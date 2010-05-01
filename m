@@ -1,7 +1,7 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH 1/3] git over TLS (gits://) support (part 1)
-Date: Sat,  1 May 2010 20:09:49 +0300
-Message-ID: <1272733791-11341-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [PATCH 3/3] git over TLS (gits://) support (part 3)
+Date: Sat,  1 May 2010 20:09:51 +0300
+Message-ID: <1272733791-11341-4-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1272733791-11341-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat May 01 19:12:55 2010
@@ -11,24 +11,24 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8GFJ-0005xf-0T
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 19:12:54 +0200
+	id 1O8GFK-0005xf-Qr
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 19:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752380Ab0EARMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 13:12:32 -0400
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:33889 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751889Ab0EARM2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 13:12:28 -0400
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 952C48BEFE
-	for <git@vger.kernel.org>; Sat,  1 May 2010 20:12:26 +0300 (EEST)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A00F1D8CCB2; Sat, 01 May 2010 20:12:26 +0300
+	id S1752864Ab0EARMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 13:12:48 -0400
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:38748 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752327Ab0EARMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 13:12:33 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 9312213B788
+	for <git@vger.kernel.org>; Sat,  1 May 2010 20:12:30 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A0695E871E1; Sat, 01 May 2010 20:12:30 +0300
 Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 9B81F403E
-	for <git@vger.kernel.org>; Sat,  1 May 2010 20:12:24 +0300 (EEST)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 104C62BD45
+	for <git@vger.kernel.org>; Sat,  1 May 2010 20:12:28 +0300 (EEST)
 X-Mailer: git-send-email 1.7.1.rc2.10.g714149
 In-Reply-To: <1272733791-11341-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -36,2960 +36,1770 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146092>
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- Makefile               |   25 +-
- git-over-tls/Makefile  |   45 ++
- git-over-tls/cbuffer.c |  504 +++++++++++++++
- git-over-tls/cbuffer.h |  304 +++++++++
- git-over-tls/user.c    | 1597 ++++++++++++++++++++++++++++++++++++++++++++++++
- git-over-tls/user.h    |  367 +++++++++++
- 6 files changed, 2839 insertions(+), 3 deletions(-)
- create mode 100644 git-over-tls/Makefile
- create mode 100644 git-over-tls/cbuffer.c
- create mode 100644 git-over-tls/cbuffer.h
- create mode 100644 git-over-tls/user.c
- create mode 100644 git-over-tls/user.h
+ git-over-tls/pem.c          |  362 ++++++++++++++++++++++++
+ git-over-tls/pem.h          |   16 +
+ git-over-tls/pem_decrypt.c  |  203 ++++++++++++++
+ git-over-tls/pem_decrypt.h  |    9 +
+ git-over-tls/ssh.c          |  635 +++++++++++++++++++++++++++++++++++++++++++
+ git-over-tls/ssh.h          |   18 ++
+ git-over-tls/ssh_localkey.c |  435 +++++++++++++++++++++++++++++
+ git-over-tls/ssh_localkey.h |   18 ++
+ 8 files changed, 1696 insertions(+), 0 deletions(-)
+ create mode 100644 git-over-tls/pem.c
+ create mode 100644 git-over-tls/pem.h
+ create mode 100644 git-over-tls/pem_decrypt.c
+ create mode 100644 git-over-tls/pem_decrypt.h
+ create mode 100644 git-over-tls/ssh.c
+ create mode 100644 git-over-tls/ssh.h
+ create mode 100644 git-over-tls/ssh_localkey.c
+ create mode 100644 git-over-tls/ssh_localkey.h
 
-diff --git a/Makefile b/Makefile
-index 910f471..b11fed4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -163,6 +163,10 @@ all::
- # apostrophes to be ASCII so that cut&pasting examples to the shell
- # will work.
- #
-+# Define NO_GNUTLS if you don't want to use GnuTLS.
-+#
-+# Define NO_SRP if you don't want SRP support.
-+#
- # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
- # MakeMaker (e.g. using ActiveState under Cygwin).
- #
-@@ -171,7 +175,6 @@ all::
- # Define NO_PYTHON if you do not want Python scripts or libraries at all.
- #
- # Define NO_TCLTK if you do not want Tcl/Tk GUI.
--#
- # The TCL_PATH variable governs the location of the Tcl interpreter
- # used to optimize git-gui for your system.  Only used if NO_TCLTK
- # is not set.  Defaults to the bare 'tclsh'.
-@@ -295,7 +298,7 @@ TCL_PATH = tclsh
- TCLTK_PATH = wish
- PTHREAD_LIBS = -lpthread
- 
--export TCL_PATH TCLTK_PATH
-+export TCL_PATH TCLTK_PATH CC
- 
- # sparse is architecture-neutral, which means that we need to tell it
- # explicitly what architecture to check for. Fix this up for yours..
-@@ -1284,6 +1287,9 @@ endif
- ifdef NO_IPV6
- 	BASIC_CFLAGS += -DNO_IPV6
- endif
-+ifdef NO_SRP
-+	BASIC_CFLAGS += -DDISABLE_SRP
-+endif
- ifdef NO_UINTMAX_T
- 	BASIC_CFLAGS += -Duintmax_t=uint32_t
- endif
-@@ -1433,6 +1439,10 @@ TCLTK_PATH_SQ = $(subst ','\'',$(TCLTK_PATH))
- 
- LIBS = $(GITLIBS) $(EXTLIBS)
- 
-+# In case some subdirectory wants to use git API libs.
-+GIT_PROGRAM_LINKLIBS = $(LIBS)
-+export GIT_PROGRAM_LINKLIBS
-+
- BASIC_CFLAGS += -DSHA1_HEADER='$(SHA1_HEADER_SQ)' \
- 	$(COMPAT_CFLAGS)
- LIB_OBJS += $(COMPAT_OBJS)
-@@ -1456,7 +1466,7 @@ endif
- ALL_CFLAGS += $(BASIC_CFLAGS)
- ALL_LDFLAGS += $(BASIC_LDFLAGS)
- 
--export TAR INSTALL DESTDIR SHELL_PATH
-+export TAR INSTALL DESTDIR SHELL_PATH ALL_CFLAGS
- 
- 
- ### Build rules
-@@ -1476,6 +1486,9 @@ endif
- ifndef NO_PERL
- 	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH='$(PERL_PATH_SQ)' prefix='$(prefix_SQ)' all
- endif
-+ifndef NO_GNUTLS
-+	$(QUIET_SUBDIR0)git-over-tls $(QUIET_SUBDIR1) prefix='$(prefix_SQ)' all
-+endif
- ifndef NO_PYTHON
- 	$(QUIET_SUBDIR0)git_remote_helpers $(QUIET_SUBDIR1) PYTHON_PATH='$(PYTHON_PATH_SQ)' prefix='$(prefix_SQ)' all
- endif
-@@ -1969,6 +1982,9 @@ install: all
- 	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
-+ifndef NO_GNUTLS
-+	$(MAKE) -C git-over-tls DESTDIR_BIN='$(DESTDIR_SQ)$(bindir_SQ)' DESTDIR_GITEXEC='$(DESTDIR_SQ)$(gitexec_instdir_SQ)' install
-+endif
- ifndef NO_PERL
- 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
- endif
-@@ -2101,6 +2117,9 @@ ifndef NO_PERL
- 	$(RM) gitweb/gitweb.cgi gitweb/gitweb.min.*
- 	$(MAKE) -C perl clean
- endif
-+ifndef NO_GNUTLS
-+	$(MAKE) -C git-over-tls clean
-+endif
- ifndef NO_PYTHON
- 	$(MAKE) -C git_remote_helpers clean
- endif
-diff --git a/git-over-tls/Makefile b/git-over-tls/Makefile
+diff --git a/git-over-tls/pem.c b/git-over-tls/pem.c
 new file mode 100644
-index 0000000..69d1d33
+index 0000000..3e4f366
 --- /dev/null
-+++ b/git-over-tls/Makefile
-@@ -0,0 +1,45 @@
-+GITLIBS2 = $(patsubst %.a,../%.a, $(GIT_PROGRAM_LINKLIBS))
-+helper = git-remote-gits
-+programs = gits-get-key-id gits-generate-keypair
-+scripts = gits-send-special-command gits-send-special-command-nourl
-+flags=
-+
-+# These can't be inherited from upper level or they won't work right...
-+ifndef V
-+	QUIET_CC       = @echo '   ' CC $@;
-+	QUIET_LINK     = @echo '   ' LINK $@;
-+endif
-+
-+ifdef NO_SRP
-+flags += -DDISABLE_SRP
-+else
-+programs += gits-generate-srp-verifier
-+endif
-+
-+ssh_deps = ssh.o ssh_localkey.o pem.o base64.o home.o pem_decrypt.o srp_askpass.o prompt.o user.o cbuffer.o misc.o
-+
-+all: $(programs) $(helper)
-+
-+git-remote-gits: main.o user.o cbuffer.o keypairs.o hostkey.o certificate.o connect.o $(ssh_deps)
-+	$(QUIET_LINK)$(CC) $(LDFLAGS) -o $@ $^ $(GITLIBS2) -lgnutls
-+
-+gits-get-key-id: getkeyid.o certificate.o $(ssh_deps)
-+	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
-+
-+ifndef NO_SRP
-+gits-generate-srp-verifier: gensrpverifier.o prompt.o home.o
-+	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
-+endif
-+
-+gits-generate-keypair: genkeypair.o home.o mkcert.o cbuffer.o prompt.o
-+	$(QUIET_LINK)$(CC) $(LDFLAGS)  -o $@ $^ $(GITLIBS2) -lgnutls
-+
-+%.o: %.c
-+	$(QUIET_CC)$(CC) $(ALL_CFLAGS) -c -o $@ $< $(flags) -I..
-+
-+install: all
-+	$(INSTALL) $(programs) $(scripts) '$(DESTDIR_BIN)'
-+	$(INSTALL) $(helper) '$(DESTDIR_GITEXEC)'
-+
-+clean:
-+	$(RM) -f *.o $(programs) $(helper)
-diff --git a/git-over-tls/cbuffer.c b/git-over-tls/cbuffer.c
-new file mode 100644
-index 0000000..e2adec7
---- /dev/null
-+++ b/git-over-tls/cbuffer.c
-@@ -0,0 +1,504 @@
++++ b/git-over-tls/pem.c
+@@ -0,0 +1,362 @@
 +/*
-+ * Copyright (C) Ilari Liusvaara 2009
++ * Copyright (C) Ilari Liusvaara 2010
 + *
 + * This code is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License version 2 as
 + * published by the Free Software Foundation.
 + */
-+#include "cbuffer.h"
-+#include <stdlib.h>
-+#include <assert.h>
-+#include <unistd.h>
-+#ifdef USE_UNIX_SCATTER_GATHER_IO
-+#include <sys/uio.h>
-+#endif
-+#include <errno.h>
++#include "pem.h"
++#include "pem_decrypt.h"
++#include "base64.h"
 +#include <string.h>
-+
-+/*
-+ * NOTE: This code may not crash, call exit or anything similar unless
-+ * program state is corrupt or call parameters are completely invalid.
-+ * It also may not call Git APIs.
-+ */
-+
-+struct cbuffer
-+{
-+	/* Base address for data area. */
-+	unsigned char *cb_base;
-+	/* Amount of free space. */
-+	size_t cb_free;
-+	/* Amount of used space. */
-+	size_t cb_used;
-+	/* Get pointer (relative to base) */
-+	size_t cb_get;
-+	/* Put pointer (relative to base) */
-+	size_t cb_put;
-+	/* Total size */
-+	size_t cb_size;
-+};
-+
-+/* Assert that invariants of circular buffer hold. */
-+static void assert_invariants(struct cbuffer *cbuf)
-+{
-+	assert(cbuf->cb_free >= 0 && cbuf->cb_free <= cbuf->cb_size);
-+	assert(cbuf->cb_used >= 0 && cbuf->cb_used <= cbuf->cb_size);
-+	assert(cbuf->cb_free + cbuf->cb_used == cbuf->cb_size);
-+	assert(cbuf->cb_get >= 0 && cbuf->cb_get <= cbuf->cb_size);
-+	assert(cbuf->cb_put >= 0 && cbuf->cb_put <= cbuf->cb_size);
-+	if (cbuf->cb_get == cbuf->cb_put)
-+		assert(cbuf->cb_free == 0 || cbuf->cb_used == 0);
-+	else if (cbuf->cb_get < cbuf->cb_put)
-+		assert(cbuf->cb_get + cbuf->cb_used == cbuf->cb_put);
-+	else
-+		assert(cbuf->cb_put + cbuf->cb_free == cbuf->cb_get);
-+}
-+
-+/* Ack specified amount of data written. */
-+static void ack_write(struct cbuffer *cbuf, size_t wsize)
-+{
-+	assert_invariants(cbuf);
-+	assert(wsize <= cbuf->cb_free);
-+	/*
-+	 * Writing data decreses free space, increases used space,
-+	 * increases put pointer, but it will wrap around if it
-+	 * goes past end of buffer.
-+	 */
-+	cbuf->cb_free -= wsize;
-+	cbuf->cb_used += wsize;
-+	cbuf->cb_put += wsize;
-+	if (cbuf->cb_put >= cbuf->cb_size)
-+		cbuf->cb_put -= cbuf->cb_size;
-+	assert_invariants(cbuf);
-+}
-+
-+/* Ack specified amount of data read (removing it). */
-+static void ack_read(struct cbuffer *cbuf, size_t rsize)
-+{
-+	assert_invariants(cbuf);
-+	assert(rsize <= cbuf->cb_used);
-+	/*
-+	 * Reading data decreses used space, increases free space,
-+	 * increases get pointer, but it will wrap around if it
-+	 * goes past end of buffer.
-+	 */
-+	cbuf->cb_free += rsize;
-+	cbuf->cb_used -= rsize;
-+	cbuf->cb_get += rsize;
-+	if (cbuf->cb_get >= cbuf->cb_size)
-+		cbuf->cb_get -= cbuf->cb_size;
-+	assert_invariants(cbuf);
-+}
-+
-+struct cbuffer *cbuffer_create(unsigned char *data, size_t datasize)
-+{
-+	struct cbuffer *cbuf = (struct cbuffer*)malloc(sizeof(
-+		struct cbuffer));
-+	if (cbuf) {
-+		cbuf->cb_base = data;
-+		cbuf->cb_size = cbuf->cb_free = datasize;
-+		cbuf->cb_used = cbuf->cb_get = cbuf->cb_put = 0;
-+		assert_invariants(cbuf);
-+	}
-+	return cbuf;
-+}
-+
-+void cbuffer_destroy(struct cbuffer *cbuf)
-+{
-+	if (cbuf) {
-+		assert_invariants(cbuf);
-+		free(cbuf);
-+	}
-+}
-+
-+size_t cbuffer_used(struct cbuffer *cbuf)
-+{
-+	assert_invariants(cbuf);
-+	return cbuf->cb_used;
-+}
-+
-+size_t cbuffer_free(struct cbuffer *cbuf)
-+{
-+	assert_invariants(cbuf);
-+	return cbuf->cb_free;
-+}
-+
-+int cbuffer_read(struct cbuffer *cbuf, unsigned char *dest, size_t toread)
-+{
-+	assert_invariants(cbuf);
-+
-+	/* Check that user doesn't try to read too much. */
-+	if (toread > cbuf->cb_used)
-+		return -1;
-+
-+	size_t tocopy = toread;
-+
-+	/*
-+	 * Limit the amount of data read to amount fits inside single
-+	 * segment. If get pointer is not greater or equal to put pointer,
-+	 * then entiere used space is only single segment.
-+	 */
-+	if (cbuf->cb_get >= cbuf->cb_put)
-+		if (tocopy > cbuf->cb_size - cbuf->cb_get)
-+			tocopy = cbuf->cb_size - cbuf->cb_get;
-+
-+	if (tocopy > 0) {
-+		/* Copy the segment and mark it read. */
-+		memcpy(dest, cbuf->cb_base + cbuf->cb_get, tocopy);
-+		ack_read(cbuf, tocopy);
-+		/* Adjust the request for subsequent segments. */
-+		toread -= tocopy;
-+		dest += tocopy;
-+	}
-+
-+	/*
-+	 * If the read was incomplete, repeat the read request for the
-+	 * non-read tail.
-+	 */
-+	if (toread > 0)
-+		return cbuffer_read(cbuf, dest, toread);
-+
-+	assert_invariants(cbuf);
-+
-+	return 0;
-+}
-+
-+int cbuffer_peek(struct cbuffer *cbuf, unsigned char *dest, size_t toread)
-+{
-+	assert_invariants(cbuf);
-+
-+	/* Check that user doesn't try to peek too much. */
-+	if (toread > cbuf->cb_used)
-+		return -1;
-+
-+	/* Is the used space as single segment or in two segments? */
-+	if (cbuf->cb_get + toread > cbuf->cb_size) {
-+		/* Two. We have to compute where segment boundary is and
-+		   copy the data as two copies. */
-+		size_t firstseg = cbuf->cb_size - cbuf->cb_get;
-+		memcpy(dest, cbuf->cb_base + cbuf->cb_get, firstseg);
-+		memcpy(dest + firstseg, cbuf->cb_base, toread - firstseg);
-+	} else {
-+		/* One, data can be read as single copy. */
-+		memcpy(dest, cbuf->cb_base + cbuf->cb_get, toread);
-+	}
-+
-+	assert_invariants(cbuf);
-+
-+	return 0;
-+}
-+
-+int cbuffer_write(struct cbuffer *cbuf, const unsigned char *src,
-+	size_t towrite)
-+{
-+	assert_invariants(cbuf);
-+
-+	/* Check that user doesn't try to write too much. */
-+	if (towrite > cbuf->cb_free)
-+		return -1;
-+
-+	size_t tocopy = towrite;
-+
-+	/*
-+	 * Limit the amount of data written to amount fits inside single
-+	 * segment. If put pointer is not greater or equal to get pointer,
-+	 * then entiere free space is only single segment.
-+	 */
-+	if (cbuf->cb_put >= cbuf->cb_get)
-+		if (tocopy > cbuf->cb_size - cbuf->cb_put)
-+			tocopy = cbuf->cb_size - cbuf->cb_put;
-+
-+	if (tocopy > 0) {
-+		/* Copy the segment and mark it written. */
-+		memcpy(cbuf->cb_base + cbuf->cb_put, src, tocopy);
-+		ack_write(cbuf, tocopy);
-+		/* Adjust the request for subsequent segments. */
-+		towrite -= tocopy;
-+		src += tocopy;
-+	}
-+
-+	/*
-+	 * If the write was incomplete, repeat the write request for the
-+	 * non-written tail.
-+	 */
-+	if (towrite > 0)
-+		return cbuffer_write(cbuf, src, towrite);
-+
-+	assert_invariants(cbuf);
-+
-+	return 0;
-+}
-+
-+int cbuffer_move(struct cbuffer *dest, struct cbuffer *src, size_t tomove)
-+{
-+	assert_invariants(dest);
-+	assert_invariants(src);
-+
-+	/* Check that amount to move isn't too great. */
-+	if (tomove > dest->cb_free)
-+		return -1;
-+	if (tomove > src->cb_used)
-+		return -1;
-+
-+	size_t tocopy = tomove;
-+	/*
-+	 * Compute maximum number of bytes that is less than amount to
-+	 * move and amount of used/free space in current segments in
-+	 * both buffers.
-+	 */
-+	if (dest->cb_put >= dest->cb_get)
-+		if (tocopy > dest->cb_size - dest->cb_put)
-+			tocopy = dest->cb_size - dest->cb_put;
-+	if (src->cb_get >= src->cb_put)
-+		if (tocopy > src->cb_size - src->cb_get)
-+			tocopy = src->cb_size - src->cb_get;
-+
-+	if (tocopy > 0) {
-+		/* Move the segment. and mark it moved. */
-+		memcpy(dest->cb_base + dest->cb_put,
-+			src->cb_base +src->cb_get, tocopy);
-+		ack_read(src, tocopy);
-+		ack_write(dest, tocopy);
-+		/* Adjust request for subsequent segments. */
-+		tomove -= tocopy;
-+	}
-+
-+	/* If request was incomplete, move the yet unmoved tail. */
-+	if (tomove > 0)
-+		return cbuffer_move(dest, src, tomove);
-+
-+	assert_invariants(dest);
-+	assert_invariants(src);
-+
-+	return 0;
-+}
-+
-+ssize_t cbuffer_read_fd(struct cbuffer *cbuf, int fd)
-+{
-+	ssize_t r;
-+
-+	assert_invariants(cbuf);
-+
-+	/* Generate EAGAIN if needed (on no free space). */
-+	if (cbuf->cb_free == 0) {
-+		errno = EAGAIN;
-+		return -1;
-+	}
-+
-+	/*
-+	 * If scatter-gather I/O is available, entiere buffer may be read at
-+	 * once. Otherwise only single segment can be read at time.
-+	 */
-+#ifdef USE_UNIX_SCATTER_GATHER_IO
-+	struct iovec areas[2];
-+	int touse;
-+
-+	/* One or two segments? */
-+	if (cbuf->cb_put >= cbuf->cb_get) {
-+		/* Two. */
-+		areas[0].iov_base = cbuf->cb_base + cbuf->cb_put;
-+		areas[0].iov_len = cbuf->cb_size - cbuf->cb_put;
-+		areas[1].iov_base = cbuf->cb_base;
-+		areas[1].iov_len = cbuf->cb_get;
-+		touse = 2;
-+	} else {
-+		/* One. */
-+		areas[0].iov_base = cbuf->cb_base + cbuf->cb_put;
-+		areas[0].iov_len = cbuf->cb_get - cbuf->cb_put;
-+		touse = 1;
-+	}
-+	r = readv(fd, areas, touse);
++#ifdef USE_COMPAT_H
++#include "compat.h"
 +#else
-+	/* Read into current segment. */
-+	if (cbuf->cb_put >= cbuf->cb_get)
-+		r = read(fd, cbuf->cb_base + cbuf->cb_put,
-+			cbuf->cb_size - cbuf->cb_put);
-+	else
-+		r = read(fd, cbuf->cb_base + cbuf->cb_put,
-+			cbuf->cb_get - cbuf->cb_put);
-+#endif
-+	/* Ack any successfully read data as written. */
-+	if (r > 0)
-+		ack_write(cbuf, (size_t)r);
-+
-+	assert_invariants(cbuf);
-+
-+	return r;
-+}
-+
-+ssize_t cbuffer_write_fd(struct cbuffer *cbuf, int fd)
-+{
-+	ssize_t r;
-+
-+	assert_invariants(cbuf);
-+
-+	/* Generate EAGAIN if needed (on no used space). */
-+	if (cbuf->cb_used == 0) {
-+		errno = EAGAIN;
-+		return -1;
-+	}
-+
-+	/*
-+	 * If scatter-gather I/O is available, entiere buffer may be written
-+	 * at once. Otherwise only single segment can be written at time.
-+	 */
-+#ifdef USE_UNIX_SCATTER_GATHER_IO
-+	struct iovec areas[2];
-+	int touse;
-+
-+	/* One or two segments? */
-+	if (cbuf->cb_get >= cbuf->cb_put) {
-+		/* Two. */
-+		areas[0].iov_base = cbuf->cb_base + cbuf->cb_get;
-+		areas[0].iov_len = cbuf->cb_size - cbuf->cb_get;
-+		areas[1].iov_base = cbuf->cb_base;
-+		areas[1].iov_len = cbuf->cb_put;
-+		touse = 2;
-+	} else {
-+		/* One. */
-+		areas[0].iov_base = cbuf->cb_base + cbuf->cb_get;
-+		areas[0].iov_len = cbuf->cb_put - cbuf->cb_get;
-+		touse = 1;
-+	}
-+	r = writev(fd, areas, touse);
-+#else
-+	/* Write current segment. */
-+	if (cbuf->cb_get >= cbuf->cb_put)
-+		r = write(fd, cbuf->cb_base + cbuf->cb_get,
-+			cbuf->cb_size - cbuf->cb_get);
-+	else
-+		r = write(fd, cbuf->cb_base + cbuf->cb_get,
-+			cbuf->cb_put - cbuf->cb_get);
-+#endif
-+	/* Ack any successfully written data as read. */
-+	if (r > 0)
-+		ack_read(cbuf, (size_t)r);
-+
-+	assert_invariants(cbuf);
-+
-+	return r;
-+}
-+
-+void cbuffer_fill_r_segment(struct cbuffer *cbuf, unsigned char **base,
-+	size_t *length)
-+{
-+	assert_invariants(cbuf);
-+
-+	/* Compute segment base. */
-+	*base = cbuf->cb_base + cbuf->cb_get;
-+
-+	if (!cbuf->cb_used) {
-+		/* No used space -> empty segment. */
-+		*length = 0;
-+	} else if (cbuf->cb_get >= cbuf->cb_put) {
-+		/* High segment is current. */
-+		*length = cbuf->cb_size - cbuf->cb_get;
-+	} else {
-+		/* Low segment is current. */
-+		*length = cbuf->cb_put - cbuf->cb_get;
-+	}
-+
-+	assert_invariants(cbuf);
-+}
-+
-+void cbuffer_commit_r_segment(struct cbuffer *cbuf, size_t length)
-+{
-+	assert_invariants(cbuf);
-+	/*
-+	 * This doesn't handle read being longer than single segment right,
-+	 * but that's undefined anyway.
-+	 */
-+	ack_read(cbuf, length);
-+	assert_invariants(cbuf);
-+}
-+
-+void cbuffer_fill_w_segment(struct cbuffer *cbuf, unsigned char **base,
-+	size_t *length)
-+{
-+	assert_invariants(cbuf);
-+
-+	/* Compute segment base. */
-+	*base = cbuf->cb_base + cbuf->cb_put;
-+
-+	if (!cbuf->cb_free) {
-+		/* No free space -> empty segment. */
-+		*length = 0;
-+	} else if (cbuf->cb_put >= cbuf->cb_get) {
-+		/* High segment is current. */
-+		*length = cbuf->cb_size - cbuf->cb_put;
-+	} else {
-+		/* Low segment is current. */
-+		*length = cbuf->cb_get - cbuf->cb_put;
-+	}
-+
-+	assert_invariants(cbuf);
-+}
-+
-+void cbuffer_commit_w_segment(struct cbuffer *cbuf, size_t length)
-+{
-+	assert_invariants(cbuf);
-+	/*
-+	 * This doesn't handle write being longer than single segment right,
-+	 * but that's undefined anyway.
-+	 */
-+	ack_write(cbuf, length);
-+	assert_invariants(cbuf);
-+}
-+
-+
-+void cbuffer_clear(struct cbuffer *cbuf)
-+{
-+	/*
-+	 * Just resetting pointers and values to initial defaults clears
-+	 * all data.
-+	 */
-+	cbuf->cb_used = cbuf->cb_put = cbuf->cb_get = 0;
-+	cbuf->cb_free = cbuf->cb_size;
-+	assert_invariants(cbuf);
-+}
-+
-+size_t cbuffer_read_max(struct cbuffer *cbuf, unsigned char *dest,
-+	size_t limit)
-+{
-+	/* Limit the request to maximum possible and do read request. */
-+	if (limit > cbuffer_used(cbuf))
-+		limit = cbuffer_used(cbuf);
-+	cbuffer_read(cbuf, dest, limit);
-+	return limit;
-+}
-+
-+size_t cbuffer_write_max(struct cbuffer *cbuf, const unsigned char *src,
-+	size_t limit)
-+{
-+	/* Limit the request to maximum possible and do write request. */
-+	if (limit > cbuffer_free(cbuf))
-+		limit = cbuffer_free(cbuf);
-+	cbuffer_write(cbuf, src, limit);
-+	return limit;
-+}
-+
-+size_t cbuffer_move_max(struct cbuffer *dest, struct cbuffer *src,
-+	size_t limit)
-+{
-+	/* Limit the request to maximum possible and do move request. */
-+	if (limit > cbuffer_free(dest))
-+		limit = cbuffer_free(dest);
-+	if (limit > cbuffer_used(src))
-+		limit = cbuffer_used(src);
-+	cbuffer_move(dest, src, limit);
-+	return limit;
-+}
-+
-+size_t cbuffer_move_nolimit(struct cbuffer *dest, struct cbuffer *src)
-+{
-+	size_t limit;
-+	/*
-+	 * Limit the request to maximum possible and do move request.
-+	 * The move lacks limit so use free space in destination as
-+	 * first limit.
-+	 */
-+	limit = cbuffer_free(dest);
-+	if (limit > cbuffer_used(src))
-+		limit = cbuffer_used(src);
-+	cbuffer_move(dest, src, limit);
-+	return limit;
-+}
-diff --git a/git-over-tls/cbuffer.h b/git-over-tls/cbuffer.h
-new file mode 100644
-index 0000000..4e07c5b
---- /dev/null
-+++ b/git-over-tls/cbuffer.h
-@@ -0,0 +1,304 @@
-+/*
-+ * Copyright (C) Ilari Liusvaara 2009
-+ *
-+ * This code is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License version 2 as
-+ * published by the Free Software Foundation.
-+ */
-+#ifndef _cbuffer__h__included__
-+#define _cbuffer__h__included__
-+
-+#include <stdlib.h>
-+
-+#ifdef __cplusplus
-+extern "C" {
++#include "git-compat-util.h"
 +#endif
 +
-+/*
-+ * Terminology:
-+ *	Segment:
-+ *		Memory-contigious range extending from get pointer, put
-+ *		pointer or start of circular buffer till used/free type
-+ *		changes.
-+ *	Current segment:
-+ *		Segment starting from get pointer or put pointer.
-+ *
-+ */
++void dump_blob(const char *name, const unsigned char *blob, size_t bloblen);
 +
-+/* Primary circular buffer structure. Opaque type. */
-+struct cbuffer;
-+
-+/*
-+ * Create new circular buffer using specified data area. The data area
-+ * is not copied and must remain until circular buffer is destroyed.
-+ *
-+ * Inputs:
-+ *	data		The data area to back the circular buffer.
-+ *	datasize	Size of backing data area.
-+ *
-+ * Outputs:
-+ *	return value	The newly created circular buffer, or NULL
-+ *			if out of memory.
-+ */
-+struct cbuffer *cbuffer_create(unsigned char *data, size_t datasize);
-+
-+
-+/*
-+ * Free circular buffer. Data area is not freed.
-+ *
-+ * Inputs:
-+ *	cbuf		The circular buffer to free.
-+ */
-+void cbuffer_destroy(struct cbuffer *cbuf);
-+
-+/*
-+ * Return number of bytes used in buffer (how many bytes can be read without
-+ * writes).
-+ *
-+ * Inputs:
-+ *	cbuf		The circular buffer to interrogate.
-+ *
-+ * Outputs:
-+ *	return value	Number of bytes data in buffer.
-+ */
-+size_t cbuffer_used(struct cbuffer *cbuf);
-+
-+/*
-+ * Return number of bytes free in buffer (how many bytes can be written
-+ * without reads).
-+ *
-+ * Inputs:
-+ *	cbuf		The circular buffer to interrogate.
-+ *
-+ * Outputs:
-+ *	return value	Number of bytes free in buffer.
-+ */
-+size_t cbuffer_free(struct cbuffer *cbuf);
-+
-+/*
-+ * Peek specified number of bytes from buffer. The bytes are not removed.
-+ *
-+ * Inputs:
-+ *	cbuf		The circular buffer to peek.
-+ *	dest		Destination buffer to store the peeked data to.
-+ *	toread		Number of bytes to peek.
-+ *
-+ * Outputs:
-+ *	Return value	0 on success, -1 if buffer has insufficient
-+ *			amount of data.
-+ *
-+ */
-+int cbuffer_peek(struct cbuffer *cbuf, unsigned char *dest, size_t toread);
-+
-+/*
-+ * Read specified number of bytes from buffer. The bytes read are
-+ * removed.
-+ *
-+ * Inputs:
-+ *	cbuf		The circular buffer to read.
-+ *	dest		Destination buffer to store the read data to.
-+ *	toread		Number of bytes to read.
-+ *
-+ * Outputs:
-+ *	Return value	0 on success, -1 if buffer has insufficient
-+ *			amount of data.
-+ */
-+int cbuffer_read(struct cbuffer *cbuf, unsigned char *dest, size_t toread);
-+
-+/*
-+ * Write specified number of bytes to buffer.
-+ *
-+ * Inputs:
-+ *	cbuf		The circular buffer to write.
-+ *	src		Buffer to read the written data from.
-+ *	towrite		Number of bytes to write.
-+ *
-+ * Outputs:
-+ *	Return value	0 on success, -1 if buffer has insufficient
-+ *			free space.
-+ */
-+int cbuffer_write(struct cbuffer *cbuf, const unsigned char *src,
-+	size_t towrite);
-+
-+/*
-+ * Move specified number of bytes from buffer to another. The data is
-+ * removed from source buffer.
-+ *
-+ * Inputs:
-+ *	dest		Destination circular buffer.
-+ *	src		Source cirrcular buffer.
-+ *	tomove		Number of bytes to move.
-+ *
-+ * Outputs:
-+ *	Return value	0 on success, -1 if insufficient source buffer
-+ *			data or insufficient destination buffer space.
-+ */
-+int cbuffer_move(struct cbuffer *dest, struct cbuffer *src, size_t tomove);
-+
-+/*
-+ * Call read on file descriptor. The call tries to read as much as
-+ * possible in one go (up to entiere free space of destination
-+ * buffer).
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer to store the data to.
-+ *	fd		File descriptor to read.
-+ *
-+ * Outputs:
-+ *	Return value	Number of bytes read (>0) on success, 0 if
-+ *			EOF on file descriptor or -1 if read failed.
-+ *	errno		Set by read() or readv() on failure.
-+ *			EAGAIN if there is no free space in circular buffer.
-+ */
-+ssize_t cbuffer_read_fd(struct cbuffer *cbuf, int fd);
-+
-+/*
-+ * Call write on file descriptor. The call tries to write as much as
-+ * possible in one go (up to entiere used space of soruce
-+ * buffer).
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer to read data from.
-+ *	fd		File descriptor to write.
-+ *
-+ * Outputs:
-+ *	Return value	Number of bytes written (>=0) on success,
-+ *			-1 if write failed.
-+ *	errno		Set by write() or writev() on failure.
-+ *			EAGAIN if there is no used space in circular buffer.
-+ */
-+ssize_t cbuffer_write_fd(struct cbuffer *cbuf, int fd);
-+
-+/*
-+ * Fill buffer read segment for direct from memory read operation on
-+ * circular buffer. Any read operation on buffer invalidates segment.
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer to read from.
-+ *
-+ * Outputs:
-+ *	base		Start address of segemnt is written here.
-+ *	length		Length of segment is written here.
-+ *
-+ * Notes:
-+ *	- Returned length of 0 is only possible if there is no used
-+ *	  space in buffer.
-+ *	- The entiere used space may not be returned in single segment.
-+ */
-+void cbuffer_fill_r_segment(struct cbuffer *cbuf, unsigned char **base,
-+	size_t *length);
-+
-+/*
-+ * Commit read segment after direct read operation, marking data as
-+ * read. The read bytes are removed.
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer read from.
-+ *	length		Length of segment to mark as read. Must
-+ *			be at most the length gotten from
-+ *			cbuffer_fill_r_segment.
-+ */
-+void cbuffer_commit_r_segment(struct cbuffer *cbuf, size_t length);
-+
-+/*
-+ * Fill buffer write segment for direct to memory write operation on
-+ * circular buffer. Any write operation on buffer invalidates segment.
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer to write to.
-+ *
-+ * Outputs:
-+ *	base		Start address of segment is written here.
-+ *	length		Length of segment is written here.
-+ *
-+ * Notes:
-+ *	- Returned length of 0 is only possible if there is no free
-+ *	  space in buffer.
-+ *	- The entiere free space may not be returned in single segment.
-+ */
-+void cbuffer_fill_w_segment(struct cbuffer *cbuf, unsigned char **base,
-+	size_t *length);
-+
-+/*
-+ * Commit write segment after direct write operation, marking data as
-+ * written
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer written to.
-+ *	length		Length of segment to mark as written. Must
-+ *			be at most the length gotten from
-+ *			cbuffer_fill_w_segment.
-+ */
-+void cbuffer_commit_w_segment(struct cbuffer *cbuf, size_t length);
-+
-+/*
-+ * Clear all data in cbuffer, freeing any used space.
-+ *
-+ * Inputs:
-+ *	cbuf		Cirecular buffer to clear.
-+ */
-+void cbuffer_clear(struct cbuffer *cbuf);
-+
-+/*
-+ * Read number of bytes from circular buffer smaller than limit.
-+ * The read bytes are removed.
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer to read.
-+ *	dest		Destination to store the read data.
-+ *	limit		Maximum number of bytes to read.
-+ *
-+ * Outputs:
-+ *	Return value	Number of bytes read.
-+ */
-+size_t cbuffer_read_max(struct cbuffer *cbuf, unsigned char *dest,
-+	size_t limit);
-+
-+/*
-+ * Write number of bytes to circular buffer smaller than limit.
-+ *
-+ * Inputs:
-+ *	cbuf		Circular buffer to write.
-+ *	dest		Source to read the wrritten data.
-+ *	limit		Maximum number of bytes to write.
-+ *
-+ * Outputs:
-+ *	Return value	Number of bytes written.
-+ */
-+size_t cbuffer_write_max(struct cbuffer *cbuf, const unsigned char *src,
-+	size_t limit);
-+
-+/*
-+ * Move number of bytes from circular buffer to another smaller than limit.
-+ * The read bytes are removed from source circular buffer.
-+ *
-+ * Inputs:
-+ *	dest		Destination circular buffer.
-+ *	src		Source circular buffer.
-+ *	limit		Maximum number of bytes to move.
-+ *
-+ * Outputs:
-+ *	Return value	Number of bytes moved.
-+ */
-+size_t cbuffer_move_max(struct cbuffer *dest, struct cbuffer *src,
-+	size_t limit);
-+
-+/*
-+ * Move as much bytes from circular buffer to another as possible.
-+ * The read bytes are removed from source circular buffer.
-+ *
-+ * Inputs:
-+ *	dest		Destination circular buffer.
-+ *	src		Source circular buffer.
-+ *
-+ * Outputs:
-+ *	Return value	Number of bytes moved.
-+ */
-+size_t cbuffer_move_nolimit(struct cbuffer *dest, struct cbuffer *src);
-+
-+
-+#ifdef __cplusplus
++static const unsigned char *strstr_n(const unsigned char *haystack,
++	const unsigned char *needle, size_t haystack_size)
++{
++	size_t maxpos, i;
++	size_t needle_size;
++	needle_size = strlen((const char*)needle);
++	if (haystack_size < needle_size)
++		return NULL;
++	maxpos = haystack_size - needle_size;
++	for (i = 0; i < maxpos; i++)
++		if (!strncmp((const char*)(haystack + i),
++			(const char*)needle, needle_size))
++			return haystack + i;
++	return NULL;
 +}
-+#endif
 +
-+#endif
-diff --git a/git-over-tls/user.c b/git-over-tls/user.c
-new file mode 100644
-index 0000000..bcfeac1
---- /dev/null
-+++ b/git-over-tls/user.c
-@@ -0,0 +1,1597 @@
-+/*
-+ * Copyright (C) Ilari Liusvaara 2009
-+ *
-+ * This code is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License version 2 as
-+ * published by the Free Software Foundation.
-+ */
-+#include "user.h"
-+#include "cbuffer.h"
-+#include "misc.h"
-+#include <sys/select.h>
-+#include <sys/time.h>
-+#include <gnutls/gnutls.h>
-+#include <errno.h>
-+#include <stdarg.h>
-+#include <stdio.h>
-+#include <string.h>
-+#include <unistd.h>
-+#include <fcntl.h>
-+#include <stdint.h>
-+#include <sys/socket.h>
-+#ifdef USE_TRAP_PAGING
-+#include <sys/mman.h>
-+#endif
-+
-+/*
-+ * NOTE: This code may not crash, call exit or anything similar unless
-+ * program state is corrupt or call parameters are completely invalid.
-+ * It also may not call Git APIs.
-+ */
-+
-+/* Main buffer size. */
-+#define BUFFERSIZE 65536
-+/*
-+ * Error buffer can be maximum of 65535-8 bytes and must be smaller or
-+ * equal in size to main buffers.
-+ */
-+#define ERR_BUFFERSIZE (65535-8)
-+
-+struct user
++static const unsigned char *strchrs_n(const unsigned char *str,
++	const char *chars, size_t str_len)
 +{
-+	/* If 1, EOF received from black in at transport level. */
-+	unsigned u_black_in_eof : 1,
-+	/* If 1, EOF sent to black out at transport level. */
-+		u_black_out_eof : 1,
-+	/* If 1, EOF received from black in at TLS level. */
-+		u_black_in_d_eof : 1,
-+	/* If 1, EOF sent to black out at TLS level. */
-+		u_black_out_d_eof : 1,
-+	/* If 1, Assume that there is more input to come from red in. */
-+		u_red_assume_more : 1,
-+	/* If 1, TLS is active and ready to transfer data. */
-+		u_tls_active : 1,
-+	/* If 1, there has been data received from red in. */
-+		u_red_in_have_data : 1,
-+	/*
-+	 * Result of last read of decrypted data.
-+	 * 0 => Read was successful.
-+	 * 1 => Read was blocked by insufficient input data.
-+	 * 2 => Read was blocked by insufficient output space.
-+	 * 3 => No read attempted.
-+	 */
-+		u_want_read : 2,
-+	/*
-+	 * Result of last write of decrypted data.
-+	 * 0 => Write was successful.
-+	 * 1 => Write was blocked by insufficient input data.
-+	 * 2 => Write was blocked by insufficient output space.
-+	 * 3 => No write attempted.
-+	 */
-+		u_want_write : 2,
-+	/*
-+	 * Result of last handshake attempt.
-+	 * 0 => Handshake was successful.
-+	 * 1 => Handshake was blocked by insufficient input data.
-+	 * 2 => Handshake was blocked by insufficient output space.
-+	 * 3 => No handshake attempted.
-+	 */
-+		u_want_hand : 2,
-+	/* Number of bytes of error header sent (0-8). */
-+		u_red_err_hdr_sent : 4,
-+	/* Delay TLS failure present. 1 for handshake, 2 otherwise */
-+		u_delay_tls_failure : 2,
-+	/* Has seen any data received. */
-+		u_seen_input_data : 1;
-+
-+	/* File descriptors. -1 if none. */
-+	int u_black_fd;		/* Input/Output */
-+	int u_red_in_fd;	/* Input */
-+	int u_red_out_fd;	/* Output */
-+	int u_red_err_fd;	/* Input */
-+	/* The backing buffer for all transfer buffers and its size. */
-+	unsigned char *u_buf_backing;
-+	size_t u_buf_backing_size;
-+	/* The actual transfer buffers. */
-+	struct cbuffer *u_black_in_buf;
-+	struct cbuffer *u_black_out_buf;
-+	struct cbuffer *u_red_in_buf;
-+	struct cbuffer *u_red_out_buf;
-+	struct cbuffer *u_red_err_buf;
-+	/* Deadline. Tv_sec is -1 if there is no deadline. */
-+	struct timeval u_deadline;
-+	/*
-+	 * Why the connection was torn down. Delay_failure is delayed
-+	 * failure that becomes real after output buffer is flushed
-+	 * so that TLS alerts are sent. Also stored is delayed TLS alert
-+	 * that couldn't be sent yet.
-+	 */
-+	int u_failure;
-+	char *u_errmsg;
-+	int u_delay_failure;
-+	gnutls_alert_description_t u_delay_alert;
-+	/* Active TLS session. NULL if no TLS. */
-+	gnutls_session_t u_tls_session;
-+	/* Transfer counters. */
-+	uint64_t u_raw_tx;
-+	uint64_t u_raw_rx;
-+	uint64_t u_decoded_tx;
-+	uint64_t u_decoded_rx;
-+	struct timeval u_last_rx;
-+	struct timeval u_last_tx;
-+};
-+
-+/* Initiate delayed failure on user. */
-+static void delay_cleanup_user(struct user *user, int failure,
-+	const char *error)
-+{
-+	/* Store the cause of termination. */
-+	if (!user->u_errmsg) {
-+		if (error)
-+			user->u_errmsg = strdup(error);
-+		else
-+			user->u_errmsg = NULL;
++	while (str_len > 0) {
++		if (strchr(chars, (char)str[0]))
++			return str;
++		str++;
++		str_len--;
 +	}
-+	user->u_delay_failure = failure;
++	return NULL;
 +}
 +
-+/* Clean up user connection immediately. */
-+static void cleanup_user(struct user *user, int failure, const char *error)
++const unsigned char *find_base64_start(const unsigned char *start,
++	const unsigned char *end, char **dek_info)
 +{
-+	/* If there is TLS session, deallocate its resources. */
-+	if (user->u_tls_session) {
-+		gnutls_deinit(user->u_tls_session);
-+		user->u_tls_session = NULL;
++	const unsigned char *startaddr;
++	const unsigned char *dekline;
++	size_t remaining = end - start;
++	startaddr = base64_blob_start(start, &remaining);
++	if (!startaddr) {
++		error("Malformed PEM: No BASE64 section found");
++		return NULL;
 +	}
-+	/* Shutdown and close black input/output. */
-+	if (user->u_black_fd >= 0) {
-+		shutdown(user->u_black_fd, SHUT_WR);
-+		force_close(user->u_black_fd);
-+	}
-+	user->u_black_fd = -1;
++	dekline = strstr_n(start, (const unsigned char*)"DEK-Info: ",
++		startaddr - start);
++	if (!dekline)
++		*dek_info = NULL;
++	else {
++		const unsigned char *term;
++		const unsigned char *dekstart = dekline + 10;
++		while (dekstart < startaddr && (*dekstart == ' ' ||
++			*dekstart == '\t'))
++			dekstart++;
 +
-+	/* Close red inputs/outputs. */
-+	if (user->u_red_in_fd >= 0)
-+		force_close(user->u_red_in_fd);
-+	user->u_red_in_fd = -1;
-+	if (user->u_red_out_fd >= 0)
-+		force_close(user->u_red_out_fd);
-+	user->u_red_out_fd = -1;
-+	if (user->u_red_err_fd >= 0)
-+		force_close(user->u_red_err_fd);
-+	user->u_red_err_fd = -1;
-+
-+	/* Store the cause of termination. */
-+	if (!user->u_errmsg) {
-+		if (error)
-+			user->u_errmsg = strdup(error);
-+		else
-+			user->u_errmsg = NULL;
-+	}
-+	user->u_failure = failure;
-+}
-+
-+/*
-+ * Process delay failure. If there is delayed failure and output buffer is
-+ * empty, make it real failure and disconnect user immediately.
-+ */
-+static int process_delay_failure(struct user *user)
-+{
-+	if (user->u_failure)
-+		return 0;
-+	if (!cbuffer_used(user->u_black_out_buf) && user->u_delay_failure) {
-+		cleanup_user(user, user->u_delay_failure, NULL);
-+		return 0;
-+	}
-+	return 0;
-+}
-+
-+/* Is this error from I/O syscall fatal? */
-+static int is_fatal_error(int error)
-+{
-+	return (error != EINTR && error != EAGAIN && error != EWOULDBLOCK);
-+}
-+
-+/* Is this error from GnuTLS I/O operation fatal? */
-+static int is_fatal_tls_error(int error)
-+{
-+	/*
-+	 * GNUTLS_E_INTERRUPTED should never be seen. since custom push and
-+	 * pull functions can't return EINTR, only EAGAIN.
-+	 */
-+	return (error < 0 && error != GNUTLS_E_AGAIN);
-+}
-+
-+/* Handle fatal error received from GnuTLS functions. */
-+static int handle_tls_failure_code(struct user *user, int gnutls_code,
-+	int handshaking)
-+{
-+	int x;
-+	char error_buffer[8192];
-+	if (gnutls_code == GNUTLS_E_FATAL_ALERT_RECEIVED) {
-+		/* Fatal alert. Get the description and format message. */
-+		gnutls_alert_description_t alert;
-+		alert = gnutls_alert_get(user->u_tls_session);
-+		sprintf(error_buffer, "TLS alert received: %s",
-+			gnutls_alert_get_name(alert));
-+
-+		if (alert == GNUTLS_A_BAD_RECORD_MAC && handshaking)
-+			sprintf(error_buffer, "TLS alert received: %s "
-+				"(incorrect password?)",
-+				gnutls_alert_get_name(alert));
-+
-+		/* Terminate the connection. */
-+		if (handshaking)
-+			cleanup_user(user, USER_TLS_HAND_ERROR,
-+				error_buffer);
-+		else
-+			cleanup_user(user, USER_TLS_ERROR,
-+				error_buffer);
-+		return 0;
-+	}
-+	/*
-+	 * Alerts use handshake readyness indicator, so try to set it
-+	 * to "perform I/O immediately".
-+	 */
-+	user->u_want_hand = 0;
-+	/*
-+	 * Mark that delay TLS failure is present and get the alert
-+	 * that should be sent. Also set error message.
-+	 */
-+	user->u_delay_tls_failure = 1;
-+#ifndef DISABLE_SRP
-+	/* GnuTLS doesn't seem to have proper code for this. */
-+	if (gnutls_code == GNUTLS_E_SRP_PWD_ERROR)
-+		user->u_delay_alert = GNUTLS_A_UNKNOWN_PSK_IDENTITY;
-+	else
-+#endif
-+		user->u_delay_alert = (gnutls_alert_description_t)
-+			gnutls_error_to_alert((int)gnutls_code, &x);
-+	user->u_errmsg = strdup(gnutls_strerror_name((int)gnutls_code));
-+	return 1;
-+}
-+
-+/* Handle black input activity */
-+static int black_in_handler(struct user *user, fd_set *rfds)
-+{
-+	/* Don't attempt to read if connection has failed. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* The file descrptor must be marked readable. */
-+	if (user->u_black_fd < 0 || !FD_ISSET(user->u_black_fd, rfds))
-+		return 0;
-+	/* Don't attempt to read already EOF'd file descriptor. */
-+	if (user->u_black_in_eof)
-+		return 0;
-+
-+	ssize_t r = cbuffer_read_fd(user->u_black_in_buf, user->u_black_fd);
-+	FD_CLR(user->u_black_fd, rfds);
-+	if (r < 0 && is_fatal_error(errno)) {
-+		/* Inbound connection faulted! */
-+		cleanup_user(user, USER_LAYER4_ERROR, strerror(errno));
-+	} else if (r == 0) {
-+		/* Received EOF. If TLS is enabled, also assume output EOF. */
-+		user->u_black_in_eof = 1;
-+		if (user->u_tls_session)
-+			user->u_black_out_eof = 1;
-+	} else if (r > 0) {
-+		/* Received some data. */
-+		user->u_raw_rx += r;
-+		user->u_seen_input_data = 1;
-+		gettimeofday(&user->u_last_rx, NULL);
-+	}
-+	return 1;
-+}
-+
-+/* Handle black output activity. */
-+static int black_out_handler(struct user *user, fd_set *wfds)
-+{
-+	/*
-+	 * Don't attempt to write if connection has failed.  This is one of
-+	 * the very few handlers still to run in delayed failure.
-+	 */
-+	if (user->u_failure)
-+		return 0;
-+	/* The file descrptor must be marked as writable. */
-+	if (user->u_black_fd < 0 || !FD_ISSET(user->u_black_fd, wfds))
-+		return 0;
-+	/* Don't attempt to write if EOF has already been sent. */
-+	if (user->u_black_out_eof)
-+		return 0;
-+
-+	ssize_t r = cbuffer_write_fd(user->u_black_out_buf, user->u_black_fd);
-+	FD_CLR(user->u_black_fd, wfds);
-+	if (r < 0 && is_fatal_error(errno)) {
-+		/* Outbound connection faulted! */
-+		cleanup_user(user, USER_LAYER4_ERROR, strerror(errno));
-+	} else if (r > 0) {
-+		/* Sent some data. */
-+		user->u_raw_tx += r;
-+		gettimeofday(&user->u_last_tx, NULL);
-+	}
-+	return 1;
-+}
-+
-+/* Send black out EOF if needed (using TLS if it is active) */
-+static int black_out_eof_handler(struct user *user)
-+{
-+	/* Don't operate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate anymore if EOF has been sent outbound. */
-+	if (user->u_black_out_eof || user->u_black_out_d_eof)
-+		return 0;
-+	/* Don't activate if there can be more data from red in. */
-+	if (user->u_red_assume_more || user->u_red_in_fd >= 0)
-+		return 0;
-+	/* Don't activate if there can be more data from red error. */
-+	if (user->u_red_err_fd >= 0)
-+		return 0;
-+	/* Don't activate if there is more data in red input. */
-+	if (cbuffer_used(user->u_red_in_buf))
-+		return 0;
-+	/* Don't activate if there is more data in red error. */
-+	if (cbuffer_used(user->u_red_err_buf))
-+		return 0;
-+	/*
-+	 * If not in TLS mode, don't activate if there is data in send
-+	 * buffer.
-+	 */
-+	if (!user->u_tls_session && cbuffer_used(user->u_black_out_buf))
-+		return 0;
-+
-+	if (user->u_tls_session) {
-+		int r;
-+		/* Try to send the EOF at TLS level. */
-+		r = gnutls_bye(user->u_tls_session, GNUTLS_SHUT_WR);
-+		if (r == 0) {
-+			/* Suceeded. Mark the connection as EOF'd. */
-+			user->u_black_out_d_eof = 1;
-+			return 1;
-+		} else if (is_fatal_tls_error((int)r)) {
-+			/* Fatal stream error! */
-+			return handle_tls_failure_code(user, (int)r, 0);
++		term = strchrs_n(dekstart, "\r\n", startaddr - dekstart);
++		if(!term) {
++			error("Malformed PEM: No BASE64 section found");
++			return NULL;
 +		}
-+		/* Otherwise we failed due to non-fatal TLS error. We'll try
-+		   again soon. */
++		*dek_info = xstrndup((const char*)dekstart, term - dekstart);
++	}
++	return startaddr;
++}
++
++size_t decode_asn1_length_tag(const unsigned char **file, size_t *left)
++{
++	if (*left < 1)
++		goto eof;
++
++	if (**file < 0x80) {
++		(*left)--;
++		(*file)++;
++		return (*file)[-1];
++	} else if (**file == 0x80) {
++		error("Malformed PEM: Bad length tag");
++		*file = NULL;
 +		return 0;
++	} else if (**file == 0x81) {
++		if (*left < 2)
++			goto eof;
++		*left -= 2;
++		(*file) += 2;
++		return (*file)[-1];
++	} else if (**file == 0x82) {
++		if (*left < 3)
++			goto eof;
++		*left -= 3;
++		(*file) += 3;
++		return (((size_t)(*file)[-2]) << 8) |
++			((size_t)(*file)[-1]);
++	} else if (**file == 0x83) {
++		if (*left < 4)
++			goto eof;
++		*left -= 4;
++		(*file) += 4;
++		return (((size_t)(*file)[-3]) << 16) |
++			(((size_t)(*file)[-2]) << 8) |
++			((size_t)(*file)[-1]);
 +	} else {
-+		/* Try to send normal transport EOF. */
-+		if (shutdown(user->u_black_fd, SHUT_WR) < 0) {
-+			/* Failed, declare as stream error. */
-+			cleanup_user(user, USER_LAYER4_ERROR,
-+				strerror(errno));
++		error("Unreadable PEM: Size too large");
++		*file = NULL;
++		return 0;
++	}
++eof:
++	error("Malformed PEM: Expected length tag, got EOF");
++	*file = NULL;
++	return 0;
++}
++
++size_t asn1_integers_size(const unsigned char *seq, size_t seq_len,
++	int low, int high, size_t *k2size)
++{
++	int component = 0;
++	size_t size = 0;
++	for (component = 0; component < high; component++) {
++		size_t clen = 0;
++		if (seq_len < 1) {
++			error("Malformed PEM: Expected tag, got EOF");
 +			return 0;
 +		}
-+		user->u_black_out_eof = 1;
-+		return 1;
-+	}
-+	return 0; /* Should not be here. */
-+}
-+
-+/* Send EOF to red output if needed. */
-+static int red_out_eof_handler(struct user *user)
-+{
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate unless input EOF has been received. */
-+	if (!user->u_black_in_eof && !user->u_black_in_d_eof)
-+		return 0;
-+	/* Don't activate anymore if red out has been closed. */
-+	if (user->u_red_out_fd < 0)
-+		return 0;
-+	/* If not in TLS mode, don't activate if there is data in receive
-+	   buffer. */
-+	if (!user->u_tls_session && cbuffer_used(user->u_black_in_buf))
-+		return 0;
-+	/* Don't activate if there is more data in red output. */
-+	if (cbuffer_used(user->u_red_out_buf))
-+		return 0;
-+
-+	force_close(user->u_red_out_fd);
-+	user->u_red_out_fd = -1;
-+	return 1;
-+}
-+
-+/* Send data to file descriptor connected to red output. */
-+static int red_out_handler(struct user *user, fd_set *wfds)
-+{
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Red out must be writable fd. */
-+	if (user->u_red_out_fd < 0 || !FD_ISSET(user->u_red_out_fd, wfds))
-+		return 0;
-+
-+	ssize_t r = cbuffer_write_fd(user->u_red_out_buf, user->u_red_out_fd);
-+	FD_CLR(user->u_red_out_fd, wfds);
-+	if (r < 0 && errno == EPIPE) {
-+		/* EPIPE is treated as special type of EOF. We need to read
-+		   EOFs from process. */
-+		force_close(user->u_red_out_fd);
-+		user->u_red_out_fd = -1;
-+		return 1;
-+	} else if (r < 0 && is_fatal_error(errno)) {
-+		/* Red out connection faulted! */
-+		cleanup_user(user, USER_RED_FAILURE, strerror(errno));
-+		return 0;
-+	} else if (r > 0) {
-+		/* Sent some data to red output. */
-+		return 1;
-+	}
-+	/* Can't come here. */
-+	return 0;
-+}
-+
-+/* Recieve data from file descriptor connected to red input. */
-+static int red_in_handler(struct user *user, fd_set *rfds)
-+{
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Red in must be readable fd. */
-+	if (user->u_red_in_fd < 0 || !FD_ISSET(user->u_red_in_fd, rfds))
-+		return 0;
-+
-+	ssize_t r = cbuffer_read_fd(user->u_red_in_buf, user->u_red_in_fd);
-+	FD_CLR(user->u_red_in_fd, rfds);
-+	if (r < 0 && is_fatal_error(errno)) {
-+		/* Inbound red connection faulted! */
-+		cleanup_user(user, USER_RED_FAILURE, strerror(errno));
-+		return 0;
-+	} else if (r == 0) {
-+		/* Close it so we eventually send EOF. */
-+		user->u_red_assume_more = 0;
-+		force_close(user->u_red_in_fd);
-+		user->u_red_in_fd = -1;
-+		return 1;
-+	} else if (r > 0) {
-+		/* Received some data. */
-+		user->u_red_in_have_data = 1;
-+
-+		/* Clear the error buffer. */
-+		cbuffer_clear(user->u_red_err_buf);
-+	}
-+	return 1;
-+}
-+
-+#define DUMMYBUFSIZE 256
-+
-+/* Receive data from file descriptor connected to red error. */
-+static int red_err_handler(struct user *user, fd_set *rfds)
-+{
-+	ssize_t r;
-+	char buf[DUMMYBUFSIZE];
-+
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Red err must be readable fd. */
-+	if (user->u_red_err_fd < 0 || !FD_ISSET(user->u_red_err_fd, rfds))
-+		return 0;
-+
-+	if (!user->u_red_in_have_data) {
-+		/* Read the red error for real. */
-+		r = cbuffer_read_fd(user->u_red_err_buf, user->u_red_err_fd);
-+	} else {
-+		/* Just do dummy read and discard the reuslts. */
-+		r = read(user->u_red_err_fd, buf, DUMMYBUFSIZE);
-+	}
-+	FD_CLR(user->u_red_err_fd, rfds);
-+	if (r < 0 && is_fatal_error(errno)) {
-+		/* Inbound red connection faulted! */
-+		cleanup_user(user, USER_RED_FAILURE, strerror(errno));
-+	} else if (r == 0) {
-+		/* Close it so we eventually send EOF. */
-+		force_close(user->u_red_err_fd);
-+		user->u_red_err_fd = -1;
-+	} else if (r > 0) {
-+		/*
-+		 * Received some data.
-+		 *
-+		 * HACK ALERT: Some systems seem to like to send these
-+		 * non-errors on error channel. Ignore those and treat
-+		 * them like data from stdout. (35 is length of that
-+		 * string).
-+		 */
-+		const char *tmsg = "Initialized empty Git repository in";
-+		unsigned char tmp[35];
-+		if (cbuffer_peek(user->u_red_err_buf, tmp, 35) >= 0 &&
-+			!strncmp(tmsg, (char*)tmp, 35)) {
-+			user->u_red_in_have_data = 1;
-+			cbuffer_clear(user->u_red_err_buf);
-+		}
-+	}
-+	return 1;
-+}
-+
-+/* Terminate the whole connection if needed EOFs have been seen. */
-+static int connection_eof_handler(struct user *user)
-+{
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate if red out is still open. */
-+	if (user->u_red_out_fd >= 0)
-+		return 0;
-+	/* Don't activate unless output EOF has been asserted. */
-+	if (!user->u_black_out_eof && !user->u_black_out_d_eof)
-+		return 0;
-+	/* Don't assert in TLS mode unless output buffer is empty. */
-+	if (user->u_tls_session && cbuffer_used(user->u_black_out_buf))
-+		return 0;
-+
-+	/* Both half-connections have ended. End the entiere connection. */
-+	cleanup_user(user, USER_CONNECTION_END, NULL);
-+	return 1;
-+}
-+
-+/*
-+ * Should operation take place given last operation failed practicular way?
-+ * Direction2 is 0 if last operation didn't fail, 1 if it failed due to
-+ * insufficient data to read, 2 if it failed due to insufficient space to
-+ * write.
-+ */
-+static int gnutls_blacks_activate2(struct user *user, int direction2)
-+{
-+	/*
-+	 * If not attempted yet, or last time it was successful, attempt
-+	 * immediately again.
-+	 */
-+	if (direction2 == 0 || direction2 == 3)
-+		return 1;
-+	/*
-+	 * If last time it failed due to insufficient read space, try
-+	 * again only if there is some data in read buffers now.
-+	 */
-+	if (direction2 == 1) {
-+		if (cbuffer_used(user->u_black_in_buf) != 0)
-+			return 1;
-+		else if (!user->u_black_in_eof)
-+			return 0;
-+		else if (user->u_tls_session && user->u_seen_input_data)
-+			cleanup_user(user, USER_TLS_ERROR, "Connection "
-+				"closed unexpectedly");
-+		else if (user->u_tls_session)
-+			cleanup_user(user, USER_LAYER4_ERROR, "Connection "
-+				"broke before any data was received");
-+		else
-+			return 0;
-+	}
-+	/*
-+	 * If last time it failed due to insufficient write space, try
-+	 * again only if there is some space in write buffers now.
-+	 */
-+	if (direction2 == 2)
-+		return (cbuffer_free(user->u_black_out_buf) != 0);
-+	return 0;
-+}
-+
-+/* Copy or decrypt data from black input to red output. */
-+static int black_to_red_handler(struct user *user)
-+{
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate if there's TLS but it isn't ready yet. */
-+	if (user->u_tls_session && !user->u_tls_active)
-+		return 0;
-+	/* Don't activate if there's no space in red out buffer. */
-+	if (!cbuffer_free(user->u_red_out_buf))
-+		return 0;
-+	/* Don't activate if TLS-level EOF has been received. */
-+	if (user->u_black_in_d_eof)
-+		return 0;
-+	/* Check that we don't fail like last time. */
-+	if (!gnutls_blacks_activate2(user, user->u_want_read))
-+		return 0;
-+
-+	if (!user->u_tls_session) {
-+		/*
-+		 * no-TLS case. Just compute how much data we can move and
-+		 * then just move it from black in buffer to red out buffer.
-+		 */
-+		size_t amount;
-+		amount = cbuffer_move_nolimit(user->u_red_out_buf,
-+			user->u_black_in_buf);
-+		if (amount > 0) {
-+			/* Ok, some data to move. Just move it. */
-+			user->u_want_read = 0;
-+			user->u_decoded_rx += amount;
-+			return 1;
-+		} else {
-+			/*
-+			 * No data to transfer. Mark operation failed due to
-+			 * insufficient data to read.
-+			 */
-+			user->u_want_read = 1;
++		if (*seq != 0x02) {
++			error("Malformed PEM: Expected INTEGER");
 +			return 0;
 +		}
-+	} else {
-+		unsigned char *ptr;
-+		size_t size;
-+		ssize_t r;
-+
-+		/*
-+		 * Compute the segment for writing data to. And if we do get
-+		 * such segment, receive data to it. The size == 0 case should
-+		 * not happen because we checked that there's space in red
-+		 * out buffer above.
-+		 */
-+		cbuffer_fill_w_segment(user->u_red_out_buf, &ptr, &size);
-+		r = gnutls_record_recv(user->u_tls_session, ptr, size);
-+		if (r > 0) {
-+			/* Received TLS data. */
-+			cbuffer_commit_w_segment(user->u_red_out_buf, r);
-+			user->u_decoded_rx += r;
-+			user->u_want_read = 0;
-+			return 1;
-+		} else if (r == 0) {
-+			/* Received TLS EOF. */
-+			user->u_black_in_d_eof = 1;
-+			user->u_want_read = 0;
-+			return 1;
-+		} else if (is_fatal_tls_error((int)r)) {
-+			/* Fatal TLS error. */
-+			return handle_tls_failure_code(user, (int)r, 0);
-+		} else if (r < 0) {
-+			/* Temporary read failure. */
-+			user->u_want_read = 1 + gnutls_record_get_direction(
-+				user->u_tls_session);
++		seq++;
++		seq_len--;
++		clen = decode_asn1_length_tag(&seq, &seq_len);
++		if (!seq)
++			return 0;
++		if (seq_len < clen) {
++			error("Malformed PEM: Truncated integer");
 +			return 0;
 +		}
-+	}
-+	/* Can't really come here. */
-+	return 0;
-+}
-+
-+/* Copy or encrypt data from red input to black output. */
-+static int red_to_black_handler(struct user *user)
-+{
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate if TLS is present but not active. */
-+	if (user->u_tls_session && !user->u_tls_active)
-+		return 0;
-+	/* Require data in red in buffer. */
-+	if (!cbuffer_used(user->u_red_in_buf))
-+		return 0;
-+	/* Don't fail like last time. */
-+	if (!gnutls_blacks_activate2(user, user->u_want_write))
-+		return 0;
-+
-+	if (!user->u_tls_session) {
-+		/*
-+		 * No-TLS case. Just find maximum amount of data to move and
-+		 * then move the data.
-+		 */
-+		size_t amount;
-+		amount = cbuffer_move_nolimit(user->u_black_out_buf,
-+			user->u_red_in_buf);
-+		if (amount > 0) {
-+			/* Ok, some data to move. Just move it. */
-+			user->u_want_write = 0;
-+			user->u_decoded_tx += amount;
-+			return 1;
-+		} else {
-+			/*
-+			 * No data to transfer. Mark operation failed due to
-+			 * insufficient space to write.
-+			 */
-+			user->u_want_write = 2;
-+			return 0;
-+		}
-+	} else {
-+		unsigned char *ptr;
-+		size_t size;
-+		ssize_t r = 0;
-+
-+		/*
-+		 * Compute the segment for reading data to. And if we do get
-+		 * such segment, send data from it. The size == 0 case should
-+		 * not happen because we checked that there's data in red
-+		 * in buffer above.
-+		 */
-+		cbuffer_fill_r_segment(user->u_red_in_buf, &ptr, &size);
-+		if (user->u_want_write == 0 || user->u_want_write == 3)
-+			/* Last was success, just send new record. */
-+			r = gnutls_record_send(user->u_tls_session, ptr,
-+				size);
-+		else
-+			/* Last time it failed, try to resend the record. */
-+			r = gnutls_record_send(user->u_tls_session, NULL, 0);
-+		if (r > 0) {
-+			/* Sent some TLS data. */
-+			cbuffer_commit_r_segment(user->u_red_in_buf, r);
-+			user->u_decoded_tx += r;
-+			user->u_want_write = 0;
-+			return 1;
-+		} else if (is_fatal_tls_error((int)r)) {
-+			/* Fatal TLS error. */
-+			return handle_tls_failure_code(user, (int)r, 0);
-+		} else if (r < 0) {
-+			/* Temporary send failure. */
-+			user->u_want_write = 1 + gnutls_record_get_direction(user->u_tls_session);
-+			return 0;
++		seq += clen;
++		seq_len -= clen;
++		if (component == 2 && k2size)
++			*k2size = (4 + clen);
++		if (component >= low) {
++			size += (4 + clen);
 +		}
 +	}
-+	/* Can't really come here. */
-+	return 0;
-+}
-+
-+static const char hexes[] = "0123456789abcdef";
-+
-+#define TMPBUFSIZE 256
-+
-+/* Copy or encrypt data from red error to black out. */
-+static int rederr_to_black_handler(struct user *user)
-+{
-+	unsigned char hdrbuf[8];
-+	unsigned char buffer[TMPBUFSIZE];
-+	size_t bufusage = 0;
-+	size_t pcktsize;
-+	unsigned char *segstart;
-+	size_t seglen;
-+	size_t maxread;
-+
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate if TLS is not yet ready. */
-+	if (user->u_tls_session && !user->u_tls_active)
-+		return 0;
-+	/* Don't activate if there's no data in red error. */
-+	if (!cbuffer_used(user->u_red_err_buf))
-+		return 0;
-+	/* Don't activate if red in hasn't been closed. */
-+	if (user->u_red_in_fd >= 0)
-+		return 0;
-+	/* Don't activate if red error can have more data. */
-+	if (user->u_red_err_fd >= 0 && cbuffer_free(user->u_red_err_buf))
-+		return 0;
-+	/* Don't fail like last write. */
-+	if (!gnutls_blacks_activate2(user, user->u_want_write))
-+		return 0;
-+
-+	/* Safety hatch. Truncate error if too long. */
-+	if (!cbuffer_free(user->u_red_err_buf) && user->u_red_err_fd >= 0) {
-+		force_close(user->u_red_err_fd);
-+		user->u_red_err_fd = -1;
-+	}
-+
-+	/* Fill the header. */
-+	pcktsize = 8 + cbuffer_used(user->u_red_err_buf);
-+	hdrbuf[0] = hexes[pcktsize / 4096 % 16];
-+	hdrbuf[1] = hexes[pcktsize / 256 % 16];
-+	hdrbuf[2] = hexes[pcktsize / 16 % 16];
-+	hdrbuf[3] = hexes[pcktsize % 16];
-+	hdrbuf[4] = 'E';
-+	hdrbuf[5] = 'R';
-+	hdrbuf[6] = 'R';
-+	hdrbuf[7] = ' ';
-+	/*
-+	 * If header hasn't been sent yet, copy the remainder of header to
-+	 * transfer buffer.
-+	 */
-+	if (user->u_red_err_hdr_sent < 8) {
-+		memcpy(buffer, hdrbuf + user->u_red_err_hdr_sent,
-+			8 - user->u_red_err_hdr_sent);
-+		bufusage = (8 - user->u_red_err_hdr_sent);
-+	}
-+	maxread = TMPBUFSIZE - bufusage;
-+
-+	/*
-+	 * Request read segment out of red error. There's always data in
-+	 * red error buffer by checks above. Then copy as much data from
-+	 * it as possible.
-+	 */
-+	cbuffer_fill_r_segment(user->u_red_err_buf, &segstart, &seglen);
-+	if (maxread >= seglen) {
-+		memcpy(buffer + bufusage, segstart, seglen);
-+		bufusage += seglen;
-+	} else {
-+		memcpy(buffer + bufusage, segstart, maxread);
-+		bufusage += maxread;
-+	}
-+
-+	/*
-+	 * Bufusage is always positive, since its either equal to seglen
-+	 * or maxread, and neither can be zero.
-+	 */
-+	if (!user->u_tls_session && !user->u_red_in_have_data) {
-+		/*
-+		 * Compute maximum amount of data that can be copied to
-+		 * send buffer (no TLS case).
-+		 */
-+		bufusage = cbuffer_write_max(user->u_black_out_buf, buffer,
-+			bufusage);
-+		if (bufusage > 0) {
-+			user->u_want_write = 0;
-+			user->u_decoded_tx += bufusage;
-+		} else {
-+			/* No space, mark it failed due to write. */
-+			user->u_want_write = 2;
-+			return 0;
-+		}
-+	} else if (!user->u_red_in_have_data) {
-+		ssize_t r;
-+
-+		if (user->u_want_write == 0 || user->u_want_write == 3)
-+			/* Last was success, just send new record. */
-+			r = gnutls_record_send(user->u_tls_session, buffer,
-+				bufusage);
-+		else
-+			/* Last time it failed, try to resend the record. */
-+			r = gnutls_record_send(user->u_tls_session, NULL, 0);
-+		if (r > 0) {
-+			/* Successfully sent data. Adjust bufusage. */
-+			bufusage = r;
-+			user->u_decoded_tx += bufusage;
-+			user->u_want_write = 0;
-+		} else if (is_fatal_tls_error((int)r)) {
-+			/* Fatal TLS error. */
-+			return handle_tls_failure_code(user, (int)r, 0);
-+		} else if (r < 0) {
-+			/* Temporary failure. Mark the failure. */
-+			user->u_want_write = 1 + gnutls_record_get_direction(
-+				user->u_tls_session);
-+			bufusage = 0;
-+			return 0;
-+		}
-+	}
-+
-+	/* Now bufusage is set to amount of bytes sent. ACK the data sent. */
-+	if ((size_t)user->u_red_err_hdr_sent + bufusage < 8) {
-+		/* Partially sent header. ACK the header sent. */
-+		user->u_red_err_hdr_sent += bufusage;
-+		bufusage = 0;
-+		return 1;
-+	} else {
-+		/*
-+		 * Completely sent the header. ACK rest of it and substract
-+		 * it from actual data sent.
-+		 */
-+		bufusage -= (8 - user->u_red_err_hdr_sent);
-+		user->u_red_err_hdr_sent = 8;
-+	}
-+	/* ACK the actual error data sent. */
-+	if (bufusage > 0)
-+		cbuffer_commit_r_segment(user->u_red_err_buf, bufusage);
-+
-+	return 1;
-+}
-+
-+/* Try to send delayed alert (No-TLS case). */
-+static int tls_alert_handler_no_tls(struct user *user)
-+{
-+	//Count it as immediates success.
-+	cleanup_user(user, USER_KILL, "Would send fatal alert");
-+	return 0;
-+}
-+
-+/* Try to send delayed alert. */
-+static int tls_alert_handler(struct user *user)
-+{
-+	int r;
-+
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't do this without delayed tls failure. */
-+	if (!user->u_delay_tls_failure)
-+		return 0;
-+	/* Handle no-TLS case. */
-+	if (!user->u_tls_session)
-+		return tls_alert_handler_no_tls(user);
-+	/* Don't fail like last time. */
-+	if (!gnutls_blacks_activate2(user, user->u_want_hand))
-+		return 0;
-+
-+	r = gnutls_alert_send(user->u_tls_session, GNUTLS_AL_FATAL,
-+		user->u_delay_alert);
-+	if (r == 0) {
-+		/* The user->u_delay_tls_failure may be 2 too. */
-+		if (user->u_delay_tls_failure == 1)
-+			delay_cleanup_user(user, USER_TLS_HAND_ERROR,
-+				"Fatal alert sent");
-+		else
-+			delay_cleanup_user(user, USER_TLS_ERROR,
-+				"Fatal alert sent");
-+		return 0;
-+	} else if (is_fatal_tls_error(r)) {
-+		const char *err = gnutls_strerror_name((int)r);
-+		delay_cleanup_user(user, USER_TLS_ERROR, err);
-+		return 1;
-+	} else if (r < 0) {
-+		/* Still needs more attempts to send. */
-+		user->u_want_hand = 1 + gnutls_record_get_direction(
-+			user->u_tls_session);
-+		return 0;
-+	}
-+	/* Can't really come here. */
-+	return 0;
-+}
-+
-+/* Try to handshake TLS connection. */
-+static int handshake_handler(struct user *user)
-+{
-+	int r;
-+
-+	/* Don't activate on already failed connections. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Don't activate if TLS is ready or no TLS. */
-+	if (user->u_tls_active || !user->u_tls_session)
-+		return 0;
-+	/* Don't handshake anoymore with delayed TLS failure. */
-+	if (user->u_delay_tls_failure)
-+		return 0;
-+	/* Don't fail like last time. */
-+	if (!gnutls_blacks_activate2(user, user->u_want_hand))
-+		return 0;
-+
-+	r = gnutls_handshake(user->u_tls_session);
-+	if (r == 0) {
-+		/* Handshake completed, TLS ready. */
-+		user->u_want_hand = 0;
-+		user->u_tls_active = 1;
-+		return 1;
-+	} else if (is_fatal_tls_error(r)) {
-+		/* Fatal TLS error. */
-+		return handle_tls_failure_code(user, (int)r, 1);
-+	} else if (r < 0) {
-+		/* Still needs more handshaking. */
-+		user->u_want_hand = 1 + gnutls_record_get_direction(
-+			user->u_tls_session);
-+		return 0;
-+	}
-+	/* Can't really come here. */
-+	return 0;
-+}
-+
-+/*
-+ * Compare two timevals. Returns -1 if first is first, 0 if same, 1 otherwise
-+ */
-+static int tv_compare(const struct timeval *tv1, const struct timeval *tv2)
-+{
-+	if (tv1->tv_sec == -1)
-+		return (tv2->tv_sec == -1) ? 0 : 1;
-+	if (tv2->tv_sec == -1)
-+		return -1;
-+	if (tv1->tv_sec > tv2->tv_sec)
-+		return 1;
-+	if (tv1->tv_sec < tv2->tv_sec)
-+		return -1;
-+	if (tv1->tv_usec > tv2->tv_usec)
-+		return 1;
-+	if (tv1->tv_usec < tv2->tv_usec)
-+		return -1;
-+	return 0;
-+}
-+
-+/* Handle timeouts on connection. */
-+static int timeout_handler(struct user *user)
-+{
-+	struct timeval t;
-+
-+	gettimeofday(&t, NULL);
-+
-+	/* Don't activate on already failed connection. */
-+	if (user->u_failure || user->u_delay_failure)
-+		return 0;
-+	/* Is it time to activate? */
-+	if (tv_compare(&user->u_deadline, &t) >= 0)
-+		return 0;
-+
-+	cleanup_user(user, USER_TIMEOUT, "Request timeout");
-+	return 0;
-+}
-+
-+/* GnuTLS push function. */
-+static ssize_t gnutls_push_data(gnutls_transport_ptr_t ptr, const void *data,
-+	size_t size)
-+{
-+	struct user *user = (struct user*)ptr;
-+
-+	/* Compute maximum transfer. */
-+	if (size > cbuffer_free(user->u_black_out_buf))
-+		size = cbuffer_free(user->u_black_out_buf);
-+
-+	/* If no data can be read, send EAGAIN. */
-+	if (size == 0) {
-+		errno = EAGAIN;
-+		return -1;
-+	}
-+
-+	cbuffer_write(user->u_black_out_buf, (unsigned char*)data, size);
 +	return size;
 +}
 +
-+/* GnuTLS pull function. */
-+static ssize_t gnutls_pull_data(gnutls_transport_ptr_t ptr, void *data,
-+	size_t size)
++unsigned char *handle_asn1_sequence(const unsigned char *seq, size_t seq_len,
++	size_t *keysize, int keytype)
 +{
-+	struct user *user = (struct user*)ptr;
++	int low;
++	int high;
++	size_t kslow;
++	size_t toffset = 0;
++	size_t foffset = 0;
++	int component = 0;
++	size_t offset = 0;
++	size_t k2size = 0;
++	unsigned char *ret = NULL;
 +
-+	/* Compute maximum transfer. */
-+	if (size > cbuffer_used(user->u_black_in_buf))
-+		size = cbuffer_used(user->u_black_in_buf);
++	if (keytype == 1) {
++		low = 1;
++		high = 4;
++		kslow = 11;
++	} else if (keytype == 2) {
++		low = 1;
++		high = 6;
++		kslow = 11;
++	} else {
++		error("Unknown PEM key type");
++		return NULL;
++	}
++	*keysize = kslow + asn1_integers_size(seq, seq_len, low, high,
++		&k2size);
++	if (*keysize <= kslow)
++		return NULL;
++	ret = xmalloc(*keysize);
 +
-+	/* If no data can be written, send EAGAIN. */
-+	if (size == 0) {
-+		errno = EAGAIN;
-+		return -1;
++	if (keytype == 1) {
++		ret[0] = 0;
++		ret[1] = 0;
++		ret[2] = 0;
++		ret[3] = 7;
++		memcpy(ret + 4, "ssh-rsa", 7);
++		offset = 11;
++	} else if (keytype == 2) {
++		ret[0] = 0;
++		ret[1] = 0;
++		ret[2] = 0;
++		ret[3] = 7;
++		memcpy(ret + 4, "ssh-dss", 7);
++		offset = 11;
 +	}
 +
-+	cbuffer_read(user->u_black_in_buf, (unsigned char*)data, size);
-+	return size;
-+
-+}
-+
-+void user_configure_tls(struct user *user, gnutls_session_t session)
-+{
-+	user->u_tls_session = session;
-+	user->u_want_hand = 0;
-+	user->u_tls_active = 0;
-+	/* Configure the TLS session transport level. */
-+	gnutls_transport_set_ptr(session, user);
-+	gnutls_transport_set_push_function(session, gnutls_push_data);
-+	gnutls_transport_set_pull_function(session, gnutls_pull_data);
-+	gnutls_transport_set_lowat(session, 0);
 +	/*
-+	 * For security reasons, clear the red output as that can no
-+	 * longer be trusted.
++	 * Hack warning: The e and n are in "wrong" order in PEM
++	 * RSA keys, so swap those.
 +	 */
-+	cbuffer_clear(user->u_red_out_buf);
++	for (component = 0; component < high; component++) {
++		size_t clen = 0;
++		seq++;
++		seq_len--;
++		clen = decode_asn1_length_tag(&seq, &seq_len);
++		if(component >= low) {
++			if (keytype == 1 && component == 1) {
++				toffset = offset;
++				foffset = offset + 4 + clen;
++				offset += k2size;
++			}
++			ret[offset + 0] = (unsigned char)(clen >> 24);
++			ret[offset + 1] = (unsigned char)(clen >> 16);
++			ret[offset + 2] = (unsigned char)(clen >> 8);
++			ret[offset + 3] = (unsigned char)(clen);
++			memcpy(ret + offset + 4, seq, clen);
++			offset += (4 + clen);
++			if (keytype == 1 && component == 1)
++				offset = toffset;
++			if (keytype == 1 && component == 2)
++				offset = foffset + k2size;
++		}
++		seq += clen;
++		seq_len -= clen;
++	}
++
++	return ret;
 +}
 +
-+void user_add_to_sets(struct user *user, int *bound, fd_set *rfds,
-+	fd_set *wfds, struct timeval *deadline)
++
++#define RSA_START_MARKER "-----BEGIN RSA PRIVATE KEY-----"
++#define DSA_START_MARKER "-----BEGIN DSA PRIVATE KEY-----"
++#define START_MARKER_LEN 31
++#define RSA_END_MARKER "-----END RSA PRIVATE KEY-----"
++#define DSA_END_MARKER "-----END DSA PRIVATE KEY-----"
++
++unsigned char *pem_decode(const unsigned char *file, size_t filesize,
++	const char *keyname, size_t *keysize)
 +{
-+	/*
-+	 * Execute all service handlers in case they alter what
-+	 * files should be waited on.
-+	 */
-+	user_service_nofd(user);
++	int type = 0;
++	const unsigned char *start;
++	const unsigned char *end;
++	unsigned char *binary;
++	unsigned char *ret;
++	const unsigned char *binary_c;
++	size_t binary_c_size;
++	size_t binary_size;
++	size_t length;
++	char *dek_info;
 +
-+	/* Pretend that errored connections have immediate deadline. */
-+	if (user->u_failure)
-+		deadline->tv_sec = 0;
-+	/* Adjust deadline. */
-+	if (tv_compare(deadline, &user->u_deadline) > 0)
-+		*deadline = user->u_deadline;
-+
-+	if (user->u_red_out_fd >= 0 && cbuffer_used(user->u_red_out_buf)) {
-+		/* Red out is writable. */
-+		FD_SET(user->u_red_out_fd, wfds);
-+		if (*bound <= user->u_red_out_fd)
-+			*bound = user->u_red_out_fd + 1;
++	while(filesize > 0 && (*file == '\n' || *file == '\r')) {
++		filesize--;
++		file++;
 +	}
-+	if (user->u_black_fd >= 0 && !user->u_black_in_eof &&
-+		/* Black in is readable. */
-+		cbuffer_free(user->u_black_in_buf)) {
-+		FD_SET(user->u_black_fd, rfds);
-+		if (*bound <= user->u_black_fd)
-+			*bound = user->u_black_fd + 1;
-+	}
-+	/* Intentionally bias red to black towards writing to black. */
-+	if (user->u_black_fd >= 0 && !user->u_black_out_eof &&
-+		/* Black out is writable. */
-+		cbuffer_used(user->u_black_out_buf)) {
-+		FD_SET(user->u_black_fd, wfds);
-+		if (*bound <= user->u_black_fd)
-+			*bound = user->u_black_fd + 1;
-+	} else if (user->u_red_in_fd >= 0 &&
-+		cbuffer_free(user->u_red_in_buf)) {
-+		/* Red in is readable. */
-+		FD_SET(user->u_red_in_fd, rfds);
-+		if (*bound <= user->u_red_in_fd)
-+			*bound = user->u_red_in_fd + 1;
-+	}
-+	if (user->u_red_err_fd >= 0 && cbuffer_free(user->u_red_err_buf)) {
-+		/* Red err is readable. */
-+		FD_SET(user->u_red_err_fd, rfds);
-+		if (*bound <= user->u_red_err_fd)
-+			*bound = user->u_red_err_fd + 1;
-+	}
-+}
 +
-+void user_service(struct user *user, fd_set *rfds, fd_set *wfds)
-+{
-+	int newr = 1;
-+
-+	/* Do this until no service handler makes any progress. */
-+	while (newr) {
-+		newr = 0;
-+		newr = newr | black_in_handler(user, rfds);
-+		newr = newr | black_out_handler(user, wfds);
-+		newr = newr | red_in_handler(user, rfds);
-+		newr = newr | red_out_handler(user, wfds);
-+		newr = newr | red_err_handler(user, rfds);
-+		newr = newr | black_out_eof_handler(user);
-+		newr = newr | red_out_eof_handler(user);
-+		newr = newr | connection_eof_handler(user);
-+		newr = newr | black_to_red_handler(user);
-+		newr = newr | red_to_black_handler(user);
-+		newr = newr | rederr_to_black_handler(user);
-+		newr = newr | timeout_handler(user);
-+		newr = newr | handshake_handler(user);
-+		newr = newr | tls_alert_handler(user);
-+		newr = newr | process_delay_failure(user);
-+	}
-+}
-+
-+void user_service_nofd(struct user *user)
-+{
-+	fd_set rfds;
-+	fd_set wfds;
-+
-+	/* Clear the fd sets, we don't do I/O here. */
-+	FD_ZERO(&rfds);
-+	FD_ZERO(&wfds);
-+	user_service(user, &rfds, &wfds);
-+}
-+
-+gnutls_session_t user_get_tls(struct user *user)
-+{
-+	if (user->u_tls_session && user->u_tls_active)
-+		return user->u_tls_session;
-+	else
++	if (filesize < 64)
 +		return NULL;
-+}
 +
-+void user_set_red_io(struct user *user, int red_in, int red_out, int red_err)
-+{
-+	user->u_red_in_fd = red_in;
-+	user->u_red_out_fd = red_out;
-+	user->u_red_err_fd = red_err;
-+	if (red_in >= 0)
-+		fcntl(red_in, F_SETFL, fcntl(red_in, F_GETFL) | O_NONBLOCK);
-+	if (red_out >= 0)
-+		fcntl(red_out, F_SETFL, fcntl(red_out, F_GETFL) | O_NONBLOCK);
-+	if (red_err >= 0)
-+		fcntl(red_err, F_SETFL, fcntl(red_err, F_GETFL) | O_NONBLOCK);
-+}
-+
-+void user_clear_red_io(struct user *user)
-+{
-+	if (user->u_red_out_fd >= 0)
-+		force_close(user->u_red_out_fd);
-+	user->u_red_out_fd = -1;
-+}
-+
-+struct cbuffer *user_get_red_in(struct user *user)
-+{
-+	if (user->u_red_in_fd >= 0)
++	if (!strncmp((const char*)file, RSA_START_MARKER "\r",
++		START_MARKER_LEN + 1)) {
++		start = file + START_MARKER_LEN + 1;
++		type = 1;
++	} else if (!strncmp((const char*)file,
++		DSA_START_MARKER "\r", START_MARKER_LEN + 1)) {
++		start = file + START_MARKER_LEN + 1;
++		type = 2;
++	} else if (!strncmp((const char*)file,
++		RSA_START_MARKER "\n", START_MARKER_LEN + 1)) {
++		start = file + START_MARKER_LEN + 1;
++		type = 1;
++	} else if (!strncmp((const char*)file,
++		DSA_START_MARKER "\n", START_MARKER_LEN + 1)) {
++		start = file + START_MARKER_LEN + 1;
++		type = 2;
++	} else {
 +		return NULL;
-+	else
-+		return user->u_red_in_buf;
-+}
++	}
 +
-+struct cbuffer *user_get_red_out(struct user *user)
-+{
-+	if (user->u_red_out_fd >= 0)
++	if(type == 1) {
++		end = strstr_n(file, (const unsigned char*)
++			"\r" RSA_END_MARKER, filesize);
++		if (end)
++			goto ok;
++		end = strstr_n(file, (const unsigned char*)
++			"\n" RSA_END_MARKER, filesize);
++		if (end)
++			goto ok;
++		error("Malformed PEM: No end marker (type 1)");
 +		return NULL;
-+	else
-+		return user->u_red_out_buf;
-+}
-+
-+int user_get_failure(struct user *user)
-+{
-+	return user->u_failure;
-+}
-+
-+const char *user_get_error(struct user *user)
-+{
-+	return user->u_errmsg;
-+}
-+
-+void user_send_red_in_eof(struct user *user)
-+{
-+	user->u_red_assume_more = 0;
-+}
-+
-+struct cbuffer *user_get_red_err(struct user *user)
-+{
-+	if (user->u_red_err_fd >= 0 || user->u_red_in_have_data)
++	} else if(type == 2) {
++		end = strstr_n(file, (const unsigned char*)
++			"\r" DSA_END_MARKER, filesize);
++		if (end)
++			goto ok;
++		end = strstr_n(file, (const unsigned char*)
++			"\n" DSA_END_MARKER, filesize);
++		if (end)
++			goto ok;
++		error("Malformed PEM: No end marker (type 2)");
 +		return NULL;
-+	else
-+		return user->u_red_err_buf;
++	} else {
++		error("Unknown PEM key type");
++		return NULL;
++	}
++ok:
++	start = find_base64_start(start, end, &dek_info);
++	binary = decode_base64_chunk(start, end - start, &binary_size);
++	if (!binary) {
++		free(dek_info);
++		return NULL;
++	}
++	if (dek_info) {
++		unsigned char *decrypted;
++		size_t decrypted_len;
++		decrypted = decrypt_key(binary, binary_size, dek_info,
++			keyname, &decrypted_len);
++		free(dek_info);
++		free(binary);
++		if (!decrypted)
++			return NULL;
++		binary = decrypted;
++		binary_size = decrypted_len;
++	}
++	if (binary_size < 1)
++		goto invalid_seq;
++	if (binary[0] != 0x30) {
++		error("Malformed PEM: First element must be SEQUENCE");
++		goto error_decoded;
++	}
++	binary_c = binary + 1;
++	binary_c_size = binary_size -1;
++	length = decode_asn1_length_tag(&binary_c, &binary_c_size);
++	if (!binary_c) {
++		error("Malformed PEM: Bad length for SEQUENCE");
++		goto error_decoded;
++	}
++	if (length < binary_c_size) {
++		error("Malformed PEM: Garbage after end");
++		goto error_decoded;
++	} else if (length > binary_c_size) {
++		error("Malformed PEM: SEQUENCE overflows file");
++		goto error_decoded;
++	}
++	ret = handle_asn1_sequence(binary_c, binary_c_size, keysize, type);
++	free(binary);
++	return ret;
++invalid_seq:
++	error("Malformed PEM: No valid sequence");
++error_decoded:
++	free(binary);
++	return NULL;
 +}
+diff --git a/git-over-tls/pem.h b/git-over-tls/pem.h
+new file mode 100644
+index 0000000..df202e5
+--- /dev/null
++++ b/git-over-tls/pem.h
+@@ -0,0 +1,16 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _pem__h__included__
++#define _pem__h__included__
 +
-+void user_clear_deadline(struct user *user)
-+{
-+	user->u_deadline.tv_sec = -1;
-+}
++#include <stdlib.h>
 +
-+size_t round_up(size_t base, size_t divide)
-+{
-+	return base + (divide - base % divide) % divide;
-+}
++unsigned char *pem_decode(const unsigned char *file, size_t filesize,
++	const char* keyname, size_t *keysize);
 +
-+struct user *user_create(int black_fd, unsigned deadline_secs)
-+{
-+	struct timeval t;
-+	size_t offset[5];
-+#ifdef USE_TRAP_PAGING
-+	size_t trap[6];
 +#endif
+diff --git a/git-over-tls/pem_decrypt.c b/git-over-tls/pem_decrypt.c
+new file mode 100644
+index 0000000..46effcf
+--- /dev/null
++++ b/git-over-tls/pem_decrypt.c
+@@ -0,0 +1,203 @@
++#include "pem_decrypt.h"
++#include "srp_askpass.h"
++#include <string.h>
++#include <gcrypt.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++#define BUFFERSIZE 16384
++#define IVSIZE 128
++
++unsigned char hexdecode(char c)
++{
++	switch(c) {
++	case '0':	return 0;
++	case '1':	return 1;
++	case '2':	return 2;
++	case '3':	return 3;
++	case '4':	return 4;
++	case '5':	return 5;
++	case '6':	return 6;
++	case '7':	return 7;
++	case '8':	return 8;
++	case '9':	return 9;
++	case 'a':	return 10;
++	case 'b':	return 11;
++	case 'c':	return 12;
++	case 'd':	return 13;
++	case 'e':	return 14;
++	case 'f':	return 15;
++	case 'A':	return 10;
++	case 'B':	return 11;
++	case 'C':	return 12;
++	case 'D':	return 13;
++	case 'E':	return 14;
++	case 'F':	return 15;
++	default:	die("Bad hexadecimal character");
++	}
++	return 0;
++}
++
++unsigned char hexpairdecode(const char* hexpair)
++{
++	return hexdecode(hexpair[0]) * 16 + hexdecode(hexpair[1]);
++}
++
++void decode_iv(unsigned char *iv, const char *dek_tail, size_t correct_len)
++{
++	int i;
++	if (strchr(dek_tail, ' ') != dek_tail + 2 * correct_len &&
++		strlen(dek_tail) != 2 * correct_len)
++		die("IV field in key encryption wrong length");
++
++	for (i = 0; i < correct_len; i++)
++		iv[i] = hexpairdecode(dek_tail + 2 * i);
++}
++
++#define MD5LEN 16
++#define SALTLEN 8
++
++void derive_key(unsigned char *key, size_t keylen, const unsigned char *iv,
++	const char *passphrase)
++{
++	size_t passphrase_len;
++	int derived;
++	unsigned char* md5 = NULL;
++	unsigned char md5copy[MD5LEN];
++	gcry_md_hd_t handle;
 +	int i;
 +
-+	for (i = 0; i < 5; i++)
-+		offset[i] = i * BUFFERSIZE;
++	if (gcry_md_open(&handle, GCRY_MD_MD5, 0))
++		die("Can't gcry_md_open(..., GCRY_MD_MD5, ...).");
 +
-+	fcntl(black_fd, F_SETFL, fcntl(black_fd, F_GETFL) | O_NONBLOCK);
++	passphrase_len = strlen(passphrase);
++	for (derived = 0; derived < keylen;) {
++		gcry_md_reset(handle);
 +
-+	/* Compute the deadline field value. */
-+	gettimeofday(&t, NULL);
-+	t.tv_sec += deadline_secs;
++		if (md5)
++			gcry_md_write(handle, md5copy, MD5LEN);
++		gcry_md_write(handle, passphrase, passphrase_len);
++		gcry_md_write(handle, iv, SALTLEN);
 +
-+	/* How much to allocate for buffers? */
-+	int r = 0;
-+	size_t allocsize = 4 * BUFFERSIZE + ERR_BUFFERSIZE;
-+
-+	/* Allocate the primary structure. */
-+	struct user *user = (struct user*)malloc(sizeof(struct user));
-+	if (!user)
-+		return NULL;
-+
-+	/* Allocate memory for buffer backing buffer. */
-+#ifdef USE_TRAP_PAGING
-+	allocsize = 4 * round_up(BUFFERSIZE, getpagesize()) +
-+		round_up(ERR_BUFFERSIZE, getpagesize()) +
-+		6 * getpagesize();
-+
-+	for (i = 0; i < 5; i++) {
-+		offset[i] = i * round_up(BUFFERSIZE, getpagesize()) + (i + 1) * getpagesize();
-+		trap[i] = offset[i] - getpagesize();
-+	}
-+	trap[5] = allocsize - getpagesize();
-+
-+	user->u_buf_backing_size = allocsize;
-+	user->u_buf_backing = (unsigned char*)mmap(NULL,
-+		user->u_buf_backing_size,
-+		PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-+	if (user->u_buf_backing == MAP_FAILED)
-+		r = -1;
-+	for (i = 0; i < 6; i++)
-+		if (mprotect(user->u_buf_backing + trap[i], getpagesize(),
-+			PROT_NONE) < 0) {
-+			munmap(user->u_buf_backing, user->u_buf_backing_size);
-+			r = -1;
-+			break;
++		md5 = gcry_md_read(handle, 0);
++		memcpy(md5copy, md5, MD5LEN);
++		for (i = 0; i < 16 && derived < keylen; i++) {
++			key[derived++] = md5[i];
 +		}
-+#else
-+	user->u_buf_backing = (unsigned char*)malloc(allocsize);
-+	user->u_buf_backing_size = 0;
-+	if (!user->u_buf_backing)
-+		r = -1;
-+#endif
-+	if (r < 0) {
-+		free(user);
-+		return NULL;
++	}
++	gcry_md_close(handle);
++}
++
++unsigned char *decrypt_key(const unsigned char *cipher, size_t cipher_size,
++	const char *dek_info, const char *keyname, size_t *decrypted_len)
++{
++	char *passphrase;
++	static char *stored_passphrase = NULL;
++	static char lastkeyname[BUFFERSIZE];
++	unsigned char iv[IVSIZE];
++	unsigned char key[IVSIZE];
++	size_t ivlen;
++	size_t keylen;
++	int algo;
++	int mode;
++	size_t i;
++	int cipher_inited = 0;
++	gcry_cipher_hd_t cipherh;
++	unsigned char *ret = NULL;
++
++	if (strlen(keyname) + 1 > BUFFERSIZE)
++		die("Keyname insanely long");
++
++	if (stored_passphrase && !strcmp(keyname, lastkeyname)) {
++		passphrase = stored_passphrase;
++		goto reuse_passphrase;
 +	}
 +
-+	user->u_black_in_eof = 0;
-+	user->u_black_out_eof = 0;
-+	user->u_black_in_d_eof = 0;
-+	user->u_black_out_d_eof = 0;
-+	user->u_want_read = 3;
-+	user->u_want_write = 3;
-+	user->u_want_hand = 3;
-+	user->u_red_assume_more = 1;
-+	user->u_red_in_have_data = 0;
-+	user->u_red_err_hdr_sent = 0;
-+	user->u_tls_active = 0;
-+	user->u_black_fd = black_fd;
-+	user->u_red_in_fd = -1;
-+	user->u_red_out_fd = -1;
-+	user->u_red_err_fd = -1;
-+	user->u_black_in_buf = cbuffer_create(user->u_buf_backing +
-+		offset[0], BUFFERSIZE);
-+	user->u_black_out_buf = cbuffer_create(user->u_buf_backing +
-+		offset[1], BUFFERSIZE);
-+	user->u_red_in_buf = cbuffer_create(user->u_buf_backing +
-+		offset[2], BUFFERSIZE);
-+	user->u_red_out_buf = cbuffer_create(user->u_buf_backing +
-+		offset[3], BUFFERSIZE);
-+	user->u_red_err_buf = cbuffer_create(user->u_buf_backing +
-+		offset[4], ERR_BUFFERSIZE);
-+	if (!user->u_black_in_buf || !user->u_black_out_buf ||
-+		!user->u_red_in_buf || !user->u_red_out_buf ||
-+		!user->u_red_err_buf) {
-+		/* Failed to allocate memory. */
-+		cbuffer_destroy(user->u_black_in_buf);
-+		cbuffer_destroy(user->u_black_out_buf);
-+		cbuffer_destroy(user->u_red_in_buf);
-+		cbuffer_destroy(user->u_red_out_buf);
-+		cbuffer_destroy(user->u_red_err_buf);
-+#ifdef USE_TRAP_PAGING
-+		munmap(user->u_buf_backing, user->u_buf_backing_size);
-+#else
-+		free(user->u_buf_backing);
-+#endif
-+		free(user);
-+		return NULL;
-+	}
-+	user->u_deadline = t;
-+	user->u_failure = USER_STILL_ACTIVE;
-+	user->u_delay_failure = USER_STILL_ACTIVE;
-+	user->u_errmsg = NULL;
-+	user->u_tls_session = NULL;
-+	user->u_delay_tls_failure = 0;
-+	user->u_raw_tx = 0;
-+	user->u_raw_rx = 0;
-+	user->u_decoded_tx = 0;
-+	user->u_decoded_rx = 0;
-+	return user;
-+}
-+
-+
-+
-+void user_release(struct user *user)
-+{
-+	if (!user->u_failure)
-+		cleanup_user(user, USER_KILL, "User session killed");
-+
-+	cbuffer_destroy(user->u_black_in_buf);
-+	cbuffer_destroy(user->u_black_out_buf);
-+	cbuffer_destroy(user->u_red_in_buf);
-+	cbuffer_destroy(user->u_red_out_buf);
-+	cbuffer_destroy(user->u_red_err_buf);
-+	free(user->u_errmsg);
-+
-+#ifdef USE_TRAP_PAGING
-+	munmap(user->u_buf_backing, user->u_buf_backing_size);
-+#else
-+	free(user->u_buf_backing);
-+#endif
-+	free(user);
-+}
-+
-+int user_tls_configured(struct user *user)
-+{
-+	return (user->u_tls_session != NULL);
-+}
-+
-+const char *user_explain_failure(int code)
-+{
-+	switch(code) {
-+	case USER_STILL_ACTIVE:
-+		return "Still active";
-+	case USER_CONNECTION_END:
-+		return "Connection closed";
-+	case USER_LAYER4_ERROR:
-+		return "Transport error";
-+	case USER_TLS_ERROR:
-+		return "TLS error";
-+	case USER_TLS_HAND_ERROR:
-+		return "TLS handshake error";
-+	case USER_KILL:
-+		return "User killed";
-+	case USER_RED_FAILURE:
-+		return "Subprocess failure";
-+	case USER_TIMEOUT:
-+		return "Timeout";
-+	default:
-+		return "Unknown error";
-+	}
-+}
-+
-+struct cbuffer *user_get_red_in_force(struct user *user)
-+{
-+	return user->u_red_in_buf;
-+}
-+
-+struct cbuffer *user_get_red_out_force(struct user *user)
-+{
-+	return user->u_red_out_buf;
-+}
-+
-+struct cbuffer *user_get_red_err_force(struct user *user)
-+{
-+	return user->u_red_err_buf;
-+}
-+
-+void user_tls_send_alert(struct user *user, gnutls_alert_description_t alert)
-+{
-+	char error_buffer[8192];
-+
-+	if (user->u_delay_tls_failure)
-+		return;
-+
-+	user->u_delay_tls_failure = 1;
-+	user->u_delay_alert = alert;
-+	sprintf(error_buffer, "TLS alert forced: %s",
-+		gnutls_alert_get_name(alert));
-+	user->u_errmsg = strdup(error_buffer);
-+}
-+
-+int user_red_out_eofd(struct user *user)
-+{
-+	if (user->u_red_out_fd >= 0)
-+		return 0;
-+	if (user->u_tls_session && !user->u_black_in_d_eof)
-+		return 0;
-+	if (!user->u_tls_session && cbuffer_used(user->u_black_in_buf))
-+		return 0;
-+	if (!user->u_tls_session && !user->u_black_in_eof)
-+		return 0;
-+	return 1;
-+}
-+
-+#define NAME_SPACE 60
-+
-+void print_name(char *buffer, const char *name)
-+{
-+	unsigned i;
-+	if(strlen(name) >= NAME_SPACE) {
-+		strncpy(buffer, name, NAME_SPACE - 4);
-+		for(i = NAME_SPACE - 4; i < NAME_SPACE - 1; i++)
-+			buffer[NAME_SPACE - i] = '.';
++	passphrase = get_ssh_password(keyname);
++	stored_passphrase = passphrase;
++reuse_passphrase:
++	if (!prefixcmp(dek_info, "DES-EDE3-CBC,")) {
++		/* 3DES-CBC */
++		ivlen = 8;
++		keylen = 24;
++		algo = GCRY_CIPHER_3DES;
++		mode = GCRY_CIPHER_MODE_CBC;
++	} else if (!prefixcmp(dek_info, "DES-CBC,")) {
++		/* DES-CBC (INSECURE!!!) */
++		ivlen = 8;
++		keylen = 8;
++		algo = GCRY_CIPHER_DES;
++		mode = GCRY_CIPHER_MODE_CBC;
++	} else if (!prefixcmp(dek_info, "AES-128-CBC,")) {
++		/* AES-128-CBC */
++		ivlen = 16;
++		keylen = 16;
++		algo = GCRY_CIPHER_AES128;
++		mode = GCRY_CIPHER_MODE_CBC;
++	} else if (!prefixcmp(dek_info, "AES-192-CBC,")) {
++		/* AES-192-CBC */
++		ivlen = 16;
++		keylen = 24;
++		algo = GCRY_CIPHER_AES192;
++		mode = GCRY_CIPHER_MODE_CBC;
++	} else if (!prefixcmp(dek_info, "AES-256-CBC,")) {
++		/* AES-256-CBC */
++		ivlen = 16;
++		keylen = 32;
++		algo = GCRY_CIPHER_AES256;
++		mode = GCRY_CIPHER_MODE_CBC;
 +	} else {
-+		strcpy(buffer, name);
-+		for(i = strlen(name); i < NAME_SPACE - 1; i++)
-+			buffer[i] = ' ';
++		error("Key encryption type not supported (%s)", dek_info);
++		goto error_exit;
 +	}
-+	buffer[NAME_SPACE - 1] = ' ';
-+}
++	decode_iv(iv, strchr(dek_info, ',') + 1, ivlen);
++	derive_key(key, keylen, iv, passphrase);
 +
-+void print_boolean(FILE *filp, const char *name, unsigned value)
-+{
-+	char buffer[NAME_SPACE + 10];
-+	print_name(buffer, name);
-+	if (value)
-+		strcpy(buffer + NAME_SPACE, "Set");
-+	else
-+		strcpy(buffer + NAME_SPACE, "Clear");
-+	fprintf(filp, "%s\n", buffer);
-+}
-+
-+void print_status(FILE *filp, const char *name, unsigned value)
-+{
-+	char buffer[NAME_SPACE + 40];
-+	print_name(buffer, name);
-+	if (value == 0)
-+		strcpy(buffer + NAME_SPACE, "Success");
-+	else if (value == 1)
-+		strcpy(buffer + NAME_SPACE, "Insufficent data");
-+	else if (value == 2)
-+		strcpy(buffer + NAME_SPACE, "Insufficent space");
-+	else if (value == 3)
-+		strcpy(buffer + NAME_SPACE, "Not attempted");
-+	else
-+		sprintf(buffer + NAME_SPACE, "Unknown code %u", value);
-+	fprintf(filp, "%s\n", buffer);
-+}
-+
-+void print_fd(FILE *filp, const char *name, int fd)
-+{
-+	char buffer[NAME_SPACE + 40];
-+	print_name(buffer, name);
-+	if (fd >= 0)
-+		sprintf(buffer + NAME_SPACE, "%i", fd);
-+	else
-+		strcpy(buffer + NAME_SPACE, "Not connected");
-+	fprintf(filp, "%s\n", buffer);
-+}
-+
-+void print_delayed_failure(FILE *filp, const char *name, unsigned dftype,
-+	unsigned dfailure)
-+{
-+	char buffer[NAME_SPACE + 40];
-+	print_name(buffer, name);
-+	if (dftype == 0)
-+		strcpy(buffer + NAME_SPACE, "<None>");
-+	else if (dftype == 1)
-+		sprintf(buffer + NAME_SPACE, "Code %u while handshaking", dfailure);
-+	else if (dftype == 2)
-+		sprintf(buffer + NAME_SPACE, "Code %u while transferring", dfailure);
-+	else
-+		sprintf(buffer + NAME_SPACE, "Code %u while in unknown %u", dfailure, dftype);
-+	fprintf(filp, "%s\n", buffer);
-+}
-+
-+void print_format(FILE *filp, const char *name, const char *format, ...)
-+{
-+	va_list args;
-+	char buffer[NAME_SPACE + 120];
-+	print_name(buffer, name);
-+	va_start(args, format);
-+	vsprintf(buffer + NAME_SPACE, format, args);
-+	fprintf(filp, "%s\n", buffer);
-+}
-+
-+void print_since(FILE *filp, const char *name, struct timeval event,
-+	struct timeval now)
-+{
-+	char buffer[NAME_SPACE + 40];
-+	uint64_t etime;
-+	uint64_t ntime;
-+	uint64_t tdelta;
-+	print_name(buffer, name);
-+	etime = (uint64_t)event.tv_sec * 1000000 + event.tv_usec;
-+	ntime = (uint64_t)now.tv_sec * 1000000 + now.tv_usec;
-+	if (etime < ntime)
-+		tdelta = ntime - etime;
-+	else
-+		tdelta = 0;
-+	if (tdelta < 1000000) {
-+		sprintf(buffer + NAME_SPACE, "<1s ago");
-+	} else {
-+		sprintf(buffer + NAME_SPACE, "%llu.%03us ago",
-+			(unsigned long long)(tdelta / 1000000),
-+			(unsigned)(tdelta % 1000000 / 1000));
++	if (gcry_cipher_open(&cipherh, algo, mode, 0)) {
++		error("gcry_cipher_open() failed (DEK=%s; unsupported algorithm?)", dek_info);
++		goto error_exit;
 +	}
-+	fprintf(filp, "%s\n", buffer);
-+}
++	cipher_inited = 1;
 +
-+void user_debug(struct user *user, FILE* filp)
-+{
-+	struct timeval tv;
-+	if (!user) {
-+		fprintf(filp, "\n\n\nNo transport present\n\n\n\n");
-+		return;
++	if (gcry_cipher_setkey(cipherh, key, keylen)) {
++		error("gcry_cipher_setkey() failed (DEK=%s)", dek_info);
++		goto error_exit;
 +	}
-+	gettimeofday(&tv, NULL);
 +
-+	fprintf(filp, "\n\n\nTransport level debugging output (version 3):\n");
-+	print_boolean(filp, "Socket raw EOF received flag:", user->u_black_in_eof);
-+	print_boolean(filp, "Socket raw EOF sent flag:", user->u_black_out_eof);
-+	print_boolean(filp, "Encrypted EOF received flag:", user->u_black_in_d_eof);
-+	print_boolean(filp, "Encrypted EOF sent flag:", user->u_black_out_d_eof);
-+	print_boolean(filp, "Assume more local inptt flag:", user->u_red_assume_more);
-+	print_boolean(filp, "TLS handshaked flag:", user->u_tls_active);
-+	print_boolean(filp, "Received local input flag:", user->u_red_in_have_data);
-+	print_status(filp, "Last read status:", user->u_want_read);
-+	print_status(filp, "Last write status:", user->u_want_write);
-+	print_status(filp, "Last handshake status:", user->u_want_hand);
-+	print_format(filp, "Error header bytes sent:", "%u", user->u_red_err_hdr_sent);
-+	print_delayed_failure(filp, "Delayed TLS failure:", user->u_delay_tls_failure,
-+		user->u_delay_alert);
-+	print_boolean(filp, "Seen input data flag:", user->u_seen_input_data);
-+	print_fd(filp, "Socket fd:", user->u_black_fd);
-+	print_fd(filp, "Local input fd:", user->u_red_in_fd);
-+	print_fd(filp, "Local output fd:", user->u_red_out_fd);
-+	print_fd(filp, "Local error fd:", user->u_red_err_fd);
-+	if (user->u_deadline.tv_sec < 0)
-+		print_format(filp, "Deadline:", "None set");
-+	else
-+		print_format(filp, "Deadline:", "%lu.%06lu\n",
-+			(unsigned long)user->u_deadline.tv_sec,
-+			(unsigned long)user->u_deadline.tv_usec);
-+	print_format(filp, "Failure code:", "%i", user->u_failure);
-+	if (user->u_errmsg)
-+		print_format(filp, "Detailed error:", "%s", user->u_errmsg);
-+	else
-+		print_format(filp, "Detailed error:", "<Not set>");
-+	print_format(filp, "Delayed failure code:", "%i", user->u_delay_failure);
-+	if (user->u_tls_session)
-+		print_format(filp, "TLS context:", "Present");
-+	else
-+		print_format(filp, "TLS context:", "Absent");
-+	print_format(filp, "Socket input buffer:", "Used: %lu, free: %lu",
-+		(unsigned long)cbuffer_used(user->u_black_in_buf),
-+		(unsigned long)cbuffer_free(user->u_black_in_buf));
-+	print_format(filp, "Socket output buffer:", "Used: %lu, free: %lu",
-+		(unsigned long)cbuffer_used(user->u_black_out_buf),
-+		(unsigned long)cbuffer_free(user->u_black_out_buf));
-+	print_format(filp, "Local input buffer:", "Used: %lu, free: %lu",
-+		(unsigned long)cbuffer_used(user->u_red_in_buf),
-+		(unsigned long)cbuffer_free(user->u_red_in_buf));
-+	print_format(filp, "Local output buffer:", "Used: %lu, free: %lu",
-+		(unsigned long)cbuffer_used(user->u_red_out_buf),
-+		(unsigned long)cbuffer_free(user->u_red_out_buf));
-+	print_format(filp, "Local error buffer:", "Used: %lu, free: %lu",
-+		(unsigned long)cbuffer_used(user->u_red_err_buf),
-+		(unsigned long)cbuffer_free(user->u_red_err_buf));
-+	print_format(filp, "TX bytes:", "Raw: %llu, Decoded: %llu",
-+		user->u_raw_tx, user->u_decoded_tx);
-+	print_format(filp, "RX bytes:", "Raw: %llu, Decoded: %llu",
-+		user->u_raw_rx, user->u_decoded_rx);
-+	print_since(filp, "Last TX:", user->u_last_tx, tv);
-+	print_since(filp, "Last RX:", user->u_last_rx, tv);
-+	fprintf(filp,"\n\n\n");
++	if (gcry_cipher_setiv(cipherh, iv, ivlen)) {
++		error("gcry_cipher_setiv() failed (DEK=%s)", dek_info);
++		goto error_exit;
++	}
++
++	ret = xmalloc(cipher_size);
++	if (gcry_cipher_decrypt(cipherh, ret, cipher_size, cipher,
++		cipher_size)) {
++		error("gcry_cipher_decrypt() failed (DEK=%s, wrong passphrase?)", dek_info);
++		goto error_exit;
++	}
++
++	*decrypted_len = cipher_size - ret[cipher_size - 1];
++	for(i = *decrypted_len; i < cipher_size; i++) {
++		if(ret[i] != ret[cipher_size - 1]) {
++			error("Incorrect passphrase or key corrupt");
++			goto error_exit;
++		}
++	}
++
++	strcpy(lastkeyname, keyname);
++	stored_passphrase = passphrase;
++	gcry_cipher_close(cipherh);
++	return ret;
++error_exit:
++	if (cipher_inited)
++		gcry_cipher_close(cipherh);
++	if (stored_passphrase)
++		free(stored_passphrase);
++	if (ret)
++		free(ret);
++	stored_passphrase = NULL;
++	return NULL;
 +}
-diff --git a/git-over-tls/user.h b/git-over-tls/user.h
+diff --git a/git-over-tls/pem_decrypt.h b/git-over-tls/pem_decrypt.h
 new file mode 100644
-index 0000000..ac0d1fa
+index 0000000..ab132bf
 --- /dev/null
-+++ b/git-over-tls/user.h
-@@ -0,0 +1,367 @@
++++ b/git-over-tls/pem_decrypt.h
+@@ -0,0 +1,9 @@
++#ifndef _pem_decrypt__h__included__
++#define _pem_decrypt__h__included__
++
++#include <stdlib.h>
++
++unsigned char *decrypt_key(const unsigned char *cipher, size_t cipher_size,
++	const char *dek_info, const char *keyname, size_t *decrypted_len);
++
++#endif
+diff --git a/git-over-tls/ssh.c b/git-over-tls/ssh.c
+new file mode 100644
+index 0000000..1d7426f
+--- /dev/null
++++ b/git-over-tls/ssh.c
+@@ -0,0 +1,635 @@
 +/*
-+ * Copyright (C) Ilari Liusvaara 2009
++ * Copyright (C) Ilari Liusvaara 2010
 + *
 + * This code is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License version 2 as
 + * published by the Free Software Foundation.
 + */
-+#ifndef _user__h__included__
-+#define _user__h__included__
-+
-+#include <gnutls/gnutls.h>
-+#include "cbuffer.h"
-+#include <stdint.h>
-+#include <stdio.h>
-+#include <sys/time.h>
-+
-+#ifdef __cplusplus
-+extern "C" {
++#include "ssh.h"
++#include "ssh_localkey.h"
++#include "home.h"
++#include "base64.h"
++#include <stdlib.h>
++#include <string.h>
++#include <errno.h>
++#include <sys/un.h>
++#include <sys/socket.h>
++#include <sys/types.h>
++#include <unistd.h>
++#include <gcrypt.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
 +#endif
++#include <stdlib.h>
 +
-+/*
-+ * Terminoloyy:
-+ *	black:
-+ *		Side of user session connected to socket. Transports
-+ *		unencrypted or TLS data between peers.
-+ *	red:
-+ *		Side of user session connected to server loop or to
-+ *		helper program.
-+ *	red input:
-+ *		Input buffer unencrypted data is read from. May be connected
-+ *		to file descriptor. In that case that file descriptor is
-+ *		read for data.
-+ *	red output:
-+ *		Output buffer decrypted data is written to. May be connected
-+ *		to file descriptor. In that cse that file descriptor is
-+ *		written with the data.
-+ *	red error:
-+ *		Input buffer error input is read from. May be connecte to
-+ *		file descriptor, which is read for input data. If red input
-+ *		file descriptor has data succesfully read, the red error buffer
-+ *		is cleared and any further error input is redirected to bit
-+ *		bucket. If red input closes with red error having data, then
-+ *		that data is sent as ERR packet when red error has associated
-+ *		file descriptor closed.
-+ *	red_in:
-+ *		File descriptor associated with red input.
-+ *	red_out:
-+ *		File descriptor associated with red output.
-+ *	red_err:
-+ *		File descriptor associated with red error.
-+ *	deadline:
-+ *		Time to disconnect (some) client on or perform some other
-+ *		service.
-+ */
++#define SSH2_AGENTC_SIGN_REQUEST 13
++#define SSH_AGENT_FAILURE 5
++#define SSH_AGENT_SUCCESS 6
++#define SSH2_AGENT_SIGN_RESPONSE 14
 +
-+/* Main session structure. Opaque type. */
-+struct user;
++#define MAX_REPLY_SIZE 1048576
 +
-+/* Failure codes. */
-+/* User still active. */
-+#define USER_STILL_ACTIVE	0
-+/* Connection normal end. */
-+#define USER_CONNECTION_END	1
-+/* Transport error. */
-+#define USER_LAYER4_ERROR	-1
-+/* TLS error while not handshaking. */
-+#define USER_TLS_ERROR		-2
-+/* TLS handshake error. */
-+#define USER_TLS_HAND_ERROR	-3
-+/* User killed. */
-+#define USER_KILL		-4
-+/* Red file descriptor I/O operation failure. */
-+#define USER_RED_FAILURE	-5
-+/* User timed out. */
-+#define USER_TIMEOUT		-6
-+
-+/*
-+ * Create new user session.
-+ *
-+ * Input:
-+ *	black_fd	Black fd. Must be socket.
-+ *	timeout_secs	Initial timeout in seconds.
-+ *
-+ * Output:
-+ *	Return value	Newly created session, or NULL on out of
-+ *			memory.
-+ */
-+struct user *user_create(int black_fd, unsigned timeout_secs);
-+
-+/*
-+ * Configure session to use TLS. The TLS session must be preconfigured
-+ * (credentials set, etc), but not handshaked.
-+ *
-+ * Input:
-+ *	user		The user session to manipulate.
-+ *	session		TLS session to assign.
-+ */
-+void user_configure_tls(struct user *user, gnutls_session_t session);
-+
-+/*
-+ * Add current user session file descriptors that are ready to read or
-+ * write to file descriptor sets for read or write. Also update dead-
-+ * line if needed.
-+ *
-+ * Input:
-+ *	user		The user session to handle.
-+ *	bound		Current file descriptor bound. 0 if there are
-+ *			no file descriptors in either set.
-+ *	rfds		Read file descriptor set.
-+ *	wfds		Write file descriptor set.
-+ *	deadline	Current deadline for select.
-+ *
-+ * Output:
-+ *	bound		Updated file descriptor bound.
-+ *	rfds		Updated read file descriptor set.
-+ *	wfds		Updated write file descriptor set.
-+ *	deadline	Updated deadline for select.
-+ */
-+void user_add_to_sets(struct user *user, int *bound, fd_set *rfds,
-+	fd_set *wfds, struct timeval *deadline);
-+
-+/*
-+ * Service this user.
-+ *
-+ * Input:
-+ *	user		The user session to handle.
-+ *	rfds		Ready to read file descriptors.
-+ *	wfds		Ready to write file descriptors.
-+ */
-+void user_service(struct user *user, fd_set *rfds, fd_set *wfds);
-+
-+/*
-+ * Service this user without doing any I/O
-+ *
-+ * Input:
-+ *	user		The user session to handle.
-+ */
-+void user_service_nofd(struct user *user);
-+
-+/*
-+ * Get failure class.
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	0 if connection is active, 1 if end
-+ *			of connection, negative code if connection
-+ *			ended with error. See USER_* defintions.
-+ */
-+int user_get_failure(struct user *user);
-+
-+/*
-+ * Get explanation of failure code.
-+ *
-+ * Input:
-+ *	code		The failure code.
-+ *
-+ * Output:
-+ *	Return value	String explaining the code. Do not
-+ *			free this.
-+ */
-+const char *user_explain_failure(int code);
-+
-+/*
-+ * Get more detailed error message to explain the failure.
-+ *
-+ * Input:
-+ *	user		The user session.
-+ *
-+ * Output:
-+ *	Return value	Error message or NULL if there is
-+ *			no more detailed error message. Do
-+ *			not free this.
-+ *
-+ * Notes:
-+ *	- Error message can be NULL or not independently of
-+ *	  main failure status.
-+ */
-+const char *user_get_error(struct user *user);
-+
-+/*
-+ * Has TLS been configured?
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	Nonzero if configured, zero if not.
-+ */
-+/* Returns 1 if TLS has been configured, 0 otherwise. */
-+int user_tls_configured(struct user *user);
-+
-+/*
-+ * Return TLS session associated with user session.
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	If TLS is configured and has handshaked, the TLS
-+ *			session. Otherwise NULL.
-+ */
-+gnutls_session_t user_get_tls(struct user *user);
-+
-+/*
-+ * Free user structure. If user is still active, disconnect user hard.
-+ *
-+ * Input:
-+ *	user		The user session to release.
-+ */
-+void user_release(struct user *user);
-+
-+/*
-+ * Set red I/O file descriptors.
-+ *
-+ * Input:
-+ *	user		The user session to manipulate.
-+ *	red_in		Red input file descriptor, -1 for none.
-+ *	red_out		Red output file descritpor, -1 for none.
-+ *	red_err		Red error file descriptor, -1 for none.
-+ *
-+ * Notes:
-+ *	- red_in and red_err must be read ends if present.
-+ *	- red_out must be write end if present.
-+ */
-+void user_set_red_io(struct user *user, int red_in, int red_out, int red_err);
-+
-+/*
-+ * Clear red I/O by closing red output and marking no red output file
-+ * descriptor. This may be neeeded, since red out can't close without
-+ * input to transfer.
-+ *
-+ * Input:
-+ *	user		The user session to manipulate.
-+ */
-+void user_clear_red_io(struct user *user);
-+
-+/*
-+ * Get red input buffer.
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	If red_in is set to none, the buffer, otherwise
-+ *			NULL.
-+ */
-+struct cbuffer *user_get_red_in(struct user *user);
-+
-+/*
-+ * Get red output buffer.
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	If red_out is set to none, the buffer, otherwise
-+ *			NULL.
-+ */
-+struct cbuffer *user_get_red_out(struct user *user);
-+
-+/*
-+ * Get red error buffer.
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	If red_err is set to none and no data has been
-+ *			received through red_in, the buffer, otherwise
-+ *			NULL.
-+ */
-+struct cbuffer *user_get_red_err(struct user *user);
-+
-+/*
-+ * Clear deadline (don't generate timeout anymore).
-+ *
-+ * Input:
-+ *	user		The user session to manipulate.
-+ */
-+void user_clear_deadline(struct user *user);
-+
-+/*
-+ * Send EOF to red input.
-+ *
-+ * Input:
-+ *	user		The user session to manipulate.
-+ *
-+ * Notes:
-+ *	- Only works if red input has no file descriptor associated.
-+ *	- EOF is automatically sent if red_in encounters EOF.
-+ */
-+void user_send_red_in_eof(struct user *user);
-+
-+/*
-+ * Force get red input buffer (even if it shouldn't be available).
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	Red input buffer.
-+ */
-+struct cbuffer *user_get_red_in_force(struct user *user);
-+
-+/*
-+ * Force get red output buffer (even if it shouldn't be available).
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	Red output buffer.
-+ */
-+struct cbuffer *user_get_red_out_force(struct user *user);
-+
-+/*
-+ * Force get red error buffer (even if it shouldn't be available).
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	Red error buffer.
-+ */
-+struct cbuffer *user_get_red_err_force(struct user *user);
-+
-+/*
-+ * Send fatal TLS alert.
-+ *
-+ * Input:
-+ *	user		The user session to manipulate.
-+ *	alert		The alert to send.
-+ *
-+ * Notes:
-+ *	- Ignored if no TLS has been configured.
-+ */
-+void user_tls_send_alert(struct user *user, gnutls_alert_description_t alert);
-+
-+/*
-+ * Has red output been EOF'd?
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *
-+ * Output:
-+ *	Return value	Nonzero if red out can receive no more data and
-+ *			not connected to file descriptor, otherwise zero
-+ *			(more data possible).
-+ */
-+int user_red_out_eofd(struct user *user);
-+
-+/*
-+ * Print debugging output.
-+ *
-+ * Input:
-+ *	user		The user session to interrogate.
-+ *	filp		Where to write the output.
-+ */
-+void user_debug(struct user *user, FILE *filp);
-+
-+#ifdef __cplusplus
++/* Decode uint32. */
++static unsigned long decode_uint32(const unsigned char *ptr)
++{
++	unsigned long v = 0;
++	v |= ((unsigned long)ptr[0] << 24);
++	v |= ((unsigned long)ptr[1] << 16);
++	v |= ((unsigned long)ptr[2] << 8);
++	v |= ((unsigned long)ptr[3]);
++	return v;
 +}
++
++/*
++ * Extract actual signature from ssh-agent reply. The return value should be
++ * freed. The reply has the component lengths present.
++ */
++static unsigned char *extract_actual_key(const unsigned char *keyreply,
++	size_t keyreply_len, const char *expected_type, size_t *key_len)
++{
++	unsigned long rlen;
++
++	if (keyreply_len < 1) {
++		error("Malformed reply from SSH agent: No packet type present");
++		return NULL;
++	}
++	if (keyreply[0] == SSH_AGENT_FAILURE) {
++		error("SSH agent failed to sign the challenge");
++		return NULL;
++	}
++	if (keyreply[0] != SSH2_AGENT_SIGN_RESPONSE) {
++		error("SSH agent is confused: Returned packet type %u when type %u was expected",
++			keyreply[0], SSH2_AGENT_SIGN_RESPONSE);
++		return NULL;
++	}
++	if (keyreply_len < 5) {
++		error("Malformed signature reply from SSH agent: Signature length incomplete");
++		return NULL;
++	}
++	rlen = decode_uint32(keyreply + 1);
++
++	if (keyreply_len < 5 + rlen) {
++		error("Malformed signature reply from SSH agent: Signature incomplete");
++		return NULL;
++	}
++	/* Strip packet header. */
++	keyreply += 5;
++	keyreply_len = rlen;
++
++	if (keyreply_len < 4) {
++		error("Malformed signature reply from SSH agent: Keytype header incomplete");
++		return NULL;
++	}
++	rlen = decode_uint32(keyreply);
++	if (keyreply_len < 4 + rlen) {
++		error("Malformed signature reply from SSH agent: Keytype incomplete");
++		return NULL;
++	}
++	if (rlen != strlen(expected_type) || memcmp(keyreply + 4,
++		expected_type, rlen)) {
++		error("SSH agent returned signature of wrong type: Expected '%s', got '%.*s'",
++			expected_type, (int)rlen, keyreply + 4);
++		return NULL;
++	}
++	/* Strip key type. */
++	keyreply += 4 + rlen;
++	keyreply_len -= 4 + rlen;
++
++	if (keyreply_len < 4) {
++		error("Malformed signature reply from SSH agent: Signature blob length incomplete");
++		return NULL;
++	}
++	rlen = decode_uint32(keyreply);
++	if (keyreply_len < 4 + rlen) {
++		error("Malformed signature reply from SSH agent: Signature blob incomplete");
++		return NULL;
++	}
++
++	/* Extract the signature blob. */
++	keyreply += 4;
++	keyreply_len = rlen;
++
++	if (!strcmp(expected_type, "ssh-rsa")) {
++		unsigned char *ret;
++
++		ret = xmalloc(keyreply_len + 5);
++		if (keyreply[0] > 128) {
++			/* Zero-pad to avoid negative value. */
++			encode_uint32(ret, keyreply_len + 1);
++			ret[4] = 0;
++			memcpy(ret + 5, keyreply, keyreply_len);
++			*key_len = 5 + keyreply_len;
++		} else {
++			encode_uint32(ret, keyreply_len);
++			memcpy(ret + 4, keyreply, keyreply_len);
++			*key_len = 4 + keyreply_len;
++		}
++		return ret;
++	} else if (!strcmp(expected_type, "ssh-dss")) {
++		unsigned char *ret;
++		unsigned offset = 0;
++
++		ret = xmalloc(keyreply_len + 10);
++		if (keyreply_len % 2) {
++			error("Malformed DSA signature, length is odd.");
++			free(ret);
++			return NULL;
++		}
++
++		/* Encode r. */
++		if (keyreply[0] > 128) {
++			/* Zero-pad to avoid negative value. */
++			encode_uint32(ret, keyreply_len / 2 + 1);
++			ret[offset + 4] = 0;
++			offset += 5;
++		} else {
++			encode_uint32(ret, keyreply_len / 2);
++			offset += 4;
++		}
++		memcpy(ret + offset, keyreply, keyreply_len / 2);
++		offset += keyreply_len / 2;
++
++		/* Encode s. */
++		if (keyreply[keyreply_len / 2] > 128) {
++			/* Zero-pad to avoid negative value. */
++			encode_uint32(ret + offset, keyreply_len / 2 + 1);
++			ret[offset + 4] = 0;
++			offset += 5;
++		} else {
++			encode_uint32(ret + offset, keyreply_len / 2);
++			offset += 4;
++		}
++		memcpy(ret + offset, keyreply + keyreply_len / 2,
++			keyreply_len / 2);
++		offset += keyreply_len / 2;
++
++		*key_len = offset;
++		return ret;
++	} else {
++		error("Unknown signature type '%s'", expected_type);
++		return NULL;
++	}
++
++	return NULL;
++}
++
++
++/* Extract SecSH public key. */
++static unsigned char *extract_secsh_pubkey(const unsigned char *file,
++	size_t file_len, size_t *key_len)
++{
++	const unsigned char *file2;
++	size_t file_len2;
++
++	/* Skip to begin line. */
++	if (*file == '\r' || *file == '\n') {
++		/* Skip the empty lines. */
++		file = next_line(file, &file_len);
++		if (!file) {
++			error("Malformed SecSH public key (no header)");
++			return NULL;
++		}
++	}
++	file = next_line(file, &file_len);
++	if (!file) {
++		error("Malformed SecSH public key (no header)");
++		return NULL;
++	}
++
++	file = base64_blob_start(file, &file_len);
++	file2 = file;
++	file_len2 = file_len;
++
++	if (file_len2 == 29 && !memcmp(file2,
++		"---- END SSH2 PUBLIC KEY ----", 29)) {
++		error("Malformed SecSH public key (no encoded blob)");
++		return NULL;
++	}
++	if (!memcmp(file2, "---- END SSH2 PUBLIC KEY ----\r", 30)) {
++		error("Malformed SecSH public key (no encoded blob)");
++		return NULL;
++	}
++	if (!memcmp(file2, "---- END SSH2 PUBLIC KEY ----\n", 30)) {
++		error("Malformed SecSH public key (no encoded blob)");
++		return NULL;
++	}
++	while(1) {
++		file2 = next_line(file2, &file_len2);
++		if (!file2) {
++			error("Malformed SecSH public key (no trailer)");
++			return NULL;
++		}
++		if (file_len2 == 29 && !memcmp(file2,
++			"---- END SSH2 PUBLIC KEY ----", 29)) {
++			file_len = file2 - file;
++			break;
++		}
++		if (!memcmp(file2, "---- END SSH2 PUBLIC KEY ----\r", 30)) {
++			file_len = file2 - file;
++			break;
++		}
++		if (!memcmp(file, "---- END SSH2 PUBLIC KEY ----\n", 30)) {
++			file_len = file2 - file;
++			break;
++		}
++	}
++	return decode_base64_chunk(file, file_len, key_len);
++}
++
++/* Is SecSH format key? */
++static int is_secsh_pubkey(const unsigned char *file, size_t file_len)
++{
++	if (file_len < 32)
++		return 0;
++	if (!memcmp(file, "---- BEGIN SSH2 PUBLIC KEY ----\r", 32))
++		return 1;
++	if (!memcmp(file, "---- BEGIN SSH2 PUBLIC KEY ----\n", 32))
++		return 1;
++	file = next_line(file, &file_len);
++	if (file_len < 32)
++		return 0;
++	if (!memcmp(file, "---- BEGIN SSH2 PUBLIC KEY ----\r", 32))
++		return 1;
++	if (!memcmp(file, "---- BEGIN SSH2 PUBLIC KEY ----\n", 32))
++		return 1;
++	return 0;
++}
++
++/* Extract OpenSSH public key. */
++static unsigned char *extract_openssh_pubkey(const unsigned char *file,
++	size_t file_len, size_t *key_len)
++{
++	const unsigned char *base;
++	const unsigned char *sep2;
++	size_t blob_size;
++	base = (const unsigned char*)strchr((const char*)file, ' ');
++	if (!base) {
++		error("Malformed OpenSSH pubkey file");
++		return NULL;
++	}
++	base++;
++
++	sep2 = (const unsigned char*)strchr((const char*)base, ' ');
++	if (!sep2)
++		blob_size = strlen((const char*)base);
++	else
++		blob_size = sep2 - base;
++
++	return decode_base64_chunk(base, blob_size, key_len);
++}
++
++/* Is OpenSSH format key? */
++static int is_openssh_pubkey(const unsigned char *file, size_t file_len)
++{
++	if (file_len < 8)
++		return 0;
++	if (!memcmp(file, "ssh-rsa ", 8))
++		return 1;
++	if (!memcmp(file, "ssh-dss ", 8))
++		return 1;
++	return 0;
++}
++
++/*
++ * Extract actual key blob from encoded key. The return value should be
++ * freed. The reply has the component lengths present.
++ */
++unsigned char *extract_key_from_file(const unsigned char *file,
++	size_t file_len, size_t *key_len)
++{
++	if (is_openssh_pubkey(file, file_len))
++		return extract_openssh_pubkey(file, file_len, key_len);
++	if (is_secsh_pubkey(file, file_len))
++		return extract_secsh_pubkey(file, file_len, key_len);
++	error("Unknown public key file format");
++	return NULL;
++}
++
++void dump_blob(const char *name, const unsigned char *blob, size_t bloblen)
++{
++
++	size_t i;
++	fprintf(stderr, "------- START %s (%u bytes) ------\n", name, (unsigned)bloblen);
++	for(i = 0; i < bloblen; i++) {
++		fprintf(stderr, "%02X ", blob[i]);
++		if (i % 16 == 15)
++			fprintf(stderr, "\n");
++	}
++	if (i % 16)
++		fprintf(stderr, "\n");
++	fprintf(stderr, "-------- END %s -------\n", name);
++
++}
++
++int write_to_agent(int fd, const unsigned char *ptr, size_t size)
++{
++	while (size > 0) {
++		ssize_t r;
++		r = write(fd, ptr, size);
++		if (r > 0) {
++			ptr += r;
++			size -= r;
++		} else if (r == 0) {
++			error("Connection to ssh-agent unexpectedly lost");
++			return -1;
++		}
++		else if (errno == EINTR || errno == EAGAIN)
++			continue;
++		else {
++			error("Error writing to ssh-agent: %s",
++				strerror(errno));
++			return -1;
++		}
++	}
++	return 0;
++}
++
++int read_in_agent(int fd, unsigned char *ptr, size_t size)
++{
++	while (size > 0) {
++		ssize_t r;
++		r = read(fd, ptr, size);
++		if (r > 0) {
++			ptr += r;
++			size -= r;
++		} else if (r == 0) {
++			error("Connection to ssh-agent unexpectedly lost");
++			return -1;
++		}
++		else if (errno == EINTR || errno == EAGAIN)
++			continue;
++		else {
++			error("Error reading from ssh-agent: %s",
++				strerror(errno));
++			return -1;
++		}
++	}
++	return 0;
++}
++
++int write_packet_to_agent(int fd, const unsigned char *payload, size_t len)
++{
++	unsigned char tmp[4];
++	encode_uint32(tmp, len);
++	if (write_to_agent(fd, tmp, 4) < 0)
++		return -1;
++	if (write_to_agent(fd, payload, len) < 0)
++		return -1;
++	return 0;
++}
++
++unsigned char *read_packet_from_agent(int fd, size_t *len)
++{
++	unsigned char *ret;
++	unsigned char tmp[4];
++	if (read_in_agent(fd, tmp, 4) < 0)
++		return NULL;
++	*len = decode_uint32(tmp);
++	if (*len > MAX_REPLY_SIZE) {
++		error("Reply from SSH agent too large (size %zu, maximum allowed %zu)",
++			*len, (size_t)MAX_REPLY_SIZE);
++		return NULL;
++	}
++	ret = xmalloc(*len);
++	if (read_in_agent(fd, ret, *len) < 0) {
++		free(ret);
++		return NULL;
++	}
++	return ret;
++}
++
++static unsigned char *agent_do_io_cycle(int fd, const unsigned char *payload,
++	size_t payload_len, size_t *reply_len)
++{
++	if (write_packet_to_agent(fd, payload, payload_len) < 0)
++		return NULL;
++	return read_packet_from_agent(fd, reply_len);
++}
++
++int ssh_agent_sock = -1;
++
++int init_ssh_agent()
++{
++	const char *agentpath;
++	struct sockaddr_un addr;
++
++	if (ssh_agent_sock >= 0)
++		return 0;
++	if (ssh_agent_sock < -1)
++		return -1;
++
++	agentpath = getenv("SSH_AUTH_SOCK");
++	if (!agentpath) {
++		ssh_agent_sock = -2;
++		return -1;
++	}
++
++	addr.sun_family = AF_UNIX;
++	strcpy(addr.sun_path, agentpath);
++
++	ssh_agent_sock = socket(AF_UNIX, SOCK_STREAM, 0);
++	if (ssh_agent_sock < 0) {
++		error("Can't create socket: %s",
++			strerror(errno));
++		ssh_agent_sock = -2;
++		return -1;
++	}
++
++	if (connect(ssh_agent_sock, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
++		error("Can't connect to ssh-agent(%s): %s", agentpath,
++		strerror(errno));
++		close(ssh_agent_sock);
++		ssh_agent_sock = -2;
++		return -1;
++	}
++	return 0;
++}
++
++unsigned char *sign_using_ssh_agent(const char *keyname,
++	const unsigned char *kblob, size_t kblob_size,
++	const unsigned char *challenge, size_t challenge_size,
++	size_t *signature_length, const char *type)
++{
++	unsigned char *request;
++	unsigned char *reply;
++	size_t reply_length;
++	size_t request_length;
++	unsigned char *signblocks = NULL;
++
++	/* 43 = 1 (type) + 8 (2 lengths) + 4 (flags) */
++	request = xmalloc(13 + kblob_size + challenge_size);
++	request_length = 13 + kblob_size + challenge_size;
++
++	request[0] = SSH2_AGENTC_SIGN_REQUEST;
++	encode_uint32(request + 1, kblob_size);
++	memcpy(request + 5, kblob, kblob_size);
++	encode_uint32(request + 5 + kblob_size, challenge_size);
++	memcpy(request + 9 + kblob_size, challenge, challenge_size);
++	encode_uint32(request + 9 + kblob_size + challenge_size, 0);
++
++	if (init_ssh_agent() < 0)
++		goto out_request;
++
++	reply = agent_do_io_cycle(ssh_agent_sock, request, request_length,
++		&reply_length);
++	if (!reply)
++		goto out_request;
++
++	signblocks = extract_actual_key(reply, reply_length, type,
++		signature_length);
++	/* extract_actual_key can fail, but we don't print any error for that. */
++
++	free(reply);
++out_request:
++	free(request);
++	return signblocks;
++}
++
++static const char *check_blob(const unsigned char* blob, size_t blob_size)
++{
++	size_t offset = 0;
++	unsigned round = 0;
++	unsigned rounds = 1;
++	const char *type = NULL;
++
++	for (round = 0; round < rounds; round++) {
++		unsigned long len;
++		if (offset + 4 < offset || blob_size < offset + 4) {
++			error("Component length header incomplete (component=%u/%u, blob_size=%zu, offset=%zu",
++				round + 1, rounds, blob_size, offset);
++			return NULL;
++		}
++		len = decode_uint32(blob + offset);
++		if (offset + len + 4 < offset + 4 || blob_size < offset + len + 4) {
++			error("Component incomplete (component=%u/%u, blob_size=%zu, offset=%zu, len=%lu)",
++				round + 1, rounds, blob_size, offset, len);
++			return NULL;
++		}
++		if (round == 0 && len == 7 && !memcmp(blob + offset + 4,
++			"ssh-rsa", 7)) {
++			rounds = 3;
++			type = "ssh-rsa";
++		} else if (round == 0 && len == 7 && !memcmp(blob + offset + 4,
++			"ssh-dss", 7)) {
++			rounds = 5;
++			type = "ssh-dss";
++		} else if (round == 0) {
++			error("Read key has unknown key type (neither ssh-rsa nor ssh-dss)");
++			return NULL;
++		}
++		offset += len + 4;
++	}
++	if (offset != blob_size) {
++		error("Garbage after end of key");
++		return NULL;
++	}
++	return type;
++}
++
++#define MAXPATH 4096
++#define MAXKEY 65536
++#define DATABLOCK 32
++#define HASHALGO GCRY_MD_SHA256
++#define HASHLEN 32
++
++void do_ssh_preauth(const char *ssh_user)
++{
++	send_ssh_authentication(NULL, ssh_user);
++}
++
++void send_ssh_authentication(struct user *dispatcher, const char *ssh_user)
++{
++	unsigned char *x = NULL;
++	size_t i;
++	FILE* filp;
++	char *path;
++	char pathtemplate[MAXPATH];
++	unsigned char key[MAXKEY];
++	size_t keysize;
++	unsigned char block[DATABLOCK] = {0};
++
++	unsigned char *signature = NULL;
++	size_t signature_length;
++	const char *type;
++
++	if (strlen(ssh_user) > MAXPATH - 32)
++		die("Key name too long");
++	sprintf(pathtemplate, "~/.ssh/%s.pub", ssh_user);
++	path = expand_path(pathtemplate);
++
++	if (!x) {
++		/* Read the pubkey file. */
++		filp = fopen(path, "r");
++		if (!filp) {
++			error("Can't open '%s'", path);
++			goto out_readfile;
++		}
++		keysize = fread(key, 1, MAXKEY, filp);
++		if (ferror(filp)) {
++			error("Can't read '%s'", path);
++			goto out_readfile;
++		}
++		if (!feof(filp)) {
++			error("Keyfile '%s' too large", path);
++			goto out_readfile;
++		}
++		fclose(filp);
++
++		x = extract_key_from_file(key, keysize, &i);
++	}
++out_readfile:
++	if (!x)
++		die("Can't read any public key named '%s'",
++			ssh_user);
++
++	type = check_blob(x, i);
++	if (!type)
++		die("Malformed public key for '%s'", ssh_user);
++
++	if (dispatcher) {
++		int s;
++		gnutls_session_t session;
++		unsigned char hash[HASHLEN];
++		const gnutls_datum_t *cert;
++		unsigned int lsize;
++		session = user_get_tls(dispatcher);
++		if (!session)
++			die("SSH auth requires TLS");
++		cert = gnutls_certificate_get_peers(session, &lsize);
++		if (!cert)
++			die("Unable to get server certificate (server didn't send one?)");
++
++		gcry_md_hash_buffer(HASHALGO, hash, cert->data, cert->size);
++		s = gnutls_prf(session, 14, "ssh-key-verify", 0, HASHLEN,
++			(const char*)hash, DATABLOCK, (char*)block);
++		if (s < 0)
++			die("Can't compute challenge: %s",
++				gnutls_strerror(s));
++	}
++	if (!signature)
++		signature = sign_using_ssh_agent(ssh_user,
++			x, i, block, DATABLOCK, &signature_length,
++			type);
++	if (!signature)
++		signature = sign_using_local_key(ssh_user,
++			x, i, block, DATABLOCK, &signature_length,
++			type);
++	if (!signature)
++		die("Can't sign using key '%s'", ssh_user);
++
++	if (dispatcher) {
++		struct cbuffer* in;
++		char tmp[5];
++		in = user_get_red_in(dispatcher);
++		sprintf(tmp, "%04x", (unsigned)(8 + i + signature_length));
++		cbuffer_write(in, (const unsigned char*)tmp, 4);
++		cbuffer_write(in, (const unsigned char*)"ssh ", 4);
++		cbuffer_write(in, x, i);
++		cbuffer_write(in, signature, signature_length);
++	}
++
++	free(signature);
++	free(x);
++}
+diff --git a/git-over-tls/ssh.h b/git-over-tls/ssh.h
+new file mode 100644
+index 0000000..3ee5daf
+--- /dev/null
++++ b/git-over-tls/ssh.h
+@@ -0,0 +1,18 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _ssh__h__included__
++#define _ssh__h__included__
++
++#include "user.h"
++
++void do_ssh_preauth(const char *ssh_user);
++void send_ssh_authentication(struct user *dispatcher, const char *ssh_user);
++unsigned char *extract_key_from_file(const unsigned char *file,
++	size_t file_len, size_t *key_len);
++
 +#endif
+diff --git a/git-over-tls/ssh_localkey.c b/git-over-tls/ssh_localkey.c
+new file mode 100644
+index 0000000..f27ee9b
+--- /dev/null
++++ b/git-over-tls/ssh_localkey.c
+@@ -0,0 +1,435 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#include <stdint.h>
++#include <stdlib.h>
++#include <string.h>
++#include "pem.h"
++#include "base64.h"
++#include "home.h"
++#include <gcrypt.h>
++#ifdef USE_COMPAT_H
++#include "compat.h"
++#else
++#include "git-compat-util.h"
++#endif
++
++static int validate_key(const unsigned char *key, size_t keysize,
++	size_t *offsets, size_t *lengths, int components)
++{
++	size_t offset = 0;
++	int c;
++
++	for(c = 0; c < components; c++) {
++		size_t len = 0;
++		if (offset + 4 < offset || offset + 4 > keysize)
++			return -1;
++		offsets[c] = offset + 4;
++		len |= ((size_t)key[offset] << 24);
++		len |= ((size_t)key[offset + 1] << 16);
++		len |= ((size_t)key[offset + 2] << 8);
++		len |= ((size_t)key[offset + 3]);
++		lengths[c] = len;
++		if (offset + 4 + len < offset + 4 ||
++			offset + 4 + len > keysize)
++			return -1;
++		offset += (4 + len);
++	}
++	if (offset != keysize)
++		return -1;
++	return 0;
++}
++
++typedef void* voidptr;
++
++static unsigned char *sign_rsa(const unsigned char *key, size_t keysize,
++	const unsigned char *challenge, size_t challenge_size,
++	size_t *signature_size)
++{
++	unsigned char *ret = NULL;
++	size_t offsets[4];
++	size_t lengths[4];
++	gcry_mpi_t rsa_e;
++	gcry_mpi_t rsa_n;
++	gcry_mpi_t rsa_d;
++	gcry_error_t err;
++	gcry_sexp_t _key;
++	gcry_sexp_t tosign;
++	gcry_sexp_t signature;
++	gcry_sexp_t sval;
++	gcry_sexp_t rsas_s;
++	const unsigned char *rsa_s;
++	size_t rsa_s_len;
++	int hashalgo = GCRY_MD_SHA256;
++	const char *algo = "sha256";
++	int hashlen = 32;
++	unsigned char hashbuffer[128];
++	voidptr params[3];
++	if (validate_key(key, keysize, offsets, lengths, 4) < 0) {
++		error("Bad RSA private key");
++		return NULL;
++	}
++	err = gcry_mpi_scan(&rsa_e, GCRYMPI_FMT_STD, key + offsets[1],
++		lengths[1], NULL);
++	if (err) {
++		error("Can't read RSA e: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out;
++	}
++	err = gcry_mpi_scan(&rsa_n, GCRYMPI_FMT_STD, key + offsets[2],
++		lengths[2], NULL);
++	if (err) {
++		error("Can't read RSA n: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_e;
++	}
++	err = gcry_mpi_scan(&rsa_d, GCRYMPI_FMT_STD, key + offsets[3],
++		lengths[3], NULL);
++	if (err) {
++		error("Can't read RSA d: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_n;
++	}
++	params[0] = &rsa_n;
++	params[1] = &rsa_e;
++	params[2] = &rsa_d;
++	err = gcry_sexp_build_array(&_key, NULL, "(private-key (rsa (n %m) (e %m) (d %m)))",
++		params);
++	if (err) {
++		error("Can't build key: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_d;
++	}
++
++	gcry_md_hash_buffer(hashalgo, hashbuffer, challenge,
++		challenge_size);
++
++	err = gcry_sexp_build(&tosign, NULL, "(data (flags pkcs1) (hash %s %b))",
++		algo, hashlen, hashbuffer);
++	if (err) {
++		error("Can't build data to sign: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_key;
++	}
++
++	err = gcry_pk_sign(&signature, tosign, _key);
++	if (err) {
++		error("Can't sign data: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_tosign;
++	}
++
++	sval = gcry_sexp_nth(signature, 1);
++	if(!sval) {
++		error("DSA signature output faulty");
++		goto out_signature;
++	}
++	rsas_s = gcry_sexp_nth(sval, 1);
++	if(!rsas_s) {
++		error("RSA signature output faulty (no s)");
++		goto out_sval;
++	}
++	rsa_s = (const unsigned char*)gcry_sexp_nth_data(rsas_s, 1, &rsa_s_len);
++	if(!rsa_s) {
++		error("RSA signature output faulty (no real s)");
++		goto out_s;
++	}
++
++	*signature_size = 4 + rsa_s_len;
++	ret = xmalloc(*signature_size);
++	encode_uint32(ret, rsa_s_len);
++	memcpy(ret + 4, rsa_s, rsa_s_len);
++
++out_s:
++	gcry_sexp_release(rsas_s);
++out_sval:
++	gcry_sexp_release(sval);
++out_signature:
++	gcry_sexp_release(signature);
++out_tosign:
++	gcry_sexp_release(tosign);
++out_key:
++	gcry_sexp_release(_key);
++out_d:
++	gcry_mpi_release(rsa_d);
++out_n:
++	gcry_mpi_release(rsa_n);
++out_e:
++	gcry_mpi_release(rsa_e);
++out:
++	return ret;
++}
++
++static unsigned char *sign_dsa(const unsigned char *key, size_t keysize,
++	const unsigned char *challenge, size_t challenge_size,
++	size_t *signature_size)
++{
++	unsigned char *ret = NULL;
++	size_t offsets[6];
++	size_t lengths[6];
++	gcry_mpi_t dsa_p;
++	gcry_mpi_t dsa_q;
++	gcry_mpi_t dsa_g;
++	gcry_mpi_t dsa_y;
++	gcry_mpi_t dsa_x;
++	gcry_mpi_t dsa_e;
++	int hashalgo;
++	const char *algo;
++	int hashlen;
++	unsigned char hashbuffer[128];
++	voidptr params[5];
++	gcry_sexp_t _key;
++	gcry_sexp_t tosign;
++	gcry_sexp_t signature;
++	gcry_sexp_t sval;
++	gcry_sexp_t dsas_r;
++	gcry_sexp_t dsas_s;
++	const unsigned char *dsa_r;
++	size_t dsa_r_len;
++	const unsigned char *dsa_s;
++	size_t dsa_s_len;
++	gcry_error_t err;
++	int sbits;
++
++	if (validate_key(key, keysize, offsets, lengths, 6) < 0) {
++		error("Bad DSA private key");
++		return NULL;
++	}
++
++	err = gcry_mpi_scan(&dsa_p, GCRYMPI_FMT_STD, key + offsets[1],
++		lengths[1], NULL);
++	if (err) {
++		error("Can't read DSA p: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out;
++	}
++	err = gcry_mpi_scan(&dsa_q, GCRYMPI_FMT_STD, key + offsets[2],
++		lengths[2], NULL);
++	if (err) {
++		error("Can't read DSA q: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_p;
++	}
++	err = gcry_mpi_scan(&dsa_g, GCRYMPI_FMT_STD, key + offsets[3],
++		lengths[3], NULL);
++	if (err) {
++		error("Can't read DSA g: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_q;
++	}
++	err = gcry_mpi_scan(&dsa_y, GCRYMPI_FMT_STD, key + offsets[4],
++		lengths[4], NULL);
++	if (err) {
++		error("Can't read DSA y: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_g;
++	}
++	err = gcry_mpi_scan(&dsa_x, GCRYMPI_FMT_STD, key + offsets[5],
++		lengths[5], NULL);
++	if (err) {
++		error("Can't read DSA x: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_y;
++	}
++
++	params[0] = &dsa_p;
++	params[1] = &dsa_q;
++	params[2] = &dsa_g;
++	params[3] = &dsa_y;
++	params[4] = &dsa_x;
++	err = gcry_sexp_build_array(&_key, NULL, "(private-key (dsa (p %m) (q %m) (g %m) (y %m) (x %m)))",
++		params);
++	if (err) {
++		error("Can't build key: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_x;
++	}
++
++	sbits = gcry_mpi_get_nbits(dsa_q);
++	if(sbits <= 160) {
++		algo = "sha1";
++		hashalgo = GCRY_MD_SHA1;
++		hashlen = 20;
++	} else if(sbits <= 224) {
++		algo = "sha224";
++		hashalgo = GCRY_MD_SHA224;
++		hashlen = 28;
++	} else if(sbits <= 256) {
++		algo = "sha256";
++		hashalgo = GCRY_MD_SHA256;
++		hashlen = 32;
++	} else if(sbits <= 384) {
++		algo = "sha384";
++		hashalgo = GCRY_MD_SHA384;
++		hashlen = 48;
++	} else if(sbits <= 512) {
++		algo = "sha512";
++		hashalgo = GCRY_MD_SHA512;
++		hashlen = 64;
++	} else {
++		error("DSA parameter q out of range (2^512 or larger)");
++		goto out_key;
++	}
++
++	gcry_md_hash_buffer(hashalgo, hashbuffer, challenge,
++		challenge_size);
++	err = gcry_mpi_scan(&dsa_e, GCRYMPI_FMT_USG, hashbuffer,
++		hashlen, NULL);
++	if (err) {
++		error("Can't read DSA e: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_key;
++	}
++
++	err = gcry_sexp_build(&tosign, NULL, "(%m)",
++		dsa_e);
++	if (err) {
++		error("Can't build data to sign: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_e;
++	}
++
++	err = gcry_pk_sign(&signature, tosign, _key);
++	if (err) {
++		error("Can't sign data: %s/%s", gcry_strsource(err),
++			gcry_strerror(err));
++		goto out_tosign;
++	}
++
++	sval = gcry_sexp_nth(signature, 1);
++	if(!sval) {
++		error("DSA signature output faulty (no sval)");
++		goto out_signature;
++	}
++	dsas_r = gcry_sexp_nth(sval, 1);
++	if(!dsas_r) {
++		error("DSA signature output faulty (no r)");
++		goto out_sval;
++	}
++	dsa_r = (const unsigned char*)gcry_sexp_nth_data(dsas_r, 1, &dsa_r_len);
++	if(!dsa_r) {
++		error("DSA signature output faulty (no real r)");
++		goto out_r;
++	}
++	dsas_s = gcry_sexp_nth(sval, 2);
++	if(!dsas_s) {
++		error("DSA signature output faulty (no s)");
++		goto out_r;
++	}
++	dsa_s = (const unsigned char*)gcry_sexp_nth_data(dsas_s, 1, &dsa_s_len);
++	if(!dsa_s) {
++		error("DSA signature output faulty (no real s)");
++		goto out_s;
++	}
++
++	*signature_size = 8 + dsa_r_len + dsa_s_len;
++	ret = xmalloc(*signature_size);
++	encode_uint32(ret, dsa_r_len);
++	memcpy(ret + 4, dsa_r, dsa_r_len);
++	encode_uint32(ret + 4 + dsa_r_len, dsa_s_len);
++	memcpy(ret + 8 + dsa_r_len, dsa_s, dsa_s_len);
++
++out_s:
++	gcry_sexp_release(dsas_s);
++out_r:
++	gcry_sexp_release(dsas_r);
++out_sval:
++	gcry_sexp_release(sval);
++out_signature:
++	gcry_sexp_release(signature);
++out_tosign:
++	gcry_sexp_release(tosign);
++out_e:
++	gcry_mpi_release(dsa_e);
++out_key:
++	gcry_sexp_release(_key);
++out_x:
++	gcry_mpi_release(dsa_x);
++out_y:
++	gcry_mpi_release(dsa_y);
++out_g:
++	gcry_mpi_release(dsa_g);
++out_q:
++	gcry_mpi_release(dsa_q);
++out_p:
++	gcry_mpi_release(dsa_p);
++out:
++	return ret;
++}
++
++#define MAXPATH 4096
++#define MAXKEY 65536
++
++unsigned char *sign_using_local_key(const char *keyname,
++	const unsigned char *kblob, size_t kblob_size,
++	const unsigned char *challenge, size_t challenge_size,
++	size_t *signature_length, const char *type)
++{
++	FILE* filp;
++	unsigned char *ret = NULL;
++
++	char *path;
++	char pathtemplate[MAXPATH];
++	unsigned char key[MAXKEY];
++	size_t keysize;
++	int readkey_flag = 0;
++
++	unsigned char *x;
++	size_t i;
++
++	if (strlen(keyname) > MAXPATH - 32)
++		die("Key name too long");
++	sprintf(pathtemplate, "~/.ssh/%s", keyname);
++	path = expand_path(pathtemplate);
++
++	/* Read the privkey file. */
++	filp = fopen(path, "r");
++	if (!filp) {
++		error("Can't open '%s'", path);
++		goto out_readfile;
++	}
++	keysize = fread(key, 1, MAXKEY, filp);
++	if (ferror(filp)) {
++		error("Can't read '%s'", path);
++		goto out_readfile_handle;
++	}
++	if (!feof(filp)) {
++		error("Keyfile '%s' too large", path);
++		goto out_readfile_handle;
++	}
++	readkey_flag = 1;
++out_readfile_handle:
++	fclose(filp);
++out_readfile:
++	free(path);
++	if (!readkey_flag) {
++		error("Can't read any private key named '%s'", keyname);
++		return NULL;
++	}
++
++	x = pem_decode(key, keysize, keyname, &i);
++	if (!x) {
++		error("Can't decode key '%s'", keyname);
++		return NULL;
++	}
++	if (kblob_size > i || memcmp(kblob, x, kblob_size)) {
++		free(x);
++		error("Pubic and private keys for '%s' are inconsistent",
++			keyname);
++		return NULL;
++	}
++	if (!strcmp(type, "ssh-rsa"))
++		ret = sign_rsa(x, i, challenge, challenge_size,
++			signature_length);
++	else if (!strcmp(type, "ssh-dss"))
++		ret = sign_dsa(x, i, challenge, challenge_size,
++			signature_length);
++	else
++		error("Key '%s' is of unknown type", keyname);
++	free(x);
++	return ret;
++}
+diff --git a/git-over-tls/ssh_localkey.h b/git-over-tls/ssh_localkey.h
+new file mode 100644
+index 0000000..223b97f
+--- /dev/null
++++ b/git-over-tls/ssh_localkey.h
+@@ -0,0 +1,18 @@
++/*
++ * Copyright (C) Ilari Liusvaara 2010
++ *
++ * This code is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++#ifndef _ssh_localkey__h__include__
++#define _ssh_localkey__h__include__
++
++#include <stdlib.h>
++
++unsigned char *sign_using_local_key(const char *keyname,
++	const unsigned char *kblob, size_t kblob_size,
++	const unsigned char *challenge, size_t challenge_size,
++	size_t *signature_length, const char *type);
 +
 +#endif
 -- 
