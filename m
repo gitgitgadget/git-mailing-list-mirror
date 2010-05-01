@@ -1,83 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFD PATCH] revlist/rev-parse: Introduce --heads and --locals revision specifiers
-Date: Sat, 01 May 2010 12:42:15 -0700 (PDT)
-Message-ID: <m3bpczcsup.fsf@localhost.localdomain>
-References: <83fc6259c434cc63f8e64ddf9ac8f90bae0ab2eb.1272557175.git.git@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] gitweb: Create install target for gitweb in Makefile
+Date: Sat, 01 May 2010 12:45:42 -0700
+Message-ID: <7vbpcz4d95.fsf@alter.siamese.dyndns.org>
+References: <20100429235046.29606.35311.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat May 01 21:42:24 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 01 21:46:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Ia0-0004fC-5O
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 21:42:24 +0200
+	id 1O8Idb-0007AW-Et
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 21:46:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753683Ab0EATmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 15:42:19 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:37699 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753416Ab0EATmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 15:42:18 -0400
-Received: by wye20 with SMTP id 20so895764wye.19
-        for <git@vger.kernel.org>; Sat, 01 May 2010 12:42:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=+2BFrXtZqO1rUFmAme/A/BeVRi+KigyHpr1gvo6gXb4=;
-        b=jlC/rFLu8zc2QvrM1lv+o4rpWXsi8jeUxA+WKqmFHMCFbybSCNvNIona1UVOI8lusS
-         5lIyOmG8Y69mLx5aZ5S34nH3TIgTtVMhnsp002QUg4yj5qfLh4DZWkgBHGyW6Udkk9sl
-         Pafj5SNdm+lhyFcT1AVRaUnMPPPOzDY9mVxI4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=bZeQyvjzMl/qJ79fLVveSHmzZPkoHxRUp0ehN78Ute7u9tijGo/4SLV1H9hB01HvuI
-         IgpXNdwPoh/mqlCXm8ZaOF5bU8Gh0SXk1+OotLMahrFtPdHONzGZciMBTx6+sCwHVIoN
-         1j/UJJgG3ElYgIwJRutBy9UiIqJZggSiucT1s=
-Received: by 10.216.180.202 with SMTP id j52mr3823353wem.214.1272742936079;
-        Sat, 01 May 2010 12:42:16 -0700 (PDT)
-Received: from localhost.localdomain (abvy46.neoplus.adsl.tpnet.pl [83.8.222.46])
-        by mx.google.com with ESMTPS id r29sm26696487wbv.3.2010.05.01.12.42.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 01 May 2010 12:42:15 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o41Jfomn002695;
-	Sat, 1 May 2010 21:42:01 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o41JfY9x002688;
-	Sat, 1 May 2010 21:41:34 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <83fc6259c434cc63f8e64ddf9ac8f90bae0ab2eb.1272557175.git.git@drmicha.warpmail.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757527Ab0EATpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 15:45:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59232 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754033Ab0EATpu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 15:45:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F1A12AF9B8;
+	Sat,  1 May 2010 15:45:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PHJkQBRliJ0qIKXmd4GzyXM4XNc=; b=PuFxF7
+	u9F0tQyazDiAjf90M9+LHol0tOHIA6yoO4CQyHcdW+1wM9uLVmqV4gZnw3bvt6Fv
+	Hukim5mk81mPQRfCfKsk1w+BxDItRO7Xu9wa1vxf/SE4NADHjcq0oe/M85zYIfi+
+	cqHbboHSdEggrbcdrEdprlaeFwv1/ws7ptG70=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=J3N60U8BpmiIBs7DVLYvBGBrT5FJD5Po
+	OEHrtygMDOqiufr/3chQW1IpHBZ2wP1033ZHhszPFhnSwxiBKzxE7UdUcor+eBXy
+	Q9AywSlaBD2JAOr0V4cCRENhUM73378wqaiLhuCAyiQLfvMYaKPOlyLHL5hMAlz2
+	ZO9i2d2ufl4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CB7CBAF9B7;
+	Sat,  1 May 2010 15:45:46 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 39EAEAF9B6; Sat,  1 May
+ 2010 15:45:44 -0400 (EDT)
+In-Reply-To: <20100429235046.29606.35311.stgit@localhost.localdomain> (Jakub
+ Narebski's message of "Fri\, 30 Apr 2010 01\:58\:22 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 230F96C4-555A-11DF-9691-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146113>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Due to the increasing usage of the ref namespace (e.g. notes, replace)
-> the revision specifier "--all" becomes decreasingly useful. But
-> "something like --all" is ineeded for getting a quick overview of
-> the development state of a repository.
-> 
-> Introduce --heads and --locals specifiers in order to help with that:
-> 
-> --heads == HEAD --branches --remotes
-> --locals = HEAD --branches --tags
+> Installing gitweb is now as easy as
+>   # make gitwebdir=/var/www/cgi-bin gitweb-install  ;# as root
+> The gitweb/INSTALL file was updated accordingly.
 
-Wouldn't new feature (introduced in 1.7.0) of --glob=<glob-pattern>
-be enough?
+Just a style, but I prefer a blank line on both sides of an example
+command line like this.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> There is a question whether to rely on correctly set file permissions
+> during build phase, i.e.
+>
+> 	$(INSTALL) $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+>
+> or whether to ensure correct file permissions during installl phase
+>
+> 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+> 	$(INSTALL) -m 644 $(GITWEB_FILES)    '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+>
+> Currently the first option is used.
+
+Hmm, the reason being?  I do not have a strong preference either way, but
+the primary Makefile seems to use "-m mode".
+
+> Note that install-* targets, including new install-gitweb, are not
+> marked as .PHONY
+
+The reason being?
+
+My preference for the standard targets like "all", "clean", and "install"
+is to make them double-colon rules and mark them as phoneys.
