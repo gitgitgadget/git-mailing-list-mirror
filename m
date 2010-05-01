@@ -1,130 +1,89 @@
-From: Grant Olson <kgo@grant-olson.net>
-Subject: PATCH:  Less fragile lookup of gpg key
-Date: Sat, 01 May 2010 11:16:59 -0400
-Message-ID: <4BDC45EB.8090305@grant-olson.net>
+From: Giedrius Slavinskas <giedrius.slavinskas@gmail.com>
+Subject: git fast-import crashes importing commits with more than one author
+Date: Sat, 01 May 2010 18:43:56 +0300
+Message-ID: <1272728636.27562.12.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------enigC248D8B5A11E4E4538516102"
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-IFec5MjjbPTMf3IO9LMz"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 01 17:17:15 2010
+X-From: git-owner@vger.kernel.org Sat May 01 17:43:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8ERO-0005LV-NY
-	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 17:17:15 +0200
+	id 1O8Eqj-00016Q-Ly
+	for gcvg-git-2@lo.gmane.org; Sat, 01 May 2010 17:43:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683Ab0EAPRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 1 May 2010 11:17:09 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:40835 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754322Ab0EAPRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 1 May 2010 11:17:07 -0400
-Received: by qyk13 with SMTP id 13so1762573qyk.1
-        for <git@vger.kernel.org>; Sat, 01 May 2010 08:17:03 -0700 (PDT)
-Received: by 10.224.47.136 with SMTP id n8mr5134363qaf.171.1272727022926;
-        Sat, 01 May 2010 08:17:02 -0700 (PDT)
-Received: from [192.168.1.180] (pool-96-235-50-222.pitbpa.east.verizon.net [96.235.50.222])
-        by mx.google.com with ESMTPS id 20sm1883037qyk.8.2010.05.01.08.17.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 01 May 2010 08:17:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-X-Enigmail-Version: 1.0.1
+	id S1755671Ab0EAPnR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 1 May 2010 11:43:17 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:57010 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754386Ab0EAPnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 1 May 2010 11:43:15 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so300946fgg.1
+        for <git@vger.kernel.org>; Sat, 01 May 2010 08:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:content-type
+         :date:message-id:mime-version:x-mailer;
+        bh=JqQWD47ODCe8XsjaMM5HExH2SG0vgy0SvG5A/yPSFR8=;
+        b=JSil4shMvRL0r86yE5Nz+CB5ZEF5Pgpc6hV2Q6vZneSEkeAkFeSK6LJhkuS/gaR1X+
+         rQm4EWpajBf6LM3boy+HZ5xqLOODQKpAY2gZJLTp6Lt96RekP8elUvDqUUcdLRUJo6eg
+         YfzpajiMhun/rcH60e/s4Ex2+CmxBRHQSINQ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer;
+        b=C7RC1Brpzq9nwJ/9UTa9TIl/hDZZhyvyNPLFG9u6tQ0/KIyUHnTiGcYTyQr1AKI6cY
+         wkYGax/6zAxHN7kUuKnPEeyZGrUhBqbWPeCgU3v5ibhm0G+4y5Lbc8h5qmns/TD07v86
+         BfiRPojnEEYLsIVAJq3/TA466rWoTqLRb640o=
+Received: by 10.87.74.17 with SMTP id b17mr6413916fgl.59.1272728593672;
+        Sat, 01 May 2010 08:43:13 -0700 (PDT)
+Received: from [10.3.5.114] (gw-world-s1.bt.ktu.lt [83.171.11.34])
+        by mx.google.com with ESMTPS id 21sm5198171fkx.40.2010.05.01.08.43.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 01 May 2010 08:43:13 -0700 (PDT)
+X-Mailer: Evolution 2.30.1.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146086>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigC248D8B5A11E4E4538516102
-Content-Type: text/plain; charset=ISO-8859-1
+
+--=-IFec5MjjbPTMf3IO9LMz
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-When signing a tag, git will attempt to lookup your gpg key if you don't
-provide the key id.  Right now, it's a little fragile.  My gpg key uid
-is "Grant T. Olson (Personal Email) <kgo@grant-olson.net>".  My git user
-info is "Grant T. Olson <kgo@grant-olson.net>".  Things don't match
-because git doesn't have the comment.
+git fast-import does not support commits with more than one author. I
+try to import bzr repository and it crashes.
 
-However, if I lookup just by email, things work perfectly.
-
-I think doing this would make life much easier for new users, and in the
-case that someone has an OpenPGP key without email (e.g. Ubuntu Master
-Signing Key) we can safely assume they're an expert and will either add
-the key id to their configuration or use -u instead of -s.
-
-Here's a patch that will try to lookup the user by email only if no
-signing key is provided.  If there is no email, it will still fall back
-to the default generated by git.
-
-=46rom d0fcf1340495045813758f910e8f4d745e28546b Mon Sep 17 00:00:00 2001
-From: Grant Olson <kgo@grant-olson.net>
-Date: Sat, 1 May 2010 11:02:18 -0400
-Subject: [PATCH] Lookup gpg key by email
-
----
- builtin/tag.c |    2 +-
- ident.c       |    9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index d311491..4eb3cc5 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -165,7 +165,7 @@ static int do_sign(struct strbuf *buffer)
- 	int i, j;
-
- 	if (!*signingkey) {
--		if (strlcpy(signingkey, git_committer_info(IDENT_ERROR_ON_NO_NAME),
-+		if (strlcpy(signingkey, git_committer_email(),
- 				sizeof(signingkey)) > sizeof(signingkey) - 1)
- 			return error("committer info too long.");
- 		bracket =3D strchr(signingkey, '>');
-diff --git a/ident.c b/ident.c
-index 9e24388..0e8b78a 100644
---- a/ident.c
-+++ b/ident.c
-@@ -260,6 +260,15 @@ const char *git_committer_info(int flag)
- 			 flag);
- }
-
-+const char *git_committer_email(void)
-+{
-+	const char *email =3D getenv("GIT_COMMITTER_EMAIL");
-+	if(!email)
-+		email =3D git_default_email;
-+
-+	return email;
-+}
-+
- int user_ident_sufficiently_given(void)
- {
- #ifndef WINDOWS
---=20
-1.7.0.4
+Here is info how to make bzr commit that couldn't be imported to git
+http://doc.bazaar.canonical.com/latest/en/user-guide/recording_changes.html=
+#giving-credit-for-a-change
 
 
 
---------------enigC248D8B5A11E4E4538516102
+--=-IFec5MjjbPTMf3IO9LMz
 Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.14 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-iQEcBAEBCAAGBQJL3EXrAAoJEP5F5V2hilTWKkgH/105EpgmVEazqHYmQj2cHeCH
-uZYSa7VkLekiOPFdgT4AgiOv9Hr543p9jia6WRSAyLTxrkt+L0oKiKKkjCsOUY7D
-uu3o5r3CQpUMcOFBnORQq+uoFT+Krhz50p+jy4xVr0Xorx/+RswsvGhCpk1pWSAJ
-60MPLLMb/TynZhDu6KxdCbrQ2BhmFVMM+YVbPoOtCye1iWGhbGSTaTYenn9ywxML
-fSZ2uPYKRhgVAdS1yZlCQtNuFzsA1gT5uIuLMa8LzkYiYyQUGT22eH+Ksd0Q4gjo
-SPBkivw0lUR5xTZ+KKxqSOX5vVrGF908oZNi9l54FtUvw67qRxjc/YJzm7ZcMEk=
-=4K66
+iQIcBAABAgAGBQJL3Ew2AAoJEGo4VRrTandCzMoP/jQMzOpwHs0W2kFP9IItJXjD
+7e75MLVfwejcxLryjQYTosHmTYY8psaRHGfZ5VJubBMD0SLYjRn45AzPYlirSsL8
+Zcr/h497/jcJWJnNryaKxVNu3oh9ZPRB/8rRwLkJqJeBrnEjzBv93wfyC4ByXKp9
+nzA7PXU/pvoXVqmTLr7CBLokZBYO7PqHIjAWCPq8MOIIFyIc/IV8SkUggO/lIWI2
+w5j+hfs0Te8r8CXkS1VE2wJ8fOe4JI8u2dczcN4/VjGoNcFCb2W1znsQLxMgrPq9
+oPUyep1AkwUlsTia4Z38QFVidP8hJFRFFR0tB0vGI93NLBNbvNQWACXOtBxfqhi3
+WMAoTFzcQ1ttLuIcz48qs58PShWjgGVCajIToRc1yH7IkV71USeEHloycqR34nMj
+FmoI9NWBg3z6tHoe/3vnCkcPvzEu1L/3sd73qE9v3wg1E2FhfeZ5lB0cpvc6oQUI
+CpP8gMLhvTBPrfqrlbLifyohyXcnAQvWsMW8gZw/wPdyW9R7PAUEK8BDqgIe6Lri
+vKj+KZgKnqSKNmYROdUH6rUwEsE+cHl5oYz132pukPk66Gd/y6gkvZ5WgT8/A4fS
+a1tN0OxisuLbUJ4Qn4vO0HKCDuVA8mKtk4rLZIWEXrwFnXK7ha0d+q3SL0s7KfJi
+o1AOFo9W/zCDlMvUctW/
+=1czf
 -----END PGP SIGNATURE-----
 
---------------enigC248D8B5A11E4E4538516102--
+--=-IFec5MjjbPTMf3IO9LMz--
