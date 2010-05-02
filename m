@@ -1,81 +1,76 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: [PATCH v4 3/3] pretty: add aliases for pretty formats
-Date: Sun, 02 May 2010 14:38:20 +0100
-Message-ID: <1272807500.24767.4.camel@dreddbeard>
-References: <1272798044-10487-1-git-send-email-wmpalmer@gmail.com>
-	 <1272798044-10487-4-git-send-email-wmpalmer@gmail.com>
-	 <20100502123039.GB13419@progeny.tock>
-Reply-To: wmpalmer@gmail.com
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFD PATCH] revlist/rev-parse: Introduce --heads and --locals
+ revision specifiers
+Date: Sun, 02 May 2010 15:43:05 +0200
+Message-ID: <4BDD8169.9050301@drmicha.warpmail.net>
+References: <83fc6259c434cc63f8e64ddf9ac8f90bae0ab2eb.1272557175.git.git@drmicha.warpmail.net> <20100502050054.GE14776@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 02 15:38:54 2010
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun May 02 15:43:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8ZNl-0002JH-HX
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 15:38:53 +0200
+	id 1O8ZS1-0005VH-8E
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 15:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755852Ab0EBNit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 09:38:49 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61138 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755561Ab0EBNir (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 09:38:47 -0400
-Received: by wye20 with SMTP id 20so1128228wye.19
-        for <git@vger.kernel.org>; Sun, 02 May 2010 06:38:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=OvYUoO7VMjtYekdRfFEGYWsYdADuwMqHm4LBMW25wHY=;
-        b=f1VtTFoDE1cwcwiKqVvl3ry/+NI97NPtVTSH24KezxeZtr/f7UUCpDcI6w+ctRo4VO
-         +eDLGzB7J1Vp7YYa6MToSOOrrhpVDwqBAOANgPEF/pPxpVZNERAdO3009MxXUwftbMiu
-         DbjsZvyJUMZUARsAJZTiC2n36Ihwki3eTXzm8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=sZ2XChl+7m9HuL6PqNrU/n3K2SWQhYIXL57GqgpwzzatH3nwTuxYqeQrk6IiL4C4S7
-         /aUJTdGzeut/OYrJA0iEOgKLpGtlPInjARWy/+msS4UgSkydiU4EVU8Qm4dz6QDZKQYR
-         kmync0tiRQqAq9EmsZzzHTLVYQ8VZ08w++fJk=
-Received: by 10.216.90.143 with SMTP id e15mr2044808wef.22.1272807526181;
-        Sun, 02 May 2010 06:38:46 -0700 (PDT)
-Received: from [192.168.0.129] (5acc34b2.bb.sky.com [90.204.52.178])
-        by mx.google.com with ESMTPS id u8sm32661326wbc.5.2010.05.02.06.38.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 02 May 2010 06:38:45 -0700 (PDT)
-In-Reply-To: <20100502123039.GB13419@progeny.tock>
-X-Mailer: Evolution 2.28.1 
+	id S1756023Ab0EBNnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 09:43:12 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50131 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754960Ab0EBNnK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 May 2010 09:43:10 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4CBF5F2391;
+	Sun,  2 May 2010 09:43:06 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sun, 02 May 2010 09:43:06 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=2geJ/yLxo1ghV91kSK4jvHR/GHM=; b=UHhiQguFKrN08pq11rwEHNRchWWODiskE/8qeO7XNyFBpB8UlGMQYaJdTkZ9u9Io4Zfw4Oe70cUUHonE1udKng0y1nis4MmsYQHlWRqUd4haxuDbDTmBZkFfZ+x7sPkrtMjPbrfFV2xD5xQ1a8NLbBTV+SlMX3xd9Q0lCX/PkJw=
+X-Sasl-enc: G6tpqDItiw1RzVK91aFvOj3PO+h8oE3/nutQVCbc/pOw 1272807785
+Received: from localhost.localdomain (p5DCC03EE.dip0.t-ipconnect.de [93.204.3.238])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 215904D2E42;
+	Sun,  2 May 2010 09:43:04 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <20100502050054.GE14776@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146176>
 
-On Sun, 2010-05-02 at 07:30 -0500, Jonathan Nieder wrote:
-
-> Likewise.
+Jeff King venit, vidit, dixit 02.05.2010 07:00:
+> On Sat, May 01, 2010 at 08:36:33PM +0200, Michael J Gruber wrote:
 > 
-> With whatever subset of the above changes you deem suitable,
+>> Due to the increasing usage of the ref namespace (e.g. notes, replace)
+>> the revision specifier "--all" becomes decreasingly useful. But
+>> "something like --all" is ineeded for getting a quick overview of
+>> the development state of a repository.
+>>
+>> Introduce --heads and --locals specifiers in order to help with that:
+>>
+>> --heads == HEAD --branches --remotes
+>> --locals = HEAD --branches --tags
 > 
->   Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-> 
-> Thanks again.
-> 
+> I don't have anything against the concept, but "--heads" is a horrible
+> name, as it implies refs/heads (which is of course what --branches does.
+> Yikes!). I know why you picked it, and once you think about it, yes, it
 
-I'm not familiar enough with the patch submission process. Should I add
-your changes (all except for the config documentation I agree with, and
-that one I agree with the reasoning for) into my series and re-submit,
-or is saying "I agree with those changes" enough to assume that they
-will be applied to my series if it is accepted?
+I second your Yikes... but won't suggest renaming refs/heads.
 
+> does make some sense (it is all the local and remote heads), but I am
+> worried that it will cause confusion.
 
--- 
--- Will
+So, your alternative suggestion is...? ;)
+
+How about --tips? But I don't like that. We really use head as the term
+for the tip (ordered end-vertex) of a branch, be it local or remote. I
+would hope that ordinary users do not have to deal with the layout under
+refs, and thus won't be confused. But people peel and poke everywhere
+where there not supposed to :)
+
+Michael
