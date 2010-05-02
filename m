@@ -1,97 +1,147 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: Fwd: GNU patch: upcoming stable release; call for testing
-Date: Sun, 2 May 2010 13:54:12 +0200
-Organization: SUSE Labs
-Message-ID: <201005021354.13119.agruen@suse.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v4 2/3] pretty: add infrastructure to allow format
+ aliases
+Date: Sun, 2 May 2010 06:55:11 -0500
+Message-ID: <20100502115511.GA13419@progeny.tock>
+References: <1272798044-10487-1-git-send-email-wmpalmer@gmail.com>
+ <1272798044-10487-3-git-send-email-wmpalmer@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 02 13:55:24 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 02 13:55:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Xlb-0005kX-Si
+	id 1O8Xlc-0005kX-D4
 	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 13:55:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756404Ab0EBLyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 07:54:16 -0400
-Received: from cantor.suse.de ([195.135.220.2]:48753 "EHLO mx1.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756121Ab0EBLyP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 07:54:15 -0400
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id D59CC8FEA2
-	for <git@vger.kernel.org>; Sun,  2 May 2010 13:54:13 +0200 (CEST)
-User-Agent: KMail/1.12.2 (Linux/2.6.31.12-0.1-desktop; KDE/4.3.1; x86_64; ; )
+	id S1756533Ab0EBLzT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 May 2010 07:55:19 -0400
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:62422 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756428Ab0EBLzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 07:55:17 -0400
+Received: by iwn12 with SMTP id 12so2084088iwn.15
+        for <git@vger.kernel.org>; Sun, 02 May 2010 04:55:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=24VIkHjOGQngFKybQhC3b6ys4UcqE04M2vniu+op0Hc=;
+        b=Sbn9ZBNHcdWI0N4A5FAeg1g3915B3umvfQ9Y+a9kyMpfWfZR9VhLib+mX/LptJqV3w
+         W9VWmI4Slhuyi/ES6Xtdbl6YCE+511Z4Bp8HTL3HRTMg4+r/Lq1iccIehpWK6TGhtRMH
+         5yP36uZT0TKCrFephSAIeQbjVR71IFTlsA6Ik=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=rjHqf/057qpmGhfBbY/o7BXrfCOabf0+uXzo+JO2sZQ9FHeiRdVHq9wiiUA7yQNjU3
+         dLaWuP7GBUC59OfoRYv7/NtPPp39Ayq1U5KXxv41GWkSXn6i96VoOPouP+iGOYTasKNw
+         zLg+uVNFy3B4O08a+vWhNOxuYZLKxiIBjMfKc=
+Received: by 10.231.79.196 with SMTP id q4mr2540310ibk.69.1272801315530;
+        Sun, 02 May 2010 04:55:15 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 23sm3387763iwn.10.2010.05.02.04.55.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 02 May 2010 04:55:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1272798044-10487-3-git-send-email-wmpalmer@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146166>
 
-----------  Forwarded Message  ----------
+Will Palmer wrote:
 
-Subject: GNU patch: upcoming stable release; call for testing
-Date: Sunday 02 May 2010
-From: Andreas Gruenbacher <agruen@suse.de>
-To: info-gnu@gnu.org
+> here we modify the find_commit_format function to make it recursively
+> dereference aliases when they are specified. At this point, there are
+> no aliases specified and there is no way to specify an alias, but the
+> support is there for any which are added.
 
-I am pleased to announce that there is progress towards the next stable 
-release of GNU patch.  This is a call for testing so that things will work as 
-expected, on as many platforms as possible.
+Style.  Maybe:
 
-The upcoming release will include several new features:
+	Subject: pretty: add infrastructure for commit format aliases
 
+	Allow named commit formats to alias one another;
+	find_commit_format() will recursively dereference aliases when
+	they are specified.  At this point, there are no aliases
+	specified and there is no way to specify an alias, but the
+	support is there for any which are added.
 
-* Support for most features of the "diff --git" format: renames and copies,
-  permission changes, symlink diffs.  (Binary diffs are not supported yet;
-  patch will complain and skip them.)
+	If an alias loop is detected, the function die()s.
 
-* Support for double-quoted filenames: when a filename in a context diff
-  starts with a double quote, it is interpreted as a C string literal.  The
-  escape sequences \\, \", \a, \b, \f, \n, \r, \t, \v, and \ooo (a three-digit
-  octal number between 0 and 255) are recognized.
+[...]
+> -static struct cmt_fmt_map *find_commit_format(const char *sought)
+> +static struct cmt_fmt_map *find_commit_format_recursive(const char *=
+sought,
+> +							const char *original,
+> +							int num_redirections)
+>  {
+>  	struct cmt_fmt_map *found =3D NULL;
+>  	size_t found_match_len;
+>  	int i;
+> =20
+> -	if (!commit_formats)
+> -		setup_commit_formats();
+> +	if (num_redirections >=3D commit_formats_len) {
+> +		die("invalid --pretty format: '%s' references an alias which "
+> +		    "points to itself", original);
+> +		return NULL;
 
-* Refuse to patch read-only files by default, or at least warn when patching
-  such files with --force or --batch.
+nitpicks:
 
-* Refuse to apply a normal patch to a symlink.  (Previous versions of patch
-  were wrongly replacing the symlink with a regular file.)
+ 1. If the caller might like the chance to add more information or
+    recover (as in code used by git daemon or that might become part of
+    libgit2), you can error() and return NULL.  This would print an
+    "error: " message and let the caller take care of exiting.
 
-* When a timestamp specifies a time zone, honor that instead of assuming the
-  local time zone (--set-date) or Universal Coordinated Time (--set-utc).
+    Otherwise, this should probably die() (which prints a "fatal: "
+    message) without returning anything.
 
-* Support for nanosecond precision timestamps.
+    Not important, of course; just something to avoid confusion for
+    the reader and static analyzers.
 
+ 2. It might be helpful to wrap differently in case someone tries to
+    grep for "alias which points to itself" after encountering the
+    error message.
 
-Behind the scenes, some infrastructure changes have happened as well: the 
-project now uses GNU Automake, and the previous, static copy of the Gnulib 
-library has been replaced by a git submodule.
+With or without the changes mentioned above:
 
+  Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-The project home with the development repository, bug tracker, and bug-
-patch@gnu.org mailing list archive is located at:
+Nice, thanks.  I hope GCC notices the tail recursion (though since
+this is not so performance critical for git afaict, if it doesn=E2=80=99=
+t, it
+is probably better to fix that in GCC than make the git code uglier).
 
-  http://savannah.gnu.org/projects/patch
-
-Development snapshots will be made available on:
-
-  ftp://alpha.gnu.org/gnu/patch/
-
-Previous stable releases are available at:
-
-  ftp://ftp.gnu.org/gnu/patch/
-
-Please send bug reports or suggestions to <bug-patch@gnu.org>.
-
-Thanks,
-Andreas
-
--------------------------------------------------------
+diff --git a/pretty.c b/pretty.c
+index 02665d0..0ba056a 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -56,11 +56,10 @@ static struct cmt_fmt_map *find_commit_format_recur=
+sive(const char *sought,
+ 	size_t found_match_len;
+ 	int i;
+=20
+-	if (num_redirections >=3D commit_formats_len) {
+-		die("invalid --pretty format: '%s' references an alias which "
+-		    "points to itself", original);
+-		return NULL;
+-	}
++	if (num_redirections >=3D commit_formats_len)
++		die("invalid --pretty format: "
++		    "'%s' references an alias which points to itself",
++		    original);
+=20
+ 	for (i =3D 0; i < commit_formats_len; i++) {
+ 		size_t match_len;
+--=20
