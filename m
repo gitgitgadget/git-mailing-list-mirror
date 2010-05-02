@@ -1,71 +1,86 @@
-From: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
-Subject: Re: [PATCH] index-pack: fix trivial typo in usage string
-Date: Sun, 2 May 2010 14:11:15 +0100
-Message-ID: <t2n86ecb3c71005020611l1beef4a5tfa0448416f0db491@mail.gmail.com>
-References: <ea91a4320bf70e3bb4acee0c9b134338c1f36d51.1272555727.git.git@drmicha.warpmail.net> 
-	<p2pbe6fef0d1005012333tb5cb1487y47512633731a80a0@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFD: tables in documentation
+Date: Sun, 02 May 2010 15:31:02 +0200
+Message-ID: <4BDD7E96.2050603@drmicha.warpmail.net>
+References: <4BDC74F3.2020206@drmicha.warpmail.net> <20100502050622.GF14776@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 02 15:12:02 2010
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun May 02 15:31:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Yxl-0000Cv-A8
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 15:12:01 +0200
+	id 1O8ZGN-0004uZ-W0
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 15:31:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754280Ab0EBNLh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 09:11:37 -0400
-Received: from mail-pz0-f204.google.com ([209.85.222.204]:57078 "EHLO
-	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751754Ab0EBNLg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 09:11:36 -0400
-Received: by pzk42 with SMTP id 42so838543pzk.4
-        for <git@vger.kernel.org>; Sun, 02 May 2010 06:11:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type;
-        bh=8g3BvozQmv93cRUhLeawwRX9yAJhMYHWDFrP1V8qQVI=;
-        b=nsk3p+CUz0cheWF7Szn4a0nrIedGtBpiuTqkwYpa0oKcn3fmXp0cZ+zC81OoGNOs2p
-         geRHF+CRcZ8GY1fOPV9/bLY6Vyuk7SO5Ky50KAtBoe/IZ5M9XWs2jUoy6CekR5DXBwui
-         jJCpo1fYiwACmNi3BRvfhtVsv0FMyGLbadR2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=X2ideCtGWHVY+3ZaObsppGpz21h+qYYkDjrNo3t3NWVDNSUbfLd4tCqqPcDZF7KKFy
-         D/LlygNDVf1AuxBQAHJdo7odZzjsvSUHueLUNmXPlqKEA+khHxcRCrhFPtRCqJAEgGDb
-         cgHQEggf8P/cZL0pGGj5z6ms5AxoKeWo+sSC8=
-Received: by 10.143.25.2 with SMTP id c2mr59563wfj.147.1272805895096; Sun, 02 
-	May 2010 06:11:35 -0700 (PDT)
-Received: by 10.142.191.1 with HTTP; Sun, 2 May 2010 06:11:15 -0700 (PDT)
-In-Reply-To: <p2pbe6fef0d1005012333tb5cb1487y47512633731a80a0@mail.gmail.com>
-X-Google-Sender-Auth: 0c657c29ff62b32d
+	id S1755879Ab0EBNbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 09:31:07 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50663 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755705Ab0EBNbE (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 May 2010 09:31:04 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4750AEFECD;
+	Sun,  2 May 2010 09:31:02 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Sun, 02 May 2010 09:31:02 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=oLHNEC1fc3MbgwildfmW0VKy/Ds=; b=DQw6DKSEfFkLMjSjWpQ4md7KYLTim0lyi5eLHeowc5Ou/RmO/DI2LqSrt+1szZCzQk74L6H9qNAsmxR9OMPfAF4ZX7XVUQGk2DxGtifmJBCVXJd05EmoSN+7e/Sny7Xpg9JOMFG8iltB4dmAfpIiOnOJI0ugAFWPNVCQ7Obqkgs=
+X-Sasl-enc: p9hMOBj+/EJLVWO3B/bcsRw5SoAa88K7IPS9h0peWrrV 1272807061
+Received: from localhost.localdomain (p5DCC03EE.dip0.t-ipconnect.de [93.204.3.238])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 881A24C9D6B;
+	Sun,  2 May 2010 09:31:01 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <20100502050622.GF14776@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146173>
 
-On 2 May 2010 07:33, Tay Ray Chuan <rctay89@gmail.com> wrote:
-> Hi,
->
-> On Sun, May 2, 2010 at 2:35 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> -"git index-pack [-v] [-o <index-file>] [{ ---keep | --keep=<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
->> +"git index-pack [-v] [-o <index-file>] [{ --keep | --keep=<msg> }] [--strict] { <pack-file> | --stdin [--fix-thin] [<pack-file>] }";
->
-> to save some eyeball-time, the change was s/---keep/--keep/.
->
+Jeff King venit, vidit, dixit 02.05.2010 07:06:
+> On Sat, May 01, 2010 at 08:37:39PM +0200, Michael J Gruber wrote:
+> 
+>> Currently, all tables are formatted using indentation by spaces. This
+>> breaks whenever AsciiDoc's parsing changes.
+>>
+>> Instead, I suggest to use AsciiDoc's table syntax which also produces
+>> proper tables in the HTML and man output. I formatted the first part of
+>> the first table in git-read-tree(1) like that so that you can compare
+>> easily.
+> 
+> Conceptually I am in favor of semantic markup where possible. I find the
+> resulting manpage a little harder to read, though. Is it possible for us
+> to style it a bit more (e.g., such a simple table looks better, IMHO,
+> without ascii-art borders).
 
-Thanks =)
+I really don't know (about styling docbook's tables). We can easily
+switch off the outer borders in AsciiDoc.
 
-I wonder if there is a normal email client which can syntax highlight
-git-format-patch emails with per word changes ;-)
+The docbook part of the toolchain makes me sick whenever I have to look
+at it. I really wish AsciiDoc could output roff straight away. I find it
+incredibly hard to find the relevant information for this part of the
+toolchain since it involves xmlto as well as the style sheets. Also, at
+least my version of xmlto/style sheets/whatever does not cope well with
+adjacent (or even non-adjacent multiple) rowspans, see below. Only the
+vger.k.o. outage kept me from posting without noticing this before...
+
+> 
+>> I put it up at http://repo.or.cz/w/git/mjg.git/commit/table-example for
+>> your viewing pleasure. I'd say it looks great even in links (but not in
+>> lynx). It also shows a problem of xmlto with multiple rowspans (the xml
+>> is correct, .1 apparently not), which could be circumvented easily by
+>> repeating those cells.
+> 
+> Did you put the source up anywhere? I didn't see it, but it would be
+> interesting to see how painful it is to write.
+
+http://repo.or.cz/w/git/mjg.git/shortlog/refs/heads/doc-use-tables
+
+Tough guess, I know ;)
+
+Michael
