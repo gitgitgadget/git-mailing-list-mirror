@@ -1,88 +1,108 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: RFD: Shipping GitBrowser.js for instaweb
-Date: Sun, 02 May 2010 13:14:27 -0700 (PDT)
-Message-ID: <m3wrvmf4ei.fsf@localhost.localdomain>
-References: <4BDDA780.7090500@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Distinguishing trivial and non-trivial merge commits
+Date: Sun, 2 May 2010 15:29:44 -0500
+Message-ID: <20100502202943.GB16746@progeny.tock>
+References: <19419.1721.763210.679444@winooski.ccs.neu.edu>
+ <20100502181854.GC16051@progeny.tock>
+ <19421.54064.178345.489772@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun May 02 22:14:43 2010
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Sun May 02 22:29:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8fYj-0002Ev-5w
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 22:14:37 +0200
+	id 1O8fnU-00041f-7b
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 22:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932119Ab0EBUOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 16:14:32 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:37611 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758581Ab0EBUOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 16:14:31 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so806839fga.1
-        for <git@vger.kernel.org>; Sun, 02 May 2010 13:14:29 -0700 (PDT)
+	id S1756998Ab0EBU3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 16:29:45 -0400
+Received: from mail-iw0-f202.google.com ([209.85.223.202]:43091 "EHLO
+	mail-iw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753575Ab0EBU3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 16:29:44 -0400
+Received: by iwn40 with SMTP id 40so2391257iwn.1
+        for <git@vger.kernel.org>; Sun, 02 May 2010 13:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=XzCNudorQawSUeUjxTK7T0rtUXvk6RpDUEK1Ap9B1hc=;
-        b=FAFiCvfde7c4LPtEXLVAmMoNqX3c8YSVXhw6H0bd7b9o2HczUG3qlUailoEqlBbzEM
-         Mp8aZtgtLnVpj1QxA61/NS7LFbh5DavEY9KJv1xTnB+Yx1cFynS0qzL2LQB0WjjsZB58
-         50myf6o6PRrChSWfQf4CLRDdCVFYtTWk8IVxA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Yax74YcMZ13Gt4FCBIfxqbub1tQtd+Gj5R5OQnENvFY=;
+        b=oat8mK3bm1y798xnwRixsGH2g+9j/xKcaDMvvR1h9bf4M8TVTso4fulFjepxnTTi3e
+         Vd43/5iWk5SUqPeJP2dBqqrCvGJaGf36r4mqSdIfH+d/Du3tXtqnFMflk12kTReltLic
+         Uvu9pv9rFKSZRuB9JQNvmdyZVmMPCgva0VWWc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=QlEQGNSS3L1LAaCosERWHVRbrV02LtJs6XrLch0cq7gf+2fo1/lrr1sCzV3trMttUP
-         YbP+e7RS2fhnHijH8kJ+q0O1mDaPH6XGOmn0fXP9SVT/GXELMN1tWBsKi2ZHGEOTqdCq
-         ihNWN3LYto4Lvo0w0uSK4F2gwqEMI0XGMGWi4=
-Received: by 10.87.68.36 with SMTP id v36mr8756930fgk.43.1272831267584;
-        Sun, 02 May 2010 13:14:27 -0700 (PDT)
-Received: from localhost.localdomain (abvt225.neoplus.adsl.tpnet.pl [83.8.217.225])
-        by mx.google.com with ESMTPS id e20sm4021605fga.26.2010.05.02.13.14.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 02 May 2010 13:14:27 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o42KDvhq014346;
-	Sun, 2 May 2010 22:14:07 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o42KDfur014340;
-	Sun, 2 May 2010 22:13:41 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4BDDA780.7090500@drmicha.warpmail.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KmCTcgDFjbhsiLRniR7ydd0dZ9TubmKfAQ5sNQ2VogU42PEqKKZTQvwxwuB6m81KsQ
+         BWXXM0qeiCv5FlWaahkJbGuDxLgZ3OO5/gCL+ePa/0DqsE95Z8tsuCM2ALtsUDEENr4h
+         ga8pGKsoTZHh7dbyyKYQoKJAxQ8OBS54yxsPA=
+Received: by 10.231.147.15 with SMTP id j15mr4003740ibv.91.1272832183160;
+        Sun, 02 May 2010 13:29:43 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm3678337iwn.15.2010.05.02.13.29.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 02 May 2010 13:29:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <19421.54064.178345.489772@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146201>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Eli Barzilay wrote:
+> On May  2, Jonathan Nieder wrote:
 
-> I was wondering whether it would make sense to ship GitBrowser.js with
-> Git and how much it would take to do so.
-> 
-> My personal answer to the 1st Q is Yes: instaweb as well as simple
-> gitweb installs would benefit from a graphical DAG viewer.
-> 
-> About the required effort I have no clue: I find it difficult to see
-> through which repo contains current gitweb, current repo.or.cz mods, and
-> especially the GitBrowser integration bits. Maybe we could ship the
-> integration bits without the actual GitBrowser if that is more feasible?
+>> Note that most conflicts will not show up here: if the merge result
+>> matches either parent, then git diff --cc and friends will not
+>> consider it interesting at all.
+>
+> Isn't that a good definition of a trivial commit?  I'm not talking
+> about the whole commit -- just any file that is not identical to one
+> of its parents.
+[...]
+> For my purpose, I basically just want
+> to know whether there was manual tweaking involved in the merge.
 
-The integration parts are actually present in gitweb, I think.  It is
-a matter of configuration to enable 'graphiclog' link like in
-http://repo.or.cz
+diff --name-only follows exactly the example heuristic you described.
+It still does not catch all manual merge resolutions[1].
 
-GitBrowser.js is not, I think, the best solution for having graphical
-history in gitweb, but would do...
+Sometimes two branches introduce different changes to completely
+separate parts of a file.  This is not a conflict, and diff --cc will
+correctly report the merge as trivial (whereas diff --name-only does
+not pay enough attention to do the same).
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+On the other hand, sometimes two branches introduce conflicting
+changes, but the correct resolution for each conflict hunk is to pick
+one as winner.  Though simple, this can be error-prone, because
+rejecting one change from branch A might end up breaking another
+change that was accepted from the same branch.  diff --cc examines
+only the selected revision and its parents and for all it knows, this
+is just another trivial merge.
+
+>  git show --pretty=format:"" --name-only "$r" | grep -q "."
+>    --> test if it's trivial
+
+I would have expected
+
+	git show --name-only --exit-code --quiet "$r"
+
+to take care of this, but apparently it always exits zero.  Probably
+no one had tried it before.
+
+> (My script generally "compensates" for git being fast by running a ton
+> of them for each email...)
+
+:)
+
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/89415
