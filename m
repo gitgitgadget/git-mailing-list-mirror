@@ -1,60 +1,97 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] [PATCH] git-gui: make sure placement of panedwindow
- sashes 	happens correctly on startup
-Date: Sun, 02 May 2010 21:00:50 +0200
-Message-ID: <4BDDCBE2.7040204@kdbg.org>
-References: <20100501182918.GA19769@atlantic.linksys.moosehall>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFD: tables in documentation
+Date: Sun, 02 May 2010 21:23:56 +0200
+Message-ID: <4BDDD14C.7040503@drmicha.warpmail.net>
+References: <4BDC74F3.2020206@drmicha.warpmail.net> <20100502050622.GF14776@coredump.intra.peff.net> <4BDD7E96.2050603@drmicha.warpmail.net> <1272811394.24767.7.camel@dreddbeard> <1272811916.24767.16.camel@dreddbeard> <4BDD956F.5070800@drmicha.warpmail.net> <4BDD99F3.9000305@drmicha.warpmail.net> <20100502175353.GA15521@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>, msysgit@googlegroups.com
-To: Adam Spiers <git@adamspiers.org>
-X-From: git-owner@vger.kernel.org Sun May 02 21:01:10 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: wmpalmer@gmail.com, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 02 21:24:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8ePe-0000NN-5B
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 21:01:10 +0200
+	id 1O8elp-0008Fu-Id
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 21:24:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756733Ab0EBTBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 15:01:00 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:35896 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751516Ab0EBTA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 15:00:59 -0400
-Received: from [77.118.71.226] (77.118.71.226.wireless.dyn.drei.com [77.118.71.226])
-	by bsmtp.bon.at (Postfix) with ESMTP id A17D7CDF82;
-	Sun,  2 May 2010 21:00:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
-In-Reply-To: <20100501182918.GA19769@atlantic.linksys.moosehall>
+	id S1758193Ab0EBTX7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 May 2010 15:23:59 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35866 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758105Ab0EBTX6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 May 2010 15:23:58 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id A1887F282B;
+	Sun,  2 May 2010 15:23:57 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sun, 02 May 2010 15:23:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=lr+W/A6QU3QypG5vt0aHFnh+cGU=; b=oLyYRdfeV7LtWiSxu6J/1P+HAt3NvJByaB+SfyfOOAGL9OTtA0cR/8MTixDXokRVMs9ebpcuz0oAaEAVxLMq74AeLonQR0hhw+Hx7Rmwp3p9sy/cnW3NgLK7skheN1koESEPLbCM2CD/ftx47je/NgRrcIruAKISXgunMZ4u+1Q=
+X-Sasl-enc: TMqwhPHOaMwjJcu30rg7+RNMkkJ4mhIXQFKTbdPPM7+c 1272828237
+Received: from localhost.localdomain (p5DCC09A3.dip0.t-ipconnect.de [93.204.9.163])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 87F754D2F19;
+	Sun,  2 May 2010 15:23:56 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <20100502175353.GA15521@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146195>
 
-Am 01.05.2010 20:29, schrieb Adam Spiers:
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 8996d2d..9585d7f 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -3466,6 +3466,7 @@ $main_status show [mc "Initializing..."]
->   catch {
->   set gm $repo_config(gui.geometry)
->   wm geometry . [lindex $gm 0]
-> +update
->   if {$use_ttk} {
->   	.vpane sashpos 0 [lindex $gm 1]
->   	.vpane.files sashpos 0 [lindex $gm 2]
+Jonathan Nieder venit, vidit, dixit 02.05.2010 19:53:
+> Hi Michael,
+>=20
+> Michael J Gruber wrote:
+>> Michael J Gruber venit, vidit, dixit 02.05.2010 17:08:
+>=20
+>>> Further experimentation (editing the xml) indicates that with my
+>>> toolchain, I can either shut off all borders (between cells as well=
+ as
+>>> outer) or none.
+> [...]
+>> For completeness, it results in this:
+>>
+>>      I                H         M               Result
+>>
+>>  0   nothing          nothing   nothing         (does not happen)
+>>
+>>  1   nothing          nothing   exists          use M
+>>
+>>  2   nothing          exists    nothing         remove path from ind=
+ex
+>>
+>>  3   nothing          exists    exists, H =3D=3DM   use M if "initia=
+l
+>>                                                 checkout", keep inde=
+x
+>>      exists, H !=3D M             fail            otherwise
+>>
+>> [Same unealt rowspan issue, of course.]
+>=20
+> For what it=E2=80=99s worth, except for the broken last row, I like t=
+his and
+> find it readable.  It is too bad there is no way to make it more
+> compact so more rows can fit on a screen or page.
+>=20
+> The ideal, to delimit the header without appearing busy, would be to
+> just have a thin horizontal rule separating the header from the
+> remaining rows[1].  Vertical rules are almost never a good idea.
+> Maybe frame=3D"topbot",grid=3D"none",options=3D"header" would be a go=
+od
+> approximation.
 
-This flashes git-gui briefly with the default size before it resizes to 
-the final size on startup. Not that it matters a lot, because the 
-incorrect sash position is much more annoying than this flashing.
+That looks nice in HTML (and produces the correct xml), but
+unfortunately my docbook renders this as if I had frame=3D"all",grid=3D=
+"all" :(
 
-But I do wonder why gitk does not have the same problem with its sashes...
-
--- Hannes
+>=20
+> Jonathan
+>=20
+> [1] Just my opinion.  I probably learned the aesthetic from Simon Fea=
+r.
+> http://www.tex.ac.uk/cgi-bin/texfaq2html?label=3Ddestable
