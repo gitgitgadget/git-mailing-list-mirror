@@ -1,83 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Eli Barzilay <eli@barzilay.org>
 Subject: Re: Distinguishing trivial and non-trivial merge commits
-Date: Sun, 02 May 2010 16:07:27 -0700
-Message-ID: <7vwrvlucls.fsf@alter.siamese.dyndns.org>
+Date: Sun, 2 May 2010 19:23:50 -0400
+Message-ID: <19422.2438.637578.793734@winooski.ccs.neu.edu>
 References: <19419.1721.763210.679444@winooski.ccs.neu.edu>
- <20100502181854.GC16051@progeny.tock>
- <19421.54064.178345.489772@winooski.ccs.neu.edu>
- <20100502202943.GB16746@progeny.tock> <m31vdugj2t.fsf@localhost.localdomain>
- <19421.59529.849850.968565@winooski.ccs.neu.edu>
+	<20100502181854.GC16051@progeny.tock>
+	<19421.54064.178345.489772@winooski.ccs.neu.edu>
+	<20100502202943.GB16746@progeny.tock>
+	<m31vdugj2t.fsf@localhost.localdomain>
+	<19421.59529.849850.968565@winooski.ccs.neu.edu>
+	<7vwrvlucls.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Mon May 03 01:07:50 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 03 01:24:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8iGJ-00051M-SP
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 01:07:48 +0200
+	id 1O8iW4-00016K-At
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 01:24:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758696Ab0EBXHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 19:07:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37906 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754888Ab0EBXHk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 19:07:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 748FCAF07A;
-	Sun,  2 May 2010 19:07:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z/PSALaKhzqnR5qpWytWth62a5k=; b=Mgwfpc
-	WQYMVMc0WuqdVZ+rA1wEpiR/hVtfVjb2R2gD8K7JFn9ofWCeFvUdntDejRgr8PnV
-	Ahf6IXWOpoGM9C73v45fqgxE7Q6MX9Y7RxKqQzgpmgbmUZqtAuAFmj83v5K5+OZt
-	9GsErUaQlmxUwi+eareElkLIOmDxHCO4+3tS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NXWpY7yKOc+dODbeaiLRf6T2vijEBOlI
-	6iCdcQLApgxP0InJE7Rb6d5sPzXYJn2kCdgjIX54i+14R9FOKersENkbtgA/Qp3E
-	xl5+BOb80CbRgpDXSbB0XSzPoEVe5J6/R5gzXDBH8Lu74YXqJm8rgHDFYqWjLPUj
-	X65CtlhSn2I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 33CCBAF074;
-	Sun,  2 May 2010 19:07:34 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62BC4AF06D; Sun,  2 May
- 2010 19:07:29 -0400 (EDT)
-In-Reply-To: <19421.59529.849850.968565@winooski.ccs.neu.edu> (Eli Barzilay's
- message of "Sun\, 2 May 2010 17\:03\:05 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E08BC3C-563F-11DF-A265-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758727Ab0EBXXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 19:23:54 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:37786 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757401Ab0EBXXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 19:23:53 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1O8iVq-0002s9-Lf; Sun, 02 May 2010 19:23:50 -0400
+In-Reply-To: <7vwrvlucls.fsf@alter.siamese.dyndns.org>
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146206>
 
-Eli Barzilay <eli@barzilay.org> writes:
+On May  2, Junio C Hamano wrote:
+> Eli Barzilay <eli@barzilay.org> writes:
+> 
+> > Good -- the first paragraph is what I thought it would do, the
+> > second makes it even better.  Perhaps it would be nice to show
+> > such manual reoslutions from one parent, but I think that that
+> > certainly qualifies as stuff that is much less interesting than
+> > work that was done to combine content inside a file, or one of
+> > those evil merges.
+> 
+> You need to be careful here.
+> 
+> If you see a conflicted hunk and the result ends up being the same
+> from one of the parents in that area, then the _result_ is trivial
+> as far as the merge (and hence --cc) is concerned, even though you
+> may have spent considerable braincycle to stare at the conflict to
+> decide that taking a change from one side is the right thing to do.
 
-> Good -- the first paragraph is what I thought it would do, the second
-> makes it even better.  Perhaps it would be nice to show such manual
-> reoslutions from one parent, but I think that that certainly qualifies
-> as stuff that is much less interesting than work that was done to
-> combine content inside a file, or one of those evil merges.
+Yes, that's clear to me now -- thanks.
 
-You need to be careful here.
 
-If you see a conflicted hunk and the result ends up being the same from
-one of the parents in that area, then the _result_ is trivial as far as
-the merge (and hence --cc) is concerned, even though you may have spent
-considerable braincycle to stare at the conflict to decide that taking a
-change from one side is the right thing to do.
+> You keep saying "manual resolutions", but --cc doesn't have much to
+> do with the resolution being manual, nor if the initial mechanical
+> merge attempt left conflict markers.
 
-You keep saying "manual resolutions", but --cc doesn't have much to do
-with the resolution being manual, nor if the initial mechanical merge
-attempt left conflict markers.  You would need to redo the merge to find
-that out, and it can be fairly cheaply done with a temporary index and an
-empty temporary working tree elsewhere in the filesystem.
+(Right, my original terminology was broken...)
+
+
+> You would need to redo the merge to find that out, and it can be
+> fairly cheaply done with a temporary index and an empty temporary
+> working tree elsewhere in the filesystem.
+
+The thing is that I spent so much time for something that is "only the
+notification emails"...  And doing something like this sounds like it
+requires knowing more git bits.  Is there something similar to this
+somewhere that I can stare at to see how it's done?  Pointers would be
+much appreciated.
+
+-- 
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
