@@ -1,97 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 0/2] commit --amend and missing space in ident line
-Date: Sun, 2 May 2010 03:49:45 -0500
-Message-ID: <20100502084827.GA1690@progeny.tock>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH v3 2/5] pretty: make %H/%h/etc respect --abbrev[-commit]
+Date: Sun, 02 May 2010 09:50:55 +0100
+Message-ID: <1272790255.4258.11.camel@walleee>
+References: <1272656128-2002-1-git-send-email-wmpalmer@gmail.com>
+	 <1272656128-2002-3-git-send-email-wmpalmer@gmail.com>
+	 <7vocgzyp1f.fsf@alter.siamese.dyndns.org>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 02 10:50:01 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, raa.lkml@gmail.com,
+	jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 02 10:51:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8Us9-0007Od-N8
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 10:49:58 +0200
+	id 1O8UtH-00088D-P3
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 10:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755978Ab0EBItw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 04:49:52 -0400
-Received: from mail-iw0-f182.google.com ([209.85.223.182]:62694 "EHLO
-	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755744Ab0EBItv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 04:49:51 -0400
-Received: by iwn12 with SMTP id 12so2015133iwn.15
-        for <git@vger.kernel.org>; Sun, 02 May 2010 01:49:50 -0700 (PDT)
+	id S1756032Ab0EBIvA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 04:51:00 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:59046 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755744Ab0EBIu6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 04:50:58 -0400
+Received: by wye20 with SMTP id 20so1053204wye.19
+        for <git@vger.kernel.org>; Sun, 02 May 2010 01:50:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=jFZNRb7sdplStFzVBi060NiaWqCXB9LaLDIqchtCxGg=;
-        b=pZiQGgxtkctJerS7WS4Woy5LyWPOcXZjOtPvT63JZL33s18ItsOa6flD8ez3IMqC2e
-         BUWwgW/kodx8kJN/OZfyvFcPqF0O0tCZPYO4CKC9GqxKdcL9sKwt36RN74ZtcHddIbpV
-         tr36BAi+H6qr+aHk5U2R4CkPj8hLybqnvpOFo=
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=C5ucLyH1xukNbkMM7SEQ+dlu6DpjX7dYiuJbbo+hwdU=;
+        b=NZ0BmFLOZB4iYoBJsp4nrl2yMshDWy6jzsz7URo5PZxiXEvv/D+CjrKCeM92GgE2J3
+         FbKdH7dpO9Qc4RivHOFXRqlNIjXzlK7vdB8NXUiuePvpPVfpY4bKuc8TS0YJJk7FKWUr
+         +Q+zKFQ1qJorrATV4ByRqSBywHdERscCiMXRk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=Z6tZ4ArojW5YiXvGt5lf35Iz/Y4jHRH7FLwOn0/iMiuo0KttJThSqHC9njpEBh0vB5
-         13VmSBSKbQPlUVGIoCbutxFQplNhCKxOK4CT/E4pgL34h7SiDDE3RKEpSZjhqZ6wNsMi
-         xcQREbspa3ROiig6K/v6fwQBbIUjE8L9lAAwE=
-Received: by 10.231.159.210 with SMTP id k18mr6541271ibx.59.1272790190331;
-        Sun, 02 May 2010 01:49:50 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm3278221iwn.5.2010.05.02.01.49.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 02 May 2010 01:49:49 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=FOBf6HgEW2/vfNQlkIMO3BoePp+yKlQcTDhhj/0PxrBYLDgaQWprXiEAwG/0Pe9CKb
+         4UrIz35WiHLaWilaCb8wE7gB/a4Nc4vKDCulWeXykPcL+ODL9g3Sy9TiiY3QWdDSMioI
+         QO6C7IBNJ0xdqQxnDRUlK/31eKnjFSvj9uSQ8=
+Received: by 10.216.89.202 with SMTP id c52mr6929343wef.84.1272790257005;
+        Sun, 02 May 2010 01:50:57 -0700 (PDT)
+Received: from [192.168.0.4] (5acc34b2.bb.sky.com [90.204.52.178])
+        by mx.google.com with ESMTPS id u8sm30891721wbc.23.2010.05.02.01.50.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 02 May 2010 01:50:56 -0700 (PDT)
+In-Reply-To: <7vocgzyp1f.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.26.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146144>
 
-The problem: since fast-import is advertised to expect the format
+On Sat, 2010-05-01 at 20:13 -0700, Junio C Hamano wrote:
+> I think it is a good change to make %h follow --abbrev, but %H should stay
+> the full length no matter what (otherwise why would anybody use %H not %h?).
 
-  "author" SP LT email GT SP date
+I could just as easily say "why would anyone pass --abbrev-commit unless
+they actually wanted an abbreviated commit?". Synonyms are confusing,
+but ignored parameters sound more confusing to me.
 
-when there is no display name associated to the author of a commit, it
-seems likely that some importers use that format[1].  Current
-fast-import passes that input through into the generated commit
-objects.  Which would mean there are commit objects like this in
-existing repositories generated by such importers.
+While I disagree that --abbrev-commit should have no effect whatsoever
+when %H is involved, I agree that the link between %h and --abbrev is
+more solid, so I will split %h respecting --abbrev into a separate
+patch.
 
-Since commit --amend looks for the string " <" _after_ the "author "
-string, it does not cope well with this sort of ident line.  In fact,
-the first " <" is found on the following "committer" line, while "> "
-is found on the author line; the distance between them, because
-negative, becomes a large unsigned integer; and the display name and
-email are considered to be very long but acceptable and happily
-used[2].
+If the current behaviour is actually intentional, we should at least
+update the documentation to say that %H is the "full commit hash",
+rather than just the "commit hash".
 
-After this series, commit --amend will instead see an empty display
-name and the email from between the angle brackets and accordingly die
-after complaining about the empty ident.  It might make sense to
-tolerate an empty ident during --amend (silently fixing it up to add
-the extra space character when missing), but such a change to the
-traditional "GIT_AUTHOR_NAME=" behavior would go beyond the scope of
-this series.
-
-Thoughts?
-Jonathan Nieder (2):
-  test-lib: Let tests specify commands to be run at end of test
-  commit --amend: cope better with invalid ident line
-
- builtin/commit.c  |   20 +++++++++++++-------
- t/t7509-commit.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- t/test-lib.sh     |   28 +++++++++++++++++++++++++++-
- 3 files changed, 86 insertions(+), 8 deletions(-)
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/145651/focus=145825
-[2] Earlier I suspected it would die().
-http://thread.gmane.org/gmane.comp.version-control.git/145651/focus=145826
-Sorry for the nonsense.
+-- 
+-- Will
