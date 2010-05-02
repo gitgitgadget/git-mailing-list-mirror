@@ -1,94 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] blame: add a range option to -L
-Date: Sun, 02 May 2010 08:23:35 -0700
-Message-ID: <7vvdb6uy2w.fsf@alter.siamese.dyndns.org>
-References: <1272662989-563-1-git-send-email-wfp5p@virginia.edu>
- <20100502091433.GA1854@progeny.tock>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: RFD: tables in documentation
+Date: Sun, 02 May 2010 17:27:47 +0200
+Message-ID: <4BDD99F3.9000305@drmicha.warpmail.net>
+References: <4BDC74F3.2020206@drmicha.warpmail.net>	 <20100502050622.GF14776@coredump.intra.peff.net>	 <4BDD7E96.2050603@drmicha.warpmail.net>	 <1272811394.24767.7.camel@dreddbeard> <1272811916.24767.16.camel@dreddbeard> <4BDD956F.5070800@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bill Pemberton <wfp5p@virginia.edu>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 02 17:23:56 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: wmpalmer@gmail.com, Jeff King <peff@peff.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sun May 02 17:27:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8b1K-0002St-6U
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 17:23:50 +0200
+	id 1O8b5G-0005Tt-56
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 17:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756461Ab0EBPXo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 May 2010 11:23:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63503 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755639Ab0EBPXn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 May 2010 11:23:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DDC2B0789;
-	Sun,  2 May 2010 11:23:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=6MiCJ9u6sTVw
-	jsES2gLvX3oU1eg=; b=n2w+ehSS5ocHDpNHHgoRT32+1tmre86lTO0ldKnc9IYS
-	mfjdI4MKhL32n3h1l25ed7OfhwSg1wX7YYls5Go0/OWpyIOwIa+SqLthKyWhiKfd
-	2vJsruE1Tq/wAPEx92Vl07AstwJMGXa2VnTxxi6zQrp7KEqyl299IdEa/x8Zgkk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=o7v9gf
-	zigYNnZxacBJpPxb9BrGBVDj8e9vAAq8XmyJbOS6XhHBtQ/2T7cvtbWE2gfeEVQT
-	+yGpcSZ+f16KyTTN9SDzv4KpXOmP6rQXQH4/fI+oiVxM5WIephyaRlpVRDZb5eDo
-	4zMM79s/r3rpwbKFFUmqgnhEyCocbDo2dw8ic=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C743B0788;
-	Sun,  2 May 2010 11:23:40 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 55876B0783; Sun,  2 May
- 2010 11:23:36 -0400 (EDT)
-In-Reply-To: <20100502091433.GA1854@progeny.tock> (Jonathan Nieder's message
- of "Sun\, 2 May 2010 04\:14\:34 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AF940FC2-55FE-11DF-B553-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755846Ab0EBP1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 11:27:49 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59641 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751754Ab0EBP1s (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 May 2010 11:27:48 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id F335FF21F6;
+	Sun,  2 May 2010 11:27:47 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sun, 02 May 2010 11:27:48 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=86X/e+tZacUww0RMNot84h0vagk=; b=YAIH9z2g9wfVt6fIZami0GN7W/31Dsk5GE0wTxt5GM3PEBbzjPupN34bqqs14oAeuqNFotjTszsnNnSl1zEuExzJyymOypsXa0YFRzeKjBRl10dcwvEpizvt0NiBan2spWo4yomaJldU+EQfq9BqSMRBucUFOG8Pjh+Om4MKUbk=
+X-Sasl-enc: tYV5XwJ65PQfLfBjW3JxNX6l80dZPXA6pQakAfrJDauA 1272814067
+Received: from localhost.localdomain (p5DCC03EE.dip0.t-ipconnect.de [93.204.3.238])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B9A1149FAC0;
+	Sun,  2 May 2010 11:27:46 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <4BDD956F.5070800@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146185>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Michael J Gruber venit, vidit, dixit 02.05.2010 17:08:
+> Will Palmer venit, vidit, dixit 02.05.2010 16:51:
+>> sorry about that, apparently "shift+enter" means "send" to this thing...
+>>
+>> On Sun, 2010-05-02 at 15:43 +0100, Will Palmer wrote:
+>>> On Sun, 2010-05-02 at 15:31 +0200, Michael J Gruber wrote:
+>>>> Jeff King venit, vidit, dixit 02.05.2010 07:06:
+>>>>> On Sat, May 01, 2010 at 08:37:39PM +0200, Michael J Gruber wrote:
+>>>>> Did you put the source up anywhere? I didn't see it, but it would be
+>>>>> interesting to see how painful it is to write.
+>>>>
+>>>> http://repo.or.cz/w/git/mjg.git/shortlog/refs/heads/doc-use-tables
+>>>>
+>>>> Tough guess, I know ;)
+>>>>
+>>>> Michael
+>>>
+>>
+>> that looks suspiciously like a format that's intended to be readable in
+>> both plaintext and eventually-generated form. This is me speaking in
+>> pure ignorance, but would something like (though I assume not exactly):
+>>
+>> [cols="1,3*5,8"]
+>>    |=====================
+>>    |		   |I		 |H		|M		|Result
+>>    |     0	   |nothing	 |nothing	|nothing	|(does not happen)
+>>    |     1	   |nothing	 |nothing	|exists		|use M
+>>    |     2	   |nothing	 |exists	|nothing	|remove path from index
+>> .2+|	 3	.2+|nothing   .2+|exists	|exists, H == M |use M if "initial checkout", keep index otherwise
+>> 						 exists, H != M |fail
+>>    |=====================
+>>
+>> work as intended?
+>>
+> 
+> Uhm, how is that different from my patch (except for spaces which I
+> didn't bother with for this p-o-c)? [This is AsciiDoc - you know, do
+> you? ;)]
+> 
+> Jeff doesn't like the ascii art in the roff output (.1, as can be seen
+> in the .1.txt file). It looks very "strong", just like the content.
+> 
+> Further experimentation (editing the xml) indicates that with my
+> toolchain, I can either shut off all borders (between cells as well as
+> outer) or none. Why does working with the toolchain always frustrate me?
+> It's often a hindrance for improvements.
+> 
+> So, we could shut off all borders by adding an output dependent table
+> definition in asciidoc.conf, copying current asciidoc's own and
+> modifying it for docbook-man output. Is it worth it? Maybe others like
+> the strong ascii borders...
 
-> Bill Pemberton wrote:
->
->> In addition to + and - you can now use r to specify how many lines
->> around <start> that you want to see.  For example: -L 20,r5 would sh=
-ow
->> lines 15 through 25
->
->>From too much exposure to subversion, the r suggests =E2=80=9Crevisio=
-n=E2=80=9D.
-> But =C2=B1 is too hard to type, so I guess r will have to do.
+For completeness, it results in this:
 
-I am not interested in this patch very much myself, and after thinking
-about it, I think my dislike largely comes from this syntax, and not fr=
-om
-the feature itself.  Any non-punctuation letter there looks like a sore
-thumb.  Either "-L 20=C2=B15" or even "-L 20+/-5" would have looked a _=
-lot_
-saner.
+     I                H         M               Result
 
->> +++ b/Documentation/blame-options.txt
->> @@ -32,6 +32,12 @@ This is only valid for <end> and will specify a n=
-umber
->>  of lines before or after the line given by <start>.
->>  +
->> =20
->> +- rrange
->
-> Maybe -rradius?  =E2=80=9Crange=E2=80=9D sounds like an interval with=
- specified endpoints.
+ 0   nothing          nothing   nothing         (does not happen)
 
-Yes, radius sounds more sensible.  Another alternative would be to call=
- it
-"context", as in "grep -C <n>".
+ 1   nothing          nothing   exists          use M
+
+ 2   nothing          exists    nothing         remove path from index
+
+ 3   nothing          exists    exists, H ==M   use M if "initial
+                                                checkout", keep index
+     exists, H != M             fail            otherwise
+
+[Same unealt rowspan issue, of course.]
+Michael
