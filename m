@@ -1,91 +1,97 @@
-From: Ulrich =?utf-8?B?U3DDtnJsZWlu?= <uqs@spoerlein.net>
-Subject: Re: migrating Mifos from svn to git
-Date: Sun, 2 May 2010 10:25:03 +0200
-Message-ID: <20100502082503.GG92627@acme.spoerlein.net>
-References: <1272751725.21622.57.camel@scraps>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/2] commit --amend and missing space in ident line
+Date: Sun, 2 May 2010 03:49:45 -0500
+Message-ID: <20100502084827.GA1690@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Adam Monsen <haircut@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 02 10:25:19 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 02 10:50:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8UUI-0007xy-W1
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 10:25:19 +0200
+	id 1O8Us9-0007Od-N8
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 10:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755770Ab0EBIZM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 04:25:12 -0400
-Received: from acme.spoerlein.net ([188.72.220.29]:60143 "EHLO
-	acme.spoerlein.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755667Ab0EBIZJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 04:25:09 -0400
-Received: from acme.spoerlein.net (localhost.spoerlein.net [IPv6:::1])
-	by acme.spoerlein.net (8.14.4/8.14.4) with ESMTP id o428P3Vd078328
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 2 May 2010 10:25:03 +0200 (CEST)
-	(envelope-from uqs@spoerlein.net)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=spoerlein.net;
-	s=dkim200908; t=1272788704;
-	bh=BavyYYmsZ2EE3L4leYepxqiiW0yN4epgP4g0hA4va0M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:In-Reply-To;
-	b=JFph9CQCdHs+Ri8989J6xHihIrcOAPt3UOl7Ewz6RBtkyPWwPWe6hUAt9khzHeN+/
-	 FcivX8PdntAthcwjHVIS8KHxZbuoRVENVOKoIGQaNChAPtXNRVVUiY87pglq3bqb4y
-	 pO2SusD5rpalPp9UaL2z5Nx1CwMkW0CnGWp4xY08=
-Received: (from uqs@localhost)
-	by acme.spoerlein.net (8.14.4/8.14.4/Submit) id o428P3Z4078327;
-	Sun, 2 May 2010 10:25:03 +0200 (CEST)
-	(envelope-from uqs@spoerlein.net)
+	id S1755978Ab0EBItw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 04:49:52 -0400
+Received: from mail-iw0-f182.google.com ([209.85.223.182]:62694 "EHLO
+	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755744Ab0EBItv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 04:49:51 -0400
+Received: by iwn12 with SMTP id 12so2015133iwn.15
+        for <git@vger.kernel.org>; Sun, 02 May 2010 01:49:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=jFZNRb7sdplStFzVBi060NiaWqCXB9LaLDIqchtCxGg=;
+        b=pZiQGgxtkctJerS7WS4Woy5LyWPOcXZjOtPvT63JZL33s18ItsOa6flD8ez3IMqC2e
+         BUWwgW/kodx8kJN/OZfyvFcPqF0O0tCZPYO4CKC9GqxKdcL9sKwt36RN74ZtcHddIbpV
+         tr36BAi+H6qr+aHk5U2R4CkPj8hLybqnvpOFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=Z6tZ4ArojW5YiXvGt5lf35Iz/Y4jHRH7FLwOn0/iMiuo0KttJThSqHC9njpEBh0vB5
+         13VmSBSKbQPlUVGIoCbutxFQplNhCKxOK4CT/E4pgL34h7SiDDE3RKEpSZjhqZ6wNsMi
+         xcQREbspa3ROiig6K/v6fwQBbIUjE8L9lAAwE=
+Received: by 10.231.159.210 with SMTP id k18mr6541271ibx.59.1272790190331;
+        Sun, 02 May 2010 01:49:50 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm3278221iwn.5.2010.05.02.01.49.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 02 May 2010 01:49:49 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1272751725.21622.57.camel@scraps>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146143>
 
-On Sat, 01.05.2010 at 15:08:45 -0700, Adam Monsen wrote:
-> 1. Is anyone willing to help me migrate Mifos from svn to git? If so,
-> please contact me on or off list, or in #mifos or #git on FreeNode IRC
-> (my nickname is "meonkeys"). It's for a good cause: our vision is to end
-> world poverty!
-> 
-> 2. I'm trying out git-svn (a) to get used to git and (b) to actually try
-> migrating our svn repo to a git repo. Is there a better way? (cbreak in
-> #git seemed to think so)
+The problem: since fast-import is advertised to expect the format
 
-svn2git is faster and can cope with multiple branches better, but it has
-bugs of its own. Try both of them ...
+  "author" SP LT email GT SP date
 
-> 3. When using git-svn, can I first "init"/"git svn fetch" from a local
-> mirror ( file:///opt/mifos_mirror ), then switch to our real repository
-> ( https://mifos.svn.sourceforge.net/svnroot/mifos ) once I'm mostly up
-> to date?
+when there is no display name associated to the author of a commit, it
+seems likely that some importers use that format[1].  Current
+fast-import passes that input through into the generated commit
+objects.  Which would mean there are commit objects like this in
+existing repositories generated by such importers.
 
-Yes, if both repos have the same UUID this should be possible. You need
-to fudge this in rev 0 and uuid in your svn mirror.
+Since commit --amend looks for the string " <" _after_ the "author "
+string, it does not cope well with this sort of ident line.  In fact,
+the first " <" is found on the following "committer" line, while "> "
+is found on the author line; the distance between them, because
+negative, becomes a large unsigned integer; and the display name and
+email are considered to be very long but acceptable and happily
+used[2].
 
-> 4. When using git-svn, "git svn init" works against my local mirror, but
-> "git svn fetch" dies on svn revision 16072
-> ( http://article.gmane.org/gmane.comp.finance.mifos.scm/6053 ). Can I
-> maybe just skip that changeset ....nevermind, "git svn fetch
-> --ignore-paths=branches/removeFinancialActionCache" seemed to do the
-> trick. Hrm, now I'm stuck at some other commit. Anyway, thanks for
-> enduring this ramble. Here's the latest problem I'm running into, in
-> case anyone has ideas on what Fu I might use to get out of this hole:
+After this series, commit --amend will instead see an empty display
+name and the email from between the angle brackets and accordingly die
+after complaining about the empty ident.  It might make sense to
+tolerate an empty ident during --amend (silently fixing it up to add
+the extra space character when missing), but such a change to the
+traditional "GIT_AUTHOR_NAME=" behavior would go beyond the scope of
+this series.
 
-If stuff has been merged from/to those ignored branches, you'll get
-into trouble later on. So ignoring them altogether doesn't seem like a
-good plan.
+Thoughts?
+Jonathan Nieder (2):
+  test-lib: Let tests specify commands to be run at end of test
+  commit --amend: cope better with invalid ident line
 
-I was only lucky in using git-svn when converting trunk only, or some
-selected branches where merging is/was done *always* from trunk ->
-branchXY
+ builtin/commit.c  |   20 +++++++++++++-------
+ t/t7509-commit.sh |   46 ++++++++++++++++++++++++++++++++++++++++++++++
+ t/test-lib.sh     |   28 +++++++++++++++++++++++++++-
+ 3 files changed, 86 insertions(+), 8 deletions(-)
 
-hth
-Uli
+[1] http://thread.gmane.org/gmane.comp.version-control.git/145651/focus=145825
+[2] Earlier I suspected it would die().
+http://thread.gmane.org/gmane.comp.version-control.git/145651/focus=145826
+Sorry for the nonsense.
