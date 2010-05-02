@@ -1,102 +1,103 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: WANTED: patch splitting tool - waypoints
-Date: Sun, 2 May 2010 23:10:33 +0200
-Message-ID: <201005022310.34169.robin.rosenberg@dewire.com>
-References: <20100502115842.GA11607@brong.net>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: RFD: a submodule-like facility that tracks branches rather than 
+	commits
+Date: Mon, 3 May 2010 08:39:42 +1000
+Message-ID: <l2u2cfc40321005021539v573e58a5j15696d81b5e5acd5@mail.gmail.com>
+References: <w2n2cfc40321005020402gdc210b79v2652afa849cf7a60@mail.gmail.com>
+	 <7veihuuwdj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Bron Gondwana <brong@brong.net>
-X-From: git-owner@vger.kernel.org Sun May 02 23:10:47 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 03 00:41:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8gR4-0006rz-5b
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 23:10:46 +0200
+	id 1O8hqv-0005XU-5S
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 00:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758773Ab0EBVKl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 May 2010 17:10:41 -0400
-Received: from mail.dewire.com ([83.140.172.130]:13537 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758751Ab0EBVKk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 2 May 2010 17:10:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id C4DB4138BF58;
-	Sun,  2 May 2010 23:10:38 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id jcY5l2+4yfj4; Sun,  2 May 2010 23:10:37 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id ED09A800388;
-	Sun,  2 May 2010 23:10:36 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-22-generic; KDE/4.4.2; i686; ; )
-In-Reply-To: <20100502115842.GA11607@brong.net>
+	id S1758558Ab0EBWjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 18:39:44 -0400
+Received: from mail-qy0-f189.google.com ([209.85.221.189]:45998 "EHLO
+	mail-qy0-f189.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757469Ab0EBWjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 18:39:43 -0400
+Received: by qyk27 with SMTP id 27so5039711qyk.23
+        for <git@vger.kernel.org>; Sun, 02 May 2010 15:39:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=j+KQIxUMbRED3EI79u0vv3dRDrfrtLdVR8+vmKlTHjQ=;
+        b=M+PzPbSnNb3JwyoGQ/ShZ0lm3j0h+HtkWeqXL41qxiW2WD8pDhOBZowBFdFql1pOR6
+         QqVZmI7+a0SLe3WR5eyWhX0IPYQYfJdcWNQYnjcNvgjhLxe1HetB1I+sKxH1hbnuMYbf
+         k01GeKLIrzStMtpYpJGboEy3KlXZVhvajgOI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=YCBvbHJTEem4CdRMl6xSWlHE4EIKTvKn+hfEQMXdrcUykaDHml+4C9ZgVCcmq0oYaR
+         30BZKdbbRz4dSVw+MyN0++HmFRn0GOXiKzsGa3S5FCDUA2Elu6Rax8QbyBBA5M3iU4Su
+         8rhINZW3ZLcdJCj3naoUg56LWtYnj2JFufaRg=
+Received: by 10.229.217.148 with SMTP id hm20mr1412777qcb.38.1272839982665; 
+	Sun, 02 May 2010 15:39:42 -0700 (PDT)
+Received: by 10.229.224.65 with HTTP; Sun, 2 May 2010 15:39:42 -0700 (PDT)
+In-Reply-To: <7veihuuwdj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146204>
 
-s=F6ndagen den 2 maj 2010 13.58.42 skrev  Bron Gondwana:
-> Hi,
->=20
-> My toolkit is missing a tool.  I've never seen it
-> or anything like it, but I can describe it - and
-> hopefully someone else knows if it exists.
->=20
-> It's basically a combination of git rebase -i and
-> git add -p.  Something that allows you to split
-> either a single patch or a series of patches that
-> had bad "waypoints".
->=20
-> You can imagine the patch as a journey from A to B.
-> Only, that's a long journey, and the path between
-> them is a big ugly code dump.  The commits along
-> the way include various adventures down rabbit holes
-> that got backed out much later without necessarily
-> tidying up the history along the way.
->=20
-> This tool allows you to easily generate one
-> intermediate state.  Repeated application generates
-> multiple intermediate states until you have a nice
-> tidy patch series, every step of the way bisectable.
->=20
-> So the journey A =3D> B becomes the journey A =3D> W =3D> B.
->=20
-> The tool allows you to quickly choose which hunks to
-> add to patch(A=3D>W) and which to add to patch(W=3D>B),
-> but also lets you make edits to the intermediate state
-> easily so that W will compile even if some bits of the
-> patch were intermingled.
->=20
->=20
-> Does anybody know of a tool that can do this?  Does it
-> sounds like something others would use?  I'm thinking
-> that you could sort of get there with a combination of
-> rebase squash, git add -p and a git stash holding the
-> state of 'B', but it would need to be scripted enough
-> that repeated application isn't a pain.  And a graphical/
-> ncurses interface like the kernel's "make menuconfig" at
-> the very least would make it much easier than paging
-> through piles of diff fragments and hoping you never
-> made a mistake.
+On Mon, May 3, 2010 at 2:00 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Jon Seymour <jon.seymour@gmail.com> writes:
+>
+>> Has consideration ever been given to a submodule-like facility where
+>> the configuration information maintained in the supermodule for the
+>> submodule is not a gitlink but is instead the name of a branch (or
+>> generally, a symbolic reference within the nested submodule).
+>
+> I think this comes up from time to time, and there was an even a slightly
+> more concrete suggestion to us 0{40} in the tree object to denote such an
+> entry.
+>
+> But once people realize that there is no single canonical authoritative
+> repository whose branch heads point at the same commits for everybody in a
+> distributed environment, the line of thought to touch gitlink entries gets
+> retracted or discarded as a misguided idea.
+>
 
-What I do is close to what you describe. I use rebase -i and
-edit commits that contain too much using git gui, i.e. I remove
-stuff that do not belong in that commit and ammend the commit.
-Then I commit that extra "junk" into a (new) commit and continue.
+I understand the point about there being no canonical authority,
+particularly in a truly distributed environment - any use of branches
+would have to imply that users followed some convention when
+publishing the entire set.
 
-The next round with rebase -i I rearrange and squash things. Onviously
-some junk gets deleted too, though the squashing takes care of most
-of that work.
+On the other hand, there is actually precedent for use of convention
+like that in the submodule facility - the use of relative paths to
+describe the relative locations of submodule repos only really works
+if everyone who publishes the supermodule uses the filesystem
+structure for the directories containing the super- and sub-module
+repos.
 
-I have a vision for Eclipse working with the history view (would transl=
-ate=20
-well to any GUI) but when is not in my calendar yet.
+> I however don't think it would hurt to enrich .gitmodules with not just
+> the repository information but with branch information to help clones
+> decide which commit (other than what is recorded in the tree of the
+> superproject's commit) on the named remote tracking branch to try out with
+> the superproject's commit.
+>
+>
 
--- robin
+I can see that this could work. Presumably git submodule sync would be
+modified in this case to help switch branches.
+
+Also needed, I think, would be a way to sync the .gitmodule file with
+the current submodule branch assignments.
+
+I guess there is no reason why I cannot prototype a facility of this
+kind with a local helper script. If I it ends up being useful, I'll
+consider posting a patch.
+
+jon.
