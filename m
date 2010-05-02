@@ -1,57 +1,62 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFD PATCH] revlist/rev-parse: Introduce --heads and --locals
- revision specifiers
-Date: Sun, 2 May 2010 01:00:54 -0400
-Message-ID: <20100502050054.GE14776@coredump.intra.peff.net>
-References: <83fc6259c434cc63f8e64ddf9ac8f90bae0ab2eb.1272557175.git.git@drmicha.warpmail.net>
+Subject: Re: RFD: tables in documentation
+Date: Sun, 2 May 2010 01:06:22 -0400
+Message-ID: <20100502050622.GF14776@coredump.intra.peff.net>
+References: <4BDC74F3.2020206@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun May 02 07:01:01 2010
+X-From: git-owner@vger.kernel.org Sun May 02 07:07:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8RIa-00014V-Tl
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 07:01:01 +0200
+	id 1O8ROj-0004mW-Bg
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 07:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752265Ab0EBFA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 01:00:56 -0400
-Received: from peff.net ([208.65.91.99]:52053 "EHLO peff.net"
+	id S1753257Ab0EBFGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 01:06:24 -0400
+Received: from peff.net ([208.65.91.99]:57824 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751200Ab0EBFAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 01:00:55 -0400
-Received: (qmail 3707 invoked by uid 107); 2 May 2010 05:01:07 -0000
+	id S1751756Ab0EBFGY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 01:06:24 -0400
+Received: (qmail 3771 invoked by uid 107); 2 May 2010 05:06:35 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 02 May 2010 01:01:07 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 May 2010 01:00:54 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 02 May 2010 01:06:35 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 02 May 2010 01:06:22 -0400
 Content-Disposition: inline
-In-Reply-To: <83fc6259c434cc63f8e64ddf9ac8f90bae0ab2eb.1272557175.git.git@drmicha.warpmail.net>
+In-Reply-To: <4BDC74F3.2020206@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146136>
 
-On Sat, May 01, 2010 at 08:36:33PM +0200, Michael J Gruber wrote:
+On Sat, May 01, 2010 at 08:37:39PM +0200, Michael J Gruber wrote:
 
-> Due to the increasing usage of the ref namespace (e.g. notes, replace)
-> the revision specifier "--all" becomes decreasingly useful. But
-> "something like --all" is ineeded for getting a quick overview of
-> the development state of a repository.
+> Currently, all tables are formatted using indentation by spaces. This
+> breaks whenever AsciiDoc's parsing changes.
 > 
-> Introduce --heads and --locals specifiers in order to help with that:
-> 
-> --heads == HEAD --branches --remotes
-> --locals = HEAD --branches --tags
+> Instead, I suggest to use AsciiDoc's table syntax which also produces
+> proper tables in the HTML and man output. I formatted the first part of
+> the first table in git-read-tree(1) like that so that you can compare
+> easily.
 
-I don't have anything against the concept, but "--heads" is a horrible
-name, as it implies refs/heads (which is of course what --branches does.
-Yikes!). I know why you picked it, and once you think about it, yes, it
-does make some sense (it is all the local and remote heads), but I am
-worried that it will cause confusion.
+Conceptually I am in favor of semantic markup where possible. I find the
+resulting manpage a little harder to read, though. Is it possible for us
+to style it a bit more (e.g., such a simple table looks better, IMHO,
+without ascii-art borders).
+
+> I put it up at http://repo.or.cz/w/git/mjg.git/commit/table-example for
+> your viewing pleasure. I'd say it looks great even in links (but not in
+> lynx). It also shows a problem of xmlto with multiple rowspans (the xml
+> is correct, .1 apparently not), which could be circumvented easily by
+> repeating those cells.
+
+Did you put the source up anywhere? I didn't see it, but it would be
+interesting to see how painful it is to write.
 
 -Peff
