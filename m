@@ -1,82 +1,83 @@
-From: "Chris.Cheney" <chris.cheney.nospam@tesco.net>
-Subject: Re: git checkout branch puzzle
-Date: Sun, 2 May 2010 20:09:32 +0000 (UTC)
-Message-ID: <Xns9D6CD773D97E5ChrisCheneytesconet@80.91.229.10>
-References: <Xns9D6BC0C4C8784ChrisCheneytesconet@80.91.229.10> <20100502045901.GD14776@coredump.intra.peff.net> <Xns9D6C65C2DB06EChrisCheneytesconet@80.91.229.10>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 02 22:09:52 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Distinguishing trivial and non-trivial merge commits
+Date: Sun, 02 May 2010 13:12:08 -0700 (PDT)
+Message-ID: <m31vdugj2t.fsf@localhost.localdomain>
+References: <19419.1721.763210.679444@winooski.ccs.neu.edu>
+	<20100502181854.GC16051@progeny.tock>
+	<19421.54064.178345.489772@winooski.ccs.neu.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Sun May 02 22:12:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8fU6-0007Nq-3L
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 22:09:50 +0200
+	id 1O8fWb-0000r5-DA
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 22:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758541Ab0EBUJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 May 2010 16:09:44 -0400
-Received: from lo.gmane.org ([80.91.229.12]:60566 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753974Ab0EBUJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 16:09:43 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O8fTw-0007G8-My
-	for git@vger.kernel.org; Sun, 02 May 2010 22:09:40 +0200
-Received: from 82.18.196.34 ([82.18.196.34])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 May 2010 22:09:40 +0200
-Received: from chris.cheney.nospam by 82.18.196.34 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 02 May 2010 22:09:40 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 82.18.196.34
-User-Agent: Xnews/5.04.25
+	id S932102Ab0EBUMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 16:12:16 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:51992 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758578Ab0EBUMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 16:12:12 -0400
+Received: by wye20 with SMTP id 20so1264961wye.19
+        for <git@vger.kernel.org>; Sun, 02 May 2010 13:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=lYFKtbd6ejSvq2eL+y7ebA2q4hBirwE1kZPqtg8OCww=;
+        b=NbasQ7rWQSRLH9oEEdMw+iFs9w9CcPmZxuBZSmaM7/IxBAN2jophp1DnfWwCNPQ5xr
+         tPoVbdqim8LEPtNYBT9OpSf6r82LfxPWjvYuwiDWPEhgpvNlhhEtKQyvzfqlyAqzfM0Z
+         xKbH3yJOEPwEAHxsPZzHdj5T2gKvb1NxoPxmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=lWmEWQ8/72XggSg4Cenq4d3A1MZEEJn5x5udZ8miBYY4lOJ4Ir2jovVaFEI4Qfv47M
+         9MppH/dBZiHp/Ihh4GZP/u/3S4IF9z+tMROhM6PCVr2CaTkc6XXMAqMxVl++0qbfTvX0
+         CdAUrGreke1rIRINyiN0N3qOgUVybx7L4i4VE=
+Received: by 10.216.86.16 with SMTP id v16mr5830580wee.169.1272831129822;
+        Sun, 02 May 2010 13:12:09 -0700 (PDT)
+Received: from localhost.localdomain (abvt225.neoplus.adsl.tpnet.pl [83.8.217.225])
+        by mx.google.com with ESMTPS id z3sm35585937wbs.10.2010.05.02.13.12.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 02 May 2010 13:12:08 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o42KBd6m014313;
+	Sun, 2 May 2010 22:11:44 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o42KBMNP014309;
+	Sun, 2 May 2010 22:11:22 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <19421.54064.178345.489772@winooski.ccs.neu.edu>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146199>
 
-"Chris.Cheney" <chris.cheney.nospam@tesco.net> wrote in
-news:Xns9D6C65C2DB06EChrisCheneytesconet@80.91.229.10: 
+Eli Barzilay <eli@barzilay.org> writes:
 
-> Jeff King <peff@peff.net> wrote in
-> news:20100502045901.GD14776@coredump.intra.peff.net: 
-> 
->> On Sat, May 01, 2010 at 05:55:47PM +0000, Chris.Cheney wrote:
->> 
->>> I have been using msysgit (curently 1.7.0.2.msysgit.0) for about 18
->>> months and thought that I had managed to understand most things.
->>> However, the following sequence has me baffled:
->>> 
->>> a) on branch 'master', git status shows that the working directory
->>> is clean 
->>> 
->>> b) git checkout HEAD^ gives the usual moan about moving to a head
->>> which isn't a local branch
->>> 
->>> c) git checkout master followed by git status gives "changed but not
->>> updated" and a list of "modified" files
->> 
->> Part (c) shouldn't show anything in "git status". I wonder if it is a
->> line-ending conversion issue, since you are using msysgit, and since
->> that is the usual culprit for files mysteriously looking changed.
->> Might you have recently changed the settings of core.autocrlf?
->> 
->> -Peff
->> 
-> 
-> Thanks for the reply and confirming what I believed about (c). 
-> 
-> It is possible that what you suggest might be involved - it's a
-> 2-developer situation, each using msysgit with their own local
-> repository and a remote master (bare) repository. I'll compare the
-> other's config file against mine.
+> OK, thanks for clarifying that.  For my purpose, I basically just want
+> to know whether there was manual tweaking involved in the merge.  (For
+> my thing I don't even need to see those changes, since I show the
+> overall push diff only.)  What I ended up doing is pretty bad:
 
-Neither of our config files contain autocrlf settings, but it's something 
-that I'll look further into. Neither of us had made recent config changes.
+Well, the compact combined output is thought in such way that 
+"git diff --cc" should be empty except for evil merges, when change
+comes from neither of parents.  See description of --cc format in
+git-diff(1) manpage.
+
+The other side is "git diff --raw" output for merges.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
