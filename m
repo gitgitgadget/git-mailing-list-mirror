@@ -1,90 +1,129 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 2/5] pretty: make %H/%h/etc respect --abbrev[-commit]
-Date: Sun, 2 May 2010 04:17:20 -0500
-Message-ID: <20100502091720.GB1854@progeny.tock>
-References: <1272656128-2002-1-git-send-email-wmpalmer@gmail.com>
- <1272656128-2002-3-git-send-email-wmpalmer@gmail.com>
- <7vocgzyp1f.fsf@alter.siamese.dyndns.org>
- <1272790255.4258.11.camel@walleee>
- <7vaasiwtvt.fsf@alter.siamese.dyndns.org>
+From: "Tilo Schwarz" <tilo@tilo-schwarz.de>
+Subject: Re: How to manage parameter files and code separately using git?
+Date: Sun, 02 May 2010 11:18:30 +0200
+Message-ID: <op.vb2ms4r8a8ed4e@dellschleppa>
+References: <op.vb0195s1a8ed4e@dellschleppa>
+ <7vmxwj5ym8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: wmpalmer@gmail.com, git@vger.kernel.org, peff@peff.net,
-	raa.lkml@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 02 11:17:32 2010
+Content-Type: text/plain; charset=US-ASCII;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 02 11:18:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8VIp-0000Yy-Sy
-	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 11:17:32 +0200
+	id 1O8VJw-0001Iq-2r
+	for gcvg-git-2@lo.gmane.org; Sun, 02 May 2010 11:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756170Ab0EBJR0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 2 May 2010 05:17:26 -0400
-Received: from mail-iw0-f182.google.com ([209.85.223.182]:55450 "EHLO
-	mail-iw0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756141Ab0EBJRZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 May 2010 05:17:25 -0400
-Received: by iwn12 with SMTP id 12so2025066iwn.15
-        for <git@vger.kernel.org>; Sun, 02 May 2010 02:17:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=E9tITmqJ4L1mNGsySyb4oe5oovj+otNFYwXmQYQIm3k=;
-        b=IFcF3WO3o2YzFNdNSSFvqTrUVUrO53Szzeikbfdo7ZyjzqcF3rx3Og6B0IU9bvHA4R
-         Rk3thqgd1BmBIloo6XSu08Pr7HRAlUQPfXL9aCLahAffFRZuGI7MNJw4lWj9eM+iM4if
-         dFI+CKl5zV0Rx12N7I90qwfzlTWhgUhJfgNj8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=HYSo8tCHCVpAvA4iiVNqjqU4RK7R0Xim1SpLfV6cukxXAeyhseW5zAKe/3y/kuVfJM
-         M+n4wreShGY67iuMf1d45dDQWLcT+ZEgF1J0zAE4WiCWumhuwtYCn3Agp6t+cjoOY3N1
-         +IsUZK5KijLitEZnGfMeAC1NcHuDGVhn9fdvU=
-Received: by 10.231.182.206 with SMTP id cd14mr1014095ibb.39.1272791843846;
-        Sun, 02 May 2010 02:17:23 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm3290041iwn.12.2010.05.02.02.17.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 02 May 2010 02:17:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vaasiwtvt.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756196Ab0EBJSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 May 2010 05:18:35 -0400
+Received: from mo-p00-ob.rzone.de ([81.169.146.161]:24341 "EHLO
+	mo-p00-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756182Ab0EBJSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 May 2010 05:18:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1272791912; l=3091;
+	s=domk; d=tilo-schwarz.de;
+	h=In-Reply-To:From:Content-Transfer-Encoding:MIME-Version:Date:
+	References:Subject:To:Content-Type:X-RZG-CLASS-ID:X-RZG-AUTH;
+	bh=O2ykRSwKJNflaSsBg3G1cCnorv4=;
+	b=As3dOQ6XuqDwsFteCBG2asNHqUpPWFQlQ3Poj5n4IfdG5HJx+xx92S5jl04tlJ9lUmK
+	5qRIp5PFnz5xOF/1jAuYXXjqhbluRlNW4/WrHLePda2znjdBrDp4wOCiGyH96b4Nwkes1
+	Ma3G3Q5IXGEGQNWNMdvbDthIb05EuILx6Kw=
+X-RZG-AUTH: :IW0NeWC8cvPlgn0IPTehqi9r6o/0DSXjJ1Me0yWdPTUrUVR0TMXac2ZAlsdx1c9Kh8s=
+X-RZG-CLASS-ID: mo00
+Received: from dellschleppa (p549CD3E5.dip.t-dialin.net [84.156.211.229])
+	by post.strato.de (klopstock mo51) (RZmta 23.0)
+	with ESMTP id a0126fm4288ukJ for <git@vger.kernel.org>;
+	Sun, 2 May 2010 11:18:32 +0200 (MEST)
+In-Reply-To: <7vmxwj5ym8.fsf@alter.siamese.dyndns.org>
+User-Agent: Opera Mail/10.10 (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146153>
 
-Junio C Hamano wrote:
-> Will Palmer <wmpalmer@gmail.com> writes:
+On Sat, 01 May 2010 19:18:55 +0200, Junio C Hamano <gitster@pobox.com>  
+wrote:
 
->> If the current behaviour is actually intentional, we should at least
->> update the documentation to say that %H is the "full commit hash",
->> rather than just the "commit hash".
+Thank you for the detailed explanation!
+
+> This design constraint makes the issue not a version control problem but
+> more of a software engineering problem.  The changes to your parameter
+> file have its own history (e.g. you upgraded your machine last week with
+> different hardware---the software didn't change but the parameter has to)
+> and the history is largely independent of the software that reads the
+> file.  In that sense, you should _never_ tie its history with the history
+> of your software.
+
+Ok.
+
+> At the same time, the history of the parameter file is not completely
+> independent of that of the software.  You may have added a new feature  
+> and code to read a new setting in the parameter file today and older  
+> parameter file would not have a setting for that variable.
+
+Exactly.
+
+> The method I used in my day-job project is something like this:
 >
-> I think it was obvious from the context that lists %H and %h next to =
-each
-> other, with description without "abbreviated" and with "abbreviated" =
-to
-> them.  The description for %H should be rewritten as "commit object n=
-ame"
-> and %h "abbreviated commit object name".
+>  - Include a "config.sample" file and track it in the history of the
+>    source code; the values it gives to the variables are the same as the
+>    default ones.  This file mostly serves as a documentation.
 
-=46WIW, this is why I suggested updating the documentation.  I think th=
-e
-=E2=80=9C%H becomes %h in the presence of --abbrev-commit=E2=80=9D beha=
-vior would be
-more useful in practice.
+I actually did exactly that already (but forgot to mention it in my first  
+mail, sorry!). The problem with this "one" config.sample is, that I need  
+about three really different config files because of really different  
+sensor setups on about five different computers. So when I push on a USB  
+stick, walk to another computer, then pull and try to run the software -  
+bummer, forgot to copy the current config file - walk back, copy ...
+But maybe the solution below solves this too. Or I write a little script  
+doing the push and parameter file copy.
 
-But I am not fanatical about it.  Maybe this functionality should get
-some other letter and I would just not use %H.
+>  - Design your parameter mechanism in a way that:
+>
+>    - a parameter file can include another;
 
-Jonathan
+Can't do that yet.
+
+>    - an unrecognized parameter setting is ignored;
+
+Can do.
+
+>    - a variable definition that happens later overrides an earlier
+>      definition.
+
+Can do.
+
+>  - Have a real parameter file that is _not_ tracked in the history of the
+>    source code.  Have it include parameter.sample and then define machine
+>    specific settings after that to override.
+
+Good idea.
+
+> It is only required for the "real" parameter file not to be tracked in  
+> the history of the source code---it is perfectly fine to track it in a
+> separate history.  The easiest way to do this would be to keep a  
+> parameter working tree next door, and "ln -s ../params/config config" in  
+> the working tree for the source code.  You could keep this symlink  
+> tracked in the
+> source history, but you do not have to.
+
+I see. So if I want parameter file history the only proper solution is to  
+have a separate parameter file git repo, right?
+
+> You will try to read from ./config, which will include ./config.sample in
+> order to read the default, and then read the customized setting that
+> appear later in ./config.  Because of the symlink, you will actually be
+> reading from ../params/config next door.
+
+Ok, will give it a try.
+
+-- 
+Regards,
+
+	Tilo
