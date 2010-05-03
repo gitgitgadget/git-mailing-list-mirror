@@ -1,73 +1,64 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: RFD: Shipping GitBrowser.js for instaweb
-Date: Mon, 03 May 2010 09:57:12 +0200
-Message-ID: <4BDE81D8.8070505@drmicha.warpmail.net>
-References: <4BDDA780.7090500@drmicha.warpmail.net> <m3wrvmf4ei.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 03 09:57:25 2010
+From: "Chris.Cheney" <chris.cheney.nospam@tesco.net>
+Subject: Re: git checkout branch puzzle
+Date: Mon, 3 May 2010 08:06:15 +0000 (UTC)
+Message-ID: <Xns9D6D5CD466CE2ChrisCheneytesconet@80.91.229.10>
+References: <Xns9D6BC0C4C8784ChrisCheneytesconet@80.91.229.10> <20100502045901.GD14776@coredump.intra.peff.net> <Xns9D6C65C2DB06EChrisCheneytesconet@80.91.229.10> <Xns9D6CD773D97E5ChrisCheneytesconet@80.91.229.10> <20100503064053.GA20002@coredump.intra.peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 03 10:06:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8qWm-0003Wr-VJ
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 09:57:21 +0200
+	id 1O8qfi-00075t-5C
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 10:06:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932261Ab0ECH5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 03:57:15 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33013 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932153Ab0ECH5P (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 03:57:15 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A5260F200A;
-	Mon,  3 May 2010 03:57:14 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 03 May 2010 03:57:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=VUdIpmUf0A5ygY+9Z5ek1T+nJP8=; b=PL8BsqxbdLkrcIpu7sof2bHLfcpLVFaHKK7E5QpZSS5mVTsAm7tPB/DXrhbV/eerK+vWHKWRZKSEt3yo2o8J9J7fSx9cg/cFN2Caoqs5LHUcN3kGBGhWitnBChfqslnDvn//MZQMtOV6FOW+JKwmuRZeALheo/e91H+HIeKfLt4=
-X-Sasl-enc: jvla1q4UnAGs+pukLP9ZRpraPc8irBYy3xEGFv9zhSMR 1272873434
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1C5E51ABCD;
-	Mon,  3 May 2010 03:57:13 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <m3wrvmf4ei.fsf@localhost.localdomain>
+	id S932376Ab0ECIGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 04:06:30 -0400
+Received: from lo.gmane.org ([80.91.229.12]:45063 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932241Ab0ECIG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 04:06:27 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O8qfZ-000721-BU
+	for git@vger.kernel.org; Mon, 03 May 2010 10:06:25 +0200
+Received: from 81.100.117.68 ([81.100.117.68])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 May 2010 10:06:25 +0200
+Received: from chris.cheney.nospam by 81.100.117.68 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 May 2010 10:06:25 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 81.100.117.68
+User-Agent: Xnews/5.04.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146222>
 
-Jakub Narebski venit, vidit, dixit 02.05.2010 22:14:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
+Jeff King <peff@peff.net> wrote in
+news:20100503064053.GA20002@coredump.intra.peff.net: 
+
+> On Sun, May 02, 2010 at 08:09:32PM +0000, Chris.Cheney wrote:
 > 
->> I was wondering whether it would make sense to ship GitBrowser.js with
->> Git and how much it would take to do so.
->>
->> My personal answer to the 1st Q is Yes: instaweb as well as simple
->> gitweb installs would benefit from a graphical DAG viewer.
->>
->> About the required effort I have no clue: I find it difficult to see
->> through which repo contains current gitweb, current repo.or.cz mods, and
->> especially the GitBrowser integration bits. Maybe we could ship the
->> integration bits without the actual GitBrowser if that is more feasible?
+>> Neither of our config files contain autocrlf settings, but it's
+>> something that I'll look further into. Neither of us had made recent
+>> config changes. 
 > 
-> The integration parts are actually present in gitweb, I think.  It is
-> a matter of configuration to enable 'graphiclog' link like in
-> http://repo.or.cz
-> 
-> GitBrowser.js is not, I think, the best solution for having graphical
-> history in gitweb, but would do...
+> I believe autocrlf is on by default for msysgit. But if there is
+> nothing in your config, then probably nothing changed. If you can
+> reproduce the situation, it might be worth narrowing down a simple
+> test case and posting the exact commands and output.
 
-After having a more thorough look at it I agree... We don't want to
-inflate $GIT_DIR/gitweb more than necessary.
+Thanks. Indeed, after asking here, that was to be my next step - I need to 
+restock up on round tuits :-)
 
-But what are the alternatives? Something svg/canvas would be nice, I
-guess. The ruby frontends with graphlog don't convince me at all
-(neither performance-wise nor layout-wise).
+FWIW My money is on a rm/git-rm or a mv/git-mv "user" error.
 
-Michael
+Chris
