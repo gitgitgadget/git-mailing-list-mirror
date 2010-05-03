@@ -1,76 +1,116 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] diff: add a 'path' meta header for non-renames and 
-	non-copies
-Date: Tue, 4 May 2010 00:55:46 +0200
-Message-ID: <m2i36ca99e91005031555x4bb2df54yb47058d9f7d5342c@mail.gmail.com>
-References: <1272852221-14927-1-git-send-email-eli@cloudera.com>
-	 <1272868072-12120-1-git-send-email-bert.wesarg@googlemail.com>
-	 <7viq75tpaw.fsf@alter.siamese.dyndns.org>
-	 <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
-	 <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: how to delete the entire history before a certain commit
+Date: Tue, 04 May 2010 01:11:52 +0200
+Message-ID: <hrnl7o$nnf$1@dough.gmane.org>
+References: <hrnidr$etm$1@dough.gmane.org> <m3ocgwfvw2.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eli Collins <eli@cloudera.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 04 00:55:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 04 01:12:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O94YL-0004BE-7q
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 00:55:53 +0200
+	id 1O94o7-0001us-GV
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 01:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759538Ab0ECWzs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 May 2010 18:55:48 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:39140 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758802Ab0ECWzr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 18:55:47 -0400
-Received: by fxm10 with SMTP id 10so2653026fxm.19
-        for <git@vger.kernel.org>; Mon, 03 May 2010 15:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=z1+zakV5OpC/pJmHkjSK5MvfMNwDJuGGHfmPIacQG1c=;
-        b=X3sgTkoBlDHZTLKGdqTux1ZUOAd2PVd0He1LvCHArQKX7yPcxQIwqrBvMaj5khBdy9
-         qq8+faWgB/06SuZaWn+hNsJfbIUQRkAZ3ozVCvYteVUjzxTCycF/D+6xcs63E3mF9Eyh
-         w6oc9QMYJWcGZnD9RQM2Q/AJ2mTOGyr4hjf3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WVtO48+c4jdIVbKrX3ByaVSnZZBZK8XtxkLRh7hLl6k8lmYqqJ3PTqxztm0t5ZOzOj
-         FCprl1DMWpQEaHb4LStDF7Hn3h1r4dYXuzb8EYZyVSvI9OsC97WT2jPUjbBVX8JaLsUf
-         5J38rsBmHZHUO7r8UDhAaQMC75ZtHcKbjkusQ=
-Received: by 10.223.98.83 with SMTP id p19mr3613489fan.27.1272927346409; Mon, 
-	03 May 2010 15:55:46 -0700 (PDT)
-Received: by 10.223.113.146 with HTTP; Mon, 3 May 2010 15:55:46 -0700 (PDT)
-In-Reply-To: <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
+	id S1759743Ab0ECXMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 19:12:05 -0400
+Received: from lo.gmane.org ([80.91.229.12]:40500 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759729Ab0ECXMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 19:12:01 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O94nw-0001rd-BV
+	for git@vger.kernel.org; Tue, 04 May 2010 01:12:00 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 May 2010 01:12:00 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 May 2010 01:12:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <m3ocgwfvw2.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146268>
 
-On Mon, May 3, 2010 at 18:29, Junio C Hamano <gitster@pobox.com> wrote:
-> Bert Wesarg <bert.wesarg@googlemail.com> writes:
->
->> As far as I understand git_diff_ui_config() applies only for "git
->> diff" not for any of the plumping "git diff-*" tools.
->
-> Ah, I missed that the patch was to the diff_ui parser. =C2=A0Sorry fo=
-r
-> confusion and thanks for straightening me up.
->
+Hi Jakub,
 
-So, now that I render your arguments voidless, do you have any other
-thoughts on adding a <path> extended header for non-renames and
-non-copies?
+Jakub Narebski wrote:
+> Gelonida <gelonida@gmail.com> writes:
+> 
+>> We have a git repository, whose size we want to reduce drastically due
+>> to frequent clone operations and a slow network connection.
+>  
+> Why frequent *clone* operations, instead of using "git fetch" or
+> equivalent ("git pull" which is fetch+merge, or "git remote update")?
 
-Regards,
-Bert
+The clone is part of the deployment process and would IIRC be equivalent
+to a 'svn export'
+Almost certainly one can also improve this, but this should probably
+discussed in another thread.
+
+The sequence on some remote hosts is.
+- git clone tag dirname
+- rm -rf dirname/.git
+- tar cvfz dirname.tgz dirname
+
+
+> 
+> If network is slow, you can do what others did in similar situations:
+> use hook to allow only not to large fetches (to prevent cloning)
+
+
+> directly on server, and provide bundle (see git-bundle(1)) to "seed"
+> the clone; it can be on dumb server (served resumably), and can be
+> also served by BitTorrent or equivalent.
+The server NW is fast, but the clients' network connection not therefore
+no need to offload the server.
+>  
+>> The idea is following:
+>>
+>> * archive the git repository just in case we really have to go back in
+>> history.
+>>
+>>
+>> create a new git repository, which shall only contain last month's activity.
+>>
+>> all changes before should be squashed together.
+>> It would be no problem if the very first commit remains unmodified.
+> 
+> If you want to simply _remove_ history before specified commit,
+> instead of squashing it, the best solution would be to use grafts to
+> cauterize (cut) history, check using [graphical] history viewer that
+> you cut it correctly, and then then use git-filter-branch to make this
+> cut permanent.
+
+This sounds exactly as what I'd like to do.
+I used "git gui" => "Visualize All Branch History" y to choose a nice
+single cutoff point.
+I just didn't know how to apply the cut.
+
+So the command to look for is git-filter-branch, right ?
+I'll read the doc.
+
+> 
+> You can later use grafts or refs/replaces/ mechanism to join "current"
+> history with historical repository.
+
+Probably we wont need this, but this sounds rather interesting and is
+good to know.
+
+
+
+Thanks a lot
