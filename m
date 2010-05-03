@@ -1,68 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH RFC] for-each-ref: Field with abbreviated objectname
-Date: Mon,  3 May 2010 22:25:19 +0200
-Message-ID: <61d114759b023b3937f8417ce44c3361f345c6f1.1272918259.git.git@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: how to squash a few commits in the past
+Date: Mon, 03 May 2010 22:45:55 +0200
+Message-ID: <hrncm3$pg8$1@dough.gmane.org>
+References: <loom.20100503T112508-677@post.gmane.org> <4BDEA0D7.9090201@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 03 22:25:46 2010
+X-From: git-owner@vger.kernel.org Mon May 03 22:46:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O92D1-0000px-6J
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 22:25:43 +0200
+	id 1O92X1-0004Ps-0s
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 22:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791Ab0ECUZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 16:25:35 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54271 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756729Ab0ECUZe (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 16:25:34 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0F89AF4655;
-	Mon,  3 May 2010 16:25:30 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 03 May 2010 16:25:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=atek7/+EqhgcOR2A2qSOlUqdvVI=; b=cqVkKipvocGamYJOl0pKzYv4DY7zNHd1rrEoEmFGZ5Td1caq/NcKGd2ymCXaaQDZUrp7XjU+SquvItPljs0S43RqvozM+4mophMmoXNK2aXK6JVsR1Zwmb8KcjwcUpUPcOxPMGjXH1ZhRy0xYZw6ll+KwkbPiGTW9Gj+BRMKUiM=
-X-Sasl-enc: zUtmr3P7jRVeuQ3O2MLWPxTKP38gy6IqkWnxjwiQDlCN 1272918319
-Received: from localhost (p5DCC068A.dip0.t-ipconnect.de [93.204.6.138])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 65F94437AB;
-	Mon,  3 May 2010 16:25:19 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.328.g9993c
+	id S1755002Ab0ECUqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 16:46:17 -0400
+Received: from lo.gmane.org ([80.91.229.12]:40061 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754775Ab0ECUqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 16:46:16 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O92Wm-0004HM-I3
+	for git@vger.kernel.org; Mon, 03 May 2010 22:46:08 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 May 2010 22:46:08 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 03 May 2010 22:46:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <4BDEA0D7.9090201@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146254>
 
-Introduce a :short modifier to objectname which outputs the abbreviated
-object name.
+Hi Michael,
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Notes:
-    I hope this finds the favour of the for-each-ref-man.
-    
-    TODO: test, doc
+Michael J Gruber wrote:
+> Gelonida venit, vidit, dixit 03.05.2010 11:33:
+>>
+>>
+>> The plan would be:
+>> - create a new git repository without the huge file
+>> - let everybody clone the new repository and continue working.
+>>
+>>
+>> I thought, that I could squash the commit adding the file, removing the file and
+>> the commits in between into one commit.
+> 
+> You don't need to squash the commits in between. Use git rebase -i A^ if
+> A is the commit introducing the large file. Then, either edit that first
+> commit (to not add the file) or reorder so that the removal commit is
+> squashed into A.
 
- builtin/for-each-ref.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 62be1bb..3a97953 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -227,6 +227,9 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
- 			strcpy(s, sha1_to_hex(obj->sha1));
- 			v->s = s;
- 		}
-+		else if (!strcmp(name, "objectname:short")) {
-+			v->s = find_unique_abbrev(obj->sha1, DEFAULT_ABBREV);
-+		}
- 	}
- }
- 
--- 
-1.7.1.328.g9993c
+I seem to misunderstand your suggestion.
+
+git rebase -i 740ebdf9b^
+returns following output
+> fatal: Needed a single revision
+> Invalid base
+
+
+what am I missing?
