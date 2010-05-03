@@ -1,77 +1,80 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Adding support for "plackup" and similar web server tools to
-	git-instaweb
-Date: Mon, 3 May 2010 13:56:24 -0700
-Message-ID: <20100503205624.GA3791@dcvr.yhbt.net>
-References: <201005020317.42112.jnareb@gmail.com>
+From: Cheng Renquan <crquan@gmail.com>
+Subject: Re: [RFC] git branch --status ?
+Date: Tue, 4 May 2010 05:03:39 +0800
+Message-ID: <t2s91b13c311005031403h37c5e066va6870a3ae0a79420@mail.gmail.com>
+References: <p2i91b13c311005031131vc876475fn674c0ceffbdb3cf6@mail.gmail.com>
+	 <4BDF2A02.1050907@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 03 22:56:33 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 03 23:03:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O92gq-0001Vd-Eu
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 22:56:32 +0200
+	id 1O92ns-0005Uj-82
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 23:03:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756696Ab0ECU41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 16:56:27 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:43199 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754921Ab0ECU40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 16:56:26 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4538F1F744;
-	Mon,  3 May 2010 20:56:24 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <201005020317.42112.jnareb@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752950Ab0ECVDm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 May 2010 17:03:42 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:41760 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752636Ab0ECVDl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 17:03:41 -0400
+Received: by vws19 with SMTP id 19so2167311vws.19
+        for <git@vger.kernel.org>; Mon, 03 May 2010 14:03:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vB2yKABmtyzvTE0mOsKSqcXov1zs6t1Hop0Frnsn3KM=;
+        b=w0oXCwvY7QrXa4+XGVC6ihmArRp1szepmEoaAduMFIJcPhWPwm/39kXa7+7fvsgnxP
+         7kBCldnjZd6DlmF/aqcr3nwJniTt1euuPncyQE8nCNDdcPbjdlHhWaObG6edeDrntxvY
+         7MtO/lumbZLrAS132KsTjeMbRtAyST44Z3cJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TtruEfnTtGN9ncNFi2jGTqI/jcy0/C14G20QAdtIOoGDd0j5o36bROTVjhEI2R76W1
+         DHejZjvQPtuLZM8yseR9YWrhtJtveS4kbnNk2S6x+T0lDQRqxx8MtZVoRuHmB3MNKCEt
+         SK5fZH2CTmXiT7M+cz5FzmbBNjuTJ0Pd8kqe4=
+Received: by 10.220.127.75 with SMTP id f11mr10602393vcs.218.1272920620046; 
+	Mon, 03 May 2010 14:03:40 -0700 (PDT)
+Received: by 10.220.16.79 with HTTP; Mon, 3 May 2010 14:03:39 -0700 (PDT)
+In-Reply-To: <4BDF2A02.1050907@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146258>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> The problem is that contrary to other web servers that can be used by
-> git-instaweb, (namely apache2, lighttpd, mongoose and webrick), the
-> 'plackup' utility is configured using command line options, and not
-> via configuration file (well, one can use configuration file, but it
-> depends on the web server run from plackup).
-> 
-> How should one go with adding support for such httpd?  My first attempt
-> was putting full command line into 'httpd' in resolve_full_httpd():
-> 
-> +       *plackup*)
-> +               # plackup is configured via command-line options
-> +               bind=
-> +               test x"$local" = xtrue && bind="--host=127.0.0.1"
-> +               httpd="$httpd --port=$port $bind --app=$fqgitdir/gitweb/app.psgi"
-> +               ;;
-> 
-> The default standalone web server used by plackup (HTTP::Server::PSGI)
-> does not have daemon mode, so we would have to do the same as for moongose
-> web server: set to background and save pid in pidfile in git-instaweb.
-> 
-> OTOH plackup prints information / logs to STDERR, so it would have to be
-> silenced or redirected to error_log.  Also plackup does not need to have
-> "$fqgitdir/gitweb/httpd.conf" passed as last argument, but it needs to
-> be passed PSGI wrapper for CGI (I'd rather not use httpd.conf, but rather
-> app.psgi or gitweb.psgi for that).
-> 
-> 
-> So how should one go with adding support for new web server to git-instaweb,
-> that is configured via command line options (--port, --host) and not via
-> config file?
+On Tue, May 4, 2010 at 3:54 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> You may mean something like
+>
+> git log --no-walk --format=3D"%d [%h %an %ad %s]" --branches
+>
+> although Jeff will tell you to use
+>
+> git for-each-ref --format=3D"%(refname:short) [%(objectname) %(author=
+name)
+> %(authordate) %(subject)]" refs/heads
 
-Hi Jakub,
+changed to refs/remotes, it works well, thanks,
 
-How about generating a small shell script that wraps plackup with the
-appropriate command-line options?
+git for-each-ref --format=3D'%(refname:short)%09[%(objectname)
+%(authorname) %(authordate:relative) %(subject)]' refs/remotes
 
--- 
-Eric Wong
+> and will probably know how to abbreviate the objectname here ;)
+>
+> Cheers,
+> Michael
+>
+
+--
+Cheng Renquan (=E7=A8=8B=E4=BB=BB=E5=85=A8), Singapore
