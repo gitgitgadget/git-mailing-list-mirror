@@ -1,68 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: add a 'path' meta header for non-renames and 
- non-copies
-Date: Mon, 03 May 2010 09:29:24 -0700
-Message-ID: <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
-References: <1272852221-14927-1-git-send-email-eli@cloudera.com>
- <1272868072-12120-1-git-send-email-bert.wesarg@googlemail.com>
- <7viq75tpaw.fsf@alter.siamese.dyndns.org>
- <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
+From: John Dlugosz <JDlugosz@TradeStation.com>
+Subject: Strange git crashing problem
+Date: Mon, 3 May 2010 13:24:21 -0400
+Message-ID: <89030B4A18ECCD45978A3A6B639D1F2403374EF348@FL01EXMB01.trad.tradestation.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eli Collins <eli@cloudera.com>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon May 03 18:29:44 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 03 19:24:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8yWc-0007Eg-RA
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 18:29:43 +0200
+	id 1O8zNu-0004Bg-82
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 19:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933215Ab0ECQ3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 12:29:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34620 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933091Ab0ECQ3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 12:29:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EC8B0B059B;
-	Mon,  3 May 2010 12:29:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=B1VuZDOQBWDinvRWocT0MwKLmg0=; b=PWNBJZ
-	WN+aeBUaRwyRuG96+rJvgyMzjjQkIuYa6XZt/E8ylwstpYzcRN81CvwWqhfl7eGF
-	x1Ikl6ocjEwJoTtoyOFEtq6uoVmYuGDFndIKBv7CuVQW3kdqsg8Zxo5oEmWhMbcQ
-	LgsIeBrWhc/B07y9e2GB9oj/UBKuOGF29YTXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AqpdjBLNrB4g+EAfCCldjO60FtsIl1mq
-	4v5eF6xvrHkL2KXUgXRzGcfbC62jd6oDSZ2ekGdUV5CN8waM69YxHWja8FiWYsRd
-	M+okdFqY+cIbQdrHNmgUVpQNiHE3vrFXicwY5UPO4jMxTMIIObySZ3lKlEpvrv+O
-	An5xJIyAg+o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B76EAB0599;
-	Mon,  3 May 2010 12:29:29 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 146BDB0592; Mon,  3 May
- 2010 12:29:25 -0400 (EDT)
-In-Reply-To: <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
- (Bert Wesarg's message of "Mon\, 3 May 2010 09\:37\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0C32F892-56D1-11DF-B84D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754907Ab0ECRYe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 May 2010 13:24:34 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:48140 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754759Ab0ECRYd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 13:24:33 -0400
+X-ASG-Debug-ID: 1272907465-7721750c0001-QuoKaX
+Received: from FL01EXCAHT02.trad.tradestation.com (fl01excaht02.trad.tradestation.com [10.4.0.167]) by mail2.tradestation.com with ESMTP id nlzfDuZrkHfV19yO (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO) for <git@vger.kernel.org>; Mon, 03 May 2010 1
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
+ FL01EXCAHT02.trad.tradestation.com ([::1]) with mapi; Mon, 3 May 2010
+ 13:24:24 -0400
+X-Barracuda-BBL-IP: ::1
+X-Barracuda-RBL-IP: ::1
+X-ASG-Orig-Subj: Strange git crashing problem
+Thread-Topic: Strange git crashing problem
+Thread-Index: Acrq4jj45zK5ZReUQgCa2H/SlnIHOg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-cr-hashedpuzzle: A9HR B3EX CTIB EHUd EX5Q ElXx FTpq FqXv GkjH HBrS IZbh
+ JFBZ JUVK JVvI JmZ1
+ Jo3o;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{9563841A-8D17-4D04-A9CC-65094E580C22};agBkAGwAdQBnAG8AcwB6AEAAdAByAGEAZABlAHMAdABhAHQAaQBvAG4ALgBjAG8AbQA=;Mon,
+ 03 May 2010 17:24:21
+ GMT;UwB0AHIAYQBuAGcAZQAgAGcAaQB0ACAAYwByAGEAcwBoAGkAbgBnACAAcAByAG8AYgBsAGUAbQA=
+x-cr-puzzleid: {9563841A-8D17-4D04-A9CC-65094E580C22}
+acceptlanguage: en-US
+X-Barracuda-Connect: fl01excaht02.trad.tradestation.com[10.4.0.167]
+X-Barracuda-Start-Time: 1272907465
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146243>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+I'm trying to do an interactive rebase, and after editing the todo file=
+, the git process just hangs.=A0 I was doing that a lot Friday and it w=
+orked fine.=0D
+=0D
+So I did the work manually using reset and cherry picking.=A0 The reset=
+ gave a strange error:=0D
+=A0=A0 Deletion of directory 'compile.vc9' failed.=A0 Should I try agai=
+n?=0D
+This is a dialog box in gitk.=A0 I suppose the interactive prompt of wh=
+atever sort is what messed up the rebase, and that would be a bug.=A0 I=
+ don't know if it applies to the main line or msysgit only.=0D
+=0D
+But, why would it be trying to delete a directory anyway?=A0 That direc=
+tory had changed files in it, but it was not created as part of any com=
+mit anywhere near here.=0D
 
-> As far as I understand git_diff_ui_config() applies only for "git
-> diff" not for any of the plumping "git diff-*" tools.
-
-Ah, I missed that the patch was to the diff_ui parser.  Sorry for
-confusion and thanks for straightening me up.
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ G=
+S: TRAD) of three operating subsidiaries, TradeStation Securities, Inc.=
+ (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a=
+ trading software and subscription company, and TradeStation Europe Lim=
+ited, a United Kingdom, FSA-authorized introducing brokerage firm. None=
+ of these companies provides trading or investment advice, recommendati=
+ons or endorsements of any kind. The information transmitted is intende=
+d only for the person or entity to which it is addressed and may contai=
+n confidential and/or privileged material. Any review, retransmission, =
+dissemination or other use of, or taking of any action in reliance upon=
+, this information by persons or entities other than the intended recip=
+ient is prohibited. If you received this in error, please contact the s=
+ender and delete the material from any computer.
