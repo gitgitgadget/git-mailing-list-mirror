@@ -1,104 +1,158 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/4] Documentation/notes: adjust description to use
- configuration section
-Date: Mon, 3 May 2010 18:42:09 -0500
-Message-ID: <20100503234209.GB27483@progeny.tock>
-References: <20100503233604.GA27451@progeny.tock>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: how to delete the entire history before a certain commit
+Date: Mon, 03 May 2010 16:42:58 -0700 (PDT)
+Message-ID: <m3k4rkft7k.fsf@localhost.localdomain>
+References: <hrnidr$etm$1@dough.gmane.org>
+	<m3ocgwfvw2.fsf@localhost.localdomain> <hrnl7o$nnf$1@dough.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 04 01:42:34 2010
+Cc: git@vger.kernel.org
+To: Gelonida <gelonida@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 04 01:43:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O95HS-000405-QL
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 01:42:31 +0200
+	id 1O95I6-0004Jl-Ux
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 01:43:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759980Ab0ECXmB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 19:42:01 -0400
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:48530 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759972Ab0ECXl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 19:41:59 -0400
-Received: by mail-yw0-f198.google.com with SMTP id 36so1477280ywh.4
-        for <git@vger.kernel.org>; Mon, 03 May 2010 16:41:58 -0700 (PDT)
+	id S1759935Ab0ECXnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 19:43:05 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:49107 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759797Ab0ECXnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 19:43:01 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1300343fga.1
+        for <git@vger.kernel.org>; Mon, 03 May 2010 16:43:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=y8UPAzvksMyC7ufE3fH09W8uez0bCtXxpggNw1RsxeY=;
-        b=IxAOuDrGcbUki4Whg+DaHEOnL79oXwvnv8LEOPl6EB+d058cu43xIr+zt8vFLdCkoc
-         cPVYWZidRCF5h5uuPRKXrdOIRMP0k7WK2xRgAomxQTwaC4WBEbCsiEOr2klKJCiqZqh6
-         ygmG+cbIMfbfvooFB7UmbWlSoYtRrd1w1bHew=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Lc8af8W0aWacUmsCqGMcLGhDNaJ8y/KS8zIeD8OE0fE=;
+        b=faTTS8oE4YfSeN+kTO6AX/MmTzO73z+5Gj9oApArtEvher8oyRsr4oFvGw6uF+y5cG
+         gBKvgOjjFnwjOC3Tw59DoJST0p69CAMEfqV/aaUMeDqv1tAjz3UxW5siIknrqK30fFCf
+         c2d8UX1yNjDNo3NayI6iOIO5HMxMziNLoafgk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=E1e98IYaivGG+nZ40HxiIxG01fXd6wqKOxDZ8pv9Y1IPotqldcsiBwgXlj6EoBWJ+Q
-         H0Bq/nPxetnyJWK/chC4h6oquDE5Tnnodoaul6JvguRcAcE01G5KRJd3/7SL5qdTPKc3
-         uUlkDHtlw8WQ7TLWWfngloMXRA6t+Ave6FyZE=
-Received: by 10.151.24.5 with SMTP id b5mr9146485ybj.79.1272930116233;
-        Mon, 03 May 2010 16:41:56 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm4733539iwn.2.2010.05.03.16.41.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 03 May 2010 16:41:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100503233604.GA27451@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=JO2CW50EuJ7vSCKkvI70An+GKv6as0Lzucqu6Q8n93jQSkGfBjdWhB/o06tL3R9x72
+         TqoaJUuM0ztydzT8WOZgP4wD1hjYTV+qqXO9oasiF20mgiW0NkUe1Se3PeABEptrvrDQ
+         +mulWAw47hqNYCtnZnVc93gkRpDfEgbMNNIcg=
+Received: by 10.87.47.23 with SMTP id z23mr11334142fgj.28.1272930179736;
+        Mon, 03 May 2010 16:42:59 -0700 (PDT)
+Received: from localhost.localdomain (abrz91.neoplus.adsl.tpnet.pl [83.8.119.91])
+        by mx.google.com with ESMTPS id e3sm11608205fga.24.2010.05.03.16.42.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 May 2010 16:42:58 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o43NgYY6003159;
+	Tue, 4 May 2010 01:42:44 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o43NgO5s003134;
+	Tue, 4 May 2010 01:42:24 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <hrnl7o$nnf$1@dough.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146273>
 
-Introduce the default notes ref early on to give the reader a frame of
-reference for understanding the rest of the description.
+Gelonida <gelonida@gmail.com> writes:
+> Jakub Narebski wrote:
+>> Gelonida <gelonida@gmail.com> writes:
+>> 
+>>> We have a git repository, whose size we want to reduce drastically due
+>>> to frequent clone operations and a slow network connection.
+>>  
+>> Why frequent *clone* operations, instead of using "git fetch" or
+>> equivalent ("git pull" which is fetch+merge, or "git remote update")?
+> 
+> The clone is part of the deployment process and would IIRC be equivalent
+> to a 'svn export'
+> Almost certainly one can also improve this, but this should probably
+> discussed in another thread.
+> 
+> The sequence on some remote hosts is.
+> - git clone tag dirname
+> - rm -rf dirname/.git
+> - tar cvfz dirname.tgz dirname
+ 
+Why not simply (after enabling 'upload-archive' service in git-daemon
+if you serve via git:// URL, and probably similar in the case of
+SSH access management by gitosis or gitolite)
 
-Cc: Johan Herland <johan@herland.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-notes.txt |   14 ++++++--------
- 1 files changed, 6 insertions(+), 8 deletions(-)
+  $ git archive --remote=<repo> <tag>
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index b26598e..0594776 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -23,6 +23,10 @@ DESCRIPTION
- This command allows you to add/remove notes to/from objects, without
- changing the objects themselves.
+(where <repo> is <dirname> in your example)?
+
+>>> The idea is following:
+>>>
+>>> * archive the git repository just in case we really have to go back in
+>>> history.
+>>>
+>>>
+>>> create a new git repository, which shall only contain last month's activity.
+>>>
+>>> all changes before should be squashed together.
+>>> It would be no problem if the very first commit remains unmodified.
+>> 
+>> If you want to simply _remove_ history before specified commit,
+>> instead of squashing it, the best solution would be to use grafts to
+>> cauterize (cut) history, check using [graphical] history viewer that
+>> you cut it correctly, and then then use git-filter-branch to make this
+>> cut permanent.
+> 
+> This sounds exactly as what I'd like to do.
+> I used "git gui" => "Visualize All Branch History" y to choose a nice
+> single cutoff point.
+> I just didn't know how to apply the cut.
+
+You can read about grafts in git-filter-branch(1) manpage, in
+gitrepository-layout(5) git repository layout description, and in
+gitglossary(7) a git glossary.
+
+In short, each line in .git/info/grafts consist of sha1 id of object,
+followed by space-separated list of its effective (grafted) parents.
+So to cut history e.g. after commit a3eb250f996bf5e, you need to put
+line containing only this SHA-1 in .git/info/grafts file, e.g.:
+
+  $ git rev-parse --verify a3eb250f996bf5e >> .git/info/grafts
  
-+By default, notes are saved to and read from `refs/notes/commits`, but
-+this default can be overridden.  See the CONFIGURATION and ENVIRONMENT
-+sections below.
-+
- A typical use of notes is to extend a commit message without having
- to change the commit itself. Such commit notes can be shown by `git log`
- along with the original commit message. To discern these notes from the
-@@ -30,14 +34,8 @@ message stored in the commit object, the notes are indented like the
- message, after an unindented line saying "Notes (<refname>):" (or
- "Notes:" for the default setting).
+> So the command to look for is git-filter-branch, right ?
+> I'll read the doc.
+
+
+As you would see in git-filter-branch(1) documentation, simple
+
+  $ git filter-branch --all
+
+(no filter) would make history described by grafts permanent.
+
+Note that this will be rewriting history, and you would make it (much)
+harder on any contributor who based his/her work on commits from
+before "rebase".
  
--This command always manipulates the notes specified in "core.notesRef"
--(see linkgit:git-config[1]), which can be overridden by GIT_NOTES_REF.
--To change which notes are shown by 'git-log', see the
--"notes.displayRef" configuration.
--
--See the description of "notes.rewrite.<command>" in
--linkgit:git-config[1] for a way of carrying your notes across commands
--that rewrite commits.
-+See the "notes.rewrite.<command>" configuration for a way of carrying
-+notes across commands that rewrite commits.
- 
- 
- SUBCOMMANDS
+>> 
+>> You can later use grafts or refs/replaces/ mechanism to join "current"
+>> history with historical repository.
+> 
+> Probably we wont need this, but this sounds rather interesting and is
+> good to know.
+
+Grafts were for example used to fuse (join) current and historical
+Linux kernel repositories, after Linux kernel moved from BitKeeper to
+Git.
+
+The 'git-replace' mechanism is meant as modern, transferable and safe
+replacements for grafts file.
+
 -- 
-1.7.1
+Jakub Narebski
+Poland
+ShadeHawk on #git
