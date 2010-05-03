@@ -1,103 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: how to delete the entire history before a certain commit
-Date: Mon, 03 May 2010 15:45:01 -0700 (PDT)
-Message-ID: <m3ocgwfvw2.fsf@localhost.localdomain>
-References: <hrnidr$etm$1@dough.gmane.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] diff: add a 'path' meta header for non-renames and 
+	non-copies
+Date: Tue, 4 May 2010 00:55:46 +0200
+Message-ID: <m2i36ca99e91005031555x4bb2df54yb47058d9f7d5342c@mail.gmail.com>
+References: <1272852221-14927-1-git-send-email-eli@cloudera.com>
+	 <1272868072-12120-1-git-send-email-bert.wesarg@googlemail.com>
+	 <7viq75tpaw.fsf@alter.siamese.dyndns.org>
+	 <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
+	 <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gelonida <gelonida@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 04 00:45:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eli Collins <eli@cloudera.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 04 00:55:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O94O1-0000HQ-EI
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 00:45:13 +0200
+	id 1O94YL-0004BE-7q
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 00:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757089Ab0ECWpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 18:45:07 -0400
-Received: from mail-bw0-f217.google.com ([209.85.218.217]:39966 "EHLO
-	mail-bw0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756571Ab0ECWpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 18:45:05 -0400
-Received: by bwz9 with SMTP id 9so1730026bwz.29
-        for <git@vger.kernel.org>; Mon, 03 May 2010 15:45:01 -0700 (PDT)
+	id S1759538Ab0ECWzs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 May 2010 18:55:48 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39140 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758802Ab0ECWzr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 18:55:47 -0400
+Received: by fxm10 with SMTP id 10so2653026fxm.19
+        for <git@vger.kernel.org>; Mon, 03 May 2010 15:55:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=EyQSs3kb7RuQjzSq0Z0A9hmSvLqdEyEwPxxV7tEstc4=;
-        b=JKlVMLDGzofh5Rpz6rpyvYxR5H+AZc2BbaP2dx4bxq8uQW4PpNFDVgYhdLxmHCBBEC
-         Z5r52fZCwPP7hHJ37+xtd2SeSB0GyrqBhpXcC504/HamGCNoRRcNXOLsSG+PEi3FchJT
-         UGvpnXB/9BLU9E0hI8W/hyiFh86qaRD5kru4I=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=z1+zakV5OpC/pJmHkjSK5MvfMNwDJuGGHfmPIacQG1c=;
+        b=X3sgTkoBlDHZTLKGdqTux1ZUOAd2PVd0He1LvCHArQKX7yPcxQIwqrBvMaj5khBdy9
+         qq8+faWgB/06SuZaWn+hNsJfbIUQRkAZ3ozVCvYteVUjzxTCycF/D+6xcs63E3mF9Eyh
+         w6oc9QMYJWcGZnD9RQM2Q/AJ2mTOGyr4hjf3M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=I40u6Vg2kB3vdjbK0T7+85mhc8Z2/zInafxGLfTDwZC36/P7lOUUEQj4tNxMDfkrk2
-         t+12QMhjaFE65cM6i4850BqEMOxHEp00RrvxpMBGJ+Iyyp5VzKuxTa7ZMWVYVsK0LcrP
-         PlE46WkgUfc+vwXHrWiclnRgQOdCLpuO5uMFg=
-Received: by 10.204.6.203 with SMTP id a11mr2871851bka.8.1272926701830;
-        Mon, 03 May 2010 15:45:01 -0700 (PDT)
-Received: from localhost.localdomain (abrz91.neoplus.adsl.tpnet.pl [83.8.119.91])
-        by mx.google.com with ESMTPS id 16sm1826587bwz.13.2010.05.03.15.45.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 03 May 2010 15:45:01 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o43MieOM002174;
-	Tue, 4 May 2010 00:44:46 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o43MiUmZ002159;
-	Tue, 4 May 2010 00:44:30 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <hrnidr$etm$1@dough.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WVtO48+c4jdIVbKrX3ByaVSnZZBZK8XtxkLRh7hLl6k8lmYqqJ3PTqxztm0t5ZOzOj
+         FCprl1DMWpQEaHb4LStDF7Hn3h1r4dYXuzb8EYZyVSvI9OsC97WT2jPUjbBVX8JaLsUf
+         5J38rsBmHZHUO7r8UDhAaQMC75ZtHcKbjkusQ=
+Received: by 10.223.98.83 with SMTP id p19mr3613489fan.27.1272927346409; Mon, 
+	03 May 2010 15:55:46 -0700 (PDT)
+Received: by 10.223.113.146 with HTTP; Mon, 3 May 2010 15:55:46 -0700 (PDT)
+In-Reply-To: <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146267>
 
-Gelonida <gelonida@gmail.com> writes:
+On Mon, May 3, 2010 at 18:29, Junio C Hamano <gitster@pobox.com> wrote:
+> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>
+>> As far as I understand git_diff_ui_config() applies only for "git
+>> diff" not for any of the plumping "git diff-*" tools.
+>
+> Ah, I missed that the patch was to the diff_ui parser. =C2=A0Sorry fo=
+r
+> confusion and thanks for straightening me up.
+>
 
-> We have a git repository, whose size we want to reduce drastically due
-> to frequent clone operations and a slow network connection.
- 
-Why frequent *clone* operations, instead of using "git fetch" or
-equivalent ("git pull" which is fetch+merge, or "git remote update")?
+So, now that I render your arguments voidless, do you have any other
+thoughts on adding a <path> extended header for non-renames and
+non-copies?
 
-If network is slow, you can do what others did in similar situations:
-use hook to allow only not to large fetches (to prevent cloning)
-directly on server, and provide bundle (see git-bundle(1)) to "seed"
-the clone; it can be on dumb server (served resumably), and can be
-also served by BitTorrent or equivalent.
- 
-> The idea is following:
-> 
-> * archive the git repository just in case we really have to go back in
-> history.
-> 
-> 
-> create a new git repository, which shall only contain last month's activity.
-> 
-> all changes before should be squashed together.
-> It would be no problem if the very first commit remains unmodified.
-
-If you want to simply _remove_ history before specified commit,
-instead of squashing it, the best solution would be to use grafts to
-cauterize (cut) history, check using [graphical] history viewer that
-you cut it correctly, and then then use git-filter-branch to make this
-cut permanent.
-
-You can later use grafts or refs/replaces/ mechanism to join "current"
-history with historical repository.
-
-HTH.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Regards,
+Bert
