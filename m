@@ -1,83 +1,77 @@
-From: Gelonida <gelonida@gmail.com>
-Subject: Re: how to squash a few commits in the past
-Date: Mon, 03 May 2010 22:55:32 +0200
-Message-ID: <hrnd84$rh0$1@dough.gmane.org>
-References: <loom.20100503T112508-677@post.gmane.org> <4BDEA0D7.9090201@drmicha.warpmail.net> <hrncm3$pg8$1@dough.gmane.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Adding support for "plackup" and similar web server tools to
+	git-instaweb
+Date: Mon, 3 May 2010 13:56:24 -0700
+Message-ID: <20100503205624.GA3791@dcvr.yhbt.net>
+References: <201005020317.42112.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 03 22:55:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 03 22:56:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O92gJ-00016Z-8J
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 22:55:59 +0200
+	id 1O92gq-0001Vd-Eu
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 22:56:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756663Ab0ECUzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 16:55:54 -0400
-Received: from lo.gmane.org ([80.91.229.12]:51004 "EHLO lo.gmane.org"
+	id S1756696Ab0ECU41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 16:56:27 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43199 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754422Ab0ECUzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 16:55:53 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O92fz-0000vA-NU
-	for git@vger.kernel.org; Mon, 03 May 2010 22:55:49 +0200
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 May 2010 22:55:39 +0200
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 May 2010 22:55:39 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <hrncm3$pg8$1@dough.gmane.org>
+	id S1754921Ab0ECU40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 16:56:26 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4538F1F744;
+	Mon,  3 May 2010 20:56:24 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <201005020317.42112.jnareb@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146257>
 
-Hi,
+Jakub Narebski <jnareb@gmail.com> wrote:
+> The problem is that contrary to other web servers that can be used by
+> git-instaweb, (namely apache2, lighttpd, mongoose and webrick), the
+> 'plackup' utility is configured using command line options, and not
+> via configuration file (well, one can use configuration file, but it
+> depends on the web server run from plackup).
+> 
+> How should one go with adding support for such httpd?  My first attempt
+> was putting full command line into 'httpd' in resolve_full_httpd():
+> 
+> +       *plackup*)
+> +               # plackup is configured via command-line options
+> +               bind=
+> +               test x"$local" = xtrue && bind="--host=127.0.0.1"
+> +               httpd="$httpd --port=$port $bind --app=$fqgitdir/gitweb/app.psgi"
+> +               ;;
+> 
+> The default standalone web server used by plackup (HTTP::Server::PSGI)
+> does not have daemon mode, so we would have to do the same as for moongose
+> web server: set to background and save pid in pidfile in git-instaweb.
+> 
+> OTOH plackup prints information / logs to STDERR, so it would have to be
+> silenced or redirected to error_log.  Also plackup does not need to have
+> "$fqgitdir/gitweb/httpd.conf" passed as last argument, but it needs to
+> be passed PSGI wrapper for CGI (I'd rather not use httpd.conf, but rather
+> app.psgi or gitweb.psgi for that).
+> 
+> 
+> So how should one go with adding support for new web server to git-instaweb,
+> that is configured via command line options (--port, --host) and not via
+> config file?
 
-Gelonida wrote:
-> Hi Michael,
-> 
-> Michael J Gruber wrote:
->> Gelonida venit, vidit, dixit 03.05.2010 11:33:
->>>
->>> The plan would be:
->>> - create a new git repository without the huge file
->>> - let everybody clone the new repository and continue working.
->>>
->>>
->>> I thought, that I could squash the commit adding the file, removing the file and
->>> the commits in between into one commit.
->> You don't need to squash the commits in between. Use git rebase -i A^ if
->> A is the commit introducing the large file. Then, either edit that first
->> commit (to not add the file) or reorder so that the removal commit is
->> squashed into A.
-> 
-> 
-> I seem to misunderstand your suggestion.
-> 
-> git rebase -i 740ebdf9b^
-> returns following output
->> fatal: Needed a single revision
->> Invalid base
-> 
-> 
-> what am I missing?
+Hi Jakub,
 
-In case it is relevent:
+How about generating a small shell script that wraps plackup with the
+appropriate command-line options?
 
-My git version:
-git version 1.6.3.3
+-- 
+Eric Wong
