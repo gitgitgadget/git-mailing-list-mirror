@@ -1,65 +1,70 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: How to push to remote(dropbox) when submit automatically?
-Date: Mon, 3 May 2010 17:06:12 -0400
-Message-ID: <r2w32541b131005031406p465f0acbg8c5850a7a851eeed@mail.gmail.com>
-References: <4BDB870B.8080503@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH/RFC 2/2] git-svn: Don't allow missing commit parent to
+	stop git-svn
+Date: Mon, 3 May 2010 14:19:42 -0700
+Message-ID: <20100503211942.GA1380@dcvr.yhbt.net>
+References: <j2wc8b3bef91004201430ie371be83kee0e3e4c35ab9c9e@mail.gmail.com> <1271880470.20208.47.camel@denix> <m2sc8b3bef91004211417n1f3368a7ica94a1c2a7656622@mail.gmail.com> <4BCF8E07.9080507@vilain.net> <r2jc8b3bef91004280851i865a911ei47b1be606dd560d9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: David Lee <zhushenli2@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 03 23:06:40 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Tim Stoakes <tim@stoakes.net>
+To: Michael Olson <mwolson@gnu.org>
+X-From: git-owner@vger.kernel.org Mon May 03 23:19:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O92qd-0006zo-B0
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 23:06:39 +0200
+	id 1O933N-0004ig-1B
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 23:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755177Ab0ECVGe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 17:06:34 -0400
-Received: from mail-iw0-f202.google.com ([209.85.223.202]:50105 "EHLO
-	mail-iw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753803Ab0ECVGd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 17:06:33 -0400
-Received: by iwn40 with SMTP id 40so3815233iwn.1
-        for <git@vger.kernel.org>; Mon, 03 May 2010 14:06:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=D/Al6h+ODTuIKG5Dp6D33AdeBxN0qXoam062lJiFxmE=;
-        b=nNnwWi8IvDhd3u4oe7HnIQIpDXro6m5eNKdbTZ69D+5BYY3KYb4FaPz2kIaW+RfkIN
-         bIL4uTBIkuSbtgjBfoLI7vx8DQ1hEEqD5/vXnpOEZ1pvcuUi11YD/MzQPEW+uJt3PNBr
-         6i3j8c8DGK3/ZLuaNSSf0BIoj7GIIvu8LQvDA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=a1m6nZNdHikpt5NRYlQJsQgzsS0fdgO0Dv6KJJD+qt9fOzze0zdXvvIEeFcbvMA82C
-         R88/CbEdTMzh1nxmofcHr2AUCASc9hsbxOTsQr8uZnHnrEkwyWaPffw0g2MxVEcuk0wK
-         ETekzYu5Z93Xpf9pyLur4EFISzcHYQOcdS1HY=
-Received: by 10.231.160.195 with SMTP id o3mr1569695ibx.32.1272920792309; Mon, 
-	03 May 2010 14:06:32 -0700 (PDT)
-Received: by 10.231.154.206 with HTTP; Mon, 3 May 2010 14:06:12 -0700 (PDT)
-In-Reply-To: <4BDB870B.8080503@gmail.com>
+	id S1755837Ab0ECVTn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 May 2010 17:19:43 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:51448 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755221Ab0ECVTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 17:19:43 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A0461F744;
+	Mon,  3 May 2010 21:19:42 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <r2jc8b3bef91004280851i865a911ei47b1be606dd560d9@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146260>
 
-On Fri, Apr 30, 2010 at 9:42 PM, David Lee <zhushenli2@gmail.com> wrote:
-> I am new to git and find it powerful.
->
-> I build a local repository(origin) and clone it to dropbox
-> directory(dropbox-git). Each time I submit to origin, I have to "git push
-> dropbox-git" manually.
->
-> How to push to remote when I submit automatically?
+Michael Olson <mwolson@gnu.org> wrote:
+> On Wed, Apr 21, 2010 at 4:45 PM, Sam Vilain <sam@vilain.net> wrote:
+> > Michael Olson wrote:
+> >> Interestingly, I see people reporting the same problem in the thre=
+ad
+> >> "git svn clone of subversion's own code failing". =A0So it's not j=
+ust
+> >> related to patch 1/2 of this series. =A0At least that thread has a
+> >> public-facing repo so the problem should be easier to reproduce fo=
+r
+> >> a real fix.
+> >
+> > Oh, right ... I remember that issue now. I'm currently testing the
+> > below change to see if it breaks the test suite; any issues and I'l=
+l
+> > post an update.
+> >
+> > Subject: [PATCH] git-svn: deal with svn cherry-picks with non-linea=
+r history
+>=20
+> This change works great on my private repos, so it should supersede m=
+y
+> version which only did an eval.
 
-I would suggest making a simple shell script for this.  Then run it
-instead of 'git push'.
+Have either of you had a chance to look into the test suite breakage
+from this patch?  Thanks.
 
-Avery
+--=20
+Eric Wong
