@@ -1,83 +1,71 @@
-From: Matthias Lehmann <mat@matlehmann.de>
-Subject: patches between different repositories
-Date: Mon, 03 May 2010 19:47:30 +0200
-Message-ID: <hrn27j$e3b$1@dough.gmane.org>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: [PATCH 0/3] git over TLS (gits://) support
+Date: Mon, 3 May 2010 13:58:05 -0400
+Message-ID: <s2h32541b131005031058o4d2df47ei7fcd5205db89eeb7@mail.gmail.com>
+References: <1272733791-11341-1-git-send-email-ilari.liusvaara@elisanet.fi> 
+	<j2tbe6fef0d1005030557l1f746349zfce18213add19efe@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 03 19:47:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 03 19:58:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8zkJ-00071o-Eh
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 19:47:55 +0200
+	id 1O8zub-0003XV-Be
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 19:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754819Ab0ECRrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 13:47:48 -0400
-Received: from lo.gmane.org ([80.91.229.12]:44406 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754166Ab0ECRrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 May 2010 13:47:47 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O8zk6-0006wG-FB
-	for git@vger.kernel.org; Mon, 03 May 2010 19:47:42 +0200
-Received: from rain.gmane.org ([80.91.229.7])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 May 2010 19:47:42 +0200
-Received: from mat by rain.gmane.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 03 May 2010 19:47:42 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: rain.gmane.org
-User-Agent: KNode/4.4.2
+	id S1755456Ab0ECR60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 13:58:26 -0400
+Received: from mail-yx0-f171.google.com ([209.85.210.171]:39302 "EHLO
+	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755436Ab0ECR60 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 13:58:26 -0400
+Received: by yxe1 with SMTP id 1so434272yxe.33
+        for <git@vger.kernel.org>; Mon, 03 May 2010 10:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=RfoEDfPvrbkPfqS/f6qAiRIgiB3xSin4snI5Wuis92M=;
+        b=pYRmnLapT1C6m88bc8NomxbfHJQ9CXSgyKdS7QklgTV5LrK/Yq8puWukVNFZJQ1GcI
+         MVQ8GIJ/r3gV1dXLQ7/7+tYNbxtdN6hNQPESVNeG7CFA6cy/9MRLVhm+wR+ywB7H53Jm
+         t8BOa+56ffSqnR+kD+u7Ox8J91/5KsQ6OLChk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=C0tIwSMNKqSnUO4gG7K5l4qFklFBBgIKZtcf2kdaRjAfsEwqEuaSLWOdj/TJmiA5Yh
+         PNND6Yf/J/WsLULvLgv8S41/t19z89tf/vKq7aOCmMHGHspr1U9W12jgKIFlT91W5BQx
+         xR/wL2cGg35xKDti0H1Z09rfejI3wYWx3rtn4=
+Received: by 10.151.89.35 with SMTP id r35mr9936873ybl.52.1272909505235; Mon, 
+	03 May 2010 10:58:25 -0700 (PDT)
+Received: by 10.151.109.5 with HTTP; Mon, 3 May 2010 10:58:05 -0700 (PDT)
+In-Reply-To: <j2tbe6fef0d1005030557l1f746349zfce18213add19efe@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146245>
 
-Hi all,
+On Mon, May 3, 2010 at 8:57 AM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+> From the discussion, Avery (Cc'ed) had some strong objections; the
+> point that I remembered the most clearly was "why not just use SSH".
+> There didn't seem to be any headway.
+>
+> I hope that we can continue where we left off and resolve the various
+> objections without too much duplication of shot-down arguments.
 
-I have to apply patches from one repository to another repository, which 
-have a different layout (I am working on splitting one big repository into 
-several smaller ones, while development still continues on the big 
-repository).
+After more consideration, I withdraw my objection since the fact that
+I don't need it, nor does anybody I know need it, isn't actually a
+good argument against including it.  I assume the Powers That Be would
+still like to see some people who *do* need it before including such a
+huge chunk of code.
 
-So I did
+Have fun,
 
-big-repo$ git format-patche -o /tmp/foo @{some-date} -- subdir
-small-repo$ git apply -p2 --directory=some/path --check /tmp/foo/*
-
-and get
-
-fatal: git diff header lacks filename information when removing 2 leading 
-pathname components (line 37)
-
-the patch looks like this:
-
-35| diff --git a/xyz/bar.jpg b/xyz/bar.jpg
-36| new file mode 100644
-37| index 0000000000000000000000000000000000000000.. 
-3dcce2e1f68586ed2089d86b1bf4e7e41c818d97
-38| GIT binary patch
-39| literal 8791
-
-It seems, like the -p options to git-apply can't handle new files.
-
-Am I doing something wrong here? Or is there another way to merge changes 
-within different repositories with differnt layouts?
-
-Any help would be greatly appreciated.
-
-Best regards,
-
-Matthias
+Avery
