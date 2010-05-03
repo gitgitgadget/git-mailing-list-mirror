@@ -1,84 +1,68 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Making git work with new remote server
-Date: Mon, 03 May 2010 18:14:47 +0200
-Message-ID: <4BDEF677.5070807@drmicha.warpmail.net>
-References: <28436896.post@talk.nabble.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diff: add a 'path' meta header for non-renames and 
+ non-copies
+Date: Mon, 03 May 2010 09:29:24 -0700
+Message-ID: <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
+References: <1272852221-14927-1-git-send-email-eli@cloudera.com>
+ <1272868072-12120-1-git-send-email-bert.wesarg@googlemail.com>
+ <7viq75tpaw.fsf@alter.siamese.dyndns.org>
+ <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: amillican <amillican@cogentsystems.com>
-X-From: git-owner@vger.kernel.org Mon May 03 18:14:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Eli Collins <eli@cloudera.com>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon May 03 18:29:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8yIL-0008EW-AV
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 18:14:57 +0200
+	id 1O8yWc-0007Eg-RA
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 18:29:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759605Ab0ECQOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 12:14:51 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50900 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758731Ab0ECQOu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 12:14:50 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A0D24F3D62;
-	Mon,  3 May 2010 12:14:49 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 03 May 2010 12:14:49 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=JY53PpW5tvKgElVkf+7nul1fL54=; b=MIRfpk8Ygj9d6pmF+IllGhEZoiOSJqjldmjHIqgt+MDQxsUh7APFvILWrA6wDBVNyIuPIGbhPcW1OD4YgabmbNbOUkBNFH5jfw8jk/QgD+t5x4X8tNScfk+RYgeijmC3H+43I9Y0pFZat41UcvykBfX09y/Tne6nIwyrPwtZmqE=
-X-Sasl-enc: fIFuyXq0wza63PqFSz4MpCDtZodC6PR1kIEi/9gPQgI9 1272903289
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1E1C72E2E2;
-	Mon,  3 May 2010 12:14:49 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <28436896.post@talk.nabble.com>
+	id S933215Ab0ECQ3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 12:29:36 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34620 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933091Ab0ECQ3f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 12:29:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EC8B0B059B;
+	Mon,  3 May 2010 12:29:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=B1VuZDOQBWDinvRWocT0MwKLmg0=; b=PWNBJZ
+	WN+aeBUaRwyRuG96+rJvgyMzjjQkIuYa6XZt/E8ylwstpYzcRN81CvwWqhfl7eGF
+	x1Ikl6ocjEwJoTtoyOFEtq6uoVmYuGDFndIKBv7CuVQW3kdqsg8Zxo5oEmWhMbcQ
+	LgsIeBrWhc/B07y9e2GB9oj/UBKuOGF29YTXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AqpdjBLNrB4g+EAfCCldjO60FtsIl1mq
+	4v5eF6xvrHkL2KXUgXRzGcfbC62jd6oDSZ2ekGdUV5CN8waM69YxHWja8FiWYsRd
+	M+okdFqY+cIbQdrHNmgUVpQNiHE3vrFXicwY5UPO4jMxTMIIObySZ3lKlEpvrv+O
+	An5xJIyAg+o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B76EAB0599;
+	Mon,  3 May 2010 12:29:29 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 146BDB0592; Mon,  3 May
+ 2010 12:29:25 -0400 (EDT)
+In-Reply-To: <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
+ (Bert Wesarg's message of "Mon\, 3 May 2010 09\:37\:51 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0C32F892-56D1-11DF-B84D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146242>
 
-amillican venit, vidit, dixit 03.05.2010 17:59:
-> 
->   0  vote down  star
-> 	
-> 
-> I am the CM person for a small company that just started using Git. We have
-> two Git repositories currently hosted on a Windows box that is our
-> all-purpose Windows server. But, we just set up a dedicated server for our
-> CM software on an Ubuntu Linux server named "Callisto".
-> 
-> So I created a test Git repository on Callisto. I gave its directory all of
-> the proper permissions recursively. I had the sysadmin create a login for me
-> on Callisto, and I created a key to use for logging in via SSH. I set up my
-> key to use a passphrase; I don't know if that could be contributing to my
-> problems? Anyway, I know my SSH login works because I tested it through
-> puTTY.
-> 
-> But, even after hours of trials and head scratching, I can't get my Windows
-> Git bash (mSysGit) to talk to Callisto for the purposes of pushing or
-> pulling Callisto's git repository files. Obviously, when trying a push, I've
-> been trying to log into my Callisto account using SSH.
-> 
-> I keep getting "Fatal error. The remote end hung up unexpectedly." And I've
-> even gotten the error that Git doesn't recognize the test repository on
-> Callisto as a git repository. I read online that the "Fatal error...hung up
-> unexpectedly" is usually a problem with the server connection or
-> permissions. So what am I missing or overlooking here? And why doesn't a
-> pull using the git:// protocol work, since that only uses read-only access?
-> Group and public permissions for the git repository's directory on Callisto
-> are set to read and execute, but not write.
-> 
-> If anyone could help, I would be so grateful. Thank you.
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-For git:// without ssh you need a running git-daemon on the server.
+> As far as I understand git_diff_ui_config() applies only for "git
+> diff" not for any of the plumping "git diff-*" tools.
 
-For helping you more we would need the actual commands you tried and the
-exact output.
-
-Cheers,
-Michael
+Ah, I missed that the patch was to the diff_ui parser.  Sorry for
+confusion and thanks for straightening me up.
