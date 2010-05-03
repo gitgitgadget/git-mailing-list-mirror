@@ -1,72 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: rev-parse vs. rev-list --no-walk
-Date: Mon, 03 May 2010 17:50:19 +0200
-Message-ID: <4BDEF0BB.6080009@drmicha.warpmail.net>
-References: <4BDC7471.9030107@drmicha.warpmail.net>	 <7v1vdv4ccz.fsf@alter.siamese.dyndns.org> <t2z76718491005030822l469c720ag1466ecd2bad31f32@mail.gmail.com>
+From: amillican <amillican@cogentsystems.com>
+Subject: Making git work with new remote server
+Date: Mon, 3 May 2010 08:59:34 -0700 (PDT)
+Message-ID: <28436896.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 03 17:50:48 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 03 17:59:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8xuw-0004AW-6R
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 17:50:46 +0200
+	id 1O8y3Z-0000Kz-Qr
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 17:59:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758781Ab0ECPuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 11:50:40 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:58806 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752224Ab0ECPuj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 11:50:39 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 480A3F2817;
-	Mon,  3 May 2010 11:50:22 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 03 May 2010 11:50:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=gC9kDkeqjmWLo3zxX1+cvRX/uUM=; b=t/+63QcinhKawSCdzxchCSZe6U/CT+qx0ueAg0qk3hh7F2pe9d5MBkhcRzH99vtTwUfO+MkURXn6uByty2zosAh2fzmaF9aGCKVH1GOnwqpY67y68Nl0f23P8OQlfRN2BPh/0wBsN9RNSwP4mzzRhOpTfQlRpkRteuoe78trYHk=
-X-Sasl-enc: 1+Uc3GUAs0ekQfhd6FH/e4SUXYy6OK4HDFUS94wpVLcF 1272901821
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EA6734A2F5B;
-	Mon,  3 May 2010 11:50:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <t2z76718491005030822l469c720ag1466ecd2bad31f32@mail.gmail.com>
+	id S932974Ab0ECP7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 May 2010 11:59:35 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:42482 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932902Ab0ECP7f (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 May 2010 11:59:35 -0400
+Received: from isper.nabble.com ([192.168.236.156])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <lists@nabble.com>)
+	id 1O8y3S-0005yh-5g
+	for git@vger.kernel.org; Mon, 03 May 2010 08:59:34 -0700
+X-Nabble-From: amillican@cogentsystems.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146240>
 
-Jay Soffian venit, vidit, dixit 03.05.2010 17:22:
-> On Sat, May 1, 2010 at 4:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> I think one sane thing to do is to stop adding new rev-flags revision.c
->> supports to rev-parse (it already lags behind and nobody complained that
->> rev-parse doesn't understand --first-parent as a rev-flag), and keep its
->> use as "revision and non revision option sifter" only to support older
->> scripts written back in v1.0.0 days.  Its primary use these days is "turn
->> symbolic object names into 40-letter SHA-1", but "option sifter" aspect of
->> the command seems to have outlived its usefulness.
-> 
-> We tell scripters to be careful to use the plumbing and not the
-> porcelain. From that standpoint, shouldn't we do our best to prevent
-> the plumbing from falling into disrepair?
 
-According to git(1), git rev-list is low-level, but git rev-parse is not!
+  0  vote down  star
+	
 
->From a cursory look at current source it would be simple to discourage
-use of rev-parse for revision flags (and, probably, as an option
-sifter). There's no need to remove them (and break some outside
-scripts). Junio suggested not to add any new ones to rev-parse. That
-would make my RFD patch (--heads, --locals) smaller, and answers the
-questions about solving the difference between rev-parse and rev-list
-"-all" regarding HEAD. But maybe git-rev-parse(1) should change then, in
-order not to encourage its use as option sifter. Everyone stops by this
-man page when looking up revision syntax.
+I am the CM person for a small company that just started using Git. We have
+two Git repositories currently hosted on a Windows box that is our
+all-purpose Windows server. But, we just set up a dedicated server for our
+CM software on an Ubuntu Linux server named "Callisto".
 
-Michael
+So I created a test Git repository on Callisto. I gave its directory all of
+the proper permissions recursively. I had the sysadmin create a login for me
+on Callisto, and I created a key to use for logging in via SSH. I set up my
+key to use a passphrase; I don't know if that could be contributing to my
+problems? Anyway, I know my SSH login works because I tested it through
+puTTY.
+
+But, even after hours of trials and head scratching, I can't get my Windows
+Git bash (mSysGit) to talk to Callisto for the purposes of pushing or
+pulling Callisto's git repository files. Obviously, when trying a push, I've
+been trying to log into my Callisto account using SSH.
+
+I keep getting "Fatal error. The remote end hung up unexpectedly." And I've
+even gotten the error that Git doesn't recognize the test repository on
+Callisto as a git repository. I read online that the "Fatal error...hung up
+unexpectedly" is usually a problem with the server connection or
+permissions. So what am I missing or overlooking here? And why doesn't a
+pull using the git:// protocol work, since that only uses read-only access?
+Group and public permissions for the git repository's directory on Callisto
+are set to read and execute, but not write.
+
+If anyone could help, I would be so grateful. Thank you.
+-- 
+View this message in context: http://old.nabble.com/Making-git-work-with-new-remote-server-tp28436896p28436896.html
+Sent from the git mailing list archive at Nabble.com.
