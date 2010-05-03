@@ -1,82 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 0/3] git over TLS (gits://) support
-Date: Mon, 03 May 2010 15:26:23 +0200
-Message-ID: <4BDECEFF.7060900@drmicha.warpmail.net>
-References: <1272733791-11341-1-git-send-email-ilari.liusvaara@elisanet.fi> <j2tbe6fef0d1005030557l1f746349zfce18213add19efe@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: rev-parse vs. rev-list --no-walk
+Date: Mon, 3 May 2010 11:22:40 -0400
+Message-ID: <t2z76718491005030822l469c720ag1466ecd2bad31f32@mail.gmail.com>
+References: <4BDC7471.9030107@drmicha.warpmail.net>
+	 <7v1vdv4ccz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 03 15:26:41 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 03 17:22:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O8vfR-0008MK-Dl
-	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 15:26:37 +0200
+	id 1O8xTr-00050S-Oc
+	for gcvg-git-2@lo.gmane.org; Mon, 03 May 2010 17:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759244Ab0ECN00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 May 2010 09:26:26 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40711 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758975Ab0ECN0Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 09:26:25 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 06015F1EB9;
-	Mon,  3 May 2010 09:26:25 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 03 May 2010 09:26:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=qcSAYllItsF8hVzEv+GyDZYtd/8=; b=fMZxhiH31GSV8+mE+tfGkqwsoXOoLdkF2UoUkUYyhwSlmX9Bpzs+NZvjWn2NQaaUsgDBOCLD96H4n6/Mh3OEQZown0widhuz4Jt6mkqsKtNk48rY4/rsXvAGbJYn1GDJhN+E4bpBnGSp7Kn4WQiYa3MORpteLC5Vi8TsrJRd1d0=
-X-Sasl-enc: vN3i4ZMA69abWLXvjtsxG0nRDJ201iy1va0OyFWIvIfa 1272893184
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 177524C7A84;
-	Mon,  3 May 2010 09:26:23 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100429 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <j2tbe6fef0d1005030557l1f746349zfce18213add19efe@mail.gmail.com>
+	id S932808Ab0ECPWn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 3 May 2010 11:22:43 -0400
+Received: from mail-iw0-f202.google.com ([209.85.223.202]:36827 "EHLO
+	mail-iw0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932791Ab0ECPWl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 3 May 2010 11:22:41 -0400
+Received: by iwn40 with SMTP id 40so3359839iwn.1
+        for <git@vger.kernel.org>; Mon, 03 May 2010 08:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bJk4vqrBqqqs80H4H/HX4TJSvuEDGALMAURo976Ta5Y=;
+        b=dOyIKmC7cQh9T8z+9KNzxVgPVfF3LCIQfYkZ+BzWenPw4346sGy7Q2Qrh+StngjkDW
+         B2pomAiL60KYw9iTHShXm2wFS3efCzCC/Q1Jy577o1wNLlw6iTLhzDVSMtTIK/ureAQQ
+         mSVsiFhndndtLfEPbbIjHtToYUISolR4qr9UA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CjPb8HjvMhhfe1Hx35JChmnowYVoNJhfZq1dxBi165RZJC62JN4DF6wPTTlJl38WsH
+         e1cD5siO+8pMGoQL6ea2XCX3/x5wOCfJOAMdnvHG0+C+kMCMDRHuC5KyS+uEwx6To6iC
+         CXyiG6jzqveEd1jGFCQY7s6sYSvXayS+Inw1M=
+Received: by 10.231.184.74 with SMTP id cj10mr871425ibb.19.1272900161042; Mon, 
+	03 May 2010 08:22:41 -0700 (PDT)
+Received: by 10.231.34.8 with HTTP; Mon, 3 May 2010 08:22:40 -0700 (PDT)
+In-Reply-To: <7v1vdv4ccz.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146238>
 
-Tay Ray Chuan venit, vidit, dixit 03.05.2010 14:57:
-> Hi,
-> 
-> On Sun, May 2, 2010 at 1:09 AM, Ilari Liusvaara
-> <ilari.liusvaara@elisanet.fi> wrote:
->> This is newer version of gits:// client side support.
-> 
-> in case anyone is wondering where the older version is, Ilari posted
-> it early this year:
-> 
->   http://thread.gmane.org/gmane.comp.version-control.git/136816
-> 
-> From the discussion, Avery (Cc'ed) had some strong objections; the
-> point that I remembered the most clearly was "why not just use SSH".
-> There didn't seem to be any headway.
-> 
-> I hope that we can continue where we left off and resolve the various
-> objections without too much duplication of shot-down arguments.
-> 
+On Sat, May 1, 2010 at 4:05 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> I think one sane thing to do is to stop adding new rev-flags revision=
+=2Ec
+> supports to rev-parse (it already lags behind and nobody complained t=
+hat
+> rev-parse doesn't understand --first-parent as a rev-flag), and keep =
+its
+> use as "revision and non revision option sifter" only to support olde=
+r
+> scripts written back in v1.0.0 days. =C2=A0Its primary use these days=
+ is "turn
+> symbolic object names into 40-letter SHA-1", but "option sifter" aspe=
+ct of
+> the command seems to have outlived its usefulness.
 
-Except for "This is a newer patch" and the split in 3 rather than 2,
-there is no information whatsoever on what's different and which
-questions have been addressed. Given that, it would be only fair to
-raise the same objections again.
+We tell scripters to be careful to use the plumbing and not the
+porcelain. From that standpoint, shouldn't we do our best to prevent
+the plumbing from falling into disrepair?
 
-Condensing the old thread to a bare minimum, these questions seem to be
-open (though answered, one might say):
+(Or perhaps I'm reading too much into what you say.)
 
-- What ssh+git: problems does gits: address?
-- What tells us these are solved by gits:?
-- What tells us there are no gits: problems which ssh+git: would solve?
-
-Frankly, so far I see no tests, no benchmarks, one author convinced by
-his own code, and seemingly nobody willing to really look a the patches.
-
-Michael
+j.
