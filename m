@@ -1,89 +1,97 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: newbie: need concrete examples for how the linux-kernel project uses 
-	git
-Date: Tue, 4 May 2010 17:31:21 -0400
-Message-ID: <m2i408104421005041431l6c8b5845ld57720c2127fbb00@mail.gmail.com>
+From: Dylan Reid <dgreid@gmail.com>
+Subject: Re: [PATCH] blame: can specify shas of commits to ignore on command 
+	line
+Date: Tue, 4 May 2010 17:46:59 -0400
+Message-ID: <j2sfd211a421005041446ub9c2247ai484c2473df856b31@mail.gmail.com>
+References: <1272939687-17686-1-git-send-email-dgreid@gmail.com>
+	 <4BE0918C.9090204@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 04 23:31:31 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue May 04 23:47:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9PiF-0007fk-5o
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 23:31:31 +0200
+	id 1O9PxV-0006ka-IT
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 23:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757379Ab0EDVbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 17:31:23 -0400
-Received: from ey-out-2122.google.com ([74.125.78.25]:35591 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752880Ab0EDVbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 17:31:22 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so244266eyd.19
-        for <git@vger.kernel.org>; Tue, 04 May 2010 14:31:21 -0700 (PDT)
+	id S934144Ab0EDVrF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 17:47:05 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38770 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934098Ab0EDVrB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 17:47:01 -0400
+Received: by gyg13 with SMTP id 13so1862083gyg.19
+        for <git@vger.kernel.org>; Tue, 04 May 2010 14:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=y0LhHfZpj3qbNPtt8zoR2ZQgdMwYeq1Lg7NQiC8Oal4=;
-        b=V2I4S4wZP/h+jUKZGji4PgFpQfsps0+5F7yJ5q6Q92hpXcaz2YXuqUGrAuibHj/fzl
-         h5L1rjxDSt1JD/WATx/nmPHRXjZuF5avN7oxHcIM/y144Q33pr7CQ8+fFoLzseETM1ah
-         zDn+UIj9nRZ9/SD+aMkbRgl7J5z3BzKeUxLZw=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=feqMp/QGInws2jG6THhZHFCd0pPaV5t8NqokvhmQCX4=;
+        b=JNKLqCF7LU3bKIWVSisd84/p0G3UUo43eagpfBq63P/C2FXw38V5P7XpDgqSdEVJ5f
+         S7m+ez41ze9Dktj+ZkR5YoKxSE1rutNDyqtvywg/AJn9jLQAXGJssCEnTGzvI01bq27l
+         BlCV4+UOylkdFV1FRqEUxDvzaMALp3qXcBv34=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=vSZqhKOEfjrnBR1N577AkTQu0d0y6s9v5tln5I7xMuQF8ufamDnJeplb82G/B2dHXJ
-         c/OJcKjqQnVduIswBUotRCHqsJE5AabC7vimXdqM+FZ/K+in5OJDxXJw3tXyqDbIaygB
-         2Zr2QkD08VHrQI4281JSvtX6WDp2cAH4HC5iU=
-Received: by 10.216.168.135 with SMTP id k7mr1026114wel.129.1273008681432; 
-	Tue, 04 May 2010 14:31:21 -0700 (PDT)
-Received: by 10.216.25.18 with HTTP; Tue, 4 May 2010 14:31:21 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hz26jmCQge+WgnXlht7ZT+GglwIRkVoDfG3LZJcuY9vs2bK46ihPysRrz/4rRxP2uH
+         uqd51U2dXsr4aurGvQujPCbaV39Ee7zJsg+DOY8d6AQcH+kY+qJvJnrzkqOuQkCh5AHO
+         7fxJWa6upBPTEQ/Tz8t8UqB02lY8vPpkUSAxU=
+Received: by 10.150.249.6 with SMTP id w6mr13519823ybh.157.1273009619634; Tue, 
+	04 May 2010 14:46:59 -0700 (PDT)
+Received: by 10.150.145.11 with HTTP; Tue, 4 May 2010 14:46:59 -0700 (PDT)
+In-Reply-To: <4BE0918C.9090204@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146349>
 
-Hello,
+Thanks for the speedy reply.
 
-We're looking at Git at our company, and in the first phase of testing
-Git passed the technical criteria with flying colors, and did much
-better than Hg. We've entered the second phase of testing where I need
-to basically try out the typical work flows in Git.
+> Only the long option --ignore-commit works with your patch, -I doesn'=
+t.
+>
+Correct.  I took that out because I didn't want to use "-I' which
+could eventually be used by a more commonly used feature.  Do you
+agree or do you think it is worth using it.  It's a UI decision I
+didn't want to make.
 
-We have multiple teams, lots of developers, and would like to use a
-variant of the dictator-lieutenant scheme discussed in published
-subject matter.
+>
+> This function was moved from below, but it seems to be indented with
+> three spaces instead of tabs now. =A0Adding a declaration without mov=
+ing
+> the function would avoid that and result in a smaller patch.
+>
 
-However, I find it rather challenging finding any subject matter that
-provides reasonable detail. What I'd like to find are concrete
-examples, step-by-step, of specifically how to:
+Good catch, I'll do that and re-send.
 
-* set up each public repository: mainline, integration, maintainers, feature
- - with enough detail showing how to set up remotes, branches for
-each, shared or not, ...
+>
+> An ignored commit can still be blamed if there is no other commit to
+> pass it on. =A0So e.g. the initial commit for the file could end up b=
+eing
+> blamed for lines that were added by later commits which are being
+> ignored. =A0That may look confusing.
+>
+> Would it make sense to pass the blame to some kind of null commit, i.=
+e.
+> a special marker that says "I could tell you who is to blame for this
+> line but you said you don't want to know"?
+>
 
-* perform the daily function for role, dictator, lieutenant, maintainer
- - with specific detail about the typical commands used each day
+A null commit could work.  I think the behavior should be to not
+ignore the commit. Meaning if you specify a commit that introduced a
+line of code that line of code will still be blamed on the ignored
+commit.  Does That sound logical or is it too confusing?
 
-Surely someone must have documented this somewhere, or perhaps
-scripted it up in some shell scripts which would be even better?
 
-I have spent multiple days on this already, and given that I am a
-novice at Git, though not with source control systems, if I could
-obtain some concrete examples, this would accelerate the evaluation
-quite a bit, and it would help me decipher the mounds of documentation
-with the few more concrete examples.
+Thanks,
 
-I'd like to present the details and results to our development
-organization next week, and be able to speak about some flows I
-actually tried out myself.
-
-By the way, Git, love it! Way cool guys.
-
-A puzzled newbie,
-
-Bob
+Dylan
