@@ -1,76 +1,125 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH/RFC 2/2] git-svn: Don't allow missing commit parent to
- stop git-svn
-Date: Wed, 05 May 2010 10:02:35 +1200
-Message-ID: <1273010555.20723.17.camel@denix>
-References: <j2wc8b3bef91004201430ie371be83kee0e3e4c35ab9c9e@mail.gmail.com>
-	 <1271880470.20208.47.camel@denix>
-	 <m2sc8b3bef91004211417n1f3368a7ica94a1c2a7656622@mail.gmail.com>
-	 <4BCF8E07.9080507@vilain.net>
-	 <r2jc8b3bef91004280851i865a911ei47b1be606dd560d9@mail.gmail.com>
-	 <20100503211942.GA1380@dcvr.yhbt.net>
-	 <4BDFC171.5010103@drmicha.warpmail.net>
-	 <20100504183452.GA30894@dcvr.yhbt.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Shell aliases & paths
+Date: Tue, 4 May 2010 17:30:28 -0500
+Message-ID: <20100504223028.GA15548@progeny.tock>
+References: <19424.34226.564684.613674@winooski.ccs.neu.edu>
+ <20100504211122.GA15091@progeny.tock>
+ <19424.36914.867693.327548@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael Olson <mwolson@gnu.org>, Sam Vilain <sam@vilain.net>,
-	git@vger.kernel.org, Tim Stoakes <tim@stoakes.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed May 05 00:03:01 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Wed May 05 00:37:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9QCi-0005gF-8a
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 00:03:00 +0200
+	id 1O9QkR-0008VJ-3D
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 00:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934260Ab0EDWCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 18:02:50 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:46840 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934206Ab0EDWCt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 18:02:49 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 51F1B21CEC8; Wed,  5 May 2010 10:02:37 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	FH_DATE_PAST_20XX autolearn=no version=3.2.5
-Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id A616D21C541;
-	Wed,  5 May 2010 10:02:31 +1200 (NZST)
-In-Reply-To: <20100504183452.GA30894@dcvr.yhbt.net>
-X-Mailer: Evolution 2.28.1 
+	id S934508Ab0EDWhJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 18:37:09 -0400
+Received: from mail-iw0-f203.google.com ([209.85.223.203]:49304 "EHLO
+	mail-iw0-f203.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934463Ab0EDWhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 18:37:06 -0400
+X-Greylist: delayed 414 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 May 2010 18:37:06 EDT
+Received: by iwn41 with SMTP id 41so5351369iwn.20
+        for <git@vger.kernel.org>; Tue, 04 May 2010 15:37:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Trs+/OB7nXyQ/El2qFJWDO3L9MUXRXW/abq64t0BPaM=;
+        b=d2487n56o2R58VpyEjs0qKf6+rwLlLdwu7tqAfrKnCj+MMtbEBLOFAQPtO1/nPofzR
+         wQ4C6X2qQ9OMYKWVBGIaQmtctnvRTRNkECNpdi19z0MA4UN5pUeWLDjFDODZQAU1+U6m
+         NfjFUcuZeCiZKUDNXNBgXKvmH7YM1+CqSQazc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=RIBleyKwn7TkPjvVus7kq/DeXskzbJ+m8sN7Dj1ycWzaHRsdTb6MUjBrhPTv2c4YFW
+         WAHZNnXOV65GY0dmp9GTeKidZHQUtlXXrbn+mEoD6jFIkWFq4+art63HHPGZoD5UTR/A
+         wrpT6+M37sxq0Z9Xz3CijeExQoTtEzRASfhHQ=
+Received: by 10.231.153.67 with SMTP id j3mr611669ibw.37.1273012207753;
+        Tue, 04 May 2010 15:30:07 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm5626017iwn.15.2010.05.04.15.30.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 04 May 2010 15:30:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <19424.36914.867693.327548@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146352>
 
-On Tue, 2010-05-04 at 18:34 +0000, Eric Wong wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> wrote:
-> > Uhm, which one: The one in your subject line or the one in the quoted
-> > subject line?
-> 
-> Sam's patch:
->   Subject: [PATCH] git-svn: deal with svn cherry-picks with non-linear history
-> 
-> Where he said:
-> > >>> Oh, right ... I remember that issue now. I'm currently testing the
-> > >>> below change to see if it breaks the test suite; any issues and I'll
-> > >>> post an update.
-> 
-> Sorry for the confusion
+Eli Barzilay wrote:
+> On May  4, Jonathan Nieder wrote:
 
-Sorry for not following up - it didn't cause any test suite breakages
-when I tested it.  Especially if Michael has had joy with it I'd say
-it's good to go...
+>> Maybe a new GIT_PATHNAME_PREFIX environment
+>> variable would help.
+>
+> Yeah, I was searching the environment for something like that, and wa=
+s
+> surprised when I didn't find any shred of the original path in there.
+> (In any case, I'd like to see something like that, although it's too
+> late for me to use it since I need a solution that works now...)
 
-Sam
+Care to write a patch?  But yeah, sounds like for now you=E2=80=99re sc=
+rewed. :(
+
+>> At that point, why not just add a git-foo script to $PATH?  (=E2=80=98=
+git
+>> foo=E2=80=99 will still call it.)
+>
+> The same can be said on all shell aliases, no?
+
+True shell aliases have the advantage of not being inherited by
+subprocesses, so they can be made to apply in interactive shells only
+and avoid breaking scripts.  Similarly, if you write an alias in
+=2Egit/config, it does not pollute the command namespace for other
+repositories.  I am not sure how much people take advantage of this.
+
+Aliases also do the work to detect a git repository and set GIT_DIR,
+which I guess some people would want; and the non-! aliases avoid
+forking a new process.
+
+> FWIW, I find these aliases more convenient in having "extensions" wor=
+k
+> for other people -- ie, it's easier to say "here's some text, dump it
+> in your ~/.gitconfig" than it is to explain where some script should
+> be added and how
+
+Hmm, maybe teaching git to respect a core.toolpath setting would help
+in some situations[1].  I am thinking of two scenarios:
+
+ A. To simplify its installation process, such-and-such git extension
+    does not require access to a directory on the user=E2=80=99s $PATH.
+    Instead, you just extract it wherever (~/opt/the-extension, say)
+    and then add =E2=80=9C[core] toolpath =3D "~/opt/the-extension"=E2=80=
+=9D to your
+    .gitconfig.
+
+ B. On an insane platform, the user might want git to look for the
+    standard tools in /usr/sfw or something instead of /usr/bin or
+    /usr/xpg4/bin.  Making this a run-time configurable setting gives
+    the user a chance to override a misguided system-wide choice or
+    experiment with what works best.
+
+I don=E2=80=99t fall into either of these categories, so I can=E2=80=99=
+t say whether
+it would be actually helpful, though.
+
+Thanks for the explanations.
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/121063/focus=
+=3D121085
