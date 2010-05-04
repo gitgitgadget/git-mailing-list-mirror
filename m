@@ -1,88 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/5] gitweb: Use nonlocal jump instead of 'exit' in die_error
-Date: Tue, 4 May 2010 13:39:23 +0200
-Message-ID: <201005041339.26192.jnareb@gmail.com>
-References: <20100424132255.30511.98829.stgit@localhost.localdomain> <20100424135334.30511.26522.stgit@localhost.localdomain>
+From: Ricky Clarkson <ricky.clarkson@gmail.com>
+Subject: I've been pushing to one branch from both git-svn and git
+Date: Tue, 4 May 2010 12:43:23 +0100
+Message-ID: <z2h7eeb06461005040443ib2fb7405i39e7d5b4220bfb08@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 04 13:39:44 2010
+X-From: git-owner@vger.kernel.org Tue May 04 13:43:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9GTX-0004jp-Uc
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 13:39:44 +0200
+	id 1O9GXW-0006cz-Qv
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 13:43:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758282Ab0EDLji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 07:39:38 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:45636 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758256Ab0EDLjh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 07:39:37 -0400
-Received: by fg-out-1718.google.com with SMTP id 19so1319738fgg.1
-        for <git@vger.kernel.org>; Tue, 04 May 2010 04:39:36 -0700 (PDT)
+	id S1752221Ab0EDLnp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 07:43:45 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45830 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751432Ab0EDLno convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 07:43:44 -0400
+Received: by fxm10 with SMTP id 10so3106016fxm.19
+        for <git@vger.kernel.org>; Tue, 04 May 2010 04:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=f97wdhY5FMM7iuK/qbHMl0XXkf/MTBI02KcgEAmfM68=;
-        b=mAEsLhSEkvnh65SaAZvLwHTBGLVnUm9Se0IiAazoPDsxMMZziGXCfNsmh6ed+JeqYA
-         d5tY/wjL3RyD4S6Ha4B83XM10v52NsMopYQ16gvbeFP/ARaigz0L1mWjo8SxytSdS0bC
-         jF62G1OxXi15kmAa/vuST5vU6Hd+lxBVbAwno=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type:content-transfer-encoding;
+        bh=TXajr5B5LdbfxS77Btd0Z731ZgQDO+GR7pU+YVtdc/M=;
+        b=mYT+xhVv8lgnbq+hkE36A4ll8sE9e+vVPsP6RtD2v9AI1xjwJJx/FE8hVNXaP4fbZr
+         DXsZfZbln5BC/YMZcj3xc3X2fQxtL1vky73wWA76CYyQiNTCy3xPzt/cba82LZIp2DEC
+         gnCurv/lTFNf3Prg6hDW+pNF/WW7LDaZTxMKo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:content-disposition
-         :message-id;
-        b=FhzpgUCaSu0jbnE4BS2ouZGe2P+LgRMZQ5uws+3HaQ2w5Ue8sx7WlK6iBChEhfJ67+
-         56JwctuvuN7b17qTgEE8yaGbsTukqsgz6l/71OAFkI+mEtM2zv4Ub5ehnpyfn8ImI6lx
-         PfGKbj6cS3FZ3n6e2Y8QxjjV9Thj+xPvtfibs=
-Received: by 10.87.53.28 with SMTP id f28mr12483136fgk.70.1272973176137;
-        Tue, 04 May 2010 04:39:36 -0700 (PDT)
-Received: from [192.168.1.13] (abrz91.neoplus.adsl.tpnet.pl [83.8.119.91])
-        by mx.google.com with ESMTPS id d8sm17324036fga.21.2010.05.04.04.39.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 May 2010 04:39:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100424135334.30511.26522.stgit@localhost.localdomain>
-Content-Disposition: inline
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=uv/WvivGZd3gLNTQC+VYT1g+xIFxOUcuKqcx3S0cFy6gtXkX2Kcqn2BpSO9odSl7zT
+         2EAnomNloWOI0PF2P1KxsVbbX8guqidP061XriQDlHWDMSp8eZN/vf1+OBVpg5SLzvzm
+         LR7UjezPgvmBqxtDh9ja7zZddxbcJ0cnCveiE=
+Received: by 10.223.24.133 with SMTP id v5mr4118561fab.46.1272973423225; Tue, 
+	04 May 2010 04:43:43 -0700 (PDT)
+Received: by 10.223.126.3 with HTTP; Tue, 4 May 2010 04:43:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146310>
 
-On Sat, 24 Apr 2010, Jakub Narebski wrote:
+Hi,
 
-> Use 'goto DONE' in place of 'exit' to end request processing in
-> die_error() subroutine.  While at it, do not end gitweb with 'exit'.
-> 
-> This would make it easier in the future to add support or improve
-> support for persistent environments such as FastCGI and mod_perl.
-> It would also make it easier to make use of die_error() as an error
-> handler (for fatalsToBrowser).
-> 
-> Perl 5 allows non-local jumps; the restriction is that you cannot jump
-> into a scope.
-> 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
-> This patch is most independent of introducing caching support to
-> gitweb, and I think it would be good to have nevertheless.
+I have a git repository we'll call the git svn repo, in which I only
+perform git svn fetch and git push bare.
 
->From *very preliminary* benchmarks it looks like this change improves 
-gitweb performance for multiple connections when served from mod_perl.
+bare is a bare git repository, which I push to from a local
+repository. =C2=A0The mistake I've been making is to push to the branch
+'trunk' in bare, from my local repository. =C2=A0The reason this is a
+mistake is because git push bare from the git svn repo also pushes to
+there.
 
-The results of "ab -n 10 -c <X> <URL>", where X = 1, 2, 5, degrades
-less with the number of concurrent requests when this patch is applied 
-than without this patch.
+Today I've been forced to learn of my mistake, as I cannot push from
+the git svn repo without possibly losing commits. =C2=A0It turns out (w=
+hich
+is probably obvious to you all) that I should have been pushing to,
+say, bare's 'master' branch instead of its trunk one.
 
--- 
-Jakub Narebski
-Poland
+I don't intend to push back to svn from any of these repos, but I
+would like to be able to continue pulling changes from svn at least
+for the time being. =C2=A0What should I do?
+
+Thanks,
+Ricky.
+
+--
+Ricky Clarkson
+Java and Scala Programmer, AD Holdings
++44 1928 706373
+Skype: ricky_clarkson
+Google Talk:=C2=A0ricky.clarkson@gmail.com
+Google Wave:=C2=A0ricky.clarkson@googlewave.com
