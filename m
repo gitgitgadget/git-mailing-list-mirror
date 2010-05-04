@@ -1,88 +1,60 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: preserve permissions?
-Date: Tue, 04 May 2010 06:08:00 -0700 (PDT)
-Message-ID: <m3fx27g6i8.fsf@localhost.localdomain>
-References: <C1288762-C750-4919-A853-5E3229870A59@btinternet.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: new platform & S_IFGITLINK problem
+Date: Tue, 4 May 2010 07:34:04 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1005040732310.5478@i5.linux-foundation.org>
+References: <1272756555.13488.1314.camel@jetpack.demon.co.uk> <7vfx2b2ft5.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1005032035310.5478@i5.linux-foundation.org> <alpine.LFD.2.00.1005032042470.5478@i5.linux-foundation.org> <4BDFBB18.70800@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathan Chetwynd <j.chetwynd@btinternet.com>
-X-From: git-owner@vger.kernel.org Tue May 04 15:08:23 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Alan Hourihane <alanh@fairlite.co.uk>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue May 04 16:37:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9HrI-0002zD-7s
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 15:08:20 +0200
+	id 1O9JFL-0003Y7-Hg
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 16:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758780Ab0EDNIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 09:08:12 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:41318 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824Ab0EDNIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 09:08:10 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1539949fga.1
-        for <git@vger.kernel.org>; Tue, 04 May 2010 06:08:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=jZW2jRF1RD8whf8NQsacMQuaKDUzVMQcp0q3rZrnJqE=;
-        b=cAT+4LKIaRppElLBf0cf6Ffh8onoEjPRPzBcA1dZKHlKlmbZAq3A08Tqg3sK/B98/j
-         GXs/PdS2oCm2wDrLtJRP/KV7Hko5NgYcB+/P87VuN4uH+pgxFeFaiRrrHJfmcSNuG9Fv
-         tulqwLUemOWnJ2kJ+yCrUC7T4T8rJWNR4RIZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=h04E7If5AOdSP3kelyuIDjyWyNkf7gISCoufgEZpqEwzUkK+ClVScjYUiJFQSc2xFF
-         fZnIsQPHtNfDUxT/+XurkG1ICR3l1ubavaiRZBvZT9P/pX/+zdo+n28DYazennwF4aU1
-         e620GSSbv0ohFBwKInWz9Hr6fTbB8r4X8hoRs=
-Received: by 10.87.69.8 with SMTP id w8mr12649634fgk.58.1272978481546;
-        Tue, 04 May 2010 06:08:01 -0700 (PDT)
-Received: from localhost.localdomain (abrz91.neoplus.adsl.tpnet.pl [83.8.119.91])
-        by mx.google.com with ESMTPS id e11sm10980389fga.18.2010.05.04.06.08.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 May 2010 06:08:00 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o44D7iga024769;
-	Tue, 4 May 2010 15:07:54 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o44D7SKo024759;
-	Tue, 4 May 2010 15:07:28 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <C1288762-C750-4919-A853-5E3229870A59@btinternet.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S932778Ab0EDOhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 10:37:06 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:51396 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932313Ab0EDOhF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 10:37:05 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o44EZWet019578
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 4 May 2010 07:35:33 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o44EZVgG000507;
+	Tue, 4 May 2010 07:35:31 -0700
+In-Reply-To: <4BDFBB18.70800@op5.se>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.447 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146313>
 
-Jonathan Chetwynd <j.chetwynd@btinternet.com> writes:
 
-> git clone ../xsl-test/
+
+On Tue, 4 May 2010, Andreas Ericsson wrote:
 > 
-> the original has a single directory, owner _www, and a few files.
-> 
-> however the clone directory has owner Me.
-> 
-> what is the reason permissions are not preserved?
+> So why not make even pack file access work with the git macros?
 
-Why should permissions be preserved?  Git is a version control system,
-meant mainly for software management, not a backup system.  
+Because I'm a sneaky bastard, and I have a long-term plan.
 
-When you clone repository from somebody, you don't want for files to
-have that somebody ownership, especially that such user most probably
-do not exist on your machine.
+The whole filename character set conversion thing.
 
-Therefore git does not store ownership, and only basic permissions
-(only executable bit for ordinary files, and the symlink bit).
+So having a git_[l]stat() macro - used only for working tree accesses - 
+would be one step in that direction. Doing it for git internal files would 
+totally screw that plan up.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+		Linus
