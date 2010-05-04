@@ -1,95 +1,109 @@
-From: "Here I. Come" <me.detected@gmail.com>
-Subject: Bad URL passed to RA layer ('https')
-Date: Tue, 4 May 2010 13:18:56 +0400
-Message-ID: <l2y5208b6091005040218t2890b871x1753a1788b67350b@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 3/4] Documentation/notes: describe content of notes
+Date: Tue, 04 May 2010 11:55:01 +0200
+Message-ID: <201005041155.02192.johan@herland.net>
+References: <20100503233604.GA27451@progeny.tock>
+ <20100503234229.GC27483@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 04 11:34:08 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 04 11:55:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9EVx-0007mL-PT
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 11:34:06 +0200
+	id 1O9Er0-0000NA-Bc
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 11:55:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754601Ab0EDJeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 05:34:00 -0400
-Received: from mail-bw0-f171.google.com ([209.85.218.171]:56406 "EHLO
-	mail-bw0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752383Ab0EDJd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 05:33:59 -0400
-X-Greylist: delayed 900 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 May 2010 05:33:58 EDT
-Received: by bwz19 with SMTP id 19so194330bwz.9
-        for <git@vger.kernel.org>; Tue, 04 May 2010 02:33:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=/dKXWRq5IhRtbrnIGcDi+7GGA8pJjWaCKRiB2WGAAmI=;
-        b=MvJUnLY1hXT3DABIX6ebWnvyUy0QZt/4kFTySl/K10u+z6n5V4a7ijXYFtlw3UztBR
-         mcSr/WzecGZlwdoNk5eWMkZuWcCRpTD3SbUcI3wclYDdPnpGHgYkkdlXMgLvnPe+9DbP
-         MoR0sKwzVteqys5g2bHgulcp+fhQI5995ZmsI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=G80Y08gisbEhcvyc0qw9gUm4BwaiOH0zCQusz/TZMFL8uJgXD0qMAm+hRzuRLl2OX8
-         xUV+uAcRcwpOSwCNp5eZ3Cqixctl+4CgnY8gVEj5oWhxKrOOSs9kNHfUy5ZNN4wlzTTO
-         SSGX7lXBskYTbBbN6ivYVbTsa2tCYxn4li7xM=
-Received: by 10.204.33.16 with SMTP id f16mr666691bkd.11.1272964736420; Tue, 
-	04 May 2010 02:18:56 -0700 (PDT)
-Received: by 10.204.156.22 with HTTP; Tue, 4 May 2010 02:18:56 -0700 (PDT)
+	id S1755489Ab0EDJzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 05:55:44 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:47151 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751251Ab0EDJzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 05:55:43 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L1W00ILJ3JRNF40@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 04 May 2010 11:55:03 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 223071EA55BF_BDFEEF7B	for <git@vger.kernel.org>; Tue,
+ 04 May 2010 09:55:03 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id F35C31EA3559_BDFEEF6F	for <git@vger.kernel.org>; Tue,
+ 04 May 2010 09:55:02 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L1W00KZL3JQZY00@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 04 May 2010 11:55:02 +0200 (MEST)
+User-Agent: KMail/1.13.2 (Linux/2.6.33-ARCH; KDE/4.4.2; x86_64; ; )
+In-reply-to: <20100503234229.GC27483@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146307>
 
-Hi, list.
+On Tuesday 04 May 2010, Jonathan Nieder wrote:
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+>  Documentation/git-notes.txt |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+> index 0594776..273264b 100644
+> --- a/Documentation/git-notes.txt
+> +++ b/Documentation/git-notes.txt
+> @@ -27,6 +27,10 @@ By default, notes are saved to and read from
+> `refs/notes/commits`, but this default can be overridden.  See the
+> CONFIGURATION and ENVIRONMENT sections below.
+> 
+> +Notes can contain any sequence of non-null bytes.  Since they are
+> +sanitized with linkgit:git-stripspace[1], empty lines other than a
+> +single line separating paragraphs are not significant.
 
-Googled and searched the list on this problem. No luck...
+In principle, a note is a regular Git (blob) object, and can contain NUL 
+bytes - indeed any kind of (non-)format is accepted.
 
-------------------8<-----------------------
-$ git svn clone https://host/svn/myrepo
-Initialized empty Git repository in /tmp/myrepo/.git/
-Bad URL passed to RA layer: Unrecognized URL scheme for
-'https://host/svn/myrepo' at /usr/libexec/git-core/git-svn line 1770
-------------------8<-----------------------
+However, the stripspace/text-based formatting kicks in when specifying the 
+notes content with -m or -F, or when an editor is used to edit the notes.
 
-Could not clone from a repository. Although if I issue 'svn checkout
-https://host/svn/myrepo' it will work, so it seems that the problem is
-connected with git. Cannot check if this happens only with 'https',
-sorry.
+So as long as you stick to the following subcommands, notes should be 
+completely binary-safe:
 
-versions used:
+- git notes [list [<object>]]
+- git notes add [-f] -C <note-object> <object>
+- git notes copy [-f] <from-object> <to-object>
+- git notes show [<object>]
+- git notes remove [<object>]
+- git notes prune
 
-------------------8<-----------------------
-$ git --version
-git version 1.7.1
+In other words, you can (binary-safely) create notes from files with the 
+following construct:
 
-$ svn --version
-svn, version 1.6.11 (r934486)
-   compiled Apr 30 2010, 02:06:58
+    git notes add -C $(git hash-object -w <file>) <object>
 
-Copyright (C) 2000-2009 CollabNet.
-Subversion is open source software, see http://subversion.tigris.org/
-This product includes software developed by CollabNet (http://www.Collab.Net/).
+Of course, it doesn't make much sense displaying non-text-format notes with 
+'git log', so if you use such notes you'll probably need to write some 
+special-purpose tools for doing anything useful with them.
 
-The following repository access (RA) modules are available:
+Otherwise, your other 3 patches seem fine to me (modulo Thomas Rast's 
+comments) and you can consider them
+Acked-by: Johan Herland <johan@herland.net>
 
-* ra_neon : Module for accessing a repository via WebDAV protocol using Neon.
-  - handles 'http' scheme
-  - handles 'https' scheme
-* ra_svn : Module for accessing a repository using the svn network protocol.
-  - with Cyrus SASL authentication
-  - handles 'svn' scheme
-* ra_local : Module for accessing a repository on local disk.
-  - handles 'file' scheme
 
-------------------8<-----------------------
+Have fun! :)
 
-Running on Slackware-current.
+...Johan
 
-Thanks.
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
