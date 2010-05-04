@@ -1,62 +1,120 @@
-From: Andrew Keller <andrew@kellerfarm.com>
-Subject: Re: preserve permissions?
-Date: Tue, 4 May 2010 14:44:15 -0400
-Message-ID: <1D033321-2F57-44BF-B27F-D7450AFC85E6@kellerfarm.com>
-References: <C1288762-C750-4919-A853-5E3229870A59@btinternet.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: update-index --really-refresh unsets assume-unchanged bit
+Date: Tue, 4 May 2010 21:41:36 +0200
+Message-ID: <20100504194136.GA19300@localhost>
+References: <20100501092512.GA15941@localhost>
+ <20100501092720.GB15941@localhost>
+ <20100504085722.GA32217@localhost>
+ <z2h32541b131005040941m79724daq4cd8b0c427bb218a@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 04 21:38:19 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 04 21:41:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9Nwf-000627-Ej
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 21:38:17 +0200
+	id 1O9O0E-00089x-Of
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 21:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757882Ab0EDTiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 15:38:09 -0400
-Received: from sanjose.tchmachines.com ([208.76.86.38]:50794 "EHLO
-	leia.tchmachines.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753600Ab0EDTiI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 15:38:08 -0400
-X-Greylist: delayed 3223 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 May 2010 15:38:08 EDT
-Received: from c-208-53-115-13.customer.broadstripe.net ([208.53.115.13] helo=[192.168.0.101])
-	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <andrew@kellerfarm.com>)
-	id 1O9N6I-0003ov-Vv
-	for git@vger.kernel.org; Tue, 04 May 2010 14:44:11 -0400
-In-Reply-To: <C1288762-C750-4919-A853-5E3229870A59@btinternet.com>
-X-Mailer: Apple Mail (2.1078)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - leia.tchmachines.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kellerfarm.com
+	id S932941Ab0EDTlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 15:41:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35944 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759779Ab0EDTlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 15:41:52 -0400
+Received: by fxm10 with SMTP id 10so3592842fxm.19
+        for <git@vger.kernel.org>; Tue, 04 May 2010 12:41:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=/d4xpKj83w9MKfhDfmgd0Y5xWn4pptdGjA3SmIwh2is=;
+        b=Q2POHOHkXes8LHkGygzV9POMl9UiMflxgfENaV7VnroiGIONXLVsHCw/Bcy2uixnKg
+         HWnG6S0E+DhRkLHTDyLFNsqOs+5QqSnjaXUfCdZGhTYoDY8FJgCbH2pKVqABvjBa3lEn
+         4g42umRtqHhicQCt/X2fxTHHT/6VhAwoqFIsg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=xosNSvePwvPvVWZwlKyEtufsB8fdoak4ICc+WR/wU9kqsszV0b62AYyYKjYY9nZIWM
+         j4dh3W4Fr2phxOJVJW2Oq69HO1taeFci5HhpxzXFWDHmVZ3Dfp6gV8LJKkNQtkFtE4Vg
+         3u1Idp8xGh/cgJUZL9w1Iow18lICWB8dDN4yU=
+Received: by 10.223.72.156 with SMTP id m28mr4558887faj.26.1273002111043;
+        Tue, 04 May 2010 12:41:51 -0700 (PDT)
+Received: from darc.lan (p549A456A.dip.t-dialin.net [84.154.69.106])
+        by mx.google.com with ESMTPS id 1sm11973532fkt.11.2010.05.04.12.41.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 May 2010 12:41:50 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1O9Nzs-0005Hz-Fn; Tue, 04 May 2010 21:41:36 +0200
+Content-Disposition: inline
+In-Reply-To: <z2h32541b131005040941m79724daq4cd8b0c427bb218a@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146339>
 
-On May 4, 2010, at 8:29 AM, Jonathan Chetwynd wrote:
+On Tue, May 04, 2010 at 12:41:22PM -0400, Avery Pennarun wrote:
 
-> ...
+> On Tue, May 4, 2010 at 4:57 AM, Clemens Buchacher <drizzd@aon.at> wrote:
+>
+> > Scratch that latter part, please. I just noticed the bit is unset only for
+> > modified files. If the file matches the index, or even if it has been
+> > deleted in the work tree, the bit is _not_ unset.
+> >
+> > So the current behavior is quite strange. I see several possible
+> > interpretations of --really-refresh:
 > 
-> what is the reason permissions are not preserved?
+> I don't know, the current behaviour sounds consistent with the name:
+> "assume unchanged."
 > 
-> ...
+> If the index says the file is unmodified, then assume it's unchanged;
+> don't check for changes.
 
+This is not about changes with respect to HEAD.  The "assume unchanged" flag
+is unset if the work tree differs from the index.  Whether or not the file
+is modified in the index is irrelevant.
 
-Git implements a network of trust permission model.  In this model, system permissions are used (among other things) to control who has access to a repository.  Once someone has access, they can perform a clone or a fetch.  This process downloads refs into a local repository that inherits your local permissions.  This model is simple, but it is often capable of most things that system permissions can do, and it avoids the problem of a given user in the repository not existing on a machine.
+> If the index says the file is modified, then clearly it's changed; it
+> would be pointless to assume otherwise, so the "assume unchanged" bit
+> should probably not be set.
 
-One of the implications of this model is that although system permissions can be used to control who has access to a repository, they are not stored in the repository itself.  This means that if you clone a repository, the system permissions of the repository are never preserved.  This is a very intentional detail of the network of trust permission model.  Once a user has access to a repository, that user has access to the whole repository.  It is exactly like telling another person something.  Once the other person hears the data, that person can do whatever he or she wants with it.  He or she "owns" a copy of the data.
+On the contrary. I _want_ git to assume the file is unchanged, even though I
+know it changed. This is an intended and documented use case (from the
+git-update-index manpage):
 
-In other words, if you want a user X to own a repository upon cloning, then user X must be the one to perform the clone.  If you want Sue to know that the new kitchen table is made of oak, then Sue must be the one to ask the question (aka clone or fetch).  You cannot ask the question for Sue and expect her to instantly know what you know.
+ This option can be also used as a coarse file-level mechanism
+ to ignore uncommitted changes in tracked files (akin to what
+ `.gitignore` does for untracked files).
 
-HTH
-~ Andrew Keller
+But even if you look at it from the performance optimization perspective,
+the behavior is still inconsistent, because it does not unset the bit for
+deleted files.
+
+Furthermore, after update-index --really-refresh --add, the file is in fact
+unchanged again and it would make much more sense to keep the
+assume-unchanged flag.
+
+> (Plus it's quite possibly dangerous to
+> assume the file permissions are the same as they were when you first
+> noticed they were changed; imagine if the file has changed twice and
+> now has a different length or mode.)
+
+What do you mean, "dangerous"? I tell git to update the index, and then
+continue to ignore changes to the work tree, until I explicitly update
+again. I can already achieve this behavior using
+
+ git ls-files -v | grep ^h | cut -f2 -d' ' >my-ignored-files
+ git update-index --really-refresh
+ cat my-ignored-files | xargs git update-index --assume-unchanged
+
+Clemens
