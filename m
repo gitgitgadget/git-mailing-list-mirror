@@ -1,59 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] test-lib.sh: Add explicit license detail, with change
- from GPLv2 to GPLv2+.
-Date: Tue, 04 May 2010 10:02:12 -0700
-Message-ID: <7vocgvmwh7.fsf@alter.siamese.dyndns.org>
-References: <87vdbi37yp.fsf@steelpick.2x.cz>
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: Re: While the awesome switch is always on, so is the confusion 
+	switch.
+Date: Tue, 4 May 2010 17:24:34 +0100
+Message-ID: <z2m57518fd11005040924oa4e609d3g9e7cc57c6fb52992@mail.gmail.com>
+References: <28447763.post@talk.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Michal Sojka <sojkam1@fel.cvut.cz>
-X-From: git-owner@vger.kernel.org Tue May 04 19:02:36 2010
+To: xuinkrbin <nabble.20.xuinkrbin@spamgourmet.com>
+X-From: git-owner@vger.kernel.org Tue May 04 19:06:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9LVx-0001h8-S7
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 19:02:34 +0200
+	id 1O9LZl-0003u7-Cz
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 19:06:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759827Ab0EDRC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 13:02:26 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64789 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753206Ab0EDRCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 13:02:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DE4AFB009B;
-	Tue,  4 May 2010 13:02:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rVNlbuW6ng8UCLR2FNmtbEBU6Pg=; b=tVlBvZ
-	xim8rDsG0okX5CgXEKUR0hmLsWH6nHg7q9cuI3i1nSOcyZR9gAxnMcB+Eouzpvk9
-	R/PZEaHOC81FBr5Oz1A2JAOOQQcaiFzHnIqblZaeOlyncKOgLojfE+RJQWw/Psln
-	CYDb3EjxdcgwscMx67g3gef5gQ/1t1GlIOuGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hRyoS0hyVhBOBXZ0pr/4AdkIagUDKjzk
-	PNAo5S99oC2aHYtkqgePjrJQGf7opUMBYtnspLNbSxN3qmNPlMAYRrgMAZiYBTnC
-	q2caq4ZvXEkqZlCVpA14WpVdr2CxNEoAtGaLe1YMvsOE5LguSmT+oTjoihZMs46g
-	RKU5eFSKxs8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A2465B0095;
-	Tue,  4 May 2010 13:02:22 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D3CBB008E; Tue,  4 May
- 2010 13:02:13 -0400 (EDT)
-In-Reply-To: <87vdbi37yp.fsf@steelpick.2x.cz> (Michal Sojka's message of
- "Fri\, 16 Apr 2010 15\:53\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CE8E3A0A-579E-11DF-8DEE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1760008Ab0EDRGG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 13:06:06 -0400
+Received: from juliet.asmallorange.com ([207.210.105.70]:44018 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760005Ab0EDRGB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 13:06:01 -0400
+X-Greylist: delayed 2445 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 May 2010 13:05:58 EDT
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52284)
+	by juliet.asmallorange.com with esmtpsa (TLSv1:RC4-MD5:128)
+	(Exim 4.69)
+	(envelope-from <maillist@steelskies.com>)
+	id 1O9Kvc-0005QW-He
+	for git@vger.kernel.org; Tue, 04 May 2010 12:25:00 -0400
+Received: by wye20 with SMTP id 20so2506952wye.19
+        for <git@vger.kernel.org>; Tue, 04 May 2010 09:24:54 -0700 (PDT)
+Received: by 10.216.90.3 with SMTP id d3mr1277136wef.110.1272990294249; Tue, 
+	04 May 2010 09:24:54 -0700 (PDT)
+Received: by 10.216.173.198 with HTTP; Tue, 4 May 2010 09:24:34 -0700 (PDT)
+In-Reply-To: <28447763.post@talk.nabble.com>
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146330>
 
-It appears that I forgot to apply this; sorry.
+On 4 May 2010 17:18, xuinkrbin <nabble.20.xuinkrbin@spamgourmet.com> wr=
+ote:
+>
+> Hi, All!
+>
+> So, here's the situation. =C2=A0I start with no modifications to HEAD=
+ and no
+> stashes. =C2=A0I verify the lack of stashes with a 'git stash list'. =
+=C2=A0I make some
+> changes so I now have modifications to HEAD and, still, no stashes. =C2=
+=A0I
+> verify the lack of stashes with a 'git stash list'. =C2=A0I run 'git =
+stash' so I
+> now have no modifications to but a stash. =C2=A0I verify the presence=
+ of a stash
+> with a 'git stash list'. =C2=A0I run 'git stash pop' so I now have mo=
+difications
+> to head but no stashes. =C2=A0I run 'git stash list' to verify the la=
+ck of
+> stashes and receive the following message:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fatal: bad object refs/stash
+> If I delete .git/refs/stash and repeat the process, I find the same r=
+esults.
+> The contents of .git/refs/stash are also embedded within
+> .git/logs/refs/stash, if that fact means anything. =C2=A0Can Anyone p=
+oint Me in
+> the direction of documentation on this particular problem to help cle=
+ar up
+> why this is happening and which might help Me to determine what I sho=
+uld do
+> about it?
+>
+
+I can't reproduce this - what does 'git --version' say?
