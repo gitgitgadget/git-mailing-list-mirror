@@ -1,100 +1,80 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: I've been pushing to one branch from both git-svn and git
-Date: Tue, 4 May 2010 12:34:31 -0400
-Message-ID: <w2s32541b131005040934o339e3e79vf386427ed282ce64@mail.gmail.com>
-References: <z2h7eeb06461005040443ib2fb7405i39e7d5b4220bfb08@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Determining if a file exists in a bare repo
+Date: Tue, 04 May 2010 09:39:29 -0700
+Message-ID: <7v7hnjoc3i.fsf@alter.siamese.dyndns.org>
+References: <w2q799406d61005040911p8fd7c234s5e6382298129985f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ricky Clarkson <ricky.clarkson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 04 18:35:07 2010
+To: Adam Mercer <ramercer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 04 18:39:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9L5N-0003e9-SI
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 18:35:06 +0200
+	id 1O9L9y-00062M-Kf
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 18:39:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758806Ab0EDQe6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 12:34:58 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:45004 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758148Ab0EDQe5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 12:34:57 -0400
-Received: by gwj19 with SMTP id 19so1705139gwj.19
-        for <git@vger.kernel.org>; Tue, 04 May 2010 09:34:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RpMerZOXXa05CRmWLMFfMNWzmP3t3fdBQTLCaiAJ0t0=;
-        b=WKIl++FdwInDd3NWrpzvQxAOTv1WrFrWIFiQPdx+JWYbxxA3g9wycGzY6ziiESDoil
-         WxnBwiiSNRmhzpQPsHY11uwy6JhXknqxfSql2U2zZpog4YuCpjeknO+o8OD+LtW9c5X4
-         37xr6GOxrXhNbf2yYbzI+Un5fv3GGoRO6uxT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Tl2jRr+lomydJxCAODGHdfDxct/Z8TB3C91g2O67XQEGn4YZjf06Yjy2CqFbD3t5+f
-         bR3Jju1MQYDM6+81phQajZw9k4TpFeUm4wizECQJWscpBnzYtWG3ri34Vd91IArl9KU9
-         mHXMlyck4+JWcFDnVXxXhgSPcYMqYRRgyNarc=
-Received: by 10.150.213.14 with SMTP id l14mr12357603ybg.241.1272990891471; 
-	Tue, 04 May 2010 09:34:51 -0700 (PDT)
-Received: by 10.151.109.5 with HTTP; Tue, 4 May 2010 09:34:31 -0700 (PDT)
-In-Reply-To: <z2h7eeb06461005040443ib2fb7405i39e7d5b4220bfb08@mail.gmail.com>
+	id S1759538Ab0EDQjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 12:39:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36208 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753937Ab0EDQjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 12:39:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD2D8B0C5E;
+	Tue,  4 May 2010 12:39:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kuSd+Ma1jKk3RNIOjs2PcCoWHFk=; b=kOU7+B
+	L4omjsmkriVWW9w1lIGAeBLUJZZiWLe5onq/f1LqgUz05jRI0p05syghVAP6seS/
+	XEfcXi5aTpYk9iKNAAiVBLgJtlCTJF9CbzwOxx1CgS7RBpU9Zz9/DqxXdzgIS6lO
+	FwCYTWhzkCu1m6uVVRoDgbYE112ALUxZSWzPY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t7kVoBXbI+KhPCSO7nDLbfJfYuVa0GRg
+	AfHTrgkdJbY4I5BVyfdnSIq+huBnP4Naw2PC9kER8r9xat12nhiyy+pD3WzYl1Nb
+	G6IcHnupp8EseJgk8FMcgHcW4SgpX4qDBAwozOkA6vn8n2hVv/WJ5Y/4GFBlDZiz
+	ZR1tfaM/So8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 74015B0C5D;
+	Tue,  4 May 2010 12:39:33 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D3966B0C5C; Tue,  4 May
+ 2010 12:39:30 -0400 (EDT)
+In-Reply-To: <w2q799406d61005040911p8fd7c234s5e6382298129985f@mail.gmail.com>
+ (Adam Mercer's message of "Tue\, 4 May 2010 11\:11\:57 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9E75AB9E-579B-11DF-8148-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146325>
 
-On Tue, May 4, 2010 at 7:43 AM, Ricky Clarkson <ricky.clarkson@gmail.co=
-m> wrote:
-> I have a git repository we'll call the git svn repo, in which I only
-> perform git svn fetch and git push bare.
+Adam Mercer <ramercer@gmail.com> writes:
+
+> Hi
 >
-> bare is a bare git repository, which I push to from a local
-> repository. =A0The mistake I've been making is to push to the branch
-> 'trunk' in bare, from my local repository. =A0The reason this is a
-> mistake is because git push bare from the git svn repo also pushes to
-> there.
+> I'm trying to write a post-receive hook that generates some HTML files
+> from reStructured text files stored in a repository. Essentially I'm
+> doing this with
 >
-> Today I've been forced to learn of my mistake, as I cannot push from
-> the git svn repo without possibly losing commits. =A0It turns out (wh=
-ich
-> is probably obvious to you all) that I should have been pushing to,
-> say, bare's 'master' branch instead of its trunk one.
+> git show master:INSTALL | rst2html --no-raw --no-file-insertion >
+> /path/to/INSTALL.html
 >
-> I don't intend to push back to svn from any of these repos, but I
-> would like to be able to continue pulling changes from svn at least
-> for the time being. =A0What should I do?
+> However I would like this script to fail gracefully if the INSTALL
+> file is not available in the repository so would like to check if this
+> file exists. The problem I'm having is that git-show seems to return a
+> zero return code even if the file you request doesn't exist
 
-If you don't intend to push back to svn, then life is relatively simple=
-=2E
+Even if it returned an error status, you are discarding it by placing the
+process on the upstream side of the pipe, so your command line above won't
+be able to catch an error anyway.  I would probably do something like this
+if I were you:
 
-=46irst, on your PC where you've been making other commits, rename the
-trunk branch to master and push that:
-
-   git branch -m trunk master
-   git push bare master
-
-Then delete the 'trunk' branch on bare, and re-push it from the git svn=
- repo:
-
-   git push bare :trunk
-   git push bare trunk
-
-And probably you'll go back to your PC and merge the latest trunk into
-your master:
-
-   git pull bare trunk
-     # resolve any conflicts
-   git push bare master
-
-Have fun,
-
-Avery
+    git rev-parse --verify master:INSTALL >/dev/null 2>&1 &&
+    git cat-file blob master:INSTALL | rst2...
