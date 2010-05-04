@@ -1,128 +1,76 @@
-From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
-Subject: Re: [BUG] [RESOLVED] merge-recursive call in git-am -3 chokes, autocrlf
- issue?
-Date: Tue, 04 May 2010 17:47:05 -0400
-Organization: MAD House Graphics
-Message-ID: <4BE095D9.6090403@mhg2.com>
-References: <201003190149.03025.trast@student.ethz.ch> <hp2jkj$mu0$1@dough.gmane.org> <7vbpe3qe09.fsf@alter.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH/RFC 2/2] git-svn: Don't allow missing commit parent to
+ stop git-svn
+Date: Wed, 05 May 2010 10:02:35 +1200
+Message-ID: <1273010555.20723.17.camel@denix>
+References: <j2wc8b3bef91004201430ie371be83kee0e3e4c35ab9c9e@mail.gmail.com>
+	 <1271880470.20208.47.camel@denix>
+	 <m2sc8b3bef91004211417n1f3368a7ica94a1c2a7656622@mail.gmail.com>
+	 <4BCF8E07.9080507@vilain.net>
+	 <r2jc8b3bef91004280851i865a911ei47b1be606dd560d9@mail.gmail.com>
+	 <20100503211942.GA1380@dcvr.yhbt.net>
+	 <4BDFC171.5010103@drmicha.warpmail.net>
+	 <20100504183452.GA30894@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 04 23:47:41 2010
+Cc: Michael Olson <mwolson@gnu.org>, Sam Vilain <sam@vilain.net>,
+	git@vger.kernel.org, Tim Stoakes <tim@stoakes.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed May 05 00:03:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9Pxr-0006u2-Q7
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 23:47:40 +0200
+	id 1O9QCi-0005gF-8a
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 00:03:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934192Ab0EDVrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 17:47:22 -0400
-Received: from lo.gmane.org ([80.91.229.12]:50657 "EHLO lo.gmane.org"
+	id S934260Ab0EDWCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 18:02:50 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:46840 "EHLO mail.utsl.gen.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934098Ab0EDVrV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 17:47:21 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O9PxV-0006kY-3N
-	for git@vger.kernel.org; Tue, 04 May 2010 23:47:17 +0200
-Received: from c-71-58-29-3.hsd1.de.comcast.net ([71.58.29.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 May 2010 23:47:17 +0200
-Received: from scottg.wp-hackers by c-71-58-29-3.hsd1.de.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 May 2010 23:47:17 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-71-58-29-3.hsd1.de.comcast.net
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.4
-In-Reply-To: <7vbpe3qe09.fsf@alter.siamese.dyndns.org>
+	id S934206Ab0EDWCt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 18:02:49 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 51F1B21CEC8; Wed,  5 May 2010 10:02:37 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.8 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+Received: from [192.168.69.233] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id A616D21C541;
+	Wed,  5 May 2010 10:02:31 +1200 (NZST)
+In-Reply-To: <20100504183452.GA30894@dcvr.yhbt.net>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146351>
 
-On 04/01/2010 01:27 PM, Junio C Hamano wrote:
-> I however think the patch probably "fixes" the issue at the worst point.
-> Wouldn't either of these alternatives be better?
->
->   (1) Perhaps the caller of "pre-commit/post-merge/post-checkout" hook
->       should instead refresh the index when the hook returns, _iff_ we
->       expect that majority of these hooks are used to munge the work tree
->       or the index; or
->
->   (2) Because you already established that setgitperms script is the
->       culprit that leaves the index unrefreshed, instead of forcing all the
->       callers of the script, it should do the refresh for its callers
->       before it exits.
+On Tue, 2010-05-04 at 18:34 +0000, Eric Wong wrote:
+> Michael J Gruber <git@drmicha.warpmail.net> wrote:
+> > Uhm, which one: The one in your subject line or the one in the quoted
+> > subject line?
+> 
+> Sam's patch:
+>   Subject: [PATCH] git-svn: deal with svn cherry-picks with non-linear history
+> 
+> Where he said:
+> > >>> Oh, right ... I remember that issue now. I'm currently testing the
+> > >>> below change to see if it breaks the test suite; any issues and I'll
+> > >>> post an update.
+> 
+> Sorry for the confusion
 
-Good call.
+Sorry for not following up - it didn't cause any test suite breakages
+when I tested it.  Especially if Michael has had joy with it I'd say
+it's good to go...
 
-I talked it over with Todd Zullinger and he came up with the following 
-patch, which I tested on my end to my complete satisfaction, rebases and 
-merges go smoothly.
-
-it's still necessary however, to --no-commit on merges so that you can 
-fix the permissions before your umask blots them out and they wind up in 
-the commit and saved in the gitmeta file
-
-As a result, my usual modus operandi currently is:
-	git checkout master
-	git merge --no-ff --no-commit develop
-	find . -perm 0600 -or -perm 0700 |grep -v .git/
-	...fix perms back to where they should be
-	git add -A
-	git commit
-
-which is somewhat less than optimal, but otherwise setgitperms.perl is 
-doing what it should.
-
-Revised patch follows:
---8<--
-Subject: [PATCH] Revise setgitperms.perl to fix dirty tree problem when 
-rebasing/merging
-
-reference:
-http://comments.gmane.org/gmane.comp.version-control.git/142548
-
-Note that it will be necessary to not only copy the changed
-setgitperms.perl from /usr/share/git-core/contrib/hooks/ to
-/usr/share/git-core/templates/hooks/ but additionally every git
-repository you currently use this script with, will also need to be
-updated with the new version. This process is regrettably not automatic 
-simply
-because git was updated on your system.
----
-  contrib/hooks/setgitperms.perl |    4 ++++
-  1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
-index a577ad0..e571560 100644
---- a/contrib/hooks/setgitperms.perl
-+++ b/contrib/hooks/setgitperms.perl
-@@ -91,6 +91,10 @@ if ($write_mode) {
-         }
-      }
-      close IN;
-+
-+    # Make sure the index isn't left dirty
-+    # http://comments.gmane.org/gmane.comp.version-control.git/142548
-+    system("git update-index --refresh");
-  }
-  elsif ($read_mode) {
-      # Handle merge conflicts in the .gitperms file
--- 
-1.7.1
-
---8<--
-
--- 
-(please respond to the list as opposed to my email box directly,
-unless you are supplying private information you don't want public
-on the list)
+Sam
