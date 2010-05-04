@@ -1,100 +1,87 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: update-index --really-refresh unsets assume-unchanged bit
-Date: Tue, 4 May 2010 12:41:22 -0400
-Message-ID: <z2h32541b131005040941m79724daq4cd8b0c427bb218a@mail.gmail.com>
-References: <20100501092512.GA15941@localhost> <20100501092720.GB15941@localhost> 
-	<20100504085722.GA32217@localhost>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Global .git directory
+Date: Tue, 04 May 2010 09:55:29 -0700
+Message-ID: <7vsk67mwse.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.00.1004270705280.15197@bbs.intern>
+ <201004271159.34071.trast@student.ethz.ch>
+ <alpine.LFD.2.00.1004272144470.11216@bbs.intern>
+ <s2y40aa078e1004271326u3fbbd46au30f187bc3ca9c8c8@mail.gmail.com>
+ <alpine.LFD.2.00.1004280710380.27548@bbs.intern>
+ <q2k40aa078e1004280550o322dc5b8jca74d401a5eb1abe@mail.gmail.com>
+ <alpine.LFD.2.00.1004282211431.29101@bbs.intern>
+ <alpine.LFD.2.00.1005040705470.4835@bbs.intern>
+ <20100504054040.GC13139@goomba>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue May 04 18:41:51 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Gerhard Wiesinger <lists@wiesinger.com>, git@vger.kernel.org,
+	kusmabite@gmail.com, Thomas Rast <trast@student.ethz.ch>
+To: Andrew Ruder <andy@aeruder.net>
+X-From: git-owner@vger.kernel.org Tue May 04 18:55:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9LBu-0007N3-H5
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 18:41:50 +0200
+	id 1O9LPU-0006MZ-Bk
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 18:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759756Ab0EDQlp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 12:41:45 -0400
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:44915 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753937Ab0EDQlo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 12:41:44 -0400
-Received: by ywh36 with SMTP id 36so1743941ywh.4
-        for <git@vger.kernel.org>; Tue, 04 May 2010 09:41:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4WRx3Bxq0tb2hevHYJHHip7TSxgSAotDT6ncmH0Kd/0=;
-        b=OJYCLeFOhs7ii9/s+87EK7bcOxt5/1sAKqGtyJUCsYWnH5KruaxMlRznz1etlLqgf2
-         STPcPwczVQPsaE1Hqz0vaHP1/LPJOjS9msO4r6MdY48eQHYYmEgftLb8IEzbQTK4AXpN
-         CxZT1+BCWYP/f0N/nuIP1OJVzsmcmixc+X++4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BbISRkypxJNAHcLj3Cf55u1ZT0lNlpVl+kIHGsh9LSYHKrnHI8IjP5arg4m+fnAFfZ
-         DbKEPp4HWjNBMlJUw7g0Zg5Ij/lKZ2C0vFRUDO+azA0bVaY9530GV6c8GpyHsRVNRRHj
-         yiFYA9XHcvopsErMcBnmLfY3hpTrwaRA4Xh60=
-Received: by 10.150.99.5 with SMTP id w5mr13092545ybb.139.1272991303321; Tue, 
-	04 May 2010 09:41:43 -0700 (PDT)
-Received: by 10.151.109.5 with HTTP; Tue, 4 May 2010 09:41:22 -0700 (PDT)
-In-Reply-To: <20100504085722.GA32217@localhost>
+	id S1754369Ab0EDQzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 12:55:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54275 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753084Ab0EDQzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 12:55:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CB701B0F30;
+	Tue,  4 May 2010 12:55:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UQNRZlA42fTyg8vbJDgW3yTifJs=; b=qaDo2E
+	nzMoPyl+E6IOU5iCaeN+OEn9HE5A3XANcIZKXpBoUhA4L8cgSaVklU+s704kUmc+
+	eJz7/TwdigKXFmGpoJqet2hMMDaIuZ3OYlGbBm4LLzrQEZpr5KO1zQLZIRebjaaz
+	Zg0nawi6YP9ypQwRBswNKLwoXT3W8MAgVXEMo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PTsOTKU124TeDbwRUNtir8aX2zyJLQ04
+	g7fh3sfKdEpv1mQbQ+jbf7llEB47LCjF/K0I+71J4iJvW0cjCJGsCM0f7VLjjfCC
+	GYfgW7fsSfrJjFL/rEQkjcESRqz2W86LssxqPU9y1M9vXvp6Mje8qu+tVe10haDc
+	bPmQtG70d/0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 796ACB0F2F;
+	Tue,  4 May 2010 12:55:36 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 533C9B0F2A; Tue,  4 May
+ 2010 12:55:30 -0400 (EDT)
+In-Reply-To: <20100504054040.GC13139@goomba> (Andrew Ruder's message of
+ "Mon\, 3 May 2010 22\:40\:40 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DC724B94-579D-11DF-B072-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146327>
 
-On Tue, May 4, 2010 at 4:57 AM, Clemens Buchacher <drizzd@aon.at> wrote=
-:
-> On Sat, May 01, 2010 at 11:27:20AM +0200, Clemens Buchacher wrote:
->
->> =A0--really-refresh::
->> =A0 =A0 =A0 Like '--refresh', but checks stat information unconditio=
-nally,
->> - =A0 =A0 without regard to the "assume unchanged" setting.
->> + =A0 =A0 without regard to the "assume unchanged" setting. The "ass=
-ume
->> + =A0 =A0 unchanged" bit is unset for all paths.
->
-> Scratch that latter part, please. I just noticed the bit is unset onl=
-y for
-> modified files. If the file matches the index, or even if it has been
-> deleted in the work tree, the bit is _not_ unset.
->
-> So the current behavior is quite strange. I see several possible
-> interpretations of --really-refresh:
+Andrew Ruder <andy@aeruder.net> writes:
 
-I don't know, the current behaviour sounds consistent with the name:
-"assume unchanged."
+> I'm not really a person that will be doing the reviewing but as a
+> frequent lurker on the list, I'm going to try to help you out some.
 
-If the index says the file is unmodified, then assume it's unchanged;
-don't check for changes.
+Thanks.
 
-If the index says the file is modified, then clearly it's changed; it
-would be pointless to assume otherwise, so the "assume unchanged" bit
-should probably not be set.  (Plus it's quite possibly dangerous to
-assume the file permissions are the same as they were when you first
-noticed they were changed; imagine if the file has changed twice and
-now has a different length or mode.)
+> While you're not exactly fixing a bug, this would benefit from a
+> testcase.
 
-Since most of the time most of your files won't have changed,
-assume-unchanged gets you the optimization without too much danger.
-The cost of not assuming a changed file is unchanged is pretty low.
+Just so that people do not misunderstand.  A test is _not_ about proving
+that your patch fixed a bug.  It instead is to protect your change from
+future breakages by _other people_.
 
-=2E..now if only there was a global "just never check for changes or ne=
-w
-files or anything, even if I run git status" bit, someone could write
-a useful git inotify daemon :)
-
-Have fun,
-
-Avery
+Having a test that would fail if careless others muck with related
+codepath in the future without taking your change into account is a good
+way to make sure your new feature or your good change of behaviour keep
+working (the alternative is for you as the author of such a valuable
+change to stay on the list 24/7, audit all the patches that may negatively
+affect your change and veto them before they are applied, which is
+impractical for most people).
