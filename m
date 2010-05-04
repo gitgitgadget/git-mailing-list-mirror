@@ -1,77 +1,59 @@
-From: Adam Mercer <ramercer@gmail.com>
-Subject: Re: Determining if a file exists in a bare repo
-Date: Tue, 4 May 2010 11:57:12 -0500
-Message-ID: <z2p799406d61005040957j93f8f4a3zfb8a9f38dbe7c72c@mail.gmail.com>
-References: <w2q799406d61005040911p8fd7c234s5e6382298129985f@mail.gmail.com> 
-	<7v7hnjoc3i.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] test-lib.sh: Add explicit license detail, with change
+ from GPLv2 to GPLv2+.
+Date: Tue, 04 May 2010 10:02:12 -0700
+Message-ID: <7vocgvmwh7.fsf@alter.siamese.dyndns.org>
+References: <87vdbi37yp.fsf@steelpick.2x.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 04 18:57:40 2010
+To: Michal Sojka <sojkam1@fel.cvut.cz>
+X-From: git-owner@vger.kernel.org Tue May 04 19:02:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9LRE-0007OD-04
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 18:57:40 +0200
+	id 1O9LVx-0001h8-S7
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 19:02:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759251Ab0EDQ5e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 12:57:34 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60862 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756873Ab0EDQ5d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 12:57:33 -0400
-Received: by gwj19 with SMTP id 19so1713677gwj.19
-        for <git@vger.kernel.org>; Tue, 04 May 2010 09:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8Oghqu+tM3E6ZlDUhPgCg/HmrPgIf48K4bCrnsZyNC0=;
-        b=TVWldg4vKmNJ6CKC9QewrwlLDsOJ+bysk1IlcSeA9EEzP2dBG5CFE+70HtfWPkaM53
-         YKWhkE1hhDddSH0/ydkvUMId9nLRU/kRltcB70Gvk8XEBT5ppVEUk04HeuA+MGnC96t2
-         C1BF7qijAoIayGwj+WWBvpoaq7nZthc+5tlZ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=lzkMSY4CUNG+H69dNo/2azWSzCzDdMPWtoqGbZZqW+r//O+gRkOwxggr7hIbOHyoka
-         +iuYILA7rQXOLRBta7kSZetoxS9fa170CkHbmxor8JJ+zeIlsKNCuyV1/oNTzwFB9rKT
-         RF1zJEnprs6L4m4sdpEpZ3PCTw8OPZqv4+TKk=
-Received: by 10.91.183.7 with SMTP id k7mr2718396agp.32.1272992252329; Tue, 04 
-	May 2010 09:57:32 -0700 (PDT)
-Received: by 10.90.97.8 with HTTP; Tue, 4 May 2010 09:57:12 -0700 (PDT)
-In-Reply-To: <7v7hnjoc3i.fsf@alter.siamese.dyndns.org>
+	id S1759827Ab0EDRC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 13:02:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64789 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753206Ab0EDRCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 13:02:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DE4AFB009B;
+	Tue,  4 May 2010 13:02:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rVNlbuW6ng8UCLR2FNmtbEBU6Pg=; b=tVlBvZ
+	xim8rDsG0okX5CgXEKUR0hmLsWH6nHg7q9cuI3i1nSOcyZR9gAxnMcB+Eouzpvk9
+	R/PZEaHOC81FBr5Oz1A2JAOOQQcaiFzHnIqblZaeOlyncKOgLojfE+RJQWw/Psln
+	CYDb3EjxdcgwscMx67g3gef5gQ/1t1GlIOuGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hRyoS0hyVhBOBXZ0pr/4AdkIagUDKjzk
+	PNAo5S99oC2aHYtkqgePjrJQGf7opUMBYtnspLNbSxN3qmNPlMAYRrgMAZiYBTnC
+	q2caq4ZvXEkqZlCVpA14WpVdr2CxNEoAtGaLe1YMvsOE5LguSmT+oTjoihZMs46g
+	RKU5eFSKxs8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A2465B0095;
+	Tue,  4 May 2010 13:02:22 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D3CBB008E; Tue,  4 May
+ 2010 13:02:13 -0400 (EDT)
+In-Reply-To: <87vdbi37yp.fsf@steelpick.2x.cz> (Michal Sojka's message of
+ "Fri\, 16 Apr 2010 15\:53\:59 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CE8E3A0A-579E-11DF-8DEE-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146329>
 
-On Tue, May 4, 2010 at 11:39, Junio C Hamano <gitster@pobox.com> wrote:
-
-> Even if it returned an error status, you are discarding it by placing=
- the
-> process on the upstream side of the pipe, so your command line above =
-won't
-> be able to catch an error anyway.
-
-Sorry I wasn't very clear, first I trying to use git-show if the file
-existed and then piping the output to rst2html...
-
-> I would probably do something like this
-> if I were you:
->
-> =A0 =A0git rev-parse --verify master:INSTALL >/dev/null 2>&1 &&
-> =A0 =A0git cat-file blob master:INSTALL | rst2...
-
-Thanks, thats a better approach!
-
-Cheers
-
-Adam
+It appears that I forgot to apply this; sorry.
