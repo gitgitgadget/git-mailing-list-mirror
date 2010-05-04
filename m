@@ -1,69 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: While the awesome switch is always on, so is the confusion
- switch.
-Date: Tue, 4 May 2010 17:08:19 -0400
-Message-ID: <20100504210819.GB10716@coredump.intra.peff.net>
-References: <28447763.post@talk.nabble.com>
- <z2m57518fd11005040924oa4e609d3g9e7cc57c6fb52992@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Shell aliases & paths
+Date: Tue, 4 May 2010 16:11:22 -0500
+Message-ID: <20100504211122.GA15091@progeny.tock>
+References: <19424.34226.564684.613674@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: xuinkrbin <nabble.20.xuinkrbin@spamgourmet.com>,
-	git@vger.kernel.org
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Tue May 04 23:08:30 2010
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Tue May 04 23:11:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9PLy-0004k3-CT
-	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 23:08:30 +0200
+	id 1O9POi-0006Jc-4f
+	for gcvg-git-2@lo.gmane.org; Tue, 04 May 2010 23:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933734Ab0EDVIX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 17:08:23 -0400
-Received: from peff.net ([208.65.91.99]:42442 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756563Ab0EDVIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 17:08:22 -0400
-Received: (qmail 14347 invoked by uid 107); 4 May 2010 21:08:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 04 May 2010 17:08:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 May 2010 17:08:19 -0400
+	id S933762Ab0EDVLK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 17:11:10 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44275 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933754Ab0EDVLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 17:11:08 -0400
+Received: by pwi5 with SMTP id 5so474494pwi.19
+        for <git@vger.kernel.org>; Tue, 04 May 2010 14:11:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=xuXcP59FEOriNE19r0PgJxErgIRG+5qHDi//m73EuxQ=;
+        b=YMBWgJOTHQC09qo9+0wXzwnS/+hD2G51mlTW4GrLrrMZne/pLjegmVdJ+51+lYLDJn
+         YydX/z4L4NnEezXSYkJliRDh4gZaQfqlC8VV1a8gCSVNfpny0VrqTyRq3S6qXbWLYhrJ
+         vhSgDDcSlmQx16p/o6fi88YMO//e4S48t8KSM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=aLccQBXbFf+jUoBrrjgUHP2guE5T/yAAGL3nCW/yIoILfb0tJgVPF2QwWAGMsYK8GV
+         qbflw1CRa8ziwEScOMHUjx1gfBEH6C5Waew1LfZeF6tGMYa4vVtMTQFSQpmd9mnvdth9
+         DfRizm4zQpXKG36X2NDH0jqYi3sdxGHUAbwLM=
+Received: by 10.142.210.15 with SMTP id i15mr3377841wfg.256.1273007466404;
+        Tue, 04 May 2010 14:11:06 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id u18sm863295wfh.19.2010.05.04.14.11.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 04 May 2010 14:11:03 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <z2m57518fd11005040924oa4e609d3g9e7cc57c6fb52992@mail.gmail.com>
+In-Reply-To: <19424.34226.564684.613674@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146345>
 
-On Tue, May 04, 2010 at 05:24:34PM +0100, Jonathan del Strother wrote:
+Eli Barzilay wrote:
 
-> > to head but no stashes. =C2=A0I run 'git stash list' to verify the =
-lack of
-> > stashes and receive the following message:
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0fatal: bad object refs/stash
-> I can't reproduce this - what does 'git --version' say?
+> AFAICT, a shell command alias (one that starts with a "!") is execute=
+d
+> from the repository root, but to make things worse it looks like ther=
+e
+> is no way to tell which directory it was executed from.  If this is
+> correct, then these aliases are useless for anything that need to
+> accept relative paths.  Is there something obvious that I'm missing?
 
-Just a guess, but probably pre-v1.6.1:
+Not that I can see.  Maybe a new GIT_PATHNAME_PREFIX environment variab=
+le
+would help.
 
-  $ git show 0e32126
-  commit 0e32126f04f6ad64826d4c145f2a1a9685e0910d
-  Author: Junio C Hamano <gitster@pobox.com>
-  Date:   Sun Dec 7 17:30:35 2008 -0800
+If we were starting from scratch, it might be nice to make aliases
+suppress the chdir to toplevel.  Unfortunately, that would probably
+break some existing aliases.  Another possibility would be to use some
+alternative convention (like [alias] foo =3D "# bar") to suppress the
+repository search.  At that point, why not just add a git-foo script
+to $PATH?  (=E2=80=98git foo=E2=80=99 will still call it.)
 
-      Revert "git-stash: use git rev-parse -q"
-
-      This reverts commit 757c7f60a78004fc3d0ea62f44320d54ef430c10 as a=
-n
-      unnecessary error message to pop up when the last stash entry is
-      dropped.
-
-      It simply is not worth the aggravation.
-
-  $ git describe --contains 0e32126
-  v1.6.1-rc2~1
-
--Peff
+Hope that helps,
+Jonathan
