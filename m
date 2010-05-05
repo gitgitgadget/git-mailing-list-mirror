@@ -1,106 +1,76 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: update-index --really-refresh unsets assume-unchanged bit
-Date: Wed, 5 May 2010 17:44:59 +0200
-Message-ID: <20100505154459.GA24447@localhost>
-References: <20100501092512.GA15941@localhost>
- <20100501092720.GB15941@localhost>
- <20100504085722.GA32217@localhost>
- <z2h32541b131005040941m79724daq4cd8b0c427bb218a@mail.gmail.com>
- <20100504194136.GA19300@localhost>
- <7v39y7mglb.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Set GIT_PATHNAME_PREFIX with aliases.
+Date: Wed, 05 May 2010 09:07:34 -0700
+Message-ID: <7v1vdql4c9.fsf@alter.siamese.dyndns.org>
+References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
+ <20100505005153.GC25390@coredump.intra.peff.net>
+ <4BE115EF.8010306@viscovery.net>
+ <20100505070131.GA11265@coredump.intra.peff.net>
+ <19425.9169.537598.876589@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 05 17:45:32 2010
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Wed May 05 18:07:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9gmv-0004aN-F0
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 17:45:29 +0200
+	id 1O9h8e-0000YJ-GT
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 18:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760642Ab0EEPpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 11:45:17 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:54976 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760410Ab0EEPpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 11:45:15 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so28221fga.1
-        for <git@vger.kernel.org>; Wed, 05 May 2010 08:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=kKbCWbvwFAg0XxktYKrfNhoeeYwutI7Cewgr15xuUa4=;
-        b=Rw84KtO00a2485xbMcpw1kN+ZO+keF5oxyYbOPcTuU8caB3xwJQeRItOmaLzQiX6hK
-         MJY9UBr2NHFl9t5/L96YTt1Tda7e/Y4bxc5Jg+nPogLKbU2gCxUITsBBc5rdVxfYeCrW
-         WSIc10WguGNF0n/Mw7AMVqNqtpigBUO2zI9xs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=PcoqtXlgIK5iL2p0mPmg+IYpENfcneuITVZqU8udrv9XvJBppUZ656KAmex8mXReyr
-         BXCQ6ZLsDWWE8OJrkk1vkLByDK9LThIX0JC8MrgWjzDgASC6gp97DGR7g7m2F4EwG6IW
-         PF/2m1MMnhPR15ibe+4yuNCLSEQu0vbebKkmo=
-Received: by 10.86.6.37 with SMTP id 37mr14505219fgf.7.1273074313457;
-        Wed, 05 May 2010 08:45:13 -0700 (PDT)
-Received: from darc.lan (p549A472D.dip.t-dialin.net [84.154.71.45])
-        by mx.google.com with ESMTPS id f31sm621170fkf.48.2010.05.05.08.45.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 May 2010 08:45:12 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1O9gmR-0006TB-BS; Wed, 05 May 2010 17:44:59 +0200
-Content-Disposition: inline
-In-Reply-To: <7v39y7mglb.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933960Ab0EEQHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 12:07:49 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40953 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932593Ab0EEQHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 12:07:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DD1C5B096C;
+	Wed,  5 May 2010 12:07:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GaY0TNR1DC/F+rWGPa8i+pdXZsU=; b=KohVVx
+	E16r9Kh3UB/oSMNl6lNImQcLg08ufzl8B2kbtOIbjRGSoY5dtv8z7qHGPmHys5yi
+	UZhZpGwXPR3m1n423t/zAw5hUCIZ5EvOdtPNuYtsLmtK8QjQUB7qYGVCjcQEBkWS
+	AA76nKgizyFkMK10UaO89tL+jr5xqVqkXzs0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IrJ90rrEBtrJogSmPfdkbLkxsspVcRmt
+	IDe1XKoMU3sfYcmvbht4iYXWQSiX9b71Otf5OAVXHGTlLogBsfFNImEAaoHQLKvn
+	a6VEWZTsLvUNLQ9N+W9Cxh3zn7awgP6Tghh/9INNa7dcFit2/vY9XZ4RlzbZ+Spj
+	F1Ig1cmxF2k=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 890EDB0968;
+	Wed,  5 May 2010 12:07:41 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AAFE7B0963; Wed,  5 May
+ 2010 12:07:35 -0400 (EDT)
+In-Reply-To: <19425.9169.537598.876589@winooski.ccs.neu.edu> (Eli Barzilay's
+ message of "Wed\, 5 May 2010 03\:52\:49 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 55483F52-5860-11DF-8824-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146408>
 
-On Tue, May 04, 2010 at 03:45:20PM -0700, Junio C Hamano wrote:
-> Clemens Buchacher <drizzd@aon.at> writes:
-> 
-> > On the contrary. I _want_ git to assume the file is unchanged, even though I
-> > know it changed. This is an intended and documented use case (from the
-> > git-update-index manpage):
-> 
-> The intended use of *really* one is to ignore the assume unchanged bit and
-> make the bit reflect reality.
+Eli Barzilay <eli@barzilay.org> writes:
 
-Yes, and right below the part you are quoting I explained why this is not
-what it does either.
+> On May  5, Jeff King wrote:
+>> 
+>> Yes, I agree it sucks.
 
-> The bit was originally invented back when
-> the machinery was too lstat(2) heavy so that people on slow filesystems
-> can say "I haven't changed these paths, and I promise I won't, so you can
-> trust this and assume that the working tree file exactly matches what is
-> recorded in the index."  Obviously we needed to give such users an way to
-> tell git that they broke their promise, and that is what *really* refresh
-> meant to give.
+I would not use such a strong word but I agree that it would have been
+nicer if the original directory were used.
 
-Yes, but after the index is refreshed, the file is now, again, unchanged.
-Yet, the assume-unchanged bit is unset.
+> Something that Jonathan suggested earlier is a different magic
+> character instead of "!" that will do the cd -- perhaps a second
+> character would be more acceptable, something like "!!"...
 
-But there is no reason presume that the user will break their promise again
-in the future. If they plan to do so, they can always use git update-index
---no-assume-unchanged.
-
-> Note that the promise is _different_ from telling "I may or may not have
-> changed the work tree files, but don't bother telling me that I did".  The
-> promise you make by "assume unchanged" bit allows git to read from the
-> working tree file when it needs the contents of blob recorded in the index
-> and the bit is set, as you promised that you will never change it.
-
-And in what case does git do that? I can only find commands which read from
-the object store and not from the work tree. This would also break the
-"ignore changes to tracked files" use case.
-
-Clemens
+That sounds a reasonable compromise.
