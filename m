@@ -1,55 +1,52 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Does recent 'smart' HTTP feature help git-svn thru unfriendly
- corp. firewalls too?
-Date: Wed, 05 May 2010 10:33:27 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1005051031280.14468@xanadu.home>
-References: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
- <20100505141636.GG11053@spearce.org>
- <i2yd43c95441005050720rccceadcex88a2ce6730d96a5d@mail.gmail.com>
+From: Samir Faci <samir@esamir.com>
+Subject: svn repo a submodule?
+Date: Wed, 5 May 2010 09:43:20 -0500
+Message-ID: <g2i9db93b0e1005050743q43d745ebod1aa13f98ab5a44c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Michael Norman <mwnorman@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 05 16:34:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 05 16:43:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9fg0-00034y-U7
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:34:17 +0200
+	id 1O9fov-0000AO-Ku
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:43:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760303Ab0EEOdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 10:33:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:54653 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760279Ab0EEOdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 10:33:39 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L1Y00I9KB3REQH0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 05 May 2010 10:33:28 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <i2yd43c95441005050720rccceadcex88a2ce6730d96a5d@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S933664Ab0EEOnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 10:43:24 -0400
+Received: from mail-bw0-f225.google.com ([209.85.218.225]:54012 "EHLO
+	mail-bw0-f225.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932329Ab0EEOnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 10:43:23 -0400
+Received: by bwz25 with SMTP id 25so3017176bwz.28
+        for <git@vger.kernel.org>; Wed, 05 May 2010 07:43:21 -0700 (PDT)
+Received: by 10.204.34.201 with SMTP id m9mr4438343bkd.127.1273070600811; Wed, 
+	05 May 2010 07:43:20 -0700 (PDT)
+Received: by 10.204.57.71 with HTTP; Wed, 5 May 2010 07:43:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146403>
 
-On Wed, 5 May 2010, Michael Norman wrote:
+I've been using git submodule to refer to external repos that I don't
+maintain.  (which works great)
 
-> Sigh - most SVN installations require ssh+svn for read/write access.
-> 
-> Our company is changing firewall vendors and I have been told that our
-> TortoisePlink+putty-session 'trick' may be blocked :-(
+So far in order to use an svn repo as a submodule I end up doing a git
+svn clone, and basically have a crontab job that pulls from svn and
+pushes to git repo.  Then I end up using the git repo it creates as a
+git submodule.
 
-Any firewall installation ought to be configurable and allow for letting 
-through selected ssh connections.  If no I suggest you change firewall 
-vendors again.
+The workflow does work, though it is a bit tedious.   I was wondering
+if there was any particular reason why having an svn repo as a
+submodule isn't supported at this time.  Or if there was a better way
+of accomplishing this that escapes me.
 
 
-Nicolas
+--
+Samir Faci
+*insert title*
+fortune | cowsay -f /usr/share/cows/tux.cow
