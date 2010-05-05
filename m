@@ -1,75 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Set GIT_PATHNAME_PREFIX with aliases.
-Date: Wed, 5 May 2010 03:01:31 -0400
-Message-ID: <20100505070131.GA11265@coredump.intra.peff.net>
-References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
- <20100505005153.GC25390@coredump.intra.peff.net>
- <4BE115EF.8010306@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jared Hance <jaredhance@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 05 09:01:46 2010
+From: jari.aalto@cante.net
+Subject: [PATCH] git-stash.txt: Add new example
+Date: Wed,  5 May 2010 10:37:14 +0300
+Organization: Private
+Message-ID: <1273045035-7292-1-git-send-email-jari.aalto@cante.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 05 09:37:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9Yc0-0005lE-5a
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 09:01:40 +0200
+	id 1O9ZAi-00038S-Ee
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 09:37:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756751Ab0EEHBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 03:01:34 -0400
-Received: from peff.net ([208.65.91.99]:45508 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752688Ab0EEHBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 03:01:34 -0400
-Received: (qmail 20327 invoked by uid 107); 5 May 2010 07:01:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 05 May 2010 03:01:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 05 May 2010 03:01:32 -0400
-Content-Disposition: inline
-In-Reply-To: <4BE115EF.8010306@viscovery.net>
+	id S1757124Ab0EEHhZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 03:37:25 -0400
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:58163 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756791Ab0EEHhY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 03:37:24 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id DD8EF8C8C9
+	for <git@vger.kernel.org>; Wed,  5 May 2010 10:37:22 +0300 (EEST)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A0510AD97D8; Wed, 05 May 2010 10:37:22 +0300
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 4AEC727D90
+	for <git@vger.kernel.org>; Wed,  5 May 2010 10:37:21 +0300 (EEST)
+Received: from webssh.cante.net ([192.168.1.7] helo=jondo.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.71)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1O9ZAR-0002Zz-AO; Wed, 05 May 2010 10:37:15 +0300
+X-Mailer: git-send-email 1.7.0
+X-SA-Exim-Connect-IP: 192.168.1.7
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146380>
 
-On Wed, May 05, 2010 at 08:53:35AM +0200, Johannes Sixt wrote:
+From: Jari Aalto <jari.aalto@cante.net>
 
-> Am 5/5/2010 2:51, schrieb Jeff King:
-> > On Tue, May 04, 2010 at 08:25:22PM -0400, Jared Hance wrote:
-> > 
-> >> The environment variable GIT_PATHNAME_PREFIX passes on the
-> >> current working directory (where the git command was called from)
-> >> to shell aliases (aliases that begin with "!"). This allows these
-> >> shell aliases to know the directory that the git command was called
-> >> from.
-> > 
-> > Seems like a reasonable goal, but...
-> 
-> Sorry, I disagree.
-> [reasons why it sucks]
+Add new example "Saving selected files to stash" thanks to
+ideas by Johan Sageryd <j416@1616.se>.
 
-Yes, I agree it sucks. The problem is that this information is totally
-lost now for shell aliases, so you can't even do these painful things.
-Your alias simply doesn't have access to that information at all. I am
-open to better interfaces (my "reasonable" above was not a ringing
-endorsement, but rather "I can see why you might want to do this").
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-stash.txt |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
 
-> The only way where this variable could be used in a useful manner is to
-> write the alias as
-> 
->    !cd "${GIT_PATHNAME_PREFIX:-.}" && { do stuff... ; }
-
-Agreed that is the only sane thing to do with it, but...
-
-> which is something that git should do before it invokes the alias.
-
-Wouldn't we then be breaking existing aliases which do not expect this
-new behavior?
-
--Peff
+diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+index 473889a..7d9f9e1 100644
+--- a/Documentation/git-stash.txt
++++ b/Documentation/git-stash.txt
+@@ -230,6 +230,18 @@ $ edit/build/test remaining parts
+ $ git commit foo -m 'Remaining parts'
+ ----------------------------------------------------------------
+=20
++Saving selected files to stash::
++
++You can use `git stash save --keep-index` to put only selected files
++into the stash. Let's suppose the files A, B, C and D are modified and
++you want to stash only C and D:
+++
++----------------------------------------------------------------
++$ git status			# Verify what's modified
++$ git add A B			# ...not these
++$ git stash save --keep-index   # ...but stash all the others
++----------------------------------------------------------------
++
+ Recovering stashes that were cleared/dropped erroneously::
+=20
+ If you mistakenly drop or clear stashes, they cannot be recovered
+--=20
+1.7.0
