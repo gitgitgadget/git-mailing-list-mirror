@@ -1,92 +1,73 @@
-From: Gelonida <gelonida@gmail.com>
-Subject: Re: how to squash a few commits in the past
-Date: Wed, 05 May 2010 23:41:10 +0200
-Message-ID: <4BE1E5F6.3040606@gmail.com>
-References: <loom.20100503T112508-677@post.gmane.org> <4BDEA0D7.9090201@drmicha.warpmail.net> 	<hrncm3$pg8$1@dough.gmane.org> <hrnem4$1m0$1@dough.gmane.org> <w2zf3271551005050619td67d697y97d7e9181c4496fc@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] An alias that starts with "!!" runs in the current
+ directory.
+Date: Wed, 05 May 2010 15:02:34 -0700
+Message-ID: <7vvdb2hurp.fsf@alter.siamese.dyndns.org>
+References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
+ <20100505005153.GC25390@coredump.intra.peff.net>
+ <4BE115EF.8010306@viscovery.net>
+ <20100505070131.GA11265@coredump.intra.peff.net>
+ <19425.9169.537598.876589@winooski.ccs.neu.edu>
+ <7v1vdql4c9.fsf@alter.siamese.dyndns.org>
+ <19425.54504.163875.379151@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 05 23:41:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Thu May 06 00:02:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9mLO-0008Pe-MY
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 23:41:27 +0200
+	id 1O9mgE-0001rK-MB
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 00:02:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758752Ab0EEVlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 17:41:20 -0400
-Received: from lo.gmane.org ([80.91.229.12]:43221 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758666Ab0EEVlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 17:41:19 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1O9mLG-0008KO-Ru
-	for git@vger.kernel.org; Wed, 05 May 2010 23:41:18 +0200
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 May 2010 23:41:18 +0200
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 May 2010 23:41:18 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <w2zf3271551005050619td67d697y97d7e9181c4496fc@mail.gmail.com>
+	id S1756357Ab0EEWCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 18:02:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56027 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753217Ab0EEWCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 18:02:51 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B630B0ECC;
+	Wed,  5 May 2010 18:02:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JPr7lMDZF9r9ckMDHCox59LTZn4=; b=thhsx/
+	6JaTmS+ahCCtUVQfCLT3SQN0GNyf5pjgBfrq6rDfV2W68RPkvU+MDAri+J2DRn9t
+	7msnCKfRd+kzThd4Rr5SJe4mrnetR3ijyGpI4ViK1wbWJaC+xRiy6UFYtJxKeCai
+	wkVa5w/U1tVEdOdDZ5iaMnOGESBD32DhbUQlc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fbw/vnTRGeX42jEQRxnC2hPcesUguXNu
+	gZBrkdYN1GC3P5JGs7zf4J0POWMuCHZnAhOdO1uJFZoDCKcSN9gCh/YtWPzosy58
+	DBtSbDb9fpuLF+kdX6VEpjbOq6Qi5CLYew6eBoUXmru/E+yxiXHI4dVPU/sT/YA8
+	dyjqwJeYONQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D86BB0EC8;
+	Wed,  5 May 2010 18:02:43 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D0372B0EBD; Wed,  5 May
+ 2010 18:02:35 -0400 (EDT)
+In-Reply-To: <19425.54504.163875.379151@winooski.ccs.neu.edu> (Eli Barzilay's
+ message of "Wed\, 5 May 2010 16\:28\:24 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EE08C30C-5891-11DF-982B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146425>
 
-Hi Ragu,
+Eli Barzilay <eli@barzilay.org> writes:
 
-Ramkumar Ramachandra wrote:
-> Hi,
-> 
-> On Mon, May 3, 2010 at 11:20 PM, Gelonida <gelonida@gmail.com> wrote:
->> Is it normal, that git gets lost wehn rebasing such a structure.
-> 
-> While performing an interactive rebase, conflicts can often occur and
-> this is quite normal.
-> 
->>> Automatic cherry-pick failed.  After resolving the conflicts,
->>> mark the corrected paths with 'git add <paths>', and
->>> run 'git rebase --continue'
->>> Could not apply 67f3f6d... preparation for #241
-> 
-> The problem and solution is described in that message. Open the file,
-> resolve the conflict and continue the rebase operation.
+> It looks like setup_git_directory_gently() returns the original CWD,...
 
-
-
-Yes merging manually could be a theortical solution, but I really don't
-understand, why I should merge anything at all.
-
-
-
-The history is purely linear at the places where I want to squash.
-
-These two commits precede a few more consecutive commits, traverse then
-a tree which forks to multiple branches, which partially cherrypick from
-each other and will then join again to a unique linear sequence.
-
-If I have a history of several hundred commits and I am asked several
-times to merge, just because I want to squash two consecutve commits
-without any branches going out or in, then something (probably the way I
-try to attack the problem or much less likely a mysterious git bug) is
-kind of wrong.
-
-
-
-I'm still looking for a solution, where I specify only the commits to be
-squashed and everything else stays untouched without any further
-userinteraction
+It is designed to return what we internally call "prefix".  You however
+have to be careful as it can return NULL or an empty string when you are
+already at the top of the working tree.
