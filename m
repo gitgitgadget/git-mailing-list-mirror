@@ -1,64 +1,84 @@
-From: Alexander Iljin <ajsoft@yandex.ru>
-Subject: Re: Strange git crashing problem
-Date: Wed, 5 May 2010 11:22:29 +0700
-Message-ID: <634021795.20100505112229@yandex.ru>
-References: <89030B4A18ECCD45978A3A6B639D1F2403374EF348@FL01EXMB01.trad.tradestation.com>
-Reply-To: =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCY0LvRjNC40L0=?= 
-	  <ajsoft@yandex.ru>
+From: Adam Monsen <haircut@gmail.com>
+Subject: Re: migrating Mifos from svn to git
+Date: Wed, 5 May 2010 04:58:45 +0000 (UTC)
+Message-ID: <loom.20100505T065133-348@post.gmane.org>
+References: <1272751725.21622.57.camel@scraps> <20100502082503.GG92627@acme.spoerlein.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: John Dlugosz <JDlugosz@TradeStation.com>
-X-From: git-owner@vger.kernel.org Wed May 05 06:22:54 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 05 07:05:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9W8L-0002wR-LS
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 06:22:54 +0200
+	id 1O9WnK-0006s1-EV
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 07:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750904Ab0EEEWs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 May 2010 00:22:48 -0400
-Received: from forward15.mail.yandex.net ([95.108.130.119]:60135 "EHLO
-	forward15.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792Ab0EEEWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 00:22:47 -0400
-Received: from smtp14.mail.yandex.net (smtp14.mail.yandex.net [95.108.131.192])
-	by forward15.mail.yandex.net (Yandex) with ESMTP id D5AD0445939C;
-	Wed,  5 May 2010 08:22:45 +0400 (MSD)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1273033365; bh=Asel3gnGlo9e/mcUZwuQicHWFFrpB6TNUlqJJOKZp/w=;
-	h=Date:From:Reply-To:Message-ID:To:CC:Subject:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=qobm16yaATd2sZQj7y25mqwcQrwLa9sIOkbgKgMO7AsbLWdsIXZjC34Xp71VANwZ5
-	 JShKA2sJA/41dipFpLshNDAAEEwMXId0B+LEa2+Cy2cRGWauRxCDu1pd3xdwR5g86v
-	 bDqCRpuVLdCSEqohEL/oxqpsDrx6YElvzgMoQRYc=
-Received: from h88-115-218.sibinet.com (unknown [88.204.115.218])
-	by smtp14.mail.yandex.net (Yandex) with ESMTPA id 837C619B808B;
-	Wed,  5 May 2010 08:22:45 +0400 (MSD)
-X-Priority: 3 (Normal)
-In-Reply-To: <89030B4A18ECCD45978A3A6B639D1F2403374EF348@FL01EXMB01.trad.tradestation.com>
-X-Yandex-TimeMark: 1273033365
-X-Yandex-Spam: 1
-X-Yandex-Front: smtp14.mail.yandex.net
+	id S1752842Ab0EEFFH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 May 2010 01:05:07 -0400
+Received: from lo.gmane.org ([80.91.229.12]:38283 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752626Ab0EEFFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 01:05:06 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O9Wn9-0006pY-6H
+	for git@vger.kernel.org; Wed, 05 May 2010 07:05:03 +0200
+Received: from c-67-183-136-182.hsd1.wa.comcast.net ([67.183.136.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 May 2010 07:05:03 +0200
+Received: from haircut by c-67-183-136-182.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 May 2010 07:05:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.183.136.182 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146371>
 
-Hello!
+Ulrich Sp=C3=B6rlein writes:
+> svn2git is faster and can cope with multiple branches better, but it =
+has
+> bugs of its own. Try both of them ...
 
-JD> I'm trying to do an interactive rebase, and after editing the
-JD> todo file, the git process just hangs.=A0 I was doing that a lot Fr=
-iday and it worked fine.
+I did, and--maybe since svn2git appears to be built atop git-svn--they =
+both
+break at the same point, spouting an error like:
 
-  There is a known problem similar to yours. Try to do the rebase with
-  your current folder being the root of the repo. It is known to fail
-  when you do it from a subfolder.
+fatal: ambiguous argument
+'2f53ad77827c0f1d492c031be4fff20b0d60fffc
+^..1a6f5af6bd84cb71f25fb1df1c67de1a9b91ba87':
+unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+rev-list
+2f53ad77827c0f1d492c031be4fff20b0d60fffc
+^..1a6f5af6bd84cb71f25fb1df1c67de1a9b91ba87:
+command returned error: 128
 
----=3D=3D=3D=3D=3D---
- Alexander
+Anyway, I gave up trying to import all svn 1.5+ mergeinfo.
+Instead, I'm just pulling in our trunk into one repository,
+and two release branches into separate repositories. Here's
+my in-progress experiment so far:
+http://mifos.git.sourceforge.net/git/gitweb-index.cgi .
+"head" is what used to be "trunk" in svn.
+
+I started writing up a procedure for our developers here:
+http://www.mifos.org/developers/wiki/MifosVersionControlGuide
+
+If anyone wants to perfect that wiki page, I would love the help.
+
+> Yes, if both repos have the same UUID this should be possible. You ne=
+ed
+> to fudge this in rev 0 and uuid in your svn mirror.
+
+This is helpful. Thank you!
