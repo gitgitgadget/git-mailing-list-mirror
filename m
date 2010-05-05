@@ -1,101 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: new platform & S_IFGITLINK problem
-Date: Tue, 4 May 2010 21:29:08 -0500
-Message-ID: <20100505022907.GA17743@progeny.tock>
-References: <1272756555.13488.1314.camel@jetpack.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/4] Documentation/notes: describe content of notes
+Date: Tue, 4 May 2010 23:23:10 -0400
+Message-ID: <20100505032310.GA8779@coredump.intra.peff.net>
+References: <20100503233604.GA27451@progeny.tock>
+ <20100503234229.GC27483@progeny.tock>
+ <201005041155.02192.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alan Hourihane <alanh@fairlite.co.uk>
-X-From: git-owner@vger.kernel.org Wed May 05 04:32:54 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed May 05 05:23:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9UPt-00059k-VJ
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 04:32:54 +0200
+	id 1O9VCj-0002O3-LM
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 05:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756295Ab0EEC2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 May 2010 22:28:47 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:54722 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755255Ab0EEC2q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 May 2010 22:28:46 -0400
-Received: by gwj19 with SMTP id 19so1967900gwj.19
-        for <git@vger.kernel.org>; Tue, 04 May 2010 19:28:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=nJnmf/hDzni4VRZGJkE2Pa5By8PhqzEPViP9LpXv94I=;
-        b=xoqRVKsBbX6bmYYHg/TOKxvIbqEVIpA6zuDHe43XEJMy12t+VNm051uwOOABJXaNdW
-         i6HSjLvbSqoRHL6nDFXV5SXLzoqDXy0q9KNhbBBrqNFUvddEq9DHmmwCXapG/BuFgg13
-         X7XAT+HjuQS1uoYo5S1eCGdp6OClLE23h1jj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jpVOosVTcKeH7S39bO6P4iAk2JTv0EGOpcMJgseJt1l1zvJkldoY1ZqVA0hBUl6KmV
-         amtQpFNx3NPBYalLY9rn9RhdSyljIRwDZJHOqeKihkCqWpMwpyBkmeckPmlJgJy1oTUW
-         bZt/Hg+2QXePpI0kmssLmnnTEHU2O+7mBv4UQ=
-Received: by 10.150.237.21 with SMTP id k21mr11494213ybh.104.1273026525581;
-        Tue, 04 May 2010 19:28:45 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm5775189iwn.12.2010.05.04.19.28.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 04 May 2010 19:28:44 -0700 (PDT)
+	id S1758065Ab0EEDXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 23:23:16 -0400
+Received: from peff.net ([208.65.91.99]:39099 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757386Ab0EEDXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 23:23:16 -0400
+Received: (qmail 18276 invoked by uid 107); 5 May 2010 03:23:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 04 May 2010 23:23:27 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 May 2010 23:23:10 -0400
 Content-Disposition: inline
-In-Reply-To: <1272756555.13488.1314.camel@jetpack.demon.co.uk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201005041155.02192.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146366>
 
-Hi,
+On Tue, May 04, 2010 at 11:55:01AM +0200, Johan Herland wrote:
 
-Alan Hourihane wrote:
-
-> Additionally, attached is a patch that I currently need to apply in
-> order to compile git successfully on the FreeMiNT platform (which is
-> m68k based).
+> On Tuesday 04 May 2010, Jonathan Nieder wrote:
+> > Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> > ---
+> >  Documentation/git-notes.txt |    4 ++++
+> >  1 files changed, 4 insertions(+), 0 deletions(-)
+> > 
+> > diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+> > index 0594776..273264b 100644
+> > --- a/Documentation/git-notes.txt
+> > +++ b/Documentation/git-notes.txt
+> > @@ -27,6 +27,10 @@ By default, notes are saved to and read from
+> > `refs/notes/commits`, but this default can be overridden.  See the
+> > CONFIGURATION and ENVIRONMENT sections below.
+> > 
+> > +Notes can contain any sequence of non-null bytes.  Since they are
+> > +sanitized with linkgit:git-stripspace[1], empty lines other than a
+> > +single line separating paragraphs are not significant.
 > 
-> Comments appreciated.
+> In principle, a note is a regular Git (blob) object, and can contain NUL 
+> bytes - indeed any kind of (non-)format is accepted.
+> 
+> However, the stripspace/text-based formatting kicks in when specifying the 
+> notes content with -m or -F, or when an editor is used to edit the notes.
 
-While wiser people discuss the hard part, here are some tiny nitpicks. :)
+The textconv-cache notes contain whatever the textconv filter produces,
+so they are a likely way of getting non-standard characters. In
+practice, though, you will probably not see NULL, because the point was
+to generate a _text_ version.
 
-> --- /dev/null	2008-12-07 20:01:52.000000000 +0000
-> +++ compat/mint.h	2008-12-23 11:52:10.000000000 +0000
-> @@ -0,0 +1,2 @@
-> +#define SA_RESTART 0
-> +#define ss_family sa_family
-
-Does MiNT restart interrupted system calls by default?  Are most
-operations generally not interruptible anyway?
-
-> --- Makefile	2009-01-29 12:12:01.000000000 +0000
-> +++ Makefile	2009-01-29 12:13:39.000000000 +0000
-> @@ -1618,7 +1613,7 @@
->  
->  git-imap-send$X: imap-send.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> -		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
-> +		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
-
-NEEDS_CRYPTO_WITH_SSL = YesPlease
-
-[...]
->  git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
-> -		$(LIBS) $(CURL_LIBCURL)
-> +		$(LIBS) $(CURL_LIBCURL) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
-[...]
-
-CURL_LIBCURL = -lcurl $(OPENSSL_LIBSSL)
-
-Hope that helps,
-Jonathan
+-Peff
