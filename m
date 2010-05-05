@@ -1,115 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-stash.txt: Add new example
-Date: Wed, 05 May 2010 12:46:32 -0700
-Message-ID: <7v39y6jfmv.fsf@alter.siamese.dyndns.org>
-References: <1273045035-7292-1-git-send-email-jari.aalto@cante.net>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: [PATCH] An alias that starts with "!!" runs in the current directory.
+Date: Wed, 5 May 2010 16:28:24 -0400
+Message-ID: <19425.54504.163875.379151@winooski.ccs.neu.edu>
+References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
+	<20100505005153.GC25390@coredump.intra.peff.net>
+	<4BE115EF.8010306@viscovery.net>
+	<20100505070131.GA11265@coredump.intra.peff.net>
+	<19425.9169.537598.876589@winooski.ccs.neu.edu>
+	<7v1vdql4c9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: jari.aalto@cante.net
-X-From: git-owner@vger.kernel.org Wed May 05 21:46:50 2010
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>,
+	Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 05 22:28:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9kYT-0000zW-Sz
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 21:46:50 +0200
+	id 1O9lDC-00068P-6k
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 22:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758187Ab0EETqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 15:46:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34326 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757880Ab0EETql (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 15:46:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CB2E2B045E;
-	Wed,  5 May 2010 15:46:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p8kSMQ00d7STUONqw97IKJ0tW4o=; b=X1CZTO
-	NN3RH75JThVYTKymzEyIO1yfTcHJKvmooykmCQ9WfVmUUFsw7SPbflMbBgNJ/vVV
-	CyXnWGyF7nNQgx53mS7wurRAhguPQOeBVhiaJ7eg6JRLQ+48kIq3GY7w7FaG0H0D
-	utU8xevrJ6z3Pv7gT1eCfwf4HuSueVfM9Kl+A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B1EmxivLz8q9QS9K77/3ZQEsEfXQ9cpG
-	/Myyj0HoIjaPc/nng/8vKaQxtNdTO+/plKf4eXeBTMLVLE6ysLqHzQ24dILenw7G
-	7afVzUWx6XOPiQrFcTooegpVRwerlUCvKGlLvPbiI4f2Rz2qXoWLtk66YhiF2Mhl
-	s0BXkkRrM/A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A4570B045B;
-	Wed,  5 May 2010 15:46:36 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2FA0B0459; Wed,  5 May
- 2010 15:46:33 -0400 (EDT)
-In-Reply-To: <1273045035-7292-1-git-send-email-jari.aalto@cante.net> (jari
- aalto's message of "Wed\,  5 May 2010 10\:37\:14 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EA6B3382-587E-11DF-89BD-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758383Ab0EEU2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 16:28:43 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:39137 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758369Ab0EEU2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 16:28:43 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1O9lCi-0007NI-7B; Wed, 05 May 2010 16:28:24 -0400
+In-Reply-To: <7v1vdql4c9.fsf@alter.siamese.dyndns.org>
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146415>
 
-jari.aalto@cante.net writes:
+With "!"-prefixed shell aliases, the shell command not only gets
+executed at the repository top level, but there is no way to know the
+current directory of the original call.  This adds "!!"-prefixed aliases
+as a similar variant for "!"-prefixed ones, but the commands are
+executed in the original directory instead of the top level.
 
-> From: Jari Aalto <jari.aalto@cante.net>
->
-> Add new example "Saving selected files to stash" thanks to
-> ideas by Johan Sageryd <j416@1616.se>.
->
-> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
-> ---
->  Documentation/git-stash.txt |   12 ++++++++++++
->  1 files changed, 12 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> index 473889a..7d9f9e1 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -230,6 +230,18 @@ $ edit/build/test remaining parts
->  $ git commit foo -m 'Remaining parts'
->  ----------------------------------------------------------------
->  
-> +Saving selected files to stash::
-> +
-> +You can use `git stash save --keep-index` to put only selected files
-> +into the stash. Let's suppose the files A, B, C and D are modified and
-> +you want to stash only C and D:
-> ++
-> +----------------------------------------------------------------
-> +$ git status			# Verify what's modified
-> +$ git add A B			# ...not these
-> +$ git stash save --keep-index   # ...but stash all the others
-> +----------------------------------------------------------------
-> +
+Signed-off-by: Eli Barzilay <eli@barzilay.org>
+---
 
-While the above is not _wrong_ per-se, it was somewhat hard to understand
-for me without a description on _why_ you might want to do this.  It
-didn't help that "put only selected files" really meant "get rid of
-selected _changes_ from the working tree and the index temporarily".
+(Sending as a reply to the earlier message, keeping CCs.)
 
-I'd perhaps suggest rephrasing it like this:
+It looks like setup_git_directory_gently() returns the original CWD, but
+since it's not documented or commented, I don't know if this is reliable
+or not, so it might need to change.
 
-        Sifting the Wheat from the Chaff::
+Also, it might make more sense to document the "!!" variant first, since
+it is generally more useful, but the way things evolved with "!!" being
+the longer prefix, it seems to me that documenting it after "!" is more
+sensible.
 
-        When you have changes to the working tree that mix what are
-        necessary for the immediate task at hand, and what are needed
-        later but not right now, you can first `git add` only the former
-        and use `git stash save --keep-index` to get rid of the latter.
-        The latter is temporarily stored in the stash.  
+ Documentation/config.txt |    9 +++++++--
+ git.c                    |    8 ++++++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-        Suppose you have changes to file A, B, and C, but only the half of
-        changes to file A and C are necessary for what you are doing:
-
-        $ git reset                     # make the index clean
-        $ git add -p A C                # add necessary bits to the index
-        $ git stash save --keep-index   # the remainder goes to the stash
-        ... test, debug, perfect ...
-        $ git commit
-        $ git stash pop                 # get the remainder back
-        ... and continue to work ...
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 92f851e..055f4e3 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -549,13 +549,18 @@ alias.*::
+ 	spaces, the usual shell quoting and escaping is supported.
+ 	quote pair and a backslash can be used to quote them.
+ +
+-If the alias expansion is prefixed with an exclamation point,
++If the alias expansion is prefixed with a single exclamation point,
+ it will be treated as a shell command.  For example, defining
+ "alias.new = !gitk --all --not ORIG_HEAD", the invocation
+ "git new" is equivalent to running the shell command
+-"gitk --all --not ORIG_HEAD".  Note that shell commands will be
++"gitk --all --not ORIG_HEAD".  Note that such shell commands will be
+ executed from the top-level directory of a repository, which may
+ not necessarily be the current directory.
+++
++If the alias expansion is prefixed with two exclamation points,
++it will be treader similarly to the above, except that the shell commands
++are executed at the current directory.
++
+ 
+ am.keepcr::
+ 	If true, git-am will call git-mailsplit for patches in mbox format
+diff --git a/git.c b/git.c
+index 6bae305..f3f8346 100644
+--- a/git.c
++++ b/git.c
+@@ -167,6 +167,14 @@ static int handle_alias(int *argcp, const char ***argv)
+ 				free(alias_string);
+ 				alias_string = buf.buf;
+ 			}
++			/* going to exit anyway, so it's fine to change
++			 * alias_string to the actual command */
++			alias_string += 1;
++			if (alias_string[0] == '!') {
++				alias_string += 1;
++				if (subdir && chdir(subdir))
++					die_errno("Cannot change to '%s'", subdir);
++			}
+ 			trace_printf("trace: alias to shell cmd: %s => %s\n",
+ 				     alias_command, alias_string + 1);
+ 			ret = system(alias_string + 1);
+-- 
+1.7.1
