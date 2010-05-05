@@ -1,69 +1,71 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: What should be the CRLF policy when win + Linux?
-Date: Wed, 5 May 2010 15:27:58 +0200
-Message-ID: <t2wf3271551005050627jbe328d84q23a85a1e5dced082@mail.gmail.com>
-References: <4BE141E3.2060904@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: mat <matthieu.stigler@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 05 15:28:27 2010
+From: Leif Arne Storset <lstorset@opera.com>
+Subject: [PATCH] Documentation/config.txt: Move GIT_NOTES_REWRITE_REF to notes.rewriteRef
+Date: Wed,  5 May 2010 15:35:16 +0200
+Message-ID: <1273066516-24469-1-git-send-email-lstorset@opera.com>
+Cc: Leif Arne Storset <lstorset@opera.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed May 05 15:50:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9eeJ-00051P-4Q
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 15:28:27 +0200
+	id 1O9ezc-0001wO-1o
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 15:50:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759061Ab0EEN2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 09:28:20 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:51469 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755191Ab0EEN2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 09:28:19 -0400
-Received: by pva18 with SMTP id 18so454621pva.19
-        for <git@vger.kernel.org>; Wed, 05 May 2010 06:28:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=kiPM/UTO7JDrecJ5yb/0khdOBJPPYOBRU2IaXh6Mpnw=;
-        b=SypESoQ+5x4oGM2+LnzV15L1nPNrzIrcLpaU/UB4Y4DIpj0Jrl271dNL66b77cHsvc
-         9xAc5uBSs2ZE4xJf6KztYyVSXLlo8bVYyWIYqn5FnR5/o3QMs1Zc824dJhGWJKkR/3Yc
-         SDIZYlEIf8zg03brUZSJFs1MtrX7jp53p16ow=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=gzQvwtfimo7rkX86cF/ceh8w+BQoiZ3tCFZc1uSgmpzNtrwXVF3JGrZxgDwS9kOUQ7
-         DNr93APFAQy2kVvMk5q19Cyjvn29P35qIRinBxOn5HXvq7wJOumQiEt8kzBnd4hvWYn7
-         gVIsa3ZSMwDUc7TOrcOmWB+AIP9YEKz5f0Is8=
-Received: by 10.142.207.11 with SMTP id e11mr5497993wfg.93.1273066098299; Wed, 
-	05 May 2010 06:28:18 -0700 (PDT)
-Received: by 10.142.254.21 with HTTP; Wed, 5 May 2010 06:27:58 -0700 (PDT)
-In-Reply-To: <4BE141E3.2060904@gmail.com>
+	id S1760178Ab0EENtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 09:49:51 -0400
+Received: from smtp.opera.com ([213.236.208.81]:42204 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760171Ab0EENtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 09:49:47 -0400
+X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 May 2010 09:49:47 EDT
+Received: from nynorsk.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o45Dcs42025937;
+	Wed, 5 May 2010 13:38:54 GMT
+X-Mailer: git-send-email 1.7.1
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146393>
 
-Hi,
+Was notes.rewrite. The environment variable refers to globs and refs, which are only mentioned by notes.rewriteRef; notes.rewrite is boolean.
 
-On Wed, May 5, 2010 at 12:01 PM, mat <matthieu.stigler@gmail.com> wrote:
-> So I don't know exactly what I should do...Should I change all the CRLF from
-> project A, but people will have also problems, or can I switch the config,
-> once I'm using project A and B? It is not so clear in my mind and I would
-> appreciate any advice!!
+Signed-off-by: Leif Arne Storset <lstorset@opera.com>
+---
+This should be a trivial fix.
 
-I'm not sure what you should be doing because I've never worked with
-Windows, but the following information might be useful: Yes, you can
-have project-specific config quite easily.
+ Documentation/config.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-In the command
-> git config --global core.autocrlf true
-just drop `--global` and the setting becomes repository-specific.
-
--- Ram
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 92f851e..8f86050 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1359,10 +1359,6 @@ notes.rewrite.<command>::
+ 	automatically copies your notes from the original to the
+ 	rewritten commit.  Defaults to `true`, but see
+ 	"notes.rewriteRef" below.
+-+
+-This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
+-environment variable, which must be a colon separated list of refs or
+-globs.
+ 
+ notes.rewriteMode::
+ 	When copying notes during a rewrite (see the
+@@ -1382,6 +1378,10 @@ notes.rewriteRef::
+ +
+ Does not have a default value; you must configure this variable to
+ enable note rewriting.
+++
++This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
++environment variable, which must be a colon separated list of refs or
++globs.
+ 
+ pack.window::
+ 	The size of the window used by linkgit:git-pack-objects[1] when no
+-- 
+1.7.1
