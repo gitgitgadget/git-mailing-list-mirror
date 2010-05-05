@@ -1,73 +1,85 @@
-From: Michael Norman <mwnorman@gmail.com>
-Subject: Re: Does recent 'smart' HTTP feature help git-svn thru unfriendly 
-	corp. firewalls too?
-Date: Wed, 5 May 2010 10:20:52 -0400
-Message-ID: <i2yd43c95441005050720rccceadcex88a2ce6730d96a5d@mail.gmail.com>
-References: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
-	 <20100505141636.GG11053@spearce.org>
+From: David Holmer <odinguru@gmail.com>
+Subject: gitk bug: annotated tag displays as a lightweight tag when branch of the same name is on the same commit
+Date: Wed, 5 May 2010 14:17:56 +0000 (UTC)
+Message-ID: <loom.20100505T155543-396@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 05 16:21:03 2010
+X-From: git-owner@vger.kernel.org Wed May 05 16:25:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9fTC-0003NK-CW
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:21:02 +0200
+	id 1O9fXE-0005xo-KI
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932188Ab0EEOU5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 May 2010 10:20:57 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38398 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755321Ab0EEOUz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 May 2010 10:20:55 -0400
-Received: by wyb35 with SMTP id 35so360267wyb.19
-        for <git@vger.kernel.org>; Wed, 05 May 2010 07:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/FtK40PlVpBwQf9W5OMwVLugcjpaxf8WL1M4JssWA0k=;
-        b=ntUUVr86sDHDyN7otuH/Sr62004Hzzi34PB64ON24hT1Iel31ygyZh9lxjfRXlNcvb
-         M/wuFBsm0uqEMbl5tCtJmvtktTLTRGOd2gtCFFMWggryFnRNOe4aOAf5yYpUaX7sByRQ
-         6F5x96r6e2zJumD1BFXY58R0mJb1/vKus+hUU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fNr7F84lCT9wGB6UQ4aWAmSSWfjVUYZCUv1yIDnlP3sB6Ao+a/p9cXVBAjDdM0aI2E
-         lK4H+mPc8KQHH8ILaIYVL/7TF/gUHqM95Cg2g/bmRrZ+LS18JKxEQls3CQMvmt3dB4Pa
-         jlm8qcMpyrpHYc0wk0XDpjOjDS/wYddEeYkNI=
-Received: by 10.216.86.14 with SMTP id v14mr1281716wee.157.1273069253024; Wed, 
-	05 May 2010 07:20:53 -0700 (PDT)
-Received: by 10.216.186.148 with HTTP; Wed, 5 May 2010 07:20:52 -0700 (PDT)
-In-Reply-To: <20100505141636.GG11053@spearce.org>
+	id S1759274Ab0EEOZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 10:25:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:49188 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753854Ab0EEOZE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 10:25:04 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O9fX5-0005sn-BG
+	for git@vger.kernel.org; Wed, 05 May 2010 16:25:03 +0200
+Received: from pool-71-167-232-243.nycmny.east.verizon.net ([71.167.232.243])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 May 2010 16:25:03 +0200
+Received: from odinguru by pool-71-167-232-243.nycmny.east.verizon.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 May 2010 16:25:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 71.167.232.243 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100401 Ubuntu/9.10 (karmic) Firefox/3.5.9 GTB7.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146400>
 
-Sigh - most SVN installations require ssh+svn for read/write access.
+I found an edge case bug in the display behavior of gitk. I encountered it while
+working in a repository where we make branches with a name like "1.0.3" and
+create an annotated tag "1.0.3" when everything is ready on that branch. In the
+process of scripting some of this, I thought I was not creating the annotated
+tags correctly because when I'd look at them in gitk, they were showing up as
+lightweight tags. However I noticed that "git describe" was showing the tag name
+correctly, and thus the issue was in gitk.
 
-Our company is changing firewall vendors and I have been told that our
-TortoisePlink+putty-session 'trick' may be blocked :-(
+The bug can be simply reproduced by the following sequence of commands:
 
-On Wed, May 5, 2010 at 10:16 AM, Shawn O. Pearce <spearce@spearce.org> =
-wrote:
-> Michael Norman <mwnorman@gmail.com> wrote:
->> Subject line says it all - does it help?
->
-> Not sure I can see how/why. =A0The smart HTTP code helps git go
-> through a firewall, not SVN. =A0SVN already speaks HTTP, just
-> somewhat inefficiently.
->
-> --
-> Shawn.
->
+git init
+touch test
+git add test
+git commit -m "commit message"
+git tag -am "annotated tag message" master
+gitk
+
+The master tag is displayed in gitk pane as a lightweight tag rather than an
+annotated tag:
+
+Tag: master
+Id:  5b0a763ec5791da4981f14ff5f6ef6384117945c
+
+However if I move the master branch on to a new commit or rename it:
+
+git branch -m renamed
+
+Then the tag is correctly displayed by gitk as an annotated tag:
+
+object 5b0a763ec5791da4981f14ff5f6ef6384117945c
+type commit
+tag master
+tagger David Holmer <xxxxx@xxxxxxxxxxx> 1273068181 -0400
+
+annotated tag message
+
+Thank you,
+David
