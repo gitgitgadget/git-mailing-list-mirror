@@ -1,54 +1,52 @@
-From: Michael Norman <mwnorman@gmail.com>
-Subject: Does recent 'smart' HTTP feature help git-svn thru unfriendly corp. 
-	firewalls too?
-Date: Wed, 5 May 2010 10:10:20 -0400
-Message-ID: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Does recent 'smart' HTTP feature help git-svn thru unfriendly
+	corp. firewalls too?
+Date: Wed, 5 May 2010 07:16:36 -0700
+Message-ID: <20100505141636.GG11053@spearce.org>
+References: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 05 16:10:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Norman <mwnorman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 05 16:16:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9fJ0-0005EA-AF
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:10:30 +0200
+	id 1O9fPF-0000pg-IL
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760187Ab0EEOKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 10:10:22 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:60585 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760094Ab0EEOKV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 10:10:21 -0400
-Received: by wwd20 with SMTP id 20so468384wwd.19
-        for <git@vger.kernel.org>; Wed, 05 May 2010 07:10:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=OcVYEwHqlPOxO3Pi6ZTL1TqKHHZ+gdS7EooCcFpVl0U=;
-        b=oQ/Co5MeLakTk0X8ngH3BwRt0MQhFPb9JkTxqaWcLquYndyBOU94+AYb0+MDoA9lLV
-         +pqh4WfoSug8F8QDgjbwejEs8pEN1wZnZrgdiECztQNauBKjvC05dIlfXgq9d7kpbJNi
-         ubYDCbKWkHN72PalGluLnSd0HqKvVuX6CSvVM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=LHOUhq+lwuBBWoIS9oGUhbzZ8NTaAS/NVvKS8jxk1U1c+bIvDsOi/jlLlnbi+iyzUP
-         Mt0g+yV1rcBP+Sm+TrSZRaDDOPNngRfXvEYXwLH2rnTkkPTKN+An3XyTaizn7KMTjgrO
-         RpqAy5brE6FFOEyMN8oxTkuIkWWrY3GzfjLvQ=
-Received: by 10.216.87.205 with SMTP id y55mr9018973wee.88.1273068620545; Wed, 
-	05 May 2010 07:10:20 -0700 (PDT)
-Received: by 10.216.186.148 with HTTP; Wed, 5 May 2010 07:10:20 -0700 (PDT)
+	id S1760264Ab0EEOQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 10:16:46 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:56743 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759165Ab0EEOQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 10:16:43 -0400
+Received: by wyb35 with SMTP id 35so356337wyb.19
+        for <git@vger.kernel.org>; Wed, 05 May 2010 07:16:42 -0700 (PDT)
+Received: by 10.227.147.143 with SMTP id l15mr2862572wbv.17.1273069002279;
+        Wed, 05 May 2010 07:16:42 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id u8sm58335483wbc.23.2010.05.05.07.16.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 05 May 2010 07:16:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146396>
 
-Subject line says it all - does it help?
+Michael Norman <mwnorman@gmail.com> wrote:
+> Subject line says it all - does it help?
 
-Thanks in advance,
----
-Mike Norman
+Not sure I can see how/why.  The smart HTTP code helps git go
+through a firewall, not SVN.  SVN already speaks HTTP, just
+somewhat inefficiently.
+
+-- 
+Shawn.
