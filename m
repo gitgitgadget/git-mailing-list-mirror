@@ -1,160 +1,94 @@
-From: Lin Mac <mkl0301@gmail.com>
-Subject: Re: newbie: need concrete examples for how the linux-kernel project 
-	uses git
-Date: Wed, 5 May 2010 11:36:50 +0800
-Message-ID: <g2u10d816431005042036hcc7a134ai7ded5b4ef3274bf7@mail.gmail.com>
-References: <m2i408104421005041431l6c8b5845ld57720c2127fbb00@mail.gmail.com>
-	 <20100505011045.GA16345@progeny.tock>
-	 <k2l408104421005041911t32652fb7ie9618a301d998983@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFD PATCH] revlist/rev-parse: Introduce --heads and --locals
+ revision specifiers
+Date: Tue, 4 May 2010 23:35:36 -0400
+Message-ID: <20100505033536.GB8779@coredump.intra.peff.net>
+References: <83fc6259c434cc63f8e64ddf9ac8f90bae0ab2eb.1272557175.git.git@drmicha.warpmail.net>
+ <20100502050054.GE14776@coredump.intra.peff.net>
+ <4BDD8169.9050301@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Robert Buck <buck.robert.j@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 05 05:37:53 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed May 05 05:37:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9VQm-0006km-81
+	id 1O9VQl-0006km-NR
 	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 05:37:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934009Ab0EEDgy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 May 2010 23:36:54 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:57972 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933746Ab0EEDgy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 May 2010 23:36:54 -0400
-Received: by pva18 with SMTP id 18so254233pva.19
-        for <git@vger.kernel.org>; Tue, 04 May 2010 20:36:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BZrwEFJkmCJDbaD9lMxEwQNP9PA0I08uVfN5qVdmo+g=;
-        b=cGKH6vUD48tvHsiWNEW31cUfdT5QzdgmqMAfWJd3kuVAkIY4S3YtqFEzMGjF1PH1L8
-         NrMs/2/0NIkivNGylAw0sJNzPVY6j/qa1qVFwu36y7uCBWUdN7gBD/3dQpbbGZnyjLI+
-         dDZO9mMBLCvKO0K6oPUtCNswiouRaNaUn/rpI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FAZwLK6rbdkDqh3wAs3VZCNSkWqvijZd8DjPf6lAVxW2HgugPsRZKq93KsGz+29068
-         uraYbZLTPxvsIh+0UUOq/P3eRm6ElqYLZtFT/CZJGDiW7aHJOV6aRKrYgwSUxFyf0sia
-         5cn26a7Zta0tWjO7CDBYlgJEF8nS/bsgJnCh4=
-Received: by 10.141.214.38 with SMTP id r38mr5265242rvq.258.1273030610589; 
-	Tue, 04 May 2010 20:36:50 -0700 (PDT)
-Received: by 10.140.134.6 with HTTP; Tue, 4 May 2010 20:36:50 -0700 (PDT)
-In-Reply-To: <k2l408104421005041911t32652fb7ie9618a301d998983@mail.gmail.com>
+	id S933635Ab0EEDfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 May 2010 23:35:40 -0400
+Received: from peff.net ([208.65.91.99]:56174 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933437Ab0EEDfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 May 2010 23:35:40 -0400
+Received: (qmail 18330 invoked by uid 107); 5 May 2010 03:35:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 04 May 2010 23:35:53 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 04 May 2010 23:35:36 -0400
+Content-Disposition: inline
+In-Reply-To: <4BDD8169.9050301@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146369>
 
-Haven't read through all the stuff, sorry if it is already coverd or
-not related.
-But as a newbie, I found following, found on this list, quiet helpful.
+On Sun, May 02, 2010 at 03:43:05PM +0200, Michael J Gruber wrote:
 
-A successful Git branching model
-http://nvie.com/git-model
+> > I don't have anything against the concept, but "--heads" is a horrible
+> > name, as it implies refs/heads (which is of course what --branches does.
+> > Yikes!). I know why you picked it, and once you think about it, yes, it
+> [...]
+> > does make some sense (it is all the local and remote heads), but I am
+> > worried that it will cause confusion.
+> 
+> So, your alternative suggestion is...? ;)
 
-Best Regards,
-Mac Lin
+I have to criticize _and_ suggest? Sheesh.
 
-2010/5/5 Robert Buck <buck.robert.j@gmail.com>:
-> Wow, this is really great folks. Let me look at these links again.
->
-> Great stuff. Thank you,
->
-> -Bob
->
-> On Tue, May 4, 2010 at 9:10 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
->> Hi Robert,
->>
->> Robert Buck wrote:
->>
->>> We have multiple teams, lots of developers, and would like to use a
->>> variant of the dictator-lieutenant scheme discussed in published
->>> subject matter.
->>>
->>> However, I find it rather challenging finding any subject matter th=
-at
->>> provides reasonable detail.
->>
->> Probably you have run into these already. =A0But for reference...
->>
->> To be a maintainer:
->>
->> =A0- the gitworkflows(7) page[1]
->>
->> The kernel does not follow all of these practices, but maybe similar
->> projects could benefit from some. :)
->>
->> To be a =93leaf=94 contributor (does not require git):
->>
->> =A0- the Linux wireless git guide[2]
->> =A0- submitting patches to linux-wireless.git[3]
->> =A0- guide to tip.git (Linux=92s x86 architecture support subsystem)=
- [4]
->>
->> To build a throw-away integration branch:
->>
->> =A0- Stephen Rothwell=92s linux-next tree[5]
->>
->> To be, well, anyone:
->>
->> =A0- =93everyday git in 20 commands or so=94 [6]
->>
->> Patch flow:
->>
->> =A0- for Linux wireless [7]
->> =A0- for git [8]
->>
->> Separate =93internal use=94 and =93public=94 trees:
->>
->> =A0- nouveau/linux-2.6 [9]
->>
->>> What I'd like to find are concrete
->>> examples, step-by-step, of specifically how to:
->>
->> If you find these, information for each about
->>
->> =A0- where you expected to find it
->> =A0- where you actually found it
->> =A0- how helpful that information was
->>
->> would be very useful. =A0It would be nice to be able to update =93ev=
-eryday git=94,
->> the user manual, the reference manual pages, and other documents to =
-make
->> this sort of question easier to answer.
->>
->> Hope that helps,
->> Jonathan
->>
->> [1] http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.htm=
-l
->> [2] http://wireless.kernel.org/en/developers/Documentation/git-guide
->> [3] http://wireless.kernel.org/en/developers/Documentation/Submittin=
-gPatches
->> [4] http://people.redhat.com/mingo/tip.git/readme.txt
->> [5] http://git.kernel.org/?p=3Dlinux/kernel/git/next/linux-next.git;=
-a=3Dtree;f=3DNext
->> [6] http://www.kernel.org/pub/software/scm/git/docs/everyday.html
->> [7] http://wireless.kernel.org/en/developers/process
->> [8] https://git.wiki.kernel.org/index.php/MaintNotes
->> [9] http://lists.freedesktop.org/archives/nouveau/2009-March/002765.=
-html
->> http://cgit.freedesktop.org/nouveau/linux-2.6/
->> =91git rebase=92 is the main tool here.
->>
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+> How about --tips? But I don't like that.
+
+I don't like it either. Really, "--branches" is a reasonable
+description of what you are providing, but that is already taken. :)
+
+I can't think of another place in git where we collectively refer to
+local and remote branch heads by a single term. The closest is
+git-branch's "-a". You could do "--all-branches", but this was meant to
+save some typing, so it probably fails on that count.
+
+The problem with things like --tips, --heads, or --branches, is that
+there is nothing to say "I mean _both_ local and remote" as opposed to
+just local. And I'm not sure there is a way to say that without getting
+long. I guess "--all-heads" is shorter, but still ugly.
+
+> We really use head as the term for the tip (ordered end-vertex) of a
+> branch, be it local or remote.
+
+Yeah. Originally both of those things were in refs/heads/, but the
+"separate remote" layout has been standard for some time. Even Junio may
+have switched by now. :)
+
+> I would hope that ordinary users do not have to deal with the layout under
+> refs, and thus won't be confused. But people peel and poke everywhere
+> where there not supposed to :)
+
+I think refs/heads is something many git users know about. Git was
+designed from the start to have a simple data model, and that model
+(including things like ref naming) was always exposed to the user.
+That's what makes it so flexible, and of course is what makes many
+people complain.
+
+These days that data model is a little more hidden, but I think you do
+still see the refs hierarchy. Certainly users see "remotes/" (e.g., in
+"git branch -a"), though perhaps they don't necessarily realize how it
+relates to refs/ and refs/heads/. Full ref names are also used for
+disambiguation, though I suppose most people never need to deal with
+that. But the first time one runs "git for-each-ref" (I know, I manage
+to work it into every conversation, right?) you get full exposure.
+
+-Peff
