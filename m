@@ -1,125 +1,92 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: [PATCH v2] An alias that starts with "!!" runs in the current directory.
-Date: Wed, 5 May 2010 17:31:30 -0400
-Message-ID: <19425.58290.42871.986460@winooski.ccs.neu.edu>
-References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
-	<20100505005153.GC25390@coredump.intra.peff.net>
-	<4BE115EF.8010306@viscovery.net>
-	<20100505070131.GA11265@coredump.intra.peff.net>
-	<19425.9169.537598.876589@winooski.ccs.neu.edu>
-	<7v1vdql4c9.fsf@alter.siamese.dyndns.org>
-	<19425.54504.163875.379151@winooski.ccs.neu.edu>
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: how to squash a few commits in the past
+Date: Wed, 05 May 2010 23:41:10 +0200
+Message-ID: <4BE1E5F6.3040606@gmail.com>
+References: <loom.20100503T112508-677@post.gmane.org> <4BDEA0D7.9090201@drmicha.warpmail.net> 	<hrncm3$pg8$1@dough.gmane.org> <hrnem4$1m0$1@dough.gmane.org> <w2zf3271551005050619td67d697y97d7e9181c4496fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 05 23:33:02 2010
+Cc: Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 05 23:41:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9mDB-0003S7-MX
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 23:32:58 +0200
+	id 1O9mLO-0008Pe-MY
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 23:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758655Ab0EEVcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 17:32:00 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:51095 "EHLO barzilay.org"
+	id S1758752Ab0EEVlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 17:41:20 -0400
+Received: from lo.gmane.org ([80.91.229.12]:43221 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758706Ab0EEVbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 17:31:48 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1O9mBm-00086m-1j; Wed, 05 May 2010 17:31:30 -0400
-In-Reply-To: <19425.54504.163875.379151@winooski.ccs.neu.edu>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1758666Ab0EEVlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 17:41:19 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1O9mLG-0008KO-Ru
+	for git@vger.kernel.org; Wed, 05 May 2010 23:41:18 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 May 2010 23:41:18 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 05 May 2010 23:41:18 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <w2zf3271551005050619td67d697y97d7e9181c4496fc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146424>
 
-With "!"-prefixed shell aliases, the shell command not only gets
-executed at the repository top level, but there is no way to know the
-current directory of the original call.  This adds "!!"-prefixed aliases
-as a similar variant for "!"-prefixed ones, but the commands are
-executed in the original directory instead of the top level.
+Hi Ragu,
 
-Signed-off-by: Eli Barzilay <eli@barzilay.org>
----
+Ramkumar Ramachandra wrote:
+> Hi,
+> 
+> On Mon, May 3, 2010 at 11:20 PM, Gelonida <gelonida@gmail.com> wrote:
+>> Is it normal, that git gets lost wehn rebasing such a structure.
+> 
+> While performing an interactive rebase, conflicts can often occur and
+> this is quite normal.
+> 
+>>> Automatic cherry-pick failed.  After resolving the conflicts,
+>>> mark the corrected paths with 'git add <paths>', and
+>>> run 'git rebase --continue'
+>>> Could not apply 67f3f6d... preparation for #241
+> 
+> The problem and solution is described in that message. Open the file,
+> resolve the conflict and continue the rebase operation.
 
-It looks like setup_git_directory_gently() returns the original CWD, but
-since it's not documented or commented, I don't know if this is reliable
-or not, so it might need to change.
 
-Also, it might make more sense to document the "!!" variant first, since
-it is generally more useful, but the way things evolved with "!!" being
-the longer prefix, it seems to me that documenting it after "!" is more
-sensible.
 
-This fixes the broken use of alias_command that Jared Hance caught.
+Yes merging manually could be a theortical solution, but I really don't
+understand, why I should merge anything at all.
 
- Documentation/config.txt |    9 +++++++--
- git.c                    |   14 +++++++++++---
- 2 files changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 92f851e..055f4e3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -549,13 +549,18 @@ alias.*::
- 	spaces, the usual shell quoting and escaping is supported.
- 	quote pair and a backslash can be used to quote them.
- +
--If the alias expansion is prefixed with an exclamation point,
-+If the alias expansion is prefixed with a single exclamation point,
- it will be treated as a shell command.  For example, defining
- "alias.new = !gitk --all --not ORIG_HEAD", the invocation
- "git new" is equivalent to running the shell command
--"gitk --all --not ORIG_HEAD".  Note that shell commands will be
-+"gitk --all --not ORIG_HEAD".  Note that such shell commands will be
- executed from the top-level directory of a repository, which may
- not necessarily be the current directory.
-++
-+If the alias expansion is prefixed with two exclamation points,
-+it will be treader similarly to the above, except that the shell commands
-+are executed at the current directory.
-+
- 
- am.keepcr::
- 	If true, git-am will call git-mailsplit for patches in mbox format
-diff --git a/git.c b/git.c
-index 6bae305..3d8ed20 100644
---- a/git.c
-+++ b/git.c
-@@ -167,14 +167,22 @@ static int handle_alias(int *argcp, const char ***argv)
- 				free(alias_string);
- 				alias_string = buf.buf;
- 			}
-+			/* going to exit anyway, so it's fine to change
-+			 * alias_string to the actual command */
-+			alias_string += 1;
-+			if (alias_string[0] == '!') {
-+				alias_string += 1;
-+				if (subdir && chdir(subdir))
-+					die_errno("Cannot change to '%s'", subdir);
-+			}
- 			trace_printf("trace: alias to shell cmd: %s => %s\n",
--				     alias_command, alias_string + 1);
--			ret = system(alias_string + 1);
-+				     alias_command, alias_string);
-+			ret = system(alias_string);
- 			if (ret >= 0 && WIFEXITED(ret) &&
- 			    WEXITSTATUS(ret) != 127)
- 				exit(WEXITSTATUS(ret));
- 			die("Failed to run '%s' when expanding alias '%s'",
--			    alias_string + 1, alias_command);
-+			    alias_string, alias_command);
- 		}
- 		count = split_cmdline(alias_string, &new_argv);
- 		if (count < 0)
--- 
-1.7.1
+
+The history is purely linear at the places where I want to squash.
+
+These two commits precede a few more consecutive commits, traverse then
+a tree which forks to multiple branches, which partially cherrypick from
+each other and will then join again to a unique linear sequence.
+
+If I have a history of several hundred commits and I am asked several
+times to merge, just because I want to squash two consecutve commits
+without any branches going out or in, then something (probably the way I
+try to attack the problem or much less likely a mysterious git bug) is
+kind of wrong.
+
+
+
+I'm still looking for a solution, where I specify only the commits to be
+squashed and everything else stays untouched without any further
+userinteraction
