@@ -1,52 +1,77 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Does recent 'smart' HTTP feature help git-svn thru unfriendly
-	corp. firewalls too?
-Date: Wed, 5 May 2010 07:16:36 -0700
-Message-ID: <20100505141636.GG11053@spearce.org>
-References: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
+From: "Leif Arne Storset" <lstorset@opera.com>
+Subject: Re: [PATCH] Documentation/config.txt: Move GIT_NOTES_REWRITE_REF to
+ notes.rewriteRef
+Date: Wed, 05 May 2010 16:15:12 +0200
+Organization: Opera Software
+Message-ID: <op.vb8kjmmktmo5g6@nynorsk>
+References: <1273066516-24469-1-git-send-email-lstorset@opera.com>
+ <201005051600.03446.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Norman <mwnorman@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 05 16:16:59 2010
+Content-Type: text/plain; charset=utf-8; format=flowed; delsp=yes
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Thomas Rast" <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed May 05 16:17:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9fPF-0000pg-IL
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:16:57 +0200
+	id 1O9fPt-0001Dl-Ic
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 16:17:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760264Ab0EEOQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 10:16:46 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:56743 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759165Ab0EEOQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 10:16:43 -0400
-Received: by wyb35 with SMTP id 35so356337wyb.19
-        for <git@vger.kernel.org>; Wed, 05 May 2010 07:16:42 -0700 (PDT)
-Received: by 10.227.147.143 with SMTP id l15mr2862572wbv.17.1273069002279;
-        Wed, 05 May 2010 07:16:42 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id u8sm58335483wbc.23.2010.05.05.07.16.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 May 2010 07:16:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <t2td43c95441005050710rb5123219v9ca23aebc01e40ad@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1760268Ab0EEORa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 10:17:30 -0400
+Received: from smtp.opera.com ([213.236.208.81]:40477 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760161Ab0EEOR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 10:17:29 -0400
+Received: from nynorsk (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o45EGYDf027615
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 5 May 2010 14:16:34 GMT
+In-Reply-To: <201005051600.03446.trast@student.ethz.ch>
+User-Agent: Opera Mail/10.53 (Linux)
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146397>
 
-Michael Norman <mwnorman@gmail.com> wrote:
-> Subject line says it all - does it help?
+Thomas Rast <trast@student.ethz.ch> skreiv Wed, 05 May 2010 16:00:03 +0200
 
-Not sure I can see how/why.  The smart HTTP code helps git go
-through a firewall, not SVN.  SVN already speaks HTTP, just
-somewhat inefficiently.
+> Leif Arne Storset wrote:
+>> Was notes.rewrite. The environment variable refers to globs and refs,  
+>> which are only mentioned by notes.rewriteRef; notes.rewrite is boolean.
+>>
+>> Signed-off-by: Leif Arne Storset <lstorset@opera.com>
+>> ---
+>> This should be a trivial fix.
+>
+> ACK and thanks for spotting this.  Putting it in the wrong place was
+> my fault.
+>
+> I found the commit message confusing, though (my first thought was "we
+> have a notes.rewrite configuration variable?"), and you also have a
+
+Yeah, I misread it as notes.rewrite.
+
+> way too long line there.  How about
+>
+>   Documentation/config.txt: GIT_NOTES_REWRITE_REF overrides  
+> notes.rewriteRef
+>
+>   The documentation erroneously mentions the GIT_NOTES_REWRITE_REF
+>   override in the description of notes.rewrite.<command>.  Move it
+>   under notes.rewriteRef where it belongs.
+
+Thanks, looks good. I suppose I should file a PATCH v2 now, it'll be along  
+in a minute.
 
 -- 
-Shawn.
+Leif Arne Storset
+Core Technology Developer, Opera Software
+Oslo, Norway
