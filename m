@@ -1,53 +1,74 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Detecting GIT_DIR runtime
-Date: Wed, 05 May 2010 18:54:33 +0200
-Message-ID: <4BE1A2C9.6010408@dbservice.com>
-References: <t2gb42431c81005050838w425412d9jfe176c3b637e77c1@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: Bizarre behavior on git commit
+Date: Wed, 5 May 2010 09:52:31 -0700
+Message-ID: <t2ga038bef51005050952u3370cf68pa45496e56a4adb7b@mail.gmail.com>
+References: <s2t6f5a4e781005042246sb9ef3d48j134b22b5b41133ed@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 05 18:54:45 2010
+To: Dan Loewenherz <dloewenherz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 05 18:59:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9hrx-00018k-If
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 18:54:45 +0200
+	id 1O9hwI-0003bV-NR
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 18:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951Ab0EEQyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 12:54:38 -0400
-Received: from office.neopsis.com ([78.46.209.98]:42559 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751613Ab0EEQyh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 12:54:37 -0400
-Received: from calvin.caurea.org ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Wed, 5 May 2010 18:54:34 +0200
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <t2gb42431c81005050838w425412d9jfe176c3b637e77c1@mail.gmail.com>
+	id S1755652Ab0EEQ7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 May 2010 12:59:01 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:46163 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752712Ab0EEQ6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 May 2010 12:58:52 -0400
+Received: by vws12 with SMTP id 12so1137005vws.19
+        for <git@vger.kernel.org>; Wed, 05 May 2010 09:58:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=bicl5Eg5TTxEdxgfht5ntOjeoWzkmFrbwdkbTwIEMPI=;
+        b=r8W9BiW+VQw5CV5itpz3/U2UwsEamxKZVeEq3JyZhMBhloCzO9Zwf0j80hja5fme7d
+         eTG30WasDuZhApkhvpT47UHkgX3D5rc7sWVMTFImmy/tr83XdVSCcfi/rnvaDA7/Cj5Q
+         ujJT26wsw4w7V2KHX+jf2jfd/3vj9YYGHsHRU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=qgQmRVYVNmc+nVyUToeMEJhaiBdsz5jhpC9EBFkowPI0roKdXvut5OXkx5TlYq8S5g
+         CX7vgQbL88fOqab8xneuumRFDGag/EkvD73y0Tkh82/IxDy/xyytHfXvZ0L2jE+Hookr
+         noQ3vENbS/fYkk8ySW75vSGMIYakLte/QH2L0=
+Received: by 10.224.122.234 with SMTP id m42mr6634469qar.305.1273078351390; 
+	Wed, 05 May 2010 09:52:31 -0700 (PDT)
+Received: by 10.229.28.3 with HTTP; Wed, 5 May 2010 09:52:31 -0700 (PDT)
+In-Reply-To: <s2t6f5a4e781005042246sb9ef3d48j134b22b5b41133ed@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146411>
 
-On 5/5/10 5:38 PM, Mahesh Vaidya wrote:
-> I have a tree like
-> /home/mvaidya/WORKSPACE/nvos/mvaidya-master-100.local/some/folder
+Hi,
+
+On Tue, May 4, 2010 at 10:46 PM, Dan Loewenherz <dloewenherz@gmail.com> wrote:
+> I'm running into a weird issue in a specific repo where "git show-ref"
+> usage is being displayed after invocating "git commit".
 >
-> I would like to issue come command say "git fetch" from any level of
-> the tree. How can I deduce path of .git folder. Reason I need it as I
-> some application configuration saved in .git/workspace.properties and
-> I need to some action before git fetch.
->
+> E.g.
+> $ git commit -m "my commit message"
+> usage: git show-ref [-q|--quiet] [--verify] [--head]
+> ...
 
-Take a look at:
-$ git rev-parse --cdup
+This may or may not be the case for you but I did have a bit of a
+face-palm issue a while back because I was tinkering with a __git_ps1
+bash script and forgot. I was actually getting output from one git
+command or another and couldn't figure out why until I eventually
+figured out that the commands that were complaining were used in my
+__git_ps1 script. This was mainly when I was doing slightly unexpected
+things (at least as far as __git_ps1 was concerned, e.g during an
+interactive rebase ).
 
-tom
+Its probably not your problem but just double check with 'echo "$PS1"'
+from your shell.
