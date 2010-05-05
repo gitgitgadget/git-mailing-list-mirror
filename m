@@ -1,62 +1,93 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: [PATCH] An alias that starts with &quot;!!&quot; runs in the current directory.
-Date: Wed, 5 May 2010 17:00:11 -0400
-Message-ID: <19425.56411.745112.753594@winooski.ccs.neu.edu>
-References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
-	<20100505005153.GC25390@coredump.intra.peff.net>
-	<4BE115EF.8010306@viscovery.net>
-	<20100505070131.GA11265@coredump.intra.peff.net>
-	<19425.9169.537598.876589@winooski.ccs.neu.edu>
-	<7v1vdql4c9.fsf@alter.siamese.dyndns.org>
-	<19425.54504.163875.379151@winooski.ccs.neu.edu>
-	<loom.20100505T225117-534@post.gmane.org>
-	<19425.56291.689142.569365@winooski.ccs.neu.edu>
+From: Eli Collins <eli@cloudera.com>
+Subject: Re: [PATCH] diff: add a 'path' meta header for non-renames and 
+	non-copies
+Date: Wed, 5 May 2010 14:14:42 -0700
+Message-ID: <w2ndfe484f01005051414p294820f8jbf974b0cde20236d@mail.gmail.com>
+References: <1272852221-14927-1-git-send-email-eli@cloudera.com>
+	 <1272868072-12120-1-git-send-email-bert.wesarg@googlemail.com>
+	 <7viq75tpaw.fsf@alter.siamese.dyndns.org>
+	 <z2m36ca99e91005030037jb880e65w73efa551a53d7be6@mail.gmail.com>
+	 <7v1vdtt0d7.fsf@alter.siamese.dyndns.org>
+	 <m2i36ca99e91005031555x4bb2df54yb47058d9f7d5342c@mail.gmail.com>
+	 <7v8w80sb5b.fsf@alter.siamese.dyndns.org>
+	 <AANLkTilsk7Hh0oN72SfOlRK92qQhjVa-rNYUtVHocEj0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 05 23:00:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed May 05 23:14:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9lhd-0004qI-1l
-	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 23:00:21 +0200
+	id 1O9lvd-0002qy-5q
+	for gcvg-git-2@lo.gmane.org; Wed, 05 May 2010 23:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758202Ab0EEVAN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 May 2010 17:00:13 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:35334 "EHLO barzilay.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754243Ab0EEVAM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 May 2010 17:00:12 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1O9lhT-0007oA-OP; Wed, 05 May 2010 17:00:11 -0400
-In-Reply-To: <19425.56291.689142.569365@winooski.ccs.neu.edu>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1755519Ab0EEVOo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 May 2010 17:14:44 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:62313 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754049Ab0EEVOn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 May 2010 17:14:43 -0400
+Received: by pxi5 with SMTP id 5so1737416pxi.19
+        for <git@vger.kernel.org>; Wed, 05 May 2010 14:14:42 -0700 (PDT)
+Received: by 10.142.56.4 with SMTP id e4mr6700694wfa.308.1273094082409; Wed, 
+	05 May 2010 14:14:42 -0700 (PDT)
+Received: by 10.142.88.2 with HTTP; Wed, 5 May 2010 14:14:42 -0700 (PDT)
+In-Reply-To: <AANLkTilsk7Hh0oN72SfOlRK92qQhjVa-rNYUtVHocEj0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146420>
 
-On May  5, Eli Barzilay wrote:
-> On May  5, Jared Hance wrote:
-> > Eli Barzilay <eli <at> barzilay.org> writes:
-> > 
-> > >  			ret = system(alias_string + 1);
-> > 
-> > I don't think that this is correct. You already changed alias_string
-> > to the actual code earlier in the command, so I think that this will
-> > actually chop off the first letter of the command.
-> 
-> (*sigh*)  That's correct, I fixed this, but improperly remade the
-> patch.
+Ditto.  I frequently generate patches for other systems (primarily
+svn) and they require diffs w/o perfixes.  Seemed like there should be
+a way to enable this option in gitconfig so users don't need to type
+--no-prefix w every diff invocation or use an alias (aliasing diff to
+diff --no-prefix in gitconfig doesn't work and wouldn't be a good idea
+anyway).
 
-Is there some convention for sending a fixed patch?
+Thanks,
+Eli
 
--- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+
+On Tue, May 4, 2010 at 12:30 PM, Bert Wesarg <bert.wesarg@googlemail.co=
+m> wrote:
+> On Tue, May 4, 2010 at 03:34, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>> Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>>
+>>> ... do you have any other
+>>> thoughts on adding a <path> extended header for non-renames and
+>>> non-copies?
+>>
+>> Other than "Why do we even need it?", no. =A0We actually have been c=
+areful
+>> when designing the output format to make sure that necessary informa=
+tion
+>> appears.
+>>
+>> See also this thread:
+>>
+>> =A0 =A0http://thread.gmane.org/gmane.comp.version-control.git/3990/f=
+ocus=3D4002
+>>
+>> I wasn't too opposed to having a separate "Index: " line (or Anton's
+>> "name") like CVS does, but the conclusion of the thread was that it =
+is not
+>> necessary.
+>>
+>
+> Thanks for the pointer. The discussion revolves around technical
+> arguments and the conclusion that this extra information is not
+> necessary is reasonable. My intention for this information comes only
+> from the usability and convenience side: I want a path without any
+> prefix which I can select in the terminal and use this to open the
+> file. Thats why it is only an option for the UI interface.
+>
+> Bert
+>
