@@ -1,121 +1,93 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Multiblobs
-Date: Thu, 6 May 2010 02:26:44 -0400
-Message-ID: <20100506062644.GB16151@coredump.intra.peff.net>
-References: <loom.20100428T164432-954@post.gmane.org>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH v2] An alias that starts with "!!" runs in the current
+ directory.
+Date: Thu, 06 May 2010 07:26:40 +0100
+Message-ID: <1273127200.3562.10.camel@dreddbeard>
+References: <1273019122.16093.6.camel@ubuntu.ubuntu-domain>
+	 <20100505005153.GC25390@coredump.intra.peff.net>
+	 <4BE115EF.8010306@viscovery.net>
+	 <20100505070131.GA11265@coredump.intra.peff.net>
+	 <19425.9169.537598.876589@winooski.ccs.neu.edu>
+	 <7v1vdql4c9.fsf@alter.siamese.dyndns.org>
+	 <19425.54504.163875.379151@winooski.ccs.neu.edu>
+	 <19425.58290.42871.986460@winooski.ccs.neu.edu>
+	 <1273098179.723.10.camel@dreddbeard>
+	 <7vpr19j4ng.fsf@alter.siamese.dyndns.org>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 08:26:59 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Eli Barzilay <eli@barzilay.org>, Jeff King <peff@peff.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 06 08:27:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9uXx-00068a-Ut
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 08:26:58 +0200
+	id 1O9uYR-0006Iq-70
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 08:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509Ab0EFG0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 02:26:48 -0400
-Received: from peff.net ([208.65.91.99]:48143 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751100Ab0EFG0r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 02:26:47 -0400
-Received: (qmail 2797 invoked by uid 107); 6 May 2010 06:27:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 06 May 2010 02:27:01 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 06 May 2010 02:26:44 -0400
-Content-Disposition: inline
-In-Reply-To: <loom.20100428T164432-954@post.gmane.org>
+	id S1752827Ab0EFG1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 02:27:19 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:63505 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751100Ab0EFG1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 02:27:18 -0400
+Received: by wyb35 with SMTP id 35so914031wyb.19
+        for <git@vger.kernel.org>; Wed, 05 May 2010 23:27:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=Ll6cA3/NLZ2O8gbjUfxP7drfK6f52iWH/9otzBhpRwM=;
+        b=MdMNbuvl5f9KnwGxDkaO/V+qsg7xmDPrnX1I9nfdIJPuOnhqqdOkbDcP8WwLZK556k
+         hkXJZF/1IUx6dMOKzaQGrarxvkPhDUgd/8R+m8FrwhA5EvybekNHJ/Q65MYQPCFY11aw
+         7ElLPhBVwr4biwes0I23UO5Mh9567guegpaVg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=Ol0Km/7eEkgUq9DvzyjjfQVTrYl9Rs5NOby8JZYFV5GNmBBM/BUXM3VVrmqj13dc0/
+         0ec8+FrWzFjn2KTAmzUaAVofev3y7Avjk498W9nopGGOlGwL8ACvESkq66dQZbuo6MhY
+         82JwuqEigg1+9K4fGPJUQ7EwQEZhixn8a9g08=
+Received: by 10.227.157.69 with SMTP id a5mr3790632wbx.146.1273127236494;
+        Wed, 05 May 2010 23:27:16 -0700 (PDT)
+Received: from [192.168.0.129] (5acc34b2.bb.sky.com [90.204.52.178])
+        by mx.google.com with ESMTPS id u8sm4906949wbc.17.2010.05.05.23.27.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 05 May 2010 23:27:16 -0700 (PDT)
+In-Reply-To: <7vpr19j4ng.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146444>
 
-On Wed, Apr 28, 2010 at 03:12:07PM +0000, Sergio Callegari wrote:
+On Wed, 2010-05-05 at 16:43 -0700, Junio C Hamano wrote:
+> What other variants might we want to be able to specify while defining and
+> using aliases?  If cwd vs root is the only distinction, then !(cwd) would
+> be a bit overkill, but if we used !! for this new feature, I suspect that
+> it would make it much harder to switch the default in the future.
+> 
+> Comments?
+> 
+> 
 
-> it happened to me to read an older post by Jeff King about "multiblobs"
-> (http://kerneltrap.org/mailarchive/git/2008/4/6/1360014) and I was wandering
-> whether the idea has been abandoned for some reason or just put on hold.
+What I had in mind when I mentioned !(...)  were some half-formed ideas
+about shortcuts for manipulating the environment, !(nopager), for
+example.
 
-I am a little late getting to this thread, and I agree with a lot of
-what Avery said elsewhere, so I won't repeat what's been said. But after
-reading my own message that you linked and the rest of this thread, I
-wanted to note a few things.
+But these ideas were vague and I can't think of any off-hand which I
+would use other than !(cwd). I'd say !(root:path/to/dir), but that's
+obviously not necessary (any more than !(root) would be, if cwd were the
+default), and honestly I'm quite happy using shell functions for that
+sort of thing.
 
-One is that many of the applications for these multiblobs are extremely
-varied, and many of them are vague and hand-waving. I think you really
-have to look at each application individually to see how a solution
-would fit. In my original email, I mentioned linear chunking of large
-blobs for:
-
-  1. faster inexact rename detection
-
-  2. better diffs of binary files
-
-I think (2) is now obsolete. Since that message, we now have textconv
-filters, which allow simple and fast diffs of large objects (in my
-example, I talked about exif tags on images. I now textconv the images
-into a text representation of the exif tags and diff those). And with
-textconv caching, we can do it on the fly without impacting how we
-represent the object in git (we don't even have to pull the original
-large blob out of storage at all, as the cache provide a look-aside
-table keyed by the object name).
-
-I also mentioned in that email that in theory we could diff individual
-chunks even if we don't understand their semantic meaning. In practice,
-I don't think this works. Most binary formats are going to involve not
-just linear chunking, but decoding the binary chunks into some
-human-readable form. So smart chunking isn't enough; you need a decoder,
-which is what a textconv filter does.
-
-For item (1), this is closely related to faster (and possibly better)
-delta compression. I say only possibly better, because in theory our
-delta algorithm should be finding something as simple as my example
-already.
-
-And for both of those cases, the upside is a speed increase, but the
-downside is a breakage of the user-visible git model (i.e., blobs get
-different sha1's depending on how they've been split). But being two
-years wiser than when I wrote the original message, I don't think that
-breakage is justified. Instead, you should retain the simple git object
-model, and consider on-the-fly content-specific splits. In other words,
-at rename (or delta) time notice that blob 123abc is a PDF, and that it
-can be intelligently split into several chunks, and then look for other
-files which share chunks with it. As a bonus, this sort of scheme is
-very easy to cache, just as textconv is. You cache the smart-split of
-the blob, which is immutable for some blob/split-scheme combination. And
-then you can even do rename detection on large blob 123abc without even
-retrieving it from storage.
-
-Another benefit is that you still _store_ the original (you just don't
-look at it as often). Which means there is no annoyance with perfectly
-reconstructing a file. I had originally envisioned straight splitting,
-with concatenation as the reverse operation. But I have seen things like
-zip and tar files mentioned in this thread. They are quite challenging,
-because it is difficult to reproduce them byte-for-byte. But if you take
-the splitting out of the git data model, then that problem just goes
-away.
-
-The other application I saw in this thread is structured files where you
-actually _want_ to see all of the innards as individual files (e.g.,
-being able to do "git show HEAD:foo.zip/file.txt"). And for those, I
-don't think any sort of automated chunking is really desirable. If you
-want git to store and process those files individually, then you should
-provide them to git individually. In other words, there is no need for
-git to know or care at all that "foo.zip" exists, but you should simply
-feed it a directory containing the files. The right place to do that
-conversion is either totally outside of git, or at the edges of git
-(i.e., git-add and when git places the file in the repository). Our
-current hooks may not be sufficient, but that means those hooks should
-be improved, which to me is much more favorable than a scheme that
-alters the core of the git data model.
-
-So no, reading my original message, I don't think it was a good idea. :)
-The things people want to accomplish are reasonable goals, but there are
-better ways to go about it.
-
--Peff
+-- 
+-- Will
