@@ -1,76 +1,61 @@
-From: "Chris.Cheney" <chris.cheney.nospam@tesco.net>
-Subject: Re: git checkout branch puzzle
-Date: Thu, 6 May 2010 20:30:11 +0000 (UTC)
-Message-ID: <Xns9D70DAFB1423DChrisCheneytesconet@80.91.229.10>
-References: <Xns9D6BC0C4C8784ChrisCheneytesconet@80.91.229.10> <20100502045901.GD14776@coredump.intra.peff.net> <Xns9D6C65C2DB06EChrisCheneytesconet@80.91.229.10> <Xns9D6CD773D97E5ChrisCheneytesconet@80.91.229.10> <20100503064053.GA20002@coredump.intra.peff.net> <Xns9D6D5CD466CE2ChrisCheneytesconet@80.91.229.10>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 06 22:31:05 2010
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: merges and git log --stat
+Date: Thu, 6 May 2010 22:36:39 +0200
+Message-ID: <20100506203639.GV4599@neumann>
+References: <20100506192616.GS4599@neumann>
+	<7vsk64hjq4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 06 22:37:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OA7iq-0004gM-0y
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 22:31:04 +0200
+	id 1OA7oy-0007k3-50
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 22:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075Ab0EFUaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 16:30:24 -0400
-Received: from lo.gmane.org ([80.91.229.12]:43909 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759019Ab0EFUaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 16:30:22 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OA7i8-0004Ir-OR
-	for git@vger.kernel.org; Thu, 06 May 2010 22:30:20 +0200
-Received: from 213.81.122.167 ([213.81.122.167])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 06 May 2010 22:30:20 +0200
-Received: from chris.cheney.nospam by 213.81.122.167 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 06 May 2010 22:30:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 213.81.122.167
-User-Agent: Xnews/5.04.25
+	id S932406Ab0EFUhR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 16:37:17 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:65315 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756782Ab0EFUhP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 16:37:15 -0400
+Received: from [127.0.1.1] (p5B130578.dip0.t-ipconnect.de [91.19.5.120])
+	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
+	id 0M6RTj-1NPJyd1yWp-00y2A0; Thu, 06 May 2010 22:36:41 +0200
+Content-Disposition: inline
+In-Reply-To: <7vsk64hjq4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V01U2FsdGVkX1/1APcIv5RgZieyYqIYNFyEgIvTSeZNfL2VT4x
+ hOBs6oI1b+2BbX2IP5RWjw3+8fW51dWOQEwdqttF7nZY6gHq+Y
+ uIzVSYm8WIFBUASIT0nig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146495>
 
-"Chris.Cheney" <chris.cheney.nospam@tesco.net> wrote in
-news:Xns9D6D5CD466CE2ChrisCheneytesconet@80.91.229.10: 
+That was fast, thank you.
 
-> Jeff King <peff@peff.net> wrote in
-> news:20100503064053.GA20002@coredump.intra.peff.net: 
-> 
->> On Sun, May 02, 2010 at 08:09:32PM +0000, Chris.Cheney wrote:
->> 
->>> Neither of our config files contain autocrlf settings, but it's
->>> something that I'll look further into. Neither of us had made recent
->>> config changes. 
->> 
->> I believe autocrlf is on by default for msysgit. But if there is
->> nothing in your config, then probably nothing changed. If you can
->> reproduce the situation, it might be worth narrowing down a simple
->> test case and posting the exact commands and output.
-> 
-> Thanks. Indeed, after asking here, that was to be my next step - I
-> need to restock up on round tuits :-)
-> 
-> FWIW My money is on a rm/git-rm or a mv/git-mv "user" error.
+On Thu, May 06, 2010 at 01:13:23PM -0700, Junio C Hamano wrote:
+> SZEDER G=E1bor <szeder@ira.uka.de> writes:
+>=20
+> > I've just noticed that 'git log --stat' does not print the diffstat
+> > for merge commits.  Is this intentional?
+>=20
+> It's very much designed so.  You cannot clearly define "diff from whi=
+ch
+> parent you would want to see".
 
-I would have lost my money.
+I see.  Perhaps it would make sense to show the diffstat from the
+point of view of the first parent, but maybe I'm biased by my current
+use case.  Anyway, it seems that I can easily get what I need with a
+bit of scripting, so it's not a major issue.
 
-You were almost spot-on. It turned out that my remote collaborator was 
-using a version of msysgit prior to the default of autocrlf being true.
-
-We'll be recloning from a freshly built repository r.s.n.
-
-Thanks for your help
-
-Chris
+Best,
+G=E1bor
