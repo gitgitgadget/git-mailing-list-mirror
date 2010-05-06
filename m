@@ -1,84 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Feature request: relative paths
-Date: Thu, 6 May 2010 04:01:33 -0500
-Message-ID: <20100506090132.GA26079@progeny.tock>
+Date: Thu, 6 May 2010 05:04:19 -0400
+Message-ID: <20100506090419.GB31873@coredump.intra.peff.net>
 References: <19426.23330.525936.981066@winooski.ccs.neu.edu>
  <20100506083113.GA25993@progeny.tock>
  <20100506084607.GA9921@atjola.homenet>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eli Barzilay <eli@barzilay.org>, git <git@vger.kernel.org>
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu May 06 11:01:08 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Eli Barzilay <eli@barzilay.org>, git <git@vger.kernel.org>
+To: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 06 11:04:29 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9wx9-0000bL-6L
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 11:01:07 +0200
+	id 1O9x0O-00027S-NG
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 11:04:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755618Ab0EFJBA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 05:01:00 -0400
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:35622 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753958Ab0EFJA7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 05:00:59 -0400
-Received: by iwn35 with SMTP id 35so7609292iwn.21
-        for <git@vger.kernel.org>; Thu, 06 May 2010 02:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ubzJ729PhZ+VFHJN7L6Zf5z7yDzSiFPWPdAr+xw3stk=;
-        b=gxhTo/AdQZcjLKGqT0ix4eBS/K1a1TfFwqQOrsRulcGjjOQB9EebPkbQegJSB4q1U4
-         neCJGoSYgJEANnnirtCCrb2dvKE+r7IMTfYs3b4gxNcWm2Me8wg2mweNVw5AMLDQX/dm
-         fxEjldempzYOu2yQZm44BTxqaDLnaC6wy09sc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=NqgNPCsm3sDVYEzPlC6prZ807rErB7AbI8U1HEs5NOYMziI5OPyanfdnUlbWX08kzA
-         DWycm5V9WdLRwEnUvVrRI5LgwgSxzFyNwOLW2wwqTRjq40CQHcGPnqs1sgdAmbTcJBUb
-         BadkixxXKcNADVcC5cxPAY+8/kjhqJbFVmkG4=
-Received: by 10.231.160.195 with SMTP id o3mr1362878ibx.32.1273136459117;
-        Thu, 06 May 2010 02:00:59 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm634558iwn.7.2010.05.06.02.00.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 06 May 2010 02:00:57 -0700 (PDT)
+	id S1755960Ab0EFJEX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 05:04:23 -0400
+Received: from peff.net ([208.65.91.99]:57666 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755250Ab0EFJEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 05:04:22 -0400
+Received: (qmail 5124 invoked by uid 107); 6 May 2010 09:04:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 06 May 2010 05:04:36 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 06 May 2010 05:04:19 -0400
 Content-Disposition: inline
 In-Reply-To: <20100506084607.GA9921@atjola.homenet>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146464>
 
-Bj=C3=B6rn Steinbrink wrote:
-> On 2010.05.06 03:31:13 -0500, Jonathan Nieder wrote:
+On Thu, May 06, 2010 at 10:46:07AM +0200, Bj=C3=B6rn Steinbrink wrote:
 
->> git show -- some-file
->
+> > git show -- some-file
+>=20
 > That's the same as "git show HEAD -- some-file" though, which shows a
-> commit with path-limited diff output.
-
-Thanks for catching the thinko.
-
-> While ":some-file" (most likely)
+> commit with path-limited diff output. While ":some-file" (most likely=
+)
 > identifies a blob, so "git show :some-file" shows the contents stored=
  in
 > that blob.
 
-I suggest reviving Dscho=E2=80=99s :./ syntax[1].
+Yep. What Eli actually wants is to allow relative path specifiers in
+tree-selectors. So you could do:
 
-Cheers,
-Jonathan
+  git show :./some-file
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/68786/focus=3D=
-68905
+or even
+
+  git show HEAD~20:./some-file
+
+and the "./" bit would magically expand into the current prefix within
+the working tree.
+
+This has come up several times on the list. It is a little bit of a
+layering violation, because "treeish:path" may or may not bear any
+resemblence to your current working tree. And the parsing of that synta=
+x
+happens in a fairly deep, library-ish place which doesn't know anything
+about the working tree. However, in practice, I think it would be
+extremely useful (because your working tree _does_ tend to be related t=
+o
+the tree-ishs that you look at, especially if that tree-ish is HEAD).
+
+I think in the past there was some vague negative sentiment around the
+issues I described above. I don't think an actual patch was ever
+produced, but I might be wrong. I suspect the only way to move the
+discussion forward would be to actually show a patch.
+
+-Peff
