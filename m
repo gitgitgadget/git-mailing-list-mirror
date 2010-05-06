@@ -1,101 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] test-lib: some shells do not let $? propagate into an
- eval
-Date: Thu, 6 May 2010 04:57:20 -0400
-Message-ID: <20100506085720.GA31873@coredump.intra.peff.net>
-References: <7vaaselxe8.fsf@alter.siamese.dyndns.org>
- <20100506055236.GA16151@coredump.intra.peff.net>
- <20100506064428.GA29360@progeny.tock>
- <20100506065419.GA21009@coredump.intra.peff.net>
- <20100506084045.GA25917@progeny.tock>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Feature request: relative paths
+Date: Thu, 6 May 2010 04:01:33 -0500
+Message-ID: <20100506090132.GA26079@progeny.tock>
+References: <19426.23330.525936.981066@winooski.ccs.neu.edu>
+ <20100506083113.GA25993@progeny.tock>
+ <20100506084607.GA9921@atjola.homenet>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 10:57:45 2010
+Cc: Eli Barzilay <eli@barzilay.org>, git <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Thu May 06 11:01:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9wtp-0007dd-CY
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 10:57:41 +0200
+	id 1O9wx9-0000bL-6L
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 11:01:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756350Ab0EFI5Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 04:57:25 -0400
-Received: from peff.net ([208.65.91.99]:57569 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756320Ab0EFI5Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 04:57:24 -0400
-Received: (qmail 5057 invoked by uid 107); 6 May 2010 08:57:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 06 May 2010 04:57:38 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 06 May 2010 04:57:20 -0400
+	id S1755618Ab0EFJBA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 05:01:00 -0400
+Received: from mail-iw0-f197.google.com ([209.85.223.197]:35622 "EHLO
+	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753958Ab0EFJA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 05:00:59 -0400
+Received: by iwn35 with SMTP id 35so7609292iwn.21
+        for <git@vger.kernel.org>; Thu, 06 May 2010 02:00:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ubzJ729PhZ+VFHJN7L6Zf5z7yDzSiFPWPdAr+xw3stk=;
+        b=gxhTo/AdQZcjLKGqT0ix4eBS/K1a1TfFwqQOrsRulcGjjOQB9EebPkbQegJSB4q1U4
+         neCJGoSYgJEANnnirtCCrb2dvKE+r7IMTfYs3b4gxNcWm2Me8wg2mweNVw5AMLDQX/dm
+         fxEjldempzYOu2yQZm44BTxqaDLnaC6wy09sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=NqgNPCsm3sDVYEzPlC6prZ807rErB7AbI8U1HEs5NOYMziI5OPyanfdnUlbWX08kzA
+         DWycm5V9WdLRwEnUvVrRI5LgwgSxzFyNwOLW2wwqTRjq40CQHcGPnqs1sgdAmbTcJBUb
+         BadkixxXKcNADVcC5cxPAY+8/kjhqJbFVmkG4=
+Received: by 10.231.160.195 with SMTP id o3mr1362878ibx.32.1273136459117;
+        Thu, 06 May 2010 02:00:59 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 21sm634558iwn.7.2010.05.06.02.00.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 May 2010 02:00:57 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100506084045.GA25917@progeny.tock>
+In-Reply-To: <20100506084607.GA9921@atjola.homenet>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146463>
 
-On Thu, May 06, 2010 at 03:41:10AM -0500, Jonathan Nieder wrote:
+Bj=C3=B6rn Steinbrink wrote:
+> On 2010.05.06 03:31:13 -0500, Jonathan Nieder wrote:
 
-> I tried the cleanup_ret idea; test_run_ ended up looking like this:
->=20
-> 	test_cleanup=3D:
-> 	eval >&3 2>&4 "$1"
-> 	eval_ret=3D$?
-> 	eval >&3 2>&4 ":; $test_cleanup"
-> 	cleanup_ret=3D?
-> 	(exit "$test_ret") && (exit "$cleanup_ret")
-> 	eval_ret=3D$?
+>> git show -- some-file
+>
+> That's the same as "git show HEAD -- some-file" though, which shows a
+> commit with path-limited diff output.
 
-Maybe it is just me, but those last two lines would be much more
-readable as:
+Thanks for catching the thinko.
 
-  if test "$eval_ret" =3D 0; then
-    eval_ret=3D$cleanup_ret
-  fi
+> While ":some-file" (most likely)
+> identifies a blob, so "git show :some-file" shows the contents stored=
+ in
+> that blob.
 
-assuming your "$test_ret" was supposed to be $eval_ret.
+I suggest reviving Dscho=E2=80=99s :./ syntax[1].
 
-> That breaks the principle of keeping the ugliness in test_when_finish=
-ed.
-> So here=E2=80=99s the minimal fix.
+Cheers,
+Jonathan
 
-I don't know that we have necessarily have that principle. The most
-important thing is that ugliness not escape to the test scripts
-themselves, where we have to write many thousands of (hopefully
-readable) lines.
-
-But...
-
-> -- 8< --
-> Subject: test-lib: some shells do not let $? propagate into an eval
-
-This fix looks fine to me, and I tested it on FreeBSD 8.0. So:
-
- Acked-by: Jeff King <peff@peff.net>
-
-> I was also surprised to see this migrate to maint so quickly, but I
-> was happy to see it broke early and loudly.
-
-I think Junio is much more carefree with changes that only touch test
-infrastructure, as they cannot possibly be breaking git itself for
-anybody.
-
-> Because there is some unhappiness with the feature[1], it might make
-
-To clarify my position, I am not that negative on the feature. I just
-think it is a bit of a fool's errand, and I don't want to personally
-spend any time on making it happen. If you think it is worth proceeding
-and you can do so without breaking anything[1], I won't object.
-
-[1] Yes, I am teasing you. But probably the complex part is now done,
-and you and others can use test_when_finished() at will now, and we can
-see if it actually makes anybody's life better.
-
--Peff
+[1] http://thread.gmane.org/gmane.comp.version-control.git/68786/focus=3D=
+68905
