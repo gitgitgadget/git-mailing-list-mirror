@@ -1,59 +1,58 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: 1.7.2 cycle will open soon
-Date: Thu, 06 May 2010 09:06:43 +0200
-Message-ID: <4BE26A83.4010708@viscovery.net>
-References: <7vaaselxe8.fsf@alter.siamese.dyndns.org> <20100506055236.GA16151@coredump.intra.peff.net> <20100506064428.GA29360@progeny.tock>
+From: Wilbert van Dolleweerd <wilbert@arentheym.com>
+Subject: Re: What should be the CRLF policy when win + Linux?
+Date: Thu, 6 May 2010 09:29:35 +0200
+Message-ID: <o2ved79be1d1005060029n67f451c6p3b48b83c51031222@mail.gmail.com>
+References: <4BE141E3.2060904@gmail.com>
+	 <x2h600158c31005051935i6f379a9j6aa36b4503776b87@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 09:06:55 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 06 09:30:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9vAY-0004En-MH
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 09:06:51 +0200
+	id 1O9vX2-0005Ly-VO
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 09:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733Ab0EFHGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 03:06:45 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:27344 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751171Ab0EFHGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 03:06:45 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1O9vAS-0002a6-6X; Thu, 06 May 2010 09:06:44 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id DE8401660F;
-	Thu,  6 May 2010 09:06:43 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <20100506064428.GA29360@progeny.tock>
-X-Spam-Score: -1.4 (-)
+	id S1755569Ab0EFH3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 03:29:37 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:58826 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755520Ab0EFH3g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 03:29:36 -0400
+Received: by bwz19 with SMTP id 19so314127bwz.21
+        for <git@vger.kernel.org>; Thu, 06 May 2010 00:29:35 -0700 (PDT)
+Received: by 10.204.7.212 with SMTP id e20mr7564521bke.117.1273130975264; Thu, 
+	06 May 2010 00:29:35 -0700 (PDT)
+Received: by 10.204.114.131 with HTTP; Thu, 6 May 2010 00:29:35 -0700 (PDT)
+X-Originating-IP: [77.61.241.211]
+In-Reply-To: <x2h600158c31005051935i6f379a9j6aa36b4503776b87@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146452>
 
-Am 5/6/2010 8:44, schrieb Jonathan Nieder:
->  test_when_finished () {
-> 	test_cleanup="$* && $test_cleanup"
->  }
+> I personally find that autocrlf causes more confusion than it solves problems.
+>
+> I've yet to see a text editor on windows that can't handle \n line
+> endings. (Notepad doesn't count)
+>
+> Just keep the project with \n line endings, disable autocrlf, and make
+> sure that people are aware of this.
 
-I'm wondering why you want this test_cleanup at all?
+Editors may handle it gracefully but older Windows programs will have problems.
 
-Is it so that subsequent tests can succeed even if an earlier test failed
-before its regular cleanup?
+For instance, Visual Studio 6 will barf on Visual Basic projectfiles
+with non-windows line-style endings. (And please don't ask why I know
+this....)
 
-I don't see what this buys you. If a test case uncovers a regression, you
-got to fix it - who cares how many later tests fail or not? Once you are
-finished with your change, all tests will pass anyway (including their
-regular cleanups).
+-- 
+Kind regards,
 
--- Hannes
+Wilbert van Dolleweerd
+Blog: http://walkingthestack.blogspot.com/
+Twitter: http://www.twitter.com/wvandolleweerd
