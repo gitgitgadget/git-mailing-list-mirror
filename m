@@ -1,84 +1,58 @@
-From: Dan Loewenherz <dloewenherz@gmail.com>
-Subject: Re: Bizarre behavior on git commit
-Date: Wed, 5 May 2010 20:32:35 -0700
-Message-ID: <n2m6f5a4e781005052032sf47733ebwf490e0369bebd03f@mail.gmail.com>
-References: <s2t6f5a4e781005042246sb9ef3d48j134b22b5b41133ed@mail.gmail.com> 
-	<20100505060110.GA21260@progeny.tock>
+From: Jason Merrill <jason@redhat.com>
+Subject: Re: How to fork on repo.or.cz?
+Date: Thu, 06 May 2010 00:38:11 -0400
+Message-ID: <4BE247B3.8060704@redhat.com>
+References: <x2r86ecb3c71004241233h97e3cf08l89aa4e6ef2fc4425@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 05:33:31 2010
+To: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
+X-From: git-owner@vger.kernel.org Thu May 06 06:38:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9rq6-0007fD-G8
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 05:33:30 +0200
+	id 1O9sqq-0007hE-To
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 06:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752324Ab0EFDdN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 May 2010 23:33:13 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40156 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751569Ab0EFDdM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 May 2010 23:33:12 -0400
-Received: by wyb35 with SMTP id 35so866036wyb.19
-        for <git@vger.kernel.org>; Wed, 05 May 2010 20:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UsulLMWBwCbW+QvNO0F1KUvMuywg733zuKU4xY+Hv/U=;
-        b=OFcY9K1GbLt4/TGq67dQ+SIgc5+am3FMPyJpxiNagd7eEpy3Mh1onj7RKdsVaiP94V
-         Tl3vhFoGK1MXlcmgujykf026NdfqZ54N2bRXzQ4ufhlfZijSf+rOzjt1kF3NBLScjA+r
-         l9hVVY+vws4ih9fZkF7dY0e+jRmrGOKzYEKhg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZyCc+7qg8cYwWh4n+WXAvYnqXIzWYj818ANsR/0/QkdCGrq9y1fAr1nngGhIEIMgwY
-         oGhAR2zX4yeeM2S9YKFWZBE1ME6mQA6JBsFE70litM37rYyXOGy7mlTQ3A3NA9QYDhRS
-         j1DWbZTGvvAcjJovBPEpEbDsyL9KYY+llJMNw=
-Received: by 10.216.166.3 with SMTP id f3mr549592wel.217.1273116775368; Wed, 
-	05 May 2010 20:32:55 -0700 (PDT)
-Received: by 10.216.52.83 with HTTP; Wed, 5 May 2010 20:32:35 -0700 (PDT)
-In-Reply-To: <20100505060110.GA21260@progeny.tock>
+	id S1751548Ab0EFEiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 00:38:15 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:51025 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750916Ab0EFEiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 00:38:14 -0400
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o464cCLa006996
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 6 May 2010 00:38:12 -0400
+Received: from [IPv6:::1] (ovpn01.gateway.prod.ext.phx2.redhat.com [10.5.9.1])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o464cB3H023355;
+	Thu, 6 May 2010 00:38:11 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100505 Lightning/1.0b1 Shredder/3.0.5pre
+In-Reply-To: <x2r86ecb3c71004241233h97e3cf08l89aa4e6ef2fc4425@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146434>
 
-On Tue, May 4, 2010 at 11:01 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Dan Loewenherz wrote:
+On 04/24/2010 03:33 PM, Dmitrijs Ledkovs wrote:
+> Looking at this output it doesn't seem like my fork
+> is reusing objects from the "fork parent" repo.
 >
->> I'm running into a weird issue in a specific repo where "git show-re=
-f"
->> usage is being displayed after invocating "git commit".
->>
->> E.g.
->> $ git commit -m "my commit message"
->> usage: git show-ref [-q|--quiet] [--verify] [--head]
-> [...]
->> =C2=A0=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0show refs from stdin that aren't in local r=
-epository
->>
->> [master 28a735f] my commit message
->> =C2=A01 files changed, 2 insertions(+), 0 deletions(-)
->> $
->
-> Strange. =C2=A0Maybe a hook script?
+> What wrong? How am I suppose to use forks on repo.or.cz such that I
+> upload just *my* commits and don't re-upload whole history again.
 
-The GIT_TRACE helped--it was a hook script. The script's been in my
-local repo for quite a while, strange that it only started having this
-behavior recently. Removed the script and all works normally.
+I have been having the same problem.  I sent mail to admin@repo.or.cz 
+about it and got this reply:
 
-Thanks for the suggestion!
+>   Thank you for the info. Unfortunately the server admin team is
+> currently severely undermanned and there is noone to fix this (anyone
+> interested in helping out would be gladly welcome), so all I could do
+> for now is to add this to our TODO list.
 
--Dan
+Jason
