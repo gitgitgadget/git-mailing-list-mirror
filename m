@@ -1,91 +1,117 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: What should be the CRLF policy when win + Linux?
-Date: Thu, 6 May 2010 12:03:44 +0200
-Message-ID: <k2x40aa078e1005060303xcd6aa177n73edc81e850d080e@mail.gmail.com>
-References: <4BE141E3.2060904@gmail.com>
-	 <t2wf3271551005050627jbe328d84q23a85a1e5dced082@mail.gmail.com>
-	 <4BE28B6C.3070302@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Problem with git merge/rebase with conflicts
+Date: Thu, 6 May 2010 06:06:04 -0400
+Message-ID: <19426.38028.501924.921359@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	hasan.aljudy@gmail.com
-To: mat <matthieu.stigler@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 12:03:56 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 06 12:06:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9xvv-0003YH-RH
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 12:03:56 +0200
+	id 1O9xyB-0004co-Hz
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 12:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756105Ab0EFKDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 06:03:48 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39325 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753646Ab0EFKDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 06:03:46 -0400
-Received: by wyb35 with SMTP id 35so1022364wyb.19
-        for <git@vger.kernel.org>; Thu, 06 May 2010 03:03:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=kSnJAjs5uw0tWPTB2UDeTx85qMBgGS8f9+vQDNqsWrE=;
-        b=e+fvCenmjMsVPTFsXs9BM69xos5o170LBeCVevODV4u9bnhXHv7iYWT9UxTpkbQAnF
-         jOIMumtcyl70Tr7u94zm3Y4WkHwfp6oqzDxVYrIyT5MiRyPysFvCDKWLTFC++NDbqK6p
-         aJU9hOYmh+//1qJUlisPP2QkwdftRavGXTu/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=bbRIEjB+lin2Rx1udS3ZsbaQ7rCjMWrQ2iXNJMItQjA53zywCpomHmCISnoFANBIJu
-         O5YQtfVlO2wuBAbawDdXeibIMBPQbrBBByld4yCW0z46uon14ZqXxim5UYs4GnvvI3Wm
-         jFzG9F8F3xi+l7wj7VfLvOt0lNDQL3WOcpXNc=
-Received: by 10.216.89.195 with SMTP id c45mr6861134wef.98.1273140224892; Thu, 
-	06 May 2010 03:03:44 -0700 (PDT)
-Received: by 10.216.51.79 with HTTP; Thu, 6 May 2010 03:03:44 -0700 (PDT)
-In-Reply-To: <4BE28B6C.3070302@gmail.com>
+	id S1757473Ab0EFKGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 06:06:08 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:37591 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753894Ab0EFKGH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 06:06:07 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1O9xy0-0005RD-Ga
+	for git@vger.kernel.org; Thu, 06 May 2010 06:06:04 -0400
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146473>
 
-On Thu, May 6, 2010 at 11:27 AM, mat <matthieu.stigler@gmail.com> wrote:
-> Thanks for your answer!!
->
-> I think what you suggest Ramkumar is indeed what I need, great! The
-> suggestion from hasan to keep with those settings was not doable as the
-> windows guy had the problem of that after even a clean cloning, git was
-> signaling changes (see: http://help.github.com/dealing-with-lineendings/)
->
+I'm writing about merging and rebasing with conflicts, and there's
+something weird with it -- after this setup:
 
-This is a symptom that someone checked in files with CRLF into the
-repo with core.autocrlf disabled, and the Windows guy having
-core.autocrlf enabled.
+  mkdir /tmp/r1; cd /tmp/r1; git init
+  echo foo > file; git add file; git commit -m first
+  cd /tmp; git clone r1 r2
+  cd /tmp/r1; echo abc > file; git commit -m abc file
+  cd /tmp/r2; echo xyz > file; git commit -m xyz file
+  git fetch
 
-I don't quite agree with Hasen about checking out LF on Windows,
-though. There's just too many tools that gets slightly confused (as
-well as some getting REALLY confused) by this in my experience. It's
-sometimes the best trade-off, but quite often not IMO.
+1. I get this:
 
-What I'd do, is to set core.autocrlf to "input" on non-Windows
-machines, and "true" on Windows-machines. This makes sure that no
-machines will check in CRLF. If there's already files checked in with
-CRLF (as seems to be the case with your repo), the Windows-people will
-be annoyed. So you'd need to make sure that the repo only contained
-CRLFs, and you have basically two options:
-1) Just call dos2unix on all files and commit the changes. This will
-still cause problems for the Windows users if they need to check out
-commits older than the dos2unix one.
-2) Use git filter-branch to rewrite the history to pretend no one ever
-made the mistake of committing CRLFs. This will make trouble for
-anyone who's working on a branch. But it's a one-time issue (unless
-someone manages to commit CRLF-files again, that is).
+     $ git merge origin
+     ...CONFLICT...
+     $ git status -s
+     UU file
+     $ echo xyz > file
+     $ git add file
+     $ git status -s
+
+   and there's nothing -- it's all clean after that `add', without
+   committing and without anything said.  If this is intentional, it
+   would be nice if there was some message from `git add'...  And it
+   would also be nice if I'd seen it mentioned anywhere, but
+   practically everything I've read said the same: `git add' and then
+   `git commit', no mention of that second step being optional.
+
+2. I have some other sample repository that exhibits the behavior with
+   the "resolution" going the other way, but here -- starting from the
+   same setup:
+
+     $ git merge origin
+     ...CONFLICT...
+     $ echo abc > file
+     $ git add file
+     $ git status -s
+     M  file
+     $ git commit
+     ...get an editor without the conflict resolution template thing...
+     $ git log --graph --all --oneline
+     * 2d3744b Huh?
+     * 98c46da xyz
+     | * 4744b19 abc
+     |/  
+     * c8915c2 first
+
+   This looks like I never did any merge.
+
+     $ git merge origin
+     Merge made by recursive.
+     $ git log --graph --all --oneline
+     *   94e69e9 Merge remote branch 'origin'
+     |\  
+     | * 4744b19 abc
+     * | 2d3744b Huh?
+     * | 98c46da xyz
+     |/  
+     * c8915c2 first
+
+   And this looks even more wrong...
+
+3. Again, starting from the same setup:
+
+     $ git rebase origin
+     ...CONFLICT...
+     $ git status -s
+     UU file
+     $ echo abc > file
+     $ git add file
+     $ git status -s
+                       <- nothing
+     $ git rebase --continue
+     Applying: xyz
+     No changes - did you forget to use 'git add'?
+
+   which is probably related to the above.  I could use --skip, but
+   now that I edited it manually I can't remember that --skip does
+   what I already did.
 
 -- 
-Erik "kusma" Faye-Lund
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
