@@ -1,67 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: how to squash a few commits in the past
-Date: Thu, 06 May 2010 08:45:49 +0200
-Message-ID: <4BE2659D.2070208@viscovery.net>
-References: <loom.20100503T112508-677@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: 1.7.2 cycle will open soon
+Date: Thu, 6 May 2010 02:54:19 -0400
+Message-ID: <20100506065419.GA21009@coredump.intra.peff.net>
+References: <7vaaselxe8.fsf@alter.siamese.dyndns.org>
+ <20100506055236.GA16151@coredump.intra.peff.net>
+ <20100506064428.GA29360@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Gelonida <gelonida@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 08:46:00 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 06 08:54:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9uqO-0004Nx-HV
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 08:46:00 +0200
+	id 1O9uyo-0007eC-72
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 08:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753420Ab0EFGpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 02:45:52 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:7563 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752852Ab0EFGpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 02:45:52 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1O9uqE-0001rF-ES; Thu, 06 May 2010 08:45:50 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 260101660F;
-	Thu,  6 May 2010 08:45:50 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <loom.20100503T112508-677@post.gmane.org>
-X-Spam-Score: -1.4 (-)
+	id S1753936Ab0EFGya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 02:54:30 -0400
+Received: from peff.net ([208.65.91.99]:60120 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751059Ab0EFGy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 02:54:29 -0400
+Received: (qmail 3144 invoked by uid 107); 6 May 2010 06:54:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 06 May 2010 02:54:36 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 06 May 2010 02:54:19 -0400
+Content-Disposition: inline
+In-Reply-To: <20100506064428.GA29360@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146448>
 
-Am 5/3/2010 11:33, schrieb Gelonida:
-> One of the team members accidentally commited a very huge file together with
-> some useful sources.
-> a few commits later he noticed his error and removed the huge file.
+On Thu, May 06, 2010 at 01:44:28AM -0500, Jonathan Nieder wrote:
+
+> > Am I missing something?
 > 
-> The plan would be:
-> - create a new git repository without the huge file
-> - let everybody clone the new repository and continue working.
+> If cleanup fails, I want to catch it.  Would something like this do?
 
-Use 'git filter-branch':
+Ah, I see.
 
-  git filter-branch \
-    --index-filter 'git rm --ignore-unmatch --cached the/huge/file' \
-    --prune-empty \
-    -- --all
+>  test_run_ () {
+> 	test_cleanup=:
+> 	eval >&3 2>&4 "$1"
+> 	eval_ret=$?
+> 	eval >&3 2>&4 "$test_cleanup" && (exit "$eval_ret")
+> 	eval_ret=$?
+> 	return 0
+>  }
+> 
+>  test_when_finished () {
+> 	test_cleanup="$* && $test_cleanup"
+>  }
 
-The --prune-empty removes the commit that removed the file from the
-history if the removal of the/huge/file was the only thing it did.
+Doesn't that violate your rule that the cleanup will _always_ be run?
+Here, if the first cleanup fails, we don't run subsequent ones.
 
-If you have tags that must be rewritten, add "--tag-name-filter cat" to
-the command before "--".
+Perhaps the simplest would be to just keep a cleanup_ret in the second
+eval (where you have eval_ret in the original patch), and then act
+appropriately after the eval finishes. That would be easier on the eyes,
+too, I think.
 
-Try this in a backup copy or clone first!
+> To permit a line break at the end of a cleanup command, one can do
+> 
+>  test_when_finished () {
+> 	test_cleanup="{ $*
+> 		} && $test_cleanup"
+>  }
+> 
+> but that might not be worth the ugliness.
 
--- Hannes
+I doubt anyone will put a linebreak in, but it is probably better to be
+defensive, and the ugliness is at least contained only in that function.
+
+-Peff
