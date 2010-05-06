@@ -1,75 +1,86 @@
-From: Knittl <knittl89@googlemail.com>
-Subject: Re: Any way to get complete diff up to a tag?
-Date: Thu, 6 May 2010 17:43:53 +0200
-Message-ID: <AANLkTilOOYlrQ5hfgxFnCIG4Qp5RE_EbfzP6vkfqBAJM@mail.gmail.com>
-References: <A612847CFE53224C91B23E3A5B48BAC74482E50D9F@xmail3.se.axis.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: RE: Any way to get complete diff up to a tag?
+Date: Thu, 6 May 2010 10:08:39 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1005060955000.901@i5.linux-foundation.org>
+References: <A612847CFE53224C91B23E3A5B48BAC74482E50D9F@xmail3.se.axis.com> <20100506094212.GB9921@atjola.homenet> <A612847CFE53224C91B23E3A5B48BAC74482E50DE7@xmail3.se.axis.com> <4BE2BE2C.8050403@viscovery.net>
+ <A612847CFE53224C91B23E3A5B48BAC74482E50F03@xmail3.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	=?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
 To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Thu May 06 17:44:27 2010
+X-From: git-owner@vger.kernel.org Thu May 06 19:10:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OA3FS-0001VK-M5
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 17:44:27 +0200
+	id 1OA4ay-0006fK-VQ
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 19:10:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932248Ab0EFPoQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 11:44:16 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:37900 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932192Ab0EFPoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 11:44:14 -0400
-Received: by ewy20 with SMTP id 20so30665ewy.1
-        for <git@vger.kernel.org>; Thu, 06 May 2010 08:44:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=Bsq58V1u7k9WCxygDXSydqsWH3ffKIwVyjJ3CozMsIs=;
-        b=dPUF/+JRMWEvHo5HzWwcAeQJwoEFXuT5257Dv2kVX1UhhkgIuYYTGiF4o4Qjomti2i
-         uI+UI5vmfH+SA6HrTqbwXbt8ZySOR2L9m32EaYnRcRCLW1z4ER6XJf0tdNfyVjiAvrFM
-         DOE6YU3m3zNraDDlejv2l035g71vfLiVv6Tzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=kg4aNngPur1vPW9aJzxOYKVVrq4VbD5H3mbSQjGQtR+OsCKtUQNv6LQ0FmTRHOSlJt
-         0GPhNvM0N1uOnxU9ofx/FX/6LBTD1mv08XGCLhA1oZYkSWb1jaqIVi23k3c/Ef3HZGRX
-         NnZg+wMCGyBVgm95EYSQ9hAJWdAhRA3HU07OY=
-Received: by 10.213.52.139 with SMTP id i11mr3514184ebg.26.1273160653117; Thu, 
-	06 May 2010 08:44:13 -0700 (PDT)
-Received: by 10.213.3.5 with HTTP; Thu, 6 May 2010 08:43:53 -0700 (PDT)
-In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74482E50D9F@xmail3.se.axis.com>
+	id S1757613Ab0EFRKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 13:10:40 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:44521 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756138Ab0EFRKj (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 May 2010 13:10:39 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o46HAQ0Y022122
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 6 May 2010 10:10:27 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o46HAPwZ002981;
+	Thu, 6 May 2010 10:10:25 -0700
+In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74482E50F03@xmail3.se.axis.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.446 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146483>
-
-On Thu, May 6, 2010 at 11:27 AM, Peter Kjellerstedt
-<peter.kjellerstedt@axis.com> wrote:
-> Basically, what I think I am asking for is a way to specify the
-> empty parent of the initial commit, i.e., where v1.7.1~1000000 would
-> end up. I can see this being useful in at least one other case as
-> well, namely when doing an interactive rebase to allow the initial
-> commit to be rebased (something I have wanted to do a couple of
-> times...)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146484>
 
 
-wait, let me get this straight. you want to diff some tag against the
-empty parent of the root commit (empty tree)?
 
-which in turn means you will get a diff, where all lines in all files
-existing in the tree that tag references are added. all files get
-basically prefixed with + and have header information (filename). what
-purpose has such a diff?
+On Thu, 6 May 2010, Peter Kjellerstedt wrote:
+> 
+> Since the 4b825dc642cb6eb9a060e54bf8d69288fbee4904 SHA1 is somewhat
+> cumbersome to remember, wouldn't it be an idea to give it some kind 
+> of alias or mnemonic? E.g., something like @~ (or some other mix of 
+> odd characters which do not clash with all the other similar 
+> constructs already used for references).
 
-regards, daniel
+Well, you don't strictly speaking have to "remember" it, you can always 
+just re-generate it. The most straightforward way to do that is probably
 
--- 
-typed with http://neo-layout.org
-myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
+	git hash-object -t tree --stdin < /dev/null
+
+although I admit that maybe we could have some syntax for "git diff" that 
+would do the "diff against empty tree" automatically. It does seem to be 
+conceptually a reasonable thing to do.
+
+For example, right now if you give "git diff" a single SHA1, it will work 
+against the working tree. Except if you add "--cached", to say that you 
+want the diff against the index. I don't think it would be in any way 
+_wrong_ to make "--root" mean that you want it against an empty tree.
+
+[ We already accept "--root", but it has no meaning for "git diff" with a 
+  single SHA1. It matters for showing the root commit for 'git-diff-tree'.
+
+  And means something totally different for git-format-patch ]
+
+So we certainly _could_ do something like
+
+	git diff --root <treeish>
+
+and make it do what you want. That said, the "empty tree" thing works for 
+all versions of git (well, some older versions of git need the actual 
+object, but you could always use "-w" on that git-hash-object command 
+line, and then it really should work for every git version).
+
+			Linus
