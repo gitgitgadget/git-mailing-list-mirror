@@ -1,139 +1,116 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: Problem with git merge/rebase with conflicts
-Date: Thu, 6 May 2010 16:45:44 -0400
-Message-ID: <19427.10872.708654.433450@winooski.ccs.neu.edu>
-References: <19426.38028.501924.921359@winooski.ccs.neu.edu>
-	<7v8w7wj134.fsf@alter.siamese.dyndns.org>
+From: Torsten Schmutzler <git-ts@theblacksun.eu>
+Subject: [PATCH] git-svn: mangle refnames forbidden in git
+Date: Thu, 06 May 2010 22:20:43 +0200
+Message-ID: <4BE3249B.7050100@theblacksun.eu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 06 22:45:53 2010
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 06 22:50:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OA7xA-0003GA-Jj
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 22:45:52 +0200
+	id 1OA81g-0005PQ-Om
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 22:50:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932571Ab0EFUpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 16:45:47 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:59906 "EHLO barzilay.org"
+	id S932649Ab0EFUu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 16:50:26 -0400
+Received: from theblacksun.eu ([85.214.73.53]:39243 "EHLO theblacksun.eu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932522Ab0EFUpq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 16:45:46 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1OA7x2-0004fI-NF; Thu, 06 May 2010 16:45:44 -0400
-In-Reply-To: <7v8w7wj134.fsf@alter.siamese.dyndns.org>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S932611Ab0EFUuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 16:50:16 -0400
+X-Greylist: delayed 1769 seconds by postgrey-1.27 at vger.kernel.org; Thu, 06 May 2010 16:50:16 EDT
+Received: from 77-64-180-33.dynamic.primacom.net ([77.64.180.33])
+	by theblacksun.eu with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <git-ts@theblacksun.eu>)
+	id 1OA7Yr-0001uH-Ox; Thu, 06 May 2010 22:20:46 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146498>
 
-On May  6, Junio C Hamano wrote:
-> Eli Barzilay <eli@barzilay.org> writes:
-> 
-> > 1. I get this:
-> > 3. Again, starting from the same setup:
-> 
-> I don't have time to look at the second one,
+git-check-ref-format(1) describes names which
+cannot be used as refnames for git.  Some are
+legal branchnames in subversion however.
+Mangle the not yet handled cases.
 
-(FWIW, I can't recreate it now -- very weird since when I sent that
-message it was definitely repeatable.)
+Signed-off-by: Torsten Schmutzler <git-ts@theblacksun.eu>
+---
+ git-svn.perl                          |    8 ++++++++
+ t/t9118-git-svn-funky-branch-names.sh |   21 +++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
 
-
-> but these are quite obvious and natural.  "status" in these cases
-> notices that you haven't made any change relative to HEAD (in either
-> the index nor in the working tree) after all, and that is what is
-> being reported.
-
-Yes, I agree that they're doing "obviously" doing the right thing, but
-I don't think that they're natural enough...  I'm not saying that it's
-doing something broken, just that some of the interface (=> printouts)
-could eliminate surprises.  Here are some problems that I've seen,
-IMO, some of them are indications that this is not natural.  I'll
-prefix each one with the false belief that I had (and that I didn't
-see any text that would correct it...).
-
-1. False belief: After you edit and `git add' a file, you will need to
-   commit it to make the change part of your history.
-
-   Obvious counter example: edit a file and `git add' it; undo the
-   edit in the file and `git add' again -- you now have nothing to
-   commit.
-
-   A way that I think will solve this: make `git add' notify you that
-   the changes that you just added canceled earlier changes and you're
-   back to a clean state.
-
-2. False belief: If you have a completely clear working directory and
-   index, then there's nothing for you to commit.  (At least without
-   forcing an empty commit.)
-
-   Counter example: run this (simplified example)
-
-     rm -rf /tmp/test; mkdir /tmp/test; cd /tmp/test; git init
-     echo foo > file; git add file; git commit -m first
-     git branch a-branch;   echo abc > file; git commit -m abc file
-     git checkout a-branch; echo xyz > file; git commit -m xyz file
-     git merge master; echo xyz > file; git add file
-     git status
-
-   That last `status' will happily tell you that "nothing to commit
-   (working directory clean)" -- but `git commit' *will* commit the
-   merge.
-
-   A way that I think will solve this: clearly there is somewhere
-   something that makes the commit possible (probably .git/MERGE*
-   files) -- so make `git status' inspect these and say something
-   about it instead of saying that there's nothing to commit.  (The
-   other option would be to make `git add' clear out the merge state
-   too, but this is probably very broken.)
-
-2a. A related problem: usually when I try to checkout a different
-   branch when I have changes, git barfs at me.  But after that script
-   is run, I can `git checkout master' with no errors or warnings, and
-   the merge commit is gone.  It looks like checkout is even careful
-   enough to remove the .git/MERGE* files, so making it barf (or at
-   least spit out some warning) is probably easy...
-
-3. False belief: if your working directory and your index are dirty,
-   then there *is* something for you to commit.
-
-   Obvious counter example: edit a file and `git add' it; undo the
-   edit in the file but *don't* `git add' again -- `git status -s'
-   will now say:
-
-     MM file
-
-   And now:
-
-     $ git commit .
-     # On branch master
-     nothing to commit (working directory clean)
-
-   but the status is still not cleared.  Trying to checkout a
-   different branch gives me the barf.
-
-   A way that I think will solve this: make `git commit <path>' add
-   the paths before committing -- and if `add' says something, it will
-   say that here and clarify what happened.  But this is probably too
-   much of a change, so alternatively `git commit' would notice that
-   there was nothing to commit because of this state, and `add' the
-   right files to clear out the status (after saying something about
-   it).
-
-4. `git rebase' issues -- I've sent a separate message about that, and
-   IMO adding those notes to what rebase says would clear up most of
-   the confusion, and probably if the above are done then it will also
-   help rebase to be more robust.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 2c86ea2..57df509 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2086,6 +2086,14 @@ sub refname {
+ 	# .. becomes %2E%2E
+ 	$refname =~ s{\.\.}{%2E%2E}g;
+ 
++	# trailing dots and .lock are not allowed
++	# .$ becomes %2E and .lock becomes %2Elock
++	$refname =~ s{\.(?=$|lock$)}{%2E};
++
++	# the sequence @{ is used to access the reflog
++	# @{ becomes %40{
++	$refname =~ s{\@\{}{%40\{}g;
++
+ 	return $refname;
+ }
+ 
+diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
+index ac52bff..7d7acc3 100755
+--- a/t/t9118-git-svn-funky-branch-names.sh
++++ b/t/t9118-git-svn-funky-branch-names.sh
+@@ -21,6 +21,14 @@ test_expect_success 'setup svnrepo' '
+ 	                      "$svnrepo/pr ject/branches/more fun plugin!" &&
+ 	svn_cmd cp -m "scary" "$svnrepo/pr ject/branches/fun plugin" \
+ 	              "$svnrepo/pr ject/branches/$scary_uri" &&
++	svn_cmd cp -m "leading dot" "$svnrepo/pr ject/trunk" \
++			"$svnrepo/pr ject/branches/.leading_dot" &&
++	svn_cmd cp -m "trailing dot" "$svnrepo/pr ject/trunk" \
++			"$svnrepo/pr ject/branches/trailing_dot." &&
++	svn_cmd cp -m "trailing .lock" "$svnrepo/pr ject/trunk" \
++			"$svnrepo/pr ject/branches/trailing_dotlock.lock" &&
++	svn_cmd cp -m "reflog" "$svnrepo/pr ject/trunk" \
++			"$svnrepo/pr ject/branches/not-a@{0}reflog" &&
+ 	start_httpd
+ 	'
+ 
+@@ -30,6 +38,10 @@ test_expect_success 'test clone with funky branch names' '
+ 		git rev-parse "refs/remotes/fun%20plugin" &&
+ 		git rev-parse "refs/remotes/more%20fun%20plugin!" &&
+ 		git rev-parse "refs/remotes/$scary_ref" &&
++		git rev-parse "refs/remotes/%2Eleading_dot" &&
++		git rev-parse "refs/remotes/trailing_dot%2E" &&
++		git rev-parse "refs/remotes/trailing_dotlock%2Elock" &&
++		git rev-parse "refs/remotes/not-a%40{0}reflog" &&
+ 	cd ..
+ 	'
+ 
+@@ -51,6 +63,15 @@ test_expect_success 'test dcommit to scary branch' '
+ 	cd ..
+ 	'
+ 
++test_expect_success 'test dcommit to trailing_dotlock branch' '
++	cd project &&
++	git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
++	echo who names branches like this anyway? >> foo &&
++	git commit -m "bar" -- foo &&
++	git svn dcommit &&
++	cd ..
++	'
++
+ stop_httpd
+ 
+ test_done
 -- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+1.7.1.12.ge45de
