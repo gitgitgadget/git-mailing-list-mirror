@@ -1,64 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: What should be the CRLF policy when win + Linux?
-Date: Thu, 6 May 2010 13:23:56 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005061317250.901@i5.linux-foundation.org>
-References: <4BE141E3.2060904@gmail.com> <x2h600158c31005051935i6f379a9j6aa36b4503776b87@mail.gmail.com>  <o2ved79be1d1005060029n67f451c6p3b48b83c51031222@mail.gmail.com>  <i2i600158c31005060834s72e10fb7te19048e3b174d29b@mail.gmail.com> 
- <alpine.LFD.2.00.1005061009020.901@i5.linux-foundation.org> <h2x600158c31005061300tfe485e01x251ae20b22ef5b27@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@googlemail.com>
-To: hasen j <hasan.aljudy@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 22:26:15 2010
+From: "Chris.Cheney" <chris.cheney.nospam@tesco.net>
+Subject: Re: git checkout branch puzzle
+Date: Thu, 6 May 2010 20:30:11 +0000 (UTC)
+Message-ID: <Xns9D70DAFB1423DChrisCheneytesconet@80.91.229.10>
+References: <Xns9D6BC0C4C8784ChrisCheneytesconet@80.91.229.10> <20100502045901.GD14776@coredump.intra.peff.net> <Xns9D6C65C2DB06EChrisCheneytesconet@80.91.229.10> <Xns9D6CD773D97E5ChrisCheneytesconet@80.91.229.10> <20100503064053.GA20002@coredump.intra.peff.net> <Xns9D6D5CD466CE2ChrisCheneytesconet@80.91.229.10>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 06 22:31:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OA7eA-0002Sd-Nx
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 22:26:15 +0200
+	id 1OA7iq-0004gM-0y
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 22:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758630Ab0EFU0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 16:26:08 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:37354 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757699Ab0EFU0F (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 May 2010 16:26:05 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o46KPhLm010667
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 6 May 2010 13:25:44 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o46KPh0F011740;
-	Thu, 6 May 2010 13:25:43 -0700
-In-Reply-To: <h2x600158c31005061300tfe485e01x251ae20b22ef5b27@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.446 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S932075Ab0EFUaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 16:30:24 -0400
+Received: from lo.gmane.org ([80.91.229.12]:43909 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759019Ab0EFUaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 16:30:22 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OA7i8-0004Ir-OR
+	for git@vger.kernel.org; Thu, 06 May 2010 22:30:20 +0200
+Received: from 213.81.122.167 ([213.81.122.167])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 May 2010 22:30:20 +0200
+Received: from chris.cheney.nospam by 213.81.122.167 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 May 2010 22:30:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 213.81.122.167
+User-Agent: Xnews/5.04.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146494>
 
+"Chris.Cheney" <chris.cheney.nospam@tesco.net> wrote in
+news:Xns9D6D5CD466CE2ChrisCheneytesconet@80.91.229.10: 
 
-
-On Thu, 6 May 2010, hasen j wrote:
+> Jeff King <peff@peff.net> wrote in
+> news:20100503064053.GA20002@coredump.intra.peff.net: 
 > 
-> My problem with autocrlf is that, well, it converts line endings in
-> the working directory to CRLF, even though I don't always want it to.
-> (most of the time, I don't).
+>> On Sun, May 02, 2010 at 08:09:32PM +0000, Chris.Cheney wrote:
+>> 
+>>> Neither of our config files contain autocrlf settings, but it's
+>>> something that I'll look further into. Neither of us had made recent
+>>> config changes. 
+>> 
+>> I believe autocrlf is on by default for msysgit. But if there is
+>> nothing in your config, then probably nothing changed. If you can
+>> reproduce the situation, it might be worth narrowing down a simple
+>> test case and posting the exact commands and output.
+> 
+> Thanks. Indeed, after asking here, that was to be my next step - I
+> need to restock up on round tuits :-)
+> 
+> FWIW My money is on a rm/git-rm or a mv/git-mv "user" error.
 
-You can just set it to 'input' if you want to. It's not just on/off, you 
-can also say "I want to check out with no conversion (ie "just LF"), but 
-convert CRLF to LF on input".
+I would have lost my money.
 
-Btw, one thing to keep in mind with autocrlf is the "auto" part: it tries 
-to do a good job noticing when something is text vs binary, but it _is_ a 
-heuristic. I think it's a pretty good one, but if you do set autocrlf 
-(whether to "true" or to "input"), at least think about attributes ("man 
-gitattributes")
+You were almost spot-on. It turned out that my remote collaborator was 
+using a version of msysgit prior to the default of autocrlf being true.
 
-		Linus
+We'll be recloning from a freshly built repository r.s.n.
+
+Thanks for your help
+
+Chris
