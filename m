@@ -1,67 +1,76 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Any way to get complete diff up to a tag?
-Date: Thu, 6 May 2010 17:27:17 +0200
-Message-ID: <20100506152717.GA12230@atjola.homenet>
-References: <A612847CFE53224C91B23E3A5B48BAC74482E50D9F@xmail3.se.axis.com>
- <20100506094212.GB9921@atjola.homenet>
- <A612847CFE53224C91B23E3A5B48BAC74482E50DE7@xmail3.se.axis.com>
- <4BE2BE2C.8050403@viscovery.net>
- <A612847CFE53224C91B23E3A5B48BAC74482E50F03@xmail3.se.axis.com>
+From: hasen j <hasan.aljudy@gmail.com>
+Subject: Re: What should be the CRLF policy when win + Linux?
+Date: Thu, 6 May 2010 09:34:43 -0600
+Message-ID: <i2i600158c31005060834s72e10fb7te19048e3b174d29b@mail.gmail.com>
+References: <4BE141E3.2060904@gmail.com> <x2h600158c31005051935i6f379a9j6aa36b4503776b87@mail.gmail.com> 
+	<o2ved79be1d1005060029n67f451c6p3b48b83c51031222@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Thu May 06 17:27:32 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Wilbert van Dolleweerd <wilbert@arentheym.com>
+X-From: git-owner@vger.kernel.org Thu May 06 17:35:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OA2z4-0007ys-BO
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 17:27:30 +0200
+	id 1OA36d-0004iF-QM
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 17:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758814Ab0EFP1Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 11:27:24 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34285 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754449Ab0EFP1X (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 11:27:23 -0400
-Received: (qmail invoked by alias); 06 May 2010 15:27:20 -0000
-Received: from i59F54DBC.versanet.de (EHLO atjola.homenet) [89.245.77.188]
-  by mail.gmx.net (mp063) with SMTP; 06 May 2010 17:27:20 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19HB9UNlwtHNzvDfMHERMt7huS2dfmpB5PPTJYiYz
-	7pmwVtwy7eerrQ
-Content-Disposition: inline
-In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74482E50F03@xmail3.se.axis.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1758894Ab0EFPfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 11:35:12 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59988 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755566Ab0EFPfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 11:35:06 -0400
+Received: by gyg13 with SMTP id 13so58839gyg.19
+        for <git@vger.kernel.org>; Thu, 06 May 2010 08:35:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=ILksvMaJbOYbajZFxfAflycpY61TJ28WiFmKIqeqY54=;
+        b=JvKaI4GYew6XiH6tEHd937bm1thabvqchp157fNuE3bMGbbQLx3dSbdEagUpQBrvYj
+         rzu8S6QLa8p/FVOZ7td2Debzdb5SRfwcE8uVAUa59cEw2sAp0QxvI/+SdVsGu66nlAaH
+         OBouF00cP0UL+GUEBd9W6k7LGKWKWQpjmGRS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=QfjKZggsyB6xntOb86OIcc6Z/LaZeiVMoM50lvvwSKz1Y98tFBx+qG5D1fwQfGshq0
+         N9Ib/u0zSYrD/p+QOE9D2FQhzMyx09YQ5jkV4pUqIRshMhZj8LxUHqVCqm4A6arjrxv2
+         SVzwWVm6PAgCr3wmdPKE3q0zHl1a9oeHskGx4=
+Received: by 10.90.77.17 with SMTP id z17mr84127aga.7.1273160103257; Thu, 06 
+	May 2010 08:35:03 -0700 (PDT)
+Received: by 10.90.79.17 with HTTP; Thu, 6 May 2010 08:34:43 -0700 (PDT)
+In-Reply-To: <o2ved79be1d1005060029n67f451c6p3b48b83c51031222@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146482>
 
-On 2010.05.06 17:09:57 +0200, Peter Kjellerstedt wrote:
->=20
-> Well, I figured out my mistake. I had abbreviated the SHA1 since I
-> typed it in manually, and it worked fine in git's own repository,=20
-> but not in another repository. But when I used the full SHA1 it=20
-> worked in both. So I guess the empty dir SHA1 hardcoded in git just=20
-> happened to be the SHA1 for the empty dir in git's own repository...
+On 6 May 2010 01:29, Wilbert van Dolleweerd <wilbert@arentheym.com> wrote:
+>> I personally find that autocrlf causes more confusion than it solves problems.
+>>
+>> I've yet to see a text editor on windows that can't handle \n line
+>> endings. (Notepad doesn't count)
+>>
+>> Just keep the project with \n line endings, disable autocrlf, and make
+>> sure that people are aware of this.
+>
+> Editors may handle it gracefully but older Windows programs will have problems.
+>
+> For instance, Visual Studio 6 will barf on Visual Basic projectfiles
+> with non-windows line-style endings. (And please don't ask why I know
+> this....)
+>
 
-No, there can be only one SHA1 for the empty tree. It's the SHA1 hash o=
-f
-the object, and the empty tree is the empty tree, always.
+Well, this is the exception that proves the rule then :)
 
-git.git just happens to actually contain that object, so the abbreviate=
-d
-hash works, because git can find the object and doesn't actually need
-the hardcoded built-in empty tree (which is only used when the full has=
-h
-is given).
+Anyway, If it's a VB project, might as well just keep the files with
+CRLF endings then.
 
-Bj=F6rn
+I don't know all linux editors, but I've yet to see one that can't
+handle CRLF endings.
