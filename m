@@ -1,51 +1,67 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: Re: [PATCH 3/3] Teach Girocco to mirror http:// style SVN repos
-Date: Thu, 6 May 2010 12:32:04 +0400
-Organization: Marine Bridge & Navigation Systems
-Message-ID: <20100506083204.GA5247@tugrik.mns.mnsspb.ru>
-References: <cover.1269255835.git.kirr@mns.spb.ru> <b7d25a4325c26bed2351257521878109b71ad771.1269255835.git.kirr@mns.spb.ru> <20100505185409.GV11185@machine.or.cz> <20100506071842.GA3436@tugrik.mns.mnsspb.ru> <20100506073647.GS11185@machine.or.cz>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Feature request: relative paths
+Date: Thu, 6 May 2010 03:31:13 -0500
+Message-ID: <20100506083113.GA25993@progeny.tock>
+References: <19426.23330.525936.981066@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: admin@repo.or.cz, Miklos Vajna <vmiklos@frugalware.org>,
-	git@vger.kernel.org, Kirill Smelkov <kirr@landau.phys.spbu.ru>
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Thu May 06 10:30:58 2010
+Cc: git <git@vger.kernel.org>
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Thu May 06 10:31:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9wTw-0005XT-4L
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 10:30:56 +0200
+	id 1O9wTw-0005XT-Kr
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 10:30:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755641Ab0EFIao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 04:30:44 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:36561 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755448Ab0EFIam (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755683Ab0EFIap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 04:30:45 -0400
+Received: from mail-iw0-f197.google.com ([209.85.223.197]:37973 "EHLO
+	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755371Ab0EFIam (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 6 May 2010 04:30:42 -0400
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1O9wTR-0008ET-Bk; Thu, 06 May 2010 12:30:25 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1O9wV2-0001Ra-OE; Thu, 06 May 2010 12:32:04 +0400
+Received: by iwn35 with SMTP id 35so7586288iwn.21
+        for <git@vger.kernel.org>; Thu, 06 May 2010 01:30:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=LU0I8z7M2k7CzXalo+tdANGm7+RU/u7BKqANPaOOtlw=;
+        b=o2HbJcPIq+3OBrBuo0M8QI/kvQ+7d0m5GRhY7APVEUq8Qe9KLMTQXAI6UdObiWmTB3
+         Ua/sSdiLDz0NEKgTgWzGgRmMt+LJ4J74ofZ4FZg94I1M9dJMXbS38rMUuA6lr41E8Sra
+         86xfnEoMGiJTTYPnUE7UEp+hs09h1M+BFhEEU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=RTfMov9ODcg8cx3bYqVv7wI0uvBX8b+85k6HuNR+KJJbDigKzlqkzPycwRNkcyQtCc
+         VmdP9Jvkn6EGGhBsLVEIWvb0eaJEdpWOFALTr3xRHs4rniSQtfJKiobczJ7EPYjxr5yM
+         Gqds5hKkCTN46wxe6YoQ0xSr1Qm981xPBIacc=
+Received: by 10.231.60.17 with SMTP id n17mr191027ibh.24.1273134640844;
+        Thu, 06 May 2010 01:30:40 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 22sm614885iwn.8.2010.05.06.01.30.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 May 2010 01:30:40 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100506073647.GS11185@machine.or.cz>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <19426.23330.525936.981066@winooski.ccs.neu.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146458>
 
-On Thu, May 06, 2010 at 09:36:47AM +0200, Petr Baudis wrote:
-> On Thu, May 06, 2010 at 11:18:42AM +0400, Kirill Smelkov wrote:
-> > Btw, would you please also apply those two important (one of them) fixes
-> > to svn mirroring setup?
-> > 
-> > *Please*
-> 
-> Applied, thanks.
+Eli Barzilay wrote:
 
-Thanks!
+> An svn feature that I used a lot is `svn cat some-file' -- and with
+> git I can get close to that with `git show :some-file'
+
+git show -- some-file
+
+Hope that helps,
+Jonathan
