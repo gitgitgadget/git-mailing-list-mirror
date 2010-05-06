@@ -1,73 +1,73 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: Any way to get complete diff up to a tag?
-Date: Thu, 6 May 2010 13:20:18 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC74482E50DE7@xmail3.se.axis.com>
-References: <A612847CFE53224C91B23E3A5B48BAC74482E50D9F@xmail3.se.axis.com>
- <20100506094212.GB9921@atjola.homenet>
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Preventing rebase confusion
+Date: Thu, 6 May 2010 07:27:08 -0400
+Message-ID: <19426.42892.542935.899298@winooski.ccs.neu.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?iso-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 06 13:20:29 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 06 13:27:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9z80-0007Wj-Sw
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 13:20:29 +0200
+	id 1O9zEa-0002ZV-EM
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 13:27:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753055Ab0EFLUX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 07:20:23 -0400
-Received: from krynn.se.axis.com ([193.13.178.10]:42114 "EHLO
-	krynn.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165Ab0EFLUW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 May 2010 07:20:22 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by krynn.se.axis.com (8.14.3/8.14.3/Debian-5) with ESMTP id o46BKJm9005997;
-	Thu, 6 May 2010 13:20:19 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Thu, 6 May 2010 13:20:19 +0200
-Thread-Topic: Any way to get complete diff up to a tag?
-Thread-Index: AcrtAJB2Yj27ehQiTwWwGMqsTT6W5QADQ7sw
-In-Reply-To: <20100506094212.GB9921@atjola.homenet>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1757531Ab0EFL1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 07:27:10 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:37480 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757477Ab0EFL1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 May 2010 07:27:09 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1O9zES-0007Kl-Io
+	for git@vger.kernel.org; Thu, 06 May 2010 07:27:08 -0400
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146475>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Bj=F6rn Steinbrink
-> Sent: den 6 maj 2010 11:42
-> To: Peter Kjellerstedt
-> Cc: git@vger.kernel.org
-> Subject: Re: Any way to get complete diff up to a tag?
->=20
-> On 2010.05.06 11:27:40 +0200, Peter Kjellerstedt wrote:
-> > If I use
-> >
-> > $ git diff $(git rev-list --reverse v1.7.1 |head -1)..v1.7.1
-> >
-> > I almost get what I want, but the initial commit is still missing.
-> > Is there any way to get that initial commit included in the diff?
->=20
-> git internally knows about the empty tree, so you can use:
-> git diff 4b825dc642cb6eb9a060e54bf8d69288fbee4904 v1.7.1
->=20
-> Bj=F6rn
 
-Thank you, that was useful. However, I need to be able to do this
-for an arbitrary repository, and that SHA seems to be specific for=20
-the git repository. How do I get the SHA for the empty tree in an=20
-arbitrary repository?
+Two suggestions (provided that I have the details right):
 
-//Peter
+1. When I run `git rebase origin' I get helpful instructions when a
+   conflict happens:
+
+     When you have resolved this problem run "git rebase --continue".
+     If you would prefer to skip this patch, instead run "git rebase --skip".
+     To restore the original branch and stop rebasing run "git rebase --abort".
+
+   It would be nice if the first line said something like
+
+     When you have resolved this problem run "git add <file>" and then
+     "git rebase --continue" (no need to commit).
+
+   My guess is that this is something that confuses many people since
+   everywhere conflicts are mentioned the instructions are to `add'
+   and then to `commit'.
+
+2. If I did get confused (which can still happen if I don't read the
+   above addition) and commit the resolved files, I get this when I
+   try `git rebase --continue':
+
+     Applying: document the type of foo
+     No changes - did you forget to use 'git add'?
+
+   But of course there are no changes now...  So it would be nice if
+   the text also said:
+
+     If you've already committed then you can run "git rebase --skip"
+     but your commit will then replace the original "...subject..."
+
+   And/or maybe instructions for using reset to undo the commit and
+   let rebase --continue do it.
+
+-- 
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
