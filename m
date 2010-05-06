@@ -1,185 +1,249 @@
 From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: [PATCH/RFC 1/3] Add "auto-eol" attribute and "core.eolStyle" config variable
-Date: Fri,  7 May 2010 00:27:33 +0200
-Message-ID: <a8bc571bb092967a1e481f74f3e97ced5135ff34.1273183206.git.eyvind.bernhardsen@gmail.com>
+Subject: [PATCH/RFC 2/3] Add tests for per-repository eol normalization
+Date: Fri,  7 May 2010 00:27:34 +0200
+Message-ID: <38d9735b135503ca444e82d3aaa9107ea18439e6.1273183206.git.eyvind.bernhardsen@gmail.com>
 References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com> <cover.1273183206.git.eyvind.bernhardsen@gmail.com>
 Cc: hasan.aljudy@gmail.com, kusmabite@googlemail.com,
 	torvalds@linux-foundation.org, prohaska@zib.de, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 07 00:27:55 2010
+X-From: git-owner@vger.kernel.org Fri May 07 00:27:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OA9Xv-0003zw-C7
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 00:27:55 +0200
+	id 1OA9Xv-0003zw-SW
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 00:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753587Ab0EFW1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 May 2010 18:27:47 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:37527 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753479Ab0EFW1p (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753637Ab0EFW1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 18:27:50 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:44803 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753492Ab0EFW1p (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 6 May 2010 18:27:45 -0400
-Received: by ewy20 with SMTP id 20so136755ewy.1
-        for <git@vger.kernel.org>; Thu, 06 May 2010 15:27:44 -0700 (PDT)
+Received: by ey-out-2122.google.com with SMTP id d26so89461eyd.19
+        for <git@vger.kernel.org>; Thu, 06 May 2010 15:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=47376j5kLHaq9xw4N1jUxA8JaL6f7wxGcMPLw6uOvUg=;
-        b=ClnjGcdqhbXscKQY549otv+AGVtxr/7SrVeqIYMJ1bsyiv79Tp+po8pG7T4HVvSwzY
-         cjfaRP6VNk/f+hP7BBuHRw6RQ9osCyZEfq/IlMaPZjAy48rxSZPLhmXZmb9SmtfkzRjk
-         C3XbvbfZUsFtkQMDqI2D1k6XpyTQs0imuqkNk=
+        bh=M+hMAhDBUMcBr7iFajVyQnNI+P90ZasRA3U5NJxI44Q=;
+        b=oCpH3ny8VciOTWcCtsbn3OS52EFESiPj/YSO/ox5kLLtKHVutmSoLuq5cSe8DhbAfi
+         uqnBUzjEk5se4l3ggBBDHv2ESIHeAnWhXlK2nF21uLVnZiYdiZsix0ET0/aEWPCMcZID
+         U+mgY3yfHI5DUroVp9IUe3ivYBfb/CpCN7S7o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mWFf4PeOP51GVKCCtIDH9Etmi9ksyXOtjsAE2ghcrC+APJYYhIbzqJ85HXEP+Ytrzd
-         kSkcwgg6D7jpq+uvZu5/y3fUVJtLp4qH26jD4e94hfB7SzQKx6NJAdb9KNyUtWGct+sm
-         35/IEXG7dIkZN+qb+b0mvkoOTqiUAcSDj4+G8=
-Received: by 10.213.55.209 with SMTP id v17mr3759734ebg.98.1273184863957;
-        Thu, 06 May 2010 15:27:43 -0700 (PDT)
+        b=vifUbp8KJufczru7Bh5Pqp8cNm4YXZNW1bu/U9rfaFM11bCwxoHYGsHROcpHST7Cc6
+         CGi1S9OYk7ZcBTihrBlepO9L+fYSLJP/tr0wCfDJy/1OZdsG3lLhR6n685eZciTqSDM/
+         fEIKhc60OC3i7dFmyMaYOvQ4a5WH9oJPQL+vI=
+Received: by 10.213.42.74 with SMTP id r10mr3744601ebe.58.1273184865046;
+        Thu, 06 May 2010 15:27:45 -0700 (PDT)
 Received: from localhost.localdomain (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 16sm843521ewy.15.2010.05.06.15.27.42
+        by mx.google.com with ESMTPS id 16sm843521ewy.15.2010.05.06.15.27.44
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 May 2010 15:27:43 -0700 (PDT)
+        Thu, 06 May 2010 15:27:44 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.3.gb95c9
 In-Reply-To: <cover.1273183206.git.eyvind.bernhardsen@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146506>
 
-Introduce a new attribute called "auto-eol" and a config variable,
-"core.eolStyle", which will enable line ending normalisation using the
-autocrlf mechanism.
-
-The intent is to enable autocrlf in an alternative way, splitting the
-existing "core.autocrlf" config variable into two:
-
-- a per-repository "line endings should be normalised in this
-  repository" setting, activated by setting the auto-eol attribute
-  (usually on all files in the repository)
-
-- a config variable, "core.eolStyle" which lets the user decide which
-  line endings are preferred in the working directory
-
-Possible values for "core.eolStyle" are:
-
-- "lf", meaning that LF line endings are preferred
-- "crlf", meaning that CRLF line endings are preferred
-- "native" (the default), crlf or lf according to platform
-- "false", which disables end-of-line conversion even when auto-eol is
-  set
-
-"core.autocrlf" will override auto-eol when set to anything but "false".
 
 Signed-off-by: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
 ---
- Makefile      |    3 +++
- cache.h       |   19 +++++++++++++++++++
- config.c      |   16 +++++++++++++++-
- environment.c |    1 +
- 4 files changed, 38 insertions(+), 1 deletions(-)
+ t/t0025-auto-eol.sh |  180 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 180 insertions(+), 0 deletions(-)
+ create mode 100755 t/t0025-auto-eol.sh
 
-diff --git a/Makefile b/Makefile
-index 910f471..419532e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -224,6 +224,8 @@ all::
- #
- # Define CHECK_HEADER_DEPENDENCIES to check for problems in the hard-coded
- # dependency rules.
-+#
-+# Define NATIVE_CRLF if your platform uses CRLF for line endings.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -989,6 +991,7 @@ ifeq ($(uname_S),Windows)
- 	NO_CURL = YesPlease
- 	NO_PYTHON = YesPlease
- 	BLK_SHA1 = YesPlease
-+	NATIVE_CRLF = YesPlease
- 
- 	CC = compat/vcbuild/scripts/clink.pl
- 	AR = compat/vcbuild/scripts/lib.pl
-diff --git a/cache.h b/cache.h
-index 5eb0573..690511e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -561,6 +561,25 @@ enum safe_crlf {
- 
- extern enum safe_crlf safe_crlf;
- 
-+enum auto_crlf {
-+	AUTO_CRLF_FALSE = 0,
-+	AUTO_CRLF_TRUE = 1,
-+	AUTO_CRLF_INPUT = -1,
-+};
+diff --git a/t/t0025-auto-eol.sh b/t/t0025-auto-eol.sh
+new file mode 100755
+index 0000000..5acee2d
+--- /dev/null
++++ b/t/t0025-auto-eol.sh
+@@ -0,0 +1,180 @@
++#!/bin/sh
 +
-+enum eol_style {
-+	EOL_STYLE_FALSE = AUTO_CRLF_FALSE,
-+	EOL_STYLE_CRLF = AUTO_CRLF_TRUE,
-+	EOL_STYLE_LF = AUTO_CRLF_INPUT,
-+#ifdef NATIVE_CRLF
-+	EOL_STYLE_NATIVE = EOL_STYLE_CRLF,
-+#else
-+	EOL_STYLE_NATIVE = EOL_STYLE_LF,
-+#endif
-+};
++test_description='CRLF conversion'
 +
-+extern enum eol_style eol_style;
++. ./test-lib.sh
 +
- enum branch_track {
- 	BRANCH_TRACK_UNSPECIFIED = -1,
- 	BRANCH_TRACK_NEVER = 0,
-diff --git a/config.c b/config.c
-index 6963fbe..8a11052 100644
---- a/config.c
-+++ b/config.c
-@@ -461,7 +461,7 @@ static int git_default_core_config(const char *var, const char *value)
- 
- 	if (!strcmp(var, "core.autocrlf")) {
- 		if (value && !strcasecmp(value, "input")) {
--			auto_crlf = -1;
-+			auto_crlf = AUTO_CRLF_INPUT;
- 			return 0;
- 		}
- 		auto_crlf = git_config_bool(var, value);
-@@ -477,6 +477,20 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.eolstyle")) {
-+		if (value && !strcasecmp(value, "lf"))
-+			eol_style = EOL_STYLE_LF;
-+		else if (value && !strcasecmp(value, "crlf"))
-+			eol_style = EOL_STYLE_CRLF;
-+		else if (value && !strcasecmp(value, "native"))
-+			eol_style = EOL_STYLE_NATIVE;
-+		else if (! git_config_bool(var, value))
-+			eol_style = EOL_STYLE_FALSE;
-+		else
-+			return error("Malformed value for %s", var);
-+		return 0;
-+	}
++has_cr() {
++	tr '\015' Q <"$1" | grep Q >/dev/null
++}
 +
- 	if (!strcmp(var, "core.notesref")) {
- 		notes_ref_name = xstrdup(value);
- 		return 0;
-diff --git a/environment.c b/environment.c
-index 876c5e5..05cd1d5 100644
---- a/environment.c
-+++ b/environment.c
-@@ -40,6 +40,7 @@ const char *editor_program;
- const char *excludes_file;
- int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
- int read_replace_refs = 1;
-+enum eol_style eol_style = EOL_STYLE_NATIVE;
- enum safe_crlf safe_crlf = SAFE_CRLF_WARN;
- unsigned whitespace_rule_cfg = WS_DEFAULT_RULE;
- enum branch_track git_branch_track = BRANCH_TRACK_REMOTE;
++test_expect_success setup '
++
++	git config core.autocrlf false &&
++
++	for w in Hello world how are you; do echo $w; done >one &&
++	for w in I am very very fine thank you; do echo ${w}Q; done | q_to_cr >two &&
++	git add . &&
++
++	git commit -m initial &&
++
++	one=`git rev-parse HEAD:one` &&
++	two=`git rev-parse HEAD:two` &&
++
++	for w in Some extra lines here; do echo $w; done >>one &&
++	git diff >patch.file &&
++	patched=`git hash-object --stdin <one` &&
++	git read-tree --reset -u HEAD &&
++
++	echo happy.
++'
++
++test_expect_success 'default settings cause no changes' '
++
++	rm -f .gitattributes tmp one two &&
++	git read-tree --reset -u HEAD &&
++
++	if has_cr one || ! has_cr two
++	then
++		echo "Eh? $f"
++		false
++	fi &&
++	onediff=`git diff one` &&
++	twodiff=`git diff two` &&
++	test -z "$onediff" -a -z "$twodiff"
++'
++
++test_expect_success 'no auto-eol, explicit eolstyle=native causes no changes' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.eolstyle native &&
++	git read-tree --reset -u HEAD &&
++
++	if has_cr one || ! has_cr two
++	then
++		echo "Eh? $f"
++		false
++	fi &&
++	onediff=`git diff one` &&
++	twodiff=`git diff two` &&
++	test -z "$onediff" -a -z "$twodiff"
++'
++
++test_expect_failure 'auto-eol=true, eolStyle=crlf <=> autocrlf=true' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.autocrlf false &&
++	git config core.eolstyle crlf &&
++	echo "* auto-eol" > .gitattributes &&
++	git read-tree --reset -u HEAD &&
++	unset missing_cr &&
++
++	for f in one two
++	do
++		if ! has_cr "$f"
++		then
++			echo "Eh? $f"
++			missing_cr=1
++			break
++		fi
++	done &&
++	test -z "$missing_cr"
++'
++
++test_expect_failure 'auto-eol=true, eolStyle=lf <=> autocrlf=input' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.autocrlf false &&
++	git config core.eolstyle lf &&
++	echo "* auto-eol" > .gitattributes &&
++	git read-tree --reset -u HEAD &&
++
++	if has_cr one || ! has_cr two
++	then
++		echo "Eh? $f"
++		false
++	fi &&
++	onediff=`git diff one` &&
++	twodiff=`git diff two` &&
++	test -z "$onediff" -a -n "$twodiff"
++'
++
++test_expect_success 'auto-eol=true, eolStyle=false <=> autocrlf=false' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.autocrlf false &&
++	git config core.eolstyle false &&
++	echo "* auto-eol" > .gitattributes &&
++	git read-tree --reset -u HEAD &&
++
++	if has_cr one || ! has_cr two
++	then
++		echo "Eh? $f"
++		false
++	fi
++	onediff=`git diff one` &&
++	twodiff=`git diff two` &&
++	test -z "$onediff" -a -z "$twodiff"
++'
++
++test_expect_success 'autocrlf=true overrides auto-eol=true, eolStyle=lf' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.autocrlf true &&
++	git config core.eolstyle lf &&
++	echo "* auto-eol" > .gitattributes &&
++	git read-tree --reset -u HEAD &&
++	unset missing_cr &&
++
++	for f in one two
++	do
++		if ! has_cr "$f"
++		then
++			echo "Eh? $f"
++			missing_cr=1
++			break
++		fi
++	done &&
++	test -z "$missing_cr"
++'
++
++test_expect_success 'autocrlf=input overrides auto-eol=true, eolStyle=crlf' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.autocrlf input &&
++	git config core.eolstyle crlf &&
++	echo "* auto-eol" > .gitattributes &&
++	git read-tree --reset -u HEAD &&
++
++	if has_cr one || ! has_cr two
++	then
++		echo "Eh? $f"
++		false
++	fi &&
++	onediff=`git diff one` &&
++	twodiff=`git diff two` &&
++	test -z "$onediff" -a -n "$twodiff"
++'
++
++test_expect_success 'autocrlf=true overrides auto-eol=true, eolStyle=false' '
++
++	rm -f .gitattributes tmp one two &&
++	git config core.autocrlf true &&
++	git config core.eolstyle false &&
++	echo "* auto-eol" > .gitattributes &&
++	git read-tree --reset -u HEAD &&
++	unset missing_cr &&
++
++	for f in one two
++	do
++		if ! has_cr "$f"
++		then
++			echo "Eh? $f"
++			missing_cr=1
++			break
++		fi
++	done &&
++	test -z "$missing_cr"
++'
++
++test_done
 -- 
 1.7.1.3.gb95c9
