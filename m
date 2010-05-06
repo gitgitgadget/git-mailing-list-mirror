@@ -1,110 +1,81 @@
-From: mat <matthieu.stigler@gmail.com>
-Subject: Re: What should be the CRLF policy when win + Linux?
-Date: Thu, 06 May 2010 14:57:08 +0530
-Message-ID: <4BE28B6C.3070302@gmail.com>
-References: <4BE141E3.2060904@gmail.com> <t2wf3271551005050627jbe328d84q23a85a1e5dced082@mail.gmail.com>
+From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+Subject: Any way to get complete diff up to a tag?
+Date: Thu, 6 May 2010 11:27:40 +0200
+Message-ID: <A612847CFE53224C91B23E3A5B48BAC74482E50D9F@xmail3.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, hasan.aljudy@gmail.com
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 06 11:27:28 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 06 11:27:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1O9xMe-0003Zk-2X
-	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 11:27:28 +0200
+	id 1O9xN2-0003iq-It
+	for gcvg-git-2@lo.gmane.org; Thu, 06 May 2010 11:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754955Ab0EFJ1W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 May 2010 05:27:22 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54746 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754481Ab0EFJ1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 May 2010 05:27:21 -0400
-Received: by pwi5 with SMTP id 5so1182541pwi.19
-        for <git@vger.kernel.org>; Thu, 06 May 2010 02:27:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=K2tYtMbYSDFQrYTVXYMBsgbFj21J2peY0kVvT3AzODo=;
-        b=cAv/iq9+GljUDGkyX9dRE7VH68H7tYFn6OaThiug68jDGJA74hFeo0hNPGH+P1mgAs
-         NosQqHdC6xDUhhVxmR/yaIlkYFdjISjeuqokk2WtO9R9LMPjRZUnyFV1ZixmbnCAcT3m
-         eOClGwb9J43X6hxcVGxmy8hwytEk6TEzxx18c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=SP613GAl2odQ5t7UAI+g9MTl9SVjpF3m+ctotrZ/CssKxR5bS3tuHSD8vzugEQeNyQ
-         X2/XHZm02M7gA/T5ZMLJvAiYWoWUuU7b0PMgzWxxIrOODrFwKJpthDBhAmtazjD/zXnD
-         Qm9acyuxFl13fmTypLueqp7KfU2gJPl7SliyU=
-Received: by 10.115.113.18 with SMTP id q18mr9243679wam.220.1273138040119;
-        Thu, 06 May 2010 02:27:20 -0700 (PDT)
-Received: from [192.168.1.3] ([59.178.204.1])
-        by mx.google.com with ESMTPS id v13sm3536865wav.2.2010.05.06.02.27.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 May 2010 02:27:17 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <t2wf3271551005050627jbe328d84q23a85a1e5dced082@mail.gmail.com>
+	id S1755275Ab0EFJ1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 May 2010 05:27:47 -0400
+Received: from miranda.se.axis.com ([193.13.178.8]:42083 "EHLO
+	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755019Ab0EFJ1q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 May 2010 05:27:46 -0400
+Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
+	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o469RhbA028732
+	for <git@vger.kernel.org>; Thu, 6 May 2010 11:27:43 +0200
+Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
+ ([10.0.5.75]) with mapi; Thu, 6 May 2010 11:27:43 +0200
+Thread-Topic: Any way to get complete diff up to a tag?
+Thread-Index: Acrs/l+gI+T1jA6AR6GvEgH4qhEqGQ==
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-cr-hashedpuzzle: Adt0 AiSJ CcwQ Dejh Dj/a DkKI GhOL HUER H1Qy ISFB IWEV
+ IqI4 Jmee J4WA KreL
+ LOlJ;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{350F925C-57E8-49C0-98D2-D46F56447E4C};cABlAHQAZQByAC4AawBqAGUAbABsAGUAcgBzAHQAZQBkAHQAQABhAHgAaQBzAC4AYwBvAG0A;Thu,
+ 06 May 2010 09:27:40
+ GMT;QQBuAHkAIAB3AGEAeQAgAHQAbwAgAGcAZQB0ACAAYwBvAG0AcABsAGUAdABlACAAZABpAGYAZgAgAHUAcAAgAHQAbwAgAGEAIAB0AGEAZwA/AA==
+x-cr-puzzleid: {350F925C-57E8-49C0-98D2-D46F56447E4C}
+acceptlanguage: en-US, sv-SE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146468>
 
-Thanks for your answer!!
+If I use
 
-I think what you suggest Ramkumar is indeed what I need, great! The=20
-suggestion from hasan to keep with those settings was not doable as the=
-=20
-windows guy had the problem of that after even a clean cloning, git was=
-=20
-signaling changes (see: http://help.github.com/dealing-with-lineendings=
-/)
+$ git diff v1.7.1..
 
-So I just did:
+I get a diff for everything that has happened after the v1.7.1
+release (up to HEAD). Is there a way to do the opposite, i.e.,
+get everything (including the initial commit) up to and including 
+v1.7.1? I first tried  
 
- git config --global --unset core.autocrlf
+$ git diff ..v1.7.1
 
-and then set for this specifical project:
+but it gave me the reverse of the above, which I later found out 
+was due to it being the same as
 
- git config core.autocrlf true
+$ git diff HEAD..v1.7.1
 
-Hope this is how you meant?
+which of course does not yield the result I want. 
 
-Thanks a lot!!
+If I use
 
-Matthieu
+$ git diff $(git rev-list --reverse v1.7.1 |head -1)..v1.7.1
 
-Ramkumar Ramachandra a =C3=A9crit :
-> Hi,
->
-> On Wed, May 5, 2010 at 12:01 PM, mat <matthieu.stigler@gmail.com> wro=
-te:
->  =20
->> So I don't know exactly what I should do...Should I change all the C=
-RLF from
->> project A, but people will have also problems, or can I switch the c=
-onfig,
->> once I'm using project A and B? It is not so clear in my mind and I =
-would
->> appreciate any advice!!
->>    =20
->
-> I'm not sure what you should be doing because I've never worked with
-> Windows, but the following information might be useful: Yes, you can
-> have project-specific config quite easily.
->
-> In the command
->  =20
->> git config --global core.autocrlf true
->>    =20
-> just drop `--global` and the setting becomes repository-specific.
->
-> -- Ram
->  =20
+I almost get what I want, but the initial commit is still missing.
+Is there any way to get that initial commit included in the diff?
+
+Basically, what I think I am asking for is a way to specify the 
+empty parent of the initial commit, i.e., where v1.7.1~1000000 would
+end up. I can see this being useful in at least one other case as 
+well, namely when doing an interactive rebase to allow the initial
+commit to be rebased (something I have wanted to do a couple of 
+times...)
+
+//Peter
