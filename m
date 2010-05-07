@@ -1,79 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 12:45:00 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005071240590.901@i5.linux-foundation.org>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com>  <cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org>  <alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org> 
- <alpine.LFD.2.00.1005071147460.901@i5.linux-foundation.org>  <n2k32541b131005071211sb2411334v4f0919abfeb4cbb7@mail.gmail.com>  <alpine.LFD.2.00.1005071213550.901@i5.linux-foundation.org> <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] git-svn documentation: minor grammar fix
+Date: Fri,  7 May 2010 19:50:03 +0000
+Message-ID: <1273261803-32626-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org, hasan.aljudy@gmail.com,
-	kusmabite@googlemail.com, prohaska@zib.de
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 07 21:48:01 2010
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 07 21:50:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OATWi-0006Wi-0z
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 21:48:00 +0200
+	id 1OATZ2-0007Vy-Cu
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 21:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932143Ab0EGTry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 15:47:54 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:53848 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754666Ab0EGTry (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 15:47:54 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47Jku1l016132
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 May 2010 12:46:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47JkuuR007981;
-	Fri, 7 May 2010 12:46:56 -0700
-In-Reply-To: <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S932167Ab0EGTuQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 15:50:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52541 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932154Ab0EGTuP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 May 2010 15:50:15 -0400
+Received: by fxm10 with SMTP id 10so1049445fxm.19
+        for <git@vger.kernel.org>; Fri, 07 May 2010 12:50:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=Cw0b5zrerxa6weSkBU1Tew8OLXdfJMNLRB4ez4/ZvMQ=;
+        b=LwC+jh0RF52Byh968RLzzNqH1hzER72pYg7Uay45O5AQOb8i781k33a4Z1Cafwj8oD
+         Or25LIfZ7j9jV/oR64cuinU+sx06lSRknys7DoPUsevsP85f31paZofC8LO4JrEyzXrS
+         6rAoYKwddYtWHrMQ5yY0AU01CfA9nJo9/O5zE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=iOo9GlQnB7moUdYFNiyDNPptTVIoKO77gTwhMY3TYRePX5bWBqU9HWCFCz7+NuGhFI
+         VSKpk5bKBC/FZKXf+N4WeizY4meCSTi1fcsY65OomvhoFksREM8NKtX6EzKaGBj8IZwb
+         ExezTjnUABRtHAOz+RdvidihORuA5mOmulSuM=
+Received: by 10.223.30.10 with SMTP id s10mr658031fac.4.1273261813572;
+        Fri, 07 May 2010 12:50:13 -0700 (PDT)
+Received: from aoeu (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
+        by mx.google.com with ESMTPS id 2sm8037367fav.1.2010.05.07.12.50.11
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 07 May 2010 12:50:12 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146573>
 
+Use the definite article when talking about a configuration property.
 
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ Documentation/git-svn.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-On Fri, 7 May 2010, Avery Pennarun wrote:
-> 
-> 1) Whether a project has files that should be EOL-converted
-> automatically (we seem to all agree that this is set in
-> .gitattributes, whichever attribute is used).
-> 
-> 2) Whether a particular person wants those particular files to be
-> EOL-converted, and what to convert them to.
-
-So? If we were to have a .gitconfig file, then both of those things would 
-just work. It's no different from Eyvind's patch, except the exact details 
-on syntax (and which file to set) would differ slightly.
-
-So it's a syntactic difference, nothing more.
-
-That said, I don't think the extra .gitconfig is even worth it, the same 
-way I do _not_ think Eyvind's extra .gitattributes things are worth it. We 
-already have perfectly good .gitattributes, and the only real issue is 
-that they just don't take effect in some situations where people would 
-_want_ them to take effect.
-
-So just a small semantic change to how .gitattributes crlf works would 
-likely make everybody happy.
-
-The only downside is that it _is_ a semantic change. It really would 
-change existing git behavior. Now, I think most people would consider the 
-change in behavior to be a clear improvement, but hey...
-
-			Linus
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 99f3c1e..b09bd97 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -243,7 +243,7 @@ where <name> is the name of the SVN repository as s=
+pecified by the -R option to
+=20
+ --username;;
+ 	Specify the SVN username to perform the commit as.  This option overr=
+ides
+-	configuration property 'username'.
++	the 'username' configuration property.
+=20
+ --commit-url;;
+ 	Use the specified URL to connect to the destination Subversion
+--=20
+1.7.1.dirty
