@@ -1,7 +1,7 @@
 From: "Mr Chen Guan" <info@w.cn>
 Subject: (unknown)
-Date: Sat, 8 May 2010 01:46:34 +0400 (MSD)
-Message-ID: <50175.65.120.57.68.1273268794.squirrel@mail.t-k.ru>
+Date: Sat, 8 May 2010 01:46:33 +0400 (MSD)
+Message-ID: <6614.65.120.57.68.1273268793.squirrel@mail.t-k.ru>
 Reply-To: chen_guan777@w.cn
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -15,20 +15,20 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAWYN-0002V8-BG
+	id 1OAWYM-0002V8-Ry
 	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 01:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753837Ab0EGXBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 19:01:44 -0400
-Received: from mx.tele-kom.ru ([91.102.104.6]:2643 "HELO mx.tele-kom.ru"
+	id S1753400Ab0EGXBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 May 2010 19:01:41 -0400
+Received: from mx.tele-kom.ru ([91.102.104.6]:4718 "HELO mx.tele-kom.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753577Ab0EGXBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 May 2010 19:01:43 -0400
-Received: (qmail 16967 invoked by uid 80); 7 May 2010 21:46:34 -0000
+	id S1752571Ab0EGXBk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 May 2010 19:01:40 -0400
+Received: (qmail 16962 invoked by uid 80); 7 May 2010 21:46:33 -0000
 Received: from 65.120.57.68
         (SquirrelMail authenticated user sb)
         by mail.t-k.ru with HTTP;
-        Sat, 8 May 2010 01:46:34 +0400 (MSD)
+        Sat, 8 May 2010 01:46:33 +0400 (MSD)
 Subject: 
 User-Agent: SquirrelMail/1.4.2
 X-Priority: 3
@@ -46,7 +46,7 @@ X-Spam-Report: 5.8 points;
  *  1.8 MISSING_SUBJECT Missing Subject: header
  *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
  *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146617>
 
 Dear Friend,
 
