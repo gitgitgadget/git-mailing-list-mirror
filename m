@@ -1,90 +1,218 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 22:42:07 +0200
-Message-ID: <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com>  <cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org>  <alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org>  <alpine.LFD.2.00.1005071147460.901@i5.linux-foundation.org>  <n2k32541b131005071211sb2411334v4f0919abfeb4cbb7@mail.gmail.com>  <alpine.LFD.2.00.1005071213550.901@i5.linux-foundation.org>  <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com>  <alpine.LFD.2.00.1005071240590.901@i5.linux-foundation.org> <g2s32541b131005071258s92e058bakc8f3a4df1e1dc634@mail.gmail.com> <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org> <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 07 22:42:21 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] Hacky version of a glob() driven config include
+Date: Fri, 07 May 2010 13:46:17 -0700 (PDT)
+Message-ID: <m3k4rfe90n.fsf@localhost.localdomain>
+References: <u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
+	<1273180440-8641-1-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 07 22:46:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAUNE-0004DO-LK
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 22:42:16 +0200
+	id 1OAURG-00067M-Cb
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 22:46:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752210Ab0EGUmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 16:42:11 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:49173 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751841Ab0EGUmK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 16:42:10 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so139844eyd.19
-        for <git@vger.kernel.org>; Fri, 07 May 2010 13:42:09 -0700 (PDT)
+	id S1756036Ab0EGUqV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 16:46:21 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:49308 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752324Ab0EGUqU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 16:46:20 -0400
+Received: by bwz19 with SMTP id 19so804745bwz.21
+        for <git@vger.kernel.org>; Fri, 07 May 2010 13:46:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=WPFDPKn95lMi+kV+T70gfJ18EhJvzrP92kzgCBASMqA=;
-        b=ss0tcJXhqzYqNFG3gTO0yszIl5ggX2VCXXV8uyn/rGT53ONowc7o3ZdupRy1MLod6+
-         KDjcpuWlryVP76dw8bvxob8QEtG22kt2BGhBWHkmhZ2OY8J+ATIbMUlB8Mk0DdW2h3k5
-         lyyYIDq3bMnKIF0JVWF7It3oX3ZMtjfpqLzfg=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=UGCZ6B880PI3O3ibXkPt0OMj08lCYm8BgosTK2VaU/A=;
+        b=oN1cdDjUKBX+uzR4ZoDgEdS9gS4rZQ3bY537CfjXmEypAeuOVPfhnlhrAlNhyZaXAF
+         vD+6mW4HQm4SY5JFs28ZMir8ZeB/THgyju8n3WEvtz9+g8BptDFoIXVMixs9qr/j9Ki7
+         BOQq0+mKMmdJDItetQRh1wu6LKcaineXTdi7U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=jJFqiUkJtDdp1YGzA/93EqW3d7L1ZCtXeCyg176Jc6Oq3iYO4bCo0hATODDETqLXo5
-         QKkCJJue2qqzA4APpKVBi2JQCrVoEMw/J6HqcfiwATBF4B61Qwtyfu4Yo+Sw2eBF6wrm
-         ulO7bQ1aDOmEl//HDI9SSO5RrLpPoMKNsUImA=
-Received: by 10.213.37.67 with SMTP id w3mr4278129ebd.69.1273264928966;
-        Fri, 07 May 2010 13:42:08 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 16sm1324319ewy.15.2010.05.07.13.42.07
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=eXqtBNaHt6cA5sLlpnexhGftRQhQ5E4KIvypJT0NXFDQst/J1TPH+YYkjbsdcfGOBx
+         TF+/ud4rfGXZ7UKvIpaMPB1U5LJR+IvnHFOHQzPpi1G4/zXhDWlrJ4n8A6KkexzlOLKn
+         F2jHM6/EDPosz+viyb+D84FNYvQXZ0m8RvY0I=
+Received: by 10.204.131.153 with SMTP id x25mr445187bks.159.1273265178419;
+        Fri, 07 May 2010 13:46:18 -0700 (PDT)
+Received: from localhost.localdomain (abvc175.neoplus.adsl.tpnet.pl [83.8.200.175])
+        by mx.google.com with ESMTPS id 15sm818386bwz.0.2010.05.07.13.46.14
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 May 2010 13:42:08 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
-X-Mailer: Apple Mail (2.1078)
+        Fri, 07 May 2010 13:46:17 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o47KjeRP012943;
+	Fri, 7 May 2010 22:45:50 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o47KjENi012938;
+	Fri, 7 May 2010 22:45:14 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1273180440-8641-1-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146593>
 
-On 7. mai 2010, at 22.17, Linus Torvalds wrote:
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
 
-> 
-> 
-> On Fri, 7 May 2010, Linus Torvalds wrote:
->> 
->> Now, the thing is, we can go for even simpler syntax still, by just making 
->> that ".gitconfig: core.autocrlf=true" entirely unnecessary. 
-> 
-> Exact semantics I'd suggest for 'core.autocrlf':
-> 
->    Setting		path in .gitattributes	path _not_ in .gitattributes
->    =======		======================	===========================
-> - not set at all	attribute value		no crlf
-> - "off"/"false"	no crlf			no crlf
-> - "on"			attribute value		autocrlf	
-> - "input"		attribute "input"	autocrlf "input"
-> 
-> Which is different from what we do now for the "not set at all" case, 
-> in that it still takes the .gitattributes value for those cases if a path 
-> matches.
-> 
-> We could add a few core.autocrlf entries, like "force" (to force output to 
-> be CRLF even on a platform where it isn't the default).
+> This is not ready for inclusion in anything. Commiting for RFC on
+> whether this way of doing it is sane in theory.
 
-How can you say that this is simpler than my syntax?  I have an attribute that means "line endings should be normalised" and a configuration variable that decides what line endings should be used in the working directory for normalised files.  If you like CRLFs you set it to "crlf", if you like LFs you set it to "lf".
+I think this is a good idea at least in theory.
+=20
+> Known bugs:
+>=20
+>   * Breaks the model of being able to *set* config values. That
+>     doesn't work for the included files. Maybe not a bug.
 
-I'll replace "auto-eol" with something like "crlf=auto" because I actually think that's pretty neat, but I won't pretend that "true" and "input" are sane ways to indicate if you prefer CRLF or LF line endings in your working directory.
--- 
-Eyvind
+Errr... do I understand correctly that it simply means that you are
+not able to set config values that came from included files, in
+included files?
+
+This is quite serious limitation.
+
+>=20
+>   * Errors in the git_config_from_file() call in glob_include_config(=
+)
+>     aren't passed upwards.
+
+Hmmm...
+
+>=20
+>   * It relies on the GNU GLOB_TILDE extension with no
+>     alternative. That can be done by calling getenv("HOME") and
+>     s/~/$home/.
+
+"git config --path <variable>" expands leading '~' to $HOME, and ~user
+to home directory of given user.  Why not use this?
+
+>=20
+>   * The whole bit with saving/restoring global state for config
+>     inclusion is evil, but then again so is the global state.
+
+Why not encapsulate those global variables in a struct, passed to
+appropriate functions, with a global variable holding an instance of
+such struct (IIRC similarly to what is done for "the_index").
+
+>=20
+>   * We don't check for recursion. But Git gives up eventually after
+>     after spewing a *lot* of duplicate entry errors. Not sure how to
+>     do this sanely w/symlinks.
+
+The alternates mechanism has some depth limit; why not use it also for
+config file inclusion?  The machanism is quite similar...
+
+>=20
+> Not-signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+
+You can simply do not add Signed-off-by for an RFC patch...
+
+> ---
+>=20
+> > On Sun, Apr 4, 2010 at 07:50, Eli Barzilay <eli@barzilay.org> wrote=
+:
+> > > Isn't it better to have a way to include files instead?
+> >
+> > Probably yes. Programs like Apache HTTPD, rsyslog and others just u=
+se
+> > ${foo}conf.d by convention by supporting config inclusion.
+>=20
+> Here's an evil implementation of this. I know the code is horrid &
+> buggy (see above). But is the general idea sane. I thought it would b=
+e
+> better to submit this for comments before I went further with it.
+>=20
+>  config.c               |   55 ++++++++++++++++++++++++++++++++++++++=
++++++++++-
+>  t/t1300-repo-config.sh |   43 +++++++++++++++++++++++++++++++++++++
+>  2 files changed, 97 insertions(+), 1 deletions(-)
+
+No documentation.
+=20
+[...]
+> diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+> index f11f98c..4df6658 100755
+> --- a/t/t1300-repo-config.sh
+> +++ b/t/t1300-repo-config.sh
+> @@ -824,4 +824,47 @@ test_expect_success 'check split_cmdline return'=
+ "
+>  	test_must_fail git merge master
+>  	"
+> =20
+> +cat > .git/config << EOF
+> +[some]
+> +	variable =3D blah
+> +[voodoo]
+> +	include =3D .git/more_config_*
+> +EOF
+
+I don't like this syntax.
+
+=46irst, it forces git-config to hide all 'include' keys.  I think ther=
+e
+might be some legitimate <section>.include config variables (perhaps
+outside git-core); with this patch they are impossible.
+
+
+Second, I guess that the section name has absolutely no meaning here.
+If included config file has section.key config variable, i.e.:
+
+  [section]
+        key =3D value
+
+the variable in master config file (visible by git-config) would not
+be voodoo.section.key.
+
+
+Third, what happens with the sections in master config file?  If I
+have the following in .git/config
+
+  [voodoo]
+        var1 =3D val1
+        include =3D .git/more_config
+        var2 =3D val2
+
+and the .git/more_config has
+
+  [foo]
+        bar =3D baz
+
+would "git config --list" see 'voodoo.var2' (i.e. sections in included
+file does not change parsing of master file), or would it see
+'foo.var2'?
+
+
+I would propose
+
+  include .git/more_config_*
+
+if not for the fast that it would trip older git.  Perhaps
+
+  [include ".git/more_config_*"]
+
+or
+
+  [include .git/more_config_*]
+
+or
+
+  ## include ".git/more_config_*"
+
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
