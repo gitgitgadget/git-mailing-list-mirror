@@ -1,73 +1,86 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 13:17:12 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com>  <cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org>  <alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org> 
- <alpine.LFD.2.00.1005071147460.901@i5.linux-foundation.org>  <n2k32541b131005071211sb2411334v4f0919abfeb4cbb7@mail.gmail.com>  <alpine.LFD.2.00.1005071213550.901@i5.linux-foundation.org>  <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com> 
- <alpine.LFD.2.00.1005071240590.901@i5.linux-foundation.org> <g2s32541b131005071258s92e058bakc8f3a4df1e1dc634@mail.gmail.com> <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 6/6] Add test_harness make target for testing with prove(1)
+Date: Fri, 07 May 2010 13:20:28 -0700 (PDT)
+Message-ID: <m339y3forb.fsf@localhost.localdomain>
+References: <1273261025-31523-1-git-send-email-avarab@gmail.com>
+	<1273261025-31523-6-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org, hasan.aljudy@gmail.com,
-	kusmabite@googlemail.com, prohaska@zib.de
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 07 22:20:26 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 07 22:20:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAU25-00040y-GE
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 22:20:25 +0200
+	id 1OAU2G-00045g-R7
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 22:20:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758178Ab0EGUUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 16:20:21 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:54254 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757008Ab0EGUUU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 16:20:20 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47KJ9D0019378
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 May 2010 13:19:10 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47KJ8Mr009659;
-	Fri, 7 May 2010 13:19:08 -0700
-In-Reply-To: <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758194Ab0EGUUb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 16:20:31 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44813 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757008Ab0EGUUa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 16:20:30 -0400
+Received: by fxm10 with SMTP id 10so1066556fxm.19
+        for <git@vger.kernel.org>; Fri, 07 May 2010 13:20:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=iqF5dkwOf6igdUl6rL/nmstB1T6AwPfnm714wZYPjWg=;
+        b=W7a4zk/TBcoEtuPYSM1ZGqg8HLzZHnpm16F9FbQsNvMnVlWJ2jRkJVy94mFrJvcNsC
+         q/eqOqVAsjlQxWTB7I+Ob5cArKNPR8D+yIpBNBeiGdz5ypxnXH2LMNdjqHLWyzcgB2sW
+         W+AKw1qmZjnTIVIUAPpTDVHqqReZfpiUqkduU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=DSbiWwP4Vfy4jMArt1sG/PCXiVwQQRKkNecNC/Xdh/tk/uNlNfGwML6x6VoKAL08ev
+         KZBOHKAVm5ARi/sODQZszn6RVDtHjekzmS3STwwGHO2byYM7t3uf4qf2dRPWIQzyQuYi
+         UsPu9c8lYJAyYETkxlMGnQjCouEQhLJ7hqq2Y=
+Received: by 10.223.5.81 with SMTP id 17mr621364fau.42.1273263629103;
+        Fri, 07 May 2010 13:20:29 -0700 (PDT)
+Received: from localhost.localdomain (abvc175.neoplus.adsl.tpnet.pl [83.8.200.175])
+        by mx.google.com with ESMTPS id 13sm8139296fad.7.2010.05.07.13.20.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 07 May 2010 13:20:28 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o47KK4w3012559;
+	Fri, 7 May 2010 22:20:10 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o47KJrsx012550;
+	Fri, 7 May 2010 22:19:53 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1273261025-31523-6-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146584>
 
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
 
+> The --jobs option I'm supplying to prove(1) is not supported in all
+> prove versions, some older ones (before Perl 5.10.1) don't have
+> it. Anyone that's hacking Git probably has 5.10.1, and you can always
+> use the old `make test` for non-parallel tests.
 
-On Fri, 7 May 2010, Linus Torvalds wrote:
-> 
-> Now, the thing is, we can go for even simpler syntax still, by just making 
-> that ".gitconfig: core.autocrlf=true" entirely unnecessary. 
+I am hacking Git, and I don't have perl >=3D 5.10.1.  On the other hand
+I can alway run "make test" or individual tests instead of=20
+"make test_harness".
 
-Exact semantics I'd suggest for 'core.autocrlf':
-
-    Setting		path in .gitattributes	path _not_ in .gitattributes
-    =======		======================	===========================
- - not set at all	attribute value		no crlf
- - "off"/"false"	no crlf			no crlf
- - "on"			attribute value		autocrlf	
- - "input"		attribute "input"	autocrlf "input"
-
-Which is different from what we do now for the "not set at all" case, 
-in that it still takes the .gitattributes value for those cases if a path 
-matches.
-
-We could add a few core.autocrlf entries, like "force" (to force output to 
-be CRLF even on a platform where it isn't the default).
-
-			Linus
+A better solution would be to check Perl version, or even better of
+"prove" supports '--jobs' option, and selectively enable parallel
+running of test harness in Makefile.
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
