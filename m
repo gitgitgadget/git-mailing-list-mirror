@@ -1,93 +1,126 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 15:14:24 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005071504280.901@i5.linux-foundation.org>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com>  <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com>  <alpine.LFD.2.00.1005071240590.901@i5.linux-foundation.org>  <g2s32541b131005071258s92e058bakc8f3a4df1e1dc634@mail.gmail.com>
-  <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org>  <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>  <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com> <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org> 
- <384AA932-227B-43B0-9D38-560A3567918A@gmail.com> <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org> <m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com> <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
+Date: Fri, 7 May 2010 18:19:52 -0400
+Message-ID: <i2l32541b131005071519nf49f8703s76f42f4fe9939b6f@mail.gmail.com>
+References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com> 
+	<g2s32541b131005071258s92e058bakc8f3a4df1e1dc634@mail.gmail.com> 
+	<alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org> 
+	<alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org> 
+	<576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com> <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org> 
+	<384AA932-227B-43B0-9D38-560A3567918A@gmail.com> <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org> 
+	<m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com> 
+	<alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 08 00:16:38 2010
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat May 08 00:20:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAVqX-0005V5-DR
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 00:16:37 +0200
+	id 1OAVu9-0006j1-G2
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 00:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158Ab0EGWQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 18:16:33 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:52659 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751051Ab0EGWQc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 18:16:32 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47MGLf5031897
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 May 2010 15:16:22 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47MGL3h014896;
-	Fri, 7 May 2010 15:16:21 -0700
+	id S1751800Ab0EGWUO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 18:20:14 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55436 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460Ab0EGWUN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 18:20:13 -0400
+Received: by gyg13 with SMTP id 13so935263gyg.19
+        for <git@vger.kernel.org>; Fri, 07 May 2010 15:20:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hwpzQW0yQ7h5t6jHw4spE0OFwWIlBREHfiZ+f9lOEYE=;
+        b=P3Ky1FWezvBi1tRjwsqzsfrS18AGZofQ+k0eN33aR+ZhZebn0fkujGrUmOH6lc+u3r
+         Jcs5qGhvlK+DyksVjl7AZgTRMrDbspUUUwrZk3e3rLZlxOH+l6J5WqLqebJT6JmnyVgW
+         koNvIf5ifsYxROLOuh5bSchMMg0H3dkAZXFyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=XA5lhukUagE5CitvYycSZOJEmhDDZgPdW8aaOCIuLf4MV+VL5clmdEg3XIHefB7Md6
+         ltkx9jUatWuH/k/u8flzrjO+NEWTEbLPkeaTikF6tXtKCznrMIOGQqkg9BMA4fZpNYEW
+         f0SQJCRcR4l9VDoAya6duY49KQO5+hPRI0AC0=
+Received: by 10.150.254.5 with SMTP id b5mr4108398ybi.161.1273270812223; Fri, 
+	07 May 2010 15:20:12 -0700 (PDT)
+Received: by 10.150.217.12 with HTTP; Fri, 7 May 2010 15:19:52 -0700 (PDT)
 In-Reply-To: <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146612>
 
+On Fri, May 7, 2010 at 5:54 PM, Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
+> On Fri, 7 May 2010, Avery Pennarun wrote:
+>> > I think "* auto-eol=3Dtrue" is just crazy. We would _never_ want t=
+o do that.
+>> > Any project that does that should be shot in the head.
+>>
+>> Just to clarify, is it crazy because that line would convert all
+>> files, even binary ones, where core.autocrlf auto-detects whether
+>> files are binary or text?
+>
+> No, presumably 'auto-eol' does the same auto-detection. Otherwise the=
+ name
+> wouldn't make sense.
+> [...]
+> Eyvind Bernhardsen wrote:
+>> Also, I meant to write "* crlf=3Dauto", not "* auto-eol=3Dtrue", if =
+that makes it
+>> any less crazy.
+>
+> Oh, yes. See my other email. "* crlf=3Dauto" is at least sensible, al=
+though
+> somewhat scary. At least with core.autocrlf=3Dtrue, the user has to h=
+ad
+> [...]
+> =A0(b) But let's say that you want to do it anyway (because you're la=
+zy
+> =A0 =A0 and because autocrlf works pretty damn well in practice), isn=
+'t that
+> =A0 =A0 a really ugly and crazy thing to add _another_ attribute name=
+ for
+> =A0 =A0 that?
+>
+> =A0 =A0 IOW, if you really want to say "do automatic crlf for this se=
+t of
+> =A0 =A0 paths", the natural syntax for that would be
+>
+> =A0 =A0 =A0 =A0* crlf=3Dauto
 
+Oh, good grief, I'm just getting more and more confused.
 
-On Fri, 7 May 2010, Linus Torvalds wrote:
-> 
->      IOW, if you really want to say "do automatic crlf for this set of 
->      paths", the natural syntax for that would be
-> 
-> 	* crlf=auto
+So just to keep all of this straight, I think there are still two
+proposals under consideration here:
 
-Btw, since we're discussing this, I do think that our current "crlf=input" 
-syntax for .gitattributes is pretty dubious. 
+a) add an in-project .gitconfig, in which case the above crlf=3Dauto is
+exactly equivalent to "crlf attribute missing" (which is different
+from "crlf unset", hee hee, are we having fun yet?) since the crlf
+attribute is ignored unless core.autocrlf=3Dtrue, and missing means to
+use the core.autocrlf setting;
 
-I don't really see why it should be a path-dependent thing on whether you 
-do crlf conversion on just input or on checkout too.  It smells odd. It 
-makes more sense to me to have a global policy for what the output/input 
-conversion should be, and then the path rules are just about whether that 
-conversion gets done or not.
+OR
 
-And like it or not, we called that global rule "autocrlf", and then mixed 
-it up with the decision on whether we should do conversion at all. I do 
-think that that was a mistake too, and that we could try to fix it, but I 
-also think that's a fairly independent issue.
+b) change the semantics of the crlf attribute, in which case crlf=3Daut=
+o
+is a new mode that means "use autocrlf on this file even if
+core.autocrlf is unset or unspecified".
 
-So we _could_ introduce a new "core.crlf" config option that talks purely 
-about what kind of conversion gets done - not about _whether_ it gets 
-done. So you could do
+Right?  So in case (a), the new crlf=3Dauto option is unneeded.  Though
+it does seem as if we're trending toward case (b).
 
-	[core]
-		crlf=input
+Thanks,
 
-and it would imply that crlf conversion is only done on input, but it 
-would differ from "autocrlf=input" in that it would _not_ imply that any 
-paths not matched by gitattributes crlf rules would be automatically 
-converted.
-
-[ And in the above model, "core.autocrlf = input" would just be a 
-  shorthand for saying "core.autocrlf=true" + "core.crlf=input")
-
-So I think we could improve the config file syntax a bit.
-
-But I think that's really a separate issue from the .gitattributes file, 
-and whether the "crlf" attribute means anythin in the _absense_ of any 
-config file rules about crlf.
-
-			Linus
+Avery
