@@ -1,100 +1,94 @@
 From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 15:35:43 -0400
-Message-ID: <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com>
+Date: Fri, 7 May 2010 15:36:45 -0400
+Message-ID: <m2g32541b131005071236u962d2c73n85d25093d1e048bb@mail.gmail.com>
 References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com> 
 	<cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org> 
 	<alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org> 
 	<alpine.LFD.2.00.1005071147460.901@i5.linux-foundation.org> 
-	<n2k32541b131005071211sb2411334v4f0919abfeb4cbb7@mail.gmail.com> 
-	<alpine.LFD.2.00.1005071213550.901@i5.linux-foundation.org>
+	<alpine.LFD.2.00.1005071529050.14468@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
 	git@vger.kernel.org, hasan.aljudy@gmail.com,
 	kusmabite@googlemail.com, prohaska@zib.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 07 21:36:12 2010
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri May 07 21:37:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OATLI-0000sd-FK
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 21:36:12 +0200
+	id 1OATMI-0001LH-4X
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 21:37:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932066Ab0EGTgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 15:36:06 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35305 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758118Ab0EGTgF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 May 2010 15:36:05 -0400
-Received: by gyg13 with SMTP id 13so842409gyg.19
-        for <git@vger.kernel.org>; Fri, 07 May 2010 12:36:03 -0700 (PDT)
+	id S932075Ab0EGThI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 15:37:08 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:50739 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932067Ab0EGThG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 15:37:06 -0400
+Received: by gxk9 with SMTP id 9so1068321gxk.8
+        for <git@vger.kernel.org>; Fri, 07 May 2010 12:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=e7xyQX+V+pLYkevBVSx0OS2rSaWqKt/E300+tXaeMEA=;
-        b=Bww+d6VqX7mGPmGitg4QFATuNXFNvwlT9bLjIVkuy2du3SoB2oEAcWoEmEDx8renSf
-         6uDBixXhrrRtwTLUtI0wae+WzHmtKB8uQRr6OOBndJnN2Ro5CGtYsXtINYMrn+9/2G4Q
-         vaUyqGv0wNqu3L2juOihFj9Pa24Eqk7svjA9A=
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0Wo/PHdMLl1qKM3vDSmVcGdMciYjQqEy6Bz9xjprq7s=;
+        b=meb7HiL5FdGtLXyuWD3vKzZs4Y6ybqfUda4se3/5tQHOHkxTvfeXZdNDlvs6QmwMrl
+         yC6mRnJgkC1dTsk5YUZN0jkXaX7YU8FBl8HQUSSrF7QKjg3q+J4zoyYWTPey56IqDM26
+         1L9xnt0ea8MUPLQaVlQvXV40EyFj50ku78frs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=kugMrVGmlH5FKcI5KFIHy3tuU9vE0xPe2JqewT4yqRsWnU2s9o5l+u+hjiYlXuOw62
-         tuFtqVqN/TuYqSh8U6ZXQEbmoU6rV0fLFx+GQ/E2s+SKFBBhCDsrqJLYXZZByDu8Eh2g
-         3QBenQUBZ3qXR9quMhQHJH6KyNQfdIca5JpbU=
-Received: by 10.150.237.9 with SMTP id k9mr4004917ybh.155.1273260963165; Fri, 
-	07 May 2010 12:36:03 -0700 (PDT)
-Received: by 10.150.217.12 with HTTP; Fri, 7 May 2010 12:35:43 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1005071213550.901@i5.linux-foundation.org>
+         :cc:content-type:content-transfer-encoding;
+        b=lOGQMW3BHlibx8obRA3spfbobrmlxcYRhYiPFoxzbKdo4uTGuzzsw4QKQZlw0bHfeV
+         ce2aF00ogrDpjckQU8tKNLIqi7Afhaj6a8jyhwq2LNajGuFCnMzqLFj5JfR7P3dEEmcb
+         uZXMrMv3HfATdDkIrTXLqposlQwT42j6chvOM=
+Received: by 10.150.239.1 with SMTP id m1mr3542594ybh.311.1273261025192; Fri, 
+	07 May 2010 12:37:05 -0700 (PDT)
+Received: by 10.150.217.12 with HTTP; Fri, 7 May 2010 12:36:45 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1005071529050.14468@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146563>
 
-On Fri, May 7, 2010 at 3:16 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Fri, 7 May 2010, Avery Pennarun wrote:
->> Unfortunately this option wouldn't be as flexible as Eyvind's current proposal.
+On Fri, May 7, 2010 at 3:31 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Fri, 7 May 2010, Linus Torvalds wrote:
+>> Btw, another option might be to start searching ".gitconfig", but on=
+ly
+>> allow a certain "safe subset" of config options in that. Things that=
+ can
+>> really be about the project itself, and not per-user or per-reposito=
+ry.
+>>
+>> And parse it before ~/.gitconfig and .git/config, so that people can
+>> always override it.
+>>
+>> I dunno. Looking at the config options, there really aren't a lot of=
+ them
+>> that make sense on a project scale. There's a few, though. Things li=
+ke
+>>
+>> =A0 =A0 =A0 core.autocrlf
+>> =A0 =A0 =A0 i18n.commitEnconfig
+>>
+>> and possibly others..
 >
-> Oh, absolutely it is.
->
->> What his method allows is to mark some files in a project as "these
->> should be the native EOL style" and others as "these should be left
->> alone."
->
-> But that's what a .gitconfig would too. We _already_ have that
-> .gitattribute thing to then distinguish particular pathname rules. It's
-> just that currently .git/config is needed to _enable_ it.
+> Given that only a subset of gitconfig could make sense to have
+> distributed, I think the file should be named .gitparams to make the
+> distinction clear.
 
-Hmm, I don't think we're saying the same thing.  There are two
-separate settings here:
-
-1) Whether a project has files that should be EOL-converted
-automatically (we seem to all agree that this is set in
-.gitattributes, whichever attribute is used).
-
-2) Whether a particular person wants those particular files to be
-EOL-converted, and what to convert them to.
-
-The existing semantics of core.autocrlf just don't let you express #2
-in a useful way.  If I set --global core.autocrlf, it turns it on for
-*all* projects, not just ones with the .gitattribute set.  If a
-project has a .gitconfig inside that sets core.autocrlf, then it's
-really just redundant with #1.  If I set .git/config on a particular
-project, it works, but it's far too easy to forget (and there seems to
-be no way to set this per-project at clone time, and setting it
-*after* cloning causes git's index to get confused).
-
-Eyvind's proposal is deceptively simple because it simply makes it
-much less error prone for users to express something that's already
-*technically* possible, but in practice, is very very frequently done
-wrong.
+Since the options it *does* have are exactly the same as .git/config,
+however, naming it .gitconfig makes sense.  I'd say just print a
+warning when reading options that are going to be ignored for security
+reasons (or because they're not known at all, or whatever).
 
 Avery
