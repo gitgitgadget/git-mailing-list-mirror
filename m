@@ -1,64 +1,89 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 13:57:39 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com>  <cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org>  <alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org> 
- <alpine.LFD.2.00.1005071147460.901@i5.linux-foundation.org>  <n2k32541b131005071211sb2411334v4f0919abfeb4cbb7@mail.gmail.com>  <alpine.LFD.2.00.1005071213550.901@i5.linux-foundation.org>  <i2i32541b131005071235z64c9de56w29a2d555cf801c9a@mail.gmail.com> 
- <alpine.LFD.2.00.1005071240590.901@i5.linux-foundation.org> <g2s32541b131005071258s92e058bakc8f3a4df1e1dc634@mail.gmail.com> <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org> <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
- <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com>
+Date: Fri, 7 May 2010 17:00:39 -0400
+Message-ID: <n2l32541b131005071400uf90ab0e8se882fce6b3abf522@mail.gmail.com>
+References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com> 
+	<cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org> 
+	<alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org> 
+	<alpine.LFD.2.00.1005071147460.901@i5.linux-foundation.org> 
+	<alpine.LFD.2.00.1005071529050.14468@xanadu.home> <m2g32541b131005071236u962d2c73n85d25093d1e048bb@mail.gmail.com> 
+	<alpine.LFD.2.00.1005071626040.14468@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 07 22:59:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	git@vger.kernel.org, hasan.aljudy@gmail.com,
+	kusmabite@googlemail.com, prohaska@zib.de
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri May 07 23:01:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAUeF-0002lx-5A
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 22:59:51 +0200
+	id 1OAUfT-0003QM-If
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 23:01:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758310Ab0EGU7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 16:59:45 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:47441 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756244Ab0EGU7o (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 16:59:44 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47KxZdn023308
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 May 2010 13:59:37 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47KxZep011433;
-	Fri, 7 May 2010 13:59:35 -0700
-In-Reply-To: <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758234Ab0EGVBB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 May 2010 17:01:01 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42237 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755595Ab0EGVBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 May 2010 17:01:00 -0400
+Received: by gyg13 with SMTP id 13so893524gyg.19
+        for <git@vger.kernel.org>; Fri, 07 May 2010 14:00:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=o+16j8V6dMDDFy5FP4dpmyx8e7ADP1CfiztvoWiVCF0=;
+        b=JU0rZiy1hfy07bExZB7FiBINv/vcXiRqz/v9G4GmQmnFaxxA6aIMntxKMKoq1MWsjM
+         A72APrFU/DAUlyGcnok78sbrql5TSXGJ4VKnCh4gpsf1o5faa4FzrHztTqFDPiEtFPCv
+         0hbd8I734K4h5XhhXPR0QbUuaK7sGwG/9HPQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=MB1ow+CufTVAru4L8rK72HH/E/VqT2Zf9V69L1gjT3d4hLjg2np65hXO53L7QYegf/
+         JrjJo0y0Obv6iYnYLMP3HKMjwFARuhVagkiex1Q7ONzSgDkYwqXszOOiAg9ISz+gma0R
+         jQYh143fOprt5NqGNZdGqRAEZunJZTERnduy4=
+Received: by 10.150.239.1 with SMTP id m1mr3639118ybh.311.1273266059446; Fri, 
+	07 May 2010 14:00:59 -0700 (PDT)
+Received: by 10.150.217.12 with HTTP; Fri, 7 May 2010 14:00:39 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1005071626040.14468@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146598>
 
+On Fri, May 7, 2010 at 4:29 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Fri, 7 May 2010, Avery Pennarun wrote:
+>> Since the options it *does* have are exactly the same as .git/config,
+>> however, naming it .gitconfig makes sense.
+>
+> Well, I disagree.
+>
+>> I'd say just print a
+>> warning when reading options that are going to be ignored for security
+>> reasons (or because they're not known at all, or whatever).
+>
+> Or just make it .gitparams (or anything you wish) which is not the same
+> as gitconfig. This way it is less likely to get bogus bug reports for
+> options that aren't supported.
 
+It has exactly the same syntax as ~/.gitconfig, and the options it
+does support can all be carried over literally to ~/.gitconfig.
+Calling it something else would imply that it deserves its own man
+page, which would need to repeat all the options that are already
+documented for ~/.gitconfig.
 
-On Fri, 7 May 2010, Eyvind Bernhardsen wrote:
-> 
-> How can you say that this is simpler than my syntax?
+I'd say something that's syntactically identical, and in some cases
+actually interchangeable, should have the same name.  Using a
+different name could actually be *misleading*.
 
-Because your syntax adds totally new attributes, so now you can't even 
-take an existing .gitattributes and make it do something sane - instead 
-you have to write totally new rules.
+Have fun,
 
-My suggestion just makes any existing usage do the "what you'd expect".
-
-THAT is simpler.
-
-		Linus
+Avery
