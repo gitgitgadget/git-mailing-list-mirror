@@ -1,65 +1,102 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH/RFC] Hacky version of a glob() driven config include
-Date: Fri, 7 May 2010 08:00:51 +0200
-Message-ID: <AANLkTik6z4cvUzjfq-q61tgk_MhqWKc_A55i3VauPSQC@mail.gmail.com>
-References: <u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
-	 <1273180440-8641-1-git-send-email-avarab@gmail.com>
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: What should be the CRLF policy when win + Linux?
+Date: Fri, 07 May 2010 09:15:59 +0200
+Message-ID: <hs0enf$vij$1@dough.gmane.org>
+References: <4BE141E3.2060904@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 07 08:00:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 07 09:16:50 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAGcL-0005fv-Vn
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 08:00:58 +0200
+	id 1OAHnl-0001ML-Iw
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 09:16:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752799Ab0EGGAw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 02:00:52 -0400
-Received: from mail-iw0-f197.google.com ([209.85.223.197]:38608 "EHLO
-	mail-iw0-f197.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752596Ab0EGGAw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 02:00:52 -0400
-Received: by iwn35 with SMTP id 35so954391iwn.21
-        for <git@vger.kernel.org>; Thu, 06 May 2010 23:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Abcf4Aro5uiqQVMkq/lexOQzk9u48WBCHkX44zqkboQ=;
-        b=qYlU8Nn84YyiOgbomcNqrzu08mzde/QIvY20su99dpFaBgkr60ppABPwYgR4LbGrAs
-         gzmsGkTuBAY4HtOfuQuMMyUsp43OonW32dk5l8frJ4UH4w/fc4PBAWqqRPUfEbQeZEio
-         NplJnv1ueLANPX/UAS4OzatL8uOKJIevtRz7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qaTW8Dobvxh6XDOT2PKSFpfFl+rNVtk19IvTRPpKQdkAc5tkZTPktCNaDL8/3ADm3y
-         uu8T9RTmvVwxfy6J56XYyAhgbBS13/6UM34SIdZutPRWDwdVBjSg8fL7OujYGezY+8oi
-         Ah/5aIwpYiwKxyPqaHvmJ3uwfPMeLksTEBcXQ=
-Received: by 10.231.143.137 with SMTP id v9mr3345909ibu.70.1273212051199; Thu, 
-	06 May 2010 23:00:51 -0700 (PDT)
-Received: by 10.231.39.205 with HTTP; Thu, 6 May 2010 23:00:51 -0700 (PDT)
-In-Reply-To: <1273180440-8641-1-git-send-email-avarab@gmail.com>
+	id S1753191Ab0EGHQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 May 2010 03:16:10 -0400
+Received: from lo.gmane.org ([80.91.229.12]:34033 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750929Ab0EGHQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 May 2010 03:16:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OAHn6-00013Y-Ed
+	for git@vger.kernel.org; Fri, 07 May 2010 09:16:08 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 May 2010 09:16:08 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 May 2010 09:16:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <4BE141E3.2060904@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146526>
 
-On Thu, May 6, 2010 at 23:14, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
->
-> Not-signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
-il.com>
+I'm not convinced, that one policy is a good solution, but it really
+depends on your project.
 
-So you don't agree to the Developer's Certificate of Origin, don't you?
 
-Bert
+What we do:
+.bat files with windows line endings
+.cmd .vbs files with windows line endings
+.sh files with unix file endings
+ source files (.c .h .py .pl) with unix file endings
+.txt files with unix file endings
+
+The rest untouched:
+you might add a precommti hook to verify this.
+SO war we din't bother to automate it, but I must admint, that we had
+occasional rare jickups.
+
+
+bye
+
+
+N
+
+
+mat wrote:
+> Hi
+> 
+> I have two git projects:
+> -one (A) with linux people only
+> -one (B) with someone using windows
+> 
+> As we had "end of line" problems with the person using windows (B), I used:
+> 
+> git config --global core.autocrlf true
+> 
+> Following advices from:
+> http://help.github.com/dealing-with-lineendings/
+> 
+> So everything now if fine with project B, but now some problems using
+> project (A): I wanted to copy the whole project file to another dir, and
+> now it is complaining about the change, signaling warning:
+> 
+> CRLF will be replaced by LF in .../A.
+> 
+> So I don't know exactly what I should do...Should I change all the CRLF
+> from project A, but people will have also problems, or can I switch the
+> config, once I'm using project A and B? It is not so clear in my mind
+> and I would appreciate any advice!!
+> 
+> Thanks a lot
+> 
+> Matthieu Stigler
+> 
+> 
+> 
