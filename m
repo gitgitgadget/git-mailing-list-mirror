@@ -1,65 +1,80 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: tracking un-committed patches in mailing list?
-Date: Fri, 7 May 2010 13:44:28 -0400
-Message-ID: <m2u46a038f91005071044w15594056sb7753b6268979228@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: git log -M -- filename is not working?
+Date: Fri, 7 May 2010 14:07:53 -0400
+Message-ID: <z2w76c5b8581005071107w79d30963g725269febe746f0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 07 19:44:59 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eugene Sajine <euguess@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 07 20:08:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OARbd-0007M6-L7
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 19:44:57 +0200
+	id 1OARxx-0001ii-6Q
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 20:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757190Ab0EGRow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 13:44:52 -0400
-Received: from mail-gx0-f217.google.com ([209.85.217.217]:32954 "EHLO
-	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756347Ab0EGRow (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 May 2010 13:44:52 -0400
-Received: by gxk9 with SMTP id 9so979578gxk.8
-        for <git@vger.kernel.org>; Fri, 07 May 2010 10:44:49 -0700 (PDT)
+	id S1757269Ab0EGSHz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 14:07:55 -0400
+Received: from mail-qy0-f195.google.com ([209.85.221.195]:53033 "EHLO
+	mail-qy0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757098Ab0EGSHz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 14:07:55 -0400
+Received: by qyk33 with SMTP id 33so2223142qyk.24
+        for <git@vger.kernel.org>; Fri, 07 May 2010 11:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=jVdg8Z1gXm7NPb1rpTH1U6V9O9QYI+L3sqb0xmYfwYw=;
-        b=IYetQcR1fk+BCuYV0EfPOhYexqmDXncJj2VKW6fWaVnfq9QdiEuO9nu9gXRtF5MFhr
-         xRByCIJ17HRncHDKwPf44kV7h55Xp1jCN9lBX5g+HErXgwM5cDszFJTCeJKN7G3Piia0
-         djpOmv+8SnN/hjMUC92iFioSVDklFvRYCJtKg=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=QhD2/2uKILZC2OwOJqkkNoehFPnQL6JPdnDkVSgGz+4=;
+        b=Fhuwy2GrTJ6bBpt7ruxjRuLNlgqm0Qdec0eIMmwQibpKLtb7fX/uTttvoF/z5JnHMw
+         hF1k3awqTvbSozlZA6PU+whgDYzl9DX4OMslzjBilkSut3DWUcHYX9ps/VcbJKyezKUQ
+         81AlyOEoy7jhC4qtf6tqrOmSnWCJpHG6447Ak=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=V8fT1hnwswOQv7gyWzcgF4Qcle51L+dHKYg4EJs3eX3wfQYMgUxs3QUvDGBleTvlVo
-         aowVx3qXjZp+O8EyVyxiUWHauKKd9nZfklSeClO0ML6RrRK8dSAL+knmfI1H3h2lxIiZ
-         jFSV2JOmWD/GQ33wjpNC8zp+wdRkDofQV4WQg=
-Received: by 10.231.182.79 with SMTP id cb15mr92017ibb.71.1273254289557; Fri, 
-	07 May 2010 10:44:49 -0700 (PDT)
-Received: by 10.231.120.230 with HTTP; Fri, 7 May 2010 10:44:28 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=AtgHuGeTA361xAp3FU0QXQ12OhnQUu2svPk0WXteUNUZLp2JYhzXkUQSfVboHTv0jf
+         1j2A4LdwHZfDecWFGvYeKra3YoBS21PzRaNtziZBSsVU2aa2TZiXJgu2qUpJNdmRMygh
+         lIRF2LrBuFh3wfhRrzVpmS4UgHAZDz7/GGrZc=
+Received: by 10.224.58.78 with SMTP id f14mr148287qah.385.1273255673777; Fri, 
+	07 May 2010 11:07:53 -0700 (PDT)
+Received: by 10.229.229.6 with HTTP; Fri, 7 May 2010 11:07:53 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146547>
 
-ISTR some folks here in git@vger are tracking patches that were posted
-to the list but not committed with a bot that subscribes to the list.
+Hi!
 
-I _thought_ it was ciabot. Maybe it's something else? A read through
-the git tools wikipage doesn't lead to any likely suspects...
+I tried it in both git 1.6.5.6 and git 1.7.0.5
 
-cheers,
+The file has been moved:
 
+=46rom
+Src/folder1/folder2/File.java
 
+To src/main/java/folder1/folder2/File.java
 
-m
--- 
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+I don=E2=80=99t think it is relevant but just in case: The author has
+committed the new file first, then the commit was amended with the
+deletion of the source file.
+So we ended up with the rename correctly detected.
+
+Now
+$ git log =E2=80=93M -- src/main/java/folder1/folder2/File.java
+
+Shows only one last commit and doesn=E2=80=99t show the history when th=
+e file
+was in source folder. Same thing happens with
+
+$ git log =E2=80=93C =C2=A0-- src/main/java/folder1/folder2/File.java
+
+What gives?
+
+Thanks,
+Eugene
