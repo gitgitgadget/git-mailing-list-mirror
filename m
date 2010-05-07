@@ -1,192 +1,175 @@
-From: Dmitry Pavlenko <dmit10@gmail.com>
-Subject: git-svn commit parents detection algorithm
-Date: Fri, 7 May 2010 17:35:10 +0400
-Message-ID: <201005071735.10322.dmit10@gmail.com>
+From: Knittl <knittl89@googlemail.com>
+Subject: Re: [PATCH] Show branch information in short output of git status
+Date: Fri, 7 May 2010 18:05:51 +0200
+Message-ID: <AANLkTilQZQzijU_xMz34eajpD05ogK01GRByDddoGGmI@mail.gmail.com>
+References: <AANLkTikM3B-9wFBuUzwpP2j9FpT34p9yysX-oLg5hZRj@mail.gmail.com> 
+	<20100505050640.GC8779@coredump.intra.peff.net> <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Semen Vadishev <semen.vadishev@gmail.com>,
-	Marc Strapetz <marc.strapetz@syntevo.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 07 15:40:20 2010
+X-From: git-owner@vger.kernel.org Fri May 07 18:06:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OANms-0001OA-E8
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 15:40:18 +0200
+	id 1OAQ4B-0006An-H3
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 18:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160Ab0EGNkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 09:40:11 -0400
-Received: from mail.intellij.net ([213.182.181.98]:45885 "EHLO
-	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753310Ab0EGNkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 May 2010 09:40:10 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 May 2010 09:40:08 EDT
-Received: (qmail 4520 invoked by uid 89); 7 May 2010 13:33:27 -0000
-Received: by simscan 1.1.0 ppid: 4455, pid: 4512, t: 0.0843s
-         scanners: regex: 1.1.0
-Received: from unknown (HELO dmit10.localnet) (172.26.240.255)
-  by mail.intellij.net with (DHE-RSA-AES256-SHA encrypted) SMTP; 7 May 2010 13:33:26 -0000
-User-Agent: KMail/1.13.3 (Linux/2.6.32-3-amd64; KDE/4.4.3; x86_64; ; )
+	id S1755348Ab0EGQGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 May 2010 12:06:13 -0400
+Received: from mail-ew0-f220.google.com ([209.85.219.220]:41920 "EHLO
+	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752517Ab0EGQGN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 May 2010 12:06:13 -0400
+Received: by ewy20 with SMTP id 20so330140ewy.1
+        for <git@vger.kernel.org>; Fri, 07 May 2010 09:06:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=dhBxZRh2ABizaj1KRI2i/Fb1MYfgQ015OcBMJEFiszI=;
+        b=XihND6E5fZGohqMb19O9JK0le4n/KIvGv5oSTHE7RxHgNZvhDN1HkQqpDguQ7HtJry
+         0y+SEWnybLl9CJAvldcxZHT7//y8VPQohU8c5ZrKHunCHMvJmoie77RLM/ygvV6o7niI
+         vUJjjJP3sRt4pIj9bbkXLC5A9vy7ZmxK/b5Pc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=KgZd7MnSDCAAWyiZCd2i/0F8SrVOJcMZN3c+sPd+1mq3UN2z+A4qt0PWV7RTK6hBva
+         agSCRVliFCDFegUkDK5kj+n+ApgcE9N7pqw2rt4hxwAwZjske9fcyWQYxt3Mp3Gy6Ghz
+         Ul3C5iQtxlfft+1X9Pt3xd0/RPiXdJap94XT4=
+Received: by 10.213.43.210 with SMTP id x18mr160936ebe.64.1273248371121; Fri, 
+	07 May 2010 09:06:11 -0700 (PDT)
+Received: by 10.213.3.5 with HTTP; Fri, 7 May 2010 09:05:51 -0700 (PDT)
+In-Reply-To: <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146536>
 
-Hello.
+hi all,
 
-I have several questions regarding git-svn parents detection algorithm for the 
-newly created branch. It seems that I have found some bugs.
+here's the second part of the branch, so it will only show branch
+information in `git status -s` if the additional option `-b` is given.
 
-The most general question is: could you describe a parents detection algorithm 
-in the git-svn?
+open for suggestions,
+daniel
 
-1. When I try to fetch revision created like this:
-svn cp trunk branches/branch1
-svn merge http://host/path/branches/branch2 branches/branch1
-svn commit
+----------8<-------------
+From 00d7aa6872a8aaf98c7e5550ba64ec6e093ca897 Mon Sep 17 00:00:00 2001
+From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+Date: Tue, 20 Apr 2010 22:40:54 +0200
+Subject: [PATCH 2/2] Hide branch information per default in short
+output of status
 
-svn:mergeinfo property is set but git-svn tries to do "svn switch"'s low level 
-analog if it's possible. svn:mergeinfo property is not received in this case 
-(revealed by setting a breakpoint at change_dir_prop in git-svn script) though 
-it's present ("svn propget" shows this property). But if "svn switch" 
-operation is not available in the perl svn client library simple "svn update" 
-operation is used. I didn't check but suspect that then svn:mergeinfo would be 
-processed and git-svn's find_extra_svn_parents would find addidtional parents. 
-But I thought that parents set shouldn't depend on the svn version (or at 
-least newer versions of svn library that support "svn switch" shouldn't make 
-behaviour worse).
+Branch information remains hidden, unless the command line option `-b`
+is given to `git status -s`. This way the command does not change from
+older versions.
 
-My opinion is that svn:mergeinfo should be checked in this case and merge 
-parents be detected and added to the whole parents set.
+Also hide branch information in `--porcelain` output
 
-2. Is it true that "find_extra_svn_parents" requires a reference to a list of 
-exactly one parent as 4th argument?
+Signed-off-by: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+---
+ builtin/commit.c |    8 ++++++--
+ wt-status.c      |    7 ++++---
+ wt-status.h      |    2 +-
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
-If @$parents is empty in the function "git rev-list" and "git merge-base" 
-calls in it would fail because of bad syntax. If @$parents has 2 or more 
-elements than merge-base call would have unpredictable behaviour.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index c5ab683..b058e66 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -92,6 +92,7 @@ static enum {
+ 	STATUS_FORMAT_SHORT,
+ 	STATUS_FORMAT_PORCELAIN,
+ } status_format = STATUS_FORMAT_LONG;
++static int status_show_branch;
 
-$merge_base = command_oneline(
-				"merge-base",
-				@$parents, $merge_tip,
-			);
-			
-Git merge-base command finds a merge-base between the first commit and any of 
-other commits listed as arguments. So if @$parents is (a, b) "git merge-base" 
-will find common ancestor between "a" and "b" or "a" and $merge_tip that is 
-nonsense. 
+ static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+ {
+@@ -133,6 +134,7 @@ static struct option builtin_commit_options[] = {
+ 	OPT_BOOLEAN(0, "dry-run", &dry_run, "show what would be committed"),
+ 	OPT_SET_INT(0, "short", &status_format, "show status concisely",
+ 		    STATUS_FORMAT_SHORT),
++	OPT_BOOLEAN(0, "branch", &status_show_branch, "show branch information"),
+ 	OPT_SET_INT(0, "porcelain", &status_format,
+ 		    "show porcelain output format", STATUS_FORMAT_PORCELAIN),
+ 	OPT_BOOLEAN('z', "null", &null_termination,
+@@ -417,7 +419,7 @@ static int run_status(FILE *fp, const char
+*index_file, const char *prefix, int
 
-More over if the "find_extra_svn_parents" call requires exactly one parent and 
-"make_log_entry" function in git-svn is always called with one-element parents 
-list then finding additional parents in "find_extra_svk_parents" method that  is 
-called before "find_extra_svn_parents" would cause fail of finding extra parents 
-in  "find_extra_svn_parents".
+ 	switch (status_format) {
+ 	case STATUS_FORMAT_SHORT:
+-		wt_shortstatus_print(s, null_termination);
++		wt_shortstatus_print(s, null_termination, status_show_branch);
+ 		break;
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(s, null_termination);
+@@ -1022,6 +1024,8 @@ int cmd_status(int argc, const char **argv,
+const char *prefix)
+ 		OPT__VERBOSE(&verbose),
+ 		OPT_SET_INT('s', "short", &status_format,
+ 			    "show status concisely", STATUS_FORMAT_SHORT),
++		OPT_BOOLEAN('b', "branch", &status_show_branch,
++		            "show branch information"),
+ 		OPT_SET_INT(0, "porcelain", &status_format,
+ 			    "show porcelain output format",
+ 			    STATUS_FORMAT_PORCELAIN),
+@@ -1063,7 +1067,7 @@ int cmd_status(int argc, const char **argv,
+const char *prefix)
 
-Maybe these lines should be rewritten as 
+ 	switch (status_format) {
+ 	case STATUS_FORMAT_SHORT:
+-		wt_shortstatus_print(&s, null_termination);
++		wt_shortstatus_print(&s, null_termination, status_show_branch);
+ 		break;
+ 	case STATUS_FORMAT_PORCELAIN:
+ 		wt_porcelain_print(&s, null_termination);
+diff --git a/wt-status.c b/wt-status.c
+index f7f1269..e1b8188 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -781,11 +781,12 @@ static void wt_shortstatus_print_tracking(struct
+wt_status *s)
+ 	color_fprintf_ln(s->fp, header_color, "]");
+ }
 
-$merge_base = command_oneline(
-				"merge-base",
-				$merge_tip, @$parents
-			);
-This makes sense in the case of several parents.
+-void wt_shortstatus_print(struct wt_status *s, int null_termination)
++void wt_shortstatus_print(struct wt_status *s, int null_termination,
+int show_branch)
+ {
+ 	int i;
 
-3. What's the purpose of "parents_exclude" git-svn's function?
+-	wt_shortstatus_print_tracking(s);
++	if(show_branch)
++		wt_shortstatus_print_tracking(s);
 
-It is called on reference to already found parents list and @commits that are 
-found as "merge tips" of svn:mergeinfo property. But note that svn:mergeinfo 
-value lines are listed *alphabetically*. For example:
-/branches/branch1:4
-/branches/branch2:3-4,8
-/trunk:2,7
-disregarding their reverse chronological order(!). So the @commits list would 
-contain hashes that corresponding to (branch1, r4), (branch2, r8), (trunk, r7) 
-in this "alphabetical" order (note: alphabetical order depends on branch 
-naming).
+ 	for (i = 0; i < s->change.nr; i++) {
+ 		struct wt_status_change_data *d;
+@@ -811,5 +812,5 @@ void wt_porcelain_print(struct wt_status *s, int
+null_termination)
+ 	s->use_color = 0;
+ 	s->relative_paths = 0;
+ 	s->prefix = NULL;
+-	wt_shortstatus_print(s, null_termination);
++	wt_shortstatus_print(s, null_termination, 0);
+ }
+diff --git a/wt-status.h b/wt-status.h
+index ca5db99..4272539 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -61,7 +61,7 @@ void wt_status_prepare(struct wt_status *s);
+ void wt_status_print(struct wt_status *s);
+ void wt_status_collect(struct wt_status *s);
 
-Let us consider another example: we have commits in @commits: a, b, c, d, e, 
-f, g (in this order) and $@parents consists of commit "h" . And suppose for 
-simplicity that no commit of a, b, c, d, e, f, g is reachable from "h" (than 
-"--not h" will have no sense). Suppose the commits have the following reverse 
-chronological order e, c, f, g, a, b, d.
+-void wt_shortstatus_print(struct wt_status *s, int null_termination);
++void wt_shortstatus_print(struct wt_status *s, int null_termination,
+int show_branch);
+ void wt_porcelain_print(struct wt_status *s, int null_termination);
 
-Then do {} while () in the "parents_exclude" will have 3 iterations:
-
-"git rev-list -1 a b c d e f g --not h" for this case will return simply the 
-latest 
-commit (e). Then inner cycle will set @new to the slice @new = {a, b, c, d} // 
-f, g are rejected because they are after "e". We add "e" to @excluded and 
-repeat
-
-`git rev-list -1 a b c d --not h` will return c as latest from these. 
-New value of @new will become {a, b} and @excluded {e, c}
-
-`git rev-list -1 a b --not h` will return a.
-@new will become empty and @excluded will contain {e, c, a}.
-
-Personally I don't know why these commits are better than others.
-
-Moreover the order of {e, c, a} is not used later in the 
-"find_extra_svn_parents" function.
-
-I have two ideas about parents_exclude's purpose:
-1) it lists a set of all commits not reachable from parents;
-2) it lists a set of all commits not reachable from parents in *chronological* 
-order.
-
-To achieve 1) the "last;" operator should be removed from "parents_exclude" 
-function.
-To achieve 2) the "last;" operator should be removed from "parents_exclude" 
-function and the function result should be assigned to @merge_tips list in 
-"find_extra_svn_parents" function (without  "map { $_ => 1 }" construction) to 
-save @excluded commits reverse chronological *order*.
-
-As for me 2) is the most reasonable because then fetched svn repository 
-wouldn't depend on branching naming.
-
-If parents in @excluded shouldn't be reachable from another parents (that is 
-true) then
-
-my @cmd = ('rev-list', "-1", @commits, "--not", @$parents);
-
-should be replaced into
-
-my @cmd = ('rev-list', "-1", @commits, "--not", @$parents, @excluded );
-
-Maybe this will make useless the check done in the doulbe cycle at the end of 
-"find_extra_svn_parents":
-
-	for ( my $i = 0; $i <= $#new_parents; $i++ ) {
-			for ( my $j = 0; $j <= $#new_parents; $j++ ) {
-
-4. The "parents_exclude" function pushes "undef" value to @merge_tips (in the 
-case of bad $tip_commit) list and then excludes them by "grep" and "next 
-unless $merge_tip and $excluded{$merge_tip};" line. So pushing "undef" is 
-useless operation, it shouldn't perplex.
-
-5. In the function "do_fetch" the last commit (my $lc = $self->last_commit) is 
-*not* put to the parents list for the "find_extra_svn_parents" function in the 
-case when "copyfrom_path parent" from "find_parent_branch" is found (it is 
-added later then) but is put otherwise. Is it done intentionally or by a 
-mistake?
-
-6. Could you please tell in a few word "linearize_history" function's goals? 
-In all cases I tested the commits list returned by it was the same as its 
-input hash list. I tried to imagine the situation when these lists differ.
-
-Let 
-commit c1 has parent c2
-commit c2 has parents c3 and c4
-commit c3 has parent c4
-commit c4 has parent c5
-
-In this case "linearize_history" for (c1, c2, c3, c4, c5) list would return 
-(c1, c2, c3) but I can't reproduce this situation by "git" command (I will try 
-using git low-level library later).
-Additional question: is it true that "git svn dcommit" will loose commits c4 
-and c5 in this strange case?
+ #endif /* STATUS_H */
+-- 
+1.7.1.12.g82b44.dirty
