@@ -1,74 +1,65 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 10:10:09 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005071007320.901@i5.linux-foundation.org>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com> <cover.1273183206.git.eyvind.bernhardsen@gmail.com> <7v4oijhdsi.fsf@alter.siamese.dyndns.org>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: tracking un-committed patches in mailing list?
+Date: Fri, 7 May 2010 13:44:28 -0400
+Message-ID: <m2u46a038f91005071044w15594056sb7753b6268979228@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org, hasan.aljudy@gmail.com,
-	kusmabite@googlemail.com, prohaska@zib.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 07 19:13:24 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 07 19:44:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAR75-0007cY-OK
-	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 19:13:24 +0200
+	id 1OARbd-0007M6-L7
+	for gcvg-git-2@lo.gmane.org; Fri, 07 May 2010 19:44:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755505Ab0EGRNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 May 2010 13:13:14 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:56212 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753961Ab0EGRNN (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 13:13:13 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47HC4Fq030535
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 7 May 2010 10:12:05 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o47HC4iT000990;
-	Fri, 7 May 2010 10:12:04 -0700
-In-Reply-To: <7v4oijhdsi.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.946 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757190Ab0EGRow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 May 2010 13:44:52 -0400
+Received: from mail-gx0-f217.google.com ([209.85.217.217]:32954 "EHLO
+	mail-gx0-f217.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756347Ab0EGRow (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 May 2010 13:44:52 -0400
+Received: by gxk9 with SMTP id 9so979578gxk.8
+        for <git@vger.kernel.org>; Fri, 07 May 2010 10:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=jVdg8Z1gXm7NPb1rpTH1U6V9O9QYI+L3sqb0xmYfwYw=;
+        b=IYetQcR1fk+BCuYV0EfPOhYexqmDXncJj2VKW6fWaVnfq9QdiEuO9nu9gXRtF5MFhr
+         xRByCIJ17HRncHDKwPf44kV7h55Xp1jCN9lBX5g+HErXgwM5cDszFJTCeJKN7G3Piia0
+         djpOmv+8SnN/hjMUC92iFioSVDklFvRYCJtKg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=V8fT1hnwswOQv7gyWzcgF4Qcle51L+dHKYg4EJs3eX3wfQYMgUxs3QUvDGBleTvlVo
+         aowVx3qXjZp+O8EyVyxiUWHauKKd9nZfklSeClO0ML6RrRK8dSAL+knmfI1H3h2lxIiZ
+         jFSV2JOmWD/GQ33wjpNC8zp+wdRkDofQV4WQg=
+Received: by 10.231.182.79 with SMTP id cb15mr92017ibb.71.1273254289557; Fri, 
+	07 May 2010 10:44:49 -0700 (PDT)
+Received: by 10.231.120.230 with HTTP; Fri, 7 May 2010 10:44:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146546>
+
+ISTR some folks here in git@vger are tracking patches that were posted
+to the list but not committed with a bot that subscribes to the list.
+
+I _thought_ it was ciabot. Maybe it's something else? A read through
+the git tools wikipage doesn't lead to any likely suspects...
+
+cheers,
 
 
 
-On Fri, 7 May 2010, Junio C Hamano wrote:
-
-> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
-> 
-> > - An attribute called "auto-eol" is set in the repository to turn on
-> >   normalization of line endings.  Since attributes are content, the
-> >   setting is copied when the repository is cloned and can be changed in
-> >   an existing repository (with a few caveats).  Setting this attribute
-> >   is equivalent to setting "core.autocrlf" to "input" or "true".
-> 
-> In what way is this attribute different from existing "crlf" attribute?
-
-The existing crlf attribute is a no-op _unless_ core.autocrlf is set, 
-isn't it?
-
-The whole point of Eyvind's series is to be able to set crlf attributes 
-without having to set the config option - because he wants to make sure 
-that a new clone always gets the proper crlf handling without users 
-having to do anything extra.
-
-And I do have to say that it makes sense.
-
-I also do think that maybe we could just change the existing crlf 
-attribute to work even without 'core.autocrlf'. 
-
-			Linus
+m
+-- 
+ martin.langhoff@gmail.com
+ martin@laptop.org -- School Server Architect
+ - ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ - http://wiki.laptop.org/go/User:Martinlanghoff
