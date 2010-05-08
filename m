@@ -1,63 +1,82 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] Makefile: Fix 'clean' target to remove all gitweb build files
-Date: Sat, 08 May 2010 18:36:15 +0100
-Message-ID: <4BE5A10F.6040401@ramsay1.demon.co.uk>
+From: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
+Subject: Re: Git Master Master Replication
+Date: Sat, 8 May 2010 18:44:42 +0100
+Message-ID: <n2y86ecb3c71005081044pae211c37lc01ddc5f9f2ff146@mail.gmail.com>
+References: <o2tc2f2fad1005080341z42b389e0i791c6c7a02dee5e5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 08 19:37:59 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: amitesh kumar <amitesh.a.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 08 19:45:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAnyQ-00026N-TA
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 19:37:59 +0200
+	id 1OAo5P-0005In-FS
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 19:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab0EHRhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 13:37:19 -0400
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:38152 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751610Ab0EHRhS (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 May 2010 13:37:18 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1OAnxk-0007Kx-Y8; Sat, 08 May 2010 17:37:17 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1753636Ab0EHRpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 13:45:04 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:39323 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822Ab0EHRpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 13:45:02 -0400
+Received: by pxi5 with SMTP id 5so1037233pxi.19
+        for <git@vger.kernel.org>; Sat, 08 May 2010 10:45:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type;
+        bh=W8iXRcfJ/1+DNpy2nTE52eVkwn9go432ykofzFHb4qE=;
+        b=i2Q/9bT13ulLEBMsgD29VoeYVTQzgsIdz915uEJI2qYhV6NFWMfVNumZ0pVOALljhJ
+         h/3CqqfkKNfW3vAMKHOAHbF8HW6HXdD6sSviN0fFvxtemr/us1IHEYVIHGynQJk3U/DD
+         65ykVnvrEnOz5dfVT9YGB26BPD++iHe28Y+x0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=m7px4mr1cqyfWjlvkQymUHPK+tbSNkQHXDDBJp9WTpUx1xRbFDKPeOYNbjyY3W6spX
+         B7QDasHasl5qdlWEXlhFfzWVFHQ5yC8UoysxXaHxDFsczlsifDv6tjJUkh4R5PZKoW9e
+         8JboUBe48H1gZWbAPr8pXuG086uexhXVQLoV0=
+Received: by 10.142.117.14 with SMTP id p14mr1096884wfc.144.1273340702110; 
+	Sat, 08 May 2010 10:45:02 -0700 (PDT)
+Received: by 10.142.191.1 with HTTP; Sat, 8 May 2010 10:44:42 -0700 (PDT)
+In-Reply-To: <o2tc2f2fad1005080341z42b389e0i791c6c7a02dee5e5@mail.gmail.com>
+X-Google-Sender-Auth: a79ddd83f319f621
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146668>
 
+On 8 May 2010 11:41, amitesh kumar <amitesh.a.kumar@gmail.com> wrote:
+> Hi im working on a project the will be deployed in many countries,
+> Is it possible with Git to host n masters?
+> Can any change on a particular master be propagated to others?
+>
+> I have had a look at Gerrit2 but it only looks one way.
+>
+> Cheers
+> Amitesh
 
-In particular the gitweb/GITWEB-BUILD-OPTIONS file was not being
-removed by the main Makefile. However, the gitweb/Makefile has a
-'clean' target that correctly removes all the build products.
-In order to fix the problem, rather than duplicate the clean-up
-instructions, we change the main Makefile so that it delegates
-the clean-up actions to the gitweb Makefile.
+In one git repository you can have only one branch with exactly the
+same ref e.g. refs/heads/master.
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+By editing .git/config you can setup unlimited amount of locations of
+where to pull from and where to push to (and you can pull from many
+locations to a same branch and push one branch to many locations)
 
-diff --git a/Makefile b/Makefile
-index 910f471..eb1d162 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2098,7 +2098,7 @@ clean:
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
- 	$(MAKE) -C Documentation/ clean
- ifndef NO_PERL
--	$(RM) gitweb/gitweb.cgi gitweb/gitweb.min.*
-+	$(MAKE) -C gitweb clean
- 	$(MAKE) -C perl clean
- endif
- ifndef NO_PYTHON
--- 
-1.7.1
+[remote "server-uk"]
+      push = +refs/heads/master:refs/heads/master
+      push = +refs/heads/uk/*:refs/heads/*
+      pushurl = bla.co.uk
+
+Similarly you can specify pulls using * or specifing each one.
+
+.git/config is extremly flexible I'm sure you can make it work with
+any amount of remotes =)
+
+hope this helps.
