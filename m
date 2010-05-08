@@ -1,133 +1,76 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Sun, 9 May 2010 03:42:22 +0400
-Message-ID: <20100508234222.GA14069@dpotapov.dyndns.org>
-References: <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org>
- <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
- <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com>
- <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org>
- <384AA932-227B-43B0-9D38-560A3567918A@gmail.com>
- <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org>
- <m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com>
- <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
- <20100508204934.GA25566@dpotapov.dyndns.org>
- <alpine.LFD.2.00.1005081450260.3711@i5.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cherry-pick: do not dump core when iconv fails
+Date: Sat, 08 May 2010 16:55:56 -0700
+Message-ID: <7veihmaqyb.fsf@alter.siamese.dyndns.org>
+References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
+ <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
+ <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
+ <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
+ <20100428233758.GA1654@progeny.tock>
+ <20100429191150.GA10526@inner.home.ulmdo.de>
+ <20100429194936.GA31941@progeny.tock>
+ <20100429202139.GW10879@inner.home.ulmdo.de>
+ <20100430133228.GA1620@progeny.tock> <20100508231729.GA6718@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun May 09 01:47:08 2010
+Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 01:56:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAtjc-0002UI-1y
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 01:47:04 +0200
+	id 1OAtsW-0004tD-7P
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 01:56:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752622Ab0EHXm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 19:42:27 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:35689 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065Ab0EHXm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 19:42:26 -0400
-Received: by bwz19 with SMTP id 19so1159346bwz.21
-        for <git@vger.kernel.org>; Sat, 08 May 2010 16:42:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=PRDVIWNLcbvy0V9UkwmSlfaCoL2YZCW9xXts8VnHWsk=;
-        b=QqwLHDQovBmBif0IpJ1QJrSRk97EVFVZuTtGH4VYEYvHvi15dANFp2Vk9KkTheXFXH
-         reA3sMgfdk7Sypw2qdMVjKmxV1RPOxJvLZQPvtVAXaTxCvZf+ep3oJj5cyVfi48mcazy
-         kEzwv7y/VkW+fUmPkl0cpegVSRykIJ6FMYxEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KOI8nVvFPbJDr2KhvInknxXcFkjrjbBxSY/XLg4CHBnZY+rSNixeGP4mhamBkwkGeN
-         QaeEM898sdQmuerSVlAxkzWvnia8PVOYqh+CFvRdE5tPupkZUy9k30kd8LeJisFj0lM0
-         d4YSH9oqXVGfCA+t3lLCO+T3Z7boCqfRp2YWE=
-Received: by 10.204.131.198 with SMTP id y6mr1243727bks.4.1273362144989;
-        Sat, 08 May 2010 16:42:24 -0700 (PDT)
-Received: from localhost (ppp85-141-234-94.pppoe.mtu-net.ru [85.141.234.94])
-        by mx.google.com with ESMTPS id 14sm1082228bwz.6.2010.05.08.16.42.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 08 May 2010 16:42:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1005081450260.3711@i5.linux-foundation.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753156Ab0EHX4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 19:56:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46247 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960Ab0EHX4I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 19:56:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89954B1D76;
+	Sat,  8 May 2010 19:56:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=exsoBbxnf6gVzPChOMhLK/B8c5E=; b=dy2ZWr
+	RDoRygkLX5viF1iiX5v9h5j7Zka7fPvadRF3i89GF71fI6WkMh+QUDNBQ0qMn3vC
+	+RKCwOY4KMGYx7GPXkSkDvUXhW59uFOylzuOnZh0Sfm0FH2sWAvO015duGgWbWKl
+	hP8K09IeIrGsDwyi8ZmWAMi2gZ/dGJM9M+LRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jhmnviMJBFWhm/JhFCAR5ig0URReBOW4
+	kJeYYa1W5M/iEsLmausm5WoVxpHKLN1YqIXcYI/TREpXuloXx7sMlAF3ulb+pnH5
+	yWKRsiOiJgpRJ6LZQyYHvgfEFPDrv1SRc2ivPxZzRgv+j0FjHvBTXTSgwveLr7bM
+	y/p8TfDm1aI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DEEBB1D75;
+	Sat,  8 May 2010 19:56:01 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A987EB1D74; Sat,  8 May
+ 2010 19:55:57 -0400 (EDT)
+In-Reply-To: <20100508231729.GA6718@progeny.tock> (Jonathan Nieder's message
+ of "Sat\, 8 May 2010 18\:17\:29 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 414811C2-5AFD-11DF-9E5E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146688>
 
-On Sat, May 08, 2010 at 02:54:35PM -0700, Linus Torvalds wrote:
-> 
-> 
-> On Sun, 9 May 2010, Dmitry Potapov wrote:
-> >
-> > explanation could be easily avoided by renaming 'crlf' as 'eol'.
-> 
-> What the heck is wrong with people?
-> 
-> > Now, if you look at this:
-> > 
-> >       *.sln -eol
-> >       *.jpg -eol
-> >       *.txt eol
-> >       *.[ch] eol
-> 
-> Right. Look at it. It's totally incomprehensible. It's _worse_ than "crlf" 
-> as a name.
-> 
-> What the f*ck does "jpg" have to do with "eol"? Nothing.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Right, nothing, in other words, no eol conversion... and "-eol" seems to
-express this idea well. So, I don't see why it is worse than "crlf"...
+> When cherry-picking, usually the new and old commit encodings are both
+> UTF-8.  Most old iconv implementations do not support this trivial
+> conversion, so on old platforms, out->message remains NULL, and later
+> attempts to read it segfault.
 
-Personally, I do not care whether it is "crlf", or "eol", but a lot of
-people that I know were confused by crlf, because they thought that it
-means that this file is stored with crlf, while this attribute actually
-means that file needs eol conversion.
+This agrees with what builtin/commit.c does around ll.896; even if the
+encoding pair says "utf8" and "UTF-8", we would do the right thing.
 
-> 
-> You could talk about "binary" vs "text", and it would make sense, but your 
-> argument that "eol" is somehow better than "crlf" is just insane.
-> 
-> So I could certainly see
-> 
-> 	*.jpg binary
-> 	*.txt text
-> 
-> making sense. But "eol" is certainly no better than "crlf". 
-
-What about .sln files? They are xml files with CRLF ending. Does it mean
-they are binary? Based on how it is stored, it is certainly binary, but
-when it comes to "diff" or even "merge" you may want to think about them
-as text, and, in general, people tend to think about them as text files.
-
-Another example is shell scripts. You really want them to be LF even on
-Windows. So, is it a binary file too?
-
-So, this approach is not so intuitive as it may appear if you consider
-only .jpg and .txt.
-
-> 
-> In the end, crlf is what we have. We're not getting rid of it, so if 
-> somebody were to actually rename it, that would just mean that there are 
-> _two_ different ways to say the same thing. And quite frankly, I think 
-> that's worse than what we have now, so I don't think it's worth it.
-
-I was not sure myself that the idea of renaming worth it... While I do
-think that "eol" is a better name than "crlf", but not by big margin,
-and as you said crlf is what we have now... so be it...
-
-
-Dmitry
+Thanks.
