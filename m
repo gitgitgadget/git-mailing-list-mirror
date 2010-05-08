@@ -1,75 +1,89 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] Add [] as an alias for a reference to the empty
- tree
-Date: Sat, 8 May 2010 00:53:20 -0400
-Message-ID: <20100508045319.GD14998@coredump.intra.peff.net>
-References: <1273250247-20762-1-git-send-email-pkj@axis.com>
+Subject: Re: [PATCH/RFC] Hacky version of a glob() driven config include
+Date: Sat, 8 May 2010 01:06:32 -0400
+Message-ID: <20100508050632.GE14998@coredump.intra.peff.net>
+References: <u2i51dd1af81004060115t5f837840z5adcf83622fa8882@mail.gmail.com>
+ <1273180440-8641-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Sat May 08 06:54:47 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eli Barzilay <eli@barzilay.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 08 07:06:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAc3q-0004Xj-NS
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 06:54:47 +0200
+	id 1OAcFV-00005q-5v
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 07:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990Ab0EHExW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 00:53:22 -0400
-Received: from peff.net ([208.65.91.99]:37064 "EHLO peff.net"
+	id S1751113Ab0EHFGh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 01:06:37 -0400
+Received: from peff.net ([208.65.91.99]:40071 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750761Ab0EHExW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 00:53:22 -0400
-Received: (qmail 2693 invoked by uid 107); 8 May 2010 04:53:37 -0000
+	id S1751095Ab0EHFGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 01:06:36 -0400
+Received: (qmail 2730 invoked by uid 107); 8 May 2010 05:06:50 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 08 May 2010 00:53:37 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 May 2010 00:53:20 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 08 May 2010 01:06:50 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 May 2010 01:06:32 -0400
 Content-Disposition: inline
-In-Reply-To: <1273250247-20762-1-git-send-email-pkj@axis.com>
+In-Reply-To: <1273180440-8641-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146637>
 
-On Fri, May 07, 2010 at 06:37:27PM +0200, Peter Kjellerstedt wrote:
+On Thu, May 06, 2010 at 09:14:00PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> Instead of specifying the SHA1 for the empty tree (i.e.,
-> 4b825dc642cb6eb9a060e54bf8d69288fbee4904) one can now say [], e.g.,
-> 'git diff [] v1.7.1' would give all the changes between the empty tree
-> and the tag v1.7.1.
+> This is not ready for inclusion in anything. Commiting for RFC on
+> whether this way of doing it is sane in theory.
 
-FWIW, I like the idea of a special namespace that indicates "this is not
-a regular ref, but you can resolve it to some object". It seems to come
-up once in a while, but I don't recall anybody ever actually making a
-patch.
+I think the goal of having globbing include files is reasonable.
 
-> The rationale for selecting [] as the alias for the empty tree was that
-> it looks empty, the brackets are not used for anything related to
-> references (AFAIK), they are not allowed in references according to
-> 'man git-check-ref-format', and the syntax can easily be extended to
-> allow other types of references by adding information between the
-> brackets.
+>   * It relies on the GNU GLOB_TILDE extension with no
+>     alternative. That can be done by calling getenv("HOME") and
+>     s/~/$home/.
 
-I am a little iffy on brackets, as they can invoke shell wildcarding
-behavior. But the fact that they don't cause a syntactic conflict does
-make them appealing.
+We already have expand_user_path which handles ~ properly (it is used
+for the values of some config entries). You could then glob the result.
 
-Based on past discussions, I suspect other people would be interested
-in:
+> +cat > .git/config << EOF
+> +[some]
+> +	variable =3D blah
+> +[voodoo]
+> +	include =3D .git/more_config_*
+> +EOF
 
-  $ git diff [index] HEAD
-  $ git diff HEAD [index]
-  $ git diff [working-tree] [index]
+My eyes! The goggles do nothing!
 
-etc. I don't think I would want to type those all the time, but they
-conceptually are quite clear about what is happening, so they may be
-nice for showing new users what is happening with each diff invocation
-(as opposed to, say, "git diff --cached" versus "git diff", which is
-somewhat unintuitive, even though it is more handy in practice).
+That syntax is horrid. Wouldn't it be much simpler to introduce some
+top-level syntax for "include this file here", with some very simple
+semantics:
+
+  - the included file starts with no section. It should have its own
+    section header.
+
+  - after returning from the included file, we are in no section. You
+    need a new section header.
+
+Yes, there are some complex tricks those semantics won't allow, but the=
+y
+are simple to read and understand, simple to use, and simple to
+implement.
+
+And really, what is the point in supporting crap like:
+
+   $ cat .gitconfig
+   [diff]
+   #include foo
+
+   $ cat foo
+   rename =3D true
 
 -Peff
