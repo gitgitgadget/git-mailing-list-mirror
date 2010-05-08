@@ -1,119 +1,70 @@
-From: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>
-Subject: [PATCH REMINDER] date.c: print "1 second ago", not "1 seconds ago"
-Date: Sat, 8 May 2010 11:27:30 +0200
-Message-ID: <20100508092730.GB26678@triton>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: tracking un-committed patches in mailing list?
+Date: Sat, 8 May 2010 18:32:46 +0800
+Message-ID: <p2obe6fef0d1005080332k26621c2fw48ea2482e84202dd@mail.gmail.com>
+References: <m2u46a038f91005071044w15594056sb7753b6268979228@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	sunny@sunbase.org
-X-From: git-owner@vger.kernel.org Sat May 08 11:31:34 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 08 12:32:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAgNc-0003F8-N0
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 11:31:29 +0200
+	id 1OAhL4-0001Oy-D4
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 12:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144Ab0EHJ1g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 05:27:36 -0400
-Received: from smtp.domeneshop.no ([194.63.248.54]:50207 "EHLO
-	smtp.domeneshop.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751681Ab0EHJ1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 05:27:35 -0400
-Received: from sfn-inkubator-70-227.hib.no ([158.37.70.227] helo=triton)
-	by smtp.domeneshop.no with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.71)
-	(envelope-from <sunny@sunbase.org>)
-	id 1OAgJo-0003PU-HW; Sat, 08 May 2010 11:27:32 +0200
-Mail-Followup-To: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-OpenPGP: id=94A506E5; url=http://www.sunbase.org/pubkey.asc
-X-Request-PGP: http://www.sunbase.org/pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751389Ab0EHKct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 06:32:49 -0400
+Received: from mail-yx0-f171.google.com ([209.85.210.171]:41847 "EHLO
+	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170Ab0EHKcs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 06:32:48 -0400
+Received: by yxe1 with SMTP id 1so1371678yxe.33
+        for <git@vger.kernel.org>; Sat, 08 May 2010 03:32:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=QJ3PgVFYhTOfFm95ZFrzXpOWeOPBQyn5EEnu3XO6IEc=;
+        b=t1XKN2gUsTl1m8dFi7TXpQEgo8z7jZl36MSKBMrxMtgZDaJgJAWRU7cpzWvxqAksHT
+         ya6+h/kbuIXvEIY5O8hRrju2aDmd/2dpHdyFfR4bTcCE+rWJ6B5cBKnabUyOuXyDYqRM
+         JrNmm4TgqYxfdWEZJzNXCusVLJKvjqwVtLtic=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=YNlw2WcmomYvTqxDvWwSJtjSKZULWMF1kpiH1Pe4L31L73aep7hiINkccWhy0r3boS
+         AnI8q13ur0dz+kWlkzg2oCGQzWOzyTiAJ0ZGi6EVX/y4PXpjS36IHidx+SAGARkFv4LQ
+         VtFCeDirRHK9x6EBhU/r66PJSFuwTiRi8gam8=
+Received: by 10.231.156.75 with SMTP id v11mr804837ibw.25.1273314766133; Sat, 
+	08 May 2010 03:32:46 -0700 (PDT)
+Received: by 10.231.36.201 with HTTP; Sat, 8 May 2010 03:32:46 -0700 (PDT)
+In-Reply-To: <m2u46a038f91005071044w15594056sb7753b6268979228@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146653>
 
 Hi,
-resending a trivial patch for correcting the output of "1 seconds" to=20
-"1 second" when using --date=3Drelative. The original patch was sent=20
-2010-04-21 07:31:00+0200. The patch is created against current master=20
-(ec768ed5) and passes all tests.
 
+On Sat, May 8, 2010 at 1:44 AM, Martin Langhoff
+<martin.langhoff@gmail.com> wrote:
+> ISTR some folks here in git@vger are tracking patches that were posted
+> to the list but not committed with a bot that subscribes to the list.
+>
+> I _thought_ it was ciabot. Maybe it's something else? A read through
+> the git tools wikipage doesn't lead to any likely suspects...
 
-=46rom ec768ed5659b0e0f91c98a01c981bc359153a7b4 Mon Sep 17 00:00:00 200=
-1
-=46rom: =3D?UTF-8?q?=3DC3=3D98yvind=3D20A.=3D20Holm?=3D <sunny@sunbase.=
-org>
-Date: Wed, 21 Apr 2010 06:21:06 +0200
-Subject: [PATCH] date.c: print "1 second ago", not "1 seconds ago"
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+AFAIK, except for the authors themselves of patches, I don't know of
+anything tracking them - well, that's my experience as a patch
+submitter. I would browse git's branches on gitweb on kernel.org, and
+sometimes keep an eye on "What's cooking" updates from Junio.
 
-When using --date=3Drelative, print "1 second ago" instead of "1 second=
-s
-ago".
-
-t0006: Add tests for 0, 1 and 2 seconds ago, to ensure that
---date=3Drelative prints "1 second ago" and "x seconds ago" when x !=3D=
- 1.
-
-Signed-off-by: =C3=98yvind A. Holm <sunny@sunbase.org>
----
- date.c          |    3 ++-
- t/t0006-date.sh |    4 ++++
- 2 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/date.c b/date.c
-index 002aa3c..6aec22b 100644
---- a/date.c
-+++ b/date.c
-@@ -96,7 +96,8 @@ const char *show_date_relative(unsigned long time, in=
-t tz,
- 		return "in the future";
- 	diff =3D now->tv_sec - time;
- 	if (diff < 90) {
--		snprintf(timebuf, timebuf_size, "%lu seconds ago", diff);
-+		snprintf(timebuf, timebuf_size, "%lu second%s ago",
-+				diff, (diff !=3D 1 ? "s" : ""));
- 		return timebuf;
- 	}
- 	/* Turn it into minutes */
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 75b02af..3069545 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -15,6 +15,9 @@ check_show() {
- 	"
- }
-=20
-+check_show 0 '0 seconds ago'
-+check_show 1 '1 second ago'
-+check_show 2 '2 seconds ago'
- check_show 5 '5 seconds ago'
- check_show 300 '5 minutes ago'
- check_show 18000 '5 hours ago'
-@@ -48,6 +51,7 @@ check_approxidate() {
- }
-=20
- check_approxidate now '2009-08-30 19:20:00'
-+check_approxidate '1 second ago' '2009-08-30 19:19:59'
- check_approxidate '5 seconds ago' '2009-08-30 19:19:55'
- check_approxidate 5.seconds.ago '2009-08-30 19:19:55'
- check_approxidate 10.minutes.ago '2009-08-30 19:10:00'
---=20
-1.7.1.11.g3bf78
-
-
-
-
-Regards,
-=C3=98yvind A. Holm
-(sunny256)
+-- 
+Cheers,
+Ray Chuan
