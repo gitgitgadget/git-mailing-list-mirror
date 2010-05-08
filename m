@@ -1,128 +1,129 @@
-From: Dmitrijs Ledkovs <dmitrij.ledkov@ubuntu.com>
-Subject: Re: Reconstructing git-svn metadata after a git clone
-Date: Sat, 8 May 2010 19:20:59 +0100
-Message-ID: <t2l86ecb3c71005081120lf87fc99bh1566c82a4d21904e@mail.gmail.com>
-References: <AANLkTikR5EpZhwFXmRfmE9jSNtiuFoGwTgGbpcwUBxnq@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
+Date: Sun, 9 May 2010 00:49:34 +0400
+Message-ID: <20100508204934.GA25566@dpotapov.dyndns.org>
+References: <alpine.LFD.2.00.1005071240590.901@i5.linux-foundation.org>
+ <g2s32541b131005071258s92e058bakc8f3a4df1e1dc634@mail.gmail.com>
+ <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org>
+ <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
+ <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com>
+ <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org>
+ <384AA932-227B-43B0-9D38-560A3567918A@gmail.com>
+ <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org>
+ <m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com>
+ <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 08 20:21:35 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat May 08 22:49:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAoec-0003ei-V7
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 20:21:35 +0200
+	id 1OAqy2-0002L7-Bs
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 22:49:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751545Ab0EHSVV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 14:21:21 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:47527 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751435Ab0EHSVU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 May 2010 14:21:20 -0400
-Received: by pwi5 with SMTP id 5so1050395pwi.19
-        for <git@vger.kernel.org>; Sat, 08 May 2010 11:21:20 -0700 (PDT)
+	id S1753322Ab0EHUtk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 16:49:40 -0400
+Received: from fg-out-1718.google.com ([72.14.220.159]:8750 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752383Ab0EHUtj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 16:49:39 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1139032fga.1
+        for <git@vger.kernel.org>; Sat, 08 May 2010 13:49:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=5IM9Li1YV6j1XllgcsbcTolds3JwhWO/y7KA5aEfsgo=;
-        b=ujM8rQVQ3/wByxhw6oYVDqJn6RXqOHtADCPBdfL5AnDIc+VtTI70mVWIoN7AUt5sLC
-         NJ7aa2rDdji8ghlW+ugtVf78kds0yh5LFR/t9WAsUeHDtRg6EwTDyZlvCPGpFC6ypvoJ
-         I7BKV8iExGQ1+p4dlF2m8ToebOAXK3ug4sa74=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=P6NkNq/H7TWr/6gTEsjaqTZwXTPkTYXsACCoDf2A17c=;
+        b=ZXEkpdGkrjb8DAbCxHaEqNIvXUanZGH/A+0uzOUAWXIaiGmsNvEq7pe0ROR1x+De/P
+         DdEr4IVblvyp7z6bZYTR3/Q1dK4tYqLOoyrI++gs8k6isrxvn+Dh/6OP8DRcHZYieeKg
+         aqvxbtcNTTFdyMqxLfV7zI7GiD7nITD/OqnLI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=SWn5CdJcswzPZDcom1KqMcuHArOnLHTCCiadpzu/NQ9pf+nz1ZR4GW8WF2LwjZLE1Y
-         cbtSstzNVDbIkxIlZ5l2nTlqr+rXiMCy3wZV2dooKqUaiySfAxsHMQE36mf6bflytKnJ
-         ami9ZRj7MYm56viqGJ+3+Z3PLUpNaDYm26BDg=
-Received: by 10.143.169.5 with SMTP id w5mr1175250wfo.222.1273342879199; Sat, 
-	08 May 2010 11:21:19 -0700 (PDT)
-Received: by 10.142.191.1 with HTTP; Sat, 8 May 2010 11:20:59 -0700 (PDT)
-In-Reply-To: <AANLkTikR5EpZhwFXmRfmE9jSNtiuFoGwTgGbpcwUBxnq@mail.gmail.com>
-X-Google-Sender-Auth: 002779fda9fe4c46
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=bWcUjHKu8rIM4rm06P+uHUR0z7rboTS/x7/k4gK2YPf7grXOVFmNS5GlH4Yx1OSvRO
+         d0SmYigOWngHxZA9/LaG/bLhDuCpCqGdsCR1z84sPWh8E8k9cF1pL4/blIsJf1BW3YeX
+         0YWpTEQbL1h0k2UFrnzGPfvUv8cxypM4DKC2o=
+Received: by 10.103.80.5 with SMTP id h5mr994377mul.82.1273351778019;
+        Sat, 08 May 2010 13:49:38 -0700 (PDT)
+Received: from localhost (ppp85-141-234-94.pppoe.mtu-net.ru [85.141.234.94])
+        by mx.google.com with ESMTPS id u26sm13798229mug.25.2010.05.08.13.49.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 May 2010 13:49:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146672>
 
-On 8 May 2010 18:58, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gma=
-il.com> wrote:
-> So:
->
-> =C2=A0* Am I doing something wrong? If so I can't see what it is.
->
+On Fri, May 07, 2010 at 02:54:40PM -0700, Linus Torvalds wrote:
+> 
+>  (a) you should try to avoid do things like that in the first place. For 
+>      something like an attribute file, you should just list the files you 
+>      want to convert. That's the _point_ of an attribute. So it's much 
+>      nicer if you instead actually are explicit about it, ie
+> 
+> 	*.[ch] crlf
+> 	*.txt crlf
+> 	*.jpg -crlf
+> 
+>      should be the _primary_ way you do it, since the autocrlf thing is a 
+>      bit dangerous in theory.
+> 
+>  (b) But let's say that you want to do it anyway (because you're lazy 
+>      and because autocrlf works pretty damn well in practice), isn't that 
+>      a really ugly and crazy thing to add _another_ attribute name for 
+>      that?
+> 
+>      IOW, if you really want to say "do automatic crlf for this set of 
+>      paths", the natural syntax for that would be
+> 
+> 	* crlf=auto
+> 
+>      No? Not some totally new attribute name.
 
-No
+I like your proposal and it makes perfect sense to me, but I am not new
+to git and core.autocrlf. I have observed that many people who were new
+to Git often got confused by meaning of the crlf attribute. In essence,
+at first, they thought that it means what you would probably describe as
+crlf=force. Thus, seeing something like this:
 
-> =C2=A0* Is there something that works for the general case, i.e. you =
-only
-> =C2=A0 have to know the original `git svn init` options. If there is =
-I'd
-> =C2=A0 like to document that & submit a patch.
->
+    *.sln -crlf
 
-In my repo I have a branch with no anestors which has a config file,
-setup.sh & fetch.sh
+baffled them, because sln files have CRLF as ending. So, it was very
+counter-intuitive for them. Of course, you can explain that Git stores
+text files with LF internally, and why it is the sane thing to do, and
+why sln files are not exactly text files (at least, non-text in sense
+of eol-conversion), etc... but I believe that all those discussion and
+explanation could be easily avoided by renaming 'crlf' as 'eol'.  Now,
+if you look at this:
 
-I instruct to clone repo, checkout "utils" branch, run setup.sh (it
-overrides .git/config with config file committed to utils branch and
-after it copied config it runs git svn init URL), fetch.sh just runs
-git svn fetch =3D)
+      *.sln -eol
+      *.jpg -eol
+      *.txt eol
+      *.[ch] eol
 
-I have to do this because I have two svn remotes and both are not
-standard layout. The only way for me to represet "same init options"
-is by editing .git/config cause it's impossible for me to supply
-git-init options on the command line =3D)
+it is clear that .sln and .jpg files are stored "as is", while Git does
+the end-of-line conversion for others files in accordance with user's
+preference. Why should users bother at all how Git stores text files
+internally? They do not need to know that Git stores text files with LF
+internally. They just want to checkout those files with the right ending
+for their platform.
 
-> =C2=A0* Depending on the above; can git-svn itself be friendlier here=
-?
-> =C2=A0 Maybe by having a `git svn bootstrap` command. E.g.:
->
-
-It would be nice to have the git init info propogate with the git
-clone. But this won't work. You are cloning *all* branches and
-providing a git mirror, where as I want to to git init just my svn
-branch or a subset of them. To achieve that I will clone just the
-branches I need modify my .git/config and get the result I want.
-
-So imho git-svn is ok here.
-
-> =C2=A0git clone git://$some_url
-> =C2=A0# Does all the work of setting up metadata/refs
-> =C2=A0git svn bootstrap --stdlayout $remote_svn_url
+So, perhaps, 'eol' would be a better name than 'crlf' for new Git users.
 
 
-If you are committing to svn regularly you are better of with bzr-svn
-in my opinion. Because launchpad can run automatic imports for you
-(webkit is already running btw) and the whole bootstrapping thing is
-done the way you are expecting it.
 
-#create repository to store revisions efficiently
-$ bzr init-repo .
-
-#on the first ever run it will rebuild meta-data
-#subsequent runs just fetch missing revisions
-$ bzr branch svn://path.to.any.branch
-
-And you can commit from that =3D) and bzr can operate on your svn
-checkouts. And every single clone done by bzr-svn is identical (unlike
-git where everyone has to follow the same git-svn mirror to get same
-revision-ids).
-
-You have two options when commiting with bzr-svn. Regular bzr ci will
-store bzr merge information in revision properties on svn server or
-you can use bzr dpush which is like git svn dcommit.
-
-IMHO bzr-svn is the best when you need to commit back to svn and
-painlessly commit parts of the feature branch and merge other bits
-later.
+Dmitry
