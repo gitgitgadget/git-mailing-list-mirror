@@ -1,215 +1,171 @@
-From: Eli Barzilay <eli@barzilay.org>
-Subject: Re: Re: git log -M -- filename is not working?
-Date: Sat, 8 May 2010 03:08:53 -0400
-Message-ID: <19429.3589.823244.270582@winooski.ccs.neu.edu>
-References: <z2w76c5b8581005071107w79d30963g725269febe746f0@mail.gmail.com>
-	<h2m8c9a061005071110nf7e63220ked03598bfa66fbc9@mail.gmail.com>
-	<z2r76c5b8581005071131q15524cb8td6711dbb9142b28e@mail.gmail.com>
-	<19428.24021.324557.517627@winooski.ccs.neu.edu>
-	<20100508044434.GC14998@coredump.intra.peff.net>
-	<19428.62170.654092.308682@winooski.ccs.neu.edu>
-	<20100508053025.GG14998@coredump.intra.peff.net>
-	<7v39y3c5p1.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC/PATCHv2 2/2] gitweb: Add support for FastCGI, using CGI::Fast
+Date: Sat, 8 May 2010 09:59:00 +0200
+Message-ID: <201005080959.01800.jnareb@gmail.com>
+References: <1273236845-6523-1-git-send-email-jnareb@gmail.com> <1273236845-6523-3-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Eugene Sajine <euguess@gmail.com>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 08 09:09:08 2010
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Eric Wong <normalperson@yhbt.net>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	Peter Vereshagin <peter@vereshagin.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 08 09:59:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAe9r-0002ha-N4
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 09:09:08 +0200
+	id 1OAewR-0005Oj-H9
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 09:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056Ab0EHHJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 03:09:00 -0400
-Received: from winooski.ccs.neu.edu ([129.10.115.117]:38145 "EHLO barzilay.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750919Ab0EHHI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 03:08:59 -0400
-Received: from eli by barzilay.org with local (Exim 4.66)
-	(envelope-from <eli@barzilay.org>)
-	id 1OAe9d-0004oR-R0; Sat, 08 May 2010 03:08:53 -0400
-In-Reply-To: <7v39y3c5p1.fsf@alter.siamese.dyndns.org>,
-	<20100508053025.GG14998@coredump.intra.peff.net>
-X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
+	id S1751865Ab0EHH7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 03:59:14 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:50958 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751681Ab0EHH7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 03:59:13 -0400
+Received: by bwz19 with SMTP id 19so935099bwz.21
+        for <git@vger.kernel.org>; Sat, 08 May 2010 00:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GQj2ftzvl9dAp4GJly8V2mYq2j5Tny8+yX+X9B7d5yg=;
+        b=vVBlwS8e4Gb+kWPOMt3Q3bAW4T+nEa4+yym0CYv7IFDjXij1bdBhkUD4FOtFl4+jpQ
+         qTCF688snlummPurexJeetpljUzcmTWwhKwS8XVLcGPwrtitsLQr6iRb3oaaasiW9da2
+         aWVFZBGcrQATG6hVpFdR1us1LK8qdRjfNhltA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=fedy7xkBGgI8emCi0UYDmAHMdezJXvOMjP6gGt79/P3rfgUreB5dTYtgZgal4g+6RQ
+         R71JP/7hrbU5oGqV0wCYIXvcBSMaQHruqXhw7K0Ut0vIxIpbtyV3w9w1hWUfjo8QxY8S
+         njv9y2HiUo4G6WJO6KG0gZGzT4ckZN9m8hJR8=
+Received: by 10.204.6.73 with SMTP id 9mr728420bky.143.1273305551449;
+        Sat, 08 May 2010 00:59:11 -0700 (PDT)
+Received: from [192.168.1.13] (abvu105.neoplus.adsl.tpnet.pl [83.8.218.105])
+        by mx.google.com with ESMTPS id 13sm925392bwz.3.2010.05.08.00.59.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 May 2010 00:59:10 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1273236845-6523-3-git-send-email-jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146647>
 
-On May  7, Junio C Hamano wrote:
-> Eli Barzilay <eli@barzilay.org> writes:
-> 
-> > So if there was some single
-> >
-> >   --do-whatever-you-can-as-much-as-you-can-to-find-all-renames
-> 
-> If I am not mistaken, that is exactly the point of Bo's patch:
-> 
->     Message-Id: <1273207949-18500-4-git-send-email-struggleyb.nku@gmail.com>
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
 
-(Actually, I was talking about some meta option that always turns on
-whatever can be done to track copies; but given the clarification from
-Jeff below, it's not as important as I first thought.)
+Former run() subroutine got renamed to run_request().  The new run()
+subroutine can run multiple requests at once if run as FastCGI script.
 
+To run gitweb as FastCGI script you must specify '--fastcgi' / '-f'
+command line option to gitweb, otherwise it runs as an ordinary CGI
+script.
 
-On May  8, Jeff King wrote:
-> On Sat, May 08, 2010 at 01:12:58AM -0400, Eli Barzilay wrote:
-> 
-> > > > BTW, I've had at least 4 people now who got confused by this.  Is
-> > > > there any use for -M/-C without --follow?  In any case, it will be
-> > > > very helpful if the -M/-C descriptions said "see also --follow".
-> > > 
-> > > Yes, it detects renames when doing diffs.
-> > 
-> > OK, so just to clear this up: -C and -M (and --find-copies-harder)
-> > are for `diff', and --follow is for `log' with a single file (and
-> > each will pass it on to the other)?
-> 
-> Yes (well, diff can never pass --follow to log, since diff never
-> invokes log, but yes, the per-commit diff shown by log uses the -C
-> and -M given to log).
+[jn: cherry picked from 56d7d436644ab296155a697552ea1345f2701620
+ in http://utsl.gen.nz/gitweb/?p=gitweb which was originally based
+ on v264 (2326acfa95ac86a53804ca8eeeb482c2f9265e34) by Kay Sievers;
+ updated to reflect current gitweb code]
 
-Aha -- I now see what makes most of this confusion, and an easy way to
-improve it considerably: looking at the `git-log' man page, I have to
-wade through 11 pages of general diff options (well, 11 is so high
-because I like big fonts in my emacs...) before I get to the log
-options, and even worse, there is no clear indication that those
-options are only relevant if I want to get patches, which is (at least
-in my interactive use cases) far from being something I do often.
-(Googling around, I see more than a few examples of confused uses of
-`git log -M', even the git faq says "'git log -M' will give the commit
-history with rename information" -- no mention of it not making any
-sense with a file that went through a rename.)
+TODO: update 'gitweb/README' and/or 'gitweb/INSTALL' files.
 
-So I think that it would really help if (1) the diff options in the
-git-log man page move to after its own options, and (2) they appeared
-after a title saying that these are the diff options, (3) `--follow'
-moves up before the few preceding options that seem to me less
-important.  To clarify, I added a simple patch to the end of this
-message.  (`git-format-patch' has the same thing, but there it looks
-more sensible to leave it as is.)
+Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Changes since v1:
+* Fix $pre_dispatch_hook -> $post_dispatch_hook typo.
 
+* Leave DONE_GITWEB label in run_request() subroutine.  This way "HTTP
+  exceptions" thrown using die_error(), such as '404 Not Found', would
+  correctly end current request, instead of exiting FCGI script.
 
-> > So if there was some single
-> > 
-> >   --do-whatever-you-can-as-much-as-you-can-to-find-all-renames
-> 
-> But I think all you really wanted was "--follow". I'd have to check the
-> code, but I'm not even sure whether "-C" will impact --follow at all.
+  Note that in original patch by Sam Vilain "HTTP exceptions" would
+  not run $post_dispatch_hook.
 
-If -C/-M are really only affecting the patches, then yes, I'd probably
-be happy with only `--follow' (or a way to have --follow on by default
-when possible).
+ gitweb/gitweb.perl |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 52 insertions(+), 2 deletions(-)
 
-
-> No, copy detection can be _really_ slow. There is a reason it isn't
-> on by default. Try "git log -1000 -p" versus "git log -1000 -p -C -M
-> --find-copies-harder" in some repository. In a simple git.git test,
-> it is almost 5x slower (about 1 second versus 5 seconds on my
-> machine). For large repositories, it can be much worse, because now
-> each diff is O(size of repository) instead of O(size of changes).
-
-Yes, I see that.  I was talking about interactive uses, where I'd
-never want to see a 1000 diffs, or even 2.  But given that -C/-M are
-only for patches, then I agree with that.
-
-
-> Still, I see your point that you might want it on all the time, if you
-> have a sufficiently small repo. There is "diff.renames" to turn on
-> rename detection all the time.
-
-(Ah, I missed that...)
-
-
-> But I think a log.follow option doesn't make sense at this
-> point. For example:
-> 
->   $ git config log.follow true
->   $ git log foo.c ;# ok, follow foo.c
->   $ git log foo.c bar.c ;# uh oh, now what?
-> 
-> Does the last one just barf, and make you say "git log --no-follow
-> foo.c bar.c"? Does it quietly turn off --follow, making the user
-> guess why "git log foo.c" finds some history that "git log foo.c
-> bar.c" doesn't?
-
-How about these options:
-
-  git config log.follow if-single-file
-    makes it use --follow only when there's a single file path given,
-    ignoring it otherwise (with no confusion about it now)
-
-  git config log.follow if-possible
-    makes it do the same, but might also do it for more cases if/when
-    they become available (so this is the "do the best you can"
-    option)
-
-  git config log.follow true
-    invalid until it is always possible to use --follow
-
-?
-
-
-
-[this is the patch that I mentioned above]
-
--------------------------------------------------------------------------------
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index fb184ba..6bc7064 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -24,7 +24,6 @@ OPTIONS
- -------
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 41bf992..9a3eaf5 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1012,7 +1012,7 @@ sub dispatch {
+ 	$actions{$action}->();
+ }
  
- :git-log: 1
--include::diff-options.txt[]
+-sub run {
++sub run_request {
+ 	our $t0 = [Time::HiRes::gettimeofday()]
+ 		if defined $t0;
  
- -<n>::
- 	Limits the number of commits to show.
-@@ -37,6 +36,10 @@ include::diff-options.txt[]
- 	and <until>, see "SPECIFYING REVISIONS" section in
- 	linkgit:git-rev-parse[1].
- 
-+--follow::
-+	Continue listing the history of a file beyond renames
-+	(works only for a single file).
+@@ -1036,7 +1036,57 @@ sub run {
+  DONE_GITWEB:
+ 	1;
+ }
+-our $cgi = CGI->new();
 +
- --decorate[=short|full]::
- 	Print out the ref names of any commits that are shown. If 'short' is
- 	specified, the ref name prefixes 'refs/heads/', 'refs/tags/' and
-@@ -55,9 +58,6 @@ include::diff-options.txt[]
- 	the specified paths; this means that "<path>..." limits only
- 	commits, and doesn't limit diff for those commits.
- 
----follow::
--	Continue listing the history of a file beyond renames.
--
- --log-size::
- 	Before the log message print out its size in bytes. Intended
- 	mainly for porcelain tools consumption. If git is unable to
-@@ -71,6 +71,10 @@ include::diff-options.txt[]
- 	to be prefixed with "\-- " to separate them from options or
- 	refnames.
- 
-+Common diff options
-+~~~~~~~~~~~~~~~~~~~
++our $is_last_request = sub { 1 };
++our ($pre_dispatch_hook, $post_dispatch_hook, $pre_listen_hook);
++our $CGI = 'CGI';
++our $cgi;
++sub evaluate_argv {
++	return unless (@ARGV);
 +
-+include::diff-options.txt[]
++	require Getopt::Long;
++	Getopt::Long::GetOptions(
++		'fastcgi|fcgi|f' => sub {
++			require CGI::Fast;
++			our $CGI = 'CGI::Fast';
++
++			my $request_number = 0;
++			# let each child service 100 requests
++			our $is_last_request = sub { ++$request_number > 100 };
++		},
++		'nproc|n=i' => sub {
++			my ($arg, $val) = @_;
++			return unless eval { require FCGI::ProcManager; 1; };
++			my $proc_manager = FCGI::ProcManager->new({
++				n_processes => $val,
++			});
++			our $pre_listen_hook    = sub { $proc_manager->pm_manage()        };
++			our $pre_dispatch_hook  = sub { $proc_manager->pm_pre_dispatch()  };
++			our $post_dispatch_hook = sub { $proc_manager->pm_post_dispatch() };
++		},
++	);
++}
++
++sub run {
++	evaluate_argv();
++
++	$pre_listen_hook->()
++		if $pre_listen_hook;
++
++ REQUEST:
++	while ($cgi = $CGI->new()) {
++		$pre_dispatch_hook->()
++			if $pre_dispatch_hook;
++
++		run_request();
++
++		$post_dispatch_hook->()
++			if $post_dispatch_hook;
++
++		last REQUEST if ($is_last_request->());
++	}
++}
++
+ run();
  
- include::rev-list-options.txt[]
- 
--------------------------------------------------------------------------------
-
-
+ ## ======================================================================
 -- 
-          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
-                    http://barzilay.org/                   Maze is Life!
+1.7.0.1
