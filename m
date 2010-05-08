@@ -1,93 +1,70 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: anything behaviourally like perforce branch-spec mappings in git?
-Date: Sat, 8 May 2010 09:39:20 -0400
-Message-ID: <AANLkTikAPyfkAXLstPdEWyq2mKM0uBP1khSUV5t4-I23@mail.gmail.com>
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: Building documentation on an isolated network
+Date: Sat, 08 May 2010 09:02:18 -0400
+Message-ID: <4BE560DA.2010809@artsci.utoronto.ca>
+References: <393FB43C-317F-4CCB-980F-F56D1126C50F@verizon.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 08 15:40:17 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jack Moore <jhmoore719@verizon.net>
+X-From: git-owner@vger.kernel.org Sat May 08 16:07:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAkGL-000134-Hi
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 15:40:13 +0200
+	id 1OAkge-0005Bw-Km
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 16:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751196Ab0EHNjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 09:39:24 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:36611 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750902Ab0EHNjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 09:39:23 -0400
-Received: by wyg36 with SMTP id 36so1424835wyg.19
-        for <git@vger.kernel.org>; Sat, 08 May 2010 06:39:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=LDuN8D44r9Uky3OoHF2aPfBtWaknc/WZkEe0iXmG+9Q=;
-        b=HKUv6OefzqC4iMoHCyuDzmVBFW4NwEfmXrB9nI1pUWbQHUNWr3yFATS7gdMpHVZ32K
-         i1N9ypzrcpyvxF4crpMs1YAfq4ybpBkMfgVxPOMFvdVIUVO0SfKaFnAglu1oKRQe//b2
-         6nOScaIrAFXH6NnS1gSchgz5Km65pLFfpEMu0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=K8mZD7B0E8OF68GQ9Rz5i/FvZ1ob8mP6e5qyNRfCMniZBMMQGGpd3JtOYAshNITl5n
-         GScJfhhP6GHemLEVBWnSwrvYYL46yvCJB0m6ZOMD6j5cxbwzbyc+JJ6hG9vSyrXK0MBZ
-         LM/bYHUNTjkLSwrTFQ+Tabl/mYgJRbvqL3u1Y=
-Received: by 10.216.90.13 with SMTP id d13mr880822wef.18.1273325960731; Sat, 
-	08 May 2010 06:39:20 -0700 (PDT)
-Received: by 10.216.25.18 with HTTP; Sat, 8 May 2010 06:39:20 -0700 (PDT)
+	id S1751600Ab0EHOHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 10:07:10 -0400
+Received: from jimi.chass.utoronto.ca ([128.100.160.32]:46464 "EHLO
+	jimi.chass.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751276Ab0EHOHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 10:07:09 -0400
+X-Greylist: delayed 3892 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 May 2010 10:07:09 EDT
+Received: from [24.36.152.183] (port=35677 helo=[192.168.0.10])
+	 (auth info: dovecot_plain:bwalton@chass.utoronto.ca) by jimi.chass.utoronto.ca with esmtpsa (TLSv1:AES256-SHA:256)
+	 (Exim 4.69)
+	 (envelope-from <bwalton@artsci.utoronto.ca>)
+	 id 1OAjfc-00084W-Ab ; Sat, 08 May 2010 09:02:16 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <393FB43C-317F-4CCB-980F-F56D1126C50F@verizon.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146660>
 
-Back at VeriSign we used branch-specs in Perforce to normalize
-checked-in tooling to standard names (without version numbers). For
-example:
+On 05/08/2010 04:24 AM, Jack Moore wrote:
 
-Checked into the Perforce "releng" depot was the following:
+> I'm trying to setup a git repository on an isolated (not connected to the internet) network.
+ > The repository is to be accessed by several developers on their own 
+workstations (all running RHEL 5).
+ > I have got git to build and install the executable with no problem, 
+but when I try to build the
+ > documentation is runs into problems with ASCIIDOC.  I found an 
+ASCIIDOC rpm for version 8.x.
+ > I think ASCIIDOC is looking for some standard DTDs.  Does anyone have
+ > suggestions?
 
-//releng/
-  head/
-    vendor/
-      junit-4.1/
-        junit-4.1.jar
-      junit-4.3
-        junit-4.3.jar
-  branches/
-     same as above...
+Once you get asciidoc, you should have everything else you need in the 
+stock RHEL distribution to build locally.  This would include things like:
 
-And a product specific depot may be:
+xmlto
+sgml-common
+xml-common
+docbook-dtds
+docbook-style-xsl
 
-//general
-  head/
-    ...
-  branches/
-    ...
+and dependencies for those.  (There might be an important item or two 
+missing from that list.  It's from memory.)  Asciidoc is available from 
+the EPEL repo if the one you found doesn't work for some reason.
 
-The branch spec for a product would be:
+The other suggestion of building just the quick docs is good too unless 
+you really want/need them.
 
-//releng/branches/branch-name/vendor/junit-4.1   //workspace/releng/vendor/junit
-...
-
-You should be able to get the point. We supported workspace
-composition, and the neat thing was that the build system itself was
-versioned and could be separately versioned and changed as though it
-were itself a product. But, as the build system was Ant based, rather
-than constantly changing the build system to adapt to new versions of
-junit, oro, and ivy jars, we simply used branch and view specs to
-neutralize the workspace so the build system only referred to names
-that lack version numbers. Further, a product could upgrade to a newer
-version of the build system, almost always without consequence just by
-changing these mappings.
-
-So, is there some way to similarly accomplish this in Git? It was a
-huge time-saver for release engineering at VeriSign, a pattern I'd
-like to replicate using Git.
-
-- Bob
+HTH.
+-Ben
