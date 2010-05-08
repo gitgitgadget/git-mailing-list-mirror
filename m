@@ -1,188 +1,87 @@
-From: Avery Pennarun <apenwarr@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
-Date: Fri, 7 May 2010 20:31:50 -0400
-Message-ID: <i2l32541b131005071731j11085ab4zf325fad96381ce35@mail.gmail.com>
-References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com> 
-	<576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com> <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org> 
-	<384AA932-227B-43B0-9D38-560A3567918A@gmail.com> <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org> 
-	<m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com> 
-	<alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org> 
-	<alpine.LFD.2.00.1005071504280.901@i5.linux-foundation.org> 
-	<h2q32541b131005071534r22cc2092t2a21bfad6d4bfd81@mail.gmail.com> 
-	<alpine.LFD.2.00.1005071601470.901@i5.linux-foundation.org>
+Date: Fri, 7 May 2010 17:33:01 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1005071728250.901@i5.linux-foundation.org>
+References: <x2s40aa078e1005061340vaf404ab3g30b2b98ca408205@mail.gmail.com>  <384AA932-227B-43B0-9D38-560A3567918A@gmail.com> <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org>  <m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com> 
+ <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>  <alpine.LFD.2.00.1005071504280.901@i5.linux-foundation.org>  <h2q32541b131005071534r22cc2092t2a21bfad6d4bfd81@mail.gmail.com>  <alpine.LFD.2.00.1005071601470.901@i5.linux-foundation.org> 
+ <q2y600158c31005071647i80871db0z7a55ae77e738d0d4@mail.gmail.com>  <alpine.LFD.2.00.1005071648400.901@i5.linux-foundation.org> <i2v600158c31005071719r23db385bpab9a971534b5d7c3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat May 08 02:32:25 2010
+	kusmabite@googlemail.com, prohaska@zib.de
+To: hasen j <hasan.aljudy@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 08 02:35:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAXxv-0002fp-Oy
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 02:32:24 +0200
+	id 1OAY0j-0003Ke-5D
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 02:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750880Ab0EHAcN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 20:32:13 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:53991 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750701Ab0EHAcL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 20:32:11 -0400
-Received: by gwj19 with SMTP id 19so993992gwj.19
-        for <git@vger.kernel.org>; Fri, 07 May 2010 17:32:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+n5DzX+7VbI6t5BtlvOJYQsGusjtplwdqhLqoLAJ7CA=;
-        b=cwv8bKDsBDDGC45WTwMuAeJSmSUrc8TVXzvqzv+AmyA4m7FSEI65JQZXUNfe79UL/f
-         AIuwIvBBNFzrDGIu2jK4XzEQvXnWCNqo1DMOWapetrwTAXQN3QtyiRSnejzr2bk+H8mI
-         jloDRJJgFpJuJNv3SSbu/mdGRZk263qet2ITg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TWbG9CZK88ailxPz1kfFIhPtP/gfTY/78JDUKGYGWfcIwTfEwqlO2YGZgkDQ3f7D+P
-         Dl65TXqIueaB4UYdb6WWj5kZYoID4chGGulyflYjPX/A/jCU+pMWqZKH76QwQAO8xZne
-         TZfo/oYjaOUaJ3pCDJVkx+6ZV8mEKCbPc10uI=
-Received: by 10.150.112.23 with SMTP id k23mr4099700ybc.308.1273278730106; 
-	Fri, 07 May 2010 17:32:10 -0700 (PDT)
-Received: by 10.150.217.12 with HTTP; Fri, 7 May 2010 17:31:50 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1005071601470.901@i5.linux-foundation.org>
+	id S1751071Ab0EHAfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 May 2010 20:35:06 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:49235 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750956Ab0EHAfF (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 20:35:05 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o480YxZ1008743
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 7 May 2010 17:35:00 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o480Yxv9020468;
+	Fri, 7 May 2010 17:34:59 -0700
+In-Reply-To: <i2v600158c31005071719r23db385bpab9a971534b5d7c3@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146624>
 
-On Fri, May 7, 2010 at 7:18 PM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Fri, 7 May 2010, Avery Pennarun wrote:
->> Maybe we should rethink this from the top. =A0Imagine that we curren=
-tly
->> have no crlf options whatsoever. =A0What *should* it look like? =A0I
->> suggest the following:
->>
->> Config:
->> =A0 =A0core.eolOverride =3D lf / crlf / auto / binary / input
->> =A0 =A0core.eolDefault =3D lf / crlf / auto / binary / input
->
-> Ugh. Hell no. What an ugly format. What does that crazy "override vs
-> default" even _mean_?
 
-That's easy:
 
- - if "override" is set, it overrides any attribute setting.
- - if "default" is set, we use it when there's no attribute or override=
- setting.
+On Fri, 7 May 2010, hasen j wrote:
 
-We can argue about whether having two config options is strictly
-necessary from a formal truth table point of view, and you'll probably
-win the argument because it all makes my head spin.  My argument is
-simpler: if it makes my head spin, it probably makes other people's
-heads spin.  The way I described is simple enough for anyone to
-understand.
+> On 7 May 2010 17:50, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+> >> What if:
+> >>
+> >> - The entire history of the file is stored in CRLF
+> >> - It's a windows-only file where the official "tool" that reads it
+> >> barfs on LF line endings.
+> >> - Third party tools also expect (or at least, handle) CRLF line endings.
+> >
+> > Umm. Then it's not text, is it? What you are describing is a binary file
+> > that happens to look like text with CRLF.
+> 
+> That depends on your definition of text.
 
-> Plus the above is confused anyway. The only reason to ever support 'l=
-f' is
-> if you're a total moron of a SCM, and you save files you know are tex=
-t in
-> CRLF format internally. That's just f*cking stupid.
+Well, my definition of text is "does it make sense to do any end-of-line 
+conversions". That's the only definition that makes sense for an SCM, at 
+least in the current context. If doing conversions on the line endings is 
+wrong, then it's not text.
 
-What I meant by "lf" is just what we currently mean by "crlf=3Dfalse".
-It's more clear for the average person to say "eol=3Dlf" than
-"crlf=3Dfalse", because "crlf=3Dfalse" doesn't say what you *do* want, =
-it
-only says what you *don't* want.
+And your whole premise was that conversions were always wrong. So the way 
+you put it, that's not a text-file, it's a binary file.
 
-Clearly any repo storing some other weird line ending, then converting
-it to LF, is not what we want here.
+> Storing it with LF internally is ok, as long as we can have it
+> *always* be checked out as crlf.
 
-> =A0- disabling all "text" issues, and considering everything to be pu=
-re
-> =A0 binary. This is the "I know I'm sane and unix" option, or the "do=
-ing
-> =A0 any conversion is always wrong" option.
->
-> =A0 We'd call this "binary" or "off" or "false".
+.. and that's what I suggested "core.crlf=on" would mean.
 
-Sure, that's what I called "binary" above.
+However, if you think that it needs to be CRLF on _all_ platforms, even 
+platforms where CRLF is _wrong_ for a text-file, then see above: in that 
+case it's not a text-file at all as far as the SCM is concerned.
 
-> =A0- if you recognize a text-file, and consider it text and different=
- from
-> =A0 binary, at a _minimum_ it needs what we call "input". Anything el=
-se is
-> =A0 crazy-talk. We don't save the same text-file in different formats=
-, and
-> =A0 we know that CRLF (or CR) is just a stupid format for text.
->
-> =A0 So there are zero options for the input side. If we don't do CRLF=
- -> LF
-> =A0 conversion on input, it's worthless even _talking_ about text vs =
-binary.
+In that case it's just a binary file, and CRLF is _not_ "end of text 
+line", it's part of the definition of the format for that binary file.
 
-That sounds good to me.  So this was a mistake in the original
-implementation of autocrlf; let's just correct it, and make all text
-modes do input conversion.
-
-Note that, in prior threads on this topic, there was some objection to
-doing crlf=3Danything by default because it wastes CPU in the common
-case that people are running on Unix and aren't doing screwy things
-with line endings.  Defaulting to crlf=3Dinput would require us to wast=
-e
-CPU here.  Is that ok?
-
-> =A0- For output, there are exactly three choices: "do nothing" (aka j=
-ust
-> =A0 "input", aka "LF"), output in native format (CRLF on Windows, LF =
-on
-> =A0 UNIX), or "force CRLF" regardless of any defaults (and the last
-> =A0 probably doesn't make sense in practice, but is good for test-sui=
-tes,
-> =A0 so that you can get CRLF output even on sane platforms.
->
-> So I think the _only_ sane choices are basically
->
-> =A0 =A0 =A0 =A0core.crlf=3D[off|input|on|force]
-
-One nice thing about my suggestion is that it completely avoids the
-concept of a "native CRLF format."  Because nowadays, that's just not
-very useful.  On Unix sometimes I need crlf files; on Windows
-sometimes I need lf files.  Yes, we can still implement that in terms
-of "native" terminology, but it seems to a roundabout way of stating
-what I want.
-
-> And the above is basically what we have. Except that for historical
-> reasons (ie we didn't even _have_ any attributes) it got mixed it up =
-with
-> "do we want to do this automatically", so "autocrlf=3Don" actually en=
-ds up
-> being "yes, do automatic detection" _and_ what I'd call "core.crlf=3D=
-force"
-> above.
-
-=46unctionally, yes, we have this already.  Your new proposal is
-essentially to make crlf=3Dauto (=3D unspecified) to actually always
-include crlf=3Dinput behaviour, which sounds good to me, but may be
-backwards incompatible in some important way.  (I wouldn't think
-anybody would want the non-fixing-stuff behaviour.  But I wonder what
-it would do to git-svn... maybe it could just check everything in as
-if it were crlf=3Dbinary, if it doesn't already.)
-
-My suggestion doesn't much change this functionality, but attempts to
-straighten out the terminology so normal humans can understand what
-will happen.  Not sure if that's worth it, given that we'll probably
-have to support the old attribute names forever anyhow, and adding a
-second set of words might confuse normal humans all the more.  But I
-would much rather teach people to use it using my terminology than
-crlf=3Dtrue/false/binary terminology.  What does "crlf=3Dbinary" mean?
-
-Have fun,
-
-Avery
+			Linus
