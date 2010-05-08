@@ -1,142 +1,133 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] cherry-pick: do not dump core when iconv fails
-Date: Sat, 8 May 2010 18:17:29 -0500
-Message-ID: <20100508231729.GA6718@progeny.tock>
-References: <s2m76c5b8581004281238jf7179fffna7d757fee6ab4f10@mail.gmail.com>
- <r2s302ed1461004281249xd1b65e41l43fa7b639db7c97d@mail.gmail.com>
- <h2v76c5b8581004281259yfaca7abfz5a455ff8fd6cdc6b@mail.gmail.com>
- <o2j2cfc40321004281539j28fe44e0r5d029061e3e08b90@mail.gmail.com>
- <20100428233758.GA1654@progeny.tock>
- <20100429191150.GA10526@inner.home.ulmdo.de>
- <20100429194936.GA31941@progeny.tock>
- <20100429202139.GW10879@inner.home.ulmdo.de>
- <20100430133228.GA1620@progeny.tock>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH/RFC 0/3] Per-repository end-of-line normalization
+Date: Sun, 9 May 2010 03:42:22 +0400
+Message-ID: <20100508234222.GA14069@dpotapov.dyndns.org>
+References: <alpine.LFD.2.00.1005071303040.901@i5.linux-foundation.org>
+ <alpine.LFD.2.00.1005071306190.901@i5.linux-foundation.org>
+ <576B55DC-C92D-4FEB-B4E8-4A042D6F024B@gmail.com>
+ <alpine.LFD.2.00.1005071355380.901@i5.linux-foundation.org>
+ <384AA932-227B-43B0-9D38-560A3567918A@gmail.com>
+ <alpine.LFD.2.00.1005071421340.901@i5.linux-foundation.org>
+ <m2z32541b131005071430vcd851ac8yd3c783429a84f875@mail.gmail.com>
+ <alpine.LFD.2.00.1005071441341.901@i5.linux-foundation.org>
+ <20100508204934.GA25566@dpotapov.dyndns.org>
+ <alpine.LFD.2.00.1005081450260.3711@i5.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Andreas Krey <a.krey@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 09 01:17:22 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	hasan.aljudy@gmail.com, kusmabite@googlemail.com, prohaska@zib.de
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun May 09 01:47:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAtGo-0001wv-WA
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 01:17:19 +0200
+	id 1OAtjc-0002UI-1y
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 01:47:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751417Ab0EHXQb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 19:16:31 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46722 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980Ab0EHXQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 19:16:29 -0400
-Received: by gwj19 with SMTP id 19so1322182gwj.19
-        for <git@vger.kernel.org>; Sat, 08 May 2010 16:16:29 -0700 (PDT)
+	id S1752622Ab0EHXm1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 19:42:27 -0400
+Received: from mail-bw0-f219.google.com ([209.85.218.219]:35689 "EHLO
+	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751065Ab0EHXm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 19:42:26 -0400
+Received: by bwz19 with SMTP id 19so1159346bwz.21
+        for <git@vger.kernel.org>; Sat, 08 May 2010 16:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=3D5of97p6deLgvsjmWyeAtxQvTBWbpfKgmZJKRIWvAo=;
-        b=MxfQ0KTr4n73I5/cEoYfuNCWoKHc//3plCGwTK+BewwHimqffQYdSmOzb3UswJpMlV
-         NiDzzYJ8dIiOerieiJ6w/KOP8lQQ8uVqPNys/+GSkjViMDjr92agmdpbtmpTUhHtidKz
-         hRsDGGp7cLV3GmUjytfOUlv52QryjScqdNS/s=
+         :in-reply-to:user-agent;
+        bh=PRDVIWNLcbvy0V9UkwmSlfaCoL2YZCW9xXts8VnHWsk=;
+        b=QqwLHDQovBmBif0IpJ1QJrSRk97EVFVZuTtGH4VYEYvHvi15dANFp2Vk9KkTheXFXH
+         reA3sMgfdk7Sypw2qdMVjKmxV1RPOxJvLZQPvtVAXaTxCvZf+ep3oJj5cyVfi48mcazy
+         kEzwv7y/VkW+fUmPkl0cpegVSRykIJ6FMYxEY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=LgaU03In6cmqNOwWQQTQALAqB4JWfUz0pqU3Wde8vX6SHSQGtEBzJU2vojadsuWWj6
-         52z5P/WFnQEYjWp9VpuAa53IHy0tNWnmyYvSh1k6BAnhHtHr/V3UV1Tijsg7K4DMz7QX
-         JxofriUzEi+VesD4fCy/7AX9+Cpi+5O1VOHp8=
-Received: by 10.150.62.13 with SMTP id k13mr5325859yba.133.1273360589048;
-        Sat, 08 May 2010 16:16:29 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm2448963yxe.11.2010.05.08.16.16.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 May 2010 16:16:28 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KOI8nVvFPbJDr2KhvInknxXcFkjrjbBxSY/XLg4CHBnZY+rSNixeGP4mhamBkwkGeN
+         QaeEM898sdQmuerSVlAxkzWvnia8PVOYqh+CFvRdE5tPupkZUy9k30kd8LeJisFj0lM0
+         d4YSH9oqXVGfCA+t3lLCO+T3Z7boCqfRp2YWE=
+Received: by 10.204.131.198 with SMTP id y6mr1243727bks.4.1273362144989;
+        Sat, 08 May 2010 16:42:24 -0700 (PDT)
+Received: from localhost (ppp85-141-234-94.pppoe.mtu-net.ru [85.141.234.94])
+        by mx.google.com with ESMTPS id 14sm1082228bwz.6.2010.05.08.16.42.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 May 2010 16:42:24 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100430133228.GA1620@progeny.tock>
+In-Reply-To: <alpine.LFD.2.00.1005081450260.3711@i5.linux-foundation.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146687>
 
-When cherry-picking, usually the new and old commit encodings are both
-UTF-8.  Most old iconv implementations do not support this trivial
-conversion, so on old platforms, out->message remains NULL, and later
-attempts to read it segfault.
+On Sat, May 08, 2010 at 02:54:35PM -0700, Linus Torvalds wrote:
+> 
+> 
+> On Sun, 9 May 2010, Dmitry Potapov wrote:
+> >
+> > explanation could be easily avoided by renaming 'crlf' as 'eol'.
+> 
+> What the heck is wrong with people?
+> 
+> > Now, if you look at this:
+> > 
+> >       *.sln -eol
+> >       *.jpg -eol
+> >       *.txt eol
+> >       *.[ch] eol
+> 
+> Right. Look at it. It's totally incomprehensible. It's _worse_ than "crlf" 
+> as a name.
+> 
+> What the f*ck does "jpg" have to do with "eol"? Nothing.
 
-=46ix this by noticing the input and output encodings match and skippin=
-g
-the iconv step, like the other reencode_string() call sites already do.
-Also stop segfaulting on other iconv failures: if iconv fails for some
-other reason, the best we can do is to pass the old message through.
+Right, nothing, in other words, no eol conversion... and "-eol" seems to
+express this idea well. So, I don't see why it is worse than "crlf"...
 
-This fixes a regression introduced in v1.7.1-rc0~15^2~2 (revert:
-clarify label on conflict hunks, 2010-03-20).
+Personally, I do not care whether it is "crlf", or "eol", but a lot of
+people that I know were confused by crlf, because they thought that it
+means that this file is stored with crlf, while this attribute actually
+means that file needs eol conversion.
 
-Reported-by: Andreas Krey <a.krey@gmx.de>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Andreas reported this cherry-pick regression about a week ago, and a
-patch similar to this one seemed to fix it.  The only question that
-made me stall was what to do if iconv just doesn=E2=80=99t understand a=
-n
-encoding:
+> 
+> You could talk about "binary" vs "text", and it would make sense, but your 
+> argument that "eol" is somehow better than "crlf" is just insane.
+> 
+> So I could certainly see
+> 
+> 	*.jpg binary
+> 	*.txt text
+> 
+> making sense. But "eol" is certainly no better than "crlf". 
 
- - from a certain point of view it might make sense to pass through
-   the message and note the old encoding
+What about .sln files? They are xml files with CRLF ending. Does it mean
+they are binary? Based on how it is stored, it is certainly binary, but
+when it comes to "diff" or even "merge" you may want to think about them
+as text, and, in general, people tend to think about them as text files.
 
- - but on the other hand, that would not respect the user=E2=80=99s pre=
-ference
-   as expressed in i18n.commitencoding, and it would deny the caller
-   the chance to fix the encoding problem in a text editor before
-   commiting.
+Another example is shell scripts. You really want them to be LF even on
+Windows. So, is it a binary file too?
 
-That second point was driven home when I tried to implement this: it
-required teaching =E2=80=98git commit=E2=80=99 to respect a new GIT_COM=
-MIT_ENCODING
-variable, but this was a pain (there is a sizeable amount of code
-paying attention to i18n.commitencoding) and the result would have
-been cherry-pick ignoring the $GIT_COMMIT_ENCODING preference,
-creating encoding mismatches between ident and commit message to boot.
+So, this approach is not so intuitive as it may appear if you consider
+only .jpg and .txt.
 
-Everyone should be using utf8 anyway. :)
+> 
+> In the end, crlf is what we have. We're not getting rid of it, so if 
+> somebody were to actually rename it, that would just mean that there are 
+> _two_ different ways to say the same thing. And quite frankly, I think 
+> that's worse than what we have now, so I don't think it's worth it.
 
-Anyway, this minimal fix should be safe (it just restores the old
-behavior, except we do not use iconv for trivial conversions any
-more).  Patch is against v1.7.1-rc0~15^2~2.
+I was not sure myself that the idea of renaming worth it... While I do
+think that "eol" is a better name than "crlf", but not by big margin,
+and as you said crlf is what we have now... so be it...
 
-Thanks to Andreas for the help.
 
- builtin/revert.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 5a5b721..5adaf27 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -97,8 +97,13 @@ static int get_message(const char *raw_message, stru=
-ct commit_message *out)
- 		encoding =3D "UTF-8";
- 	if (!git_commit_encoding)
- 		git_commit_encoding =3D "UTF-8";
--	if ((out->reencoded_message =3D reencode_string(raw_message,
--					git_commit_encoding, encoding)))
-+
-+	out->reencoded_message =3D NULL;
-+	out->message =3D raw_message;
-+	if (strcmp(encoding, git_commit_encoding))
-+		out->reencoded_message =3D reencode_string(raw_message,
-+					git_commit_encoding, encoding);
-+	if (out->reencoded_message)
- 		out->message =3D out->reencoded_message;
-=20
- 	abbrev =3D find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
---=20
-1.7.1
+Dmitry
