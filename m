@@ -1,83 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/6] Add test_harness make target for testing with
- prove(1)
-Date: Fri, 07 May 2010 20:58:06 -0700
-Message-ID: <7vwrvfcaep.fsf@alter.siamese.dyndns.org>
-References: <1273261025-31523-1-git-send-email-avarab@gmail.com>
- <1273261025-31523-6-git-send-email-avarab@gmail.com>
- <m339y3forb.fsf@localhost.localdomain>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff flags
+Date: Sat, 8 May 2010 00:06:02 -0400
+Message-ID: <20100508040602.GA14998@coredump.intra.peff.net>
+References: <19428.27908.870639.422432@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 08 05:59:23 2010
+Cc: git@vger.kernel.org
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Sat May 08 06:08:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAbCC-00061i-As
-	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 05:59:20 +0200
+	id 1OAbLP-00005e-02
+	for gcvg-git-2@lo.gmane.org; Sat, 08 May 2010 06:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752127Ab0EHD6S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 May 2010 23:58:18 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41013 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691Ab0EHD6R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 May 2010 23:58:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6928EB1517;
-	Fri,  7 May 2010 23:58:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=RxOo6ZNc4wea
-	IjIY178bFOPW4Ck=; b=ZiVa0tWRSAwD38rX+s0peuwvcDb73XjV8E5EaugiX0j0
-	qeONYP0Gx3Z824lcpYgEAXeOrH0Xe6A/PDvO22MifTP1fy0SjTmI8t9cnPC+3Puv
-	3MbQdttAaEq0AFP1Kakd490vvDJeH0as0RcExQWUyRbZZzMdogfPwGQ2798re7E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=I9DcfA
-	E04jdjvU07dwnswv0l5GqKk6wVCY2HMfH3+ao8KSGZbhiwDnAh8ZkTzjP3UcAk0X
-	qVcNcOBiY2gCy80Nig+XruiM9tIE76aYEONW9W0FZm0Ck+VtUsEwghg1FkuLZVaP
-	t+U8k6Ympa8LdrjVqwYeuvO29urFpvTn6P/zM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F557B150F;
-	Fri,  7 May 2010 23:58:12 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F302B150C; Fri,  7 May
- 2010 23:58:07 -0400 (EDT)
-In-Reply-To: <m339y3forb.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Fri\, 07 May 2010 13\:20\:28 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EBF110CC-5A55-11DF-8E8B-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750724Ab0EHEGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 00:06:08 -0400
+Received: from peff.net ([208.65.91.99]:53490 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750706Ab0EHEGG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 00:06:06 -0400
+Received: (qmail 1280 invoked by uid 107); 8 May 2010 04:06:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 08 May 2010 00:06:19 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 08 May 2010 00:06:02 -0400
+Content-Disposition: inline
+In-Reply-To: <19428.27908.870639.422432@winooski.ccs.neu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146633>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Fri, May 07, 2010 at 03:41:56PM -0400, Eli Barzilay wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->
->> The --jobs option I'm supplying to prove(1) is not supported in all
->> prove versions, some older ones (before Perl 5.10.1) don't have
->> it. Anyone that's hacking Git probably has 5.10.1, and you can alway=
-s
->> use the old `make test` for non-parallel tests.
->
-> I am hacking Git, and I don't have perl >=3D 5.10.1.  On the other ha=
-nd
-> I can alway run "make test" or individual tests instead of=20
-> "make test_harness".
->
-> A better solution would be to check Perl version, or even better of
-> "prove" supports '--jobs' option, and selectively enable parallel
-> running of test harness in Makefile.
+> There's something strange with how `git diff' parses its flags:
 
-Besides, "make -j15 test" from the toplevel already runs the tests in
-parallel.  I don't see much point in this change.
+Yep.
+
+>   git diff --some-bogus-flag
+>   --> complains as expected
+
+Yep.
+
+>   git diff --follow
+>   --> works but there's no mention of this in the man page, and it
+>       doesn't look like it's doing anything
+
+--follow is a "diff option" even though it is about revision
+traversal. This is an artifact of the implementation, where
+rename-following happens at a low level where we have only diff_options.
+It should be possible to fix, though (parse the option at the revision
+layer, but have it set the diff_options flag).
+
+>   git diff -C -M
+>   --> works as expected too
+
+Yep.
+
+>   git diff -CM
+>   --> doesn't say anything (but it does exit with an error code)
+
+The revision and diff parsers do not use parse_options, and thus don't
+understand things like bundling. Even if they did, -C takes an optional
+argument. In this case, the argument format is bogus, so it aborts, but
+for some reason there is no error message (it is the same with -B, -M,
+and -C).
+
+>   git diff -CM --I-can-write-anything here!
+>   --> does the same
+
+Because we barfed at -CM already. It only looks funny because we didn't
+bother to print a message.
+
+Patches welcome.
+
+-Peff
