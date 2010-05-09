@@ -1,54 +1,54 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 5/8] Documentation/log: add a CONFIGURATION section
-Date: Sat, 8 May 2010 22:30:41 -0500
-Message-ID: <20100509033040.GE7958@progeny.tock>
+Subject: [PATCH 6/8] Documentation/notes: simplify treatment of default
+ display refs
+Date: Sat, 8 May 2010 22:32:24 -0500
+Message-ID: <20100509033223.GF7958@progeny.tock>
 References: <20100509031357.GA7926@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Johan Herland <johan@herland.net>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 09 05:30:42 2010
+X-From: git-owner@vger.kernel.org Sun May 09 05:32:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAxE2-0003eg-1F
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:30:42 +0200
+	id 1OAxFY-00049I-Qd
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753940Ab0EID3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 23:29:39 -0400
-Received: from mail-yx0-f171.google.com ([209.85.210.171]:55418 "EHLO
-	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752951Ab0EID3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 23:29:38 -0400
-Received: by yxe1 with SMTP id 1so1738528yxe.33
-        for <git@vger.kernel.org>; Sat, 08 May 2010 20:29:37 -0700 (PDT)
+	id S1754039Ab0EIDbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 May 2010 23:31:22 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:46686 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752951Ab0EIDbV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 23:31:21 -0400
+Received: by gwj19 with SMTP id 19so1374484gwj.19
+        for <git@vger.kernel.org>; Sat, 08 May 2010 20:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=Z8zC4Ot2Tck1kSCs1XmmTLXKtTjWb85x7iCKMoTKilA=;
-        b=RJjKUcAKJ+3rKBDYlhRNDHAyJo8SRUXt5ox/+qtU6PlvTi4PHWuGkMDjrdtsMbMRRX
-         u59TOiET+7GkK9vgY7aWUnS8P0/SikKGpCpQ+vPGJhInETrpoWnhGiAxFbqjEhBYPYse
-         +mkOCzwFp/Fv7fe1T5xu3HEQSP9AbFXTnY8lg=
+        bh=3mEfGKg4WpuyEr9OsFYDMH4GxwdszS8C6C6H2d8Bhc4=;
+        b=U55l6E5zVpR8Rk22DkhYGwIlgDDS+rtEbl98BaNlmb3PoK/tybrlaRzSuiJ07zD0Ia
+         B+r1UsUuK4fC7ZOIH62ns4MuZ7vDPIbu1aZ9PC6DN3sUAQR4oTJRVmTyX30/6pDx5bxG
+         4Jzq4UGZflPHKa75WfQGMBQLpqblVAkTfj9PM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=N8gyF1ql1ijdOW1WiSboXiZw2HhtY4jWjhzSPTe6F6sHAIcPbeY4HEcSv747enXarJ
-         5iYS8xe0yg+sG3raMW8aLKFrNkFG4eKpPrM+Flh79Rqms+zTBpWiVSyLCwFGio1Pu5qh
-         pep9n7ueC0a4XDKOYf2wgSFxVZ2d8BYlsFIcM=
-Received: by 10.151.92.14 with SMTP id u14mr5029866ybl.45.1273375777149;
-        Sat, 08 May 2010 20:29:37 -0700 (PDT)
+        b=e9bNg4Ce+dSAdo/4sqRSvo1E57j3I71u83zw+mCYHRPdozgFsXNHA2Bgo+RoEiQ38F
+         7WhZd4pir3YXeR6DAYwIS2vqjwEp2w5NEZHwn1rKikEQ8MABdemkRNKx5RCjylDcvNLb
+         ZRqdzfsgc39bBHeDZ+a0X8Vt5xEj4SRJ7GJZ8=
+Received: by 10.150.63.17 with SMTP id l17mr6113687yba.115.1273375880625;
+        Sat, 08 May 2010 20:31:20 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 23sm2578104yxe.6.2010.05.08.20.29.35
+        by mx.google.com with ESMTPS id 21sm2581625yxe.3.2010.05.08.20.31.18
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 May 2010 20:29:36 -0700 (PDT)
+        Sat, 08 May 2010 20:31:19 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100509031357.GA7926@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -56,68 +56,84 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146697>
 
-Add a configuration section summarizing variables that affect the
-log family of commands.
+The main description of display refs for notes should be in
+git-log.1, where there is a chance to give a leisurely description
+of all the ways they can be set, what they are used for, and so
+on.  The description in git-notes.1 is only meant to be a quick
+reminder of how notes are used.
+
+So simplify it.
+
+Also add an entry for GIT_NOTES_DISPLAY_REF to the environment
+section.
 
 Cc: Thomas Rast <trast@student.ethz.ch>
-Cc: Jakub Narebski <jnareb@gmail.com>
+Cc: Johan Herland <johan@herland.net>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git-log.txt |   42 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 42 insertions(+), 0 deletions(-)
+ Documentation/git-notes.txt |   36 +++++++++++++++++++-----------------
+ 1 files changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index fb184ba..d7f6a9c 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -132,6 +132,48 @@ Discussion
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 28ac862..7856b28 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -35,8 +35,8 @@ message stored in the commit object, the notes are indented like the
+ message, after an unindented line saying "Notes (<refname>):" (or
+ "Notes:" for `refs/notes/commits`).
  
- include::i18n.txt[]
+-To change which notes are shown by 'git-log', see the
+-"notes.displayRef" configuration.
++To change which notes are shown by 'git log', see the
++"notes.displayRef" configuration in linkgit:git-log[1].
  
-+Configuration
-+-------------
-+
-+See linkgit:git-config[1] for core variables and linkgit:git-diff[1]
-+for settings related to diff generation.
-+
-+format.pretty::
-+	Default for the `--format` option.  (See "PRETTY FORMATS" above.)
-+	Defaults to "medium".
-+
-+i18n.logOutputEncoding::
-+	Encoding to use when displaying logs.  (See "Discussion", above.)
-+	Defaults to the value of `i18n.commitEncoding` if set, UTF-8
-+	otherwise.
-+
-+log.date::
-+	Default format for human-readable dates.  (Compare the
-+	`--date` option.)  Defaults to "default", which means to write
-+	dates like `Sat May 8 19:35:34 2010 -0500`.
-+
-+log.showroot::
-+	If `false`, 'git log' and related commands will not treat the
-+	initial commit as a big creation event.  Any root commits in
-+	`git log -p` output would be shown without a diff attached.
-+	The default is `true`.
-+
-+mailmap.file::
-+	See linkgit:git-shortlog[1].
-+
-+notes.displayRef::
-+	Which refs, in addition to the default set by `core.notesRef`
-+	or 'GIT_NOTES_REF', to read notes from when showing commit
-+	messages with the 'log' family of commands.  See
-+	linkgit:git-notes[1].
+ See the description of "notes.rewrite.<command>" in
+ linkgit:git-config[1] for a way of carrying your notes across commands
+@@ -196,21 +196,13 @@ core.notesRef::
+ 	command line.
+ 
+ notes.displayRef::
+-	The (fully qualified) refname from which to show notes when
+-	showing commit messages.  The value of this variable can be set
+-	to a glob, in which case notes from all matching refs will be
+-	shown.  You may also specify this configuration variable
+-	several times.  A warning will be issued for refs that do not
+-	exist, but a glob that does not match any refs is silently
+-	ignored.
+-+
+-This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
+-environment variable, which must be a colon separated list of refs or
+-globs.
+-+
+-The effective value of "core.notesRef" (possibly overridden by
+-GIT_NOTES_REF) is also implicitly added to the list of refs to be
+-displayed.
++	Which ref (or refs, if a glob or specified more than once), in
++	addition to the default set by `core.notesRef` or
++	'GIT_NOTES_REF', to read notes from when showing commit
++	messages with the 'git log' family of commands.
++	This setting can be overridden on the command line or by the
++	'GIT_NOTES_DISPLAY_REF' environment variable.
++	See linkgit:git-log[1].
+ 
+ notes.rewrite.<command>::
+ 	When rewriting commits with <command> (currently `amend` or
+@@ -250,6 +242,16 @@ ENVIRONMENT
+ 	Which ref to manipulate notes from, instead of `refs/notes/commits`.
+ 	This overrides the `core.notesRef` setting.
+ 
++'GIT_NOTES_DISPLAY_REF'::
++	Colon-delimited list of refs or globs indicating which refs,
++	in addition to the default from `core.notesRef` or
++	'GIT_NOTES_REF', to read notes from when showing commit
++	messages.
++	This overrides the `notes.displayRef` setting.
 ++
-+May be an unabbreviated ref name or a glob and may be specified
-+multiple times.  A warning will be issued for refs that do not exist,
-+but a glob that does not match any refs is silently ignored.
-++
-+This setting can be disabled by the `--no-standard-notes` option,
-+overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
-+and supplemented by the `--show-notes` option.
++A warning will be issued for refs that do not exist, but a glob that
++does not match any refs is silently ignored.
++
  
  Author
  ------
