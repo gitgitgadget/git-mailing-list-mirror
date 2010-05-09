@@ -1,95 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/2] Makefile: let header dependency checker override
- COMPUTE_HEADER_DEPENDENCIES
-Date: Sat, 8 May 2010 23:00:10 -0500
-Message-ID: <20100509040010.GB8198@progeny.tock>
-References: <20100509035536.GA8118@progeny.tock>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/8] Documentation/notes: document format of notes trees
+Date: Sun, 9 May 2010 02:52:20 -0400
+Message-ID: <20100509065220.GA23717@sigill.intra.peff.net>
+References: <20100509031357.GA7926@progeny.tock>
+ <20100509031935.GA7958@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 09 05:59:15 2010
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 08:52:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAxfe-00027l-7f
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:59:14 +0200
+	id 1OB0NJ-000083-A2
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 08:52:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754496Ab0EID7J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 23:59:09 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:49287 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242Ab0EID7G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 23:59:06 -0400
-Received: by qyk13 with SMTP id 13so4098741qyk.1
-        for <git@vger.kernel.org>; Sat, 08 May 2010 20:59:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=LkRvCAA6bs0UWLi5qxsqgrukm3ry/5BJ42ZzCxvxGkE=;
-        b=KDLxtLLjzPy//zp6F5FJNdJL4qwfnALHzkcUlynKN2FqPzSukzBa+E7DrqjoncLXsp
-         yhySM7MH3GqsH429I5XWHAgr+LjcqFy4MekyN84jZcLYbbtkhSeDnvy0PTMLS2O8FwwQ
-         exdeD2j0ybswnjpwrMv2C0qjSKu1aT5cR23A8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=bB+ZOMaOjQlhqaGfI41NWesEs/Kci8cMTFT8Txn21ECiPoLfwm4m+oziR/3/K+FboY
-         EIvsz1gzX1/wgjecTfHEpYhvfQcqtU4NBOpKZcgYrcuarFVO7oLwc5KTXI0F/VxAjRGZ
-         7JdRKZeLB0g9H0mWLqnVlXxmBcdMUbzKxRg1Q=
-Received: by 10.229.187.71 with SMTP id cv7mr1669052qcb.81.1273377545831;
-        Sat, 08 May 2010 20:59:05 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id x34sm2730081qce.3.2010.05.08.20.59.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 May 2010 20:59:05 -0700 (PDT)
+	id S1751255Ab0EIGwX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 May 2010 02:52:23 -0400
+Received: from peff.net ([208.65.91.99]:60669 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750971Ab0EIGwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 02:52:23 -0400
+Received: (qmail 17208 invoked by uid 107); 9 May 2010 06:52:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 09 May 2010 02:52:37 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 May 2010 02:52:20 -0400
 Content-Disposition: inline
-In-Reply-To: <20100509035536.GA8118@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100509031935.GA7958@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146703>
 
-This way, if you have =E2=80=9CCOMPUTE_HEADER_DEPENDENCIES =3D YesPleas=
-e=E2=80=9D in your
-config.mak, you can still =E2=80=9Cmake CHECK_HEADER_DEPENDENCIES=3DYes=
-=E2=80=9D to check
-the makefile after a successful build.
+On Sat, May 08, 2010 at 10:19:35PM -0500, Jonathan Nieder wrote:
 
-This change does not affect the result of the command
-=E2=80=9Cmake CHECK_HEADER_DEPENDENCIES=3DYes COMPUTE_HEADER_DEPENDENCI=
-ES=3DYes=E2=80=9D.
-That will still die with an error message:
+> How well does =E2=80=98git notes=E2=80=99 handle notes trees without =
+a commit
+> currently?  I remembered some rumor about a commitless mode in which
+> the only history is the reflog, but I am not sure how much of that is
+> implemented yet and I did not check.
+>=20
+> If it was only groundless rumor (read: I made it up), then the last
+> paragraph of the discussion should be removed.
 
-	cannot compute header dependencies outside a normal build
+My original textconv caching implementation used commitless notes. The
+new version uses commits, but keeps the history truncated. As far as I
+know, you can manipulate the latter with git-notes, but I haven't tried
+much (adding a new note should make a history graph with length 2, whic=
+h
+will then get re-truncated the next time we add something to the cache
+automatically). But certainly "list", "show", and "prune" should work,
+which are the ones I would expect to be useful for such a cache.
 
-The message is appropriate because still true.
+> +It is also permitted for a notes ref to point directly to a tree
+> +object, in which case the history of the notes can be read with
+> +`git log -p -g <refname>`.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Makefile |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+You would also use this to see the history of cache notes. They have
+commits, but the only ancestry is in the reflog. So perhaps:
 
-diff --git a/Makefile b/Makefile
-index 567b859..0025b98 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1063,6 +1063,7 @@ endif
- -include config.mak
-=20
- ifdef CHECK_HEADER_DEPENDENCIES
-+COMPUTE_HEADER_DEPENDENCIES =3D
- USE_COMPUTED_HEADER_DEPENDENCIES =3D
- endif
-=20
---=20
-1.7.1
+  Some notes refs may be "history-less", either because they point
+  directly to a tree instead of a commit, or because their commits are
+  truncated (the notes generated by textconv caching are an example of
+  the latter). To see the local history of these refs, view the reflog
+  with `git log -g <refname>`.
+
+-Peff
