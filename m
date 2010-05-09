@@ -1,85 +1,88 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/2] Makefile: fix header dependency checker to allow
- NO_CURL builds
-Date: Sat, 8 May 2010 22:57:28 -0500
-Message-ID: <20100509035728.GA8198@progeny.tock>
-References: <20100509035536.GA8118@progeny.tock>
+Subject: [PATCH 0/2] Makefile: header dependency checker fixes
+Date: Sat, 8 May 2010 22:55:36 -0500
+Message-ID: <20100509035536.GA8118@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 09 05:57:05 2010
+X-From: git-owner@vger.kernel.org Sun May 09 05:57:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAxdY-0001YG-VC
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:57:05 +0200
+	id 1OAxdY-0001YG-F6
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754402Ab0EID41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 23:56:27 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63063 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753678Ab0EID40 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 23:56:26 -0400
-Received: by gyg13 with SMTP id 13so1369671gyg.19
-        for <git@vger.kernel.org>; Sat, 08 May 2010 20:56:26 -0700 (PDT)
+	id S1754238Ab0EIDyf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 23:54:35 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:40315 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753742Ab0EIDyf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 23:54:35 -0400
+Received: by gwj19 with SMTP id 19so1378598gwj.19
+        for <git@vger.kernel.org>; Sat, 08 May 2010 20:54:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Jyy4/xLoYT2swonEZBRsJH5Ck11T17D/+PV3jCzRaQo=;
-        b=cvq3fZHTN4n9395S4mQg6L0BhcngechYOYzvuR0aFKEWoIbDia7el8EA8LoLyhxKFG
-         2tKhI4lO/8UapLPUP/qNujQvRBvvvMuFZgsm8lDdoGTjecje0cnmlFSgBTX6JQTmwZS2
-         a541KuUlh9nv+qH0ouMq0v+Z8deBTSEaQ4cH4=
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=ufRTDZ0kBpgmXoRpbzolL1Mcy5GBmVn8ZI22oagUnxA=;
+        b=su9AgQ17Y/42THYelCWAurVxgjncfmxwukXPwgUIE21wkVv9/6zyk9a3VWBHD90+78
+         A0wdgA0bxtkmkJ2reD35da96NHNwb41SJKHjnFfWsMkD5EipF5Nsgmu8SITl5RbizpIS
+         SK0OBC7YS7GaZ1DK4UTOhNKV6gylTUPCRqclg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FbJF6haBLhJn7kbPqjr9QPG/W4MEzSQW4wn7V9YbFhdSf6vaecv9g5m9TB5Us4l9IM
-         SxsQjeLR3CiGwNw+5oPVmWO2ExOU3ka8j2A5nOEnCR6eFNJIUKt+B/cqaxVQUAvC3Je3
-         5Kf6vG59KRUxC9SLFOP7Tarkipx1Wih9TuUkc=
-Received: by 10.150.244.8 with SMTP id r8mr5916267ybh.206.1273377385998;
-        Sat, 08 May 2010 20:56:25 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=ED0fCAPzjVD2vVWKKSGOmH4ltmyc/KUY/20YbQpmnuDNbRmmlBSHKZi9pOt4+TCooD
+         EUv2VXDCSMLSy8v1tovOOyOQgNx+fyr1I7dP8V7Z1olDB8+jL9k1fWjogl5UF0T3rgWt
+         qQEGp6+1ifbIqcZYIpypveZrL7BeePssrTW7Y=
+Received: by 10.91.163.11 with SMTP id q11mr1123269ago.90.1273377274240;
+        Sat, 08 May 2010 20:54:34 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 22sm2594614yxe.13.2010.05.08.20.56.24
+        by mx.google.com with ESMTPS id 21sm2590309yxe.11.2010.05.08.20.54.33
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 May 2010 20:56:25 -0700 (PDT)
+        Sat, 08 May 2010 20:54:33 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100509035536.GA8118@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146701>
 
-Do not expect to find http-related dependency fragments after a build
-with HTTP support disabled.
+Two fixes to make the CHECK_HEADER_DEPENDENCIES facility more
+usable.  Now you can
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Makefile |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+ echo >>config.mak NO_CURL =3D YesPlease
+ echo >>config.mak COMPUTE_HEADER_DEPENDENCIES =3D YesPlease
+ make -j16
+ make -j16 CHECK_HEADER_DEPENDENCIES=3DYep
 
-diff --git a/Makefile b/Makefile
-index 910f471..567b859 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1656,7 +1656,10 @@ git.o git.spec \
- 
- TEST_OBJS := $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
- GIT_OBJS := $(LIB_OBJS) $(BUILTIN_OBJS) $(PROGRAM_OBJS) $(TEST_OBJS) \
--	git.o http.o http-walker.o remote-curl.o
-+	git.o
-+ifndef NO_CURL
-+	GIT_OBJS += http.o http-walker.o remote-curl.o
-+endif
- XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
- 	xdiff/xmerge.o xdiff/xpatience.o
- OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS)
--- 
-1.7.1
+on some super-fast machine without libcurl-dev installed and
+it will check the header dependencies for the rest of the makefile.
+
+Previously it would error out for two reasons:
+
+ - COMPUTE_HEADER_DEPENDENCIES and CHECK_HEADER_DEPENDENCIES
+   are incompatible
+
+ - the safety to make sure the automatically computed header
+   dependencies were present did not understand that HTTP support
+   is missing
+
+This is nothing urgent, just nice to have.  I=E2=80=99d be glad to carr=
+y
+them locally if that=E2=80=99s more convenient.
+
+Jonathan Nieder (2):
+  Makefile: fix header dependency checker to allow NO_CURL builds
+  Makefile: let header dependency checker override
+    COMPUTE_HEADER_DEPENDENCIES
+
+ Makefile |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
