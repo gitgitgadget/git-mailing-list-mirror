@@ -1,106 +1,97 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control  end-of-line conversion
-Date: Sun, 9 May 2010 20:59:04 +0200
-Message-ID: <E6434515-5357-4FF4-8049-5E4FCE8B29E4@gmail.com>
-References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com> <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org> <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com> <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com> <20100509070043.GB14069@dpotapov.dyndns.org> <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com> <AANLkTikRJ6Hl_fRNRZbxeNNgwv9UTm2fPrOKv4GbT0qJ@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	mat <matthieu.stigler@gmail.com>,
-	hasen j <hasan.aljudy@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>
-To: Robert Buck <buck.robert.j@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 09 20:59:21 2010
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: [PATCH v2 0/2] clone: simplify progress message
+Date: Sun, 09 May 2010 13:09:14 -0700
+Message-ID: <4BE7166A.5030107@pcharlan.com>
+References: <4BE60E89.8010709@pcharlan.com> <20100509110221.GA16639@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun May 09 22:09:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBBig-0003BM-Jf
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 20:59:18 +0200
+	id 1OBCoU-0002R9-MR
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 22:09:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315Ab0EIS7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 14:59:12 -0400
-Received: from mail-ew0-f220.google.com ([209.85.219.220]:54325 "EHLO
-	mail-ew0-f220.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206Ab0EIS7J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 May 2010 14:59:09 -0400
-Received: by ewy20 with SMTP id 20so716513ewy.1
-        for <git@vger.kernel.org>; Sun, 09 May 2010 11:59:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=1mFgY7Ckr1nTVSr+h2G5MsRC3HqSNyfM+DrmkpL0Ex4=;
-        b=rkjFcuxcgoAN4NS4Q2+7yBazplajWzrfVXvBa+5FLsLiBzt7ZZB+x35BH/jk2kW/g2
-         DBg9IP93ePBQoV5+44wcEsMG/2mKve+Eb8jKlRXKRwXmGh14EcDwPcN+uE9zeAVg8mZW
-         v5FWxjCMlo0bJR71XQXJ1Olc7diMlTHoY+Ot4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=g5K4dAcsMN5LUGJRQ2cf1SqS9cZ3xvzNp/h8oNhPTtM3VBtlPoutr7EAoIJFQGkVFk
-         cxkP1jdc1jPrf1mmADSUFzTBG9VrfofBTdhTInpFOQQn3TMabVpFRKuKh8Cnb9rWZ+B/
-         ogXxf5HxJgyp3G0jVQP1/9hrcBJWpp+4dT1Sw=
-Received: by 10.213.37.67 with SMTP id w3mr883524ebd.69.1273431548544;
-        Sun, 09 May 2010 11:59:08 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 14sm2162949ewy.6.2010.05.09.11.59.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 09 May 2010 11:59:08 -0700 (PDT)
-In-Reply-To: <AANLkTikRJ6Hl_fRNRZbxeNNgwv9UTm2fPrOKv4GbT0qJ@mail.gmail.com>
-X-Mailer: Apple Mail (2.1078)
+	id S1750854Ab0EIUJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 16:09:17 -0400
+Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:56677 "EHLO
+	swarthymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750701Ab0EIUJQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 May 2010 16:09:16 -0400
+Received: from [192.168.0.119] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
+	(Authenticated sender: pete@tento.net)
+	by swarthymail-a5.g.dreamhost.com (Postfix) with ESMTPA id AED7E340001;
+	Sun,  9 May 2010 13:09:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <20100509110221.GA16639@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146740>
 
-On 9. mai 2010, at 13.14, Robert Buck wrote:
-
-> So, the meanings of these would become...
+On 05/09/2010 04:02 AM, Jeff King wrote:
+> On Sat, May 08, 2010 at 06:23:21PM -0700, Pete Harlan wrote:
 > 
-> core.crlf [ auto | input | false ] : 'auto' means to enable
-> bidirectional normalization, and 'false' would mean do not
-> normalization, and 'input' would mean normalize on input only,
-> otherwise output lf. Is this true?
-
-No, "auto" means to enable normalization for files git doesn't identify as text files, "true" means to always normalize, and "false" means never normalize.  I probably wouldn't implement "input" unless there was a lot of demand.  The idea is to make it act exactly like the "crlf" attribute, even though "core.crlf=true/false" would probably be used very rarely...  I'm having second thoughts, actually.
-
-> core.localcrlf [ crlf | lf ] : this is obvious, and use-friendly
-
-Well, yes.  I was thinking "true|false" (ie "I want crlf" or "I don't want crlf"), but I'm having second thoughts about that, too.
-
-> For the above case have you considered using 'core.crlflocal' instead?
-> Usability-wise the related properties start with the same name prefix.
-
-I didn't think too much about the name, so a completely different name might be even better.
-
-Because of this and my second thoughts, I'm going to wait a few days before I make any more changes to allow good ideas to appear and give them time to sink in.
-
-> From a usability standpoint, I personally prefer something similar to
-> what you (see "my user interface would have been") specified, slight
-> adjustment to the names only:
+>> "git clone foo bar" currently reports "Cloning into
+>> /path/to/bar/.git".  Change this message to "Cloning into bar" to more
+>> closely match the user's expectation.
 > 
-> core.eolconv [ true | false ] - whether or not to turn on conversions
-> core.eoltype [ lf | crlf ] - by default what to convert to for text files
+> I am a little torn on this. For most users, it is just another
+> implementation detail that makes git's output more confusing. And it is
+> likely to be the very first git message seen by many people. But at the
+> same time, it is telling you where the repository actually is, which is
+> something that can help users learn about how git works.
+> 
+> I guess it comes down to how much detail we want to show.
 
-Agreed, but I think getting this feature included is more important than getting the user interface exactly right.  A compromise between backwards compatibility and user friendliness is okay.
+For me it isn't only a matter of detail; I find "Cloning into
+bar/.git" misleading, since bar is getting more than a .git directory.
 
-> I like this purely because, from the users standpoint, saying
-> something like "localcrlf crlf" is strange; meaning the term "crlf" is
-> on both sides of the assignment. I do prefer "eol... crlf", where eol
-> refers to the applicability of the property and crlf is only one such
-> value.
+>> For a --bare clone the current message prints the top level dir
+>> (because that is the git dir), so one could argue in favor of the
+>> current message because it confirms for the user whether their
+>> checkout was bare or not.  But that's only if the user is aware of how
+>> it would appear in both cases; I doubt that the existing code intended
+>> to make that distinction clear, and in practice I expect most users
+>> (a) trust git to do what they asked and (b) wouldn't notice that
+>> "Cloning into /path/to/bar" meant that it was a bare checkout.
+> 
+> I do think there is some value to this distinction. But we can make it a
+> lot less ugly for new users with:
+> 
+>   $ git clone /tmp/foo
+>   Cloning into /tmp/foo...
+> 
+>   $ git clone --bare /tmp/foo
+>   Cloning into bare repository /tmp/foo...
+> 
+> or something like that.
 
-Yes, my "localcrlf" would be true/false instead of crlf/lf.  It's definitely a compromise :)
--- 
-Eyvind
+Thank you for looking at this.  I agree with you, and have added a
+second patch that implements that.
+
+These two changes modify a progress message introduced a few weeks ago
+in 28ba96ab2.  Unless there's a particular reason to report the .git
+dir instead of the top level dir, seeing the top level dir feels more
+natural to me.
+
+For a --bare clone the current message prints the top level dir
+(because that is the git dir), so one could argue in favor of the
+current message because it confirms for the user whether their
+checkout was bare or not.  The second patch modifies the message per
+Jeff King's suggestion, to say "Cloning to bare repository bar..." to
+convey that information more directly.
+
+Pete Harlan (2):
+  clone: have progress report mention top level dir, not git dir
+  clone: add bare clone to the progress message
+
+ builtin/clone.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
