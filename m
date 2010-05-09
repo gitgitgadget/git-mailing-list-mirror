@@ -1,91 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Multiple line ranges and files in line level history browser
-Date: Sun, 09 May 2010 11:20:21 -0700
-Message-ID: <7v1vdl9btm.fsf@alter.siamese.dyndns.org>
-References: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] diff: fix coloring of extended diff headers
+Date: Sun, 9 May 2010 20:43:07 +0200
+Message-ID: <AANLkTilFfkadPZd56OSGr1yDLVeSQ_G2jOxga1dK5NBD@mail.gmail.com>
+References: <591c96c90ca049400a8c0df70f8b44061aeacba5.1272926169.git.bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 09 20:20:55 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 09 20:43:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBB7W-0004cf-Bn
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 20:20:54 +0200
+	id 1OBBTA-0004I2-IZ
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 20:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751568Ab0EISUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 14:20:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47867 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181Ab0EISUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 14:20:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 30364B262D;
-	Sun,  9 May 2010 14:20:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=staDY/B6KyQEF4O0kEF9FLgR7tQ=; b=LwNneo
-	eWcp+cF+K/S3p6sHInfErbHJWsKQccxemxtlvjQatDnv/UnAlMdIv2s/NmT93xfz
-	227as3pErRPodNLDH86kjgh86ZYkTYMvBJpn+AkSIWoO0xqbjPnFwB2HWRkVqojS
-	rSiqhtuw+OC8K3ba8QRdgoY0eJbTCeerWVLqU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RoLN1NR+JbanrrQD2x9ajUGrV4wU1xqB
-	XG8seYWyguDSEfphlJaDiSckJ9b/jO83VkaHR6YA2tnflsRpv/1M3JyFWj/9vwAf
-	jLYJxxRoH7H5DDsnwlatU1K0MPcEWSVjovM8FxuYv38LhXA/oaoDC03DuYzOp+6f
-	/CUHbol6eag=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DA56B262C;
-	Sun,  9 May 2010 14:20:38 -0400 (EDT)
-Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E787DB262A; Sun,  9 May
- 2010 14:20:28 -0400 (EDT)
-In-Reply-To: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
- (Bo Yang's message of "Sun\, 9 May 2010 07\:00\:32 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 91A5BF08-5B97-11DF-A71E-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751313Ab0EISnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 14:43:09 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43671 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750967Ab0EISnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 14:43:08 -0400
+Received: by gwj19 with SMTP id 19so1550112gwj.19
+        for <git@vger.kernel.org>; Sun, 09 May 2010 11:43:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=M40Lh8zUBa+7GauxYWNQOR1NBhRvsMqoLESriSnYZwU=;
+        b=hiN2gHpE/lg5ccMyHXIUpM9/gcfIfm2pl74yk26cZa4ciMFcyRlwh216o3khbLfcNH
+         wHdiaSZYMisSfgNm7nd+nIC/8DwZJRSfpjT4IBLSiPW+uQtqOrQrQyK5+zLa7B33CqgX
+         RGzGzPE4i1Zosp8B7JnSg1BHPnbqy+OUGaa6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=h27grXVxo5GSdh03gzpwncXISeZ0xQWm4NZeicBPDW1FaNJHmqy+E6HITVwO4muEmz
+         04madxYe9hYXTBFfTgrALkXgeuFQ7gmHR0UcJ+WGtHUCPkqBxqv5/PjEQZUvfSt7MMxs
+         pGanXwHcKeMderE0f1Zduq6wwLe64lUiGL+rI=
+Received: by 10.231.146.2 with SMTP id f2mr1416850ibv.23.1273430587084; Sun, 
+	09 May 2010 11:43:07 -0700 (PDT)
+Received: by 10.231.39.205 with HTTP; Sun, 9 May 2010 11:43:07 -0700 (PDT)
+In-Reply-To: <591c96c90ca049400a8c0df70f8b44061aeacba5.1272926169.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146737>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
-
-> git log <revision> -L1,8 -L45,+6 <file1> -L/some/,/end/ -L9,29 <file2> <file3>
-> ...
-> Since '-L' option is also used by many other command, I don't know the
-> exact impact of this, anyway we can use another name anytime...
+On Tue, May 4, 2010 at 00:38, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+> Coloring the extended headers where done as a whole not per line. less with
+> option -R (which is the default from git) does not support this coloring
+> mode because of performance reasons. The -r option would be an alternative
+> but has problems with lines that are longer than the screen. Therefore
+> stick to the idiom to color each line separately. The problem is, that the
+> result of ill_metainfo() will also be used as an parameter to an external
+> diff driver, so we need to disable coloring in this case.
 >
-> If there is no opposition for this kind of option syntax, I will try
-> to implement it in revision.c. ;-)
+> Because coloring is now done inside fill_metainfo() we can simply add this
+> string to the diff header and therefore keep the last newline in the
+> extended header. This results also into the fact that the external diff
+> driver now gets this last newline too. Which is a change in behavior
+> but a good one.
 
-I'd rather not to see this in revision.c at all.  The revision.c parser
-has always been options and then pathspecs and never takes individual
-filnames, except for "--follow" that is an afterthought checkbox hack that
-lets the main parser parse and then reject a generic pathspec after the
-fact.
+Ping.
 
-I think the right place to do this sort of thing is in the incremental
-output of "blame".  The command only takes individual filenames and never
-takes general pathspecs, it knows about -L as line-range (and as far as I
-see, it is the only command that does so) and I think its output routine
-already has the right infrastructure for doing this.  The "--incremental"
-output itself is designed for porcelain scripts to interpret and do the UI
-around it, but that does not mean it can have another mode that gives
-human readable output.  When "blame --incremental" emits the record that
-says "these lines are blamed to this path in this commit", it has already
-run internally necessary "diff" between blobs to find that
-information---you should be able to re-run the diff (or keep the output
-from "diff" around, but I would suggest against it) and show something
-like "git log -p" output but is limited to the hunks that actually touch
-the areas that we are following.
+Regards,
+Bert
