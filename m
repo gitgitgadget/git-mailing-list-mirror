@@ -1,97 +1,80 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: [PATCH v2 0/2] clone: simplify progress message
-Date: Sun, 09 May 2010 13:09:14 -0700
-Message-ID: <4BE7166A.5030107@pcharlan.com>
-References: <4BE60E89.8010709@pcharlan.com> <20100509110221.GA16639@coredump.intra.peff.net>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control
+	end-of-line conversion
+Date: Sun, 9 May 2010 22:09:37 +0200
+Message-ID: <20100509200935.GA22563@pvv.org>
+References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com> <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org> <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com> <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com> <20100509070043.GB14069@dpotapov.dyndns.org> <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun May 09 22:09:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	mat <matthieu.stigler@gmail.com>,
+	hasen j <hasan.aljudy@gmail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Robert Buck <buck.robert.j@gmail.com>
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 22:10:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBCoU-0002R9-MR
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 22:09:23 +0200
+	id 1OBCp9-0002fz-SJ
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 22:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854Ab0EIUJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 16:09:17 -0400
-Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:56677 "EHLO
-	swarthymail-a5.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750701Ab0EIUJQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 May 2010 16:09:16 -0400
-Received: from [192.168.0.119] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
-	(Authenticated sender: pete@tento.net)
-	by swarthymail-a5.g.dreamhost.com (Postfix) with ESMTPA id AED7E340001;
-	Sun,  9 May 2010 13:09:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <20100509110221.GA16639@coredump.intra.peff.net>
+	id S1751178Ab0EIUJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 16:09:47 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:33051 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750701Ab0EIUJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 16:09:46 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1OBCoj-0004Z3-UA; Sun, 09 May 2010 22:09:38 +0200
+Content-Disposition: inline
+In-Reply-To: <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146741>
 
-On 05/09/2010 04:02 AM, Jeff King wrote:
-> On Sat, May 08, 2010 at 06:23:21PM -0700, Pete Harlan wrote:
-> 
->> "git clone foo bar" currently reports "Cloning into
->> /path/to/bar/.git".  Change this message to "Cloning into bar" to more
->> closely match the user's expectation.
-> 
-> I am a little torn on this. For most users, it is just another
-> implementation detail that makes git's output more confusing. And it is
-> likely to be the very first git message seen by many people. But at the
-> same time, it is telling you where the repository actually is, which is
-> something that can help users learn about how git works.
-> 
-> I guess it comes down to how much detail we want to show.
+On Sun, May 09, 2010 at 12:42:17PM +0200, Eyvind Bernhardsen wrote:
 
-For me it isn't only a matter of detail; I find "Cloning into
-bar/.git" misleading, since bar is getting more than a .git directory.
+> I guess I should nail my flag to the mast: Here's what I would have
+> done, with the benefit of plenty of hindsight, had we not had
+> core.autocrlf, and also what I think we should do to approach that
+> ideal.
+> [...]
 
->> For a --bare clone the current message prints the top level dir
->> (because that is the git dir), so one could argue in favor of the
->> current message because it confirms for the user whether their
->> checkout was bare or not.  But that's only if the user is aware of how
->> it would appear in both cases; I doubt that the existing code intended
->> to make that distinction clear, and in practice I expect most users
->> (a) trust git to do what they asked and (b) wouldn't notice that
->> "Cloning into /path/to/bar" meant that it was a bare checkout.
-> 
-> I do think there is some value to this distinction. But we can make it a
-> lot less ugly for new users with:
-> 
->   $ git clone /tmp/foo
->   Cloning into /tmp/foo...
-> 
->   $ git clone --bare /tmp/foo
->   Cloning into bare repository /tmp/foo...
-> 
-> or something like that.
+After some meditation, I think the following:
 
-Thank you for looking at this.  I agree with you, and have added a
-second patch that implements that.
+The most important thing is how we can fix git on Windows to operate
+well by default. This is what we really should try to fix.
 
-These two changes modify a progress message introduced a few weeks ago
-in 28ba96ab2.  Unless there's a particular reason to report the .git
-dir instead of the top level dir, seeing the top level dir feels more
-natural to me.
+The way git on Windows would work best, while at the same time cause
+the minimum amount of damage, would IMHO be:
 
-For a --bare clone the current message prints the top level dir
-(because that is the git dir), so one could argue in favor of the
-current message because it confirms for the user whether their
-checkout was bare or not.  The second patch modifies the message per
-Jeff King's suggestion, to say "Cloning to bare repository bar..." to
-convey that information more directly.
+- Convert LF-only text files to CRLF on checkout
+- Convert those same files (but only those!) back to LF on commit
+- Optionally: Convert new CRLF text files to LF on commit
 
-Pete Harlan (2):
-  clone: have progress report mention top level dir, not git dir
-  clone: add bare clone to the progress message
+And all this should happen without setting any configuration, and not
+setting any attributes.
 
- builtin/clone.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+So maybe, just maybe, we can make everything sufficiently good by
+repairing "core.autocrlf = {input,true}" so that git will not convert
+a CRLF already in the repo. This would make autocrlf = true a safe
+default value (and probably input too, but you'd have to "do
+something" to get a new text file with CRLF into the repo then).
+
+Then we go from a situation that didn't work, to a working situation,
+and break nothing that used to work. You no longer have to normalise
+your repos to work from Windows.
+
+- Finn Arne
