@@ -1,72 +1,106 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: [PATCH 6/6] Add test_harness make target for testing with 
-	prove(1)
-Date: Sun, 9 May 2010 13:04:30 +0200
-Message-ID: <q2pd2d39d861005090404w41710d82nd9b2570f79931d00@mail.gmail.com>
-References: <1273261025-31523-1-git-send-email-avarab@gmail.com>
-	 <1273261025-31523-6-git-send-email-avarab@gmail.com>
+From: Robert Buck <buck.robert.j@gmail.com>
+Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control 
+	end-of-line conversion
+Date: Sun, 9 May 2010 07:14:12 -0400
+Message-ID: <AANLkTikRJ6Hl_fRNRZbxeNNgwv9UTm2fPrOKv4GbT0qJ@mail.gmail.com>
+References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com>
+	 <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com>
+	 <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org>
+	 <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
+	 <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
+	 <20100509070043.GB14069@dpotapov.dyndns.org>
+	 <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 09 13:04:38 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	mat <matthieu.stigler@gmail.com>,
+	hasen j <hasan.aljudy@gmail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 13:14:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OB4JJ-0006CC-Eq
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 13:04:37 +0200
+	id 1OB4Sn-0001vC-Gx
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 13:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127Ab0EILEc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 May 2010 07:04:32 -0400
-Received: from fg-out-1718.google.com ([72.14.220.154]:18272 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752420Ab0EILEb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 May 2010 07:04:31 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1256941fga.1
-        for <git@vger.kernel.org>; Sun, 09 May 2010 04:04:30 -0700 (PDT)
+	id S1753267Ab0EILOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 07:14:15 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:36133 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752782Ab0EILOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 07:14:14 -0400
+Received: by wwa36 with SMTP id 36so932072wwa.19
+        for <git@vger.kernel.org>; Sun, 09 May 2010 04:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=j3dZZRv89hYla0x8z7woHd7Yk5jahgVC9F3Z/xdEU0k=;
-        b=OGJe1c/rdmkxtaa6ADax3ZexmqDqBhXghKiRgRbgH5XtrDQ6IMmSMnxRTqCfinW5DB
-         dX4yhdbHfsfsfkkbNBlpZVylH8m0fG5Kc4iaPpyPB673pQjimvEtXZfd9lc5qP+wgMyV
-         H7dzrYvtQNHtARBarhYg11cjxfMzt8FeNPtL8=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=9l3pSHvOmbKxIyCoMGKGl0WWuWI8qLY2GrlinjZHahk=;
+        b=Lf5jDuwJwJk04+S1TsMOluwvx3bAmLwk1x73BSL9pOR2JteL5FX/KMlGiNF1sHiXbW
+         5YxYUR1d5Vby7UdBPngOh4walRiNzXhMmh1O6bJKjWdVg15CYme1Jn1myOx1reU+J8OP
+         MqPtkEiwSfAkz26uhb8Ifo+3P3bXu2d8FECh0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=ESPUdPxmdZbeusfqhgkuwsGvsql51i2NGYczz0l2JzDtSfNFjNqhK+hZ4VpSrnO6s+
-         /7a3yf4QGn/iy16QMLuwhuDtAnsy4MTCgTsZY5lM76D7wJE0gQImV/HfjI2Uaqp312hw
-         VlNgs6FZnZfdP0sCgTgdcMQUwVdQk03qC7Ap0=
-Received: by 10.239.130.209 with SMTP id 17mr7490hbk.200.1273403070071; Sun, 
-	09 May 2010 04:04:30 -0700 (PDT)
-Received: by 10.239.179.197 with HTTP; Sun, 9 May 2010 04:04:30 -0700 (PDT)
-In-Reply-To: <1273261025-31523-6-git-send-email-avarab@gmail.com>
-X-Google-Sender-Auth: bc0276ce63bc8b23
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hSJCtBvJBD4BPARuAkN5Vy4Y7Nl6KoVrv3RSnXshWgqVpZedhb2sTJyWEDlLoqzO8l
+         bIJh0VWbQxkz8xUlUQ2T9y6h0igEAbvSK370vCGyROrara0pAL1w/1DR+Gj26gOcBvM8
+         magKHycTStqRR+kaUFRXMqhXcMSemhbC17gDw=
+Received: by 10.216.155.143 with SMTP id j15mr1514784wek.46.1273403652754; 
+	Sun, 09 May 2010 04:14:12 -0700 (PDT)
+Received: by 10.216.7.207 with HTTP; Sun, 9 May 2010 04:14:12 -0700 (PDT)
+In-Reply-To: <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146721>
 
-On Fri, May 7, 2010 at 21:37, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gma=
-il.com> wrote:
-> The --jobs option I'm supplying to prove(1) is not supported in all
-> prove versions, some older ones (before Perl 5.10.1) don't have
-> it. Anyone that's hacking Git probably has 5.10.1, [...]
+> My user interface would have been:
+>
+> - an attribute "eolconv" that enables or disables line ending conversion
+> - a config variable "core.eolconv" that sets "eolconv" for all files where it is unset
+> - a config variable "core.localeol" that decides whether LF or CRLF is preferred
+>
 
-Not on the platforms I'm testing Git on. (The non-Linux ones.) It's
-troublesome enough that parts of Git itself requires 5.8 or later..
+[...]
 
->and you can always use the old `make test` for non-parallel tests.
+> My current thinking on how to change my series now runs along these lines:
+>
+> - keep the current "crlf=auto" change
+> - rename "core.eolStyle" to "core.localcrlf"
+> - add a "core.crlf" that sets the "crlf" attribute on paths where it isn't explicitly configured
+> - keep "core.autocrlf" for backwards compatibility, but make "core.autocrlf=input" and "core.autocrlf=true" complain if they are in conflict with the other config settings.
 
-If tests still can be run.. ok then.
+So, the meanings of these would become...
 
--Tor
+core.crlf [ auto | input | false ] : 'auto' means to enable
+bidirectional normalization, and 'false' would mean do not
+normalization, and 'input' would mean normalize on input only,
+otherwise output lf. Is this true?
+core.localcrlf [ crlf | lf ] : this is obvious, and use-friendly
+
+For the above case have you considered using 'core.crlflocal' instead?
+Usability-wise the related properties start with the same name prefix.
+
+>From a usability standpoint, I personally prefer something similar to
+what you (see "my user interface would have been") specified, slight
+adjustment to the names only:
+
+core.eolconv [ true | false ] - whether or not to turn on conversions
+core.eoltype [ lf | crlf ] - by default what to convert to for text files
+
+I like this purely because, from the users standpoint, saying
+something like "localcrlf crlf" is strange; meaning the term "crlf" is
+on both sides of the assignment. I do prefer "eol... crlf", where eol
+refers to the applicability of the property and crlf is only one such
+value.
