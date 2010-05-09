@@ -1,97 +1,168 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Multiple line ranges and files in line level history browser
-Date: Sun, 9 May 2010 07:00:32 -0700
-Message-ID: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 09 16:00:41 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] ls-remote: print URL when no repo is specified
+Date: Sun,  9 May 2010 22:42:20 +0800
+Message-ID: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun May 09 16:44:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OB73f-0007KG-9k
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 16:00:39 +0200
+	id 1OB7jm-0000t5-8q
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 16:44:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470Ab0EIOAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 10:00:34 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:34549 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753092Ab0EIOAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 10:00:33 -0400
-Received: by qyk13 with SMTP id 13so4510757qyk.1
-        for <git@vger.kernel.org>; Sun, 09 May 2010 07:00:32 -0700 (PDT)
+	id S1751375Ab0EIOmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 10:42:40 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:48882 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751203Ab0EIOmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 10:42:39 -0400
+Received: by pva18 with SMTP id 18so1268544pva.19
+        for <git@vger.kernel.org>; Sun, 09 May 2010 07:42:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=dss4mOprKQlaEQuUR2UmCmRdAwsLHDiTgQsO/CYZuYc=;
-        b=WyRMLLImObDVlMy4cAU1ddq+oHgsw1yxGafCCopi6gSuqQsC4Rg+xMcPO9q+7qZP3X
-         TASYq1BWnWKJaKBCqv7Z26qa8Qbr9lMNrnBMMRJhqYdOMGc0O0e6bFE01BFANRUtMa+n
-         /tuQe/sRM5nXOL4PI/ZV5ET0dIbMju+ejHsDI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=FshrWgrFdZTr4YCKtORsltAExFzdP81hhCamNDxGO/E=;
+        b=itkhnB0DTgWvjR8aOCtL9wI/Is/DKDqUTI7JgHSTZKXD4asn0hxruybpv7lRnzUmyu
+         Il1AfnBwxIWlyOZaw2Qe6IcmQZt43YFQYsEE5mZu3cvHWLJz23B9xEvwSjE8c4mxFk5x
+         MTN17oE81c35f2GP/rSezWMrbH0KUgDMzTEoQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=vOpxs4TM+Qw+rJTUqZCG5yofVoivXG+dAkmklYStv/HYkoi/pz7pzeQ//QY1LHXgnZ
-         7thjL6V5q3/IWvYQw3zNHESMjDsVBg5n68/yKsgZgIWLxbbZlTaKhICfVt2v2XaDcGww
-         nWMVVGzTUB9xc36+QYAEfV3HTKh7iwmelTDSI=
-Received: by 10.224.72.34 with SMTP id k34mr1642737qaj.283.1273413632067; Sun, 
-	09 May 2010 07:00:32 -0700 (PDT)
-Received: by 10.229.97.80 with HTTP; Sun, 9 May 2010 07:00:32 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=RabhQEQgTZBZQYg87V0GAOzi3SKrzYh5noLY5EiqHA8nlVB3IpsiuDw8KrGExgph7j
+         liieMPNMOche8rChixfdwJgW6yD5seXEkwoYZNSNelwcaoDBI0+v7Y8Azicq4yFD+/Vp
+         L1tyeN86ppTSzbIc8/7t6N29e2ilckoPbJsBs=
+Received: by 10.115.86.38 with SMTP id o38mr2088282wal.170.1273416158282;
+        Sun, 09 May 2010 07:42:38 -0700 (PDT)
+Received: from localhost.localdomain (cm71.zeta153.maxonline.com.sg [116.87.153.71])
+        by mx.google.com with ESMTPS id c22sm20533881wam.6.2010.05.09.07.42.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 May 2010 07:42:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.337.gbd0bc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146726>
 
-Hi,
+After 9c00de5 (ls-remote: fall-back to default remotes when no remote
+specified), when no repository is specified, ls-remote may use
+the URL/remote in the config "branch.<name>.remote" or the remote
+"origin"; it may not be immediately obvious to the user which was used.
 
-    Since we want to support to browse the history of multiple line
-ranges in multiple files, so we should design a workable way to let
-users specify these kind of thing. Generally, git revision walking
-mechanism support syntax like:
+In such cases, print a simple "From <URL>" line to indicate which
+repository was used. This message is similar to git-fetch's, and is
+printed to stderr to avoid breaking existing scripts that depend on
+ls-remote's output behaviour.
 
-git log <revision> -- <file1> <file2>
+It can also be disabled with -q/--quiet.
 
-That's that we can specify one revision and multiple files one time.
-And the dashdash is optional. And I want to introduce a new way for
-line ranges argument based on this, that is something like:
+Modify tests related to falling back on default remotes to check for
+this as well, and add a test to check for suppression of the message.
 
-git log <revision> -L1,8 -L45,+6 <file1> -L/some/,/end/ -L9,29 <file2> <file3>
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
 
-That's that putting the line ranges arguments just before the filename
-argument.  And here, no dashdash should be provided by users, if there
-is, all the following arguments are still take considered as normal
-filenames. And this helps if there are some files in your working
-directory called '-L1,8'... Yes, you can always try to browse the line
-level history of such a strange file by 'git log -L1,8 <revision> --
--L1,8' .
+  This is a logical follow-up to the "optional repo" form of ls-remote
+  feature. Myself, I was using the "no-repo" form of ls-remote and
+  sometimes wondered where it was listing remotes from.
 
-And the principle for this:
-1. After '--', all following arguments are treated as filenames, just
-as what we do now;
-2. After any <filename>, all following arguments are treated as
-whether ranges or filenames, using -L to separate;
-3. '-L' can be specified at any place, and all ranges will be assigned
-to the first filename following the '-L';
-4. If some file has no '-L', we will display the normal log for that
-file just like git log -p <file>.
+  Johnathan, do you think the tests involved might have any cross-
+  platform issues?
 
-Since '-L' option is also used by many other command, I don't know the
-exact impact of this, anyway we can use another name anytime...
+ builtin/ls-remote.c  |   10 +++++++++-
+ t/t5512-ls-remote.sh |   19 +++++++++++++++----
+ 2 files changed, 24 insertions(+), 5 deletions(-)
 
-If there is no opposition for this kind of option syntax, I will try
-to implement it in revision.c. ;-)
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 8ee91eb..34480cf 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -5,7 +5,7 @@
 
-Regards!
-Bo
--- 
-My blog: http://blog.morebits.org
+ static const char ls_remote_usage[] =
+ "git ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack <exec>]\n"
+-"                     [<repository> [<refs>...]]";
++"                     [-q|--quiet] [<repository> [<refs>...]]";
+
+ /*
+  * Is there one among the list of patterns that match the tail part
+@@ -34,6 +34,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	const char *dest = NULL;
+ 	int nongit;
+ 	unsigned flags = 0;
++	int quiet = 0;
+ 	const char *uploadpack = NULL;
+ 	const char **pattern = NULL;
+
+@@ -67,6 +68,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 				flags |= REF_NORMAL;
+ 				continue;
+ 			}
++			if (!strcmp("--quiet", arg) || !strcmp("-q", arg)) {
++				quiet = 1;
++				continue;
++			}
+ 			usage(ls_remote_usage);
+ 		}
+ 		dest = arg;
+@@ -99,6 +104,9 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	ref = transport_get_remote_refs(transport);
+ 	if (transport_disconnect(transport))
+ 		return 1;
++
++	if (!dest && !quiet)
++		fprintf(stderr, "From %s\n", *remote->url);
+ 	for ( ; ref; ref = ref->next) {
+ 		if (!check_ref_type(ref, flags))
+ 			continue;
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 3cf1b3d..8508df8 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -57,12 +57,21 @@ test_expect_success 'dies when no remote specified and no default remotes found'
+
+ test_expect_success 'use "origin" when no remote specified' '
+
+-	git remote add origin "$(pwd)/.git" &&
+-	git ls-remote >actual &&
++	URL="$(pwd)/.git" &&
++	git remote add origin "$URL" &&
++	git ls-remote 2>actual_err >actual &&
++	grep "From $URL" actual_err &&
+ 	test_cmp expected.all actual
+
+ '
+
++test_expect_success 'suppress "From <url>" with -q' '
++
++	git ls-remote -q 2>actual_err &&
++	test_must_fail grep "From $URL" actual_err
++
++'
++
+ test_expect_success 'use branch.<name>.remote if possible' '
+
+ 	#
+@@ -78,10 +87,12 @@ test_expect_success 'use branch.<name>.remote if possible' '
+ 		git show-ref	| sed -e "s/ /	/"
+ 	) >exp &&
+
+-	git remote add other other.git &&
++	URL="other.git" &&
++	git remote add other $URL &&
+ 	git config branch.master.remote other &&
+
+-	git ls-remote >actual &&
++	git ls-remote 2>actual_err >actual &&
++	grep "From $URL" actual_err &&
+ 	test_cmp exp actual
+
+ '
+--
+1.7.1.189.g07419
