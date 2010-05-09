@@ -1,54 +1,57 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 6/8] Documentation/notes: simplify treatment of default
- display refs
-Date: Sat, 8 May 2010 22:32:24 -0500
-Message-ID: <20100509033223.GF7958@progeny.tock>
+Subject: [PATCH 7/8] Documentation/notes: clean up description of rewriting
+ configuration
+Date: Sat, 8 May 2010 22:33:28 -0500
+Message-ID: <20100509033327.GG7958@progeny.tock>
 References: <20100509031357.GA7926@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johan Herland <johan@herland.net>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>,
+	Leif Arne Storset <lstorset@opera.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 09 05:32:18 2010
+X-From: git-owner@vger.kernel.org Sun May 09 05:32:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OAxFY-00049I-Qd
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:32:17 +0200
+	id 1OAxFo-0004CN-TP
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 05:32:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039Ab0EIDbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 May 2010 23:31:22 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46686 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752951Ab0EIDbV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 May 2010 23:31:21 -0400
-Received: by gwj19 with SMTP id 19so1374484gwj.19
-        for <git@vger.kernel.org>; Sat, 08 May 2010 20:31:20 -0700 (PDT)
+	id S1754095Ab0EIDcZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 May 2010 23:32:25 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:41505 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752951Ab0EIDcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 May 2010 23:32:24 -0400
+Received: by gyg13 with SMTP id 13so1365454gyg.19
+        for <git@vger.kernel.org>; Sat, 08 May 2010 20:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=3mEfGKg4WpuyEr9OsFYDMH4GxwdszS8C6C6H2d8Bhc4=;
-        b=U55l6E5zVpR8Rk22DkhYGwIlgDDS+rtEbl98BaNlmb3PoK/tybrlaRzSuiJ07zD0Ia
-         B+r1UsUuK4fC7ZOIH62ns4MuZ7vDPIbu1aZ9PC6DN3sUAQR4oTJRVmTyX30/6pDx5bxG
-         4Jzq4UGZflPHKa75WfQGMBQLpqblVAkTfj9PM=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=9hTmAvvxYYDUrBnqgQ7YuaunHJ9bG3aI103GOKuwt6E=;
+        b=GI7fLH5hNkk7ePOPpgTIpJ6RB6F1gIk2N8Q1jx3WsFXCGuwRnbTYSYSlGn2F5Hkhpr
+         AOUpxgD93GN8bqbjQqIc3axI2dAE93IAmgBJMTTQecY2nrf1FORqZgnpoAPkziIQU6tV
+         zy7IqCHCCNFj/D9ke0GeuA3+PhjXW9CH9ZaGg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=e9bNg4Ce+dSAdo/4sqRSvo1E57j3I71u83zw+mCYHRPdozgFsXNHA2Bgo+RoEiQ38F
-         7WhZd4pir3YXeR6DAYwIS2vqjwEp2w5NEZHwn1rKikEQ8MABdemkRNKx5RCjylDcvNLb
-         ZRqdzfsgc39bBHeDZ+a0X8Vt5xEj4SRJ7GJZ8=
-Received: by 10.150.63.17 with SMTP id l17mr6113687yba.115.1273375880625;
-        Sat, 08 May 2010 20:31:20 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=A5bhcX59bJEWvgOXgkgdPmTK4JRrGfIUYJ/8lHJ7jkjwW+koH6jISzb/olTfjBJaBq
+         LWy5Q5E6ZKoLVvA0ZiJjBSEbRs4k9MvSOtW+HIwkGLakFZStpw3BZQmJHjQzTlGg1ydr
+         aHupvSQW1NBmbQnaQUk1ovhhQ3wRjTD6UrmPI=
+Received: by 10.151.3.3 with SMTP id f3mr6949809ybi.117.1273375943905;
+        Sat, 08 May 2010 20:32:23 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 21sm2581625yxe.3.2010.05.08.20.31.18
+        by mx.google.com with ESMTPS id 23sm2564845yxe.10.2010.05.08.20.32.22
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 May 2010 20:31:19 -0700 (PDT)
+        Sat, 08 May 2010 20:32:23 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100509031357.GA7926@progeny.tock>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -56,86 +59,107 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146698>
 
-The main description of display refs for notes should be in
-git-log.1, where there is a chance to give a leisurely description
-of all the ways they can be set, what they are used for, and so
-on.  The description in git-notes.1 is only meant to be a quick
-reminder of how notes are used.
+Clarify that the GIT_NOTES_REWRITE_REFS environment variable
+overrides both =E2=80=98[notes "rewrite"] <command>=E2=80=99 and =E2=80=
+=98[notes] rewriteRef=E2=80=99.
 
-So simplify it.
+Add explanations of GIT_NOTES_REWRITE_MODE and GIT_NOTES_REWRITE_REFS
+to the ENVIRONMENT section.
 
-Also add an entry for GIT_NOTES_DISPLAY_REF to the environment
-section.
-
-Cc: Thomas Rast <trast@student.ethz.ch>
-Cc: Johan Herland <johan@herland.net>
+Cc: Leif Arne Storset <lstorset@opera.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Documentation/git-notes.txt |   36 +++++++++++++++++++-----------------
- 1 files changed, 19 insertions(+), 17 deletions(-)
+ Documentation/git-notes.txt |   47 ++++++++++++++++++++++++++---------=
+-------
+ 1 files changed, 29 insertions(+), 18 deletions(-)
 
 diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 28ac862..7856b28 100644
+index 7856b28..d868535 100644
 --- a/Documentation/git-notes.txt
 +++ b/Documentation/git-notes.txt
-@@ -35,8 +35,8 @@ message stored in the commit object, the notes are indented like the
- message, after an unindented line saying "Notes (<refname>):" (or
- "Notes:" for `refs/notes/commits`).
- 
--To change which notes are shown by 'git-log', see the
--"notes.displayRef" configuration.
-+To change which notes are shown by 'git log', see the
-+"notes.displayRef" configuration in linkgit:git-log[1].
- 
- See the description of "notes.rewrite.<command>" in
- linkgit:git-config[1] for a way of carrying your notes across commands
-@@ -196,21 +196,13 @@ core.notesRef::
- 	command line.
- 
- notes.displayRef::
--	The (fully qualified) refname from which to show notes when
--	showing commit messages.  The value of this variable can be set
--	to a glob, in which case notes from all matching refs will be
--	shown.  You may also specify this configuration variable
--	several times.  A warning will be issued for refs that do not
--	exist, but a glob that does not match any refs is silently
--	ignored.
--+
--This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
--environment variable, which must be a colon separated list of refs or
--globs.
--+
--The effective value of "core.notesRef" (possibly overridden by
--GIT_NOTES_REF) is also implicitly added to the list of refs to be
--displayed.
-+	Which ref (or refs, if a glob or specified more than once), in
-+	addition to the default set by `core.notesRef` or
-+	'GIT_NOTES_REF', to read notes from when showing commit
-+	messages with the 'git log' family of commands.
-+	This setting can be overridden on the command line or by the
-+	'GIT_NOTES_DISPLAY_REF' environment variable.
-+	See linkgit:git-log[1].
- 
+@@ -38,9 +38,8 @@ message, after an unindented line saying "Notes (<ref=
+name>):" (or
+ To change which notes are shown by 'git log', see the
+ "notes.displayRef" configuration in linkgit:git-log[1].
+=20
+-See the description of "notes.rewrite.<command>" in
+-linkgit:git-config[1] for a way of carrying your notes across commands
+-that rewrite commits.
++See the "notes.rewrite.<command>" configuration for a way to carry
++notes across commands that rewrite commits.
+=20
+=20
+ SUBCOMMANDS
+@@ -206,33 +205,31 @@ notes.displayRef::
+=20
  notes.rewrite.<command>::
  	When rewriting commits with <command> (currently `amend` or
-@@ -250,6 +242,16 @@ ENVIRONMENT
- 	Which ref to manipulate notes from, instead of `refs/notes/commits`.
- 	This overrides the `core.notesRef` setting.
- 
-+'GIT_NOTES_DISPLAY_REF'::
-+	Colon-delimited list of refs or globs indicating which refs,
-+	in addition to the default from `core.notesRef` or
-+	'GIT_NOTES_REF', to read notes from when showing commit
-+	messages.
-+	This overrides the `notes.displayRef` setting.
+-	`rebase`) and this variable is set to `true`, git
+-	automatically copies your notes from the original to the
+-	rewritten commit.  Defaults to `true`, but see
+-	"notes.rewriteRef" below.
++	`rebase`), if this variable is `false`, git will not copy
++	notes from the original to the rewritten commit.  Defaults to
++	`true`.  See also "`notes.rewriteRef`" below.
 ++
-+A warning will be issued for refs that do not exist, but a glob that
-+does not match any refs is silently ignored.
++This setting can be overridden by the 'GIT_NOTES_REWRITE_REF'
++environment variable.
+=20
+ notes.rewriteMode::
+-	When copying notes during a rewrite (see the
+-	"notes.rewrite.<command>" option), determines what to do if
+-	the target commit already has a note.  Must be one of
+-	`overwrite`, `concatenate`, or `ignore`.  Defaults to
+-	`concatenate`.
++	When copying notes during a rewrite, what to do if the target
++	commit already has a note.  Must be one of `overwrite`,
++	`concatenate`, and `ignore`.  Defaults to `concatenate`.
+ +
+ This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
+ environment variable.
+=20
+ notes.rewriteRef::
+ 	When copying notes during a rewrite, specifies the (fully
+-	qualified) ref whose notes should be copied.  The ref may be a
+-	glob, in which case notes in all matching refs will be copied.
+-	You may also specify this configuration several times.
++	qualified) ref whose notes should be copied.  May be a glob,
++	in which case notes in all matching refs will be copied.  You
++	may also specify this configuration several times.
+ +
+ Does not have a default value; you must configure this variable to
+ enable note rewriting.
+ +
+-This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
+-environment variable, which must be a colon separated list of refs or
+-globs.
++Can be overridden with the 'GIT_NOTES_REWRITE_REF' environment variabl=
+e.
+=20
+=20
+ ENVIRONMENT
+@@ -252,6 +249,20 @@ ENVIRONMENT
+ A warning will be issued for refs that do not exist, but a glob that
+ does not match any refs is silently ignored.
+=20
++'GIT_NOTES_REWRITE_MODE'::
++	When copying notes during a rewrite, what to do if the target
++	commit already has a note.
++	Must be one of `overwrite`, `concatenate`, and `ignore`.
++	This overrides the `core.rewriteMode` setting.
 +
- 
++'GIT_NOTES_REWRITE_REF'::
++	When rewriting commits, which notes to copy from the original
++	to the rewritten commit.  Must be a colon-delimited list of
++	refs or globs.
+++
++If not set in the environment, the list of notes to copy depends
++on the `notes.rewrite.<command>` and `notes.rewriteRef` settings.
++
+=20
  Author
  ------
--- 
+--=20
 1.7.1
