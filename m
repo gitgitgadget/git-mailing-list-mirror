@@ -1,97 +1,129 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control 
-	end-of-line conversion
-Date: Sun, 9 May 2010 16:46:37 -0400
-Message-ID: <AANLkTikg7Tc6zJvfBELBQoeAxebFenNLivEs92j8c83D@mail.gmail.com>
-References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com>
-	 <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com>
-	 <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org>
-	 <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
-	 <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
-	 <20100509070043.GB14069@dpotapov.dyndns.org>
-	 <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
-	 <AANLkTikRJ6Hl_fRNRZbxeNNgwv9UTm2fPrOKv4GbT0qJ@mail.gmail.com>
-	 <E6434515-5357-4FF4-8049-5E4FCE8B29E4@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Multiple line ranges and files in line level history browser
+Date: Sun, 9 May 2010 16:06:54 -0500
+Message-ID: <20100509210654.GA1637@progeny.tock>
+References: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	mat <matthieu.stigler@gmail.com>,
-	hasen j <hasan.aljudy@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Jakub Narebski <jnareb@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 09 22:46:46 2010
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 23:07:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBDOg-00070e-71
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 22:46:46 +0200
+	id 1OBDic-0007nn-GM
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 23:07:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300Ab0EIUqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 16:46:39 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45687 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100Ab0EIUqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 16:46:38 -0400
-Received: by wyf19 with SMTP id 19so448520wyf.19
-        for <git@vger.kernel.org>; Sun, 09 May 2010 13:46:37 -0700 (PDT)
+	id S1751328Ab0EIVHE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 May 2010 17:07:04 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:54369 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435Ab0EIVHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 17:07:03 -0400
+Received: by qyk13 with SMTP id 13so4942104qyk.1
+        for <git@vger.kernel.org>; Sun, 09 May 2010 14:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=spOYQ3SF5mYBCiqnss5Le2/64A/YJeo673YNIbA9+Ak=;
-        b=aJ1G5+K1uxLhZ1D2OxbpipEz270t9Ws78Nuo54VImlxfCjub6U0d0+SvwjNKqoke85
-         YVDwvKkGzkW43+7LtUWJMX0XLUfCSrJFJbmNvJw/eJw7FLtUbd4Vz6NE5D8EbI/lIul8
-         vNkwYlyE3sY/CCmvuR9IV1Qlq6FWLI3NYeoMk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=8gbRglefUQfi7a2BdhwhuSP+ZRkcnzrtq5mZKZ5avjo=;
+        b=jF1aIfYTp8/4cOzI/zYsHbLs/HVYy/iq1gB854NKK1FAB6nDns3o3uanD1KP1lipil
+         2AoqAjsw2Ja4i+vxXSq9olEQHYGIZTP+ZTijz+qpuN1w1GI4YO49zgwRWtubIK5KL+ZR
+         tJtA//fxKXarCF8FW3hTjqFLM5uzKBC2eBRRE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=K5/fC8KgBHFfFDz6wis8bLX9lF7Bsg8creCVVLTZrZoIrluBUpLJmyciHPQlQx3G1A
-         sYSbZCvAgVBzJ9pF6/xX80mYCuMfoMIM6eBH/qOD/Q6eUg2AgByqKJUtvgpqMzgIBKJg
-         VA6NW+LrMICZpySjcz9uFFVsKxLW0ONiJGNI8=
-Received: by 10.216.90.84 with SMTP id d62mr1787102wef.211.1273437997243; Sun, 
-	09 May 2010 13:46:37 -0700 (PDT)
-Received: by 10.216.7.207 with HTTP; Sun, 9 May 2010 13:46:37 -0700 (PDT)
-In-Reply-To: <E6434515-5357-4FF4-8049-5E4FCE8B29E4@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=JE/Sw+CUcbFkWRUa9O5ehG5izWaoHrh9TjpQlQvAnkK14U+gPI22fgNeSf54YgBZeD
+         BWVp66mssoXswLQoIFtLhA6W3TM/CUPdCfsWOLMJ/EFAxE0bTwSzyW6DwQFNit0/fgh4
+         sLwW31DjTqdYiom1fifVI2yTWCVdwf2jepKMI=
+Received: by 10.224.80.106 with SMTP id s42mr1993621qak.8.1273439221597;
+        Sun, 09 May 2010 14:07:01 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id v37sm3266999qce.6.2010.05.09.14.06.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 09 May 2010 14:07:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146747>
 
-> On 9. mai 2010, at 13.14, Robert Buck wrote:
->
->> So, the meanings of these would become...
->>
->> core.crlf [ auto | input | false ] : 'auto' means to enable
->> bidirectional normalization, and 'false' would mean do not
->> normalization, and 'input' would mean normalize on input only,
->> otherwise output lf. Is this true?
->
-> No, "auto" means to enable normalization for files git doesn't identify as text files, "true" means to always normalize, and "false" means never normalize.
+Hi,
 
-I probably missed something. The part that confuses me in this
-statement is that you said "for files git doesn't identify as text
-files". The convert.c source is the heart of this, and if a file is
-not identified as text it is presumed to be binary. The statement made
-seems to imply you'd auto-convert PDF files? I know you did not mean
-that, but it could have been read that way.
+Bo Yang wrote:
 
-What specifically happens in the three modes? Would it be precise to
-say the following?
+> git log <revision> -L1,8 -L45,+6 <file1> -L/some/,/end/ -L9,29 <file2=
+> <file3>
 
-    "Files subject to EOL conversion are those that are explicitly
-identified through attributes to be text files, or those
-algorithmically determined to be text files which happen to not bear
-the "text" file attribute. Otherwise the default value, "false",
-applies and no EOL conversions occur."
+I like it.  It looks like paranoid script authors would have to check
+for paths like =E2=80=98--=E2=80=99 and =E2=80=98-L=E2=80=99 and quote =
+them as =E2=80=98./--=E2=80=99 and =E2=80=98./-L=E2=80=99, a
+small price to pay for a nice syntax.
 
--Bob
+Unfortunately, this is completely incompatible with the existing blame
+option syntax.  i.e., existing scripts might do things like this:
+
+  git blame -L1,8 -C <file>
+
+or
+
+  git blame -L1,8 <rev> <file>
+
+Maybe there should be a line range required before every file
+specifier in this syntax, to avoid trouble.  Borrowing syntax from sed,
+this makes
+
+ git log <rev> -L1,8 -L45,+6 <file1> -L/some/,/end/ -L9,29 <file2> -L1,=
+$ <file3>
+
+which is also a little clearer to look at, I think.
+
+> 'git log -L1,8 <revision> -- -L1,8' .
+
+This provides a single line range specifier for all files?  Sounds
+convenient.
+
+  # who wrote the opening comments?
+  git blame -L '/^[/][*]/,/^ [*][/]/' -- '*.c'
+
+Summing up, with my refinement above, a human would parse args like
+this:
+
+  When an -L option is encountered, remember the current state.
+
+  Try to parse the remaining arguments as ((-L range)* filespec)*,
+  where filespec has some appropriately strict meaning that forbids
+  =E2=80=98-L=E2=80=99 and =E2=80=98--=E2=80=99.  If that succeeds, we=E2=
+=80=99re done.
+
+  Otherwise, rewind.  Look for an upcoming =E2=80=98--=E2=80=99.  If --=
+ is found, any
+  -L arguments before the -- apply to all files specified.  Unclaimed
+  arguments before the -- are revision specifiers.
+
+  If no -- is found either, any -L arguments before the first
+  unclaimed argument that is not unambiguously a revision apply to all
+  files specified.  Arguments from that point on must be unambiguously
+  paths.
+
+A little hairy.  Maybe you can do better, but already it seems okay.
+Maybe the last case ought to disallow multiple -L arguments and
+multiple files, to encourage people to use the first syntax or an
+explicit =E2=80=98--=E2=80=99.
+
+Hope that helps,
+Jonathan
