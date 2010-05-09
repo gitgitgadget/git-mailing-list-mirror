@@ -1,81 +1,101 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: [PATCH 0/2] gitweb: Add support for running gitweb as FastCGI
-	script
-Date: Sun, 9 May 2010 20:47:24 +0400
-Organization: '
-Message-ID: <20100509164723.GA4638@screwed.box>
-References: <1273236845-6523-1-git-send-email-jnareb@gmail.com> <201005090041.11864.jnareb@gmail.com> <20100509093100.GA7641@dcvr.yhbt.net> <201005091439.26310.jnareb@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control 
+	end-of-line conversion
+Date: Sun, 9 May 2010 13:02:34 -0400
+Message-ID: <u2p76718491005091002v516429ddrf118c35f3312c3ab@mail.gmail.com>
+References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com>
+	 <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com>
+	 <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org>
+	 <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
+	 <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
+	 <20100509070043.GB14069@dpotapov.dyndns.org>
+	 <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Juan Jose Comellas <juanjo@comellas.org>,
-	Peter Vereshagin <peter@vereshagin.org>,
-	John Goerzen <jgoerzen@complete.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 09 18:47:57 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	mat <matthieu.stigler@gmail.com>,
+	hasen j <hasan.aljudy@gmail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Robert Buck <buck.robert.j@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 19:08:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OB9fY-0001xV-6v
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 18:47:56 +0200
+	id 1OB9zf-0001Og-9T
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 19:08:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754235Ab0EIQru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 12:47:50 -0400
-Received: from ns1.skyriver.ru ([89.108.118.221]:53869 "EHLO mx1.skyriver.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753727Ab0EIQrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 12:47:49 -0400
-Received: from localhost (unknown [222.107.34.53])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id 267555A81;
-	Sun,  9 May 2010 20:36:09 +0400 (MSD)
-Content-Disposition: inline
-In-Reply-To: <201005091439.26310.jnareb@gmail.com>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L (~u 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
+	id S1754065Ab0EIRCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 13:02:35 -0400
+Received: from mail-yw0-f198.google.com ([209.85.211.198]:58352 "EHLO
+	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754384Ab0EIRCf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 13:02:35 -0400
+Received: by ywh36 with SMTP id 36so1522716ywh.4
+        for <git@vger.kernel.org>; Sun, 09 May 2010 10:02:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=gj8PGcutmeh4rdGAwcsnQmIxtZJHx6rnSeil8VshJCY=;
+        b=hONf40SEBV1riodUCtgr2rGXVUJmLCVRCJc0iFZLoN2AlNANxJcWlkLMW7dyjFqlY5
+         M7jziTSegoqL7wRVBp6srsyoP2qUDc04G7t8lNiMDCw3NsYSfyGwpfs10bDs8DUgbHXa
+         7lCEpMrUechGTHqmdxfGy56xflO8vNi+jHa/s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VMmq9DOYHqWkx6EwmLXwdROvYe58BdZQeIwaaxUwRDYErAFpVSCxoL9KpbtgmgjAb/
+         Ls2v4ktqn7nfCriKKw46pcWuPY+xjDlqfpACVVN0QoJQHLsKhP/h4pGJsQGRAf83FRjq
+         36YhA81gK2I6B5jWOARaaz0iI4VyEDHEP6iDI=
+Received: by 10.231.145.146 with SMTP id d18mr1874829ibv.16.1273424554171; 
+	Sun, 09 May 2010 10:02:34 -0700 (PDT)
+Received: by 10.231.34.8 with HTTP; Sun, 9 May 2010 10:02:34 -0700 (PDT)
+In-Reply-To: <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146728>
 
-I'm face to face with Jakub who sold the world?
-2010/05/09 14:39:23 +0200 Jakub Narebski <jnareb@gmail.com> => To Eric Wong :
+On Sun, May 9, 2010 at 6:42 AM, Eyvind Bernhardsen
+<eyvind.bernhardsen@gmail.com> wrote:
+> I guess I should nail my flag to the mast: Here's what I would have done, with the benefit of plenty of hindsight, had we not had core.autocrlf, and also what I think we should do to approach that ideal.
+>
+> Please don't get hung up too much on the names, they were chosen to not match anything suggested so far so that I can refer back to them unambiguously.
+>
+> My user interface would have been:
+>
+> - an attribute "eolconv" that enables or disables line ending conversion
+> - a config variable "core.eolconv" that sets "eolconv" for all files where it is unset
+> - a config variable "core.localeol" that decides whether LF or CRLF is preferred
+>
+> This provides the means to enable normalization on a per-project ("eolconv") or per-repository ("core.eolconv") basis, and allows the user to override the platform native line ending when normalization is in effect.
+>
+> [...]
+>
+> My current thinking on how to change my series now runs along these lines:
+>
+> - keep the current "crlf=auto" change
+> - rename "core.eolStyle" to "core.localcrlf"
+> - add a "core.crlf" that sets the "crlf" attribute on paths where it isn't explicitly configured
+> - keep "core.autocrlf" for backwards compatibility, but make "core.autocrlf=input" and "core.autocrlf=true" complain if they are in conflict with the other config settings.
 
-JN> Yes, it can.  CGI::Compile is used for example by CGI::Emulate::PSGI,
-JN> and you can run PSGI app on standalone Perl web server (pure Perl
-JN> HTTP::Server::PSGI, or HTTP::Server::Simple::PSGI which in turn uses
-JN> HTTP::Server::Simple, or Starman, or Twiggy, or Perlbal).  CGI::Compile
-JN> just compiles given CGI script into a subroutine, which can be called
-JN> many times in a persistent web environment like FastCGI.
+Bah. I think relegating the old names to "deprecated, for
+compatibility" is absolutely the right thing to do. Is there a use
+case where the existing crlf setup is preferable? If not, why not just
+mark them as deprecated in the documentation and say "see ..."
+pointing to the new functionality and use the new names as you
+suggest.
 
-Thanks a lot about that!
-I took a quick look at the patches and see this:
-- FastCGI people are not always happy with CGI.pm anmd thus with CGI::Fast that
-  derives from it. They prefer CGI::Simple, e. g. for the Catalyst on fastcgi
-and other CGI.pm replacements. Despite the CGI::Fast is somehow the part of the
-perl core distribution the FCGI.pm and CGI.pm which are the required
-dependencies are not. Needless to say that the CGI.pm is not at all ( because
-it tries too much to be ) a 'killer app'. I myself is about to stop using
-CGI::Fast in FCGI::Spawn in favor of regular FCGI.pm and the CGI.pm variant
-chosen by the user. Needless to say that this can make the CGI.pm patching for
-FCGI::Spawn unecessary.
-- FCGI::ProcManager is a piece of cake in any way, but there are 'more than one
-  way to do it' (c) and it should be mentioned on a docs as a dependency since
-there are modules on CPAN too for the same purpose but promiseful of features
-like OO/etc.
+$0.02. :-)
 
-The special thank for getting rid of exit()!
-
-I'd like to propose the Git to have the Perl interface for common functions
-that can make it easy to create trhe bunch of tools like those made with
-(likely XS'ed) SVN:* namespace, e. g. git-svn. It makes me wonder why gitweb is
-packaged with Git but no Perl API seen: looks like its storage is simple enough
-to realize all of that in PP. Don't just disappoint me saying that git is used
-to be exec()'uted on some of the gitweb calls. ;)
-
-73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 6627)
--- 
-http://vereshagin.org
+j.
