@@ -1,82 +1,196 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control
-	end-of-line conversion
-Date: Sun, 9 May 2010 20:18:53 +0200
-Message-ID: <20100509181853.GA4676@pvv.org>
-References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com> <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org> <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com> <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com> <20100509070043.GB14069@dpotapov.dyndns.org> <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com> <7v632x9dfk.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 0/2] gitweb: Add support for running gitweb as FastCGI script
+Date: Sun, 9 May 2010 20:18:52 +0200
+Message-ID: <201005092018.54580.jnareb@gmail.com>
+References: <1273236845-6523-1-git-send-email-jnareb@gmail.com> <201005091439.26310.jnareb@gmail.com> <20100509164723.GA4638@screwed.box>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	mat <matthieu.stigler@gmail.com>,
-	hasen j <hasan.aljudy@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Robert Buck <buck.robert.j@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 09 20:19:07 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: Peter Vereshagin <peter@vereshagin.org>,
+	Petr Baudis <pasky@suse.cz>, Petr Baudis <pasky@ucw.cz>
+X-From: git-owner@vger.kernel.org Sun May 09 20:19:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBB5k-0003z9-B4
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 20:19:04 +0200
+	id 1OBB62-00045O-3E
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 20:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751248Ab0EISS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 14:18:58 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:60754 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751063Ab0EISS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 14:18:57 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1OBB5Z-0000xK-JW; Sun, 09 May 2010 20:18:53 +0200
+	id S1751506Ab0EISTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 14:19:13 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59135 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751063Ab0EISTK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 May 2010 14:19:10 -0400
+Received: by fxm10 with SMTP id 10so1817512fxm.19
+        for <git@vger.kernel.org>; Sun, 09 May 2010 11:19:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=QNSSZ23/rWkbkYDZupEL2JqBzJCL/afWJ1gTx+EiE6g=;
+        b=WKAF00qhyezVHmPVzJx5vK8oyh3krf++VtReRNKQR0h5qRVAMo6TR533+CERVJaJFy
+         jl67dmwiFOTCS6KgVegMTrgZ3uNoNQJEjV61d36JFYWJcC0nEB0j6sqQ29/yc9lnrMrZ
+         tSSQYbOG/rSAz5eOXKa4VDTHT5DjlHvxSOOHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=QSf67FExzmozwEC8MGBmPJWrmY31YjIm9/IRBzqSK4SKoC8zBKsOMEIRVExOzvqSfX
+         ObJ37Unry1TwKAGCoMftRQvjC/TNWkOHLpMgG9W5tQhZM5TqfEbuKeZzg9+brb66nuz6
+         gw+CZeEY/3hck8xu9xVB9MUivaNIuNzjZaI4I=
+Received: by 10.102.222.5 with SMTP id u5mr1607579mug.134.1273429145170;
+        Sun, 09 May 2010 11:19:05 -0700 (PDT)
+Received: from [192.168.1.13] (abwi51.neoplus.adsl.tpnet.pl [83.8.232.51])
+        by mx.google.com with ESMTPS id s10sm16890146muh.35.2010.05.09.11.19.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 May 2010 11:19:03 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20100509164723.GA4638@screwed.box>
 Content-Disposition: inline
-In-Reply-To: <7v632x9dfk.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146735>
 
-On Sun, May 09, 2010 at 10:45:35AM -0700, Junio C Hamano wrote:
-> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
+On Sun, 9 May 2010, Peter Vereshagin wrote:
+> I'm face to face with Jakub who sold the world?
+> 2010/05/09 14:39:23 +0200 Jakub Narebski <jnareb@gmail.com> => To Eric Wong :
 > 
-> > My user interface would have been:
-> >
-> > - an attribute "eolconv" that enables or disables line ending conversion
-> > - a config variable "core.eolconv" that sets "eolconv" for all files where it is unset
-> > - a config variable "core.localeol" that decides whether LF or CRLF is preferred
+> JN> Yes, it can.  CGI::Compile is used for example by CGI::Emulate::PSGI,
+> JN> and you can run PSGI app on standalone Perl web server (pure Perl
+> JN> HTTP::Server::PSGI, or HTTP::Server::Simple::PSGI which in turn uses
+> JN> HTTP::Server::Simple, or Starman, or Twiggy, or Perlbal).  CGI::Compile
+> JN> just compiles given CGI script into a subroutine, which can be called
+> JN> many times in a persistent web environment like FastCGI.
 > 
-> I am puzzled about this second item; what is its type and what is its
-> purpose?  If it is to allow project-wide default to be specified, then
-> isn't having "* eolconv=true" in .gitattributes a much better option and
-> is already supported by the first item?
+> Thanks a lot about that!
+>
+> I took a quick look at the patches and see this:
+> - FastCGI people are not always happy with CGI.pm and thus with CGI::Fast that
+>   derives from it. They prefer CGI::Simple, e. g. for the Catalyst on fastcgi
+>   and other CGI.pm replacements.
 
-The way I understood it core.eolconv has exactly the same possible
-values as the "eolconv" attribute, and serves as a default value for
-"eolconv" if it isn't set. This would (mostly, I guess) be for Windows
-users who would like to check out a project that is primarily
-developed on Unix and didn't bother to set any eolconv attributes, and
-still get CRLF line endings. core.eolconv has some of the drawbacks
-of autocrlf, so shouldn't really be used if you can convince projects
-to add eolconv attributes instead.
+CGI::Simple is not in core.  For Catalyst folks it is not a problem, 
+because Catalyst (one of Perl MVC web frameworks) is not in core either.
 
-Are you thinking we could live completely without it? Most other
-popular vcs-systems have eol-conversion/normalisation on by default,
-while git has it disabled by default. The config variable can change
-the default behaviour, but is isn't as helpful as it should have been
-perhaps.
+>   Despite the CGI::Fast is somehow the part of the perl core distribution
+>   the FCGI.pm and CGI.pm which are the required dependencies are not.
 
-To do a better job with old un-normalised repos, we could for each
-file remember what their eol-style was (CR, LF, CRLF, mixed), and then
-even if doing output conversion on checkout, convert back to the same
-eol style on commit. This would perhaps break down a bit for renames,
-but would be lovely if it worked for merges for example...
+Actually both CGI and CGI::Fast are in Perl core distribution since 
+perl 5.004 (Perl 5.4.0).  I assume that CGI::Fast simply degrades to CGI
+if FCGI module is not present.
 
-- Finn Arne
+FCGI is the single non-core dependency of CGI, see 
+  http://deps.cpantesters.org/?module=CGI;perl=latest
+so when I upgraded CGI (locally, using cpan client and local::lib), I also
+installed FCGI.
+
+>   Needless to say that the CGI.pm is not at all (because 
+>   it tries too much to be) a 'killer app'. I myself is about to stop using
+>   CGI::Fast in FCGI::Spawn in favor of regular FCGI.pm and the CGI.pm variant
+>   chosen by the user. Needless to say that this can make the CGI.pm patching for
+>   FCGI::Spawn unecessary.
+
+That's nice.
+
+What are required changes to gitweb to use FCGI::Spawn to run gitweb as
+a FastCGI script?  Alternatively, how the wrapper script for gitweb 
+(gitweb.fcgi) to be run as FastCGI should look like to use FCGI::Spawn?
+
+> - FCGI::ProcManager is a piece of cake in any way, but there are 'more than one
+>   way to do it' (c) and it should be mentioned on a docs as a dependency since
+>   there are modules on CPAN too for the same purpose but promiseful of features
+>   like OO/etc.
+
+As PATCH 2/2 was straighforward port of Sam Vilain patch, I don't even
+know what exactly the part containing FCGI::ProcManager does.
+
+Note however that FCGI::ProcManager is require'd on demand; you have to
+run gitweb with '--nproc=<n>'.  Also if FCGI::ProcManager is not found,
+then the '--nproc=<n>' command line option is a no-op (does nothing).
+
+>
+> The special thank for getting rid of exit()!
+
+You are welcome.
+
+> 
+> I'd like to propose the Git to have the Perl interface for common functions
+> that can make it easy to create the bunch of tools like those made with
+> (likely XS'ed) SVN::* namespace, e. g. git-svn.
+
+>From what I remember from watching questions and discussion here on git
+mailing list, the SVN::* Subversion bindings (from subversion-perl package)
+are serious PITA.
+
+Git.pm started (by Petr Baudis) with XS parts, but because of lack of
+Perl hacker their compilation was unportable (IIRC it required support
+for -fPIC), and was therefore abandoned.  The difficulty of creating
+Git::XS is exacerbated by the fact that there is no libgit to make
+Perl bindings againts, although hopefully GSoC 2010 project "Completing
+libgit2" would help.
+
+
+Git.pm currently wraps git commands in a *portable* way; that was the
+reason behind creating it, to e.g. not have to write the same workarounds
+for ActiveState Perl.  The other reason was to have safe way of invoking
+git commands.  There are some utility functions there, but not much.
+
+The "Gitweb caching" GSoC 2008 project[1] by Lea Wiemann included 
+improvements to git Perl interface in the form of Git::Repo, Git::RepoRoot,
+Git::Object, Git::Commit and Git::Tag.  They are available in Lea's
+repository[2], but were not merged into git core.
+
+[1]: http://git.wiki.kernel.org/index.php/SoC2008Projects#Gitweb_caching
+[2]: http://repo.or.cz/w/git/gitweb-caching.git
+
+>
+> It makes me wonder why gitweb is packaged with Git but no Perl API seen:
+
+If you ask why gitweb does not use Git.pm, the reason is twofold.
+
+First, gitweb predates Git.pm.  It also used safe form of invokeing git
+commands (list form of magic "-|" pipeline open) at least since b918298
+(gitweb: Use list for of open for running git commands..., 2006-07-30),
+and was intended to run on POSIX (like e.g. "/" as path separator) and
+therefore ActiveState Perl workarounds were not needed.
+
+Second, in a few places gitweb needs either to pipe output of git command
+to other command (to compressor in snapshot, and newly introduced to 
+highlighter when syntax highlighting is turned on), or silence errors
+redirecting STDERR to /dev/null (in 'object' action to check if object
+exists).  This is not yet supported in Git.pm.
+
+Note that using IPC::Run for piping git command output to other command
+would be counter to gitweb's goal of minimal non-core dependencies.
+
+> looks like its storage is simple enough 
+> to realize all of that in PP. Don't just disappoint me saying that git is used
+> to be exec()'uted on some of the gitweb calls. ;)
+
+Gitalist[3], which started as port of gitweb to Catalyst web framework,
+uses Git::PurePerl, a pure Perl interface to Git repositories (which
+was mostly based on Grit, a git Ruby library, which includes a partial
+native Ruby implementation).  Or used to use; there was some discussion
+whether to use Git::PurePerl or wrap git commands.
+
+Note that Gitalist was based on IIRC 2008 version of gitweb, so while
+it includes features that gitweb doesn't have, the opposite also might
+be true (features in gitweb that Gitalist doesn't have).
+
+Also performance matters for gitweb.
+
+[3]: https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Gitalist
+-- 
+Jakub Narebski
+Poland
