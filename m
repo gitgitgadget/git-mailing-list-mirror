@@ -1,74 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] ls-remote: print URL when no repo is specified
-Date: Sun, 9 May 2010 17:01:23 -0500
-Message-ID: <20100509220122.GA2098@progeny.tock>
-References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [GSoC update] git-remote-svn: Week 1
+Date: Mon, 10 May 2010 00:12:20 +0200
+Message-ID: <o2pf3271551005091512qdebc006cic2c5b85ab7a9e23e@mail.gmail.com>
+References: <g2zf3271551005050559v2ea99346gcc59f941d634ce1a@mail.gmail.com> 
+	<90AEA593-35CC-403E-8918-94DB45BC0E06@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 00:01:44 2010
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: David Michael Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Mon May 10 00:12:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBEZD-0004rw-PB
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 00:01:44 +0200
+	id 1OBEjw-0008Hu-5h
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 00:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab0EIWBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 18:01:38 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:57036 "EHLO
+	id S1753305Ab0EIWMm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 18:12:42 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:41690 "EHLO
 	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751477Ab0EIWBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 18:01:37 -0400
-Received: by qyk13 with SMTP id 13so4993211qyk.1
-        for <git@vger.kernel.org>; Sun, 09 May 2010 15:01:37 -0700 (PDT)
+	with ESMTP id S1751801Ab0EIWMl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 18:12:41 -0400
+Received: by qyk13 with SMTP id 13so5003932qyk.1
+        for <git@vger.kernel.org>; Sun, 09 May 2010 15:12:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=z5GKtwUf9jBf55F/Xk9S13ziBfs9KDiRpwCkIisGEw4=;
-        b=KzFWtrS/8uiUmQ+dcQEXMURMyAsiFKE5ihDecrMYZ3VZ52kwgo1qYcIAII3IfqBi5K
-         qXa4uLm4E3Z3t7UlQFAOdJUQi9zz8VPb6EgwLl/IDIn5I1TtAvFampyzIS1h/xB/25gW
-         N5EI1zgmFX0C5Hwg6Hn2KE0wfI10abjFBwcf4=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=t7yxxxRvK4bnTTkg8JAqNHcJ1+fimEL2WhenCC8Xamw=;
+        b=LuqDUzI94NjVCZwH4Lb2M3GrQRI5gRei2Em+70xsbP8Xp1cp2OmPej/FFn2t6LziXk
+         bJxOx2KKxYQciWprVahOz9NMJuQjIqNMIvt77vKwszTFTWHcgwPiPdhTO/4XCrS3kUeJ
+         uYu0C/S7RnIL6+P0xJYnqfNCVtxqLMP0exY9c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=t/TNReKWxQkfCPlq911JfHcSzDNahBwlKqkhgQeiA3CwQmwXE/ctQ9YgLbUkfWswJE
-         lkDcw67k1dM5jodthy2LmXy8VH4h+WdNZVg6qh6/Hzh6MWXP4/UH/2cg8JBDn5pXE2v5
-         z/FeaN2GgqJFt4f4Zrk9AYHjsIPcnbxEUKSSc=
-Received: by 10.224.85.148 with SMTP id o20mr1842682qal.65.1273442490802;
-        Sun, 09 May 2010 15:01:30 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id g19sm3316825qcq.11.2010.05.09.15.01.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 09 May 2010 15:01:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=MqmA0Z7hfIh3p0B+Y5OIxo8gwMosmcXQGvvNiWmZ2E+XtXZpWLTNSC2pJaGbzDvTcA
+         ZUPAWwIQvtW/C/ObszS2IYmvNkGaictlh2s69U6s9umG8knDRmLzSwTodpzbPGGpNLHO
+         mkEi8yoCA+VJZB8DPRcGlKkDDFYmeJGF02O2M=
+Received: by 10.224.18.36 with SMTP id u36mr1998317qaa.64.1273443160186; Sun, 
+	09 May 2010 15:12:40 -0700 (PDT)
+Received: by 10.229.182.85 with HTTP; Sun, 9 May 2010 15:12:20 -0700 (PDT)
+In-Reply-To: <90AEA593-35CC-403E-8918-94DB45BC0E06@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146750>
 
-Tay Ray Chuan wrote:
+Hi David,
 
-> when no repository is specified, ls-remote may use
-> the URL/remote in the config "branch.<name>.remote" or the remote
-> "origin"
-[...]
-> In such cases, print a simple "From <URL>" line to indicate which
-> repository was used. This message is similar to git-fetch's
+> A quick update. I've begun work on a reference exporter written in perl.
 
-Makes sense.  The code and tests look sane.
+Curiously, why?
 
-Testing on Linux and Msysgit does not reveal any problems, either.
+> I believe I introduced some regressions during code cleanup.
+> From memory, the svn-dump-fast-export_0.8 tag has been verified for
+> 10,000 revisions of my repository.
 
-Thanks,
-Jonathan
+Thanks for the heads up. Don't worry about it though- I've started
+cleaning up the code. Will send you some patches off the list by
+email, or whatever you prefer.
+
+-- Ram
