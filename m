@@ -1,76 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 6/8] Documentation/notes: simplify treatment of default
- display refs
-Date: Sun, 9 May 2010 03:00:22 -0400
-Message-ID: <20100509070022.GC23717@sigill.intra.peff.net>
-References: <20100509031357.GA7926@progeny.tock>
- <20100509033223.GF7958@progeny.tock>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control
+ end-of-line conversion
+Date: Sun, 9 May 2010 11:00:43 +0400
+Message-ID: <20100509070043.GB14069@dpotapov.dyndns.org>
+References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com>
+ <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com>
+ <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org>
+ <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
+ <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 09 09:00:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	mat <matthieu.stigler@gmail.com>,
+	hasen j <hasan.aljudy@gmail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Robert Buck <buck.robert.j@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 09 09:01:03 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OB0VE-0002sE-4W
-	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 09:00:40 +0200
+	id 1OB0VZ-00032V-4V
+	for gcvg-git-2@lo.gmane.org; Sun, 09 May 2010 09:01:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751587Ab0EIHA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 May 2010 03:00:27 -0400
-Received: from peff.net ([208.65.91.99]:36978 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751557Ab0EIHAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 May 2010 03:00:24 -0400
-Received: (qmail 17279 invoked by uid 107); 9 May 2010 07:00:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 09 May 2010 03:00:40 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 09 May 2010 03:00:22 -0400
+	id S1751463Ab0EIHAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 May 2010 03:00:49 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53597 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751039Ab0EIHAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 May 2010 03:00:48 -0400
+Received: by fxm10 with SMTP id 10so1606984fxm.19
+        for <git@vger.kernel.org>; Sun, 09 May 2010 00:00:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=PaUuM8SDiQ4J3x/naS6+fG+88jYJst6ZG7PoPANMcTg=;
+        b=FeMD0MSxAogwWL3UNTTe1IJMgW3iIcJR9g2sf2R0MZCOZ+spoSIlSzWS595gmMOTuK
+         BLVw444OAPqN7F7+MD1VEc+D8LgQPhiuCW6R6/rHKsXFX5lrhl7NQIvhPQv1xcpw+lyk
+         G8L8pyk+4yV5+Y8rln6ed2zYBVwMdRVdukhvc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=t2AULHizINqv6aDiD+CxdFQye2rFe0GT+ZJ1N93nf8Gs2hLCHyKjGWxyLFAMPpHnli
+         YNWQoR4mIQ78QtuxY14XeI0uzLif37LinOGpWuD91a59679ryQOwqTNqauM63J6g9l1Y
+         4dBAZkjI4RrypuowwsXm+5owFwklLvZoLIWmw=
+Received: by 10.102.165.40 with SMTP id n40mr1229840mue.71.1273388446237;
+        Sun, 09 May 2010 00:00:46 -0700 (PDT)
+Received: from localhost (ppp85-141-234-94.pppoe.mtu-net.ru [85.141.234.94])
+        by mx.google.com with ESMTPS id e8sm14873787muf.39.2010.05.09.00.00.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 May 2010 00:00:45 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100509033223.GF7958@progeny.tock>
+In-Reply-To: <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146706>
 
-On Sat, May 08, 2010 at 10:32:24PM -0500, Jonathan Nieder wrote:
+On Sun, May 09, 2010 at 12:53:17AM +0200, Eyvind Bernhardsen wrote:
+> On 9. mai 2010, at 00.17, Eyvind Bernhardsen
+> <eyvind.bernhardsen@gmail.com> wrote:
+> 
+> >I'll try to think of a better name.
+> 
+> Heh. How about "localcrlf={true,false,native}"?
 
-> @@ -196,21 +196,13 @@ core.notesRef::
->  	command line.
->  
->  notes.displayRef::
-> -	The (fully qualified) refname from which to show notes when
-> -	showing commit messages.  The value of this variable can be set
-> -	to a glob, in which case notes from all matching refs will be
-> -	shown.  You may also specify this configuration variable
-> -	several times.  A warning will be issued for refs that do not
-> -	exist, but a glob that does not match any refs is silently
-> -	ignored.
-> -+
-> -This setting can be overridden with the `GIT_NOTES_DISPLAY_REF`
-> -environment variable, which must be a colon separated list of refs or
-> -globs.
-> -+
-> -The effective value of "core.notesRef" (possibly overridden by
-> -GIT_NOTES_REF) is also implicitly added to the list of refs to be
-> -displayed.
-> +	Which ref (or refs, if a glob or specified more than once), in
-> +	addition to the default set by `core.notesRef` or
-> +	'GIT_NOTES_REF', to read notes from when showing commit
-> +	messages with the 'git log' family of commands.
-> +	This setting can be overridden on the command line or by the
-> +	'GIT_NOTES_DISPLAY_REF' environment variable.
-> +	See linkgit:git-log[1].
+IMHO, the 'local' prefix certainly does not improve anything. Also,
+I would rather call default as "default" instead of "native". So,
+why not use "core.crlf={true, false, default}"?
 
-Hmm. Both this and 4/8 rewrite bits of the configuration copied from
-config.txt in an earlier patch. Do any changes need to be propagated
-back to config.txt (and no, I didn't read and think carefully, so the
-answer may be "no, they are now diverging intentionally")?
+Though crlf is not my preferable name, I think consistency is important,
+and we should use the same name here as in git attributes.
 
--Peff
+
+Dmitry
