@@ -1,89 +1,136 @@
-From: Bill Winspur <bwinspur@gmail.com>
-Subject: git-gui disagrees with git status
-Date: Mon, 10 May 2010 15:32:09 -0600
-Message-ID: <y2m3b1db1e51005101432je9e75a53vbb3781fa33aa83e7@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 10 23:32:23 2010
+From: Alex Vandiver <alex@chmrr.net>
+Subject: Re: avoiding anonymous commits from root/shared accounts
+Date: Mon, 10 May 2010 17:11:23 -0400
+Message-ID: <1273525498-sup-6628@utwig>
+References: <4BE83CCD.2090505@letterboxes.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 10 23:36:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBaaH-0006q6-SW
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 23:32:18 +0200
+	id 1OBadq-00081q-5t
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 23:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755814Ab0EJVcN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 May 2010 17:32:13 -0400
-Received: from mail-yx0-f171.google.com ([209.85.210.171]:44203 "EHLO
-	mail-yx0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819Ab0EJVcK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 17:32:10 -0400
-Received: by yxe1 with SMTP id 1so2986018yxe.33
-        for <git@vger.kernel.org>; Mon, 10 May 2010 14:32:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=1WGuu8HNCE909zNmykh0ixcBd9eCEPo7P2TxDIGhJSQ=;
-        b=OyZjp2XyFFmrJakTyRs2bNpyJZ5+MpMnGzvsWWkIGJV1xQiMevhWY9CP4qoBkGuz0n
-         h9CRkFe6tjNAW2q9jzW/j1Sf5yINrlkygHs5dRSZOnsdctSco2vdV4Bb1DRSGQGQtmiz
-         8xFML1R7H6vKxh5CnCEym1X9tIakufss2uT04=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=H0MWGQKesPMVgBj+1K1ykLk6ZFRVtlpsxJj9eVa8vIe+62BeODTly5Qi5BjZhGDm/E
-         lQJWqR0sfnrMZxkq4/pZ/ydIzDb9Na3rEt6p/3zpbm35w4LHGCEElnognAfE9PbY1+PY
-         37YFbwG0YOydHy2jj1g8jxHre3FkuFF4nLkcY=
-Received: by 10.231.59.203 with SMTP id m11mr2923429ibh.72.1273527129995; Mon, 
-	10 May 2010 14:32:09 -0700 (PDT)
-Received: by 10.231.147.207 with HTTP; Mon, 10 May 2010 14:32:09 -0700 (PDT)
+	id S1756199Ab0EJVfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 17:35:53 -0400
+Received: from chmrr.net ([209.67.253.66]:50660 "EHLO utwig.chmrr.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756069Ab0EJVfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 17:35:52 -0400
+X-Greylist: delayed 1469 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 May 2010 17:35:52 EDT
+Received: from chmrr by utwig.chmrr.net with local (Exim 4.71)
+	(envelope-from <chmrr@chmrr.net>)
+	id 1OBaG3-0003B5-7J
+	for git@vger.kernel.org; Mon, 10 May 2010 17:11:23 -0400
+In-reply-to: <4BE83CCD.2090505@letterboxes.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146856>
 
-Using git version 1.6.0.4
+At Mon May 10 13:05:17 -0400 2010, Nick wrote:
+> [snip]
+> The best idea I've come across seems to be some sort of wrapper for git, which
+> if no $GIT_USER_* is defined, can use $SUDO_USER and/or `who am i` to identify
+> the original log-in account, and sets $GIT_AUTHOR_NAME etc. - else if it can't
+> do this, it refuses to commit.  Or perhaps it would be a script which spawns a
+> shell with the right environment to invoke git commands from, after successfully
+> determining the identity.
 
-- Created an eclipse wkspace, with a couple of projects in it.
-- Created a git repos at the workspace route, using cli.
-- Using cli added the two projects to git - at this point git status
-shows the following
+At work, we have a number of repositories which we store server
+configurations in, most of which are only writable as root.  We use
+the script below to ensure that git mostly doesn't lie about the
+authors of commits.  This won't solve your problem of people logging
+in under shared credentials -- and it also _does_ allow commits as
+'root' if you logged in directly as root -- but it's perhaps a partial
+solution for you.
 
-=3D=3D=3D=3D=3D
-bwinspur@elm:~/ca.wydv.
-workspaces/008-leaning-group/git-lrng-wksp$ git status
-# On branch master
-#
-# Initial commit
-#
-# Changes to be committed:
-#=A0=A0 (use "git rm --cached <file>..." to unstage)
-#
-#=A0=A0=A0 new file: git.trial.help.bundle/.classpath
-=A0=A0=A0=A0=A0=A0=A0 =3D=3D=3D omitted details from this post =3D=3D
-#=A0=A0=A0 new file: git.trial.ui.bundle/.classpath
-=A0=A0=A0=A0=A0=A0=A0 =3D=3D=3D omitted details from this post =3D=3D
-#
-# Untracked files:
-#=A0=A0 (use "git add <file>..." to include in what will be committed)
-#
-#=A0=A0=A0 .metadata/
-bwinspur@elm:~/ca.wydv.workspaces/008-leaning-group/git-lrng-wksp$
-=3D=3D=3D=3D=3D
+ - Alex
 
-which is what I expected: my project folders are tracked, and
-=2Emetadata/ is untracked.
+-------------------->8--------------------
+#!/usr/bin/perl
 
-- now I bring up git gui and it shows all the files under .metadata/ as
-unstaged changes, which conflicts with git status, and may be due to a
-git-gui bug
+use strict;
+use warnings;
+use constant EMAIL_DOMAIN => "example.com";
 
-Regards,
+setenv( get_user($$) );
+exec("/usr/bin/git", @ARGV);
 
-Bill Winspur
+sub setenv {
+    my $user = shift;
+
+    # If they're _really_ _really_ root, just bail now
+    return if $user eq "root";
+
+    # Ditto if we can't find the user (?!)
+    my @getpw = getpwnam($user);
+    return unless @getpw;
+
+    my $name;
+    my $email;
+
+    # See if we can pull from the user's config
+    my $gitconfig = "$getpw[7]/.gitconfig";
+    if (-r $gitconfig) {
+        $name  = `/usr/bin/git config --file $gitconfig user.name`;
+        chomp $name;
+        $email = `/usr/bin/git config --file $gitconfig user.email`;
+        chomp $email;
+    }
+
+    # Fall back to getent
+    $name  ||= $getpw[6] || $user;
+    $email ||= $user . '@' . EMAIL_DOMAIN;
+
+    $ENV{GIT_AUTHOR_NAME} = $name;
+    $ENV{GIT_AUTHOR_EMAIL} = $email;
+}
+
+sub get_user {
+    my $pid = shift;
+
+    # See if the PID is bogus
+    return "root" unless $pid and kill 0, $pid;
+
+    # Pull out the env from it
+    my %env = getenv($pid);
+
+    # Simplest case -- check USER first
+    if ($env{USER} and $env{USER} ne "root") {
+        return $env{USER};
+    }
+
+    # Or we're running under sudo
+    if ($env{SUDO_USER} and $env{SUDO_USER} ne "root") {
+        return $env{SUDO_USER};
+    }
+
+    # They did something like `sudo su -`
+    return get_user(parent_pid($pid));
+}
+
+sub getenv {
+    my $pid = shift;
+    my $env = do {local @ARGV = ("/proc/$pid/environ"); local $/; <>};
+    my @lines = split /\0/, $env;
+    return () unless grep {/=/} @lines;
+    my %env = map {split /=/, $_, 2} @lines;
+    return %env;
+}
+
+sub parent_pid {
+    my $pid = shift;
+    my $stat = do {local @ARGV = ("/proc/$pid/stat"); local $/; <>};
+    my (undef, undef, undef, $ppid) = split ' ', $stat;
+    return $ppid;
+}
+-- 
+Networking -- only one letter away from not working
