@@ -1,79 +1,68 @@
-From: Raja R Harinath <harinath@hurrynot.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: Instead of rebasing, etc....?
-Date: Mon, 10 May 2010 13:33:22 +0530
-Message-ID: <87ljbsdvzp.fsf@hariville.hurrynot.org>
+Date: Mon, 10 May 2010 10:49:46 +0200
+Message-ID: <AANLkTikikb5rKfxBlqrNfgLQhKRYKZ_e-760vWEMLKQ1@mail.gmail.com>
 References: <loom.20100507T003055-527@post.gmane.org>
-	<loom.20100507T004928-336@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 10 10:39:01 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Dave Abrahams <dave@boostpro.com>
+X-From: git-owner@vger.kernel.org Mon May 10 10:50:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBOVv-0007A1-3N
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 10:38:59 +0200
+	id 1OBOgo-0002i5-OK
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 10:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755497Ab0EJIiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 04:38:54 -0400
-Received: from lo.gmane.org ([80.91.229.12]:44539 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753364Ab0EJIix (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 04:38:53 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OBOVn-00077l-69
-	for git@vger.kernel.org; Mon, 10 May 2010 10:38:51 +0200
-Received: from 117.192.138.218 ([117.192.138.218])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 May 2010 10:38:51 +0200
-Received: from harinath by 117.192.138.218 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 10 May 2010 10:38:51 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 117.192.138.218
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-Cancel-Lock: sha1:LNws7jW9Ic5IvTkmzNKIqPIIa14=
+	id S1755632Ab0EJIuI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 May 2010 04:50:08 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:55798 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755535Ab0EJIuH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 04:50:07 -0400
+Received: by qyk13 with SMTP id 13so5762436qyk.1
+        for <git@vger.kernel.org>; Mon, 10 May 2010 01:50:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Dztiu2zAXNm4EYyaCJjp/EQ4x6hkUv0dDOLTnlEjseg=;
+        b=EXQRhUZuuQnnUhrQGsDhyVgNVrzFVPZYBJoNp0SuOYZ0SQ3NIUXZjpUvNK21oK4X6y
+         8cKr2rTe9TZTZIowORCwjrfAXJLd3m/J5579eMHEHHyTiA+l12T213BccGgnwJifW99B
+         9T/z6vgSqqFLT17dWv6XLVrVVMl3RigjSYNcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=GuhC3rFUO37pboPHX08Ntm+lfBaRauqoMtWwrsHgOpnxtdgEO3b97U+1ZzL6sUsVZn
+         CttORAK9bqR91CK4cTyC5RRtHN2P9IV3TefOOV74qyuadSuTDxlUpFVp/k8bWzw4ua3Q
+         qZMbmNFJx0JkKM9/VoXyUe65Hrw6+KnH19PKI=
+Received: by 10.229.181.142 with SMTP id by14mr2957671qcb.18.1273481406168; 
+	Mon, 10 May 2010 01:50:06 -0700 (PDT)
+Received: by 10.229.182.85 with HTTP; Mon, 10 May 2010 01:49:46 -0700 (PDT)
+In-Reply-To: <loom.20100507T003055-527@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146774>
 
 Hi,
 
-Dave Abrahams <dave@boostpro.com> writes:
+> Of course then I want to push dev and move origin/dev to refer to it.
+> So I delete and recreate origin/dev. =C2=A0That's essentially like
+> rebasing, and all the advice says "don't do it." =C2=A0How bad is tha=
+t,
+> really, if it's my own development branch?
 
-> Dave Abrahams <dave <at> boostpro.com> writes:
->
->> I often find myself pursuing a development branch ...
->
-> Sorry, my ASCII art was messed up in the previous message.  
-> Here's what I meant:
->
-> o-o-o-o origin/dev
->    \
->     o-o-o dev
->
->
-> o-o-o-o - -o origin/dev dev
->    \      / 
->     o-o-o 
+If I understand correctly, you want a non-FF push. Simply develop on
+dev and `git push origin +dev:dev` to force a non-FF push. It's not
+bad at all if your branch isn't public and others aren't pulling from
+it.
 
-You can use the 'ours' merge strategy.
-
-On the 'dev' branch, you do
-
-   git merge -s ours origin/dev
-
-Now 'origin/dev' is a parent of the new 'dev', while the tree contents
-haven't changed.  You can now push 'dev' back to origin without any
-hassles.
-
-- Hari
+-- Ram
