@@ -1,82 +1,85 @@
-From: Tatsuhiko Miyagawa <miyagawa@gmail.com>
-Subject: Re: gitweb, FastCGI and PSGI/Plack
-Date: Mon, 10 May 2010 10:03:44 -0700
-Message-ID: <AANLkTikH39rbm64sc0nn7eTBJSfxcqWpz6VXZBCQQIl3@mail.gmail.com>
-References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com>
-	 <201005100105.49985.jnareb@gmail.com>
-	 <x2k693254b91005091805re0f63ac5z471e05fa4ab71ca7@mail.gmail.com>
-	 <201005101232.32908.jnareb@gmail.com>
+From: Nick <oinksocket@letterboxes.org>
+Subject: avoiding anonymous commits from root/shared accounts
+Date: Mon, 10 May 2010 18:05:17 +0100
+Message-ID: <4BE83CCD.2090505@letterboxes.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Peter Vereshagin <peter@vereshagin.org>,
-	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Juan Jose Comellas <juanjo@comellas.org>,
-	John Goerzen <jgoerzen@complete.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 19:03:52 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 10 19:04:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBWOV-0000D3-BH
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 19:03:51 +0200
+	id 1OBWPS-0000hO-FA
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 19:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755638Ab0EJRDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 13:03:46 -0400
-Received: from mail-yw0-f198.google.com ([209.85.211.198]:43066 "EHLO
-	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755446Ab0EJRDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 13:03:45 -0400
-Received: by ywh36 with SMTP id 36so2063938ywh.4
-        for <git@vger.kernel.org>; Mon, 10 May 2010 10:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=VJodMorUsyTj9tPDwcoxCkm/jeqbCA3GyB+FoPJI6bs=;
-        b=eaFKaJXCNygH3fVMVaXUJgU6nvcnnnht7YpSeD8mokFZKJ88PmWMY9XGzIPCdgXDCv
-         jyEqFGbnVdiZPrH4Hk64z/TFBX8Oq+LI7zi+kkf/y3heiQxfRGdVbKSrwayK7WosLANA
-         gNoMEpBGJwBQ1lxh8tCGBA99OmX80WZJSzfIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Yz7FSutVINig1h8iGAGR+NUiIRzWu0sFRHyNL9o1t+rHXeBOw3tIIBd696xy+TYLYn
-         rZxTl32ecHjhFQ+9PEiZ1ziZaWd/+oPMg23TYUjYTm77LZ0VY+RMSaWqdY28goFRc1WL
-         9UjsW4Q4dRazjhNWdh7P1ftNhIbJI/G91ysqs=
-Received: by 10.101.2.18 with SMTP id e18mr359713ani.72.1273511024376; Mon, 10 
-	May 2010 10:03:44 -0700 (PDT)
-Received: by 10.100.228.6 with HTTP; Mon, 10 May 2010 10:03:44 -0700 (PDT)
-In-Reply-To: <201005101232.32908.jnareb@gmail.com>
+	id S1755710Ab0EJREp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 13:04:45 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:46711 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755713Ab0EJREp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 13:04:45 -0400
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.100])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <oinksocket@letterboxes.org>)
+	id 1OBWPL-0003IJ-Qg
+	for git@vger.kernel.org; Mon, 10 May 2010 18:04:43 +0100
+User-Agent: Thunderbird 2.0.0.24 (X11/20100317)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146827>
 
-On Mon, May 10, 2010 at 3:32 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->> You have a CGI script and you want to turn it into a PSGI application,
->> hence we have CGI::Emulate::PSGI and CGI::Compile.
->>
->> You usually do not have a FCGI "application". You're writing a .fcgi
->> "wrapper" to make your CGI script runnable from a web server (like
->> you're doing with gitweb.fcgi).
->
-> After thinking about it a bit, I realized that I don't want to have
-> Plack::App::WrapFCGI wrapper (which if there are no FastCGI-only Perl
-> web apps, e.g. using FCGI directly and which do not have support for
-> running as ordinary CGI would be totally unnecessary), but I want to
-> avoid price of using CGI::Compile.
+Hi,
 
-Yes, that makes sense - if implementing FastCGI is just switching CGI
-to CGI::Fast and a while loop, implementing PSGI interface just for
-that is far more complicated. I just argued about it because i saw on
-a separate thread that PSGI implementation is also on its way.
+I have a question about what is probably an unusual use-case, where git is being
+used from the root account, or an account shared by various committers.
 
 
+I'm setting up a shared git repository, currently accessed via plain ssh to the
+server in question. The code has been inherited, and is migrated from CVS.
 
--- 
-Tatsuhiko Miyagawa
+The code is a sysadmin tool designed to set up a new server and keep its
+configuration synchronised to one of several templates thereafter. Typically, it
+is checked out in /root on a freshly installed server, and "make all" is run as
+root to configure the services, set up user accounts, etc.
+
+>From then on you pull updates from the repository, run "make all", and the
+machine is reconfigured, services restarted, etc. as necessary.
+
+The problem is maintenance of this code.  In the past, fixes might be made on
+any server, then pushed back into the repository to be replicated everywhere.
+There are several users, each of whom might commit changes to this tool.  When
+it was in CVS, a common account was used to allow commits from anyone and
+anywhere - and as a result nothing can be attributed to anyone.
+
+
+
+I want to avoid these anonymous commits from now on.  The trouble is, I'm not
+sure the best way to, as there is no guarantee any accounts but root will exist,
+and if they do, some of these are shared accounts various people can log in as.
+(This may or may not be advisable, but for now that's the way it works)
+
+I also don't want to make it easy for the maintainers to do the right thing,
+they will already be re-adjusting to git.  For that reason, just mandating that
+everyone sets $GIT_AUTHOR_NAME etc. manually on log-in isn't very satisfactory.
+
+The best idea I've come across seems to be some sort of wrapper for git, which
+if no $GIT_USER_* is defined, can use $SUDO_USER and/or `who am i` to identify
+the original log-in account, and sets $GIT_AUTHOR_NAME etc. - else if it can't
+do this, it refuses to commit.  Or perhaps it would be a script which spawns a
+shell with the right environment to invoke git commands from, after successfully
+determining the identity.
+
+
+But before I investigate this avenue any further, I wonder is there any prior
+art addressing this sort of situation, using git?
+
+Thanks
+
+Nick
