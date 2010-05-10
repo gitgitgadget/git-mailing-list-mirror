@@ -1,147 +1,110 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Multiple line ranges and files in line level history browser
-Date: Mon, 10 May 2010 04:31:20 -0500
-Message-ID: <20100510093120.GA4445@progeny.tock>
-References: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
- <20100509210654.GA1637@progeny.tock>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] handle "git --bare init <dir>" properly
+Date: Mon, 10 May 2010 05:42:06 -0400
+Message-ID: <20100510094206.GA30869@coredump.intra.peff.net>
+References: <201005081238.14156.oliverhoffmann32@googlemail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 11:31:30 2010
+Cc: Oliver Hoffmann <oliverhoffmann32@googlemail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 10 11:42:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBPKk-0002Q5-2N
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 11:31:30 +0200
+	id 1OBPVh-00078N-2L
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 11:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755169Ab0EJJbZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 May 2010 05:31:25 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:47215 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751374Ab0EJJbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 05:31:24 -0400
-Received: by qyk13 with SMTP id 13so5804884qyk.1
-        for <git@vger.kernel.org>; Mon, 10 May 2010 02:31:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=4Ym/822AzPSBS3MgcoXsBxv0Z9BtoeLbNDEV2HPDvdo=;
-        b=xxC8S4eOLQXOyaXLNxMivtFFGM3gx0xzTD7HUhjppBlMyT7HIs4jhXyxLGAIbJcUDk
-         k0e3R36f67BL8iSv7IzurASaUdNuFCUothvdCFXZ8RJxopiFKfL+JOgy2Gs5YUHRYcCs
-         Gh/D0n8sVLRXvKXrdU7b4rFN5PI+Jj5zolCus=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=f22edKqialIFvkDz2fVYvlW155b/q5+N0n96cjM/Ge/aqGPpN8QBRNeoHxlBrauiRM
-         ad3f4JjMdcZxKL4JBktN3njwHbdnFX6+UD9E5OC5hgmP8mg4olX8HAonak9MiX2aV9XD
-         yC5eGRkeih2nD+/D+uNgnoeLAvf7JT5soxmo4=
-Received: by 10.229.213.140 with SMTP id gw12mr2913411qcb.96.1273483882345;
-        Mon, 10 May 2010 02:31:22 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v37sm3835155qce.18.2010.05.10.02.31.20
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 May 2010 02:31:21 -0700 (PDT)
+	id S1755797Ab0EJJmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 05:42:11 -0400
+Received: from peff.net ([208.65.91.99]:36352 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756127Ab0EJJmI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 05:42:08 -0400
+Received: (qmail 2924 invoked by uid 107); 10 May 2010 09:42:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 10 May 2010 05:42:24 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 10 May 2010 05:42:06 -0400
 Content-Disposition: inline
-In-Reply-To: <20100509210654.GA1637@progeny.tock>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201005081238.14156.oliverhoffmann32@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146779>
 
-Jonathan Nieder wrote:
+If we know we are creating a bare repository, we use setenv
+to set the GIT_DIR directory to the current directory
+(either where we already were, or one we created and chdir'd
+into with "git init --bare <dir>").
 
->   If -- is found, any
->   -L arguments before the -- apply to all files specified.  Unclaimed
->   arguments before the -- are revision specifiers.
+However, with "git --bare init <dir>" (note the --bare as a
+git wrapper option), the setup code actually sets GIT_DIR
+for us, but it uses the wrong, original cwd when a directory
+is given. Because our setenv does not use the overwrite
+flag, it is ignored.
 
-More comments.
+We need to set the overwrite flag, but only when we are
+given a directory on the command line. That still allows:
 
-The -L arguments describe lines in some particular revision of the
-files, so how would arbitrary =E2=80=98rev-list=E2=80=99-style revision=
- specifiers
-work here?  They don=E2=80=99t: in =E2=80=98blame=E2=80=99, one "positi=
-ve" revision is allowed
-and the rest must be negative.  Good.
+  GIT_DIR=foo.git git init --bare
 
-The modified proposal was, roughly:
+to work. The behavior is changed for:
 
-  git blame [options, no -L among them] revs ((-L range)... filespec)..=
-=2E
-  git blame [options, -L permitted] revs -- [filespec...]
-  git blame [options, -L permitted] revs [filespec...]
+  GIT_DIR=foo.git git init --bare bar.git
 
-=E2=80=9C...=E2=80=9D means =E2=80=9Cone or more=E2=80=9D.  How to know=
- whether the -L or revision
-arguments are encountered first?  One approach is to abuse
-STOP_AT_NON_OPTION to catch the -L, revisions, and filespecs as they
-appear.  Probably better would be to make -L an unknown option and
-rely on parse_revision_opt leaving a residue of any revisions it
-finds, so that after the first pass, the first syntax can be
-distinguished from the others by the first argument starting with "-L".
+which used to create the repository in foo.git, but now will
+use bar.git. This is more sane, as command line options
+should generally override the environment.
 
-=46eel free to do something else entirely (including another syntax) if
-you prefer, of course.
+Noticed by Oliver Hoffmann.
 
-Here=E2=80=99s a patch that makes STOP_AT_NON_OPTION easier to abuse, w=
-ithout
-affecting current users.  Maybe it would make it easier to play
-around.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Thanks for the bug report, Oliver.
 
-Good night,
-Jonathan
+ builtin/init-db.c |    2 +-
+ t/t0001-init.sh   |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletions(-)
 
- parse-options.c |    3 ++-
- parse-options.h |    1 +
- 2 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index 8546d85..4e3532b 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -372,7 +372,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 			if (parse_nodash_opt(ctx, arg, options) =3D=3D 0)
- 				continue;
- 			if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
--				break;
-+				return PARSE_OPT_NON_OPTION;
- 			ctx->out[ctx->cpidx++] =3D ctx->argv[0];
- 			continue;
- 		}
-@@ -454,6 +454,7 @@ int parse_options(int argc, const char **argv, cons=
-t char *prefix,
- 	switch (parse_options_step(&ctx, options, usagestr)) {
- 	case PARSE_OPT_HELP:
- 		exit(129);
-+	case PARSE_OPT_NON_OPTION:
- 	case PARSE_OPT_DONE:
- 		break;
- 	default: /* PARSE_OPT_UNKNOWN */
-diff --git a/parse-options.h b/parse-options.h
-index 7581e93..4773cf9 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -160,6 +160,7 @@ extern NORETURN void usage_msg_opt(const char *msg,
- enum {
- 	PARSE_OPT_HELP =3D -1,
- 	PARSE_OPT_DONE,
-+	PARSE_OPT_NON_OPTION,
- 	PARSE_OPT_UNKNOWN,
- };
-=20
---=20
-1.7.1
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index edc40ff..0271285 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -463,7 +463,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+ 		static char git_dir[PATH_MAX+1];
+ 
+ 		setenv(GIT_DIR_ENVIRONMENT,
+-			getcwd(git_dir, sizeof(git_dir)), 0);
++			getcwd(git_dir, sizeof(git_dir)), argc > 0);
+ 	}
+ 
+ 	if (init_shared_repository != -1)
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 6757734..7c0a698 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -310,4 +310,18 @@ test_expect_success POSIXPERM 'init notices EPERM' '
+ 	)
+ '
+ 
++test_expect_success 'init creates a new bare directory with global --bare' '
++	rm -rf newdir &&
++	git --bare init newdir &&
++	test -d newdir/refs
++'
++
++test_expect_success 'init prefers command line to GIT_DIR' '
++	rm -rf newdir &&
++	mkdir otherdir &&
++	GIT_DIR=otherdir git --bare init newdir &&
++	test -d newdir/refs &&
++	! test -d otherdir/refs
++'
++
+ test_done
+-- 
+1.7.1.248.gf52fc.dirty
