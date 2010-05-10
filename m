@@ -1,84 +1,108 @@
-From: Sergio Callegari <sergio.callegari@gmail.com>
-Subject: Re: Multiblobs
-Date: Mon, 10 May 2010 15:58:10 +0200
-Message-ID: <4BE810F2.3080107@gmail.com>
-References: <loom.20100428T164432-954@post.gmane.org> <20100506062644.GB16151@coredump.intra.peff.net> <4BE3493B.8010409@gmail.com> <20100510063618.GD13340@coredump.intra.peff.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control
+ end-of-line conversion
+Date: Mon, 10 May 2010 18:03:21 +0400
+Message-ID: <20100510140321.GF14069@dpotapov.dyndns.org>
+References: <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
+ <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
+ <20100509070043.GB14069@dpotapov.dyndns.org>
+ <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
+ <AANLkTikRJ6Hl_fRNRZbxeNNgwv9UTm2fPrOKv4GbT0qJ@mail.gmail.com>
+ <E6434515-5357-4FF4-8049-5E4FCE8B29E4@gmail.com>
+ <AANLkTikg7Tc6zJvfBELBQoeAxebFenNLivEs92j8c83D@mail.gmail.com>
+ <91F47297-A1B5-4AE5-8835-E3A8E452FB8A@gmail.com>
+ <AANLkTilDiP_5Q9HrssB0lyf-jsE8LAF2ULGwEMO4BzdQ@mail.gmail.com>
+ <AANLkTikYUypxH5WhCOMby_zpHsnHEFyix5MGpD96FVWD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 10 15:59:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	mat <matthieu.stigler@gmail.com>,
+	hasen j <hasan.aljudy@gmail.com>,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>
+To: Robert Buck <buck.robert.j@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 10 16:03:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBTWL-0002da-LY
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 15:59:45 +0200
+	id 1OBTa7-0005Nh-UJ
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 16:03:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620Ab0EJN6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 09:58:17 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:58847 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753912Ab0EJN6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 09:58:16 -0400
-Received: by bwz19 with SMTP id 19so1774055bwz.21
-        for <git@vger.kernel.org>; Mon, 10 May 2010 06:58:13 -0700 (PDT)
+	id S1754926Ab0EJODa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 10:03:30 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62739 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755303Ab0EJOD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 10:03:27 -0400
+Received: by fxm7 with SMTP id 7so115911fxm.19
+        for <git@vger.kernel.org>; Mon, 10 May 2010 07:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=tWepm2tqxhzXKm0OhV0urFdA+NOO5YX5TbDpRF2L8ng=;
-        b=uPrpCn61QYlLlhlpW5v4t0k+8bPYbbiw7QYQj+bOqkOe8Hv2zoa50W110lhKs8MMlu
-         JBnDQmeDb9ulxZ+LhK8NbEQpFpK86eucAxvJi0MpRFgqol82UhaC1+uMcfXaUN524lED
-         fStqvl7rJCh7RmngEV66auSW3V9hKl1Xig6Us=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=HSDbi+TF6c0NWwN6jJHcF9cVZwkgABorTBLwWGMaNPk=;
+        b=Lr82pVTjx2azj06V2TLUdy3+scehLe7abeKIx2g+wsALcQqUiZniBl92Dh+PpUSjSy
+         0cGAGg7XSlgCpG4bz9JtCnn5zECa9de+PAd7mehaQkeT8dTqGZ5jO5dx2Hbb6tMteNe+
+         w0IbXr/YoOF0djk5Gtj3IXi1qU2LSIaStdtxU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=UubRNwHeACiduf2aJAxB36ViFy+9HR+pDQ/D/1FgXfzFPa68wqCBIpCItcefPX09Ca
-         cGIXG5kZK1woc/ei11Q6a9CAohtVNjFnejfbCUcW1o/d2ep6cEaF0XNUIjI7mWe2gabq
-         dP72DkNtsl4oD4/dubvEGQDrPHdPHVxpD7EAk=
-Received: by 10.204.7.194 with SMTP id e2mr21461bke.103.1273499892938;
-        Mon, 10 May 2010 06:58:12 -0700 (PDT)
-Received: from [10.143.20.33] (mars-fw.arces.unibo.it [137.204.143.2])
-        by mx.google.com with ESMTPS id l1sm52351bkl.2.2010.05.10.06.58.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 May 2010 06:58:11 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Lightning/1.0b1 Thunderbird/3.0.4
-In-Reply-To: <20100510063618.GD13340@coredump.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=mwNWyrzQzA0S5+7tiSYEsNw4CVq7jmuSFKmjt/35mBjk3mGAEivBUzSJPBBxFXeOSc
+         oc5w8fhyvpsop7mVcvSGY2HsEfNw3HTbmuOVrjsfFf6CrkPnP3+NVbt2OuGQao4hXhJn
+         vyefzpbdn/rPS/lRm97GM+rWXLhlH1cjpCu0M=
+Received: by 10.223.27.151 with SMTP id i23mr4307334fac.104.1273500205109;
+        Mon, 10 May 2010 07:03:25 -0700 (PDT)
+Received: from localhost (ppp91-76-18-177.pppoe.mtu-net.ru [91.76.18.177])
+        by mx.google.com with ESMTPS id j23sm21637248faa.14.2010.05.10.07.03.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 May 2010 07:03:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikYUypxH5WhCOMby_zpHsnHEFyix5MGpD96FVWD@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146816>
 
-On 10/05/2010 08:36, Jeff King wrote:
-> Sure. And for those cases, I think clean/smudge filters are perhaps
-> already doing the job.
->
->    
-As a matter of fact, my idea was exactly to think of a multiblob as a 
-git tree (maybe plus a signature).
+On Mon, May 10, 2010 at 09:25:11AM -0400, Robert Buck wrote:
+> Today I am writing up some documentation related to Git use at the
+> company, and planning to check in all the data from Git vs Hg testing,
+> and all on-boarding/first-day documentation related to Git use. So
+> within the directory containing all these files I init-ed the
+> repository and got this when I attempted to add multiple files. Mind
+> you, this is on Linux!
+> 
+>   "warning: LF will be replaced by CRLF"
 
-With this, one can set up a "multiclean" filter, triggered by a filename 
-pattern as for a normal filter or by the invocation of "file" to look at 
-inner magic.
+It looks like you set core.autocrlf to true on Linux.
 
-When this filter is invoked it should take the file to be cleaned as the 
-stdin and output a tree at the output, while (as a side effect) 
-populating the git storage by the normal blobs pointed to by the tree.
+The problem is core.autocrlf says two things -- whether you want to
+enable automatic eol conversion for text files and whether you have CRLF
+for text files. Only if the answer is "yes" to both then you should set
+it to true. In other words, you should never set it to true on Linux.
 
-In a complementary fashion, the multismudge filter should receive the 
-"multiblob" tree on stdin, and output on stdout the smudged file, 
-inspecting the blobs pointed to by the tree to do the work.
+You may want use core.autocrlf=input on Linux to avoid text files being
+accidentally commit with a wrong encoding, when they were copied from
+Windows directly.
 
-This would require having trees as tree entries, and (I guess) also some 
-update to the git package machinery, but apart from that should fit well 
-with the current clean/smudge approach, nor significantly alter the git 
-model.
+> 
+> This _really_ of scares me being that this was on Linux. Is this one
+> of the problem spots that the topic of this thread attempts to
+> resolve?
 
-Sergio
+Yes, we want to have a separate setting, whihc will tell what is EOL on
+your system, and it should have sensible default, i.e. LF on Linux and
+CRLF on Windows.
+
+
+Dmitry
