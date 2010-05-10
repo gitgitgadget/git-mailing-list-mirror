@@ -1,122 +1,113 @@
-From: Pete Harlan <pgit@pcharlan.com>
-Subject: Re: [PATCH v2 0/2] clone: simplify progress message
-Date: Mon, 10 May 2010 16:22:54 -0700
-Message-ID: <4BE8954E.3030405@pcharlan.com>
-References: <4BE60E89.8010709@pcharlan.com> <20100509110221.GA16639@coredump.intra.peff.net> <4BE7166A.5030107@pcharlan.com> <20100510054756.GB13340@coredump.intra.peff.net> <4BE7E09F.3040303@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git branch descriptions
+Date: Mon, 10 May 2010 18:26:12 -0500
+Message-ID: <20100510232612.GA6890@progeny.tock>
+References: <657A681BEF27534399890012B8C8E50E1AD63D1FEA@lcs-exchange01.Lantekcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git list <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 11 01:23:46 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Joel Reed <jreed@lantekcs.com>
+X-From: git-owner@vger.kernel.org Tue May 11 01:27:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBcK9-00055l-TH
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 01:23:46 +0200
+	id 1OBcNT-0006C0-9c
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 01:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932743Ab0EJXXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 19:23:04 -0400
-Received: from caibbdcaaaaf.dreamhost.com ([208.113.200.5]:60354 "EHLO
-	swarthymail-a2.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757428Ab0EJXW4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 19:22:56 -0400
-Received: from [192.168.0.119] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
-	by swarthymail-a2.g.dreamhost.com (Postfix) with ESMTP id 1306FEE873;
-	Mon, 10 May 2010 16:22:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <4BE7E09F.3040303@drmicha.warpmail.net>
+	id S932616Ab0EJX0Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 May 2010 19:26:16 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:53933 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932569Ab0EJX0K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 19:26:10 -0400
+Received: by qyk13 with SMTP id 13so7019629qyk.1
+        for <git@vger.kernel.org>; Mon, 10 May 2010 16:26:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=yUyhVehsHiHGJfZFxIoZmXZb800NoooEDW3/P7BzbVs=;
+        b=T7AFKe+rs0Tgu+MFoGAaCFTAE+2kUe+WLIpxmPzCIdWzjeYN5xyIg1mFd+pYioBamS
+         c2VtW0dRtYvYVOlRapImGsvWosKM9pcPPG3KZE8JR8GXtoqpvgSb9YCL6QWMdsmpoFVN
+         MipdRoFGIJgXKGNJw350b7xasjZXZBdU2ttWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=DNu2uMa/T0QmvuAC41L/0Js5f8RSfxW31xljEQe1Ah1vs+h+p0pKh0ZSTUx3YkgWAH
+         N4N0GAA6xQz4yd8EqbCVxhy1BTVuXBJOQS2xXYK1cxVKtylT0whhwazLn/BAvFdCW37i
+         jWP+4LNIWDC08NtD8z8YBzWGm/De0yq3guN1A=
+Received: by 10.224.71.130 with SMTP id h2mr3237817qaj.90.1273533969425;
+        Mon, 10 May 2010 16:26:09 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id f5sm4342002qcg.20.2010.05.10.16.26.07
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 10 May 2010 16:26:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <657A681BEF27534399890012B8C8E50E1AD63D1FEA@lcs-exchange01.Lantekcs.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146861>
 
-On 05/10/2010 03:31 AM, Michael J Gruber wrote:
-> Jeff King venit, vidit, dixit 10.05.2010 07:47:
->> On Sun, May 09, 2010 at 01:09:14PM -0700, Pete Harlan wrote:
->> 
->>>> I guess it comes down to how much detail we want to show.
->>> 
->>> For me it isn't only a matter of detail; I find "Cloning into 
->>> bar/.git" misleading, since bar is getting more than a .git 
->>> directory.
->> 
->> Yeah, I can buy that line of reasoning. Junio's nitpick aside, I 
->> think most users perceive the clone process as creating the whole 
->> "bar" directory.
->> 
->>> Thank you for looking at this.  I agree with you, and have added 
->>> a second patch that implements that.
->> 
->> These patches look good to me. I agree with Junio about just 
->> squashing them.
->> 
->> -Peff
-> 
-> Back from a conference, I'm being late for the party (Which way
-> round is better? ;) ).
-> 
-> But I still want to suggest not sacrificing correctness for "user's 
-> expectations" and rather trying to do combine them. So how about 
-> saying
-> 
-> Cloning into $GIT_DIR... Checking out branch $branch in $WORK_DIR...
-> 
-> where the latter happens for non-bare repos only, of course, and 
-> incidently confirms the use of "-b" or of the default.
-> 
-> Michael
+Hi,
 
-Thanks for looking at this.  The patch you posted reports, e.g.:
+Joel Reed wrote:
 
-  % git clone foo bar
-  Cloning into /tmp/git/bar/.git...
-  done.
-  Checking out branch master into worktree bar.
-  %
+> Working on a wide range of topics/branches from week to week and
+> project to project, it's sometimes difficult to quickly remember
+> what each branch is about, without doing a git diff master <branch>.
+> =C2=A0I like to keep branch names short so they're easy to switch to =
+and
+> from, but being able to attach a description that would display when
+> doing a "git branch" would be a huge help.
 
-I'd like to see "worktree" either omitted or replaced with "working
-directory".  Git works on trees, but "working directory" is a term
-ordinary users understand and "bar" is a directory being populated
-with files so there's nothing wrong with the user thinking of it that
-way.
+I think the closest thing we have now is =E2=80=98git branch -v=E2=80=99=
+, which tells
+the subject of the commit at the tip of the branch.  =E2=80=98git notes=
+=E2=80=99
+annotates commits rather than branches, so it occupies a different
+niche.
 
-But on a different note, I think we don't have to be so verbose.  If
-the user asks for details with -v then be as chatty as we want, but
-for the most part operations that succeed should do so quietly.
+Your request is a reasonable one, and it has come up a few times in
+different forms over the years:
 
-My original (unsent) patch was based on master from a couple of weeks
-ago and was merely going to remove the db-initialization message and
-replace it with nothing, so a successful local clone would look like:
+ . per-branch descriptions in .git/description[1]
+ . per-branch descriptions in .git/config[2][3]
+ . README branch whose files describe the branches[4]
 
-  % git clone foo bar
-  %
+Number [2] is my preferred choice (and comes with code!), for what
+it=E2=80=99s worth.
 
-I don't think it needs to be more complicated than that.  And there's
-real value in silent success: every message output has to be read by
-the user because it might be an error message.
+That doesn=E2=80=99t address the problem of how to _share_ branch
+descriptions.  That could be dealt with by extending the wire protocol
+as in [1], I think.  Just sharing a list of branch descriptions is a
+bad idea imho, since related repositories need to be able to name
+their branches independently to avoid painful coordination problems.
 
-Since Junio solved the original problem in a different way (still
-reporting a message but making it less scary) I made a patch to make
-his message more (in my opinion) friendly, but I think output from
-normal commands should be as simple as possible.
+> My only intention with this email is to say "thanks" and put in a
+> vote for git branch descriptions.
 
-At my previous job I converted a team of ten or so people from
-Subversion to Git, and virtually everyone on the team besides myself
-considered Git difficult to use and not worth the trouble.  We didn't
-have enough time with it (three months) so I couldn't tell if they
-ever would have come around, but each little thing that a user could
-perceive as complicated adds up.
+The best vote is to write a sample script for yourself, try it out,
+and tell us how it goes. :)
 
-So: I'm fine with your patch (with a removed "worktree" or replace it
-with "working directory") if writing a thorough message is considered
-desirable.  But my vote is for more simple output (as in my patches),
-or better yet nothing at all unless there's a problem.  The user can
-ask for progress with -v if they want it.
+Thanks for bringing this up.
+Jonathan
 
---Pete
+[1] http://thread.gmane.org/gmane.comp.version-control.git/8130/focus=3D=
+8187
+[2] http://thread.gmane.org/gmane.comp.version-control.git/33528/focus=3D=
+33563
+[3] http://thread.gmane.org/gmane.comp.version-control.git/46855/focus=3D=
+47077
+[4] http://thread.gmane.org/gmane.comp.version-control.git/93333/focus=3D=
+93491
