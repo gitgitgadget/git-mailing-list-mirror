@@ -1,163 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Multiblobs
-Date: Mon, 10 May 2010 02:36:18 -0400
-Message-ID: <20100510063618.GD13340@coredump.intra.peff.net>
-References: <loom.20100428T164432-954@post.gmane.org>
- <20100506062644.GB16151@coredump.intra.peff.net>
- <4BE3493B.8010409@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Sergio Callegari <sergio.callegari@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 08:36:27 2010
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: [GSoC update] git-remote-svn: Week 1
+Date: Mon, 10 May 2010 17:08:46 +1000
+Message-ID: <66B5CC1B-044A-483E-88D2-DCB0785E3ABE@cordelta.com>
+References: <g2zf3271551005050559v2ea99346gcc59f941d634ce1a@mail.gmail.com>  <90AEA593-35CC-403E-8918-94DB45BC0E06@cordelta.com> <o2pf3271551005091512qdebc006cic2c5b85ab7a9e23e@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 10 09:09:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBMbK-0005Al-7g
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 08:36:26 +0200
+	id 1OBN6v-0008D3-3o
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 09:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532Ab0EJGgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 02:36:21 -0400
-Received: from peff.net ([208.65.91.99]:57820 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752890Ab0EJGgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 02:36:20 -0400
-Received: (qmail 32566 invoked by uid 107); 10 May 2010 06:36:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 10 May 2010 02:36:35 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 10 May 2010 02:36:18 -0400
-Content-Disposition: inline
-In-Reply-To: <4BE3493B.8010409@gmail.com>
+	id S1755263Ab0EJHI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 03:08:56 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52345 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752909Ab0EJHIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 03:08:54 -0400
+Received: by gyg13 with SMTP id 13so1743340gyg.19
+        for <git@vger.kernel.org>; Mon, 10 May 2010 00:08:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=dPHwq7WdSKyGWEVbUuw4vc3xRMmoPvMq/rex5itLkwQ=;
+        b=qEP0QGCTBE9VIsITgGiM4JVTQwvfEgqOO80r/2MayCbP4wUrMwVM9ma/gsC6pAGDpk
+         R2LJotLo0zcT6ZTFP6pEsM79roNpGI+pybCQ9UdkNLYXv4yiJYt+NhHLR/kIkjJt0th7
+         7LJPuBzCO5/hEvcdMnJGCO3snASdVPNbXCODw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=mwOy91VZrB6pZvGcVklf221RGNjmB+h//EpbApRNE0D0VtuvIYEuxiLEzFegZkTGOl
+         OYccPSdmGK4Ig3aD7stkmG4TE1nzBwJiVEeN1Ah+o6+6ny75DN4o3vWi6ECjE2mZmum7
+         DaXSWT1PjunxLwtNrPN8oBoc9J/E+opTRJ9wk=
+Received: by 10.150.120.5 with SMTP id s5mr7560455ybc.331.1273475332776;
+        Mon, 10 May 2010 00:08:52 -0700 (PDT)
+Received: from [192.168.1.2] (d122-109-106-179.mit3.act.optusnet.com.au [122.109.106.179])
+        by mx.google.com with ESMTPS id 21sm3433672ywh.6.2010.05.10.00.08.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 May 2010 00:08:51 -0700 (PDT)
+In-Reply-To: <o2pf3271551005091512qdebc006cic2c5b85ab7a9e23e@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146764>
 
-On Fri, May 07, 2010 at 12:56:59AM +0200, Sergio Callegari wrote:
+Hi Ram,
 
-> >And for both of those cases, the upside is a speed increase, but the
-> >downside is a breakage of the user-visible git model (i.e., blobs get
-> >different sha1's depending on how they've been split).
-> Is this different from what happens with clean/smudge filters? I
-> wonder what hash does a cleanable object get. The hash of its cleaned
-> version or its original hash? If it is the first case, the hash can
+My off-list reply was because I was still waking up.
 
-It gets the cleaned version. The idea is that the sha1 in the repository
-is the "official" version, and anything else is simply a representation
-suitable for use on your platform.
+>> A quick update. I've begun work on a reference exporter written in perl.
+> 
+> Curiously, why?
 
-So in that sense, clean/smudge filters are very visible. Splitting into
-multiple blobs would mean that as far as git was concerned, your data
-_is_ multiple blobs. And it would diff and merge them as separate
-entities. That makes sense for something where that breakdown happens
-along user-visible lines, and is useful to the user. For example,
-automatically breaking down a tarfile into its constituent files might
-be a more desirable representation for git to diff and merge (though the
-current implementation of clean/smudge filters does not allow breaking
-the file into multiple blobs).
+I was working on a slow but reliable alternate implementation for
+validation and regression testing. So far, it seems really hard to write
+anything reliable atop Subversion.
 
-But as I argued later in my email, I think that is not the right model
-for performance-oriented multiblobs. Splitting a file at certain length
-boundaries simply because it is large is going to be awkward when you
-want to look at it as a whole item.
+>> I believe I introduced some regressions during code cleanup.
+>> From memory, the svn-dump-fast-export_0.8 tag has been verified for
+>> 10,000 revisions of my repository.
+> 
+> Thanks for the heads up. Don't worry about it though- I've started
+> cleaning up the code. Will send you some patches off the list by
+> email, or whatever you prefer.
 
-> >Another benefit is that you still _store_ the original (you just don't
-> >look at it as often).
-> ... but of course if you keep storing the original, I guess there is
-> no advantage in storage efficiency.
+I know its bad form, but I've done what I promise is the last history
+manipulation on my public repository. Now that the code is at a point
+that is quite functional and ready to receive contributions, I've signed
+off on my own commits and reviewed the history.
+Its not yet '1.0' but hopefully Ram's eyeballing of the code will get us
+there.
 
-Yes and no. If you are storing some set of N bytes, then you need to
-store N bytes whether they are in a single blob or multiple blobs. The
-only way that multiple blobs can improve on that is if you can find
-better delta candidates by doing so.  Which means that you are just as
-well off by splitting the large blob when looking for delta candidates
-as you are in splitting it in storage.
-
-> I agree, but this is already being done. For instance on odf and zip
-> files, by using clean filters capable of removing compression you can
-> greatly improve the storage efficiency of the delta machinery
-> included in git. And of course, to re-create the original file is
-> potentially challenging. But most time, it does not really matter.
-> For instance, when I use this technique with odf files, I do not need
-> to care if the smudge filter recreates the original file or not, the
-> important thing is that it recreates a file that can then be cleaned
-> to the same thing (and this makes me think that cleanable objects get
-> the sha1 of the cleaned blob, see above).
-
-Sure. And for those cases, I think clean/smudge filters are perhaps
-already doing the job.
-
-As an aside, I don't think that _git_ cares about pristine tars. It is
-that people want to store compressed tarfiles in git that have a
-particular checksum because they are interacting with some _other_
-system that cares about the tarfile.  In your case, where you don't care
-about the particular byte pattern of the odf file, it is much simpler.
-So clean/smudge filters are even easier there.
-
-> In other terms, all the time we underline that git is about tracking
-> /content/. However, when you have a structured file, and you want to
-> track its /content/, most time you are not interested at all at the
-> /envelope/ (e.g. the compression level of the odf/zip file): the
-> content is what is inside (typically a tree-structured thing). And
-> maybe scms could be made better at tracking structured files, by
-> providing an easy way to tell the scm how to discard the envelope.
-
-Right. The question is how the structured contents are handled
-internally by the SCM. Git's choice is to leave contents as opaque as
-possible, and let you handle conversion at the boundaries: textconv (or
-a custom external diff) for viewing diffs, and clean/smudge for working
-tree files.
-
-> In fact, having the hash of the structured file only depend on its
-> real content (the inner tree or list of files/streams/whatever),
-> seems to me to be completely respectful of the git model. This is why
-
-Yes, and that is how it works with clean/smudge filters.
-
-> I originally thought that having enhanced filters enabling the
-> storage of the the inner matter of a structured file as a multiblob
-> could make sense.
-
-I do think it makes sense, but only for some applications. But for those
-applications, rather than a multiblob, I think creating a tree structure
-is a natural fit, and works well with existing git tools. But again,
-that isn't really implemented. Blobs must stay as blobs. So the closest
-you can come is saying:
-
-  - an ODF file may be a collection of structured text, but we will
-    store it marshalled as a single binary data stream
-
-  - we don't want it compressed for performance reasons, so we won't use
-    the native marshalling format. Instead, we'll clean/smudge it as an
-    uncompressed collection format inside of git (e.g., a zip without
-    compression, or a tarball).
-
-  - even though git doesn't understand the structure, we _do_ want to
-    see the structure when doing diffs or merges. For that, we define
-    custom diff/merge drivers which can operate on the file. They can
-    unpack the structure as necessary.
-
-which is really not too bad, and it means git can remain blissfully
-unaware of the details of any format.
-
-> >provide them to git individually. In other words, there is no need for
-> >git to know or care at all that "foo.zip" exists, but you should simply
-> >feed it a directory containing the files. The right place to do that
-> >conversion is either totally outside of git, or at the edges of git
-> >(i.e., git-add and when git places the file in the repository).
-> Originally, I thought of creating wrappers for some git commands.
-> However, things like "status" or "commit -a" appeared to me quite
-> complicated to be done in a wrapper.
-
-Yes, I would just do it manually. But in theory a clean/smudge filter
-could be the right sort of place for that, if somebody made an
-implementation that handle exploding a single file into an arbitrary
-tree/blob hierarchy. I think it was discussed when filters were
-introduced, but the complexity (both in terms of implementation, and
-in meeting user expectations) prevented anyone from moving it forward.
-
--Peff
+--
+David Barr
