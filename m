@@ -1,170 +1,130 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: [PATCH/RFC] autocrlf: Make it work also for un-normalized
-	repositories
-Date: Mon, 10 May 2010 19:11:19 +0200
-Message-ID: <20100510171119.GA17875@pvv.org>
+From: Tatsuhiko Miyagawa <miyagawa@gmail.com>
+Subject: Re: gitweb, FastCGI and PSGI/Plack
+Date: Mon, 10 May 2010 10:14:09 -0700
+Message-ID: <AANLkTimcEjYpwa2xFhnRtnQ4ImfqJrDzQJdpptKNoskh@mail.gmail.com>
+References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com>
+	 <201005100105.49985.jnareb@gmail.com>
+	 <t2n693254b91005091759ye577992y32d2b6a41d7d8c45@mail.gmail.com>
+	 <201005101826.10735.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>
-To: git@vger.kernel.org, msysgit@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon May 10 19:11:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Peter Vereshagin <peter@vereshagin.org>,
+	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 10 19:14:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBWVu-0004Hk-17
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 19:11:30 +0200
+	id 1OBWYb-0005hZ-BJ
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 19:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755793Ab0EJRLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 13:11:24 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:51998 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755645Ab0EJRLX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 13:11:23 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1OBWVj-0004xU-7I; Mon, 10 May 2010 19:11:19 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755823Ab0EJROM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 May 2010 13:14:12 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:34704 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755821Ab0EJROL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 13:14:11 -0400
+Received: by gwj19 with SMTP id 19so2083168gwj.19
+        for <git@vger.kernel.org>; Mon, 10 May 2010 10:14:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mvvpIGnfQI30/mrjdBSWyr2v8YoshmJ60RWRBAbr6Y8=;
+        b=hjp3UxiLkp8OZhq3WWhZ69x86tS87koutzV+J8XHMfXMKDq8T3fX8+h5N+Q+LUPMa8
+         nFJywmfw1TM7Dd4QK1qud6Bp0Eb7TXCtvXLixbrmngbPoiAGFjvjNrxuif5kj3LJNOhk
+         bMXQJCyVgcb4cgPdylLtVOh5e6J0y9xzR5SWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vG80OYUzvCrPI1sJBoofUTbalEWbjbAdurVKSgIGDND6oxEwvjMxIr6AOiUv3Ecdoo
+         bQJ1Y/zCXPoWoasCew51HoU9+Kx185GBWVDWtBcbNNbjS0ZRrDoTROz5g3wBgtisRivD
+         rQ3QO8Qm4KdDgaDGq2zq64t1pvPyxf+TMuyD8=
+Received: by 10.101.128.36 with SMTP id f36mr377993ann.119.1273511650040; Mon, 
+	10 May 2010 10:14:10 -0700 (PDT)
+Received: by 10.100.228.6 with HTTP; Mon, 10 May 2010 10:14:09 -0700 (PDT)
+In-Reply-To: <201005101826.10735.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146829>
 
-Previously, autocrlf would only work well for normalized
-repositories. Any text files that contained CRLF in the repository
-would cause problems, and would be modified when handled with
-core.autocrlf set.
+On Mon, May 10, 2010 at 9:26 AM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
 
-Change autocrlf to not do any conversions to files that in the
-repository already contain a CR. git with autocrlf set will never
-create such a file, or change a LF only file to contain CRs, so the
-(new) assumption is that if a file contains a CR, it is intentional,
-and autocrlf should not change that.
+> As I understand it, CGI::Compile catches all STDOUT output of compile=
+d
+> CGI script, and passes it to PSGI layer (PSGI interface). =A0That doe=
+sn't
+> allow, I think, for serving request as it is generated. =A0This might=
+ be
+> important for actions (pages) such as 'snapshot', 'blob_plain' and
+> 'patches', which simply dump output of external comand to STDOUT.
 
-The following sequence should now always be a NOP even with autocrlf
-set (assuming a clean working directory):
+Yes, good point.
 
-git checkout <something>
-touch *
-git add -A .    (will add nothing)
-git comit       (nothing to commit)
+PSGI allows "streaming response interface", which gives you a writer
+object to call ->write method, to implement the non-buffering output
+from your application. (Of course, returning IO::Handle is another way
+to do so, but that's "pull" style streaming, not "push" which is much
+easier when you convert CGI applications).
 
-Previously this would break for any text file containing a CR
+It would still require you to rewrite some of the gitweb.cgi HTML
+generation code, such as;
 
-Signed-off-by: Finn Arne Gangstad <finag@pvv.org>
----
+  # original
+  my $cgi =3D CGI->new;
+  print $cgi->header(...);
+  print "<html>";
+  print "<body>...";
 
-Some of you may have been folowing Eyvind's excellent thread about
-trying to make end-of-line translation in git a bit smoother.
+into:
 
-I decided to attack the problem from a different angle: Is it possible
-to make autocrlf behave non-destructively for all the previous problem cases?
+  # CGI::PSGI
+  my $app =3D sub {
+      my $env =3D shift;
+      return sub {
+          my $r =3D shift;
+          my $cgi =3D CGI::PSGI->new($env);
+          my $writer =3D $r->([ $cgi->header(...) ]);
+          $writer->write("<html>");
+          $writer->write("<body>...");
+      }
+  };
 
-Stealing the problem from Eyvind's initial mail (paraphrased and
-summarized a bit):
+With some work to do the initialization and turn ->write call into a
+callback, it should be possible to make one code do both the normal
+CGI and PSGI.
 
-1. Setting autocrlf globally is a pain since autocrlf does not work well
-   with CRLF in the repo
-2. Setting it in individual repos is hard since you do it "too late"
-   (the clone will get it wrong)
-3. If someone checks in a file with CRLF later, you get into problems again
-4. If a repository once has contained CRLF, you can't tell autocrlf
-   at which commit everything is sane again
-5. autocrlf does needless work if you know that all your users want
-   the same EOL style.
+> Also I think that currently you can currently see in web browser page=
+ as
+> it is being generated by gitweb (e.g. 'projects_list' page). =A0This =
+is
+> impossible (I guess) with CGI::Compile.
 
-I belive that this patch makes autocrlf a safe (and good) default
-setting for Windows, and this solves problems 1-4.
+Correct, and possible with CGI::PSGI.
 
-I implemented it by looking for CR charactes in the index, and
-aborting any conversion attempt if this is found. The code to read
-the index contents was copied pretty verbatim from attr.c, and should
-probably be made into a non-static function instead if there is no
-better way of doing this.
+> There is also a problem that there is no way, I guess, to automatical=
+ly
+> reload / refresh app if underlying CGI script changes (a la "plackup =
+-r").
 
-Note that ALL the tests still pass unmodified. This is a bit
-surprising perhaps, but think it is an indication that no one ever
-intented autocrlf to do what it does to files containing CRs.
+Yes there is. "plackup -R" can specify the path containing your cgi
+script to refresh whenever they're updated.
+
+There's also "plackup -L Shotgun" to fork your application to get a
+fresh copy in every request, handy for the development.
 
 
- convert.c |   45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 45 insertions(+), 0 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 4f8fcb7..9d062c8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -120,6 +120,43 @@ static void check_safe_crlf(const char *path, int action,
- 	}
- }
- 
-+static int has_cr_in_index(const char *path)
-+{
-+	int pos, len;
-+	unsigned long sz;
-+	enum object_type type;
-+	void *data;
-+	int has_cr;
-+	struct index_state *istate = &the_index;
-+
-+	len = strlen(path);
-+	pos = index_name_pos(istate, path, len);
-+	if (pos < 0) {
-+		/*
-+		 * We might be in the middle of a merge, in which
-+		 * case we would read stage #2 (ours).
-+		 */
-+		int i;
-+		for (i = -pos - 1;
-+		     (pos < 0 && i < istate->cache_nr &&
-+		      !strcmp(istate->cache[i]->name, path));
-+		     i++)
-+			if (ce_stage(istate->cache[i]) == 2)
-+				pos = i;
-+	}
-+	if (pos < 0)
-+		return 0;
-+	data = read_sha1_file(istate->cache[pos]->sha1, &type, &sz);
-+	if (!data || type != OBJ_BLOB) {
-+		free(data);
-+		return 0;
-+	}
-+
-+	has_cr = memchr(data, '\r', sz) != NULL;
-+	free(data);
-+	return has_cr;
-+}
-+
- static int crlf_to_git(const char *path, const char *src, size_t len,
-                        struct strbuf *buf, int action, enum safe_crlf checksafe)
- {
-@@ -147,6 +184,10 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 			return 0;
- 	}
- 
-+	/* If the file in the index has any CR in it, do not convert. */
-+	if (has_cr_in_index(path))
-+		return 0;
-+
- 	check_safe_crlf(path, action, &stats, checksafe);
- 
- 	/* Optimization: No CR? Nothing to convert, regardless. */
-@@ -202,6 +243,10 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
- 	if (stats.lf == stats.crlf)
- 		return 0;
- 
-+	/* Are there ANY lines at all with CRLF? If so, ignore */
-+	if (stats.crlf > 0)
-+		return 0;
-+
- 	if (action == CRLF_GUESS) {
- 		/* If we have any bare CR characters, we're not going to touch it */
- 		if (stats.cr != stats.crlf)
--- 
-1.7.1.1.g653e8
+--=20
+Tatsuhiko Miyagawa
