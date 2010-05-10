@@ -1,107 +1,107 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control
- end-of-line conversion
-Date: Mon, 10 May 2010 12:13:58 +0400
-Message-ID: <20100510081358.GD14069@dpotapov.dyndns.org>
-References: <cover.1273352819.git.eyvind.bernhardsen@gmail.com>
- <c8ef28b72709013f17e093954a0f4e2ad1fb9652.1273352819.git.eyvind.bernhardsen@gmail.com>
- <alpine.LFD.2.00.1005081455450.3711@i5.linux-foundation.org>
- <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
- <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
- <20100509070043.GB14069@dpotapov.dyndns.org>
- <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
- <20100509200935.GA22563@pvv.org>
+From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+Subject: RE: [PATCH/RFC] Add [] as an alias for a reference to the empty tree
+Date: Mon, 10 May 2010 10:14:15 +0200
+Message-ID: <A612847CFE53224C91B23E3A5B48BAC74482E511E7@xmail3.se.axis.com>
+References: <1273250247-20762-1-git-send-email-pkj@axis.com>
+ <20100508045319.GD14998@coredump.intra.peff.net>
+ <7vhbmjc6dy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	mat <matthieu.stigler@gmail.com>,
-	hasen j <hasan.aljudy@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Robert Buck <buck.robert.j@gmail.com>
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Mon May 10 10:14:11 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon May 10 10:14:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBO7v-0004sq-5z
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 10:14:11 +0200
+	id 1OBO8N-00051U-F3
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 10:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755454Ab0EJIOG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 04:14:06 -0400
-Received: from mail-bw0-f219.google.com ([209.85.218.219]:48223 "EHLO
-	mail-bw0-f219.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751311Ab0EJIOE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 04:14:04 -0400
-Received: by bwz19 with SMTP id 19so1583156bwz.21
-        for <git@vger.kernel.org>; Mon, 10 May 2010 01:14:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Dr4qG5qpOMlcQPAdb/NxRwVwoqlvDIo0rEuwaYlLQyk=;
-        b=QvWDE2BOW+iEJHIKUXaxCtQHnS/t7/775or/BPbxCueFtIcdtwSTVj1rQPxoJmiLjd
-         DhCO2oN8IfIYcaTws9klEk1mzbyzrLj3kUyysDInHm3fvqSTxvuB4ScdnBphaW/4aQGj
-         SsF+uWhKrwTBeSxLvqG2vE6Bv+WuzpEjrqzkM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FnwhR4XYZ/L6ZWTDyfS6P25xSmQH6SjypTRIUtzhb6MOR9reAISjEejFisMfJJ4IVX
-         Xs4+JDTBwKJZz0gWxHvjahU3jDuCLEzj5GEP/PCxAyS5rhAbtVe/66FDBe3+wfZhNTff
-         Gm4NY87CcnQhaejx1ngd7fvIirQu2og0eg2wg=
-Received: by 10.204.16.73 with SMTP id n9mr2201550bka.21.1273479240867;
-        Mon, 10 May 2010 01:14:00 -0700 (PDT)
-Received: from localhost (ppp91-76-18-177.pppoe.mtu-net.ru [91.76.18.177])
-        by mx.google.com with ESMTPS id 13sm1461721bwz.7.2010.05.10.01.13.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 May 2010 01:14:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100509200935.GA22563@pvv.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755463Ab0EJIOf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 04:14:35 -0400
+Received: from miranda.se.axis.com ([193.13.178.8]:52341 "EHLO
+	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752176Ab0EJIOd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 04:14:33 -0400
+Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
+	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o4A8EHcB024392;
+	Mon, 10 May 2010 10:14:17 +0200
+Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
+ ([10.0.5.75]) with mapi; Mon, 10 May 2010 10:14:17 +0200
+Thread-Topic: [PATCH/RFC] Add [] as an alias for a reference to the empty
+ tree
+Thread-Index: AcrubtrZ+O3pXLgmRR+rEV1PcN3WtABpwtOA
+In-Reply-To: <7vhbmjc6dy.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, sv-SE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146771>
 
-On Sun, May 09, 2010 at 10:09:37PM +0200, Finn Arne Gangstad wrote:
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Junio C Hamano
+> Sent: den 8 maj 2010 07:25
+> To: Jeff King
+> Cc: Peter Kjellerstedt; git@vger.kernel.org
+> Subject: Re: [PATCH/RFC] Add [] as an alias for a reference to the
+> empty tree
 > 
-> So maybe, just maybe, we can make everything sufficiently good by
-> repairing "core.autocrlf = {input,true}" so that git will not convert
-> a CRLF already in the repo. This would make autocrlf = true a safe
-> default value (and probably input too, but you'd have to "do
-> something" to get a new text file with CRLF into the repo then).
+> Jeff King <peff@peff.net> writes:
+> 
+> > Based on past discussions, I suspect other people would be interested
+> > in:
+> >
+> >   $ git diff [index] HEAD
+> >   $ git diff HEAD [index]
+> >   $ git diff [working-tree] [index]
 
-First of autocrlf is safe as it is implemented now. Second, to do
-something to get a new with CRLF into the repo is really stupid.
-The whole point of autocrlf is being automatic and do not have the
-user to worry about CRLF when he adds a new file.
+Interesting. I had not thought of that, but I can see the use for it
+in some situations if nothing else but to clarify what is going on.
 
-The only real problem I am aware of is that some repository are not
-compatible with autocrlf conversion, because they store text files
-with different endings and do not have appropriate .gitatributes to
-describle what text files should and should not be converted. So, each
-user has to disable autocrlf in them manually and then re-checkout all
-files using (rm -rf * && git checkout -f), which is confusing for many
-users. In fact, you do not have to disable autocrlf, you can add a few
-lines to .git/info/attributes to make it autocrlf compatible, but again
-many users even not aware about this file, let alone what needs to be
-added. Further, the problem amplified by the fact that you have to do
-the same procedure every time when you do cloning, and though cloning
-is not most common operation, it happens often enough to annoy many
-users.
+> > etc. I don't think I would want to type those all the time,...
 
-I believe that the right solution is to be able to enable autocrlf but
-only for those repositories that are marked as autocrlf compatible by
-upstream.
+Well, I have to agree on that, even though I guess they could be 
+abbreviated like [i] and [wt].
 
+> If you go that route, why not use INDEX and WORKTREE (all caps) to at
+> least avoid the brackets?  I am not personally interested in [] at all,
+> but as part of that repertoire of syntactic sugar tokens EMPTY might be
+> able to sneak in [*1*]
 
-Dmitry
+The reason I choose to use some special characters like [] was that I 
+explicitly did not want to touch the normal namespace for references,
+since these refs do not actually exist in the .git directory and things
+could get a bit surprising if someone actually created a branch/tag
+named INDEX...
+
+However, if INDEX, WORKTREE and EMPTY are preferred as syntactic sugar
+tokes, then that is fine by me. Unfortunately, I do not have the time
+nor the knowledge needed to add support for the INDEX and WORKTREE 
+tokens, so I am afraid I will have to leave this as a suggestion for 
+the future.
+
+> [Footnote]
+> 
+> *1* Without that "[]" syntax, the feature is "Meh" for me, but with the
+> syntax, it becomes "Yuck".  The reason I am not interested in the
+> feature is because I don't see much value in running "git diff EMPTY
+> <anything>". Perhaps "git archive" might be what the user really wants 
+> to find.
+
+As I mentioned in [1] I am post-processing the generated diff, and then 
+the empty tree is just another starting point for the diff. Having to 
+get the full content some other way (e.g., via git archive) would just
+mean a lot of unnecessary code and special casing in this case.
+
+//Peter
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/146468/focus=146518
