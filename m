@@ -1,130 +1,76 @@
-From: Tatsuhiko Miyagawa <miyagawa@gmail.com>
-Subject: Re: gitweb, FastCGI and PSGI/Plack
-Date: Mon, 10 May 2010 10:14:09 -0700
-Message-ID: <AANLkTimcEjYpwa2xFhnRtnQ4ImfqJrDzQJdpptKNoskh@mail.gmail.com>
-References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com>
-	 <201005100105.49985.jnareb@gmail.com>
-	 <t2n693254b91005091759ye577992y32d2b6a41d7d8c45@mail.gmail.com>
-	 <201005101826.10735.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Peter Vereshagin <peter@vereshagin.org>,
-	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Juan Jose Comellas <juanjo@comellas.org>,
-	John Goerzen <jgoerzen@complete.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 19:14:17 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 0/8] merge: allow --log to append shortlog to -m
+Date: Tue, 11 May 2010 01:17:44 +0800
+Message-ID: <1273511872-4924-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
+	"Miklos Vajna" <vmiklos@frugalware.org>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 10 19:18:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBWYb-0005hZ-BJ
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 19:14:17 +0200
+	id 1OBWcV-0007Vr-8L
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 19:18:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755823Ab0EJROM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 May 2010 13:14:12 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:34704 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755821Ab0EJROL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 13:14:11 -0400
-Received: by gwj19 with SMTP id 19so2083168gwj.19
-        for <git@vger.kernel.org>; Mon, 10 May 2010 10:14:10 -0700 (PDT)
+	id S1755859Ab0EJRSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 13:18:14 -0400
+Received: from mail-pz0-f204.google.com ([209.85.222.204]:49993 "EHLO
+	mail-pz0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755821Ab0EJRSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 13:18:13 -0400
+Received: by pzk42 with SMTP id 42so275995pzk.4
+        for <git@vger.kernel.org>; Mon, 10 May 2010 10:18:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=mvvpIGnfQI30/mrjdBSWyr2v8YoshmJ60RWRBAbr6Y8=;
-        b=hjp3UxiLkp8OZhq3WWhZ69x86tS87koutzV+J8XHMfXMKDq8T3fX8+h5N+Q+LUPMa8
-         nFJywmfw1TM7Dd4QK1qud6Bp0Eb7TXCtvXLixbrmngbPoiAGFjvjNrxuif5kj3LJNOhk
-         bMXQJCyVgcb4cgPdylLtVOh5e6J0y9xzR5SWE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=bwAX6psqeik82CF1Dwyq9OlvoEB8Ji6TLw03yUFd51Y=;
+        b=sJp35NnOZ2ZvAjNhuy7dVBK3QjKpDdvVJor+8SmNhv2eNjQUZErMNHbdTsQPbU8bPD
+         PfmZFwc8yDRAIZUILB5hi3xXqUx6AJbgwajk7JZ6Eg9ZckxQHytG8G1iQyCTa8WHCv96
+         kqsCrIw5Y8r6RTogJCmtKLnZzzxsw/KOlwnjc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vG80OYUzvCrPI1sJBoofUTbalEWbjbAdurVKSgIGDND6oxEwvjMxIr6AOiUv3Ecdoo
-         bQJ1Y/zCXPoWoasCew51HoU9+Kx185GBWVDWtBcbNNbjS0ZRrDoTROz5g3wBgtisRivD
-         rQ3QO8Qm4KdDgaDGq2zq64t1pvPyxf+TMuyD8=
-Received: by 10.101.128.36 with SMTP id f36mr377993ann.119.1273511650040; Mon, 
-	10 May 2010 10:14:10 -0700 (PDT)
-Received: by 10.100.228.6 with HTTP; Mon, 10 May 2010 10:14:09 -0700 (PDT)
-In-Reply-To: <201005101826.10735.jnareb@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=uQcv7be1icInxYOeXsaAaFycwXasYNlI+5slzPoGjYsLcZE6SVB42ieWmDui2oqAcf
+         B4UdQr1gFCcyO3Nreu60fQbzxbs34U/RdX2mgT9MjJkTY5KivGaREov+tJNxw1mvIFxF
+         7lxd1u6FhnvrAGvOs4NCrhd0wIjLWIkfZZu1g=
+Received: by 10.115.65.19 with SMTP id s19mr3382700wak.203.1273511892264;
+        Mon, 10 May 2010 10:18:12 -0700 (PDT)
+Received: from localhost.localdomain (cm71.zeta153.maxonline.com.sg [116.87.153.71])
+        by mx.google.com with ESMTPS id v13sm27449213wav.2.2010.05.10.10.18.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 May 2010 10:18:11 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.337.gbd0bc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146830>
 
-On Mon, May 10, 2010 at 9:26 AM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
+Previously, --log didn't have any effect if a message was specified
+with -m. This allows one to create commit messages like:
 
-> As I understand it, CGI::Compile catches all STDOUT output of compile=
-d
-> CGI script, and passes it to PSGI layer (PSGI interface). =A0That doe=
-sn't
-> allow, I think, for serving request as it is generated. =A0This might=
- be
-> important for actions (pages) such as 'snapshot', 'blob_plain' and
-> 'patches', which simply dump output of external comand to STDOUT.
+  Merge in new feature
 
-Yes, good point.
+  * commit c2:
+    c2's message
 
-PSGI allows "streaming response interface", which gives you a writer
-object to call ->write method, to implement the non-buffering output
-from your application. (Of course, returning IO::Handle is another way
-to do so, but that's "pull" style streaming, not "push" which is much
-easier when you convert CGI applications).
+Contents:
+[PATCH 1/8] t7604-merge-custom-message: shift expected output creation
+[PATCH 2/8] t7604-merge-custom-message: show that --log doesn't append to -m
+[PATCH 3/8] merge: update comment
+[PATCH 4/8] merge: rename variable
+[PATCH 5/8] fmt-merge-msg: minor refactor of fmt_merge_msg()
+[PATCH 6/8] fmt-merge-msg: refactor merge title formatting
+[PATCH 7/8] fmt-merge-msg: add function to append shortlog only
+[PATCH 8/8] merge: --log appends shortlog to message if specified
 
-It would still require you to rewrite some of the gitweb.cgi HTML
-generation code, such as;
-
-  # original
-  my $cgi =3D CGI->new;
-  print $cgi->header(...);
-  print "<html>";
-  print "<body>...";
-
-into:
-
-  # CGI::PSGI
-  my $app =3D sub {
-      my $env =3D shift;
-      return sub {
-          my $r =3D shift;
-          my $cgi =3D CGI::PSGI->new($env);
-          my $writer =3D $r->([ $cgi->header(...) ]);
-          $writer->write("<html>");
-          $writer->write("<body>...");
-      }
-  };
-
-With some work to do the initialization and turn ->write call into a
-callback, it should be possible to make one code do both the normal
-CGI and PSGI.
-
-> Also I think that currently you can currently see in web browser page=
- as
-> it is being generated by gitweb (e.g. 'projects_list' page). =A0This =
-is
-> impossible (I guess) with CGI::Compile.
-
-Correct, and possible with CGI::PSGI.
-
-> There is also a problem that there is no way, I guess, to automatical=
-ly
-> reload / refresh app if underlying CGI script changes (a la "plackup =
--r").
-
-Yes there is. "plackup -R" can specify the path containing your cgi
-script to refresh whenever they're updated.
-
-There's also "plackup -L Shotgun" to fork your application to get a
-fresh copy in every request, handy for the development.
-
-
---=20
-Tatsuhiko Miyagawa
+ Documentation/git-merge.txt     |    7 +++-
+ builtin.h                       |    1 +
+ builtin/fmt-merge-msg.c         |   76 ++++++++++++++++++++++++--------------
+ builtin/merge.c                 |   20 ++++++----
+ t/t7604-merge-custom-message.sh |   24 ++++++++++--
+ 5 files changed, 87 insertions(+), 41 deletions(-)
