@@ -1,84 +1,138 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCH RFC GSoC] gitweb: Use -M option while using format-patch
-Date: Mon, 10 May 2010 21:38:45 +0530
-Message-ID: <4BE82F8D.8060205@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb, FastCGI and PSGI/Plack
+Date: Mon, 10 May 2010 18:26:07 +0200
+Message-ID: <201005101826.10735.jnareb@gmail.com>
+References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com> <201005100105.49985.jnareb@gmail.com> <t2n693254b91005091759ye577992y32d2b6a41d7d8c45@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Git List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 18:09:13 2010
+Cc: git@vger.kernel.org, Peter Vereshagin <peter@vereshagin.org>,
+	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: Tatsuhiko Miyagawa <miyagawa@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 10 18:26:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBVXc-00009s-Ag
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 18:09:12 +0200
+	id 1OBVob-0008EW-QT
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 18:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981Ab0EJQJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 12:09:06 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:54935 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751233Ab0EJQJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 12:09:04 -0400
-Received: by pvb32 with SMTP id 32so48457pvb.19
-        for <git@vger.kernel.org>; Mon, 10 May 2010 09:09:04 -0700 (PDT)
+	id S1754466Ab0EJQ0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 12:26:22 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:4863 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102Ab0EJQ0V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 12:26:21 -0400
+Received: by ey-out-2122.google.com with SMTP id d26so258515eyd.19
+        for <git@vger.kernel.org>; Mon, 10 May 2010 09:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=NHkzV/sp8WWT1xCJpiBqSDPUQJHJHKKXAKR2ZbW6LuA=;
-        b=VvDjM9ADO9sVx2rHCXqNNNdDyrryu9gm2mOIEEBVh3182H5UjpshjYw7pEyGeOfpOM
-         HeCXsq5i9R87lh8Vz/Z6l0kHVhOEbs0BtRG5cb+1fnZmZI02UYYDDEBDOyxyWWTdB6Fi
-         zKkSdQZy3mBDBe2j3/WT8mYmRnxWZjnYhquwQ=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=rn6BU2fnL7LoJb1G8xSWDrIDqC86EuKxVZhkhttAflw=;
+        b=TUU8isINYyxxeVGunIB+YQYGKJhNrwHotJwrY1dtcC7BwP+dTFpr5gjQHZpKZOqo6q
+         7M8LtTe8jnECXhBszVFlaRX5kB1WQpKUghkHdkCRrGaeabZ1j4Z3HSl66A0JdWqM35Le
+         erk/by09o9v6Z2AG2GVJU7+RsUeb8lwB/mBQk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=JVBZ3LggQfaFcU0nXqktZb/d6AZZ1vo1G7ypBl1jdtREi+iES3UVl60iYCHllckOen
-         DOzh4XBRORB4apGLo+/UyLGTW8mNfIWCnzqVbkVK/W/E3kbVVv/7ErxbCbUuGldgyWLl
-         fqv12Zn2XisiBEeSJPbDOGCiL5SSDs+bV3GC0=
-Received: by 10.114.87.17 with SMTP id k17mr3296179wab.215.1273507731013;
-        Mon, 10 May 2010 09:08:51 -0700 (PDT)
-Received: from [172.16.19.166] ([202.63.112.23])
-        by mx.google.com with ESMTPS id v13sm27004247wav.14.2010.05.10.09.08.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 May 2010 09:08:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=jLsNCQkcHq+d8cKvKtDE7Hz1/hjGEMQsA405LMq7Sm07o8cZKWlsufH9g70RNj6W82
+         q6MR/YPmeqxU1vHGdZTX6ZNYt1ipVOXA2Xk/nwVU859df7w73ZsA5k9nCZpfRlm9ea1H
+         2/fmIHz2Isad+m7LbLKML/LqDVDy8qwY36igk=
+Received: by 10.102.182.28 with SMTP id e28mr2494893muf.78.1273508779170;
+        Mon, 10 May 2010 09:26:19 -0700 (PDT)
+Received: from [192.168.1.13] (abwb94.neoplus.adsl.tpnet.pl [83.8.225.94])
+        by mx.google.com with ESMTPS id u26sm20875409mug.55.2010.05.10.09.26.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 May 2010 09:26:17 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <t2n693254b91005091759ye577992y32d2b6a41d7d8c45@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146823>
 
-Add option '-M' to use with format-patch whcih detects
-renames in the commit.
+On Sun, May 9, 2010 at 17:59:11 -0700, Tatsuhiko Miyagawa wrote:
+> On Sun, May 9, 2010 at 4:05 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+> > Moving to PSGI, or adding possibility to run gitweb as PSGI script (like
+> > the series adds *ability* to run gitweb as FastCGI script) by modifying
+> > gitweb would not be that easy, even with help of CGI::PSGI.
+> 
+> You don't need it - since you can just use Plack::App::WrapCGI.
 
-Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
----
+It is simplest method, but I don't think it is best one from the
+performance and especially latency point of view.  
 
-  gitweb/gitweb.perl |    2 +-
-  1 files changed, 1 insertions(+), 1 deletions(-)
+As I understand it, CGI::Compile catches all STDOUT output of compiled
+CGI script, and passes it to PSGI layer (PSGI interface).  That doesn't
+allow, I think, for serving request as it is generated.  This might be
+important for actions (pages) such as 'snapshot', 'blob_plain' and
+'patches', which simply dump output of external comand to STDOUT.  If
+gitweb was written as PSGI app, or with PSGI-compliant web framework, 
+it would return IO::Handle-like object.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index c356e95..0184de5 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6117,7 +6117,7 @@ sub git_commitdiff {
-                         }
-                         push @commit_spec, '--root', $hash;
-                 }
--               open $fd, "-|", git_cmd(), "format-patch", 
-'--encoding=utf8',
-+               open $fd, "-|", git_cmd(), "format-patch", '-M', 
-'--encoding=utf8',
-                         '--stdout', @commit_spec
-                         or die_error(500, "Open git-format-patch failed");
-         } else {
+Also I think that currently you can currently see in web browser page as
+it is being generated by gitweb (e.g. 'projects_list' page).  This is
+impossible (I guess) with CGI::Compile.
+
+
+There is also a problem that there is no way, I guess, to automatically
+reload / refresh app if underlying CGI script changes (a la "plackup -r").
+
+> > CGI::Compile was referring to an alternate approach, where instead of
+> > modifying gitweb to be able to run it as FastCGI script (you can run it
+> > as CGI script and as ModPerl::Registry script from mod_perl) there was
+> > added gitweb.fcgi wrapper:
+> 
+> and the .fcgi wrapper can just use Plack::Loader, or the plackup
+> executable with FCGI environment variable set, to DWIM.
+
+Right, having gitweb.psgi PSGI wrapper, which can be run not only via
+FCGI, but also on many other web servers, is certainly superior to
+having gitweb.fcgi FastCGI wrapper, which allows to run gitweb as
+FastCGI script (on FCGI server).
+ 
+> > One can of course use this approach wrapping gitweb to be run on PSGI,
+> > using CGI::Emulate::PSGI (via Plack::App::WrapCGI), which in turn uses
+> > CGI::Compile.  The gitweb.fcgi wrapper could use CGI::Emulate::FCGI...
+> > if it existed.
+> 
+> Again, you still don't understand - once your CGI script is turned
+> into PSGI, plackup can take over the web server interface, including
+> the FastCGI interface. If you need .fcgi wrapper to be spawned from
+> web servers, just put plackup command line call (or Plack::Runner or
+> ::Loader) in the .fcgi script.
+
+I didn't made myself clear here.
+
+What I want, like I wrote in neighbour subthread, is for the FastCGI app
+that looks like this:
+
+   use CGI::Fast;
+
+   do_some_initialization();
+
+   while ($q = new CGI::Fast) {
+      process_request();  # it uses 'my $cgi = CGI->new()' inside
+   }
+
+to make PSGI application that runs do_some_initialization() only once,
+and returns converted-to-PSGI process_request() as PSGI subroutine (as
+PSGI $app).
+
 -- 
-1.7.0.4
+Jakub Narebski
+jnareb on #plack
+Poland
