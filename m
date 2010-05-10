@@ -1,138 +1,146 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb, FastCGI and PSGI/Plack
-Date: Mon, 10 May 2010 18:26:07 +0200
-Message-ID: <201005101826.10735.jnareb@gmail.com>
-References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com> <201005100105.49985.jnareb@gmail.com> <t2n693254b91005091759ye577992y32d2b6a41d7d8c45@mail.gmail.com>
+Subject: Re: [PATCH RFC GSoC] gitweb: Use -M option while using format-patch
+Date: Mon, 10 May 2010 18:41:35 +0200
+Message-ID: <201005101841.40011.jnareb@gmail.com>
+References: <4BE82F8D.8060205@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Peter Vereshagin <peter@vereshagin.org>,
-	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Juan Jose Comellas <juanjo@comellas.org>,
-	John Goerzen <jgoerzen@complete.org>
-To: Tatsuhiko Miyagawa <miyagawa@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 18:26:47 2010
+Cc: Petr Baudis <pasky@ucw.cz>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Git List <git@vger.kernel.org>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 10 18:42:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBVob-0008EW-QT
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 18:26:46 +0200
+	id 1OBW3L-0006c1-Bo
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 18:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754466Ab0EJQ0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 12:26:22 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:4863 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753102Ab0EJQ0V (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 12:26:21 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so258515eyd.19
-        for <git@vger.kernel.org>; Mon, 10 May 2010 09:26:19 -0700 (PDT)
+	id S1752532Ab0EJQly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 12:41:54 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44385 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085Ab0EJQlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 12:41:52 -0400
+Received: by fxm7 with SMTP id 7so285297fxm.19
+        for <git@vger.kernel.org>; Mon, 10 May 2010 09:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=rn6BU2fnL7LoJb1G8xSWDrIDqC86EuKxVZhkhttAflw=;
-        b=TUU8isINYyxxeVGunIB+YQYGKJhNrwHotJwrY1dtcC7BwP+dTFpr5gjQHZpKZOqo6q
-         7M8LtTe8jnECXhBszVFlaRX5kB1WQpKUghkHdkCRrGaeabZ1j4Z3HSl66A0JdWqM35Le
-         erk/by09o9v6Z2AG2GVJU7+RsUeb8lwB/mBQk=
+        bh=t8T0QrtGCK/8H3378Q+Qpqg9gIECuP1086MJOjNfxmE=;
+        b=isx6/WM6lif+kr96EcbDyeLRN7IT1bFhYVcH+xnaYvjWCHdLrmOIvr9v5NCqiZEHyP
+         akDaKme+9jJVTy18TSb61XLLobOvQiYFBQX6/yWKAeCEQ+uchfkHxcLgrpn8ZpfIFeeE
+         +hIdtiLj4p1UFYmfCIdCWGbupW/wsMvE4cWew=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=jLsNCQkcHq+d8cKvKtDE7Hz1/hjGEMQsA405LMq7Sm07o8cZKWlsufH9g70RNj6W82
-         q6MR/YPmeqxU1vHGdZTX6ZNYt1ipVOXA2Xk/nwVU859df7w73ZsA5k9nCZpfRlm9ea1H
-         2/fmIHz2Isad+m7LbLKML/LqDVDy8qwY36igk=
-Received: by 10.102.182.28 with SMTP id e28mr2494893muf.78.1273508779170;
-        Mon, 10 May 2010 09:26:19 -0700 (PDT)
+        b=ITy+0s6xTnDXn6bxj6rS70wAsUMaHC+sUNxPhSblWReXPmMYSMGtgI6Os3M9rrKuKM
+         wUJScq84igfleATeFcdELWOBUz5RNMIo3uZRG7jqDY+NeacFgDO1Pz31vGJ3H531Wv4y
+         5Br13R8Y71EYsV+OMgAJNrpS1eYTQjoK/lKAU=
+Received: by 10.223.25.74 with SMTP id y10mr4633813fab.81.1273509710804;
+        Mon, 10 May 2010 09:41:50 -0700 (PDT)
 Received: from [192.168.1.13] (abwb94.neoplus.adsl.tpnet.pl [83.8.225.94])
-        by mx.google.com with ESMTPS id u26sm20875409mug.55.2010.05.10.09.26.16
+        by mx.google.com with ESMTPS id j23sm22230379faa.2.2010.05.10.09.41.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 May 2010 09:26:17 -0700 (PDT)
+        Mon, 10 May 2010 09:41:49 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <t2n693254b91005091759ye577992y32d2b6a41d7d8c45@mail.gmail.com>
+In-Reply-To: <4BE82F8D.8060205@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146824>
 
-On Sun, May 9, 2010 at 17:59:11 -0700, Tatsuhiko Miyagawa wrote:
-> On Sun, May 9, 2010 at 4:05 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+CC-ed Guiseppe Bilotta, author of 'patch' and 'patches' views
+(you can find this information using "git blame" or "git log --grep").
+
+On Mon, 10 May 2010, Pavan Kumar Sunkara wrote:
+
+> Add option '-M' to use with format-patch whcih detects
+> renames in the commit.
+
+  Subject: [PATCH RFC GSoC] gitweb: Use @diff_opts while using format-patch
+
+  Make git-format-patch (used by 'patch' and 'patches' views) use the
+  same rename detection options that git-diff and git-diff-tree (used
+  by 'commitdiff', 'blobdiff', etc.) use.
+
+
+Note that I am not sure if it is really a good change, as it might
+create patches that (currently) can be applied only with git.
+
 > 
-> > Moving to PSGI, or adding possibility to run gitweb as PSGI script (like
-> > the series adds *ability* to run gitweb as FastCGI script) by modifying
-> > gitweb would not be that easy, even with help of CGI::PSGI.
+> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+> ---
 > 
-> You don't need it - since you can just use Plack::App::WrapCGI.
-
-It is simplest method, but I don't think it is best one from the
-performance and especially latency point of view.  
-
-As I understand it, CGI::Compile catches all STDOUT output of compiled
-CGI script, and passes it to PSGI layer (PSGI interface).  That doesn't
-allow, I think, for serving request as it is generated.  This might be
-important for actions (pages) such as 'snapshot', 'blob_plain' and
-'patches', which simply dump output of external comand to STDOUT.  If
-gitweb was written as PSGI app, or with PSGI-compliant web framework, 
-it would return IO::Handle-like object.
-
-Also I think that currently you can currently see in web browser page as
-it is being generated by gitweb (e.g. 'projects_list' page).  This is
-impossible (I guess) with CGI::Compile.
-
-
-There is also a problem that there is no way, I guess, to automatically
-reload / refresh app if underlying CGI script changes (a la "plackup -r").
-
-> > CGI::Compile was referring to an alternate approach, where instead of
-> > modifying gitweb to be able to run it as FastCGI script (you can run it
-> > as CGI script and as ModPerl::Registry script from mod_perl) there was
-> > added gitweb.fcgi wrapper:
+>   gitweb/gitweb.perl |    2 +-
+>   1 files changed, 1 insertions(+), 1 deletions(-)
 > 
-> and the .fcgi wrapper can just use Plack::Loader, or the plackup
-> executable with FCGI environment variable set, to DWIM.
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index c356e95..0184de5 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -6117,7 +6117,7 @@ sub git_commitdiff {
+>                          }
+>                          push @commit_spec, '--root', $hash;
+>                  }
+> -               open $fd, "-|", git_cmd(), "format-patch", '--encoding=utf8',
+> +               open $fd, "-|", git_cmd(), "format-patch", '-M', '--encoding=utf8',
 
-Right, having gitweb.psgi PSGI wrapper, which can be run not only via
-FCGI, but also on many other web servers, is certainly superior to
-having gitweb.fcgi FastCGI wrapper, which allows to run gitweb as
-FastCGI script (on FCGI server).
- 
-> > One can of course use this approach wrapping gitweb to be run on PSGI,
-> > using CGI::Emulate::PSGI (via Plack::App::WrapCGI), which in turn uses
-> > CGI::Compile.  The gitweb.fcgi wrapper could use CGI::Emulate::FCGI...
-> > if it existed.
-> 
-> Again, you still don't understand - once your CGI script is turned
-> into PSGI, plackup can take over the web server interface, including
-> the FastCGI interface. If you need .fcgi wrapper to be spawned from
-> web servers, just put plackup command line call (or Plack::Runner or
-> ::Loader) in the .fcgi script.
+  +               open $fd, "-|", git_cmd(), "format-patch", @diff_opts, '--encoding=utf8',
 
-I didn't made myself clear here.
 
-What I want, like I wrote in neighbour subthread, is for the FastCGI app
-that looks like this:
+or
 
-   use CGI::Fast;
+  -               open $fd, "-|", git_cmd(), "format-patch", '--encoding=utf8',
+  -                        '--stdout', @commit_spec
+  +               open $fd, "-|", git_cmd(), "format-patch", @diff_opts,
+  +                         '--encoding=utf8', '--stdout', @commit_spec
 
-   do_some_initialization();
+This patsh is both line-wrapped and whitespace-damaged (tabs replaced
+by spacess)
 
-   while ($q = new CGI::Fast) {
-      process_request();  # it uses 'my $cgi = CGI->new()' inside
-   }
+>                          '--stdout', @commit_spec
+>                          or die_error(500, "Open git-format-patch failed");
+>          } else {
+> -- 
 
-to make PSGI application that runs do_some_initialization() only once,
-and returns converted-to-PSGI process_request() as PSGI subroutine (as
-PSGI $app).
+-- >8 --
+Subject: [PATCH RFC GSoC] gitweb: Use @diff_opts while using format-patch
 
--- 
-Jakub Narebski
-jnareb on #plack
-Poland
+Make git-format-patch (used by 'patch' and 'patches' views) use the
+same rename detection options that git-diff and git-diff-tree (used
+by 'commitdiff', 'blobdiff', etc.) use.
+
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/gitweb.perl |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index 225f404..d983ce5 100755
+--- i/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -6295,8 +6295,8 @@ sub git_commitdiff {
+ 			}
+ 			push @commit_spec, '--root', $hash;
+ 		}
+-		open $fd, "-|", git_cmd(), "format-patch", '--encoding=utf8',
+-			'--stdout', @commit_spec
++		open $fd, "-|", git_cmd(), "format-patch", @diff_opts,
++			'--encoding=utf8', '--stdout', @commit_spec
+ 			or die_error(500, "Open git-format-patch failed");
+ 	} else {
+ 		die_error(400, "Unknown commitdiff format");
