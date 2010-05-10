@@ -1,108 +1,82 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH/RFC v2 1/4] Add "core.eolStyle" variable to control
- end-of-line conversion
-Date: Mon, 10 May 2010 18:03:21 +0400
-Message-ID: <20100510140321.GF14069@dpotapov.dyndns.org>
-References: <E2A9C4D2-010F-44B2-BF6A-627DE8B72FB5@gmail.com>
- <BFFD3CAC-E7D9-49D8-9B67-C3F5157646F3@gmail.com>
- <20100509070043.GB14069@dpotapov.dyndns.org>
- <CD080D38-811C-4BBF-A5CB-6B613555FE72@gmail.com>
- <AANLkTikRJ6Hl_fRNRZbxeNNgwv9UTm2fPrOKv4GbT0qJ@mail.gmail.com>
- <E6434515-5357-4FF4-8049-5E4FCE8B29E4@gmail.com>
- <AANLkTikg7Tc6zJvfBELBQoeAxebFenNLivEs92j8c83D@mail.gmail.com>
- <91F47297-A1B5-4AE5-8835-E3A8E452FB8A@gmail.com>
- <AANLkTilDiP_5Q9HrssB0lyf-jsE8LAF2ULGwEMO4BzdQ@mail.gmail.com>
- <AANLkTikYUypxH5WhCOMby_zpHsnHEFyix5MGpD96FVWD@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	mat <matthieu.stigler@gmail.com>,
-	hasen j <hasan.aljudy@gmail.com>,
-	Erik Faye-Lund <kusmabite@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>
-To: Robert Buck <buck.robert.j@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 10 16:03:41 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] clone: report check out for non-bare clones
+Date: Mon, 10 May 2010 16:46:03 +0200
+Message-ID: <3521b4733b58bfa516303fafc64d87f05760ea02.1273502583.git.git@drmicha.warpmail.net>
+References: <4BE7E09F.3040303@drmicha.warpmail.net>
+Cc: Pete Harlan <pgit@pcharlan.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 10 16:46:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBTa7-0005Nh-UJ
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 16:03:40 +0200
+	id 1OBUFp-0000lV-DA
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 16:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754926Ab0EJODa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 10:03:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62739 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755303Ab0EJOD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 10:03:27 -0400
-Received: by fxm7 with SMTP id 7so115911fxm.19
-        for <git@vger.kernel.org>; Mon, 10 May 2010 07:03:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=HSDbi+TF6c0NWwN6jJHcF9cVZwkgABorTBLwWGMaNPk=;
-        b=Lr82pVTjx2azj06V2TLUdy3+scehLe7abeKIx2g+wsALcQqUiZniBl92Dh+PpUSjSy
-         0cGAGg7XSlgCpG4bz9JtCnn5zECa9de+PAd7mehaQkeT8dTqGZ5jO5dx2Hbb6tMteNe+
-         w0IbXr/YoOF0djk5Gtj3IXi1qU2LSIaStdtxU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=mwNWyrzQzA0S5+7tiSYEsNw4CVq7jmuSFKmjt/35mBjk3mGAEivBUzSJPBBxFXeOSc
-         oc5w8fhyvpsop7mVcvSGY2HsEfNw3HTbmuOVrjsfFf6CrkPnP3+NVbt2OuGQao4hXhJn
-         vyefzpbdn/rPS/lRm97GM+rWXLhlH1cjpCu0M=
-Received: by 10.223.27.151 with SMTP id i23mr4307334fac.104.1273500205109;
-        Mon, 10 May 2010 07:03:25 -0700 (PDT)
-Received: from localhost (ppp91-76-18-177.pppoe.mtu-net.ru [91.76.18.177])
-        by mx.google.com with ESMTPS id j23sm21637248faa.14.2010.05.10.07.03.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 10 May 2010 07:03:23 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikYUypxH5WhCOMby_zpHsnHEFyix5MGpD96FVWD@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751312Ab0EJOqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 10:46:39 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33109 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751160Ab0EJOqi (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 May 2010 10:46:38 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 10959F538E;
+	Mon, 10 May 2010 10:46:11 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 10 May 2010 10:46:11 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=QLY3fIym12BWI/jnCpBHIdCaSJU=; b=W0fQCkA3p+i7gt1Y92dfK8OHQkLwRl5wim3psvFWyTjX2OTiO50+IMVShUdU4NRp9kqmvrob6XaS/1GzvN7Y5hibfp7hEBYxbXbqNXC2TD0YQqgZNHjI8OwmPufdzX0ScVfTtPHKBB65ctMXpv7uWaypdC7szFnY9PoRzwewj1o=
+X-Sasl-enc: RnH0kno9O/qL8F3lc8K8CgXPaZH08bHwWrW0VtG2NZPY 1273502759
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 00E724DCF35;
+	Mon, 10 May 2010 10:45:58 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.240.geeaa4d
+In-Reply-To: <4BE7E09F.3040303@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146817>
 
-On Mon, May 10, 2010 at 09:25:11AM -0400, Robert Buck wrote:
-> Today I am writing up some documentation related to Git use at the
-> company, and planning to check in all the data from Git vs Hg testing,
-> and all on-boarding/first-day documentation related to Git use. So
-> within the directory containing all these files I init-ed the
-> repository and got this when I attempted to add multiple files. Mind
-> you, this is on Linux!
-> 
->   "warning: LF will be replaced by CRLF"
+git clone reports $GIT_DIR as the destination of a clone operation,
+which is correct but possibly confusing for new users cloning into
+non-bare repositories.
 
-It looks like you set core.autocrlf to true on Linux.
+Thus, report additionally the check out process as
 
-The problem is core.autocrlf says two things -- whether you want to
-enable automatic eol conversion for text files and whether you have CRLF
-for text files. Only if the answer is "yes" to both then you should set
-it to true. In other words, you should never set it to true on Linux.
+checking out branch $branchname into worktree $worktree
 
-You may want use core.autocrlf=input on Linux to avoid text files being
-accidentally commit with a wrong encoding, when they were copied from
-Windows directly.
+which has the additional benefit of confirming the checked out branch
+(as specified by -b, defaulting to master).
 
-> 
-> This _really_ of scares me being that this was on Linux. Is this one
-> of the problem spots that the topic of this thread attempts to
-> resolve?
+In the case of a detached head, (null) is the branch name.
 
-Yes, we want to have a separate setting, whihc will tell what is EOL on
-your system, and it should have sensible default, i.e. LF on Linux and
-CRLF on Windows.
+Inspired-by: Pete Harlan <pgit@pcharlan.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+I mean something like this. Noobs won't use --no-checkout so that a
+check out message should help all possibly confused users.
 
+ builtin/clone.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Dmitry
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 4457922..38ca5e8 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -629,6 +629,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		struct tree_desc t;
+ 		int fd;
+ 
++		if (0 <= option_verbosity)
++			printf("Checking out branch %s into worktree %s.\n",
++				skip_prefix(our_head_points_at->name, "refs/heads/"),
++				work_tree);
++
+ 		/* We need to be in the new work tree for the checkout */
+ 		setup_work_tree();
+ 
+-- 
+1.7.1.240.geeaa4d
