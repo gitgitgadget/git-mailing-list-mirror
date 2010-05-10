@@ -1,92 +1,140 @@
-From: Jonathan Leto <jaleto@gmail.com>
-Subject: Help with a possibly corrupt repo
-Date: Mon, 10 May 2010 12:37:36 -0700
-Message-ID: <AANLkTiks5g7BvLXBrUcb0m5dCiIrBifjDUKBDScXd1dw@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH/RFC] autocrlf: Make it work also for un-normalized
+ repositories
+Date: Mon, 10 May 2010 23:43:21 +0400
+Message-ID: <20100510194321.GG14069@dpotapov.dyndns.org>
+References: <20100510171119.GA17875@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 10 21:38:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, msysgit@googlegroups.com,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Mon May 10 21:43:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBYng-0001hX-Rv
-	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 21:38:01 +0200
+	id 1OBYt2-0004HM-7c
+	for gcvg-git-2@lo.gmane.org; Mon, 10 May 2010 21:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781Ab0EJThx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 May 2010 15:37:53 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:55995 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754375Ab0EJThw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 May 2010 15:37:52 -0400
-Received: by gwj19 with SMTP id 19so2192492gwj.19
-        for <git@vger.kernel.org>; Mon, 10 May 2010 12:37:51 -0700 (PDT)
+	id S1756227Ab0EJTn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 May 2010 15:43:26 -0400
+Received: from fg-out-1718.google.com ([72.14.220.156]:62065 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756204Ab0EJTnZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 May 2010 15:43:25 -0400
+Received: by fg-out-1718.google.com with SMTP id 19so929799fgg.1
+        for <git@vger.kernel.org>; Mon, 10 May 2010 12:43:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=Y8LcSizHHBEcLVFLXOaBbnJg4bUifzno/fVMStgAZLk=;
-        b=XvjQacqBSGnyWYVjSxRL7XQt8JDDiDXkJXftua83UT+J7lg5Jb9orLQoXOKpuaupzt
-         Kr+WNw5X6j2xVQvHaQ3qYp4bTp6WO8hw6a1m9cno8jeU8qP4HVhjsoskVHvGwaa0WX4p
-         7Pzd1X7fICK1JJMfW4G6XYnnIvWCx+K84NsW0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=fshJbgPLPFdsRt1Ni5OWaFZ6fq4goP/sF9iOea1sigg=;
+        b=nN435AuS06FA5gnk8zii/cNUqlr0MTtMAvxG0onspHkAqDvXQYFa51VkKgTm9a8q0P
+         7fP84vpXA8JlxSrEzh2lI2zNSjWmlg2QNfROfcMvwfXvQTCVBlnmgoYViHKEvBkbAo8k
+         otV8WCkIiBROOR1hnQjfZorq9diDu0qmF1CQM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=WW4V7D/wQ5rSnICxVtxzPi/ALeqJF71V0BlHSIyjLm6O7TGllWkygrBAiP6otpmJdQ
-         RYFhzjOqCY+o0fMT9dBo7WI7HBk3ZJ64KiOqTLv1JQgwGaIP+Kdn//0cWHfpde6rUzT7
-         YhFPAYgA9mvX+/c/5cjxJwS6cic6B7aIR67Ko=
-Received: by 10.150.244.10 with SMTP id r10mr6697990ybh.414.1273520271536; 
-	Mon, 10 May 2010 12:37:51 -0700 (PDT)
-Received: by 10.151.48.4 with HTTP; Mon, 10 May 2010 12:37:36 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=CDQFkRt7Vinq95VzTPfghW+UpojRk467NeXdifFwWE8kugfY2c0Iuih6PvaM3TXq2D
+         rtNOtLmItV16Qp6PE4NBXD5tczrIdP/KMv3a+nDezDqkHX9XWxriuV0d6OWmU3cmOM8v
+         6rKo2w3yqUIGjFMNImWyQIrvJyIraOMWNraVw=
+Received: by 10.223.22.145 with SMTP id n17mr4955795fab.23.1273520603751;
+        Mon, 10 May 2010 12:43:23 -0700 (PDT)
+Received: from localhost (ppp85-140-167-246.pppoe.mtu-net.ru [85.140.167.246])
+        by mx.google.com with ESMTPS id g10sm22914334fai.12.2010.05.10.12.43.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 10 May 2010 12:43:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100510171119.GA17875@pvv.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146848>
 
-Howdy,
+On Mon, May 10, 2010 at 07:11:19PM +0200, Finn Arne Gangstad wrote:
 
-Due to a network (or possibly disk) error, I started getting this error:
+> 
+> Stealing the problem from Eyvind's initial mail (paraphrased and
+> summarized a bit):
+> 
+> 1. Setting autocrlf globally is a pain since autocrlf does not work well
+>    with CRLF in the repo
+> 2. Setting it in individual repos is hard since you do it "too late"
+>    (the clone will get it wrong)
+> 3. If someone checks in a file with CRLF later, you get into problems again
+> 4. If a repository once has contained CRLF, you can't tell autocrlf
+>    at which commit everything is sane again
+> 5. autocrlf does needless work if you know that all your users want
+>    the same EOL style.
+> 
+> I belive that this patch makes autocrlf a safe (and good) default
+> setting for Windows, and this solves problems 1-4.
 
-$ git --version
-git version 1.7.1.166.gf2086
-error: garbage at end of loose object '66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba'
-fatal: object 66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba is corrupte$ git reflog
-291cf66 HEAD@{0}: commit: Class::MethodMaker
-44c9cdb HEAD@{1}: commit: TAP::Harness::Archive
-89053c5 HEAD@{2}: HEAD^: updating HEAD
-b6eb92a HEAD@{3}: commit: TAP::Harness::Archive
-89053c5 HEAD@{4}: commit: Bio::Perl 1.006001
-c745fed HEAD@{5}: commit: MooseX::Declare
-d4097d4 HEAD@{6}: commit (initial): Initial .modulebuildrc
-error: garbage at end of loose object '66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba'
-fatal: object 66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba is corrupted
+It does not really solve #2, because you will have the wrong ending for
+files that must be LF, such as shell scripts, and then these scripts
+fail with some weird error...
 
-$ uname -a
-Linux datura 2.6.31-21-generic #59-Ubuntu SMP Wed Mar 24 07:28:27 UTC
-2010 x86_64 GNU/Linux
+> 
+> I implemented it by looking for CR charactes in the index, and
+> aborting any conversion attempt if this is found.
 
-This git was built from the 'next' branch a few days ago. Is there
-anyway to fix my repo? I can provide a copy of my .git directory if
-needed, but it is 54MB. As for background, this repo contained a set
-of CPAN modules, via local::lib, so it had many files but only a few
-commits.
+Does it have any measurable impact on the check-in when a lot of files
+are committed? 
 
-I tried "git gc", but it borks on the corrupt sha1:
+> 
+> Note that ALL the tests still pass unmodified. This is a bit
+> surprising perhaps, but think it is an indication that no one ever
+> intented autocrlf to do what it does to files containing CRs.
 
-$ git gc
-error: garbage at end of loose object '66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba'
-fatal: object 66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba is corrupted
-error: failed to run repack
+Well, tests do not cover many corner cases... So, no surprise here...
 
-Thanks for any help anybody can give.
+> @@ -147,6 +184,10 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+>                        return 0;
+>        }
+>
+> +       /* If the file in the index has any CR in it, do not convert. */
+> +       if (has_cr_in_index(path))
+> +               return 0;
+> +
 
-Duke
+Why do you disable crlf conversion not only for "guess" case but also
+for those files that have the "crlf" attribute? Moreover, you do that
+silently without even a warning to the user. IMHO, it is incompatible
+change. In fact, it can seen as regression, because by specifying the
+correct attribute for that file, I could fix the ending of this file.
+Now, this is impossible.
+
+>  
+>  	/* Optimization: No CR? Nothing to convert, regardless. */
+> @@ -202,6 +243,10 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
+>  	if (stats.lf == stats.crlf)
+>  		return 0;
+>  
+> +	/* Are there ANY lines at all with CRLF? If so, ignore */
+> +	if (stats.crlf > 0)
+> +		return 0;
+> +
+>  	if (action == CRLF_GUESS) {
+>  		/* If we have any bare CR characters, we're not going to touch it */
+>  		if (stats.cr != stats.crlf)
+
+This chunk does not make sense. Can you explain what did you try to
+achieve here for guess and non-guess cases?
+
+IMHO, we should conservative in our changes. So, to change behavior of
+autocrlf only where "crlf" is not set explicitly. Or, at least, produce
+some warning about discrepancy between what the user has _explicitly_
+told to do and what git does. I really dislike that any tool silently
+ignores users explicit instructions, because it thinks it knows better
+than a human. It is plainly wrong.
 
 
--- 
-Jonathan "Duke" Leto
-jonathan@leto.net
-http://leto.net
+Dmitry
