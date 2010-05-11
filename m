@@ -1,75 +1,66 @@
-From: Joel Reed <jreed@lantekcs.com>
-Subject: RE: git branch descriptions
-Date: Tue, 11 May 2010 08:39:58 -0400
-Message-ID: <657A681BEF27534399890012B8C8E50E1AD63D2244@lcs-exchange01.Lantekcs.com>
-References: <657A681BEF27534399890012B8C8E50E1AD63D1FEA@lcs-exchange01.Lantekcs.com>
- <20100510232612.GA6890@progeny.tock> <4BE90ADF.7020503@drmicha.warpmail.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: git branch descriptions
+Date: Tue, 11 May 2010 12:54:26 +0000
+Message-ID: <AANLkTimhCBNyJv6b9AT578AC4H1_zsB2CgfsrveNpNNE@mail.gmail.com>
+References: <AcrwUP1AvzllIOBSQwuAO49egMRfdg==>
+	 <657A681BEF27534399890012B8C8E50E1AD63D1FEA@lcs-exchange01.Lantekcs.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 11 14:40:15 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joel Reed <jreed@lantekcs.com>
+X-From: git-owner@vger.kernel.org Tue May 11 14:59:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBokw-0007y7-Jt
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 14:40:14 +0200
+	id 1OBp3H-0001HL-Er
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 14:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755962Ab0EKMkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 May 2010 08:40:09 -0400
-Received: from [173.225.48.98] ([173.225.48.98]:49695 "EHLO mail.lantekcs.com"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755604Ab0EKMkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 May 2010 08:40:08 -0400
-X-ASG-Debug-ID: 1273581600-2afd5de50001-QuoKaX
-Received: from exchange.lantekcs.com (lcs-exchange01.lantekcs.com [192.168.0.26]) by mail.lantekcs.com with ESMTP id 2tfc6mPukDjFqA7H; Tue, 11 May 2010 08:40:00 -0400 (EDT)
-X-Barracuda-Envelope-From: jreed@lantekcs.com
-Received: from lcs-exchange01.Lantekcs.com ([fe80::b4fc:249:9bbc:9298]) by
- lcs-exchange01.Lantekcs.com ([fe80::18c5:3222:7819:3ef6%19]) with mapi; Tue,
- 11 May 2010 08:40:00 -0400
-X-ASG-Orig-Subj: RE: git branch descriptions
-Thread-Topic: git branch descriptions
-Thread-Index: Acrw3c/ZDm8WcoBgTWeFRsCVcEZLfQAKR/fw
-In-Reply-To: <4BE90ADF.7020503@drmicha.warpmail.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Barracuda-Connect: lcs-exchange01.lantekcs.com[192.168.0.26]
-X-Barracuda-Start-Time: 1273581600
-X-Barracuda-URL: http://192.168.0.2:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at lantekcs.com
+	id S1756626Ab0EKMy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 08:54:29 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59713 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756491Ab0EKMy2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 May 2010 08:54:28 -0400
+Received: by fxm19 with SMTP id 19so380002fxm.19
+        for <git@vger.kernel.org>; Tue, 11 May 2010 05:54:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=aVpPDkVppsWomveGvgRcrby1eL39jQfFmXEZSB3QVIw=;
+        b=FdICQl4YxOFUM8bDbnIB19eBd5DAM2P+A9HbQMpQtUN/K43KrnhMWjD7mK+umwLSsv
+         tNPkOxoKPnYumUDNaNeRlNT8Pon9MgIJ6Hv8rfw/PcNxn3i8n1k43GwqZxb0QOTNUa4I
+         0GU8sj6dzOvcaIg5iFjfJrNLvojeKOT5jM/+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=B4iVmE8TMgtz0IJY5uXyCQWHxaTt+1MLFBoQtPfe45SAB68VGPHckZOj3vqOM3eEEt
+         3fhlUPZlW8UONVIQoL3CHxa9+oqdNssuMQ0AeJn/oE7R6vrTS1ayJGodJGKqyDFMaB91
+         ybSVIVHgBYOHXlT93Dprf0I8e0QEIt5jLuWlo=
+Received: by 10.223.92.153 with SMTP id r25mr6218461fam.76.1273582466754; Tue, 
+	11 May 2010 05:54:26 -0700 (PDT)
+Received: by 10.223.109.78 with HTTP; Tue, 11 May 2010 05:54:26 -0700 (PDT)
+In-Reply-To: <657A681BEF27534399890012B8C8E50E1AD63D1FEA@lcs-exchange01.Lantekcs.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146891>
 
-TWljaGFlbCBKIEdydWJlciB3cm90ZToNCg0KPHNuaXA+DQoNCj4gPiBZb3VyIHJlcXVlc3QgaXMg
-YSByZWFzb25hYmxlIG9uZSwgYW5kIGl0IGhhcyBjb21lIHVwIGEgZmV3IHRpbWVzIGluDQo+ID4g
-ZGlmZmVyZW50IGZvcm1zIG92ZXIgdGhlIHllYXJzOg0KPiA+DQo+ID4gIC4gcGVyLWJyYW5jaCBk
-ZXNjcmlwdGlvbnMgaW4gLmdpdC9kZXNjcmlwdGlvblsxXQ0KPiA+ICAuIHBlci1icmFuY2ggZGVz
-Y3JpcHRpb25zIGluIC5naXQvY29uZmlnWzJdWzNdDQo+ID4gIC4gUkVBRE1FIGJyYW5jaCB3aG9z
-ZSBmaWxlcyBkZXNjcmliZSB0aGUgYnJhbmNoZXNbNF0NCj4gPg0KPiA+IE51bWJlciBbMl0gaXMg
-bXkgcHJlZmVycmVkIGNob2ljZSAoYW5kIGNvbWVzIHdpdGggY29kZSEpLCBmb3Igd2hhdA0KPiA+
-IGl04oCZcyB3b3J0aC4NCj4gPg0KPiA+IFRoYXQgZG9lc27igJl0IGFkZHJlc3MgdGhlIHByb2Js
-ZW0gb2YgaG93IHRvIF9zaGFyZV8gYnJhbmNoDQo+ID4gZGVzY3JpcHRpb25zLiAgVGhhdCBjb3Vs
-ZCBiZSBkZWFsdCB3aXRoIGJ5IGV4dGVuZGluZyB0aGUgd2lyZSBwcm90b2NvbA0KPiA+IGFzIGlu
-IFsxXSwgSSB0aGluay4gIEp1c3Qgc2hhcmluZyBhIGxpc3Qgb2YgYnJhbmNoIGRlc2NyaXB0aW9u
-cyBpcyBhDQo+ID4gYmFkIGlkZWEgaW1obywgc2luY2UgcmVsYXRlZCByZXBvc2l0b3JpZXMgbmVl
-ZCB0byBiZSBhYmxlIHRvIG5hbWUNCj4gPiB0aGVpciBicmFuY2hlcyBpbmRlcGVuZGVudGx5IHRv
-IGF2b2lkIHBhaW5mdWwgY29vcmRpbmF0aW9uIHByb2JsZW1zLg0KPiANCj4gSSBoYXZlIGEgbW9z
-dGx5IHdvcmtpbmcgaWRlYSAod29ya2luZyB3aGVuIGRvbmUgIm1hbnVhbGx5Iikgb24gaG93IHRv
-DQo+IHVzZSBub3RlcyBmb3IgdGhhdC4gQXMgd2UsIGtub3csIHdlIGNhbiBzaGFyZSBub3RlcyB3
-aXRob3V0IG92ZXJyaWRpbmcNCj4gb3VyIG93biBub3RlcyAoYW5kIGltcHJvdmluZyB0aGUgbWVy
-Z2UvY29tYmluZSBmYWNpbGl0aWVzIHdvdWxkIGJlbmVmaXQNCj4gYWxsIG5vdGUgdXNlcnMpLiBJ
-J2xsIHRyeSB0byBjb21lIHVwIHdpdGggYSBwcm9vZi1vZi1jb25jZXB0IHBhdGNoLCBidXQNCj4g
-cHJvYmFibHkgbm90IGJlZm9yZSBuZXh0IHdlZWsuDQoNClNvdW5kcyBhd2Vzb21lISBJZiBJIGNh
-biBoZWxwIHRlc3QgaW4gYW55d2F5IHBsZWFzZSBsZXQgbWUga25vdy4NCg0KanINCg==
+On Mon, May 10, 2010 at 14:56, Joel Reed <jreed@lantekcs.com> wrote:
+
+> I like to keep branch names short so they're easy to switch to and
+> from, but being able to attach a description that would display when
+> doing a "git branch" would be a huge help.
+
+Or you could just use long branch names coupled with bash completion
+(or something like that) so it isn't hard to switch between branches
+with long names.
+
+I use branch names that are long enough so that I can tell what
+they're for by looking at the name, using them isn't a pain due to
+bash/magit completion.
