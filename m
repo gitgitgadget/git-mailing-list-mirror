@@ -1,74 +1,92 @@
-From: Andreas Hartmetz <ahartmetz@gmail.com>
-Subject: Re: git branch documentation improvements
-Date: Tue, 11 May 2010 20:27:04 +0200
-Message-ID: <201005112027.05818.ahartmetz@gmail.com>
-References: <201005070024.41172.ahartmetz@gmail.com> <201005081839.37790.ahartmetz@gmail.com> <4BE7A629.7050709@viscovery.net>
+From: Tatsuhiko Miyagawa <miyagawa@gmail.com>
+Subject: Re: gitweb, FastCGI and PSGI/Plack
+Date: Tue, 11 May 2010 11:56:43 -0700
+Message-ID: <AANLkTinDzAgLckK6z08DJwZPWRmXywQ69EImTaiFsDOE@mail.gmail.com>
+References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com>
+	 <201005102310.47879.jnareb@gmail.com>
+	 <AANLkTimypauJKP-ifPKDmM9TK0u0JsSG5PlcpWdkkbVd@mail.gmail.com>
+	 <201005111129.10931.jnareb@gmail.com>
+	 <20100511094409.GB5220@screwed.box>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jon Seymour <jon.seymour@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue May 11 20:27:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: Peter Vereshagin <peter@vereshagin.org>
+X-From: git-owner@vger.kernel.org Tue May 11 20:57:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBuBN-0000DA-KZ
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 20:27:54 +0200
+	id 1OBudv-0008EE-0b
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 20:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932456Ab0EKS1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 May 2010 14:27:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34482 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932541Ab0EKS1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 May 2010 14:27:12 -0400
-Received: by fxm19 with SMTP id 19so758291fxm.19
-        for <git@vger.kernel.org>; Tue, 11 May 2010 11:27:11 -0700 (PDT)
+	id S1755554Ab0EKS4q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 May 2010 14:56:46 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:60601 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753105Ab0EKS4p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 14:56:45 -0400
+Received: by gwb19 with SMTP id 19so514227gwb.19
+        for <git@vger.kernel.org>; Tue, 11 May 2010 11:56:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=d+eTwhWliDgM1XZH5tPU/+iD/0Ch9aZXyM6dxsH+7xE=;
-        b=C3o9Z3P571EWX4vTwxROImGAiDikg8DF2cME2wHxBiJf7sg21WvqDua4Et5sOwRNe3
-         /AURe6c8WC1vgAe3rZKQyzaXnXcjGXUD8I4eL6qYrzqCB3UpzpyBivzBGH6J5uHrYmeE
-         /lRXc1yBpSxheIkxjCaaGVnfTUPqKfkI27Asc=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TviZ0tycxujAwE5XRR+9jZ0p1PTx50U3pUwF24yAZvQ=;
+        b=T4X4uROcBjm5jRAqMbKnzEHfPvI2iarNGFEj5I6zj+pGbVycG7OhoSD6hS+5dK5eFq
+         YySLQkyluh5JOA7iT2eKZOoL2F1/+e+yuCDKuBf0OB3JzrP/sJcc5hWDno/pbLh9RryE
+         JwVo66aLUfSKVOw7ZiY+Kl6NVzAJtfVyvY2RA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=xJuhmu3HtKJbvwZ5p8fGj/7WlTfQYwf1ilg0GqkijvvDgSVX6ybll6MQkr5rs+oXSY
-         9LgVIfn3TtFQySi5gb/AR4YVTBs/6XffCdk8xqgWKNzYU02uJ33s79YeXVgOshDNDXW7
-         RxHhb8PrIZjazqC640+dOqyia7wO1aAmSHiS4=
-Received: by 10.223.144.77 with SMTP id y13mr6652100fau.86.1273602431045;
-        Tue, 11 May 2010 11:27:11 -0700 (PDT)
-Received: from rechenplan.localnet (brln-4dba81cc.pool.mediaWays.net [77.186.129.204])
-        by mx.google.com with ESMTPS id u12sm27767672fah.4.2010.05.11.11.27.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 May 2010 11:27:09 -0700 (PDT)
-User-Agent: KMail/1.13.3 (Linux/2.6.33-02063303-generic; KDE/4.4.75; x86_64; svn-1124099; 2010-05-04)
-In-Reply-To: <4BE7A629.7050709@viscovery.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JHBpz98ZnJ6tIMmN0TtOOvdRZtO0j1seQo4zQZqFY7En0QBq1ABEw16D0DprMCG5W9
+         5MDs5+A6SuaqKON8t2D22XLVhJwCtlXfpmd8vX1hpAWeUUBIItu4uxeyncDsBTOTLXc6
+         S8dcM49xYZgEEHZ5O6Db6B4S3xaL+ebZZcvUs=
+Received: by 10.101.134.6 with SMTP id l6mr2564942ann.50.1273604203741; Tue, 
+	11 May 2010 11:56:43 -0700 (PDT)
+Received: by 10.100.228.6 with HTTP; Tue, 11 May 2010 11:56:43 -0700 (PDT)
+In-Reply-To: <20100511094409.GB5220@screwed.box>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146905>
 
-On Monday 10 May 2010 08:22:33 Johannes Sixt wrote:
-> Am 5/8/2010 18:39, schrieb Andreas Hartmetz:
-> > On Friday 07 May 2010 09:20:15 Johannes Sixt wrote:
-> >> But what is wrong with "start-point"? It precisely conveys the meaning
-> >> of the parameter.
-> > 
-> > Look at -f: as far as I understand it moves the branch *head*, so
-> > start-point is plain wrong. The "root" of the branch is not moved, or
-> > only moved indirectly (not sure if the latter is allowed).
-> 
-> Huh? The purpose of -f is not to *move* a branch head, but to say "trust
-> me, I know what I'm doing". Why would "start-point" not be suitable in
-> this case?
-> 
-Because a branch doesn't start at the head.
+2010/5/11 Peter Vereshagin <peter@vereshagin.org>:
+> I know St. Peter won't call your name, Jakub!
+> 2010/05/11 11:29:07 +0200 Jakub Narebski <jnareb@gmail.com> =3D> To T=
+atsuhiko Miyagawa :
+>
+> JN> gitweb running as FastCGI script (using ab, ApacheBench). =A0Do y=
+ou know
+> JN> any pure-Perl FastCGI server with minimal dependencies, and pure-=
+Perl
+>
+> I'd like to know about the pure-perl FastCGI protocol implementation =
+either, at
+> least to make tests for FCGI::Spawn.
+
+There are two pure perl FCGI protocol implementations (caller side)
+available: Net::FastCGI and FCGI::Client.
+
+Plack::App::FCGIDispatcher is a PSGI application to connect to a
+=46astCGI external daemon over TCP or UNIX sockets, so you can use pure
+perl PSGI web servers such as Starman to talk to them. But since it's
+all pure perl and experimental and not suited for the benchmarking,
+but it could be handy for testing (we actually use FCGI::Client to
+test our own FastCGI server side implementation in Plack).
+
+When I seriously want to benchmark FastCGI i always use nginx or
+lighttpd, which is easy to install and doesn't need external modules
+such as the case with Apache.
+
+--=20
+Tatsuhiko Miyagawa
