@@ -1,89 +1,114 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git branch descriptions
-Date: Tue, 11 May 2010 09:44:31 +0200
-Message-ID: <4BE90ADF.7020503@drmicha.warpmail.net>
-References: <657A681BEF27534399890012B8C8E50E1AD63D1FEA@lcs-exchange01.Lantekcs.com> <20100510232612.GA6890@progeny.tock>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joel Reed <jreed@lantekcs.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 11 09:44:34 2010
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Subject: [PATCH] gitk: Show notes
+Date: Tue, 11 May 2010 12:26:56 +0400
+Message-ID: <1273566416-3512-1-git-send-email-kirr@mns.spb.ru>
+Cc: git@vger.kernel.org, Kirill Smelkov <kirr@mns.spb.ru>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue May 11 10:25:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBk8n-0008Gi-Db
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 09:44:33 +0200
+	id 1OBkmn-0001Rz-Rg
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 10:25:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752647Ab0EKHo2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 May 2010 03:44:28 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57877 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751657Ab0EKHo1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 03:44:27 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7A7E6F3897;
-	Tue, 11 May 2010 03:44:27 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 11 May 2010 03:44:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=A49HwhYOdEEHRkfyt73xLdpnPG8=; b=OHX60+G6mWlYjld+GdRD33FyK8uBOtrtkfBf/Qg6PbHsp6zjHfZMfMW1mg8zXaX4nt6DlITz00aIUvgLvajWBxRV2jqGNtkfFs5qV8BgbO/aBuxi46O3H/nUKkL3EMat4//Fn+jZH346pQJ1YMClwR5IDoVVQUJNpj4hXT303T4=
-X-Sasl-enc: Ov5B8mo9oU1PB+Iq2SKvYyVCy4n/OysdwGw0FtbSF2vm 1273563867
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8082A49A0;
-	Tue, 11 May 2010 03:44:26 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <20100510232612.GA6890@progeny.tock>
+	id S1757049Ab0EKIZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 04:25:48 -0400
+Received: from mail.mnsspb.ru ([84.204.75.2]:45719 "EHLO mail.mnsspb.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751074Ab0EKIZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 May 2010 04:25:44 -0400
+Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
+	by mail.mnsspb.ru with esmtps id 1OBkmP-0002NC-PO; Tue, 11 May 2010 12:25:29 +0400
+Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
+	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
+	id 1OBknx-0000v9-Qo; Tue, 11 May 2010 12:27:05 +0400
+X-Mailer: git-send-email 1.7.1.90.g801e39
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146879>
 
-Jonathan Nieder venit, vidit, dixit 11.05.2010 01:26:
-> Hi,
->=20
-> Joel Reed wrote:
->=20
->> Working on a wide range of topics/branches from week to week and
->> project to project, it's sometimes difficult to quickly remember
->> what each branch is about, without doing a git diff master <branch>.
->>  I like to keep branch names short so they're easy to switch to and
->> from, but being able to attach a description that would display when
->> doing a "git branch" would be a huge help.
->=20
-> I think the closest thing we have now is =E2=80=98git branch -v=E2=80=
-=99, which tells
-> the subject of the commit at the tip of the branch.  =E2=80=98git not=
-es=E2=80=99
-> annotates commits rather than branches, so it occupies a different
-> niche.
->=20
-> Your request is a reasonable one, and it has come up a few times in
-> different forms over the years:
->=20
->  . per-branch descriptions in .git/description[1]
->  . per-branch descriptions in .git/config[2][3]
->  . README branch whose files describe the branches[4]
->=20
-> Number [2] is my preferred choice (and comes with code!), for what
-> it=E2=80=99s worth.
->=20
-> That doesn=E2=80=99t address the problem of how to _share_ branch
-> descriptions.  That could be dealt with by extending the wire protoco=
-l
-> as in [1], I think.  Just sharing a list of branch descriptions is a
-> bad idea imho, since related repositories need to be able to name
-> their branches independently to avoid painful coordination problems.
+If in git.git I do
 
-I have a mostly working idea (working when done "manually") on how to
-use notes for that. As we, know, we can share notes without overriding
-our own notes (and improving the merge/combine facilities would benefit
-all note users). I'll try to come up with a proof-of-concept patch, but
-probably not before next week.
+    $ git notes add -m 'This makes status significantly slower with Dokko' \
+        ee6fc514
 
-Michael
+then `git log` shows the note...
+
+    $ git log -1 ee6fc514
+
+    commit ee6fc514f2df821c2719cc49499a56ef2fb136b0
+    Author: Jens Lehmann <Jens.Lehmann@web.de>
+    Date:   Sat Jan 16 18:42:24 2010 +0100
+
+        Show submodules as modified when they contain a dirty work tree
+
+        Until now a submodule only then showed up as modified in the supermodule
+        when the last commit in the submodule differed from the one in the index
+        or the diffed against commit of the superproject. A dirty work tree
+        containing new untracked or modified files in a submodule was
+        undetectable when looking at it from the superproject.
+
+        Now git status and git diff (against the work tree) in the superproject
+        will also display submodules as modified when they contain untracked or
+        modified files, even if the compared ref matches the HEAD of the
+        submodule.
+
+        Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+        Signed-off-by: Nanako Shiraishi <nanako3@lavabit.com>
+        Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+    Notes:
+        This makes status significantly slower with Dokko
+
+... but unfortunately gitk does not.
+
+Let's fix this and teach gitk to show notes.
+
+Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+---
+ gitk |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/gitk b/gitk
+index 1b0e09a..d537011 100755
+--- a/gitk
++++ b/gitk
+@@ -361,8 +361,8 @@ proc start_rev_list {view} {
+     }
+ 
+     if {[catch {
+-	set fd [open [concat | git log --no-color -z --pretty=raw --parents \
+-			 --boundary $args "--" $files] r]
++	set fd [open [concat | git log --no-color -z --pretty=raw --show-notes \
++			--parents --boundary $args "--" $files] r]
+     } err]} {
+ 	error_popup "[mc "Error executing git log:"] $err"
+ 	return 0
+@@ -508,8 +508,8 @@ proc updatecommits {} {
+ 	set args $vorigargs($view)
+     }
+     if {[catch {
+-	set fd [open [concat | git log --no-color -z --pretty=raw --parents \
+-			  --boundary $args "--" $vfilelimit($view)] r]
++	set fd [open [concat | git log --no-color -z --pretty=raw --show-notes \
++			--parents --boundary $args "--" $vfilelimit($view)] r]
+     } err]} {
+ 	error_popup "[mc "Error executing git log:"] $err"
+ 	return
+@@ -1586,7 +1586,8 @@ proc do_readcommit {id} {
+     global tclencoding
+ 
+     # Invoke git-log to handle automatic encoding conversion
+-    set fd [open [concat | git log --no-color --pretty=raw -1 $id] r]
++    set fd [open [concat | git log --no-color --pretty=raw --show-notes \
++		     -1 $id] r]
+     # Read the results using i18n.logoutputencoding
+     fconfigure $fd -translation lf -eofchar {}
+     if {$tclencoding != {}} {
+-- 
+1.7.1.89.g6b35c
