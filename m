@@ -1,92 +1,107 @@
-From: Tatsuhiko Miyagawa <miyagawa@gmail.com>
-Subject: Re: gitweb, FastCGI and PSGI/Plack
-Date: Tue, 11 May 2010 11:56:43 -0700
-Message-ID: <AANLkTinDzAgLckK6z08DJwZPWRmXywQ69EImTaiFsDOE@mail.gmail.com>
-References: <g2s693254b91005091428ib188cbd1le5ffa90eace741a8@mail.gmail.com>
-	 <201005102310.47879.jnareb@gmail.com>
-	 <AANLkTimypauJKP-ifPKDmM9TK0u0JsSG5PlcpWdkkbVd@mail.gmail.com>
-	 <201005111129.10931.jnareb@gmail.com>
-	 <20100511094409.GB5220@screwed.box>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	Juan Jose Comellas <juanjo@comellas.org>,
-	John Goerzen <jgoerzen@complete.org>
-To: Peter Vereshagin <peter@vereshagin.org>
-X-From: git-owner@vger.kernel.org Tue May 11 20:57:24 2010
+From: Paul Lindner <lindner@inuus.com>
+Subject: Re: git-svn error: ambiguous argument
+Date: Tue, 11 May 2010 12:44:07 -0700
+Message-ID: <0D702391-E490-4942-AAB6-C8C887E671C5@inuus.com>
+References: <7A6370FC-843B-43FD-8064-4F44C9C66493@inuus.com> <AANLkTik_YK6_KbRIq4MsrU-LDn8apHQfm1_f7XHKKfX1@mail.gmail.com> <AANLkTil7WdGZTtmwwK0kYPkK6-y4W5HKKLNdtkoI0riM@mail.gmail.com> <AANLkTimE6Wo9HT0p5WMfTggJ059dhDg4fyPeax93VCLy@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue May 11 21:51:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBudv-0008EE-0b
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 20:57:23 +0200
+	id 1OBvU2-00009c-0e
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 21:51:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755554Ab0EKS4q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 May 2010 14:56:46 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60601 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753105Ab0EKS4p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 14:56:45 -0400
-Received: by gwb19 with SMTP id 19so514227gwb.19
-        for <git@vger.kernel.org>; Tue, 11 May 2010 11:56:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TviZ0tycxujAwE5XRR+9jZ0p1PTx50U3pUwF24yAZvQ=;
-        b=T4X4uROcBjm5jRAqMbKnzEHfPvI2iarNGFEj5I6zj+pGbVycG7OhoSD6hS+5dK5eFq
-         YySLQkyluh5JOA7iT2eKZOoL2F1/+e+yuCDKuBf0OB3JzrP/sJcc5hWDno/pbLh9RryE
-         JwVo66aLUfSKVOw7ZiY+Kl6NVzAJtfVyvY2RA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=JHBpz98ZnJ6tIMmN0TtOOvdRZtO0j1seQo4zQZqFY7En0QBq1ABEw16D0DprMCG5W9
-         5MDs5+A6SuaqKON8t2D22XLVhJwCtlXfpmd8vX1hpAWeUUBIItu4uxeyncDsBTOTLXc6
-         S8dcM49xYZgEEHZ5O6Db6B4S3xaL+ebZZcvUs=
-Received: by 10.101.134.6 with SMTP id l6mr2564942ann.50.1273604203741; Tue, 
-	11 May 2010 11:56:43 -0700 (PDT)
-Received: by 10.100.228.6 with HTTP; Tue, 11 May 2010 11:56:43 -0700 (PDT)
-In-Reply-To: <20100511094409.GB5220@screwed.box>
+	id S1756821Ab0EKTu7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 15:50:59 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:58048 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756602Ab0EKTu6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 15:50:58 -0400
+X-Greylist: delayed 403 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 May 2010 15:50:58 EDT
+Received: by ewy8 with SMTP id 8so1538805ewy.28
+        for <git@vger.kernel.org>; Tue, 11 May 2010 12:50:56 -0700 (PDT)
+Received: by 10.213.40.201 with SMTP id l9mr2626068ebe.28.1273607052849;
+        Tue, 11 May 2010 12:44:12 -0700 (PDT)
+Received: from [172.16.27.141] (dagmar.corp.linkedin.com [69.28.149.29])
+        by mx.google.com with ESMTPS id 13sm3293217ewy.13.2010.05.11.12.44.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 11 May 2010 12:44:11 -0700 (PDT)
+In-Reply-To: <AANLkTimE6Wo9HT0p5WMfTggJ059dhDg4fyPeax93VCLy@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146906>
 
-2010/5/11 Peter Vereshagin <peter@vereshagin.org>:
-> I know St. Peter won't call your name, Jakub!
-> 2010/05/11 11:29:07 +0200 Jakub Narebski <jnareb@gmail.com> =3D> To T=
-atsuhiko Miyagawa :
->
-> JN> gitweb running as FastCGI script (using ab, ApacheBench). =A0Do y=
-ou know
-> JN> any pure-Perl FastCGI server with minimal dependencies, and pure-=
-Perl
->
-> I'd like to know about the pure-perl FastCGI protocol implementation =
-either, at
-> least to make tests for FCGI::Spawn.
+This fixed it for my situation.  Thanks!
 
-There are two pure perl FCGI protocol implementations (caller side)
-available: Net::FastCGI and FCGI::Client.
+On May 11, 2010, at 9:20 AM, Bert Wesarg wrote:
 
-Plack::App::FCGIDispatcher is a PSGI application to connect to a
-=46astCGI external daemon over TCP or UNIX sockets, so you can use pure
-perl PSGI web servers such as Starman to talk to them. But since it's
-all pure perl and experimental and not suited for the benchmarking,
-but it could be handy for testing (we actually use FCGI::Client to
-test our own FastCGI server side implementation in Plack).
-
-When I seriously want to benchmark FastCGI i always use nginx or
-lighttpd, which is easy to install and doesn't need external modules
-such as the case with Apache.
-
---=20
-Tatsuhiko Miyagawa
+> On Tue, May 11, 2010 at 16:46, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+>> On Tue, May 11, 2010 at 16:25, Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+>>> On Mon, May 3, 2010 at 22:51, Paul Lindner <lindner@inuus.com> wrote:
+>>>> Hi,
+>>>> 
+>>>> Since the 1.7 time frame my git-svn imports have stopped working after a period of time.  The error that crops up is:
+>>>> 
+>>>>  trace: built-in: git 'rev-list' '-1' 'cb612e24c7d15ff8b4b13822592fff25e1efff13' 'd18d09558e4f56fb757b258cb364f38861f84116' '3f498379030b5358d65820415b98cbe338086247' '1e4ed9c6fde9e4b2465a8db6915f32a132634064'   'a51029a8667288556e02055057f250157e0a7f59' '0a7934d4a22563e29ed9857240bc022800f626f7' 'c6a0edb91eed10b86aad74c138422ff8a496ad29' 'd211954a973b92feef86aa130bf5ac253c095574' 'd9e99745569c8cd7d087cd8740f915b34f0f5fa2' '--not' 'd86892a76b3ef4049b87ca50f62846cdff5f204f'
+>>>>  trace: built-in: git 'rev-list' '-1' 'cb612e24c7d15ff8b4b13822592fff25e1efff13' 'd18d09558e4f56fb757b258cb364f38861f84116' '3f498379030b5358d65820415b98cbe338086247' '--not' 'd86892a76b3ef4049b87ca50f62846cdff5f204f'
+>>>>  trace: built-in: git 'rev-list' '-1' 'cb612e24c7d15ff8b4b13822592fff25e1efff13' '--not' 'd86892a76b3ef4049b87ca50f62846cdff5f204f'
+>>>>  trace: built-in: git 'merge-base' 'd86892a76b3ef4049b87ca50f62846cdff5f204f' 'cb612e24c7d15ff8b4b13822592fff25e1efff13'
+>>>>  trace: built-in: git 'rev-list' '--no-merges' 'cb612e24c7d15ff8b4b13822592fff25e1efff13' '--not' '23dfc0fd04cedd8e09c2bfa6f0e79e9a4282bc57'
+>>>>  trace: built-in: git 'rev-list' 'dde42274ac34e4055275ea4926cd8cc259476399^..4ff8e8528dd9d3901c6839080a6f172b8e380764'
+>>>>  fatal: ambiguous argument 'dde42274ac34e4055275ea4926cd8cc259476399^..4ff8e8528dd9d3901c6839080a6f172b8e380764': unknown revision or path not in the working tree.
+>>>>  Use '--' to separate paths from revisions
+>>>>  rev-list dde42274ac34e4055275ea4926cd8cc259476399^..4ff8e8528dd9d3901c6839080a6f172b8e380764: command returned error: 128
+>>>> 
+>>>> This git-svn repo is a shallow clone of a very large svn repo.
+>>>> 
+>>>> It was initialized like this:
+>>>> 
+>>>>  git svn init SVNREPO --trunk=network/trunk --branches=network/branches --tags=network/tagz --ignore-paths='^.+/(?:branches)/(?!BR_ENG_PLFM|BR_REL)' network
+>>>>  git svn fetch -r 112002
+>>>> 
+>>>> It appears that one of the branches cannot find it's parent:
+>>>> 
+>>>>  git log dde42274ac34e4055275ea4926cd8cc259476399^
+>>> 
+>>> That hit me too. The first revision number is the root commit, which
+>>> does not have any parents. Thats why the rev-list command fails.
+>> 
+>> I think the correct useage should be
+>> 
+>>    git rev-list dde42274ac34e4055275ea4926cd8cc259476399^!
+>> 4ff8e8528dd9d3901c6839080a6f172b8e380764
+>> 
+>> Making a patch for this doesn't look trivial, because git-svn expects
+>> that a commit range is only one argument, not two in this case.
+> 
+> Can you try this patch, it worked on my site:
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index b3b6964..40ecec0 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -3103,7 +3095,11 @@ sub check_cherry_pick {
+> 	my %commits = map { $_ => 1 }
+> 		_rev_list("--no-merges", $tip, "--not", $base);
+> 	for my $range ( @ranges ) {
+> -		delete @commits{_rev_list($range)};
+> +		if ( $range =~ /^([[:xdigit:]]{40})\^\.\.([[:xdigit:]]{40})$/i ) {
+> +			delete @commits{_rev_list(sprintf("%s^!", $1), $2)};
+> +		} else {
+> +			delete @commits{_rev_list($range)};
+> +		}
+> 	}
+> 	for my $commit (keys %commits) {
+> 		if (has_no_changes($commit)) {
+> 
+> Bert
