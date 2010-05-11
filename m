@@ -1,68 +1,171 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [PATCH/RFC] autocrlf: Make it work also for un-normalized repositories
-Date: Tue, 11 May 2010 18:31:38 +0200
-Message-ID: <13E8F544-9351-4B1F-9E4B-B625D20E2A8C@gmail.com>
-References: <20100510171119.GA17875@pvv.org> <20100510194321.GG14069@dpotapov.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org,
-	msysgit@googlegroups.com, Junio C Hamano <gitster@pobox.com>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 11 18:31:59 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v2] ls-remote: print URL when no repo is specified
+Date: Wed, 12 May 2010 01:20:23 +0800
+Message-ID: <1273598423-3156-1-git-send-email-rctay89@gmail.com>
+References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 11 19:28:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBsNA-0002mH-Pn
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 18:31:57 +0200
+	id 1OBtGE-0002n1-Jf
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 19:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664Ab0EKQbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 May 2010 12:31:43 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:58102 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752699Ab0EKQbl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 12:31:41 -0400
-Received: by ey-out-2122.google.com with SMTP id 9so259754eyd.5
-        for <git@vger.kernel.org>; Tue, 11 May 2010 09:31:40 -0700 (PDT)
+	id S932171Ab0EKR2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 13:28:42 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:64532 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932138Ab0EKR2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 May 2010 13:28:41 -0400
+X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 May 2010 13:28:41 EDT
+Received: by ewy8 with SMTP id 8so1441243ewy.28
+        for <git@vger.kernel.org>; Tue, 11 May 2010 10:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=s9ZMn77XHfNFK7xllF6Nl9A70Fk5Cn8WdAkWtLVWruA=;
-        b=H1rWdV6mwJiUCEcwdkOpbDSkhfhv0oVcYAwJS/yLkokTggtyayvZ0DlguY2xJbCFXW
-         91nRRozre8cRLzvAQTDgD3g294rljUHiIzC+eJIPxdfNQ5MHKA11I3tWmsOXmu96EvVs
-         RqSFG/zjUWGE0uCGkqmqo+1mLB0R4HwYeBJyg=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=M5sviQl02HMy4Fb3AduNnI3jwnQCTl+vSRF8RfP82x4=;
+        b=xZNU6/5sMliGFJuGbHivZK1MpoOd3S/FBiRGz7ju2qua3lMi+tGrC5fPUFk5cLdPcc
+         htmshCpZcvHu93pS6NGEf3QeWuf7UrFX/Q9nnH7afHapZLOl2fLxsZFl5rDP+fqCzD81
+         g+BAHmDsOq1tqvfFEBtzat1KfaYpzaK9H/ccI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=hIgWluqD2mkE8gsuo8w/alO1LiIGTVmfTmS5OTtYvoEOAMX/SBwXOs/rvCxe7J7PDx
-         EE/NvX53ZGBYjWk5Dt3WM6K4gEQTVxynWc/AiWkk30yLLcz+2MzQ0wxItZSStuxCHn3+
-         vx8nT4xVZook5eQCThGoJ+TbIABpcZI4eG0Zk=
-Received: by 10.213.59.77 with SMTP id k13mr2245834ebh.38.1273595500267;
-        Tue, 11 May 2010 09:31:40 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 13sm3183113ewy.5.2010.05.11.09.31.39
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=XPPTlK3cW8UZRauMY0RL71V3s1XhA4kRjSGsHm8pv6SF3o80WlVvjkU6OK0qT4L4hR
+         RhxHuB1NnJTO2rTP8o4ksDGthZOG9sQjRqyKCQmJFEZVaOK/6RX810ub7jGHYdECiXmJ
+         wEYixv9tH9Ne7TPn/Gsno8f0GqPC/U4unB9wc=
+Received: by 10.213.91.76 with SMTP id l12mr2599020ebm.47.1273598454782;
+        Tue, 11 May 2010 10:20:54 -0700 (PDT)
+Received: from localhost.localdomain (cm37.zeta153.maxonline.com.sg [116.87.153.37])
+        by mx.google.com with ESMTPS id 16sm3265950ewy.3.2010.05.11.10.20.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 May 2010 09:31:39 -0700 (PDT)
-In-Reply-To: <20100510194321.GG14069@dpotapov.dyndns.org>
-X-Mailer: Apple Mail (2.1078)
+        Tue, 11 May 2010 10:20:52 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.337.gbd0bc
+In-Reply-To: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146902>
 
-On 10. mai 2010, at 21.43, Dmitry Potapov wrote:
+After 9c00de5 (ls-remote: fall-back to default remotes when no remote
+specified), when no repository is specified, ls-remote may use
+the URL/remote in the config "branch.<name>.remote" or the remote
+"origin"; it may not be immediately obvious to the user which was used.
 
-> It does not really solve #2, because you will have the wrong ending for
-> files that must be LF, such as shell scripts, and then these scripts
-> fail with some weird error...
+In such cases, print a simple "From <URL>" line to indicate which
+repository was used. This message is similar to git-fetch's, and is
+printed to stderr to avoid breaking existing scripts that depend on
+ls-remote's output behaviour.
 
-That's okay, because I'll solve that in my next iteration with "crlf=crlf" and "crlf=lf" (yes, I know).  Finn Arne's patch is about fixing the current broken behaviour when autocrlf is enabled in a repository containing CRLFs, while mine's the one you need if you want normalized text files in your repository.
--- 
-Eyvind
+It can also be disabled with -q/--quiet.
+
+Modify tests related to falling back on default remotes to check for
+this as well, and add a test to check for suppression of the message.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+
+  The sole difference from the previous patch is the use of test_cmp
+  instead of grep in the tests.
+
+ builtin/ls-remote.c  |   10 +++++++++-
+ t/t5512-ls-remote.sh |   24 ++++++++++++++++++++----
+ 2 files changed, 29 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 8ee91eb..34480cf 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -5,7 +5,7 @@
+
+ static const char ls_remote_usage[] =
+ "git ls-remote [--heads] [--tags]  [-u <exec> | --upload-pack <exec>]\n"
+-"                     [<repository> [<refs>...]]";
++"                     [-q|--quiet] [<repository> [<refs>...]]";
+
+ /*
+  * Is there one among the list of patterns that match the tail part
+@@ -34,6 +34,7 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	const char *dest = NULL;
+ 	int nongit;
+ 	unsigned flags = 0;
++	int quiet = 0;
+ 	const char *uploadpack = NULL;
+ 	const char **pattern = NULL;
+
+@@ -67,6 +68,10 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 				flags |= REF_NORMAL;
+ 				continue;
+ 			}
++			if (!strcmp("--quiet", arg) || !strcmp("-q", arg)) {
++				quiet = 1;
++				continue;
++			}
+ 			usage(ls_remote_usage);
+ 		}
+ 		dest = arg;
+@@ -99,6 +104,9 @@ int cmd_ls_remote(int argc, const char **argv, const char *prefix)
+ 	ref = transport_get_remote_refs(transport);
+ 	if (transport_disconnect(transport))
+ 		return 1;
++
++	if (!dest && !quiet)
++		fprintf(stderr, "From %s\n", *remote->url);
+ 	for ( ; ref; ref = ref->next) {
+ 		if (!check_ref_type(ref, flags))
+ 			continue;
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 3cf1b3d..d191235 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -57,12 +57,24 @@ test_expect_success 'dies when no remote specified and no default remotes found'
+
+ test_expect_success 'use "origin" when no remote specified' '
+
+-	git remote add origin "$(pwd)/.git" &&
+-	git ls-remote >actual &&
++	URL="$(pwd)/.git" &&
++	echo "From $URL" >exp_err &&
++
++	git remote add origin "$URL" &&
++	git ls-remote 2>actual_err >actual &&
++
++	test_cmp exp_err actual_err &&
+ 	test_cmp expected.all actual
+
+ '
+
++test_expect_success 'suppress "From <url>" with -q' '
++
++	git ls-remote -q 2>actual_err &&
++	test_must_fail test_cmp exp_err actual_err
++
++'
++
+ test_expect_success 'use branch.<name>.remote if possible' '
+
+ 	#
+@@ -78,10 +90,14 @@ test_expect_success 'use branch.<name>.remote if possible' '
+ 		git show-ref	| sed -e "s/ /	/"
+ 	) >exp &&
+
+-	git remote add other other.git &&
++	URL="other.git" &&
++	echo "From $URL" >exp_err &&
++
++	git remote add other $URL &&
+ 	git config branch.master.remote other &&
+
+-	git ls-remote >actual &&
++	git ls-remote 2>actual_err >actual &&
++	test_cmp exp_err actual_err &&
+ 	test_cmp exp actual
+
+ '
+--
+1.7.1.189.g07419
