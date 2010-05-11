@@ -1,182 +1,120 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Re: Multiple line ranges and files in line level history browser
-Date: Tue, 11 May 2010 14:28:51 +0800
-Message-ID: <AANLkTimhMLazMDk53fY3g3Fy0FXXHWIC9o5VST7fPQjG@mail.gmail.com>
-References: <p2q41f08ee11005090700xdb6070dajab0e2d77b1d0f9fc@mail.gmail.com>
-	 <20100509210654.GA1637@progeny.tock>
-	 <20100510093120.GA4445@progeny.tock>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH v2 0/2] clone: simplify progress message
+Date: Tue, 11 May 2010 09:27:07 +0200
+Message-ID: <4BE906CB.3000303@drmicha.warpmail.net>
+References: <4BE60E89.8010709@pcharlan.com> <20100509110221.GA16639@coredump.intra.peff.net> <4BE7166A.5030107@pcharlan.com> <20100510054756.GB13340@coredump.intra.peff.net> <4BE7E09F.3040303@drmicha.warpmail.net> <4BE8954E.3030405@pcharlan.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 11 08:29:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git list <git@vger.kernel.org>
+To: Pete Harlan <pgit@pcharlan.com>
+X-From: git-owner@vger.kernel.org Tue May 11 09:27:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBixg-00057G-4u
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 08:29:00 +0200
+	id 1OBjs1-00008H-S6
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 09:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756985Ab0EKG2z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 May 2010 02:28:55 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:64923 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756968Ab0EKG2y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 02:28:54 -0400
-Received: by qyk13 with SMTP id 13so7591560qyk.1
-        for <git@vger.kernel.org>; Mon, 10 May 2010 23:28:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4/ZR9Co89s1Fjct1vgo+lgm6Hnf2P/1XxtRMua9KkDA=;
-        b=Ma6jRETDQu7IvR22FwKg3rbXU9GQY1Rw9d+HJk2m6qOhzl5/xUGRm83hg+wMcjJknh
-         rwzNgP44ZqwGsMAvqO3/DL8Ehol2KWo2JQNcOIuRkZ+HPxLF4xkFlK7NttN3cYv+aFU0
-         bnTHzp///ZTbDMpj8SsNgqQtebyWnBGx5kr6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YNnwdva9e5/wi2KImk97DCsDbkej2w/Pjdx6GNaW8r7D9OsIbNsXUzIaQ8D+LZBaaw
-         +xmzHzK0iN04k3cueQJaiB7xi93rgsbzK9PlFbi0sR5EYAzJ7H/D++jr/JFUlDDYmnYl
-         L1G1ih451yQ2K3W0+9idtPJ4gCUQTqQFtJlI8=
-Received: by 10.229.211.68 with SMTP id gn4mr4167852qcb.79.1273559331726; Mon, 
-	10 May 2010 23:28:51 -0700 (PDT)
-Received: by 10.229.97.80 with HTTP; Mon, 10 May 2010 23:28:51 -0700 (PDT)
-In-Reply-To: <20100510093120.GA4445@progeny.tock>
+	id S1757241Ab0EKH1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 03:27:08 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57237 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753441Ab0EKH1E (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 May 2010 03:27:04 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D9183F5509;
+	Tue, 11 May 2010 03:27:02 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 11 May 2010 03:27:02 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vzjyJnvlDEAt5FSVhCWrSyWLOzU=; b=iOJwbGwb0GqUcBmyffOkdVJS67ukOa9SxeI8LLdPs7Ka51NWz5tW//NZIYW/BeZ3xnM3nLxyUmv6iopESVLb3N2mtow6wUJpnaa8fmDos9VM4sfh+PCGRPzbSWiUCGXBOQnhwT6v8vFHPyxScbHKsuY5gqoPqeqi8T7r53GiEFk=
+X-Sasl-enc: DwfrIag40OIJajbSmDKyML41nN79r/6eGVdkOEfSGRq+ 1273562822
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0FE324CF1B1;
+	Tue, 11 May 2010 03:27:01 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <4BE8954E.3030405@pcharlan.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146876>
 
-Hi Jonathan,
-    Many thanks to provide so much precious advice and even a patch, I
-think the patch is really helpful. Thanks.
-    After some thought, I think we should keep the syntax as simple,
-see my following comments.
+Pete Harlan venit, vidit, dixit 11.05.2010 01:22:
+> On 05/10/2010 03:31 AM, Michael J Gruber wrote:
+>> Jeff King venit, vidit, dixit 10.05.2010 07:47:
+>>> On Sun, May 09, 2010 at 01:09:14PM -0700, Pete Harlan wrote:
+>>>
+>>>>> I guess it comes down to how much detail we want to show.
+>>>>
+>>>> For me it isn't only a matter of detail; I find "Cloning into 
+>>>> bar/.git" misleading, since bar is getting more than a .git 
+>>>> directory.
+>>>
+>>> Yeah, I can buy that line of reasoning. Junio's nitpick aside, I 
+>>> think most users perceive the clone process as creating the whole 
+>>> "bar" directory.
+>>>
+>>>> Thank you for looking at this.  I agree with you, and have added 
+>>>> a second patch that implements that.
+>>>
+>>> These patches look good to me. I agree with Junio about just 
+>>> squashing them.
+>>>
+>>> -Peff
+>>
+>> Back from a conference, I'm being late for the party (Which way
+>> round is better? ;) ).
+>>
+>> But I still want to suggest not sacrificing correctness for "user's 
+>> expectations" and rather trying to do combine them. So how about 
+>> saying
+>>
+>> Cloning into $GIT_DIR... Checking out branch $branch in $WORK_DIR...
+>>
+>> where the latter happens for non-bare repos only, of course, and 
+>> incidently confirms the use of "-b" or of the default.
+>>
+>> Michael
+> 
+> Thanks for looking at this.  The patch you posted reports, e.g.:
+> 
+>   % git clone foo bar
+>   Cloning into /tmp/git/bar/.git...
+>   done.
+>   Checking out branch master into worktree bar.
+>   %
+> 
+> I'd like to see "worktree" either omitted or replaced with "working
+> directory".  Git works on trees, but "working directory" is a term
+> ordinary users understand and "bar" is a directory being populated
+> with files so there's nothing wrong with the user thinking of it that
+> way.
 
-On Mon, May 10, 2010 at 5:31 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Jonathan Nieder wrote:
-> The -L arguments describe lines in some particular revision of the
-> files, so how would arbitrary =91rev-list=92-style revision specifier=
-s
-> work here? =A0They don=92t: in =91blame=92, one "positive" revision i=
-s allowed
-> and the rest must be negative. =A0Good.
+"working tree" (short: worktree) is the Git term, core.worktree the name
+of the config variable, GIT_WORK_TREE the name of the environment
+variable for the directory in which a tree is checked out.
 
-A great reminder, thanks!
+"working directory" is the name of the directory which you are in (i.e.
+$(pwd)).
 
-> The modified proposal was, roughly:
->
-> =A0git blame [options, no -L among them] revs ((-L range)... filespec=
-)...
-> =A0git blame [options, -L permitted] revs -- [filespec...]
-> =A0git blame [options, -L permitted] revs [filespec...]
->
-> =93...=94 means =93one or more=94. =A0How to know whether the -L or r=
-evision
-> arguments are encountered first? =A0One approach is to abuse
-> STOP_AT_NON_OPTION to catch the -L, revisions, and filespecs as they
-> appear. =A0Probably better would be to make -L an unknown option and
-> rely on parse_revision_opt leaving a residue of any revisions it
-> finds, so that after the first pass, the first syntax can be
-> distinguished from the others by the first argument starting with "-L=
-".
+While, technically, the wd is the wt during the check out, using wd
+would introduce users to the wrong terminology.
 
-How if the user provide now <revs> argument at all. In that case, we
-may encounter the '-L' firstly too. And then we need to check whether
-the non option argument is revision specifier. I think this kind of
-check is not good to appear in builtin/log.c
+> But on a different note, I think we don't have to be so verbose.  If
+> the user asks for details with -v then be as chatty as we want, but
+> for the most part operations that succeed should do so quietly.
 
-> Feel free to do something else entirely (including another syntax) if
-> you prefer, of course.
+In fact, we introduced that message not that long ago because until
+then, only init's message would be displayed to the user ("Initializing
+empty..."), which was highly confusing.
 
-Yeah, I want to make a simpler syntax for the line level browser. It is=
-:
+The consensus back then was, without -v nor -q, to have everyday
+commands be silent on successful operation, and "infrequent" commands
+report progress.
 
-git log [options without -L] revs ((-Llines)... filespec)...
-
-We can then parse the options by:
-1. Make -L a unknown option and call parse_revision_opt to filter out
-all options and leave out  revs, -L and pathspec.
-2. Parse the remain options with '-L' a known option and your
-STOP_AT_NON_OPTION way to matching all line ranges with pathspec.
-Error out when there are some pathspec which has no line ranges
-specified. And this time, leaving out the revs and pathspec. And put a
-'--' just before the first '-L'.
-3. Call setup_revisions using the remain arguments.
-
-> Here=92s a patch that makes STOP_AT_NON_OPTION easier to abuse, witho=
-ut
-> affecting current users. =A0Maybe it would make it easier to play
-> around.
->
-> Good night,
-> Jonathan
->
-> =A0parse-options.c | =A0 =A03 ++-
-> =A0parse-options.h | =A0 =A01 +
-> =A02 files changed, 3 insertions(+), 1 deletions(-)
->
-> diff --git a/parse-options.c b/parse-options.c
-> index 8546d85..4e3532b 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -372,7 +372,7 @@ int parse_options_step(struct parse_opt_ctx_t *ct=
-x,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (parse_nodash_opt(c=
-tx, arg, options) =3D=3D 0)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0contin=
-ue;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (ctx->flags & PARSE=
-_OPT_STOP_AT_NON_OPTION)
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return =
-PARSE_OPT_NON_OPTION;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0ctx->out[ctx->cpidx++]=
- =3D ctx->argv[0];
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0continue;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
-> @@ -454,6 +454,7 @@ int parse_options(int argc, const char **argv, co=
-nst char *prefix,
-> =A0 =A0 =A0 =A0switch (parse_options_step(&ctx, options, usagestr)) {
-> =A0 =A0 =A0 =A0case PARSE_OPT_HELP:
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0exit(129);
-> + =A0 =A0 =A0 case PARSE_OPT_NON_OPTION:
-> =A0 =A0 =A0 =A0case PARSE_OPT_DONE:
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break;
-> =A0 =A0 =A0 =A0default: /* PARSE_OPT_UNKNOWN */
-> diff --git a/parse-options.h b/parse-options.h
-> index 7581e93..4773cf9 100644
-> --- a/parse-options.h
-> +++ b/parse-options.h
-> @@ -160,6 +160,7 @@ extern NORETURN void usage_msg_opt(const char *ms=
-g,
-> =A0enum {
-> =A0 =A0 =A0 =A0PARSE_OPT_HELP =3D -1,
-> =A0 =A0 =A0 =A0PARSE_OPT_DONE,
-> + =A0 =A0 =A0 PARSE_OPT_NON_OPTION,
-> =A0 =A0 =A0 =A0PARSE_OPT_UNKNOWN,
-> =A0};
->
-> --
-> 1.7.1
->
->
-
-Really thanks for this patch I will use it.
-
-Regards!
-Bo
---=20
-My blog: http://blog.morebits.org
+Cheers,
+Michael
