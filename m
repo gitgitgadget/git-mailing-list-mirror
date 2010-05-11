@@ -1,88 +1,74 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [RFC PATCH] GIT-VERSION-GEN: restrict tags used
-Date: Wed, 12 May 2010 01:33:18 +0800
-Message-ID: <1273599198-1008-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>, "Jeff King" <peff@peff.net>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 11 19:37:22 2010
+From: Andreas Hartmetz <ahartmetz@gmail.com>
+Subject: Re: git branch documentation improvements
+Date: Tue, 11 May 2010 20:27:04 +0200
+Message-ID: <201005112027.05818.ahartmetz@gmail.com>
+References: <201005070024.41172.ahartmetz@gmail.com> <201005081839.37790.ahartmetz@gmail.com> <4BE7A629.7050709@viscovery.net>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jon Seymour <jon.seymour@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue May 11 20:27:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OBtOT-0006zO-SG
-	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 19:37:22 +0200
+	id 1OBuBN-0000DA-KZ
+	for gcvg-git-2@lo.gmane.org; Tue, 11 May 2010 20:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754457Ab0EKReE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 May 2010 13:34:04 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:43943 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056Ab0EKReB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 May 2010 13:34:01 -0400
-Received: by wwi18 with SMTP id 18so107653wwi.19
-        for <git@vger.kernel.org>; Tue, 11 May 2010 10:33:59 -0700 (PDT)
+	id S932456Ab0EKS1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 14:27:15 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34482 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932541Ab0EKS1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 May 2010 14:27:12 -0400
+Received: by fxm19 with SMTP id 19so758291fxm.19
+        for <git@vger.kernel.org>; Tue, 11 May 2010 11:27:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=/tH4f03uWbWn/lNKKvN/jdnqTXAbjGiNRSHGywD1jEU=;
-        b=L7Hg2X7oYAsK0p2OIrfgBq4EGF/IXC641CJn4RcHmfwXKkgsCusMHYfDcpm9L0/kSN
-         2QWKjD2Mg6rYNH7IVnT/skPvWftTeYmIQB9IQHAfZ9V16tZNc9pSUj3eoJLmYu/WvwIO
-         dQPDazI1gND4V1E8z2TEnNRMT1NvAr3QxKMMg=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=d+eTwhWliDgM1XZH5tPU/+iD/0Ch9aZXyM6dxsH+7xE=;
+        b=C3o9Z3P571EWX4vTwxROImGAiDikg8DF2cME2wHxBiJf7sg21WvqDua4Et5sOwRNe3
+         /AURe6c8WC1vgAe3rZKQyzaXnXcjGXUD8I4eL6qYrzqCB3UpzpyBivzBGH6J5uHrYmeE
+         /lRXc1yBpSxheIkxjCaaGVnfTUPqKfkI27Asc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=h2b76+pp2DsahcTUon4wO/3kkYwOXD2ZLd+WYwaon6F2mxUdpRgG6LmACAp5QSIIqB
-         gAe7A78FJH3CGyWaW4qsMnu6awSeFFo45nqm0zPs0kIVp1MVJFRhtQH1OhcSV7aMoYl/
-         dmD0DF2HTQLPNqXGodMYfM5/F5SEzwbjeggI0=
-Received: by 10.227.135.6 with SMTP id l6mr5570525wbt.60.1273599239527;
-        Tue, 11 May 2010 10:33:59 -0700 (PDT)
-Received: from localhost.localdomain (cm37.zeta153.maxonline.com.sg [116.87.153.37])
-        by mx.google.com with ESMTPS id j8sm23014340gvb.1.2010.05.11.10.33.46
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=xJuhmu3HtKJbvwZ5p8fGj/7WlTfQYwf1ilg0GqkijvvDgSVX6ybll6MQkr5rs+oXSY
+         9LgVIfn3TtFQySi5gb/AR4YVTBs/6XffCdk8xqgWKNzYU02uJ33s79YeXVgOshDNDXW7
+         RxHhb8PrIZjazqC640+dOqyia7wO1aAmSHiS4=
+Received: by 10.223.144.77 with SMTP id y13mr6652100fau.86.1273602431045;
+        Tue, 11 May 2010 11:27:11 -0700 (PDT)
+Received: from rechenplan.localnet (brln-4dba81cc.pool.mediaWays.net [77.186.129.204])
+        by mx.google.com with ESMTPS id u12sm27767672fah.4.2010.05.11.11.27.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 May 2010 10:33:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.337.gbd0bc
+        Tue, 11 May 2010 11:27:09 -0700 (PDT)
+User-Agent: KMail/1.13.3 (Linux/2.6.33-02063303-generic; KDE/4.4.75; x86_64; svn-1124099; 2010-05-04)
+In-Reply-To: <4BE7A629.7050709@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146904>
 
-Restrict the tags used to generate the version string to those that
-begin with "v", since git's tags for git-core (ie. excluding git-gui)
-are all of the form "vX.Y...".
-
-This is to avoid using private tags by the user in a clone of the git
-code repository, which may break certain machinery (eg. Makefile).
-
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
-
-  Ran into this after tagging a topic branch and running make.
-
-  Although a "v.*" match does not guarantee the non-usage of private
-  tags, I feel it's an acceptable level of accuracy.
-
-  After this patch, perhaps we could advertise somewhere to git hackers
-  that tags beginning with "v" should be avoided.
-
- GIT-VERSION-GEN |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index 59219bd..28b4d56 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -12,7 +12,7 @@ if test -f version
- then
- 	VN=$(cat version) || VN="$DEF_VER"
- elif test -d .git -o -f .git &&
--	VN=$(git describe --abbrev=4 HEAD 2>/dev/null) &&
-+	VN=$(git describe --match "v*" --abbrev=4 HEAD 2>/dev/null) &&
- 	case "$VN" in
- 	*$LF*) (exit 1) ;;
- 	v[0-9]*)
---
-1.7.1.189.g07419
+On Monday 10 May 2010 08:22:33 Johannes Sixt wrote:
+> Am 5/8/2010 18:39, schrieb Andreas Hartmetz:
+> > On Friday 07 May 2010 09:20:15 Johannes Sixt wrote:
+> >> But what is wrong with "start-point"? It precisely conveys the meaning
+> >> of the parameter.
+> > 
+> > Look at -f: as far as I understand it moves the branch *head*, so
+> > start-point is plain wrong. The "root" of the branch is not moved, or
+> > only moved indirectly (not sure if the latter is allowed).
+> 
+> Huh? The purpose of -f is not to *move* a branch head, but to say "trust
+> me, I know what I'm doing". Why would "start-point" not be suitable in
+> this case?
+> 
+Because a branch doesn't start at the head.
