@@ -1,508 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3] Documentation/notes: fill out the man page a little
-Date: Wed, 12 May 2010 07:57:06 -0500
-Message-ID: <20100512125706.GA5585@progeny.tock>
-References: <20100509031357.GA7926@progeny.tock>
- <201005110127.43916.johan@herland.net>
- <201005120948.19514.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Show branch information in short output of git status
+Date: Wed, 12 May 2010 09:35:38 -0400
+Message-ID: <20100512133537.GA28956@coredump.intra.peff.net>
+References: <AANLkTikM3B-9wFBuUzwpP2j9FpT34p9yysX-oLg5hZRj@mail.gmail.com>
+ <20100505050640.GC8779@coredump.intra.peff.net>
+ <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed May 12 15:23:32 2010
+Cc: git@vger.kernel.org
+To: Knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed May 12 15:35:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCBuO-00083z-1Q
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 15:23:32 +0200
+	id 1OCC6C-0006vr-Lg
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 15:35:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403Ab0ELNX1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 May 2010 09:23:27 -0400
-Received: from mail-qy0-f171.google.com ([209.85.221.171]:50837 "EHLO
-	mail-qy0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752084Ab0ELNXZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 09:23:25 -0400
-Received: by qyk1 with SMTP id 1so9624112qyk.5
-        for <git@vger.kernel.org>; Wed, 12 May 2010 06:23:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=0PmBJZRoT/nkJpTSQ7bIUihgY/eFesDJ9Yew6ZkkS0g=;
-        b=TsI0GA6bjOyUSr0PMQ2Sb+gK//reljUqqgXG7ckOy6Yw0ooALSE9Q/jTKEtOTsHFUM
-         aNdgUwPwl54ILQfO7S5/rg88dle61B4vj3XT537wgoCnBgCxaKfUE316jxjf3LzEfHJ7
-         vrHKdCkv/GjmnpxFKg09nkT26OBBPNEEqpsOY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=SZMkzjLU27qYuAN98i32KoU7osSuvg9kY3wKiYc5kkygTz7LMPwUr7zWz1tuLci3eI
-         BmSqhCFCr44ZcSWvEGftaFHiugsm/AxqPoVJ14AR5D/bXFMP93ZRbJz8kHiFhdZVSVwt
-         gToVtLPTKQ8NzTNBfpuJiYDCYckAnSsdGOEpg=
-Received: by 10.224.35.216 with SMTP id q24mr4997940qad.79.1273669007159;
-        Wed, 12 May 2010 05:56:47 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id a11sm49636qco.4.2010.05.12.05.56.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 12 May 2010 05:56:46 -0700 (PDT)
+	id S1754441Ab0ELNfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 09:35:40 -0400
+Received: from peff.net ([208.65.91.99]:49437 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754345Ab0ELNfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 09:35:39 -0400
+Received: (qmail 4765 invoked by uid 107); 12 May 2010 13:35:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 12 May 2010 09:35:38 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 May 2010 09:35:38 -0400
 Content-Disposition: inline
-In-Reply-To: <201005120948.19514.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146948>
 
-Add some basic information to the =E2=80=98git notes=E2=80=99 page, mos=
-tly by moving
-over information from git-config.1.  In particular, clarify that the
-GIT_NOTES_REWRITE_REFS environment variable overrides both
-=E2=80=98[notes "rewrite"] <command>=E2=80=99 and =E2=80=98[notes] rewr=
-iteRef=E2=80=99.
+On Thu, May 06, 2010 at 02:24:41PM +0200, Knittl wrote:
 
-Also add a Configuration section to git-log.1 for the =E2=80=98git note=
-s=E2=80=99
-page to refer to.
+>  - initial commit is also printed when there is tracking information
+> (i still haven't managed to create a situation like that. `git branch
+> oldmaster; rm .git/refs/heads/master; git branch master --set-upstream
+> oldmaster` will reset branch master to oldmaster (a bug?))
 
-Later it would be nice to merge some changes back to git-config.1,
-but one thing at a time.
+Try:
 
-Based on advice from Johan, Thomas, and Jeff.
+  git branch oldmaster
+  rm .git/refs/heads/master
+  git config branch.master.remote .
+  git config branch.master.merge refs/heads/oldmaster
 
-Acked-by: Johan Herland <johan@herland.net>
-Acked-by: Thomas Rast <trast@student.ethz.ch>
-Cc: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-This patch is meant to replace the jn/notes-doc branch in pu.
-Interdiff from last round:
+That being said, I still get "Initial commit on master". I think that
+stat_tracking_branch just gives up if the branch doesn't exist (which
+does make some sense). So in practice, I think your original and this
+one actually behave the same (sorry, I know that changing it was my
+suggestion).
 
-  diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.tx=
-t
-  index de63ef0..1d8eef1 100644
-  --- a/Documentation/git-notes.txt
-  +++ b/Documentation/git-notes.txt
-  @@ -149,9 +149,12 @@ which operation triggered the update, and the co=
-mmit authorship is
-   determined according to the usual rules (see linkgit:git-commit[1]).
-   These details may change in the future.
-  =20
-  -It is also permitted for a notes ref to point directly to a tree
-  -object, in which case the history of the notes can be read with
-  -`git log -p -g <refname>`.
-  +Some notes refs may be "history-less", either because they point
-  +directly to a tree instead of a commit, or because their commits are
-  +truncated; the notes generated by textconv caching
-  +(see linkgit:gitattributes[5]) are an example of the latter.
-  +To see the local history of these refs, view the reflog with
-  +`git log -g <refname>`.
-  =20
-  =20
-   EXAMPLES
-  @@ -191,8 +194,8 @@ CONFIGURATION
-   core.notesRef::
-   	Notes ref to read and manipulate instead of
-   	`refs/notes/commits`.  Must be an unabbreviated ref name.
-  -	This setting can be overridden through the environment and
-  -	command line.
-  +	This setting can be overridden by the 'GIT_NOTES_REF'
-  +	environment variable or the `--ref` option.
-  =20
-   notes.displayRef::
-   	Which ref (or refs, if a glob or specified more than once), in
+And no, the "--set-upstream" behavior is not a bug. At least not
+according to the documentation. ;)
 
-Thomas Rast wrote:
+>  - colors to match output of `git branch` (green: current, red: remote)
+>  - output format is copy-pasteable, ahead/behind information is in the
+> same format as in `git branch -v`
 
-> I admit I read the end result instead of
-> the series to save myself some confusion.
+I think it's much nicer, though the colors are a bit much for my liking.
+Still, it's configurable, so I don't have to care. :)
 
-There=E2=80=99s a good reason to combine patches if I=E2=80=99ve ever h=
-eard one.
-Thanks for noticing.
+>  - branch information is still printed by default, i have to look into
+> commandline option parsing first. i was thinking of `git status -v -b`
+> (as in `git checkout -b` to mean branch)
 
-Jonathan
+You may also want to have a configuration option if it is the output you
+prefer all the time (similarly, if you are using "git status -s" all the
+time, you might want a config option to make "git status" do what you
+want).
 
- Documentation/config.txt    |   16 +---
- Documentation/git-log.txt   |   42 ++++++++++
- Documentation/git-notes.txt |  180 +++++++++++++++++++++++++++++++++++=
-++------
- t/t3307-notes-man.sh        |   38 +++++++++
- 4 files changed, 241 insertions(+), 35 deletions(-)
- create mode 100755 t/t3307-notes-man.sh
+> ---------8<----------------
+> From 82b4481d38ae0cd62030aeea67160656b7c763e2 Mon Sep 17 00:00:00 2001
+> From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+> Date: Tue, 20 Apr 2010 22:40:54 +0200
+> Subject: [PATCH] Show branch information in short output of git status
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8f86050..cc4bc20 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -518,18 +518,12 @@ check that makes sure that existing object files =
-will not get overwritten.
-=20
- core.notesRef::
- 	When showing commit messages, also show notes which are stored in
--	the given ref.  This ref is expected to contain files named
--	after the full SHA-1 of the commit they annotate.  The ref
--	must be fully qualified.
-+	the given ref.  The ref must be fully qualified.  If the given
-+	ref does not exist, it is not an error but means that no
-+	notes should be printed.
- +
--If such a file exists in the given ref, the referenced blob is read, a=
-nd
--appended to the commit message, separated by a "Notes (<refname>):"
--line (shortened to "Notes:" in the case of "refs/notes/commits").  If =
-the
--given ref itself does not exist, it is not an error, but means that no
--notes should be printed.
--+
--This setting defaults to "refs/notes/commits", and can be overridden b=
-y
--the `GIT_NOTES_REF` environment variable.
-+This setting defaults to "refs/notes/commits", and it can be overridde=
-n by
-+the 'GIT_NOTES_REF' environment variable.  See linkgit:git-notes[1].
-=20
- core.sparseCheckout::
- 	Enable "sparse checkout" feature. See section "Sparse checkout" in
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index fb184ba..d7f6a9c 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -132,6 +132,48 @@ Discussion
-=20
- include::i18n.txt[]
-=20
-+Configuration
-+-------------
-+
-+See linkgit:git-config[1] for core variables and linkgit:git-diff[1]
-+for settings related to diff generation.
-+
-+format.pretty::
-+	Default for the `--format` option.  (See "PRETTY FORMATS" above.)
-+	Defaults to "medium".
-+
-+i18n.logOutputEncoding::
-+	Encoding to use when displaying logs.  (See "Discussion", above.)
-+	Defaults to the value of `i18n.commitEncoding` if set, UTF-8
-+	otherwise.
-+
-+log.date::
-+	Default format for human-readable dates.  (Compare the
-+	`--date` option.)  Defaults to "default", which means to write
-+	dates like `Sat May 8 19:35:34 2010 -0500`.
-+
-+log.showroot::
-+	If `false`, 'git log' and related commands will not treat the
-+	initial commit as a big creation event.  Any root commits in
-+	`git log -p` output would be shown without a diff attached.
-+	The default is `true`.
-+
-+mailmap.file::
-+	See linkgit:git-shortlog[1].
-+
-+notes.displayRef::
-+	Which refs, in addition to the default set by `core.notesRef`
-+	or 'GIT_NOTES_REF', to read notes from when showing commit
-+	messages with the 'log' family of commands.  See
-+	linkgit:git-notes[1].
-++
-+May be an unabbreviated ref name or a glob and may be specified
-+multiple times.  A warning will be issued for refs that do not exist,
-+but a glob that does not match any refs is silently ignored.
-++
-+This setting can be disabled by the `--no-standard-notes` option,
-+overridden by the 'GIT_NOTES_DISPLAY_REF' environment variable,
-+and supplemented by the `--show-notes` option.
-=20
- Author
- ------
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 4e5113b..1d8eef1 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -3,7 +3,7 @@ git-notes(1)
-=20
- NAME
- ----
--git-notes - Add/inspect object notes
-+git-notes - Add or inspect object notes
-=20
- SYNOPSIS
- --------
-@@ -20,24 +20,26 @@ SYNOPSIS
-=20
- DESCRIPTION
- -----------
--This command allows you to add/remove notes to/from objects, without
--changing the objects themselves.
-+Adds, removes, or reads notes attached to objects, without touching
-+the objects themselves.
-=20
--A typical use of notes is to extend a commit message without having
--to change the commit itself. Such commit notes can be shown by `git lo=
-g`
--along with the original commit message. To discern these notes from th=
-e
-+By default, notes are saved to and read from `refs/notes/commits`, but
-+this default can be overridden.  See the OPTIONS, CONFIGURATION, and
-+ENVIRONMENT sections below.  If this ref does not exist, it will be
-+quietly created when it is first needed to store a note.
-+
-+A typical use of notes is to supplement a commit message without
-+changing the commit itself. Notes can be shown by 'git log' along with
-+the original commit message. To distinguish these notes from the
- message stored in the commit object, the notes are indented like the
- message, after an unindented line saying "Notes (<refname>):" (or
--"Notes:" for the default setting).
-+"Notes:" for `refs/notes/commits`).
-=20
--This command always manipulates the notes specified in "core.notesRef"
--(see linkgit:git-config[1]), which can be overridden by GIT_NOTES_REF.
--To change which notes are shown by 'git-log', see the
--"notes.displayRef" configuration.
-+To change which notes are shown by 'git log', see the
-+"notes.displayRef" configuration in linkgit:git-log[1].
-=20
--See the description of "notes.rewrite.<command>" in
--linkgit:git-config[1] for a way of carrying your notes across commands
--that rewrite commits.
-+See the "notes.rewrite.<command>" configuration for a way to carry
-+notes across commands that rewrite commits.
-=20
-=20
- SUBCOMMANDS
-@@ -101,15 +103,20 @@ OPTIONS
- 	Use the given note message (instead of prompting).
- 	If multiple `-m` options are given, their values
- 	are concatenated as separate paragraphs.
-+	Lines starting with `#` and empty lines other than a
-+	single line between paragraphs will be stripped out.
-=20
- -F <file>::
- --file=3D<file>::
- 	Take the note message from the given file.  Use '-' to
- 	read the note message from the standard input.
-+	Lines starting with `#` and empty lines other than a
-+	single line between paragraphs will be stripped out.
-=20
- -C <object>::
- --reuse-message=3D<object>::
--	Reuse the note message from the given note object.
-+	Take the note message from the given blob object (for
-+	example, another note).
-=20
- -c <object>::
- --reedit-message=3D<object>::
-@@ -117,22 +124,147 @@ OPTIONS
- 	the user can further edit the note message.
-=20
- --ref <ref>::
--	Manipulate the notes tree in <ref>.  This overrides both
--	GIT_NOTES_REF and the "core.notesRef" configuration.  The ref
-+	Manipulate the notes tree in <ref>.  This overrides
-+	'GIT_NOTES_REF' and the "core.notesRef" configuration.  The ref
- 	is taken to be in `refs/notes/` if it is not qualified.
-=20
-=20
--NOTES
-------
-+DISCUSSION
-+----------
-+
-+Commit notes are blobs containing extra information about an object
-+(usually information to supplement a commit's message).  These blobs
-+are taken from notes refs.  A notes ref is usually a branch which
-+contains "files" whose paths are the object names for the objects
-+they describe, with some directory separators included for performance
-+reasons footnote:[Permitted pathnames have the form
-+'ab'`/`'cd'`/`'ef'`/`'...'`/`'abcdef...': a sequence of directory
-+names of two hexadecimal digits each followed by a filename with the
-+rest of the object ID.].
-=20
- Every notes change creates a new commit at the specified notes ref.
- You can therefore inspect the history of the notes by invoking, e.g.,
--`git log -p notes/commits`.
-+`git log -p notes/commits`.  Currently the commit message only records
-+which operation triggered the update, and the commit authorship is
-+determined according to the usual rules (see linkgit:git-commit[1]).
-+These details may change in the future.
-=20
--Currently the commit message only records which operation triggered
--the update, and the commit authorship is determined according to the
--usual rules (see linkgit:git-commit[1]).  These details may change in
--the future.
-+Some notes refs may be "history-less", either because they point
-+directly to a tree instead of a commit, or because their commits are
-+truncated; the notes generated by textconv caching
-+(see linkgit:gitattributes[5]) are an example of the latter.
-+To see the local history of these refs, view the reflog with
-+`git log -g <refname>`.
-+
-+
-+EXAMPLES
-+--------
-+
-+You can use notes to add annotations with information that was not
-+available at the time a commit was written.
-+
-+------------
-+$ git notes add -m 'Tested-by: Johannes Sixt <j6t@kdbg.org>' 72a144e2
-+$ git show -s 72a144e
-+[...]
-+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-+
-+Notes:
-+    Tested-by: Johannes Sixt <j6t@kdbg.org>
-+------------
-+
-+In principle, a note is a regular Git blob, and any kind of
-+(non-)format is accepted.  You can binary-safely create notes from
-+arbitrary files using 'git hash-object':
-+
-+------------
-+$ cc *.c
-+$ blob=3D$(git hash-object -w a.out)
-+$ git notes --ref=3Dbuilt add -C "$blob" HEAD
-+------------
-+
-+Of course, it doesn't make much sense to display non-text-format notes
-+with 'git log', so if you use such notes, you'll probably need to writ=
-e
-+some special-purpose tools to do something useful with them.
-+
-+
-+CONFIGURATION
-+-------------
-+
-+core.notesRef::
-+	Notes ref to read and manipulate instead of
-+	`refs/notes/commits`.  Must be an unabbreviated ref name.
-+	This setting can be overridden by the 'GIT_NOTES_REF'
-+	environment variable or the `--ref` option.
-+
-+notes.displayRef::
-+	Which ref (or refs, if a glob or specified more than once), in
-+	addition to the default set by `core.notesRef` or
-+	'GIT_NOTES_REF', to read notes from when showing commit
-+	messages with the 'git log' family of commands.
-+	This setting can be overridden on the command line or by the
-+	'GIT_NOTES_DISPLAY_REF' environment variable.
-+	See linkgit:git-log[1].
-+
-+notes.rewrite.<command>::
-+	When rewriting commits with <command> (currently `amend` or
-+	`rebase`), if this variable is `false`, git will not copy
-+	notes from the original to the rewritten commit.  Defaults to
-+	`true`.  See also "`notes.rewriteRef`" below.
-++
-+This setting can be overridden by the 'GIT_NOTES_REWRITE_REF'
-+environment variable.
-+
-+notes.rewriteMode::
-+	When copying notes during a rewrite, what to do if the target
-+	commit already has a note.  Must be one of `overwrite`,
-+	`concatenate`, and `ignore`.  Defaults to `concatenate`.
-++
-+This setting can be overridden with the `GIT_NOTES_REWRITE_MODE`
-+environment variable.
-+
-+notes.rewriteRef::
-+	When copying notes during a rewrite, specifies the (fully
-+	qualified) ref whose notes should be copied.  May be a glob,
-+	in which case notes in all matching refs will be copied.  You
-+	may also specify this configuration several times.
-++
-+Does not have a default value; you must configure this variable to
-+enable note rewriting.
-++
-+Can be overridden with the 'GIT_NOTES_REWRITE_REF' environment variabl=
-e.
-+
-+
-+ENVIRONMENT
-+-----------
-+
-+'GIT_NOTES_REF'::
-+	Which ref to manipulate notes from, instead of `refs/notes/commits`.
-+	This overrides the `core.notesRef` setting.
-+
-+'GIT_NOTES_DISPLAY_REF'::
-+	Colon-delimited list of refs or globs indicating which refs,
-+	in addition to the default from `core.notesRef` or
-+	'GIT_NOTES_REF', to read notes from when showing commit
-+	messages.
-+	This overrides the `notes.displayRef` setting.
-++
-+A warning will be issued for refs that do not exist, but a glob that
-+does not match any refs is silently ignored.
-+
-+'GIT_NOTES_REWRITE_MODE'::
-+	When copying notes during a rewrite, what to do if the target
-+	commit already has a note.
-+	Must be one of `overwrite`, `concatenate`, and `ignore`.
-+	This overrides the `core.rewriteMode` setting.
-+
-+'GIT_NOTES_REWRITE_REF'::
-+	When rewriting commits, which notes to copy from the original
-+	to the rewritten commit.  Must be a colon-delimited list of
-+	refs or globs.
-++
-+If not set in the environment, the list of notes to copy depends
-+on the `notes.rewrite.<command>` and `notes.rewriteRef` settings.
-=20
-=20
- Author
-diff --git a/t/t3307-notes-man.sh b/t/t3307-notes-man.sh
-new file mode 100755
-index 0000000..3269f2e
---- /dev/null
-+++ b/t/t3307-notes-man.sh
-@@ -0,0 +1,38 @@
-+#!/bin/sh
-+
-+test_description=3D'Examples from the git-notes man page
-+
-+Make sure the manual is not full of lies.'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit A &&
-+	test_commit B &&
-+	test_commit C
-+'
-+
-+test_expect_success 'example 1: notes to add an Acked-by line' '
-+	cat <<-\EOF >expect &&
-+	    B
-+
-+	Notes:
-+	    Acked-by: A C Ker <acker@example.com>
-+	EOF
-+	git notes add -m "Acked-by: A C Ker <acker@example.com>" B &&
-+	git show -s B^{commit} >log &&
-+	tail -n 4 log >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'example 2: binary notes' '
-+	cp "$TEST_DIRECTORY"/test4012.png .
-+	git checkout B &&
-+	blob=3D$(git hash-object -w test4012.png) &&
-+	git notes --ref=3Dlogo add -C "$blob" &&
-+	git notes --ref=3Dlogo copy B C &&
-+	git notes --ref=3Dlogo show C >actual &&
-+	test_cmp test4012.png actual
-+'
-+
-+test_done
---=20
-1.7.1
+This patch looks OK, but:
+
+  1. I think for the final version you can just squash in part 2/2.
+
+  2. Your patch has wrapped lines which make it impossible to apply
+     without fixing up manually. This is a common gmail problem.  See
+     the "gmail" section of SubmittingPatches.
+
+-Peff
