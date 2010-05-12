@@ -1,70 +1,62 @@
-From: "J.H." <warthog9@kernel.org>
-Subject: Re: [PATCH/RFC] gitweb: Create install target for gitweb in Makefile
-Date: Tue, 11 May 2010 16:49:56 -0700
-Message-ID: <4BE9ED24.1050400@kernel.org>
-References: <20100429235046.29606.35311.stgit@localhost.localdomain> <7vbpcz4d95.fsf@alter.siamese.dyndns.org> <201005012236.16703.jnareb@gmail.com> <20100511234558.GP3563@machine.or.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] clone: report check out for non-bare clones
+Date: Tue, 11 May 2010 18:55:31 -0700
+Message-ID: <7vljbp994c.fsf@alter.siamese.dyndns.org>
+References: <4BE7E09F.3040303@drmicha.warpmail.net>
+ <3521b4733b58bfa516303fafc64d87f05760ea02.1273502583.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed May 12 02:45:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pete Harlan <pgit@pcharlan.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed May 12 03:56:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OC04Z-0007yb-Mo
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 02:45:16 +0200
+	id 1OC1BB-0004In-GH
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 03:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753642Ab0ELApI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 May 2010 20:45:08 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:38656 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753308Ab0ELApH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 May 2010 20:45:07 -0400
-X-Greylist: delayed 3270 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 May 2010 20:45:06 EDT
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.3/8.14.3) with ESMTP id o4BNnujP017387
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Tue, 11 May 2010 16:49:56 -0700
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100330 Fedora/3.0.4-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.4
-In-Reply-To: <20100511234558.GP3563@machine.or.cz>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Tue, 11 May 2010 16:49:56 -0700 (PDT)
+	id S1752987Ab0ELB4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 May 2010 21:56:01 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46698 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752507Ab0ELB4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 May 2010 21:56:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 41AA8B2A94;
+	Tue, 11 May 2010 21:55:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=l8bOlW5tFL8xYCGvZEE85eNLZH0=; b=G4v1fzovfB3MwD4Gm4iHGGD
+	osguYSM4Ztak1+CBdtHus1ZHzxWRZKKGM5XGTewYLjmj62zGmvrYoi4dsVzT1esg
+	5c6nCJAmv/GsUphLa5/UfNoNeY9/uwRiWuap3aGy8FkviuZ9dI5wckpZHWPl8cLa
+	yQPsRF/vNTJ++kGsxjFw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=M4MTeDSBvAYAPxrA0wgHV7fXSWFxpf2g/T6nmnxWaomXfV9NF
+	RPfPVNkjch65FPw5zhyfpKy7Fe+X0BCQlhiDEC7AgfCJ2xYomY0TeV6W1vISi8g+
+	5FL7hUyRVtrCtgvGdbe0k0QkjCeg7lc6/xDvf5jiHQ6WoeklxkWjbmZq1A=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E975CB2A8F;
+	Tue, 11 May 2010 21:55:53 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9DD9B2A8D; Tue, 11 May
+ 2010 21:55:47 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7FAB12FC-5D69-11DF-909D-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146915>
 
-On 05/11/2010 04:45 PM, Petr Baudis wrote:
-> On Sat, May 01, 2010 at 10:36:15PM +0200, Jakub Narebski wrote:
->> Subject: [PATCHv2] gitweb: Create install target for gitweb in Makefile
->>
->> Installing gitweb is now as easy as
->>
->>   # make gitwebdir=/var/www/cgi-bin gitweb-install  ;# as root
->>
->> The gitweb/INSTALL file was updated accordingly, to make use of this
->> new target.
->>
->> Fix shell quoting, i.e. setting bindir_SQ etc., in gitweb/Makefile.
->> Those variables were not used previously.
->>
->> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> 
-> Acked-by: Petr Baudis <pasky@suse.cz>
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Most installations I've seen install gitweb into /var/www/git[web] and
-set it up to be CGI executable.  I'm not sure I've actually seen cgi-bin
-used on most systems in quite a long time.
+> In the case of a detached head, (null) is the branch name.
 
-Just my $0.02
-
-- John 'Warthog9' Hawley
+I think that depends on your particular libc implementation that helpfully
+makes printf("%s", NULL) not to at least dump core.
