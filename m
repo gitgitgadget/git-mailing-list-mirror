@@ -1,97 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: serious performance issues with images, audio files, and other "non-code" data
-Date: Wed, 12 May 2010 12:15:41 -0700 (PDT)
-Message-ID: <m339xxdj71.fsf@localhost.localdomain>
-References: <4BEAF941.6040609@puckerupgames.com>
+From: Robert Buck <buck.robert.j@gmail.com>
+Subject: [remote rejected] master -> master (n/a (unpacker error))
+Date: Wed, 12 May 2010 15:45:52 -0400
+Message-ID: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John <john@puckerupgames.com>
-X-From: git-owner@vger.kernel.org Wed May 12 21:22:14 2010
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed May 12 21:46:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCHVV-00061n-Jc
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 21:22:13 +0200
+	id 1OCHsW-00034l-7L
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 21:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757079Ab0ELTWH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 15:22:07 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:35140 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756975Ab0ELTWF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 15:22:05 -0400
-Received: by wwi18 with SMTP id 18so301570wwi.19
-        for <git@vger.kernel.org>; Wed, 12 May 2010 12:22:02 -0700 (PDT)
+	id S932156Ab0ELTpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 15:45:55 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42787 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932092Ab0ELTpy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 15:45:54 -0400
+Received: by wyb32 with SMTP id 32so352072wyb.19
+        for <git@vger.kernel.org>; Wed, 12 May 2010 12:45:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=W+iUrmKbO+ehB4THqhZEkpJ9h5aZY65McWgeriIQ2XM=;
-        b=ngLJ7E9SJ/IFlGw/X3w0B88zCM6DeN+hXyOZOM7q3Raf1YjquH319YM5rxsjOhDpaD
-         5EEbveksgC+KUjxxsh1EymCu0RMbdRIS+UCHnA/Zn673S0Bts34clE5IfryWZVt/lfmz
-         c+5nol3tiZfFBKEH+RvLtv/S4QZVgIVMXfrwo=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=myDnZYze2W/B+Po3+CmGRH1S6f9apBHItnJh9/HoSRA=;
+        b=VIBXswgR8W/GRKUCozEoiqWYFGMT578XbxvyEGuj9oJyYfSe4e2ETVeaTDlk22BZbB
+         ySujck5gLZJyBG3p5C0ali49Y7Ti1DzfCAqyGURYLYI6SGxi44MUOPiRWFRL7aMzI35t
+         nIMFsHInjOUftFAYOQb6aKd1j4VXc9EYsnpAk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=ip9/VM9WbiBKLyCDryn9wBZol9TS3Y6nuVOPcOvPC7wg4ytNfET17+G7xVh39HtDh6
-         sgFDFOSpfkp3gXujQoa1dXEwkhY300H92w5GGKJO+w1xGiWsA7NyzegIfQsg8VV10gY+
-         GMxi9kHNvp7A8IM/8AVqs4rWmIxAYw4HKhSZQ=
-Received: by 10.227.129.10 with SMTP id m10mr7489023wbs.132.1273691742728;
-        Wed, 12 May 2010 12:15:42 -0700 (PDT)
-Received: from localhost.localdomain (abvw188.neoplus.adsl.tpnet.pl [83.8.220.188])
-        by mx.google.com with ESMTPS id u36sm2916374wbv.18.2010.05.12.12.15.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 May 2010 12:15:41 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o4CJGpa6011052;
-	Wed, 12 May 2010 21:17:01 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o4CJGYsU011048;
-	Wed, 12 May 2010 21:16:34 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4BEAF941.6040609@puckerupgames.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=O957Y2XCMQR7tBzv5wQjpCl/3DCCJj6YH3//k4sRLyo7FeJ11Z6gXWCAb4RLOQW6lf
+         0uN5wfC8R0sE6q2xwf6v2P7jCCR330JxW/jr9+qjcAS5L/1E2NG+8hHkD7H6YfG4Xi27
+         VVS/jVIKgzBnn68fZ2u8+V9r8SG8lwXj9H/fE=
+Received: by 10.216.89.140 with SMTP id c12mr620080wef.163.1273693552914; Wed, 
+	12 May 2010 12:45:52 -0700 (PDT)
+Received: by 10.216.7.207 with HTTP; Wed, 12 May 2010 12:45:52 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146960>
 
-John <john@puckerupgames.com> writes:
+Today, just after someone else committed to my public repository I
+started getting errors. Until then Git worked great.
 
-> We're seeing serious performance issues with repos that store media
-> files, even relatively small files. For example, a web site with less
-> than 100 MB of images can take minutes to commit, push, or pull when
-> images have changed.
-> 
-> Our first guess was that git is repeatedly attempting to
-> compress/decompress data that had already been compressed. We tried
-> these configuration settings (shooting in the dark) to no avail:
-> 
->     core.compression 0   ## Docs say this disables compression. Didn't seem to work.
->     pack.depth 1     ## Unclear what this does.
->     pack.window 0    ## No idea what this does.
->     gc.auto 0        ## We hope this disables automatic packing.
-> 
-> Our guess that re-compression is to blame may not even be valid since
-> we can manually re-compress these files in seconds, not minutes.
-> 
-> Is there a trick to getting git to simply "copy files as is"?  In
-> other words, don't attempt to compress them, don't attempt to "diff"
-> them, just store/copy/transfer the files as-is?
+Does anyone know what is going on here? Are there particular versions
+of Git with known issues around this?
 
-Search for `delta` attribute, which should be unset for files that you
-don't want for git to attempt (binary) delta against, in gitattributes
-manpage.
 
-P.S. There is also git-bigfiles project that migth be of interest to
-you.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+uname@hostname:~/dev/workspaces/scm-evaluations/welcome.git/install/git-config$
+git push
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 922 bytes, done.
+Total 4 (delta 0), reused 4 (delta 0)
+error: unable to create temporary sha1 filename ./objects/e6: File
+exists
+
+fatal: failed to write object
+error: unpack failed: unpacker exited with error code
+To ssh://git.projectbedrock.com/var/cache/git/welcome.git
+ ! [remote rejected] master -> master (n/a (unpacker error))
+error: failed to push some refs to
+'ssh://git.projectbedrock.com/var/cache/git/welcome.git'
+
+
+As an aside, where the heck is the git bug tracker? I've searched, and
+searched, and ... All I found is a Debian tracking system, which
+appears to have no full text search capabilities.
