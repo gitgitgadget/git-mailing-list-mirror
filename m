@@ -1,101 +1,79 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [PATCHv2 GSoC] gitweb: Move static files into seperate 
-	subdirectory
-Date: Wed, 12 May 2010 10:45:36 +0530
-Message-ID: <AANLkTikrNRJY4vQetIfBF5OOx8ZmHc4gFs1zkOgOZkXe@mail.gmail.com>
-References: <p2ze72faaa81005090656j593c3464v9ee1bb6432461efc@mail.gmail.com>
-	 <201005101455.50633.jnareb@gmail.com> <4BE803B8.4090607@gmail.com>
-	 <201005120127.55971.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] ls-remote: print URL when no repo is specified
+Date: Tue, 11 May 2010 22:50:44 -0700
+Message-ID: <7veihh8y8b.fsf@alter.siamese.dyndns.org>
+References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
+ <1273598423-3156-1-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 12 07:15:45 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 12 07:51:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OC4IK-0000ZP-CX
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 07:15:44 +0200
+	id 1OC4qQ-0005Mr-Df
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 07:50:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291Ab0ELFPi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 May 2010 01:15:38 -0400
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:39709 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729Ab0ELFPh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 May 2010 01:15:37 -0400
-Received: by gxk27 with SMTP id 27so4934766gxk.1
-        for <git@vger.kernel.org>; Tue, 11 May 2010 22:15:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yrXHo0TNJ22q8DCEuQ2/Mz8pHPcdpcEi4hXrX8Mhy7w=;
-        b=je27PwbXky46ES+VvYwPFdI0RgsCOkx40allg3ar5cki2oZk0Rsh8IaeNSCAGLtY7f
-         MJQ/+lCtUUBUp4NNZuL3KeDdUs+d6LnPqhZB0KzM9ENzCwBAB1VgSRNSJg9tBhgiN/02
-         O05OJCoEbCR28ZWIJCyApQPPB03EBdLyd5l5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=kzw9WC8kqtt/kqpfrSD04WpFY44bb0wrbY9UyJd1/nhV7BooBkbC3BhIo10XwbeAcH
-         fK86jGHVD2YWV+5amceGqNI703PzT3e+t2RUT6eV+scsPt9mWKDIy3KpGLONOcAj9Z1F
-         ufaxVR2zgSthg0WDWTevOf9kcjOnoeIkeOs/U=
-Received: by 10.91.9.10 with SMTP id m10mr2728406agi.128.1273641336272; Tue, 
-	11 May 2010 22:15:36 -0700 (PDT)
-Received: by 10.90.84.5 with HTTP; Tue, 11 May 2010 22:15:36 -0700 (PDT)
-In-Reply-To: <201005120127.55971.jnareb@gmail.com>
+	id S1752619Ab0ELFux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 01:50:53 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40676 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729Ab0ELFuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 01:50:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E4F9B245F;
+	Wed, 12 May 2010 01:50:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=iOaZUcaQB7ZL5DeNmfZiI8cui/w=; b=joeACF
+	3lgpzhXcSSTD22lBNX/osFMAZiW9V9YxXYLZ/wi3oCWNY5gaA1zDTf6DETaaebG4
+	zf0hAktZnB6dmN/ohfxNrg/uXH4puyTVWocgWjuPIqhEzVoDHTIBWJA7xWrCB3ch
+	0v05rrPIjnHYBy06JH1SwyiXK1wl1Zr/438SQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yWN7duRY0PYFjF7YEfiFfEyyvHmij7Xr
+	UXf3pd1jEhVVI2Agsd3JqH0n1FrKrj4tQfuPF4K24YiFEQt5O3n/5xOug8WAnonS
+	aIdLxEH2iss7nZO09EHZxS/xN4S323YHvuumYyv9fDOiKXhUZ3eVfIwK0CDXyBzy
+	fW+hDB6Cuiw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EC05FB245E;
+	Wed, 12 May 2010 01:50:48 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57014B245D; Wed, 12 May
+ 2010 01:50:46 -0400 (EDT)
+In-Reply-To: <1273598423-3156-1-git-send-email-rctay89@gmail.com> (Tay Ray
+ Chuan's message of "Wed\, 12 May 2010 01\:20\:23 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 50F31196-5D8A-11DF-9964-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146920>
 
-On Wed, May 12, 2010 at 4:57 AM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> On Mon, 10 May 2010, Pavan Kumar Sunkara wrote:
->> On Monday 10 May 2010 06:25 PM, Jakub Narebski wrote:
->>> On Mon, 10 May 2010, Pavan Kumar Sunkara wrote:
->>>
->>>> Gitweb: Move static files into seperate subdirectory
->>>>
->>>> Create a new subdirectory called 'static' in gitweb/, and move
->>>> all static files required by gitweb.cgi when running, which means
->>>> styles, images and Javascript code. This should make gitweb more
->>>> readable and easier to maintain.
->>>>
->>>> Update t/gitweb-lib.sh to reflect this change. =A0The default is
->>>> now to install static files also in 'static' subdirectory in targe=
-t
->>>> directory: update Makefile, gitweb's INSTALL, README and Makefile
->>>>
->>>> Signed-off-by: Pavan Kumar Sunkara<pavan.sss1991@gmail.com>
->
->> I would like to know when this patch will be merged.
->
-> Note please that this patch conflict on semantic level with the
-> patch adding support for 'install' target in gitweb/Makefile (and
-> install-gitweb to the main Makefile), which means that either this
-> one or the 'jn/gitweb-install' would have to be changed.
->
-> --
-> Jakub Narebski
-> Poland
->
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-Yeah, actually me and petr have been discussing about 'install' target
-in gitweb/Makefile. So, I will apply these 2 patches
-http://repo.or.cz/w/alt-git.git/patch/152d94348f6a38eb7cb5f4af8397f51ba=
-06ddffb
-http://repo.or.cz/w/alt-git.git/patch/8515392f5d4c5a36a0f9e4a73068f7106=
-d7f4638
+> After 9c00de5 (ls-remote: fall-back to default remotes when no remote
+> specified), when no repository is specified, ls-remote may use
+> the URL/remote in the config "branch.<name>.remote" or the remote
+> "origin"; it may not be immediately obvious to the user which was used.
 
-and resubmit this patch.
+I cannot convince myself that this is a good change, as I've always
+thought "ls-remote" output as something people want to let their scripts
+read and parse.  9c00de5 may have given an enhancement to these scripts in
+the sense that they can now respond to an empty input from the end user,
+but this patch forces them to change the way they parse the output from
+the command.
 
-Thanks
-- Pavan
+I also think this patch is solving a wrong problem.
+
+When an end user does not know which remote ls-remote would be talking to
+by default, what else does he *not* know?  Probably which remote "pull"
+would be fetching from and what branch it would be merging with?  Doesn't
+he have a better command to use to learn that information to reorient
+himself when he is lost that way?
