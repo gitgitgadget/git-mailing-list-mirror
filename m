@@ -1,52 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fatal: Unable to find remote helper for 'http'
-Date: Wed, 12 May 2010 12:47:55 -0400
-Message-ID: <20100512164755.GB14710@coredump.intra.peff.net>
-References: <811C439C44639E429301EB1083399FA302F1853F@CINMLVEM12.e2k.ad.ge.com>
+From: John <john@puckerupgames.com>
+Subject: serious performance issues with images, audio files, and other "non-code"
+ data
+Date: Wed, 12 May 2010 14:53:53 -0400
+Message-ID: <4BEAF941.6040609@puckerupgames.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Laflen, Brandon (GE, Research)" <laflenb@ge.com>
-X-From: git-owner@vger.kernel.org Wed May 12 18:48:04 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 12 20:55:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCF6H-00005K-TT
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 18:48:02 +0200
+	id 1OCH5G-0006ph-Eu
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 20:55:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756630Ab0ELQr4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 12:47:56 -0400
-Received: from peff.net ([208.65.91.99]:44149 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756497Ab0ELQr4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 12:47:56 -0400
-Received: (qmail 6945 invoked by uid 107); 12 May 2010 16:47:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 12 May 2010 12:47:55 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 May 2010 12:47:55 -0400
-Content-Disposition: inline
-In-Reply-To: <811C439C44639E429301EB1083399FA302F1853F@CINMLVEM12.e2k.ad.ge.com>
+	id S1755209Ab0ELSy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 14:54:59 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:41459 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752577Ab0ELSy6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 14:54:58 -0400
+Received: from postalmail-a2.g.dreamhost.com (caiajhbdcahe.dreamhost.com [208.97.132.74])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 0F50C1873A1
+	for <git@vger.kernel.org>; Wed, 12 May 2010 11:54:56 -0700 (PDT)
+Received: from [10.3.1.118] (unknown [65.202.33.238])
+	by postalmail-a2.g.dreamhost.com (Postfix) with ESMTP id E99DB111D91
+	for <git@vger.kernel.org>; Wed, 12 May 2010 11:54:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146957>
 
-On Wed, May 12, 2010 at 11:08:27AM -0400, Laflen, Brandon (GE, Research) wrote:
+Hi,
 
-> I recently compiled git on a red-hat linux system.  There were not compile
-> errors.  But, when I try to use git to clone a repository, I receive the
-> following error:
-> 
-> 	fatal: Unable to find remote helper for 'http'
+We're seeing serious performance issues with repos that store media files, even relatively small 
+files. For example, a web site with less than 100 MB of images can take minutes to commit, push, or 
+pull when images have changed.
 
-Did you build git with http support? You need to have curl installed for
-it. If you built with the straight Makefile, you would have had to
-specify NO_CURL manually. If you used the "configure" script, though, it
-probably would have noticed that you didn't have curl installed and
-switched it off.
+Our first guess was that git is repeatedly attempting to compress/decompress data that had already 
+been compressed. We tried these configuration settings (shooting in the dark) to no avail:
 
--Peff
+    core.compression 0   ## Docs say this disables compression. Didn't seem to work.
+    pack.depth 1     ## Unclear what this does.
+    pack.window 0    ## No idea what this does.
+    gc.auto 0        ## We hope this disables automatic packing.
+
+Our guess that re-compression is to blame may not even be valid since we can manually re-compress 
+these files in seconds, not minutes.
+
+Is there a trick to getting git to simply "copy files as is"?  In other words, don't attempt to 
+compress them, don't attempt to "diff" them, just store/copy/transfer the files as-is?
+
+Thanks,
+  -John
