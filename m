@@ -1,357 +1,462 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [PATCHv3 GSoC] gitweb: Move static files into seperate subdirectory
-Date: Wed, 12 May 2010 13:22:15 +0530
-Message-ID: <4BEA5E2F.9070608@gmail.com>
-References: <p2ze72faaa81005090656j593c3464v9ee1bb6432461efc@mail.gmail.com> <201005101455.50633.jnareb@gmail.com> <4BE803B8.4090607@gmail.com> <201005120127.55971.jnareb@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (May 2010, #04; Wed, 12)
+Date: Wed, 12 May 2010 00:57:06 -0700
+Message-ID: <7vzl057dt9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 12 09:52:30 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 12 09:57:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OC6k1-0004OZ-1I
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 09:52:29 +0200
+	id 1OC6oi-0006Zt-UT
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 09:57:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753501Ab0ELHwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 03:52:23 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:39240 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753342Ab0ELHwW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 03:52:22 -0400
-Received: by pxi5 with SMTP id 5so2768343pxi.19
-        for <git@vger.kernel.org>; Wed, 12 May 2010 00:52:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=ZyWdhPZU34BmdnXmJulWDV65ju34sICSkk5nJmuDQnI=;
-        b=AF+fjC8tgqhW/ZGFczmRwlU8An0i+IOnUqTWZWI1AKt1Q0ZFKEDQtxqYwVjUJwgq6p
-         OZxwBH9lpDLUt7aBAPgVN5fQef2RXUuheuyhkX5FuyBnYL5sHNgonV6HWB84tCIwWsdl
-         arDTehr5ipBFP+JXxHESX00yxk+Na51EzDCxs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=TdPhTMz6uq+de4LcqxE3dmNbmEL+2gmJdAggf292JJKN+itNe2H+SFZ4EO5xyWU1Xe
-         qmBpxVG6vMoKZYRYQbHAojhHCe2rNfv+H2QGA5mSOXdVCEJ95DkRDuyxPPjyVG0TN/Gr
-         wiCORH9mPjwa1vK4pLsIYGrU+ZwbtvqfI7+2M=
-Received: by 10.114.237.2 with SMTP id k2mr5473022wah.214.1273650741717;
-        Wed, 12 May 2010 00:52:21 -0700 (PDT)
-Received: from [172.16.19.166] ([202.63.112.23])
-        by mx.google.com with ESMTPS id d20sm42384631waa.3.2010.05.12.00.52.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 12 May 2010 00:52:20 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <201005120127.55971.jnareb@gmail.com>
+	id S1753571Ab0ELH5P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 03:57:15 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49124 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753513Ab0ELH5N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 03:57:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C6AFB2008;
+	Wed, 12 May 2010 03:57:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=Pd/a
+	qYoBJm06kPeqz2+yX5TnzAk=; b=Lit35F3rOlHjDsqGHasD1Wi8Sh+wNloJPrME
+	GkOLRp5VEGo+RXosZ7UMrshlhjZ0cXjTEqBB+knNhKz+Y6dWzIzGpv5iENIUBIJX
+	KKC0swxg6XKdRWsPzDlwaDtrQsCUBUIsggt2G4M38SZ+KBeqsl8acshBL8vh+rdc
+	s0WhjBo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=jWM
+	XHyE6OF2DG6yQqLFwBfdc2w5bSyHM/A6wOhtdxCimjeN1syfMjwq8Cpb7zGLIhRm
+	+v4w4icdaV58osA8KnmzPwq5yklIIMzL5EmHu7Gc6+cNLhpa9NOHZOb6sZJhs2zB
+	7q2zK+1NrVzly5ic7JMJYIJkjt6ijbYYn4gsXN5c=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E7C6FB2007;
+	Wed, 12 May 2010 03:57:09 -0400 (EDT)
+Received: from pobox.com (unknown [68.225.240.211]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B4CCDB2002; Wed, 12 May
+ 2010 03:57:07 -0400 (EDT)
+X-master-at: 0e4607c09d72ada4942ea49298dba83ec4145892
+X-next-at: 7d1e8fef7ffce7fe8e9fa8fae99aaa15468fb6d3
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F78BA52A-5D9B-11DF-8965-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146928>
 
-Create a new subdirectory called 'static' in gitweb/, and move
-all static files required by gitweb.cgi when running, which means
-styles, images and Javascript code. This should make gitweb more
-readable and easier to maintain.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the integration branches, but I am
+still holding onto them.
 
-Update t/gitweb-lib.sh to reflect this change.The install-gitweb
-now also include moving of static files into 'static' subdirectory
-in target directory: update Makefile, gitweb's INSTALL, README and
-Makefile accordingly.
+I'll be packing my primary machine tomorrow morning, and hopefully I can
+resume my git activity early next week.  This will be the last pushout
+until then.
 
-Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
----
+--------------------------------------------------
+[New Topics]
 
-This patch is rewritten based on 'jn/gitweb-install' as per the 
-suggestion of Jakub Nareski
+* bw/diff-metainfo-color (2010-05-04) 1 commit
+ - [sign-off?] diff: fix coloring of extended diff headers
 
-  Makefile                            |   20 ++++++++--------
-  gitweb/INSTALL                      |   19 +++++++--------
-  gitweb/Makefile                     |   41 
-++++++++++++++++++----------------
-  gitweb/README                       |   14 ++++++-----
-  gitweb/{ => static}/git-favicon.png |  Bin 115 -> 115 bytes
-  gitweb/{ => static}/git-logo.png    |  Bin 207 -> 207 bytes
-  gitweb/{ => static}/gitweb.css      |    0
-  gitweb/{ => static}/gitweb.js       |    0
-  t/gitweb-lib.sh                     |    6 ++--
-  9 files changed, 52 insertions(+), 48 deletions(-)
-  rename gitweb/{ => static}/git-favicon.png (100%)
-  rename gitweb/{ => static}/git-logo.png (100%)
-  rename gitweb/{ => static}/gitweb.css (100%)
-  rename gitweb/{ => static}/gitweb.js (100%)
+* ph/clone-message-reword (2010-05-09) 1 commit
+ - clone: reword messages to match the end-user perception
 
-diff --git a/Makefile b/Makefile
-index dab5a14..de7f680 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1561,32 +1561,32 @@ gitweb:
-      $(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) all
+* rc/ls-remote-default (2010-05-12) 1 commit
+ - ls-remote: print URL when no repo is specified
 
-  ifdef JSMIN
--GITWEB_PROGRAMS += gitweb/gitweb.min.js
--GITWEB_JS = gitweb/gitweb.min.js
-+GITWEB_PROGRAMS += gitweb/static/gitweb.min.js
-+GITWEB_JS = gitweb/static/gitweb.min.js
-  else
--GITWEB_JS = gitweb/gitweb.js
-+GITWEB_JS = gitweb/static/gitweb.js
-  endif
-  ifdef CSSMIN
--GITWEB_PROGRAMS += gitweb/gitweb.min.css
--GITWEB_CSS = gitweb/gitweb.min.css
-+GITWEB_PROGRAMS += gitweb/static/gitweb.min.css
-+GITWEB_CSS = gitweb/static/gitweb.min.css
-  else
--GITWEB_CSS = gitweb/gitweb.css
-+GITWEB_CSS = gitweb/static/gitweb.css
-  endif
-  OTHER_PROGRAMS +=  gitweb/gitweb.cgi  $(GITWEB_PROGRAMS)
-  gitweb/gitweb.cgi: gitweb/gitweb.perl $(GITWEB_PROGRAMS)
-      $(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
+* fg/autocrlf (2010-05-12) 1 commit
+ - autocrlf: Make it work also for un-normalized repositories
 
-  ifdef JSMIN
--gitweb/gitweb.min.js: gitweb/gitweb.js
-+gitweb/static/gitweb.min.js: gitweb/static/gitweb.js
-      $(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
-  endif # JSMIN
-  ifdef CSSMIN
--gitweb/gitweb.min.css: gitweb/gitweb.css
-+gitweb/static/gitweb.min.css: gitweb/static/gitweb.css
-      $(QUIET_SUBDIR0)gitweb $(QUIET_SUBDIR1) $(patsubst gitweb/%,%,$@)
-  endif # CSSMIN
+* tc/merge-m-log (2010-05-11) 8 commits
+ - merge: --log appends shortlog to message if specified
+ - fmt-merge-msg: add function to append shortlog only
+ - fmt-merge-msg: refactor merge title formatting
+ - fmt-merge-msg: minor refactor of fmt_merge_msg()
+ - merge: rename variable
+ - merge: update comment
+ - t7604-merge-custom-message: show that --log doesn't append to -m
+ - t7604-merge-custom-message: shift expected output creation
 
+--------------------------------------------------
+[Stalled]
 
--git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/gitweb.css 
-gitweb/gitweb.js
-+git-instaweb: git-instaweb.sh gitweb/gitweb.cgi 
-gitweb/static/gitweb.css gitweb/static/gitweb.js
-      $(QUIET_GEN)$(RM) $@ $@+ && \
-      sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-          -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-@@ -2101,7 +2101,7 @@ clean:
-      $(RM) $(htmldocs).tar.gz $(manpages).tar.gz
-      $(MAKE) -C Documentation/ clean
-  ifndef NO_PERL
--    $(RM) gitweb/gitweb.cgi gitweb/gitweb.min.*
-+    $(RM) gitweb/gitweb.cgi gitweb/static/gitweb.min.*
-      $(MAKE) -C perl clean
-  endif
-  ifndef NO_PYTHON
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index d484d76..8230531 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -2,9 +2,10 @@ GIT web Interface (gitweb) Installation
-  =======================================
+* jc/rev-list-ancestry-path (2010-04-20) 1 commit
+ - revision: --ancestry-path
 
-  First you have to generate gitweb.cgi from gitweb.perl using
--"make gitweb", then copy appropriate files (gitweb.cgi, gitweb.js,
--gitweb.css, git-logo.png and git-favicon.png) to their destination.
--For example if git was (or is) installed with /usr prefix, you can do
-+"make gitweb", then "make install-gitweb" appropriate files
-+(gitweb.cgi, gitweb.js, gitweb.css, git-logo.png and git-favicon.png)
-+to their destination. For example if git was (or is) installed with
-+/usr prefix and gitwebdir is /var/www/cgi-bin, you can do
+Just an illustration patch.  merge simplification logic used when
+pathspecs are in effect interacts with this rather badly.
 
-      $ make prefix=/usr gitweb                            ;# as yourself
-      # make gitwebdir=/var/www/cgi-bin install-gitweb     ;# as root
-@@ -81,16 +82,14 @@ Build example
-    minifiers, you can do
+* js/rebase-origin-x (2010-02-05) 1 commit
+ - [RFC w/o test and incomplete] rebase: add -x option to record original commit name
 
-      make GITWEB_PROJECTROOT="/home/local/scm" \
--         GITWEB_JS="/gitweb/gitweb.js" \
--         GITWEB_CSS="/gitweb/gitweb.css" \
--         GITWEB_LOGO="/gitweb/git-logo.png" \
--         GITWEB_FAVICON="/gitweb/git-favicon.png" \
-+         GITWEB_JS="gitweb/static/gitweb.js" \
-+         GITWEB_CSS="gitweb/static/gitweb.css" \
-+         GITWEB_LOGO="gitweb/static/git-logo.png" \
-+         GITWEB_FAVICON="gitweb/static/git-favicon.png" \
-           bindir=/usr/local/bin \
-           gitweb
+I retract my objection against the idea of -x; needs polishing before
+moving forward.
 
--    cp -fv gitweb/gitweb.{cgi,js,css} \
--           gitweb/git-{favicon,logo}.png \
--         /var/www/cgi-bin/gitweb/
-+    make gitwebdir=/var/www/cgi-bin/gitweb install-gitweb
+* js/grep-open (2010-05-01) 3 commits
+ - grep: do not ignore return value from chdir()
+ - grep -O: allow optional argument specifying the pager (or editor)
+ - grep: Add the option '--open-files-in-pager'
+ (this branch is used by jp/hold-string-list-sanity.)
 
+Probably needs to support --no-index mode as well.
 
-  Gitweb config file
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 935d2d2..3af71f7 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -4,10 +4,10 @@ all::
-  # Define V=1 to have a more verbose compile.
-  #
-  # Define JSMIN to point to JavaScript minifier that functions as
--# a filter to have gitweb.js minified.
-+# a filter to have static/gitweb.js minified.
-  #
-  # Define CSSMIN to point to a CSS minifier in order to generate a minified
--# version of gitweb.css
-+# version of static/gitweb.css
-  #
+* jp/hold-string-list-sanity (2010-04-06) 9 commits
+ . string_list: Fix argument order for string_list_append
+ . Merge branch 'sr/remote-helper-export' into HEAD
+ . Merge branch 'js/grep-open' into HEAD
+ . Merge branch 'sb/fmt-merge-msg' into HEAD
+ . string_list: Fix argument order for string_list_lookup
+ . string_list: Fix argument order for string_list_insert_at_index
+ . string_list: Fix argument order for string_list_insert
+ . string_list: Fix argument order for for_each_string_list
+ . string_list: Fix argument order for print_string_list
+ (this branch uses js/grep-open and sr/remote-helper-export.)
 
-  prefix ?= $(HOME)
-@@ -16,6 +16,7 @@ gitwebdir ?= /var/www/cgi-bin
+Building this on top of slushy codebase is not a very promising endeavor.
+Good thing to do, but it came at a bad time.
 
-  RM ?= rm -f
-  INSTALL ?= install
-+MKDIR ?= mkdir
+--------------------------------------------------
+[Cooking]
 
-  # default configuration for gitweb
-  GITWEB_CONFIG = gitweb_config.perl
-@@ -29,10 +30,10 @@ GITWEB_STRICT_EXPORT =
-  GITWEB_BASE_URL =
-  GITWEB_LIST =
-  GITWEB_HOMETEXT = indextext.html
--GITWEB_CSS = gitweb.css
--GITWEB_LOGO = git-logo.png
--GITWEB_FAVICON = git-favicon.png
--GITWEB_JS = gitweb.js
-+GITWEB_CSS = static/gitweb.css
-+GITWEB_LOGO = static/git-logo.png
-+GITWEB_FAVICON = static/git-favicon.png
-+GITWEB_JS = static/gitweb.js
-  GITWEB_SITE_HEADER =
-  GITWEB_SITE_FOOTER =
+* jn/gitweb-fastcgi (2010-05-07) 5 commits
+ - gitweb: Add support for FastCGI, using CGI::Fast
+ - gitweb: Put all per-connection code in run() subroutine
+ + gitweb: Use nonlocal jump instead of 'exit' in die_error
+ + gitweb: href(..., -path_info => 0|1)
+ + Export more test-related variables when running external tests
+ (this branch shares commits with jn/gitweb-caching-prep.)
 
-@@ -54,6 +55,7 @@ PERL_PATH  ?= /usr/bin/perl
-  # Shell quote;
-  bindir_SQ = $(subst ','\'',$(bindir))#'
-  gitwebdir_SQ = $(subst ','\'',$(gitwebdir))#'
-+gitwebfile_SQ = $(subst ','\'',$(gitwebdir)/static)#'
-  SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))#'
-  PERL_PATH_SQ  = $(subst ','\'',$(PERL_PATH))#'
-  DESTDIR_SQ    = $(subst ','\'',$(DESTDIR))#'
-@@ -88,26 +90,26 @@ all:: gitweb.cgi
-  GITWEB_PROGRAMS = gitweb.cgi
+* jn/make-header-dependency (2010-05-08) 2 commits
+ - Makefile: let header dependency checker override COMPUTE_HEADER_DEPENDENCIES
+ - Makefile: fix header dependency checker to allow NO_CURL builds
 
-  ifdef JSMIN
--GITWEB_FILES += gitweb.min.js
--GITWEB_JS = gitweb.min.js
--all:: gitweb.min.js
--gitweb.min.js: gitweb.js GITWEB-BUILD-OPTIONS
-+GITWEB_FILES += static/gitweb.min.js
-+GITWEB_JS = static/gitweb.min.js
-+all:: static/gitweb.min.js
-+static/gitweb.min.js: static/gitweb.js GITWEB-BUILD-OPTIONS
-      $(QUIET_GEN)$(JSMIN) <$< >$@
-  else
--GITWEB_FILES += gitweb.js
-+GITWEB_FILES += static/gitweb.js
-  endif
+* js/try-to-free-stackable (2010-05-08) 2 commits
+ - Do not call release_pack_memory in malloc wrappers when GIT_TRACE is used
+ - Have set_try_to_free_routine return the previous routine
+ (this branch uses np/malloc-threading.)
 
-  ifdef CSSMIN
--GITWEB_FILES += gitweb.min.css
--GITWEB_CSS = gitweb.min.css
--all:: gitweb.min.css
--gitweb.min.css: gitweb.css GITWEB-BUILD-OPTIONS
-+GITWEB_FILES += static/gitweb.min.css
-+GITWEB_CSS = static/gitweb.min.css
-+all:: static/gitweb.min.css
-+static/gitweb.min.css: static/gitweb.css GITWEB-BUILD-OPTIONS
-      $(QUIET_GEN)$(CSSMIN) <$ >$@
-  else
--GITWEB_FILES += gitweb.css
-+GITWEB_FILES += static/gitweb.css
-  endif
+Should be Ok for 'next'.
 
--GITWEB_FILES += git-logo.png git-favicon.png
-+GITWEB_FILES += static/git-logo.png static/git-favicon.png
+* jn/gitweb-syntax-highlight (2010-04-27) 2 commits
+ - gitweb: Refactor syntax highlighting support
+ - gitweb: Syntax highlighting support
 
-  GITWEB_REPLACE = \
-      -e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
-@@ -147,12 +149,13 @@ gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
-  install: all
-      $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
-      $(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
--    $(INSTALL) -m 644 $(GITWEB_FILES)    '$(DESTDIR_SQ)$(gitwebdir_SQ)'
-+    $(MKDIR) -p '$(DESTDIR_SQ)$(gitwebfile_SQ)'
-+    $(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebfile_SQ)'
+* jn/maint-amend-missing-name (2010-05-02) 1 commit
+  (merged to 'next' on 2010-05-09 at 9023332)
+ + commit --amend: cope with missing display name
 
-  ### Cleaning rules
+* rs/diff-no-minimal (2010-05-02) 1 commit
+  (merged to 'next' on 2010-05-09 at 6c74aa0)
+ + git diff too slow for a file
 
-  clean:
--    $(RM) gitweb.cgi gitweb.min.js gitweb.min.css GITWEB-BUILD-OPTIONS
-+    $(RM) gitweb.cgi static/gitweb.min.js static/gitweb.min.css 
-GITWEB-BUILD-OPTIONS
+* ab/test-cleanup (2010-05-07) 2 commits
+ - Turn setup code in t2007-checkout-symlink.sh into a test
+ - Move t6000lib.sh to lib-*
 
-  .PHONY: all clean install .FORCE-GIT-VERSION-FILE FORCE
+Should be Ok for 'next'.
 
-diff --git a/gitweb/README b/gitweb/README
-index 71742b3..5787260 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -80,24 +80,26 @@ You can specify the following configuration 
-variables when building GIT:
-     Points to the location where you put gitweb.css on your web server
-     (or to be more generic, the URI of gitweb stylesheet).  Relative to the
-     base URI of gitweb.  Note that you can setup multiple stylesheets from
--   the gitweb config file.  [Default: gitweb.css (or gitweb.min.css if the
--   CSSMIN variable is defined / CSS minifier is used)]
-+   the gitweb config file.  [Default: static/gitweb.css (or
-+   static/gitweb.min.css if the CSSMIN variable is defined / CSS minifier
-+    is used)]
-   * GITWEB_LOGO
-     Points to the location where you put git-logo.png on your web server
-     (or to be more generic URI of logo, 72x27 size, displayed in top right
-     corner of each gitweb page, and used as logo for Atom feed).  Relative
--   to base URI of gitweb.  [Default: git-logo.png]
-+   to base URI of gitweb.  [Default: static/git-logo.png]
-   * GITWEB_FAVICON
-     Points to the location where you put git-favicon.png on your web server
-     (or to be more generic URI of favicon, assumed to be image/png type;
-     web browsers that support favicons (website icons) may display them
-     in the browser's URL bar and next to site name in bookmarks).  Relative
--   to base URI of gitweb.  [Default: git-favicon.png]
-+   to base URI of gitweb.  [Default: static/git-favicon.png]
-   * GITWEB_JS
-     Points to the localtion where you put gitweb.js on your web server
-     (or to be more generic URI of JavaScript code used by gitweb).
--   Relative to base URI of gitweb.  [Default: gitweb.js (or gitweb.min.js
--   if JSMIN build variable is defined / JavaScript minifier is used)]
-+   Relative to base URI of gitweb.  [Default: static/gitweb.js (or
-+   static/gitweb.min.js if JSMIN build variable is defined / JavaScript
-+   minifier is used)]
-   * GITWEB_CONFIG
-     This Perl file will be loaded using 'do' and can be used to 
-override any
-     of the options above as well as some other options -- see the "Runtime
-diff --git a/gitweb/gitweb.css b/gitweb/static/gitweb.css
-similarity index 100%
-rename from gitweb/gitweb.css
-rename to gitweb/static/gitweb.css
-diff --git a/gitweb/gitweb.js b/gitweb/static/gitweb.js
-similarity index 100%
-rename from gitweb/gitweb.js
-rename to gitweb/static/gitweb.js
-diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
-index 5a734b1..b70b891 100644
---- a/t/gitweb-lib.sh
-+++ b/t/gitweb-lib.sh
-@@ -19,9 +19,9 @@ our \$site_name = '[localhost]';
-  our \$site_header = '';
-  our \$site_footer = '';
-  our \$home_text = 'indextext.html';
--our @stylesheets = ('file:///$TEST_DIRECTORY/../gitweb/gitweb.css');
--our \$logo = 'file:///$TEST_DIRECTORY/../gitweb/git-logo.png';
--our \$favicon = 'file:///$TEST_DIRECTORY/../gitweb/git-favicon.png';
-+our @stylesheets = ('file:///$TEST_DIRECTORY/../gitweb/static/gitweb.css');
-+our \$logo = 'file:///$TEST_DIRECTORY/../gitweb/static/git-logo.png';
-+our \$favicon = 'file:///$TEST_DIRECTORY/../gitweb/static/git-favicon.png';
-  our \$projects_list = '';
-  our \$export_ok = '';
-  our \$strict_export = '';
--- 
-1.7.1.13.g35592.dirty
+* by/blame-doc-m-c (2010-05-06) 1 commit
+  (merged to 'next' on 2010-05-09 at c975ad5)
+ + blame-options.txt: Add default value for `-M/-C` options.
+
+* by/log-follow (2010-05-10) 4 commits
+  (merged to 'next' on 2010-05-10 at f4ce9f8)
+ + tests: rename duplicate t4205
+  (merged to 'next' on 2010-05-09 at d97e924)
+ + Make git log --follow find copies among unmodified files.
+ + Make diffcore_std only can run once before a diff_flush
+ + Add a macro DIFF_QUEUE_CLEAR.
+
+* jn/notes-doc (2010-05-08) 8 commits
+ - Documentation/notes: nitpicks
+ - Documentation/notes: clean up description of rewriting configuration
+ - Documentation/notes: simplify treatment of default display refs
+ - Documentation/log: add a CONFIGURATION section
+ - Documentation/notes: simplify treatment of default notes ref
+ - Documentation/notes: add configuration section
+ - Documentation/notes: describe content of notes blobs
+ - Documentation/notes: document format of notes trees
+
+* mg/advice-statushints (2010-04-22) 2 commits
+  (merged to 'next' on 2010-05-09 at 4642509)
+ + wt-status: take advice.statusHints seriously
+ + t7508: test advice.statusHints
+
+* cb/maint-stash-orphaned-file (2010-04-18) 2 commits
+  (merged to 'next' on 2010-05-04 at 38488ba)
+ + stash tests: stash can lose data in a file removed from the index
+ + stash: Don't overwrite files that have gone from the index
+
+(has been in 'next' since 2010-04-22)
+
+* jn/maint-bundle (2010-04-19) 2 commits
+  (merged to 'next' on 2010-05-04 at f2086f5)
+ + fix "bundle --stdin" segfault
+ + t5704 (bundle): add tests for bundle --stdin
+
+(has been in 'next' since 2010-04-22)
+
+* pb/patch-id-plus (2010-04-19) 2 commits
+  (merged to 'next' on 2010-05-04 at 59881b8)
+ + patch-id: Add support for mbox format
+ + patch-id: extract parsing one diff out of generate_id_list
+
+(has been in 'next' since 2010-04-22)
+
+* rr/doc-submitting (2010-04-19) 1 commit
+  (merged to 'next' on 2010-05-04 at 5f040bd)
+ + SubmittingPatches: Add new section about what to base work on
+
+(has been in 'next' since 2010-04-22)
+
+* st/remote-tags-no-tags (2010-04-20) 2 commits
+  (merged to 'next' on 2010-05-09 at fa9e04e)
+ + remote add: add a --[no-]tags option
+ + Honor "tagopt = --tags" configuration option
+
+* cb/assume-unchanged-fix (2010-05-01) 2 commits
+ - Documentation: git-add does not update files marked "assume unchanged"
+ - do not overwrite files marked "assume unchanged"
+
+* jn/fsck-ident (2010-04-24) 1 commit
+  (merged to 'next' on 2010-05-09 at 0d36355)
+ + fsck: check ident lines in commit objects
+
+There also was a companion patch to fast-import to deal with foreign SCM
+interface that may not have human-readable author identifier.
+
+* jn/gitweb-caching-prep (2010-04-24) 5 commits
+  (merged to 'next' on 2010-05-09 at ceb4dad)
+ + gitweb: Move generating page title to separate subroutine
+ + gitweb: Add custom error handler using die_error
+ + gitweb: Use nonlocal jump instead of 'exit' in die_error
+ + gitweb: href(..., -path_info => 0|1)
+ + Export more test-related variables when running external tests
+ (this branch shares commits with jn/gitweb-fastcgi.)
+
+* jn/gitweb-install (2010-05-01) 2 commits
+  (merged to 'next' on 2010-05-09 at 9ea6cad)
+ + gitweb: Create install target for gitweb in Makefile
+ + gitweb: Improve installation instructions in gitweb/INSTALL
+
+* jn/gitweb-our-squelch (2010-04-30) 1 commit
+  (merged to 'next' on 2010-05-09 at 060726a)
+ + gitweb: Silence 'Variable VAR may be unavailable' warnings
+
+* jn/maint-request-pull (2010-05-07) 3 commits
+ + t5150: protect backslash with backslash in shell
+ + request-pull: protect against OPTIONS_KEEPDASHDASH from environment
+ + tests for request-pull
+ (this branch is used by jn/request-pull.)
+
+* jn/request-pull (2010-05-10) 3 commits
+  (merged to 'next' on 2010-05-10 at fcae760)
+ + tests: chmod +x t5150
+  (merged to 'next' on 2010-05-09 at 05aadd6)
+ + adapt request-pull tests for new pull request format
+ + Merge branch 'jn/maint-request-pull' into jn/request-pull
+ (this branch uses jn/maint-request-pull.)
+
+* jn/shortlog (2010-05-03) 5 commits
+  (merged to 'next' on 2010-05-09 at efd1311)
+ + pretty: Respect --abbrev option
+ + shortlog: Document and test --format option
+ + t4201 (shortlog): Test output format with multiple authors
+ + t4201 (shortlog): guard setup with test_expect_success
+ + Documentation/shortlog: scripted users should not rely on implicit HEAD
+
+* wp/pretty-enhancement (2010-05-08) 4 commits
+  (merged to 'next' on 2010-05-09 at eeaa4dc)
+ + pretty: initialize new cmt_fmt_map to 0
+ + pretty: add aliases for pretty formats
+ + pretty: add infrastructure for commit format aliases
+ + pretty: make it easier to add new formats
+
+* jn/t7006-fixup (2010-04-14) 1 commit
+  (merged to 'next' on 2010-05-04 at 490ab5d)
+ + t7006: guard cleanup with test_expect_success
+
+(has been in 'next' since 2010-04-22)
+
+* js/maint-receive-pack-symref-alias (2010-04-19) 3 commits
+  (merged to 'next' on 2010-05-04 at 259f4f1)
+ + t5516-fetch-push.sh: style cleanup
+ + receive-pack: detect aliased updates which can occur with symrefs
+ + receive-pack: switch global variable 'commands' to a parameter
+
+(has been in 'next' since 2010-04-22)
+
+* sp/maint-dumb-http-pack-reidx (2010-04-19) 12 commits
+  (merged to 'next' on 2010-05-04 at 166443a)
+ + http.c::new_http_pack_request: do away with the temp variable filename
+ + http-fetch: Use temporary files for pack-*.idx until verified
+ + http-fetch: Use index-pack rather than verify-pack to check packs
+ + Allow parse_pack_index on temporary files
+ + Extract verify_pack_index for reuse from verify_pack
+ + Introduce close_pack_index to permit replacement
+ + http.c: Remove unnecessary strdup of sha1_to_hex result
+ + http.c: Don't store destination name in request structures
+ + http.c: Drop useless != NULL test in finish_http_pack_request
+ + http.c: Tiny refactoring of finish_http_pack_request
+ + t5550-http-fetch: Use subshell for repository operations
+ + http.c: Remove bad free of static block
+
+(has been in 'next' since 2010-04-22)
+
+* hg/id-munging (2010-04-06) 2 commits
+ - convert: Keep foreign $Id$ on checkout.
+ - convert: Safer handling of $Id$ contraction.
+
+* jn/submodule-basic-test (2010-04-10) 3 commits
+  (merged to 'next' on 2010-05-04 at 0bec27a)
+ + t7400: clarify submodule update tests
+ + t7400: clarify 'submodule add' tests
+ + t7400: split setup into multiple tests
+
+(has been in 'next' since 2010-04-22)
+
+* np/index-pack-memsave (2010-04-12) 3 commits
+  (merged to 'next' on 2010-05-04 at 366b014)
+ + index-pack: smarter memory usage when appending objects
+ + index-pack: rationalize unpack_entry_data()
+ + index-pack: smarter memory usage when resolving deltas
+
+(has been in 'next' since 2010-04-22)
+
+* jc/am-3-show-corrupted-patch (2010-04-09) 1 commit
+  (merged to 'next' on 2010-05-04 at 951f0e6)
+ + am -3: recover the diagnostic messages for corrupt patches
+
+(has been in 'next' since 2010-04-22)
+
+* jc/maint-no-reflog-expire-unreach-for-head (2010-04-09) 3 commits
+  (merged to 'next' on 2010-05-04 at d23a180)
+ + reflog --expire-unreachable: special case entries in "HEAD" reflog
+ + more war on "sleep" in tests
+ + Document gc.<pattern>.reflogexpire variables
+
+(has been in 'next' since 2010-04-22)
+
+* cw/maint-exec-defpath (2010-04-15) 2 commits
+  (merged to 'next' on 2010-05-04 at 8d1591f)
+ + autoconf: Check if <paths.h> exists and set HAVE_PATHS_H
+ + exec_cmd.c: replace hard-coded path list with one from <paths.h>
+
+(has been in 'next' since 2010-04-22)
+
+* tr/word-diff (2010-04-14) 1 commit
+  (merged to 'next' on 2010-05-04 at d191b25)
+ + diff: add --word-diff option that generalizes --color-words
+
+(has been in 'next' since 2010-04-22)
+There are gitk patches that go with this series.
+
+* sp/maint-describe-tiebreak-with-tagger-date (2010-04-12) 5 commits
+  (merged to 'next' on 2010-05-04 at af2d605)
+ + describe: Break annotated tag ties by tagger date
+ + tag.c: Parse tagger date (if present)
+ + tag.c: Refactor parse_tag_buffer to be saner to program
+ + tag.h: Remove unused signature field
+ + tag.c: Correct indentation
+
+(has been in 'next' since 2010-04-22)
+
+* jc/status-show-ignored (2010-05-01) 6 commits
+  (merged to 'next' on 2010-05-04 at 8b32120)
+ + wt-status: fix 'fprintf' compilation warning
+ + status: --ignored option shows ignored files
+ + wt-status: rename and restructure status-print-untracked
+ + wt-status: collect ignored files
+ + wt-status: plug memory leak while collecting untracked files
+ + wt-status: remove unused workdir_untracked member
+
+(has been in 'next' since 2010-05-01)
+
+I am negative about conflating the JSON output to the mix at this point.
+Let's stabilize "status" with the existing --porcelain/-z option first.
+
+* np/malloc-threading (2010-04-08) 2 commits
+  (merged to 'next' on 2010-05-04 at 1b0567f)
+ + Thread-safe xmalloc and xrealloc needs a recursive mutex
+ + Make xmalloc and xrealloc thread-safe
+ (this branch is used by js/try-to-free-stackable.)
+
+(has been in 'next' since 2010-04-10)
+
+The fix should eventually go to 'maint' and 'master'.
+
+* js/async-thread (2010-03-09) 7 commits
+ - Enable threaded async procedures whenever pthreads is available
+  (merged to 'next' on 2010-05-04 at 2644e74)
+ + Dying in an async procedure should only exit the thread, not the process.
+ + Reimplement async procedures using pthreads
+ + Windows: more pthreads functions
+ + Fix signature of fcntl() compatibility dummy
+ + Make report() from usage.c public as vreportf() and use it.
+ + Modernize t5530-upload-pack-error.
+
+(all except for the tip has been in 'next' since 2010-03-20).
+
+* sr/remote-helper-export (2010-04-12) 9 commits
+  (merged to 'next' on 2010-05-04 at 519ab16)
+ + t5800: testgit helper requires Python support
+ + Makefile: Simplify handling of python scripts
+ + remote-helpers: add tests for testgit helper
+ + remote-helpers: add testgit helper
+ + remote-helpers: add support for an export command
+ + remote-helpers: allow requesing the path to the .git directory
+ + fast-import: always create marks_file directories
+ + clone: also configure url for bare clones
+ + clone: pass the remote name to remote_get
+ (this branch is used by jp/hold-string-list-sanity.)
+
+(has been in 'next' since 2010-04-12)
+
+* ld/discovery-limit-to-fs (2010-04-04) 6 commits
+ - write-index: check and warn when worktree crosses a filesystem boundary
+  (merged to 'next' on 2010-05-04 at b7118ad)
+ + Rename ONE_FILESYSTEM to DISCOVERY_ACROSS_FILESYSTEM
+ + GIT_ONE_FILESYSTEM: flip the default to stop at filesystem boundaries
+ + Add support for GIT_ONE_FILESYSTEM
+ + truncate cwd string before printing error message
+ + config.c: remove static keyword from git_env_bool()
+
+(all except for the tip has been in 'next' since 2010-04-07)
+
+The tip one is a bit iffy.
+
+* em/checkout-orphan (2010-03-21) 1 commit
+  (merged to 'next' on 2010-05-04 at ddb45fc)
+ + git checkout: create unparented branch by --orphan
+
+(has been in 'next' since 2010-03-28)
+
+Perhaps needs a bit of documentation updates, describing the "going open
+source" scenario.
+
+* ar/config-from-command-line (2010-03-26) 2 commits
+  (merged to 'next' on 2010-05-04 at 2962717)
+ + Use strbufs instead of open-coded string manipulation
+ + Allow passing of configuration parameters in the command line
+
+(has been in 'next' since 2010-04-07)
+
+----------------------------------------------------------------
+[Dropped]
+
+* eb/crlf (2010-05-08) 4 commits
+ . Add per-repository eol normalization
+ . Pass eol conv mode as an argument instead of using global auto_crlf
+ . Add tests for per-repository eol normalization
+ . Add "core.eolStyle" variable to control end-of-line conversion
+
+Perhaps will be rerolled after discussion settles.
