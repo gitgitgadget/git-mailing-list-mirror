@@ -1,7 +1,8 @@
 From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: [PATCH v3 0/5] End-of-line normalization, redesigned
-Date: Thu, 13 May 2010 01:00:50 +0200
-Message-ID: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
+Subject: [PATCH v3 1/5] autocrlf: Make it work also for un-normalized repositories
+Date: Thu, 13 May 2010 01:00:51 +0200
+Message-ID: <4dc62dfef759eca02dd7debd833b25ac47956370.1273700831.git.eyvind.bernhardsen@gmail.com>
+References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
 Cc: msysGit <msysgit@googlegroups.com>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -10,129 +11,244 @@ Cc: msysGit <msysgit@googlegroups.com>,
 	Finn Arne Gangstad <finnag@pvv.org>,
 	Jay Soffian <jaysoffian@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 13 01:02:08 2010
+X-From: git-owner@vger.kernel.org Thu May 13 01:02:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCKwI-0004sz-5u
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 01:02:06 +0200
+	id 1OCKwK-0004sz-Ch
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 01:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757576Ab0ELXBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 19:01:05 -0400
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:60012 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752309Ab0ELXBD (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758471Ab0ELXBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 19:01:34 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:44545 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753147Ab0ELXBD (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 12 May 2010 19:01:03 -0400
-Received: by ewy8 with SMTP id 8so355525ewy.28
-        for <git@vger.kernel.org>; Wed, 12 May 2010 16:01:00 -0700 (PDT)
+Received: by ey-out-2122.google.com with SMTP id d26so172792eyd.19
+        for <git@vger.kernel.org>; Wed, 12 May 2010 16:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=95pTe+DG92N79lBnyA3dvzW0g5E9QGpkFYlb/yeSBRc=;
-        b=tW5JAPuX/Bhdwu9VskVqexjQQ/lFxnyvXCvQTdlaU6rn/kDPmw09vDHiQW9YBnPuy7
-         u8Qb10QunInluHy6HALs0VrDEz7EzzFeTRKgj7HKQjpUdTU961EoJPCBRt8bfjecsSib
-         1SosMzOvLgG6BUEIuVEW68hN32UCB/+de35VA=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=rR6exBt7izNGUvwo4LXLJq75sjyGWW0vxkMPCiF1eas=;
+        b=f++sAYNXCNcrZwkVIhqO9z5qIK1pM4EMlwC8B+N8qzW3b1WHQNbCJG/O+JT7yx1SqW
+         AsWUcRkn/T+mG3BW1uwT85IgOQX4xUgjDlNKm0ez4VYH8wlACQfdUUatb7N9xD4Tq8h7
+         CEiSslYkYGbONPXWY+wWRy1ytQBAMKr/Ss60c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=wsQP4cpUkdiS/g7dzrBo4xrP0VHF8FLdgnoXgxD4kj/2QYQ9e4t2HDo92z9I20NSJP
-         mQ3vnKal/U7/qOeGruiovbWI7mGjoQHOvQX8y+4SfKG31N+OLjs/liB/FrrGme0w+WGv
-         dgVAB7bF2pF0xWqM3/eVgiU5R9IAKVne10TTU=
-Received: by 10.213.48.148 with SMTP id r20mr3699259ebf.42.1273705260586;
-        Wed, 12 May 2010 16:01:00 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=exUgXY14/GIifbMU6d2/oxsZIG6fM1e20n2JtfvXpzS0ZEEnxk3pKmytpzMoAxk1kp
+         MgsbCjwO5N3FNEvMbIts5h8MEgh3nuE+LcVZmN+T7RRPNX5+UjMlyTn4yn7zSJWcDkUO
+         Y7Dc4lZQ703uIog7Dsa2/9tZTqVHEflOAEJmI=
+Received: by 10.213.48.5 with SMTP id p5mr945424ebf.0.1273705261913;
+        Wed, 12 May 2010 16:01:01 -0700 (PDT)
 Received: from localhost.localdomain (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 15sm365675ewy.4.2010.05.12.16.00.58
+        by mx.google.com with ESMTPS id 15sm365675ewy.4.2010.05.12.16.01.00
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 May 2010 16:00:59 -0700 (PDT)
+        Wed, 12 May 2010 16:01:01 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.5.gd739a
+In-Reply-To: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146968>
 
-After Finn Arne's bombshell of a patch, I was almost ready to throw in
-the towel on this series.  Then I realized that just because autocrlf
-is safe to use now doesn't mean it solves my CRLF-related problems.
+From: Finn Arne Gangstad <finnag@pvv.org>
 
-The reason is that since autocrlf doesn't require your text files to
-be normalized any more, it also doesn't guarantee that they are.  If
-you need to interoperate with some other SCM, have tools that require
-a specific line ending, or you just like your repository free of CR
-characters, autocrlf doesn't do that.
+Previously, autocrlf would only work well for normalized
+repositories. Any text files that contained CRLF in the repository
+would cause problems, and would be modified when handled with
+core.autocrlf set.
 
-This series does that.  There have been some changes since v2:
+Change autocrlf to not do any conversions to files that in the
+repository already contain a CR. git with autocrlf set will never
+create such a file, or change a LF only file to contain CRs, so the
+(new) assumption is that if a file contains a CR, it is intentional,
+and autocrlf should not change that.
 
-- Series is now based on Finn Arne's "safe autocrlf" patch (I took the
-  one from "pu" since Junio seems to have fixed some whitespace
-  damage).
+The following sequence should now always be a NOP even with autocrlf
+set (assuming a clean working directory):
 
-- Removed core.eolStyle.  This gets more explanation below.
+git checkout <something>
+touch *
+git add -A .    (will add nothing)
+git commit      (nothing to commit)
 
-- Added "crlf=lf" and "crlf=crlf"; they turn on normalization and
-  convert line endings to LF or CRLF on checkout, respectively.  Yes,
-  I know.
+Previously this would break for any text file containing a CR.
 
-- RFC patch: As promised, rename "crlf" attribute as "eolconv",
-  keeping "crlf" as an alias for backwards compatibility.  I think
-  this one might be worth it, but perhaps not as implemented (see the
-  fix I made for git-cvsserver.perl to understand why).
+Some of you may have been folowing Eyvind's excellent thread about
+trying to make end-of-line translation in git a bit smoother.
 
-- RFC patch: Rename "core.autocrlf" as "core.eolconv".  This one is
-  mainly for fun, not so much for inclusion: it might have the same
-  problems as adding an alias for "crlf" and I'm not too bothered
-  about the name any more anyway, as I'll explain below.
+I decided to attack the problem from a different angle: Is it possible
+to make autocrlf behave non-destructively for all the previous problem cases?
 
+Stealing the problem from Eyvind's initial mail (paraphrased and
+summarized a bit):
 
-So if I've removed eolStyle, how does the user say what line endings
-to use for a normalized text file in the working directory?  Using
-"core.autocrlf".  There are three reasons why that isn't completely
-insane:
+1. Setting autocrlf globally is a pain since autocrlf does not work well
+   with CRLF in the repo
+2. Setting it in individual repos is hard since you do it "too late"
+   (the clone will get it wrong)
+3. If someone checks in a file with CRLF later, you get into problems again
+4. If a repository once has contained CRLF, you can't tell autocrlf
+   at which commit everything is sane again
+5. autocrlf does needless work if you know that all your users want
+   the same EOL style.
 
-1. A user who wants CRLFs in text files probably doesn't want them
-   just in files that happen to have normalized line endings.
+I belive that this patch makes autocrlf a safe (and good) default
+setting for Windows, and this solves problems 1-4 (it solves 2 by being
+set by default, which is early enough for clone).
 
-2. You can force CRLF in the working directory now, so if you just
-   want .vcproj files and the like to have CRLFs, you check in a
-   .gitattributes containing "*.vcproj crlf=crlf" or add that line to
-   your .git/info/attributes.  No need to use autocrlf at all.
+I implemented it by looking for CR charactes in the index, and
+aborting any conversion attempt if this is found.
 
-3. With the "safe autocrlf" patch, core.autocrlf is actually safe to
-   use in a non-normalized repository, so "core.autocrlf=true" is no
-   longer an insane default.
+Signed-off-by: Finn Arne Gangstad <finag@pvv.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+---
+ convert.c       |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ t/t0020-crlf.sh |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 101 insertions(+), 0 deletions(-)
 
-Given the intended usage for autocrlf it's not even a particularly bad
-name any more: "I don't care how you do it, I just want CRLFs in my
-text files".  Even "autocrlf=input" isn't that bad if you squint a
-bit.  After a few beers.
-
-Summary: the new "core.autocrlf" is for when you don't want to mess up
-an existing repository with unwanted CRLFs, and the new "crlf"
-mechanisms are for normalizing text files.
-
-
-Eyvind Bernhardsen (4):
-  Add tests for per-repository eol normalization
-  Add per-repository eol normalization
-  Rename "crlf" attribute as "eolconv"
-  Rename "core.autocrlf" config variable as "core.eolconv"
-
-Finn Arne Gangstad (1):
-  autocrlf: Make it work also for un-normalized repositories
-
- Documentation/config.txt        |   26 ++++---
- Documentation/gitattributes.txt |  157 ++++++++++++++++++++++++++++++---------
- attr.c                          |    2 +-
- cache.h                         |    9 ++-
- config.c                        |   13 ++-
- convert.c                       |  115 +++++++++++++++++++++++-----
- environment.c                   |    2 +-
- git-cvsserver.perl              |    8 ++-
- t/t0020-crlf.sh                 |  106 ++++++++++++++++++++++++++
- t/t0025-crlf-auto.sh            |  134 +++++++++++++++++++++++++++++++++
- 10 files changed, 497 insertions(+), 75 deletions(-)
- create mode 100755 t/t0025-crlf-auto.sh
+diff --git a/convert.c b/convert.c
+index 4f8fcb7..46622b0 100644
+--- a/convert.c
++++ b/convert.c
+@@ -120,6 +120,43 @@ static void check_safe_crlf(const char *path, int action,
+ 	}
+ }
+ 
++static int has_cr_in_index(const char *path)
++{
++	int pos, len;
++	unsigned long sz;
++	enum object_type type;
++	void *data;
++	int has_cr;
++	struct index_state *istate = &the_index;
++
++	len = strlen(path);
++	pos = index_name_pos(istate, path, len);
++	if (pos < 0) {
++		/*
++		 * We might be in the middle of a merge, in which
++		 * case we would read stage #2 (ours).
++		 */
++		int i;
++		for (i = -pos - 1;
++		     (pos < 0 && i < istate->cache_nr &&
++		      !strcmp(istate->cache[i]->name, path));
++		     i++)
++			if (ce_stage(istate->cache[i]) == 2)
++				pos = i;
++	}
++	if (pos < 0)
++		return 0;
++	data = read_sha1_file(istate->cache[pos]->sha1, &type, &sz);
++	if (!data || type != OBJ_BLOB) {
++		free(data);
++		return 0;
++	}
++
++	has_cr = memchr(data, '\r', sz) != NULL;
++	free(data);
++	return has_cr;
++}
++
+ static int crlf_to_git(const char *path, const char *src, size_t len,
+                        struct strbuf *buf, int action, enum safe_crlf checksafe)
+ {
+@@ -145,6 +182,13 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 		 */
+ 		if (is_binary(len, &stats))
+ 			return 0;
++
++		/*
++		 * If the file in the index has any CR in it, do not convert.
++		 * This is the new safer autocrlf handling.
++		 */
++		if (has_cr_in_index(path))
++			return 0;
+ 	}
+ 
+ 	check_safe_crlf(path, action, &stats, checksafe);
+@@ -203,6 +247,11 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
+ 		return 0;
+ 
+ 	if (action == CRLF_GUESS) {
++		/* If we have any CR or CRLF line endings, we do not touch it */
++		/* This is the new safer autocrlf-handling */
++		if (stats.cr > 0 || stats.crlf > 0)
++			return 0;
++
+ 		/* If we have any bare CR characters, we're not going to touch it */
+ 		if (stats.cr != stats.crlf)
+ 			return 0;
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index c3e7e32..234a94f 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -453,5 +453,57 @@ test_expect_success 'invalid .gitattributes (must not crash)' '
+ 	git diff
+ 
+ '
++# Some more tests here to add new autocrlf functionality.
++# We want to have a known state here, so start a bit from scratch
++
++test_expect_success 'setting up for new autocrlf tests' '
++	git config core.autocrlf false &&
++	git config core.safecrlf false &&
++	rm -rf .????* * &&
++	for w in I am all LF; do echo $w; done >alllf &&
++	for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr >mixed &&
++	for w in I am all CRLF; do echo $w; done | append_cr >allcrlf &&
++	git add -A . &&
++	git commit -m "alllf, allcrlf and mixed only" &&
++	git tag -a -m "message" autocrlf-checkpoint
++'
++
++test_expect_success 'report no change after setting autocrlf' '
++	git config core.autocrlf true &&
++	touch * &&
++	git diff --exit-code
++'
++
++test_expect_success 'files are clean after checkout' '
++	rm * &&
++	git checkout -f &&
++	git diff --exit-code
++'
++
++cr_to_Q_no_NL () {
++    tr '\015' Q | tr -d '\012'
++}
++
++test_expect_success 'LF only file gets CRLF with autocrlf' '
++	test "$(cr_to_Q_no_NL < alllf)" = "IQamQallQLFQ"
++'
++
++test_expect_success 'Mixed file is still mixed with autocrlf' '
++	test "$(cr_to_Q_no_NL < mixed)" = "OhhereisCRLFQintext"
++'
++
++test_expect_success 'CRLF only file has CRLF with autocrlf' '
++	test "$(cr_to_Q_no_NL < allcrlf)" = "IQamQallQCRLFQ"
++'
++
++test_expect_success 'New CRLF file gets LF in repo' '
++	tr -d "\015" < alllf | append_cr > alllf2 &&
++	git add alllf2 &&
++	git commit -m "alllf2 added" &&
++	git config core.autocrlf false &&
++	rm * &&
++	git checkout -f &&
++	test_cmp alllf alllf2
++'
+ 
+ test_done
+-- 
+1.7.1.3.g448cb.dirty
