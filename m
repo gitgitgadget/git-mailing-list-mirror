@@ -1,169 +1,154 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: Re: gitk: Show notes
-Date: Wed, 12 May 2010 12:56:58 +0400
-Organization: Marine Bridge & Navigation Systems
-Message-ID: <20100512085658.GA22938@tugrik.mns.mnsspb.ru>
-References: <1273566416-3512-1-git-send-email-kirr@mns.spb.ru> <4BE96B41.7010902@drmicha.warpmail.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Advice on choosing git
+Date: Wed, 12 May 2010 13:04:19 +0400
+Message-ID: <20100512090418.GM14069@dpotapov.dyndns.org>
+References: <4BEA4B46.6010009@smartmediacorp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 12 10:55:50 2010
+Cc: git@vger.kernel.org
+To: Noah Silverman <noah@smartmediacorp.com>
+X-From: git-owner@vger.kernel.org Wed May 12 11:04:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OC7jH-0007BW-IO
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 10:55:47 +0200
+	id 1OC7rj-0002bK-Ju
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 11:04:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235Ab0ELIzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 04:55:42 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:37453 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752463Ab0ELIzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 04:55:41 -0400
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1OC7it-0007Ra-T8; Wed, 12 May 2010 12:55:24 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1OC7kQ-0006RV-IK; Wed, 12 May 2010 12:56:58 +0400
+	id S1754352Ab0ELJE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 05:04:26 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:10602 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753929Ab0ELJEY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 05:04:24 -0400
+Received: by ey-out-2122.google.com with SMTP id d26so82229eyd.19
+        for <git@vger.kernel.org>; Wed, 12 May 2010 02:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=wmOL5kXY9YW29nniIA1h8/a8AOlniZ4rnbjzWDh+BJU=;
+        b=LwdqY+gkumpaTUvJstbgkGt868nR24aiPL1p6x/yxHEuRmJxe3AyjM5+5tlFjLjtZI
+         1b7PwWwjkFIg+1vho7EWbIozy29P3ZsFYh26sf1ZWsjZDlIjLYsASIZgeWSWhEZvZAh6
+         TE73REJzM/tcxXoKkiqxbEhOs3RIGl8Fy/zZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=JUFniza5Vs0eM+WuRwztxyqV55fuCBgKrabp9nLGyu8lr7zmSnRl0ucuXerEXK+fSP
+         tLIybGS12qnBOR01vMiib7pq3PcSUZSNg4Z0GINOQy7f4uo6B+BP2VF8TeQwZJhEADDf
+         4n7xlHZ4VGXqpTqOsUBEA9XmA9kS2htBBGosA=
+Received: by 10.103.125.13 with SMTP id c13mr4284085mun.81.1273655061954;
+        Wed, 12 May 2010 02:04:21 -0700 (PDT)
+Received: from localhost (ppp85-141-232-209.pppoe.mtu-net.ru [85.141.232.209])
+        by mx.google.com with ESMTPS id j10sm29086099mue.48.2010.05.12.02.04.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 12 May 2010 02:04:21 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4BE96B41.7010902@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <4BEA4B46.6010009@smartmediacorp.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146933>
 
-On Tue, May 11, 2010 at 04:35:45PM +0200, Michael J Gruber wrote:
-> Kirill Smelkov venit, vidit, dixit 11.05.2010 10:26:
-> > If in git.git I do
-> > 
-> >     $ git notes add -m 'This makes status significantly slower with Dokko' \
-> >         ee6fc514
-> > 
-> > then `git log` shows the note...
-> > 
+On Tue, May 11, 2010 at 11:31:34PM -0700, Noah Silverman wrote:
 > 
-> because --show-notes is the default...
+> 1) Size.  THIS IS MY MAIN CONCERN - If I want to sync my home, office,
+> and server Document directories.  From what I have read, I will
+> effectively have multiple copies of each item on my hard drive, thus
+> eating up a lot of space (One of the "working file"and several in the
+> .git directory.)
+
+Usually, Git is more efficient in disk space than other DVCS, because
+it uses packages to store files. In each package contains deltified
+and then gzip data, and this deltification is done not only relatively
+to direct ancestor but potentially any suitable candidate (there is some
+heuristic to find best). But when you add a new file to the repository
+then it is stored just gzip compressed inside .gzip/objects. Such files
+are often referred as "loose" in Git documentation. When you have a lot
+of loose objects then the garbage collector is activated and packs them
+together. Obviously, you can run "git gc" that manually, or to configure
+the condition what means too many loose objects.
+
+Even those files that are stored as loose objects is never transfered
+separately over network. When you pull or push, all required objects are
+packed together in a single package, and this package is sent to the
+other side. So, on the other side they will never stored as separate
+files. But each push/pull can create a new package, if you have too many
+small packages, git-gc will combine them into a single package.
+
+However, if you have huge multi-media files, I am not sure how Git is
+good at handling them. There were some improvements to Git recently,
+and there is a clone of git that specifically focuses on this problem:
+http://caca.zoy.org/wiki/git-bigfile
+but I don't know much about it.
+
+> several full versions of it on my machine.  This could be a problem for
+> a directory with 100GB or more, especially on a laptop with limited hard
+> drive space.  I know Subversion is a dirty word around here, but it
+> seemed to only annotate and send the changes
+
+Actually, Subversion is very inefficient in space usage (at least,
+when I used it last time). I had a repository where subversion checkout
+took much more space than git working tree and the whole repository with
+all history combine! Obviously, a centralized VCS do not have to store
+the whole history on each client, which saves space, but having the
+whole history with you is very handy, and also it avoids the situation
+where you have a single point of failure.
+
+BTW, git allows to do a shallow clone to save space by not storying the
+whole history (only the specified number of revisions), but I have never
+used this feature, and it has some limitations.
+
 > 
-> > ... but unfortunately gitk does not.
+> 2) Sub-directory selection.  On my laptop, I only want a few
+> sub-directories to be synced up.  I don't need my whole document tree,
+> but just a few directories of things I work on.
+
+Synchronization works on what you committed in your repository. At
+this level, directories are completely irrelevant. Probably, you
+want to have a separate repository for each sub-directory that you
+want to synchronize separately, and then you can bundle them together
+using git-submodules mechanism or trivial shell script that will
+synchronize all of them.
+
+In fact, the basic concept of Git is to treat a single repository
+as whole. So, if you have some pieces that are irrelevant, it is
+better to store them in separate repositories. It will improve
+speed and possible disk usage, because deltifying will have easy
+time to find related files, so compression will be better.
+
 > 
-> ... unless --pretty is given, and gitk uses --pretty.
-> 
-> But what is wrong with gitk --show-notes?
+> Bazaar also looks like a possible option, but I'm not sure it handles
+> drive usage better.  Their website has a lengthy manifesto about how
+> they're better than Git, but I don't have enough experience with either
+> to make an informed decision.
 
-Sorry, you are right. I learned notes just yesterday and forgot one can
-pass such options to gitk.
+Well, this manifesto sounds like written by a marketing guy, and it
+compares Bazaar to rather old version of Git... So I am not going to
+comment on it.
 
-> If you mean to adjust gitk's default to log's current default please say
-> so in the commit message. There's no need to include a longish sample
-> output for that.
+In fact, any meaningful comparison has to consider your workflow. Git
+targets fully distributed workflow, which may even have hierarchy of
+repositories, while Bazaar focus around more centralized solution and
+close to what you have with Subversion. So, people who got used to a
+centralized VCS may find Bazaar easier at the beginning, but IMHO,
+Git is more flexible and when you learn basic principles everything
+feels very natural.
 
-Ok, agree.
+In any case, your main concern was the size of the repository, and
+even this marketing piece from Bazaar admits that Git is better at
+saving disk space.
 
-> Also, I don't think proc do_readcommit needs the notes. The other two
-> places use $args, so it might make sense to prepend --show-notes to the
-> arg list in a central place.
-
-Right.
-
-I've tried to rework the patch -- only I could not find a better way to
-prepend --show-notes to arg, than just define $show_notes based on
-$git_version and use it in 2 appropriate places.
-
-Also, --show-notes was introduced in git-1.6.6.2, but our $git_version
-is 3 digits only, so this will be really enabled for git-1.7.0 .
-
-
-Thanks for the review, and maybe there is a better way to do it?
-
-Kirill
+Here you can see some comparison of a repository size for Git,
+Mercurial, Bazaar:
+http://vcscompare.blogspot.com/2008/06/git-mercurial-bazaar-repository-size.html
 
 
----- 8< ----
 
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Date: Tue, 11 May 2010 12:17:11 +0400
-Subject: [PATCH] gitk: Show notes by default (like git log do)
-
-Starting from ~ git-1.6.6, log, show & whatchanged show notes by default.
-
-On the other hand, gitk does not show notes by default, because under
-the hood it calls `git log --pretty=raw ...` to get the log, and in
-`git log` notes are turned off, when user specifies format or pretty
-settings.
-
-Yes, it is possible to invoke `gitk --show-notes` explicitly, but since
-from user's perspective, gitk is gui enabled git log, it would be
-logical for gitk to show notes by default too for consistency.
-
-In git, --show-notes was introduced in 66b2ed (Fix "log" family not to
-be too agressive about showing notes) which predates 1.6.6.2
-
-Notes can still be supressed with `gitk --no-notes`.
-
-Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
----
- gitk |   15 +++++++++++----
- 1 files changed, 11 insertions(+), 4 deletions(-)
-
-diff --git a/gitk b/gitk
-index 1b0e09a..45e3380 100755
---- a/gitk
-+++ b/gitk
-@@ -313,6 +313,7 @@ proc start_rev_list {view} {
-     global viewactive viewinstances vmergeonly
-     global mainheadid viewmainheadid viewmainheadid_orig
-     global vcanopt vflags vrevs vorigargs
-+    global show_notes
- 
-     set startmsecs [clock clicks -milliseconds]
-     set commitidx($view) 0
-@@ -361,8 +362,8 @@ proc start_rev_list {view} {
-     }
- 
-     if {[catch {
--	set fd [open [concat | git log --no-color -z --pretty=raw --parents \
--			 --boundary $args "--" $files] r]
-+	set fd [open [concat | git log --no-color -z --pretty=raw $show_notes \
-+			--parents --boundary $args "--" $files] r]
-     } err]} {
- 	error_popup "[mc "Error executing git log:"] $err"
- 	return 0
-@@ -456,6 +457,7 @@ proc updatecommits {} {
-     global mainheadid viewmainheadid viewmainheadid_orig pending_select
-     global isworktree
-     global varcid vposids vnegids vflags vrevs
-+    global show_notes
- 
-     set isworktree [expr {[exec git rev-parse --is-inside-work-tree] == "true"}]
-     rereadrefs
-@@ -508,8 +510,8 @@ proc updatecommits {} {
- 	set args $vorigargs($view)
-     }
-     if {[catch {
--	set fd [open [concat | git log --no-color -z --pretty=raw --parents \
--			  --boundary $args "--" $vfilelimit($view)] r]
-+	set fd [open [concat | git log --no-color -z --pretty=raw $show_notes \
-+			--parents --boundary $args "--" $vfilelimit($view)] r]
-     } err]} {
- 	error_popup "[mc "Error executing git log:"] $err"
- 	return
-@@ -11521,6 +11523,11 @@ set NS [expr {$use_ttk ? "ttk" : ""}]
- 
- set git_version [join [lrange [split [lindex [exec git version] end] .] 0 2] .]
- 
-+set show_notes {}
-+if {[package vcompare $git_version "1.6.6.2"] >= 0} {
-+    set show_notes "--show-notes"
-+}
-+
- set runq {}
- set history {}
- set historyindex 0
--- 
-1.7.1.91.ga63a7
+Dmitry
