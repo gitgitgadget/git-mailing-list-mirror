@@ -1,75 +1,106 @@
 From: "Laflen, Brandon (GE, Research)" <laflenb@ge.com>
 Subject: RE: fatal: Unable to find remote helper for 'http'
-Date: Wed, 12 May 2010 16:24:36 -0400
-Message-ID: <811C439C44639E429301EB1083399FA302F18C19@CINMLVEM12.e2k.ad.ge.com>
+Date: Wed, 12 May 2010 16:53:38 -0400
+Message-ID: <811C439C44639E429301EB1083399FA302F18CC6@CINMLVEM12.e2k.ad.ge.com>
 References: <811C439C44639E429301EB1083399FA302F1853F@CINMLVEM12.e2k.ad.ge.com> <20100512164755.GB14710@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed;
 	protocol="application/x-pkcs7-signature";
 	micalg=SHA1;
-	boundary="----=_NextPart_000_01BC_01CAF1EF.9CE8F130"
+	boundary="----=_NextPart_000_01EB_01CAF1F3.AB19C460"
 Cc: <git@vger.kernel.org>
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 12 22:25:49 2010
+To: "Laflen, Brandon (GE, Research)" <laflenb@ge.com>,
+	"Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 12 22:54:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCIUz-0001zr-1F
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 22:25:45 +0200
+	id 1OCIwk-0006AG-1q
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 22:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756887Ab0ELUZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 16:25:39 -0400
-Received: from exprod5og108.obsmtp.com ([64.18.0.186]:39869 "EHLO
-	exprod5og108.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698Ab0ELUZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 16:25:38 -0400
-Received: from source ([12.43.191.1]) (using TLSv1) by exprod5ob108.postini.com ([64.18.4.12]) with SMTP
-	ID DSNKS+sOv606O0OIl4TqSAGp3000qBnL+Wsj@postini.com; Wed, 12 May 2010 13:25:37 PDT
+	id S1755078Ab0ELUyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 16:54:06 -0400
+Received: from exprod5og109.obsmtp.com ([64.18.0.188]:36214 "EHLO
+	exprod5og109.obsmtp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757690Ab0ELUyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 16:54:04 -0400
+Received: from source ([12.43.191.1]) (using TLSv1) by exprod5ob109.postini.com ([64.18.4.12]) with SMTP
+	ID DSNKS+sVaka9SR0U9dECIIIkcvg1pAuLG4c2@postini.com; Wed, 12 May 2010 13:54:03 PDT
 X-GEattachmentname: smime.p7s
 X-GEattachmentsize: 4411
-Received: from unknown (HELO alpmlef01.e2k.ad.ge.com) ([3.159.18.10])
-  by Alpmlip05.e2k.ad.ge.com with ESMTP; 12 May 2010 16:25:35 -0400
-Received: from CINMLVEM12.e2k.ad.ge.com ([3.159.214.56]) by alpmlef01.e2k.ad.ge.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 12 May 2010 16:25:34 -0400
+Received: from unknown (HELO alpmlef06.e2k.ad.ge.com) ([3.159.18.15])
+  by Alpmlip07.e2k.ad.ge.com with ESMTP; 12 May 2010 16:54:02 -0400
+Received: from CINMLVEM12.e2k.ad.ge.com ([3.159.214.56]) by alpmlef06.e2k.ad.ge.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 12 May 2010 16:53:52 -0400
 X-MIMEOLE: Produced By Microsoft Exchange V6.5
 Content-class: urn:content-classes:message
-In-Reply-To: <20100512164755.GB14710@coredump.intra.peff.net>
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 Thread-Topic: fatal: Unable to find remote helper for 'http'
-Thread-Index: Acrx8uIsQocQSHbZR7Ov9Vntg9DGCQAHWLtw
-X-OriginalArrivalTime: 12 May 2010 20:25:34.0860 (UTC) FILETIME=[46BC6CC0:01CAF211]
+Thread-Index: Acrx8uIsQocQSHbZR7Ov9Vntg9DGCQAHWLtwAAECrlA=
+X-OriginalArrivalTime: 12 May 2010 20:53:52.0918 (UTC) FILETIME=[3ADB8360:01CAF215]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146962>
 
 This is a multi-part message in MIME format.
 
-------=_NextPart_000_01BC_01CAF1EF.9CE8F130
+------=_NextPart_000_01EB_01CAF1F3.AB19C460
 Content-Type: text/plain;
 	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
+
+My problem is solved.  I did the following:
+
+Started in a new directory.  Then ran the following commands
+
+make prefix=<git_install_path> CURLDIR=<curl_install_path>
+NO_R_TO_GCC_LINKER=YesPlease EXPATDIR=<expat_install_path> all
+
+make prefix=<git_install_path> CURLDIR=<curl_install_path>
+NO_R_TO_GCC_LINKER=YesPlease EXPATDIR=<expat_install_path> install
+
+
+There are three differences:
+
+1) The NO_R_TO_GCC_LINKER directive
+2) Bypassed the configure script altogether
+3) Included the path directives for curl and expat in both "make all" and
+"make install" steps
+
+Not sure which were necessary.
+
+
+Cheers.
+
+
+
+
+-----Original Message-----
+From: Laflen, Brandon (GE, Research) 
+Sent: Wednesday, May 12, 2010 4:25 PM
+To: 'Jeff King'
+Cc: git@vger.kernel.org
+Subject: RE: fatal: Unable to find remote helper for 'http'
 
 Thank you for your responses.  I downloaded, make'd, and installed the most
 recent versions of curl and expat as part of this process.  I used the
 following commands to make and install git:
 
 ./configure --prefix=<git_install_path> --with-curl=<curl_install_path>
---with-expat=<expat_install_path>
-make all
-make install
+--with-expat=<expat_install_path> make all make install
 
 
 Thank you
 
 
 -----Original Message-----
-From: Jeff King [mailto:peff@peff.net] 
+From: Jeff King [mailto:peff@peff.net]
 Sent: Wednesday, May 12, 2010 12:48 PM
 To: Laflen, Brandon (GE, Research)
 Cc: git@vger.kernel.org
@@ -91,7 +122,7 @@ would have noticed that you didn't have curl installed and switched it off.
 
 -Peff
 
-------=_NextPart_000_01BC_01CAF1EF.9CE8F130
+------=_NextPart_000_01EB_01CAF1F3.AB19C460
 Content-Type: application/x-pkcs7-signature;
 	name="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -165,16 +196,16 @@ xZqDs1lJp3n4LzRwr24qliX3Ewnt/YJxT7GYL2+vizuPwUENURMhFB4g/WX33/tV7IJmni69BdCF
 7EnYwlk5CNwd+xO3iqe6vB2rbg1aJh24DjGCAtgwggLUAgEBMGwwWTELMAkGA1UEBhMCVVMxITAf
 BgNVBAoTGEdlbmVyYWwgRWxlY3RyaWMgQ29tcGFueTEnMCUGA1UEAxMeR2VuZXJhbCBFbGVjdHJp
 YyBDb21wYW55IENBIElJAg8Ap64AAQAC4XD57cOWYhcwCQYFKw4DAhoFAKCCAcIwGAYJKoZIhvcN
-AQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTAwNTEyMjAyNDM2WjAjBgkqhkiG9w0B
-CQQxFgQU9FxfYDHcP7zMoPD0RaTitNWDEmIwZwYJKoZIhvcNAQkPMVowWDAKBggqhkiG9w0DBzAO
+AQkDMQsGCSqGSIb3DQEHATAcBgkqhkiG9w0BCQUxDxcNMTAwNTEyMjA1MzM4WjAjBgkqhkiG9w0B
+CQQxFgQUNEwKvb4pQHLbic9slaFP4aG/CPYwZwYJKoZIhvcNAQkPMVowWDAKBggqhkiG9w0DBzAO
 BggqhkiG9w0DAgICAIAwDQYIKoZIhvcNAwICAUAwBwYFKw4DAgcwDQYIKoZIhvcNAwICASgwBwYF
 Kw4DAhowCgYIKoZIhvcNAgUwewYJKwYBBAGCNxAEMW4wbDBZMQswCQYDVQQGEwJVUzEhMB8GA1UE
 ChMYR2VuZXJhbCBFbGVjdHJpYyBDb21wYW55MScwJQYDVQQDEx5HZW5lcmFsIEVsZWN0cmljIENv
 bXBhbnkgQ0EgSUkCDwCnrgABAALhcPntw5ZiFzB9BgsqhkiG9w0BCRACCzFuoGwwWTELMAkGA1UE
 BhMCVVMxITAfBgNVBAoTGEdlbmVyYWwgRWxlY3RyaWMgQ29tcGFueTEnMCUGA1UEAxMeR2VuZXJh
 bCBFbGVjdHJpYyBDb21wYW55IENBIElJAg8Ap64AAQAC4XD57cOWYhcwDQYJKoZIhvcNAQEBBQAE
-gYBpkhjSCRjbuG9csjoBYVWdNxqOXvJ+1/LE1paCAt466BTgvbaxUrqb0b4mdF+T+bH3R+F+7fjm
-cbhND2JNOeakyvo/QtrDH2H5S2GVO+zoLK/50nT0ivB/VzWkOhYbxRDPk/dosfxX2eJQ9AAuiKLj
-pM5RxbEGB+ndDpxEtyoWHgAAAAAAAA==
+gYCDkilkl54ajlSudph2uh5+Wv0TXb4PIDFK6XRwh2iePlyyBVLrYoGQbn9ZAXXwZkusN6udcar0
+Gtb3TE7nSx5kNbE8RFMJ0yLUIZDi5BKFks3UHp3t2ku1bqxhX70dkVYn7Iw5nSAQZb7QraUACE1F
+EWY4GqBDF3LX9aZxLYqh/AAAAAAAAA==
 
-------=_NextPart_000_01BC_01CAF1EF.9CE8F130--
+------=_NextPart_000_01EB_01CAF1F3.AB19C460--
