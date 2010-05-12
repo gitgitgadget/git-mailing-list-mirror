@@ -1,93 +1,100 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Show branch information in short output of git status
-Date: Wed, 12 May 2010 09:35:38 -0400
-Message-ID: <20100512133537.GA28956@coredump.intra.peff.net>
-References: <AANLkTikM3B-9wFBuUzwpP2j9FpT34p9yysX-oLg5hZRj@mail.gmail.com>
- <20100505050640.GC8779@coredump.intra.peff.net>
- <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Knittl <knittl89@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed May 12 15:35:47 2010
+From: Eli Barzilay <eli@barzilay.org>
+Subject: [PATCH] Reorganize `git-log' man page to clarify common diff options.
+Date: Wed, 12 May 2010 10:12:17 -0400
+Message-ID: <1273673537-29300-1-git-send-email-eli@barzilay.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 12 16:12:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCC6C-0006vr-Lg
-	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 15:35:45 +0200
+	id 1OCCfg-0004Fg-Qo
+	for gcvg-git-2@lo.gmane.org; Wed, 12 May 2010 16:12:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754441Ab0ELNfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 09:35:40 -0400
-Received: from peff.net ([208.65.91.99]:49437 "EHLO peff.net"
+	id S1752080Ab0ELOMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 May 2010 10:12:19 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:49168 "EHLO barzilay.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754345Ab0ELNfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 09:35:39 -0400
-Received: (qmail 4765 invoked by uid 107); 12 May 2010 13:35:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 12 May 2010 09:35:38 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 12 May 2010 09:35:38 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
+	id S1751849Ab0ELOMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 May 2010 10:12:18 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1OCCfZ-0007d3-5G; Wed, 12 May 2010 10:12:17 -0400
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146949>
 
-On Thu, May 06, 2010 at 02:24:41PM +0200, Knittl wrote:
+This will reduce considerably the common confusion where people miss the
+`--follow' option, and wonder why `-M'/`-C' is not working.
 
->  - initial commit is also printed when there is tracking information
-> (i still haven't managed to create a situation like that. `git branch
-> oldmaster; rm .git/refs/heads/master; git branch master --set-upstream
-> oldmaster` will reset branch master to oldmaster (a bug?))
+* Move the diff options include to after the log-specific flags, and add
+  a "Common diff options" subtitle before them.  (These options apply
+  only when patches are shown, which is not a common use case among
+  newbies, so having them first is confusing.)
 
-Try:
+* Move the `--follow' description to the top of the listed options.  The
+  options before that seem less important: `--full-diff' applies only
+  when patches are shown, `--source' and `--decorate' are less useful
+  with many common commit specifications.
 
-  git branch oldmaster
-  rm .git/refs/heads/master
-  git config branch.master.remote .
-  git config branch.master.merge refs/heads/oldmaster
+* Clarify that `--follow' works only for a single path argument.
 
-That being said, I still get "Initial commit on master". I think that
-stat_tracking_branch just gives up if the branch doesn't exist (which
-does make some sense). So in practice, I think your original and this
-one actually behave the same (sorry, I know that changing it was my
-suggestion).
+Signed-off-by: Eli Barzilay <eli@barzilay.org>
+---
+ Documentation/git-log.txt |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
 
-And no, the "--set-upstream" behavior is not a bug. At least not
-according to the documentation. ;)
-
->  - colors to match output of `git branch` (green: current, red: remote)
->  - output format is copy-pasteable, ahead/behind information is in the
-> same format as in `git branch -v`
-
-I think it's much nicer, though the colors are a bit much for my liking.
-Still, it's configurable, so I don't have to care. :)
-
->  - branch information is still printed by default, i have to look into
-> commandline option parsing first. i was thinking of `git status -v -b`
-> (as in `git checkout -b` to mean branch)
-
-You may also want to have a configuration option if it is the output you
-prefer all the time (similarly, if you are using "git status -s" all the
-time, you might want a config option to make "git status" do what you
-want).
-
-> ---------8<----------------
-> From 82b4481d38ae0cd62030aeea67160656b7c763e2 Mon Sep 17 00:00:00 2001
-> From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
-> Date: Tue, 20 Apr 2010 22:40:54 +0200
-> Subject: [PATCH] Show branch information in short output of git status
-
-This patch looks OK, but:
-
-  1. I think for the final version you can just squash in part 2/2.
-
-  2. Your patch has wrapped lines which make it impossible to apply
-     without fixing up manually. This is a common gmail problem.  See
-     the "gmail" section of SubmittingPatches.
-
--Peff
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 57aa574..7336364 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -23,9 +23,6 @@ each commit introduces are shown.
+ OPTIONS
+ -------
+ 
+-:git-log: 1
+-include::diff-options.txt[]
+-
+ -<n>::
+ 	Limits the number of commits to show.
+ 
+@@ -37,6 +34,10 @@ include::diff-options.txt[]
+ 	and <until>, see "SPECIFYING REVISIONS" section in
+ 	linkgit:git-rev-parse[1].
+ 
++--follow::
++	Continue listing the history of a file beyond renames
++	(works only for a single file).
++
+ --no-decorate::
+ --decorate[=short|full|no]::
+ 	Print out the ref names of any commits that are shown. If 'short' is
+@@ -56,9 +57,6 @@ include::diff-options.txt[]
+ 	the specified paths; this means that "<path>..." limits only
+ 	commits, and doesn't limit diff for those commits.
+ 
+---follow::
+-	Continue listing the history of a file beyond renames.
+-
+ --log-size::
+ 	Before the log message print out its size in bytes. Intended
+ 	mainly for porcelain tools consumption. If git is unable to
+@@ -72,6 +70,11 @@ include::diff-options.txt[]
+ 	to be prefixed with "\-- " to separate them from options or
+ 	refnames.
+ 
++Common diff options
++~~~~~~~~~~~~~~~~~~~
++
++:git-log: 1
++include::diff-options.txt[]
+ 
+ include::rev-list-options.txt[]
+ 
+-- 
+1.7.1
