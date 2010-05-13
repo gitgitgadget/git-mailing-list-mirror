@@ -1,81 +1,64 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: [remote rejected] master -> master (n/a (unpacker error))
-Date: Thu, 13 May 2010 08:05:00 -0400
-Message-ID: <rmiy6fo3t3n.fsf@fnord.ir.bbn.com>
-References: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com>
-	<20100513005218.GA20655@progeny.tock>
-	<AANLkTilz_gbHl_RLyOuvEIdjPoUDIfZTUCpnswdHTiej@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: how to push from  repository with two tracking branches
+Date: Thu, 13 May 2010 14:12:58 +0200
+Message-ID: <201005131412.58675.trast@student.ethz.ch>
+References: <hsgfjn$onv$1@dough.gmane.org> <20100513115747.GC10963@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: "git\@vger.kernel.org List" <git@vger.kernel.org>
-To: Robert Buck <buck.robert.j@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 13 14:05:18 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>
+To: Gelonida <gelonida@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 13 14:13:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCXAB-00073w-DV
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 14:05:15 +0200
+	id 1OCXHs-0002jU-9h
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 14:13:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758836Ab0EMMFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 May 2010 08:05:04 -0400
-Received: from fnord.ir.bbn.com ([192.1.100.210]:61290 "EHLO fnord.ir.bbn.com"
+	id S1758797Ab0EMMNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 08:13:06 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:36852 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754911Ab0EMMFC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 May 2010 08:05:02 -0400
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id 504735747; Thu, 13 May 2010 08:05:00 -0400 (EDT)
-X-Hashcash: 1:20:100513:git@vger.kernel.org::nDXSVRwjTxjXBgtP:00000000000000000000000000000000000000000018Wc
-X-Hashcash: 1:20:100513:buck.robert.j@gmail.com::I8BBYkcr+h36O8ja:000000000000000000000000000000000000001zGX
-X-Hashcash: 1:20:100513:judge.packham@gmail.com::nDXSVRwjTxjXBgtP:000000000000000000000000000000000000009uTp
-X-Hashcash: 1:20:100513:jrnieder@gmail.com::I8BBYkcr+h36O8ja:0000000000000000000000000000000000000000000Cm9s
-In-Reply-To: <AANLkTilz_gbHl_RLyOuvEIdjPoUDIfZTUCpnswdHTiej@mail.gmail.com>
-	(Robert Buck's message of "Thu, 13 May 2010 05:30:43 -0400")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (berkeley-unix)
+	id S1755942Ab0EMMNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 May 2010 08:13:05 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 13 May
+ 2010 14:13:02 +0200
+Received: from thomas.localnet (129.132.210.10) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 13 May
+ 2010 14:13:01 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <20100513115747.GC10963@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146996>
 
---=-=-=
+Jeff King wrote:
+> On Thu, May 13, 2010 at 11:09:11AM +0200, Gelonida wrote:
+> 
+> > I have a repository with two tracking branches ('master' and 'mybranch')
+> > 
+> > with only one tracking branch I can do
+> > git pull
+> > make_local_changes
+> > git commit -a
+> > git push
+> > 
+> > with two tracking branches I will be told off if the other branch has
+> > been updated meanwhile, so what I currently to do is:
+> 
+> How about "git push origin mybranch" to just push mybranch? You might
+> also want to look at "push.default" in "git help config".
 
+Besides, all successful branch updates go through independently of the
+ones that failed.  So you can push without having all local branches
+up to date.
 
-Robert Buck <buck.robert.j@gmail.com> writes:
-
-> Yes, the repository is shared by several people, and in geographically
-> different locations, ssh-ing to the same host, under different groups.
-> So your recommendation would be to use --shared. But this won't work
-> so well out in the wild will it? Meaning, what if people's accounts
-> are NOT under the same group that is?
-
-Git simply rides on filesystem permissions.  So you choose a group to
-control access to the repository, chgrp -R the repo to that group, and
-config shared=0660.  Then you put people in the group to give them
-access; it doesn't have to be their primary gid.  I don't follow your
-objection; you seem to want to use groups to control access yet not set
-up a group for the repo.
-
-On some systems (e.g. BSD), directories automatically inherit the parent
-dir's group.  On others, you need setgid bit.  I have the impression
-that git will deal with this all correctly if you simply have
-"sharedrepository = 0660" under [core] in config; I would expect it to
-chgrp new files/dirs as needed to match the repo dir's group.
-
-I don't see how chroot would change the issues above.
-
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (NetBSD)
-
-iEYEARECAAYFAkvr6uwACgkQ+vesoDJhHiVsawCbBTkzGRdl/hWwIXokDkjqy9Hw
-vJIAoJEUMgTbC6wetb7BWaJ9opwdjMt7
-=AOdy
------END PGP SIGNATURE-----
---=-=-=--
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
