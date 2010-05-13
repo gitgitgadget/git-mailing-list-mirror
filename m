@@ -1,168 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [remote rejected] master -> master (n/a (unpacker error))
-Date: Wed, 12 May 2010 19:52:19 -0500
-Message-ID: <20100513005218.GA20655@progeny.tock>
-References: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com>
+From: Jonathan Nieder <jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: Initial setup question
+Date: Wed, 12 May 2010 20:04:12 -0500
+Message-ID: <20100513010411.GA26612@progeny.tock>
+References: <4BEAFC62.40409@smartmediacorp.com>
+Reply-To: gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
-	Chris Packham <judge.packham@gmail.com>
-To: Robert Buck <buck.robert.j@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 13 02:52:11 2010
+Content-Transfer-Encoding: 8bit
+Cc: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org, gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+To: Noah Silverman <noah-OMyv7SbxW+RvqA2Dkdf5ddBPR1lH4CV8@public.gmane.org>
+X-From: gitx+bncCPy4qcTgERD2n63fBBoEgkILYQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Thu May 13 03:03:57 2010
 connect(): No such file or directory
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Return-path: <gitx+bncCPy4qcTgERD2n63fBBoEgkILYQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcvg-gitx@m.gmane.org
+Received: from mail-yw0-f167.google.com ([209.85.211.167])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCMel-00051y-QT
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 02:52:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252Ab0EMAv7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 May 2010 20:51:59 -0400
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:62912 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756235Ab0EMAv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 20:51:58 -0400
-Received: by gxk27 with SMTP id 27so432429gxk.1
-        for <git@vger.kernel.org>; Wed, 12 May 2010 17:51:58 -0700 (PDT)
+	(envelope-from <gitx+bncCPy4qcTgERD2n63fBBoEgkILYQ-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1OCMqB-0000fG-H0
+	for gcvg-gitx@m.gmane.org; Thu, 13 May 2010 03:03:55 +0200
+Received: by ywh39 with SMTP id 39sf454639ywh.24
+        for <gcvg-gitx@m.gmane.org>; Wed, 12 May 2010 18:03:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=LXVWdp+yMTtF4IKdXc/1P8m0MTT1ph91pAs0tDTwuXE=;
-        b=nzMgZDPAJ5jNylAJSlV9li1EdqjPo5WrvDEvHbx/aBgurMiG8XNUJXp88ucWeSmqXL
-         wBU6QMO35IZyR1XMjZxehG2Gt8VAR451+rf7kDF5GJccl1rl7L0ZfkhkCvQ52NRINpBw
-         r7aSolXl3O+4VjMZj9QBC73eOtOqkf5OJjc3k=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:in-reply-to:user-agent
+         :x-original-authentication-results:x-original-sender:reply-to
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition:content-transfer-encoding;
+        bh=RFVz9drq8vDPMxSjxTKC5uh/EzgoIs+UWn/bw+HbKIc=;
+        b=nJST0JVDThh0R98Z/I4GRb9Tu9S+iG9FNrMBuk+g1HkrdQF2LCMWyg3QSByh6DbKJ5
+         pP7DhthFRSYat/66v+f+vaRTDyshUwkDu5mHi3IJ94CSBPnsvnj2UZ5enTd9gmLhFoHJ
+         +uYSOXzmKYT+E5gVP1C4RJcuqsC2u1o/hz8FU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=u4huSwVpP72OsZLB0Dpequt4Uz0aV15V+lO/moniSeJpOzXzf4VkTgy0Bs3Mh3viJl
-         FYmIgWv/zXkLlmxlWj0LcMCLG9Q8LUfZsjpiditDayDLJu0+/N0UqTLIRqUKA80hw2lA
-         dbW8SaWdYhz9QQszVrRA8mz4gLOeMo/3ejCN4=
-Received: by 10.101.184.4 with SMTP id l4mr5456233anp.222.1273711917903;
-        Wed, 12 May 2010 17:51:57 -0700 (PDT)
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:date:from:to:cc:subject:message-id
+         :references:mime-version:in-reply-to:user-agent
+         :x-original-authentication-results:x-original-sender:reply-to
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition:content-transfer-encoding;
+        b=5llrBVUybWCqWiQhLw/YWsWcR85OqIuFx1od3kVr7wq5jyBasJToCRFVz3Q9lfGLW9
+         XVnTNxDnHNKjCXvkoBnIXJDPHGfERT3eZSE5OMbxhFudnGIC1OJXK3CUocXloKEtnBgS
+         uSvjdm01wyNR5+5TOmyxViK5oVVleWWLAc5aw=
+Received: by 10.150.168.5 with SMTP id q5mr996587ybe.9.1273712630953;
+        Wed, 12 May 2010 18:03:50 -0700 (PDT)
+X-BeenThere: gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.91.67.25 with SMTP id u25ls11859378agk.7.p; Wed, 12 May 2010 
+	18:03:50 -0700 (PDT)
+Received: by 10.90.41.36 with SMTP id o36mr44856ago.8.1273712630344;
+        Wed, 12 May 2010 18:03:50 -0700 (PDT)
+Received: by 10.90.41.36 with SMTP id o36mr44855ago.8.1273712630310;
+        Wed, 12 May 2010 18:03:50 -0700 (PDT)
+Received: from mail-gw0-f46.google.com (mail-gw0-f46.google.com [74.125.83.46])
+        by gmr-mx.google.com with ESMTP id 18si60991gxk.3.2010.05.12.18.03.49;
+        Wed, 12 May 2010 18:03:49 -0700 (PDT)
+Received-SPF: pass (google.com: domain of jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 74.125.83.46 as permitted sender) client-ip=74.125.83.46;
+Received: by mail-gw0-f46.google.com with SMTP id 19so388609gwj.19
+        for <gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Wed, 12 May 2010 18:03:49 -0700 (PDT)
+Received: by 10.150.253.11 with SMTP id a11mr14248822ybi.245.1273712629118;
+        Wed, 12 May 2010 18:03:49 -0700 (PDT)
 Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id t2sm1326494ani.18.2010.05.12.17.51.56
+        by mx.google.com with ESMTPS id 20sm162218yxe.0.2010.05.12.18.03.47
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 12 May 2010 17:51:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com>
+        Wed, 12 May 2010 18:03:48 -0700 (PDT)
+In-Reply-To: <4BEAFC62.40409-OMyv7SbxW+RvqA2Dkdf5ddBPR1lH4CV8@public.gmane.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146972>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com: 
+	domain of jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 74.125.83.46 as permitted sender) 
+	smtp.mail=jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org; dkim=pass (test mode) header.i=@gmail.com
+X-Original-Sender: jrnieder-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+Precedence: list
+Mailing-list: list gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact gitx+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <gitx.googlegroups.com>
+List-Post: <http://groups.google.com/group/gitx/post?hl=en_US>, 
+	<mailto:gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:gitx+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/gitx?hl=en_US>
+Sender: gitx-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/gitx/subscribe?hl=en_US>, 
+	<mailto:gitx+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/gitx/subscribe?hl=en_US>, 
+	<mailto:gitx+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146973>
 
-Hi Robert,
+Hi Noah,
 
-Robert Buck wrote:
+Noah Silverman wrote:
 
-> error: unable to create temporary sha1 filename ./objects/e6: File ex=
-ists
+> Using Gitx as a gui client.
+> 
+> I have ssh setup, keys, etc.
+> 
+> Can someone help me with the next step of pushing my initial repo up
+> to the server as version 1?
 
-Yeah, this error message is not so great.
+  ssh some.host git init --bare /path/to/repo.git
+  git remote add myrepo some.host:/path/to/repo.git
+  git push myrepo master
 
-The relevant code is in sha1_file.c.
+I don’t know if Gitx has a button for this.
 
-	fd =3D create_tmpfile(tmpfile, sizeof(tmpfile), filename);
-	while (fd < 0 && errno =3D=3D EMFILE && unuse_one_window(packed_git, -=
-1))
-		fd =3D create_tmpfile(tmpfile, sizeof(tmpfile), filename);
-	if (fd < 0) {
-		if (errno =3D=3D EACCES)
-			return error("insufficient permission for adding an object to reposi=
-tory database %s\n", get_object_directory());
-		else
-			return error("unable to create temporary sha1 filename %s: %s\n", tm=
-pfile, strerror(errno));
-	}
-
-create_tmpfile() creates a filename of the form
-=2E/objects/e6/tmp_obj_<random letters> and tries to open that file.
-The random value is based on the current time and the process ID of
-the current process.  If the file exists, it tries again with another
-collection of random letters, up to 16384 times.
-
-In your case, all 16384 trials yielded the same result: file already
-existed.  As a workaround, I=E2=80=99d suggest
-
- rm -f .git/objects/??/tmp_obj_*
-
-but it might be nice to get a listing with "ls -lR .git/objects" first
-for post-mortem analysis.
-
-And presumably the directory filled with temporary files that could
-not be renamed to a proper name for some reason.  Probably a permission=
-s
-problem, as Chris suggested.
-
--- 8< --
-Subject: write_loose_object(): improve error message for some mkstemp f=
-ailures
-
-If the .git/objects/ab/ directory fills up with tmp_obj_ files, the
-result is a cryptic error:
-
-  error: unable to create temporary sha1 filename ./objects/e6: File ex=
-ists
-
-Replace it with the slightly less cryptic
-
-  error: cannot write temporary file under ./objects/e6: all the good f=
-ilenames are taken
-
-Reported-by: Robert Buck <buck.robert.j@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-> As an aside, where the heck is the git bug tracker?
-
-Here is an answer from the last time it came up[1]:
-
- See http://thread.gmane.org/gmane.comp.version-control.git/136500
-
- Short answer: the usual method is to report bugs to the list,
- preferably with a patch for t/ or even better, a fix.=20
-
-> I've searched, and
-> searched, and ... All I found is a Debian tracking system, which
-> appears to have no full text search capabilities.
-
-http://merkel.debian.org/~don/cgi/search.cgi
-http://www.google.com/search?q=3Dsite:bugs.debian.org+"Package:+git"+"f=
-ile+exists"
-
-Thoughts?  Improvements?
+Hope that helps,
 Jonathan
-
-[1] http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/68077=
-8/focus=3D141598
-
- sha1_file.c |    4 ++++
- 1 files changed, 4 insertions(+), 0 deletions(-)
-
-diff --git a/sha1_file.c b/sha1_file.c
-index 28c056e..a2aa301 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2288,6 +2288,10 @@ static int write_loose_object(const unsigned cha=
-r *sha1, char *hdr, int hdrlen,
- 	if (fd < 0) {
- 		if (errno =3D=3D EACCES)
- 			return error("insufficient permission for adding an object to repos=
-itory database %s\n", get_object_directory());
-+		else if (errno =3D=3D EEXIST)
-+			return error("cannot write temporary file under %s: "
-+			             "all the good filenames are taken\n",
-+			             tmpfile);
- 		else
- 			return error("unable to create temporary sha1 filename %s: %s\n", t=
-mpfile, strerror(errno));
- 	}
---=20
-1.7.1
