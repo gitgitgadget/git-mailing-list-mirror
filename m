@@ -1,75 +1,88 @@
-From: Robert Buck <buck.robert.j@gmail.com>
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
 Subject: Re: [RFC/PATCH v3 4/5] Rename "crlf" attribute as "eolconv"
-Date: Thu, 13 May 2010 05:58:45 -0400
-Message-ID: <AANLkTimCraGNet9lCuJGmFNR5JcDRQBTz1yME6GQFo4B@mail.gmail.com>
-References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
-	 <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com>
-	 <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>
-	 <AANLkTilQjSKNYq8NEabcsZc5WWF86kWMWxnTy-mShVgS@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
+Date: Thu, 13 May 2010 12:59:15 +0200
+Message-ID: <961B7250-F65E-4C67-8C5C-6701F68C2FC0@gmail.com>
+References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com> <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Dmitry Potapov <dpotapov@gmail.com>,
+	Robert Buck <buck.robert.j@gmail.com>,
 	Finn Arne Gangstad <finnag@pvv.org>,
 	Jay Soffian <jaysoffian@gmail.com>
 To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu May 13 11:59:00 2010
+X-From: git-owner@vger.kernel.org Thu May 13 12:59:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCVC0-0004eH-0Z
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 11:59:00 +0200
+	id 1OCW8V-0006gK-3L
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 12:59:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758412Ab0EMJ6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 May 2010 05:58:48 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:42676 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758410Ab0EMJ6r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 May 2010 05:58:47 -0400
-Received: by wyb32 with SMTP id 32so738028wyb.19
-        for <git@vger.kernel.org>; Thu, 13 May 2010 02:58:45 -0700 (PDT)
+	id S1758539Ab0EMK7U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 06:59:20 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:63573 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755343Ab0EMK7T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 May 2010 06:59:19 -0400
+Received: by ewy8 with SMTP id 8so468733ewy.28
+        for <git@vger.kernel.org>; Thu, 13 May 2010 03:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=44xM+j8YGnK+HpIMX9ROVqMPLTUXDWnV3EWKyszmmVw=;
-        b=Y25I4XeLxQvfqTVXoVGfIqWqxqx4ORt1mtOaRsF3dynKS9NlLW0smt7YViHqpl684Z
-         B33iN9zkzSsS0XPLehhNj4Vv+xY89d9A04I5TZRdojlI4Qrum3x1rzIxCFRWEQv7vXwW
-         n0TPljU3n0mxcYOf9ahZz9sbML85M4zw5ZR6I=
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=OgjqARqFePE3RL5I2K85E8Zd3aGJHIuR8t80kEUFo/s=;
+        b=gg6bTEYEOnpLC35mxG3oZwdjF6sr+pGPyz/rkiKRybaKV5pmxHMGfbYgldbLz/piXA
+         XdVz9xs++CJrissy6kBL6t/sO7AIIXafaZN2HvzVmu5lOk+lgZXyDia1Bc0A62NvDeu4
+         aTSW3Xt47xRUbgbk/gHy8W5ZemJu78aUJzzDI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=gRnqrApkCVAALDMiuiCZKMi4GIFrpV614DaQFnakkeSahuhqV+7r/ZUczsm7pDdZXW
-         eHpeNjALdTjRfMxX2hY0GRlTUTDu9W6TOu7ty7sRHssC6qum8ivuTBnLugTlVsprCq23
-         LdCZ55k+2xp7IvOf6s7Uuddttv9XomRvsazJo=
-Received: by 10.227.155.82 with SMTP id r18mr7818483wbw.193.1273744725638; 
-	Thu, 13 May 2010 02:58:45 -0700 (PDT)
-Received: by 10.216.7.207 with HTTP; Thu, 13 May 2010 02:58:45 -0700 (PDT)
-In-Reply-To: <AANLkTilQjSKNYq8NEabcsZc5WWF86kWMWxnTy-mShVgS@mail.gmail.com>
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=CstQxFmkkt9SV7wL2hBmTotjajkR1uuDxNPCewGtkstrYldV63GLuTquFLt7C84UrS
+         InfQ6xhdptNXPWQfhFd5JFeVtGyoeGPaQIzVEa8Yim3vSzyf1NkcvW/UZdokd5zP9rlA
+         5kxBNYBXIB2nGJZQt/6QTOsqranXkW5MHJsvo=
+Received: by 10.213.67.207 with SMTP id s15mr1279468ebi.76.1273748358096;
+        Thu, 13 May 2010 03:59:18 -0700 (PDT)
+Received: from [172.16.3.204] (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id 14sm625015ewy.6.2010.05.13.03.59.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 13 May 2010 03:59:17 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146987>
 
-Quick question here, while people would be in the convert.c functions
-when making the above changes. This question is related to detecting
-whether a file is text, but the question could be spun off to a
-different thread if you so wish...
+On 13. mai 2010, at 03.38, Linus Torvalds wrote:
 
-Have you considered skipping the UTF8 BOM and provided that the
-remaining content is considered text allow auto conversions? The check
-is simple, and would cover at least 50% of latin-derived languages.
-Since you have the buffer at hand, and are in the same file
-(convert.c), simply check for an initial EF BB BF. This would fix some
-text files created on Windows (someone had mentioned Notepad I
-believe). Out of the box experience for eol and text detection for
-Windows users would be improved.
+> so now you can write:
+> 
+> 	*.jpg -text
+> 	*.txt text
+> 	*.vcproj eol=crlf
+> 	*.sh eol=lf
+> 	* text=auto
 
-Bob
+[...]
+
+> Doesn't that look finally sane?
+> 
+> Because if we really renaem the attributes, let's rename them _right_.
+
+Beautiful.
+
+Do you agree that "native" eol should only be CRLF if autocrlf is true?  Otherwise, if .gitattributes looks like this:
+
+	*.txt text
+
+git will put CRLFs in .txt files but LFs in .c files, and I don't think that makes much sense.
+-- 
+Eyvind
