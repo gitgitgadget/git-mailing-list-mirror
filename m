@@ -1,85 +1,137 @@
-From: "Mike.lifeguard" <mike.lifeguard@gmail.com>
-Subject: Re: git-svn uses uninitialized value $lc_rev at line 1141
-Date: Thu, 13 May 2010 11:58:07 -0300
-Message-ID: <4BEC137F.1020200@gmail.com>
-References: <4BEB88ED.3080609@gmail.com> <20100513084015.GA20917@sajinet.com.pe>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 0/2] gitweb: Add support for running gitweb as FastCGI 
+	script
+Date: Thu, 13 May 2010 17:13:12 +0000
+Message-ID: <AANLkTilnaHQ4Q8n3GOhYPcYAFi_tT8uSE_uTZhU_QYhK@mail.gmail.com>
+References: <1273236845-6523-1-git-send-email-jnareb@gmail.com>
+	 <201005111258.53388.jnareb@gmail.com>
+	 <20100511120924.GC5220@screwed.box>
+	 <201005111551.21316.jnareb@gmail.com>
+	 <20100513131016.GA5250@screwed.box>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe>
-X-From: git-owner@vger.kernel.org Thu May 13 17:06:18 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@suse.cz>,
+	Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org,
+	Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: Peter Vereshagin <peter@vereshagin.org>
+X-From: git-owner@vger.kernel.org Thu May 13 19:13:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCZzK-0006Gm-JL
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 17:06:14 +0200
+	id 1OCbyK-00059V-5R
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 19:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758939Ab0EMPFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 May 2010 11:05:54 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:45731 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758822Ab0EMPFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 May 2010 11:05:53 -0400
-Received: by vws16 with SMTP id 16so2039vws.19
-        for <git@vger.kernel.org>; Thu, 13 May 2010 08:05:52 -0700 (PDT)
+	id S1756120Ab0EMRNO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 May 2010 13:13:14 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:42239 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755545Ab0EMRNN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 May 2010 13:13:13 -0400
+Received: by pwi10 with SMTP id 10so117463pwi.19
+        for <git@vger.kernel.org>; Thu, 13 May 2010 10:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        bh=7bn0fSe4d7HXKnfXdXUz7lMzmQg2ytrQ+Jrx+hkfB8Y=;
-        b=ZJaHXJ2fJCGcheHD2HvhoI0OycSF7eWVjGhTBOZYjgGKvZMvBZWwTKz01jvqFiT8xs
-         dB9ML97wP2EbDKjZVm009e4qhLGn3jIwHX7u/P0gMgcl+KmOIBYttulgci+X23ZTVJ83
-         oRQ4Rx/6y22RX3YxLScTIuFOiyyaz1e/AUzek=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nt/XnTtx6BuSeC+SJ2mrSERyofnMMsy7qWvC9aRY4yY=;
+        b=qVO9sEkYa1zcP5G7Vs7yYsMN4HiHjwgYJjBELnwq9D/XLZw8XHUx4rANCdDTf0bw37
+         ltTHF2l/hjvwh79zqEyVHy9ldknRbsFMdXTfpI42oZyNh5SXUoaDEVIOajG8uKxhwvxL
+         zhwkZPSVf/xzD0S6d/MLSFpQiD2CFa992rfQA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=Ou5TstYOi69gagmpVwyhvXw44po8uzXhWDNOSJ8zlalOHjy6TzDhm3qJjwSBbVNyJv
-         GCaofSPQuXkbn+mmOCmp9gyL10vFDsPJP5Hr6lhYP7qPnLKmdqU9azbU78V5H21kHngr
-         2QpUUbsnTHeGjZkdMC/OUn4Dv+Rpc7gTJ0cqI=
-Received: by 10.220.122.37 with SMTP id j37mr2333936vcr.234.1273762692783;
-        Thu, 13 May 2010 07:58:12 -0700 (PDT)
-Received: from [192.168.0.2] (hlfxns0169w-142177058040.pppoe-dynamic.High-Speed.ns.bellaliant.net [142.177.58.40])
-        by mx.google.com with ESMTPS id g3sm5980173vcp.4.2010.05.13.07.58.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 13 May 2010 07:58:11 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.23) Gecko/20090817 Thunderbird/2.0.0.23 Mnenhy/0.7.6.0
-In-Reply-To: <20100513084015.GA20917@sajinet.com.pe>
-X-Enigmail-Version: 1.0
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fNpPNTWbuZMvoEYnZ9QCHgOiubJJLe+UdcZ4isYOKtZDwoSMw5GSfzNdCp3dTdC6ky
+         RYgqSsaDn4scl9Iw43BbN0ss3zHEALjtniWBkzW6iqLNnEX84CCC/h9u/VUdsWLFPA35
+         WGQPNCMgzjATVDLX914kM/K61d1TTNvzmr2bw=
+Received: by 10.142.4.31 with SMTP id 31mr6628850wfd.255.1273770792582; Thu, 
+	13 May 2010 10:13:12 -0700 (PDT)
+Received: by 10.231.160.11 with HTTP; Thu, 13 May 2010 10:13:12 -0700 (PDT)
+In-Reply-To: <20100513131016.GA5250@screwed.box>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147016>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+2010/5/13 Peter Vereshagin <peter@vereshagin.org>:
+> Hey Mr(s) Jakub show some good to me!
+> 2010/05/11 15:51:15 +0200 Jakub Narebski <jnareb@gmail.com> =3D> To P=
+eter Vereshagin :
+> JN> On Tue, 11 May 2010, Peter Vereshagin wrote:
+> JN> > 2010/05/11 12:58:50 +0200 Jakub Narebski <jnareb@gmail.com> =3D=
+> To Peter Vereshagin :
+> JN>
+> JN> > > > > I have changed this 'exit' to non-local goto to toplevel.=
+ =C2=A0It could be
+> JN> > > > > done instead by redefining 'exit' subroutine, like shown =
+below, but I
+> JN> > > > > feel that would be hacky if you can change gitweb code (i=
+t is not
+> JN> > > > > black box you should not touch).
+> JN> > > >
+> JN> > > > Right, one shouldn't ever redefine perl built-in functions.=
+ I did only because
+> JN> > > > of no other way to 'get things working'
+> JN> > >
+> JN> > > Why not? =C2=A0For example CGI::Carp redefines 'die' to log e=
+rrors.
+> JN> >
+> JN> > Ouch, sorry, I meant 'last' or something like that.
+> JN>
+> JN> "last" / "last LABEL" is a command, not a function, therefore you=
+ cannot
+> JN> redefine it.
+>
+> it's a flow control statement thus it is a built-in thing same way as=
+ any other
+> functions are explained in a 'perldoc -f'
+> Therefore it is treated by monkeys crowd as function. It's obvious fo=
+r me to
+> stay out here ( here !=3D maillist ) yet in such an environment.
 
-On 10-05-13 05:40 AM, Carlo Marcelo Arenas Belon wrote:
-> this shouldn't happen unless you are doing git svn info in a tree 
-> that has no metadata (or lost it somehow).
+These things are called "operators" in Perl, some of them (like exit)
+you can redefine. Some (like last) you can't. At least not without
+some deep magic.
 
-Even if your tree has no SVN metadata, perl shouldn't be sending me
-errors. Maybe you want to catch the error and git-svn can give me the error.
+> Anyway, I compare last() here =C2=A0with exit() and die() which look =
+to user just
+> like the same kind of: the flow control statements. I guess any perl =
+user who
+> makes things like gitweb ( at least as a CGI-only app ) shouldn't car=
+e about
+> such an internal difference of flow control statements those are
+> hidden/incapsulated inside the implementation of those statements?
+> Needless to mention that the 'last LABEL' ( goto, gosub, ... named th=
+em ) =C2=A0is a
+> bad and a very deprecated style which is every schoolboy is aware abo=
+ut
+> nowadays to keep from using in the application, not system, programmi=
+ng in imho
+> every language.
 
-> does git log show any git-svn-id tags?
+`last LABEL' is not bad or deprecated. It's what you use to get out of
+nested for-loops in Perl:
 
-Yes, it did... though I've since re-cloned the SVN repo since I needed
-to include stuff I had skipped with --ignore-paths. The top commit was
-made to something I had ignored in that way. I don't know if git would
-have lc_rev data in that case.
+    OUTER: for my $i (1 .. 10) {
+        for my $j (1 .. 10) {
+            last OUTER if $i =3D=3D 5 and $j =3D=3D 5;
+        }
+    }
 
-- -Mike
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+goto is also recommended in some cases in Perl. That's because it
+doesn't do the same thing as in C:
 
-iEYEARECAAYFAkvsE3wACgkQst0AR/DaKHvEuwCgkUZ/DF5GAQzwM38ICrkLaDkY
-qWMAn28fO1Jzu2LHVnG7mrKRIM8ZIb+h
-=eG8N
------END PGP SIGNATURE-----
+    # Don't create a stack frame
+    sub foo { goto &bar }
+
+Anyway, arguing over which control flow operator is evil in an
+imperitive language is just splitting hairs. Certain uses of them are
+a bad idea, not the operators themselves.
