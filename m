@@ -1,62 +1,60 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC resend] diff-options: make --patch a synonym for -p
-Date: Thu, 13 May 2010 13:39:40 +0200
-Message-ID: <vpqzl04ghdv.fsf@bauges.imag.fr>
-References: <1273741140.2516.15.camel@wpalmer.simply-domain>
+Subject: Re: Advice on choosing git
+Date: Thu, 13 May 2010 13:42:58 +0200
+Message-ID: <vpqvdasgh8d.fsf@bauges.imag.fr>
+References: <4BEA4B46.6010009@smartmediacorp.com>
+	<201005130018.o4D0I7iI079145@kzsu.stanford.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 13 13:40:28 2010
+Cc: Noah Silverman <noah@smartmediacorp.com>, git@vger.kernel.org
+To: Joe Brenner <doom@kzsu.stanford.edu>
+X-From: git-owner@vger.kernel.org Thu May 13 13:43:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCWmB-0002LJ-Tq
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 13:40:28 +0200
+	id 1OCWov-0003uj-37
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 13:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758762Ab0EMLkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 May 2010 07:40:22 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38769 "EHLO rominette.imag.fr"
+	id S1758770Ab0EMLnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 07:43:11 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:39109 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758759Ab0EMLkV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 May 2010 07:40:21 -0400
+	id S1758708Ab0EMLnJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 May 2010 07:43:09 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o4DBXJWw001569
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o4DBab58012936
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 13 May 2010 13:33:19 +0200
+	Thu, 13 May 2010 13:36:37 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtp (Exim 4.69)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OCWlQ-0002UE-WB; Thu, 13 May 2010 13:39:41 +0200
-In-Reply-To: <1273741140.2516.15.camel@wpalmer.simply-domain> (Will Palmer's message of "Thu\, 13 May 2010 09\:59\:00 +0100")
+	id 1OCWoc-0002Wa-Ut; Thu, 13 May 2010 13:42:59 +0200
+In-Reply-To: <201005130018.o4D0I7iI079145@kzsu.stanford.edu> (Joe Brenner's message of "Wed\, 12 May 2010 17\:18\:07 -0700")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 13 May 2010 13:33:19 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 13 May 2010 13:36:38 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o4DBXJWw001569
+X-MailScanner-ID: o4DBab58012936
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1274355200.86923@AF2HnsBclWJ+pVTiMk50tw
+MailScanner-NULL-Check: 1274355400.23155@XrLeRmD1E7awdEHOD+8jbQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146989>
 
-Will Palmer <wmpalmer@gmail.com> writes:
+Joe Brenner <doom@kzsu.stanford.edu> writes:
 
-> Re-sending, as this seems to have slipped under the radar last time.
-> In case a justification is non-obvious: -p has always meant "patch", and the
-> synonym (-u) has a long-form. I always find myself typing out the long-form
-> --patch, only to be surprised that it doesn't exist. This patch seeks to
-> correct what I can only assume was an oversight.
+> You won't get any benefit out of things like "git diff" either.  The
+> diffs we have (these days at least) don't work well on anything but plain
+> text.
 
-Agreed. I'll still type -p, but explaining to newbies "git log --patch"
-is self-explanatory, while "git log -p" is non-obvious, especially
-when it's different from "git -p log"...
+Not totally true. textconv filter is just great when working when
+word-processors (with the filter being odt2txt or antiword).
 
 -- 
 Matthieu Moy
