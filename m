@@ -1,133 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [RFC PATCH] Make :/ accept a regex rather than a fixed pattern
-Date: Thu, 13 May 2010 15:08:42 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005131457350.3711@i5.linux-foundation.org>
+From: Adam Monsen <haircut@gmail.com>
+Subject: request for help with buildnumber-maven-plugin git integration
+Date: Thu, 13 May 2010 23:22:48 +0000 (UTC)
+Message-ID: <loom.20100514T010951-900@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 14 00:12:20 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 14 01:23:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCgdb-0004Dq-Oi
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 00:12:16 +0200
+	id 1OChkp-000859-9V
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 01:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758643Ab0EMWLy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 May 2010 18:11:54 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:43210 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757797Ab0EMWLv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 May 2010 18:11:51 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4DMAlTK024750
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 13 May 2010 15:10:48 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4DMAlNK023426;
-	Thu, 13 May 2010 15:10:47 -0700
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1756322Ab0EMXXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 19:23:04 -0400
+Received: from lo.gmane.org ([80.91.229.12]:35792 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752221Ab0EMXXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 May 2010 19:23:01 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OChk0-0007hY-KX
+	for git@vger.kernel.org; Fri, 14 May 2010 01:22:56 +0200
+Received: from c-67-183-136-182.hsd1.wa.comcast.net ([67.183.136.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 May 2010 01:22:56 +0200
+Received: from haircut by c-67-183-136-182.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 14 May 2010 01:22:56 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.183.136.182 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100402 Ubuntu/9.10 (karmic) Firefox/3.5.9)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147036>
 
+Justin(?) said, on May 11th:
+> Ah yes I also got that. I disabled the "itest"
+> section of the pom.
+> 
+> I'll send it to you soon.
+> 
+> Regards
+> Justin
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 23 Apr 2010 08:20:20 -0700
-Subject: [PATCH] Make :/ accept a regex rather than a fixed pattern
+Antony Stubbs wrote, on Tue, May 11, 2010 at 12:53 PM:
+> I use my build every day, it definitely works for me. However,
+> yes, I noticed the failure and disabled the tests! ;) but yes, the
+> git integration works fine. I welcome a patch to fix the
+> integration tests...
+> 
+> Regards
+> Antony
+> 
+> On 12/05/2010, at 4:06, Adam Monsen wrote:
+> > Hi there! Sorry to trouble you all. I ran across
+> > http://stackoverflow.com/questions/2685069/maven-buildnumber-plugin-git
+> > , and it led me to you folks. I'm a software engineer on Mifos.
+> >
+> > Do any of you have a working version of buildnumber-maven-plugin
+> > with git support? I tried building from 14001f of
+> > http://github.com/astubbs/buildnumber-maven-plugin/ , but I get
+> > an "embedded error". I think an integration test is failing, and
+> > I forget how to debug these integration tests. The build passes
+> > for me for the upstream code (r11906 of
+> > http://svn.codehaus.org/mojo/trunk/mojo/buildnumber-maven-plugin
+> > ).
+> >
+> > Anyway, I'd like to help, let me know if you'd like to
+> > collaborate.
 
-This also makes it trigger anywhere in the commit message, rather than
-just at the beginning. Which tends to be a lot more useful.
+(also asked on <users@maven.apache.org>)
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
+Maven is a build system used by many Java-based projects. Some folks
+have added Git support, allowing the inclusion of build identifiers
+(like branches and commit hashes) in products of Maven builds. But
+they need help to complete it. Is anyone interested in helping?
 
-I'm re-sending, because after having this in my tree for several weeks 
-now, I actually end up still using it. 
-
-I agree that it's still not a wonderful thing, and it's entirely possible 
-that we should strive to use just HEAD in :/ commit finding rather than 
-all refs we can find, but for at least the kernel, I don't care (since my 
-tree tends to have just one main branch anyway, apart from some random 
-testing stuff I keep around).
-
-But even if we want to limit it to HEAD, that would be a separate patch.
-
-I've personally used it for things like
-
-	git show :/mqueue	# did I apply that 'mqueue' patch?
-	git show :/akpm		# what was the last patch I got from Andrew?
-
-and while in all cases I could admittedly have done exactly the same thing 
-with something like "git log -p -1 --grep=mqueue" instead, I've used it as 
-a nice shortcut.
-
-Of course, I'm still not convinced that :/ was a good feature to begin 
-with. If we had a short form of "--grep" ("-/"?), I would probably happily 
-have written "git log -/akpm" instead. 
-
-So take this patch with a large pinch of salt. It's just not very 
-important.
-
- sha1_name.c |   12 +++++++++---
- 1 files changed, 9 insertions(+), 3 deletions(-)
-
-diff --git a/sha1_name.c b/sha1_name.c
-index bf92417..8cf635a 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -679,8 +679,8 @@ static int handle_one_ref(const char *path,
- 
- /*
-  * This interprets names like ':/Initial revision of "git"' by searching
-- * through history and returning the first commit whose message starts
-- * with the given string.
-+ * through history and returning the first commit whose message matches
-+ * the given regular expression.
-  *
-  * For future extension, ':/!' is reserved. If you want to match a message
-  * beginning with a '!', you have to repeat the exclamation mark.
-@@ -692,12 +692,17 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
- 	struct commit_list *list = NULL, *backup = NULL, *l;
- 	int retval = -1;
- 	char *temp_commit_buffer = NULL;
-+	regex_t regex;
- 
- 	if (prefix[0] == '!') {
- 		if (prefix[1] != '!')
- 			die ("Invalid search pattern: %s", prefix);
- 		prefix++;
- 	}
-+
-+	if (regcomp(&regex, prefix, REG_EXTENDED))
-+		die("Invalid search pattern: %s", prefix);
-+
- 	for_each_ref(handle_one_ref, &list);
- 	for (l = list; l; l = l->next)
- 		commit_list_insert(l->item, &backup);
-@@ -721,12 +726,13 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
- 		}
- 		if (!(p = strstr(p, "\n\n")))
- 			continue;
--		if (!prefixcmp(p + 2, prefix)) {
-+		if (!regexec(&regex, p + 2, 0, NULL, 0)) {
- 			hashcpy(sha1, commit->object.sha1);
- 			retval = 0;
- 			break;
- 		}
- 	}
-+	regfree(&regex);
- 	free(temp_commit_buffer);
- 	free_commit_list(list);
- 	for (l = backup; l; l = l->next)
--- 
-1.7.1.83.g9d02
+This is something we (Mifos) need, so if you do help, know that
+you'll be helping to end world poverty.
