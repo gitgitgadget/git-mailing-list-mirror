@@ -1,75 +1,67 @@
-From: Ryan Ray <ryan.ray@methodologie.com>
-Subject: Git hangs on compressing objects
-Date: Thu, 13 May 2010 13:05:40 -0700
-Message-ID: <AANLkTik4WMqjkqYady6BQAf2OTPLzCeMoedwrGj8s10T@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 0/7] grep: better support for binary files
+Date: Thu, 13 May 2010 22:33:21 +0200
+Message-ID: <4BEC6211.2000309@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 13 22:13:30 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Phil Lawrence <prlawrence@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 13 22:33:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCemg-0001fj-1C
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 22:13:30 +0200
+	id 1OCf68-0004VG-Nd
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 22:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932856Ab0EMUNN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 May 2010 16:13:13 -0400
-Received: from na3sys009aog114.obsmtp.com ([74.125.149.211]:34309 "HELO
-	na3sys009aog114.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S932503Ab0EMUNL convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 May 2010 16:13:11 -0400
-X-Greylist: delayed 428 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 May 2010 16:13:11 EDT
-Received: from source ([209.85.212.173]) by na3sys009aob114.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKS+xdUl/8GIbGJ/o34rGEkLP7NhBqusWB@postini.com; Thu, 13 May 2010 13:13:11 PDT
-Received: by mail-px0-f173.google.com with SMTP id 19so933738pxi.4
-        for <git@vger.kernel.org>; Thu, 13 May 2010 13:13:06 -0700 (PDT)
-Received: by 10.140.248.13 with SMTP id v13mr34511rvh.25.1273781160244; Thu, 
-	13 May 2010 13:06:00 -0700 (PDT)
-Received: by 10.140.174.4 with HTTP; Thu, 13 May 2010 13:05:40 -0700 (PDT)
+	id S1754232Ab0EMUda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 16:33:30 -0400
+Received: from india601.server4you.de ([85.25.151.105]:53151 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751070Ab0EMUd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 May 2010 16:33:29 -0400
+Received: from [10.0.1.100] (p57B7E766.dip.t-dialin.net [87.183.231.102])
+	by india601.server4you.de (Postfix) with ESMTPSA id 5D7962F806A;
+	Thu, 13 May 2010 22:33:27 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147021>
 
-I'm on Mac OS 10.6
+This series improves support of git grep for binary files.  It tries to
+pick the low hanging fruits; at the end you can search _in_ files that
+contain NUL characters, but you can't search _for_ NULs, yet.
 
-ryanray:fhlb2009ar ryan.ray$ git push
-Counting objects: 322, done.
-Delta compression using up to 4 threads.
-^Cmpressing objects:  94% (243/258)
+[PATCH 1/7] grep: add test script for binary file handling
 
-Iv'e tried this countless times today. It just doesn't finish. My
-local dir is 6 revisions ahead of master so I prefer not to can my
-local dir and re-clone.
+	This patch adds a simple test script documenting what git grep
+	can do with binary files.
 
-Any suggestions? Can I figure out which file (243) is hanging it?
+[PATCH 2/7] grep: refactor handling of binary mode options
+[PATCH 3/7] grep: --count over binary
 
-Thanks,
+	These two makes git grep handle counting in binary files like
+	GNU grep does.
 
-Ryan
+[PATCH 4/7] grep: use memmem() for fixed string search
+[PATCH 5/7] grep: continue case insensitive fixed string search after NUL chars
+
+	These two patches make git grep -F work on binary files.
+
+[PATCH 6/7] grep: add regmatch(), a wrapper for REG_STARTEND handling
+[PATCH 7/7] grep: use regmatch() for line matching
+
+	The final patches make git grep work on binary files if the
+	platform's regexec() supports the flag REG_STARTEND.  Our own
+	version in compat/ doesn't, unfortunately.
 
 
-
-
-
---=20
-___________________________________
-
-
-R. Ryan Ray / Se=F1or Developer
-
-Methodologie
-720 Third Avenue, Suite 800
-Seattle, WA 98104-1870
-
-206.399.5063 direct
-206.623.1044 phone
-206.625.0154 fax
-
-http://www.methodologie.com
+ grep.c                 |   70 ++++++++++++++++++++++++++++-------------------
+ t/t7008-grep-binary.sh |   54 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+), 28 deletions(-)
