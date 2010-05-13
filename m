@@ -1,254 +1,112 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: [PATCH v3 1/5] autocrlf: Make it work also for un-normalized repositories
-Date: Thu, 13 May 2010 01:00:51 +0200
-Message-ID: <4dc62dfef759eca02dd7debd833b25ac47956370.1273700831.git.eyvind.bernhardsen@gmail.com>
-References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
-Cc: msysGit <msysgit@googlegroups.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Robert Buck <buck.robert.j@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 13 01:02:09 2010
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [remote rejected] master -> master (n/a (unpacker error))
+Date: Wed, 12 May 2010 17:06:52 -0700
+Message-ID: <AANLkTilfXLdYCIZAu_I5vGTrbI08fbqUpIsjx5yP1q47@mail.gmail.com>
+References: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT <git@vger.kernel.org>
+To: Robert Buck <buck.robert.j@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 13 02:07:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCKwK-0004sz-Ch
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 01:02:08 +0200
+	id 1OCLx9-0005Ai-Kr
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 02:07:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758471Ab0ELXBe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 19:01:34 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:44545 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147Ab0ELXBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 19:01:03 -0400
-Received: by ey-out-2122.google.com with SMTP id d26so172792eyd.19
-        for <git@vger.kernel.org>; Wed, 12 May 2010 16:01:02 -0700 (PDT)
+	id S1756092Ab0EMAGz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 May 2010 20:06:55 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:41405 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755545Ab0EMAGy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 May 2010 20:06:54 -0400
+Received: by qyk13 with SMTP id 13so782911qyk.1
+        for <git@vger.kernel.org>; Wed, 12 May 2010 17:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=rR6exBt7izNGUvwo4LXLJq75sjyGWW0vxkMPCiF1eas=;
-        b=f++sAYNXCNcrZwkVIhqO9z5qIK1pM4EMlwC8B+N8qzW3b1WHQNbCJG/O+JT7yx1SqW
-         AsWUcRkn/T+mG3BW1uwT85IgOQX4xUgjDlNKm0ez4VYH8wlACQfdUUatb7N9xD4Tq8h7
-         CEiSslYkYGbONPXWY+wWRy1ytQBAMKr/Ss60c=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=iJHlxvWmT253TdeU+rZj9UI23+NT4t3HYZYrxcAXtgk=;
+        b=YKsGvQiO+qe9lB0COkHHs4WUwSqvg/Z736SxRWXLejYI5lvF0u/KsH7VtSYN5701A3
+         EcuOoA4vKbfIbDvKjfLUJSpzFRVWHRbCCkvfAnMWDu8amVuX2qxr0DfjmzK0jHqlEzS3
+         M+h4IykS5MLkaVQXzm1PnByZMpFPqqLmhyGPM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=exUgXY14/GIifbMU6d2/oxsZIG6fM1e20n2JtfvXpzS0ZEEnxk3pKmytpzMoAxk1kp
-         MgsbCjwO5N3FNEvMbIts5h8MEgh3nuE+LcVZmN+T7RRPNX5+UjMlyTn4yn7zSJWcDkUO
-         Y7Dc4lZQ703uIog7Dsa2/9tZTqVHEflOAEJmI=
-Received: by 10.213.48.5 with SMTP id p5mr945424ebf.0.1273705261913;
-        Wed, 12 May 2010 16:01:01 -0700 (PDT)
-Received: from localhost.localdomain (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 15sm365675ewy.4.2010.05.12.16.01.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 12 May 2010 16:01:01 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.5.gd739a
-In-Reply-To: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ldYyaEagNqtEAEGAfiWTAJUXSyLAxXME0ZPyPd7lE8dWCC6N58UXhe2z7c8KieRdcp
+         lyIShNuVQPcY/8vWz0rqHUh7tfdAEqgYgOzUL4ObxuW23ZZpHfdVaj82csbrTlBybbdT
+         59X3xbr57ErSD8tfeHZzou6k/huuVcG7Hpydo=
+Received: by 10.229.235.204 with SMTP id kh12mr858980qcb.191.1273709212415; 
+	Wed, 12 May 2010 17:06:52 -0700 (PDT)
+Received: by 10.229.2.26 with HTTP; Wed, 12 May 2010 17:06:52 -0700 (PDT)
+In-Reply-To: <AANLkTinV2U6Lbbl0N7jVAESEi0mZQ_D3slMEYa68vRT4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146969>
 
-From: Finn Arne Gangstad <finnag@pvv.org>
+On Wed, May 12, 2010 at 12:45 PM, Robert Buck <buck.robert.j@gmail.com>=
+ wrote:
+> Today, just after someone else committed to my public repository I
+> started getting errors. Until then Git worked great.
+>
+> Does anyone know what is going on here? Are there particular versions
+> of Git with known issues around this?
+>
+>
+> uname@hostname:~/dev/workspaces/scm-evaluations/welcome.git/install/g=
+it-config$
+> git push
+> Counting objects: 7, done.
+> Delta compression using up to 2 threads.
+> Compressing objects: 100% (4/4), done.
+> Writing objects: 100% (4/4), 922 bytes, done.
+> Total 4 (delta 0), reused 4 (delta 0)
+> error: unable to create temporary sha1 filename ./objects/e6: File
+> exists
+>
+> fatal: failed to write object
+> error: unpack failed: unpacker exited with error code
+> To ssh://git.projectbedrock.com/var/cache/git/welcome.git
+> =C2=A0! [remote rejected] master -> master (n/a (unpacker error))
+> error: failed to push some refs to
+> 'ssh://git.projectbedrock.com/var/cache/git/welcome.git'
 
-Previously, autocrlf would only work well for normalized
-repositories. Any text files that contained CRLF in the repository
-would cause problems, and would be modified when handled with
-core.autocrlf set.
+This is probably a permissions problem on the server. We use git over
+ssh at $dayjob and we need to make sure everyone who pushes to a
+repository on the server is a member of the same group and that the
+repositories are created with "git init --shared" otherwise we run
+into problems like this. Its not too much of an issue for us because
+we have a maintainer model and the maintainers generally have the
+right permissions and don't change frequently.
 
-Change autocrlf to not do any conversions to files that in the
-repository already contain a CR. git with autocrlf set will never
-create such a file, or change a LF only file to contain CRs, so the
-(new) assumption is that if a file contains a CR, it is intentional,
-and autocrlf should not change that.
+I think the "shared" part is probably the problem in this case because
+you can both obviously create files on the server. Rhe problem appears
+to be when one of you needs to update a file (or directory) the other
+created.
 
-The following sequence should now always be a NOP even with autocrlf
-set (assuming a clean working directory):
+To fix your current problem you'll just need to ssh into that server
+and find the  welcome.git/objects directory and check the permissions
+on the "e6" directory and its contents. You will keep running into
+this problem until the permissions/sharing is sorted. Theres probably
+a config variable which dictates the permissions to use when creating
+objects on the server which is changed when you pass the "--shared"
+option to "git init", but I'm not sure what its is (I see some man
+pages in your future).
 
-git checkout <something>
-touch *
-git add -A .    (will add nothing)
-git commit      (nothing to commit)
+> As an aside, where the heck is the git bug tracker? I've searched, an=
+d
+> searched, and ... All I found is a Debian tracking system, which
+> appears to have no full text search capabilities.
 
-Previously this would break for any text file containing a CR.
+You're looking at it bugs, patches, questions all go to this mailing
+list. The archive on gmane[1] is conveniently search-able.
 
-Some of you may have been folowing Eyvind's excellent thread about
-trying to make end-of-line translation in git a bit smoother.
-
-I decided to attack the problem from a different angle: Is it possible
-to make autocrlf behave non-destructively for all the previous problem cases?
-
-Stealing the problem from Eyvind's initial mail (paraphrased and
-summarized a bit):
-
-1. Setting autocrlf globally is a pain since autocrlf does not work well
-   with CRLF in the repo
-2. Setting it in individual repos is hard since you do it "too late"
-   (the clone will get it wrong)
-3. If someone checks in a file with CRLF later, you get into problems again
-4. If a repository once has contained CRLF, you can't tell autocrlf
-   at which commit everything is sane again
-5. autocrlf does needless work if you know that all your users want
-   the same EOL style.
-
-I belive that this patch makes autocrlf a safe (and good) default
-setting for Windows, and this solves problems 1-4 (it solves 2 by being
-set by default, which is early enough for clone).
-
-I implemented it by looking for CR charactes in the index, and
-aborting any conversion attempt if this is found.
-
-Signed-off-by: Finn Arne Gangstad <finag@pvv.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
----
- convert.c       |   49 +++++++++++++++++++++++++++++++++++++++++++++++++
- t/t0020-crlf.sh |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 101 insertions(+), 0 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 4f8fcb7..46622b0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -120,6 +120,43 @@ static void check_safe_crlf(const char *path, int action,
- 	}
- }
- 
-+static int has_cr_in_index(const char *path)
-+{
-+	int pos, len;
-+	unsigned long sz;
-+	enum object_type type;
-+	void *data;
-+	int has_cr;
-+	struct index_state *istate = &the_index;
-+
-+	len = strlen(path);
-+	pos = index_name_pos(istate, path, len);
-+	if (pos < 0) {
-+		/*
-+		 * We might be in the middle of a merge, in which
-+		 * case we would read stage #2 (ours).
-+		 */
-+		int i;
-+		for (i = -pos - 1;
-+		     (pos < 0 && i < istate->cache_nr &&
-+		      !strcmp(istate->cache[i]->name, path));
-+		     i++)
-+			if (ce_stage(istate->cache[i]) == 2)
-+				pos = i;
-+	}
-+	if (pos < 0)
-+		return 0;
-+	data = read_sha1_file(istate->cache[pos]->sha1, &type, &sz);
-+	if (!data || type != OBJ_BLOB) {
-+		free(data);
-+		return 0;
-+	}
-+
-+	has_cr = memchr(data, '\r', sz) != NULL;
-+	free(data);
-+	return has_cr;
-+}
-+
- static int crlf_to_git(const char *path, const char *src, size_t len,
-                        struct strbuf *buf, int action, enum safe_crlf checksafe)
- {
-@@ -145,6 +182,13 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 		 */
- 		if (is_binary(len, &stats))
- 			return 0;
-+
-+		/*
-+		 * If the file in the index has any CR in it, do not convert.
-+		 * This is the new safer autocrlf handling.
-+		 */
-+		if (has_cr_in_index(path))
-+			return 0;
- 	}
- 
- 	check_safe_crlf(path, action, &stats, checksafe);
-@@ -203,6 +247,11 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
- 		return 0;
- 
- 	if (action == CRLF_GUESS) {
-+		/* If we have any CR or CRLF line endings, we do not touch it */
-+		/* This is the new safer autocrlf-handling */
-+		if (stats.cr > 0 || stats.crlf > 0)
-+			return 0;
-+
- 		/* If we have any bare CR characters, we're not going to touch it */
- 		if (stats.cr != stats.crlf)
- 			return 0;
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index c3e7e32..234a94f 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -453,5 +453,57 @@ test_expect_success 'invalid .gitattributes (must not crash)' '
- 	git diff
- 
- '
-+# Some more tests here to add new autocrlf functionality.
-+# We want to have a known state here, so start a bit from scratch
-+
-+test_expect_success 'setting up for new autocrlf tests' '
-+	git config core.autocrlf false &&
-+	git config core.safecrlf false &&
-+	rm -rf .????* * &&
-+	for w in I am all LF; do echo $w; done >alllf &&
-+	for w in Oh here is CRLFQ in text; do echo $w; done | q_to_cr >mixed &&
-+	for w in I am all CRLF; do echo $w; done | append_cr >allcrlf &&
-+	git add -A . &&
-+	git commit -m "alllf, allcrlf and mixed only" &&
-+	git tag -a -m "message" autocrlf-checkpoint
-+'
-+
-+test_expect_success 'report no change after setting autocrlf' '
-+	git config core.autocrlf true &&
-+	touch * &&
-+	git diff --exit-code
-+'
-+
-+test_expect_success 'files are clean after checkout' '
-+	rm * &&
-+	git checkout -f &&
-+	git diff --exit-code
-+'
-+
-+cr_to_Q_no_NL () {
-+    tr '\015' Q | tr -d '\012'
-+}
-+
-+test_expect_success 'LF only file gets CRLF with autocrlf' '
-+	test "$(cr_to_Q_no_NL < alllf)" = "IQamQallQLFQ"
-+'
-+
-+test_expect_success 'Mixed file is still mixed with autocrlf' '
-+	test "$(cr_to_Q_no_NL < mixed)" = "OhhereisCRLFQintext"
-+'
-+
-+test_expect_success 'CRLF only file has CRLF with autocrlf' '
-+	test "$(cr_to_Q_no_NL < allcrlf)" = "IQamQallQCRLFQ"
-+'
-+
-+test_expect_success 'New CRLF file gets LF in repo' '
-+	tr -d "\015" < alllf | append_cr > alllf2 &&
-+	git add alllf2 &&
-+	git commit -m "alllf2 added" &&
-+	git config core.autocrlf false &&
-+	rm * &&
-+	git checkout -f &&
-+	test_cmp alllf alllf2
-+'
- 
- test_done
--- 
-1.7.1.3.g448cb.dirty
+[1] http://news.gmane.org/gmane.comp.version-control.git
