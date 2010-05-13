@@ -1,92 +1,88 @@
-From: Joe Brenner <doom@kzsu.stanford.edu>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: Advice on choosing git
-Date: Wed, 12 May 2010 17:18:07 -0700
-Message-ID: <201005130018.o4D0I7iI079145@kzsu.stanford.edu>
-References: <4BEA4B46.6010009@smartmediacorp.com>
-Cc: git@vger.kernel.org
-To: Noah Silverman <noah@smartmediacorp.com>
-X-From: git-owner@vger.kernel.org Thu May 13 02:18:21 2010
+Date: Wed, 12 May 2010 20:31:32 -0400
+Message-ID: <AANLkTikc6_jZoMzF1VhfJBSk1DRHCNNP3puPT0Z2Usk5@mail.gmail.com>
+References: <4BEA4B46.6010009@smartmediacorp.com> <201005130018.o4D0I7iI079145@kzsu.stanford.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Noah Silverman <noah@smartmediacorp.com>, git@vger.kernel.org
+To: Joe Brenner <doom@kzsu.stanford.edu>
+X-From: git-owner@vger.kernel.org Thu May 13 02:32:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCM84-0000fr-GU
-	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 02:18:20 +0200
+	id 1OCMLg-00068J-S2
+	for gcvg-git-2@lo.gmane.org; Thu, 13 May 2010 02:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756702Ab0EMASP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 May 2010 20:18:15 -0400
-Received: from smtp3.Stanford.EDU ([171.67.219.83]:49516 "EHLO
-	smtp.stanford.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755902Ab0EMASO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 May 2010 20:18:14 -0400
-Received: from smtp.stanford.edu (localhost.localdomain [127.0.0.1])
-	by localhost (Postfix) with SMTP id 422A11A071F;
-	Wed, 12 May 2010 17:18:14 -0700 (PDT)
-Received: from kzsu.stanford.edu (KZSU.Stanford.EDU [171.66.118.90])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp.stanford.edu (Postfix) with ESMTPS id 752621A0717;
-	Wed, 12 May 2010 17:18:12 -0700 (PDT)
-Received: from kzsu.stanford.edu (localhost.stanford.edu [127.0.0.1])
-	by kzsu.stanford.edu (8.13.4/8.13.7) with ESMTP id o4D0I7iI079145;
-	Wed, 12 May 2010 17:18:12 -0700 (PDT)
-	(envelope-from doom@kzsu.stanford.edu)
-In-reply-to: <4BEA4B46.6010009@smartmediacorp.com>
-Comments: In-reply-to Noah Silverman <noah@smartmediacorp.com>
-   message dated "Tue, 11 May 2010 23:31:34 -0700."
-X-Mailer: MH-E 8.2; nmh 1.2; GNU Emacs 24.0.50
-X-Scanned-By: MIMEDefang 2.56 on 171.66.118.47
-X-Greylist: Sender DNS name whitelisted, not delayed by milter-greylist-2.0.2 (kzsu.stanford.edu [127.0.0.1]); Wed, 12 May 2010 17:18:12 -0700 (PDT)
+	id S1755117Ab0EMAb6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 May 2010 20:31:58 -0400
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:43053 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751435Ab0EMAb5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 May 2010 20:31:57 -0400
+Received: by gxk27 with SMTP id 27so425605gxk.1
+        for <git@vger.kernel.org>; Wed, 12 May 2010 17:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gr55j4QvuntyiBEWKdI6vZ/KULTtZCyucN5DNBr+eQ4=;
+        b=hPH/vGLHaI+kzrnTvFCHL0nzGe0sQL5f8uiCNbTf1hXqAmgMjDAGFhmlYj5plkkIXn
+         iPWIiEapEA7rlgOL/HzBuh+r8cmBH08Kxjcg9ugmnprOm4FQ3wneqPqLKdHf+uaQYRT7
+         PM9socbsmwamtC2stJMnaSHhZW8NmNLEpxRAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=u+FC2OFZxtdGXsjROC989By/PyNja9Ki5Jgc8Fo4f4WSrLj+2DS3yCujgfmd5M9NJ6
+         HK0at065CgNbIBH78HUp9sdHUcLcXuGHZ8Lwc2zL4A0GbExe320s0E4bSpMYl/JwgVvm
+         LbmPRKl/XjqhMIJJdNRDuSTBu8fNRp8NU5Jrs=
+Received: by 10.151.2.38 with SMTP id e38mr12008042ybi.78.1273710712868; Wed, 
+	12 May 2010 17:31:52 -0700 (PDT)
+Received: by 10.150.217.12 with HTTP; Wed, 12 May 2010 17:31:32 -0700 (PDT)
+In-Reply-To: <201005130018.o4D0I7iI079145@kzsu.stanford.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/146971>
 
+On Wed, May 12, 2010 at 8:18 PM, Joe Brenner <doom@kzsu.stanford.edu> w=
+rote:
+> Noah Silverman <noah@smartmediacorp.com> wrote:
+>> 1) Size. =A0THIS IS MY MAIN CONCERN - If I want to sync my home, off=
+ice,
+>> and server Document directories. =A0From what I have read, I will
+>> effectively have multiple copies of each item on my hard drive, thus
+>> eating up a lot of space
+>
+> Pretty much any version control system is going to have this problem,
+> and it gets really bad if you've got any files that aren't straight t=
+ext.
 
-Noah Silverman <noah@smartmediacorp.com> wrote:
+Note that most people probably don't need to worry about this
+nowadays.  Disk $/gigabyte just keeps dropping and is now at
+absolutely abysmally small levels.  You can only fill up your disks if
+you download tons of movies and/or create tons of VMs.
 
-> I'm looking for both a version control system and backup system.
+If you're struggling with a laptop drive that's too small, just buy a
+new one for $100 and solve all your problems.
 
-I had a similar thought some time ago.  I thought that putting my life
-inside of a distributed version control system (my first thought back
-then was Monotone) would also be a convienient way to handle the
-laptop-workstation sync problem.
+So you're fine with storing multiple copies.  Just make sure your
+backup/syncing software has an expiration algorithm so you don't end
+up storing *all* the historical copies.
 
-But:
+I'd like to adapt bup to support this usage model eventually.
+However, I haven't yet written the expiration algorithm and it doesn't
+yet support two-way syncing.  The fundamental design allows for this,
+though, so it's just a matter of having some free time.  Meanwhile,
+you might want to take a look at something like rdiff-backup.
 
-> 1) Size.  THIS IS MY MAIN CONCERN - If I want to sync my home, office,
-> and server Document directories.  From what I have read, I will
-> effectively have multiple copies of each item on my hard drive, thus
-> eating up a lot of space
+Have fun,
 
-Pretty much any version control system is going to have this problem,
-and it gets really bad if you've got any files that aren't straight text.
-
-You won't get any benefit out of things like "git diff" either.  The
-diffs we have (these days at least) don't work well on anything but plain
-text.
-
-I suggest you stick to using git down on the project level, where a
-project should be limited to things like code development (or writing
-projects where you stick to text formats), and give up on any ideas like
-putting your entire home directory into a single repository.
-
-As far as mirroring machines go, rsync based solutions actually aren't
-that bad, though in addition to the annoying syntax gotchas, I've had
-problems with an unreliable laptop clock.  Lately I've been using the
-"--size-only" option of rsync, which assumes that if a file is bigger
-it must be newer.
-
-I tend to use a perl script something like this, which copies newer
-stuff from a given directory to an analogous directory on a remote
-machine:
-
-  use File::Basename qw( dirname );
-  my $this  = shift;   # e.g. '/home/doom/dev/code
-  my $there = shift;   # e.g. 'doom@192.168.1.3'
-  my $this_loc = dirname( $this );
-  $cmd = "rsync -avz --size-only -e ssh $this $there:$this_loc";
-  system( $cmd );
+Avery
