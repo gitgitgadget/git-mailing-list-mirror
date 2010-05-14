@@ -1,93 +1,88 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 3/7] grep: --count over binary
-Date: Fri, 14 May 2010 13:34:24 +0400
-Message-ID: <20100514093424.GA6212@dpotapov.dyndns.org>
-References: <4BEC6211.2000309@lsrfire.ath.cx>
- <4BEC62F6.9050602@lsrfire.ath.cx>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Phil Lawrence <prlawrence@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri May 14 11:34:38 2010
+From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Subject: [PATCH v5 00/18] Portability patches for git-1.7.1
+Date: Fri, 14 May 2010 09:31:31 +0000
+Message-ID: <20100514093131.249094000@mlists.thewrittenword.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 14 11:37:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCrHx-0008Fg-2c
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 11:34:37 +0200
+	id 1OCrKe-0001PH-VC
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 11:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116Ab0ENJec convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 May 2010 05:34:32 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35351 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753870Ab0ENJea (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 05:34:30 -0400
-Received: by fxm6 with SMTP id 6so1261383fxm.19
-        for <git@vger.kernel.org>; Fri, 14 May 2010 02:34:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=RfqC34F2kOk1iGjchMZCCkjy6mH/1uP95CSXf8faCuQ=;
-        b=Dw8XZsYMiwx47dqqsc/Xs61FghgHBA/nCM0fqxO/E+eYAxhU31m5l7HVa32zRvYagq
-         JRdJpIHqBCXluAQ8niIBA/++ht7puSio4BpK8qrQnKs+TCm/lDG4bmqJRDrxcr/AMUBp
-         /zzawl1eCeYhcjQzUytaV4Skd8VgAojiEvYjM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=x4+m/BHFitPkrukeOTBnIM1byzk+O2ofioTvcws/sP0lmJ4x5HS5k7Z9oDwmVNzp2q
-         wj7P2R6eV/Ve3npJ8qrVyvq/HgijguitdyvT7LMGfMyUAq1OEfCipCQzqBmkhrbRRcQG
-         CGPWEizuEQmuZEHq3q6cFabxLZQW+h+AlV7HU=
-Received: by 10.223.35.12 with SMTP id n12mr1294540fad.35.1273829668846;
-        Fri, 14 May 2010 02:34:28 -0700 (PDT)
-Received: from localhost (ppp85-140-167-195.pppoe.mtu-net.ru [85.140.167.195])
-        by mx.google.com with ESMTPS id u12sm10096049fah.16.2010.05.14.02.34.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 14 May 2010 02:34:27 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4BEC62F6.9050602@lsrfire.ath.cx>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758682Ab0ENJhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 05:37:22 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:64438 "EHLO
+	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756610Ab0ENJhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 05:37:21 -0400
+Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 3430D5C0C
+	for <git@vger.kernel.org>; Fri, 14 May 2010 09:54:13 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 3430D5C0C
+Received: from akari.il.thewrittenword.com (akari.il.thewrittenword.com [10.191.57.57])
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id EBE78CD2;
+	Fri, 14 May 2010 09:37:20 +0000 (UTC)
+Received: by akari.il.thewrittenword.com (Postfix, from userid 1048)
+	id C9D0211D4D1; Fri, 14 May 2010 09:37:20 +0000 (UTC)
+User-Agent: quilt/0.46-1
+X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147058>
 
-On Thu, May 13, 2010 at 10:37:10PM +0200, Ren=E9 Scharfe wrote:
-> The intent of showing the message "Binary file xyz matches" for
-> binary files is to avoid annoying users by potentially messing up
-> their terminals by printing control characters.  In --count mode,
-> this precaution isn't necessary.
->=20
-> Display counts of matches if -c/--count was specified, even if -a
-> was not given.  GNU grep does the same.
+Momentum appears to have stalled on this portability patch set, but
+I received a lot of great feed back on restructuring and tweaking, the
+results of which follow. If there's anything else I can do to help the
+adoption of some or all of these patches into upstream please don't
+hesitate to ask.  There are no new changes in this v5 patchset, and
+the additional 2 patches in the series over the last submission is
+purely an artifact of the restructuring based on feedback.
 
-It is also not necessary with '-l' and '-L' options. (At least, if
-we follow GNU grep).
+So, as I said before: Here are the portability patches we needed at
+TWW to enable git-1.7.1 to compile and run on all of the wide range of
+Unix machines we support.  These patches apply to the git-1.7.1
+release,  and address all of the feedback from the previous four
+times I posted them to this list.
 
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -802,7 +802,7 @@ static int grep_buffer_1(struct grep_opt *opt, co=
-nst char *name,
-> =20
->  	switch (opt->binary) {
->  	case GREP_BINARY_DEFAULT:
-> -		if (buffer_is_binary(buf, size))
-> +		if (!opt->count && buffer_is_binary(buf, size))
->  			binary_match_only =3D 1;
+With the exception of a hand-full of test failures outside of Linux
+and Solaris8+, git now compiles and passes all tests on the following
+architectures:
 
-So, I believe it should be:
+        Solaris 2.6/SPARC
+        Solaris 7/SPARC
+        Solaris 8/SPARC
+        Solaris 9/SPARC
+        Solaris 10/SPARC
+        Solaris 10/Intel
+        HP-UX 10.20/PA
+        HP-UX 11.00/PA
+        HP-UX 11.11/PA
+        HP-UX 11.23/PA
+        HP-UX 11.23/IA
+        HP-UX 11.31/PA
+        HP-UX 11.31/IA
+        AIX 5.1
+        AIX 5.2
+        AIX 5.3
+        AIX 6.1
+        Tru64 UNIX 5.1
+        IRIX 6.5
+        RHEL 3/x86
+        RHEL 3/amd64
+        RHEL 4/x86
+        RHEL 4/amd64
+        RHEL 5/x86
+        RHEL 5/amd64
+        SLES 10/x86
+        SLES 10/amd64
 
-		if (!opt->count && !opt->name_only && !opt->unmatch_name_only &&
-				buffer_is_binary(buf, size))
-
-
-Dmitry
+Cheers,
+-- 
+Gary V. Vaughan (gary@thewrittenword.com)
