@@ -1,92 +1,102 @@
-From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: Re: [PATCH v5 01/18] Makefile: pass CPPFLAGS through to fllow
- customization
-Date: Fri, 14 May 2010 12:01:16 +0000
-Message-ID: <20100514120116.GC31921@thor.il.thewrittenword.com>
-References: <20100514093131.249094000@mlists.thewrittenword.com>
- <20100514093725.884968000@mlists.thewrittenword.com>
- <robbat2-20100514T094909-157386852Z@orbis-terrarum.net>
- <20100514105832.GB31921@thor.il.thewrittenword.com>
- <robbat2-20100514T110034-766521339Z@orbis-terrarum.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: What does the 100 in R100 mean?
+Date: Fri, 14 May 2010 14:20:52 +0200
+Message-ID: <201005141420.52657.trast@student.ethz.ch>
+References: <20100514112145.GQ12846@penguin.codegnome.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Fri May 14 14:01:24 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: "Todd A. Jacobs" <nospam@codegnome.org>
+X-From: git-owner@vger.kernel.org Fri May 14 14:21:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCtZz-0002EB-M7
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 14:01:24 +0200
+	id 1OCtt1-0003qq-9S
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 14:21:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758042Ab0ENMBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 08:01:18 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:62639 "EHLO
-	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754327Ab0ENMBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 08:01:17 -0400
-Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id 471D35C44;
-	Fri, 14 May 2010 12:18:09 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 471D35C44
-Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id CEAFBCA0;
-	Fri, 14 May 2010 12:01:16 +0000 (UTC)
-Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
-	id C5650BAAE; Fri, 14 May 2010 12:01:16 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <robbat2-20100514T110034-766521339Z@orbis-terrarum.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
-X-Virus-Status: Clean
+	id S1753900Ab0ENMU5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 May 2010 08:20:57 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:27665 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751709Ab0ENMU4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 May 2010 08:20:56 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 14 May
+ 2010 14:20:54 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 14 May
+ 2010 14:20:52 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <20100514112145.GQ12846@penguin.codegnome.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147085>
 
-Hi Robin,
+Todd A. Jacobs wrote:
+> When I'm looking at the output for renamed files in git-log or
+> git-whatchanged, renamed files always seem to say "R100." So, I looke=
+d
+> in the man page, followed the internal references to --diff-filter, a=
+nd
+> remain stumped as to what the digits stand for. I couldn't even find =
+an
+> explanatory comment in the git source code.
+>=20
+> Obviously, R is for "(R)enamed." What is the "100" for? If it's being
+> returned as a flag to --name-status and friends, it should probably b=
+e
+> documented somewhere.
 
-On Fri, May 14, 2010 at 11:04:59AM +0000, Robin H. Johnson wrote:
-> On Fri, May 14, 2010 at 10:58:32AM +0000, Gary V. Vaughan wrote:
-> > As a matter of fact, Automake even jumps through hoops with
-> > AM_CPPFLAGS to make sure that the package maintainer doesn't
-> > accidentally trample over the package builder's CPPFLAGS settings - I
-> > can't think of a scenario where the person who writes the build system
-> > for a package knows more about what CPPFLAGS the person who builds it
-> > will need that the person doing the actual building.
-> AM_CFLAGS != AM_CPPFLAGS. My concern was the mixing of them.
+It is, but in the "wrong" section:
 
-While I agree that mixing up AM_CFLAGS and AM_CPPFLAGS, or even
-AM_CXXFLAGS and AM_CFLAGS is likely to break your build, that's no
-reason to deprecate the user's CPPFLAGS setting!
+RAW OUTPUT FORMAT
+[...]
+       Possible status letters are:
+       =B7   A: addition of a file
+       =B7   C: copy of a file into a new one
+       =B7   D: deletion of a file
+       =B7   M: modification of the contents or mode of a file
+       =B7   R: renaming of a file
+[...]
+       Status letters C and R are always followed by a score (denoting
+       the percentage of similarity between the source and target of
+       the move or copy), and are the only ones to be so.
 
-> As a middle ground:
-> CFLAGS = $(OPTCFLAGS) -Wall
-> CPPFLAGS = $(OPTCPPFLAGS)
-> LDFLAGS = $(OPTLDFLAGS)
-> CC = $(OPTCC)
-> AR = $(OPTAR)
+The patch below might rectify that, but it's not that reader-friendly
+because it has to point at the git-diff manpage where diff-format.txt
+is not included.  The ifdef is also an incomplete test because
+diff-{files,index,tree} include diff-format.txt but don't set
+git-diff.
 
-Okay, I think we are mostly in agreement here.  In all the packages we
-build here at TWW, we let the user use CFLAGS, CPPFLAGS, LDFLAGS etc,
-and to preserve that we'll jump through some Automake-like hoops so
-that the build system doesn't overwrite them at build time.
+diff --git i/Documentation/diff-options.txt w/Documentation/diff-option=
+s.txt
+index 98cc779..424971c 100644
+--- i/Documentation/diff-options.txt
++++ w/Documentation/diff-options.txt
+@@ -107,8 +107,12 @@ any of those replacements occurred.
+ 	Show only names of changed files.
+=20
+ --name-status::
+-	Show only names and status of changed files. See the description
+-	of the `--diff-filter` option on what the status letters mean.
++	Show only names and status of changed files. See the "RAW
++	OUTPUT FORMAT" section
++ifndef::git-diff[]
++	in linkgit:git-diff[1]
++endif::git-diff[]
++	for what the status codes mean.
+=20
+ --submodule[=3D<format>]::
+ 	Chose the output format for submodule differences. <format> can be on=
+e of
 
-You actually propose the same separation, except that you want the
-package builder to use the OPTCFLAGS, OPTCPPFLAGS, OPTLDFLAGS etc so
-that the build system can use CFLAGS et al.  I don't think this
-buys you anything but confusion when anyone used to building on Unix
-over the last 20 or 30 years tries to pass flags into the build using
-the tried and tested mechanism (CFLAGS, CPPFLAGS et al) to no effect.
 
-Git already follows the tried and tested mechanism, but forgot to
-honor the user's CPPFLAGS setting, which is what this patch is trying
-to address.
-
-Cheers,
--- 
-Gary V. Vaughan (gary@thewrittenword.com)
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
