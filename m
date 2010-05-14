@@ -1,92 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
 Subject: Re: [RFC/PATCH v3 4/5] Rename "crlf" attribute as "eolconv"
-Date: Fri, 14 May 2010 14:27:57 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005141421560.3711@i5.linux-foundation.org>
-References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com> <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org> <961B7250-F65E-4C67-8C5C-6701F68C2FC0@gmail.com>
- <alpine.LFD.2.00.1005131438330.3711@i5.linux-foundation.org> <7DF58EB2-F6A0-47FB-BC89-72757B29FAE6@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
+Date: Fri, 14 May 2010 23:32:03 +0200
+Message-ID: <13750F09-B5F9-421E-9479-4C50CC0E59A1@gmail.com>
+References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com> <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org> <961B7250-F65E-4C67-8C5C-6701F68C2FC0@gmail.com> <alpine.LFD.2.00.1005131438330.3711@i5.linux-foundation.org> <AANLkTil1i_vFAvT1CotYdK47LnufVKc17-1168rOVcMX@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Dmitry Potapov <dpotapov@gmail.com>,
-	Robert Buck <buck.robert.j@gmail.com>,
 	Finn Arne Gangstad <finnag@pvv.org>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 14 23:31:47 2010
+	Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Robert Buck <buck.robert.j@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 14 23:32:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OD2Tv-0005lJ-Lr
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 23:31:44 +0200
+	id 1OD2Ud-0006EH-Cr
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 23:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754386Ab0ENVbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 17:31:39 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:57756 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752118Ab0ENVbi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 May 2010 17:31:38 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4ELU3mG026676
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 14 May 2010 14:30:05 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4ELU24C023583;
-	Fri, 14 May 2010 14:30:03 -0700
-In-Reply-To: <7DF58EB2-F6A0-47FB-BC89-72757B29FAE6@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.945 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757784Ab0ENVcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 17:32:11 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:42095 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752861Ab0ENVcJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 May 2010 17:32:09 -0400
+Received: by ewy8 with SMTP id 8so1024013ewy.28
+        for <git@vger.kernel.org>; Fri, 14 May 2010 14:32:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=GIEcqhrvSv3I4Rjm5BF31wtGcseqb8ZjPkfPv0HBY8s=;
+        b=A/FVEzus+ELKoLhapZgQChW4ZLcq5sjY9/mCnjs9RfIWs2yKOPDBRovQcRs5+To7I1
+         CD2n2n5Yj+v6IpCxiyW9BeV3A22YVW4GR+rTZUds0frSUYCf6oU8RuPnsSQHai1h7Xhy
+         XvVOhMogDjNR3K0DIdG0PpF6zfRMEldv68abY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=sS2CJVDXT+F2ZXIvmypMRSFtOaZAcq+z20kzuKkeAEhTFEceIR75hCoIi//LHfL0MK
+         9ShsBpl462+TDROCZSfNCfXU5EpAgWBYoabs+7vF/fSL9OvJg+EGjyq4qgkLT6cKmBbf
+         vrggnQRvnDPAk9GjT/SlritEVyTjSVjukAQ6A=
+Received: by 10.213.52.199 with SMTP id j7mr637330ebg.79.1273872727945;
+        Fri, 14 May 2010 14:32:07 -0700 (PDT)
+Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id 16sm1493904ewy.3.2010.05.14.14.32.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 14 May 2010 14:32:07 -0700 (PDT)
+In-Reply-To: <AANLkTil1i_vFAvT1CotYdK47LnufVKc17-1168rOVcMX@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147121>
 
+On 14. mai 2010, at 04.34, Robert Buck wrote:
 
-
-On Fri, 14 May 2010, Eyvind Bernhardsen wrote:
-
-> On 13. mai 2010, at 23.45, Linus Torvalds wrote:
+> Probably a newbie question, lots to read, lots already read, but I
+> really want to verify if I have this correct. So in a nutshell, in the
+> gitattributes file
 > 
-> > On Thu, 13 May 2010, Eyvind Bernhardsen wrote:
-> >> 
-> >> Do you agree that "native" eol should only be CRLF if autocrlf is true?  
-> > 
-> > Not really. We're trying to get _away_ from .gitattributes depending on 
-> > autocrlf, aren't we?
-> 
-> I'm not sure we still are.  I certainly was when I started this series, 
-> but that was because autocrlf just plain didn't work with many existing 
-> repositories.  When "safe autocrlf" fixed that, I decided that the extra 
-> complexity of core.eolStyle wasn't worth it.
+> *   text
 
-The thing is, I disagree with your notion of "safe autocrlf". I think it's 
-ugly, and I don't think it's safe at all. It adds a _feeling_ of safety 
-that isn't actually safe.
+I missed this when I replied to Jonathan, but you probably want "* text=auto" here.  "* text" would force git to treat all files as text files.
 
-In short:
-
- - core.autocrlf is _always_ dangerous. Your "safe" thing isn't any safer 
-   at all, since it depends on something that isn't reliable (previous 
-   state).
-
-   Example: new binary files, or changed files, or renames.
-
- - so if you want text conversion, but you want it to be truly safe, and 
-   only happen for certain files, YOU MUST NOT ENABLE autocrlf.
-
- - Ergo: if you make the .gitattributes behaviour depend on autocrlf, 
-   you're still screwed, and you've not actually improved on anything at 
-   all in the end.
-
-It's really that simple. I think "autocrlf" actually works pretty well, 
-but at the same time, I think we made mistakes in the initial design. 
-Let's not make them again.
-
-		Linus
+Also, as Jonathan said, if you want CRLF line endings you currently have to have core.autocrlf set to "true" (which is the default on Windows).
+-- 
+Eyvind
