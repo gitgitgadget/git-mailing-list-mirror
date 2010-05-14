@@ -1,70 +1,77 @@
-From: "Akhbari, Farshad" <farshad.akhbari@intel.com>
-Subject: Git methodology question
-Date: Fri, 14 May 2010 09:14:18 -0700
-Message-ID: <F802F7F4D3C2674881AB105A9CD324A804EE0D0D8D@azsmsx504.amr.corp.intel.com>
-References: <20100505033536.GB8779@coredump.intra.peff.net>
- <cover.1273760226.git.git@drmicha.warpmail.net>
- <20100514060612.GA19652@coredump.intra.peff.net>
- <4BED7574.4070503@drmicha.warpmail.net>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [PATCHv3 GSoC] gitweb: Move static files into seperate 
+	subdirectory
+Date: Fri, 14 May 2010 21:45:35 +0530
+Message-ID: <AANLkTimlfiIulCUGf9WHMU2f4wlR3in83VR9UkP0-vi6@mail.gmail.com>
+References: <p2ze72faaa81005090656j593c3464v9ee1bb6432461efc@mail.gmail.com>
+	 <201005120127.55971.jnareb@gmail.com> <4BEA5E2F.9070608@gmail.com>
+	 <201005131054.01262.chriscool@tuxfamily.org>
+	 <4BEBC001.10803@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 14 18:14:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, Git List <git@vger.kernel.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri May 14 18:15:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCxWt-0002Vz-K9
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 18:14:27 +0200
+	id 1OCxY7-0003Do-VJ
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 18:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752817Ab0ENQOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 12:14:21 -0400
-Received: from mga01.intel.com ([192.55.52.88]:32683 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751995Ab0ENQOU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 12:14:20 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga101.fm.intel.com with ESMTP; 14 May 2010 09:11:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.53,231,1272870000"; 
-   d="scan'208";a="567224262"
-Received: from unknown (HELO azsmsx603.amr.corp.intel.com) ([10.2.161.23])
-  by fmsmga002.fm.intel.com with ESMTP; 14 May 2010 09:13:31 -0700
-Received: from azsmsx504.amr.corp.intel.com ([10.2.121.37]) by
- azsmsx603.amr.corp.intel.com ([10.2.161.23]) with mapi; Fri, 14 May 2010
- 09:14:19 -0700
-Thread-Topic: Git methodology question
-Thread-Index: Acrzf7BUO2vqmbVaSZiZ8BtRibyD9QAACgbw
-In-Reply-To: <4BED7574.4070503@drmicha.warpmail.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1755504Ab0ENQPj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 May 2010 12:15:39 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:44188 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755462Ab0ENQPg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 May 2010 12:15:36 -0400
+Received: by gwj19 with SMTP id 19so1372508gwj.19
+        for <git@vger.kernel.org>; Fri, 14 May 2010 09:15:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hKnDtRta9srTD8OuMEf+q5sY6hZJL7IHHprTFIjq2E4=;
+        b=u2ILXi/nT+W/My+2YIs2JFc1NhuuGD2TuaxoAjsgU+pkp+63Cg+9s9sdw/WqOFdT0B
+         k8ZyOmg9IxRbwQZ22oJ32zjxO0IhBlf60NfQ+ss9EgdKwqcCPwSL4OAvKDntfs4jS+4e
+         H14DgXq2WoBdIi1JF4scTlZZg0QgK/bGzrVCg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QuOE7hegy3Eoz76ZhYTglv//Z0aB7AR/+eSY5RfZiI/jH9B5NDa48Nf2zM3sFPrUMB
+         c7ohpyVunYcJt2IEqjWT7tUkjG14DHWZpgM2iwAU3OS94ALbxtt4Px90znqtNMSNhJA/
+         Sx8gQWJghHB+zALBYy4u2hXnivQOaHjodj6KI=
+Received: by 10.91.19.34 with SMTP id w34mr1048247agi.179.1273853735309; Fri, 
+	14 May 2010 09:15:35 -0700 (PDT)
+Received: by 10.90.84.5 with HTTP; Fri, 14 May 2010 09:15:35 -0700 (PDT)
+In-Reply-To: <4BEBC001.10803@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147098>
 
-DQpBbGwsDQoNCkkgYW0gdHJ5aW5nIHRvIHNldHVwIGEgInJlbGlhYmxlIiBmbG93IHdpdGggZ2l0
-LiBJIGFtIHNvcnQgb2YgbmV3IHRvIHRoZSB0b29sIGFuZCBuZWVkIHNvbWUgaGVscCBmcm9tIHRo
-ZSBleHBlcnRzLiBUaGUgcXVlc3Rpb24gcGVydGFpbnMgdG8gdGhlIHdheSBTSEExIHRhZ3MgY2Fu
-IGJlIGJhY2stdHJhY2tlZCBpbiBwYXJhbGxlbCBjbG9uZXMuIEhlcmUgaXMgdGhlIHNjZW5hcmlv
-IEkgaGF2ZSBpbiBtaW5kOg0KDQpJbiBvcmRlciBvZiB0aW1lOg0KVXNlcjEg4oCTIHB1bGxzIGZy
-b20gdGhlIG9yaWdpbjsgdXBkYXRlcywgbW9kaWZpZXMsIHZlcmlmaWVzIGFuZCBjb21taXRzIGlu
-dG8gaGlzIGNsb25lLiBUaGlzIHdpbGwgZ2VuZXJhdGUgU0hBMV8xDQpVc2VyMiDigJMgcHVsbHMg
-ZnJvbSB0aGUgb3JpZ2luOyB1cGRhdGVzLCBtb2RpZmllcywgdmVyaWZpZXMgYW5kIGNvbW1pdHMg
-aW50byBoaXMgY2xvbmUuIFRoaXMgd2lsbCBnZW5lcmF0ZSBTSEExXzINClVzZXIzIOKAkyBwdWxs
-cyBmcm9tIHRoZSBvcmlnaW47IHVwZGF0ZXMsIG1vZGlmaWVzLCB2ZXJpZmllcyBhbmQgY29tbWl0
-cyBpbnRvIGhpcyBjbG9uZS4gVGhpcyB3aWxsIGdlbmVyYXRlIFNIQTFfMw0KDQpJbiBub25lIG9m
-IHRoZXNlIGNhc2VzLCBhbnlvbmUgaXMgdXBkYXRpbmcgZnJvbSBlYWNoIG90aGVy4oCZcyBjbG9u
-ZXMNCg0KQXQgdGhlIGVuZCBvZiB0aGUgd2VlaywgdGhlIG1vZGVsIGJ1aWxkZXIgbmVlZHMgdG8g
-bWVyZ2UgYW5kIHZlcmlmeSBhbGwgY29tbWl0cyBmcm9tIHVzZXIxLCB1c2VyMiBhbmQgdXNlcjMg
-YmVmb3JlIHB1c2hpbmcgaW50byB0aGUgb3JpZ2luIG1hc3Rlci4gDQoNClRoZSBxdWVzdGlvbiBp
-cywNCiAgICAgICAgICAgIENhbiB0aGUgbW9kZWwgYnVpbGRlciB1c2UgU0hBMV8zIHRhZyBvbmx5
-IHRvIGdldCBhbGwgdGhlIHVwZGF0ZXMgbWFkZSBieSB1c2VyMSwgdXNlcjIgYW5kIHVzZXIzOyBv
-ciBhbGwgU0hBMSB0YWdzIGFyZSBuZWVkZWQ/DQoNCg0KDQpUaGFua3MsDQpGYXJzaGFkLg0K
+Jakub, I would like to know the status of this patch.
+
+On Thu, May 13, 2010 at 2:31 PM, Pavan Kumar Sunkara
+<pavan.sss1991@gmail.com> wrote:
+>
+>>> =A0 First you have to generate gitweb.cgi from gitweb.perl using
+>>> -"make gitweb", then copy appropriate files (gitweb.cgi, gitweb.js,
+>>> -gitweb.css, git-logo.png and git-favicon.png) to their destination=
+=2E
+>>> -For example if git was (or is) installed with /usr prefix, you can=
+ do
+>>> +"make gitweb", then "make install-gitweb" appropriate files
+>>>
+>
+> Sorry about that.
+>
+> - Pavan
+>
