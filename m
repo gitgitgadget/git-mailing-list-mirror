@@ -1,382 +1,152 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: [PATCH v5 02/18] Rewrite dynamic structure initializations to runtime assignment
-Date: Fri, 14 May 2010 09:31:33 +0000
-Message-ID: <20100514093731.063765000@mlists.thewrittenword.com>
+Subject: [PATCH v5 03/18] Makefile: -lpthread may still be necessary when libc has only pthread stubs
+Date: Fri, 14 May 2010 09:31:34 +0000
+Message-ID: <20100514093736.227762000@mlists.thewrittenword.com>
 References: <20100514093131.249094000@mlists.thewrittenword.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 14 11:37:39 2010
+X-From: git-owner@vger.kernel.org Fri May 14 11:37:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCrKs-0001WK-Pm
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 11:37:39 +0200
+	id 1OCrL5-0001bS-1x
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 11:37:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758706Ab0ENJhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 05:37:34 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:60216 "EHLO
+	id S1758715Ab0ENJhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 05:37:39 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:64990 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754537Ab0ENJhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 05:37:32 -0400
+	with ESMTP id S1754537Ab0ENJhh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 05:37:37 -0400
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id 6B5B55C71
-	for <git@vger.kernel.org>; Fri, 14 May 2010 09:54:23 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 6B5B55C71
+	by mail1.thewrittenword.com (Postfix) with ESMTP id 89F885CC0
+	for <git@vger.kernel.org>; Fri, 14 May 2010 09:54:28 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com 89F885CC0
 Received: from akari.il.thewrittenword.com (akari.il.thewrittenword.com [10.191.57.57])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 407B6CD2;
-	Fri, 14 May 2010 09:37:31 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 611FBCD4;
+	Fri, 14 May 2010 09:37:36 +0000 (UTC)
 Received: by akari.il.thewrittenword.com (Postfix, from userid 1048)
-	id 300A011D4D1; Fri, 14 May 2010 09:37:31 +0000 (UTC)
+	id 56BDF11D4D1; Fri, 14 May 2010 09:37:36 +0000 (UTC)
 User-Agent: quilt/0.46-1
-Content-Disposition: inline; filename=const-expr.patch
+Content-Disposition: inline; filename=pthread.patch
 X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147061>
 
-Unfortunately, there are still plenty of production systems with
-vendor compilers that choke unless all compound declarations can be
-determined statically at compile time, for example hpux10.20 (I can
-provide a comprehensive list of our supported platforms that exhibit
-this problem if necessary).
+Without this patch, systems that provide stubs for pthread functions
+in libc, but which still require libpthread for full the pthread
+implementation are not detected correctly.
 
-This patch simply breaks apart any compound declarations with dynamic
-initialisation expressions, and moves the initialisation until after
-the last declaration in the same block, in all the places necessary to
-have the offending compilers accept the code.
+Also, some systems require -pthread in CFLAGS for each compilation
+unit for a successful link of an mt binary, which is also addressed by
+this patch.
 
 Signed-off-by: Gary V. Vaughan <gary@thewrittenword.com>
 ---
- builtin/add.c      |    4 +++-
- builtin/blame.c    |   10 ++++++----
- builtin/cat-file.c |    4 +++-
- builtin/checkout.c |    3 ++-
- builtin/commit.c   |    3 ++-
- builtin/fetch.c    |    6 ++++--
- builtin/remote.c   |    9 ++++++---
- convert.c          |    4 +++-
- daemon.c           |   19 ++++++++++---------
- ll-merge.c         |   14 +++++++-------
- refs.c             |    6 +++++-
- remote.c           |    3 +--
- unpack-trees.c     |    4 +++-
- wt-status.c        |   23 ++++++++++++-----------
- 14 files changed, 67 insertions(+), 45 deletions(-)
+ Makefile      |    4 ++++
+ config.mak.in |    1 +
+ configure.ac  |   17 +++++++++++++++--
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-Index: b/convert.c
+Index: b/Makefile
 ===================================================================
---- a/convert.c
-+++ b/convert.c
-@@ -249,7 +249,9 @@ static int filter_buffer(int in, int out
- 	struct child_process child_process;
- 	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
--	const char *argv[] = { params->cmd, NULL };
-+	const char *argv[] = { NULL, NULL };
-+
-+	argv[0] = params->cmd;
+--- a/Makefile
++++ b/Makefile
+@@ -294,6 +294,7 @@ RPMBUILD = rpmbuild
+ TCL_PATH = tclsh
+ TCLTK_PATH = wish
+ PTHREAD_LIBS = -lpthread
++PTHREAD_CFLAGS =
  
- 	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
-Index: b/remote.c
+ export TCL_PATH TCLTK_PATH
+ 
+@@ -898,6 +899,8 @@ ifeq ($(uname_S),AIX)
+ 	BASIC_CFLAGS += -D_LARGE_FILES
+ 	ifeq ($(shell expr "$(uname_V)" : '[1234]'),1)
+ 		NO_PTHREADS = YesPlease
++	else
++		PTHREAD_LIBS = -lpthread
+ 	endif
+ endif
+ ifeq ($(uname_S),GNU)
+@@ -1349,6 +1352,7 @@ endif
+ ifdef NO_PTHREADS
+ 	BASIC_CFLAGS += -DNO_PTHREADS
+ else
++	BASIC_CFLAGS += $(PTHREAD_CFLAGS)
+ 	EXTLIBS += $(PTHREAD_LIBS)
+ 	LIB_OBJS += thread-utils.o
+ endif
+Index: b/configure.ac
 ===================================================================
---- a/remote.c
-+++ b/remote.c
-@@ -657,10 +657,9 @@ static struct refspec *parse_refspec_int
- 
- int valid_fetch_refspec(const char *fetch_refspec_str)
+--- a/configure.ac
++++ b/configure.ac
+@@ -802,7 +802,11 @@ AC_DEFUN([PTHREADTEST_SRC], [
+ int main(void)
  {
--	const char *fetch_refspec[] = { fetch_refspec_str };
- 	struct refspec *refspec;
- 
--	refspec = parse_refspec_internal(1, fetch_refspec, 1, 1);
-+	refspec = parse_refspec_internal(1, &fetch_refspec_str, 1, 1);
- 	free_refspecs(refspec, 1);
- 	return !!refspec;
+ 	pthread_mutex_t test_mutex;
+-	return (0);
++	int retcode = 0;
++	retcode |= pthread_mutex_init(&test_mutex,(void*)0);
++	retcode |= pthread_mutex_lock(&test_mutex);
++	retcode |= pthread_mutex_unlock(&test_mutex);
++	return retcode;
  }
-Index: b/unpack-trees.c
+ ])
+ 
+@@ -819,7 +823,8 @@ if test -n "$USER_NOPTHREAD"; then
+ # handle these separately since PTHREAD_CFLAGS could be '-lpthreads
+ # -D_REENTRANT' or some such.
+ elif test -z "$PTHREAD_CFLAGS"; then
+-  for opt in -pthread -lpthread; do
++  threads_found=no
++  for opt in -mt -pthread -lpthread; do
+      old_CFLAGS="$CFLAGS"
+      CFLAGS="$opt $CFLAGS"
+      AC_MSG_CHECKING([Checking for POSIX Threads with '$opt'])
+@@ -827,11 +832,18 @@ elif test -z "$PTHREAD_CFLAGS"; then
+ 	[AC_MSG_RESULT([yes])
+ 		NO_PTHREADS=
+ 		PTHREAD_LIBS="$opt"
++		PTHREAD_CFLAGS="$opt"
++		threads_found=yes
+ 		break
+ 	],
+ 	[AC_MSG_RESULT([no])])
+       CFLAGS="$old_CFLAGS"
+   done
++  if test $threads_found != yes; then
++    AC_CHECK_LIB([pthread], [pthread_create],
++	[PTHREAD_LIBS="-lpthread"],
++	[NO_PTHREADS=UnfortunatelyYes])
++  fi
+ else
+   old_CFLAGS="$CFLAGS"
+   CFLAGS="$PTHREAD_CFLAGS $CFLAGS"
+@@ -848,6 +860,7 @@ fi
+ 
+ CFLAGS="$old_CFLAGS"
+ 
++AC_SUBST(PTHREAD_CFLAGS)
+ AC_SUBST(PTHREAD_LIBS)
+ AC_SUBST(NO_PTHREADS)
+ 
+Index: b/config.mak.in
 ===================================================================
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -287,9 +287,11 @@ static void add_same_unmerged(struct cac
- static int unpack_index_entry(struct cache_entry *ce,
- 			      struct unpack_trees_options *o)
- {
--	struct cache_entry *src[5] = { ce, NULL, };
-+	struct cache_entry *src[5] = { NULL };
- 	int ret;
- 
-+	src[0] = ce;
-+
- 	mark_ce_used(ce, o);
- 	if (ce_stage(ce)) {
- 		if (o->skip_unmerged) {
-Index: b/daemon.c
-===================================================================
---- a/daemon.c
-+++ b/daemon.c
-@@ -141,15 +141,14 @@ static char *path_ok(char *directory)
- 	}
- 	else if (interpolated_path && saw_extended_args) {
- 		struct strbuf expanded_path = STRBUF_INIT;
--		struct strbuf_expand_dict_entry dict[] = {
--			{ "H", hostname },
--			{ "CH", canon_hostname },
--			{ "IP", ip_address },
--			{ "P", tcp_port },
--			{ "D", directory },
--			{ NULL }
--		};
-+		struct strbuf_expand_dict_entry dict[6];
- 
-+		dict[0].placeholder = "H"; dict[0].value = hostname;
-+		dict[1].placeholder = "CH"; dict[1].value = canon_hostname;
-+		dict[2].placeholder = "IP"; dict[2].value = ip_address;
-+		dict[3].placeholder = "P"; dict[3].value = tcp_port;
-+		dict[4].placeholder = "D"; dict[4].value = directory;
-+		dict[5].placeholder = NULL; dict[5].value = NULL;
- 		if (*dir != '/') {
- 			/* Allow only absolute */
- 			logerror("'%s': Non-absolute path denied (interpolated-path active)", dir);
-@@ -343,7 +342,9 @@ static int upload_pack(void)
- {
- 	/* Timeout as string */
- 	char timeout_buf[64];
--	const char *argv[] = { "upload-pack", "--strict", timeout_buf, ".", NULL };
-+	const char *argv[] = { "upload-pack", "--strict", NULL, ".", NULL };
-+
-+	argv[2] = timeout_buf;
- 
- 	snprintf(timeout_buf, sizeof timeout_buf, "--timeout=%u", timeout);
- 	return run_service_command(argv);
-Index: b/wt-status.c
-===================================================================
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -498,17 +498,18 @@ static void wt_status_print_submodule_su
- 	struct child_process sm_summary;
- 	char summary_limit[64];
- 	char index[PATH_MAX];
--	const char *env[] = { index, NULL };
--	const char *argv[] = {
--		"submodule",
--		"summary",
--		uncommitted ? "--files" : "--cached",
--		"--for-status",
--		"--summary-limit",
--		summary_limit,
--		uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD"),
--		NULL
--	};
-+	const char *env[] = { NULL, NULL };
-+	const char *argv[8];
-+
-+	env[0] =	index;
-+	argv[0] =	"submodule";
-+	argv[1] =	"summary";
-+	argv[2] =	uncommitted ? "--files" : "--cached";
-+	argv[3] =	"--for-status";
-+	argv[4] =	"--summary-limit";
-+	argv[5] =	summary_limit;
-+	argv[6] =	uncommitted ? NULL : (s->amend ? "HEAD^" : "HEAD");
-+	argv[7] =	NULL;
- 
- 	sprintf(summary_limit, "%d", s->submodule_summary);
- 	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
-Index: b/ll-merge.c
-===================================================================
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -139,17 +139,17 @@ static int ll_ext_merge(const struct ll_
- {
- 	char temp[4][50];
- 	struct strbuf cmd = STRBUF_INIT;
--	struct strbuf_expand_dict_entry dict[] = {
--		{ "O", temp[0] },
--		{ "A", temp[1] },
--		{ "B", temp[2] },
--		{ "L", temp[3] },
--		{ NULL }
--	};
-+	struct strbuf_expand_dict_entry dict[5];
- 	const char *args[] = { NULL, NULL };
- 	int status, fd, i;
- 	struct stat st;
- 
-+	dict[0].placeholder = "O"; dict[0].value = temp[0];
-+	dict[1].placeholder = "A"; dict[1].value = temp[1];
-+	dict[2].placeholder = "B"; dict[2].value = temp[2];
-+	dict[3].placeholder = "L"; dict[3].value = temp[3];
-+	dict[4].placeholder = NULL; dict[4].value = NULL;
-+
- 	if (fn->cmdline == NULL)
- 		die("custom merge driver %s lacks command line.", fn->name);
- 
-Index: b/builtin/commit.c
-===================================================================
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -717,7 +717,8 @@ static int prepare_to_commit(const char 
- 
- 	if (use_editor) {
- 		char index[PATH_MAX];
--		const char *env[2] = { index, NULL };
-+		const char *env[2] = { NULL };
-+		env[0] =  index;
- 		snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", index_file);
- 		if (launch_editor(git_path(commit_editmsg), NULL, env)) {
- 			fprintf(stderr,
-Index: b/builtin/remote.c
-===================================================================
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -705,11 +705,14 @@ static int rm(int argc, const char **arg
- 	struct known_remotes known_remotes = { NULL, NULL };
- 	struct string_list branches = { NULL, 0, 0, 1 };
- 	struct string_list skipped = { NULL, 0, 0, 1 };
--	struct branches_for_remote cb_data = {
--		NULL, &branches, &skipped, &known_remotes
--	};
-+	struct branches_for_remote cb_data;
- 	int i, result;
- 
-+	memset(&cb_data,0,sizeof(cb_data));
-+	cb_data.branches = &branches;
-+	cb_data.skipped = &skipped;
-+	cb_data.keep = &known_remotes;
-+
- 	if (argc != 2)
- 		usage_with_options(builtin_remote_rm_usage, options);
- 
-Index: b/builtin/blame.c
-===================================================================
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -733,10 +733,11 @@ static int pass_blame_to_parent(struct s
- {
- 	int last_in_target;
- 	mmfile_t file_p, file_o;
--	struct blame_chunk_cb_data d = { sb, target, parent, 0, 0 };
-+	struct blame_chunk_cb_data d;
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
--
-+	memset(&d,0,sizeof(d));
-+	d.sb = sb; d.target = target; d.parent=parent;
- 	last_in_target = find_last_in_target(sb, target);
- 	if (last_in_target < 0)
- 		return 1; /* nothing remains for this target */
-@@ -875,10 +876,11 @@ static void find_copy_in_blob(struct sco
- 	const char *cp;
- 	int cnt;
- 	mmfile_t file_o;
--	struct handle_split_cb_data d = { sb, ent, parent, split, 0, 0 };
-+	struct handle_split_cb_data d;
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
--
-+	memset(&d,0,sizeof(d));
-+	d.sb = sb; d.ent = ent; d.parent = parent; d.split = split;
- 	/*
- 	 * Prepare mmfile that contains only the lines in ent.
- 	 */
-Index: b/builtin/cat-file.c
-===================================================================
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -118,7 +118,9 @@ static int cat_one_file(int opt, const c
- 
- 		/* custom pretty-print here */
- 		if (type == OBJ_TREE) {
--			const char *ls_args[3] = {"ls-tree", obj_name, NULL};
-+			const char *ls_args[3] = { NULL };
-+			ls_args[0] =  "ls-tree";
-+			ls_args[1] =  obj_name;
- 			return cmd_ls_tree(2, ls_args, NULL);
- 		}
- 
-Index: b/refs.c
-===================================================================
---- a/refs.c
-+++ b/refs.c
-@@ -314,7 +314,11 @@ static int warn_if_dangling_symref(const
- 
- void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
- {
--	struct warn_if_dangling_data data = { fp, refname, msg_fmt };
-+	struct warn_if_dangling_data data;
-+
-+	data.fp = fp;
-+	data.refname = refname;
-+	data.msg_fmt = msg_fmt;
- 	for_each_rawref(warn_if_dangling_symref, &data);
- }
- 
-Index: b/builtin/add.c
-===================================================================
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -261,12 +261,14 @@ static int edit_patch(int argc, const ch
- {
- 	char *file = xstrdup(git_path("ADD_EDIT.patch"));
- 	const char *apply_argv[] = { "apply", "--recount", "--cached",
--		file, NULL };
-+		NULL, NULL };
- 	struct child_process child;
- 	struct rev_info rev;
- 	int out;
- 	struct stat st;
- 
-+	apply_argv[3] = file;
-+
- 	git_config(git_diff_basic_config, NULL); /* no "diff" UI options */
- 
- 	if (read_cache() < 0)
-Index: b/builtin/checkout.c
-===================================================================
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -609,7 +609,8 @@ static int check_tracking_name(const cha
- 
- static const char *unique_tracking_name(const char *name)
- {
--	struct tracking_name_data cb_data = { name, NULL, 1 };
-+	struct tracking_name_data cb_data = { NULL, NULL, 1 };
-+	cb_data.name = name;
- 	for_each_ref(check_tracking_name, &cb_data);
- 	if (cb_data.unique)
- 		return cb_data.remote;
-Index: b/builtin/fetch.c
-===================================================================
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -574,9 +574,10 @@ static void find_non_local_tags(struct t
- {
- 	struct string_list existing_refs = { NULL, 0, 0, 0 };
- 	struct string_list remote_refs = { NULL, 0, 0, 0 };
--	struct tag_data data = {head, tail};
-+	struct tag_data data;
- 	const struct ref *ref;
- 	struct string_list_item *item = NULL;
-+	data.head = head; data.tail = tail;
- 
- 	for_each_ref(add_existing, &existing_refs);
- 	for (ref = transport_get_remote_refs(transport); ref; ref = ref->next) {
-@@ -778,7 +779,8 @@ static int get_remote_group(const char *
- static int add_remote_or_group(const char *name, struct string_list *list)
- {
- 	int prev_nr = list->nr;
--	struct remote_group_data g = { name, list };
-+	struct remote_group_data g;
-+	g.name = name; g.list = list;
- 
- 	git_config(get_remote_group, &g);
- 	if (list->nr == prev_nr) {
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -57,4 +57,5 @@ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
+ FREAD_READS_DIRECTORIES=@FREAD_READS_DIRECTORIES@
+ SNPRINTF_RETURNS_BOGUS=@SNPRINTF_RETURNS_BOGUS@
+ NO_PTHREADS=@NO_PTHREADS@
++PTHREAD_CFLAGS=@PTHREAD_CFLAGS@
+ PTHREAD_LIBS=@PTHREAD_LIBS@
 
 -- 
 Gary V. Vaughan (gary@thewrittenword.com)
