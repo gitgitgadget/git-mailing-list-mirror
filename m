@@ -1,75 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: many files, simple history
-Date: Fri, 14 May 2010 00:05:59 -0400
-Message-ID: <20100514040559.GB6075@coredump.intra.peff.net>
-References: <AANLkTinHZbJ4obpa1FpT8boFWjNYpgU184HUTvki_A0G@mail.gmail.com>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: Re: Git log follow question
+Date: Fri, 14 May 2010 12:16:13 +0800
+Message-ID: <AANLkTilFn8qugzcGgr-Ooe5PZsSxmJOiubbG7sAwW1Ft@mail.gmail.com>
+References: <006d01caf300$703e96a0$50bbc3e0$@burgmann.anu.edu.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Ali Tofigh <alix.tofigh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 14 06:06:33 2010
+To: Albert Krawczyk <albert@burgmann.anu.edu.au>
+X-From: git-owner@vger.kernel.org Fri May 14 06:16:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCmAT-0008R6-7Y
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 06:06:33 +0200
+	id 1OCmJx-0003Kw-Uy
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 06:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750798Ab0ENEG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 00:06:26 -0400
-Received: from peff.net ([208.65.91.99]:54642 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716Ab0ENEGZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 00:06:25 -0400
-Received: (qmail 27112 invoked by uid 107); 14 May 2010 04:06:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 14 May 2010 00:06:02 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 May 2010 00:05:59 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTinHZbJ4obpa1FpT8boFWjNYpgU184HUTvki_A0G@mail.gmail.com>
+	id S1751454Ab0ENEQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 00:16:16 -0400
+Received: from mail-qy0-f171.google.com ([209.85.221.171]:42056 "EHLO
+	mail-qy0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751048Ab0ENEQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 00:16:15 -0400
+Received: by qyk1 with SMTP id 1so2725501qyk.5
+        for <git@vger.kernel.org>; Thu, 13 May 2010 21:16:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=sImTSi9CjtK8C+XyE0Br7lm0W07g047n0iWLAG+6if8=;
+        b=mAkSP0hZXNOiu1EssWnVZWWvcQpfw1MiNp1/hvrqPFbruuoYygHRbrcfDNOsteVu4o
+         wP6pXzYif1a5JBo0VmeJX1ciCvQqHrXMa1L7QBTHXfFh5sP4atQKJvDINGQy980rNjfJ
+         5dJxN9lyoNMzA75qv1/VUeiovAiVSCgqvTQT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=utdDbb198qYb3Rk7zP8X0xO/qdgEcLoLjXZxMqBXLK4N5ZRaWcDthsLce+9pKkVICG
+         u3t2QZKPRz8SyFY4Iedu3wsAtFroVvZg5HFPk81FHA3VSkFwO4n0fGpm8lZEKAR2yOWJ
+         UWH9C8CcwH4Boe8ia+AgAg28LPB0IR18MVLl4=
+Received: by 10.224.99.210 with SMTP id v18mr264196qan.87.1273810573451; Thu, 
+	13 May 2010 21:16:13 -0700 (PDT)
+Received: by 10.229.97.80 with HTTP; Thu, 13 May 2010 21:16:13 -0700 (PDT)
+In-Reply-To: <006d01caf300$703e96a0$50bbc3e0$@burgmann.anu.edu.au>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147043>
 
-On Thu, May 13, 2010 at 10:57:22PM -0400, Ali Tofigh wrote:
+Hi Albert,
+On Fri, May 14, 2010 at 8:57 AM, Albert Krawczyk
+<albert@burgmann.anu.edu.au> wrote:
+> As you can see git log --parents and git log --follow --parents produce very
+> different results, and as far as I can tell they should produce identical
+> outputs.
+>
+> Could somebody tell me if I'm doing something wrong with the syntax? Or have
+> I stumbled onto a quirk I fail to understand?
 
-> short version: will git handle large number of files efficiently if
-> the history is simple and linear, i.e., without merges?
+The problem you encountered is something about parent rewriting.
+That's when git do a revision walk it will *modify* the actual parents
+of a commit according on the command line options.
+When you invoke, git log --parents , the parents rewriting mechanism
+is on. Take you have five commits:
+commit1 <- commit2 <- commit3 <- 4 <- 5
+And only commit 5 and commit 2 change the file alloc.c. When you run
+'git log --parents alloc.c', the actual parent of commit 5 will be
+modified to commit2. When you run git without --parents, commit 5's
+parent will still be commit 4.
+And when '--follow' is given, parent rewriting mechanism will be shut
+down, so you get two different output.
 
-Short answer: large number of files, yes, large files, not really. The
-shape of history is largely irrelevant.
+For another words, I don't understand why we shut down the parent
+rewriting when '--follow' given. This make users confusing and also
+make --graph inpossible to work with '--follow'...
 
-Longer answer:
-
-Git separates the conceptual structure of history (the digraph of
-commits, and the pointers of commits to trees to blobs) from the actual
-storage of objects representing that history. Problems with large files
-are usually storage issues. Copying them around in packfiles is
-expensive, storing an extra copy in the repo is expensive, trying deltas
-and diffs is expensive. None of those things has to do with the shape of
-your history. So I would expect git to handle such a load with a linear
-history about as well as a complex history with merges.
-
-For large numbers of files, git generally does a good job, especially if
-those files are distributed throughout a directory hierarchy. But keep
-in mind that the git repo will store another copy of every file. They
-will be delta-compressed between versions, and zlib compressed overall,
-but you may potentially be doubling the amount of disk space required if
-you have a lot of uncompressible binary files.
-
-For large files, git expects to be able to pull each file into memory.
-Sometimes two versions if you are doing a diff. And it will copy those
-files around when repacking (which you will want to do for the sake of
-the smaller files). So files on the order of a few megabytes are not a
-problem. If you have files in the hundreds of megabytes or gigabytes,
-expect some operations to be slow (like repacking).
-
-Really, I would start by just "git add"-ing your whole filesystem, doing
-a "git repack -ad", and seeing how long it takes, and what the resulting
-size is.
-
--Peff
+Regards!
+Bo
+-- 
+My blog: http://blog.morebits.org
