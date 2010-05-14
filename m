@@ -1,114 +1,64 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2] ls-remote: print URL when no repo is specified
-Date: Fri, 14 May 2010 11:07:41 +0800
-Message-ID: <AANLkTinxm8hwX53LE9_7rDPoKs9UnGAyFFfVcoh-WGxE@mail.gmail.com>
-References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
-	 <1273598423-3156-1-git-send-email-rctay89@gmail.com>
-	 <7veihh8y8b.fsf@alter.siamese.dyndns.org>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: many files, simple history
+Date: Thu, 13 May 2010 22:27:42 -0500
+Message-ID: <AANLkTimHB9jZq-SUxD2YUfCXKfTOHSxEnANETDL7i6DB@mail.gmail.com>
+References: <AANLkTinHZbJ4obpa1FpT8boFWjNYpgU184HUTvki_A0G@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 14 05:11:27 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Ali Tofigh <alix.tofigh@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 14 05:28:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OClJ9-0006bK-6q
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 05:11:27 +0200
+	id 1OClZT-00049a-Hi
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 05:28:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756984Ab0ENDHn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 May 2010 23:07:43 -0400
-Received: from mail-yx0-f191.google.com ([209.85.210.191]:63147 "EHLO
-	mail-yx0-f191.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767Ab0ENDHn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 May 2010 23:07:43 -0400
-Received: by yxe29 with SMTP id 29so737922yxe.4
-        for <git@vger.kernel.org>; Thu, 13 May 2010 20:07:41 -0700 (PDT)
+	id S1753305Ab0END2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 23:28:14 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57773 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822Ab0END2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 May 2010 23:28:13 -0400
+Received: by fxm6 with SMTP id 6so1048795fxm.19
+        for <git@vger.kernel.org>; Thu, 13 May 2010 20:28:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=E4mjzbS6SFAbSxJrkTPUOkxcVHEzqexKgknT6d1+oBM=;
-        b=eH9IBw3xpyn3lHlFObCnd4y2XTsdhP64Ht8pB56+N0fXzATzgMuD2lckGsvbiPO9gP
-         rdnuKo3w1CTahRlrVxaGv/VYSRAlr0O4PM03kCIMOGwirRWO2TQoiSMnV2O/d3WVhib5
-         5FL3Bf3XZxVxRYldGtVGNDuOvQvAspJoHFuDo=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=cX/YQHEOIXyZ4J2mrqSKBA9XbHCw9DtDbrWn6SFhCLA=;
+        b=PYr/zfXydiEcy9BMcjlI+rLl73ZbFP64WwI4jL6jKRJPjAGUHLUM5EAdReqCAyFb+g
+         35gU199UfLSlbtdfpp3uGxkNvBjuAFljK2AoG7nEZ4SzVkVcHKZA0vGzE/ylJbMuUpKF
+         9S9qErCNP5nxei2VKJMzjmPn9jdx9RhdVfuB0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hyitiiIKPzTKXV77oGcNLQbbnovkmTN4tVOEIO0bJHzJen/4uN6fN+3IaS6kE+kYXa
-         44skPsQ5pQVVJ54fOUJzxv42afw+6BP5pp3PWmAB8E+jfwKQ+dGswjv0vhL+9FgPZLB3
-         lfdbVfC5bqxRrvC6hLjTfAxvxuVbSID1yEgxw=
-Received: by 10.231.161.146 with SMTP id r18mr40571ibx.81.1273806461717; Thu, 
-	13 May 2010 20:07:41 -0700 (PDT)
-Received: by 10.231.13.194 with HTTP; Thu, 13 May 2010 20:07:41 -0700 (PDT)
-In-Reply-To: <7veihh8y8b.fsf@alter.siamese.dyndns.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=rm7hSpcaDgJSTrwvtz8lq4DV4hceTA+7sNhdwdL494f/LAQAAyB+hkTTF4xPom0pni
+         iQECa2eqaAgbT8O4YV50kIohuNNn6JtvGo17JJ4p/RjLOkyuMEpL3mSHnhJ/akHPhlnH
+         yds+6RXfyO3AKZC5x88YwfliPaI0lsYAPsm7Y=
+Received: by 10.239.148.137 with SMTP id f9mr75543hbb.14.1273807692130; Thu, 
+	13 May 2010 20:28:12 -0700 (PDT)
+Received: by 10.239.189.143 with HTTP; Thu, 13 May 2010 20:27:42 -0700 (PDT)
+In-Reply-To: <AANLkTinHZbJ4obpa1FpT8boFWjNYpgU184HUTvki_A0G@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147041>
 
-Hi,
+On Thu, May 13, 2010 at 21:57, Ali Tofigh <alix.tofigh@gmail.com> wrote:
+> (i almost
+> always build from source code and install in non-standard locations).
 
-On Wed, May 12, 2010 at 1:50 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Tay Ray Chuan <rctay89@gmail.com> writes:
->
->> After 9c00de5 (ls-remote: fall-back to default remotes when no remot=
-e
->> specified), when no repository is specified, ls-remote may use
->> the URL/remote in the config "branch.<name>.remote" or the remote
->> "origin"; it may not be immediately obvious to the user which was us=
-ed.
->
-> I cannot convince myself that this is a good change, as I've always
-> thought "ls-remote" output as something people want to let their scri=
-pts
-> read and parse. =A09c00de5 may have given an enhancement to these scr=
-ipts in
-> the sense that they can now respond to an empty input from the end us=
-er,
-> but this patch forces them to change the way they parse the output fr=
-om
-> the command.
+It would make a lot more sense to use a package manager.
 
-in this patch, the remote url is printed to stderr, instead of stdout,
-so existing scripts should be safe.
+You might find that Arch Linux's `pacman' provides everything that you
+need; it's really easy to define your own packages and build from
+source, allowing pacman to manage dependencies, locate which package
+owns which file, and upgrade/remove packages.
 
-> I also think this patch is solving a wrong problem.
->
-> When an end user does not know which remote ls-remote would be talkin=
-g to
-> by default, what else does he *not* know? =A0Probably which remote "p=
-ull"
-> would be fetching from and what branch it would be merging with? =A0D=
-oesn't
-> he have a better command to use to learn that information to reorient
-> himself when he is lost that way?
-
-I'm not sure if there's a command to determine the remote - I'd be
-interested to know it, if there's one.
-
-That aside, I believe this patch as an attempt at improving usability.
-
-Compare (pre-patch):
-
-  $ git ls-remote
-  (scratch head)
-  $ git-x # to determine which remote we listed refs from
-
-with (post-patch):
-
-  $ git ls-remote
-
-The advantage is minor, but I feel there's some added convenience.
-
---=20
-Cheers,
-Ray Chuan
+I bet gentoo's `emerge' would also be viable.
