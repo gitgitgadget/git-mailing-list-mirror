@@ -1,93 +1,116 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Re: git log -M -- filename is not working?
-Date: Fri, 14 May 2010 00:55:22 -0400
-Message-ID: <20100514045522.GE6075@coredump.intra.peff.net>
-References: <19428.24021.324557.517627@winooski.ccs.neu.edu>
- <20100508044434.GC14998@coredump.intra.peff.net>
- <19428.62170.654092.308682@winooski.ccs.neu.edu>
- <20100508053025.GG14998@coredump.intra.peff.net>
- <7v39y3c5p1.fsf@alter.siamese.dyndns.org>
- <19429.3589.823244.270582@winooski.ccs.neu.edu>
- <20100512113855.GB23847@coredump.intra.peff.net>
- <19434.39095.448649.313537@winooski.ccs.neu.edu>
- <20100512124948.GA11761@coredump.intra.peff.net>
- <19434.48308.815673.263230@winooski.ccs.neu.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH v3 4/5] Rename "crlf" attribute as "eolconv"
+Date: Thu, 13 May 2010 23:56:46 -0500
+Message-ID: <20100514045646.GA2433@progeny.tock>
+References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com>
+ <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com>
+ <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>
+ <961B7250-F65E-4C67-8C5C-6701F68C2FC0@gmail.com>
+ <alpine.LFD.2.00.1005131438330.3711@i5.linux-foundation.org>
+ <AANLkTil1i_vFAvT1CotYdK47LnufVKc17-1168rOVcMX@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eugene Sajine <euguess@gmail.com>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>, git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Fri May 14 06:55:36 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	git@vger.kernel.org, msysGit <msysgit@googlegroups.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Robert Buck <buck.robert.j@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 14 06:57:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCmvr-00082m-H9
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 06:55:31 +0200
+	id 1OCmxO-0000Ba-Kd
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 06:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239Ab0ENEz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 00:55:26 -0400
-Received: from peff.net ([208.65.91.99]:45767 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751522Ab0ENEzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 00:55:25 -0400
-Received: (qmail 28562 invoked by uid 107); 14 May 2010 04:55:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 14 May 2010 00:55:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 14 May 2010 00:55:22 -0400
+	id S1752771Ab0ENE47 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 May 2010 00:56:59 -0400
+Received: from mail-yw0-f198.google.com ([209.85.211.198]:37651 "EHLO
+	mail-yw0-f198.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752368Ab0ENE46 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 00:56:58 -0400
+Received: by ywh36 with SMTP id 36so1006025ywh.4
+        for <git@vger.kernel.org>; Thu, 13 May 2010 21:56:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=f333Ho/aecxlV5SIJSwRIuE5nJRZVNjY30v9GGC9wlo=;
+        b=Gjs5/Le1lge8eU/+enkBY8LTQ+Le2YM1wTsLhypLcko/3qGT8vm63N8GRj2gp47NGB
+         9vNAPYd1P0qaqfAXYjg01N86Tu997rRl+bSLz6yG63+qnE1C/uDOaOcUKwGeQmlJ/R/s
+         45XFwgo+71UWnrb1ATfhQCEHQGd3RZvVHIJ3M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=HoH3AFXOJfDHltwI1CpZc3QIOxBxz6RiBoeE5pq+bUybScqFBtSG1Y1ZWsdqdlqJ72
+         d+6ORelGDvQ1ddpI4OjMjT5ueh9elD3pkflHDQF8aGQLE2jFu7SvxPJMXvkcIxKmiZ3t
+         Hs2WIRRTAFKKDjRrSnFhhk35sYd0E7UhCpO+E=
+Received: by 10.150.120.9 with SMTP id s9mr1373623ybc.299.1273813017857;
+        Thu, 13 May 2010 21:56:57 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id a26sm14925870ybd.5.2010.05.13.21.56.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 13 May 2010 21:56:55 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <19434.48308.815673.263230@winooski.ccs.neu.edu>
+In-Reply-To: <AANLkTil1i_vFAvT1CotYdK47LnufVKc17-1168rOVcMX@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147048>
 
-On Wed, May 12, 2010 at 10:35:32AM -0400, Eli Barzilay wrote:
+Hi Bob,
 
-> But with `-p' it was doing something confusing: I used two files that
-> were recently renamed, and the result was the correct log history, but
-> the first patch that was shown (the rename) showed the two files as
-> added.  (That's even when I added `-C' and `-M'.)  This happens even
-> with a single path.  OTOH, using `--follow' with `-p' and a single
-> path without your patch produces the expected result where the first
-> patch is a rename (even without `-C'/`-M').
+Robert Buck wrote:
 
-Ah, yeah, I see. The problem is that my code is doing something like:
+> *   text
+> *.foo  binary
+>=20
+> means autoconvert everything regardless of the autocrlf setting,
+> except for .foo files ? So now we can dispense with the autocrlf
+> attribute altogether if we so wish?
 
-  1. Do a sha1-only diff with our current path list.
+If I understand correctly, there is no autocrlf attribute, just a
+configuration item.  If you put
 
-  2. If there were any created files, they might be renames.
-     Put aside the old diff results. Do a new diff, looking for renames.
+ * crlf
+ *.foo -crlf
 
-  3. If there are renames, add them to our path list.
+in your .gitattributes with current git, this means:
 
-  4. Restore the old diff results.
+ - if the '[core] autocrlf' configuration is not set, do not convert
+   anything;
 
-  5. Proceed with other desired diff options (rename detection, showing
-     patches, etc).
+ - otherwise, convert everything except for .foo files
 
-But the during step (5), remember that we are still working with the old
-diff results, which will not include the expanded path. Thus we won't
-consider the new path as a rename source, and will fail to find the
-rename.
+Eyvind=E2=80=99s series improves that in a few ways.
 
-The naive right way would be to re-do step (1) with the expanded path.
-But there is an optimization, since we can use the diff results from (2)
-directly, including avoiding re-doing the rename detection.
+ - [from Finn Arne Gangstad] If the in-repository copy of a file
+   contains any carriage returns, do not try to convert it.  This
+   makes it easier to deal with mistakes.
 
-The only "downside" is that it means --follow actually impacts the diff
-generation by implying --find-copies-harder. And I put downside in
-quotes because it is probably not a big deal. We have already spent the
-CPU time to find the answer, so it is silly not to show it. I can't
-imagine why somebody would want --follow, but would _not_ want rename
-detection in the resulting diff.
+ - For files with crlf enabled through attributes, always convert,
+   whether '[core] autocrlf' is enabled or not.
 
-Bo's version of the patch does that optimization. When I clean up the
-patch (probably sometime next week), I'll take those changes.
+ - Use the '[core] autocrlf' setting to determine the desired
+   line-ending for checked-out files (\r\n if true, \n otherwise).
+   A new eol attribute is provided to override that setting.
 
--Peff
+ - The crlf attribute gets a new synonym "text" to avoid confusion.
+
+There is also some change to the result of file type autodetection,
+but as long as your .gitattributes uses '* crlf' or '* -crlf', there
+is no need to worry about this.
+
+Hope that helps,
+Jonathan
