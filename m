@@ -1,71 +1,68 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v5 01/18] Makefile: pass CPPFLAGS through to fllow
- customization
-Date: Fri, 14 May 2010 09:53:30 +0000
-Message-ID: <robbat2-20100514T094909-157386852Z@orbis-terrarum.net>
-References: <20100514093131.249094000@mlists.thewrittenword.com>
- <20100514093725.884968000@mlists.thewrittenword.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] git-rebase--interactive: Handle commit messages that end in backslash
+Date: Fri, 14 May 2010 12:15:55 +0200
+Message-ID: <201005141215.55746.trast@student.ethz.ch>
+References: <20100513133955.05493175@bobcat.office> <20100513135807.548594f9@bobcat.office> <20100513143350.GA2742@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 14 12:00:23 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Chris Lamb <lamby@debian.org>, <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 14 12:16:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCrgs-0004IM-Nk
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 12:00:23 +0200
+	id 1OCrw6-0003lS-4n
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 12:16:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758893Ab0ENKAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 06:00:16 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:41848 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751585Ab0ENKAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 06:00:14 -0400
-X-Greylist: delayed 395 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 May 2010 06:00:13 EDT
-Received: (qmail 24510 invoked from network); 14 May 2010 09:53:31 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Fri, 14 May 2010 09:53:31 +0000
-Received: (qmail 21797 invoked by uid 10000); 14 May 2010 09:53:30 -0000
-Content-Disposition: inline
-In-Reply-To: <20100514093725.884968000@mlists.thewrittenword.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759023Ab0ENKP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 06:15:59 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:4909 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759019Ab0ENKP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 06:15:58 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 14 May
+ 2010 12:15:55 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 14 May
+ 2010 12:15:56 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <20100513143350.GA2742@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147078>
 
-On Fri, May 14, 2010 at 09:31:32AM +0000, Gary V. Vaughan wrote:
-> Without this patch there is no straight forward way to pass additional
-> CPPFLAGS at configure-time.  At TWW, everything non-vendor package is
-> installed to its own subdirectory, so we need the following to show
-> the preprocessor where the headers for the libraries we will link
-> later can be found:
-As a point of comparision, this is what we use in Gentoo, to allow us to
-override many of the variables:
-sed -i \
-    -e 's:^\(CFLAGS =\).*$:\1 $(OPTCFLAGS) -Wall:' \
-    -e 's:^\(LDFLAGS =\).*$:\1 $(OPTLDFLAGS):' \
-    -e 's:^\(CC = \).*$:\1$(OPTCC):' \
-    -e 's:^\(AR = \).*$:\1$(OPTAR):' \
-    Makefile || die "sed failed"
+Jeff King wrote:
+> As I understand it[1], the subject line shown is for
+> human consumption only, and the actual operations happen on the included
+> sha1. So we could munge it in a non-reversible way without breaking
+> anything.
+> 
+> -Peff
+> 
+> [1] I may be wrong. This is not code I'm too familiar with, and I do
+> remember a proposal at some point for automagically handling subjects
+> with "wip" or "squash" in them. Still, a light munging may work.
 
-Which would be equivilent to changing the Makefile to have:
-CFLAGS = $(OPTCFLAGS) -Wall
-LDFLAGS = $(OPTLDFLAGS)
-CC = $(OPTCC)
-AR = $(OPTAR)
+During the actual rebasing, only the 'cmd sha' portion of the line
+matters, as evidenced by the code doing
 
-Thereafter, we pass in the relevant values for those variables.
+  do_next () {
+          rm -f "$MSG" "$AUTHOR_SCRIPT" "$AMEND" || exit
+          read command sha1 rest < "$TODO"
 
-CPPFLAGS is reserved for flags destined for ONLY the preprocessor, and we don't
-want to introduce for that reason.
+and then not using $rest except in status messages.
+
+The automatic handling you are referring to is --autosquash, which
+happens in rearrange_squash() which is a preprocessing stage.  AFAICS
+that function is still okay iff the munging maps prefixes to prefixes.
 
 -- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+Thomas Rast
+trast@{inf,student}.ethz.ch
