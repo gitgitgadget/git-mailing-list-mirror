@@ -1,91 +1,103 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: request for help with buildnumber-maven-plugin git integration
-Date: Thu, 13 May 2010 23:22:48 +0000 (UTC)
-Message-ID: <loom.20100514T010951-900@post.gmane.org>
+From: "Albert Krawczyk" <albert@burgmann.anu.edu.au>
+Subject: Git log follow question
+Date: Fri, 14 May 2010 10:57:34 +1000
+Message-ID: <006d01caf300$703e96a0$50bbc3e0$@burgmann.anu.edu.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 14 01:23:49 2010
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri May 14 03:35:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OChkp-000859-9V
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 01:23:47 +0200
+	id 1OCjnz-0007Gr-Mr
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 03:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756322Ab0EMXXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 May 2010 19:23:04 -0400
-Received: from lo.gmane.org ([80.91.229.12]:35792 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752221Ab0EMXXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 May 2010 19:23:01 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OChk0-0007hY-KX
-	for git@vger.kernel.org; Fri, 14 May 2010 01:22:56 +0200
-Received: from c-67-183-136-182.hsd1.wa.comcast.net ([67.183.136.182])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 May 2010 01:22:56 +0200
-Received: from haircut by c-67-183-136-182.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 14 May 2010 01:22:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 67.183.136.182 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100402 Ubuntu/9.10 (karmic) Firefox/3.5.9)
+	id S1754753Ab0ENBfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 May 2010 21:35:05 -0400
+Received: from anumail9.anu.edu.au ([130.56.64.135]:40134 "EHLO
+	anumail9.anu.edu.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751979Ab0ENBfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 May 2010 21:35:03 -0400
+X-Greylist: delayed 2233 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 May 2010 21:35:03 EDT
+Received: from mailout2.anu.edu.au (mailout2.anu.edu.au [130.56.64.233])
+	by anumail9.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4E0vjsX023605
+	for <git@vger.kernel.org>; Fri, 14 May 2010 10:57:45 +1000 (EST)
+Received: from mailout2.anu.edu.au (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id 0DE3C9E82B6
+	for <git@vger.kernel.org>; Fri, 14 May 2010 10:57:45 +1000 (EST)
+Received: from smtphost.anu.edu.au (ds2.anu.edu.au [130.56.64.54])
+	by mailout2.anu.edu.au (Postfix) with ESMTP id 7D4EC9E8476
+	for <git@vger.kernel.org>; Fri, 14 May 2010 10:57:44 +1000 (EST)
+Received: from AlbertDesktop (burg237222.anu.edu.au [150.203.237.222])
+	by smtphost.anu.edu.au (8.14.3/8.14.3) with SMTP id o4E0viba007883
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Fri, 14 May 2010 10:57:44 +1000 (EST)
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: Acry/4nXw1+/maQCSEi0vZ2Or3c/GA==
+Content-Language: en-au
+X-PMX-Version: 5.5.9.395186, Antispam-Engine: 2.7.2.376379, Antispam-Data: 2010.5.14.4818 internal
+X-PMX-Outbound: anu.edu.au
+X-PMX-Info: from-anu
+X-PerlMx-Spam: Gauge=X, Probability=10%, Report='
+ TO_IN_SUBJECT 0.5, BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1600_1699 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, FORGED_MUA_OUTLOOK 0, TO_NO_NAME 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __OUTLOOK_MUA 0, __OUTLOOK_MUA_1 0, __SANE_MSGID 0, __TO_MALFORMED_2 0, __USER_AGENT_MS_GENERIC 0'
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147037>
 
-Justin(?) said, on May 11th:
-> Ah yes I also got that. I disabled the "itest"
-> section of the pom.
-> 
-> I'll send it to you soon.
-> 
-> Regards
-> Justin
+Hi Everybody,
 
-Antony Stubbs wrote, on Tue, May 11, 2010 at 12:53 PM:
-> I use my build every day, it definitely works for me. However,
-> yes, I noticed the failure and disabled the tests! ;) but yes, the
-> git integration works fine. I welcome a patch to fix the
-> integration tests...
-> 
-> Regards
-> Antony
-> 
-> On 12/05/2010, at 4:06, Adam Monsen wrote:
-> > Hi there! Sorry to trouble you all. I ran across
-> > http://stackoverflow.com/questions/2685069/maven-buildnumber-plugin-git
-> > , and it led me to you folks. I'm a software engineer on Mifos.
-> >
-> > Do any of you have a working version of buildnumber-maven-plugin
-> > with git support? I tried building from 14001f of
-> > http://github.com/astubbs/buildnumber-maven-plugin/ , but I get
-> > an "embedded error". I think an integration test is failing, and
-> > I forget how to debug these integration tests. The build passes
-> > for me for the upstream code (r11906 of
-> > http://svn.codehaus.org/mojo/trunk/mojo/buildnumber-maven-plugin
-> > ).
-> >
-> > Anyway, I'd like to help, let me know if you'd like to
-> > collaborate.
+I'm having an issue understanding the way git log --follow works with git
+log --parents
 
-(also asked on <users@maven.apache.org>)
+When I run 
+git log --parents --pretty=format:Commit:%H%nParent:%P%n%n alloc.c
+I get: 
+Commit:4b25d091ba53c758fae0096b8c0662371857b9d9
+Parent:100c5f3b0b27ec6617de1a785c4ff481e92636c1
 
-Maven is a build system used by many Java-based projects. Some folks
-have added Git support, allowing the inclusion of build identifiers
-(like branches and commit hashes) in products of Maven builds. But
-they need help to complete it. Is anyone interested in helping?
+Commit:100c5f3b0b27ec6617de1a785c4ff481e92636c1
+Parent:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
 
-This is something we (Mifos) need, so if you do help, know that
-you'll be helping to end world poverty.
+Commit:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
+Parent:579d1fbfaf25550254014fa472faac95f88eb779
+
+Commit:579d1fbfaf25550254014fa472faac95f88eb779
+Parent:855419f764a65e92f1d5dd1b3d50ee987db1d9de
+
+Commit:855419f764a65e92f1d5dd1b3d50ee987db1d9de
+Parent:
+
+When I try to run git log --parents --follow I get this:
+git log --parents --follow --pretty=format:Commit:%H%nParent:%P%n%n alloc.c
+
+Commit:4b25d091ba53c758fae0096b8c0662371857b9d9
+Parent:75b44066f3ed7cde238cdea1f0bf9e2f1744c820
+
+Commit:100c5f3b0b27ec6617de1a785c4ff481e92636c1
+Parent:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
+
+Commit:2c1cbec1e2f0bd7b15fe5e921d287babfd91c7d3
+Parent:f948792990f82a35bf0c98510e7511ef8acb9cd3
+
+Commit:579d1fbfaf25550254014fa472faac95f88eb779
+Parent:446c6faec69f7ac521b8b9fc2b1874731729032f
+
+Commit:855419f764a65e92f1d5dd1b3d50ee987db1d9de
+Parent:64e86c57867593ba0ee77a7b0ff0eb8e9d4d8ed5
+
+As you can see git log --parents and git log --follow --parents produce very
+different results, and as far as I can tell they should produce identical
+outputs. 
+
+Could somebody tell me if I'm doing something wrong with the syntax? Or have
+I stumbled onto a quirk I fail to understand?
+
+Thanks,
+Albert 
