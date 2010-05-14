@@ -1,71 +1,61 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH v5 01/18] Makefile: pass CPPFLAGS through to fllow
- customization
-Date: Fri, 14 May 2010 11:04:59 +0000
-Message-ID: <robbat2-20100514T110034-766521339Z@orbis-terrarum.net>
-References: <20100514093131.249094000@mlists.thewrittenword.com>
- <20100514093725.884968000@mlists.thewrittenword.com>
- <robbat2-20100514T094909-157386852Z@orbis-terrarum.net>
- <20100514105832.GB31921@thor.il.thewrittenword.com>
+From: "Todd A. Jacobs" <nospam@codegnome.org>
+Subject: What does the 100 in R100 mean?
+Date: Fri, 14 May 2010 04:21:45 -0700
+Message-ID: <20100514112145.GQ12846@penguin.codegnome.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 14 13:05:20 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 14 13:58:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCshh-0005LS-Qd
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 13:05:18 +0200
+	id 1OCtWs-0000Ub-Is
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 13:58:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075Ab0ENLFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 07:05:09 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:51197 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754512Ab0ENLFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 07:05:07 -0400
-Received: (qmail 7777 invoked from network); 14 May 2010 11:05:03 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Fri, 14 May 2010 11:05:02 +0000
-Received: (qmail 1482 invoked by uid 10000); 14 May 2010 11:04:59 -0000
+	id S1757730Ab0ENL6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 07:58:01 -0400
+Received: from que11.charter.net ([209.225.8.21]:56109 "EHLO que11.charter.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754290Ab0ENL57 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 07:57:59 -0400
+X-Greylist: delayed 1600 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 May 2010 07:57:59 EDT
+Received: from imp10 ([10.20.200.15]) by mta21.charter.net
+          (InterMail vM.7.09.02.04 201-2219-117-106-20090629) with ESMTP
+          id <20100514112147.GXLG75.mta21.charter.net@imp10>
+          for <git@vger.kernel.org>; Fri, 14 May 2010 07:21:47 -0400
+Received: from penguin.codegnome.org ([71.83.124.90])
+	by imp10 with smtp.charter.net
+	id HPMm1e0011x8DgP05PMmf9; Fri, 14 May 2010 07:21:47 -0400
+X-Authority-Analysis: v=1.0 c=1 a=ge45WnWFqjUA:10 a=mI6YO6ZdSLUA:10
+ a=kj9zAlcOel0A:10 a=MQcGYD3nGAUvkubrX70A:9 a=a6UAOH6QQrF1UY6GrM-laZoJO9YA:4
+ a=CjuIK1q_8ugA:10
+Received: by penguin.codegnome.org (Postfix, from userid 1000)
+	id CEDDF37CB2; Fri, 14 May 2010 04:21:45 -0700 (PDT)
+Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
+	Fri, 14 May 2010 04:21:45 -0700
 Content-Disposition: inline
-In-Reply-To: <20100514105832.GB31921@thor.il.thewrittenword.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Delivery-Agent: TMDA/1.1.12 (Macallan)
+Mail-Followup-To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147083>
 
-On Fri, May 14, 2010 at 10:58:32AM +0000, Gary V. Vaughan wrote:
-> As a matter of fact, Automake even jumps through hoops with
-> AM_CPPFLAGS to make sure that the package maintainer doesn't
-> accidentally trample over the package builder's CPPFLAGS settings - I
-> can't think of a scenario where the person who writes the build system
-> for a package knows more about what CPPFLAGS the person who builds it
-> will need that the person doing the actual building.
-AM_CFLAGS != AM_CPPFLAGS. My concern was the mixing of them.
+When I'm looking at the output for renamed files in git-log or
+git-whatchanged, renamed files always seem to say "R100." So, I looked
+in the man page, followed the internal references to --diff-filter, and
+remain stumped as to what the digits stand for. I couldn't even find an
+explanatory comment in the git source code.
 
-IIRC the correct direction was that all CPPFLAGS should be valid CFLAGS,
-but not all valid CFLAGS are valid CPPFLAGS (depending on your cpp, they
-might be passed to other layers).
-
-> I'm pretty sure I'm missing the point though, since letting the
-> package builder choose their own CPPFLAGS has been at the core of
-> building Unix packages for as long as I can remember...
-As a middle ground:
-CFLAGS = $(OPTCFLAGS) -Wall
-CPPFLAGS = $(OPTCPPFLAGS)
-LDFLAGS = $(OPTLDFLAGS)
-CC = $(OPTCC)
-AR = $(OPTAR)
-
-(and pass them suitably to the various binaries).
+Obviously, R is for "(R)enamed." What is the "100" for? If it's being
+returned as a flag to --name-status and friends, it should probably be
+documented somewhere.
 
 -- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+"Oh, look: rocks!"
+	-- Doctor Who, "Destiny of the Daleks"
