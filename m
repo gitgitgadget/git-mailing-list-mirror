@@ -1,122 +1,76 @@
 From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-Subject: [PATCH v5 10/18] Make NO_{INET_NTOP,INET_PTON} configured independently
-Date: Fri, 14 May 2010 09:31:41 +0000
-Message-ID: <20100514093812.591978000@mlists.thewrittenword.com>
+Subject: [PATCH v5 14/18] Makefile: SunOS 5.6 portability fix
+Date: Fri, 14 May 2010 09:31:45 +0000
+Message-ID: <20100514093833.233343000@mlists.thewrittenword.com>
 References: <20100514093131.249094000@mlists.thewrittenword.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 14 11:38:33 2010
+X-From: git-owner@vger.kernel.org Fri May 14 11:38:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCrLg-0001z6-Gc
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 11:38:28 +0200
+	id 1OCrLu-000236-Hf
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 11:38:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758796Ab0ENJiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 05:38:17 -0400
-Received: from mail1.thewrittenword.com ([69.67.212.77]:65243 "EHLO
+	id S1758834Ab0ENJij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 05:38:39 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:62502 "EHLO
 	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758769Ab0ENJiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 05:38:13 -0400
+	with ESMTP id S1758789Ab0ENJie (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 05:38:34 -0400
 Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
-	by mail1.thewrittenword.com (Postfix) with ESMTP id E12F95C48
-	for <git@vger.kernel.org>; Fri, 14 May 2010 09:55:04 +0000 (UTC)
-X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com E12F95C48
+	by mail1.thewrittenword.com (Postfix) with ESMTP id DE4975C0C
+	for <git@vger.kernel.org>; Fri, 14 May 2010 09:55:25 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com DE4975C0C
 Received: from akari.il.thewrittenword.com (akari.il.thewrittenword.com [10.191.57.57])
-	by mail1.il.thewrittenword.com (Postfix) with ESMTP id B7FB2CA0;
-	Fri, 14 May 2010 09:38:12 +0000 (UTC)
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id A18FED06;
+	Fri, 14 May 2010 09:38:33 +0000 (UTC)
 Received: by akari.il.thewrittenword.com (Postfix, from userid 1048)
-	id AC79711D4D1; Fri, 14 May 2010 09:38:12 +0000 (UTC)
+	id 5DD6E11D4D1; Fri, 14 May 2010 09:38:33 +0000 (UTC)
 User-Agent: quilt/0.46-1
-Content-Disposition: inline; filename=no-inet_ntop.patch
+Content-Disposition: inline; filename=host-SunOS56.patch
 X-Virus-Scanned: clamav-milter 0.96 at maetel.il.thewrittenword.com
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147071>
 
-Being careful not to overwrite the results of testing for hstrerror in
-libresolv, also test whether inet_ntop/inet_pton are available from
-that library.
+Although configure takes care of most of this, set some default values
+for Solaris 2.6 (aka SunOS-5.6) to ensure git compiles even when
+configure is not used to build it.
 
 Signed-off-by: Gary V. Vaughan <gary@thewrittenword.com>
 ---
- config.mak.in |    2 ++
- configure.ac  |   37 ++++++++++++++++++++++++++++++-------
- 2 files changed, 32 insertions(+), 7 deletions(-)
+ Makefile |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Index: b/configure.ac
+Index: b/Makefile
 ===================================================================
---- a/configure.ac
-+++ b/configure.ac
-@@ -545,11 +545,33 @@ AC_SUBST(NEEDS_SOCKET)
- test -n "$NEEDS_SOCKET" && LIBS="$LIBS -lsocket"
- 
- #
--# Define NEEDS_RESOLV if linking with -lnsl and/or -lsocket is not enough.
--# Notably on Solaris 7 inet_ntop and inet_pton additionally reside there.
--AC_CHECK_LIB([c], [inet_ntop],
--[NEEDS_RESOLV=],
--[NEEDS_RESOLV=YesPlease])
-+# The next few tests will define NEEDS_RESOLV if linking with
-+# libresolv provides some of the functions we would normally get
-+# from libc.
-+NEEDS_RESOLV=
-+AC_SUBST(NEEDS_RESOLV)
-+#
-+# Define NO_INET_NTOP if linking with -lresolv is not enough.
-+# Solaris 2.7 in particular hos inet_ntop in -lresolv.
-+NO_INET_NTOP=
-+AC_SUBST(NO_INET_NTOP)
-+AC_CHECK_FUNC([inet_ntop],
-+	[],
-+    [AC_CHECK_LIB([resolv], [inet_ntop],
-+	    [NEEDS_RESOLV=YesPlease],
-+	[NO_INET_NTOP=YesPlease])
-+])
-+#
-+# Define NO_INET_PTON if linking with -lresolv is not enough.
-+# Solaris 2.7 in particular hos inet_pton in -lresolv.
-+NO_INET_PTON=
-+AC_SUBST(NO_INET_PTON)
-+AC_CHECK_FUNC([inet_pton],
-+	[],
-+    [AC_CHECK_LIB([resolv], [inet_pton],
-+	    [NEEDS_RESOLV=YesPlease],
-+	[NO_INET_PTON=YesPlease])
-+])
- #
- # Define NO_HSTRERROR if linking with -lresolv is not enough.
- # Solaris 2.6 in particular has no hstrerror, even in -lresolv.
-@@ -561,8 +583,9 @@ AC_CHECK_FUNC([hstrerror],
- 	[NO_HSTRERROR=YesPlease])
- ])
- AC_SUBST(NO_HSTRERROR)
--
--AC_SUBST(NEEDS_RESOLV)
-+#
-+# If any of the above tests determined that -lresolv is needed at
-+# build-time, also set it here for remaining configure-time checks.
- test -n "$NEEDS_RESOLV" && LIBS="$LIBS -lresolv"
- 
- AC_CHECK_LIB([c], [basename],
-Index: b/config.mak.in
-===================================================================
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -53,6 +53,8 @@ NO_SETENV=@NO_SETENV@
- NO_UNSETENV=@NO_UNSETENV@
- NO_MKDTEMP=@NO_MKDTEMP@
- NO_MKSTEMPS=@NO_MKSTEMPS@
-+NO_INET_NTOP=@NO_INET_NTOP@
-+NO_INET_PTON=@NO_INET_PTON@
- NO_ICONV=@NO_ICONV@
- OLD_ICONV=@OLD_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
+--- a/Makefile
++++ b/Makefile
+@@ -812,6 +812,18 @@ ifeq ($(uname_S),SunOS)
+ 	NO_MKDTEMP = YesPlease
+ 	NO_MKSTEMPS = YesPlease
+ 	NO_REGEX = YesPlease
++	ifeq ($(uname_R),5.6)
++		SOCKLEN_T = int
++		NO_HSTRERROR = YesPlease
++		NO_IPV6 = YesPlease
++		NO_SOCKADDR_STORAGE = YesPlease
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRLCPY = YesPlease
++		NO_C99_FORMAT = YesPlease
++		NO_STRTOUMAX = YesPlease
++		GIT_TEST_CMP = cmp
++	endif
+ 	ifeq ($(uname_R),5.7)
+ 		NEEDS_RESOLV = YesPlease
+ 		NO_IPV6 = YesPlease
 
 -- 
 Gary V. Vaughan (gary@thewrittenword.com)
