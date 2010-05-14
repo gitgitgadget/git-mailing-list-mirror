@@ -1,7 +1,7 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH v2 1/4] rev-parse: deprecate use as an option sifter
-Date: Fri, 14 May 2010 20:26:49 +0200
-Message-ID: <725860e3bfc692c7241695ef5f554ff73f277b15.1273861341.git.git@drmicha.warpmail.net>
+Subject: [PATCH v2 0/4] All is too much
+Date: Fri, 14 May 2010 20:26:48 +0200
+Message-ID: <cover.1273861341.git.git@drmicha.warpmail.net>
 References: <4BED7574.4070503@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
@@ -12,82 +12,48 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCzb9-0006mi-Id
+	id 1OCzb9-0006mi-2B
 	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 20:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753382Ab0ENS0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 14:26:54 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35848 "EHLO
+	id S1753183Ab0ENS0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 14:26:53 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55835 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752811Ab0ENS0w (ORCPT
+	by vger.kernel.org with ESMTP id S1752563Ab0ENS0w (ORCPT
 	<rfc822;git@vger.kernel.org>); Fri, 14 May 2010 14:26:52 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7C41FF63F7;
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 61254F5DDD;
 	Fri, 14 May 2010 14:26:51 -0400 (EDT)
 Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 14 May 2010 14:26:51 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=ObsH0nSQArIaeODCrTJfLbwUZXM=; b=p3nqvcCv6ckD0zDaBJQ63c56GExF+j4DR3qqOnOuNaB4XigyUM7aEJ2scMfry+zQo6BysZJrm3WkiYy8Mgkfh1alOrJ8pCj+pE0VYkqtrCamRXu9NacQ5hzF3LBUMXN+aGBxD+tQlN9LmeTCQC9uMhG58/8DsNclWOl9CybdFiQ=
-X-Sasl-enc: I7HtZ5CTfpt678iFitBNU+fKuwU3Tb+UikLOXCRvJw9Y 1273861610
+  by compute1.internal (MEProxy); Fri, 14 May 2010 14:26:51 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=Cy8kRTQcmjhckkPia6BW033j7Yc=; b=ozVGd4a3Aw9p078MP31bcC6YqhxlppiWi4uVjI7DKm2aCa87AhAJjyQASzwBDdVTpxo6Qadj9Tt+ibEU7aT0keLfYtGLNA9t1HNlBJAuQ5lEjogI9pYemA5q0O4BD/p5Vg54wZ4O6zf9g4txdGMc92IPM5X3rQanKzctHX0Ljis=
+X-Sasl-enc: Zm0XqNiugJt3cKSW6ld2PpRLkfm/0EDmPE2tbn6W1SKQ 1273861607
 Received: from localhost (p5485982A.dip0.t-ipconnect.de [84.133.152.42])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6B0F24CFCDD;
-	Fri, 14 May 2010 14:26:50 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A7DF04CFCBD;
+	Fri, 14 May 2010 14:26:47 -0400 (EDT)
 X-Mailer: git-send-email 1.7.1.240.geeaa4d
 In-Reply-To: <4BED7574.4070503@drmicha.warpmail.net>
-In-Reply-To: <cover.1273861341.git.git@drmicha.warpmail.net>
-References: <cover.1273861341.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147106>
 
-This command used to be used to distinguish between parameters meant
-for rev-list and others, but this is deprectated now, and one should not
-rely on rev-parse keeping up to date with rev-list. State this in the
-man page and reword the title according to the primary use (converting
-symbolic names to SHA1's).
+Resent with correct rebasing/squasing:
+1,2 are unchanged
+The introduction of tests for the new options is moved from 3 to 4 as
+originally intended.
 
-Reference: <http://permalink.gmane.org/gmane.comp.version-control.git/146118>
+Michael J Gruber (4):
+  rev-parse: deprecate use as an option sifter
+  t6018: add tests for rev-list's --branches and --tags
+  t6018: make sure all tested symbolic names are different revs
+  revlist: Introduce --lrbranches and --locals revision specifiers
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-rev-parse.txt |   14 ++++++++++----
- 1 files changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 8db600f..99d2a79 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -3,7 +3,7 @@ git-rev-parse(1)
- 
- NAME
- ----
--git-rev-parse - Pick out and massage parameters
-+git-rev-parse - Parse symbolic names into object names
- 
- 
- SYNOPSIS
-@@ -13,12 +13,18 @@ SYNOPSIS
- DESCRIPTION
- -----------
- 
--Many git porcelainish commands take mixture of flags
-+The primary use of 'git rev-parse' is to turn symbolic object names into
-+40-letter object names ("SHA-1").
-+
-+Also, many git porcelainish commands take a mixture of flags
- (i.e. parameters that begin with a dash '-') and parameters
- meant for the underlying 'git rev-list' command they use internally
- and flags and parameters for the other commands they use
--downstream of 'git rev-list'.  This command is used to
--distinguish between them.
-+downstream of 'git rev-list'.  This command used to be used to
-+distinguish between them, but this is deprectated now, and you should
-+not expect 'git rev-parse' to keep up to date with newer parameters for
-+'git rev-list'. You can use linkgit:git-rev-list[1] directly or
-+linkgit:git-for-each-ref[1] for scripting.
- 
- 
- OPTIONS
--- 
-1.7.1.240.geeaa4d
+ Documentation/git-rev-list.txt     |    2 ++
+ Documentation/git-rev-parse.txt    |   14 ++++++++++----
+ Documentation/rev-list-options.txt |    8 ++++++++
+ builtin/rev-list.c                 |    2 ++
+ revision.c                         |   12 ++++++++++++
+ t/t6018-rev-list-glob.sh           |   33 ++++++++++++++++++++++++++++++++-
+ 6 files changed, 66 insertions(+), 5 deletions(-)
