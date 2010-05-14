@@ -1,120 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] ls-remote: print URL when no repo is specified
-Date: Fri, 14 May 2010 11:17:44 -0500
-Message-ID: <20100514161743.GA1957@progeny.tock>
-References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
- <1273598423-3156-1-git-send-email-rctay89@gmail.com>
- <7veihh8y8b.fsf@alter.siamese.dyndns.org>
- <AANLkTinxm8hwX53LE9_7rDPoKs9UnGAyFFfVcoh-WGxE@mail.gmail.com>
+From: Ali Tofigh <alix.tofigh@gmail.com>
+Subject: Re: many files, simple history
+Date: Fri, 14 May 2010 12:18:03 -0400
+Message-ID: <AANLkTimwd0DMc2gMbQfv9t_4YeEZrJETz2trszVqq3jd@mail.gmail.com>
+References: <AANLkTinHZbJ4obpa1FpT8boFWjNYpgU184HUTvki_A0G@mail.gmail.com> 
+	<20100514040559.GB6075@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 14 18:17:55 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 14 18:26:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OCxaD-0004QY-IG
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 18:17:53 +0200
+	id 1OCxi6-0000Vh-4B
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 18:26:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753655Ab0ENQRs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 May 2010 12:17:48 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:42100 "EHLO
+	id S1756229Ab0ENQZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 12:25:46 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:47204 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753435Ab0ENQRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 12:17:47 -0400
-Received: by vws9 with SMTP id 9so217254vws.19
-        for <git@vger.kernel.org>; Fri, 14 May 2010 09:17:46 -0700 (PDT)
+	with ESMTP id S1755940Ab0ENQZm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 12:25:42 -0400
+Received: by vws9 with SMTP id 9so226023vws.19
+        for <git@vger.kernel.org>; Fri, 14 May 2010 09:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=jnI4K5HwaaT5pDpq5236lPFq9m6L/H82CbT1WAnhCLU=;
-        b=DDTpjoWPiYDNWhJNElGLqB3xwUE3B9HtuYEMBT7V2bvoX3O7qWcEZj0esA1AZX96Q4
-         XoVcfWc1eshqBdo14LkXATiI6XVt1pElcslELyBJ3c98MsaEnedHOct9iJkUJL+Vpqt1
-         hiWkwnQD8dZ6c6QUjsIh5KSHRGho7NTxsTMhk=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=aBa7qJuCY0rL4qvTfXoDmgg3tnPXTUV64GTZJHWifHI=;
+        b=SGFHBndakxcHNQcXZi6sT5cM80ilkvRNdrerogNW8kCIluMeabxW1kwrqXPiCl0E8l
+         a2I864Yx1yUlpY6ZuIsuDKDSvLNDL3a6Q7T0OnjXes3L6b9IP5AekutUosWHi2EjbKxw
+         FbQX7S5zA22AWgtLWXRmiHOuUSCvXSF7n3jKo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ZhPvXmxlBTlt26q4R0Kq3TGqslk2dqIc2Xn7rxbPy8ismJonKSQjwPHGLZhIPpSszG
-         ++Ah06JJBvUIClq2HtPrwRnevaH4SlJPK2KJTG2acfDMMk65hAwrfRGKK4Dox+hsEA9j
-         1pYwy/tBmCss/ohfPQHqf8yB34D4onIZUhSYI=
-Received: by 10.229.214.10 with SMTP id gy10mr387423qcb.195.1273853865957;
-        Fri, 14 May 2010 09:17:45 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id i10sm541801qcb.11.2010.05.14.09.17.42
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 14 May 2010 09:17:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinxm8hwX53LE9_7rDPoKs9UnGAyFFfVcoh-WGxE@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=NVbWwcMjk6PIGcMuk1CttxPnLnQ6mmdsUpBoC9wxbq8bDFRzGuOanTDDrt6sLgaLOd
+         2W8iVPN/ilpUuuUFq5cAc9BXe+k+O7/PzRHQOh5zaxfQhLRRRzOYehZkY+/wwIs81JqR
+         MMUPFGwYstC9GruIEWTOKODJZRKEuNUH8w7HQ=
+Received: by 10.229.225.212 with SMTP id it20mr394194qcb.123.1273853903194; 
+	Fri, 14 May 2010 09:18:23 -0700 (PDT)
+Received: by 10.229.51.84 with HTTP; Fri, 14 May 2010 09:18:03 -0700 (PDT)
+In-Reply-To: <20100514040559.GB6075@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147100>
 
-Tay Ray Chuan wrote:
-> On Wed, May 12, 2010 at 1:50 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
-
->> I cannot convince myself that this is a good change, as I've always
->> thought "ls-remote" output as something people want to let their scr=
-ipts
->> read and parse. =A09c00de5 may have given an enhancement to these sc=
-ripts in
->> the sense that they can now respond to an empty input from the end u=
-ser,
->> but this patch forces them to change the way they parse the output f=
-rom
->> the command.
-
-Would 9c00de5 be so useful for scripts?  I suspect the typical script
-does
-
-  git ls-remote "$remote"
-
-so to use the new default it would need adjusting.
-
-Run by hand, 'ls-remote | grep heads' can be quite useful.
-
-> in this patch, the remote url is printed to stderr, instead of stdout=
-,
-> so existing scripts should be safe.
+On Fri, May 14, 2010 at 00:05, Jeff King <peff@peff.net> wrote:
+> On Thu, May 13, 2010 at 10:57:22PM -0400, Ali Tofigh wrote:
 >
->> I also think this patch is solving a wrong problem.
->>
->> When an end user does not know which remote ls-remote would be talki=
-ng to
->> by default, what else does he *not* know? =A0Probably which remote "=
-pull"
->> would be fetching from
-[...]
+>> short version: will git handle large number of files efficiently if
+>> the history is simple and linear, i.e., without merges?
+>
+> Short answer: large number of files, yes, large files, not really. The
+> shape of history is largely irrelevant.
 
-I think I see what you are saying, and for scripts, that really would
-be the most useful thing.  Then the script could use something like
+thank you for the explanation. I will start using git for managing my
+installed programs and will try to  report back to this list about my
+experience.
 
-  if test -z "$remote"
-  then
-	remote=3D$(git branch --get-remote --current)
-  fi
-  git ls-remote "$remote"
+/ali
 
-which would be much better than
-
-  git ls-remote ${remote:+"$remote"} 2>/dev/null
-
-because it does not suppress error messages.
-
-=46or manual use of ls-remote, on the other hand, I can see the use of
-the reminder.
-
-Jonathan
+>
+> Longer answer:
+>
+> Git separates the conceptual structure of history (the digraph of
+> commits, and the pointers of commits to trees to blobs) from the actual
+> storage of objects representing that history. Problems with large files
+> are usually storage issues. Copying them around in packfiles is
+> expensive, storing an extra copy in the repo is expensive, trying deltas
+> and diffs is expensive. None of those things has to do with the shape of
+> your history. So I would expect git to handle such a load with a linear
+> history about as well as a complex history with merges.
+>
+> For large numbers of files, git generally does a good job, especially if
+> those files are distributed throughout a directory hierarchy. But keep
+> in mind that the git repo will store another copy of every file. They
+> will be delta-compressed between versions, and zlib compressed overall,
+> but you may potentially be doubling the amount of disk space required if
+> you have a lot of uncompressible binary files.
+>
+> For large files, git expects to be able to pull each file into memory.
+> Sometimes two versions if you are doing a diff. And it will copy those
+> files around when repacking (which you will want to do for the sake of
+> the smaller files). So files on the order of a few megabytes are not a
+> problem. If you have files in the hundreds of megabytes or gigabytes,
+> expect some operations to be slow (like repacking).
+>
+> Really, I would start by just "git add"-ing your whole filesystem, doing
+> a "git repack -ad", and seeing how long it takes, and what the resulting
+> size is.
+>
+> -Peff
+>
