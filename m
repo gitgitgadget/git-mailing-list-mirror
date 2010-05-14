@@ -1,62 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/4] rev-parse: deprecate use as an option sifter
-Date: Fri, 14 May 2010 20:52:57 +0200
-Message-ID: <4BED9C09.8010801@drmicha.warpmail.net>
-References: <20100505033536.GB8779@coredump.intra.peff.net>	<725860e3bfc692c7241695ef5f554ff73f277b15.1273760226.git.git@drmicha.warpmail.net> <m3y6fmcx0n.fsf@localhost.localdomain>
+From: Jensen Somers <jensen.somers@gmail.com>
+Subject: How to migrate folders using svn:externals exclusively (no actual 
+	data inside folder) to git submodules?
+Date: Fri, 14 May 2010 20:53:18 +0200
+Message-ID: <AANLkTikJNSPKPDdpYEYVJogPq22LyOr0s3QxEF7wZO1Z@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 14 20:53:00 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 14 20:53:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OD00J-0007w1-SA
-	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 20:53:00 +0200
+	id 1OD012-000067-Fq
+	for gcvg-git-2@lo.gmane.org; Fri, 14 May 2010 20:53:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758866Ab0ENSwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 14:52:54 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57124 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757882Ab0ENSwx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 May 2010 14:52:53 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7AE9AF78F3;
-	Fri, 14 May 2010 14:52:53 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 14 May 2010 14:52:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=E7X4SoIFRxia7Z1jHd7HHt7jj98=; b=i1+dhjvm9yXqZZj3nuXDZUsIHYDiweEbmJGbDwdJGRM/RF6cqpHCxpsTlvq5RX6NvjbLQnTuWtlumBDq5q2dhRmfqMf2DUqZWrxKDPdHKuMVeYa8X8LjSa3AegGyT7E05XxUNTIc6L7+GyEhztb6Om0oXgUoTXijQEDotzr82UM=
-X-Sasl-enc: s2GOp83gD86W+qs6w/ZAfWTPcJAuZ+MRrVULOQvaWW89 1273863173
-Received: from localhost.localdomain (p5485982A.dip0.t-ipconnect.de [84.133.152.42])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6B0784AA1F5;
-	Fri, 14 May 2010 14:52:52 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <m3y6fmcx0n.fsf@localhost.localdomain>
+	id S1758477Ab0ENSxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 May 2010 14:53:40 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51684 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757976Ab0ENSxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 14:53:39 -0400
+Received: by fxm6 with SMTP id 6so1825371fxm.19
+        for <git@vger.kernel.org>; Fri, 14 May 2010 11:53:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=V3HKJOhDasQ/QDDUSUyI68cTz+FFknqFQEMkVINxc1w=;
+        b=k7YR0aagODPxQGVNJVLWALZ7TNGxtf2AjMOsZj4IBMLGoKgAh5j4sMJzKHE5677l1H
+         TxMOCaiOpZREeUkGe21oZbU3ZpxJMCGO2NFZJTuFffp78nn6SJTAjXXCDX9k2NW6g0wY
+         +novRcnHHrhwaRAGDYsOTkoV/nQsXpJSsDwBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=FJzDvoGO7BsXdQcA8+fs63eM+6dlMeHkNXPTVVI4kSlhCLcx4zoC1ECPbXkyc9dr1p
+         XG6TkHyE3i+UXN3sJsQ/X48VfvGvgUAJ6/Gk5TsrAOK14wahEE9MqNOqRXybu5RHHeWG
+         j2Pi3TKPyYrJ3hB5ruVYK2wDv1D/16MP8c7h8=
+Received: by 10.204.141.69 with SMTP id l5mr32819bku.64.1273863218138; Fri, 14 
+	May 2010 11:53:38 -0700 (PDT)
+Received: by 10.204.60.1 with HTTP; Fri, 14 May 2010 11:53:18 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147112>
 
-Jakub Narebski venit, vidit, dixit 14.05.2010 17:41:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->>  NAME
->>  ----
->> -git-rev-parse - Pick out and massage parameters
->> +git-rev-parse - Parse symbolic names into object names
-> 
-> What about "git rev-parse --parseopt"?  Isn't it massaging parameters?
-> 
+Hello,
 
-Sure it is. But if you read the part of the patch that you cut out (i.e.
-the comment and relevant diff) you see that the massaging part is the
-deprecated part of it. That's why I suggest not mentioning it at the
-most prominent place. (I don't suggest removing that functionality.)
+Having used Git a couple of times on some open source projects I am
+beginning to be more and more convinced of the power and benefit it
+has over subversion. One of the major benefits for me is the
+possibility to create local branches - and thus work on several things
+at the same time - without interfering with the actual master
+repository or to have 10 different /trunk folders on my hard drive.
 
-Michael
+Where I work we currently use subversion but I am looking into
+migrating everything to Git. There is one thing that is not very clear
+to me though and I hope somebody could shine some light on the matter.
+
+Our current repository is set up as follows:
+/
++ /Modules
++ + /ModuleA
++ + /ModuleB
++ + /ModuleC
++ /Applications
++ + /ApplicationA
++ + /ApplicationB
++ /Views
++ + /ViewApplicationA
++ + /ViewApplicationB
+
+ViewApplicationA and ViewApplicationB are empty folders which use the
+svn:externals property to include all required folders. For
+ViewApplicationA this would for example be ApplicationA, ModuleA and
+ModuleC, for ViewApplicationB this would be ApplicationB, ModuleB and
+ModuleC. Using the views the developers are able to checkout only
+what's needed for the given project they work on.
+And this is where Git confuses me. As an alternative for svn:externals
+I stumbled upon Git submodules but I am not entirely sure they allow
+me to do the same thing. Can I create a sub folder on my root Git
+repository and let developers check out only that folder or do I need
+to create a separate repository per view and reference another
+repository (holding all actual data) as a submodule? And can I
+actually do that on the server? Most examples I found talk about
+cloning another repository as a submodule, but all of them seem to do
+it locally, and not on the server and I don't want to bother every
+developer doing all that every time he decides to start fresh.
+
+Any tips, pointers, links to websites and other help to clarify this
+is greatly appreciated.
+
+- Jensen
