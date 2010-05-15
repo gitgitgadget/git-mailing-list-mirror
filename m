@@ -1,97 +1,72 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCH 3/3] git-web--browse: Add support for google chrome
-Date: Sun, 16 May 2010 01:28:40 +0530
-Message-ID: <1273953520-25990-3-git-send-email-pavan.sss1991@gmail.com>
-References: <1273953520-25990-1-git-send-email-pavan.sss1991@gmail.com>
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 15 21:59:48 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: utf8 BOM
+Date: Sat, 15 May 2010 22:23:52 +0200
+Message-ID: <61355CFC-EB9E-4B76-9450-F2DF1B2903C0@gmail.com>
+References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com> <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org> <AANLkTilQjSKNYq8NEabcsZc5WWF86kWMWxnTy-mShVgS@mail.gmail.com> <AANLkTimCraGNet9lCuJGmFNR5JcDRQBTz1yME6GQFo4B@mail.gmail.com> <014C9B00-800C-465D-A0B9-98BEEB7D7A96@gmail.com> <20100514101648.GB6212@dpotapov.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Robert Buck <buck.robert.j@gmail.com>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 15 22:28:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODNWW-0003WH-Co
-	for gcvg-git-2@lo.gmane.org; Sat, 15 May 2010 21:59:48 +0200
+	id 1ODNyW-0001op-7L
+	for gcvg-git-2@lo.gmane.org; Sat, 15 May 2010 22:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753492Ab0EOT7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 May 2010 15:59:43 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:45900 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753032Ab0EOT7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 May 2010 15:59:43 -0400
-Received: by pxi5 with SMTP id 5so1907345pxi.19
-        for <git@vger.kernel.org>; Sat, 15 May 2010 12:59:42 -0700 (PDT)
+	id S1751782Ab0EOUX6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 May 2010 16:23:58 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:57727 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751588Ab0EOUX5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 May 2010 16:23:57 -0400
+Received: by ewy8 with SMTP id 8so1255926ewy.28
+        for <git@vger.kernel.org>; Sat, 15 May 2010 13:23:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=CzWK5jx+2bwe/LBN8JdE1GhM6qEw8w/r/wGk2gSXEV4=;
-        b=Wg6SKhWusG1GMnzx7/ijVKSUjyU+4HS0Q10kH/xY7iX0GdU78PEIiQB0U7NHSucaki
-         mHCT/MrGKLrJIsJsu5gVGmornEjtuO01yDqvjKLDbufq2wGXn4O2hfBv4rMA40aweggB
-         aGoJczA0CBa9SwodEThKutJrJ8THLSeK4uMcc=
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=a0tF8o7mCINZSFdYJHZJWKqcJdydM9ArzIIk/1lEOpw=;
+        b=vZnK40+Aujpbry9ME4W2vmyhpq1tEsSACPLXOdT9x+DQf/Ohy3zRSVPdG8QE+4Q96d
+         XH22HoS+ffZ1OLZEKIBwEjVlX2d3xmtFr1c9bz8ee56/amu3Uqkxd2yYuoaLDtHJ1/iL
+         h3KUJeUUaNlEqNdzyigW+eCrA/XE+Nmc61UJA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pjT2sluNu53eaBQAsnbz/oiuBqyDIOH/Dj5B7WvJy4Bk4DHyWPY6OWOrBWJuJgTrhv
-         4BPr+ylb2yaKItQKHHwr6FrRfkgC5QkgDSSbtuSa+9rB0Nu39H2nUexn/9PWFusEjGQP
-         R2DsvFrmx1rpdLFu5HmHo1G1GmKN8rokmxHvk=
-Received: by 10.114.86.3 with SMTP id j3mr2518786wab.152.1273953581362;
-        Sat, 15 May 2010 12:59:41 -0700 (PDT)
-Received: from localhost.localdomain ([202.63.112.23])
-        by mx.google.com with ESMTPS id v13sm32432688wav.14.2010.05.15.12.59.39
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=UuOsaVjPzRtek97urzqIpWziUgZ78mG6fU5iJi8lSID7geDTe+c2IibgUYPfyoNU0l
+         HJH4M8GiafGPtYw66i7ksXaQ98HMnm6sKhuE71HOEhsLdi600d6aiI1tJJro8yN+wOjS
+         E4dNypqYaOuo5/NA45vyoN5uBbpuFoc4q6aq8=
+Received: by 10.213.80.140 with SMTP id t12mr1203641ebk.7.1273955034915;
+        Sat, 15 May 2010 13:23:54 -0700 (PDT)
+Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id 13sm1950803ewy.9.2010.05.15.13.23.53
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 15 May 2010 12:59:40 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.16.g5d405c.dirty
-In-Reply-To: <1273953520-25990-1-git-send-email-pavan.sss1991@gmail.com>
+        Sat, 15 May 2010 13:23:54 -0700 (PDT)
+In-Reply-To: <20100514101648.GB6212@dpotapov.dyndns.org>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147163>
 
-Add support for another web browser called chrome. To
-select it, the value of the browser should be 'chromium'.
+On 14. mai 2010, at 12.16, Dmitry Potapov wrote:
 
-Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
----
- git-web--browse.sh |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
+> Probably, ability of automatic add utf8 BOM on Windows to text files
+> (which are marked as "unicode") can be helpful, but it is just a part
+> of the problem of how to deal with text files in "legacy" encoding,
+> which are still widely used on Windows.
 
-diff --git a/git-web--browse.sh b/git-web--browse.sh
-index a578c3a..72dde3b 100755
---- a/git-web--browse.sh
-+++ b/git-web--browse.sh
-@@ -31,7 +31,7 @@ valid_custom_tool()
- 
- valid_tool() {
- 	case "$1" in
--		firefox | iceweasel | konqueror | w3m | links | lynx | dillo | open | start)
-+		firefox | iceweasel | chromium | konqueror | w3m | links | lynx | dillo | open | start)
- 			;; # happy
- 		*)
- 			valid_custom_tool "$1" || return 1
-@@ -103,7 +103,7 @@ fi
- 
- if test -z "$browser" ; then
-     if test -n "$DISPLAY"; then
--	browser_candidates="firefox iceweasel konqueror w3m links lynx dillo"
-+	browser_candidates="firefox iceweasel chromium konqueror w3m links lynx dillo"
- 	if test "$KDE_FULL_SESSION" = "true"; then
- 	    browser_candidates="konqueror $browser_candidates"
- 	fi
-@@ -146,6 +146,11 @@ case "$browser" in
- 	test "$vers" -lt 2 && NEWTAB=''
- 	"$browser_path" $NEWTAB "$@" &
- 	;;
-+    chromium)
-+	# Actual command for chromium is chromium-browser.
-+	# No need to specify newTab. It's default in chromium
-+	eval "$browser_path-browser" "$@" &
-+	;;
-     konqueror)
- 	case "$(basename "$browser_path")" in
- 	    konqueror)
+Sounds like something a clean/smudge filter should be able to do.  The clean filter converts legacy encoded text to utf8 and strips any utf8 BOM before checking the file in, and the smudge filter writes the file out as utf8 with a BOM (which hopefully works no matter what your code page is?  I don't know much about Windows i18n).
+
+Adding this to convert.c would be more difficult, at least politically, since I assume it would be Windows-specific code.
 -- 
-1.7.1.16.g5d405c.dirty
+Eyvind
