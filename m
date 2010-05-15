@@ -1,75 +1,103 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] notes: dry-run and verbose options for prune
-Date: Sat, 15 May 2010 01:38:16 +0200
-Message-ID: <201005150138.16618.johan@herland.net>
-References: <ecbe317d2f12d83185f3c3242c0350051e3b4bfa.1273873273.git.git@drmicha.warpmail.net>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 0/6] git-cvsserver: password support for pserver
+Date: Sat, 15 May 2010 02:45:58 +0000
+Message-ID: <1273891564-7523-1-git-send-email-avarab@gmail.com>
+References: <7v3an9tc5w.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat May 15 01:40:44 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 15 04:46:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OD4Ul-0007kz-6y
-	for gcvg-git-2@lo.gmane.org; Sat, 15 May 2010 01:40:43 +0200
+	id 1OD7Oo-0008Gd-I6
+	for gcvg-git-2@lo.gmane.org; Sat, 15 May 2010 04:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759954Ab0ENXkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 May 2010 19:40:36 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:39310 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751328Ab0ENXkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 May 2010 19:40:32 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L2F000VTOBT8FD0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sat, 15 May 2010 01:38:17 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 805091EA5549_BEDDEE9B	for <git@vger.kernel.org>; Fri,
- 14 May 2010 23:38:17 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 4574D1EA50A7_BEDDEE9F	for <git@vger.kernel.org>; Fri,
- 14 May 2010 23:38:17 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L2F00BUYOBT6V10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 15 May 2010 01:38:17 +0200 (MEST)
-User-Agent: KMail/1.13.3 (Linux/2.6.33-ARCH; KDE/4.4.3; x86_64; ; )
-In-reply-to: <ecbe317d2f12d83185f3c3242c0350051e3b4bfa.1273873273.git.git@drmicha.warpmail.net>
+	id S1755365Ab0EOCql convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 May 2010 22:46:41 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:48640 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751741Ab0EOCqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 May 2010 22:46:40 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1937174fga.1
+        for <git@vger.kernel.org>; Fri, 14 May 2010 19:46:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=WZjpwpDVb0Q3hvNE/ejL4iMCLfd2obJpaJFDpoJZDzA=;
+        b=SOhP7nUFvTRSUelB3mV1tQSdRFJxS88xr+jAiVDVMPHh5qokcMeg2jGMpLzI27yRFE
+         u6o8/yVpvDrqd0KxkxueGoJToE8e6C4cc0uJlOQUxZzW7unh3oYmX8E62Ch5V2PUO+nB
+         AwxIcKSQjFoXrqVlDfwHqMIEpyXblSRf5OyoQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=F0MHqzTQ1bzk8GRWd6rJpRhqhdedseE4Lr4QffbkOi4GDcQsDMpeMOb5ud9Va79b/Y
+         spEW3RbfUTm9KOxv0cn7Okl5Yu5zhFEbooxrdPRNeE8bl4QqWgN4N1elvg3D7ZX2O4WY
+         7JvDyMlNy92B6iRQhLBpbHv6pkek+gge7F5Fk=
+Received: by 10.86.239.14 with SMTP id m14mr3851270fgh.78.1273891598826;
+        Fri, 14 May 2010 19:46:38 -0700 (PDT)
+Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
+        by mx.google.com with ESMTPS id 22sm4155718fkq.17.2010.05.14.19.46.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 14 May 2010 19:46:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.84.gd92f8
+In-Reply-To: <7v3an9tc5w.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147127>
 
-On Friday 14 May 2010, Michael J Gruber wrote:
-> Introduce -n and -v options for "git notes prune" in complete analogy to
-> "git prune" so that one can check for dangling notes easily.
-> 
-> The output is a list of names of objects whose notes would be resp.
-> are removed so that one can check the object ("git show sha1") as well as
-> the note ("git notes show sha1").
-> 
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+This series adds optional pserver authentication support to
+git-cvsserver. It's useful in legacy environments that rely on pserver
+authentication support, and for various reasons can't easily switch to
+ssh-based authentication.
 
-Love it! :)
+This series was originally submitted in 2007/2008[1] and approved by
+Junio[2], it stalled because I didn't follow up[3] on sending it in an
+applyable format until now.
 
-Acked-by: Johan Herland <johan@herland.net>
+Changes since the series was originally submitted:
 
+  - There's now a test for pserver authentication support
 
-Thanks!
+  - Fixed the commit message of a few commits & squashed some commits.
 
-...Johan
+  - It now complies with Documentation/SubmittingPatches. I.e. has
+    signed-off-by lines.
 
+  - Changed my E-Mail address in the commits.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1. http://lists-archives.org/git/640574-authentication-support-for-pser=
+ver.html=20
+2. http://lists-archives.org/git/640617-authentication-support-for-pser=
+ver.html=20
+3. http://article.gmane.org/gmane.comp.version-control.git/85521/
+
+Sam Vilain (1):
+  git-cvsserver: use a password file cvsserver pserver
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (5):
+  git-cvsserver: authentication support for pserver
+  git-cvsserver: indent & clean up authdb code
+  git-cvsserver: Improved error handling for pserver
+  git-cvsserver: document making a password without htpasswd
+  git-cvsserver: test for pserver authentication support
+
+ Documentation/git-cvsserver.txt |   37 +++++++++++++--
+ git-cvsserver.perl              |   97 +++++++++++++++++++++++++++++++=
+++++---
+ t/t9400-git-cvsserver-server.sh |   16 ++++++-
+ 3 files changed, 137 insertions(+), 13 deletions(-)
