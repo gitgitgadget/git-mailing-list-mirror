@@ -1,91 +1,156 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] ls-remote: print URL when no repo is specified
-Date: Sat, 15 May 2010 11:20:02 -0500
-Message-ID: <20100515162002.GA2592@progeny.tock>
-References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
- <1273598423-3156-1-git-send-email-rctay89@gmail.com>
- <7veihh8y8b.fsf@alter.siamese.dyndns.org>
- <AANLkTinxm8hwX53LE9_7rDPoKs9UnGAyFFfVcoh-WGxE@mail.gmail.com>
- <20100514161743.GA1957@progeny.tock>
- <AANLkTimTKiGxpVelj9rVV_BV-f8NiKlQHpov38ojlfFq@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] git-am: Ignore whitespace before patches
+Date: Sat, 15 May 2010 17:23:08 +0000
+Message-ID: <1273944188-9472-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 15 18:20:18 2010
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 15 19:23:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODK62-0007UV-W9
-	for gcvg-git-2@lo.gmane.org; Sat, 15 May 2010 18:20:15 +0200
+	id 1ODL5J-0004Us-73
+	for gcvg-git-2@lo.gmane.org; Sat, 15 May 2010 19:23:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753222Ab0EOQUH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 May 2010 12:20:07 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:34707 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751491Ab0EOQUG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 May 2010 12:20:06 -0400
-Received: by gyg13 with SMTP id 13so1518477gyg.19
-        for <git@vger.kernel.org>; Sat, 15 May 2010 09:20:04 -0700 (PDT)
+	id S1754815Ab0EORX1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 May 2010 13:23:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:45415 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753150Ab0EORX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 May 2010 13:23:26 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so2117039fga.1
+        for <git@vger.kernel.org>; Sat, 15 May 2010 10:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=XNtDXx8HUjuUYzT95PCEElAqsbe2wRiQXOWHxFBHqis=;
-        b=QN3q9dQS0F4PdkbzLnYj711u49RulEW3HVwq3ZDI0u8ai5fUY/d15CgGyky2TpbNWh
-         DSwkNXkMUOiX2ZRLGg5flqoLB/1LpQxSRj7+/UcooPbg40UKN2b7Opi/Op0RSwJUhiN/
-         +4wLHZKXoRqaCghk2UFRGXbEKzUKCGnkrQurc=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=ls9fM++8XbXs8EM/qpWK/guEMcP/w4uFGCaC66XI7Vk=;
+        b=dXw6DTGWhIhXW00ERkF3VJ6NGMREqWoZVp+09RwtqmoimJaE/B/92A1B3AYJYec5io
+         JNoU42d+er14q9BoqHLxjF+5OOndYJrYYtZu9XTO9YQl0eAaCCiOV9LWZmGLNFyuNC3M
+         cB8u0DDDoQo+q6kKnNe/+05lsUr6RzX3KVnew=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=jp/mAlq6ADOdRAaLpTVHRITLWPytW1Y/Gu4Awqm0KmP5vX7Fjao/kTdoIFQQpG6z9q
-         m8qHBfSgTvsKeFTViA3ugcCx8Wg5N5qQyimJGQRM7US4dxwJiiM/K0rslqGPmk3Nn2ur
-         r8cKb8uLSYn+KcpZZbNiX1mVWUnk27vyjVB/A=
-Received: by 10.150.47.15 with SMTP id u15mr3983287ybu.220.1273940404767;
-        Sat, 15 May 2010 09:20:04 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 20sm2280421yxe.12.2010.05.15.09.20.02
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=ibUgSZ2ByR6d5BTsPhpxJS4utgSnAM3k9RvAq3NteArOkQdL/l3imbi7MPmV/FWCFB
+         SD97qooomSLRMpAbxKv9i53dq3lIWEHGshDYRkaVYosRMkFJTLjR9YKazPsJS4X58tDI
+         HnB/S5l9YtsX9D1GfDbDsMmymrfpPx6BIoPFM=
+Received: by 10.87.15.13 with SMTP id s13mr5114317fgi.48.1273944204819;
+        Sat, 15 May 2010 10:23:24 -0700 (PDT)
+Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
+        by mx.google.com with ESMTPS id 18sm5107101fks.35.2010.05.15.10.23.23
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 15 May 2010 09:20:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimTKiGxpVelj9rVV_BV-f8NiKlQHpov38ojlfFq@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sat, 15 May 2010 10:23:24 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.84.gd92f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147157>
 
-Tay Ray Chuan wrote:
-> On Sat, May 15, 2010 at 12:17 AM, Jonathan Nieder <jrnieder@gmail.com=
-> wrote:
+Change git-am to ignore whitespace (as defined by sh's read) at the
+beginning of patches.
 
->> I think I see what you are saying, and for scripts, that really woul=
-d
->> be the most useful thing. =C2=A0Then the script could use something =
-like
->>
->> =C2=A0if test -z "$remote"
->> =C2=A0then
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0remote=3D$(git branch --get-remote --curr=
-ent)
->> =C2=A0fi
->> =C2=A0git ls-remote "$remote"
+Empty lines are wont to creep in at the beginning of patches, here's
+an example from a raw Gmail attachment:
+
+    20 20 20 20 20 20 20 20  20 20 20 20 20 20 20 20  |                =
+|
+    20 20 20 20 20 20 20 20  20 20 20 20 20 20 20 0a  |               .=
+|
+    52 65 74 75 72 6e 2d 50  61 74 68 3a 20 3c 61 76  |Return-Path: <av=
+|
+
+Whitespace is also likely to appear if the user copy/pastes the patch
+around, e.g. via a pastebin, or any any number of other cases. This
+harms nothing and makes git-am's detection more fault tolerant.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> Just curious - when did git-branch learn "--get-remote"? Or "--curren=
-t"?
+---
+ git-am.sh     |   16 +++++++++++++++-
+ t/t4150-am.sh |   30 ++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 1 deletions(-)
 
-It didn=E2=80=99t.  I was just saying that it should (or we should prov=
-ide some
-commands to that effect).  What do you think?
-
-Maybe later today...
-Jonathan
+diff --git a/git-am.sh b/git-am.sh
+index 1056075..1b4baa8 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -172,7 +172,21 @@ check_patch_format () {
+ 	# otherwise, check the first few lines of the first patch to try
+ 	# to detect its format
+ 	{
+-		read l1
++		while read -r line
++		do
++			case "$line" in
++				"")
++					# Just skip whitespace
++					continue
++					;;
++				*)
++					# First non-empty line
++					l1=3D$line
++					break
++					;;
++			esac
++		done
++
+ 		read l2
+ 		read l3
+ 		case "$l1" in
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index 810b04b..3d089de 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -318,6 +318,36 @@ test_expect_success 'am without --committer-date-i=
+s-author-date' '
+ 	test "$at" !=3D "$ct"
+ '
+=20
++test_expect_success 'am applying a patch that begins with an empty lin=
+e' '
++	git checkout first &&
++	test_tick &&
++	echo > patch1-white &&
++	cat patch1 >> patch1-white &&
++	git am patch1-white &&
++	git cat-file commit HEAD | sed -e "/^\$/q" >head1 &&
++	at=3D$(sed -ne "/^author /s/.*> //p" head1) &&
++	ct=3D$(sed -ne "/^committer /s/.*> //p" head1) &&
++	test "$at" !=3D "$ct"
++'
++
++test_expect_success 'am applying a patch that begins with many empty l=
+ines' '
++	git checkout first &&
++	test_tick &&
++	echo "   " > patch1-white2 &&
++	echo "  " >> patch1-white2 &&
++	echo " " >> patch1-white2 &&
++	echo "" >> patch1-white2 &&
++	echo " " >> patch1-white2 &&
++	echo "  " >> patch1-white2 &&
++	echo "   " >> patch1-white2 &&
++	cat patch1 >> patch1-white2 &&
++	git am patch1-white2 &&
++	git cat-file commit HEAD | sed -e "/^\$/q" >head1 &&
++	at=3D$(sed -ne "/^author /s/.*> //p" head1) &&
++	ct=3D$(sed -ne "/^committer /s/.*> //p" head1) &&
++	test "$at" !=3D "$ct"
++'
++
+ # This checks for +0000 because TZ is set to UTC and that should
+ # show up when the current time is used. The date in message is set
+ # by test_tick that uses -0700 timezone; if this feature does not
+--=20
+1.7.1.84.gd92f8
