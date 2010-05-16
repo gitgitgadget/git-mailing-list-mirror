@@ -1,83 +1,92 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Has anyone looked at Gettext support for Git itself?
-Date: Sun, 16 May 2010 09:36:51 +0400
-Message-ID: <20100516053651.GB17200@dpotapov.dyndns.org>
-References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
- <m3pr0wd880.fsf@localhost.localdomain>
- <AANLkTikgs3d1YagU5lRCkEM9uwWe9dmifbHvIjhsk_wF@mail.gmail.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [PATCH] Add git format-patch produced patches to .gitignore
+Date: Sun, 16 May 2010 11:57:05 +0530
+Message-ID: <AANLkTinSJTzYOk_MRp2ddlLnbd5dC65q-c4zQbv8Oubj@mail.gmail.com>
+References: <1273958566-7328-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 16 07:37:11 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 16 08:27:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODWXG-0006hP-11
-	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 07:37:10 +0200
+	id 1ODXJm-000396-Uj
+	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 08:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346Ab0EPFg5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 May 2010 01:36:57 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60347 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301Ab0EPFg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 May 2010 01:36:56 -0400
-Received: by fxm6 with SMTP id 6so2714341fxm.19
-        for <git@vger.kernel.org>; Sat, 15 May 2010 22:36:55 -0700 (PDT)
+	id S1751838Ab0EPG1K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 May 2010 02:27:10 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:52871 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751827Ab0EPG1J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 May 2010 02:27:09 -0400
+Received: by gwaa20 with SMTP id a20so3714gwa.19
+        for <git@vger.kernel.org>; Sat, 15 May 2010 23:27:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=8wRgSm6nndQ6pRo8FBFdAAmNHBPh7gbthuoVrJpbeU8=;
-        b=X6kXeoaAarXEKN2GuSltojdoYN1I6zidI0D97bl+BiTwCslYzyqioZUDEjIxkZ20ro
-         uPwTktsB77qIa+Kf0LHW7leGBtjulSQRO0pOqmP1hfL6417F/mFmBwnO2Dn9GiZlA2rD
-         W9mozAs1XJie4ykZ6/TTQw34khpYoD4rPkbCU=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wBRsBI1B5UggwwTxKpD2IyjnhPjCrEE+MSUASk1BNuA=;
+        b=J91gm/Nv5Sal5nQs1lGHKhZct2huUU7LAJcCQKJ5FrUnx430PKTUr5vVcw+nImv3QC
+         iDHA5O23v3qdFo4t0p6+Sgry+BG+YMJli53DKPGE8Ns1hrSxX4lS/psx9W0YccRsHusJ
+         BxvJJ3dq8iAB/uyTvoQpJgSY0P84Xi3SmVMC0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=stAdUxdfjiIHe+hb/omJkhwzhWNMrLbmpfNzUUcLvd+YrjjAZw0ZxHtczmkS5gOsBR
-         P/gPNTRr2YjADBpi3FpjVQO3uWyG5lG49krba7xzuo3FSD2JJTPEJIez0b8Mu/SSyy/7
-         VlqjO6kVkVlauPSaBbgwOM27CLnTgndabIalo=
-Received: by 10.223.24.5 with SMTP id t5mr4119093fab.72.1273988214912;
-        Sat, 15 May 2010 22:36:54 -0700 (PDT)
-Received: from localhost (ppp85-140-167-233.pppoe.mtu-net.ru [85.140.167.233])
-        by mx.google.com with ESMTPS id 7sm19220065far.6.2010.05.15.22.36.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 15 May 2010 22:36:54 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikgs3d1YagU5lRCkEM9uwWe9dmifbHvIjhsk_wF@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=l45c+CS17/sItarekzMYUWiQfN53wgBf95T2lfl77DuIbHgbIa/Z5Mya20Pai/eHYe
+         YKcoP5MGTLC32iCznfWPrvucKbmdQlRujbjg27crWLI+gYs6sjNwSTnLc8f6up9yrIZU
+         EFtZsQlniyMd7/cE2utVognauaxVnECyrYDDM=
+Received: by 10.91.39.19 with SMTP id r19mr1583945agj.130.1273991225726; Sat, 
+	15 May 2010 23:27:05 -0700 (PDT)
+Received: by 10.90.84.5 with HTTP; Sat, 15 May 2010 23:27:05 -0700 (PDT)
+In-Reply-To: <1273958566-7328-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147177>
 
-On Sun, May 16, 2010 at 01:12:20AM +0000, =C6var Arnfj=F6r=F0 Bjarmason=
- wrote:
->=20
->     GETTEXT=3D`which gettext 2> /dev/null`
->     if [ -z $GETTEXT ] ; then GETTEXT=3D'echo -n'; fi
+Generally I use the format-patch command as:
 
-'echo -n' is not portable, and it is not used in git for this reason.
+git format-patch -M origin/master -o outgoing/
 
-Dmitry
+So, my patches will be in subdirectory outgoing.
+But the regex rule in this patch won't be able to hide them.
 
-> And then just:
->=20
->     - echo "We are not bisecting."
->     + $GETTEXT "We are not bisecting."
+What do u want to do in that case ?
 
-If gettext does not add the trailing newline to the message then it is
-clearly not equivalent replacement.
+- Pavan
 
-
-Dmitry
+On Sun, May 16, 2010 at 2:52 AM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> Change Git's own .gitignore so that patches produced with git
+> format-patch don't show up as untracked.
+>
+> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+> ---
+> =A0.gitignore | =A0 =A01 +
+> =A01 files changed, 1 insertions(+), 0 deletions(-)
+>
+> diff --git a/.gitignore b/.gitignore
+> index dbf1b90..039d99c 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -203,3 +203,4 @@
+> =A0*.pdb
+> =A0/Debug/
+> =A0/Release/
+> +[0-9][0-9][0-9][0-9]-*.patch
+> --
+> 1.7.1.84.gd92f8
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
