@@ -1,69 +1,91 @@
-From: Tait <git.git@t41t.com>
-Subject: Re: utf8 BOM
-Date: Sun, 16 May 2010 04:26:12 -0700
-Message-ID: <20100516112612.GV2480@ece.pdx.edu>
-References: <cover.1273700831.git.eyvind.bernhardsen@gmail.com> <6dd7bef7811283b03b8b9dac93c9a264d007bcb0.1273700831.git.eyvind.bernhardsen@gmail.com> <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org> <AANLkTilQjSKNYq8NEabcsZc5WWF86kWMWxnTy-mShVgS@mail.gmail.com> <AANLkTimCraGNet9lCuJGmFNR5JcDRQBTz1yME6GQFo4B@mail.gmail.com> <014C9B00-800C-465D-A0B9-98BEEB7D7A96@gmail.com> <20100514101648.GB6212@dpotapov.dyndns.org> <61355CFC-EB9E-4B76-9450-F2DF1B2903C0@gmail.com> <20100516051927.GA17200@dpotapov.dyndns.org> <00E0B9AC-2A2E-4F95-9B35-F3F63EBC3CF3@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] Add git format-patch produced patches to .gitignore
+Date: Sun, 16 May 2010 13:06:25 +0000
+Message-ID: <AANLkTilsZ1Dzsu6GwWaNh8WvMrzpQtj5AQNDavdYuCjf@mail.gmail.com>
+References: <1273958566-7328-1-git-send-email-avarab@gmail.com>
+	 <AANLkTinSJTzYOk_MRp2ddlLnbd5dC65q-c4zQbv8Oubj@mail.gmail.com>
+	 <20100516075244.GA9010@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Robert Buck <buck.robert.j@gmail.com>
-To: "git@vger.kernel.org List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun May 16 13:39:20 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 16 15:06:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODcBg-0000Wt-0R
-	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 13:39:16 +0200
+	id 1ODdYD-0000I5-QE
+	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 15:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754214Ab0EPLiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 May 2010 07:38:00 -0400
-Received: from rcpt.cat.pdx.edu ([131.252.208.107]:57542 "EHLO
-	rcpt.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752927Ab0EPLiA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 May 2010 07:38:00 -0400
-X-Greylist: delayed 704 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 May 2010 07:38:00 EDT
-Received: from nemo.ece.pdx.edu (nemo.ece.pdx.edu [131.252.209.162])
-	by rcpt.cat.pdx.edu (8.14.2/8.14.2/Debian-2build1) with ESMTP id o4GBQCvK018686
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 16 May 2010 04:26:12 -0700
-Received: from nemo.ece.pdx.edu (localhost [127.0.0.1])
-	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id o4GBQC8P016761;
-	Sun, 16 May 2010 04:26:12 -0700 (PDT)
-Received: (from tait@localhost)
-	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id o4GBQCJo016760;
-	Sun, 16 May 2010 04:26:12 -0700 (PDT)
-X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
-Content-Disposition: inline
-In-Reply-To: <00E0B9AC-2A2E-4F95-9B35-F3F63EBC3CF3@gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (rcpt.cat.pdx.edu [131.252.208.107]); Sun, 16 May 2010 04:26:12 -0700 (PDT)
-X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=failed
-	version=3.2.5
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on rcpt.cat.pdx.edu
-X-Virus-Scanned: clamav-milter 0.95.2 at rcpt.cat.pdx.edu
-X-Virus-Status: Clean
+	id S1754212Ab0EPNG3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 May 2010 09:06:29 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38797 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752605Ab0EPNG2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 May 2010 09:06:28 -0400
+Received: by fxm6 with SMTP id 6so2894304fxm.19
+        for <git@vger.kernel.org>; Sun, 16 May 2010 06:06:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xeRcHjT16RujckX0yGtaj17BHSuZp2l5qho6xe8X+Ok=;
+        b=mEXOeNUWLwnmeYh/yBP6cFIQReXDR+tVmgkgZlRP3tHv6eDmuF6WR1NyJ6kjYgGFXx
+         YWSoVtDzdBFSTBYyApEnx+/HjjhPlgL2S9BuV24vB9s9lPtF3cUTN9d03yy+MklQIbhu
+         a6LDtoN1UtYpsb6uNpb6jKj3/q3JTlcRNJChY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XLx1J+JCldE9kd/hJSLpxwC9Lgp9UmIx41UX7Y1MX2xgQJWaEgFBsA4OX3dH6isw7I
+         Qgl65wlV4YElWrwsqSl7Fw1iyrzE+cGtz5XhCjjZ0Ujg8cjZFv0NKNin7CpFdYPNQLE0
+         iJQ79fa7W4pvOeCT/bhitZIU56yuMl2HHF5BU=
+Received: by 10.223.56.206 with SMTP id z14mr4574728fag.97.1274015185457; Sun, 
+	16 May 2010 06:06:25 -0700 (PDT)
+Received: by 10.223.109.78 with HTTP; Sun, 16 May 2010 06:06:25 -0700 (PDT)
+In-Reply-To: <20100516075244.GA9010@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147187>
 
-> Okay, so something that checks text files to see if they're utf...
-> "core.autoutf", anyone?
+On Sun, May 16, 2010 at 07:52, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Pavan Kumar Sunkara wrote:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>>> --- a/.gitignore
+>>> +++ b/.gitignore
+>>> @@ -203,3 +203,4 @@
+>>> =C2=A0*.pdb
+>>> =C2=A0/Debug/
+>>> =C2=A0/Release/
+>>> +[0-9][0-9][0-9][0-9]-*.patch
+> [...]
+>> git format-patch -M origin/master -o outgoing/
+>>
+>> So, my patches will be in subdirectory outgoing.
+>> But the regex rule in this patch won't be able to hide them.
+>>
+>> What do u want to do in that case ?
+>
+> Try it out.
 
-This (and crlf-conversion, for that matter) strikes me as something best 
-handled outside of git core, such as through checkout/commit hooks. Perhaps 
-examples of such hooks could be provided and adapted by each project and 
-user as that user/project sees fit for their specific choice of repository 
-format and development environment.
+Right, patches in outgoing/ will be ignored too because the rule isn't
+prefixed with /, so it works regardless of whether the file is in a
+subdirectory or not.
 
-Given that git already chose not to screw around with encodings or define 
-a canonical encoding for the on-disk format (it's just a string of bytes), 
-it would be consistent and reasonable to not mess with these other things, 
-too.
+> In fact, I was worried that this patch would trigger a similar
+> problem: maybe some test data directory contains format-patch
+> output? =C2=A0In fact none do, so I like the patch.
 
-Tait
+None do, there's no file that matches '????-*.patch' in Git. Even if
+there was you could still 'git add -f' it, which wouldn't be that big
+of a problem because it would be part of some rarely touched test
+suite in t/*.
