@@ -1,76 +1,119 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [ANNOUNCE] diffit - A git plugin for vim
-Date: Sun, 16 May 2010 11:12:37 +0200
-Message-ID: <514EDDA1-E8A4-45CD-ACF5-F7FE18CABD4F@wincent.com>
-References: <20100515105009.GA10517@localhost>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun May 16 12:13:56 2010
+From: Peter Vereshagin <peter@vereshagin.org>
+Subject: Re: [PATCH 0/2] gitweb: Add support for running gitweb as FastCGI
+	script
+Date: Sun, 16 May 2010 14:15:28 +0400
+Organization: '
+Message-ID: <20100516101528.GA5761@screwed.box>
+References: <1273236845-6523-1-git-send-email-jnareb@gmail.com> <201005141958.16469.jnareb@gmail.com> <20100515100615.GA3564@screwed.box> <201005151558.12191.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=koi8-r
+Cc: Petr Baudis <pasky@suse.cz>, Eric Wong <normalperson@yhbt.net>,
+	git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Juan Jose Comellas <juanjo@comellas.org>,
+	John Goerzen <jgoerzen@complete.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 16 12:15:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODar4-0001J6-Px
-	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 12:13:55 +0200
+	id 1ODasy-0002bF-V2
+	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 12:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218Ab0EPKNs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 May 2010 06:13:48 -0400
-Received: from outmail148099.authsmtp.net ([62.13.148.99]:52189 "EHLO
-	outmail148099.authsmtp.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754214Ab0EPKNq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 May 2010 06:13:46 -0400
-X-Greylist: delayed 3657 seconds by postgrey-1.27 at vger.kernel.org; Sun, 16 May 2010 06:13:46 EDT
-Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
-	by punt2.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o4G9Ch5o010422;
-	Sun, 16 May 2010 09:12:43 GMT
-Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id o4G9Cfpj077950
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 16 May 2010 10:12:42 +0100 (BST)
-Received: from [192.168.1.6] (175.Red-88-3-72.dynamicIP.rima-tde.net [88.3.72.175])
-	(authenticated bits=0)
-	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id o4G9CcWw017517
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 16 May 2010 05:12:40 -0400
-In-Reply-To: <20100515105009.GA10517@localhost>
-X-Mailer: Apple Mail (2.1078)
-X-Server-Quench: 2f4c0348-60cb-11df-80b9-0022640b883e
-X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH axgdC1NCdwdEHAkR AmYBWlZeVF4/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNEHJhckpB XB4ZVRB3d0tCeHtw K0Q0WiNbX0ByaEB9 ERxJFGxSM3poaDIW TUBYdQFSdAMYdhdG Px4dAXkdChR5GAUF OSQeCng9PDtRKTgd B0kkZV0TXQ4TGiMz RhZKEzI1VVMEQk0A 
-X-Authentic-SMTP: 61633436303433.1015:706/Kp
-X-AuthFastPath: 0 (Was 255)
-X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1752140Ab0EPKPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 May 2010 06:15:48 -0400
+Received: from ns1.skyriver.ru ([89.108.118.221]:65184 "EHLO mx1.skyriver.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751113Ab0EPKPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 May 2010 06:15:47 -0400
+Received: from localhost (xvm-0-245.ghst.net [92.243.0.245])
+	by mx1.skyriver.ru (Postfix) with ESMTPSA id 984D15A81;
+	Sun, 16 May 2010 14:04:11 +0400 (MSD)
+Content-Disposition: inline
+In-Reply-To: <201005151558.12191.jnareb@gmail.com>
+X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L (~u 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147181>
 
-El 15/05/2010, a las 12:50, Clemens Buchacher escribi=F3:
+Be sure to wear flowers on your hat, Jakub!
+2010/05/15 15:58:11 +0200 Jakub Narebski <jnareb@gmail.com> => To Peter Vereshagin :
+===
+JN> >       eval "use Image::Magick;";
+JN> >       if ($@){
+JN> > ===
+JN> > 
+JN> > are those lemmings wrong?
+JN> 
+JN> No they are not.
 
-> Hi,
->=20
-> I am currently working on a git plugin for vim. My aim is for it to i=
-mitate
-> much of git-gui's functionality. Right now, it is still closer to "ad=
-d -p".
->=20
-> But I believe it's already useful. And since I'm new to vim scripting=
-, it
-> can use some testing.
+so that code is just right, and this:
+===
+eval( 'use Module;' ); die $@ if $@;
+===
 
-Clemens, were you aware that there are already a couple of Git plug-ins=
- for Vim? Of these, the most advanced one currently is almost certainly=
- Fugitive:
+is 'Wrong!'. And what is the difference?
 
-http://github.com/tpope/vim-fugitive
+JN> would work as expected, I think that 'use' in conditional 'eval BLOCK' would
+JN> not.
 
-Cheers,
-Wincent
+I think so too as I did never meant about eval BLOCK;
+
+JN>   if (<condition>) {
+JN>       eval { use Image::Magick; }
+JN>       ...
+JN>   }
+JN> 
+JN> So if you want to use 'eval BLOCK' form, you need to use 'require' and not
+JN> 'use':
+JN> 
+JN>   if (<condition>) {
+JN>       eval { require Image::Magick; import Image::Magick; }
+JN>       ...
+JN>   }
+JN> 
+JN> 
+JN> Second, if you are not interested in error condition, and only whether
+JN> require'ing some module failed or not, then instead of
+JN> 
+JN>   eval { require Net::SSLeay };
+JN>   no_SSL_warning($URL) if $@;
+JN> 
+JN> you can use the 'eval { <sth>; 1 };' idiom, i.e.
+JN> 
+JN>   eval { require Net::SSLeay; 1; }
+JN>       or no_SSL_warning($URL);
+
+'eval BLOCK' versus 'eval EXPR' it's just better, but not a tabu. 'eval EXPR'
+with $@ checking causes no any errors on the same runtime with the code to be
+executed later.
+For most cases the modules are used, the read/parsing error can be the only
+error possible as no run-time code happens out there but only the symbols
+declaration.
+Therefore checking $@ is just fine.
+
+JN> When I added checking for $@ in the form of 'die $@ if $@', the error that
+JN> Perl shown was the syntax error in the foo() subroutine in $file file.
+
+and this is where the $@ was sufficient, too.
+
+JN> I don't know if it would be complete replacement for FCGI::Spawn, but from
+JN> your description of it, using Plack::App::CGIBin middleware (+ plackup +
+JN> Plack::Handler::FCGI wrapper) could be a valid alternative to it..
+
+There are some more features those are on by default in FCGI::Spawn if they are
+to be replaced, not sure if I will find them inside that framework.
+
+JN> P.S. About Girocco: instead of writing it as set of separate CGI scripts, it
+JN> could have been instead written as single app, loading its modules ('use
+JN> lib' would help).
+
+... and sharing them with gitweb, right. ;-)
+
+73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 6627)
+-- 
+http://vereshagin.org
