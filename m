@@ -1,197 +1,96 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH RFC] git-submodule foreach: Add $toplevel variable
-Date: Sat, 15 May 2010 23:20:17 +0000
-Message-ID: <1273965617-26731-1-git-send-email-avarab@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Has anyone looked at Gettext support for Git itself?
+Date: Sat, 15 May 2010 17:03:15 -0700 (PDT)
+Message-ID: <m3pr0wd880.fsf@localhost.localdomain>
+References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 16 01:37:35 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 16 02:03:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODQvD-00047R-11
-	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 01:37:31 +0200
+	id 1ODRKL-0007Mp-B0
+	for gcvg-git-2@lo.gmane.org; Sun, 16 May 2010 02:03:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158Ab0EOXUi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 May 2010 19:20:38 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59165 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751996Ab0EOXUh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 May 2010 19:20:37 -0400
-Received: by fxm6 with SMTP id 6so2618754fxm.19
-        for <git@vger.kernel.org>; Sat, 15 May 2010 16:20:34 -0700 (PDT)
+	id S1752859Ab0EPADT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 15 May 2010 20:03:19 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:1281 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752492Ab0EPADS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 May 2010 20:03:18 -0400
+Received: by fg-out-1718.google.com with SMTP id 22so11912fge.1
+        for <git@vger.kernel.org>; Sat, 15 May 2010 17:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=tD8OTb7eTwQg+TumB5vaSgRdsaWd3hVfdI26PV0NLkU=;
-        b=t77/pW+4JKDknKO2plzf7pbAkmQZH2SOUboT6+MvKfHLDLdFvg+RYENKoDo2z/Lgfv
-         MIK9KNGHMLsLeSA4pLSxrp6f+ztGYfhc09XArhADtcuITCYtvDcQBOYYH+Dr/iAPVVJ+
-         SzUFIFqw5PZNQf2oZfokLk720oBFwEV7pdMuk=
+        bh=kgj6VkLn/lec4GPpen8711OMeYUkOF22DY7n8XFfwjc=;
+        b=siEOnSNA88FMYCah4z/ZzdNCeytM37IMURtsJXG5a7HqZxtqNGzTlOI1HMYg71erve
+         T8EL2KHCmSwqeeDmg+H3rzlCTfRcZ5BXlHi0D0CRHAQ3G9tGBI8xwGHdS9pTApww0QiV
+         yNjXI3kzK9MYhc8Ni/BjVb5ZHqSDGerzbO8qM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=CYGAZfLhYRMCSmPypLa0uv9TokN+oihggpD1MkHwRnMncX7YKPkI8GlYpTN9h0GsmV
-         WH30qsbzesm7BWFd+smzhAPn5yXRmWm2Zjc/FOBhiQKLZSlnWH9wtDD4DaHPKigoNbr9
-         pWKLvhxSHqY0lfAsrMyIDMOkk/nKucnzxyXgQ=
-Received: by 10.87.76.7 with SMTP id d7mr5538520fgl.65.1273965634861;
-        Sat, 15 May 2010 16:20:34 -0700 (PDT)
-Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
-        by mx.google.com with ESMTPS id 21sm5448327fks.53.2010.05.15.16.20.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 15 May 2010 16:20:34 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.84.gd92f8
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=YNME0EQ1Juo35CcxT4lakN3UaCXWz9+s9F26DnAzNm4WxI436WDeSmNZdEeUuTNtSL
+         /JufSTRlmGzL4ryCws0iyx2r5Gc+rMkS0rJ1VXlwTvuQdgXbRdX9vAqwHgcs2MLDl7gt
+         OSF+WOXY9rKaKFriHX+FR/FUas+vy8WHFo/ks=
+Received: by 10.86.124.35 with SMTP id w35mr5616359fgc.49.1273968196360;
+        Sat, 15 May 2010 17:03:16 -0700 (PDT)
+Received: from localhost.localdomain (absh50.neoplus.adsl.tpnet.pl [83.8.127.50])
+        by mx.google.com with ESMTPS id 18sm5506038fks.5.2010.05.15.17.03.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 15 May 2010 17:03:15 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o4G02pAU013266;
+	Sun, 16 May 2010 02:03:01 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o4G02eq2013262;
+	Sun, 16 May 2010 02:02:40 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147169>
 
-Add a $toplevel variable accessible to `git submodule foreach`, it
-contains the absolute path of the top level directory (where
-=2Egitmodules is).
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 
-This makes it possible to e.g. read data in .gitmodules from within
-foreach commands. I'm using this to configure the branch names I want
-to track for each submodule:
+> I couldn't find anything about this in the list archives. Have there
+> been any discussions of adding internationalization support to Git
+> itself? I.e. the interface messages that the core Git utilities emit.
+>=20
+> I tried to get started with integrating GNU Gettext, but gnuish
+> assumptions it makes about building make it a bit hard.
+>=20
+> Is there perhaps another gettext implementation that would be more
+> suitable for Git?
+>=20
+> I'd be interested in submitting patches to make the existing strings
+> translatable if someone could get the tool + build skeleton going.
 
-    git submodule foreach 'git checkout $(git config --file $toplevel/.=
-gitmodules submodule.$name.branch) && git pull'
+=46irst, git uses multiple programming languages: you would need a
+solution that would work for programs in C (gettext), for Perl
+(Locale::Maketext or less known Data::Localize), probably for Python,
+and what would probably give most problems for shell scripts.
 
-=46or a little history: This patch is borne out of my continuing fight
-of trying to have Git track the branches of submodules, not just their
-commits.
+Second, you would need to take care that changing locale wouldn't
+break git.  It can be done either via setting LC_ALL=3DC in
+git-sh-setup, or by translation only porcelain, and leaving plumbing
+unchanged.
 
-Obviously that's not how they work (they only track commits), but I'm
-just interested in being able to do:
-
-    git submodule foreach 'git pull'
-
-Of course that won't work because the submodule is in a disconnected
-head, so I first have to connect it, but connect it *to what*.
-
-=46or a while I was happy with this because as fate had it, it just so
-happened to do what I meant:
-
-    git submodule foreach 'git checkout $(git describe --all --always) =
-&& git pull'
-
-But then that broke down, if there's a tag and a branch the tag will
-win out, and I can't git pull a branch:
-
-    $ git branch -a
-    * master
-      remotes/origin/HEAD -> origin/master
-      remotes/origin/master
-    $ git tag -l
-    release-0.0.6
-    $ git describe --always --all
-    release-0.0.6
-
-So I figured that I might as well start tracking the branches I want
-in .gitmodules itself:
-
-    [submodule "yaml-mode"]
-        path =3D yaml-mode
-        url =3D git://github.com/yoshiki/yaml-mode.git
-        branch =3D master
-
-So now I can just do (as stated above):
-
-    git submodule foreach 'git checkout $(git config --file $toplevel/.=
-gitmodules submodule.$name.branch) && git pull'
-
-Maybe there's a less painful way to do *that* (I'd love to hear about
-it). But regardless of that I think it's a good idea to be able to
-know what the top-level is from git submodule foreach.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- Documentation/git-submodule.txt |    6 ++++--
- git-submodule.sh                |    2 ++
- t/t7407-submodule-foreach.sh    |   10 +++++++---
- 3 files changed, 13 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
-ule.txt
-index 2502531..cdabfd2 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -145,10 +145,12 @@ summary::
-=20
- foreach::
- 	Evaluates an arbitrary shell command in each checked out submodule.
--	The command has access to the variables $name, $path and $sha1:
-+	The command has access to the variables $name, $path, $sha1 and
-+	$toplevel:
- 	$name is the name of the relevant submodule section in .gitmodules,
- 	$path is the name of the submodule directory relative to the
--	superproject, and $sha1 is the commit as recorded in the superproject=
-=2E
-+	superproject, $sha1 is the commit as recorded in the superproject,
-+	and $toplevel is the absolute path to the top-level of the superproje=
-ct.
- 	Any submodules defined in the superproject but not checked out are
- 	ignored by this command. Unless given --quiet, foreach prints the nam=
-e
- 	of each submodule before evaluating the command.
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 8175cb2..8c562a7 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -271,6 +271,8 @@ cmd_foreach()
- 		shift
- 	done
-=20
-+	toplevel=3D$(pwd)
-+
- 	module_list |
- 	while read mode sha1 stage path
- 	do
-diff --git a/t/t7407-submodule-foreach.sh b/t/t7407-submodule-foreach.s=
-h
-index 2a52775..db9365b 100755
---- a/t/t7407-submodule-foreach.sh
-+++ b/t/t7407-submodule-foreach.sh
-@@ -59,11 +59,13 @@ test_expect_success 'setup a submodule tree' '
- sub1sha1=3D$(cd super/sub1 && git rev-parse HEAD)
- sub3sha1=3D$(cd super/sub3 && git rev-parse HEAD)
-=20
-+pwd=3D$(pwd)
-+
- cat > expect <<EOF
- Entering 'sub1'
--foo1-sub1-$sub1sha1
-+$pwd/clone-foo1-sub1-$sub1sha1
- Entering 'sub3'
--foo3-sub3-$sub3sha1
-+$pwd/clone-foo3-sub3-$sub3sha1
- EOF
-=20
- test_expect_success 'test basic "submodule foreach" usage' '
-@@ -71,7 +73,9 @@ test_expect_success 'test basic "submodule foreach" u=
-sage' '
- 	(
- 		cd clone &&
- 		git submodule update --init -- sub1 sub3 &&
--		git submodule foreach "echo \$name-\$path-\$sha1" > ../actual
-+		git submodule foreach "echo \$toplevel-\$name-\$path-\$sha1" > ../ac=
-tual &&
-+		git config foo.bar zar &&
-+		git submodule foreach "git config --file \"\$toplevel/.git/config\" =
-foo.bar"
- 	) &&
- 	test_cmp expect actual
- '
 --=20
-1.7.1.84.gd92f8
+Jakub Narebski
+Poland
+ShadeHawk on #git
