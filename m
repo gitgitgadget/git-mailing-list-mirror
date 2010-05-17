@@ -1,64 +1,88 @@
-From: "Albert Krawczyk" <albert@burgmann.anu.edu.au>
-Subject: Development Environment Setup
-Date: Mon, 17 May 2010 11:29:42 +1000
-Message-ID: <00b801caf560$6d07be50$47173af0$@burgmann.anu.edu.au>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Add git format-patch produced patches to .gitignore
+Date: Sun, 16 May 2010 20:35:49 -0500
+Message-ID: <20100517013549.GA19081@progeny.tock>
+References: <1273958566-7328-1-git-send-email-avarab@gmail.com>
+ <4BEFFBB5.7010808@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 17 03:29:52 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 17 03:35:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODp9T-0002NP-GK
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 03:29:51 +0200
+	id 1ODpFB-0004Aq-T6
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 03:35:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964Ab0EQB3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 May 2010 21:29:45 -0400
-Received: from anumail8.anu.edu.au ([130.56.64.134]:64335 "EHLO
-	anumail8.anu.edu.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751763Ab0EQB3o (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 May 2010 21:29:44 -0400
-Received: from mailout2.anu.edu.au (mailout2.anu.edu.au [130.56.64.233])
-	by anumail8.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4H1Tge5008835
-	for <git@vger.kernel.org>; Mon, 17 May 2010 11:29:42 +1000 (EST)
-Received: from mailout2.anu.edu.au (localhost.localdomain [127.0.0.1])
-	by localhost (Postfix) with SMTP id B1F8C9E83A5
-	for <git@vger.kernel.org>; Mon, 17 May 2010 11:29:42 +1000 (EST)
-Received: from smtphost.anu.edu.au (ds1.anu.edu.au [130.56.64.53])
-	by mailout2.anu.edu.au (Postfix) with ESMTP id 3E7E39E8485
-	for <git@vger.kernel.org>; Mon, 17 May 2010 11:29:42 +1000 (EST)
-Received: from AlbertDesktop (burg237222.anu.edu.au [150.203.237.222])
-	by smtphost.anu.edu.au (8.14.3/8.14.3) with SMTP id o4H1Tgot002816
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Mon, 17 May 2010 11:29:42 +1000 (EST)
-References: 
-In-Reply-To: 
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQJUJeB6ujeuqz6c7YxSdBWm4X5MBpFCdNRA
-Content-Language: en-au
-X-PMX-Version: 5.5.9.395186, Antispam-Engine: 2.7.2.376379, Antispam-Data: 2010.5.17.11815 internal
-X-PMX-Outbound: anu.edu.au
-X-PMX-Info: from-anu
-X-PerlMx-Spam: Gauge=IIIIIIII, Probability=8%, Report='
- BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_100_199 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, FORGED_MUA_OUTLOOK 0, SMALL_BODY 0, TO_NO_NAME 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __OUTLOOK_MUA 0, __OUTLOOK_MUA_1 0, __SANE_MSGID 0, __TO_MALFORMED_2 0, __USER_AGENT_MS_GENERIC 0'
+	id S1752098Ab0EQBfl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 May 2010 21:35:41 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51948 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752057Ab0EQBfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 May 2010 21:35:40 -0400
+Received: by gyg13 with SMTP id 13so1884772gyg.19
+        for <git@vger.kernel.org>; Sun, 16 May 2010 18:35:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=02A/zegsxvdEWWBkE9RqzlOAQGs000q6i/WzZbpZ93c=;
+        b=ruFleu8c0it4LYYGG0NsOTCaXZlkgb2RglZ+8Gu4DBNCg3XfIA/PYPrqG2Fi2P+c1r
+         6b6EgZdMRMQeUu8wBqrfxHPdKgy16o+H68kUrnMC4BTeHypoV+feH7uqQXxTOFJ8g8UT
+         oBReFjBg5iKIEpg4feQPzQEKNfeM9Es6kAEMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Plwsu3yVWxH9Bw/n8rXbf6Zt3tQfCDJlzL5Pz2piYJTn7zNvHTxwmTCaOZIiDaTbmH
+         WRmuw8o/2vZU0eeapDZI4dwJrxigU69E+vayxuQvQxJWjE89oTAJ/rHSsu+4FEBFfnfp
+         R6cmPn+lTEwvlmPUHx3HFhkvcQNIuT/M8fjqQ=
+Received: by 10.101.106.33 with SMTP id i33mr5284520anm.161.1274060139154;
+        Sun, 16 May 2010 18:35:39 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id a10sm3398150anj.9.2010.05.16.18.35.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 16 May 2010 18:35:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4BEFFBB5.7010808@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147203>
 
-Hi,
+Michael J Gruber wrote:
 
-I'm curious, what is the recommended / typical setup for Git development?
+> Does the git build process call format-patch? No! The .gitignore we
+> distribute is meant for things the build process creates
 
-Do people use IDEs? If they do what are they? 
+Ah, true.  I seem to remember a thread long ago about whether to
+include editor droppings in .gitignore, but I can=E2=80=99t find it in
+the git or lkml archive.
 
-I'm looking to do dev on Ubuntu. 
+git=E2=80=99s .gitignore does not include .*.swp, \#*#, *~, indeed.
 
-Thanks,
-Albert 
+>> +[0-9][0-9][0-9][0-9]-*.patch
+
+So nack from me as well.  It is nice that the .gitignore file we track
+does not have to change with fashions, and this way each user can set
+up a personal excludesfile according to choice of tools without
+interference.
+
+Maybe there should be a reasonable "default" .gitexcludes file in
+gitignore.5 as an example, but that is a different topic[1].
+
+Thanks for the reminder,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/96220/focus=3D=
+96289
