@@ -1,99 +1,92 @@
-From: Marcus Comstedt <marcus@mc.pp.se>
-Subject: [PATCH 2/2] Accept the timezone specifiers [+-]hh:mm and [+-]hh in addition to [+-]hhmm
-Date: Mon, 17 May 2010 21:07:11 +0200
-Message-ID: <1274123231-18482-3-git-send-email-marcus@mc.pp.se>
-References: <1274123231-18482-1-git-send-email-marcus@mc.pp.se>
-Cc: Marcus Comstedt <marcus@mc.pp.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 17 21:15:36 2010
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: stupid error - is there a way to fix?
+Date: Mon, 17 May 2010 15:31:01 -0400
+Message-ID: <AANLkTinIaInzOLiJcXNPtg4AQ2_TAxjBNzcheNlvSrft@mail.gmail.com>
+References: <AANLkTin32LGzfA79XYfivdun0EwWTs8p_yBeR030_2N2@mail.gmail.com>
+	 <AANLkTimFZ1GCBIf9y8Gkz-AnG-TmvWU_WXfjgw1olmKi@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 17 21:31:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE5mp-00039I-PY
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 21:15:36 +0200
+	id 1OE61x-0001ME-Bl
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 21:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755758Ab0EQTPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 15:15:14 -0400
-Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:35815 "EHLO
-	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755693Ab0EQTPN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 May 2010 15:15:13 -0400
-X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 May 2010 15:15:12 EDT
-Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bahamut.mc.pp.se (Postfix) with ESMTPS id DD0D8DD11;
-	Mon, 17 May 2010 21:07:46 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
-	t=1274123266; bh=pgJFM7kgWgLFTU9iRyTQZQz0CGsUHsnxLiQE0tPYHHs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=Helm
-	Ox/nrhSPDrNKsWzHSpY7VzQ3DVRmr9jAAJkBXH2ak/9ms8os+6A3vsVAM31YX5jawnJ
-	YOGRJcG1BRCMmVy++RSJwRZ9JFkrYIHlvCN0cZ2WI79c3CU1LWFB0eeCrOqu2kp1Jma
-	WGNxswJCj1vPDgyDRga2/281KWGeXEzzM=
-Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
-	(envelope-from <marcus@chiyo>)
-	id 1OE5fG-0004oq-OQ; Mon, 17 May 2010 21:07:46 +0200
-X-Mailer: git-send-email 1.7.0.4
-In-Reply-To: <1274123231-18482-1-git-send-email-marcus@mc.pp.se>
+	id S1752311Ab0EQTbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 15:31:07 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:63922 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751090Ab0EQTbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 15:31:04 -0400
+Received: by vws9 with SMTP id 9so2060278vws.19
+        for <git@vger.kernel.org>; Mon, 17 May 2010 12:31:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=a5VNtFFTc4m8eRXOyPP7NzKxfdX/BzWg5mrmHKSMl28=;
+        b=cjT1iw2Dpv8XAWpskKJ2jOL13daXGi68iadF7Imo9xMr9MXCZxJnI8ryNHaU8OqPQW
+         60W9DPm2b+g0YYMJ8pk5poOWlz+xtCmkeu5W1Ct43DSPOEBadJFxn1G0qVqqqARkRMhW
+         zIRatRSpQTPJkfFKgs4KckJXGUWfwS5RqgwFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=fmkF07K0tGbzIURPOvvwfHxhz1daUTZCLoP/hKC6Ok7IKn4tb00mZH926YwWaHZd+/
+         lXlaEMZukrI88oTGBSF/TbtWKNlE3dubY2558gpuRwUUYIIQBsHl2DS8/GIYQ8FQ9dy+
+         yoAEWxFixhRvuNg4sffrsbWLB7sUWdHPvLFZA=
+Received: by 10.229.218.21 with SMTP id ho21mr1230332qcb.102.1274124661877; 
+	Mon, 17 May 2010 12:31:01 -0700 (PDT)
+Received: by 10.229.242.3 with HTTP; Mon, 17 May 2010 12:31:01 -0700 (PDT)
+In-Reply-To: <AANLkTimFZ1GCBIf9y8Gkz-AnG-TmvWU_WXfjgw1olmKi@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147256>
 
-ISO 8601 specifies three syntaxes for timezones other than "Z".
-git already supports the +-hhmm syntax.  This patch adds support
-for the other two: +-hh:mm and +-hh.
+On Mon, May 17, 2010 at 2:57 PM, Chris Packham <judge.packham@gmail.com> wrote:
+> On Mon, May 17, 2010 at 11:32 AM, Eugene Sajine <euguess@gmail.com> wrote:
+>> Hi,
+>>
+>> Wanted to share some Admin nightmares;)
+>>
+>> Is there a way to correct a stupid error when few commits were made
+>> under username Your Name and the same kind of stub email address
+>> instead of normal name?
+>>
+>> Thanks,
+>> Eugene
+>> --
+>
+> There are a few ways (that I know of) to fix this.
+>
+> If you haven't pushed yet you can use "git rebase -i" [1] and edit the
+> commit with "git commit --amend --reset-author" to fix up your local
+> branch. Note that --reset-author is a fairly recent addition to git
+> but the --author="name <email>" option is available for older
+> versions.
+>
+> If no-one has cloned/pulled from that repository you can use "git
+> filter-branch" [2] with an environment filter to update the name.
+> Using filter branch (or anything else that re-writes history) is a
+> last resort as it will cause problems for anyone that has cloned your
+> repository.
+>
+> The preferred, non-destructive, method would be to include a .mailmap
+> file [3] which can be used to remap authors names and email addresses.
+> Some of the git tools can be told to ignore the mailmap so that stub
+> email address will still be visible if people know where to look but
+> thats usually fine unless you _really_ want to hide an email address
+> for some reason.
+>
 
-Signed-off-by: Marcus Comstedt <marcus@mc.pp.se>
----
-:100644 100644 6bae49c... f83e46e... M	date.c
- date.c |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
+Thanks a lot, Chris - that should help!
 
-diff --git a/date.c b/date.c
-index 6bae49c..f83e46e 100644
---- a/date.c
-+++ b/date.c
-@@ -555,6 +555,18 @@ static int match_tz(const char *date, int *offp)
- 	int min, hour;
- 	int n = end - date - 1;
- 
-+	/* Check for HH:MM format, allowed by ISO 8601 */
-+	if (n == 2 && date[3] == ':') {
-+		char *end2;
-+		min = strtoul(date+4, &end2, 10);
-+		/* If we have two digits after the colon too, assume HH:MM */
-+		if (end2 == date+6) {
-+			offset = offset*100 + min;
-+			end = end2;
-+			n = end - date - 1;
-+		}
-+	}
-+
- 	min = offset % 100;
- 	hour = offset / 100;
- 
-@@ -570,6 +582,17 @@ static int match_tz(const char *date, int *offp)
- 
- 		*offp = offset;
- 	}
-+	/*
-+	 * Also accept just the hour, allowed by ISO 8601
-+	 */
-+	else if (n == 2 && hour == 0 && min < 24) {
-+		offset = min*60;
-+		if (*date == '-')
-+			offset = -offset;
-+
-+		*offp = offset;
-+	}
-+
- 	return end - date;
- }
- 
--- 
-1.7.0.4
+Eugene
