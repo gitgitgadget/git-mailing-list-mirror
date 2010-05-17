@@ -1,68 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: gitk (or tcl/tk) slow to start?
-Date: Mon, 17 May 2010 13:51:02 +0200
-Message-ID: <4BF12DA6.9090709@drmicha.warpmail.net>
-References: <19441.8527.606063.296769@winooski.ccs.neu.edu>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
+Date: Mon, 17 May 2010 21:07:13 +0900
+Message-ID: <buofx1qhgum.fsf@dhlpc061.dev.necel.com>
+References: <878w7ieu4p.fsf@thor.thematica.it>
+	<4BF12C96.9030802@drmicha.warpmail.net>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Mon May 17 13:51:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Giuseppe Scrivano <gscrivano@gnu.org>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 17 14:07:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODyqi-0006No-EL
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 13:51:08 +0200
+	id 1ODz6X-0004Hp-AV
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 14:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755059Ab0EQLvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 07:51:01 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43551 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754352Ab0EQLvA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 07:51:00 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0DA0CF7607;
-	Mon, 17 May 2010 07:50:55 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 17 May 2010 07:50:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=W23yZ9nWBem0Hh1Tc/FEeOk9PJY=; b=ekEHvzIP9OZ2U/l+gt5mszt2M/Pk0kOq2EzV5Uw39XV4ue3TN3Cf47Z9Q8Nw9DvHJDQjsfRd2aj+Bad4NSl8adRUO1eJ1O03e2F670gRY+OiuzMI4Mc2g1ia3p4uoWVwtPpJAruuuDbDaFlbhFEG/JU3tpnZ+1Oj5g4mzcTBaOM=
-X-Sasl-enc: dTDhCo1tmKI9V224mEtqA1eNgXsVLubYrj7LUny0E0Nu 1274097054
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 77E4A55BA9;
-	Mon, 17 May 2010 07:50:54 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <19441.8527.606063.296769@winooski.ccs.neu.edu>
+	id S1752311Ab0EQMHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 08:07:23 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:37969 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751562Ab0EQMHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 08:07:23 -0400
+Received: from mailgate3.nec.co.jp ([10.7.69.192])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o4HC7E8V011004;
+	Mon, 17 May 2010 21:07:14 +0900 (JST)
+Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
+	id o4HC7EO01422; Mon, 17 May 2010 21:07:14 +0900 (JST)
+Received: from relay51.aps.necel.com ([10.29.19.60]) by vgate02.nec.co.jp (8.11.7/3.7W-MAILSV-NEC) with ESMTP
+	id o4HC7Da27023; Mon, 17 May 2010 21:07:13 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay51.aps.necel.com with ESMTP; Mon, 17 May 2010 21:07:13 +0900
+Received: from dhlpc061 ([10.114.112.154] [10.114.112.154]) by relay21.aps.necel.com with ESMTP; Mon, 17 May 2010 21:07:13 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 3649152E1F3; Mon, 17 May 2010 21:07:13 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <4BF12C96.9030802@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Mon, 17 May 2010 13:46:30 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147228>
 
-Eli Barzilay venit, vidit, dixit 17.05.2010 12:58:
-> Every time I run gitk when I didn't use it for a while, it takes a
-> long time to start (more than 30 seconds) with no visible cpu load.  I
-> tried to strace it, and the result shows that the time is spent
-> stat()ing my whole /usr/lib directory:
-> 
->   ...
->   stat("/usr/lib/libelf-0.131.so", {st_mode=S_IFREG|0755, st_size=87496, ...}) = 0
->   stat("/usr/lib/libungif.so.4", {st_mode=S_IFREG|0755, st_size=2444, ...}) = 0
->   stat("/usr/lib/libtiff.so.3.8.2", {st_mode=S_IFREG|0755, st_size=360268, ...}) = 0
->   ...
-> 
-> Is this expected?  Anything that can be done to avoid it?
+Michael J Gruber <git@drmicha.warpmail.net> writes:
+> Now, usage messages are displayed on specific request (-h) as well as
+> when a command is used with wrong arguments. So the classification
+> depends on the use case! But I reckon that even with '-h', usage strings
+> are not exactly "regular output", so stderr looks more natural to me.
 
-I don't expect stat'ing /usr/lib to take 30s. How large is it (file size
-and count)?
+Usage info specifically requested by the user is not error output, it is
+the output of the command.  It should be output to stdout, not stderr.
 
-> [This is using a new git version (1.7.1), but it's an old OS (Fedora
-> 7), so maybe tcl/tk is buggy?]
-> 
+[Note that for GNU progs, this behavior is explicitly required by the
+GNU coding standards, and I think it's a pretty reasonable rule.]
 
-ver += 6 - epsilon ; /* :) */
+-miles
 
-Michael
+-- 
+o The existentialist, not having a pillow, goes everywhere with the book by
+  Sullivan, _I am going to spit on your graves_.
