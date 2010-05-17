@@ -1,101 +1,78 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Marc Weber <marco-oweber@gmx.de>
 Subject: Re: Has anyone looked at Gettext support for Git itself?
-Date: Mon, 17 May 2010 14:53:16 +0000
-Message-ID: <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>
+Date: Mon, 17 May 2010 17:04:56 +0200
+Message-ID: <1274108567-sup-1380@nixos>
 References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
-	 <20100516160800.GB22447@efreet.light.src>
-	 <AANLkTinGSBRMRyaD0w2p9PQELLA6ThvKFdi6hcNWBTxr@mail.gmail.com>
-	 <201005171632.48253.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jan Hudec <bulb@ucw.cz>, Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 17 16:53:26 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 17 17:05:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE1h6-0006d2-Q2
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 16:53:25 +0200
+	id 1OE1sk-0004Tt-Ov
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 17:05:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752363Ab0EQOxT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 May 2010 10:53:19 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:51915 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751683Ab0EQOxT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 10:53:19 -0400
-Received: by gwaa20 with SMTP id a20so510883gwa.19
-        for <git@vger.kernel.org>; Mon, 17 May 2010 07:53:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nGqjb1SXACl9ses0/oc2PfESHOxeyyic29z4JMsiRkg=;
-        b=TDQObFLTEPHEgxiHsSde6K4kB8Zng/t/UiZTMe1h72Q4V8pkXfyBGa8WzPqlBMoI8Q
-         SWz5XQnoS4MuOaD66HwzieF9V+c3mbn14mqYTjId42wtymrhe7JSL7e3e+rPoncnK3/9
-         x+FFlhzYn1+j8Vp1PWvMAvyt6mv5oW0nAPmwQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=loPyQXuv4Z5ALf9Xgco3XNT8xIc/M+N6deOZEP+49IZe196s3P68W1nj+zLyXMVWrl
-         a70NNFwfkUds/X2R3yBKw02SDGsB/RjEzrKkyppJE36P8jZ5kPXXrZMUffR/t8rRI3+X
-         V9xppybTOD4VqfmY+/qSEUnuKOmDC5EMV4q8Y=
-Received: by 10.231.120.100 with SMTP id c36mr255502ibr.77.1274107996312; Mon, 
-	17 May 2010 07:53:16 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Mon, 17 May 2010 07:53:16 -0700 (PDT)
-In-Reply-To: <201005171632.48253.trast@student.ethz.ch>
+	id S1753823Ab0EQPFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 11:05:04 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from mail.gmx.net ([213.165.64.20]:45073 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753494Ab0EQPFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 11:05:00 -0400
+Received: (qmail invoked by alias); 17 May 2010 15:04:57 -0000
+Received: from pD9E0AA3C.dip.t-dialin.net (EHLO mail.gmx.net) [217.224.170.60]
+  by mail.gmx.net (mp061) with SMTP; 17 May 2010 17:04:57 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX1/E5rldjOzEkpPCxjowVJsVsX3Ehz76TKGEW9BEP5
+	pXCh0S2Y+9Qbdh
+Received: by mail.gmx.net (sSMTP sendmail emulation); Mon, 17 May 2010 17:04:56 +0200
+In-reply-to: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
+User-Agent: Sup/git
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147243>
 
-On Mon, May 17, 2010 at 14:32, Thomas Rast <trast@student.ethz.ch> wrot=
-e:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Sun, May 16, 2010 at 16:08, Jan Hudec <bulb@ucw.cz> wrote:
->> > It would definitely not be fine to break *git*. You need to make s=
-ure no
->> > part of git itself or anything distributed with it (gitk, git gui,=
- gitweb,
->> > things in contrib) is looking for any string that might be broken =
-by
->> > translating.
->>
->> Of course internal breakage, i.e. git-foo parsing the output from
->> git-bar breaking under non-English is unacceptable. I meant that
->> external tools now running under some non-English locale may start
->> breaking if they're parsing the output and assuming English. The
->> remedy for that is easy though, just prefix the calls to git with
->> LC_ALL=3DC.
->
-> And how exactly do you expect us to go back in history and prefix all
-> invocations of git in all scripts with LC_ALL=3DC?
+Excerpts from =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason's message of Sun M=
+ay 16 00:10:09 +0200 2010:
+> I couldn't find anything about this in the list archives. Have there
+> been any discussions of adding internationalization support to Git
+> itself? I.e. the interface messages that the core Git utilities emit.
+>=20
+> I tried to get started with integrating GNU Gettext, but gnuish
+> assumptions it makes about building make it a bit hard.
+>=20
+> Is there perhaps another gettext implementation that would be more
+> suitable for Git?
+>=20
+> I'd be interested in submitting patches to make the existing strings
+> translatable if someone could get the tool + build skeleton going.
 
-I don't expect you to. I just don't think it's unreasonable that if
-Git were to be internationalized that it behave like every other *nix
-program. If you have a Chinese locale and rely on the output of some
-program being in English your scripts will break if the OS
-subsequently upgrades to a new version of the program that has been
-translated to Chinese.
+It may sound silly and stupid: My coworker has had much trouble because
+he doesn't know English at all.
+You could help those people very much by creating a git-translator.org
+page where you can copy paste failures which are translated only.
 
-The right way to handle that is to call programs like that with
-LC_ALL=3DC.
+In the end you must have seen any failure multiple times to cope with
+it - no matter which language this message was written in. However
+having an understandable text may help.
 
-The alternative would be to do introduce a variable like
-GIT_YES_REALLY_FOLLOW_LC_VARIABLES=3D1.
-
-> Porcelain such as git-status could be changed, but then there's not
-> that much of it anyway. =C2=A0IMHO a set of standard documentation in=
- each
-> language would be more useful.
-
-The output of the utilities is what people see when using Git, having
-that in your native language is more valuable than some howto being
-translated.
+Marc Weber
