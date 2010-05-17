@@ -1,65 +1,119 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 7/7] Make --color-words work well with --graph.
-Date: Mon, 17 May 2010 08:59:27 +0200
-Message-ID: <201005170859.28022.trast@student.ethz.ch>
-References: <1273921331-32702-1-git-send-email-struggleyb.nku@gmail.com> <1273921331-32702-7-git-send-email-struggleyb.nku@gmail.com> <1273921331-32702-8-git-send-email-struggleyb.nku@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] Add git format-patch produced patches to .gitignore
+Date: Mon, 17 May 2010 09:52:33 +0200
+Message-ID: <4BF0F5C1.1060309@drmicha.warpmail.net>
+References: <1273958566-7328-1-git-send-email-avarab@gmail.com> <4BEFFBB5.7010808@drmicha.warpmail.net> <20100517022244.GA19141@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, <gitster@pobox.com>
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 17 08:59:39 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 17 09:52:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODuIb-0006tw-AF
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 08:59:37 +0200
+	id 1ODv7p-0007jC-LN
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 09:52:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753086Ab0EQG7c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 02:59:32 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:59021 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751702Ab0EQG7c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 May 2010 02:59:32 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 17 May
- 2010 08:59:32 +0200
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 17 May
- 2010 08:59:28 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <1273921331-32702-8-git-send-email-struggleyb.nku@gmail.com>
+	id S1754325Ab0EQHw2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 May 2010 03:52:28 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46472 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753773Ab0EQHw2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 03:52:28 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 597EAF75F8;
+	Mon, 17 May 2010 03:52:27 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Mon, 17 May 2010 03:52:27 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=XKvKlpP5LdZw61wj7J65wzBztDw=; b=VAVWvn8dPnfOJdAGrCBKSO6LVMNqnFt8yuLsEif/iCPVzmq7PeSYbUrMvLAp9ru90eKrSPhSmmGQ9WhuXzX7m37uc+uClMg9FAA2XbGRAnrZ5I21i3aMmuq6fuW5e+Eekol3CFt31PvRDgh+T/QVi+mox3oR58esck0VkJhcCK4=
+X-Sasl-enc: GIsIbCAzkA5J5tpzinkQ8TaJhxfVjm04VEZYfdeb6yE3 1274082746
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 78DC0430C;
+	Mon, 17 May 2010 03:52:26 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <20100517022244.GA19141@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147214>
 
-Bo Yang wrote:
-> @@ -629,20 +640,39 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
->  	} else
->  		plus_begin = plus_end = diff_words->plus.orig[plus_first].end;
->  
-> -	if (diff_words->current_plus != plus_begin)
-> -		fwrite(diff_words->current_plus,
-> -				plus_begin - diff_words->current_plus, 1,
-> -				diff_words->file);
-> -	if (minus_begin != minus_end)
-> -		color_fwrite_lines(diff_words->file,
-> +	if (diff_words->current_plus != plus_begin) {
-> +		if ((diff_words->current_plus == diff_words->plus.text.ptr &&
-> +			diff_words->last_minus == 0) ||
-> +			(diff_words->current_plus > diff_words->plus.text.ptr &&
-> +			*(diff_words->current_plus - 1) == '\n')) {
-> +			fputs(line_prefix, diff_words->opt->file);
-> +			print = 1;
+Jonathan Nieder venit, vidit, dixit 17.05.2010 04:22:
+> Michael J Gruber wrote:
+>=20
+>> If you want to ignore format patch output, simply use .git/info/excl=
+udes
+>> or a global excludes file, but please don't force everyone else to l=
+ive
+>> with that or work around it.
+>=20
+> Side note: I said with similar intent that this allows developers to
+> work =E2=80=9Cwithout interference=E2=80=9D.  This was a poor choice =
+of words on my
+> part: a too-long .gitignore only prevents me from noticing and
+> tracking files that others considered not worth tracking.
+>=20
+> From the thread I faintly remembered and then linked to[1]: ;-)
+>=20
+>   I earlier said that "*~" should not be in project-wide .gitignore
+>   file because use of Emacs vs vi is a matter of personal taste, and
+>   Emacs specific "*~" pattern does not belong to a project policy,
+>   just like vim "*.swp" pattern doesn't.
+>=20
+>   But I think that reasoning is flawed.  The right criteria should no=
+t
+>   be about "use of Emacs vs vi", but about "do we in this project eve=
+r
+>   want to track files that match *~ or *.swp as legitimate contents".
+>   If a project expects not to have a tracked file whose name ends wit=
+h
+>   ".swp", even if it does _not_ mean to encourage use of vim over
+>   Emacs or any other editor, I think it is fine to add such to its
+>   tracked .gitignore file for its developer's benefit.
 
-Are these border checks needed/the best solution?  If so, please can
-you put an explanation in the commit message?
+I think I meant to object back then but concluded it made no difference=
+=2E
+My mathematically deformed^Weducated mind tells me that "do we...
+contents" means we should put everything in .gitignore except what we
+expect to track. So, here the literal understanding certainly differs
+from the intended definition ;)
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+>=20
+> This does not change my conclusion: there are many other reasons to
+> leave files produced outside the build process unlisted:
+>=20
+>  . consistency: to keep the file intuitive and avoid a lot of
+>    patch churn, it is nicest to choose one rule and stick to it
+>=20
+>  . simplicity: shorter .gitignore.  Making the appropriate content
+>    of .gitignore depend on the behavior of too many text editors
+>    (and IDEs, and foreign VCSes, and debugging tools, and ...)
+>    makes it hard to maintain.  See qt=E2=80=99s .gitignore for an exa=
+mple
+>    of this.
+>=20
+>  . correctness: for the case of format-patch, it is hard to say
+>    "we will never want to track files that match ????-*.patch as
+>    legitimate contents".  In fact, it is likely such files may need
+>    to be added to the test suite.
+>=20
+> And unlike .o files and company, it does not seem likely that
+> formatted patches need to be kept around during development.
+>=20
+> I hope that is a little clearer.  Sorry for the ramble.
+> Jonathan
+
+I haven't found the rambling part in your post yet but agree everything
+is clearer now :)
+
+Michael
+
+P.S.: I'm fine with =C3=86var's revised patch, of course. ACK
+>=20
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/96220/focu=
+s=3D96294
