@@ -1,62 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] git-remote-svn: Week 3
-Date: Mon, 17 May 2010 15:28:01 +0200
-Message-ID: <AANLkTimBxpZYDaE8S-KFivn1F9I983-Ab0q9JUGP53nK@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
+Date: Mon, 17 May 2010 15:30:40 +0200
+Message-ID: <4BF14500.30806@drmicha.warpmail.net>
+References: <878w7ieu4p.fsf@thor.thematica.it>	<4BF12C96.9030802@drmicha.warpmail.net> <buofx1qhgum.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 17 15:28:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Giuseppe Scrivano <gscrivano@gnu.org>, git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Mon May 17 15:31:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE0Mu-0005jO-4q
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 15:28:28 +0200
+	id 1OE0Po-0007G2-UZ
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 15:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755333Ab0EQN2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 09:28:23 -0400
-Received: from mail-qy0-f171.google.com ([209.85.221.171]:49749 "EHLO
-	mail-qy0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698Ab0EQN2W (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 May 2010 09:28:22 -0400
-Received: by qyk1 with SMTP id 1so7005713qyk.5
-        for <git@vger.kernel.org>; Mon, 17 May 2010 06:28:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=6GHn0T1WiF45QIcHJWkbDQq6fHi2qFYpYMcHAbc9Bw8=;
-        b=Ep9Zp2wiPlLhHfxGg9u1pS5Ys4bp6EyOZ/VAikOM2fYSgktz5Wb6mJ00RL/NtZiy3N
-         nMaLSln0frMBU98+9E70ePQTNgYQDBqO988qo5qVYUsOHGX82zEE1rZYILpEeppWQTdI
-         RZ4fyF/1Nwo55of/g0bjIhQDn60ef3m9cf52M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=IQqU2fZRJB3wfhHWUmEYV4576E3PO/Y6dwJDfNL6D9LbL24lCFIq76Gqlrf6Jb75yD
-         zDJoM73b56zhs8dtboc2l4GN5ID6hEkhsP9DoG37vvv3UlWOUpaL72BwRL9e3ILwI+L4
-         B7QB7ejHFV48AF7AsduTZnBh+utBCuoAP0PMM=
-Received: by 10.229.238.135 with SMTP id ks7mr1110050qcb.31.1274102901162; 
-	Mon, 17 May 2010 06:28:21 -0700 (PDT)
-Received: by 10.229.182.85 with HTTP; Mon, 17 May 2010 06:28:01 -0700 (PDT)
+	id S1755423Ab0EQNbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 09:31:21 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34092 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753252Ab0EQNbT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 09:31:19 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 888B2F65DB;
+	Mon, 17 May 2010 09:30:34 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 17 May 2010 09:30:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=E8cZuvIIzCYmAtILtG7O6iht8P8=; b=keUkjvP29p81n3YbrVpQRDYZJXaQk4pEGOZlTVwfAuhz6Y5NLKfmaPHoqm43di4Mpjg37Zs6M+/JL8YeD64GLaxU69Af56+eVuJ9oVvMY1o5QrjOVyIcqT6vLbU1rsmYtG4OKkhQmhtxoRciJg21S58sl1Ry9/01me+qG4SQEmw=
+X-Sasl-enc: m/rDZy/dqXk3i9XjMkMnohNBrOV2a01ADEIzZjf9Lg0F 1274103033
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0229B4D499;
+	Mon, 17 May 2010 09:30:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
+In-Reply-To: <buofx1qhgum.fsf@dhlpc061.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147234>
 
-Hi,
+Miles Bader venit, vidit, dixit 17.05.2010 14:07:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> Now, usage messages are displayed on specific request (-h) as well as
+>> when a command is used with wrong arguments. So the classification
+>> depends on the use case! But I reckon that even with '-h', usage strings
+>> are not exactly "regular output", so stderr looks more natural to me.
+> 
+> Usage info specifically requested by the user is not error output, it is
+> the output of the command.  It should be output to stdout, not stderr.
 
-In the earlier part of the week, David and I collaborated over IRC and
-managed to plug some leaks in the exporter using the data from
-Valgrind. We also fixed some bugs and documented some of the
-limitations of the exporter. In the later half of the week, I was on
-vacation in Berlin and I returned today. I'm not entirely happy with
-the exporter yet, but I'll defer working on it for now- this week,
-I'll attempt to plug the exporter into the remote helper I built in
-week 2.
+Well sure it is, just as I wrote. So do you suggest that the file handle
+should depend on the use case? Care to implement?
 
--- Ram
+> [Note that for GNU progs, this behavior is explicitly required by the
+> GNU coding standards, and I think it's a pretty reasonable rule.]
+
+Fortunately, Git is not GNU software.
+
+Michael
