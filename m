@@ -1,65 +1,66 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Error: Unable to append to logs/HEAD: Permission denied
-Date: Mon, 17 May 2010 14:26:00 +0200
-Message-ID: <4BF135D8.70106@drmicha.warpmail.net>
-References: <1274051912050-5063068.post@n2.nabble.com> <4BF0F63A.1080005@drmicha.warpmail.net> <1274084247216-5064104.post@n2.nabble.com> <4BF10623.5000705@drmicha.warpmail.net> <1274094574729-5064574.post@n2.nabble.com> <4BF12B11.2090002@drmicha.warpmail.net> <1274098383422-5064764.post@n2.nabble.com>
+From: Giuseppe Scrivano <gscrivano@gnu.org>
+Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
+Date: Mon, 17 May 2010 14:40:43 +0200
+Message-ID: <87vdamu2es.fsf@thor.thematica.it>
+References: <878w7ieu4p.fsf@thor.thematica.it>
+	<4BF12C96.9030802@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: git_user101 <m.aqadjanimemar@student.ru.nl>
-X-From: git-owner@vger.kernel.org Mon May 17 14:26:28 2010
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 17 14:40:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODzOt-0003C7-NW
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 14:26:28 +0200
+	id 1ODzcU-0000X4-3q
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 14:40:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754880Ab0EQM0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 08:26:22 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40669 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753884Ab0EQM0V (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 08:26:21 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 889A6F76F3;
-	Mon, 17 May 2010 08:25:58 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 17 May 2010 08:25:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=SrVBLtsdhq37N6PhNAMFRlyx7ZI=; b=h8d0nkATgOaTB9t2x71aS7QVhqslGLnEUaqP9wlzyTbaCjaLdUEJAq6EUD1KMhuL8VTw4+9phawNcKevwT699K7RbP8WF27JXsPt8YUkJPf4EO6t3gVdrL6Jhf+kVfc5Jtx7pcrChVN3nHg3gK6ENGAh5cCYr7dPpZToKDPI04w=
-X-Sasl-enc: 4LMM1n3vTBZYqitf0Zi+8lFe1Y1z/aSuDKPosZNxoW3k 1274099153
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 97CA74DE2B9;
-	Mon, 17 May 2010 08:25:53 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <1274098383422-5064764.post@n2.nabble.com>
+	id S1754298Ab0EQMjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 08:39:51 -0400
+Received: from chapters.gnu.org ([91.121.9.110]:39109 "EHLO chapters.gnu.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752747Ab0EQMju (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 08:39:50 -0400
+Received: by chapters.gnu.org (Postfix, from userid 111)
+	id A4DF646C086; Mon, 17 May 2010 14:39:50 +0200 (CEST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on chapters.gnu.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.8 required=3.0 tests=ALL_TRUSTED,BAYES_50
+	autolearn=disabled version=3.2.5
+X-Spam-Level-GNUchapters: 
+Received: from thor.thematica.it (localhost.localdomain [127.0.0.1])
+	by chapters.gnu.org (Postfix) with ESMTP id 2044446C070;
+	Mon, 17 May 2010 14:39:50 +0200 (CEST)
+In-Reply-To: <4BF12C96.9030802@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Mon, 17 May 2010 13:46:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147231>
 
-git_user101 venit, vidit, dixit 17.05.2010 14:13:
-> 
-> Thank you, Michael!
-> I do not understand what you exactly mean with "Also, you'll have to fix-up
-> permissions manually at least
-> on logs/HEAD (and probably others)"
-> If you mean that I have to change the permission of logs/HEAD to read, write
-> for the group,
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-I meant all files & dirs under ${repo}.git should be owned by the group
-and +rw for the group. ["All" is actually overkill but sufficient.]
+> More importantly, callers expect error messages on stderr, such as usage
+> with wrong arguments. I don't think scripts would call commands with
+> '-h', and if they do they do so on purpose and can parse stderr, knowing
+> there is no stdout in this case.
 
-> it is already done.
-> All files and directories in the repository are accessible for the group.
+It looks like a workaround to me.  Anyway, if -h is left unchanged then,
+I think, --help should be adjusted as well when it doesn't use an
+external pager.
 
-Hmm. If really all files and dirs (!) are group writeable I'm puzzled.
-What is the complete report and error message (besides failed to push)?
+These two commands behave differently:
 
-A push can also fail due to non fast-forward, of course.
+git status --help 2>/dev/null | cat -
+git status -h 2>/dev/null | cat -
 
-Michael
+IMO, what should be changed is -h to be uniform with --help, as the it
+is the expected output, not an error.
+
+Cheers,
+Giuseppe
