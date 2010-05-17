@@ -1,66 +1,58 @@
-From: Giuseppe Scrivano <gscrivano@gnu.org>
-Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
-Date: Mon, 17 May 2010 14:40:43 +0200
-Message-ID: <87vdamu2es.fsf@thor.thematica.it>
-References: <878w7ieu4p.fsf@thor.thematica.it>
-	<4BF12C96.9030802@drmicha.warpmail.net>
+From: git_user101 <m.aqadjanimemar@student.ru.nl>
+Subject: Re: Error: Unable to append to logs/HEAD: Permission denied
+Date: Mon, 17 May 2010 05:48:23 -0700 (PDT)
+Message-ID: <1274100503553-5064900.post@n2.nabble.com>
+References: <1274051912050-5063068.post@n2.nabble.com> <4BF0F63A.1080005@drmicha.warpmail.net> <1274084247216-5064104.post@n2.nabble.com> <4BF10623.5000705@drmicha.warpmail.net> <1274094574729-5064574.post@n2.nabble.com> <4BF12B11.2090002@drmicha.warpmail.net> <1274098383422-5064764.post@n2.nabble.com> <4BF135D8.70106@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon May 17 14:40:32 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 17 14:48:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODzcU-0000X4-3q
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 14:40:30 +0200
+	id 1ODzkE-00048h-PS
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 14:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754298Ab0EQMjv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 08:39:51 -0400
-Received: from chapters.gnu.org ([91.121.9.110]:39109 "EHLO chapters.gnu.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752747Ab0EQMju (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 May 2010 08:39:50 -0400
-Received: by chapters.gnu.org (Postfix, from userid 111)
-	id A4DF646C086; Mon, 17 May 2010 14:39:50 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on chapters.gnu.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=3.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-X-Spam-Level-GNUchapters: 
-Received: from thor.thematica.it (localhost.localdomain [127.0.0.1])
-	by chapters.gnu.org (Postfix) with ESMTP id 2044446C070;
-	Mon, 17 May 2010 14:39:50 +0200 (CEST)
-In-Reply-To: <4BF12C96.9030802@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Mon, 17 May 2010 13:46:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S1754813Ab0EQMsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 08:48:25 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:48528 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752747Ab0EQMsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 08:48:24 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <m.aqadjanimemar@student.ru.nl>)
+	id 1ODzk7-0008Lx-I3
+	for git@vger.kernel.org; Mon, 17 May 2010 05:48:23 -0700
+In-Reply-To: <4BF135D8.70106@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147232>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> More importantly, callers expect error messages on stderr, such as usage
-> with wrong arguments. I don't think scripts would call commands with
-> '-h', and if they do they do so on purpose and can parse stderr, knowing
-> there is no stdout in this case.
+The push is succeed but I get this error every time. This is de complete
+message:
 
-It looks like a workaround to me.  Anyway, if -h is left unchanged then,
-I think, --help should be adjusted as well when it doesn't use an
-external pager.
+user@desktop:~/Documents/LRSystems$ git push 
+user@server's password: 
+Counting objects: 5, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 302 bytes, done.
+Total 3 (delta 2), reused 0 (delta 0)
+To ssh://user@server:port/repositories/LRSystems
+   1143c0..50b610  master -> master
+error: failed to push some refs to
+'ssh://user@server:port/repositories/LRSystems'
+user@desktop:~/Documents/LRSystems$
 
-These two commands behave differently:
-
-git status --help 2>/dev/null | cat -
-git status -h 2>/dev/null | cat -
-
-IMO, what should be changed is -h to be uniform with --help, as the it
-is the expected output, not an error.
-
-Cheers,
-Giuseppe
+As you can see the push is done but I get the error.
+-- 
+View this message in context: http://git.661346.n2.nabble.com/Error-Unable-to-append-to-logs-HEAD-Permission-denied-tp5063068p5064900.html
+Sent from the git mailing list archive at Nabble.com.
