@@ -1,79 +1,53 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
-Date: Mon, 17 May 2010 22:11:22 +0800
-Message-ID: <AANLkTinoTsoX-BzWj1pBFg8k6seDBMmwqC9Gm3sg1hz3@mail.gmail.com>
-References: <878w7ieu4p.fsf@thor.thematica.it>
-	 <4BF12C96.9030802@drmicha.warpmail.net>
-	 <buofx1qhgum.fsf@dhlpc061.dev.necel.com>
-	 <4BF14500.30806@drmicha.warpmail.net>
-	 <87hbm6tydr.fsf@thor.thematica.it>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/4] rev-parse: deprecate use as an option sifter
+Date: Mon, 17 May 2010 16:26:40 +0200
+Message-ID: <201005171626.41175.trast@student.ethz.ch>
+References: <20100505033536.GB8779@coredump.intra.peff.net> <4BED9C09.8010801@drmicha.warpmail.net> <201005142101.16317.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: Giuseppe Scrivano <gscrivano@gnu.org>
-X-From: git-owner@vger.kernel.org Mon May 17 16:18:30 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 17 16:27:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE19J-0004EM-F7
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 16:18:29 +0200
+	id 1OE1Hs-0008Vv-AE
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 16:27:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365Ab0EQOSW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 May 2010 10:18:22 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:64732 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751986Ab0EQOSV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 10:18:21 -0400
-Received: by gwaa20 with SMTP id a20so482389gwa.19
-        for <git@vger.kernel.org>; Mon, 17 May 2010 07:18:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Sx6KQy16LK17CCP1pA9j3n4kDLSkYZM4SLR72CpR7A4=;
-        b=UnYQRjCxQbof3LDHe2TSLW48DVYjWgrhFUeantP6QrKaIaKIl2i+PDsQHY8E7hCJP6
-         4Alfh8S5CMb+DbzlTEwnvXPKafXJS9lDliXNPkvymgVSKOO1ovnW0R5qbpYhoT2X/H6k
-         3IYkJDSiuroo16rjHr+S2R+39dXy+sPD2yxVY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Po8q3Dpnb14rjAwuZvdXdPB4SxA2U+aA+fb7styi5IUFGkgMjsmRyCU1YvvLmV0/hd
-         USIu5urI9DK9iZ7io+qwyp6QHGNsN6uT6ozLO9G8mD6eBLdSXPlZQVxG+66aT/TpYHad
-         p2btYqpZ9TU/ML44FLPCJZWQ/qlXZJJHKeWhE=
-Received: by 10.231.79.131 with SMTP id p3mr246258ibk.27.1274105483125; Mon, 
-	17 May 2010 07:11:23 -0700 (PDT)
-Received: by 10.231.13.194 with HTTP; Mon, 17 May 2010 07:11:22 -0700 (PDT)
-In-Reply-To: <87hbm6tydr.fsf@thor.thematica.it>
+	id S1752987Ab0EQO1G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 10:27:06 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:32627 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751991Ab0EQO1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 10:27:05 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 17 May
+ 2010 16:27:02 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 17 May
+ 2010 16:26:41 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <201005142101.16317.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147240>
 
-On Mon, May 17, 2010 at 10:07 PM, Giuseppe Scrivano <gscrivano@gnu.org>=
- wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->> Well sure it is, just as I wrote. So do you suggest that the file ha=
-ndle
->> should depend on the use case? Care to implement?
->
-> Thanks for your comments. =A0I will fix my patch accordingly and rese=
-nd it.
+Jakub Narebski wrote:
+> 
+> "git rev-parse --parseopt" is not deprecated.  What is deprecated is
+> --revs-only, --flags, etc.
 
-While you're at it, please take a look at
+git-filter-branch uses --revs-only and --no-revs, and I'm not sure how
+it could avoid doing so without losing a lot of flexibility (or
+knowing a list of options, which is worse)...
 
-  http://github.com/git/git/blob/master/Documentation/SubmittingPatches
-
-for your next re-send.
-
---=20
-Cheers,
-Ray Chuan
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
