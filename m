@@ -1,73 +1,68 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
-Date: Mon, 17 May 2010 13:46:30 +0200
-Message-ID: <4BF12C96.9030802@drmicha.warpmail.net>
-References: <878w7ieu4p.fsf@thor.thematica.it>
+Subject: Re: gitk (or tcl/tk) slow to start?
+Date: Mon, 17 May 2010 13:51:02 +0200
+Message-ID: <4BF12DA6.9090709@drmicha.warpmail.net>
+References: <19441.8527.606063.296769@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Giuseppe Scrivano <gscrivano@gnu.org>
-X-From: git-owner@vger.kernel.org Mon May 17 13:46:36 2010
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Mon May 17 13:51:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ODymI-0004h2-6U
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 13:46:34 +0200
+	id 1ODyqi-0006No-EL
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 13:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755220Ab0EQLqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 07:46:25 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37532 "EHLO
+	id S1755059Ab0EQLvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 07:51:01 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43551 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754352Ab0EQLqY (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 07:46:24 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E9F07F6F21;
-	Mon, 17 May 2010 07:46:23 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 17 May 2010 07:46:23 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=MB43WL8ASgFEHF/4yYFJFbhO80s=; b=LDTq0Xwe2Mx9AeoFvkFTEiwI9JXbNUZLtQl98UvKlSjahiQA8CU/dGcNhG9kxzYlVkySvfs9H3zQASX3NMQ962dd89eLUOlfP+MKX2AmMNX3DT3+5dc8sXSYFHs0hRgCUfdi72dN3hoeFTebvpgRHdSgzcAPAg2idoaYgX6U7xY=
-X-Sasl-enc: sIpRStbJ583rlq7T93DZAPSRyziFnIXT+VS+19C2fyst 1274096783
+	by vger.kernel.org with ESMTP id S1754352Ab0EQLvA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 07:51:00 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0DA0CF7607;
+	Mon, 17 May 2010 07:50:55 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 17 May 2010 07:50:55 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=W23yZ9nWBem0Hh1Tc/FEeOk9PJY=; b=ekEHvzIP9OZ2U/l+gt5mszt2M/Pk0kOq2EzV5Uw39XV4ue3TN3Cf47Z9Q8Nw9DvHJDQjsfRd2aj+Bad4NSl8adRUO1eJ1O03e2F670gRY+OiuzMI4Mc2g1ia3p4uoWVwtPpJAruuuDbDaFlbhFEG/JU3tpnZ+1Oj5g4mzcTBaOM=
+X-Sasl-enc: dTDhCo1tmKI9V224mEtqA1eNgXsVLubYrj7LUny0E0Nu 1274097054
 Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 54D114DDFF8;
-	Mon, 17 May 2010 07:46:23 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 77E4A55BA9;
+	Mon, 17 May 2010 07:50:54 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100503 Lightning/1.0b2pre Lanikai/3.1b2pre
-In-Reply-To: <878w7ieu4p.fsf@thor.thematica.it>
+In-Reply-To: <19441.8527.606063.296769@winooski.ccs.neu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147227>
 
-Giuseppe Scrivano venit, vidit, dixit 17.05.2010 11:48:
-> Hello,
+Eli Barzilay venit, vidit, dixit 17.05.2010 12:58:
+> Every time I run gitk when I didn't use it for a while, it takes a
+> long time to start (more than 30 seconds) with no visible cpu load.  I
+> tried to strace it, and the result shows that the time is spent
+> stat()ing my whole /usr/lib directory:
 > 
-> I have noticed that the -h flag uses stderr to print the usage string,
-> is there any reason for it?
+>   ...
+>   stat("/usr/lib/libelf-0.131.so", {st_mode=S_IFREG|0755, st_size=87496, ...}) = 0
+>   stat("/usr/lib/libungif.so.4", {st_mode=S_IFREG|0755, st_size=2444, ...}) = 0
+>   stat("/usr/lib/libtiff.so.3.8.2", {st_mode=S_IFREG|0755, st_size=360268, ...}) = 0
+>   ...
+> 
+> Is this expected?  Anything that can be done to avoid it?
 
-As a general rule, regular output goes to stdout and error reports to
-stderr.
+I don't expect stat'ing /usr/lib to take 30s. How large is it (file size
+and count)?
 
-Now, usage messages are displayed on specific request (-h) as well as
-when a command is used with wrong arguments. So the classification
-depends on the use case! But I reckon that even with '-h', usage strings
-are not exactly "regular output", so stderr looks more natural to me.
+> [This is using a new git version (1.7.1), but it's an old OS (Fedora
+> 7), so maybe tcl/tk is buggy?]
+> 
 
-More importantly, callers expect error messages on stderr, such as usage
-with wrong arguments. I don't think scripts would call commands with
-'-h', and if they do they do so on purpose and can parse stderr, knowing
-there is no stdout in this case.
+ver += 6 - epsilon ; /* :) */
 
 Michael
-
-P.S.: I guess this means NACK from me FWIIW.
-
-> 
-> The small patch I have attached changes -h to print on stdout.
-> 
-> Thanks,
-> Giuseppe
-> 
