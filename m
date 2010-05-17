@@ -1,114 +1,58 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Has anyone looked at Gettext support for Git itself?
-Date: Mon, 17 May 2010 19:59:40 +0200
-Message-ID: <20100517175939.GA3575@efreet.light.src>
-References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
- <201005171632.48253.trast@student.ethz.ch>
- <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>
- <201005171712.22763.trast@student.ethz.ch>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: stupid error - is there a way to fix?
+Date: Mon, 17 May 2010 14:32:05 -0400
+Message-ID: <AANLkTin32LGzfA79XYfivdun0EwWTs8p_yBeR030_2N2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon May 17 19:59:50 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 17 20:32:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE4bV-0005S3-Ow
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 19:59:50 +0200
+	id 1OE56t-0002HD-UB
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 20:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666Ab0EQR7o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 May 2010 13:59:44 -0400
-Received: from cuda1.bluetone.cz ([212.158.128.5]:55515 "EHLO
-	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753653Ab0EQR7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 May 2010 13:59:43 -0400
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by cuda1.bluetone.cz (Spam & Virus Firewall) with ESMTP
-	id 63CB916AF575; Mon, 17 May 2010 19:59:40 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by cuda1.bluetone.cz with ESMTP id qqF7Q3milp9SDFFS; Mon, 17 May 2010 19:59:40 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.71)
-	(envelope-from <bulb@ucw.cz>)
-	id 1OE4bM-0002WJ-5c; Mon, 17 May 2010 19:59:40 +0200
-Content-Disposition: inline
-In-Reply-To: <201005171712.22763.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752809Ab0EQScK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 14:32:10 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:63894 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751782Ab0EQScG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 14:32:06 -0400
+Received: by vws9 with SMTP id 9so1995612vws.19
+        for <git@vger.kernel.org>; Mon, 17 May 2010 11:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=x5w/9T6lpvShvvO7/fPkOmHyb0l6nGP1QEIooExBOHk=;
+        b=m21B+EYjj/zc0Vg14V9adZI1jmviT6bZ22s2rQdFUGaVjd5ZOZGymIPTcQzsnpM/Xi
+         5RZUbMDjTcRaRoaQHENjm3ips7r+LpzptDVXQRVWJJ7QcDZtTuZxagtUzsScyN47cZ5y
+         6hTJm4XzrTfcURe3ww3wTWeGHPYz+teqvuIiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=KKTMgA3bkNR09jZ5KWQTKxrjlTtHQHd5kwfZFFqWqz/MuZt18W9w7vgHVaFCcsuPAl
+         E8WVZ3QOQ779fy6bG2BMbs7Tv7IYCTyx5ZWRttp9XybRKGjxzW+z88GfM3EPf0IZ1hkp
+         TKlQJRItmksQDegnyx8Xmkls0fVYRsQ9dzcQs=
+Received: by 10.229.181.138 with SMTP id by10mr1231304qcb.9.1274121125876; 
+	Mon, 17 May 2010 11:32:05 -0700 (PDT)
+Received: by 10.229.242.3 with HTTP; Mon, 17 May 2010 11:32:05 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147249>
 
-On Mon, May 17, 2010 at 17:12:22 +0200, Thomas Rast wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> > On Mon, May 17, 2010 at 14:32, Thomas Rast <trast@student.ethz.ch> =
-wrote:
-> > > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> > >>
-> > >> just prefix the calls to git with LC_ALL=3DC.
-> > >
-> > > And how exactly do you expect us to go back in history and prefix=
- all
-> > > invocations of git in all scripts with LC_ALL=3DC?
-> >=20
-> > I don't expect you to. I just don't think it's unreasonable that if
-> > Git were to be internationalized that it behave like every other *n=
-ix
-> > program. If you have a Chinese locale and rely on the output of som=
-e
-> > program being in English your scripts will break if the OS
-> > subsequently upgrades to a new version of the program that has been
-> > translated to Chinese.
->=20
-> I've bumped against these hysterical raisins in the past too, so you
-> have my sympathy.  But git's API is the set of its plumbing commands,
-> I/O, arguments and all.
+Hi,
 
-The plumbing commands' output, obviously, may not become locale depende=
-nt
-since it is indeed part of the API. It may sometimes print localized er=
-ror
-messages though where one can't really do anything besides relying them=
- to
-the user anyway.
+Wanted to share some Admin nightmares;)
 
-There are cases though, where somebody calls *porcelain* commands in th=
-eir
-scripts and there they occasionally may need this LC_ALL=3DC thing. I s=
-uppose
-having a global option to turn off localization might be useful for suc=
-h
-users.
+Is there a way to correct a stupid error when few commits were made
+under username Your Name and the same kind of stub email address
+instead of normal name?
 
-> We do not give a similar promise for porcelain commands, which
-> includes most of the frequently used commands that also have a bunch
-> of translatable output like status, clone, fetch, branch, etc.  You
-> could start by translating the helpful comments in status, commit and
-> rebase -i.
->=20
-> However, I'm just trying to point out that your suggested solution
->=20
-> > The right way to handle that is to call programs like that with
-> > LC_ALL=3DC.
->=20
-> will never fly, and that git will, e.g., never be able to consistentl=
-y
-> call a commit a "Version" [de] because for-each-ref must forever fill
-> the %(type) field with "commit".
-
-I would personally consider it too obvious that "programs like that" me=
-ans
-porcelain to mention it.
-
-Most error messages may be translated even in plumbing though, just lik=
-e they
-are translated in standard unix commands.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Thanks,
+Eugene
