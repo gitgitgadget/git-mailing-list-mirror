@@ -1,94 +1,63 @@
-From: Uri Okrent <uokrent@gmail.com>
-Subject: Question: start mergetool with trivial differences already handled?
-Date: Mon, 17 May 2010 13:47:23 -0700
-Message-ID: <AANLkTinYq5LKcY8EDzfCGRoEYXftcd15Dviww749uBUC@mail.gmail.com>
+From: matteo brutti <webmbackslash@gmail.com>
+Subject: git pull
+Date: Mon, 17 May 2010 23:51:50 +0200
+Message-ID: <AANLkTimLZgkojC5L0ZdDewhprLgehLw2w4EZDwyViF4R@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: The Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 17 23:48:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 17 23:52:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE8BA-0001Ko-5u
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 23:48:52 +0200
+	id 1OE8EA-0002Wy-Be
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 23:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754197Ab0EQVsq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 May 2010 17:48:46 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45106 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754035Ab0EQVsq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 17:48:46 -0400
-X-Greylist: delayed 3334 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 May 2010 17:48:45 EDT
-Received: by iwn6 with SMTP id 6so773973iwn.19
-        for <git@vger.kernel.org>; Mon, 17 May 2010 14:48:45 -0700 (PDT)
+	id S1755841Ab0EQVvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 May 2010 17:51:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52129 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755218Ab0EQVvw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 May 2010 17:51:52 -0400
+Received: by fxm10 with SMTP id 10so392089fxm.19
+        for <git@vger.kernel.org>; Mon, 17 May 2010 14:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=2+d7mjI30riCrMqg3XyGMdw4vTPbm7CU4OFrTQ6nUfI=;
-        b=VpTYdck0Unu77w6mKS9Rmcwl6Y9rEkvN4n8wl6+hh6Xy/sL9VJPZbNLsrpSjzkJEWS
-         cxTltGV07UC4n1jZUjLeiMwQ5KJTx0itcWSvXeIy58WMd/jho51kmdzSuhP7mPInb4gx
-         ZRTl4WnJSqQ4E6wpWnVVL8JFIZyHUTpKGQSVA=
+         :subject:from:to:content-type;
+        bh=S9Ngcm3ql2HpfAsvYlCXCDlSXBRed6FiC9iZ4yaKM7Q=;
+        b=rCo5o3jDAOU0mfjB3KEd9gVuWSeT3igzhDIh5BkV5JNb9qDRJLRA+Wb+lNOfEYZsli
+         sYH2dHWUEozw53yvsfOGQ/9PQnMyjddo8vpHt9/8vXNDIZKZLdQKN39NOGKfjiRyaavE
+         pTgp1f1jJdfzR1/XuT80XEz/LPEZAVZoTVlIA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=YTVCVUcY8B8gw6cJKOXKCXMBBTzdzYspq/IcFlaVHcgZ7XWpgrjrmQnbh3ZY5uimIF
-         +PqQseAMEJWUCeyUMLOda/YiCmvkM+MPVga5RU++L3Xcc0MuZByMN+YjUWU+YoqBb3ji
-         rexRZmywCJUwBdGkXx6gEpG8TlJDHl0mjeKiM=
-Received: by 10.231.79.4 with SMTP id n4mr818950ibk.16.1274129243198; Mon, 17 
-	May 2010 13:47:23 -0700 (PDT)
-Received: by 10.231.200.198 with HTTP; Mon, 17 May 2010 13:47:23 -0700 (PDT)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=iQbpwhO/6ZS1sPRrLgt3ZlvksUoB6sjuTdWj9mqOrC9bP8l8w5yacaUqO5SikfBOU/
+         xdgQALRsn9wgBiIEWf9jgN/D5mnTxpEIP9I/F0v2LyL0P5cLibWCZnYwjw651vjffD1V
+         DDrYCHQsG96Li6vxMaaNDNg8Os7iZVdSn0OZ4=
+Received: by 10.103.84.21 with SMTP id m21mr3925647mul.106.1274133110820; Mon, 
+	17 May 2010 14:51:50 -0700 (PDT)
+Received: by 10.103.137.11 with HTTP; Mon, 17 May 2010 14:51:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147260>
 
-Hey all, just wondering if this is possible (as things stand, I don't
-think it is).
+Hi,
+i'm learning about git and soon have a question.
+My repo is in /dev/sda6 and my home is in /dev/sda4, as are both in
+local i thought that when i committ, i'll found the files on repo
+changed, it was not so! I learn i have to use git pull, but i didn't
+understand why.
+I made some tries, put my repo in /home/user/myrepo cloned in
+/home/user/myclones changed files and committed and the changes was in
+the repo without any need of pulling, and i have permission to write
+to /dev/sda6, so why have i to pull changes?
 
-Basically, I'd like to be able to fire up merge tool with all the trivi=
-al
-merges already taken care of (since git is better than I am at resolvin=
-g the
-trivial ones anyway).
+Thanks.
 
-The way I understand it, mergetool populates the merge tool with the ba=
-se
-file (file from the common ancestor), file from ours, and file from the=
-irs.
-So, when I pull up mergetool, I see all the differences in between ours=
- and
-theirs, even if git knows how to resolve many of those.  What I always =
-end up
-doing instead is just running vi on the unmerged path in my repo since =
-that
-way I only see the actual conflicts (those marked with conflict markers=
-).
 
-The net effect is that I almost never use mergetool, even though I woul=
-d
-like to.
-
-Do the various diff tools out there understand the conflict marker synt=
-ax? It
-would be nice to be able to just tell mergetool to visually display the
-"unmerged" version of the path that git dumps in your working tree.  Id=
-eally,
-it would be able to show ours and theirs, with all the trivial differen=
-ces
-pre-selected as git itself would have resolved them, but that seems mor=
-e pie-
-in-the-sky, and a lot harder to do.
-
-Thanks!
---
-=C2=A0 Uri
-
-Please consider the environment before printing this message.
-http://www.panda.org/how_you_can_help/
+Matteo
