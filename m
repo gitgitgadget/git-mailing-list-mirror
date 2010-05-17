@@ -1,78 +1,81 @@
-From: Marc Weber <marco-oweber@gmx.de>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: Has anyone looked at Gettext support for Git itself?
-Date: Mon, 17 May 2010 17:04:56 +0200
-Message-ID: <1274108567-sup-1380@nixos>
-References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
+Date: Mon, 17 May 2010 17:12:22 +0200
+Message-ID: <201005171712.22763.trast@student.ethz.ch>
+References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com> <201005171632.48253.trast@student.ethz.ch> <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 17 17:05:27 2010
+Cc: Jan Hudec <bulb@ucw.cz>, Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 17 17:12:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OE1sk-0004Tt-Ov
-	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 17:05:27 +0200
+	id 1OE1za-0008AX-Et
+	for gcvg-git-2@lo.gmane.org; Mon, 17 May 2010 17:12:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753823Ab0EQPFE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 May 2010 11:05:04 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from mail.gmx.net ([213.165.64.20]:45073 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753494Ab0EQPFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 May 2010 11:05:00 -0400
-Received: (qmail invoked by alias); 17 May 2010 15:04:57 -0000
-Received: from pD9E0AA3C.dip.t-dialin.net (EHLO mail.gmx.net) [217.224.170.60]
-  by mail.gmx.net (mp061) with SMTP; 17 May 2010 17:04:57 +0200
-X-Authenticated: #9006135
-X-Provags-ID: V01U2FsdGVkX1/E5rldjOzEkpPCxjowVJsVsX3Ehz76TKGEW9BEP5
-	pXCh0S2Y+9Qbdh
-Received: by mail.gmx.net (sSMTP sendmail emulation); Mon, 17 May 2010 17:04:56 +0200
-In-reply-to: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
-User-Agent: Sup/git
-X-Y-GMX-Trusted: 0
+	id S1752779Ab0EQPMZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 May 2010 11:12:25 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:28816 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751810Ab0EQPMY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 May 2010 11:12:24 -0400
+Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 17 May
+ 2010 17:12:23 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 17 May
+ 2010 17:12:23 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147244>
 
-Excerpts from =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason's message of Sun M=
-ay 16 00:10:09 +0200 2010:
-> I couldn't find anything about this in the list archives. Have there
-> been any discussions of adding internationalization support to Git
-> itself? I.e. the interface messages that the core Git utilities emit.
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+> On Mon, May 17, 2010 at 14:32, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+> > =C6var Arnfj=F6r=F0 Bjarmason wrote:
+> >>
+> >> just prefix the calls to git with LC_ALL=3DC.
+> >
+> > And how exactly do you expect us to go back in history and prefix a=
+ll
+> > invocations of git in all scripts with LC_ALL=3DC?
 >=20
-> I tried to get started with integrating GNU Gettext, but gnuish
-> assumptions it makes about building make it a bit hard.
->=20
-> Is there perhaps another gettext implementation that would be more
-> suitable for Git?
->=20
-> I'd be interested in submitting patches to make the existing strings
-> translatable if someone could get the tool + build skeleton going.
+> I don't expect you to. I just don't think it's unreasonable that if
+> Git were to be internationalized that it behave like every other *nix
+> program. If you have a Chinese locale and rely on the output of some
+> program being in English your scripts will break if the OS
+> subsequently upgrades to a new version of the program that has been
+> translated to Chinese.
 
-It may sound silly and stupid: My coworker has had much trouble because
-he doesn't know English at all.
-You could help those people very much by creating a git-translator.org
-page where you can copy paste failures which are translated only.
+I've bumped against these hysterical raisins in the past too, so you
+have my sympathy.  But git's API is the set of its plumbing commands,
+I/O, arguments and all.
 
-In the end you must have seen any failure multiple times to cope with
-it - no matter which language this message was written in. However
-having an understandable text may help.
+We do not give a similar promise for porcelain commands, which
+includes most of the frequently used commands that also have a bunch
+of translatable output like status, clone, fetch, branch, etc.  You
+could start by translating the helpful comments in status, commit and
+rebase -i.
 
-Marc Weber
+However, I'm just trying to point out that your suggested solution
+
+> The right way to handle that is to call programs like that with
+> LC_ALL=3DC.
+
+will never fly, and that git will, e.g., never be able to consistently
+call a commit a "Version" [de] because for-each-ref must forever fill
+the %(type) field with "commit".
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
