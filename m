@@ -1,75 +1,65 @@
-From: Yann Droneaud <yann@droneaud.fr>
-Subject: [PATCH] t9129: fix UTF-8 locale detection
-Date: Tue, 18 May 2010 19:16:53 +0200
-Message-ID: <1274203013-1349-1-git-send-email-yann@droneaud.fr>
-References: <1274202486.4228.22.camel@localhost>
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Yann Droneaud <yann@droneaud.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 18 19:26:16 2010
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] t9129: fix UTF-8 locale detection
+Date: Tue, 18 May 2010 10:45:26 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1005181037250.4195@i5.linux-foundation.org>
+References: <1274202486.4228.22.camel@localhost> <1274203013-1349-1-git-send-email-yann@droneaud.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Yann Droneaud <yann@droneaud.fr>
+X-From: git-owner@vger.kernel.org Tue May 18 19:48:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEQYY-0007j2-BN
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 19:26:14 +0200
+	id 1OEQuE-0001rP-5I
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 19:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758260Ab0ERR0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 May 2010 13:26:09 -0400
-Received: from smtp6-g21.free.fr ([212.27.42.6]:39615 "EHLO smtp6-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758169Ab0ERR0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 May 2010 13:26:06 -0400
-Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
-	by smtp6-g21.free.fr (Postfix) with ESMTP id 75948E081AC;
-	Tue, 18 May 2010 19:25:58 +0200 (CEST)
-Received: from mais.quest-ce.net (mais.quest-ce.net [88.161.129.79])
-	by smtp6-g21.free.fr (Postfix) with ESMTP;
-	Tue, 18 May 2010 19:25:56 +0200 (CEST)
-Received: by mais.quest-ce.net (Postfix, from userid 500)
-	id B4B717C08A; Tue, 18 May 2010 19:16:53 +0200 (CEST)
-X-Mailer: git-send-email 1.6.2.5
-In-Reply-To: <1274202486.4228.22.camel@localhost>
+	id S1758677Ab0ERRsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 May 2010 13:48:16 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:33393 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758674Ab0ERRsO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 May 2010 13:48:14 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4IHlaBM012732
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 May 2010 10:47:37 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4IHlZCk026315;
+	Tue, 18 May 2010 10:47:35 -0700
+In-Reply-To: <1274203013-1349-1-git-send-email-yann@droneaud.fr>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.446 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147293>
 
-Since I don't have en_US.utf8, some tests failed:
 
-  * UTF-8 locale not available, test skipped
-  * skip 10: ISO-8859-1 should match UTF-8 in svn
-  * skip 11: eucJP should match UTF-8 in svn
-  * skip 12: ISO-2022-JP should match UTF-8 in svn
 
-On my system locale -a reports:
+On Tue, 18 May 2010, Yann Droneaud wrote:
+>  
+> -if locale -a |grep -q en_US.utf8; then
+> +if locale -a |grep -qE '^en_US\.(utf|UTF)-?8$'; then
 
-   en_US
-   en_US.ISO-8859-1
-   en_US.UTF-8
+While -E is POSIX, I suspect that it's not universal. iirc, you still have 
+some really crap fileutils tools coming with Solaris, for example. 
 
-Tests available locales against en_US\.(utf|UTF)-?8 regexp.
+Wouldn't it be easier to just make it ignore case, and do
 
-Signed-off-by: Yann Droneaud <yann@droneaud.fr>
----
- t/t9129-git-svn-i18n-commitencoding.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+	grep -qi '^en_US\.utf-?8$'
 
-diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
-index b9224bd..00a273b 100755
---- a/t/t9129-git-svn-i18n-commitencoding.sh
-+++ b/t/t9129-git-svn-i18n-commitencoding.sh
-@@ -69,7 +69,7 @@ do
- 	'
- done
- 
--if locale -a |grep -q en_US.utf8; then
-+if locale -a |grep -qE '^en_US\.(utf|UTF)-?8$'; then
- 	test_set_prereq UTF8
- else
- 	say "UTF-8 locale not available, test skipped"
--- 
-1.6.4.4
+instead?
+
+I'm also not entirely sure you want to make that pattern stricter - the 
+whole problem with the old pattern was that it was too exact, so why add 
+the beginning/end requirement?
+
+		Linus
