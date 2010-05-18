@@ -1,93 +1,123 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: git pull
-Date: Tue, 18 May 2010 18:31:15 +0200
-Message-ID: <20100518163115.GA12950@vidovic>
-References: <AANLkTimLZgkojC5L0ZdDewhprLgehLw2w4EZDwyViF4R@mail.gmail.com>
+From: Jeff Epler <jepler@unpythonic.net>
+Subject: Re: [PATCH] WIP: begin to translate git with gettext
+Date: Tue, 18 May 2010 11:40:02 -0500
+Message-ID: <20100518164002.GC20842@unpythonic.net>
+References: <20100517160503.GA12717@unpythonic.net> <4BF24467.7000204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: matteo brutti <webmbackslash@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 18 18:31:37 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>, Jan Hudec <bulb@ucw.cz>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Marc Weber <marco-oweber@gmx.de>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue May 18 18:40:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEPhh-0000vl-7t
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 18:31:37 +0200
+	id 1OEPq2-0005NR-8k
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 18:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757355Ab0ERQb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 May 2010 12:31:26 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56064 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755525Ab0ERQbY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 May 2010 12:31:24 -0400
-Received: by fxm10 with SMTP id 10so1312172fxm.19
-        for <git@vger.kernel.org>; Tue, 18 May 2010 09:31:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=l0UF5tNkFRk+pXamn3/peTceySnWs7BA6p7PUtO+3CM=;
-        b=LQtgbjnLCncWcFgBU+1Bh8/1ssMzl1N98etDUOfN6pmX6YEU/qQ2hDsxMX1jK/kbv1
-         zqc+svJcUtWDzlg1qQU99daDOFw8iQCtvq0ofD6+eXQ74O3dIwQO/2v3jnhPuOU8EY/0
-         kLV+5aiNIXCmr6oCFeeg+nYrfuR3DaAndiTlM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=op//SV8wAN4fFIckRJGlSxM/dd2YLiHkwZL04+iHwLrOfHPOBH11xHkkcahJX91Dnl
-         vvVXOXLJt5Mw4RpyJlNucW724Oo5CBaLoxQERTLhgEmhDM4r39WbAl/AMrm1ZNuVxOcT
-         0lViYZttILHyB//ckq5BUzEwetdgjepdrEong=
-Received: by 10.204.13.65 with SMTP id b1mr14760bka.188.1274200282746;
-        Tue, 18 May 2010 09:31:22 -0700 (PDT)
-Received: from @ (91-165-141-122.rev.libertysurf.net [91.165.141.122])
-        by mx.google.com with ESMTPS id l1sm19744947bkl.20.2010.05.18.09.31.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 18 May 2010 09:31:20 -0700 (PDT)
+	id S1754723Ab0ERQkG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 May 2010 12:40:06 -0400
+Received: from dsl.unpythonic.net ([206.222.212.217]:48915 "EHLO
+	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751529Ab0ERQkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 May 2010 12:40:05 -0400
+Received: by unpythonic.net (Postfix, from userid 1000)
+	id 6399911469D; Tue, 18 May 2010 11:40:02 -0500 (CDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTimLZgkojC5L0ZdDewhprLgehLw2w4EZDwyViF4R@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <4BF24467.7000204@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147288>
 
-The 17/05/10, matteo brutti wrote:
+On Tue, May 18, 2010 at 09:40:23AM +0200, Michael J Gruber wrote:
+> > -		color_fprintf(s->fp, c, "unmerged:   %s", one);
+> > +		color_fprintf(s->fp, c, _("unmerged:   %s"), one);
+>=20
+> I have no experience whatsover with gettext, but it looks quite
+> dangerous to me to have printf format specifiers as part of the
+> localized text. It means that our programs can crash depending on the
+> LANG setting at run time if localisers mess up. We'll never catch thi=
+s
+> unless we run all tests in all languages!
 
-> Hi,
+This is exactly how gettext works.  Yes, you can get crashes if the
+translated string does not have the right arguments--and I would not be
+at all surprised to hear of at least one privilege escalation bug
+due to a bad message catalog, since printf format errors can be used in
+such interesting ways.
 
-Hi,
+Anyway, for printf-style formats, 'msgfmt' can be directed to check for
+this situation:
+    $ cat bad.po
+    msgid ""
+    msgstr "Content-Type: text/plain; charset=3DUTF-8\n"
 
-> i'm learning about git and soon have a question.
-> My repo is in /dev/sda6 and my home is in /dev/sda4, as are both in
-> local i thought that when i committ, i'll found the files on repo
-> changed, it was not so! I learn i have to use git pull, but i didn't
-> understand why.
+    #,c-format
+    msgid "foo %s %d"
+    msgstr "f=F6=F6 %d %d"
 
-"/dev/sda" is the physical device and "/dev/sda6" a physical partition
-of the hard drive "sda".
+    $ msgfmt --check-format bad.po
+    bad.po:6: format specifications in 'msgid' and 'msgstr' for argumen=
+t 1 are not the same
+    msgfmt: found 1 fatal error
+=20
+> Also, the basic structure of the output should probably be independen=
+t
+> of the language, preferring consistent structure across languages ove=
+r
+> linguistically consistent structure  within a language.
 
-Inside a partition, we may find (usually after the installation process
-of the system) a filesytem. The filesytem contains the files we can
-access to when mounted to the virtual filesytem (begining at "/").
+No, the ability of gettext+printf to use the right structure of the
+user's language is a strength.  For instance, consider the translation
+into Yoda's locale of the following sentence:
 
-While using user application which works on usual files (like git does),
-we don't care about the underlying local hard drive device ("/dev/sda"
-here).
+    printf("The %s is %s.\n", "Future", "Clouded");
 
-You can safely forget all the "/dev/<something>" things here.
+The proper localized message is
 
-> I made some tries, put my repo in /home/user/myrepo cloned in
-> /home/user/myclones changed files and committed and the changes was in
-> the repo without any need of pulling, and i have permission to write
-> to /dev/sda6, so why have i to pull changes?
+    Clouded the Future is.
 
-With the above in mind, could you please try to rephrase your problem
-(and maybe provide a basic use case with the commands to reproduce it) ?
+Anything else will range from confusing to unintelligible to the
+native speaker.  You get that with gettext by writing
 
--- 
-Nicolas Sebrecht
+    printf(_("The %s is %s.\n"), _("Future"), _("Clouded"));
+
+together with the message catalog entry
+    msgid "The %s is %s.\n"
+    msgfmt "%2$s the %1$s is.\n"
+
+> >  	if (extra.len) {
+> > -		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "%s", extra.buf=
+);
+> > +		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), _("%s"), extra.=
+buf);
+>=20
+> Seriously?
+
+No, that one's a mistake.  I did not take care when choosing which
+strings to mark, because I was mostly interested in showing a
+proof-of-concept for using gettext to translate core parts of git.
+
+The amount of work to mark all the source files and then to keep the
+marks up to date should not be underestimated--and that's just the work
+to enable translators to localize the software.  It is important to
+gauge the interest in the git community in actually doing this work.
+
+As my own primary language is English, I have only a theoretical
+interest in this feature.  However, the existence of translations for
+gitk and git-gui indicates to me that the community probably does desir=
+e
+this.
+
+Jeff
