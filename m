@@ -1,114 +1,68 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] WIP: begin to translate git with gettext
-Date: Tue, 18 May 2010 08:11:51 +0000
-Message-ID: <AANLkTikNzz5T4oJR1MQjdWjs-4zmWfXrPaBOHNfAi-1S@mail.gmail.com>
-References: <20100517160503.GA12717@unpythonic.net>
-	 <4BF24467.7000204@drmicha.warpmail.net>
+From: Thomas Singer <thomas.singer@syntevo.com>
+Subject: Re: Has anyone looked at Gettext support for Git itself?
+Date: Tue, 18 May 2010 11:35:56 +0200
+Message-ID: <4BF25F7C.10303@syntevo.com>
+References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>	 <201005171632.48253.trast@student.ethz.ch>	 <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>	 <201005171712.22763.trast@student.ethz.ch>	 <20100517175939.GA3575@efreet.light.src> <1274122619.4780.36.camel@dreddbeard> <4BF246ED.3040706@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff Epler <jepler@unpythonic.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>, Jan Hudec <bulb@ucw.cz>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Marc Weber <marco-oweber@gmx.de>
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 18 10:12:04 2010
+X-From: git-owner@vger.kernel.org Tue May 18 11:35:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEHuD-0005i4-Gt
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 10:12:01 +0200
+	id 1OEJCl-0007bn-5I
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 11:35:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756858Ab0ERILz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 May 2010 04:11:55 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54449 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754226Ab0ERILw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 May 2010 04:11:52 -0400
-Received: by iwn6 with SMTP id 6so1315682iwn.19
-        for <git@vger.kernel.org>; Tue, 18 May 2010 01:11:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=S0W0JwZUV0aYyaMXHBmnCVNTGfwK0gfzdhXk8WAouNc=;
-        b=MFhcnphK30D9vK9gtAApqC/3+/0VYwlXKwTIL3GayK4fQ2qL7p3SJKe0lJdGAtaATG
-         ymuikj1VGSa0WifDuyYHko8ch2ER0JHHVMsoL2DjjtxV2sF0JByurLQoVdMNhH1vS8Eq
-         8B2a5vXXfjumCQYq1G18YMo9CeeMRpC9dKcGg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UjaTN6MC17LZJVJbsC9hGpBzdpeQsREtwEUpC9vr3u+iauGzJfFCVO16rH3iV/p3mA
-         6qHemlcl4m8HFY0Zq7PqsV0M2+LWjmg7D4hr10BpxJvE7lQovugwjRzAhVRcIF0FuVFw
-         s9vhPWhBMa1db0SrDeMGnHiX7m3eBQVjmbkss=
-Received: by 10.231.148.200 with SMTP id q8mr1452542ibv.10.1274170311316; Tue, 
-	18 May 2010 01:11:51 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Tue, 18 May 2010 01:11:51 -0700 (PDT)
-In-Reply-To: <4BF24467.7000204@drmicha.warpmail.net>
+	id S1753068Ab0ERJfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 May 2010 05:35:09 -0400
+Received: from syntevo.com ([85.214.39.145]:44664 "EHLO syntevo.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751742Ab0ERJfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 May 2010 05:35:07 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTPSA id 4168317402C
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <4BF246ED.3040706@drmicha.warpmail.net>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147277>
 
-On Tue, May 18, 2010 at 07:40, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> I have no experience whatsover with gettext, but it looks quite
-> dangerous to me to have printf format specifiers as part of the
-> localized text. It means that our programs can crash depending on the
-> LANG setting at run time if localisers mess up. We'll never catch thi=
-s
-> unless we run all tests in all languages!
+> Note that "non-english-speaking" here really means "requiring or badly
+> wanting translated git". There are many non-native speakers here, and
+> your following reasoning
+> 
+>> It may also be worth mentioning that a git "commit", for example,
+>> doesn't have anything (other than historical reasons) to do with the
+>> English word "commit". A git commit is a git commit, and perhaps such
+>> conceptual terms should best be left untranslated anyway. It would
+>> certainly make it easier to answer questions in #git if people continued
+>> to use the same terms everywhere. Just as a weak anecdotal argument,
+>> when someone uses the term "revision" in #git, there's generally a lack
+>> of understanding about what a "commit" is. "commit" means something very
+>> specific in git, and I would hesitate to try to translate that into
+>> another language as if it's just a synonym for "revision" or
+>> "checkpoint", or "transaction", etc
+> 
+> explains why many non-native speakers prefer an English git. When
+> confronted with the localised German git-gui for the first time, I
+> really did not understand the menu entries at all. And my German is
+> pretty good ;)
 
-I don't have much experience with gettext either (except through
-Launchpad), maybe it has some internal facilities to avoid errors in
-these cases.
+I can second that. If I have the choice between a German (no matter whether
+good or bad translated) and an English version of a software, I'll choose
+the English one.
 
-You can test if the translated messages contain the same format
-specifiers as the originals, and in any case much larger projects than
-Git manage dozens of translations with gettext while avoiding
-disaster.
+Also, the support aspect might be important. If a German would use a
+software version which reports a German error, non-German speakers will most
+likely not be able to help him/her and even worse, (s)he will most likely
+not be able to find a solution by searching google for this error message.
 
-> Also, the basic structure of the output should probably be independen=
-t
-> of the language, preferring consistent structure across languages ove=
-r
-> linguistically consistent structure =C2=A0within a language.
->
-> That means we'll have to do a lot of strcat's (the _() things are not
-> compile time constants, are they?) rather than those mechanical
-> replacements above. Are you prepared to do that?
-
-Generally you don't to strcat's since you don't want to enforce word
-order, doing so will make the messages sound like Yoda in some of the
-target languages.
-
-That does mean re-arranging some code if it's to be done properly.
-
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
->> =C2=A0 =C2=A0 =C2=A0 default:
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("bug: unhandled diff=
- status %c", status);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die(_("bug: unhandled di=
-ff status %c"), status);
->> =C2=A0 =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 if (extra.len) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp, col=
-or(WT_STATUS_HEADER, s), "%s", extra.buf);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp, col=
-or(WT_STATUS_HEADER, s), _("%s"), extra.buf);
->
-> Seriously?
-
-No, as Jeff said it's just a proof of concept. That patch as-is
-doesn't reflect good translation practices, it just bootstraps
-gettext.
-
-Which is very useful by the way, thanks Jeff.
+-- 
+Thomas
