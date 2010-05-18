@@ -1,79 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git clone problem, missing "configure"
-Date: Tue, 18 May 2010 16:01:50 -0400
-Message-ID: <20100518200150.GB4448@coredump.intra.peff.net>
-References: <984297.53304.qm@web30503.mail.mud.yahoo.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] t9129: fix UTF-8 locale detection
+Date: Tue, 18 May 2010 13:00:32 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1005181300130.7559@i5.linux-foundation.org>
+References: <1274202486.4228.22.camel@localhost> <1274203013-1349-1-git-send-email-yann@droneaud.fr> <alpine.LFD.2.00.1005181037250.4195@i5.linux-foundation.org> <m24oi5j81q.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Anthony Willard <awillard69@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue May 18 22:01:59 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Yann Droneaud <yann@droneaud.fr>, git@vger.kernel.org,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Tue May 18 22:03:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OESzG-0007Rg-JV
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 22:01:58 +0200
+	id 1OET0U-00086R-8X
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 22:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757923Ab0ERUBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 May 2010 16:01:53 -0400
-Received: from peff.net ([208.65.91.99]:46001 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751441Ab0ERUBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 May 2010 16:01:53 -0400
-Received: (qmail 21021 invoked by uid 107); 18 May 2010 20:02:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 18 May 2010 16:02:20 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 18 May 2010 16:01:50 -0400
-Content-Disposition: inline
-In-Reply-To: <984297.53304.qm@web30503.mail.mud.yahoo.com>
+	id S1758159Ab0ERUDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 May 2010 16:03:08 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:35666 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756096Ab0ERUDG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 May 2010 16:03:06 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4IK2g6F027935
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 May 2010 13:02:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4IK2fg3032675;
+	Tue, 18 May 2010 13:02:41 -0700
+In-Reply-To: <m24oi5j81q.fsf@igel.home>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-5.446 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147307>
 
-[cc +git@vger]
 
-On Fri, May 14, 2010 at 01:50:16PM -0700, Anthony Willard wrote:
 
-> First off, I apologize if I have err'd in sending this directly to
-> you.  Please forward to the responsible party.
+On Tue, 18 May 2010, Andreas Schwab wrote:
 
-Usually such things just go to the list (which is open to
-non-subscribers).
-
-> I did a "git clone git://git.kernel.org/pub/scm/git/git.git" to a
-> fresh working folder.
+> Linus Torvalds <torvalds@linux-foundation.org> writes:
 > 
-> I attempted a "./configure" and it failed -- the file is missing;
-> there is a "configure.ac".  I had a different clone from mid March
-> that contained the file.
+> > Wouldn't it be easier to just make it ignore case, and do
+> >
+> > 	grep -qi '^en_US\.utf-?8$'
+> 
+> You'll need ERE's for the ? operator.
 
-Right. We don't commit the configure script, as it is auto-generated.
-You need to either:
+Oh, just replace it with '*' then. It's not like anybody cares.
 
-  1. Build from a release tarball which contains the "configure" script.
-
-  2. Run "autoconf" to generate the configure script (obviously this
-     implies that you have GNU autoconf installed).
-
-  3. Just run "make" without configure. You may need to tweak some
-     settings if you don't have some optional libraries installed. See the
-     top of Makefile for details.
-
-> I found the entry in the ".gitignore" file, a "git blame .gitignore" yields:
-> ...
-> c591d5f3 (Jeff King                   2009-10-26 21:10:24 -0400 191) /configure
-
-That does blame to me, but if you "git show c591d5f3" you will see that
-I was just tweaking the entries, and the original "configure" line
-predates me. Try the "blame parent" option of "git gui blame" or "tig",
-and you will see that 5566771 (the original commit adding autoconf
-support) is actually responsible. So yes, it has been intentionally
-ignored since the beginning.
-
-Hope that helps,
--Peff
+		Linus
