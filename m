@@ -1,123 +1,70 @@
-From: Jeff Epler <jepler@unpythonic.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: [PATCH] WIP: begin to translate git with gettext
-Date: Tue, 18 May 2010 11:40:02 -0500
-Message-ID: <20100518164002.GC20842@unpythonic.net>
-References: <20100517160503.GA12717@unpythonic.net> <4BF24467.7000204@drmicha.warpmail.net>
+Date: Tue, 18 May 2010 16:47:09 +0000
+Message-ID: <AANLkTilRMHuYFTaMv3p3XN2v2MVN-txOKKo7csvo9-iA@mail.gmail.com>
+References: <20100517160208.GA20842@unpythonic.net>
+	 <AANLkTikK9LAd_pwTwB56Vpq19i00X5apy6qT-ZOpnLEp@mail.gmail.com>
+	 <20100518160708.GB20842@unpythonic.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>, Jan Hudec <bulb@ucw.cz>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Marc Weber <marco-oweber@gmx.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 18 18:40:15 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff Epler <jepler@unpythonic.net>
+X-From: git-owner@vger.kernel.org Tue May 18 18:47:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEPq2-0005NR-8k
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 18:40:14 +0200
+	id 1OEPws-0000b7-4f
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 18:47:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754723Ab0ERQkG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 May 2010 12:40:06 -0400
-Received: from dsl.unpythonic.net ([206.222.212.217]:48915 "EHLO
-	unpythonic.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751529Ab0ERQkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 May 2010 12:40:05 -0400
-Received: by unpythonic.net (Postfix, from userid 1000)
-	id 6399911469D; Tue, 18 May 2010 11:40:02 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <4BF24467.7000204@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755740Ab0ERQrM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 May 2010 12:47:12 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:65035 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755221Ab0ERQrL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 May 2010 12:47:11 -0400
+Received: by gwaa20 with SMTP id a20so1244944gwa.19
+        for <git@vger.kernel.org>; Tue, 18 May 2010 09:47:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Malebtm64EYMe1643wQoj/D9Vx2XNgbY++exO2Ko2LE=;
+        b=h+2gk1gxMg2mhX94cPO575cFi8t6/h5i1WkOJLiLBERRecD9nPshyodA2ctV56+jlq
+         EmzDodGfKcsYWNJEDNxxA7nMjDKwzaKBYwRp4ZH7X8eMCiqana8YBGzvZ1St5QO0XkDn
+         QDzPUsHFffcm/mrwAzPF7+gF+hMYMs8RUXVAU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CcW4he45l+oA8habqrkh4cKYSrtly9MrmqItoJwc19CtlVKe+pDDHLsoKtOnNuaBcu
+         cHDKud0Y6KbIxZBEqtu2fakNElBMeEvVBk2Jx2SwtQx8duQgoDnAivyoYbeVvf9uFQbV
+         Q07EDKpE4QNECLjXkEZi4J5e7vWeEAYJs5jG4=
+Received: by 10.231.178.132 with SMTP id bm4mr1924664ibb.62.1274201230041; 
+	Tue, 18 May 2010 09:47:10 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Tue, 18 May 2010 09:47:09 -0700 (PDT)
+In-Reply-To: <20100518160708.GB20842@unpythonic.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147289>
 
-On Tue, May 18, 2010 at 09:40:23AM +0200, Michael J Gruber wrote:
-> > -		color_fprintf(s->fp, c, "unmerged:   %s", one);
-> > +		color_fprintf(s->fp, c, _("unmerged:   %s"), one);
->=20
-> I have no experience whatsover with gettext, but it looks quite
-> dangerous to me to have printf format specifiers as part of the
-> localized text. It means that our programs can crash depending on the
-> LANG setting at run time if localisers mess up. We'll never catch thi=
-s
-> unless we run all tests in all languages!
+On Tue, May 18, 2010 at 16:07, Jeff Epler <jepler@unpythonic.net> wrote=
+:
+> Is it possible that you don't have is_IS language support? =C2=A0On U=
+buntu
+> this comes from a package like language-pack-is-base.
+>
+> I tried your po entries in a file named po/is.po, and it didn't work.
+> When I installed language-pack-is-base, it did.
+>
+> $ unset LANGUAGE LC_MESSAGES; export LANG=3Dis_IS.UTF-8
+> $ /usr/local/jepler/git/bin/git status | head -1
+> # A greininni master
 
-This is exactly how gettext works.  Yes, you can get crashes if the
-translated string does not have the right arguments--and I would not be
-at all surprised to hear of at least one privilege escalation bug
-due to a bad message catalog, since printf format errors can be used in
-such interesting ways.
-
-Anyway, for printf-style formats, 'msgfmt' can be directed to check for
-this situation:
-    $ cat bad.po
-    msgid ""
-    msgstr "Content-Type: text/plain; charset=3DUTF-8\n"
-
-    #,c-format
-    msgid "foo %s %d"
-    msgstr "f=F6=F6 %d %d"
-
-    $ msgfmt --check-format bad.po
-    bad.po:6: format specifications in 'msgid' and 'msgstr' for argumen=
-t 1 are not the same
-    msgfmt: found 1 fatal error
-=20
-> Also, the basic structure of the output should probably be independen=
-t
-> of the language, preferring consistent structure across languages ove=
-r
-> linguistically consistent structure  within a language.
-
-No, the ability of gettext+printf to use the right structure of the
-user's language is a strength.  For instance, consider the translation
-into Yoda's locale of the following sentence:
-
-    printf("The %s is %s.\n", "Future", "Clouded");
-
-The proper localized message is
-
-    Clouded the Future is.
-
-Anything else will range from confusing to unintelligible to the
-native speaker.  You get that with gettext by writing
-
-    printf(_("The %s is %s.\n"), _("Future"), _("Clouded"));
-
-together with the message catalog entry
-    msgid "The %s is %s.\n"
-    msgfmt "%2$s the %1$s is.\n"
-
-> >  	if (extra.len) {
-> > -		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "%s", extra.buf=
-);
-> > +		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), _("%s"), extra.=
-buf);
->=20
-> Seriously?
-
-No, that one's a mistake.  I did not take care when choosing which
-strings to mark, because I was mostly interested in showing a
-proof-of-concept for using gettext to translate core parts of git.
-
-The amount of work to mark all the source files and then to keep the
-marks up to date should not be underestimated--and that's just the work
-to enable translators to localize the software.  It is important to
-gauge the interest in the git community in actually doing this work.
-
-As my own primary language is English, I have only a theoretical
-interest in this feature.  However, the existence of translations for
-gitk and git-gui indicates to me that the community probably does desir=
-e
-this.
-
-Jeff
+Yes, my system's settings were broken. Thanks, it works now.
