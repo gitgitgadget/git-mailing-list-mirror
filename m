@@ -1,85 +1,77 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Has anyone looked at Gettext support for Git itself?
-Date: Tue, 18 May 2010 14:33:31 +0100
-Message-ID: <1274189611.1294.10.camel@wpalmer.simply-domain>
-References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
-	 <201005171632.48253.trast@student.ethz.ch>
-	 <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>
-	 <201005171712.22763.trast@student.ethz.ch>
-	 <20100517175939.GA3575@efreet.light.src>
-	 <1274122619.4780.36.camel@dreddbeard>
-	 <4BF246ED.3040706@drmicha.warpmail.net>  <4BF25F7C.10303@syntevo.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Thomas Singer <thomas.singer@syntevo.com>
-X-From: git-owner@vger.kernel.org Tue May 18 15:33:54 2010
+From: Yann Droneaud <yann@droneaud.fr>
+Subject: [PATCH] t9129: fix UTF-8 locale detection
+Date: Tue, 18 May 2010 16:41:25 +0200
+Message-ID: <1274193685-5468-1-git-send-email-yann@droneaud.fr>
+Cc: Yann Droneaud <yann@droneaud.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 18 16:41:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEMvZ-0001oB-UJ
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 15:33:46 +0200
+	id 1OENzV-0006ah-GZ
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 16:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757493Ab0ERNdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 May 2010 09:33:41 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64144 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756706Ab0ERNdj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 May 2010 09:33:39 -0400
-Received: by fxm10 with SMTP id 10so1100411fxm.19
-        for <git@vger.kernel.org>; Tue, 18 May 2010 06:33:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=a3I+aj2SHmmWzi1su735lb3Gv7sW4MjrbcO2nlyhIJg=;
-        b=R3WpBd7sxiDpFlTP6jWE77TDduXME45qEEY43Z+Dc8V7y7fWibRKP0knU/73VK6A+8
-         rkGjtW2R/Bxuj1nG/uycILKVRZknntt3FGBx+PbB2GAfKhAS4qPgfl2pLvhl+N9u269/
-         +ytqDEP9rXNyXgiLmdBvUrLv+QB3dLn2IMrAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=pb/sg38NHSf58j/OG16MyGF3iKQ0JTEmMaf6qljmd26nLj41gp6VWSOyJ0xfr+Fqmp
-         zetk0AYqeQYaj4YUUzacTV6uW7TSABcazlQ7bwjXvL87u5ta9dvoVbvOG+qedGPwvQjT
-         nTGQxu4Jw/cXD4vJXuFlv/F5cCAIuFfznf+eI=
-Received: by 10.223.45.22 with SMTP id c22mr8115555faf.107.1274189618047;
-        Tue, 18 May 2010 06:33:38 -0700 (PDT)
-Received: from [192.168.2.64] ([193.164.118.24])
-        by mx.google.com with ESMTPS id 15sm30963201fad.22.2010.05.18.06.33.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 18 May 2010 06:33:37 -0700 (PDT)
-In-Reply-To: <4BF25F7C.10303@syntevo.com>
-X-Mailer: Evolution 2.28.3 
+	id S1754344Ab0EROln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 May 2010 10:41:43 -0400
+Received: from smtp6-g21.free.fr ([212.27.42.6]:50740 "EHLO smtp6-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754791Ab0EROll (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 May 2010 10:41:41 -0400
+Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
+	by smtp6-g21.free.fr (Postfix) with ESMTP id 8B3F8E08119;
+	Tue, 18 May 2010 16:41:35 +0200 (CEST)
+Received: from mais.quest-ce.net (mais.quest-ce.net [88.161.129.79])
+	by smtp6-g21.free.fr (Postfix) with ESMTP;
+	Tue, 18 May 2010 16:41:33 +0200 (CEST)
+Received: by mais.quest-ce.net (Postfix, from userid 500)
+	id A02487C055; Tue, 18 May 2010 16:41:25 +0200 (CEST)
+X-Mailer: git-send-email 1.6.2.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147282>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147283>
 
-On Tue, 2010-05-18 at 11:35 +0200, Thomas Singer wrote:
-> ... and even worse, (s)he will most likely
-> not be able to find a solution by searching google for this error message.
-> 
+Since I don't have en_US.utf8, some tests failed:
 
-Other software projects make this a non-issue by reporting an "error
-code" or something along those lines, along with the message. The code
-is easily indexed, so that the message can be located by support staff
-and, nowadays, google. I assume any internationalization effort would
-require a message code of some sort be generated internally (if only to
-look up which internationalized message to display), so doing something
-as simple as outputting the internally-used code (even if that is just a
-hash of the English version of the message) could solve this problem.
+  * UTF-8 locale not available, test skipped
+  * skip 10: ISO-8859-1 should match UTF-8 in svn
+  * skip 11: eucJP should match UTF-8 in svn
+  * skip 12: ISO-2022-JP should match UTF-8 in svn
 
-Having error messages pasted into #git in 14 different languages could
-be annoying, but if those are 14 people who otherwise would not be using
-git at all, then I expect we're looking at the wrong problem, and
-internationalisation /should/ be a priority.
+On my system locale -a reports:
 
-But what do I know? I speak English :)
+   en_US
+   en_US.ISO-8859-1
+   en_US.UTF-8
+
+According to Wikipedia utf8 is not a correct name
+for the UTF-8 encoding:
+http://en.wikipedia.org/wiki/UTF-8#Official_name_and_incorrect_variants
+
+And compare_svn_head_with() is explicitly using en_US.UTF-8
+locale.
+
+Signed-off-by: Yann Droneaud <yann@droneaud.fr>
+---
+ t/t9129-git-svn-i18n-commitencoding.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t9129-git-svn-i18n-commitencoding.sh b/t/t9129-git-svn-i18n-commitencoding.sh
+index b9224bd..ec6ed4f 100755
+--- a/t/t9129-git-svn-i18n-commitencoding.sh
++++ b/t/t9129-git-svn-i18n-commitencoding.sh
+@@ -69,7 +69,7 @@ do
+ 	'
+ done
+ 
+-if locale -a |grep -q en_US.utf8; then
++if locale -a |grep -q en_US.UTF-8; then
+ 	test_set_prereq UTF8
+ else
+ 	say "UTF-8 locale not available, test skipped"
+-- 
+1.6.4.4
