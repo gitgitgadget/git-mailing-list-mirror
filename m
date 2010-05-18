@@ -1,86 +1,86 @@
-From: Yann Droneaud <yann@droneaud.fr>
-Subject: Re: [PATCH] t9129: fix UTF-8 locale detection
-Date: Tue, 18 May 2010 22:49:57 +0200
-Message-ID: <1274215797.16337.16.camel@localhost>
-References: <1274202486.4228.22.camel@localhost>
-	 <1274203013-1349-1-git-send-email-yann@droneaud.fr>
-	 <alpine.LFD.2.00.1005181037250.4195@i5.linux-foundation.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git clone problem, missing "configure"
+Date: Tue, 18 May 2010 16:53:20 -0500
+Message-ID: <20100518215320.GA9065@progeny.tock>
+References: <984297.53304.qm@web30503.mail.mud.yahoo.com>
+ <20100518200150.GB4448@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue May 18 22:50:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Anthony Willard <awillard69@yahoo.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 18 23:53:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OETkK-0003YD-Cu
-	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 22:50:36 +0200
+	id 1OEUjM-0004W4-UP
+	for gcvg-git-2@lo.gmane.org; Tue, 18 May 2010 23:53:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757954Ab0ERUuI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 May 2010 16:50:08 -0400
-Received: from smtp6-g21.free.fr ([212.27.42.6]:42851 "EHLO smtp6-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757791Ab0ERUuF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 May 2010 16:50:05 -0400
-Received: from smtp6-g21.free.fr (localhost [127.0.0.1])
-	by smtp6-g21.free.fr (Postfix) with ESMTP id 62A1EE08120;
-	Tue, 18 May 2010 22:49:58 +0200 (CEST)
-Received: from mais.quest-ce.net (mais.quest-ce.net [88.161.129.79])
-	by smtp6-g21.free.fr (Postfix) with ESMTP;
-	Tue, 18 May 2010 22:49:57 +0200 (CEST)
-Received: by mais.quest-ce.net (Postfix, from userid 500)
-	id 74F057C0B4; Tue, 18 May 2010 22:49:57 +0200 (CEST)
-In-Reply-To: <alpine.LFD.2.00.1005181037250.4195@i5.linux-foundation.org>
-X-Mailer: Evolution 2.26.3-1.1mdv2009.1 
+	id S1757723Ab0ERVxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 May 2010 17:53:33 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:59012 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757446Ab0ERVxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 May 2010 17:53:31 -0400
+Received: by qyk13 with SMTP id 13so9992037qyk.1
+        for <git@vger.kernel.org>; Tue, 18 May 2010 14:53:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=B0+v7SvmWWEEkF+PsvjUIwlLWpyRYGChv4NANjhWW2w=;
+        b=joFgr4b1x90tjyZi7OtFUcs8j/t/b3sCm71qprYfebrO2c5I2cZqLhoHYbWiAzC4DA
+         cPgc36OpMeDYNRc7smvk1eqG13Se6SPsxWQf2oAkpLgk6gYjIx3o91B/nCAUGoOy3Rrb
+         A9/d5BinEj+8YvzC2e7ZhQoWe3xQtu6AKfOwc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZYI6X5OYmOwcWQn4/kBb/5zEhUcgLd8zfh6mMLJlwkxXeyAlVDxzW9zwpflBHkBfLg
+         3vAvPVr4rwr+hw03h13Yk3+8ZV8Jmr2mqdbHD86Y9vNXZmiglXIG7EJg3XFXip+QlKGG
+         pm4bzbiyAFImUTyoky0bDi8RX9oAeZBuJgkiM=
+Received: by 10.229.236.16 with SMTP id ki16mr1622418qcb.68.1274219609536;
+        Tue, 18 May 2010 14:53:29 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id f5sm1490051qcg.8.2010.05.18.14.53.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 18 May 2010 14:53:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100518200150.GB4448@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147310>
 
-Le mardi 18 mai 2010 =C3=A0 10:45 -0700, Linus Torvalds a =C3=A9crit :
->=20
-> On Tue, 18 May 2010, Yann Droneaud wrote:
-> > =20
-> > -if locale -a |grep -q en_US.utf8; then
-> > +if locale -a |grep -qE '^en_US\.(utf|UTF)-?8$'; then
->=20
-> While -E is POSIX, I suspect that it's not universal. iirc, you still=
- have=20
-> some really crap fileutils tools coming with Solaris, for example.=20
->=20
+Hi,
 
-You're right, Solaris's own grep doesn't known about -E nor -e.
+Jeff King wrote:
 
-And it even doesn't know about -q :=20
+> Right. We don't commit the configure script, as it is auto-generated.
+> You need to either:
+> 
+>   1. Build from a release tarball which contains the "configure" script.
+> 
+>   2. Run "autoconf" to generate the configure script (obviously this
+>      implies that you have GNU autoconf installed).
+> 
+>   3. Just run "make" without configure. You may need to tweak some
+>      settings if you don't have some optional libraries installed. See the
+>      top of Makefile for details.
 
- $ grep -q                                                    =20
- grep: illegal option -- q
- Usage: grep -hblcnsviw pattern file . . .
+To add to this excellent reply, I should mention the
 
-So the whole test won't work for older Solaris.
+  make configure
 
-Solaris don't support grep -e, but has the non POSIX egrep instead
-(which doesn't support -q too).
+command.  This runs autoconf, also filling in the version number for
+correct ./configure --help output. :)
 
-[...]
+See the README and INSTALL files for more details.
 
-> I'm also not entirely sure you want to make that pattern stricter - t=
-he=20
-> whole problem with the old pattern was that it was too exact, so why =
-add=20
-> the beginning/end requirement?
->=20
-
-Just to be sure it doesn't match "garbage".=20
-Initial regexp was using a straight '.' operator, so while fixing it, I
-thought it would be better to achieve "perfect match".
-
-Regards.
-
---=20
-Yann Droneaud
+Hope that helps,
+Jonathan
