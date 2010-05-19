@@ -1,87 +1,117 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: git-svn clone -- runs out of memory
-Date: Wed, 19 May 2010 16:33:41 +0000
-Message-ID: <AANLkTimm_9Ks3adWqXpVBbY6osLl_3c029x8eMI5tb1M@mail.gmail.com>
-References: <F47FB1C2-3EEB-475C-8874-CBEC45582386@verizon.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH GSoC 2/3] git-instaweb: Configure it to work with a global  server root and projects list
+Date: Wed, 19 May 2010 18:48:47 +0200
+Message-ID: <201005191848.49922.jnareb@gmail.com>
+References: <1273953520-25990-1-git-send-email-pavan.sss1991@gmail.com> <201005190105.59606.jnareb@gmail.com> <AANLkTimFrX6yE69ZNlZM11XJVNLS5rpbsdeNN984iNs7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jack Moore <jhmoore719@verizon.net>
-X-From: git-owner@vger.kernel.org Wed May 19 18:34:03 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 19 18:49:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEmDa-0006Rq-LS
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 18:34:02 +0200
+	id 1OEmSO-0005uf-0v
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 18:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294Ab0ESQd5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 May 2010 12:33:57 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45607 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751605Ab0ESQd5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 May 2010 12:33:57 -0400
-Received: by iwn6 with SMTP id 6so3154503iwn.19
-        for <git@vger.kernel.org>; Wed, 19 May 2010 09:33:55 -0700 (PDT)
+	id S1754215Ab0ESQtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 May 2010 12:49:04 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:13392 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754341Ab0ESQtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 May 2010 12:49:00 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so142520fga.1
+        for <git@vger.kernel.org>; Wed, 19 May 2010 09:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Mnh7fOQPJu6KLaK54HhjwcJYNXyAmwVLYj3vq2+wl1A=;
-        b=oCXGLwUCohWkB2rUGdLmPiN3m3DEs7jrz8RNvL8qUhSelQfNLsyEuH0JvlMxhNMKdY
-         uihc+XnT03xPZvh7hXMVaWLOUdocdJdu4LIWydiH/vJNinGFBdO6W7A4+19klN0PRlwE
-         Iy9lH3f1f5Io09rQxfCk0qpHt1cF8dvbkYIeA=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=aIA8Egldyy4ooWrpaY4Co6qlyc1PSRlYIiRe1fJxhS8=;
+        b=Abu0FVJtFM2y9xYkWllHnAVwNLCWc0fCrWls9sWGduG9gitZSSQSdp7rCcYUIx3L1q
+         ME3DxB/NPpClaG3M6szpA5raoznY5Rh+sZVUFtAJFv9FZbi8UpgxgkszFQeVmfnUbvGl
+         OSEuZlir4zY35qQdkRrwF7caBRIgXFkhZC8Do=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vCjvi5djoZMQh2wpzHAehiMTh8d7xAT/ucoW+YyIDxf6Lw/c17JFor3a3d5rsteYP8
-         hcnyY6gygs0W/ePInoXBnf0nn/pgHAtK/bu8LRn/nfnrMCLA+Uz6QnXwUAvaUlhlzSh9
-         k6sESD0JM2MMlwjf/4VAWqkKVXZ1f1XcWEbm4=
-Received: by 10.231.168.129 with SMTP id u1mr3829153iby.49.1274286821549; Wed, 
-	19 May 2010 09:33:41 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Wed, 19 May 2010 09:33:41 -0700 (PDT)
-In-Reply-To: <F47FB1C2-3EEB-475C-8874-CBEC45582386@verizon.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ZZ0H5Hz+96pNbKf0sjGwC/T/SFKVRH3PN1Gu9S5ChijH6lpyND+QwFbF6QaP0N8MKR
+         qYjjaJ5dmJRVI+i2CE7RkcTYjkG6Txlaf94NzXymedc6ruGBNVBS29NoY475+SWZkdK7
+         rxvw/DN7fnpzQVYzFZrecd226chXB6L1JZlyg=
+Received: by 10.87.70.10 with SMTP id x10mr119687fgk.5.1274287738502;
+        Wed, 19 May 2010 09:48:58 -0700 (PDT)
+Received: from [192.168.1.13] (abrz84.neoplus.adsl.tpnet.pl [83.8.119.84])
+        by mx.google.com with ESMTPS id c28sm11187101fka.44.2010.05.19.09.48.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 May 2010 09:48:57 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTimFrX6yE69ZNlZM11XJVNLS5rpbsdeNN984iNs7@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147334>
 
-On Wed, May 19, 2010 at 05:51, Jack Moore <jhmoore719@verizon.net> wrot=
-e:
+On Wed, 19 May 2010, Pavan Kumar Sunkara wrote:
+> On Wed, 19 May 2010 01:05:57 +0200, Jakub Narebski wrote:
 
-> When I "git-svn clone" the repository it takes about 30 hour (yes
-> hours) =C2=A0to (appears to) retrieve the files.
+> > Well, I can understand that.
+> >
+> > There are two options how to resolve this issue without adding yet
+> > another script (although on the other hand git-web-gui / git-client
+> > could share code with git-instaweb just like git-difftool and
+> > git-mergetool do).
+> >
+> > First is to leave git-instaweb similar to how it is now, with pid file,
+> > server config file, gitweb config file, etc. in $GIT_DIR/gitweb, but
+> > if it is invoked outside any git repository, start it in "repository
+> > administration" mode, i.e. on the page that allows one to create new
+> > repository or clone repository.
+> 
+> But this solution requires starting of many apache servers on many
+> ports which is quite complicated and even messier.
 
-That's relatively short actually with git-svn. I've taken 3 weeks to
-clone one large (~70k revisions + lots of branches) repository, and
-that was via local file:// access.
+I agree with that.  I guess that git-instaweb was created mainly for the
+situation where you work in single repository, and does not support well
+situation where you move from repository to repository, and run git-instaweb
+in different repositories.
 
-> Then git goes into either a packing or garbage collecting phase and
-> eventually runs out of memory. =C2=A0I get an error relating to "mmap
-> ... out of memory". =C2=A0When it runs out of memory the "cloned"
-> repository is ~2.4 GBi.
 
-This could be one of a few things:
+As I wrote earlier:
 
-  * git-svn leaks *lots* of memory.
+   Now, current git-instaweb behavior has its quirks, but having
+   git-instaweb show _current_ repository is a very important feature,
+   and I'd rather we didn't lose it in transition.
 
-    The solution is to just kill it and restart it every few
-    hours. After it's killed run `git svn fetch`. You should be doing
-    this anyway on any clone that takes >1 hour, aside from leaking
-    memory it gets a lot slower.
+> > The alternate solution would be to follow the idea implemented in this
+> > patch, namely per-user pid file, gitweb config file, server config file
+> > etc. and the *list of projects* file in $HOME/.gitweb (or whenever
+> > XDG / FHS / LSB says it should be named), _but_ add an easy way to add
+> > a new project (a new repositoey) to list.
+> 
+> The feature *Adding repository to client* in my project proposal will
+> take care of this.
 
-  * The known problem with some git utilities doing things in-memory.
+That's good, but...
 
-    If that's the case the solution is to just add lots of swap (or
-    patch the core).
+> >  Perhaps even make
+> > 'git instaweb', when run from inside git repository, add automatically
+> > current repository to list (unless it is present there already), and
+> > perhaps open 'summary' page for said repository.
+> 
+> Yeah, we can do that but I think I will do it in another commit.
 
-  * Something I'm forgetting
+...this is really needed, in my opinion.
 
-In any case, run it with GIT_TRACE=3D1 so you can see what command is
-the one that failed.
+I agree that it should be in separate commit.
+
+-- 
+Jakub Narebski
+Poland
