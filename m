@@ -1,60 +1,75 @@
-From: Pedro Belo <pedrobelo@gmail.com>
-Subject: git 1.7.1 freezing during http transport with sideband
-Date: Tue, 18 May 2010 18:37:55 -0700
-Message-ID: <AANLkTilHslSYFhxdyebhbatVmA98ZtoPgFDdqLQhLJNH@mail.gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] t9129: fix UTF-8 locale detection
+Date: Wed, 19 May 2010 11:44:14 +0900
+Message-ID: <87r5l8mwzl.fsf@catnip.gol.com>
+References: <1274193685-5468-1-git-send-email-yann@droneaud.fr>
+	<4BF2BABC.2010405@drmicha.warpmail.net>
+	<1274215074.16337.4.camel@localhost>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 19 03:38:07 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Yann Droneaud <yann@droneaud.fr>
+X-From: git-owner@vger.kernel.org Wed May 19 04:44:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEYET-0006LE-Pb
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 03:38:02 +0200
+	id 1OEZGn-0005qX-AI
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 04:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754749Ab0ESBh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 May 2010 21:37:56 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57955 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754434Ab0ESBh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 May 2010 21:37:56 -0400
-Received: by vws9 with SMTP id 9so3370092vws.19
-        for <git@vger.kernel.org>; Tue, 18 May 2010 18:37:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=knJQ2O2bpTaGAX7pUuUwxDjJivqf68Zx2YtKrEKPO7E=;
-        b=fFfcaiUKWrwrRZLEYLUnTiUJQ6lUQp9Ja3XbwXkIgQG1qdFq8R9aCn19Se5tYWY7gF
-         IIQCcQdy59ujS1OIhsWtIYP++MEa9U1tTmai2BI00HPws/HCgQIQAuNh6kmc+y4CHIgG
-         RmLtNklQeV89jLb4SlvDZmI5vWFlxkMAA2i2k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=DGL+pWBB9CPWP/tI6lvWQm+PHA1DLAGPMrvSzZGbp2HReAVR8jBfPErtxb9yGQvqpY
-         iiK5+MLx5GM6IEcBhDIcseEj06WTb20vfY8/sKgBBj0LJfa1nuEoWNaqbIA5qlsEo5oV
-         qDHxT9HsnL4tI7ZlnAZr1d1AmECkip3vgnL5k=
-Received: by 10.220.61.142 with SMTP id t14mr4017950vch.11.1274233075290; Tue, 
-	18 May 2010 18:37:55 -0700 (PDT)
-Received: by 10.220.168.131 with HTTP; Tue, 18 May 2010 18:37:55 -0700 (PDT)
+	id S1751896Ab0ESCoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 May 2010 22:44:23 -0400
+Received: from smtp11.dentaku.gol.com ([203.216.5.73]:54631 "EHLO
+	smtp11.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751354Ab0ESCoW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 May 2010 22:44:22 -0400
+Received: from 218.231.149.129.eo.eaccess.ne.jp ([218.231.149.129] helo=catnip.gol.com)
+	by smtp11.dentaku.gol.com with esmtpa (Dentaku)
+	id 1OEZGZ-0002J4-Cs; Wed, 19 May 2010 11:44:15 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id D19C4DF70; Wed, 19 May 2010 11:44:14 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+In-Reply-To: <1274215074.16337.4.camel@localhost> (Yann Droneaud's message of
+	"Tue, 18 May 2010 22:37:54 +0200")
+X-Virus-Scanned: ClamAV GOL (outbound)
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147317>
 
-Hey guys,
+Yann Droneaud <yann@droneaud.fr> writes:
+> I've tested on:
+>  - FreeBSD 8.0
+>  - NetBSD 5.0.1
+>  - OpenSolaris 2009.06
+>
+> and none of these systems report en_US.utf8 in locale -a, they're all
+> reporting en_US.UTF-8
 
-Git 1.7.1 is freezing when I push something via http and the hook has
-some output. From the client side, I see the hook output prefixed with
-"remote: " as expected - and then the process just hangs.
+Still, "utf8" is common enough, so clearly it should be supported (along
+with "utf-8" and "UTF-8" etc).
 
-The interesting part is I could work around it by adding a sleep to the hook.
+[On my system::
 
-Tested on debian 5.0.4 and git 1.7.1. Couldn't reproduce on a mac.
+   $ locale -a
+   C
+   POSIX
+   en_US.utf8
+   ja_JP.utf8
+   ko_KR
+   ko_KR.euckr
+   ko_KR.utf8
+   korean
+   korean.euc
+]
 
-I started digging in the code to attempt to fix it but it will take me
-a while heh, not proficient with C.
+-miles
+
+-- 
+Idiot, n. A member of a large and powerful tribe whose influence in human
+affairs has always been dominant and controlling.
