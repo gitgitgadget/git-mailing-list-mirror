@@ -1,108 +1,121 @@
-From: Marcus Comstedt <marcus@mc.pp.se>
-Subject: [PATCH] Accept the timezone specifiers [+-]hh:mm and [+-]hh in addition to [+-]hhmm
-Date: Wed, 19 May 2010 22:49:37 +0200
-Message-ID: <1274302177-3573-2-git-send-email-marcus@mc.pp.se>
-References: <1274302177-3573-1-git-send-email-marcus@mc.pp.se>
-Cc: Marcus Comstedt <marcus@mc.pp.se>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] git-instaweb: Add support for running gitweb via 'plackup'
+Date: Wed, 19 May 2010 22:52:46 +0200
+Message-ID: <201005192252.49461.jnareb@gmail.com>
+References: <1274290298-19245-1-git-send-email-jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 19 22:50:13 2010
+X-From: git-owner@vger.kernel.org Wed May 19 22:53:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEqDR-0008Hq-Nb
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 22:50:10 +0200
+	id 1OEqGD-0001Eu-1M
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 22:53:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970Ab0ESUuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 May 2010 16:50:03 -0400
-Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:42001 "EHLO
-	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752812Ab0ESUuA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 May 2010 16:50:00 -0400
-Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bahamut.mc.pp.se (Postfix) with ESMTPS id C9348E184;
-	Wed, 19 May 2010 22:49:59 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
-	t=1274302199; bh=1AA4sv/SXcnOKVz2FvPzaKx2KMKbOHaVjDwQxbg4Vnw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=hmAI
-	AAbIC3fZxxQZIr5X3d0ennMS7UMbsjEn0B1rX9awu6V8XtKQ8W8HEyYfGVtkIJ5KbhG
-	dbllT5MIIM6QePJqTrWstLoQWhJfSodbtV6tDVpCY+FiOerR/DrDCmUcJGTcXqsk8tK
-	HoRYfZgyUrF89JHeauOn57MqaURtz+7zA=
-Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
-	(envelope-from <marcus@chiyo>)
-	id 1OEqDH-0000wo-Io; Wed, 19 May 2010 22:49:59 +0200
-X-Mailer: git-send-email 1.7.1.95.g7c1a64.dirty
-In-Reply-To: <1274302177-3573-1-git-send-email-marcus@mc.pp.se>
+	id S1753003Ab0ESUw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 May 2010 16:52:56 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57717 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751843Ab0ESUwz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 May 2010 16:52:55 -0400
+Received: by fxm10 with SMTP id 10so2838408fxm.19
+        for <git@vger.kernel.org>; Wed, 19 May 2010 13:52:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=JELL8YnBTzhccAqVzbXkDIJX3bcBR2ofqyBkcaULrF4=;
+        b=cczsduAjrjEFRft/MySAWbrFNU3Q3YNfN/rmcrmoYjiiWeYkqMskd0cjV99ZiCnibx
+         ou0d5HH+nJn19+7w6pDZIQir7LZvXKvT2zNJjoo5/WLMttE7wYgHRzrAsdUJ3oKO+kVU
+         Z1ymALNlK/5hbSHmKFRLj8wCjloK1cBMPLb4A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=cvrpiEfhT6KlumsboVbhv7auZHp0IstbNOpfPMQx/WUdu1+TvsJZV+s+uBncQJ15xb
+         YtGl4xS08IlBqLJR6NtoF2eKXSwvL2aEpE5ojbW/I1P3+p/21DE3LafFxTXdZevDDFPx
+         3IC+0AKu0WpMvlHWamQfvHa8t6eISlqLeid34=
+Received: by 10.102.198.37 with SMTP id v37mr678183muf.119.1274302373516;
+        Wed, 19 May 2010 13:52:53 -0700 (PDT)
+Received: from [192.168.1.13] (abrz84.neoplus.adsl.tpnet.pl [83.8.119.84])
+        by mx.google.com with ESMTPS id s17sm25619844bkd.22.2010.05.19.13.52.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 May 2010 13:52:51 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1274290298-19245-1-git-send-email-jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147348>
 
-ISO 8601 specifies three syntaxes for timezones other than "Z".
-git already supports the +-hhmm syntax.  This patch adds support
-for the other two: +-hh:mm and +-hh.
+On Wed, 19 May 2010, Jakub Narebski wrote:
 
-Signed-off-by: Marcus Comstedt <marcus@mc.pp.se>
----
- date.c |   39 ++++++++++++++++++++++++++-------------
- 1 files changed, 26 insertions(+), 13 deletions(-)
+> ---
+[...]
+> RFC is because when when running
+> 
+>   $ ./git-instaweb --httpd=plackup --browser=lynx
+> 
+> I get the following error
+> 
+>   Looking up 127.0.0.1:1234
+>   Making HTTP connection to 127.0.0.1:1234
+>   Alert!: Unable to connect to remote host.
+> 
+>   lynx: Can't access startfile http://127.0.0.1:1234/
+>   http://127.0.0.1:1234
+> 
+> But running 'lynx http://127.0.0.1:1234/' after this works correctly
+> without problems.  Running './.git/gitweb/gitweb.psgi' doesn't cause
+> any problems either.  WTF?
 
-diff --git a/date.c b/date.c
-index 6bae49c..f2cad1f 100644
---- a/date.c
-+++ b/date.c
-@@ -555,21 +555,34 @@ static int match_tz(const char *date, int *offp)
- 	int min, hour;
- 	int n = end - date - 1;
- 
--	min = offset % 100;
--	hour = offset / 100;
-+	if (n == 2 && offset <= 14) {
-+		/* +HH:MM (ISO 8601) or +HH (ISO 8601 abbreviated) */
-+		hour = offset;
-+		if (date[3] == ':') {
-+			min = strtoul(date + 4, &end, 10);
-+			if (end != date + 6) {
-+				/* there was no minute field, but we're
-+				   fine with just the hour */
-+				end = (char *)date + 3;
-+				min = 0;
-+			}
-+		} else {
-+			min = 0;
-+		}
-+	} else if (n < 3) {
-+		return end - date; /* we want at least 3 digits */
-+	} else {
-+		min = offset % 100;
-+		hour = offset / 100;
-+	}
- 
--	/*
--	 * Don't accept any random crap.. At least 3 digits, and
--	 * a valid minute. We might want to check that the minutes
--	 * are divisible by 30 or something too.
--	 */
--	if (min < 60 && n > 2) {
--		offset = hour*60+min;
--		if (*date == '-')
--			offset = -offset;
-+	if (60 <= min)
-+		return end - date; /* invalid minute */
- 
--		*offp = offset;
--	}
-+	offset = hour * 60 + min;
-+	if (*date == '-')
-+		offset = -offset;
-+	*offp = offset;
- 	return end - date;
- }
- 
+I think I know what might be happening here.  The plackup / Plack::Runner
+needs some time to setup and start running HTTP::Server::PSGI based web
+server.  When it is ready to serve requests (web pages), it prints to stderr
+
+  <server>: Accepting connections at http://<host>:<port>/
+
+In the case of .git/gitweb/gitweb.psgi script generated by git-instaweb it
+is:
+
+  HTTP::Server::PSGI: Accepting connections at http://0:1234/
+
+But plackup / Plack::Runner is run in background (HTTP::Server::PSGI does
+not support '--daemonize'), and most probably the web browser is started
+before web server is not ready.
+
+
+Do you have any idea on how to synchronize those two processes, the web
+server and the web client (web browser), so that web browser is run only
+after web server prints that it is ready to accept connection?
+
+TIA.
+
+> @@ -83,9 +90,9 @@ start_httpd () {
+>  
+>  	# don't quote $full_httpd, there can be arguments to it (-f)
+>  	case "$httpd" in
+> -	*mongoose*)
+> -		#The mongoose server doesn't have a daemon mode so we'll have to fork it
+> -		$full_httpd "$fqgitdir/gitweb/httpd.conf" &
+> +	*mongoose*|*plackup*)
+> +		#The mongoose server and plackup don't have a daemon mode so we'll have to fork it
+> +		$full_httpd "$fqgitdir/gitweb/httpd.conf" 2>"$fqgitdir/error_log" &
+>  		#Save the pid before doing anything else (we'll print it later)
+>  		pid=$!
+>  
+
 -- 
-1.7.0.4
+Jakub Narebski
+Poland
