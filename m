@@ -1,149 +1,131 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Accept the timezone specifiers [+-]hh:mm and [+-]hh
- in addition to [+-]hhmm
-Date: Wed, 19 May 2010 07:31:25 -0700
-Message-ID: <7v632karpe.fsf@alter.siamese.dyndns.org>
-References: <1274123231-18482-1-git-send-email-marcus@mc.pp.se>
- <1274123231-18482-3-git-send-email-marcus@mc.pp.se>
+Subject: What's cooking extra
+Date: Wed, 19 May 2010 07:33:32 -0700
+Message-ID: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marcus Comstedt <marcus@mc.pp.se>
-X-From: git-owner@vger.kernel.org Wed May 19 16:31:45 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 19 16:33:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEkJC-0005xl-BT
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 16:31:42 +0200
+	id 1OEkL8-000709-M3
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 16:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752779Ab0ESObh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 May 2010 10:31:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58469 "EHLO
+	id S1752807Ab0ESOdi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 May 2010 10:33:38 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60496 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332Ab0ESObg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 May 2010 10:31:36 -0400
+	with ESMTP id S1752044Ab0ESOdh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 May 2010 10:33:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D667B4068;
-	Wed, 19 May 2010 10:31:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=hLIiyn9eqhNiZtDu4zj+fykbdb4=; b=tW3U5tyJy2qQYB100s9OJyo
-	ze5fdrv1qXnRH93ALXxkBqQ9Gh8V9pWagj53LeZ33UXv6NJ87mE9r1mosmvaJ0oo
-	+74HL/jBy0qDHylQPqA07ANQL8Wrb9NL6QoRGU+d66tGjt3Kn01erEnsF0bg5FCp
-	ejuMsObOXABKjGnSPQgc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=IMz2R7pENUJy2uqOT+dyYJEFzJIvCWQzn4HJvwqISOCAO7km0
-	rfw5g4Pcb94IVDfwFGytLu8ZgDC4u+4zaJlnqXPlQT9zeEnvDKb/5R+8k3ZeAKg7
-	gycVgd3aqwcFkQ+J+gNJBL+dZn/QjKqR9XSGuow+RPzB6yuzHC3nzVW1CM=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C290AB40BD;
+	Wed, 19 May 2010 10:33:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=Zs0WUz9S78FSne6MJDCqovKXx
+	qA=; b=MptdmKehxIxE4lFUt7/tossM06tRZiETJQHuyeh6kgA4i7S0PHmwSMnc8
+	z6Vt7phqox01KnRT9zFNZK/BcZ5771pmMSLfSVXksZTI+RhxcFuC90P/VYYC8oQ0
+	KaoH1sAg5/AsUOFXSP3qLL1fJ2ucXsBvNGRH30+1IG+kks5uYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=bcZhubLvtiXTAetQBU1
+	SVkjSDty7jm9EXO07MAvu2M/51NLYSnfKdXf+Jw9Kf3HNVY2Yj8CwELe1SDdedcC
+	q8XaNUTY4ik4SaK4+tbzBBbfSmf9wbjfBh27uZLksWCpmN7xmPos6dmk1/bSqbVm
+	LTB1sQDJPoKjSOjNZhEu2kyQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A57EB4059;
-	Wed, 19 May 2010 10:31:30 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8AF4CB40BB;
+	Wed, 19 May 2010 10:33:35 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A755B404F; Wed, 19 May
- 2010 10:31:27 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 944F9B40BA; Wed, 19 May
+ 2010 10:33:33 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3734DE6E-6353-11DF-A8B9-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 81CAE964-6353-11DF-B1A7-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147328>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147329>
 
-Marcus Comstedt <marcus@mc.pp.se> writes:
+=46irst, let me thank everybody who participated in the list traffic fo=
+r the
+past few weeks, reporting problems, answering questions, raising issues=
+,
+discussing them, sending patches and giving feedback to them, while I w=
+as
+away.
 
-> ISO 8601 specifies three syntaxes for timezones other than "Z".
-> git already supports the +-hhmm syntax.  This patch adds support
-> for the other two: +-hh:mm and +-hh.
->
-> Signed-off-by: Marcus Comstedt <marcus@mc.pp.se>
-> ---
-> :100644 100644 6bae49c... f83e46e... M	date.c
->  date.c |   23 +++++++++++++++++++++++
->  1 files changed, 23 insertions(+), 0 deletions(-)
->
-> diff --git a/date.c b/date.c
-> index 6bae49c..f83e46e 100644
-> --- a/date.c
-> +++ b/date.c
-> @@ -555,6 +555,18 @@ static int match_tz(const char *date, int *offp)
->  	int min, hour;
->  	int n = end - date - 1;
->  
-> +	/* Check for HH:MM format, allowed by ISO 8601 */
-> +	if (n == 2 && date[3] == ':') {
-> +		char *end2;
-> +		min = strtoul(date+4, &end2, 10);
-> +		/* If we have two digits after the colon too, assume HH:MM */
-> +		if (end2 == date+6) {
-> +			offset = offset*100 + min;
-> +			end = end2;
-> +			n = end - date - 1;
-> +		}
-> +	}
-> +
->  	min = offset % 100;
->  	hour = offset / 100;
->  
-> @@ -570,6 +582,17 @@ static int match_tz(const char *date, int *offp)
->  
->  		*offp = offset;
->  	}
-> +	/*
-> +	 * Also accept just the hour, allowed by ISO 8601
-> +	 */
-> +	else if (n == 2 && hour == 0 && min < 24) {
-> +		offset = min*60;
-> +		if (*date == '-')
-> +			offset = -offset;
-> +
-> +		*offp = offset;
-> +	}
-> +
+I took a new day-job (yesterday was my second day) and haven't quite
+adjusted yet, but I finally managed to find some time and energy to bro=
+wse
+through the list traffic and even queued a handful of topics.  I expect
+I'll be more productive and back to speed in a week or two, but until t=
+hen
+I expect to still be slower than my usual self.
 
-I don't recall seeing in ISO 8601 that +hh or -hh without minute
-resolution was allowed, but I don't have my copy of ISO 8601 with me (they
-are packed and are still in transit with my household goods) so I'll take
-your word for it for now [*1*].
+Here are the topics I've picked up so far (excluding the ones that were
+trivially and obviously correct that went directly to 'maint' or
+'master'):
 
-But the placement of this second hunk is somewhat curious.  Why doesn't the
-updated function look like this?
+ * ec/diff-noprefix-config (2010-05-02) 1 commit
+  - diff: add configuration option for disabling diff prefixes.
 
-        int offset = strtoul(date + 1, &end, 10);
-        int min, hour;
-        int n = end - date - 1;
+ * jk/diff-m-doc (2010-05-08) 1 commit
+  - docs: clarify meaning of -M for git-log
 
-        if (n == 2 && offset <= 14) {
-                /* +HH:MM (ISO 8601) or +HH (ISO 8601 abbreviated) */
-                hour = offset;
-                if (n == 2 && date[3] == ':') {
-                        min = strtoul(date + 4, &end, 10);
-                        if (end != date + 6)
-                                return 0; /* Bad CRAP */
-                } else {
-                        min = 0;
-                }
-        } else if (n < 3) {
-                return 0; /* we want at least 3 digits */
-        } else {
-                min = offset % 100;
-                hour = offset / 100;
-        }
+ * mc/maint-zoneparse (2010-05-17) 1 commit
+  - Add "Z" as an alias for the timezone "UTC"
 
-        if (60 <= min)
-                return 0; /* invalid minute */
+ * mg/notes-dry-run (2010-05-14) 1 commit
+  - notes: dry-run and verbose options for prune
 
-        offset = hour * 60 + min;
-        if (*date == '-')
-                offset = -offset;
-        *offp = offset;
-        return end - date;
+ * mg/rev-parse-lrbranches-locals (2010-05-14) 1 commit
+  - revlist: Introduce --lrbranches and --locals revision specifiers
+  (this branch uses mg/rev-parse-option-sifter-deprecation.)
 
+ * mg/rev-parse-option-sifter-deprecation (2010-05-14) 3 commits
+  - t6018: make sure all tested symbolic names are different revs
+  - t6018: add tests for rev-list's --branches and --tags
+  - rev-parse: deprecate use as an option sifter
+  (this branch is used by mg/rev-parse-lrbranches-locals.)
 
-[Footnote]
+I am aware of the following topics, that are probably all worthy of
+inclusion at some point, but am unclear in what status their discussion=
+s
+are.  I'd appreciate it if people can help me come up with a list of
+topics that are fully discussed, and if patch submitters of these topic=
+s
+can re-send the final "to apply" copy.
 
-*1* Appendix A of RFC3339 seems to agree with you.
+ * (Eyvind Bernhardsen and Linus) Fixing the behaviour of crlf attribut=
+e;
+   ignoring them when core.autocrlf is not in effect was a wrong design
+   decision.
+
+   I agree with what Linus said in the thread; I haven't yet looked at =
+the
+   discussion in the past few days.  Also I don't know where '[PATCH v2=
+]
+   Add "core.eol" config variable' fits in the picture.
+
+ * (Chris Lamb, Jeff King, Thomas Rast) "rebase -i" mishandles a patch
+   with backslash in the title
+
+ * (Rene) grep on binary files
+
+ * (Linus) "git show ':/this is now a regex'"
+
+ * (Gary V. Vaughan) Portability patches
+
+ * (=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason) cvsserver updates
+
+ * (Bo Yang, Thomas Rast) "log --graph" improvements
+
+ * (Pavan Kumar Sunkara) instaweb and web--browse
+
+ * (Yann Droneaud, Linus) matching utf8 locale in t9129
