@@ -1,43 +1,56 @@
-From: Jack Moore <jhmoore719@verizon.net>
-Subject: git-svn clone -- runs out of memory
-Date: Tue, 18 May 2010 22:51:27 -0700
-Message-ID: <F47FB1C2-3EEB-475C-8874-CBEC45582386@verizon.net>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Jack Moore <jhmoore719@verizon.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 19 07:51:45 2010
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git 1.7.1 freezing during http transport with sideband
+Date: Wed, 19 May 2010 08:05:42 +0200
+Message-ID: <4BF37FB6.40808@viscovery.net>
+References: <AANLkTilHslSYFhxdyebhbatVmA98ZtoPgFDdqLQhLJNH@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Pedro Belo <pedrobelo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 19 08:05:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEcC1-0000nu-80
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 07:51:45 +0200
+	id 1OEcPg-0004fY-CH
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 08:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605Ab0ESFvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 May 2010 01:51:39 -0400
-Received: from vms173017pub.verizon.net ([206.46.173.17]:33829 "EHLO
-	vms173017pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358Ab0ESFvi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 May 2010 01:51:38 -0400
-Received: from [192.168.1.102] ([unknown] [173.58.219.82])
- by vms173017.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0L2N002UJK9RIX70@vms173017.mailsrvcs.net> for
- git@vger.kernel.org; Wed, 19 May 2010 00:51:28 -0500 (CDT)
-X-Mailer: Apple Mail (2.1078)
+	id S1752379Ab0ESGFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 May 2010 02:05:46 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:28847 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752154Ab0ESGFq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 May 2010 02:05:46 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OEcPX-00074R-Ch; Wed, 19 May 2010 08:05:43 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 1ECF61660F;
+	Wed, 19 May 2010 08:05:43 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <AANLkTilHslSYFhxdyebhbatVmA98ZtoPgFDdqLQhLJNH@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147319>
 
-I'm trying to transition from subversion to git.  I have a very poorly structured subversion repository.  It has multiple (dozens) copies of many (thousands) of binary files that don't change from version to version.  When I "git-svn clone" the repository it takes about 30 hour (yes hours)  to (appears to) retrieve the files.  Then git goes into either a packing or garbage collecting phase and eventually runs out of memory.  I get an error relating to "mmap ... out of memory".  When it runs out of memory the "cloned" repository is ~2.4 GBi.
+Am 5/19/2010 3:37, schrieb Pedro Belo:
+> Git 1.7.1 is freezing when I push something via http and the hook has
+> some output. From the client side, I see the hook output prefixed with
+> "remote: " as expected - and then the process just hangs.
+> 
+> The interesting part is I could work around it by adding a sleep to the hook.
+> 
+> Tested on debian 5.0.4 and git 1.7.1. Couldn't reproduce on a mac.
 
-I don't know what files it's failing on.  I've tried excluding the directories that contain the binary files.  Does anyone have suggestions on isolating the problem or working around the memory limitation?
+We do have a bug (and a fix for it) that causes a hang that might be
+related. If you had said what you did, which hooks you use, and what the
+output was, perhaps it would have been possible to help you some more.
 
-Thanks
-Jack
+-- Hannes
