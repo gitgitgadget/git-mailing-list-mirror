@@ -1,204 +1,386 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC/PATCH] git-instaweb: Add support for running gitweb via 'plackup'
-Date: Wed, 19 May 2010 19:31:38 +0200
-Message-ID: <1274290298-19245-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 19 19:31:59 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] Add git remote set-branches
+Date: Wed, 19 May 2010 13:38:50 -0500
+Message-ID: <20100519183850.GA18623@progeny.tock>
+References: <20070710133226.GA23751@piper.oerlikon.madduck.net>
+ <20100516004538.GA5528@progeny.tock>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: martin f krafft <madduck@debian.org>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 19 20:39:03 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEn7d-00049Z-Pt
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 19:31:58 +0200
+	id 1OEoAZ-0007uk-0O
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 20:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754196Ab0ESRbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 May 2010 13:31:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40771 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751961Ab0ESRbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 May 2010 13:31:51 -0400
-Received: by fxm10 with SMTP id 10so2616734fxm.19
-        for <git@vger.kernel.org>; Wed, 19 May 2010 10:31:50 -0700 (PDT)
+	id S1753474Ab0ESSi5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 May 2010 14:38:57 -0400
+Received: from mail-pz0-f194.google.com ([209.85.222.194]:62751 "EHLO
+	mail-pz0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522Ab0ESSi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 May 2010 14:38:56 -0400
+Received: by pzk32 with SMTP id 32so2886941pzk.21
+        for <git@vger.kernel.org>; Wed, 19 May 2010 11:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=xlKXTVkas5yH1uZldWE5umX1xxRxz4rwsAUuM01xV44=;
-        b=NNLsM6lIiXzLrE8YUoeyyBvE6FHYDtofwWIsFcCoLBtDK7SSE+N9sJMSFoa5tl2PBw
-         FptVQ202dxxVjPzlkbLNdWewN6TnCW7b0nfCQC18YvBxtWPkKVOwiRPkLTQmG0iLTbTL
-         EMt+F5ViesOIaQOBgv4LWJ7wO3QvvCTQQ/7Nw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=eRhp84yz+FZaYiLxXLDxd/F2ECHRxc37Cg0vs8yO8Is=;
+        b=u05NowPHUOq5xsYGKC1QHojjs1ZSHZ1+NT+HnomvJt/hnUjOYHaUHpccN+pbVc4Q4t
+         dmOkg4Kop53uOfwQUNhb4upVAJ3fQHZA78r3DwV9MXHtNSqj+v9LqdooNAy/M7MglDw2
+         GIo80yNkd7/wSJdzyir78+ym5JxNcWV3vcWP4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=ZG1LhRCdzLolQhTqnDytoOqYSrwRs8/UYW27W9X/rXulB/wj7FcLa8lO3yS47z1c03
-         YHGnYQAkXHyBRroqZttluwaFTJmp+wu0P4uuLBcf3cKWV14UKeB3s3LuCjqQnN8dyZxr
-         hAXWGIIS1rEdtMYMws2hd7OMVPmOQe5VoLwUk=
-Received: by 10.223.101.81 with SMTP id b17mr2448277fao.17.1274290309477;
-        Wed, 19 May 2010 10:31:49 -0700 (PDT)
-Received: from localhost.localdomain (abrz84.neoplus.adsl.tpnet.pl [83.8.119.84])
-        by mx.google.com with ESMTPS id 2sm36966639fav.1.2010.05.19.10.31.48
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=KwN3yvtHyhIvsF5Epggn1vn37ugtUORKTpRNlzbzSFYrbeId5+CxsdSiwRtrAwoH0S
+         DsNx++AvSeFYRoXvyquJMF/aUM3ZwH6TFRiReSf8gSKYua62pkI6u165HV09XgIEZAh7
+         QuvQogdvpEC0FHNF17LsS+OVAYchoXtU/9QuQ=
+Received: by 10.142.7.11 with SMTP id 11mr6450675wfg.136.1274294334512;
+        Wed, 19 May 2010 11:38:54 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 20sm6167683pzk.3.2010.05.19.11.38.48
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 19 May 2010 10:31:48 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.1
+        Wed, 19 May 2010 11:38:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100516004538.GA5528@progeny.tock>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147338>
 
-PSGI is an interface between Perl web applications and web servers, and
-Plack is a Perl module and toolkit that contains PSGI middleware, helpers
-and adapters to web servers; see http://plackperl.org
+Add =E2=80=98git remote set-branches=E2=80=99 for changing the list of =
+tracked refs
+for a remote repository with one "porcelain-level" command.  This
+complements the longstanding =E2=80=98git remote add --track=E2=80=99 o=
+ption.
 
-PSGI and Plack are inspired by Python's WSGI and Ruby's Rack.
+The interface is based on the =E2=80=98git remote set-url=E2=80=99 subc=
+ommand.
 
-Plack core distribution includes HTTP::Server::PSGI, a reference PSGI
-standalone web server implementation.  plackup is a command line launcher
-to run PSGI applications from command line, connecting web app to a web
-server; it uses Plack::Runner module.  It uses HTTP::Server::PSGI as a web
-server by default.
+   git remote set-branches base --add C
+   git remote set-branches base A B D
+   git remote set-branches base --delete D; # not implemented
 
-git-instaweb generates gitweb.psgi wrapper, which uses Plack::App::WrapCGI
-to compile a CGI script into a PSGI application using CGI::Compile and
-CGI::Emulate::PSGI, and runs it with any PSGI server as a PSGI
-application.
-
-To run git-instaweb with '--httpd=plackup', you need to have instaled
-Plack core, CGI::Emulate::PSGI, CGI::Compile, and available for a Perl
-script (e.g. by setting PERL5LIB environment variable).
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Suggested-by: martin f. krafft <madduck@debian.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Compared to earlier version (only mentioned, but not sent to git
-mailing list, if I remember correctly), instead of configuring plackup
-from command line (by modifying $httpd variable), the configuration is
-embedded in generated gitweb.psgi file.  Also instead of using plackup,
-the generated gitweb.psgi is made into standalone app, running server
-(so $full_httpd is full path to gitweb.psgi).
+Junio C Hamano wrote:
 
-RFC is because when when running
+> This, and the other patch, look Ok except these unsightly debbugs cru=
+ft in
+> the commit log message.  Could you redo them please?
 
-  $ ./git-instaweb --httpd=plackup --browser=lynx
+Sorry about that.  Hoping someone would take inspiration from my rough
+sketch and finish it off, I didn=E2=80=99t even bother to consider whet=
+her it
+might be usable as-is.
 
-I get the following error
+ Documentation/git-remote.txt |   13 +++++
+ builtin/remote.c             |  102 ++++++++++++++++++++++++++++++++++=
++++-----
+ t/t5505-remote.sh            |   88 ++++++++++++++++++++++++++++++++++=
+++
+ 3 files changed, 192 insertions(+), 11 deletions(-)
 
-  Looking up 127.0.0.1:1234
-  Making HTTP connection to 127.0.0.1:1234
-  Alert!: Unable to connect to remote host.
-
-  lynx: Can't access startfile http://127.0.0.1:1234/
-  http://127.0.0.1:1234
-
-But running 'lynx http://127.0.0.1:1234/' after this works correctly
-without problems.  Running './.git/gitweb/gitweb.psgi' doesn't cause
-any problems either.  WTF?
-
-HELP!!!
-
- Documentation/git-instaweb.txt |    2 +-
- git-instaweb.sh                |   52 +++++++++++++++++++++++++++++++++++++--
- 2 files changed, 50 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
-index a1f17df..2c3c4d2 100644
---- a/Documentation/git-instaweb.txt
-+++ b/Documentation/git-instaweb.txt
-@@ -29,7 +29,7 @@ OPTIONS
- 	The HTTP daemon command-line that will be executed.
- 	Command-line options may be specified here, and the
- 	configuration file will be added at the end of the command-line.
--	Currently apache2, lighttpd, mongoose and webrick are supported.
-+	Currently apache2, lighttpd, mongoose, plackup and webrick are supported.
- 	(Default: lighttpd)
- 
- -m::
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index f608014..dd82955 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -46,6 +46,13 @@ resolve_full_httpd () {
- 			httpd="$httpd -f"
- 		fi
- 		;;
-+	*plackup*)
-+		# Plack::Runner etc must be in $PERL5LIB of user, currently
-+		# server is started by running via generated gitweb.psgi in $fqgitdir/gitweb
-+		bind=
-+		full_httpd="$fqgitdir/gitweb/gitweb.psgi"
-+		return
-+		;;
- 	esac
- 
- 	httpd_only="$(echo $httpd | cut -f1 -d' ')"
-@@ -83,9 +90,9 @@ start_httpd () {
- 
- 	# don't quote $full_httpd, there can be arguments to it (-f)
- 	case "$httpd" in
--	*mongoose*)
--		#The mongoose server doesn't have a daemon mode so we'll have to fork it
--		$full_httpd "$fqgitdir/gitweb/httpd.conf" &
-+	*mongoose*|*plackup*)
-+		#The mongoose server and plackup don't have a daemon mode so we'll have to fork it
-+		$full_httpd "$fqgitdir/gitweb/httpd.conf" 2>"$fqgitdir/error_log" &
- 		#Save the pid before doing anything else (we'll print it later)
- 		pid=$!
- 
-@@ -370,6 +377,42 @@ mime_types	.gz=application/x-gzip,.tar.gz=application/x-tgz,.tgz=application/x-t
- EOF
- }
- 
-+plackup_conf () {
-+	cat > "$fqgitdir/gitweb/gitweb.psgi" <<GITWEB_PSGI_EOF
-+#!$PERL
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.tx=
+t
+index 3fc599c..de4386b 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -14,6 +14,7 @@ SYNOPSIS
+ 'git remote rename' <old> <new>
+ 'git remote rm' <name>
+ 'git remote set-head' <name> (-a | -d | <branch>)
++'git remote set-branches' <name> [--add] <branch>...
+ 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
+ 'git remote set-url --add' [--push] <name> <newurl>
+ 'git remote set-url --delete' [--push] <name> <url>
+@@ -104,6 +105,18 @@ remote set-head origin master" will set `$GIT_DIR/=
+refs/remotes/origin/HEAD` to
+ `refs/remotes/origin/master` already exists; if not it must be fetched=
+ first.
+ +
+=20
++'set-branches'::
 +
-+# gitweb - simple web interface to track changes in git repositories
-+#          PSGI wrapper (see http://plackperl.org)
++Changes the list of branches tracked by the named remote.
++This can be used to track a subset of the available remote branches
++after the initial setup for a remote.
+++
++The named branches will be interpreted as if specified with the
++`-t` option on the 'git remote add' command line.
+++
++With `--add`, instead of replacing the list of currently tracked
++branches, adds to that list.
 +
-+use strict;
-+
-+use Plack::Builder;
-+use Plack::App::WrapCGI;
-+use CGI::Emulate::PSGI 0.07; # minimum version required to work with gitweb
-+
-+my \$app = builder {
-+	# serve static files, i.e. stylesheet, images, script
-+	enable 'Static',
-+		path => sub { m!\.(js|css|png)\$! && s!^/gitweb/!! },
-+		root => "$fqgitdir/gitweb/";
-+	# convert CGI application to PSGI app
-+	Plack::App::WrapCGI->new(script => "$fqgitdir/gitweb/gitweb.cgi")->to_app;
+ 'set-url'::
+=20
+ Changes URL remote points to. Sets first URL remote points to matching
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 277765b..c4d17b5 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -16,6 +16,7 @@ static const char * const builtin_remote_usage[] =3D =
+{
+ 	"git remote [-v | --verbose] show [-n] <name>",
+ 	"git remote prune [-n | --dry-run] <name>",
+ 	"git remote [-v | --verbose] update [-p | --prune] [group | remote]",
++	"git remote set-branches <name> [--add] <branch>...",
+ 	"git remote set-url <name> <newurl> [<oldurl>]",
+ 	"git remote set-url --add <name> <newurl>",
+ 	"git remote set-url --delete <name> <url>",
+@@ -42,6 +43,12 @@ static const char * const builtin_remote_sethead_usa=
+ge[] =3D {
+ 	NULL
+ };
+=20
++static const char * const builtin_remote_setbranches_usage[] =3D {
++	"git remote set-branches <name> <branch>...",
++	"git remote set-branches --add <name> <branch>...",
++	NULL
 +};
 +
-+# make it runnable as standalone app, like via plackup
-+if (__FILE__ eq \$0) {
-+	require Plack::Runner;
-+
-+	my \$runner = Plack::Runner->new();
-+	\$runner->parse_options(qw(--port $port),
-+	                       "$local" ? qw(--host 127.0.0.1) : ());
-+	\$runner->run(\$app);
+ static const char * const builtin_remote_show_usage[] =3D {
+ 	"git remote show [<options>] <name>",
+ 	NULL
+@@ -104,6 +111,20 @@ static int fetch_remote(const char *name)
+ 	return 0;
+ }
+=20
++static int add_branch(const char *key, const char *branchname,
++		const char *remotename, int mirror, struct strbuf *tmp)
++{
++	strbuf_reset(tmp);
++	strbuf_addch(tmp, '+');
++	if (mirror)
++		strbuf_addf(tmp, "refs/%s:refs/%s",
++				branchname, branchname);
++	else
++		strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
++				branchname, remotename, branchname);
++	return git_config_set_multivar(key, tmp->buf, "^$", 0);
 +}
-+GITWEB_PSGI_EOF
 +
-+	chmod a+x "$fqgitdir/gitweb/gitweb.psgi"
-+	rm -f "$fqgitdir/gitweb/gitweb.psgi.tmp" "$conf"
+ static int add(int argc, const char **argv)
+ {
+ 	int fetch =3D 0, mirror =3D 0;
+@@ -151,17 +172,8 @@ static int add(int argc, const char **argv)
+ 	if (track.nr =3D=3D 0)
+ 		string_list_append("*", &track);
+ 	for (i =3D 0; i < track.nr; i++) {
+-		struct string_list_item *item =3D track.items + i;
+-
+-		strbuf_reset(&buf2);
+-		strbuf_addch(&buf2, '+');
+-		if (mirror)
+-			strbuf_addf(&buf2, "refs/%s:refs/%s",
+-					item->string, item->string);
+-		else
+-			strbuf_addf(&buf2, "refs/heads/%s:refs/remotes/%s/%s",
+-					item->string, name, item->string);
+-		if (git_config_set_multivar(buf.buf, buf2.buf, "^$", 0))
++		if (add_branch(buf.buf, track.items[i].string,
++				name, mirror, &buf2))
+ 			return 1;
+ 	}
+=20
+@@ -1265,6 +1277,72 @@ static int update(int argc, const char **argv)
+ 	return run_command_v_opt(fetch_argv, RUN_GIT_CMD);
+ }
+=20
++static int remove_all_fetch_refspecs(const char *remote, const char *k=
+ey)
++{
++	return git_config_set_multivar(key, NULL, NULL, 1);
 +}
- 
- script='
- s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
-@@ -419,6 +462,9 @@ webrick)
- *mongoose*)
- 	mongoose_conf
- 	;;
-+*plackup*)
-+	plackup_conf
-+	;;
- *)
- 	echo "Unknown httpd specified: $httpd"
- 	exit 1
--- 
-1.7.0.1
++
++static int add_branches(struct remote *remote, const char **branches,
++			const char *key)
++{
++	const char *remotename =3D remote->name;
++	int mirror =3D remote->mirror;
++	struct strbuf refspec =3D STRBUF_INIT;
++
++	for (; *branches; branches++)
++		if (add_branch(key, *branches, remotename, mirror, &refspec)) {
++			strbuf_release(&refspec);
++			return 1;
++		}
++
++	strbuf_release(&refspec);
++	return 0;
++}
++
++static int set_remote_branches(const char *remotename, const char **br=
+anches,
++				int add_mode)
++{
++	struct strbuf key =3D STRBUF_INIT;
++	struct remote *remote;
++
++	strbuf_addf(&key, "remote.%s.fetch", remotename);
++
++	if (!remote_is_configured(remotename))
++		die("No such remote '%s'", remotename);
++	remote =3D remote_get(remotename);
++
++	if (!add_mode && remove_all_fetch_refspecs(remotename, key.buf)) {
++		strbuf_release(&key);
++		return 1;
++	}
++	if (add_branches(remote, branches, key.buf)) {
++		strbuf_release(&key);
++		return 1;
++	}
++
++	strbuf_release(&key);
++	return 0;
++}
++
++static int set_branches(int argc, const char **argv)
++{
++	int add_mode =3D 0;
++	struct option options[] =3D {
++		OPT_BOOLEAN('\0', "add", &add_mode, "add branch"),
++		OPT_END()
++	};
++
++	argc =3D parse_options(argc, argv, NULL, options,
++			     builtin_remote_setbranches_usage, 0);
++	if (argc =3D=3D 0) {
++		error("no remote specified");
++		usage_with_options(builtin_remote_seturl_usage, options);
++	}
++	argv[argc] =3D NULL;
++
++	return set_remote_branches(argv[0], argv + 1, add_mode);
++}
++
+ static int set_url(int argc, const char **argv)
+ {
+ 	int i, push_mode =3D 0, add_mode =3D 0, delete_mode =3D 0;
+@@ -1430,6 +1508,8 @@ int cmd_remote(int argc, const char **argv, const=
+ char *prefix)
+ 		result =3D rm(argc, argv);
+ 	else if (!strcmp(argv[0], "set-head"))
+ 		result =3D set_head(argc, argv);
++	else if (!strcmp(argv[0], "set-branches"))
++		result =3D set_branches(argc, argv);
+ 	else if (!strcmp(argv[0], "set-url"))
+ 		result =3D set_url(argc, argv);
+ 	else if (!strcmp(argv[0], "show"))
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index 230c0cd..8aaf53e 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -534,6 +534,94 @@ test_expect_success 'show empty remote' '
+ 	)
+ '
+=20
++test_expect_success 'remote set-branches requires a remote' '
++	test_must_fail git remote set-branches &&
++	test_must_fail git remote set-branches --add
++'
++
++test_expect_success 'remote set-branches' '
++	echo "+refs/heads/*:refs/remotes/scratch/*" >expect.initial &&
++	sort <<-\EOF >expect.add &&
++	+refs/heads/*:refs/remotes/scratch/*
++	+refs/heads/other:refs/remotes/scratch/other
++	EOF
++	sort <<-\EOF >expect.replace &&
++	+refs/heads/maint:refs/remotes/scratch/maint
++	+refs/heads/master:refs/remotes/scratch/master
++	+refs/heads/next:refs/remotes/scratch/next
++	EOF
++	sort <<-\EOF >expect.add-two &&
++	+refs/heads/maint:refs/remotes/scratch/maint
++	+refs/heads/master:refs/remotes/scratch/master
++	+refs/heads/next:refs/remotes/scratch/next
++	+refs/heads/pu:refs/remotes/scratch/pu
++	+refs/heads/t/topic:refs/remotes/scratch/t/topic
++	EOF
++	sort <<-\EOF >expect.setup-ffonly &&
++	refs/heads/master:refs/remotes/scratch/master
++	+refs/heads/next:refs/remotes/scratch/next
++	EOF
++	sort <<-\EOF >expect.respect-ffonly &&
++	refs/heads/master:refs/remotes/scratch/master
++	+refs/heads/next:refs/remotes/scratch/next
++	+refs/heads/pu:refs/remotes/scratch/pu
++	EOF
++
++	git clone .git/ setbranches &&
++	(
++		cd setbranches &&
++		git remote rename origin scratch &&
++		git config --get-all remote.scratch.fetch >config-result &&
++		sort <config-result >../actual.initial &&
++
++		git remote set-branches scratch --add other &&
++		git config --get-all remote.scratch.fetch >config-result &&
++		sort <config-result >../actual.add &&
++
++		git remote set-branches scratch maint master next &&
++		git config --get-all remote.scratch.fetch >config-result &&
++		sort <config-result >../actual.replace &&
++
++		git remote set-branches --add scratch pu t/topic &&
++		git config --get-all remote.scratch.fetch >config-result &&
++		sort <config-result >../actual.add-two &&
++
++		git config --unset-all remote.scratch.fetch &&
++		git config remote.scratch.fetch \
++			refs/heads/master:refs/remotes/scratch/master &&
++		git config --add remote.scratch.fetch \
++			+refs/heads/next:refs/remotes/scratch/next &&
++		git config --get-all remote.scratch.fetch >config-result &&
++		sort <config-result >../actual.setup-ffonly &&
++
++		git remote set-branches --add scratch pu &&
++		git config --get-all remote.scratch.fetch >config-result &&
++		sort <config-result >../actual.respect-ffonly
++	) &&
++	test_cmp expect.initial actual.initial &&
++	test_cmp expect.add actual.add &&
++	test_cmp expect.replace actual.replace &&
++	test_cmp expect.add-two actual.add-two &&
++	test_cmp expect.setup-ffonly actual.setup-ffonly &&
++	test_cmp expect.respect-ffonly actual.respect-ffonly
++'
++
++test_expect_success 'remote set-branches with --mirror' '
++	echo "+refs/*:refs/*" >expect.initial &&
++	echo "+refs/heads/master:refs/heads/master" >expect.replace &&
++	git clone --mirror .git/ setbranches-mirror &&
++	(
++		cd setbranches-mirror &&
++		git remote rename origin scratch &&
++		git config --get-all remote.scratch.fetch >../actual.initial &&
++
++		git remote set-branches scratch heads/master &&
++		git config --get-all remote.scratch.fetch >../actual.replace
++	) &&
++	test_cmp expect.initial actual.initial &&
++	test_cmp expect.replace actual.replace
++'
++
+ test_expect_success 'new remote' '
+ 	git remote add someremote foo &&
+ 	echo foo >expect &&
+--=20
+1.7.1
