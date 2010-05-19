@@ -1,79 +1,73 @@
-From: hasen j <hasan.aljudy@gmail.com>
-Subject: Re: git pull
-Date: Wed, 19 May 2010 05:03:18 -0600
-Message-ID: <AANLkTikDmfiUwhn2wQNVkhTVMUpv2pyp5pU5OvmfzM-T@mail.gmail.com>
-References: <AANLkTimLZgkojC5L0ZdDewhprLgehLw2w4EZDwyViF4R@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCHv2] git-web--browse: Add support for google chrome
+Date: Wed, 19 May 2010 09:32:59 -0400
+Message-ID: <AANLkTikxis7BU-OGi76MzjN_JuOwmGNhDXYmZ1_bgMTl@mail.gmail.com>
+References: <1274262692-3783-1-git-send-email-pavan.sss1991@gmail.com>
+	 <1274262692-3783-2-git-send-email-pavan.sss1991@gmail.com>
+	 <1274265104.2121.7.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: matteo brutti <webmbackslash@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 19 13:03:48 2010
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org,
+	jnareb@gmail.com, chriscool@tuxfamily.org, pasky@ucw.cz
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 19 15:33:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEh3x-0007w2-Fy
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 13:03:45 +0200
+	id 1OEjOV-0007MR-Ta
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 15:33:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757288Ab0ESLDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 May 2010 07:03:40 -0400
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:50331 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756349Ab0ESLDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 May 2010 07:03:39 -0400
-Received: by gxk27 with SMTP id 27so4074703gxk.1
-        for <git@vger.kernel.org>; Wed, 19 May 2010 04:03:38 -0700 (PDT)
+	id S1751565Ab0ESNdB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 May 2010 09:33:01 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53209 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751041Ab0ESNdA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 May 2010 09:33:00 -0400
+Received: by iwn6 with SMTP id 6so2949555iwn.19
+        for <git@vger.kernel.org>; Wed, 19 May 2010 06:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=8KBZshYv3Pg/Bf1LA6dGMNqwSWvc+mfy1epBUXrQhNs=;
-        b=O37R1Z1UdHiCdsVtypAnoveXi5b9QU3vHxyxXiEuHCwL6X6Q3qj4fJJWkkJnMVsLVS
-         kXpRH84DidAaGPYaHyN39jSHSh3XxVKioQLxzBzT3s8VVsYytzPTFvklE2I0Mk6Kkuui
-         9/k0q+cLcdC2gCulGkpfJiole4VvGM36O4XGc=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=8qEO/c8QQJZFSPcFHOLFA6NAEK4kjryN7jmJcMNVvPk=;
+        b=G1ZROYULv2uCq0DjHilkVzN1EBMt8NxV5vmZU8/iam8m2j1sat11fWE5WtMGW+hWLn
+         6hrBbCcNR/F6hSgoo+MuRAb7eFI9NOacRMlLLv1IBHdCUAUQEgkoS1YbUT0Z+Xu9zvpN
+         WI42J9A65R0ys5SHnuC/EsOVEvBRyfdCQ3dW8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=lzszIe12XKW022vFA7kut3sBGZhcIYgrK/K3y3wFDyYta+psaYSy3So0jx+iz0UqXh
-         Zp6FUMhxVRn9ZC0o77IENEQeavg6f6tMBrAluqM7SOwUJ54qi+UdR63LD/ublwx5zXsY
-         tyF7FzEpMx0/dtQoVqXRQNbuKUXrYXho+plG4=
-Received: by 10.91.18.28 with SMTP id v28mr3190626agi.94.1274267018089; Wed, 
-	19 May 2010 04:03:38 -0700 (PDT)
-Received: by 10.90.79.17 with HTTP; Wed, 19 May 2010 04:03:18 -0700 (PDT)
-In-Reply-To: <AANLkTimLZgkojC5L0ZdDewhprLgehLw2w4EZDwyViF4R@mail.gmail.com>
+        b=hAFkT7tQ3P/6nM715OIKLPDoldD0xDG0zE7UoCuPBr4cxP3njPJ2sW/O+EwXfoZwJS
+         y9fhOYUysDASeVvBFzkh3dYT67dv9UqFFVzz/A+O9DUduNFX/YSnefVpXN2JENGTIAWB
+         Kzkm4cBLPt75Qb6B69iOba98f7rPI0zU4pOcM=
+Received: by 10.231.183.19 with SMTP id ce19mr550271ibb.35.1274275979386; Wed, 
+	19 May 2010 06:32:59 -0700 (PDT)
+Received: by 10.231.34.8 with HTTP; Wed, 19 May 2010 06:32:59 -0700 (PDT)
+In-Reply-To: <1274265104.2121.7.camel@wpalmer.simply-domain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147327>
 
-On 17 May 2010 15:51, matteo brutti <webmbackslash@gmail.com> wrote:
-> Hi,
-> i'm learning about git and soon have a question.
-> My repo is in /dev/sda6 and my home is in /dev/sda4, as are both in
-> local i thought that when i committ, i'll found the files on repo
-> changed, it was not so! I learn i have to use git pull, but i didn't
-> understand why.
-> I made some tries, put my repo in /home/user/myrepo cloned in
-> /home/user/myclones changed files and committed and the changes was in
-> the repo without any need of pulling, and i have permission to write
-> to /dev/sda6, so why have i to pull changes?
->
-> Thanks.
->
->
-> Matteo
+On Wed, May 19, 2010 at 6:31 AM, Will Palmer <wmpalmer@gmail.com> wrote:
+> perhaps this has already been discussed, but aren't "chrome" and
+> "chromium" two different browsers? (based on the same code, sure, but
+> different releases which are often installed separately, all the same)
 
-If you clone repoA into repoB, then you commit some new changes to
-repoA, you won't see the same changes in repoB unless you pull them
-from repoA.
+Correct. The chromium browser is 100% open-source. You can compile it
+yourself or download a continuous build of it from the chromium trunk
+(the Chromium project uses subversion for
+chromium/chrome/chrome-frame, though interestingly uses git for
+ChromiumOS). This is generally a developer release.
 
-I don't think it matters whether or not they are in the same partition or not.
+Google Chrome is a Google-branded version of the chromium browser. It
+includes some non-opensource or restricted components (such as H.264
+playback, Flash, Google design assets, etc), so you can't compile it
+yourself. Rather you can only download binaries of various vintages
+(dev, beta, stable). This is generally the consumer release.
 
-As far as I understand, if you clone within the same partition, the
-object database might be hard-linked. This won't affect what files you
-have checked out though. It would just mean that you won't need to
-"fetch", because the objects are already there.
+j.
