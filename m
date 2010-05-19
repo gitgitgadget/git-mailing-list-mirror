@@ -1,94 +1,75 @@
-From: Yann Droneaud <yann@droneaud.fr>
-Subject: Re: [PATCH] t9129: fix UTF-8 locale detection
-Date: Wed, 19 May 2010 17:16:42 +0200
-Message-ID: <1274282202.4275.68.camel@localhost>
-References: <1274202486.4228.22.camel@localhost>
-	 <1274203013-1349-1-git-send-email-yann@droneaud.fr>
-	 <alpine.LFD.2.00.1005181037250.4195@i5.linux-foundation.org>
-	 <1274215797.16337.16.camel@localhost>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: What's cooking extra
+Date: Wed, 19 May 2010 11:12:23 -0400
+Message-ID: <4BF3FFD7.6020904@gmail.com>
+References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 19 17:16:57 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 19 17:20:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OEl0y-0005eq-Ux
-	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 17:16:57 +0200
+	id 1OEl4Q-0007RH-3T
+	for gcvg-git-2@lo.gmane.org; Wed, 19 May 2010 17:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390Ab0ESPQv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 May 2010 11:16:51 -0400
-Received: from smtp28.orange.fr ([80.12.242.101]:26111 "EHLO smtp28.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751353Ab0ESPQu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 May 2010 11:16:50 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2824.orange.fr (SMTP Server) with ESMTP id C01428000F80;
-	Wed, 19 May 2010 17:16:44 +0200 (CEST)
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2824.orange.fr (SMTP Server) with ESMTP id B12EA80014B1;
-	Wed, 19 May 2010 17:16:44 +0200 (CEST)
-Received: from iago.mandriva.com (LPuteaux-156-16-100-40.w80-12.abo.wanadoo.fr [80.12.80.40])
-	by mwinf2824.orange.fr (SMTP Server) with ESMTP id A2F138000F80;
-	Wed, 19 May 2010 17:16:44 +0200 (CEST)
-X-ME-UUID: 20100519151644667.A2F138000F80@mwinf2824.orange.fr
-Received: by iago.mandriva.com (Postfix, from userid 10001)
-	id 092405AA; Wed, 19 May 2010 17:16:43 +0200 (CEST)
-In-Reply-To: <1274215797.16337.16.camel@localhost>
-X-Mailer: Evolution 2.28.2-1.1mdv2010.0 
+	id S1751405Ab0ESPUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 May 2010 11:20:25 -0400
+Received: from mail-yw0-f180.google.com ([209.85.211.180]:51233 "EHLO
+	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750832Ab0ESPUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 May 2010 11:20:24 -0400
+X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 May 2010 11:20:24 EDT
+Received: by ywh10 with SMTP id 10so4212676ywh.1
+        for <git@vger.kernel.org>; Wed, 19 May 2010 08:20:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=uIG5JYT0TUEFxFwgN1yrKR3m3OsFU9NyLdDdYQPyk8U=;
+        b=s7mVg0DIpgW5IR8i1juoPqBgudKShz3+EhCEAKMTeZU+yImOmsvsjImO9SO/FgjIE2
+         CyT6++WqGUZo3SO4EvwuiFDOeBq3yxKPmyEKAcPDWDf8sKLFROobNgAm1FUb4aH4rKPK
+         EcCboS4qCvfCMMd86QiD6svHPIpxV5ffncOzI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=BMVpj/t14Xlf7g0LcE/VSqGNTwTlCstT3NNt8AEDlbuJ6z8rjRLZDEJPCyxiZC4JEO
+         vA86JXVphxwKOmU4rTYnW2vlRpmK3PuZ3vLJoRTUD0Ctk9WDfFZcIBXswrdWoxD9uf4/
+         jjkckDdQgpiOedA/o6p+remkdoRy4LdMNtlAo=
+Received: by 10.150.74.15 with SMTP id w15mr9537644yba.408.1274281950129;
+        Wed, 19 May 2010 08:12:30 -0700 (PDT)
+Received: from [10.0.0.6] (c-24-129-111-166.hsd1.fl.comcast.net [24.129.111.166])
+        by mx.google.com with ESMTPS id w18sm1393133ybe.10.2010.05.19.08.12.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 May 2010 08:12:28 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147331>
 
-Le mardi 18 mai 2010 =C3=A0 22:49 +0200, Yann Droneaud a =C3=A9crit :
-> Le mardi 18 mai 2010 =C3=A0 10:45 -0700, Linus Torvalds a =C3=A9crit =
-:
-> >=20
-> > On Tue, 18 May 2010, Yann Droneaud wrote:
-> > > =20
-> > > -if locale -a |grep -q en_US.utf8; then
-> > > +if locale -a |grep -qE '^en_US\.(utf|UTF)-?8$'; then
-> >=20
-> > While -E is POSIX, I suspect that it's not universal. iirc, you sti=
-ll have=20
-> > some really crap fileutils tools coming with Solaris, for example.=20
-> >=20
->=20
-> You're right, Solaris's own grep doesn't known about -E nor -e.
->=20
-> And it even doesn't know about -q :=20
->=20
->  $ grep -q                                                    =20
->  grep: illegal option -- q
->  Usage: grep -hblcnsviw pattern file . . .
->=20
+Junio C Hamano wrote:
+[...]
+> 
+> I took a new day-job (yesterday was my second day) and haven't quite
+> adjusted yet, but I finally managed to find some time and energy to browse
+> through the list traffic and even queued a handful of topics.  I expect
+> I'll be more productive and back to speed in a week or two, but until then
+> I expect to still be slower than my usual self.
+> 
 
-Integrating Linus's remarks and some autoconf[1][2] hints, here is a
-proposal for a portable test:
-
-   if locale -a |grep -i 'en_US\.utf-*8' > /dev/null ; then
-
-It should be as portable as possible without too much work.
-
-
-[1] egrep
-<http://www.gnu.org/software/autoconf/manual/html_node/Limitations-of-U=
-sual-Tools.html#index-g_t_0040command_007begrep_007d-1706>
-
-[2] grep
-<http://www.gnu.org/software/autoconf/manual/html_node/Limitations-of-U=
-sual-Tools.html#index-g_t_0040command_007bgrep_007d-1712>
-
-Regards.
-
---=20
-Yann Droneaud
+This is interesting news. Congratulations on the new job! It must be a 
+good one to get you to leave southern California. Is your new employer 
+subsidizing your git work similar to your previous employer?
