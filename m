@@ -1,111 +1,91 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Don't do status in submodules if status.SubmoduleSummary 
-	unset
-Date: Thu, 20 May 2010 16:12:31 +0200
-Message-ID: <AANLkTil1QHA3G2VaITdm7DkDmN1IhZ_u2SWLrelyxkF2@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Git, Mac OS X and German special characters
+Date: Thu, 20 May 2010 16:29:24 +0200
+Message-ID: <4BF54744.60602@drmicha.warpmail.net>
+References: <4BF4E40B.30205@math.tu-dortmund.de> <AANLkTimYgkv6q6fTXqNOCq1ZbodxgCZ18Fum_NryyiO8@mail.gmail.com> <4BF4F7D7.60002@drmicha.warpmail.net> <4BF4FA89.2040904@gmail.com> <4BF4FDB4.2010409@drmicha.warpmail.net> <4BF5294E.7060206@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=001636c925885784600487072a55
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 20 16:12:39 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu May 20 16:29:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF6UJ-0008BM-8l
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 16:12:39 +0200
+	id 1OF6km-0000f0-JG
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 16:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814Ab0ETOMe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 10:12:34 -0400
-Received: from mail-yw0-f180.google.com ([209.85.211.180]:46062 "EHLO
-	mail-yw0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754062Ab0ETOMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 10:12:33 -0400
-Received: by ywh10 with SMTP id 10so5116357ywh.1
-        for <git@vger.kernel.org>; Thu, 20 May 2010 07:12:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=1uptbCFcH564DKl5njBaZ3nkZK2/fmI0VwNVQT8MKm0=;
-        b=BK+Zp6tI6P4uBGCicGkEwV8Jg3GPhV1SdO1hDS5onZpYo0Ij/p0j1GfsAuZB2b8TJE
-         W5ZIlMEJ8xsvByOy3OYdbDzmWLS9HKl830GB193BLUpkB/iG2hKkI9z3BhMzcFTyouTq
-         fiVsnbrLHoUws5ewUoXI9n6XNE4DB5ZuTp8Ao=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=s4z2+jgLaZSE+RtznQfOiE42nIkxxsF4isoMRqgrJJbkKcPhxGGjJp7O6FbU/6nT2v
-         vz7394AQI4s3/l/XHep7zMKTS1ebgXOpEp0TvrG1RPNYB+ndS0fyb7AMngtn1+Swz1Tj
-         cUTohALxkrn0ruay7h2J3OfvZPqmBU0Xi4XaA=
-Received: by 10.101.105.22 with SMTP id h22mr178345anm.35.1274364751741; Thu, 
-	20 May 2010 07:12:31 -0700 (PDT)
-Received: by 10.100.154.8 with HTTP; Thu, 20 May 2010 07:12:31 -0700 (PDT)
+	id S1752751Ab0ETO3f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 10:29:35 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41972 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751961Ab0ETO3e (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 10:29:34 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 115C7F5A11;
+	Thu, 20 May 2010 10:29:34 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 20 May 2010 10:29:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=R+PC0Q6rum7dnZPIQdybj5ISqR8=; b=j38JvM54MBd1DS749RZifOb6fyIgbTNNxukwWh619ZagxroUgQEQC7JQAwm5l89II8m4uQ0IYOHbKxIgSJCHJKgI/OY+dEWKMO06RpnmG+J2OL2KzEYT6GVJCMxHg6Ekd3xb+6UYEyo9kLY4lYvTXAx68aD1abka9cvBslBeJLA=
+X-Sasl-enc: 81Y3PAo+GvCfxud/67YDBUovYfcrUylON7Kp/GG7ZaB/ 1274365773
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 40E284E0213;
+	Thu, 20 May 2010 10:29:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
+In-Reply-To: <4BF5294E.7060206@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147390>
 
---001636c925885784600487072a55
-Content-Type: text/plain; charset=UTF-8
+Torsten B=C3=B6gershausen venit, vidit, dixit 20.05.2010 14:21:
+> Hej Michael,
+> Thanks for the reply.
+>=20
+>> You signed off, but is Markus Kuhn's code from UCS GPL2-licensed?
+> Oh, I haven't added any code from Markus here.
+> But if my sign off is a problem, we can remove it ;-)
+> or move the code to another place. (And utf.c will still have code fr=
+om UCS)
 
-Noticed-by: Andy Parkins
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+Your sign-off is fine if you can place the code under the terms of the
+project.
 
---
+In your patch there is a line
 
-On Thu, May 20, 2010 at 15:28, Junio C Hamano <gitster@pobox.com> wrote:
-> As to the not-working-configuration I don't remember the codepath well, so
-> sorry but no answer from me right now.
+/* This code is originally from http://www.cl.cam.ac.uk/~mgk25/ucs/ */
 
-Maybe because we do a (kind of) gentle status run on submodules
-whether the status.SubmoduleSummary set or not. Usually a background
-run of "git status" for every submodules goes unnoticed, just
-sometimes a submodule is a little too big.
+but I missed the missing '+' in front - that comment was there before
+your patch! Sorry for the confusion.
 
-I tried this, but feels like a bit of overkill.
+>=20
+>> Also, a few tests would be nice.
+> Yes, fully agreed.
+> My feeling is, that at least
+> "git add", "git mv", "git rm" should be tested.
+> I will fix that.
+> But as I become more familiar with the git testsuite,
+> it becomes more and more clear, that testing the new feature will
+> do the same tests as already existing tests.
+>  From that point of view, it seems easier to re-use the existing test
+> cases and run them twice, once with clean ascii, and second time with
+> an internationalized form.
+> As not all platforms support utf-8, the internationalized tests may b=
+e
+> either utf-8, 8859-1, or nothing at all.
+>  =20
+> I feel that at least 50% of the test cases should be "internationaliz=
+ed",
+> like "git merge", "git pull" etc.
+> (And re-writing the tests is a big issue, at least for me as a beginn=
+er)
+> Anyway, I will make simple tests.
 
-diff --git a/wt-status.c b/wt-status.c
-index 8ca59a2..d5bcdf9 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -303,7 +303,10 @@ static void
-wt_status_collect_changes_worktree(struct wt_status *s)
- 	init_revisions(&rev, NULL);
- 	setup_revisions(0, NULL, &rev, NULL);
- 	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
--	DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
-+	if (s->submodule_summary)
-+		DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
-+	else
-+		DIFF_OPT_SET(&rev.diffopt, IGNORE_SUBMODULES);
- 	if (!s->show_untracked_files)
- 		DIFF_OPT_SET(&rev.diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
- 	rev.diffopt.format_callback = wt_status_collect_changed_cb;
+Simple tests are a good start. More importantly (compared to full
+internationalisation), we need someone running them on Mac OS ;)
 
---001636c925885784600487072a55
-Content-Type: application/octet-stream; name="ignore-submodules.patch"
-Content-Disposition: attachment; filename="ignore-submodules.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_g9fntmqn0
-
-RnJvbSA2YjdhNWUwYWM1NjBlMTE4N2Q4ZmYzNTliYWQ4YzA0OTI3ZDBiNTk5IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBBbGV4IFJpZXNlbiA8cmFhLmxrbWxAZ21haWwuY29tPgpEYXRl
-OiBUaHUsIDIwIE1heSAyMDEwIDE2OjA0OjExICswMjAwClN1YmplY3Q6IFtQQVRDSF0gRG9uJ3Qg
-ZG8gc3RhdHVzIGluIHN1Ym1vZHVsZXMgaWYgc3RhdHVzLlN1Ym1vZHVsZVN1bW1hcnkgdW5zZXQK
-Ck5vdGljZWQtYnk6IEFuZHkgUGFya2lucwpTaWduZWQtb2ZmLWJ5OiBBbGV4IFJpZXNlbiA8cmFh
-LmxrbWxAZ21haWwuY29tPgoKZGlmZiAtLWdpdCBhL3d0LXN0YXR1cy5jIGIvd3Qtc3RhdHVzLmMK
-aW5kZXggOGNhNTlhMi4uZDViY2RmOSAxMDA2NDQKLS0tIGEvd3Qtc3RhdHVzLmMKKysrIGIvd3Qt
-c3RhdHVzLmMKQEAgLTMwMyw3ICszMDMsMTAgQEAgc3RhdGljIHZvaWQgd3Rfc3RhdHVzX2NvbGxl
-Y3RfY2hhbmdlc193b3JrdHJlZShzdHJ1Y3Qgd3Rfc3RhdHVzICpzKQogCWluaXRfcmV2aXNpb25z
-KCZyZXYsIE5VTEwpOwogCXNldHVwX3JldmlzaW9ucygwLCBOVUxMLCAmcmV2LCBOVUxMKTsKIAly
-ZXYuZGlmZm9wdC5vdXRwdXRfZm9ybWF0IHw9IERJRkZfRk9STUFUX0NBTExCQUNLOwotCURJRkZf
-T1BUX1NFVCgmcmV2LmRpZmZvcHQsIERJUlRZX1NVQk1PRFVMRVMpOworCWlmIChzLT5zdWJtb2R1
-bGVfc3VtbWFyeSkKKwkJRElGRl9PUFRfU0VUKCZyZXYuZGlmZm9wdCwgRElSVFlfU1VCTU9EVUxF
-Uyk7CisJZWxzZQorCQlESUZGX09QVF9TRVQoJnJldi5kaWZmb3B0LCBJR05PUkVfU1VCTU9EVUxF
-Uyk7CiAJaWYgKCFzLT5zaG93X3VudHJhY2tlZF9maWxlcykKIAkJRElGRl9PUFRfU0VUKCZyZXYu
-ZGlmZm9wdCwgSUdOT1JFX1VOVFJBQ0tFRF9JTl9TVUJNT0RVTEVTKTsKIAlyZXYuZGlmZm9wdC5m
-b3JtYXRfY2FsbGJhY2sgPSB3dF9zdGF0dXNfY29sbGVjdF9jaGFuZ2VkX2NiOwo=
---001636c925885784600487072a55--
+Michael
