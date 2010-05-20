@@ -1,64 +1,60 @@
-From: "Albert Krawczyk" <u4232169@anu.edu.au>
-Subject: Revision Generation Question
-Date: Thu, 20 May 2010 17:46:03 +1000
-Message-ID: <000d01caf7f0$7f8c6700$7ea53500$@anu.edu.au>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: temporarily unsetting sendemail.smtpuser
+Date: Thu, 20 May 2010 08:23:11 +0000
+Message-ID: <AANLkTilhkDWkGpbkMAbYtgHNI49gAGzi1oYLeE-sdsTE@mail.gmail.com>
+References: <4BF46C0A.9070000@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu May 20 10:19:26 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Eric Blake <eblake@redhat.com>
+X-From: git-owner@vger.kernel.org Thu May 20 10:23:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF0yS-0005C3-6X
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 10:19:24 +0200
+	id 1OF12K-0007PF-11
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 10:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754636Ab0ETITT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 04:19:19 -0400
-Received: from anumail8.anu.edu.au ([130.56.64.134]:37209 "EHLO
-	anumail8.anu.edu.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751947Ab0ETITR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 04:19:17 -0400
-X-Greylist: delayed 1991 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 May 2010 04:19:16 EDT
-Received: from mailout2.anu.edu.au (mailout2.anu.edu.au [130.56.64.233])
-	by anumail8.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4K7k1Dj025173
-	for <git@vger.kernel.org>; Thu, 20 May 2010 17:46:01 +1000 (EST)
-Received: from mailout2.anu.edu.au (localhost.localdomain [127.0.0.1])
-	by localhost (Postfix) with SMTP id A30BC9E83A0
-	for <git@vger.kernel.org>; Thu, 20 May 2010 17:46:01 +1000 (EST)
-Received: from smtphost.anu.edu.au (ds2.anu.edu.au [130.56.64.54])
-	by mailout2.anu.edu.au (Postfix) with ESMTP id 5AF979E8040
-	for <git@vger.kernel.org>; Thu, 20 May 2010 17:46:01 +1000 (EST)
-Received: from AlbertDesktop (burg237222.anu.edu.au [150.203.237.222])
-	by smtphost.anu.edu.au (8.14.3/8.14.3) with SMTP id o4K7k1Dp023370
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Thu, 20 May 2010 17:46:01 +1000 (EST)
-X-Mailer: Microsoft Outlook 14.0
-Content-language: en-au
-Thread-index: Acr38H9wRbMc/KM7Q1ihRm0XsKTT+w==
-X-PMX-Version: 5.5.9.395186, Antispam-Engine: 2.7.2.376379, Antispam-Data: 2010.5.20.73615 internal
-X-PMX-Outbound: anu.edu.au
-X-PMX-Info: from-anu
-X-PerlMx-Spam: Gauge=IIIIIIII, Probability=8%, Report='
- BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_300_399 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS 0, FORGED_MUA_OUTLOOK 0, FROM_EDU_TLD 0, TO_NO_NAME 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __OUTLOOK_MUA 0, __OUTLOOK_MUA_1 0, __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0, __TO_MALFORMED_2 0, __USER_AGENT_MS_GENERIC 0'
+	id S1754691Ab0ETIXS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 04:23:18 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42052 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754595Ab0ETIXN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 04:23:13 -0400
+Received: by iwn6 with SMTP id 6so4037480iwn.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 01:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kYWSj61ZT9r3j/m3iaaKdtpJZVrkgO+hlEddv+SoXkE=;
+        b=C9QeO94bOVjqZKKGNmf5hwC4GMFltAPVsF8rGIvpxbC+N2H0lkiXqqxb9MrSu2A74/
+         q37lHQvq62PNTqLWbciFRL87EZ9za/inc1baNIgXR7raNcuQ3/9iMjLduGksRtPFk38O
+         bzDdW5+vfPL5KRWnYUbaWDQCHba7iJwOD8Fko=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Jcyc5uvLoKY0p4RKtr+2TPn2lDN6DPWQVHnO+s1IkJKcaPmrqwCGHqr/lN1cgtAY5w
+         sh6+VnNSR7n+PR1cCtulli2SMjxeu0ZHaKDOppvuZT60Nw8jQtoCtwdynN5fSyLZ8liw
+         wcDbD4lZ7GD/GG4rX7ui0mJHgzrb+Em8cJkMk=
+Received: by 10.231.157.77 with SMTP id a13mr4785352ibx.59.1274343792056; Thu, 
+	20 May 2010 01:23:12 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 20 May 2010 01:23:11 -0700 (PDT)
+In-Reply-To: <4BF46C0A.9070000@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147361>
 
-Hi,
+On Wed, May 19, 2010 at 22:54, Eric Blake <eblake@redhat.com> wrote:
+> But both of those are rather unappealing. =C2=A0Is there a better app=
+roach to
+> accomplishing what I wanted?
 
-I'm trying to figure out how the internal revision generation works. Could
-somebody shed some light on how this happens in the code?
-
-I've stepped through the code, however, I still don't really understand how
-the revision history gets generated. 
-
-Any pointers will be greatly appreciated :)  
-
-Albert 
+--no-smtp-user ?
