@@ -1,87 +1,77 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-status and git-diff now very slow in project with a submodule
-Date: Thu, 20 May 2010 19:01:49 +0100
-Message-ID: <201005201901.49853.andyparkins@gmail.com>
-References: <ht3194$1vc$1@dough.gmane.org> <ht3sda$cvo$1@dough.gmane.org> <4BF57635.9090409@web.de>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Git, Mac OS X and German special characters
+Date: Thu, 20 May 2010 14:22:22 -0400
+Message-ID: <AANLkTilIqY0760KpZbGrv3jyZLT1e0CbkvKF3lbYB5la@mail.gmail.com>
+References: <4BF4E40B.30205@math.tu-dortmund.de>
+	 <AANLkTimYgkv6q6fTXqNOCq1ZbodxgCZ18Fum_NryyiO8@mail.gmail.com>
+	 <4BF4F7D7.60002@drmicha.warpmail.net> <4BF4FA89.2040904@gmail.com>
+	 <AANLkTil2N2xP1CWj0xxskOn-KCN1JMpJS8d3WpT5Mdg2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu May 20 20:04:10 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	matthias.moeller@math.tu-dortmund.de, git@vger.kernel.org
+To: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <totte.enea@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 20 20:22:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFA6F-0001fL-HZ
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 20:04:03 +0200
+	id 1OFAO8-0006U4-4Q
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 20:22:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170Ab0ETSAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 14:00:21 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:51830 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755147Ab0ETSAS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 14:00:18 -0400
-Received: by wyg36 with SMTP id 36so68613wyg.19
-        for <git@vger.kernel.org>; Thu, 20 May 2010 11:00:17 -0700 (PDT)
+	id S1756311Ab0ETSW0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 14:22:26 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53592 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754113Ab0ETSWZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 14:22:25 -0400
+Received: by iwn6 with SMTP id 6so127767iwn.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 11:22:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=fdgZpwpa5XHf0+vpbwwKt+9Tt1SZluqod7wnU7g+Tos=;
-        b=fmzKTHaLe3DL8oZ6HO1bBtFdx4YP4fTpzg6eNFEU5Xt96+V8jbw+3EttS+b2WjVnhh
-         VDeIepgemkFInRZMqt7+f2/daijYPU2/GPoy2ae+5+DFlZ8Ck8zo+8Ov1Hg609XOxRH+
-         EAVIBkg5lt+OALU6zLgwJTfCdGZl2YQto3HnY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GDxNja5ZWppa0arVwF7b+2Rep7vsOHOfpY/ph3VWC6U=;
+        b=ICd2bmHM7XcJQhGc7d6iT9ALLF6FFbrv752NSjz31q3CLnNPNvPWM0zkPm6oncYxer
+         AbEzL1tNZzOWb9lwP3FnzQsy7RJWUrs+xGi+oMRY0soPMbL3f35kUw09355U88KniN9Z
+         eb/qGh0fcHZ4Fb7BW4dXzvyFwqgD5Vl5RFpxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=ZDaoQ1vGN6HsK1X8Nj/1WgjqQnpG3tYvZk20UzerZNEFoBIg0l+QCI5VT+PDOBzMsJ
-         3a0eJFm4jayhz0rCLCKU9GCQg4k+13WZaLymP+vSNfqFfOKtzjgN4ZklOe1nv+w2fXsw
-         2CkdUkxhs6fhSkNVeTS2BzZnc8MpjrzC50G+4=
-Received: by 10.227.128.81 with SMTP id j17mr252757wbs.149.1274378416939;
-        Thu, 20 May 2010 11:00:16 -0700 (PDT)
-Received: from grissom.localnet ([91.84.15.31])
-        by mx.google.com with ESMTPS id h22sm915552wbh.9.2010.05.20.11.00.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 May 2010 11:00:14 -0700 (PDT)
-User-Agent: KMail/1.13.3 (Linux/2.6.32-trunk-686; KDE/4.4.3; i686; ; )
-In-Reply-To: <4BF57635.9090409@web.de>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TL8UtNg6Q7YBI4k0txYCPeYLTtafR3x4VYllVPJgrkSWziKwlunZCf/VjFJkBEHlU5
+         K4N5MKmJFzrBtEj8vPag+GcMXHlKYGikkKAAsAHrm3maM9RskWvGhvIuR3uN0KfHspXx
+         fNEo1BeTz/S+IWzKPDm8Xt9aeCwT3OX7Dd44Y=
+Received: by 10.231.176.74 with SMTP id bd10mr427550ibb.38.1274379742367; Thu, 
+	20 May 2010 11:22:22 -0700 (PDT)
+Received: by 10.231.34.8 with HTTP; Thu, 20 May 2010 11:22:22 -0700 (PDT)
+In-Reply-To: <AANLkTil2N2xP1CWj0xxskOn-KCN1JMpJS8d3WpT5Mdg2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147405>
 
-On Thursday 20 May 2010 18:49:41 Jens Lehmann wrote:
-> Am 20.05.2010 19:45, schrieb Andy Parkins:
-> > (Most of my
-> > personal use of submodule is embedding large projects that I want to be
-> > able to guarantee are at a particular version, but I don't really
-> > change them)
-> 
-> But to guarantee they are at a particular version they have to be checked
-> for local modifications (no matter if they happened accidentally or on
-> purpose), no?
+On Thu, May 20, 2010 at 11:50 AM, Jay Soffian <jaysoffian@gmail.com> wr=
+ote:
+> To be consistent, shouldn't we have a core.HFSPlusCompat that can be
+> set on non-braindamaged filesystems to prevent filenames which would
+> alias on HFS+ from entering the repo?
+>
+> =C2=A0 http://developer.apple.com/mac/library/technotes/tn/tn1150.htm=
+l#UnicodeSubtleties
 
-A valid point.
+And here's an implementation (BSD-style license):
 
-Surely though in my own .git/config I can be allowed to tell git that I 
-don't care about that risk?
+  http://src.chromium.org/svn/trunk/src/base/file_path.cc
 
-I've got a top level module that used to diff/status instantly; now git 
-scans an entire Linux kernel checkout and an entire ffmpeg checkout.  
-Painful.  I fully accept that it was my own choice to arrange my repository 
-in this way, but in my defence, it was fine last week :-)
+See GetHFSDecomposedForm and HFSFastUnicodeCompare.
 
+C++ so it'll require adapting.
 
-
-Andy
-
--- 
-Dr Andy Parkins
-andyparkins@gmail.com
+j.
