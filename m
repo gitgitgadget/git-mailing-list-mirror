@@ -1,91 +1,100 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Git, Mac OS X and German special characters
-Date: Thu, 20 May 2010 16:29:24 +0200
-Message-ID: <4BF54744.60602@drmicha.warpmail.net>
-References: <4BF4E40B.30205@math.tu-dortmund.de> <AANLkTimYgkv6q6fTXqNOCq1ZbodxgCZ18Fum_NryyiO8@mail.gmail.com> <4BF4F7D7.60002@drmicha.warpmail.net> <4BF4FA89.2040904@gmail.com> <4BF4FDB4.2010409@drmicha.warpmail.net> <4BF5294E.7060206@web.de>
+From: Jonathan Leto <jaleto@gmail.com>
+Subject: Re: Help with a possibly corrupt repo
+Date: Thu, 20 May 2010 07:57:30 -0700
+Message-ID: <AANLkTikSo8hTPXG8kGgCLOul6wp8THobUW_rSni4D6YC@mail.gmail.com>
+References: <AANLkTiks5g7BvLXBrUcb0m5dCiIrBifjDUKBDScXd1dw@mail.gmail.com> 
+	<20100510201720.GH14069@dpotapov.dyndns.org> <AANLkTinYj624545WtRf8TayNkm6a_z3e6kiwRyHCjqtv@mail.gmail.com> 
+	<20100510212801.GJ14069@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu May 20 16:29:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 20 16:57:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF6km-0000f0-JG
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 16:29:40 +0200
+	id 1OF7C3-0007NL-PM
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 16:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752751Ab0ETO3f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 10:29:35 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:41972 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751961Ab0ETO3e (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 10:29:34 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 115C7F5A11;
-	Thu, 20 May 2010 10:29:34 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Thu, 20 May 2010 10:29:34 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=R+PC0Q6rum7dnZPIQdybj5ISqR8=; b=j38JvM54MBd1DS749RZifOb6fyIgbTNNxukwWh619ZagxroUgQEQC7JQAwm5l89II8m4uQ0IYOHbKxIgSJCHJKgI/OY+dEWKMO06RpnmG+J2OL2KzEYT6GVJCMxHg6Ekd3xb+6UYEyo9kLY4lYvTXAx68aD1abka9cvBslBeJLA=
-X-Sasl-enc: 81Y3PAo+GvCfxud/67YDBUovYfcrUylON7Kp/GG7ZaB/ 1274365773
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 40E284E0213;
-	Thu, 20 May 2010 10:29:32 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
-In-Reply-To: <4BF5294E.7060206@web.de>
+	id S1752098Ab0ETO5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 10:57:47 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47231 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751146Ab0ETO5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 10:57:46 -0400
+Received: by gwaa20 with SMTP id a20so2615554gwa.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 07:57:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=RtZgPGPig24rWIx5cpwrt580CJH2DT+T6fFkupbXnxU=;
+        b=It2etuCbVXyktlnc1G+bH1UcQwNWKs9AesuUVeUOCF8Cfj8CYQQH1MhGEWoZ7L6n45
+         Kzjs44UXb00SqCvQPI+VHFlopv8ic+L26ypTcGiW9Zo3braQW6NnCTwejlGAm0OyBbs2
+         J6/rnQhk9nIvPXuSP1vXoVys/vsdActZu9eNw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=OXNQqjo4sNrfueAW1VtyKp9tDUP7ABX5fB4cliJeGmXNPkoPXf8V+H3nXhgxFn3nJt
+         85e4vDML3238emFTc008STDIssvdtLbnhlJGIWoBuQ9U7BqIKhsbu9mZ20iqaXIGbms6
+         zaa3xcY3QJ++UyNI5qxIEC4bk3APt00K2vdsU=
+Received: by 10.151.21.12 with SMTP id y12mr1913371ybi.226.1274367465330; Thu, 
+	20 May 2010 07:57:45 -0700 (PDT)
+Received: by 10.151.48.4 with HTTP; Thu, 20 May 2010 07:57:30 -0700 (PDT)
+In-Reply-To: <20100510212801.GJ14069@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147392>
 
-Torsten B=C3=B6gershausen venit, vidit, dixit 20.05.2010 14:21:
-> Hej Michael,
-> Thanks for the reply.
->=20
->> You signed off, but is Markus Kuhn's code from UCS GPL2-licensed?
-> Oh, I haven't added any code from Markus here.
-> But if my sign off is a problem, we can remove it ;-)
-> or move the code to another place. (And utf.c will still have code fr=
-om UCS)
+Howdy,
 
-Your sign-off is fine if you can place the code under the terms of the
-project.
+I ran into this corruption issue using ecryptfs with an ext4
+filesystem (on a local SSD drive) on Ubuntu 9.10. The corruption seems
+to coincide with getting these errors in my dmesg output:
 
-In your patch there is a line
+[12773.772426] ecryptfs_decrypt_page: Error attempting to read lower
+page; rc = [-22]
+[12773.772431] ecryptfs_readpage: Error decrypting page; rc = [-22]
+[12796.061574] ecryptfs_read_lower: octets_read = [-4]; expected [4096]
+[12796.061584] ecryptfs_read_and_validate_header_region: Error reading
+header region; rc = [-22]
 
-/* This code is originally from http://www.cl.cam.ac.uk/~mgk25/ucs/ */
+I am lead to believe that ecryptfs+ext4 is not yet production-ready,
+although it could be a weird failure mode of my drive. I have not had
+more time to test this setup with other hardware.
 
-but I missed the missing '+' in front - that comment was there before
-your patch! Sorry for the confusion.
+Duke
 
->=20
->> Also, a few tests would be nice.
-> Yes, fully agreed.
-> My feeling is, that at least
-> "git add", "git mv", "git rm" should be tested.
-> I will fix that.
-> But as I become more familiar with the git testsuite,
-> it becomes more and more clear, that testing the new feature will
-> do the same tests as already existing tests.
->  From that point of view, it seems easier to re-use the existing test
-> cases and run them twice, once with clean ascii, and second time with
-> an internationalized form.
-> As not all platforms support utf-8, the internationalized tests may b=
-e
-> either utf-8, 8859-1, or nothing at all.
->  =20
-> I feel that at least 50% of the test cases should be "internationaliz=
-ed",
-> like "git merge", "git pull" etc.
-> (And re-writing the tests is a big issue, at least for me as a beginn=
-er)
-> Anyway, I will make simple tests.
 
-Simple tests are a good start. More importantly (compared to full
-internationalisation), we need someone running them on Mac OS ;)
+On Mon, May 10, 2010 at 2:28 PM, Dmitry Potapov <dpotapov@gmail.com> wrote:
+> On Mon, May 10, 2010 at 02:05:09PM -0700, Jonathan Leto wrote:
+>> 00020c0 deed 3541 7800 56dd 005c 0000 0000 0000
+>> 00020d0 0000 0000 0000 0000 0000 0000 0000 0000
+>> *
+>> 0003000
+>> error: garbage at end of loose object '66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba'
+>> fatal: object 66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba is corrupted
+>
+> The object is "tree", and it contains a lot of zeros at end.
+> I have truncated them, and it appears to fix the problem.
+> I have attached the corrected file.
+>
+> But the important question is how it could happen. What filesystem
+> do you use? Do you store it on the local disk or network share?
+>
+>
+> Dmitry
+>
 
-Michael
+
+
+-- 
+Jonathan "Duke" Leto
+jonathan@leto.net
+http://leto.net
