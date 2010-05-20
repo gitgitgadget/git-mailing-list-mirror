@@ -1,10 +1,11 @@
 From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 1/5 maint] Fix "Out of memory? mmap failed" for files larger than 4GB on Windows
-Date: Thu, 20 May 2010 20:57:51 +0200
-Message-ID: <7289ab6b171efda2fbc0f5d5b0080c7f1afd529e.1274380838.git.j6t@kdbg.org>
+Subject: [PATCH 2/5 maint] start_command: close cmd->err descriptor when fork/spawn fails
+Date: Thu, 20 May 2010 20:57:52 +0200
+Message-ID: <753dbe1c95461e736185f4a1b06e20937dab9db7.1274380838.git.j6t@kdbg.org>
 References: <cover.1274380838.git.j6t@kdbg.org>
 Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Ian McLean <ian.mclean@gmail.com>, Johannes Sixt <j6t@kdbg.org>
+	bert Dvornik <dvornik+git@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
 To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Thu May 20 21:01:01 2010
 connect(): No such file or directory
@@ -13,69 +14,78 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFAzL-0008GA-QO
+	id 1OFAzM-0008GA-Bn
 	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 21:01:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991Ab0ETTAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 15:00:55 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:15223 "EHLO bsmtp.bon.at"
+	id S1752189Ab0ETTA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 15:00:58 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:15285 "EHLO bsmtp.bon.at"
 	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751895Ab0ETTAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 15:00:53 -0400
+	id S1751895Ab0ETTA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 15:00:56 -0400
 Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 3466ECDF87;
-	Thu, 20 May 2010 21:00:52 +0200 (CEST)
+	by bsmtp.bon.at (Postfix) with ESMTP id BF6BECDF8B;
+	Thu, 20 May 2010 21:00:55 +0200 (CEST)
 Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id B9CA519F5F0;
-	Thu, 20 May 2010 20:58:09 +0200 (CEST)
+	by dx.sixt.local (Postfix) with ESMTP id 5572219F5F0;
+	Thu, 20 May 2010 20:58:13 +0200 (CEST)
 X-Mailer: git-send-email 1.7.1.64.ga1799.dirty
 In-Reply-To: <cover.1274380838.git.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147408>
 
-From: Ian McLean <ian.mclean@gmail.com>
+From: bert Dvornik <dvornik+git@gmail.com>
 
-The git_mmap implementation was broken for file sizes that wouldn't fit
-into a size_t (32 bits).  This was caused by intermediate variables that
-were only 32 bits wide when they should be 64 bits.
+Fix the problem where the cmd->err passed into start_command wasn't
+being properly closed when certain types of errors occurr.  (Compare
+the affected code with the clean shutdown code later in the function.)
 
+On Windows, this problem would be triggered if mingw_spawnvpe()
+failed, which would happen if the command to be executed was malformed
+(e.g. a text file that didn't start with a #! line).  If cmd->err was
+a pipe, the failure to close it could result in a hang while the other
+side was waiting (forever) for either input or pipe close, e.g. while
+trying to shove the output into the side band.  On msysGit, this
+problem was causing a hang in t5516-fetch-push.
+
+[J6t: With a slight adjustment of the test case, the hang is also
+observed on Linux.]
+
+Signed-off-by: bert Dvornik <dvornik+git@gmail.com>
 Signed-off-by: Johannes Sixt <j6t@kdbg.org>
 ---
- This patch is obviously correct. I have used it in production to verify
- that it doesn't break repositories that are smaller than 4GB.
+ run-command.c         |    2 ++
+ t/t5516-fetch-push.sh |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletions(-)
 
- compat/win32mmap.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/compat/win32mmap.c b/compat/win32mmap.c
-index 1c5a149..b58aa69 100644
---- a/compat/win32mmap.c
-+++ b/compat/win32mmap.c
-@@ -4,19 +4,19 @@ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t of
- {
- 	HANDLE hmap;
- 	void *temp;
--	size_t len;
-+	off_t len;
- 	struct stat st;
- 	uint64_t o = offset;
- 	uint32_t l = o & 0xFFFFFFFF;
- 	uint32_t h = (o >> 32) & 0xFFFFFFFF;
- 
- 	if (!fstat(fd, &st))
--		len = xsize_t(st.st_size);
-+		len = st.st_size;
- 	else
- 		die("mmap: could not determine filesize");
- 
- 	if ((length + offset) > len)
--		length = len - offset;
-+		length = xsize_t(len - offset);
- 
- 	if (!(flags & MAP_PRIVATE))
- 		die("Invalid usage of mmap when built with USE_WIN32_MMAP");
+diff --git a/run-command.c b/run-command.c
+index eb5c575..c7793f5 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -383,6 +383,8 @@ fail_pipe:
+ 			close(cmd->out);
+ 		if (need_err)
+ 			close_pair(fderr);
++		else if (cmd->err)
++			close(cmd->err);
+ 		errno = failed_errno;
+ 		return -1;
+ 	}
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 2de98e6..6a37a4d 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -528,7 +528,7 @@ test_expect_success 'push does not update local refs on failure' '
+ 	mk_test heads/master &&
+ 	mk_child child &&
+ 	mkdir testrepo/.git/hooks &&
+-	echo exit 1 >testrepo/.git/hooks/pre-receive &&
++	echo "#!/no/frobnication/today" >testrepo/.git/hooks/pre-receive &&
+ 	chmod +x testrepo/.git/hooks/pre-receive &&
+ 	(cd child &&
+ 		git pull .. master
 -- 
 1.7.1.64.ga1799.dirty
