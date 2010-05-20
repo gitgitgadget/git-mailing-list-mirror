@@ -1,69 +1,119 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH 5/5] Recent MinGW has a C99 implementation of snprintf functions
-Date: Thu, 20 May 2010 20:57:55 +0200
-Message-ID: <439f0b3d51f9548b72e0e719d590cc9bcf4c0084.1274380838.git.j6t@kdbg.org>
-References: <cover.1274380838.git.j6t@kdbg.org>
-Cc: git@vger.kernel.org, msysgit@googlegroups.com,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 20 21:01:27 2010
+From: Antriksh Pany <antriksh.pany@gmail.com>
+Subject: Need to change old commit (and regenerate tree)
+Date: Thu, 20 May 2010 20:17:03 +0100
+Message-ID: <AANLkTilTAknKPFv5AZBrwsITPsRlVSnsuX8TDXlUTWmw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 20 21:17:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFAzn-00009b-5H
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 21:01:27 +0200
+	id 1OFBF4-0008I7-4x
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 21:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916Ab0ETTBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 15:01:17 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:15528 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752889Ab0ETTBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 15:01:16 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1FE9B1001F;
-	Thu, 20 May 2010 21:01:15 +0200 (CEST)
-Received: from dx.sixt.local (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id A018219F5F0;
-	Thu, 20 May 2010 20:58:32 +0200 (CEST)
-X-Mailer: git-send-email 1.7.1.64.ga1799.dirty
-In-Reply-To: <cover.1274380838.git.j6t@kdbg.org>
+	id S1753047Ab0ETTRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 15:17:09 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:39536 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751637Ab0ETTRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 15:17:07 -0400
+Received: by gwaa20 with SMTP id a20so92862gwa.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 12:17:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=gZ66qjPGqLgGrITBJKqJYeQ+2r3TVEN3+X02xOQ6IdQ=;
+        b=Au21nKk1csTdXSOdV9z9tBd49Z59NZwGTGq47dMyb4eMioukQtQS/5H9H1IMYb3rc0
+         CBgfXU6ZqWgQ3yjD5glwcdlir+OogiyxuZXbYJXKeNd5fD/TN3qLoM1aknzsfHZIy1WH
+         4EIYHILQT202LXLLkwsuJThVM6+xxe1s4yun4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=VE4xgdZmLfcIR/AlQjYsbVK0a+YWz4az14wD0TqAYFO6CSR7JadVTzB50kYEWATw+E
+         OtzBR2ECdMPdpszCF3Z+6p6j71TYWfXBUCwT0a0CpAJmdP5gV+0dQG48vGRBpbQIQSJ/
+         aNCMbQ0SvJ3Lhc+Mx6OZdQsINCXsDR4BC09HM=
+Received: by 10.150.127.5 with SMTP id z5mr1908902ybc.275.1274383023902; Thu, 
+	20 May 2010 12:17:03 -0700 (PDT)
+Received: by 10.151.111.3 with HTTP; Thu, 20 May 2010 12:17:03 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147412>
 
-Date: Mon, 20 Jul 2009 22:15:07 +0200
+Hi all
 
-Starting with MinGW 3.14, released end of 2007, a working snprintf
-is available. This means we do not need our own replacement that works
-around the broken implementation in Microsoft's C runtime.
+My question is this: I have two branches (say B and C) where one is
+reachable from the other (say B is ancestor of C), and if they are
+separately rebased about/onto the same point, why do B and C become
+non-overlapping branches?
 
-People who build git in an old MinGW environment are expected to set
-SNPRINTF_RETURNS_BOGUS in their config.mak. msysgit is sufficiently
-recent, of course.
+Let me explain with an example.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- The Date: line is deliberate to show how long I carry this patch. :-)
+Say I have the following commit line:
 
- Makefile |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
+A--------o--------o--------o--------B--------o--------o--------C
 
-diff --git a/Makefile b/Makefile
-index 910f471..c36c5b0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1026,7 +1026,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_STRTOUMAX = YesPlease
- 	NO_MKDTEMP = YesPlease
- 	NO_MKSTEMPS = YesPlease
--	SNPRINTF_RETURNS_BOGUS = YesPlease
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
- 	RUNTIME_PREFIX = YesPlease
--- 
-1.7.1.64.ga1799.dirty
+A, B and C are branches (so that B is reachable from C, and A is
+reachable from B). [For ease, I am drawing the branches at the same
+level since there are no real diverging branches here.]
+
+I then realise that I want to change the commit A and have both B and
+C rebased on this changed commit.
+
+Now when I do a
+  $ git rebase --onto A2 A C
+
+This results in two parallel trees like these:
+
+A--------o--------o--------o--------B--------o--------o--------o(old C)
+
+A2--------o--------o--------o--------o--------o--------o--------C
+
+Now I go about rebasing B. I can of course 'reset' B to C~3. But
+alternatively, if I decide to do a rebase:
+  $ git rebase --onto A2 A B
+
+I will end up getting
+
+A--------o--------o--------o--------o(old B)--------o--------o--------o(old C)
+
+A2--------o--------o--------o--------o--------o--------o--------C
+   \
+     ` -----o--------o--------o--------B
+
+Instead of (what I initially expected):
+
+A--------o--------o--------o--------o(old B)--------o--------o--------o(old C)
+
+A2--------o--------o--------o--------B--------o--------o--------C
+
+
+So what I am missing here? Aren't the new commits B~1, B~2, B~3
+identical to C~4, C~5, C~6 (respectively) in all ways so as to have
+gotten them the same SHA1 and hence appear as what I expected them to
+appear?
+
+I have taken a simple example here. In reality, I wanted to change a
+not so new commit (on the main line), and there were many branches
+diverging out from the main line after the (bad) commit. I initially
+thought I could just write a simple script that would rebase all
+branches that have the bad commit as an ancestor, and the new tree
+would be a mirror image of the original. But that was not to be! There
+is also the problem of resetting tags (and possible notes).
+
+
+I am sorry if this has already been discussed, please point me to the
+right resource if so.
+
+My git version:
+  $ git --version
+  git version 1.7.0.5
+
+Thanks
+Antriksh Pany
