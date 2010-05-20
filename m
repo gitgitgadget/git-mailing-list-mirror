@@ -1,78 +1,58 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Need to change old commit (and regenerate tree)
-Date: Fri, 21 May 2010 09:05:46 +1000
-Message-ID: <AANLkTim0M-PJC655bhfcQ6mBYTPt9TK9Ys8qJBJd1UPS@mail.gmail.com>
-References: <AANLkTilTAknKPFv5AZBrwsITPsRlVSnsuX8TDXlUTWmw@mail.gmail.com>
-	 <m2sk5mtecw.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Various fixes for Windows
+Date: Thu, 20 May 2010 16:13:23 -0700
+Message-ID: <7v7hmy6ub0.fsf@alter.siamese.dyndns.org>
+References: <cover.1274380838.git.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Antriksh Pany <antriksh.pany@gmail.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri May 21 01:05:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Fri May 21 01:13:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFEoR-00032F-91
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 01:05:59 +0200
+	id 1OFEvu-0005T4-E7
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 01:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755221Ab0ETXFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 19:05:49 -0400
-Received: from mail-qy0-f171.google.com ([209.85.221.171]:59966 "EHLO
-	mail-qy0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755183Ab0ETXFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 19:05:48 -0400
-Received: by qyk1 with SMTP id 1so489651qyk.5
-        for <git@vger.kernel.org>; Thu, 20 May 2010 16:05:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=PKjisBjEB2o/Lf84cCmwMctuNT+drVcW/R3kDBVfhF4=;
-        b=nIVrcEnVUbFYGJjdFYJtDbxyDMlpjjN5EY2hDFV/FlzExfJzQrE3y6QBh0SqOW/OoK
-         N2U2Ctr97EUKT8V7SsWB1nX4thW8Z2MDSli3x3kulc8z2jrAetOsP6t1JEAeU3RFDNHY
-         vnmioC8Dske5FcyPAawN1kAtqUeoUoeBq9G2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ADVxQrd3iB9E0m20LE0IN4gaHM6kB08T94Ryr+DVzez2RaWthE1M0eq90eTp3766ZH
-         HmQIR40OEaXyNg75k+7Dlj/UNK/u+q58r/rQchcmztPs4lAOgv1R0HoXfPzgxaTiVBo1
-         WD+ibLxTDVvUvC7kF6CEISM19deHVSJ7Z+H7o=
-Received: by 10.229.249.212 with SMTP id ml20mr206286qcb.147.1274396746730; 
-	Thu, 20 May 2010 16:05:46 -0700 (PDT)
-Received: by 10.229.22.194 with HTTP; Thu, 20 May 2010 16:05:46 -0700 (PDT)
-In-Reply-To: <m2sk5mtecw.fsf@igel.home>
+	id S1755209Ab0ETXNi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 19:13:38 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59307 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755197Ab0ETXNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 19:13:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 996BEB452F;
+	Thu, 20 May 2010 19:13:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=cpBIET
+	fcd8/X1OGTqezTkvJPgcBMlTBeajp0lQGdh4z1bLeLJkeucaAB+Xa+WZHrw9d8G4
+	tbsrwUJvNVOg0Qyy+QQYxiJAK4ft20Wt3hYQHLm23MXdNLBIH6UJIqttzYQvYSaz
+	isaOAnYBzcqHrBbP5F07KGclJD1YsIQucdXJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eeaQ0jPTSFf8ZNTKWC9xL3FVlaxhgQXt
+	Qq/vIvp09XIc1KaQUNZ5NG6u14B47frHny9sqv0nre/WqKAUoVGw4mjMyG9V5PUg
+	COVK+WBuxWoW/aCGn6HLNB4HFCCrcu6oyncupBmOyRGlwfvGdIWCsU8SAQrv9ZEp
+	OiCGEoHydCs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 309A3B452D;
+	Thu, 20 May 2010 19:13:30 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54D55B4523; Thu, 20 May
+ 2010 19:13:25 -0400 (EDT)
+In-Reply-To: <cover.1274380838.git.j6t@kdbg.org> (Johannes Sixt's message of
+ "Thu\, 20 May 2010 20\:57\:50 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4DA57C4A-6465-11DF-A4F5-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147419>
 
-On Fri, May 21, 2010 at 8:09 AM, Andreas Schwab <schwab@linux-m68k.org> wrote:
-> Antriksh Pany <antriksh.pany@gmail.com> writes:
->
->> Instead of (what I initially expected):
->>
->> A--------o--------o--------o--------o(old B)--------o--------o--------o(old C)
->>
->> A2--------o--------o--------o--------B--------o--------o--------C
->>
->>
->> So what I am missing here? Aren't the new commits B~1, B~2, B~3
->> identical to C~4, C~5, C~6 (respectively) in all ways so as to have
->> gotten them the same SHA1 and hence appear as what I expected them to
->> appear?
->
-> No, they have a different commit time, which is also part of the hash.
->
-
-Of course, even if the commit time was forged to be the same, the
-parent of B~3 is different to the parent of C~6 and since the parent
-is also contributes bits to the respective hashes, B~3 will
-necessarily (unlikely hash collisions excepted!) have a different hash
-to C~6
-
-jon.
+Thanks.
