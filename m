@@ -1,64 +1,79 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH (regression, resend)] Handle failure of core.worktree to identify the working directory.
-Date: Thu, 20 May 2010 13:57:57 +0400
-Message-ID: <1274349477-8747-1-git-send-email-kirr@mns.spb.ru>
-Cc: git@vger.kernel.org, Pat Thoyts <patthoyts@users.sourceforge.net>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 20 11:57:07 2010
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: git-status and git-diff now very slow in project with a submodule
+Date: Thu, 20 May 2010 11:01:02 +0100
+Message-ID: <ht3194$1vc$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 20 12:01:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF2Ux-00044S-Pb
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 11:57:04 +0200
+	id 1OF2ZA-0005uJ-QQ
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 12:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755361Ab0ETJ47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 05:56:59 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:58653 "EHLO mail.mnsspb.ru"
+	id S1755390Ab0ETKBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 06:01:20 -0400
+Received: from lo.gmane.org ([80.91.229.12]:38690 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752604Ab0ETJ46 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 05:56:58 -0400
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1OF2Ua-00007K-Dj; Thu, 20 May 2010 13:56:40 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1OF2W3-0002Ha-DE; Thu, 20 May 2010 13:58:11 +0400
-X-Mailer: git-send-email 1.7.1.91.ga63a7
+	id S1755377Ab0ETKBT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 06:01:19 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OF2Z2-0005hn-4o
+	for git@vger.kernel.org; Thu, 20 May 2010 12:01:16 +0200
+Received: from 194.70.53.228 ([194.70.53.228])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 May 2010 12:01:16 +0200
+Received: from andyparkins by 194.70.53.228 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 May 2010 12:01:16 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 194.70.53.228
+User-Agent: KNode/4.4.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147372>
 
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Hello,
 
-Commit 21985a11 'git-gui: handle non-standard worktree locations' attempts
-to use either GIT_WORK_TREE or core.worktree to set the _gitworktree
-variable but these may not be set which leads to a failure to launch
-gitk to review history. Use _gitdir to set the location for a standard
-git layout where the parent of the .git directory is the working tree.
+I've just upgraded from 1.6.something to 1.7.1.  All very nice.
 
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-Tested-by: Kirill Smelkov <kirr@mns.spb.ru>
----
- git-gui.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+The new submodule reporting is nice too; but I'd like to be able to turn it 
+off :-)
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 8996d2d..ec81b15 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1158,6 +1158,9 @@ apply_config
- # try to set work tree from environment, falling back to core.worktree
- if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
- 	set _gitworktree [get_config core.worktree]
-+	if {$_gitworktree eq ""} {
-+		set _gitworktree [file dirname [file normalize $_gitdir]]
-+	}
- }
- if {$_prefix ne {}} {
- 	if {$_gitworktree eq {}} {
+The problem is that I have a (relatively) small project as the supermodule, 
+and a linux kernel clone as a submodule and an ffmpeg clone as a submodule.  
+Now I used to be able to do git-status or git-diff and it would be instant, 
+it now takes a number of seconds to report.  I guess (but don't know), that 
+it is the detection of "dirty" status in the submodule's that is slowing 
+down the supermodule processing.
+
+I wouldn't like to see the feature go, because in almost all circumstances 
+it is exactly right; however, I'd like to be able to turn off dirty 
+detection in submodules.  Is this already possible, and I've just missed the 
+configuration option?
+
+One additional small point: why do untracked files in a submodule make the 
+module dirty?  I've often got a few "temp.ps" or "debug.log" or 
+"backtrace.log" files lying around -- inappropriate to add to an ignore 
+file, but they don't make my working directory dirty.  "Dirty" in a working 
+directory means uncommitted changes to tracked files, why does it mean 
+something different in a submodule?
+
+
+
+Andy
 -- 
-1.7.1.91.ga63a7
+Dr Andy Parkins
+andyparkins@gmail.com
