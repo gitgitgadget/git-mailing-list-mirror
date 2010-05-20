@@ -1,79 +1,70 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: git-status and git-diff now very slow in project with a submodule
-Date: Thu, 20 May 2010 11:01:02 +0100
-Message-ID: <ht3194$1vc$1@dough.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH 0/6 v2] Make git log --graph looks better with -p and other diff options
+Date: Thu, 20 May 2010 03:25:32 -0700
+Message-ID: <1274351138-11813-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 20 12:01:27 2010
+X-From: git-owner@vger.kernel.org Thu May 20 12:25:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF2ZA-0005uJ-QQ
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 12:01:25 +0200
+	id 1OF2wq-0006ff-Eh
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 12:25:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755390Ab0ETKBU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 06:01:20 -0400
-Received: from lo.gmane.org ([80.91.229.12]:38690 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755377Ab0ETKBT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 06:01:19 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OF2Z2-0005hn-4o
-	for git@vger.kernel.org; Thu, 20 May 2010 12:01:16 +0200
-Received: from 194.70.53.228 ([194.70.53.228])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 May 2010 12:01:16 +0200
-Received: from andyparkins by 194.70.53.228 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 May 2010 12:01:16 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 194.70.53.228
-User-Agent: KNode/4.4.3
+	id S1752985Ab0ETKZr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 06:25:47 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:40491 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751571Ab0ETKZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 06:25:46 -0400
+Received: by pva18 with SMTP id 18so1448192pva.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 03:25:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=CuQD+VWsbU/2wVpNF1jMjSwfEqt+gVmCAgY5+krl/5E=;
+        b=kjBzuUUC1yTuesAuAlW4gmdEfCgR6SGCmQ7kIJaze/1/GPr9fUs8+ZGv5FS+jqoKUc
+         k02Xy+gTKaa1EKidITi2wapUrvjDuPHbO+doDbGU57CD8Xkero5OZJU16+1PAniEZIcm
+         Irn39ernuIgndihYLaCtnJp9Lrrk5pnRoTXtg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=hP/hTyIDO2EQ/lcKvgSMJIABZX0Z3CyiXvsX8CPcjkmE04VNwLBV2FphoYKeNrsAwY
+         vFNwclwESnApvGhW+Ctnm8uiYSVSVvz0UB5Ejw/G0XsUgLrLLFwoRMweh26g+xvdauWk
+         3odDdcnqTxkRlOp8Vd2445P4UILIlaHSVCFRw=
+Received: by 10.115.20.18 with SMTP id x18mr8547263wai.50.1274351144971;
+        Thu, 20 May 2010 03:25:44 -0700 (PDT)
+Received: from localhost.localdomain ([222.30.37.37])
+        by mx.google.com with ESMTPS id n32sm76160636wae.22.2010.05.20.03.25.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 20 May 2010 03:25:43 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147372>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147373>
 
-Hello,
-
-I've just upgraded from 1.6.something to 1.7.1.  All very nice.
-
-The new submodule reporting is nice too; but I'd like to be able to turn it 
-off :-)
-
-The problem is that I have a (relatively) small project as the supermodule, 
-and a linux kernel clone as a submodule and an ffmpeg clone as a submodule.  
-Now I used to be able to do git-status or git-diff and it would be instant, 
-it now takes a number of seconds to report.  I guess (but don't know), that 
-it is the detection of "dirty" status in the submodule's that is slowing 
-down the supermodule processing.
-
-I wouldn't like to see the feature go, because in almost all circumstances 
-it is exactly right; however, I'd like to be able to turn off dirty 
-detection in submodules.  Is this already possible, and I've just missed the 
-configuration option?
-
-One additional small point: why do untracked files in a submodule make the 
-module dirty?  I've often got a few "temp.ps" or "debug.log" or 
-"backtrace.log" files lying around -- inappropriate to add to an ignore 
-file, but they don't make my working directory dirty.  "Dirty" in a working 
-directory means uncommitted changes to tracked files, why does it mean 
-something different in a submodule?
+When we run git log --graph with any other diff output function, such as '-p','--check','--numstat' or other diff optoins, the diff output area have no graph lines ahead of it. And this make the text graph looks strange.
+The following 7 patches try to deal with this, and put the text graph columns before all the diff output lines.
 
 
+Bo Yang (6):
+  Add a prefix output callback to diff output.
+  Output the graph columns at the end of the commit message.
+  diff.c: Output the text graph padding before each diff line.
+  Emit a whole line once a time.
+  Register a callback for graph output.
+  Make --color-words work well with --graph.
 
-Andy
--- 
-Dr Andy Parkins
-andyparkins@gmail.com
+ color.c    |   21 +++-
+ color.h    |    3 +-
+ diff.c     |  339 +++++++++++++++++++++++++++++++++++++++++++++---------------
+ diff.h     |    5 +
+ graph.c    |   19 ++++
+ log-tree.c |    6 +
+ 6 files changed, 303 insertions(+), 90 deletions(-)
