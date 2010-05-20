@@ -1,86 +1,83 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-status and git-diff now very slow in project with a submodule
-Date: Thu, 20 May 2010 18:45:48 +0100
-Message-ID: <ht3sda$cvo$1@dough.gmane.org>
-References: <ht3194$1vc$1@dough.gmane.org> <4BF50A92.3060209@atlas-elektronik.com> <ht36u4$lo4$1@dough.gmane.org> <4BF55ACD.3060009@drmicha.warpmail.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] Don't do status in submodules if status.SubmoduleSummary
+ 	unset
+Date: Thu, 20 May 2010 19:45:28 +0200
+Message-ID: <4BF57538.5040204@web.de>
+References: <AANLkTil1QHA3G2VaITdm7DkDmN1IhZ_u2SWLrelyxkF2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 20 19:44:28 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 20 19:45:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF9nF-0006sC-GD
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 19:44:25 +0200
+	id 1OF9oR-0007Rz-J1
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 19:45:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266Ab0ETRoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 13:44:20 -0400
-Received: from lo.gmane.org ([80.91.229.12]:46704 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752479Ab0ETRoT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 13:44:19 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OF9n8-0006pz-JQ
-	for git@vger.kernel.org; Thu, 20 May 2010 19:44:18 +0200
-Received: from 91.84.15.31 ([91.84.15.31])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 May 2010 19:44:18 +0200
-Received: from andyparkins by 91.84.15.31 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 May 2010 19:44:18 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 91.84.15.31
-User-Agent: KNode/4.4.3
+	id S1754053Ab0ETRpf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 13:45:35 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:43000 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752983Ab0ETRpe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 13:45:34 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 1EEC915A86E80;
+	Thu, 20 May 2010 19:45:33 +0200 (CEST)
+Received: from [80.128.73.13] (helo=[192.168.178.26])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1OF9oK-0008LX-00; Thu, 20 May 2010 19:45:32 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <AANLkTil1QHA3G2VaITdm7DkDmN1IhZ_u2SWLrelyxkF2@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/w3tfUISLDhwN0ckplJAvc/WG2KjC7kMnXFSzb
+	iYO8fI9kva7tGTXpZNLUd23bAhFemtiEpu0ms8zKmnMVnuk174
+	fAAlEsgAlhp4aHU+XMtA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147402>
 
-Michael J Gruber wrote:
+Am 20.05.2010 16:12, schrieb Alex Riesen:
+> Maybe because we do a (kind of) gentle status run on submodules
+> whether the status.SubmoduleSummary set or not.
 
-> You see: No submodule summary here!
-> Try setting the variable to true and see the difference. False is the
-> default.
-
-Quite so; I hadn't understood submodulesummary -- I just tried it when it 
-was suggested.
-
-> Git needs to check the submodule in order to produce the "modified" line
-> even when no summary is required. Stopping Git from looking at the
-
-I realise that -- what I was after is a return to the old behaviour -- under 
-the control of an option.
-
-> submodule at all is impossible, I think. One could only hope that it
-> stops scanning after the first modification.
-
-"Impossible" is a strong word for a behaviour that existed pre-1.7.
-
-It's not that I want git not to look at the submodule at all; in fact it 
-certainly should for those cases when the submodule commit has changed, and 
-I guess that a check for a dirty index is pretty quick too; but scanning the 
-whole submodule tree (which it has to do to find if anything was modified, 
-even when nothing was modified) is a lot of extra time when the submodule is 
-large.  That extra time is inconvenient when you're working on a small 
-project that makes use of a large project as a submodule.  (Most of my 
-personal use of submodule is embedding large projects that I want to be able 
-to guarantee are at a particular version, but I don't really change them)
+Yup, because checking a submodule for its dirtiness has to be done
+no matter if the summary output is also wanted.
 
 
+> Usually a background
+> run of "git status" for every submodules goes unnoticed, just
+> sometimes a submodule is a little too big.
+> 
+> I tried this, but feels like a bit of overkill.
+
+This patch seems to disable submodule output completely for the default
+case (when status.SubmoduleSummary is false) and breaks 17 test cases.
+
+So no thumbs up from me ;-)
 
 
-Andy
-
--- 
-Dr Andy Parkins
-andyparkins@gmail.com
+> diff --git a/wt-status.c b/wt-status.c
+> index 8ca59a2..d5bcdf9 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -303,7 +303,10 @@ static void
+> wt_status_collect_changes_worktree(struct wt_status *s)
+>  	init_revisions(&rev, NULL);
+>  	setup_revisions(0, NULL, &rev, NULL);
+>  	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
+> -	DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
+> +	if (s->submodule_summary)
+> +		DIFF_OPT_SET(&rev.diffopt, DIRTY_SUBMODULES);
+> +	else
+> +		DIFF_OPT_SET(&rev.diffopt, IGNORE_SUBMODULES);
+>  	if (!s->show_untracked_files)
+>  		DIFF_OPT_SET(&rev.diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
+>  	rev.diffopt.format_callback = wt_status_collect_changed_cb;
