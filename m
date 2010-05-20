@@ -1,119 +1,75 @@
-From: Antriksh Pany <antriksh.pany@gmail.com>
-Subject: Need to change old commit (and regenerate tree)
-Date: Thu, 20 May 2010 20:17:03 +0100
-Message-ID: <AANLkTilTAknKPFv5AZBrwsITPsRlVSnsuX8TDXlUTWmw@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Don't do status in submodules if status.SubmoduleSummary 
+	unset
+Date: Thu, 20 May 2010 21:34:18 +0200
+Message-ID: <AANLkTikQDEwA7Iih9hniYzLfSGnPvZ9PTDNtSKfJPa9d@mail.gmail.com>
+References: <AANLkTil1QHA3G2VaITdm7DkDmN1IhZ_u2SWLrelyxkF2@mail.gmail.com>
+	 <4BF57538.5040204@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 20 21:17:16 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu May 20 21:34:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFBF4-0008I7-4x
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 21:17:14 +0200
+	id 1OFBVu-0007iP-G7
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 21:34:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753047Ab0ETTRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 15:17:09 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:39536 "EHLO
+	id S1757003Ab0ETTeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 15:34:21 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64501 "EHLO
 	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751637Ab0ETTRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 15:17:07 -0400
-Received: by gwaa20 with SMTP id a20so92862gwa.19
-        for <git@vger.kernel.org>; Thu, 20 May 2010 12:17:04 -0700 (PDT)
+	with ESMTP id S1757006Ab0ETTeT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 15:34:19 -0400
+Received: by gwaa20 with SMTP id a20so102203gwa.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 12:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=gZ66qjPGqLgGrITBJKqJYeQ+2r3TVEN3+X02xOQ6IdQ=;
-        b=Au21nKk1csTdXSOdV9z9tBd49Z59NZwGTGq47dMyb4eMioukQtQS/5H9H1IMYb3rc0
-         CBgfXU6ZqWgQ3yjD5glwcdlir+OogiyxuZXbYJXKeNd5fD/TN3qLoM1aknzsfHZIy1WH
-         4EIYHILQT202LXLLkwsuJThVM6+xxe1s4yun4=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=q2eAK06AraYm9kcZd3iu9/GmaTMuxyXeV5AADPP1nWw=;
+        b=lh53dLwa08FI+8TqaKURwPMUUd7avwcBtxOyuj31vTxeNZINWrYc7UW1YYRofw2z0x
+         OET2VhtlkiuKG/sTCMmc+QPrGdh/WGlVw5Ks4/tcDO/1sN0h9hDMyhviM96z7juGaXQq
+         WV1v6xzaDzwGx9jxli3u+Xfqo7G9Q5YeUof/o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=VE4xgdZmLfcIR/AlQjYsbVK0a+YWz4az14wD0TqAYFO6CSR7JadVTzB50kYEWATw+E
-         OtzBR2ECdMPdpszCF3Z+6p6j71TYWfXBUCwT0a0CpAJmdP5gV+0dQG48vGRBpbQIQSJ/
-         aNCMbQ0SvJ3Lhc+Mx6OZdQsINCXsDR4BC09HM=
-Received: by 10.150.127.5 with SMTP id z5mr1908902ybc.275.1274383023902; Thu, 
-	20 May 2010 12:17:03 -0700 (PDT)
-Received: by 10.151.111.3 with HTTP; Thu, 20 May 2010 12:17:03 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=fXit3xXrb1dghTEbf4YjZguqjqfykJoShCjWxJtdxTMolg/ckOEk+gxs7h0Kqa7uHt
+         6Yvemtfy2AIyRkRxGDyFfkiMH65WeuXXNE8DeD94ace+q3/ExqIiHOTMEJyk3hSRFgeu
+         z5IjAhLbtJiy69X0D+UujjQGeNMlo43RsQMGc=
+Received: by 10.101.105.22 with SMTP id h22mr719555anm.35.1274384058399; Thu, 
+	20 May 2010 12:34:18 -0700 (PDT)
+Received: by 10.100.154.8 with HTTP; Thu, 20 May 2010 12:34:18 -0700 (PDT)
+In-Reply-To: <4BF57538.5040204@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147413>
 
-Hi all
+On Thu, May 20, 2010 at 19:45, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Am 20.05.2010 16:12, schrieb Alex Riesen:
+>> Maybe because we do a (kind of) gentle status run on submodules
+>> whether the status.SubmoduleSummary set or not.
+>
+> Yup, because checking a submodule for its dirtiness has to be done
+> no matter if the summary output is also wanted.
 
-My question is this: I have two branches (say B and C) where one is
-reachable from the other (say B is ancestor of C), and if they are
-separately rebased about/onto the same point, why do B and C become
-non-overlapping branches?
+Yeah. Why?
 
-Let me explain with an example.
+>> Usually a background
+>> run of "git status" for every submodules goes unnoticed, just
+>> sometimes a submodule is a little too big.
+>>
+>> I tried this, but feels like a bit of overkill.
+>
+> This patch seems to disable submodule output completely for the default
+> case (when status.SubmoduleSummary is false) and breaks 17 test cases.
 
-Say I have the following commit line:
-
-A--------o--------o--------o--------B--------o--------o--------C
-
-A, B and C are branches (so that B is reachable from C, and A is
-reachable from B). [For ease, I am drawing the branches at the same
-level since there are no real diverging branches here.]
-
-I then realise that I want to change the commit A and have both B and
-C rebased on this changed commit.
-
-Now when I do a
-  $ git rebase --onto A2 A C
-
-This results in two parallel trees like these:
-
-A--------o--------o--------o--------B--------o--------o--------o(old C)
-
-A2--------o--------o--------o--------o--------o--------o--------C
-
-Now I go about rebasing B. I can of course 'reset' B to C~3. But
-alternatively, if I decide to do a rebase:
-  $ git rebase --onto A2 A B
-
-I will end up getting
-
-A--------o--------o--------o--------o(old B)--------o--------o--------o(old C)
-
-A2--------o--------o--------o--------o--------o--------o--------C
-   \
-     ` -----o--------o--------o--------B
-
-Instead of (what I initially expected):
-
-A--------o--------o--------o--------o(old B)--------o--------o--------o(old C)
-
-A2--------o--------o--------o--------B--------o--------o--------C
-
-
-So what I am missing here? Aren't the new commits B~1, B~2, B~3
-identical to C~4, C~5, C~6 (respectively) in all ways so as to have
-gotten them the same SHA1 and hence appear as what I expected them to
-appear?
-
-I have taken a simple example here. In reality, I wanted to change a
-not so new commit (on the main line), and there were many branches
-diverging out from the main line after the (bad) commit. I initially
-thought I could just write a simple script that would rebase all
-branches that have the bad commit as an ancestor, and the new tree
-would be a mirror image of the original. But that was not to be! There
-is also the problem of resetting tags (and possible notes).
-
-
-I am sorry if this has already been discussed, please point me to the
-right resource if so.
-
-My git version:
-  $ git --version
-  git version 1.7.0.5
-
-Thanks
-Antriksh Pany
+That's why I said it feels like overkill
