@@ -1,68 +1,94 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Documentation/config: describe status.submodulesummary
-Date: Thu, 20 May 2010 17:55:42 +0200
-Message-ID: <8dde28deb72eb473c9177bb212647b0976fa2458.1274370897.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 20 17:55:59 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] WIP: begin to translate git with gettext
+Date: Thu, 20 May 2010 16:02:46 +0000
+Message-ID: <AANLkTinksuRQ-XJrusR9PXeP0HowaK-6ZJh8uwxMFUg2@mail.gmail.com>
+References: <20100517160503.GA12717@unpythonic.net>
+	 <4BF24467.7000204@drmicha.warpmail.net>
+	 <20100518164002.GC20842@unpythonic.net>
+	 <AANLkTikbl3jDXzdBhd0w6jSXTD-q5kai6Sy6CKLVmRdD@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>, Jan Hudec <bulb@ucw.cz>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Marc Weber <marco-oweber@gmx.de>
+To: Jeff Epler <jepler@unpythonic.net>
+X-From: git-owner@vger.kernel.org Thu May 20 18:02:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF86G-0002np-5g
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 17:55:56 +0200
+	id 1OF8Cz-0006QG-Bc
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 18:02:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355Ab0ETPzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 11:55:51 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35659 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751835Ab0ETPzv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 11:55:51 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9DD3FF7BA7
-	for <git@vger.kernel.org>; Thu, 20 May 2010 11:55:50 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 20 May 2010 11:55:50 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id; s=smtpout; bh=Jj5BPkBjYIVDNWEka9pTiVyFeFY=; b=gen/YbWqNGknKRYQldB43rrUaIQbAxOJ04s56WeWZ33M3WApJ9x1HeKLGr68Ulf4+bHXlY5vpU2maBm4RK8DX1r9XWCacQ8pSSsdqmH6tedBvmSZ96kgtxEf7Pja5Oy0aCCKv9JWXN9GTtbPdUvHMdpP9CjQjahuD879Ys5hhGw=
-X-Sasl-enc: qUW0tNRLhfGBYWOaG+1YEZrc+umUJFn1CTKID6aCeC5B 1274370950
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 149D710A4A;
-	Thu, 20 May 2010 11:55:49 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.259.g3aef8
+	id S1752326Ab0ETQCs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 12:02:48 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56770 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751594Ab0ETQCr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 12:02:47 -0400
+Received: by iwn6 with SMTP id 6so4453592iwn.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 09:02:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4DnlodSSEIwfleSkJ0EUiMcxU6bahdtu27ENbzbvQ+s=;
+        b=HIl1hzmHnA1h4mOhm/Fh2I8GDajbIJFXdt6bcsTz0wXH3nXOd74VgpylDfUCJgqj9r
+         e7VTqBS+wTjWbLDMsCnwJAGa7yC6Voo2icDgmezDqjKK592yKRzs4UbSQr2BPVTaplsb
+         VOoZeVPJNEGzJ0WN7TEtcv6Ce4u9AoMPtC6VQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XN77BA/389CyuV95Y+8Ed7bwqvUDV4t7894xbFwB8G3yjY8HqeUCmpeb9JlDswQG58
+         vvjX4FsOnlZgCxm+suyBylgphr5K4ce582gihp4fsNQrx2pGNAt8ijHOdVUNqUTMlE+z
+         VBSTEOWpnCtfajV1f7eHplpwBXUlKNBeHZm4w=
+Received: by 10.231.150.2 with SMTP id w2mr227355ibv.37.1274371366743; Thu, 20 
+	May 2010 09:02:46 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 20 May 2010 09:02:46 -0700 (PDT)
+In-Reply-To: <AANLkTikbl3jDXzdBhd0w6jSXTD-q5kai6Sy6CKLVmRdD@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147397>
 
-ac8d5af (builtin-status: submodule summary support, 2008-04-12)
-intoduced this variable and described it in git-status[1].
+On Tue, May 18, 2010 at 17:02, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> On Tue, May 18, 2010 at 16:40, Jeff Epler <jepler@unpythonic.net> wro=
+te:
+>> The amount of work to mark all the source files and then to keep the
+>> marks up to date should not be underestimated--and that's just the w=
+ork
+>> to enable translators to localize the software. =C2=A0It is importan=
+t to
+>> gauge the interest in the git community in actually doing this work.
+>
+> It's also something you shouldn't overestimate. I've been involved in
+> internationalizing several projects that were previously English-only=
+=2E
+>
+> The work of making things translatable can be done incrementally. You
+> also don't have to get everything right the first time, the current
+> proof of concept translation of `git status` for instance suffers fro=
+m
+> numerous problems, but it's still better than nothing.
+>
+> It can be used as-is and then incrementally improved by arranging the
+> strings more intelligently in the future.
 
-Include this description in git-config[1], as well.
+I did some work on this in my branch:
+http://github.com/avar/git/compare/master...topic/git-gettext
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/config.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+=46ixed up the Makefile rules a bit, added appropriate gitignores, and
+added a work in progress po/is.po.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 39140ba..100ac7c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1691,6 +1691,13 @@ If this variable is not specified, it defaults to 'normal'.
- This variable can be overridden with the -u|--untracked-files option
- of linkgit:git-status[1] and linkgit:git-commit[1].
- 
-+status.submodulesummary::
-+	Defaults to false.
-+	If this is set to a non zero number or true (identical to -1 or an
-+	unlimited number), the submodule summary will be enabled and a
-+	summary of commits for modified submodules will be shown (see
-+	--summary-limit option of linkgit:git-submodule[1]).
-+
- tar.umask::
- 	This variable can be used to restrict the permission bits of
- 	tar archive entries.  The default is 0002, which turns off the
--- 
-1.7.1.259.g3aef8
+Still have to go through the gettext manual to figure out how to
+integrate this with our shellscripts.
