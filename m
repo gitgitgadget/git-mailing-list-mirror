@@ -1,100 +1,79 @@
-From: Jonathan Leto <jaleto@gmail.com>
-Subject: Re: Help with a possibly corrupt repo
-Date: Thu, 20 May 2010 07:57:30 -0700
-Message-ID: <AANLkTikSo8hTPXG8kGgCLOul6wp8THobUW_rSni4D6YC@mail.gmail.com>
-References: <AANLkTiks5g7BvLXBrUcb0m5dCiIrBifjDUKBDScXd1dw@mail.gmail.com> 
-	<20100510201720.GH14069@dpotapov.dyndns.org> <AANLkTinYj624545WtRf8TayNkm6a_z3e6kiwRyHCjqtv@mail.gmail.com> 
-	<20100510212801.GJ14069@dpotapov.dyndns.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Git, Mac OS X and German special characters
+Date: Thu, 20 May 2010 11:30:37 -0400
+Message-ID: <AANLkTilvz-n-oBzfCChh0qGo3oWVXaB7CZY4562ineDn@mail.gmail.com>
+References: <4BF4E40B.30205@math.tu-dortmund.de>
+	 <AANLkTimYgkv6q6fTXqNOCq1ZbodxgCZ18Fum_NryyiO8@mail.gmail.com>
+	 <4BF4F7D7.60002@drmicha.warpmail.net> <4BF4FA89.2040904@gmail.com>
+	 <4BF4FDB4.2010409@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 20 16:57:53 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <totte.enea@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	matthias.moeller@math.tu-dortmund.de, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu May 20 17:30:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF7C3-0007NL-PM
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 16:57:52 +0200
+	id 1OF7hu-00074w-EB
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 17:30:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab0ETO5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 10:57:47 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:47231 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146Ab0ETO5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 10:57:46 -0400
-Received: by gwaa20 with SMTP id a20so2615554gwa.19
-        for <git@vger.kernel.org>; Thu, 20 May 2010 07:57:45 -0700 (PDT)
+	id S1751835Ab0ETPak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 11:30:40 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33725 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752482Ab0ETPaj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 11:30:39 -0400
+Received: by iwn6 with SMTP id 6so4414476iwn.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 08:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=RtZgPGPig24rWIx5cpwrt580CJH2DT+T6fFkupbXnxU=;
-        b=It2etuCbVXyktlnc1G+bH1UcQwNWKs9AesuUVeUOCF8Cfj8CYQQH1MhGEWoZ7L6n45
-         Kzjs44UXb00SqCvQPI+VHFlopv8ic+L26ypTcGiW9Zo3braQW6NnCTwejlGAm0OyBbs2
-         J6/rnQhk9nIvPXuSP1vXoVys/vsdActZu9eNw=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=oQUKJWshi/lOr8ng+S+Z3wEgXNG/2ms7DSamtcgleZM=;
+        b=t2vL5Q/lIXQXE7y7Goc+B5k4DU3IrVwm5Agh/Dsrc0UzOj2T7WVtKp/DOtukTewrfJ
+         5veyQf5Mxk0kew42AFkYPZGxEGbBuMtld67y46fmoltybunC1SgvicWuvgArT470Uia5
+         I5UdVrityoRklTHivO0MhlvV8+XysHmm4V1CI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=OXNQqjo4sNrfueAW1VtyKp9tDUP7ABX5fB4cliJeGmXNPkoPXf8V+H3nXhgxFn3nJt
-         85e4vDML3238emFTc008STDIssvdtLbnhlJGIWoBuQ9U7BqIKhsbu9mZ20iqaXIGbms6
-         zaa3xcY3QJ++UyNI5qxIEC4bk3APt00K2vdsU=
-Received: by 10.151.21.12 with SMTP id y12mr1913371ybi.226.1274367465330; Thu, 
-	20 May 2010 07:57:45 -0700 (PDT)
-Received: by 10.151.48.4 with HTTP; Thu, 20 May 2010 07:57:30 -0700 (PDT)
-In-Reply-To: <20100510212801.GJ14069@dpotapov.dyndns.org>
+        b=YanXro4X51GGJPVDbACA3gJQNClTal44aockIO6WN73+ku5v9igY7MHpGd9eibxhOo
+         8lmp85zVh5Ym/7KpViUkUAqAvYPKHSCCozN5LgIFnM7pbTvpREIP/FEv1lk2CrHEU4DF
+         Wjk88tnveBFcKWI05T/J1q1/FUbX/dVjjO/oQ=
+Received: by 10.231.147.18 with SMTP id j18mr199843ibv.12.1274369437680; Thu, 
+	20 May 2010 08:30:37 -0700 (PDT)
+Received: by 10.231.34.8 with HTTP; Thu, 20 May 2010 08:30:37 -0700 (PDT)
+In-Reply-To: <4BF4FDB4.2010409@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147393>
 
-Howdy,
+2010/5/20 Michael J Gruber <git@drmicha.warpmail.net>:
+> I remember we had threads on this issue in the past. I haven't checked
+> yet (Thunderbird pruned my nntp history), but it is worth checking that
+> you addressed any issues mentioned there.
 
-I ran into this corruption issue using ecryptfs with an ext4
-filesystem (on a local SSD drive) on Ubuntu 9.10. The corruption seems
-to coincide with getting these errors in my dmesg output:
+This was the monster thread on it:
 
-[12773.772426] ecryptfs_decrypt_page: Error attempting to read lower
-page; rc = [-22]
-[12773.772431] ecryptfs_readpage: Error decrypting page; rc = [-22]
-[12796.061574] ecryptfs_read_lower: octets_read = [-4]; expected [4096]
-[12796.061584] ecryptfs_read_and_validate_header_region: Error reading
-header region; rc = [-22]
+  http://thread.gmane.org/gmane.comp.version-control.git/70688
 
-I am lead to believe that ecryptfs+ext4 is not yet production-ready,
-although it could be a weird failure mode of my drive. I have not had
-more time to test this setup with other hardware.
+Linus added support for the case-insensitivity aliasing issue:
 
-Duke
+  1102952 (Make git-add behave more sensibly in a case-insensitive environment,
+           2008-03-22)
+  6835550 (When adding files to the index, add support for
+case-independent matches,
+           2008-03-22)
 
+But he couldn't care less about HFS+ brain-damage, so he left that for
+others. And hey, it's only taken 2 years for someone to step up to the
+plate. :-)
 
-On Mon, May 10, 2010 at 2:28 PM, Dmitry Potapov <dpotapov@gmail.com> wrote:
-> On Mon, May 10, 2010 at 02:05:09PM -0700, Jonathan Leto wrote:
->> 00020c0 deed 3541 7800 56dd 005c 0000 0000 0000
->> 00020d0 0000 0000 0000 0000 0000 0000 0000 0000
->> *
->> 0003000
->> error: garbage at end of loose object '66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba'
->> fatal: object 66fdbaef5ae12a8402f6b0f7c1a73a3ce72e8eba is corrupted
->
-> The object is "tree", and it contains a lot of zeros at end.
-> I have truncated them, and it appears to fix the problem.
-> I have attached the corrected file.
->
-> But the important question is how it could happen. What filesystem
-> do you use? Do you store it on the local disk or network share?
->
->
-> Dmitry
->
-
-
-
--- 
-Jonathan "Duke" Leto
-jonathan@leto.net
-http://leto.net
+j.
