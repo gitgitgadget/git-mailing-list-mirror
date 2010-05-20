@@ -1,38 +1,39 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: gitblogger
-Date: Thu, 20 May 2010 18:29:30 +0100
-Message-ID: <ht3reo$b6i$1@dough.gmane.org>
+Subject: Re: git-status and git-diff now very slow in project with a submodule
+Date: Thu, 20 May 2010 18:45:48 +0100
+Message-ID: <ht3sda$cvo$1@dough.gmane.org>
+References: <ht3194$1vc$1@dough.gmane.org> <4BF50A92.3060209@atlas-elektronik.com> <ht36u4$lo4$1@dough.gmane.org> <4BF55ACD.3060009@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 20 19:28:13 2010
+X-From: git-owner@vger.kernel.org Thu May 20 19:44:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF9XZ-0007ak-1z
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 19:28:13 +0200
+	id 1OF9nF-0006sC-GD
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 19:44:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753757Ab0ETR2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 13:28:06 -0400
-Received: from lo.gmane.org ([80.91.229.12]:56395 "EHLO lo.gmane.org"
+	id S1753266Ab0ETRoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 13:44:20 -0400
+Received: from lo.gmane.org ([80.91.229.12]:46704 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751084Ab0ETR2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 13:28:04 -0400
+	id S1752479Ab0ETRoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 13:44:19 -0400
 Received: from list by lo.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OF9XM-0007Vv-Qs
-	for git@vger.kernel.org; Thu, 20 May 2010 19:28:00 +0200
+	id 1OF9n8-0006pz-JQ
+	for git@vger.kernel.org; Thu, 20 May 2010 19:44:18 +0200
 Received: from 91.84.15.31 ([91.84.15.31])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 May 2010 19:28:00 +0200
+        for <git@vger.kernel.org>; Thu, 20 May 2010 19:44:18 +0200
 Received: from andyparkins by 91.84.15.31 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 May 2010 19:28:00 +0200
+        for <git@vger.kernel.org>; Thu, 20 May 2010 19:44:18 +0200
 X-Injected-Via-Gmane: http://gmane.org/
 connect(): No such file or directory
 Followup-To: gmane.comp.version-control.git
@@ -43,44 +44,43 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147401>
 
-Hello,
+Michael J Gruber wrote:
 
-Just a small announcement of a little project I just published.  Normally I 
-wouldn't bother troubling you all, but I thought whoever it was wrote the 
-key feature (git-notes) might appreciate knowing it was being used...
+> You see: No submodule summary here!
+> Try setting the variable to true and see the difference. False is the
+> default.
 
-I've been wanting for a while to keep my blog in git (in fact I did do so, 
-except it was a full ikiwiki installation, but ikiwiki is so slow, and meant 
-I had to use my own computer to host my blog).  What I wanted was to have a 
-post-receive hook that automatically compiled the markdown-syntax source 
-files to HTML articles and posted them to my blogger account.  However, I 
-wanted to be able to modify, rename, delete, etc, etc the local files while 
-keeping the remote end in sync.
+Quite so; I hadn't understood submodulesummary -- I just tried it when it 
+was suggested.
 
-I was motivated to write the necessary script when I noticed that git 1.7 
-comes with shiny git-notes support.  This is just what I needed -- when you 
-post an article to blogger using the GData API, it gives you back a freshly 
-assigned post ID.  That post ID is the only (reliable) way you have of 
-keeping track of the link between the remote article and the local file that 
-generated it.  My script grabs that ID and uses git-notes to store it 
-against the object hash of the original article file.
+> Git needs to check the submodule in order to produce the "modified" line
+> even when no summary is required. Stopping Git from looking at the
 
-Then, when you change that article in the repository (git diff-tree is a 
-godsend by the way), it's a simply matter of using git-notes again to look 
-up the postID and send the appropriate GData command to update that article.
+I realise that -- what I was after is a return to the old behaviour -- under 
+the control of an option.
 
-Summary: git-notes... excellent, exactly the tool I needed.
+> submodule at all is impossible, I think. One could only hope that it
+> stops scanning after the first modification.
 
-If you write a blog and would prefer git + markdown for maintaining it over 
-HTML in a web interface, the repository is at
+"Impossible" is a strong word for a behaviour that existed pre-1.7.
 
-http://gitorious.org/git_blogger
+It's not that I want git not to look at the submodule at all; in fact it 
+certainly should for those cases when the submodule commit has changed, and 
+I guess that a check for a dirty index is pretty quick too; but scanning the 
+whole submodule tree (which it has to do to find if anything was modified, 
+even when nothing was modified) is a lot of extra time when the submodule is 
+large.  That extra time is inconvenient when you're working on a small 
+project that makes use of a large project as a submodule.  (Most of my 
+personal use of submodule is embedding large projects that I want to be able 
+to guarantee are at a particular version, but I don't really change them)
+
 
 
 
 Andy
+
 -- 
 Dr Andy Parkins
 andyparkins@gmail.com
