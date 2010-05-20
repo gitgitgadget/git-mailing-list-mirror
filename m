@@ -1,91 +1,82 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: git-status and git-diff now very slow in project with a submodule
-Date: Thu, 20 May 2010 18:17:04 +0100
-Message-ID: <201005201817.05593.andyparkins@gmail.com>
-References: <ht3194$1vc$1@dough.gmane.org> <7vy6fe7ldo.fsf@alter.siamese.dyndns.org>
+Subject: gitblogger
+Date: Thu, 20 May 2010 18:29:30 +0100
+Message-ID: <ht3reo$b6i$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 20 19:15:46 2010
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 20 19:28:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF9LS-0001Vy-FE
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 19:15:42 +0200
+	id 1OF9XZ-0007ak-1z
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 19:28:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753556Ab0ETRPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 13:15:37 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58927 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479Ab0ETRPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 13:15:36 -0400
-Received: by wyg36 with SMTP id 36so33386wyg.19
-        for <git@vger.kernel.org>; Thu, 20 May 2010 10:15:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=FStjzDcVL4i66UgFfSgwvvOr7RbK1waCNGp240+/sD0=;
-        b=ufYQxcptu3038sbcZoux+k2HiD16jlaqmPEhSFOExmAzf6cIy9O8Dwm17HPdIRTN6Z
-         ZHKSN5Qp6ry6ugqqLh3S5theJwrDw53eQFx+/IQjo0Xo7gqfgkHoS+GwlVeJsEdy7ssy
-         5kXwAMyFTZ0jfbgvOzXoiciZxyk6ZquA/pTuY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        b=gUNNhNh+V2U7AoqWriz838kqN8j0QjhFkRY9eGzjZGXlB/G2188f335HznFga4vfHT
-         wIQZtCjAnr6N6hE76RLW3QwWyk0+Q7aRTmNr85gQ4vH9h8sJ5BZuiQFTWx/tlNXF4BJj
-         lP8/ZPjQHQgrTjXZvq/KYoobOWmv+nL/tOvRY=
-Received: by 10.227.135.134 with SMTP id n6mr228363wbt.88.1274375735050;
-        Thu, 20 May 2010 10:15:35 -0700 (PDT)
-Received: from grissom.localnet ([91.84.15.31])
-        by mx.google.com with ESMTPS id t20sm630294wbc.22.2010.05.20.10.15.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 May 2010 10:15:33 -0700 (PDT)
-User-Agent: KMail/1.13.3 (Linux/2.6.32-trunk-686; KDE/4.4.3; i686; ; )
-In-Reply-To: <7vy6fe7ldo.fsf@alter.siamese.dyndns.org>
+	id S1753757Ab0ETR2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 13:28:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56395 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751084Ab0ETR2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 13:28:04 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OF9XM-0007Vv-Qs
+	for git@vger.kernel.org; Thu, 20 May 2010 19:28:00 +0200
+Received: from 91.84.15.31 ([91.84.15.31])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 May 2010 19:28:00 +0200
+Received: from andyparkins by 91.84.15.31 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 May 2010 19:28:00 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 91.84.15.31
+User-Agent: KNode/4.4.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147400>
 
-On Thursday 20 May 2010 14:28:35 Junio C Hamano wrote:
+Hello,
 
-> > One additional small point: why do untracked files in a submodule make
-> > the module dirty?  I've often got a few "temp.ps" or "debug.log" or
-> > "backtrace.log" files lying around -- inappropriate to add to an
-> > ignore file, but they don't make my working directory dirty.
-> 
-> "They don't make my working directory dirty" is something only you can
-> decide, until you tell git about that fact, isn't it?
+Just a small announcement of a little project I just published.  Normally I 
+wouldn't bother troubling you all, but I thought whoever it was wrote the 
+key feature (git-notes) might appreciate knowing it was being used...
 
-Perhaps I've misunderstood then; I have always understood that "dirty" was 
-the name we give to the state when tracked files have changes in the working 
-directory.  If not, then what word should be used to distinguish between 
-tracked files unchecked in and untracked files?
+I've been wanting for a while to keep my blog in git (in fact I did do so, 
+except it was a full ikiwiki installation, but ikiwiki is so slow, and meant 
+I had to use my own computer to host my blog).  What I wanted was to have a 
+post-receive hook that automatically compiled the markdown-syntax source 
+files to HTML articles and posted them to my blogger account.  However, I 
+wanted to be able to modify, rename, delete, etc, etc the local files while 
+keeping the remote end in sync.
 
-Anyhoo; I don't mind.  Me starting a semantics debate isn't helpful is it?
+I was motivated to write the necessary script when I noticed that git 1.7 
+comes with shiny git-notes support.  This is just what I needed -- when you 
+post an article to blogger using the GData API, it gives you back a freshly 
+assigned post ID.  That post ID is the only (reliable) way you have of 
+keeping track of the link between the remote article and the local file that 
+generated it.  My script grabs that ID and uses git-notes to store it 
+against the object hash of the original article file.
 
-> The way to tell git about them is to use the ignore/exclude mechanism.
-> Why are they "inappropriate to add to an ignore file"?  At least you
-> could have "*.log" in your personal exclude $GIT_DIR/info/exclude, no?
+Then, when you change that article in the repository (git diff-tree is a 
+godsend by the way), it's a simply matter of using git-notes again to look 
+up the postID and send the appropriate GData command to update that article.
 
-I think you've taken me too literally; I was trying to get across the idea 
-that they are files that are made on the fly, and when I notice them they 
-just get deleted.
+Summary: git-notes... excellent, exactly the tool I needed.
 
-Also, I don't want *.log, or *.ps -- neither of them is guaranteed to be an 
-ignore pattern.  These throw away files have all sorts of names, made up on 
-the spot as I'm working, adding them to an ignore file is overkill from my 
-point of view.
+If you write a blog and would prefer git + markdown for maintaining it over 
+HTML in a web interface, the repository is at
+
+http://gitorious.org/git_blogger
 
 
 
