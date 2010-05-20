@@ -1,110 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/6 v2] Make git log --graph looks better with -p and
- other diff options
-Date: Thu, 20 May 2010 09:24:25 -0400
-Message-ID: <20100520132425.GA5504@coredump.intra.peff.net>
-References: <1274351138-11813-1-git-send-email-struggleyb.nku@gmail.com>
- <20100520123650.GA7665@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] ls-remote: print URL when no repo is specified
+Date: Thu, 20 May 2010 06:27:29 -0700
+Message-ID: <7v632i8zzy.fsf@alter.siamese.dyndns.org>
+References: <1273416140-5044-1-git-send-email-rctay89@gmail.com>
+ <1273598423-3156-1-git-send-email-rctay89@gmail.com>
+ <7veihh8y8b.fsf@alter.siamese.dyndns.org>
+ <AANLkTinxm8hwX53LE9_7rDPoKs9UnGAyFFfVcoh-WGxE@mail.gmail.com>
+ <20100514161743.GA1957@progeny.tock>
+ <AANLkTimTKiGxpVelj9rVV_BV-f8NiKlQHpov38ojlfFq@mail.gmail.com>
+ <20100515162002.GA2592@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 20 15:24:35 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 20 15:27:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OF5jm-0007mR-CF
-	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 15:24:34 +0200
+	id 1OF5ms-00011y-Pe
+	for gcvg-git-2@lo.gmane.org; Thu, 20 May 2010 15:27:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753077Ab0ETNY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 09:24:28 -0400
-Received: from peff.net ([208.65.91.99]:35517 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752712Ab0ETNY1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 09:24:27 -0400
-Received: (qmail 13868 invoked by uid 107); 20 May 2010 13:24:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 20 May 2010 09:24:27 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 20 May 2010 09:24:25 -0400
-Content-Disposition: inline
-In-Reply-To: <20100520123650.GA7665@sigill.intra.peff.net>
+	id S1753459Ab0ETN1m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 09:27:42 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35739 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752326Ab0ETN1l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 09:27:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BF85DB46CB;
+	Thu, 20 May 2010 09:27:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=Sh/x/ywNffOVqzfTIbbcfMUbn
+	MY=; b=ya7u47VVYGBCh0kB7KuU+H69gN+NxO368WdOkKnRuU+63jSvyaaV/e5gf
+	CFOz8XbPg7pSO7zvryLSXumdIrB/oeit8lULxTVmxjjPWrFSPkHnXyWIopAiYteu
+	3kvpoTUuH+EOHyUp4e6gKTKbYK1qbCylEKP1QWCGs9+7abOcbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=I2JQa88hqq0Vf1TJ/nf
+	jeG+Waplyjop/If8YhZftfBCnqEscAHhPuTs7gP6zvWM8u3scyZr+U3EmRdjhVOC
+	qVp3FOK+5RP2+ABMhvvC42990C/JbIKpFcrkyD5JIM/HzEhSkdFl9D7TZxotPBAN
+	8HRTWUsJ8mNKNj4QvQaCA9uM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 880A8B46C7;
+	Thu, 20 May 2010 09:27:36 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9050CB46C3; Thu, 20 May
+ 2010 09:27:31 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 746E6028-6413-11DF-8489-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147387>
 
-On Thu, May 20, 2010 at 08:36:50AM -0400, Jeff King wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->   git log --graph --oneline --summary 212f0ba
-> 
-> Summary lines for some reason don't get properly indented or prefixed
-> with branch lines.
+> Tay Ray Chuan wrote:
+>> On Sat, May 15, 2010 at 12:17 AM, Jonathan Nieder <jrnieder@gmail.co=
+m> wrote:
+>
+>>> I think I see what you are saying, and for scripts, that really wou=
+ld
+>>> be the most useful thing. =C2=A0Then the script could use something=
+ like
+>>>
+>>> =C2=A0if test -z "$remote"
+>>> =C2=A0then
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0remote=3D$(git branch --get-remote --cur=
+rent)
+>>> =C2=A0fi
+>>> =C2=A0git ls-remote "$remote"
+>>
+>> Just curious - when did git-branch learn "--get-remote"? Or "--curre=
+nt"?
+>
+> It didn=E2=80=99t.  I was just saying that it should (or we should pr=
+ovide some
+> commands to that effect).  What do you think?
 
-This is my naive attempt at fixing it just by copying your other
-changes. However, it seems to sometimes put several copies of the prefix
-in front of summary lines (and sometimes the next commit line!?). So
-clearly there is something about the output prefix code that I don't
-quite understand.
-
-Maybe this is helpful, and maybe not. :)
-
-diff --git a/diff.c b/diff.c
-index 3a1e05a..656f40b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3460,27 +3460,41 @@ static void show_rename_copy(FILE *file, const char *renamecopy, struct diff_fil
- 	show_mode_change(file, p, 0);
- }
- 
--static void diff_summary(FILE *file, struct diff_filepair *p)
-+static void diff_summary(struct diff_options *opt, struct diff_filepair *p)
- {
-+	FILE *file = opt->file;
-+	char *line_prefix = "";
-+
-+	if (opt->output_prefix) {
-+		struct strbuf *buf = opt->output_prefix(file, opt->output_prefix_data);
-+		line_prefix = buf->buf;
-+	}
-+
- 	switch(p->status) {
- 	case DIFF_STATUS_DELETED:
-+		fputs(line_prefix, file);
- 		show_file_mode_name(file, "delete", p->one);
- 		break;
- 	case DIFF_STATUS_ADDED:
-+		fputs(line_prefix, file);
- 		show_file_mode_name(file, "create", p->two);
- 		break;
- 	case DIFF_STATUS_COPIED:
-+		fputs(line_prefix, file);
- 		show_rename_copy(file, "copy", p);
- 		break;
- 	case DIFF_STATUS_RENAMED:
-+		fputs(line_prefix, file);
- 		show_rename_copy(file, "rename", p);
- 		break;
- 	default:
- 		if (p->score) {
-+			fputs(line_prefix, file);
- 			fputs(" rewrite ", file);
- 			write_name_quoted(p->two->path, file, ' ');
- 			fprintf(file, "(%d%%)\n", similarity_index(p));
- 		}
-+		fputs(line_prefix, file);
- 		show_mode_change(file, p, !p->score);
- 		break;
- 	}
-@@ -3692,7 +3706,7 @@ void diff_flush(struct diff_options *options)
- 
- 	if (output_format & DIFF_FORMAT_SUMMARY && !is_summary_empty(q)) {
- 		for (i = 0; i < q->nr; i++)
--			diff_summary(options->file, q->queue[i]);
-+			diff_summary(options, q->queue[i]);
- 		separator++;
- 	}
- 
+I think you said what I meant to say much more clearly.  Thanks.
