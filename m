@@ -1,63 +1,62 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH next] Complete prototype of git_config_from_parameters()
-Date: Fri, 21 May 2010 12:07:47 +0200
-Message-ID: <0c117d8ae7550689d0f19814872ccefe68fb4e62.1274436375.git.trast@student.ethz.ch>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH next] Complete prototype of git_config_from_parameters()
+Date: Fri, 21 May 2010 12:18:01 +0200
+Message-ID: <AANLkTilhCcJ7Qsz_KL8ymhfkgy0_MtoE9WsVZp080YLi@mail.gmail.com>
+References: <0c117d8ae7550689d0f19814872ccefe68fb4e62.1274436375.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Alex Riesen <raa.lkml@gmail.com>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 21 12:08:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri May 21 12:18:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFP99-000279-Ll
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 12:08:03 +0200
+	id 1OFPIz-0005xz-Oe
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 12:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753254Ab0EUKH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 06:07:58 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:8605 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751280Ab0EUKH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 06:07:57 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 21 May
- 2010 12:07:56 +0200
-Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 21 May
- 2010 12:07:46 +0200
-X-Mailer: git-send-email 1.7.1.312.g24d42.dirty
+	id S1753526Ab0EUKSH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 May 2010 06:18:07 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:33691 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752415Ab0EUKSG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 May 2010 06:18:06 -0400
+Received: by gyg13 with SMTP id 13so374242gyg.19
+        for <git@vger.kernel.org>; Fri, 21 May 2010 03:18:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=POUl4eRP5PlMlfpMlGpEfN9T/RzqjsqAio+knFbGkEU=;
+        b=Z9cMqt/BM9613JgGSJ4isgdg579BbjGGjlHwG7F537BZMaMZ3dXbErMMjD4rgZF6yV
+         AG6wdErRNs6yLdl4i+yAjKYLJu5vD7EhC+7SA6qi1D5QQyPnpBmi6/bD+TpgBcpzeZ9Z
+         HOLZPa/HQdKNlwIY68+7osQNPfh3FlWlON9Dw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b4FhXpp5KdoXOztKoXEpl80Bpus+OvLfBDXN2h5usZkQdsDkk7hGCjMg2ULLK9TpMU
+         JINXdwngeOkzrIc8yjiJY8GSxDB5xaCy2sk9WuKJEaQRc7u42o5eXjPzmFpRIoiOr8Ke
+         coJgdqC1BOZa0xjPXuUg7F+oORClYl4lIoshE=
+Received: by 10.101.149.15 with SMTP id b15mr1691832ano.219.1274437081240; 
+	Fri, 21 May 2010 03:18:01 -0700 (PDT)
+Received: by 10.100.154.8 with HTTP; Fri, 21 May 2010 03:18:01 -0700 (PDT)
+In-Reply-To: <0c117d8ae7550689d0f19814872ccefe68fb4e62.1274436375.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147446>
 
-Add the missing argument list.  (Its lack triggered a compiler warning
-for me.)
+On Fri, May 21, 2010 at 12:07, Thomas Rast <trast@student.ethz.ch> wrot=
+e:
+> Add the missing argument list. =C2=A0(Its lack triggered a compiler w=
+arning
+> for me.)
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-On top of 8b1fa778, which is only in 'next' so far.
-
- cache.h |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 51d9678..c966023 100644
---- a/cache.h
-+++ b/cache.h
-@@ -940,7 +940,7 @@ typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
- extern int git_config_parse_parameter(const char *text);
--extern int git_config_from_parameters();
-+extern int git_config_from_parameters(config_fn_t fn, void *data);
- extern int git_config(config_fn_t fn, void *);
- extern int git_parse_ulong(const char *, unsigned long *);
- extern int git_config_int(const char *, const char *);
--- 
-1.7.1.312.g24d42.dirty
+Oh, thanks! I just forgot about the prototype from the previous iterati=
+ons.
