@@ -1,155 +1,289 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Re: [PATCH 0/6 v2] Make git log --graph looks better with -p and 
-	other diff options
-Date: Thu, 20 May 2010 18:49:20 -0700
-Message-ID: <AANLkTim5R94ZmIfujvhky5zFQYT5MIgJJ58tVnjvQkHF@mail.gmail.com>
-References: <1274351138-11813-1-git-send-email-struggleyb.nku@gmail.com>
-	 <20100520123650.GA7665@sigill.intra.peff.net>
-	 <20100520132425.GA5504@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, trast@student.ethz.ch
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 21 03:52:01 2010
+Subject: [PATCH 1/6 v3] Add a prefix output callback to diff output.
+Date: Thu, 20 May 2010 18:52:39 -0700
+Message-ID: <1274406764-32278-2-git-send-email-struggleyb.nku@gmail.com>
+References: <1274406764-32278-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, trast@student.ethz.ch, peff@peff.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 21 03:52:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFHP6-0003sj-VC
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 03:52:01 +0200
+	id 1OFHQ1-00049I-9g
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 03:52:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754856Ab0EUBtW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 May 2010 21:49:22 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:53113 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753054Ab0EUBtV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 May 2010 21:49:21 -0400
-Received: by qyk13 with SMTP id 13so796871qyk.1
-        for <git@vger.kernel.org>; Thu, 20 May 2010 18:49:20 -0700 (PDT)
+	id S1755364Ab0EUBwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 21:52:53 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:33687 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753163Ab0EUBwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 21:52:51 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 5so209656pwi.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 18:52:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sCQ3N5qU7A7sTfLZxiu9Ylt+agehq4Ah2Xm6Km8QP4A=;
-        b=OcVEs3SqheJOjGaNZQaMGK2dF1ws7bK+pIy/xiBv1JXkZ01Taj4NKhKDlH1rHW8yED
-         RkipfZzuLAziBJ0SO0Itt8nr8nzBdzukkAKRIg0HtAbr+OmMwYuPhLaDgezlX3hewIZF
-         zhqrVS/H+kWGcbm6mkKDvPO1GFXi9fUoq61+w=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=6EQ/iMTBu1qCiHRCnOT8zpBAGrY0fsq9kXwO5h6zHLs=;
+        b=YvYr0kiTVhG0WcAKpgyHeucQDQIJmxkREU/pad0Q94KFyWaI47vlfX1CZzeu/7sv8g
+         oh/itXUctYKIjCm22Wi/85pIsa2hgFseDcv0PiWkMY2tckSbdh7N+2GTddcgICX3Dy3v
+         jk/XvFvHdgyINrpox8laiYAO3PyoWsCBDzZT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AxlxDCu8VmNc3bYQjFQ0EjHfcRIqheyqHwQ1/0EwumaO8XXvAPe18NjzVeLbj3qNAa
-         B6m2ANd5kow4sfiTaa35obk/CHlqD7kK9KpVLFpJCeV6DBAl5ZgR19o/V9rW2he8dhMa
-         wR8nEZS4H+/onPltM8RcbCOM/DV0lsBv5a5VU=
-Received: by 10.229.213.199 with SMTP id gx7mr232037qcb.187.1274406560404; 
-	Thu, 20 May 2010 18:49:20 -0700 (PDT)
-Received: by 10.229.97.80 with HTTP; Thu, 20 May 2010 18:49:20 -0700 (PDT)
-In-Reply-To: <20100520132425.GA5504@coredump.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=O1JlO5ZnvIlnbBfJI2c7bTpAIbC9QxY9TSdstPSv35GUp8CPvm9P7gsJBwHzu9ms2i
+         UkVj5WsWl3RDQCfvbi7WYsT7Hr+OC+vV8w+oVn7ReYFWq/DZ1oUH+Ls+TqSjdoQ55r8R
+         Qzewz9nD6KAh+XO9jJgjRA7zceHlG9KfdElF4=
+Received: by 10.141.188.29 with SMTP id q29mr663035rvp.120.1274406771533;
+        Thu, 20 May 2010 18:52:51 -0700 (PDT)
+Received: from localhost.localdomain ([222.30.37.37])
+        by mx.google.com with ESMTPS id o38sm442378rvp.12.2010.05.20.18.52.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 20 May 2010 18:52:50 -0700 (PDT)
+X-Mailer: git-send-email 1.6.0.4
+In-Reply-To: <1274406764-32278-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147421>
 
-Hi Jeff,
-On Thu, May 20, 2010 at 6:24 AM, Jeff King <peff@peff.net> wrote:
-> On Thu, May 20, 2010 at 08:36:50AM -0400, Jeff King wrote:
->
->> =A0 git log --graph --oneline --summary 212f0ba
->>
->> Summary lines for some reason don't get properly indented or prefixe=
-d
->> with branch lines.
->
-> This is my naive attempt at fixing it just by copying your other
-> changes. However, it seems to sometimes put several copies of the pre=
-fix
-> in front of summary lines (and sometimes the next commit line!?). So
-> clearly there is something about the output prefix code that I don't
-> quite understand.
+The callback allow to output some prefix string for
+each line of diff output.
 
-Thanks a lot for reporting this bug. I would not to ignore the
---summary option, :) Thanks again!
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+---
+ diff.c |   56 ++++++++++++++++++++++++++++++++------------------------
+ diff.h |    5 +++++
+ 2 files changed, 37 insertions(+), 24 deletions(-)
 
-> Maybe this is helpful, and maybe not. :)
->
-> diff --git a/diff.c b/diff.c
-> index 3a1e05a..656f40b 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -3460,27 +3460,41 @@ static void show_rename_copy(FILE *file, cons=
-t char *renamecopy, struct diff_fil
-> =A0 =A0 =A0 =A0show_mode_change(file, p, 0);
-> =A0}
->
-> -static void diff_summary(FILE *file, struct diff_filepair *p)
-> +static void diff_summary(struct diff_options *opt, struct diff_filep=
-air *p)
-> =A0{
-> + =A0 =A0 =A0 FILE *file =3D opt->file;
-> + =A0 =A0 =A0 char *line_prefix =3D "";
-> +
-> + =A0 =A0 =A0 if (opt->output_prefix) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 struct strbuf *buf =3D opt->output_pref=
-ix(file, opt->output_prefix_data);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 line_prefix =3D buf->buf;
-> + =A0 =A0 =A0 }
-> +
-> =A0 =A0 =A0 =A0switch(p->status) {
-> =A0 =A0 =A0 =A0case DIFF_STATUS_DELETED:
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fputs(line_prefix, file);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0show_file_mode_name(file, "delete", p-=
->one);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break;
-> =A0 =A0 =A0 =A0case DIFF_STATUS_ADDED:
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fputs(line_prefix, file);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0show_file_mode_name(file, "create", p-=
->two);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break;
-> =A0 =A0 =A0 =A0case DIFF_STATUS_COPIED:
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fputs(line_prefix, file);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0show_rename_copy(file, "copy", p);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break;
-> =A0 =A0 =A0 =A0case DIFF_STATUS_RENAMED:
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fputs(line_prefix, file);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0show_rename_copy(file, "rename", p);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break;
-> =A0 =A0 =A0 =A0default:
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (p->score) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fputs(line_prefix, file=
-);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0fputs(" rewrite ", fil=
-e);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0write_name_quoted(p->t=
-wo->path, file, ' ');
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0fprintf(file, "(%d%%)\=
-n", similarity_index(p));
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fputs(line_prefix, file);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0show_mode_change(file, p, !p->score);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0break;
-> =A0 =A0 =A0 =A0}
-> @@ -3692,7 +3706,7 @@ void diff_flush(struct diff_options *options)
->
-> =A0 =A0 =A0 =A0if (output_format & DIFF_FORMAT_SUMMARY && !is_summary=
-_empty(q)) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0for (i =3D 0; i < q->nr; i++)
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 diff_summary(options->f=
-ile, q->queue[i]);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 diff_summary(options, q=
-->queue[i]);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0separator++;
-> =A0 =A0 =A0 =A0}
-
-Ah, thanks for patch and of course it helps! I have make --summary
-works well and make some other changes for the output_prefix call, and
-I will resend the series later. Thanks!
-
-Regards!
-Bo
---=20
-My blog: http://blog.morebits.org
+diff --git a/diff.c b/diff.c
+index 43a313d..78bd633 100644
+--- a/diff.c
++++ b/diff.c
+@@ -194,8 +194,8 @@ struct emit_callback {
+ 	sane_truncate_fn truncate;
+ 	const char **label_path;
+ 	struct diff_words_data *diff_words;
++	struct diff_options *opt;
+ 	int *found_changesp;
+-	FILE *file;
+ 	struct strbuf *header;
+ };
+ 
+@@ -282,11 +282,19 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+ 	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
+ }
+ 
+-static void emit_line_0(FILE *file, const char *set, const char *reset,
++static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
+ 			int first, const char *line, int len)
+ {
+ 	int has_trailing_newline, has_trailing_carriage_return;
+ 	int nofirst;
++	FILE *file = o->file;
++
++	if (o->output_prefix) {
++		struct strbuf *msg = NULL;
++		msg = o->output_prefix(o, o->output_prefix_data);
++		assert(msg);
++		fwrite(msg->buf, msg->len, 1, file);
++	}
+ 
+ 	if (len == 0) {
+ 		has_trailing_newline = (first == '\n');
+@@ -316,10 +324,10 @@ static void emit_line_0(FILE *file, const char *set, const char *reset,
+ 		fputc('\n', file);
+ }
+ 
+-static void emit_line(FILE *file, const char *set, const char *reset,
++static void emit_line(struct diff_options *o, const char *set, const char *reset,
+ 		      const char *line, int len)
+ {
+-	emit_line_0(file, set, reset, line[0], line+1, len-1);
++	emit_line_0(o, set, reset, line[0], line+1, len-1);
+ }
+ 
+ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
+@@ -341,15 +349,15 @@ static void emit_add_line(const char *reset,
+ 	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_NEW);
+ 
+ 	if (!*ws)
+-		emit_line_0(ecbdata->file, set, reset, '+', line, len);
++		emit_line_0(ecbdata->opt, set, reset, '+', line, len);
+ 	else if (new_blank_line_at_eof(ecbdata, line, len))
+ 		/* Blank line at EOF - paint '+' as well */
+-		emit_line_0(ecbdata->file, ws, reset, '+', line, len);
++		emit_line_0(ecbdata->opt, ws, reset, '+', line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line_0(ecbdata->file, set, reset, '+', "", 0);
++		emit_line_0(ecbdata->opt, set, reset, '+', "", 0);
+ 		ws_check_emit(line, len, ecbdata->ws_rule,
+-			      ecbdata->file, set, reset, ws);
++			      ecbdata->opt->file, set, reset, ws);
+ 	}
+ }
+ 
+@@ -370,23 +378,23 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	if (len < 10 ||
+ 	    memcmp(line, atat, 2) ||
+ 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
+-		emit_line(ecbdata->file, plain, reset, line, len);
++		emit_line(ecbdata->opt, plain, reset, line, len);
+ 		return;
+ 	}
+ 	ep += 2; /* skip over @@ */
+ 
+ 	/* The hunk header in fraginfo color */
+-	emit_line(ecbdata->file, frag, reset, line, ep - line);
++	emit_line(ecbdata->opt, frag, reset, line, ep - line);
+ 
+ 	/* blank before the func header */
+ 	for (cp = ep; ep - line < len; ep++)
+ 		if (*ep != ' ' && *ep != '\t')
+ 			break;
+ 	if (ep != cp)
+-		emit_line(ecbdata->file, plain, reset, cp, ep - cp);
++		emit_line(ecbdata->opt, plain, reset, cp, ep - cp);
+ 
+ 	if (ep < line + len)
+-		emit_line(ecbdata->file, func, reset, ep, line + len - ep);
++		emit_line(ecbdata->opt, func, reset, ep, line + len - ep);
+ }
+ 
+ static struct diff_tempfile *claim_diff_tempfile(void) {
+@@ -446,7 +454,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 		len = endp ? (endp - data + 1) : size;
+ 		if (prefix != '+') {
+ 			ecb->lno_in_preimage++;
+-			emit_line_0(ecb->file, old, reset, '-',
++			emit_line_0(ecb->opt, old, reset, '-',
+ 				    data, len);
+ 		} else {
+ 			ecb->lno_in_postimage++;
+@@ -458,7 +466,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 	if (!endp) {
+ 		const char *plain = diff_get_color(ecb->color_diff,
+ 						   DIFF_PLAIN);
+-		emit_line_0(ecb->file, plain, reset, '\\',
++		emit_line_0(ecb->opt, plain, reset, '\\',
+ 			    nneof, strlen(nneof));
+ 	}
+ }
+@@ -508,7 +516,7 @@ static void emit_rewrite_diff(const char *name_a,
+ 	ecbdata.color_diff = color_diff;
+ 	ecbdata.found_changesp = &o->found_changes;
+ 	ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
+-	ecbdata.file = o->file;
++	ecbdata.opt = o;
+ 	if (ecbdata.ws_rule & WS_BLANK_AT_EOF) {
+ 		mmfile_t mf1, mf2;
+ 		mf1.ptr = (char *)data_one;
+@@ -786,7 +794,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
+ 
+ 	if (ecbdata->header) {
+-		fprintf(ecbdata->file, "%s", ecbdata->header->buf);
++		fprintf(ecbdata->opt->file, "%s", ecbdata->header->buf);
+ 		strbuf_reset(ecbdata->header);
+ 		ecbdata->header = NULL;
+ 	}
+@@ -798,9 +806,9 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
+ 		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
+ 
+-		fprintf(ecbdata->file, "%s--- %s%s%s\n",
++		fprintf(ecbdata->opt->file, "%s--- %s%s%s\n",
+ 			meta, ecbdata->label_path[0], reset, name_a_tab);
+-		fprintf(ecbdata->file, "%s+++ %s%s%s\n",
++		fprintf(ecbdata->opt->file, "%s+++ %s%s%s\n",
+ 			meta, ecbdata->label_path[1], reset, name_b_tab);
+ 		ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
+ 	}
+@@ -818,12 +826,12 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		find_lno(line, ecbdata);
+ 		emit_hunk_header(ecbdata, line, len);
+ 		if (line[len-1] != '\n')
+-			putc('\n', ecbdata->file);
++			putc('\n', ecbdata->opt->file);
+ 		return;
+ 	}
+ 
+ 	if (len < 1) {
+-		emit_line(ecbdata->file, reset, reset, line, len);
++		emit_line(ecbdata->opt, reset, reset, line, len);
+ 		return;
+ 	}
+ 
+@@ -840,7 +848,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		diff_words_flush(ecbdata);
+ 		line++;
+ 		len--;
+-		emit_line(ecbdata->file, plain, reset, line, len);
++		emit_line(ecbdata->opt, plain, reset, line, len);
+ 		return;
+ 	}
+ 
+@@ -851,7 +859,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		ecbdata->lno_in_preimage++;
+ 		if (line[0] == ' ')
+ 			ecbdata->lno_in_postimage++;
+-		emit_line(ecbdata->file, color, reset, line, len);
++		emit_line(ecbdata->opt, color, reset, line, len);
+ 	} else {
+ 		ecbdata->lno_in_postimage++;
+ 		emit_add_line(reset, ecbdata, line + 1, len - 1);
+@@ -1416,7 +1424,7 @@ static void checkdiff_consume(void *priv, char *line, unsigned long len)
+ 		fprintf(data->o->file, "%s:%d: %s.\n",
+ 			data->filename, data->lineno, err);
+ 		free(err);
+-		emit_line(data->o->file, set, reset, line, 1);
++		emit_line(data->o, set, reset, line, 1);
+ 		ws_check_emit(line + 1, len - 1, data->ws_rule,
+ 			      data->o->file, set, reset, ws);
+ 	} else if (line[0] == ' ') {
+@@ -1726,7 +1734,7 @@ static void builtin_diff(const char *name_a,
+ 		ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
+ 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
+ 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
+-		ecbdata.file = o->file;
++		ecbdata.opt = o;
+ 		ecbdata.header = header.len ? &header : NULL;
+ 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+ 		xecfg.ctxlen = o->context;
+diff --git a/diff.h b/diff.h
+index 6a71013..62a08d7 100644
+--- a/diff.h
++++ b/diff.h
+@@ -9,6 +9,7 @@
+ struct rev_info;
+ struct diff_options;
+ struct diff_queue_struct;
++struct strbuf;
+ 
+ typedef void (*change_fn_t)(struct diff_options *options,
+ 		 unsigned old_mode, unsigned new_mode,
+@@ -25,6 +26,8 @@ typedef void (*add_remove_fn_t)(struct diff_options *options,
+ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
+ 		struct diff_options *options, void *data);
+ 
++typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data);
++
+ #define DIFF_FORMAT_RAW		0x0001
+ #define DIFF_FORMAT_DIFFSTAT	0x0002
+ #define DIFF_FORMAT_NUMSTAT	0x0004
+@@ -122,6 +125,8 @@ struct diff_options {
+ 	add_remove_fn_t add_remove;
+ 	diff_format_fn_t format_callback;
+ 	void *format_callback_data;
++	diff_prefix_fn_t output_prefix;
++	void *output_prefix_data;
+ };
+ 
+ enum color_diff {
+-- 
+1.6.0.4
