@@ -1,113 +1,81 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH] edit: Allow setting git tree SHA1 of a patch
-Date: Fri, 21 May 2010 17:29:52 +0200
-Message-ID: <u5twrux6znz.fsf@beatles.e.vtech>
-References: <20100516172738.5043.94039.stgit@localhost.localdomain>
-	<AANLkTikcG3Chw1cpiKB00MrnZz-HZk9xAF_KtTTiVECi@mail.gmail.com>
-	<u5tzkzt73us.fsf@beatles.e.vtech>
-	<AANLkTilV3VQARdyZ-m9GCXz1Rwt0j6Q6noNyFrmmDzR5@mail.gmail.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: [PATCH] perl shebangs: Use /usr/bin/env, not /usr/bin/perl
+Date: Fri, 21 May 2010 08:32:53 -0700
+Message-ID: <86tyq1gti2.fsf@red.stonehenge.com>
+References: <1274453455-1941-1-git-send-email-avarab@gmail.com>
+	<1274454086-2312-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kha@treskal.com,
-	Gustav =?utf-8?Q?H=C3=A5llberg?= <gustav@gmail.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 21 17:30:12 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 21 17:33:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFUAt-0001d3-6v
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 17:30:11 +0200
+	id 1OFUDc-00036o-Gt
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 17:33:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933001Ab0EUPaE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 May 2010 11:30:04 -0400
-Received: from [62.20.90.206] ([62.20.90.206]:60936 "EHLO beatles.e.vtech"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758080Ab0EUPaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 11:30:03 -0400
-Received: from beatles.e.vtech (localhost.localdomain [127.0.0.1])
-	by beatles.e.vtech (8.13.1/8.13.1) with ESMTP id o4LFTw4c003564;
-	Fri, 21 May 2010 17:29:58 +0200
-Received: (from david@localhost)
-	by beatles.e.vtech (8.13.1/8.13.1/Submit) id o4LFTqlX003561;
-	Fri, 21 May 2010 17:29:52 +0200
-X-Authentication-Warning: beatles.e.vtech: david set sender to davidk@lysator.liu.se using -f
-In-Reply-To: <AANLkTilV3VQARdyZ-m9GCXz1Rwt0j6Q6noNyFrmmDzR5@mail.gmail.com>
-	(Catalin Marinas's message of "Fri, 21 May 2010 16:16:18 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S933561Ab0EUPcz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 May 2010 11:32:55 -0400
+Received: from red.stonehenge.com ([208.79.95.2]:11908 "EHLO
+	red.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758226Ab0EUPcy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 May 2010 11:32:54 -0400
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 53D0219C04; Fri, 21 May 2010 08:32:54 -0700 (PDT)
+x-mayan-date: Long count = 12.19.17.6.15; tzolkin = 8 Men; haab = 8 Zip
+In-Reply-To: <1274454086-2312-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 21 May
+ 2010 15:01:26 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147469>
 
-Catalin Marinas <catalin.marinas@gmail.com> writes:
+>>>>> "=C3=86var" =3D=3D =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab=
+@gmail.com> writes:
 
-> On 21 May 2010 14:59, David K=C3=A5gedal <davidk@lysator.liu.se> wrot=
-e:
->> Catalin Marinas <catalin.marinas@gmail.com> writes:
->>> 2010/5/16 Gustav H=C3=A5llberg <gustav@gmail.com>:
->>>> I would like to have something similar to this patch, which allows=
- for
->>>> setting the (git) tree of a particular patch. I would like to use =
-it
->>>> (from the Emacs mode) to make it easier to split an old patch into=
- two
->>>> (or more).
->>>>
->>>> It might be that this is too "powerful" (read: unsafe), and maybe =
-a
->>>> better (safer) command would use whatever is currently in the inde=
-x
->>>> rather than a SHA1.
->>>
->>> I'm not against such option (as long as it is somehow mentioned tha=
-t's
->>> dangerous) though I don't fully understand how one would use it,
->>> especially when the patch is buried under other patches. With a ser=
-ies
->>> of patches, any easily accessible tree (sha1) belongs to one of the
->>> patches.
->>
->> The idea is that Gustav wants to allow the editing of a file as it
->> appears in an earlier version. Lets say you have patches A, B, C and
->> D. You realize that one of the changes in to foo.c in C shuold reall=
-y be
->> done in A. So you open the "A version of foo.c" in your editor, do t=
-he
->> change, and then save it. The save operation needs to update A to be
->> the new tree that contains the updated foo.c, and the remaining patc=
-hes
->> will keep their tree. The effect is that the moved change now appear=
-s as
->> a diff in A, but not in C (nor B or D).
->
-> This is currently achieved by "pop B C D", edit file, "refresh", "pus=
-h
-> --set-tree B C D".
+=C3=86var> Change the Perl Git utilities to use #!/usr/bin/env perl as =
+a shebang
+=C3=86var> instead of #!/usr/bin/perl. This makes e.g. git-send-email w=
+ork if
+=C3=86var> your personal perl has Net::SMTP::SSL, but your system perl
+=C3=86var> doesn't.
 
-Exactly. But I realize that my example was poor, since this will make B
-revert the change and then C reintroduce it. But perhaps this is
-actually a defect of the propsed usage model. Gustav, did you think
-about this?
+Not a good idea in general.
 
-> Can "edit --set-tree <sha1>" make this simpler?
+=C3=86var> With this change all the code in Git that uses a shebang now=
+ uses
+=C3=86var> /usr/bin/env, except those things that use /bin/sh and /bin/=
+bash. All
+=C3=86var> the Python code already used it, and some of the Perl code.
 
-One think I can think of is that it doesn't have to worry about
-modifications to the work tree or the index.
+Sorry I didn't catch this earlier then.
 
-> Which <sha1> value would be used with "edit --set-tree" (unless that'=
-s
-> done by Emacs mode behind the scene and it generates the tree that
-> gets passed to edit).
+I often have an "experimental" Perl earlier in my path than the
+"official" Perl.  This would mean that I'd get different behaviors
+running git from the command line than I would from automated tools, an=
+d
+it would be relatively confusing.
 
-Yes, that would be up to the tool (emacs in this case) to figure out. I
-could probably give a couple of examples when a user could do it
-manually, but for those cases the normal push/pop/refresh operations
-should be good enough.
+The official Perl should be in /usr/bin or /usr/local/bin, and that's
+the one you should use with Git.  *Or*, give the installer a knob to
+configure.
+
+But please don't use env.  Heck, some systems might not even *have*
+env.  And some systems have it in /bin and not /usr/bin.  Don't ruin
+portablity at this point, please.
 
 --=20
-David K=C3=A5gedal
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 =
+0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discus=
+sion
