@@ -1,78 +1,148 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Changing indents
-Date: Fri, 21 May 2010 09:30:13 -0700 (PDT)
-Message-ID: <m3vdahqkuw.fsf@localhost.localdomain>
-References: <C0CDDC0A-A813-41C3-8CEC-40EFADFB5A4A@kellerfarm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Fri May 21 18:30:30 2010
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: Re: [PATCH RFC] Add a config verbose option fetch and push
+Date: Fri, 21 May 2010 08:26:11 -0500
+Message-ID: <4bf6b6f5.dd79dc0a.5533.2acd@mx.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 21 18:38:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFV7G-0001Oz-0Q
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 18:30:30 +0200
+	id 1OFVEv-0005Wj-RF
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 18:38:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933741Ab0EUQaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 12:30:19 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40113 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758503Ab0EUQaP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 12:30:15 -0400
-Received: by fxm5 with SMTP id 5so1021981fxm.19
-        for <git@vger.kernel.org>; Fri, 21 May 2010 09:30:14 -0700 (PDT)
+	id S934008Ab0EUQiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 12:38:19 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:54448 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933996Ab0EUQiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 12:38:17 -0400
+Received: by vws9 with SMTP id 9so985493vws.19
+        for <git@vger.kernel.org>; Fri, 21 May 2010 09:38:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=EDKJql973VOJieWq3RrVfd75W3J+fA351pGymeZUV6o=;
-        b=ST7IwkZCFwWGf3Mk4ptSG0ZODIff4U+x+7UBzICcXFf/wmsZa+kz5kvXWIlaTETAVZ
-         wwIrmEp1SmFykILvU7E5C4oWY+MlE+lkQD66XBnvVsWhvJRDhLdG6Bvo/Yjh34ZYX98K
-         4/Ulj9Kl+RVa/0tWK9YMUuzHtaLd/a2PlCM/4=
+        h=domainkey-signature:received:received:message-id:from:date:subject
+         :to;
+        bh=Qs2+HA+k584qYnSShFtFicOKNLoLe4xJb9jHobicBW0=;
+        b=RacEppHMcy++cE6q9Sp7F+0b+hZzafpykQJEEdUQEP4VcZPyfRMutDp0Aaj8TxQ1nd
+         sVeWjWvR6uL66qDsu+a9yk/ZyJkgls843YpXsBnZoT80xpk2pwONYKscueT+C7cJLWWL
+         a/67h2Ra6sXeKTngxHwWYcukXlUS/F9A+Mf5U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=N+RKH1yjQbV//ykGpe3vO0xKfh90TuLG19y2qE/IURzrouYAaxnqtXjn9HWO+lKymW
-         HK6zuF7nWXkVHghGyIyKB4jUCk9CTdlFCySjF708QF9PhjMGrN1a53MZQkLE5RqZQqf+
-         a6YCjS1RyHXCNUzlVNY40KbQj+SgNE21pCpsw=
-Received: by 10.223.54.140 with SMTP id q12mr1691357fag.50.1274459413687;
-        Fri, 21 May 2010 09:30:13 -0700 (PDT)
-Received: from localhost.localdomain (abvl111.neoplus.adsl.tpnet.pl [83.8.209.111])
-        by mx.google.com with ESMTPS id j23sm5239509faa.2.2010.05.21.09.30.12
+        h=message-id:from:date:subject:to;
+        b=QC+zLaibUmVkqxJEjG59b45ctXNFqE8L7G0j39VRHA/OpGZYB3qwC2Lgma5mRyWTnY
+         08s+wx0zt56qVazNK7HgVcUVKJ/Sc8nNuRcGyxWx2hlYCMMID7i8uh65lrIIPYtnIAvP
+         DXRc3L0EMWRoSXmg5B0iPOJkYFFes3GalxZrI=
+Received: by 10.220.123.68 with SMTP id o4mr1212727vcr.148.1274459894154;
+        Fri, 21 May 2010 09:38:14 -0700 (PDT)
+Received: from localhost ([144.92.149.203])
+        by mx.google.com with ESMTPS id i29sm5212276vcr.0.2010.05.21.09.38.12
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 21 May 2010 09:30:13 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o4LGThs0011557;
-	Fri, 21 May 2010 18:29:54 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o4LGTRdx011552;
-	Fri, 21 May 2010 18:29:27 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <C0CDDC0A-A813-41C3-8CEC-40EFADFB5A4A@kellerfarm.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Fri, 21 May 2010 09:38:13 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147482>
 
-Andrew Keller <andrew@kellerfarm.com> writes:
+---
+>> 
+>> +fetch.verbose::
+>> +	If true, it is the same as setting "-v" on the command line. If it is
+>> +	false or not defined, git will use the command line parameters to
+>> +	decide the verboseness of fetch.
+>> +
+> 
+> Don't you usually use the configured option as the default, and 
+> then let the command line options override it (e.g., by specifying
+> --no-verbose).
+> 
+> //Peter
+> 
 
-> Is it possible to change the indent of a line (or multiple lines)
-> without rewriting the whole line?  Or, more specifically, can a
-> commit exist that modifies the leading whitespace of a line but
-> still allows you to trace the origin of the line to a previous
-> commit?
+This patch fixes this objection.
 
-Whatever for?  Use "git blame -w <file>" (ignore whitespace).
+ Documentation/config.txt |    7 +++++++
+ builtin/fetch.c          |    7 +++++++
+ builtin/push.c           |    7 +++++++
+ 3 files changed, 21 insertions(+), 0 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 39140ba..fc88d02 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -860,6 +860,9 @@ fetch.unpackLimit::
+ 	especially on slow filesystems.  If not set, the value of
+ 	`transfer.unpackLimit` is used instead.
+ 
++fetch.verbose::
++	If true, it is the same as setting "-v" on the command line.
++
+ format.attach::
+ 	Enable multipart/mixed attachments as the default for
+ 	'format-patch'.  The value can also be a double quoted string
+@@ -1495,6 +1498,10 @@ push.default::
+ * `tracking` push the current branch to its upstream branch.
+ * `current` push the current branch to a branch of the same name.
+ 
++push.verbose::
++	If true, it is the same as using the '-v' flag on the command
++	line.
++
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 8470850..f4832fe 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -885,6 +885,12 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ 	return exit_code;
+ }
+ 
++static int git_fetch_verbose_config(const char *var,const char *value, void *dummy)
++{
++	if(!strcmp("fetch.verbose",var))
++		verbosity = git_config_maybe_bool(NULL,value);
++}
++
+ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -897,6 +903,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	for (i = 1; i < argc; i++)
+ 		strbuf_addf(&default_rla, " %s", argv[i]);
+ 
++	git_config(git_fetch_verbose_config,NULL);
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_fetch_options, builtin_fetch_usage, 0);
+ 
+diff --git a/builtin/push.c b/builtin/push.c
+index f4358b9..e907b11 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -202,6 +202,12 @@ static int do_push(const char *repo, int flags)
+ 	return !!errs;
+ }
+ 
++static int git_push_verbose_config(const char *var, const char *value, void *d)
++{
++	if(!strcmp("push.verbose",var))
++		verbosity = git_config_maybe_bool(NULL,value);
++}
++
+ int cmd_push(int argc, const char **argv, const char *prefix)
+ {
+ 	int flags = 0;
+@@ -229,6 +235,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	};
+ 
+ 	git_config(git_default_config, NULL);
++	git_config(git_push_verbose_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
+ 
+ 	if (deleterefs && (tags || (flags & (TRANSPORT_PUSH_ALL | TRANSPORT_PUSH_MIRROR))))
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.1.97.gf85c7
