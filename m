@@ -1,87 +1,105 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH] edit: Allow setting git tree SHA1 of a patch
-Date: Fri, 21 May 2010 15:59:23 +0200
-Message-ID: <u5tzkzt73us.fsf@beatles.e.vtech>
-References: <20100516172738.5043.94039.stgit@localhost.localdomain>
-	<AANLkTikcG3Chw1cpiKB00MrnZz-HZk9xAF_KtTTiVECi@mail.gmail.com>
+From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+Subject: RE: Use "git pull --ff-only" by default?
+Date: Fri, 21 May 2010 16:47:49 +0200
+Message-ID: <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
+References: <A612847CFE53224C91B23E3A5B48BAC74483234E90@xmail3.se.axis.com>
+ <4BF68F5F.9010309@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kha@treskal.com, git@vger.kernel.org
-To: Gustav =?utf-8?Q?H=C3=A5llberg?= <gustav@gmail.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 21 16:16:19 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri May 21 16:48:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFT1O-0003Ey-P1
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 16:16:19 +0200
+	id 1OFTWH-00042K-7z
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 16:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666Ab0EUOQN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 May 2010 10:16:13 -0400
-Received: from [62.20.90.206] ([62.20.90.206]:41422 "EHLO beatles.e.vtech"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753666Ab0EUOQM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 10:16:12 -0400
-X-Greylist: delayed 999 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 May 2010 10:16:12 EDT
-Received: from beatles.e.vtech (localhost.localdomain [127.0.0.1])
-	by beatles.e.vtech (8.13.1/8.13.1) with ESMTP id o4LDxS75030483;
-	Fri, 21 May 2010 15:59:28 +0200
-Received: (from david@localhost)
-	by beatles.e.vtech (8.13.1/8.13.1/Submit) id o4LDxNgF030482;
-	Fri, 21 May 2010 15:59:23 +0200
-X-Authentication-Warning: beatles.e.vtech: david set sender to davidk@lysator.liu.se using -f
-In-Reply-To: <AANLkTikcG3Chw1cpiKB00MrnZz-HZk9xAF_KtTTiVECi@mail.gmail.com>
-	(Catalin Marinas's message of "Fri, 21 May 2010 13:37:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1757715Ab0EUOsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 10:48:08 -0400
+Received: from miranda.se.axis.com ([193.13.178.8]:53037 "EHLO
+	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757473Ab0EUOsA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 May 2010 10:48:00 -0400
+Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
+	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o4LElofW028542;
+	Fri, 21 May 2010 16:47:50 +0200
+Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
+ ([10.0.5.75]) with mapi; Fri, 21 May 2010 16:47:50 +0200
+Thread-Topic: Use "git pull --ff-only" by default?
+Thread-Index: Acr47JI7xiBS7PbMRqmHvGdNRCrpEAABt+lA
+In-Reply-To: <4BF68F5F.9010309@drmicha.warpmail.net>
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, sv-SE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147458>
 
-Catalin Marinas <catalin.marinas@gmail.com> writes:
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Michael J Gruber
+> Sent: den 21 maj 2010 15:49
+> To: Peter Kjellerstedt
+> Cc: git@vger.kernel.org
+> Subject: Re: Use "git pull --ff-only" by default?
+> 
+> Peter Kjellerstedt venit, vidit, dixit 21.05.2010 14:59:
+> > Is there some way to make "git pull --ff-only" be the default?
+> > I could not find anything about this in "git config --help" and
+> > also the lack of a --no-ff-only option for git pull (it exists
+> > for git merge) indicates that there is no such support.
+> >
+> > I did considered the branch.<name>.mergeoptions configuration
+> > option, but it does not seem appropriate as it only applies to
+> > a specific branch, whereas I want it to apply to all branches
+> > by default.
+> >
+> > Yes, I know I could do "git config alias.pl 'pull --ff-only'",
+> > but since my intensions are for this to be the default for all
+> > developers in our organization (most of whom have no git knowledge
+> > at all yet) to avoid unnecessary branches caused by the developers
+> > hacking directly on master rather than a topic branch, I would
+> > very much prefer a configuration option rather than an alias (as
+> > I am unlikely to get the developers to remember to do "git pl"
+> > instead of "git pull").
+> 
+> Problem is they have to remember to set your new config, or, if you are
+> able to set all developers system config, they have to refrain from
+> overriding it.
 
-> Hi Gustav,
->
-> 2010/5/16 Gustav H=C3=A5llberg <gustav@gmail.com>:
->> I would like to have something similar to this patch, which allows f=
-or
->> setting the (git) tree of a particular patch. I would like to use it
->> (from the Emacs mode) to make it easier to split an old patch into t=
-wo
->> (or more).
->>
->> It might be that this is too "powerful" (read: unsafe), and maybe a
->> better (safer) command would use whatever is currently in the index
->> rather than a SHA1.
->
-> I'm not against such option (as long as it is somehow mentioned that'=
-s
-> dangerous) though I don't fully understand how one would use it,
-> especially when the patch is buried under other patches. With a serie=
-s
-> of patches, any easily accessible tree (sha1) belongs to one of the
-> patches.
+They would get it by default from our setup scripts. If they then 
+choose to turn it off, so be it.
 
-The idea is that Gustav wants to allow the editing of a file as it
-appears in an earlier version. Lets say you have patches A, B, C and
-D. You realize that one of the changes in to foo.c in C shuold really b=
-e
-done in A. So you open the "A version of foo.c" in your editor, do the
-change, and then save it. The save operation needs to update A to be
-the new tree that contains the updated foo.c, and the remaining patches
-will keep their tree. The effect is that the moved change now appears a=
-s
-a diff in A, but not in C (nor B or D).
+> > My idea was to add something like merge.options and pull.options
+> > as configuration options (I want to be able to specify the options
+> > separately for pull and merge). However, I wanted throw this out
+> > here first before starting to hack away at the code, in case I
+> > missed something obvious, or if others find this to be an
+> > incredibly stupid idea...
+> 
+> In general, you can't control reliably what people do in their repos.
 
-Working like this means that we don't really see the series as a string
-of pateches, but as a series of named commits that we can go back and
-edit. But this is a natural way of working with it once the tools get
-powerful enough to support it.
+I sure wish I had more control over it, but that is a separate 
+discussion. ;)
 
---=20
-David K=C3=A5gedal
+> But you can control what kind of pushes into a central repo you allow.
+> That is the usual approach: Let them mess up their repos, they'll learn
+> their lesson when they can't push ;)
+
+Can you differentiate between an automatic merge which happened
+because the user had made some local changes before pulling (which
+I do not want to appear in the central repo), and a real merge of 
+a topic branch (which I do want)?
+
+> Michael
+
+//Peter
