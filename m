@@ -1,66 +1,78 @@
-From: "Gary V. Vaughan" <gary@gnu.org>
-Subject: Re: [SCM] GNU Libtool annotated tag, v2.2.7b, created. v2.2.7b
-Date: Fri, 21 May 2010 12:52:12 +0700
-Message-ID: <A3F5E117-5E3D-4C9B-97A9-5C75D0ACF8E2@gnu.org>
-References: <E1OFFfN-0003gH-6w@vcs-noshell.in.savannah.gnu.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: libtool-commit@gnu.org, git@vger.kernel.org
-To: "Gary V. Vaughan" <gary@gnu.org>
-X-From: git-owner@vger.kernel.org Fri May 21 07:53:12 2010
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [ot] Re: gitblogger
+Date: Fri, 21 May 2010 09:57:57 +0100
+Message-ID: <ht5huo$nd1$1@dough.gmane.org>
+References: <ht3reo$b6i$1@dough.gmane.org> <AANLkTilpaRyrIgHN5eK_jRFJoukOSYlyEMwU1-LdGT0K@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 21 10:58:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFLAV-0008LG-5B
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 07:53:11 +0200
+	id 1OFO3d-0006Lw-FX
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 10:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754809Ab0EUFxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 01:53:05 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:34306 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754702Ab0EUFxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 01:53:04 -0400
-Received: from homiemail-a22.g.dreamhost.com (mailbigip.dreamhost.com [208.97.132.5])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id 6EA8027403B
-	for <git@vger.kernel.org>; Thu, 20 May 2010 22:53:02 -0700 (PDT)
-Received: from [192.168.1.3] (unknown [110.164.248.181])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: gary@vaughan.pe)
-	by homiemail-a22.g.dreamhost.com (Postfix) with ESMTPSA id 5461F1A8063;
-	Thu, 20 May 2010 22:52:20 -0700 (PDT)
-In-Reply-To: <E1OFFfN-0003gH-6w@vcs-noshell.in.savannah.gnu.org>
-X-Mailer: Apple Mail (2.1078)
+	id S1752831Ab0EUI6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 04:58:11 -0400
+Received: from lo.gmane.org ([80.91.229.12]:57708 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751219Ab0EUI6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 04:58:10 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OFO3U-0006II-0U
+	for git@vger.kernel.org; Fri, 21 May 2010 10:58:08 +0200
+Received: from 194.70.53.228 ([194.70.53.228])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 May 2010 10:58:08 +0200
+Received: from andyparkins by 194.70.53.228 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 21 May 2010 10:58:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 194.70.53.228
+User-Agent: KNode/4.4.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147442>
 
-Git bug?  Or am I misunderstanding something?
+Ping Yin wrote:
 
-On 21 May 2010, at 07:00, Gary V. Vaughan wrote:
-> This is an automated email from the git hooks/post-receive script. It was
-> generated because a ref change was pushed to the repository containing
-> the project "GNU Libtool".
+>> http://gitorious.org/git_blogger
+>>
 > 
-> The annotated tag, v2.2.7b has been created
->        at  13412c2e2dfe7a720483c8d1dc98ca21c13c0483 (tag)
->   tagging  99da5501fcca20d7cab7f328e223c7520c1a6701 (commit)
->  replaces  v2.2.6
-   ^^^^^^^
-> tagged by  Gary V. Vaughan
->        on  Fri May 21 06:26:53 2010 +0700
+> You may want to have a look at toto ( http://github.com/cloudhead/toto )
+> git + github + herokou + markdown + txt store
 
-This implies v2.2.6 tag was removed, and v2.2.7b was created in its place.
-And yet in a freshly cloned tree I still see the v2.2.6 tag at commit
-c7f97f395615fb62c96de30c6925484ecd0cee2e.  I'm running git version 1.6.6.1.
+Maybe I've misunderstood, but isn't this just a similar thing to ikiwiki?  I 
+realise it's not a full wiki, but this toto still requires self-hosting of 
+the blog?
 
-Cheers,
-Gary
+I really wanted to be able to make someone else (Google) do the hosting for 
+me, but still be able to use lovely txt + git.
+
+The advantage (to me) of gitblogger was that it was simple: one post-receive 
+hook, and only needed installing on the one central server.
+
+(Regardless, my point was only to give some feedback and encouragement (and 
+thanks) to the developers who add these features.  To show that their work 
+is being used and is appreciated.  gitblogger is just a script I wrote for 
+me, and published in case it was useful to someone else)
+
+
+
+Andy
+
 -- 
-Gary V. Vaughan <gary@gnu.org>
+Dr Andy Parkins
+andyparkins@gmail.com
