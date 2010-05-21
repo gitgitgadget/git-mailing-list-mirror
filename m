@@ -1,86 +1,98 @@
-From: Jack Moore <jhmoore719@verizon.net>
-Subject: Migrate an svn repo to git - Where did all the branches got? and tags?
-Date: Thu, 20 May 2010 21:20:18 -0700
-Message-ID: <CFE20E75-F23D-41EA-89AA-2FF59BFA5DF9@verizon.net>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Jack Moore <jhmoore719@verizon.net>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: [PATCH 5/7] Add support for case insensitive directory and file lookups to git log
+Date: Thu, 20 May 2010 22:50:33 -0600
+Message-ID: <1274417435-2344-6-git-send-email-jjensen@workspacewhiz.com>
+References: <1274417435-2344-1-git-send-email-jjensen@workspacewhiz.com>
+Cc: Joshua Jensen <jjensen@workspacewhiz.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 21 06:20:42 2010
+X-From: git-owner@vger.kernel.org Fri May 21 06:50:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFJix-0008IF-K2
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 06:20:39 +0200
+	id 1OFKCE-0007X7-Bm
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 06:50:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428Ab0EUEUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 00:20:34 -0400
-Received: from vms173013pub.verizon.net ([206.46.173.13]:24781 "EHLO
-	vms173013pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751064Ab0EUEUd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 May 2010 00:20:33 -0400
-Received: from [192.168.1.102] ([unknown] [173.58.219.82])
- by vms173013.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0L2R00MMF5DUIT30@vms173013.mailsrvcs.net> for
- git@vger.kernel.org; Thu, 20 May 2010 23:20:19 -0500 (CDT)
-X-Mailer: Apple Mail (2.1078)
+	id S1754180Ab0EUEuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 00:50:51 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:39245 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754140Ab0EUEut (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 00:50:49 -0400
+Received: (qmail 28926 invoked by uid 399); 20 May 2010 22:50:49 -0600
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on jeltz.qwknetllc.net
+X-Spam-Level: *
+X-Spam-Status: No, score=1.3 required=14.0 tests=AWL,HELO_LH_LD,RDNS_NONE
+	autolearn=disabled version=3.2.5
+X-Virus-Scan: Scanned by ClamAV 0.95.2 (no viruses);
+  Thu, 20 May 2010 22:50:48 -0600
+Received: from unknown (HELO localhost.localdomain) (jjensen@workspacewhiz.com@76.27.116.215)
+  by hsmail.qwknetllc.com with ESMTPAMMMMMM; 20 May 2010 22:50:48 -0600
+X-Originating-IP: 76.27.116.215
+X-Mailer: git-send-email 1.7.1.1930.gcd3ce
+In-Reply-To: <1274417435-2344-1-git-send-email-jjensen@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147432>
 
-All,
+This patch also affects any other commands that use tree-diff.c.
 
-I have a subversion repository with the usual structure
+Signed-off-by: Joshua Jensen <jjensen@workspacewhiz.com>
+---
+ tree-diff.c |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
-svn-repo
-  |
-  +-branches
-      +-release1
-      +-release2
-  +-tags
-      +-r1dev
-      +-r1test
-      +-r2dev
-      +-r2test
-  +-trunk
-
-that I want to migrate to git.
-
-I cloned the svn repo with
-
-   git svn clone --no-metadata -t tags -b branches -T trunk <repo-url>
-
-I used the example in the Pro Git book.
-
-the cloned repo has files 
-
-  git-repo/.git/refs/heads/master
-  git-repo/.git/refs/remotes/trunk
-
-directory
-
-  git-repo/.git/refs/tags
-
-is empty.
-
-Directories git-repo/.git/logs/... have files corresponding to the branches and tags, but they do not appear to reference git objects.
-
-There are unhandled.log.gz files in the .git/svn directory for each branch and tag.
-
-If I do a 
-
-	git branch -r
-
-the branches and tags show up as remote branches.
-gitk appears to show all of the commits, but I do not see any of the branches and tags.
-
-I would like to make the branches and tags to appear al local to git repo.
-
-Is there a way to do this?
+diff --git a/tree-diff.c b/tree-diff.c
+index fe9f52c..5110980 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -5,6 +5,7 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "tree.h"
++#include "dir.h"
+ 
+ static char *malloc_base(const char *base, int baselen, const char *path, int pathlen)
+ {
+@@ -114,7 +115,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ 
+ 		if (baselen >= matchlen) {
+ 			/* If it doesn't match, move along... */
+-			if (strncmp(base, match, matchlen))
++			if (strncmp_icase(base, match, matchlen))
+ 				continue;
+ 
+ 			/*
+@@ -131,7 +132,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ 		}
+ 
+ 		/* Does the base match? */
+-		if (strncmp(base, match, baselen))
++		if (strncmp_icase(base, match, baselen))
+ 			continue;
+ 
+ 		match += baselen;
+@@ -147,7 +148,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ 			 * Does match sort strictly earlier than path
+ 			 * with their common parts?
+ 			 */
+-			m = strncmp(match, path,
++			m = strncmp_icase(match, path,
+ 				    (matchlen < pathlen) ? matchlen : pathlen);
+ 			if (m < 0)
+ 				continue;
+@@ -183,7 +184,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ 			 * we cheated and did not do strncmp(), so we do
+ 			 * that here.
+ 			 */
+-			m = strncmp(match, path, pathlen);
++			m = strncmp_icase(match, path, pathlen);
+ 
+ 		/*
+ 		 * If common part matched earlier then it is a hit,
+-- 
+1.7.1.1930.gca7dd4
