@@ -1,121 +1,114 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: [PATCH] perl shebangs: Use /usr/bin/env, not /usr/bin/perl
-Date: Fri, 21 May 2010 17:15:46 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC74483234EEB@xmail3.se.axis.com>
-References: <1274453455-1941-1-git-send-email-avarab@gmail.com>
- <1274454086-2312-1-git-send-email-avarab@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Use "git pull --ff-only" by default?
+Date: Fri, 21 May 2010 17:18:29 +0200
+Message-ID: <4BF6A445.1030105@drmicha.warpmail.net>
+References: <A612847CFE53224C91B23E3A5B48BAC74483234E90@xmail3.se.axis.com> <4BF68F5F.9010309@drmicha.warpmail.net> <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 21 17:17:55 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Fri May 21 17:18:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFTz0-0003gH-Dn
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 17:17:54 +0200
+	id 1OFTzw-00049W-Uv
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 17:18:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932917Ab0EUPRt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 11:17:49 -0400
-Received: from miranda.se.axis.com ([193.13.178.8]:52912 "EHLO
-	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932381Ab0EUPRs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 11:17:48 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o4LFFlE3000743;
-	Fri, 21 May 2010 17:15:47 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Fri, 21 May 2010 17:15:47 +0200
-Thread-Topic: [PATCH] perl shebangs: Use /usr/bin/env, not /usr/bin/perl
-Thread-Index: Acr49qAn+973WCFARiO/ZLYXwsiXAAAAS0Rg
-In-Reply-To: <1274454086-2312-1-git-send-email-avarab@gmail.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1758261Ab0EUPSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 11:18:48 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:44329 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758080Ab0EUPSr (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 May 2010 11:18:47 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 67901F7B78;
+	Fri, 21 May 2010 11:18:40 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 21 May 2010 11:18:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=q2nSkqrOmMqqkyIVrAy+FQ3KuNo=; b=D4WcA0ChR4F18rmxmRYnNHKq6FZVF5+p8Pt6cjlY7f+Dv1dLDrltXfJbRVyk6Ok9k5rWzdvePopRvH0/9egDUrFK7aCgIGuDNjlv3CpmpYBCLn/2ZW0jSMVQmLvmGurcIHlBJfjLM5NUwUytP+jJOVPXAonzF7V6AoRNdTOKlKk=
+X-Sasl-enc: /B0eupEaT+lYsCFYfDfV8864vS7v80KOzeIn9CFEnBbQ 1274455120
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C3CA64D2DA;
+	Fri, 21 May 2010 11:18:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
+In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147465>
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJu
-ZWwub3JnIFttYWlsdG86Z2l0LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9m
-IMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uDQo+IFNlbnQ6IGRlbiAyMSBtYWogMjAxMCAxNzow
-MQ0KPiBUbzogZ2l0QHZnZXIua2VybmVsLm9yZw0KPiBDYzogSnVuaW8gQyBIYW1hbm87IMOGdmFy
-IEFybmZqw7Zyw7AgQmphcm1hc29uDQo+IFN1YmplY3Q6IFtQQVRDSF0gcGVybCBzaGViYW5nczog
-VXNlIC91c3IvYmluL2Vudiwgbm90IC91c3IvYmluL3BlcmwNCj4gDQo+IENoYW5nZSB0aGUgUGVy
-bCBHaXQgdXRpbGl0aWVzIHRvIHVzZSAjIS91c3IvYmluL2VudiBwZXJsIGFzIGEgc2hlYmFuZw0K
-PiBpbnN0ZWFkIG9mICMhL3Vzci9iaW4vcGVybC4gVGhpcyBtYWtlcyBlLmcuIGdpdC1zZW5kLWVt
-YWlsIHdvcmsgaWYNCj4geW91ciBwZXJzb25hbCBwZXJsIGhhcyBOZXQ6OlNNVFA6OlNTTCwgYnV0
-IHlvdXIgc3lzdGVtIHBlcmwgZG9lc24ndC4NCj4gDQo+IFRoaXMgb25seSBhZmZlY3RzIHNoZWJh
-bmdzIGluIHRoZSB1bmluc3RhbGxlZCBzb3VyY2UgdHJlZS4gT24NCj4gaW5zdGFsbGF0aW9uIHNo
-ZWJhbmdzIHdpbGwgc3RpbGwgYmUgbXVuZ2VkIHRvIFBFUkxfUEFUSCwgd2hpY2ggaXMNCj4gY3Vy
-cmVudGx5IC91c3IvYmluL3BlcmwgYnkgZGVmYXVsdC4NCj4gDQo+IFdpdGggdGhpcyBjaGFuZ2Ug
-YWxsIHRoZSBjb2RlIGluIEdpdCB0aGF0IHVzZXMgYSBzaGViYW5nIG5vdyB1c2VzDQo+IC91c3Iv
-YmluL2VudiwgZXhjZXB0IHRob3NlIHRoaW5ncyB0aGF0IHVzZSAvYmluL3NoIGFuZCAvYmluL2Jh
-c2guIEFsbA0KPiB0aGUgUHl0aG9uIGNvZGUgYWxyZWFkeSB1c2VkIGl0LCBhbmQgc29tZSBvZiB0
-aGUgUGVybCBjb2RlLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogw4Z2YXIgQXJuZmrDtnLDsCBCamFy
-bWFzb24gPGF2YXJhYkBnbWFpbC5jb20+DQo+IC0tLQ0KPiANCj4gVGhpcyBzaG91bGQgcHJvYmFi
-bHkgaGF2ZSBiZWVuIGEgc2VyaWVzLCBub3QgYW4gaW5kaXZpZHVhbCBwYXRjaCBzaW5jZQ0KPiBp
-dCBkZXBlbmRzIG9uIDwxMjc0NDUzNDU1LTE5NDEtMS1naXQtc2VuZC1lbWFpbC1hdmFyYWJAZ21h
-aWwuY29tPiB0bw0KPiBhcHBseS4gSG93ZXZlciB0aGUgdHdvIGFyZSBmdW5jdGlvbmFsbHkgaW5k
-ZXBlbmRlbnQuIEkgY2FuIGFsdGVyIHRoaXMNCj4gb25lIHNvIHRoYXQgaXQgYXBwbGllcyB0byB0
-aGUgY3VycmVudCBtYXN0ZXIgb24gcmVxdWVzdCwgYnV0IEknbQ0KPiBndWVzc2luZyB0aGUgInBl
-cmwgbGliczogcGVybCAtdyArIHVzZSB3YXJuaW5ncyBpcyByZWR1bmRhbnQiIHBhdGNoIGlzDQo+
-IHdhbnRlZCBhbnl3YXkuDQo+IA0KPiAgRG9jdW1lbnRhdGlvbi9idWlsZC1kb2NkZXAucGVybCAg
-ICAgICAgICAgICB8ICAgIDIgKy0NCj4gIERvY3VtZW50YXRpb24vY2F0LXRleGkucGVybCAgICAg
-ICAgICAgICAgICAgfCAgICAyICstDQo+ICBEb2N1bWVudGF0aW9uL2NtZC1saXN0LnBlcmwgICAg
-ICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgRG9jdW1lbnRhdGlvbi9maXgtdGV4aS5wZXJsICAg
-ICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGNvbXBhdC92Y2J1aWxkL3NjcmlwdHMvY2xpbmsu
-cGwgICAgICAgICAgICAgfCAgICAyICstDQo+ICBjb21wYXQvdmNidWlsZC9zY3JpcHRzL2xpYi5w
-bCAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgY29udHJpYi9ibGFtZXZpZXcvYmxhbWV2aWV3
-LnBlcmwgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGNvbnRyaWIvYnVpbGRzeXN0ZW1zL2VuZ2lu
-ZS5wbCAgICAgICAgICAgICAgfCAgICAyICstDQo+ICBjb250cmliL2J1aWxkc3lzdGVtcy9nZW5l
-cmF0ZSAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgY29udHJpYi9idWlsZHN5c3RlbXMvcGFy
-c2UucGwgICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGNvbnRyaWIvY29udGludW91cy9jaWRh
-ZW1vbiAgICAgICAgICAgICAgICAgfCAgICAyICstDQo+ICBjb250cmliL2NvbnRpbnVvdXMvcG9z
-dC1yZWNlaXZlLWNpbm90aWZ5ICAgIHwgICAgMiArLQ0KPiAgY29udHJpYi9leGFtcGxlcy9naXQt
-cmVtb3RlLnBlcmwgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGNvbnRyaWIvZXhhbXBsZXMvZ2l0
-LXJlcmVyZS5wZXJsICAgICAgICAgICAgfCAgICAyICstDQo+ICBjb250cmliL2V4YW1wbGVzL2dp
-dC1zdm5pbXBvcnQucGVybCAgICAgICAgIHwgICAgMiArLQ0KPiAgY29udHJpYi9mYXN0LWltcG9y
-dC9naXQtaW1wb3J0LnBlcmwgICAgICAgICB8ICAgIDIgKy0NCj4gIGNvbnRyaWIvZmFzdC1pbXBv
-cnQvaW1wb3J0LWRpcmVjdG9yaWVzLnBlcmwgfCAgICAyICstDQo+ICBjb250cmliL2Zhc3QtaW1w
-b3J0L2ltcG9ydC10YXJzLnBlcmwgICAgICAgIHwgICAgMiArLQ0KPiAgY29udHJpYi9ob29rcy9z
-ZXRnaXRwZXJtcy5wZXJsICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGNvbnRyaWIvaG9va3Mv
-dXBkYXRlLXBhcmFub2lkICAgICAgICAgICAgICAgfCAgICAyICstDQo+ICBjb250cmliL3N0YXRz
-L21haWxtYXAucGwgICAgICAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgY29udHJpYi9zdGF0
-cy9wYWNraW5mby5wbCAgICAgICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGdpdC1hZGQtLWlu
-dGVyYWN0aXZlLnBlcmwgICAgICAgICAgICAgICAgICAgfCAgICAyICstDQo+ICBnaXQtYXJjaGlt
-cG9ydC5wZXJsICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgZ2l0LWN2c2V4
-cG9ydGNvbW1pdC5wZXJsICAgICAgICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGdpdC1jdnNp
-bXBvcnQucGVybCAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICAyICstDQo+ICBnaXQtY3Zz
-c2VydmVyLnBlcmwgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgZ2l0LXNl
-bmQtZW1haWwucGVybCAgICAgICAgICAgICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIGdpdHdl
-Yi9naXR3ZWIucGVybCAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgICAyICstDQo+ICB0L2dp
-dHdlYi1saWIuc2ggICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAgdC90
-NzAwNi90ZXN0LXRlcm1pbmFsLnBlcmwgICAgICAgICAgICAgICAgICB8ICAgIDIgKy0NCj4gIHQv
-dDkxMzgtZ2l0LXN2bi1hdXRob3JzLXByb2cuc2ggICAgICAgICAgICAgfCAgICAyICstDQo+ICB0
-L3Q5NzAwL3Rlc3QucGwgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAgMiArLQ0KPiAg
-MzMgZmlsZXMgY2hhbmdlZCwgMzMgaW5zZXJ0aW9ucygrKSwgMzMgZGVsZXRpb25zKC0pDQo+IA0K
-PiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9idWlsZC1kb2NkZXAucGVybCBiL0RvY3VtZW50
-YXRpb24vYnVpbGQtDQo+IGRvY2RlcC5wZXJsDQo+IGluZGV4IGJhNDIwNWUuLmRjNTBmMjEgMTAw
-NzU1DQo+IC0tLSBhL0RvY3VtZW50YXRpb24vYnVpbGQtZG9jZGVwLnBlcmwNCj4gKysrIGIvRG9j
-dW1lbnRhdGlvbi9idWlsZC1kb2NkZXAucGVybA0KPiBAQCAtMSw0ICsxLDQgQEANCj4gLSMhL3Vz
-ci9iaW4vcGVybA0KPiArIyEvdXNyL2Jpbi9lbnYgcGVybA0KPiANCj4gIG15ICVpbmNsdWRlID0g
-KCk7DQo+ICBteSAlaW5jbHVkZWQgPSAoKTsNCj4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24v
-Y2F0LXRleGkucGVybCBiL0RvY3VtZW50YXRpb24vY2F0LXRleGkucGVybA0KPiBpbmRleCA4Mjhl
-YzYyLi5kOTZkMmYxIDEwMDc1NQ0KPiAtLS0gYS9Eb2N1bWVudGF0aW9uL2NhdC10ZXhpLnBlcmwN
-Cj4gKysrIGIvRG9jdW1lbnRhdGlvbi9jYXQtdGV4aS5wZXJsDQo+IEBAIC0xLDQgKzEsNCBAQA0K
-PiAtIyEvdXNyL2Jpbi9wZXJsIC13DQo+ICsjIS91c3IvYmluL2VudiBwZXJsIC13DQoNClRoaXMg
-ZG9lcyBub3Qgd29yay4gWW91IGNhbm5vdCBnaXZlIGFyZ3VtZW50cyB0byBhbiBhcHBsaWNhdGlv
-biANCnN0YXJ0ZWQgdmlhIC91c3IvYmluL2VudjsgaXQgd2lsbCBpbnRlcnByZXRlIGV2ZXJ5dGhp
-bmcgYWZ0ZXIgDQovdXNyL2Jpbi9lbnYgYXMgdGhlIGFwcGxpY2F0aW9uIG5hbWUgYW5kIGZhaWwg
-d2l0aDoNCg0KL3Vzci9iaW4vZW52OiBwZXJsIC13OiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5
-DQoNCi8vUGV0ZXINCg0K
+Peter Kjellerstedt venit, vidit, dixit 21.05.2010 16:47:
+>> -----Original Message-----
+>> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+>> Behalf Of Michael J Gruber
+>> Sent: den 21 maj 2010 15:49
+>> To: Peter Kjellerstedt
+>> Cc: git@vger.kernel.org
+>> Subject: Re: Use "git pull --ff-only" by default?
+>>
+>> Peter Kjellerstedt venit, vidit, dixit 21.05.2010 14:59:
+>>> Is there some way to make "git pull --ff-only" be the default?
+>>> I could not find anything about this in "git config --help" and
+>>> also the lack of a --no-ff-only option for git pull (it exists
+>>> for git merge) indicates that there is no such support.
+>>>
+>>> I did considered the branch.<name>.mergeoptions configuration
+>>> option, but it does not seem appropriate as it only applies to
+>>> a specific branch, whereas I want it to apply to all branches
+>>> by default.
+>>>
+>>> Yes, I know I could do "git config alias.pl 'pull --ff-only'",
+>>> but since my intensions are for this to be the default for all
+>>> developers in our organization (most of whom have no git knowledge
+>>> at all yet) to avoid unnecessary branches caused by the developers
+>>> hacking directly on master rather than a topic branch, I would
+>>> very much prefer a configuration option rather than an alias (as
+>>> I am unlikely to get the developers to remember to do "git pl"
+>>> instead of "git pull").
+>>
+>> Problem is they have to remember to set your new config, or, if you are
+>> able to set all developers system config, they have to refrain from
+>> overriding it.
+> 
+> They would get it by default from our setup scripts. If they then 
+> choose to turn it off, so be it.
+
+If you're relying on setup scripts, you can
+
+git config alias.pull 'pull --ff-only'
+
+> 
+>>> My idea was to add something like merge.options and pull.options
+>>> as configuration options (I want to be able to specify the options
+>>> separately for pull and merge). However, I wanted throw this out
+>>> here first before starting to hack away at the code, in case I
+>>> missed something obvious, or if others find this to be an
+>>> incredibly stupid idea...
+>>
+>> In general, you can't control reliably what people do in their repos.
+> 
+> I sure wish I had more control over it, but that is a separate 
+> discussion. ;)
+> 
+>> But you can control what kind of pushes into a central repo you allow.
+>> That is the usual approach: Let them mess up their repos, they'll learn
+>> their lesson when they can't push ;)
+> 
+> Can you differentiate between an automatic merge which happened
+> because the user had made some local changes before pulling (which
+> I do not want to appear in the central repo), and a real merge of 
+> a topic branch (which I do want)?
+
+I can't, and neither can Git. Who can?
+
+I think this boils down to having a few people who are allowed to push
+merges because they can make these decisions. Even if people don't merge
+"origin" but their own branches they can create a mess, so you cannot
+differentiate based on that.
+
+Michael
