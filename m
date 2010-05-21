@@ -1,35 +1,35 @@
 From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: [PATCH 5/7] Add support for case insensitive directory and file lookups to git log
-Date: Thu, 20 May 2010 22:50:33 -0600
-Message-ID: <1274417435-2344-6-git-send-email-jjensen@workspacewhiz.com>
+Subject: [PATCH 1/7] Add string comparison functions that respect the ignore_case variable.
+Date: Thu, 20 May 2010 22:50:29 -0600
+Message-ID: <1274417435-2344-2-git-send-email-jjensen@workspacewhiz.com>
 References: <1274417435-2344-1-git-send-email-jjensen@workspacewhiz.com>
 Cc: Joshua Jensen <jjensen@workspacewhiz.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 21 06:50:56 2010
+X-From: git-owner@vger.kernel.org Fri May 21 06:50:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFKCE-0007X7-Bm
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 06:50:54 +0200
+	id 1OFKCC-0007X7-Rx
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 06:50:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754180Ab0EUEuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 00:50:51 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:39245 "EHLO
+	id S1754079Ab0EUEur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 00:50:47 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:39241 "EHLO
 	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754140Ab0EUEut (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 00:50:49 -0400
-Received: (qmail 28926 invoked by uid 399); 20 May 2010 22:50:49 -0600
+	with ESMTP id S1754038Ab0EUEup (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 00:50:45 -0400
+Received: (qmail 28852 invoked by uid 399); 20 May 2010 22:50:44 -0600
 X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on jeltz.qwknetllc.net
 X-Spam-Level: *
 X-Spam-Status: No, score=1.3 required=14.0 tests=AWL,HELO_LH_LD,RDNS_NONE
 	autolearn=disabled version=3.2.5
 X-Virus-Scan: Scanned by ClamAV 0.95.2 (no viruses);
-  Thu, 20 May 2010 22:50:48 -0600
+  Thu, 20 May 2010 22:50:43 -0600
 Received: from unknown (HELO localhost.localdomain) (jjensen@workspacewhiz.com@76.27.116.215)
-  by hsmail.qwknetllc.com with ESMTPAMMMMMM; 20 May 2010 22:50:48 -0600
+  by hsmail.qwknetllc.com with ESMTPAMM; 20 May 2010 22:50:43 -0600
 X-Originating-IP: 76.27.116.215
 X-Mailer: git-send-email 1.7.1.1930.gcd3ce
 In-Reply-To: <1274417435-2344-1-git-send-email-jjensen@workspacewhiz.com>
@@ -37,62 +37,86 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147433>
 
-This patch also affects any other commands that use tree-diff.c.
+Multiple locations within this patch series alter a case sensitive
+string comparison call such as strcmp() to be a call to a string
+comparison call that selects case comparison based on the global
+ignore_case variable. Behaviorally, when core.ignorecase=false, the
+*_icase() versions are functionally equivalent to their C runtime
+counterparts.  When core.ignorecase=true, the *_icase() versions perform
+a case insensitive comparison.
+
+Like Linus' earlier ignorecase patch, these may ignore filename
+conventions on certain file systems. By isolating filename comparisons
+to certain functions, support for those filename conventions may be more
+easily met.
 
 Signed-off-by: Joshua Jensen <jjensen@workspacewhiz.com>
 ---
- tree-diff.c |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+ dir.c |   35 +++++++++++++++++++++++++++++++++++
+ dir.h |    5 +++++
+ 2 files changed, 40 insertions(+), 0 deletions(-)
 
-diff --git a/tree-diff.c b/tree-diff.c
-index fe9f52c..5110980 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -5,6 +5,7 @@
- #include "diff.h"
- #include "diffcore.h"
- #include "tree.h"
-+#include "dir.h"
+diff --git a/dir.c b/dir.c
+index cb83332..21d2104 100644
+--- a/dir.c
++++ b/dir.c
+@@ -18,6 +18,41 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, in
+ 	int check_only, const struct path_simplify *simplify);
+ static int get_dtype(struct dirent *de, const char *path, int len);
  
- static char *malloc_base(const char *base, int baselen, const char *path, int pathlen)
++/* helper string functions with support for the ignore_case flag */
++int strcmp_icase(const char *a, const char *b)
++{
++	return ignore_case ? strcasecmp(a, b) : strcmp(a, b);
++}
++
++int strncmp_icase(const char *a, const char *b, size_t count)
++{
++	return ignore_case ? strncasecmp(a, b, count) : strncmp(a, b, count);
++}
++
++int fnmatch_icase(const char *pattern, const char *string, int flags)
++{
++	return fnmatch(pattern, string, flags | (ignore_case ? FNM_CASEFOLD : 0));
++}
++
++int memcmp_icase(const char *a, const char *b, size_t count)
++{
++	if (ignore_case) {
++		int lowera = 0;
++		int lowerb = 0;
++		while (--count) {
++			lowera = tolower(*a++);
++			lowerb = tolower(*b++);
++			if (lowera != lowerb)
++				break;
++		}
++		return lowera - lowerb;
++
++		return 0;
++	} else {
++		return memcmp(a, b, count);
++	}
++}
++
+ static int common_prefix(const char **pathspec)
  {
-@@ -114,7 +115,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
+ 	const char *path, *slash, *next;
+diff --git a/dir.h b/dir.h
+index 3bead5f..aced818 100644
+--- a/dir.h
++++ b/dir.h
+@@ -100,4 +100,9 @@ extern int remove_dir_recursively(struct strbuf *path, int flag);
+ /* tries to remove the path with empty directories along it, ignores ENOENT */
+ extern int remove_path(const char *path);
  
- 		if (baselen >= matchlen) {
- 			/* If it doesn't match, move along... */
--			if (strncmp(base, match, matchlen))
-+			if (strncmp_icase(base, match, matchlen))
- 				continue;
- 
- 			/*
-@@ -131,7 +132,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 		}
- 
- 		/* Does the base match? */
--		if (strncmp(base, match, baselen))
-+		if (strncmp_icase(base, match, baselen))
- 			continue;
- 
- 		match += baselen;
-@@ -147,7 +148,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 			 * Does match sort strictly earlier than path
- 			 * with their common parts?
- 			 */
--			m = strncmp(match, path,
-+			m = strncmp_icase(match, path,
- 				    (matchlen < pathlen) ? matchlen : pathlen);
- 			if (m < 0)
- 				continue;
-@@ -183,7 +184,7 @@ static int tree_entry_interesting(struct tree_desc *desc, const char *base, int
- 			 * we cheated and did not do strncmp(), so we do
- 			 * that here.
- 			 */
--			m = strncmp(match, path, pathlen);
-+			m = strncmp_icase(match, path, pathlen);
- 
- 		/*
- 		 * If common part matched earlier then it is a hit,
++extern int strcmp_icase(const char *a, const char *b);
++extern int strncmp_icase(const char *a, const char *b, size_t count);
++extern int fnmatch_icase(const char *pattern, const char *string, int flags);
++extern int memcmp_icase(const char *a, const char *b, size_t count);
++
+ #endif
 -- 
 1.7.1.1930.gca7dd4
