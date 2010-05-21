@@ -1,66 +1,78 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH] edit: Allow setting git tree SHA1 of a patch
-Date: Fri, 21 May 2010 19:48:32 +0200
-Message-ID: <u5tpr0p6t8v.fsf@beatles.e.vtech>
-References: <20100516172738.5043.94039.stgit@localhost.localdomain>
-	<AANLkTikcG3Chw1cpiKB00MrnZz-HZk9xAF_KtTTiVECi@mail.gmail.com>
-	<u5tzkzt73us.fsf@beatles.e.vtech>
-	<AANLkTilV3VQARdyZ-m9GCXz1Rwt0j6Q6noNyFrmmDzR5@mail.gmail.com>
-	<AANLkTimYCxzT16aI96dztmcKYuVrvKikSkrkRHT-Ckcd@mail.gmail.com>
-	<AANLkTimIxtmaUNxp-LNy_ui5__BEBetcjTYE17ygIXD2@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: RE: Use "git pull --ff-only" by default?
+Date: Fri, 21 May 2010 18:49:52 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1005211848160.9961@perkele.intern.softwolves.pp.se>
+References: <A612847CFE53224C91B23E3A5B48BAC74483234E90@xmail3.se.axis.com>
+ <4BF68F5F.9010309@drmicha.warpmail.net>
+ <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kha@treskal.com
-To: Gustav =?utf-8?Q?H=C3=A5llberg?= <gustav@gmail.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 21 19:48:50 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Fri May 21 19:50:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFWL2-0002jP-UL
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 19:48:49 +0200
+	id 1OFWMB-0003L3-Md
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 19:50:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934049Ab0EURso convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 May 2010 13:48:44 -0400
-Received: from [62.20.90.206] ([62.20.90.206]:23672 "EHLO beatles.e.vtech"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S934036Ab0EURsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 13:48:43 -0400
-Received: from beatles.e.vtech (localhost.localdomain [127.0.0.1])
-	by beatles.e.vtech (8.13.1/8.13.1) with ESMTP id o4LHmaPe015924;
-	Fri, 21 May 2010 19:48:36 +0200
-Received: (from david@localhost)
-	by beatles.e.vtech (8.13.1/8.13.1/Submit) id o4LHmWu9015923;
-	Fri, 21 May 2010 19:48:32 +0200
-X-Authentication-Warning: beatles.e.vtech: david set sender to davidk@lysator.liu.se using -f
-In-Reply-To: <AANLkTimIxtmaUNxp-LNy_ui5__BEBetcjTYE17ygIXD2@mail.gmail.com>
-	(Catalin Marinas's message of "Fri, 21 May 2010 16:58:22 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1758576Ab0EURtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 13:49:55 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:49557 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754509Ab0EURty (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 13:49:54 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L2S00C8A6V4ER50@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 21 May 2010 19:49:52 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 9C3591EA583E_BF6C7C0B	for <git@vger.kernel.org>; Fri,
+ 21 May 2010 17:49:52 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 834731EA36C2_BF6C7C0F	for <git@vger.kernel.org>; Fri,
+ 21 May 2010 17:49:52 +0000 (GMT)
+Received: from perkele ([84.215.142.63]) by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L2S00JQC6V4LQ20@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 21 May 2010 19:49:52 +0200 (MEST)
+Received: by perkele (Postfix, from userid 501)	id 633F72FC00; Fri,
+ 21 May 2010 19:49:52 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 604532FBFF; Fri, 21 May 2010 18:49:52 +0100 (CET)
+In-reply-to: <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147489>
 
-Catalin Marinas <catalin.marinas@gmail.com> writes:
+Peter Kjellerstedt:
 
-> BTW, since you are a group of people using stgit, have you found a
-> useful way to share patches/series easily?
+> Can you differentiate between an automatic merge which happened because 
+> the user had made some local changes before pulling (which I do not want 
+> to appear in the central repo), and a real merge of a topic branch (which 
+> I do want)?
 
-Not really. It is complicated by the fact that we are really using
-subversion, and people are using git as a frontend to that with no
-common git-svn import. But it hasn't been a big problem either.
+Sort of, by looking at the commit message. An auto-generated pull-merge will 
+contain the branch name twice, once with the remote repository path, and 
+once with the local repository path. You could walk the history that the 
+user tries to push, looking for this kind of auto-generated merge messages.
 
-Stgit is used to work on a set of changes that will sooner or later be
-committed to svn. Shared "topic branches" that several people work on
-live in svn.
+This may of course teach your users to re-write the commit message into 
+something more sensible, but that can only be a good thing :-)
 
-I often mail patches for review using stg mail, and sometimes import
-patches mailed to me. I have also used stg export a few times.
-
---=20
-David K=C3=A5gedal
+-- 
+\\// Peter - http://www.softwolves.pp.se/
