@@ -1,116 +1,104 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: [PATCH 4/7] Add case insensitivity support when using git ls-files
-Date: Thu, 20 May 2010 22:50:32 -0600
-Message-ID: <1274417435-2344-5-git-send-email-jjensen@workspacewhiz.com>
-References: <1274417435-2344-1-git-send-email-jjensen@workspacewhiz.com>
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 21 06:51:21 2010
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Re: Need to change old commit (and regenerate tree)
+Date: Fri, 21 May 2010 07:31:47 +0200
+Message-ID: <AANLkTinzl_sc9G1PUtLczEjHFdpRqMFuKkEiQTUXaEgQ@mail.gmail.com>
+References: <AANLkTilTAknKPFv5AZBrwsITPsRlVSnsuX8TDXlUTWmw@mail.gmail.com>
+	 <m2sk5mtecw.fsf@igel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Antriksh Pany <antriksh.pany@gmail.com>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri May 21 07:31:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFKCf-0007k0-1b
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 06:51:21 +0200
+	id 1OFKpv-0001Z5-C1
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 07:31:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754260Ab0EUEvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 00:51:01 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:39244 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753116Ab0EUEut (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 00:50:49 -0400
-Received: (qmail 28907 invoked by uid 399); 20 May 2010 22:50:48 -0600
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on jeltz.qwknetllc.net
-X-Spam-Level: *
-X-Spam-Status: No, score=1.3 required=14.0 tests=AWL,HELO_LH_LD,RDNS_NONE
-	autolearn=disabled version=3.2.5
-X-Virus-Scan: Scanned by ClamAV 0.95.2 (no viruses);
-  Thu, 20 May 2010 22:50:47 -0600
-Received: from unknown (HELO localhost.localdomain) (jjensen@workspacewhiz.com@76.27.116.215)
-  by hsmail.qwknetllc.com with ESMTPAMMMMM; 20 May 2010 22:50:47 -0600
-X-Originating-IP: 76.27.116.215
-X-Mailer: git-send-email 1.7.1.1930.gcd3ce
-In-Reply-To: <1274417435-2344-1-git-send-email-jjensen@workspacewhiz.com>
+	id S1754541Ab0EUFbu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 01:31:50 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43364 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752987Ab0EUFbs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 01:31:48 -0400
+Received: by wyg36 with SMTP id 36so406760wyg.19
+        for <git@vger.kernel.org>; Thu, 20 May 2010 22:31:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        bh=krUorGH4USWG0zAp6DZ6N5TwRZKwnEWIOQQljBDz+3I=;
+        b=DfZECUwYnsqgasmaf9zOiCo82vnvgOwhpgAFo5YW9YxJStLau0FMwn+CDq7mU8Xksl
+         jw3M8+c1fRknIwGmLkS/NRbpkU2jx+eVOtGxj3sLrf/hct/I3eNl4iZKjX1rqGoXSWZV
+         L0FNvAJC15I2qfTRCxuZpJuXlRtxfoXlrQJeE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=Drff4xqD58GHWsQcjdQEcJeffooYBrF4pKt6UhFGHlovmp0Ks7tLRdJJYGPVktHsV/
+         1niK6GYmDDAv0L1WMgnJ0aKPIh9I1UdYmk0uPWTAVQLPUDfxzjXNWC1YERegwBdQdVzG
+         PD5wGKSFnRC8oc3TbbBL1/LDdVyR8CypEIUcg=
+Received: by 10.216.156.193 with SMTP id m43mr489220wek.11.1274419907534; Thu, 
+	20 May 2010 22:31:47 -0700 (PDT)
+Received: by 10.216.55.202 with HTTP; Thu, 20 May 2010 22:31:47 -0700 (PDT)
+In-Reply-To: <m2sk5mtecw.fsf@igel.home>
+X-Google-Sender-Auth: r9cnLsT7nyMv9kWUUK0NEln1TgI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147440>
 
-When mydir/filea.txt is added, mydir/ is renamed to MyDir/, and
-MyDir/fileb.txt is added, running git ls-files mydir only shows
-mydir/filea.txt. Running git ls-files MyDir shows MyDir/fileb.txt.
-Running git ls-files mYdIR shows nothing.
+On Fri, May 21, 2010 at 00:09, Andreas Schwab <schwab@linux-m68k.org> wrote:
+> Antriksh Pany <antriksh.pany@gmail.com> writes:
+>
+>> Instead of (what I initially expected):
+>>
+>> A--------o--------o--------o--------o(old B)--------o--------o--------o(old C)
+>>
+>> A2--------o--------o--------o--------B--------o--------o--------C
+>>
+>>
+>> So what I am missing here? Aren't the new commits B~1, B~2, B~3
+>> identical to C~4, C~5, C~6 (respectively) in all ways so as to have
+>> gotten them the same SHA1 and hence appear as what I expected them to
+>> appear?
+>
+> No, they have a different commit time, which is also part of the hash.
 
-With this patch running git ls-files for mydir, MyDir, and mYdIR shows
-mydir/filea.txt and MyDir/fileb.txt.
+Indeed.
 
-Wildcards are not handled case insensitively in this patch. Example:
-MyDir/aBc/file.txt is added. git ls-files MyDir/a* works fine, but git
-ls-files mydir/a* does not.
+To avoid this, you have to:
+  - rebase B on top of A2 first,
 
-Signed-off-by: Joshua Jensen <jjensen@workspacewhiz.com>
----
- dir.c |   38 ++++++++++++++++++++++++++------------
- 1 files changed, 26 insertions(+), 12 deletions(-)
+        git rebase --onto A2 A B
 
-diff --git a/dir.c b/dir.c
-index c861f3e..d67ec68 100644
---- a/dir.c
-+++ b/dir.c
-@@ -126,16 +126,30 @@ static int match_one(const char *match, const char *name, int namelen)
- 	if (!*match)
- 		return MATCHED_RECURSIVELY;
- 
--	for (;;) {
--		unsigned char c1 = *match;
--		unsigned char c2 = *name;
--		if (c1 == '\0' || is_glob_special(c1))
--			break;
--		if (c1 != c2)
--			return 0;
--		match++;
--		name++;
--		namelen--;
-+	if (ignore_case) {
-+		for (;;) {
-+			unsigned char c1 = tolower(*match);
-+			unsigned char c2 = tolower(*name);
-+			if (c1 == '\0' || is_glob_special(c1))
-+				break;
-+			if (c1 != c2)
-+				return 0;
-+			match++;
-+			name++;
-+			namelen--;
-+		}
-+	} else {
-+		for (;;) {
-+			unsigned char c1 = *match;
-+			unsigned char c2 = *name;
-+			if (c1 == '\0' || is_glob_special(c1))
-+				break;
-+			if (c1 != c2)
-+				return 0;
-+			match++;
-+			name++;
-+			namelen--;
-+		}
- 	}
- 
- 
-@@ -144,8 +158,8 @@ static int match_one(const char *match, const char *name, int namelen)
- 	 * we need to match by fnmatch
- 	 */
- 	matchlen = strlen(match);
--	if (strncmp(match, name, matchlen))
--		return !fnmatch(match, name, 0) ? MATCHED_FNMATCH : 0;
-+	if (strncmp_icase(match, name, matchlen))
-+		return !fnmatch_icase(match, name, 0) ? MATCHED_FNMATCH : 0;
- 
- 	if (namelen == matchlen)
- 		return MATCHED_EXACTLY;
--- 
-1.7.1.1930.gca7dd4
+  - rebase of C on top of the new B.
+
+        git rebase --onto B B_old C
+       ("git rebase --onto B A C" should work too, as usually git is
+smart enough to see
+        that A-B_old is already applied. Use "git rebase --skip" if it isn't)
+
+If A is an ancestor of A2, you can simplify to:
+
+    git rebase A2 B
+    git rebase B C
+
+(Disclaimer: the examples without --onto I use almost daily, the ones
+with I don't)
+
+Gr{oetje,eeting}s,
+
+						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
