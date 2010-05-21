@@ -1,551 +1,306 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH 3/6 v3] diff.c: Output the text graph padding before each diff line.
-Date: Thu, 20 May 2010 18:52:41 -0700
-Message-ID: <1274406764-32278-4-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH 6/6 v3] Make --color-words work well with --graph.
+Date: Thu, 20 May 2010 18:52:44 -0700
+Message-ID: <1274406764-32278-7-git-send-email-struggleyb.nku@gmail.com>
 References: <1274406764-32278-1-git-send-email-struggleyb.nku@gmail.com>
  <1274406764-32278-2-git-send-email-struggleyb.nku@gmail.com>
  <1274406764-32278-3-git-send-email-struggleyb.nku@gmail.com>
+ <1274406764-32278-4-git-send-email-struggleyb.nku@gmail.com>
+ <1274406764-32278-5-git-send-email-struggleyb.nku@gmail.com>
+ <1274406764-32278-6-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com, trast@student.ethz.ch, peff@peff.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 21 03:53:18 2010
+X-From: git-owner@vger.kernel.org Fri May 21 03:53:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFHQI-0004JK-6T
-	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 03:53:14 +0200
+	id 1OFHQJ-0004JK-R9
+	for gcvg-git-2@lo.gmane.org; Fri, 21 May 2010 03:53:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436Ab0EUBxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 May 2010 21:53:00 -0400
+	id S1757061Ab0EUBxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 May 2010 21:53:10 -0400
 Received: from mail-pz0-f185.google.com ([209.85.222.185]:55274 "EHLO
 	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753163Ab0EUBw6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 May 2010 21:52:58 -0400
-Received: by pzk15 with SMTP id 15so257540pzk.15
-        for <git@vger.kernel.org>; Thu, 20 May 2010 18:52:58 -0700 (PDT)
+	with ESMTP id S1755501Ab0EUBxH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 May 2010 21:53:07 -0400
+Received: by mail-pz0-f185.google.com with SMTP id 15so257540pzk.15
+        for <git@vger.kernel.org>; Thu, 20 May 2010 18:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=IL8cJvzdRFgxRvvKiTuHAfwAl7dfA5vru6ACKa8TjFk=;
-        b=jP4rIqXqseAqYC2dElwCBL+PavexR4FVMDdHRYLxlvjFc8Zd6JmTlp3G7z2QoUR74h
-         GaoOF0lcqBDYmgJz1O7pce3RfMRs2MjLymYgYygGpePmNa51MNJyDwDbgz2K99x9Oa5g
-         3oojNPLONTuYAvqnJ78oATBl+21vyh/knLr8M=
+        bh=urwV4P4f8d5JWy635kfS4TJUOv47h1qmX/ULBqey+9o=;
+        b=hDkyLuWwum48EzLCn5TKxjp5M55lAauloHcjvO7XXa386fsmj8p/jG8d1WFSJ/nb+p
+         Ixlpse51ZnP30QhKM8uH4UnwhpG/ayAI8Lg+BBPR5RYIf60Jh4zZRT3dQL+h6B7QUxRy
+         IaxqyPwi1Esihnzvh+hSyZbuwlvxqLLH0s+es=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Q9mCs0Qao+USH55Ws6yZhfEsSide/vMhfkPJVMBDmnCaNfojE3W39TwzRs4AOXmxbd
-         0OtyKGKcgiAsYSDD/O9lONISNQ7seti4hYrP6gv/o2BlacnowQuqAoo6f2Tx6zQn80fQ
-         U0VI6E1r2BJsBS8+bJmPWlVWRqabLbF97bcBA=
-Received: by 10.140.55.16 with SMTP id d16mr684107rva.26.1274406777969;
-        Thu, 20 May 2010 18:52:57 -0700 (PDT)
+        b=sNRXh86f3dLmdBGD4qozd01CJWloU83JMAeAQ8LC0uhLeX+NXWZL5Og5i50wSw+fo6
+         9DVnrQUAlMm06/6EScV/w4MkwRLHfKJsEqbPHr9jlpuNG60PRjkuawmCRcOP1xAya3sz
+         X028arLENcBBXwZ+dxaC3kCQhOMav1Gcqn87U=
+Received: by 10.141.214.40 with SMTP id r40mr684734rvq.11.1274406787242;
+        Thu, 20 May 2010 18:53:07 -0700 (PDT)
 Received: from localhost.localdomain ([222.30.37.37])
-        by mx.google.com with ESMTPS id o38sm442378rvp.12.2010.05.20.18.52.54
+        by mx.google.com with ESMTPS id o38sm442378rvp.12.2010.05.20.18.53.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 20 May 2010 18:52:57 -0700 (PDT)
+        Thu, 20 May 2010 18:53:06 -0700 (PDT)
 X-Mailer: git-send-email 1.6.0.4
-In-Reply-To: <1274406764-32278-3-git-send-email-struggleyb.nku@gmail.com>
+In-Reply-To: <1274406764-32278-6-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147426>
 
-Change -p/--dirstat/--binary/--numstat/--stat/--shortstat/
---check/--summary to align with graph paddings.
-Thanks Jeff King <peff@peff.net> for reporting the '--summary' bug and his
-initial patch.
+'--color-words' algorithm can be described as:
+
+1. collect a the minus/plus lines of a diff hunk, divided into minus-lines and plus-lines;
+2. break both minus-lines and plus-lines into words and place them into two
+   mmfile_t with one word for each line;
+3. use xdiff to run diff on the two mmfile_t to get the words level diff;
+
+And for the common parts of the both file, we output the plus side text.
+diff_words->current_plus is used to trace the current position of the plus file
+which printed. diff_words->last_minus is used to trace the last minus word
+printed.
+
+For '--graph' to work with '--color-words', we need to output the graph prefix
+on each line of color words output. Generally, there are two conditions on
+which we should output the prefix.
+1. diff_words->last_minus == 0 && diff_words->current_plus == diff_words->plus.text.ptr
+   that is: the plus text must start as a new line, and if there is no minus
+   word printed, a graph prefix must be printed.
+2. diff_words->current_plus > diff_words->plus.text.ptr && *(diff_words->current_plus - 1) == '\n'
+   that is: a graph prefix must be printed following a '\n'
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- diff.c |  201 +++++++++++++++++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 148 insertions(+), 53 deletions(-)
+ color.c |   21 +++++++++----
+ color.h |    3 +-
+ diff.c  |   98 +++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+ 3 files changed, 97 insertions(+), 25 deletions(-)
 
+diff --git a/color.c b/color.c
+index bcf4e2c..e034e3b 100644
+--- a/color.c
++++ b/color.c
+@@ -218,22 +218,31 @@ int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...)
+  * Returns 0 on success.
+  */
+ int color_fwrite_lines(FILE *fp, const char *color,
+-		size_t count, const char *buf)
++		size_t count, const char *buf, const char *prefix)
+ {
+-	if (!*color)
+-		return fwrite(buf, count, 1, fp) != 1;
++	int printing = 0;
++	const char *reset = GIT_COLOR_RESET;
++
++	if (strlen(color) == 0)
++		reset = "";
++
+ 	while (count) {
+ 		char *p = memchr(buf, '\n', count);
+-		if (p != buf && (fputs(color, fp) < 0 ||
++		if (printing)
++			fputs(prefix, fp);
++		if (p != buf) {
++			if (fputs(color, fp) < 0 ||
+ 				fwrite(buf, p ? p - buf : count, 1, fp) != 1 ||
+-				fputs(GIT_COLOR_RESET, fp) < 0))
+-			return -1;
++				fputs(reset, fp) < 0)
++				return -1;
++		}
+ 		if (!p)
+ 			return 0;
+ 		if (fputc('\n', fp) < 0)
+ 			return -1;
+ 		count -= p + 1 - buf;
+ 		buf = p + 1;
++		printing = 1;
+ 	}
+ 	return 0;
+ }
+diff --git a/color.h b/color.h
+index 5c264b0..55fea4f 100644
+--- a/color.h
++++ b/color.h
+@@ -61,6 +61,7 @@ __attribute__((format (printf, 3, 4)))
+ int color_fprintf(FILE *fp, const char *color, const char *fmt, ...);
+ __attribute__((format (printf, 3, 4)))
+ int color_fprintf_ln(FILE *fp, const char *color, const char *fmt, ...);
+-int color_fwrite_lines(FILE *fp, const char *color, size_t count, const char *buf);
++int color_fwrite_lines(FILE *fp, const char *color, size_t count,
++	const char *buf, const char *prefix);
+ 
+ #endif /* COLOR_H */
 diff --git a/diff.c b/diff.c
-index 78bd633..b935e1a 100644
+index ea737e9..2d757a4 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -490,6 +490,13 @@ static void emit_rewrite_diff(const char *name_a,
- 	char *data_one, *data_two;
- 	size_t size_one, size_two;
- 	struct emit_callback ecbdata;
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
-+
-+	if (o && o->output_prefix) {
-+		msgbuf = o->output_prefix(o, o->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
- 
- 	if (diff_mnemonic_prefix && DIFF_OPT_TST(o, REVERSE_DIFF)) {
- 		a_prefix = o->b_prefix;
-@@ -531,9 +538,10 @@ static void emit_rewrite_diff(const char *name_a,
- 	lc_a = count_lines(data_one, size_one);
- 	lc_b = count_lines(data_two, size_two);
- 	fprintf(o->file,
--		"%s--- %s%s%s\n%s+++ %s%s%s\n%s@@ -",
--		metainfo, a_name.buf, name_a_tab, reset,
--		metainfo, b_name.buf, name_b_tab, reset, fraginfo);
-+		"%s%s--- %s%s%s\n%s%s+++ %s%s%s\n%s%s@@ -",
-+		line_prefix, metainfo, a_name.buf, name_a_tab, reset,
-+		line_prefix, metainfo, b_name.buf, name_b_tab, reset,
-+		line_prefix, fraginfo);
- 	print_line_count(o->file, lc_a);
- 	fprintf(o->file, " +");
- 	print_line_count(o->file, lc_b);
-@@ -792,6 +800,14 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 	const char *meta = diff_get_color(ecbdata->color_diff, DIFF_METAINFO);
- 	const char *plain = diff_get_color(ecbdata->color_diff, DIFF_PLAIN);
- 	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
-+	struct diff_options *o = ecbdata->opt;
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
-+
-+	if (o && o->output_prefix) {
-+		msgbuf = o->output_prefix(o, o->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
- 
- 	if (ecbdata->header) {
- 		fprintf(ecbdata->opt->file, "%s", ecbdata->header->buf);
-@@ -806,10 +822,10 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
- 		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
- 
--		fprintf(ecbdata->opt->file, "%s--- %s%s%s\n",
--			meta, ecbdata->label_path[0], reset, name_a_tab);
--		fprintf(ecbdata->opt->file, "%s+++ %s%s%s\n",
--			meta, ecbdata->label_path[1], reset, name_b_tab);
-+		fprintf(ecbdata->opt->file, "%s%s--- %s%s%s\n",
-+			line_prefix, meta, ecbdata->label_path[0], reset, name_a_tab);
-+		fprintf(ecbdata->opt->file, "%s%s+++ %s%s%s\n",
-+			line_prefix, meta, ecbdata->label_path[1], reset, name_b_tab);
- 		ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
- 	}
- 
-@@ -1039,10 +1055,17 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 	int total_files = data->nr;
- 	int width, name_width;
- 	const char *reset, *set, *add_c, *del_c;
-+	const char *line_prefix = "";
-+	struct strbuf *msg = NULL;
- 
- 	if (data->nr == 0)
- 		return;
- 
-+	if (options->output_prefix) {
-+		msg = options->output_prefix(options, options->output_prefix_data);
-+		line_prefix = msg->buf;
-+	}
-+
- 	width = options->stat_width ? options->stat_width : 80;
- 	name_width = options->stat_name_width ? options->stat_name_width : 50;
- 
-@@ -1112,6 +1135,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		}
- 
- 		if (data->files[i]->is_binary) {
-+			fprintf(options->file, "%s", line_prefix);
- 			show_name(options->file, prefix, name, len);
- 			fprintf(options->file, "  Bin ");
- 			fprintf(options->file, "%s%"PRIuMAX"%s",
-@@ -1124,6 +1148,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 			continue;
- 		}
- 		else if (data->files[i]->is_unmerged) {
-+			fprintf(options->file, "%s", line_prefix);
- 			show_name(options->file, prefix, name, len);
- 			fprintf(options->file, "  Unmerged\n");
- 			continue;
-@@ -1146,6 +1171,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 			add = scale_linear(add, width, max_change);
- 			del = scale_linear(del, width, max_change);
- 		}
-+		fprintf(options->file, "%s", line_prefix);
- 		show_name(options->file, prefix, name, len);
- 		fprintf(options->file, "%5"PRIuMAX"%s", added + deleted,
- 				added + deleted ? " " : "");
-@@ -1153,6 +1179,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
- 		show_graph(options->file, '-', del, del_c, reset);
- 		fprintf(options->file, "\n");
- 	}
-+	fprintf(options->file, "%s", line_prefix);
- 	fprintf(options->file,
- 	       " %d files changed, %d insertions(+), %d deletions(-)\n",
- 	       total_files, adds, dels);
-@@ -1179,6 +1206,12 @@ static void show_shortstats(struct diffstat_t *data, struct diff_options *option
- 			}
- 		}
- 	}
-+	if (options->output_prefix) {
-+		struct strbuf *msg = NULL;
-+		msg = options->output_prefix(options,
-+				options->output_prefix_data);
-+		fprintf(options->file, "%s", msg->buf);
-+	}
- 	fprintf(options->file, " %d files changed, %d insertions(+), %d deletions(-)\n",
- 	       total_files, adds, dels);
- }
-@@ -1193,6 +1226,13 @@ static void show_numstat(struct diffstat_t *data, struct diff_options *options)
- 	for (i = 0; i < data->nr; i++) {
- 		struct diffstat_file *file = data->files[i];
- 
-+		if (options->output_prefix) {
-+			struct strbuf *msg = NULL;
-+			msg = options->output_prefix(options,
-+					options->output_prefix_data);
-+			fprintf(options->file, "%s", msg->buf);
-+		}
-+
- 		if (file->is_binary)
- 			fprintf(options->file, "-\t-\t");
- 		else
-@@ -1228,10 +1268,20 @@ struct dirstat_dir {
- 	int alloc, nr, percent, cumulative;
+@@ -603,7 +603,8 @@ static void diff_words_append(char *line, unsigned long len,
+ struct diff_words_data {
+ 	struct diff_words_buffer minus, plus;
+ 	const char *current_plus;
+-	FILE *file;
++	int last_minus;
++	struct diff_options *opt;
+ 	regex_t *word_regex;
  };
  
--static long gather_dirstat(FILE *file, struct dirstat_dir *dir, unsigned long changed, const char *base, int baselen)
-+static long gather_dirstat(struct diff_options *opt, struct dirstat_dir *dir,
-+		unsigned long changed, const char *base, int baselen)
- {
- 	unsigned long this_dir = 0;
- 	unsigned int sources = 0;
+@@ -612,11 +613,20 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+ 	struct diff_words_data *diff_words = priv;
+ 	int minus_first, minus_len, plus_first, plus_len;
+ 	const char *minus_begin, *minus_end, *plus_begin, *plus_end;
++	struct diff_options *opt = diff_words->opt;
++	struct strbuf *msgbuf;
++	char *line_prefix = "";
+ 
+ 	if (line[0] != '@' || parse_hunk_header(line, len,
+ 			&minus_first, &minus_len, &plus_first, &plus_len))
+ 		return;
+ 
 +	assert(opt);
-+	FILE *file = opt->file;
-+	const char *line_prefix = "";
-+	struct strbuf *msg = NULL;
-+
 +	if (opt->output_prefix) {
-+		msg = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msg->buf;
-+	}
- 
- 	while (dir->nr) {
- 		struct dirstat_file *f = dir->files;
-@@ -1246,7 +1296,7 @@ static long gather_dirstat(FILE *file, struct dirstat_dir *dir, unsigned long ch
- 		slash = strchr(f->name + baselen, '/');
- 		if (slash) {
- 			int newbaselen = slash + 1 - f->name;
--			this = gather_dirstat(file, dir, changed, f->name, newbaselen);
-+			this = gather_dirstat(opt, dir, changed, f->name, newbaselen);
- 			sources++;
- 		} else {
- 			this = f->changed;
-@@ -1268,7 +1318,7 @@ static long gather_dirstat(FILE *file, struct dirstat_dir *dir, unsigned long ch
- 		if (permille) {
- 			int percent = permille / 10;
- 			if (percent >= dir->percent) {
--				fprintf(file, "%4d.%01d%% %.*s\n", percent, permille % 10, baselen, base);
-+				fprintf(file, "%s%4d.%01d%% %.*s\n", line_prefix, percent, permille % 10, baselen, base);
- 				if (!dir->cumulative)
- 					return 0;
- 			}
-@@ -1348,7 +1398,7 @@ static void show_dirstat(struct diff_options *options)
- 
- 	/* Show all directories with more than x% of the changes */
- 	qsort(dir.files, dir.nr, sizeof(dir.files[0]), dirstat_compare);
--	gather_dirstat(options->file, &dir, changed, "", 0);
-+	gather_dirstat(options, &dir, changed, "", 0);
- }
- 
- static void free_diffstat_info(struct diffstat_t *diffstat)
-@@ -1406,6 +1456,15 @@ static void checkdiff_consume(void *priv, char *line, unsigned long len)
- 	const char *reset = diff_get_color(color_diff, DIFF_RESET);
- 	const char *set = diff_get_color(color_diff, DIFF_FILE_NEW);
- 	char *err;
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
-+
-+	assert(data->o);
-+	if (data->o->output_prefix) {
-+		msgbuf = data->o->output_prefix(data->o,
-+			data->o->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
- 
- 	if (line[0] == '+') {
- 		unsigned bad;
-@@ -1413,16 +1472,16 @@ static void checkdiff_consume(void *priv, char *line, unsigned long len)
- 		if (is_conflict_marker(line + 1, marker_size, len - 1)) {
- 			data->status |= 1;
- 			fprintf(data->o->file,
--				"%s:%d: leftover conflict marker\n",
--				data->filename, data->lineno);
-+				"%s%s:%d: leftover conflict marker\n",
-+				line_prefix, data->filename, data->lineno);
- 		}
- 		bad = ws_check(line + 1, len - 1, data->ws_rule);
- 		if (!bad)
- 			return;
- 		data->status |= bad;
- 		err = whitespace_error_string(bad);
--		fprintf(data->o->file, "%s:%d: %s.\n",
--			data->filename, data->lineno, err);
-+		fprintf(data->o->file, "%s%s:%d: %s.\n",
-+			line_prefix, data->filename, data->lineno, err);
- 		free(err);
- 		emit_line(data->o, set, reset, line, 1);
- 		ws_check_emit(line + 1, len - 1, data->ws_rule,
-@@ -1462,7 +1521,7 @@ static unsigned char *deflate_it(char *data,
- 	return deflated;
- }
- 
--static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two)
-+static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two, char *prefix)
- {
- 	void *cp;
- 	void *delta;
-@@ -1491,13 +1550,13 @@ static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two)
- 	}
- 
- 	if (delta && delta_size < deflate_size) {
--		fprintf(file, "delta %lu\n", orig_size);
-+		fprintf(file, "%sdelta %lu\n", prefix, orig_size);
- 		free(deflated);
- 		data = delta;
- 		data_size = delta_size;
- 	}
- 	else {
--		fprintf(file, "literal %lu\n", two->size);
-+		fprintf(file, "%sliteral %lu\n", prefix, two->size);
- 		free(delta);
- 		data = deflated;
- 		data_size = deflate_size;
-@@ -1515,18 +1574,19 @@ static void emit_binary_diff_body(FILE *file, mmfile_t *one, mmfile_t *two)
- 			line[0] = bytes - 26 + 'a' - 1;
- 		encode_85(line + 1, cp, bytes);
- 		cp = (char *) cp + bytes;
-+		fprintf(file, "%s", prefix);
- 		fputs(line, file);
- 		fputc('\n', file);
- 	}
--	fprintf(file, "\n");
-+	fprintf(file, "%s\n", prefix);
- 	free(data);
- }
- 
--static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two)
-+static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two, char *prefix)
- {
--	fprintf(file, "GIT binary patch\n");
--	emit_binary_diff_body(file, one, two);
--	emit_binary_diff_body(file, two, one);
-+	fprintf(file, "%sGIT binary patch\n", prefix);
-+	emit_binary_diff_body(file, one, two, prefix);
-+	emit_binary_diff_body(file, two, one, prefix);
- }
- 
- static void diff_filespec_load_driver(struct diff_filespec *one)
-@@ -1615,6 +1675,13 @@ static void builtin_diff(const char *name_a,
- 	struct userdiff_driver *textconv_one = NULL;
- 	struct userdiff_driver *textconv_two = NULL;
- 	struct strbuf header = STRBUF_INIT;
-+	struct strbuf *msgbuf;
-+	char *line_prefix = "";
-+
-+	if (o->output_prefix) {
-+		msgbuf = o->output_prefix(o, o->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
- 
- 	if (DIFF_OPT_TST(o, SUBMODULE_LOG) &&
- 			(!one->mode || S_ISGITLINK(one->mode)) &&
-@@ -1649,22 +1716,22 @@ static void builtin_diff(const char *name_a,
- 	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
- 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
- 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
--	strbuf_addf(&header, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
-+	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix, set, a_one, b_two, reset);
- 	if (lbl[0][0] == '/') {
- 		/* /dev/null */
--		strbuf_addf(&header, "%snew file mode %06o%s\n", set, two->mode, reset);
-+		strbuf_addf(&header, "%s%snew file mode %06o%s\n", line_prefix, set, two->mode, reset);
- 		if (xfrm_msg && xfrm_msg[0])
- 			strbuf_addf(&header, "%s%s%s\n", set, xfrm_msg, reset);
- 	}
- 	else if (lbl[1][0] == '/') {
--		strbuf_addf(&header, "%sdeleted file mode %06o%s\n", set, one->mode, reset);
-+		strbuf_addf(&header, "%s%sdeleted file mode %06o%s\n", line_prefix, set, one->mode, reset);
- 		if (xfrm_msg && xfrm_msg[0])
- 			strbuf_addf(&header, "%s%s%s\n", set, xfrm_msg, reset);
- 	}
- 	else {
- 		if (one->mode != two->mode) {
--			strbuf_addf(&header, "%sold mode %06o%s\n", set, one->mode, reset);
--			strbuf_addf(&header, "%snew mode %06o%s\n", set, two->mode, reset);
-+			strbuf_addf(&header, "%s%sold mode %06o%s\n", line_prefix, set, one->mode, reset);
-+			strbuf_addf(&header, "%s%snew mode %06o%s\n", line_prefix, set, two->mode, reset);
- 		}
- 		if (xfrm_msg && xfrm_msg[0])
- 			strbuf_addf(&header, "%s%s%s\n", set, xfrm_msg, reset);
-@@ -1699,10 +1766,10 @@ static void builtin_diff(const char *name_a,
- 		fprintf(o->file, "%s", header.buf);
- 		strbuf_reset(&header);
- 		if (DIFF_OPT_TST(o, BINARY))
--			emit_binary_diff(o->file, &mf1, &mf2);
-+			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
- 		else
--			fprintf(o->file, "Binary files %s and %s differ\n",
--				lbl[0], lbl[1]);
-+			fprintf(o->file, "%sBinary files %s and %s differ\n",
-+				line_prefix, lbl[0], lbl[1]);
- 		o->found_changes = 1;
- 	}
- 	else {
-@@ -2312,28 +2379,36 @@ static void fill_metainfo(struct strbuf *msg,
- 			  struct diff_options *o,
- 			  struct diff_filepair *p)
- {
-+	struct strbuf *msgbuf;
-+	char *line_prefix = "";
-+
-+	if (o->output_prefix) {
-+		msgbuf = o->output_prefix(o, o->output_prefix_data);
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
 +		line_prefix = msgbuf->buf;
 +	}
 +
- 	strbuf_init(msg, PATH_MAX * 2 + 300);
- 	switch (p->status) {
- 	case DIFF_STATUS_COPIED:
--		strbuf_addf(msg, "similarity index %d%%", similarity_index(p));
--		strbuf_addstr(msg, "\ncopy from ");
-+		strbuf_addf(msg, "%ssimilarity index %d%%", line_prefix, similarity_index(p));
-+		strbuf_addf(msg, "\n%scopy from ", line_prefix);
- 		quote_c_style(name, msg, NULL, 0);
--		strbuf_addstr(msg, "\ncopy to ");
-+		strbuf_addf(msg, "\n%scopy to ", line_prefix);
- 		quote_c_style(other, msg, NULL, 0);
- 		strbuf_addch(msg, '\n');
- 		break;
- 	case DIFF_STATUS_RENAMED:
--		strbuf_addf(msg, "similarity index %d%%", similarity_index(p));
--		strbuf_addstr(msg, "\nrename from ");
-+		strbuf_addf(msg, "%ssimilarity index %d%%", line_prefix, similarity_index(p));
-+		strbuf_addf(msg, "\n%srename from ", line_prefix);
- 		quote_c_style(name, msg, NULL, 0);
--		strbuf_addstr(msg, "\nrename to ");
-+		strbuf_addf(msg, "\n%srename to ", line_prefix);
- 		quote_c_style(other, msg, NULL, 0);
- 		strbuf_addch(msg, '\n');
- 		break;
- 	case DIFF_STATUS_MODIFIED:
- 		if (p->score) {
--			strbuf_addf(msg, "dissimilarity index %d%%\n",
--				    similarity_index(p));
-+			strbuf_addf(msg, "%sdissimilarity index %d%%\n",
-+				    line_prefix, similarity_index(p));
- 			break;
- 		}
- 		/* fallthru */
-@@ -2350,8 +2425,8 @@ static void fill_metainfo(struct strbuf *msg,
- 			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
- 				abbrev = 40;
- 		}
--		strbuf_addf(msg, "index %.*s..%.*s",
--			    abbrev, sha1_to_hex(one->sha1),
-+		strbuf_addf(msg, "%sindex %.*s..%.*s",
-+			    line_prefix, abbrev, sha1_to_hex(one->sha1),
- 			    abbrev, sha1_to_hex(two->sha1));
- 		if (one->mode == two->mode)
- 			strbuf_addf(msg, " %06o", one->mode);
-@@ -3030,6 +3105,11 @@ static void diff_flush_raw(struct diff_filepair *p, struct diff_options *opt)
- {
- 	int line_termination = opt->line_termination;
- 	int inter_name_termination = line_termination ? '\t' : '\0';
-+	if (opt->output_prefix) {
-+		struct strbuf *msg = NULL;
-+		msg = opt->output_prefix(opt, opt->output_prefix_data);
-+		fprintf(opt->file, "%s", msg->buf);
+ 	/* POSIX requires that first be decremented by one if len == 0... */
+ 	if (minus_len) {
+ 		minus_begin = diff_words->minus.orig[minus_first].begin;
+@@ -632,20 +642,54 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
+ 	} else
+ 		plus_begin = plus_end = diff_words->plus.orig[plus_first].end;
+ 
+-	if (diff_words->current_plus != plus_begin)
+-		fwrite(diff_words->current_plus,
+-				plus_begin - diff_words->current_plus, 1,
+-				diff_words->file);
+-	if (minus_begin != minus_end)
+-		color_fwrite_lines(diff_words->file,
++	/*
++	 * '--color-words' algorithm can be described as:
++	 *
++	 * 1. collect a the minus/plus lines of a diff hunk, divided into minus-lines and plus-lines;
++	 * 2. break both minus-lines and plus-lines into words and place them into two
++	 *    mmfile_t with one word for each line;
++	 * 3. use xdiff to run diff on the two mmfile_t to get the words level diff;
++	 *
++	 * And for the common parts of the both file, we output the plus side text.
++	 * diff_words->current_plus is used to trace the current position of the plus file
++	 * which printed. diff_words->last_minus is used to trace the last minus word
++	 * printed.
++	 *
++	 * For '--graph' to work with '--color-words', we need to output the graph prefix
++	 * on each line of color words output. Generally, there are two conditions on
++	 * which we should output the prefix.
++	 * 1. diff_words->last_minus == 0 && diff_words->current_plus == diff_words->plus.text.ptr
++	 *    that is: the plus text must start as a new line, and if there is no minus
++	 *    word printed, a graph prefix must be printed.
++	 * 2. diff_words->current_plus > diff_words->plus.text.ptr && *(diff_words->current_plus - 1) == '\n'
++	 *    that is: a graph prefix must be printed following a '\n'
++	 */
++	if ((diff_words->last_minus == 0 &&
++		diff_words->current_plus == diff_words->plus.text.ptr) ||
++		(diff_words->current_plus > diff_words->plus.text.ptr &&
++		*(diff_words->current_plus - 1) == '\n')) {
++		fputs(line_prefix, diff_words->opt->file);
++	}
++	if (diff_words->current_plus != plus_begin) {
++		color_fwrite_lines(diff_words->opt->file, "",
++				plus_begin - diff_words->current_plus,
++				diff_words->current_plus, line_prefix);
++		if (*(plus_begin - 1) == '\n')
++			fputs(line_prefix, diff_words->opt->file);
++	}
++	if (minus_begin != minus_end) {
++		color_fwrite_lines(diff_words->opt->file,
+ 				diff_get_color(1, DIFF_FILE_OLD),
+-				minus_end - minus_begin, minus_begin);
+-	if (plus_begin != plus_end)
+-		color_fwrite_lines(diff_words->file,
++				minus_end - minus_begin, minus_begin, line_prefix);
++	}
++	if (plus_begin != plus_end) {
++		color_fwrite_lines(diff_words->opt->file,
+ 				diff_get_color(1, DIFF_FILE_NEW),
+-				plus_end - plus_begin, plus_begin);
++				plus_end - plus_begin, plus_begin, line_prefix);
 +	}
  
- 	if (!(opt->output_format & DIFF_FORMAT_NAME_STATUS)) {
- 		fprintf(opt->file, ":%06o %06o %s ", p->one->mode, p->two->mode,
-@@ -3275,48 +3355,62 @@ static void show_file_mode_name(FILE *file, const char *newdelete, struct diff_f
+ 	diff_words->current_plus = plus_end;
++	diff_words->last_minus = minus_first;
  }
  
- 
--static void show_mode_change(FILE *file, struct diff_filepair *p, int show_name)
-+static void show_mode_change(FILE *file, struct diff_filepair *p, int show_name,
-+		const char *line_prefix)
- {
- 	if (p->one->mode && p->two->mode && p->one->mode != p->two->mode) {
--		fprintf(file, " mode change %06o => %06o%c", p->one->mode, p->two->mode,
--			show_name ? ' ' : '\n');
-+		fprintf(file, "%s mode change %06o => %06o%c", line_prefix, p->one->mode,
-+			p->two->mode, show_name ? ' ' : '\n');
- 		if (show_name) {
- 			write_name_quoted(p->two->path, file, '\n');
- 		}
- 	}
- }
- 
--static void show_rename_copy(FILE *file, const char *renamecopy, struct diff_filepair *p)
-+static void show_rename_copy(FILE *file, const char *renamecopy, struct diff_filepair *p,
-+			const char *line_prefix)
- {
- 	char *names = pprint_rename(p->one->path, p->two->path);
- 
- 	fprintf(file, " %s %s (%d%%)\n", renamecopy, names, similarity_index(p));
- 	free(names);
--	show_mode_change(file, p, 0);
-+	show_mode_change(file, p, 0, line_prefix);
- }
- 
--static void diff_summary(FILE *file, struct diff_filepair *p)
-+static void diff_summary(struct diff_options *opt, struct diff_filepair *p)
- {
-+	FILE *file = opt->file;
+ /* This function starts looking at *begin, and returns 0 iff a word was found. */
+@@ -724,17 +768,29 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	xpparam_t xpp;
+ 	xdemitconf_t xecfg;
+ 	mmfile_t minus, plus;
++	struct diff_options *opt = diff_words->opt;
++	struct strbuf *msgbuf;
 +	char *line_prefix = "";
 +
++	assert(opt);
 +	if (opt->output_prefix) {
-+		struct strbuf *buf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = buf->buf;
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++		line_prefix = msgbuf->buf;
 +	}
-+
- 	switch(p->status) {
- 	case DIFF_STATUS_DELETED:
-+		fputs(line_prefix, file);
- 		show_file_mode_name(file, "delete", p->one);
- 		break;
- 	case DIFF_STATUS_ADDED:
-+		fputs(line_prefix, file);
- 		show_file_mode_name(file, "create", p->two);
- 		break;
- 	case DIFF_STATUS_COPIED:
--		show_rename_copy(file, "copy", p);
-+		fputs(line_prefix, file);
-+		show_rename_copy(file, "copy", p, line_prefix);
- 		break;
- 	case DIFF_STATUS_RENAMED:
--		show_rename_copy(file, "rename", p);
-+		fputs(line_prefix, file);
-+		show_rename_copy(file, "rename", p, line_prefix);
- 		break;
- 	default:
- 		if (p->score) {
--			fputs(" rewrite ", file);
-+			fprintf(file, "%s rewrite ", line_prefix);
- 			write_name_quoted(p->two->path, file, ' ');
- 			fprintf(file, "(%d%%)\n", similarity_index(p));
- 		}
--		show_mode_change(file, p, !p->score);
-+		show_mode_change(file, p, !p->score, line_prefix);
- 		break;
+ 
+ 	/* special case: only removal */
+ 	if (!diff_words->plus.text.size) {
+-		color_fwrite_lines(diff_words->file,
++		fputs(line_prefix, diff_words->opt->file);
++		color_fwrite_lines(diff_words->opt->file,
+ 			diff_get_color(1, DIFF_FILE_OLD),
+-			diff_words->minus.text.size, diff_words->minus.text.ptr);
++			diff_words->minus.text.size,
++			diff_words->minus.text.ptr, line_prefix);
+ 		diff_words->minus.text.size = 0;
+ 		return;
  	}
+ 
+ 	diff_words->current_plus = diff_words->plus.text.ptr;
++	diff_words->last_minus = 0;
+ 
+ 	memset(&xpp, 0, sizeof(xpp));
+ 	memset(&xecfg, 0, sizeof(xecfg));
+@@ -748,11 +804,17 @@ static void diff_words_show(struct diff_words_data *diff_words)
+ 	free(minus.ptr);
+ 	free(plus.ptr);
+ 	if (diff_words->current_plus != diff_words->plus.text.ptr +
+-			diff_words->plus.text.size)
+-		fwrite(diff_words->current_plus,
++			diff_words->plus.text.size) {
++		if ((diff_words->current_plus == diff_words->plus.text.ptr &&
++			diff_words->last_minus == 0) ||
++			(diff_words->current_plus > diff_words->plus.text.ptr &&
++			*(diff_words->current_plus - 1) == '\n'))
++			fputs(line_prefix, diff_words->opt->file);
++		color_fwrite_lines(diff_words->opt->file, "",
+ 			diff_words->plus.text.ptr + diff_words->plus.text.size
+-			- diff_words->current_plus, 1,
+-			diff_words->file);
++			- diff_words->current_plus, diff_words->current_plus,
++			line_prefix);
++	}
+ 	diff_words->minus.text.size = diff_words->plus.text.size = 0;
  }
-@@ -3526,8 +3620,9 @@ void diff_flush(struct diff_options *options)
- 		show_dirstat(options);
  
- 	if (output_format & DIFF_FORMAT_SUMMARY && !is_summary_empty(q)) {
--		for (i = 0; i < q->nr; i++)
--			diff_summary(options->file, q->queue[i]);
-+		for (i = 0; i < q->nr; i++) {
-+			diff_summary(options, q->queue[i]);
-+		}
- 		separator++;
- 	}
- 
+@@ -1842,7 +1904,7 @@ static void builtin_diff(const char *name_a,
+ 		if (DIFF_OPT_TST(o, COLOR_DIFF_WORDS)) {
+ 			ecbdata.diff_words =
+ 				xcalloc(1, sizeof(struct diff_words_data));
+-			ecbdata.diff_words->file = o->file;
++			ecbdata.diff_words->opt = o;
+ 			if (!o->word_regex)
+ 				o->word_regex = userdiff_word_regex(one);
+ 			if (!o->word_regex)
 -- 
 1.6.0.4
