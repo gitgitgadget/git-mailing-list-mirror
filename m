@@ -1,95 +1,76 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: What's cooking extra
-Date: Sat, 22 May 2010 15:09:16 +0200
-Message-ID: <20100522130916.GA28452@localhost>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
- <20100519170656.GA30161@pvv.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH RFC] Add a config verbose option fetch and push
+Date: Sat, 22 May 2010 15:34:18 +0200
+Message-ID: <201005221534.18529.trast@student.ethz.ch>
+References: <4bf6b6f5.dd79dc0a.5533.2acd@mx.google.com> <201005221244.32213.trast@student.ethz.ch> <AANLkTimQzAM7qA32FRFvQC1cx7UEEKtBxjU89whrSqF5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Sat May 22 15:09:29 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Nathan W. Panike" <nathan.panike@gmail.com>,
+	<git@vger.kernel.org>,
+	Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 22 15:34:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFoSG-0005Um-QU
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 15:09:29 +0200
+	id 1OFoqm-0007bj-Hu
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 15:34:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754314Ab0EVNJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 09:09:24 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:63575 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754060Ab0EVNJX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 09:09:23 -0400
-Received: by wwb13 with SMTP id 13so25142wwb.19
-        for <git@vger.kernel.org>; Sat, 22 May 2010 06:09:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=iQB7OwYhB4Gh05Gjwi/6uUrwvMX4Dc6A8dsokDi4+6Q=;
-        b=xoprttY/ccMN7jIy/tDn1sGMkUGk4m4nnPrfWgxjA6t3P170MBNhVDUwxuOkfdJxUx
-         7HhY8Uw9iQpykAYaiwTJyoa1Orz+sIi0mLkyFyGlMgtR7fEDhUURu934UmbMzeORrP7h
-         a7hAJqJgZz8rOYsG0LVr6n7OnoDBX2DlRkL2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=xaDM7hlCqdxJi+0ZaKmYVU+VEfQbpGE1kiKxVVNalkM7LsjCmn40PagKdIzYVaewvm
-         qfh4915wt9sbCL7k85BcLJbB8XP0Z0H3hOB9vybwd1ph1Myz1R5muIbDGkvEb0fSCZn7
-         T4giIUADZ3AO3VKH5/hVtidzYc1YlnixdB2pk=
-Received: by 10.227.68.144 with SMTP id v16mr2640134wbi.156.1274533761734;
-        Sat, 22 May 2010 06:09:21 -0700 (PDT)
-Received: from darc.lan (p549A3CF7.dip.t-dialin.net [84.154.60.247])
-        by mx.google.com with ESMTPS id h22sm15362089wbh.9.2010.05.22.06.09.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 22 May 2010 06:09:21 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OFoS4-0007Xa-FI; Sat, 22 May 2010 15:09:16 +0200
-Content-Disposition: inline
-In-Reply-To: <20100519170656.GA30161@pvv.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752907Ab0EVNen convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 May 2010 09:34:43 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:12487 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752695Ab0EVNem convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 09:34:42 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 22 May
+ 2010 15:34:40 +0200
+Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 22 May
+ 2010 15:34:18 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <AANLkTimQzAM7qA32FRFvQC1cx7UEEKtBxjU89whrSqF5@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147524>
 
-On Wed, May 19, 2010 at 07:06:56PM +0200, Finn Arne Gangstad wrote:
-> On Wed, May 19, 2010 at 07:33:32AM -0700, Junio C Hamano wrote:
-> 
-> >  * (Eyvind Bernhardsen and Linus) Fixing the behaviour of crlf attribute;
-> >    ignoring them when core.autocrlf is not in effect was a wrong design
-> >    decision.
-> > 
-> >    I agree with what Linus said in the thread; I haven't yet looked at the
-> >    discussion in the past few days.  Also I don't know where '[PATCH v2]
-> >    Add "core.eol" config variable' fits in the picture.
-> 
-> I think this one is pretty much discussed by now, with the latest
-> changes this should do pretty much what Linus wanted.
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+> On Sat, May 22, 2010 at 10:44, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+> > =C6var Arnfj=F6r=F0 Bjarmason wrote:
+> > That would completely ruin the scriptability of almost all commands=
+=2E
+> > Imagine the user added the following options as default:
+> >  add --edit
+[...]
+> > I'm sure you can find one option that changes the command in someth=
+ing
+> > completely different *for every command*.
+>=20
+> Sure. But so would adding this as git-add to your $PATH:
+>=20
+>     #!/bin/sh
+>     /usr/lib/git-core/git-add --edit $@
 
-That is not the impression I got. Linus was objecting to the idea of new
-attribute and configuration variables, which essentially do the same thing
-but with slightly different semantics.
+Two points:
 
-As soon as the existing crlf attribute is given priority over core.autocrlf,
-all the problems discussed originally go away. So what exactly are the new
-attributes supposed to do?
+* This way is not documented in git-config(1), as the proposed
+  interface would have to be; hence, it is not "official".
 
-Also, could you post a truth table for all the parameters involved (eol,
-crlf, core.autocrlf, core.eol). The documentation in the patches is too
-confusing for me to understand even that.
+* More importantly, it doesn't work; for builtins such as git-add, not
+  even if you put it under the `git --exec-path` (yes, I've tested
+  this).
 
-And, renaming the crlf attribute to text? Where did Linus suggest that? If
-we do that, we don't even have to talk about backwards compatibility any
-more.
+> Git already has plenty of ways to shoot yourself in the foot.
 
-Clemens
+Can't argue with that.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
