@@ -1,64 +1,55 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git-status and git-diff now very slow in project with a submodule
-Date: Sat, 22 May 2010 14:08:38 +0200
-Message-ID: <4BF7C946.1040000@web.de>
-References: <ht3194$1vc$1@dough.gmane.org>	 <7vy6fe7ldo.fsf@alter.siamese.dyndns.org> <AANLkTilctjct-a911H14XMnaBydYR1I6lPbEuFThTJ99@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: SLONIK.AZ@gmail.com
-X-From: git-owner@vger.kernel.org Sat May 22 14:09:05 2010
+From: Marc Weber <marco-oweber@gmx.de>
+Subject: Re: can pre-commit hook accept user input?
+Date: Sat, 22 May 2010 14:11:15 +0200
+Message-ID: <1274530138-sup-6441@nixos>
+References: <ht7co7$d0s$1@dough.gmane.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 22 14:11:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFnVj-00034A-KQ
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 14:08:59 +0200
+	id 1OFnY6-00041C-Es
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 14:11:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754785Ab0EVMIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 08:08:41 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:42824 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754283Ab0EVMIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 08:08:40 -0400
-Received: from smtp02.web.de  ( [172.20.0.184])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 5F0DE161ED6CF;
-	Sat, 22 May 2010 14:08:39 +0200 (CEST)
-Received: from [80.128.110.225] (helo=[192.168.178.26])
-	by smtp02.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OFnVN-0008Ic-00; Sat, 22 May 2010 14:08:37 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <AANLkTilctjct-a911H14XMnaBydYR1I6lPbEuFThTJ99@mail.gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18CGq11N9eTp2o31galw1PE+01LTZqSW1++G5aU
-	7bVS6egO9a6OvdXoC5rfiVXiAnXqiTkM9cTRLw+Y/t50sY07vb
-	AeGm6O0FJVh+92Y5EH7w==
+	id S1754447Ab0EVMLU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 08:11:20 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43099 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754153Ab0EVMLT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 May 2010 08:11:19 -0400
+Received: (qmail invoked by alias); 22 May 2010 12:11:16 -0000
+Received: from pD9E0AA67.dip.t-dialin.net (EHLO mail.gmx.net) [217.224.170.103]
+  by mail.gmx.net (mp011) with SMTP; 22 May 2010 14:11:16 +0200
+X-Authenticated: #9006135
+X-Provags-ID: V01U2FsdGVkX1/N5cglE1bN6QSB61D3arzzv0SYGYdbJiooiWoir9
+	NUBYVGT0EO4LDj
+Received: by mail.gmx.net (sSMTP sendmail emulation); Sat, 22 May 2010 14:11:15 +0200
+In-reply-to: <ht7co7$d0s$1@dough.gmane.org>
+User-Agent: Sup/git
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147521>
 
-Am 21.05.2010 14:52, schrieb Leo Razoumov:
-> On 2010-05-20, Junio C Hamano <gitster@pobox.com> wrote:
-> I would be interested to know of any counter-example: that is, a
-> use-case where it makes logical sense to declare a repo dirty when it
-> gets an untracked file not mentioned in .gitignore.
+Excerpts from Neal Kreitzinger's message of Sat May 22 03:41:11 +0200 2010:
+> Can the pre-commit hook accept user input?  I'm new to linux and bash 
 
-For submodules the presence of untracked files must be visible in the
-superproject. When new files are added to a submodule but the user
-forgot to commit them, the superproject might not even build at all
-when another developer clones the superproject. And yes, this is a
-real-life use case from my dayjob.
+Maybe try describing why you want to add this hook?
+Which purpose does it have?
+Maybe there is another way to get what you want.
 
-The alternative to these broader definitions about when to declare a
-submodule dirty (new commits, modified content and untracked content)
-would have been to handle all eight combinations of these states. In
-all relevant parts of the toolchain. Which seems pretty insane. So
-the submodule shows up as modified; and all but the short outputs of
-diff and status also tell you /why/ it is considered modified. So the
-user can decide what to do about that.
+There may be some ways using new ttys and such to be able to read from
+stdin again. Maybe even use tools such as xmessage or gui inputs.
+
+But this should be a personal hack only then - because I don't know
+exactly those hooks are run. So tell more about the "why" and maybe
+you'll get much feedback about the "how" to do it.
+
+Marc Weber
