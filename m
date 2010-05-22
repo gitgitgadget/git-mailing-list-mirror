@@ -1,243 +1,160 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 8/8] grep: support NUL chars in search strings for -F
-Date: Sat, 22 May 2010 23:43:43 +0200
-Message-ID: <4BF8500F.70205@lsrfire.ath.cx>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org> <4BF84B9E.7060009@lsrfire.ath.cx>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: What's cooking extra
+Date: Sun, 23 May 2010 00:27:46 +0200
+Message-ID: <20100522222746.GA2694@localhost>
+References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
+ <20100519170656.GA30161@pvv.org>
+ <20100522130916.GA28452@localhost>
+ <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 22 23:44:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Finn Arne Gangstad <finnag@pvv.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 23 00:31:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFwUS-0007V3-Ro
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 23:44:17 +0200
+	id 1OFxEH-0000h6-Mk
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 00:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758982Ab0EVVn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 17:43:58 -0400
-Received: from india601.server4you.de ([85.25.151.105]:52453 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758808Ab0EVVn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 17:43:57 -0400
-Received: from [10.0.1.100] (p57B7F4C3.dip.t-dialin.net [87.183.244.195])
-	by india601.server4you.de (Postfix) with ESMTPSA id 81C612F8069;
-	Sat, 22 May 2010 23:43:55 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <4BF84B9E.7060009@lsrfire.ath.cx>
+	id S1759035Ab0EVW1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 18:27:55 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45201 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759016Ab0EVW1z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 May 2010 18:27:55 -0400
+Received: by fxm5 with SMTP id 5so1669273fxm.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 15:27:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Uv2o6YXe/J42qF7YtwTVt3drXsMFHx/k5ATZR/Jdv0w=;
+        b=CcYBogJxxXOC/Yls8JktNRh++gF0rzneLIKvn7xnMiZzR/JEqi/+ryB44Npelw0PJX
+         mvPNzfQm3oL3YKtepRZJdGaJiC5/vE7MPAyP/r452NaA/TkYjGSmppbvRsDjSQpueVEp
+         UD8yrm/O3bIvO5OzPiejGybHgc+PKZdenwUsQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=g/vdbDixBa2ANtDKg9B2+fPXds4rSSnyKctCFR9NPsufnE8JjZzaaCYhFJXzfaEY5L
+         OLvdL/ZVTE36kL2b9TjN/D83jJ1GrMxiKiOVTAO0b0/InteW0fdrqto3ou8RXCQu12p5
+         F5aaQqxxuNfgPi8aGPRL3x/fjES99Y/YoTyJU=
+Received: by 10.223.98.24 with SMTP id o24mr3048899fan.29.1274567272439;
+        Sat, 22 May 2010 15:27:52 -0700 (PDT)
+Received: from darc.lan (p549A5187.dip.t-dialin.net [84.154.81.135])
+        by mx.google.com with ESMTPS id 2sm11462827fav.13.2010.05.22.15.27.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 22 May 2010 15:27:51 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OFxAY-00010y-2n; Sun, 23 May 2010 00:27:46 +0200
+Content-Disposition: inline
+In-Reply-To: <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147551>
 
-Search patterns in a file specified with -f can contain NUL characters.
-The current code ignores all characters on a line after a NUL.
+Hi Eyvind,
 
-Pass the actual length of the line all the way from the pattern file to
-fixmatch() and use it for case-sensitive fixed string matching.
+Thanks for the extended summary. I still have several doubts, as
+detailed below. But I understand that this has been heavily
+discussed and if the discussion has indeed come to a conclusion,
+then I will not complain about it now.
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
-Support for -F was easy, but in order to be able to search for NULs
-with -Fi, -G and -E, we'd need a different case-insensitive fixed
-string search function (memcasemem?) and a different regex library, or
-at least use a different (non-POSIX) entry point.
+On Sat, May 22, 2010 at 09:42:14PM +0200, Eyvind Bernhardsen wrote:
+> On 22. mai 2010, at 15.09, Clemens Buchacher wrote:
+> 
+> > As soon as the existing crlf attribute is given priority over
+> > core.autocrlf, all the problems discussed originally go away.
+> > So what exactly are the new attributes supposed to do?
 
-How badly do we need this feature?  If the new regex lib is faster or
-improves multi-platform support then NUL support would be a nice side
-effect, I think, but this feature alone doesn't justify a switch in my
-eyes.
+For all my comments below I am assuming that the behavior of
+autocrlf will be changed to respect the crlf/text attribute by
+default.
 
+> There is one new attribute, "eol", that is used for files which
+> need a specific line ending.  Being able to "force" LF or CRLF
+> line endings has been requested several times on the list, and is
+> already sort of provided for by "crlf=input".
 
- builtin/grep.c         |    8 ++++++--
- grep.c                 |   33 ++++++++++++++++++++-------------
- grep.h                 |    2 ++
- t/t7008-grep-binary.sh |   30 ++++++++++++++++++++++++++++++
- 4 files changed, 58 insertions(+), 15 deletions(-)
+[...]
+> Any file with the "text" attribute set will have its line endings
+> normalized to LF in the repository.  If "text" is set to the
+> special value "auto", git will only convert the file if it looks
+> like a text file.
+> 
+> The "eol" attribute is used for files that need a specific line
+> ending.  Setting it also sets "text".
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index b194ea3..d0a73da 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -724,11 +724,15 @@ static int file_callback(const struct option *opt, const char *arg, int unset)
- 	if (!patterns)
- 		die_errno("cannot open '%s'", arg);
- 	while (strbuf_getline(&sb, patterns, '\n') == 0) {
-+		char *s;
-+		size_t len;
-+
- 		/* ignore empty line like grep does */
- 		if (sb.len == 0)
- 			continue;
--		append_grep_pattern(grep_opt, strbuf_detach(&sb, NULL), arg,
--				    ++lno, GREP_PATTERN);
-+
-+		s = strbuf_detach(&sb, &len);
-+		append_grep_pat(grep_opt, s, len, arg, ++lno, GREP_PATTERN);
- 	}
- 	fclose(patterns);
- 	strbuf_release(&sb);
-diff --git a/grep.c b/grep.c
-index 70a776f..82fb349 100644
---- a/grep.c
-+++ b/grep.c
-@@ -7,6 +7,7 @@ void append_header_grep_pattern(struct grep_opt *opt, enum grep_header_field fie
- {
- 	struct grep_pat *p = xcalloc(1, sizeof(*p));
- 	p->pattern = pat;
-+	p->patternlen = strlen(pat);
- 	p->origin = "header";
- 	p->no = 0;
- 	p->token = GREP_PATTERN_HEAD;
-@@ -19,8 +20,15 @@ void append_header_grep_pattern(struct grep_opt *opt, enum grep_header_field fie
- void append_grep_pattern(struct grep_opt *opt, const char *pat,
- 			 const char *origin, int no, enum grep_pat_token t)
- {
-+	append_grep_pat(opt, pat, strlen(pat), origin, no, t);
-+}
-+
-+void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen,
-+		     const char *origin, int no, enum grep_pat_token t)
-+{
- 	struct grep_pat *p = xcalloc(1, sizeof(*p));
- 	p->pattern = pat;
-+	p->patternlen = patlen;
- 	p->origin = origin;
- 	p->no = no;
- 	p->token = t;
-@@ -44,8 +52,8 @@ struct grep_opt *grep_opt_dup(const struct grep_opt *opt)
- 			append_header_grep_pattern(ret, pat->field,
- 						   pat->pattern);
- 		else
--			append_grep_pattern(ret, pat->pattern, pat->origin,
--					    pat->no, pat->token);
-+			append_grep_pat(ret, pat->pattern, pat->patternlen,
-+					pat->origin, pat->no, pat->token);
- 	}
- 
- 	return ret;
-@@ -329,21 +337,21 @@ static void show_name(struct grep_opt *opt, const char *name)
- 	opt->output(opt, opt->null_following_name ? "\0" : "\n", 1);
- }
- 
--static int fixmatch(const char *pattern, char *line, char *eol,
--		    int ignore_case, regmatch_t *match)
-+static int fixmatch(struct grep_pat *p, char *line, char *eol,
-+		    regmatch_t *match)
- {
- 	char *hit;
- 
--	if (ignore_case) {
-+	if (p->ignore_case) {
- 		char *s = line;
- 		do {
--			hit = strcasestr(s, pattern);
-+			hit = strcasestr(s, p->pattern);
- 			if (hit)
- 				break;
- 			s += strlen(s) + 1;
- 		} while (s < eol);
- 	} else
--		hit = memmem(line, eol - line, pattern, strlen(pattern));
-+		hit = memmem(line, eol - line, p->pattern, p->patternlen);
- 
- 	if (!hit) {
- 		match->rm_so = match->rm_eo = -1;
-@@ -351,7 +359,7 @@ static int fixmatch(const char *pattern, char *line, char *eol,
- 	}
- 	else {
- 		match->rm_so = hit - line;
--		match->rm_eo = match->rm_so + strlen(pattern);
-+		match->rm_eo = match->rm_so + p->patternlen;
- 		return 0;
- 	}
- }
-@@ -417,7 +425,7 @@ static int match_one_pattern(struct grep_pat *p, char *bol, char *eol,
- 
-  again:
- 	if (p->fixed)
--		hit = !fixmatch(p->pattern, bol, eol, p->ignore_case, pmatch);
-+		hit = !fixmatch(p, bol, eol, pmatch);
- 	else
- 		hit = !regmatch(&p->regexp, bol, eol, pmatch, eflags);
- 
-@@ -743,10 +751,9 @@ static int look_ahead(struct grep_opt *opt,
- 		int hit;
- 		regmatch_t m;
- 
--		if (p->fixed) {
--			hit = !fixmatch(p->pattern, bol, bol + *left_p,
--					p->ignore_case, &m);
--		} else
-+		if (p->fixed)
-+			hit = !fixmatch(p, bol, bol + *left_p, &m);
-+		else
- 			hit = !regmatch(&p->regexp, bol, bol + *left_p, &m, 0);
- 		if (!hit || m.rm_so < 0 || m.rm_eo < 0)
- 			continue;
-diff --git a/grep.h b/grep.h
-index 89342e5..0aebebd 100644
---- a/grep.h
-+++ b/grep.h
-@@ -29,6 +29,7 @@ struct grep_pat {
- 	int no;
- 	enum grep_pat_token token;
- 	const char *pattern;
-+	size_t patternlen;
- 	enum grep_header_field field;
- 	regex_t regexp;
- 	unsigned fixed:1;
-@@ -104,6 +105,7 @@ struct grep_opt {
- 	void *output_priv;
- };
- 
-+extern void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
- extern void append_grep_pattern(struct grep_opt *opt, const char *pat, const char *origin, int no, enum grep_pat_token t);
- extern void append_header_grep_pattern(struct grep_opt *, enum grep_header_field, const char *);
- extern void compile_grep_patterns(struct grep_opt *opt);
-diff --git a/t/t7008-grep-binary.sh b/t/t7008-grep-binary.sh
-index 4f5e74f..eb8ca88 100755
---- a/t/t7008-grep-binary.sh
-+++ b/t/t7008-grep-binary.sh
-@@ -69,4 +69,34 @@ test_expect_failure 'git grep .fi a' '
- 	git grep .fi a
- '
- 
-+test_expect_success 'git grep -F y<NUL>f a' "
-+	printf 'y\000f' >f &&
-+	git grep -f f -F a
-+"
-+
-+test_expect_success 'git grep -F y<NUL>x a' "
-+	printf 'y\000x' >f &&
-+	test_must_fail git grep -f f -F a
-+"
-+
-+test_expect_success 'git grep -Fi Y<NUL>f a' "
-+	printf 'Y\000f' >f &&
-+	git grep -f f -Fi a
-+"
-+
-+test_expect_failure 'git grep -Fi Y<NUL>x a' "
-+	printf 'Y\000x' >f &&
-+	test_must_fail git grep -f f -Fi a
-+"
-+
-+test_expect_success 'git grep y<NUL>f a' "
-+	printf 'y\000f' >f &&
-+	git grep -f f a
-+"
-+
-+test_expect_failure 'git grep y<NUL>x a' "
-+	printf 'y\000x' >f &&
-+	test_must_fail git grep -f f a
-+"
-+
- test_done
--- 
-1.7.1
+If a file needs specific line endings, why enable conversion for
+this file at all? Just make sure the repository contains the
+correct version and unset the crlf attribute.
+
+> core.eol controls which line endings to use for normalized files
+> that don't have the "eol" attribute set, and defaults to the
+> platform native line ending.
+
+That makes sense to me, except for the part where I need a per-file
+attribute.
+
+> When core.autocrlf is set, the default value of the "text"
+> attribute is set to "auto" but with an extra safety feature: if a
+> file contains CRs in the index, it won't be normalized.  The
+> extra feature comes from Finn Arne's "safe autocrlf" patch.
+> 
+> There is a backwards compatibility wrinkle in that core.autocrlf
+> will override core.eol if the latter isn't explicitly set, so
+> that "core.autocrlf=true" still results in CRLFs in the working
+> directory on Linux.
+
+This also makes sense. I just fear that making this frequently
+misunderstood feature even more complex will only confuse users
+further.
+
+I do see the value of a global core.eol option, however, since it
+allows me to convert to LF instead of CRLF, which AFAIK is not
+currently possible.
+
+On the other hand, this will cause users to stop caring whether or
+not a file in the repository has LF or CRLF line endings. I am not
+sure if that is a good thing, but I suppose it is better than what
+we have now.
+
+> > And, renaming the crlf attribute to text? Where did Linus suggest that? If
+> > we do that, we don't even have to talk about backwards compatibility any
+> > more.
+> 
+> In <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>:
+> > So if you rename these things, keep them separate.  Make the "am I a
+> > text-file" boolean be a boolean (plus "auto"), and just call it "text". 
+> > And make the "what end of line to use" be just "eol" then.
+
+I see. Well, if we rename the "crlf" attribute then we will have a
+macro attribute "binary" and an attribute "text", which are not the
+opposite of each other. That is a bit strange.
+
+> The "crlf" attribute will be used if it is present so backwards
+> compatibility is preserved to a degree.
+
+Ah, ok. That is fine then.
+
+> Scripts that test for
+> the "crlf" attribute explicitly (such as git-cvsserver, which I
+> fixed) will break.  I don't know how big a problem that is going
+> to be in practice, but nobody raised it as an issue during the
+> discussion.
+
+I agree that should not be a big issue.
+
+Regards,
+Clemens
