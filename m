@@ -1,98 +1,152 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Sat, 22 May 2010 11:52:01 +0100
-Message-ID: <4BF7B751.7050704@pileofstuff.org>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] get_cwd_relative(): do not misinterpret suffix as
+ subdirectory
+Date: Sat, 22 May 2010 13:13:05 +0200
+Message-ID: <20100522111305.GA2888@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 22 13:11:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 22 13:13:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFmbo-00019t-GP
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 13:11:12 +0200
+	id 1OFme4-0001m8-P9
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 13:13:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907Ab0EVLLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 07:11:04 -0400
-Received: from queueout02-winn.ispmail.ntl.com ([81.103.221.56]:14187 "EHLO
-	queueout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752481Ab0EVLLA (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 07:11:00 -0400
-X-Greylist: delayed 1133 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 May 2010 07:10:59 EDT
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout01-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100522105204.QELJ14666.mtaout01-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
-          Sat, 22 May 2010 11:52:04 +0100
-Received: from [192.168.1.5] (really [80.6.134.127])
-          by aamtaout02-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100522105203.HSNG1586.aamtaout02-winn.ispmail.ntl.com@[192.168.1.5]>;
-          Sat, 22 May 2010 11:52:03 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=BxPs6DqL8UcA:10 a=UBIxAjGgU1YA:10 a=IkcTkHD0fZMA:10 a=v9beyyg-DFlU8wgCEF0A:9 a=GwwvMkx9x3TezHxo4a76cozRIXkA:4 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1753897Ab0EVLN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 07:13:27 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:47507 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752481Ab0EVLN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 May 2010 07:13:26 -0400
+Received: by wwi18 with SMTP id 18so1287253wwi.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 04:13:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:mime-version:content-type:content-disposition
+         :user-agent;
+        bh=ZiAtj7DbVdU9nQG305YxiBrM2jt2hLM1fV6HA1ffZ2w=;
+        b=GBwCVYSOxB33f0Q37W0Nt6Ydc5cp3eLkfzNvJzyjqVytLxKhqZiodpxXGzgh/BL+kf
+         KSbrQMdJ/xUL6ko6Hmj3nANH3dS9cTO2aUNVMbR5D5XUwkHWHWbVv6ZWkvHeAQHYnaAk
+         zquFg/UDnAt9UdZaMMbmAMbXNPaSHVqXFrceg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        b=xD/R+BL2IJoWL0poLymKpaPd+lIJC8ccphsbNfCHG+Q91gRl8kILlyKQgsKyQBmgQR
+         O8xSHT2cbl4RYEETWHQCYKdjYio1IraJzyy45nlq6QX0B6Jogc/Utle4ci0/ykf7v3nr
+         21RO0jvxoBX5U47ebLPuM3G7NwpBEbysHHM74=
+Received: by 10.227.141.137 with SMTP id m9mr2552145wbu.202.1274526804544;
+        Sat, 22 May 2010 04:13:24 -0700 (PDT)
+Received: from darc.lan (p549A3CF7.dip.t-dialin.net [84.154.60.247])
+        by mx.google.com with ESMTPS id z33sm14674606wbd.13.2010.05.22.04.13.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 22 May 2010 04:13:23 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OFmdd-0003wf-6s; Sat, 22 May 2010 13:13:05 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147515>
 
-Hi Daniele,
+If the current working directory is the same as the work tree path
+plus a suffix, e.g. 'work' and 'work-xyz', then the suffix '-xyz'
+would be interpreted as a subdirectory of 'work'.
 
-I'm a developer getting towards the end of introducing my company to 
-Git.  Here are some thoughts based on the (mis)steps I took.
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
 
+Hi Junio,
 
-I found that advocating specific steps wasn't that effective - I just 
-came across as being pushy and hard to work with.  It was more effective 
-to politely show off what I could do with git-svn, and let people get 
-jealous enough to work the "how" out for themselves.  Here are some 
-examples:
+I am not sure if the tests are really worth it. I do not mind you drop them.
 
-I would quietly bisect a hard-to-fix bug, then say "if it's any help, 
-git tells me it was introduced by so-and-so in revision N".  Sometimes 
-it was no help, but sometimes it was enough to provoke the appropriate 
-"aha!" for the bug.
+Regards,
+Clemens
 
-I would nonchalantly use as many git features as I could while showing 
-people my work.  So "here's the diff for my work... grr whitespace ... 
-hang on I'll add `-w`... anyway, these are the REAL differences...". The 
-fact it was all in glorious technicolour went without mention.
+ dir.c               |    9 +++++++--
+ t/t1501-worktree.sh |   12 ++++++++++--
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
-When we had a big merge that nobody was looking forward to, I said "let 
-me do it!  It'll give me a chance to practice my git-fu".
-
-When I used svn on somebody else's command-line, I'd blame the mistakes 
-I made on being spoiled by Git.  So "I'll just do an `svn log`... argh 
-no!  Control-C!  Control-C!  Right, `svn log | less`... my bad, git 
-pipes to less automatically."
-
-
-Over the course of a few months, people became convinced that Git was 
-something that makes you more productive.  Our lead developer had a go 
-with git-svn for a while, before our boss decided we should all make the 
-switch.
-
-I tried to make git-svn as painless as possible with some svn-like 
-aliases and a cheatsheet, which I'd be happy to upload if the list could 
-suggest a good place to put a PDF and some text.
-
-The move worked for a while, but it turned out that one-and-a-half git 
-experts supporting the rest of the team wasn't enough to stop people 
-from making rookie mistakes like `git merge`ing into an SVN branch with 
-unpushed changes.  We had to accelerate our move to git on the server, 
-and I got a lot of exercise and not much work done that month as I 
-dashed from desk to desk.
-
-Things gradually calmed down as people got more comfortable with git. 
-But I expect to be occasionally called over for a long time as people 
-learn new tricks - "how do I, like, cherry-unpick a single commit?"
-
-	- Andrew Sayers
+diff --git a/dir.c b/dir.c
+index cb83332..5615f33 100644
+--- a/dir.c
++++ b/dir.c
+@@ -958,9 +958,14 @@ char *get_relative_cwd(char *buffer, int size, const char *dir)
+ 	}
+ 	if (*dir)
+ 		return NULL;
+-	if (*cwd == '/')
++	switch (*cwd) {
++	case '\0':
++		return cwd;
++	case '/':
+ 		return cwd + 1;
+-	return cwd;
++	default:
++		return NULL;
++	}
+ }
+ 
+ int is_inside_dir(const char *dir)
+diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+index 9df3012..bd8b607 100755
+--- a/t/t1501-worktree.sh
++++ b/t/t1501-worktree.sh
+@@ -30,6 +30,7 @@ test_rev_parse() {
+ 
+ EMPTY_TREE=$(git write-tree)
+ mkdir -p work/sub/dir || exit 1
++mkdir -p work2 || exit 1
+ mv .git repo.git || exit 1
+ 
+ say "core.worktree = relative path"
+@@ -54,7 +55,9 @@ GIT_DIR=$(pwd)/repo.git
+ GIT_CONFIG=$GIT_DIR/config
+ git config core.worktree "$(pwd)/work"
+ test_rev_parse 'outside'      false false false
+-cd work || exit 1
++cd work2
++test_rev_parse 'outside2'     false false false
++cd ../work || exit 1
+ test_rev_parse 'inside'       false false true ''
+ cd sub/dir || exit 1
+ test_rev_parse 'subdirectory' false false true sub/dir/
+@@ -67,7 +70,9 @@ git config core.worktree non-existent
+ GIT_WORK_TREE=work
+ export GIT_WORK_TREE
+ test_rev_parse 'outside'      false false false
+-cd work || exit 1
++cd work2
++test_rev_parse 'outside'      false false false
++cd ../work || exit 1
+ GIT_WORK_TREE=.
+ test_rev_parse 'inside'       false false true ''
+ cd sub/dir || exit 1
+@@ -76,6 +81,7 @@ test_rev_parse 'subdirectory' false false true sub/dir/
+ cd ../../.. || exit 1
+ 
+ mv work repo.git/work
++mv work2 repo.git/work2
+ 
+ say "GIT_WORK_TREE=absolute path, work tree below git dir"
+ GIT_DIR=$(pwd)/repo.git
+@@ -86,6 +92,8 @@ cd repo.git || exit 1
+ test_rev_parse 'in repo.git'              false true  false
+ cd objects || exit 1
+ test_rev_parse 'in repo.git/objects'      false true  false
++cd ../work2 || exit 1
++test_rev_parse 'in repo.git/work2'      false true  false
+ cd ../work || exit 1
+ test_rev_parse 'in repo.git/work'         false true true ''
+ cd sub/dir || exit 1
+-- 
+1.7.0.5.3.ga76e
