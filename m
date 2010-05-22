@@ -1,49 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: can pre-commit hook accept user input?
-Date: Fri, 21 May 2010 18:45:24 -0700
-Message-ID: <20100522014524.GF16470@spearce.org>
-References: <ht7co7$d0s$1@dough.gmane.org>
-Mime-Version: 1.0
+From: Andrew Keller <andrew@kellerfarm.com>
+Subject: Re: Changing indents
+Date: Fri, 21 May 2010 22:46:04 -0400
+Message-ID: <F19D8C01-CDA8-4381-94EC-4105E70A92CA@kellerfarm.com>
+References: <C0CDDC0A-A813-41C3-8CEC-40EFADFB5A4A@kellerfarm.com> <m3vdahqkuw.fsf@localhost.localdomain>
+Mime-Version: 1.0 (Apple Message framework v1078)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <neal@rsss.com>
-X-From: git-owner@vger.kernel.org Sat May 22 03:45:34 2010
+Content-Transfer-Encoding: 7bit
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 22 04:46:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFdmO-0004nz-Sb
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 03:45:33 +0200
+	id 1OFejF-0001NS-BW
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 04:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935698Ab0EVBp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 May 2010 21:45:28 -0400
-Received: from mail-pz0-f185.google.com ([209.85.222.185]:38485 "EHLO
-	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932456Ab0EVBp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 May 2010 21:45:27 -0400
-Received: by pzk15 with SMTP id 15so948781pzk.15
-        for <git@vger.kernel.org>; Fri, 21 May 2010 18:45:27 -0700 (PDT)
-Received: by 10.142.55.18 with SMTP id d18mr1605505wfa.170.1274492726925;
-        Fri, 21 May 2010 18:45:26 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id d16sm13796546wam.0.2010.05.21.18.45.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 21 May 2010 18:45:26 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <ht7co7$d0s$1@dough.gmane.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758281Ab0EVCqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 May 2010 22:46:11 -0400
+Received: from sanjose.tchmachines.com ([208.76.86.38]:47651 "EHLO
+	leia.tchmachines.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752382Ab0EVCqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 May 2010 22:46:09 -0400
+Received: from c-208-53-115-13.customer.broadstripe.net ([208.53.115.13] helo=[192.168.0.104])
+	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69)
+	(envelope-from <andrew@kellerfarm.com>)
+	id 1OFeir-0004cr-JT
+	for git@vger.kernel.org; Fri, 21 May 2010 22:45:57 -0400
+In-Reply-To: <m3vdahqkuw.fsf@localhost.localdomain>
+X-Mailer: Apple Mail (2.1078)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - leia.tchmachines.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - kellerfarm.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147505>
 
-Neal Kreitzinger <neal@rsss.com> wrote:
-> Can the pre-commit hook accept user input?
+On May 21, 2010, at 12:30 PM, Jakub Narebski wrote:
+> Andrew Keller <andrew@kellerfarm.com> writes:
+>> Is it possible to change the indent of a line (or multiple lines)
+>> without rewriting the whole line?  Or, more specifically, can a
+>> commit exist that modifies the leading whitespace of a line but
+>> still allows you to trace the origin of the line to a previous
+>> commit?
+> 
+> Whatever for?  Use "git blame -w <file>" (ignore whitespace).
 
-No.  None of the hooks accept user input.
+Because I forgot about -w of blame...
 
--- 
-Shawn.
+Thanks,
+~ Andrew Keller
