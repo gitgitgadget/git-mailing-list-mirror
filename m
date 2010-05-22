@@ -1,60 +1,81 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Use "git pull --ff-only" by default?
-Date: Sat, 22 May 2010 13:37:15 +0200
-Message-ID: <4BF7C1EB.8040702@drmicha.warpmail.net>
-References: <A612847CFE53224C91B23E3A5B48BAC74483234E90@xmail3.se.axis.com>	 <4BF68F5F.9010309@drmicha.warpmail.net>	 <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>	 <4BF6A445.1030105@drmicha.warpmail.net> <AANLkTilfD1jhDcyuK9zAthlW4vRU-15TmBgYlc16W0Ux@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH RFC] Add a config verbose option fetch and push
+Date: Sat, 22 May 2010 12:01:29 +0000
+Message-ID: <AANLkTimQzAM7qA32FRFvQC1cx7UEEKtBxjU89whrSqF5@mail.gmail.com>
+References: <4bf6b6f5.dd79dc0a.5533.2acd@mx.google.com>
+	 <AANLkTil-PDpdkcJaJn2FUrJrSIJ6lP0OcvY5l7HRorsa@mail.gmail.com>
+	 <201005221244.32213.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 22 13:37:29 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Nathan W. Panike" <nathan.panike@gmail.com>, git@vger.kernel.org,
+	Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat May 22 14:06:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFn1B-0001A8-RX
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 13:37:26 +0200
+	id 1OFnSt-00020f-Go
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 14:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754644Ab0EVLhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 07:37:11 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53945 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754153Ab0EVLhK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 07:37:10 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 36C52F70FE;
-	Sat, 22 May 2010 07:37:08 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Sat, 22 May 2010 07:37:08 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=mxKziYm5LeAQf2fEkTmMGwCX5bQ=; b=JhJQYYABXsHpda+8kTT+fpbd6gP+1pwdQPBlitsZZ3PclXeDcFQilS/TFyxkZGIThIkGHunwhpLmJaZNOYX0YKafZ/5EpJaI4LHkpN5prgT71LFwWb89wN1Vw+XIwOLXYx9/Djv6iDA+JLnDCovNsuE+Vg3AmJ3mCRvFX5t1u2A=
-X-Sasl-enc: BGTAti82RDkzZ+pmbLt0pLmhno1XYi3Ba7YdT367AQLp 1274528227
-Received: from localhost.localdomain (p548583CF.dip0.t-ipconnect.de [84.133.131.207])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4C97C299F2;
-	Sat, 22 May 2010 07:37:07 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
-In-Reply-To: <AANLkTilfD1jhDcyuK9zAthlW4vRU-15TmBgYlc16W0Ux@mail.gmail.com>
+	id S1754760Ab0EVMBc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 May 2010 08:01:32 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55755 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754690Ab0EVMBb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 08:01:31 -0400
+Received: by iwn6 with SMTP id 6so2204148iwn.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 05:01:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dr1ZuxW9KunqMxO1nbHf9Ddx7G/TM/jMtcDEUKbO0a4=;
+        b=NxBV3C0ISQiSk4x+Wtoo1x/BIUJy/k9ICarqXtwnVYnDDDaITtoSbGaJypaOXLR7M/
+         N8QVH9DGj3maZpV4y1ye1Cquv30VXFkas8Tz/lmlGe9BIv7dgZLDiF3mZpAqsOxNrwfC
+         Gz+D/AZUnxkNis5/vvO7hbRR2eKnQo/V06lnc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DSPHgk7hPA1aCUc57eOsNLiOhpvLBjvbR0Rz+brue3bTNnf84TlsE2uag3sLPZc2Pn
+         /dnbdsWt3YxfrWekQXZfw/NR1Whza7bRFxAFOLzuRxuqzkk9u88XfYUIugeeYOW8V3sh
+         uoXARcsi5GMH5NjewqSNzl9D+2sZ975tuiaTE=
+Received: by 10.231.185.86 with SMTP id cn22mr1943689ibb.69.1274529689913; 
+	Sat, 22 May 2010 05:01:29 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sat, 22 May 2010 05:01:29 -0700 (PDT)
+In-Reply-To: <201005221244.32213.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147518>
 
-Jay Soffian venit, vidit, dixit 21.05.2010 21:13:
-> On Fri, May 21, 2010 at 11:18 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
-> 
->> git config alias.pull 'pull --ff-only'
-> 
-> That won't work. You cannot override built-in commands. Look at
-> run.argv() in git.c and notice it doesn't process aliases unless
-> handle_internal_command() and execv_dashed_external() fail.
+On Sat, May 22, 2010 at 10:44, Thomas Rast <trast@student.ethz.ch> wrot=
+e:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> That would completely ruin the scriptability of almost all commands.
+> Imagine the user added the following options as default:
+>
+> =C2=A0add --edit
+> =C2=A0checkout --patch
+> =C2=A0cherry-pick --no-commit
+> =C2=A0commit --amend
+> =C2=A0pull --rebase
+>
+> I'm sure you can find one option that changes the command in somethin=
+g
+> completely different *for every command*.
 
-I was sure it worked at some point. Maybe I'm just so used to my "ci"
-(read: check-in) alias for "commit" that being able to override that one
-(to "commit -s" for git.git) fooled my perception. Sorry!
+Sure. But so would adding this as git-add to your $PATH:
 
-Michael
+    #!/bin/sh
+    /usr/lib/git-core/git-add --edit $@
+
+Git already has plenty of ways to shoot yourself in the foot. I don't
+see how it's worse if that's done through some generalized facility
+which results in less special-case code in individual tools.
