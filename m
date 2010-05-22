@@ -1,290 +1,333 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] ls-files: allow relative pathspec
-Date: Sat, 22 May 2010 18:35:25 +0200
-Message-ID: <20100522163525.GA12420@localhost>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [PATCHv2 GSoC] git-instaweb: Configure it to work with new gitweb 
+	structure
+Date: Sat, 22 May 2010 22:27:51 +0530
+Message-ID: <AANLkTinbzlRsmQekpLlFQC3xOMB2ZUurLqJoyFCnHZFG@mail.gmail.com>
+References: <1274523105-3327-1-git-send-email-pavan.sss1991@gmail.com>
+	 <201005221757.38376.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 22 18:35:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 22 18:58:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFrfm-0004tb-2r
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 18:35:38 +0200
+	id 1OFs1Q-0006yF-Gl
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 18:58:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754685Ab0EVQfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 12:35:33 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:63590 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819Ab0EVQfc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 12:35:32 -0400
-Received: by wwb13 with SMTP id 13so102844wwb.19
-        for <git@vger.kernel.org>; Sat, 22 May 2010 09:35:30 -0700 (PDT)
+	id S1755192Ab0EVQ5x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 May 2010 12:57:53 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:34937 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752021Ab0EVQ5w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 12:57:52 -0400
+Received: by gyg13 with SMTP id 13so929910gyg.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 09:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=DTMQ+Q9fKCE/b1slL5iKQnw2y7gXFNnnn1GsXN9aU/I=;
-        b=pdDyoCZNOcKkTflLn6SaPKm45C2QqmiqQ3pizj0+C3X9dy6jxASO5CHT1jmI77S5P1
-         xhatU77Mdq4TrlsKGEoSpb+a8vxCLTjTgVmke0F2kMTayRjzzdTRANeDBQB5kFBP+QEO
-         sFjvDGT6RlMYLiAJ11Y6k5wMPfhSCD/PGiCSc=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OdTjAm6tUK8uYiskV9jnkWN4tYmCCAfFMEIbuXdJLIk=;
+        b=FdwEymuSuspTCYv/E93kQWCivGN0qalH5cs+tzXPyb+TGpPesbCl5QlojWHXB2NEs0
+         ++BpbThDGYefwElFyRH1buyYNLOWT3JnpEKqxZMc2kFJk0danzhFj/F41MVDBZimfI1y
+         nSDZ+Zqb+aeyCaeFPldneYo9XqgXT46TYXMWQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        b=DpI8eKi0O27MnQK85wGKuom9kAiLbtL5J6mS9vPzj4TN1ZKbQr67gc10CLqO5rwhTi
-         X211o75y3OHbZFDFdiGSE2B8YVQsuNTmUUXIonTJ6TMb5E6/cLAEuYfQz/Ih1R96ge0l
-         L+rGP2mwLQjOT7n1VnY/tr6iwlYk2A4fLvTiY=
-Received: by 10.227.135.195 with SMTP id o3mr2863880wbt.120.1274546130800;
-        Sat, 22 May 2010 09:35:30 -0700 (PDT)
-Received: from darc.lan (p549A3CF7.dip.t-dialin.net [84.154.60.247])
-        by mx.google.com with ESMTPS id h22sm16522667wbh.21.2010.05.22.09.35.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 22 May 2010 09:35:30 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OFrfZ-0007pW-Tg; Sat, 22 May 2010 18:35:25 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Kt2RYGP8evoWrIp5SOxF0CL59xgcixQrPpWZTIWxKybZq/EiDSoBVN/EjFkjWgsJl6
+         sbwePQ8ExZ07OH4N5LN1itjKocNHVptTnvgMljCTxarUuP6rxpIKJbDkMLHTRWQS5YAk
+         jTfhM8kSeyUlWeiQ5icyMugElbxzqzWa+pU3I=
+Received: by 10.90.20.19 with SMTP id 19mr1947964agt.160.1274547471460; Sat, 
+	22 May 2010 09:57:51 -0700 (PDT)
+Received: by 10.90.84.5 with HTTP; Sat, 22 May 2010 09:57:51 -0700 (PDT)
+In-Reply-To: <201005221757.38376.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147534>
 
-git ls-files used to error out if given paths which point outside
-the current working directory, such as '../'. We now allow such
-paths and the output is analogous to git grep -l.
+2010/5/22 Jakub Narebski <jnareb@gmail.com>:
+> On Sat, 22 May 2010, Pavan Kumar Sunkara wrote:
+>
+>> git-instaweb in its current form (re)creates gitweb.cgi and
+>> (some of) required static files in $GIT_DIR/gitweb/ directory.
+>> Splitting gitweb would make it difficult for git-instaweb to
+>> continue with this method.
+>>
+>> Use the instaweb.gitwebdir config variable to point git-instaweb scr=
+ipt
+>> to a global directory which contains gitweb files as server root
+>> and the httpd.conf along with server logs and pid go into
+>> '$(GIT_DIR)/gitweb' directory.
+>
+> That's not all this patch changes, isn't it?
+>
+> =A0While at it, change apache2 configuration to use the same access l=
+og
+> =A0and error log files as the rest of web servers supported by
+> =A0git-instaweb.
+>
+> While it would be better to have it as a separate commit, I think it
+> doesn't matter much, and having it in this patch is acceptable as
+> "while at it" change.
+>
+>>
+>> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+>
+> I like this change, because it simplifies greatly git-instaweb
+> generation; besides the fact that it is necessary for future splittin=
+g
+> gitweb for better maintability, and for write functionality for gitwe=
+b.
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
- builtin/ls-files.c |   61 +++++++++++++++++++++++++++++-----------------------
- t/t7010-setup.sh   |   12 +++------
- 2 files changed, 38 insertions(+), 35 deletions(-)
+Thanks.
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index c0fbcdc..441da81 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -26,7 +26,8 @@ static int show_killed;
- static int show_valid_bit;
- static int line_terminator = '\n';
- 
--static int prefix_len;
-+static const char *prefix;
-+static int max_prefix_len;
- static int prefix_offset;
- static const char **pathspec;
- static int error_unmatch;
-@@ -43,10 +44,19 @@ static const char *tag_modified = "";
- static const char *tag_skip_worktree = "";
- static const char *tag_resolve_undo = "";
- 
-+static void write_name(const char* name, size_t len)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	if (prefix_offset > 0)
-+		quote_path_relative(name, len, &path, prefix);
-+	else
-+		strbuf_add(&path, name, len);
-+	write_name_quoted(strbuf_detach(&path, NULL), stdout, line_terminator);
-+}
-+
- static void show_dir_entry(const char *tag, struct dir_entry *ent)
- {
--	int len = prefix_len;
--	int offset = prefix_offset;
-+	int len = max_prefix_len;
- 
- 	if (len >= ent->len)
- 		die("git ls-files: internal error - directory entry not superset of prefix");
-@@ -55,7 +65,7 @@ static void show_dir_entry(const char *tag, struct dir_entry *ent)
- 		return;
- 
- 	fputs(tag, stdout);
--	write_name_quoted(ent->name + offset, stdout, line_terminator);
-+	write_name(ent->name, ent->len);
- }
- 
- static void show_other_files(struct dir_struct *dir)
-@@ -121,8 +131,7 @@ static void show_killed_files(struct dir_struct *dir)
- 
- static void show_ce_entry(const char *tag, struct cache_entry *ce)
- {
--	int len = prefix_len;
--	int offset = prefix_offset;
-+	int len = max_prefix_len;
- 
- 	if (len >= ce_namelen(ce))
- 		die("git ls-files: internal error - cache entry not superset of prefix");
-@@ -156,20 +165,19 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 		       find_unique_abbrev(ce->sha1,abbrev),
- 		       ce_stage(ce));
- 	}
--	write_name_quoted(ce->name + offset, stdout, line_terminator);
-+	write_name(ce->name, ce_namelen(ce));
- }
- 
- static int show_one_ru(struct string_list_item *item, void *cbdata)
- {
--	int offset = prefix_offset;
- 	const char *path = item->string;
- 	struct resolve_undo_info *ui = item->util;
- 	int i, len;
- 
- 	len = strlen(path);
--	if (len < prefix_len)
-+	if (len < max_prefix_len)
- 		return 0; /* outside of the prefix */
--	if (!match_pathspec(pathspec, path, len, prefix_len, ps_matched))
-+	if (!match_pathspec(pathspec, path, len, max_prefix_len, ps_matched))
- 		return 0; /* uninterested */
- 	for (i = 0; i < 3; i++) {
- 		if (!ui->mode[i])
-@@ -177,19 +185,19 @@ static int show_one_ru(struct string_list_item *item, void *cbdata)
- 		printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
- 		       find_unique_abbrev(ui->sha1[i], abbrev),
- 		       i + 1);
--		write_name_quoted(path + offset, stdout, line_terminator);
-+		write_name(path, len);
- 	}
- 	return 0;
- }
- 
--static void show_ru_info(const char *prefix)
-+static void show_ru_info()
- {
- 	if (!the_index.resolve_undo)
- 		return;
- 	for_each_string_list(show_one_ru, the_index.resolve_undo, NULL);
- }
- 
--static void show_files(struct dir_struct *dir, const char *prefix)
-+static void show_files(struct dir_struct *dir)
- {
- 	int i;
- 
-@@ -243,7 +251,7 @@ static void show_files(struct dir_struct *dir, const char *prefix)
-  */
- static void prune_cache(const char *prefix)
- {
--	int pos = cache_name_pos(prefix, prefix_len);
-+	int pos = cache_name_pos(prefix, max_prefix_len);
- 	unsigned int first, last;
- 
- 	if (pos < 0)
-@@ -256,7 +264,7 @@ static void prune_cache(const char *prefix)
- 	while (last > first) {
- 		int next = (last + first) >> 1;
- 		struct cache_entry *ce = active_cache[next];
--		if (!strncmp(ce->name, prefix, prefix_len)) {
-+		if (!strncmp(ce->name, prefix, max_prefix_len)) {
- 			first = next+1;
- 			continue;
- 		}
-@@ -265,7 +273,7 @@ static void prune_cache(const char *prefix)
- 	active_nr = last;
- }
- 
--static const char *verify_pathspec(const char *prefix)
-+static const char *verify_pathspec(const char* prefix)
- {
- 	const char **p, *n, *prev;
- 	unsigned long max;
-@@ -291,10 +299,7 @@ static const char *verify_pathspec(const char *prefix)
- 		}
- 	}
- 
--	if (prefix_offset > max || memcmp(prev, prefix, prefix_offset))
--		die("git ls-files: cannot generate relative filenames containing '..'");
--
--	prefix_len = max;
-+	max_prefix_len = max;
- 	return max ? xmemdupz(prev, max) : NULL;
- }
- 
-@@ -456,9 +461,10 @@ static int option_parse_exclude_standard(const struct option *opt,
- 	return 0;
- }
- 
--int cmd_ls_files(int argc, const char **argv, const char *prefix)
-+int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- {
- 	int require_work_tree = 0, show_tag = 0;
-+	const char *max_prefix;
- 	struct dir_struct dir;
- 	struct option builtin_ls_files_options[] = {
- 		{ OPTION_CALLBACK, 'z', NULL, NULL, NULL,
-@@ -516,6 +522,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	memset(&dir, 0, sizeof(dir));
-+	prefix = cmd_prefix;
- 	if (prefix)
- 		prefix_offset = strlen(prefix);
- 	git_config(git_default_config, NULL);
-@@ -557,7 +564,7 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 
- 	/* Verify that the pathspec matches the prefix */
- 	if (pathspec)
--		prefix = verify_pathspec(prefix);
-+		max_prefix = verify_pathspec(prefix);
- 
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec && error_unmatch) {
-@@ -575,8 +582,8 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 	      show_killed | show_modified | show_resolve_undo))
- 		show_cached = 1;
- 
--	if (prefix)
--		prune_cache(prefix);
-+	if (max_prefix)
-+		prune_cache(max_prefix);
- 	if (with_tree) {
- 		/*
- 		 * Basic sanity check; show-stages and show-unmerged
-@@ -584,11 +591,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
- 		 */
- 		if (show_stage || show_unmerged)
- 			die("ls-files --with-tree is incompatible with -s or -u");
--		overlay_tree_on_cache(with_tree, prefix);
-+		overlay_tree_on_cache(with_tree, max_prefix);
- 	}
--	show_files(&dir, prefix);
-+	show_files(&dir);
- 	if (show_resolve_undo)
--		show_ru_info(prefix);
-+		show_ru_info();
- 
- 	if (ps_matched) {
- 		int bad;
-diff --git a/t/t7010-setup.sh b/t/t7010-setup.sh
-index d8a7c79..0335a9a 100755
---- a/t/t7010-setup.sh
-+++ b/t/t7010-setup.sh
-@@ -103,14 +103,10 @@ test_expect_success 'git ls-files (relative #3)' '
- 	git add a &&
- 	(
- 		cd a/b &&
--		if git ls-files "../e/f"
--		then
--			echo Gaah, should have failed
--			exit 1
--		else
--			: happy
--		fi
--	)
-+		git ls-files "../e/f"
-+	)  >current &&
-+	echo ../e/f >expect &&
-+	test_cmp expect current
- 
- '
- 
--- 
-1.7.0.5.3.ga76e
+> Acked-by: Jakub Narebski <jnareb@gmail.com>
+>
+> _If_ there is no problem with $(gitwebdir) and not $(gitwebdir_SQ),
+> see below for details.
+>
+>> ---
+>>
+>> This patch is based on commit 'jn/gitweb-install' in the next branch=
+=2E
+>
+> I think it is based on your earlier patches:
+>
+> * gitweb: Move static files into seperate subdirectory
+> =A0http://article.gmane.org/gmane.comp.version-control.git/147321
+> * gitweb: Set default destination directory for installing gitweb in =
+Makefile
+> =A0http://article.gmane.org/gmane.comp.version-control.git/147160
+>
+> Those are necessary for this patch to be applied. =A0Well, the second=
+ is
+> necessary for it to make sense...
+
+Yes. They are necessary patches before this patch.
+I assume, they are going to be merged before this patch is.
+
+> BTW. which web servers supported by git-instaweb: lighttpd, apache2,
+> webrick, mongoose you have tested your change with?
+
+I tested this patch with lighttpd and apache2.
+And am sure about mongoose. But don't know the status with webrick.
+
+>> =A0Makefile =A0 =A0 =A0 =A0| =A0 10 +------
+>> =A0git-instaweb.sh | =A0 71 ++++++++++++++++++++--------------------=
+--------------
+>> =A02 files changed, 28 insertions(+), 53 deletions(-)
+>>
+>> diff --git a/Makefile b/Makefile
+>> index caf2f64..91cd726 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -1592,15 +1592,8 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.c=
+gi gitweb/static/gitweb.css gitweb/
+>> =A0 =A0 =A0 sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+> [...]
+>> + =A0 =A0 =A0 =A0 -e 's|@@GITWEBDIR@@|$(gitwebdir)|g' \
+>> =A0 =A0 =A0 =A0 =A0 -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+>> - =A0 =A0 =A0 =A0 =A0 =A0-e 's|@@GITWEB_CSS_NAME@@|$(GITWEB_CSS)|' \
+>> - =A0 =A0 =A0 =A0 =A0 =A0-e 's|@@GITWEB_JS_NAME@@|$(GITWEB_JS)|' \
+>> =A0 =A0 =A0 =A0 =A0 $@.sh > $@+ && \
+>> =A0 =A0 =A0 chmod +x $@+ && \
+>> =A0 =A0 =A0 mv $@+ $@
+>> @@ -1972,6 +1965,7 @@ install: all
+>> =A0 =A0 =A0 $(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' install
+>> =A0ifndef NO_PERL
+>> =A0 =A0 =A0 $(MAKE) -C perl prefix=3D'$(prefix_SQ)' DESTDIR=3D'$(DES=
+TDIR_SQ)' install
+>> + =A0 =A0 $(MAKE) -C gitweb gitwebdir=3D$(gitwebdir) install
+>> =A0endif
+>
+> Have you checked that you can use $(gitwebdir) and don't need
+> $(gitwebdir_SQ) here? =A0Does git-instaweb installs and works correct=
+ly
+> if 'gitwebdir' contains spaces and single or double quote characters?
+> But perhaps that doesn't matter in practice, and this is good enough.
+
+Nope. I didn't check it. But you are right.
+
+>
+>> diff --git a/git-instaweb.sh b/git-instaweb.sh
+>> index f608014..b3e9192 100755
+>> --- a/git-instaweb.sh
+>> +++ b/git-instaweb.sh
+>> @@ -24,6 +24,7 @@ restart =A0 =A0 =A0 =A0restart the web server
+>> =A0fqgitdir=3D"$GIT_DIR"
+>> =A0local=3D"$(git config --bool --get instaweb.local)"
+>> =A0httpd=3D"$(git config --get instaweb.httpd)"
+>> +root=3D"$(git config --get instaweb.gitwebdir)"
+>> =A0port=3D$(git config --get instaweb.port)
+>> =A0module_path=3D"$(git config --get instaweb.modulepath)"
+>>
+>> @@ -34,6 +35,9 @@ conf=3D"$GIT_DIR/gitweb/httpd.conf"
+>> =A0# if installed, it doesn't need further configuration (module_pat=
+h)
+>> =A0test -z "$httpd" && httpd=3D'lighttpd -f'
+>>
+>> +# Default is @@GITWEBDIR@@
+>> +test -z "$root" && root=3D'@@GITWEBDIR@@'
+>> +
+>
+> Nice.
+>
+>> @@ -57,7 +61,7 @@ resolve_full_httpd () {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # these days and those are not in most u=
+sers $PATHs
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # in addition, we may have generated a s=
+erver script
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 # in $fqgitdir/gitweb.
+>> - =A0 =A0 =A0 =A0 =A0 =A0 for i in /usr/local/sbin /usr/sbin "$fqgit=
+dir/gitweb"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 for i in /usr/local/sbin /usr/sbin "$root"=
+ "$fqgitdir/gitweb"
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 do
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test -x "$i/$httpd_on=
+ly"
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 then
+>
+> You probably want to update comment above this loop. =A0But this is n=
+ot
+> something very important.
+>
+> Alternatively, if e.g. webrick.rb and webrick (shell script) are
+> installed in "$fqgitdir/gitweb" directory, there is no need to check
+> "$root".
+>
+>> =A0webrick_conf () {
+> [...]
+>> -:DocumentRoot: "$fqgitdir/gitweb"
+>> +:DocumentRoot: "$root"
+>
+>> =A0lighttpd_conf () {
+>> =A0 =A0 =A0 cat > "$conf" <<EOF
+>> -server.document-root =3D "$fqgitdir/gitweb"
+>> +server.document-root =3D "$root"
+> [...]
+>> -setenv.add-environment =3D ( "PATH" =3D> env.PATH )
+>> +setenv.add-environment =3D ( "PATH" =3D> env.PATH, "GITWEB_CONFIG" =
+=3D> env.GITWEB_CONFIG )
+>
+>> =A0apache2_conf () {
+> [...]
+>> -ServerRoot "$fqgitdir/gitweb"
+>> -DocumentRoot "$fqgitdir/gitweb"
+>> +ServerRoot "$root"
+>> +DocumentRoot "$root"
+> [...]
+>> =A0PerlPassEnv GIT_DIR
+>> =A0PerlPassEnv GIT_EXEC_DIR
+>> +PerlPassEnv GITWEB_CONFIG
+>
+>> @@ -353,7 +359,7 @@ mongoose_conf() {
+>> =A0# For detailed description of every option, visit
+>> =A0# http://code.google.com/p/mongoose/wiki/MongooseManual
+>>
+>> -root =A0 =A0 =A0 =A0 $fqgitdir/gitweb
+>> +root =A0 =A0 =A0 =A0 $root
+> [...]
+>> -cgi_env =A0 =A0 =A0 =A0 =A0 =A0 =A0PATH=3D$PATH,GIT_DIR=3D$GIT_DIR,=
+GIT_EXEC_PATH=3D$GIT_EXEC_PATH
+>> +cgi_env =A0 =A0 =A0 =A0 =A0 =A0 =A0PATH=3D$PATH,GIT_DIR=3D$GIT_DIR,=
+GIT_EXEC_PATH=3D$GIT_EXEC_PATH,GITWEB_CONFIG=3D$GITWEB_CONFIG
+>
+> All right, those changes are pretty clear.
+>
+>> @@ -277,14 +281,15 @@ EOF
+>>
+>> =A0apache2_conf () {
+>> =A0 =A0 =A0 test -z "$module_path" && module_path=3D/usr/lib/apache2=
+/modules
+>> - =A0 =A0 mkdir -p "$GIT_DIR/gitweb/logs"
+>> =A0 =A0 =A0 bind=3D
+>> =A0 =A0 =A0 test x"$local" =3D xtrue && bind=3D'127.0.0.1:'
+>> =A0 =A0 =A0 echo 'text/css css' > "$fqgitdir/mime.types"
+>> =A0 =A0 =A0 cat > "$conf" <<EOF
+>> =A0ServerName "git-instaweb"
+>> -ServerRoot "$fqgitdir/gitweb"
+>> -DocumentRoot "$fqgitdir/gitweb"
+>> +ServerRoot "$root"
+>> +DocumentRoot "$root"
+>> +ErrorLog "$fqgitdir/gitweb/error.log"
+>> +CustomLog "$fqgitdir/gitweb/access.log" combined
+>> =A0PidFile "$fqgitdir/pid"
+>> =A0Listen $bind$port
+>> =A0EOF
+>
+> This is independent change, modifying configuration of apache2 web
+> server to use the same files for access log and for error log
+> ("$fqgitdir/gitweb/access.log" and "$fqgitdir/gitweb/error.log",
+> respectively) as the rest of web servers.
+>
+> Isn't it?
+
+Yes. But I included it in this commit because, it is not a big change
+to be included in another commit.
+
+>> @@ -370,41 +376,16 @@ mime_types =A0 =A0 =A0.gz=3Dapplication/x-gzip=
+,.tar.gz=3Dapplication/x-tgz,.tgz=3Dapplication/x-t
+>> =A0EOF
+>> =A0}
+>>
+>> -
+>> -script=3D'
+>> -s#^(my|our) \$projectroot =3D.*#$1 \$projectroot =3D "'$(dirname "$=
+fqgitdir")'";#;
+>> -s#(my|our) \$gitbin =3D.*#$1 \$gitbin =3D "'$GIT_EXEC_PATH'";#;
+>> -s#(my|our) \$projects_list =3D.*#$1 \$projects_list =3D \$projectro=
+ot;#;
+>> -s#(my|our) \$git_temp =3D.*#$1 \$git_temp =3D "'$fqgitdir/gitweb/tm=
+p'";#;'
+>> -
+>> -gitweb_cgi () {
+> [...]
+>
+>> +gitweb_conf() {
+>> + =A0 =A0 cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
+>> +#!/usr/bin/perl
+>> +our \$projectroot =3D "$(dirname "$fqgitdir")";
+>> +our \$git_temp =3D "$fqgitdir/gitweb/tmp";
+>> +our \$projects_list =3D \$projectroot;
+>> +EOF
+>> =A0}
+>
+> Right, $GIT (formerly $gitbin) is set when generating gitweb.cgi from
+> gitweb.perl.
+>
+> Actually $git_temp is not needed by modern gitweb (from quite some ti=
+me,
+> since using external /usr/bin/diff was replaced by git-diff-tree), so
+> setting it could be removed from gitweb_config.perl. =A0Nevertheless =
+it is
+> not a problem having it.
+>
+>> -gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
+>> -gitweb_css "$GIT_DIR/@@GITWEB_CSS_NAME@@"
+>> -gitweb_js =A0"$GIT_DIR/@@GITWEB_JS_NAME@@"
+>> +gitweb_conf
+>>
+>> =A0case "$httpd" in
+>> =A0*lighttpd*)
+>> --
+>> 1.7.1.18.g74211d.dirty
+>
+>
+> --
+> Jakub Narebski
+> Poland
+>
+
+Thanks
+-Pavan
