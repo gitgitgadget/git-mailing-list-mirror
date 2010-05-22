@@ -1,91 +1,98 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Has anyone looked at Gettext support for Git itself?
-Date: Sat, 22 May 2010 13:01:58 +0200
-Message-ID: <20100522110158.GA30035@efreet.light.src>
-References: <AANLkTinlDF-aKDjwvgZEqtUgzW7MCIuElQ_RfJn_RkZp@mail.gmail.com>
- <201005171632.48253.trast@student.ethz.ch>
- <AANLkTil0iESsCpHm-X3iiMZC3sEzCqYvXjsZiIHvFz3n@mail.gmail.com>
- <201005171712.22763.trast@student.ethz.ch>
- <20100517175939.GA3575@efreet.light.src>
- <1274122619.4780.36.camel@dreddbeard>
- <4BF246ED.3040706@drmicha.warpmail.net>
- <4BF25F7C.10303@syntevo.com>
- <1274189611.1294.10.camel@wpalmer.simply-domain>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: What's the best way to make my company migrate to Git?
+Date: Sat, 22 May 2010 11:52:01 +0100
+Message-ID: <4BF7B751.7050704@pileofstuff.org>
+References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Singer <thomas.singer@syntevo.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 22 13:02:16 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniele Segato <daniele.bilug@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 22 13:11:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFmT9-00075n-Mx
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 13:02:16 +0200
+	id 1OFmbo-00019t-GP
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 13:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754465Ab0EVLCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 07:02:08 -0400
-Received: from cuda1.bluetone.cz ([212.158.128.5]:42770 "EHLO
-	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753744Ab0EVLCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 07:02:04 -0400
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by cuda1.bluetone.cz (Spam & Virus Firewall) with ESMTP
-	id CF51816F3D8A; Sat, 22 May 2010 13:01:59 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145]) by cuda1.bluetone.cz with ESMTP id lmaGkwGqEfI4NFSS; Sat, 22 May 2010 13:01:59 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.71)
-	(envelope-from <bulb@ucw.cz>)
-	id 1OFmSt-0005j8-3z; Sat, 22 May 2010 13:01:59 +0200
-Content-Disposition: inline
-In-Reply-To: <1274189611.1294.10.camel@wpalmer.simply-domain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753907Ab0EVLLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 07:11:04 -0400
+Received: from queueout02-winn.ispmail.ntl.com ([81.103.221.56]:14187 "EHLO
+	queueout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752481Ab0EVLLA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 07:11:00 -0400
+X-Greylist: delayed 1133 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 May 2010 07:10:59 EDT
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20100522105204.QELJ14666.mtaout01-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
+          Sat, 22 May 2010 11:52:04 +0100
+Received: from [192.168.1.5] (really [80.6.134.127])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20100522105203.HSNG1586.aamtaout02-winn.ispmail.ntl.com@[192.168.1.5]>;
+          Sat, 22 May 2010 11:52:03 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
+X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=BxPs6DqL8UcA:10 a=UBIxAjGgU1YA:10 a=IkcTkHD0fZMA:10 a=v9beyyg-DFlU8wgCEF0A:9 a=GwwvMkx9x3TezHxo4a76cozRIXkA:4 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147514>
 
-On Tue, May 18, 2010 at 14:33:31 +0100, Will Palmer wrote:
-> On Tue, 2010-05-18 at 11:35 +0200, Thomas Singer wrote:
-> > ... and even worse, (s)he will most likely
-> > not be able to find a solution by searching google for this error message.
-> 
-> Other software projects make this a non-issue by reporting an "error
-> code" or something along those lines, along with the message. The code
-> is easily indexed, so that the message can be located by support staff
-> and, nowadays, google. I assume any internationalization effort would
-> require a message code of some sort be generated internally (if only to
-> look up which internationalized message to display), so doing something
-> as simple as outputting the internally-used code (even if that is just a
-> hash of the English version of the message) could solve this problem.
+Hi Daniele,
 
-Gettext does not require any kind of internal ID. It uses the english string
-as a key. It should (as already suggested) be easy to have
-a reverse-translation tool on the web somewhere for deciphering session logs
-from users with non-english locale.
+I'm a developer getting towards the end of introducing my company to 
+Git.  Here are some thoughts based on the (mis)steps I took.
 
-Non-English-speaking users won't be able to find a solution to problem by
-searching google most of the time anyway, though, because the prevalent
-English resources won't be understandable for them. Usually, however, they
-will have somebody on their team who does and will be able to help them out
-if they get into deep trouble.
 
-> Having error messages pasted into #git in 14 different languages could
-> be annoying, but if those are 14 people who otherwise would not be using
-> git at all, then I expect we're looking at the wrong problem, and
-> internationalisation /should/ be a priority.
-> 
-> But what do I know? I speak English :)
+I found that advocating specific steps wasn't that effective - I just 
+came across as being pushy and hard to work with.  It was more effective 
+to politely show off what I could do with git-svn, and let people get 
+jealous enough to work the "how" out for themselves.  Here are some 
+examples:
 
-It is important for cases when somebody wants to use git in their team, but
-some of their colleagues don't speak English. One has to expect having to
-help their colleagues occasionally in such cases, but than when you propose
-using git in some team, you have to expect having to help your colleagues
-in any case.
+I would quietly bisect a hard-to-fix bug, then say "if it's any help, 
+git tells me it was introduced by so-and-so in revision N".  Sometimes 
+it was no help, but sometimes it was enough to provoke the appropriate 
+"aha!" for the bug.
 
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+I would nonchalantly use as many git features as I could while showing 
+people my work.  So "here's the diff for my work... grr whitespace ... 
+hang on I'll add `-w`... anyway, these are the REAL differences...". The 
+fact it was all in glorious technicolour went without mention.
+
+When we had a big merge that nobody was looking forward to, I said "let 
+me do it!  It'll give me a chance to practice my git-fu".
+
+When I used svn on somebody else's command-line, I'd blame the mistakes 
+I made on being spoiled by Git.  So "I'll just do an `svn log`... argh 
+no!  Control-C!  Control-C!  Right, `svn log | less`... my bad, git 
+pipes to less automatically."
+
+
+Over the course of a few months, people became convinced that Git was 
+something that makes you more productive.  Our lead developer had a go 
+with git-svn for a while, before our boss decided we should all make the 
+switch.
+
+I tried to make git-svn as painless as possible with some svn-like 
+aliases and a cheatsheet, which I'd be happy to upload if the list could 
+suggest a good place to put a PDF and some text.
+
+The move worked for a while, but it turned out that one-and-a-half git 
+experts supporting the rest of the team wasn't enough to stop people 
+from making rookie mistakes like `git merge`ing into an SVN branch with 
+unpushed changes.  We had to accelerate our move to git on the server, 
+and I got a lot of exercise and not much work done that month as I 
+dashed from desk to desk.
+
+Things gradually calmed down as people got more comfortable with git. 
+But I expect to be occasionally called over for a long time as people 
+learn new tricks - "how do I, like, cherry-unpick a single commit?"
+
+	- Andrew Sayers
