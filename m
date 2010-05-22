@@ -1,133 +1,294 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Sat, 22 May 2010 17:52:31 +0200
-Message-ID: <1274543552.21346.166.camel@Luffy>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
-	 <4BF7B751.7050704@pileofstuff.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 GSoC] git-instaweb: Configure it to work with new gitweb structure
+Date: Sat, 22 May 2010 17:57:37 +0200
+Message-ID: <201005221757.38376.jnareb@gmail.com>
+References: <1274523105-3327-1-git-send-email-pavan.sss1991@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sat May 22 17:52:45 2010
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 22 17:57:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFr0G-0000mc-8X
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 17:52:44 +0200
+	id 1OFr5G-0003Z9-JD
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 17:57:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755139Ab0EVPwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 11:52:39 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57093 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752248Ab0EVPwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 11:52:38 -0400
-Received: by wyb29 with SMTP id 29so569851wyb.19
-        for <git@vger.kernel.org>; Sat, 22 May 2010 08:52:36 -0700 (PDT)
+	id S1755361Ab0EVP5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 11:57:49 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:41912 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755233Ab0EVP5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 May 2010 11:57:48 -0400
+Received: by fxm5 with SMTP id 5so1556959fxm.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 08:57:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=QH+eFIdI27zhRZ0IsiarvKbS4b0G5cH6PXZSUUglg5U=;
-        b=OtVzI7v5PkOo2oUGVdKvfbUXcYOudA8X9FBEgCs9PgzucvTsPdHNt8qSU7yatPaP1h
-         KsnBlc8vvw91+NdyS0b1ff5wnAS2+ZnbPZUvQK+4JbjKe56365DPcFKtNsORfYG/gVQX
-         6L2UvOl7rScxZCykcsqIX3oLAIoOQIIP2qDG8=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=cMtZ/26cAW/iaz2CeViOiW3gqgXhjj1HHrx34E4P3GQ=;
+        b=dcJawZdXSf2cYpD1W9labcVxONOT8omL0roCBiFfIhvQpoi85IQZApNMqmQ1z79JzG
+         PICRf76w2Vl3tVcoIRvOhojS7D3JEcwGFMIB6d45tmun34j7LCgkYeIlgnyfPpailRJC
+         FN+yR3bIBzMx/+gndHhCD/YLwV6m/4wC7Zcjg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=pmbN0ukRIx2CBg7oPzYozNo7UKDg66Yy1q5lrz2M0vI8v+3tdHVOiA1J1Oe4W3Tp6o
-         P5CjxYDN7EFxoRGKIgNon8HS+XnzrxIRpRw8jzy+JV7nBHgtqFQdZFwXxmoJDoVhQ4nF
-         KwJ5OvTnb/ceVCRelQvAIl9AraRVdQPlXAeag=
-Received: by 10.227.151.138 with SMTP id c10mr2844272wbw.219.1274543556152;
-        Sat, 22 May 2010 08:52:36 -0700 (PDT)
-Received: from [192.168.1.2] (host32-6-dynamic.52-82-r.retail.telecomitalia.it [82.52.6.32])
-        by mx.google.com with ESMTPS id t20sm16278538wbc.22.2010.05.22.08.52.33
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=eWIsDBx0rUv7hchtSTdhqi4yl/qdmLsyea3QDCUYfv73a0ac7mJ06jRXrinQ7UB0zw
+         WIs+i8zuF+6LENHuH/vdurwsgMVRYPTxZkBIgdgv7XbuuYli1NvH+96H0Uoxpjz1modE
+         cGxc3o7lEZpEjP4DWmdl7q/weP6IKDiakIm0A=
+Received: by 10.204.9.23 with SMTP id j23mr542045bkj.132.1274543866629;
+        Sat, 22 May 2010 08:57:46 -0700 (PDT)
+Received: from [192.168.1.15] (abwk129.neoplus.adsl.tpnet.pl [83.8.234.129])
+        by mx.google.com with ESMTPS id 24sm9943871bkr.0.2010.05.22.08.57.44
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 22 May 2010 08:52:34 -0700 (PDT)
-In-Reply-To: <4BF7B751.7050704@pileofstuff.org>
-X-Mailer: Evolution 2.28.3 
+        Sat, 22 May 2010 08:57:45 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1274523105-3327-1-git-send-email-pavan.sss1991@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147529>
 
-Il giorno sab, 22/05/2010 alle 11.52 +0100, Andrew Sayers ha scritto:
-> Hi Daniele,
+On Sat, 22 May 2010, Pavan Kumar Sunkara wrote:
+
+> git-instaweb in its current form (re)creates gitweb.cgi and
+> (some of) required static files in $GIT_DIR/gitweb/ directory.
+> Splitting gitweb would make it difficult for git-instaweb to
+> continue with this method.
 > 
-> I'm a developer getting towards the end of introducing my company to 
-> Git.  Here are some thoughts based on the (mis)steps I took.
+> Use the instaweb.gitwebdir config variable to point git-instaweb script
+> to a global directory which contains gitweb files as server root
+> and the httpd.conf along with server logs and pid go into
+> '$(GIT_DIR)/gitweb' directory.
 
-thanks
+That's not all this patch changes, isn't it?
 
+  While at it, change apache2 configuration to use the same access log
+  and error log files as the rest of web servers supported by
+  git-instaweb.
 
-> I found that advocating specific steps wasn't that effective - I just 
-> came across as being pushy and hard to work with.  It was more effective 
-> to politely show off what I could do with git-svn, and let people get 
-> jealous enough to work the "how" out for themselves.  Here are some 
-> examples:
+While it would be better to have it as a separate commit, I think it
+doesn't matter much, and having it in this patch is acceptable as
+"while at it" change.
+
 > 
-> I would quietly bisect a hard-to-fix bug, then .... [big-snip]
+> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+
+I like this change, because it simplifies greatly git-instaweb
+generation; besides the fact that it is necessary for future splitting
+gitweb for better maintability, and for write functionality for gitweb.
+
+
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+_If_ there is no problem with $(gitwebdir) and not $(gitwebdir_SQ),
+see below for details.
+
+> ---
 > 
-> Over the course of a few months, people became convinced that Git was 
-> something that makes you more productive.  Our lead developer had a go 
-> with git-svn for a while, before our boss decided we should all make the 
-> switch.
+> This patch is based on commit 'jn/gitweb-install' in the next branch.
 
-I'm already doing this stuff..
-but i'm in the *lead developer* position now, so, if I say that they had
-to start using git (at least my team) they will..
+I think it is based on your earlier patches:
 
-But I don't thing going throw git-svn is a good idea.. it has some
-limitation over the normal git and you have to be more careful about
-rebasing (interactive) and you should avoid merge (as much as I
-understood it).
+* gitweb: Move static files into seperate subdirectory
+  http://article.gmane.org/gmane.comp.version-control.git/147321 
+* gitweb: Set default destination directory for installing gitweb in Makefile
+  http://article.gmane.org/gmane.comp.version-control.git/147160
 
-I'd like to make the big move going directly to git.
-I don't think i'll had the time to do it now, the new project is already
-going on.. but I'd like to have all prepared and ready for the next
-one :)
+Those are necessary for this patch to be applied.  Well, the second is
+necessary for it to make sense...
 
 
-> I tried to make git-svn as painless as possible with some svn-like 
-> aliases and a cheatsheet, which I'd be happy to upload if the list could 
-> suggest a good place to put a PDF and some text.
+BTW. which web servers supported by git-instaweb: lighttpd, apache2,
+webrick, mongoose you have tested your change with?
 
-I think that may be useful to many.
-In my specific case it wouldn't help, since everybody is used to click
-around with the git-svn graphical interface, they don't even know the
-svn commands to do those stuffs. They are almost all windows-minded :)
-you know: "writing when you can click? why?" - I use to think the
-opposite :)
+>  Makefile        |   10 +------
+>  git-instaweb.sh |   71 ++++++++++++++++++++----------------------------------
+>  2 files changed, 28 insertions(+), 53 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index caf2f64..91cd726 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1592,15 +1592,8 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/static/gitweb.css gitweb/
+>  	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+[...]
+> +	    -e 's|@@GITWEBDIR@@|$(gitwebdir)|g' \
+>  	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
+> -            -e 's|@@GITWEB_CSS_NAME@@|$(GITWEB_CSS)|' \
+> -            -e 's|@@GITWEB_JS_NAME@@|$(GITWEB_JS)|' \
+>  	    $@.sh > $@+ && \
+>  	chmod +x $@+ && \
+>  	mv $@+ $@
+> @@ -1972,6 +1965,7 @@ install: all
+>  	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
+>  ifndef NO_PERL
+>  	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
+> +	$(MAKE) -C gitweb gitwebdir=$(gitwebdir) install
+>  endif
 
-What i mean here is: git should be graphical, at least at the beginning,
-better if inside eclipse itself.
+Have you checked that you can use $(gitwebdir) and don't need
+$(gitwebdir_SQ) here?  Does git-instaweb installs and works correctly
+if 'gitwebdir' contains spaces and single or double quote characters?
 
-> The move worked for a while, but it turned out that one-and-a-half git 
-> experts supporting the rest of the team wasn't enough to stop people 
-> from making rookie mistakes like `git merge`ing into an SVN branch with 
-> unpushed changes.  We had to accelerate our move to git on the server, 
-> and I got a lot of exercise and not much work done that month as I 
-> dashed from desk to desk.
+But perhaps that doesn't matter in practice, and this is good enough.
 
-that's what I fear, because we usually are overladen of work and we
-can't stand some slow down if it last more then 2-3 days in a row.
-If that happen I'll be the one who will be blamed for the issue :)
+> diff --git a/git-instaweb.sh b/git-instaweb.sh
+> index f608014..b3e9192 100755
+> --- a/git-instaweb.sh
+> +++ b/git-instaweb.sh
+> @@ -24,6 +24,7 @@ restart        restart the web server
+>  fqgitdir="$GIT_DIR"
+>  local="$(git config --bool --get instaweb.local)"
+>  httpd="$(git config --get instaweb.httpd)"
+> +root="$(git config --get instaweb.gitwebdir)"
+>  port=$(git config --get instaweb.port)
+>  module_path="$(git config --get instaweb.modulepath)"
+>  
+> @@ -34,6 +35,9 @@ conf="$GIT_DIR/gitweb/httpd.conf"
+>  # if installed, it doesn't need further configuration (module_path)
+>  test -z "$httpd" && httpd='lighttpd -f'
+>  
+> +# Default is @@GITWEBDIR@@
+> +test -z "$root" && root='@@GITWEBDIR@@'
+> +
 
-> Things gradually calmed down as people got more comfortable with git. 
-> But I expect to be occasionally called over for a long time as people 
-> learn new tricks - "how do I, like, cherry-unpick a single commit?"
+Nice.
 
-Well.. that's ok.. the problem is with things I don't know about git
-like: what's the best way to manage binary files? how do I manage
-submodules? and so on... if I don't know how to properly reply to those
-questions I'll obtain the opposite effect :)
+> @@ -57,7 +61,7 @@ resolve_full_httpd () {
+>  		# these days and those are not in most users $PATHs
+>  		# in addition, we may have generated a server script
+>  		# in $fqgitdir/gitweb.
+> -		for i in /usr/local/sbin /usr/sbin "$fqgitdir/gitweb"
+> +		for i in /usr/local/sbin /usr/sbin "$root" "$fqgitdir/gitweb"
+>  		do
+>  			if test -x "$i/$httpd_only"
+>  			then
 
-Thanks for your experience,
+You probably want to update comment above this loop.  But this is not
+something very important.
 
-Daniele
+Alternatively, if e.g. webrick.rb and webrick (shell script) are
+installed in "$fqgitdir/gitweb" directory, there is no need to check
+"$root".
+
+>  webrick_conf () {
+[...]
+> -:DocumentRoot: "$fqgitdir/gitweb"
+> +:DocumentRoot: "$root"
+
+>  lighttpd_conf () {
+>  	cat > "$conf" <<EOF
+> -server.document-root = "$fqgitdir/gitweb"
+> +server.document-root = "$root"
+[...]
+> -setenv.add-environment = ( "PATH" => env.PATH )
+> +setenv.add-environment = ( "PATH" => env.PATH, "GITWEB_CONFIG" => env.GITWEB_CONFIG )
+
+>  apache2_conf () {
+[...]
+> -ServerRoot "$fqgitdir/gitweb"
+> -DocumentRoot "$fqgitdir/gitweb"
+> +ServerRoot "$root"
+> +DocumentRoot "$root"
+[...]
+>  PerlPassEnv GIT_DIR
+>  PerlPassEnv GIT_EXEC_DIR
+> +PerlPassEnv GITWEB_CONFIG
+
+> @@ -353,7 +359,7 @@ mongoose_conf() {
+>  # For detailed description of every option, visit
+>  # http://code.google.com/p/mongoose/wiki/MongooseManual
+>  
+> -root		$fqgitdir/gitweb
+> +root		$root
+[...]
+> -cgi_env		PATH=$PATH,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH
+> +cgi_env		PATH=$PATH,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH,GITWEB_CONFIG=$GITWEB_CONFIG
+
+All right, those changes are pretty clear.
+
+> @@ -277,14 +281,15 @@ EOF
+>  
+>  apache2_conf () {
+>  	test -z "$module_path" && module_path=/usr/lib/apache2/modules
+> -	mkdir -p "$GIT_DIR/gitweb/logs"
+>  	bind=
+>  	test x"$local" = xtrue && bind='127.0.0.1:'
+>  	echo 'text/css css' > "$fqgitdir/mime.types"
+>  	cat > "$conf" <<EOF
+>  ServerName "git-instaweb"
+> -ServerRoot "$fqgitdir/gitweb"
+> -DocumentRoot "$fqgitdir/gitweb"
+> +ServerRoot "$root"
+> +DocumentRoot "$root"
+> +ErrorLog "$fqgitdir/gitweb/error.log"
+> +CustomLog "$fqgitdir/gitweb/access.log" combined
+>  PidFile "$fqgitdir/pid"
+>  Listen $bind$port
+>  EOF
+
+This is independent change, modifying configuration of apache2 web
+server to use the same files for access log and for error log
+("$fqgitdir/gitweb/access.log" and "$fqgitdir/gitweb/error.log",
+respectively) as the rest of web servers.
+
+Isn't it?
+
+> @@ -370,41 +376,16 @@ mime_types	.gz=application/x-gzip,.tar.gz=application/x-tgz,.tgz=application/x-t
+>  EOF
+>  }
+>  
+> -
+> -script='
+> -s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
+> -s#(my|our) \$gitbin =.*#$1 \$gitbin = "'$GIT_EXEC_PATH'";#;
+> -s#(my|our) \$projects_list =.*#$1 \$projects_list = \$projectroot;#;
+> -s#(my|our) \$git_temp =.*#$1 \$git_temp = "'$fqgitdir/gitweb/tmp'";#;'
+> -
+> -gitweb_cgi () {
+[...]
+
+> +gitweb_conf() {
+> +	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
+> +#!/usr/bin/perl
+> +our \$projectroot = "$(dirname "$fqgitdir")";
+> +our \$git_temp = "$fqgitdir/gitweb/tmp";
+> +our \$projects_list = \$projectroot;
+> +EOF
+>  }
+
+Right, $GIT (formerly $gitbin) is set when generating gitweb.cgi from
+gitweb.perl.
+
+Actually $git_temp is not needed by modern gitweb (from quite some time,
+since using external /usr/bin/diff was replaced by git-diff-tree), so
+setting it could be removed from gitweb_config.perl.  Nevertheless it is
+not a problem having it.
+
+> -gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
+> -gitweb_css "$GIT_DIR/@@GITWEB_CSS_NAME@@"
+> -gitweb_js  "$GIT_DIR/@@GITWEB_JS_NAME@@"
+> +gitweb_conf
+>  
+>  case "$httpd" in
+>  *lighttpd*)
+> -- 
+> 1.7.1.18.g74211d.dirty
+
+
+-- 
+Jakub Narebski
+Poland
