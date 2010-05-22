@@ -1,63 +1,122 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [PATCHv2 GSoC] git-instaweb: Configure it to work with new gitweb 
-	structure
-Date: Sun, 23 May 2010 00:48:12 +0530
-Message-ID: <AANLkTikSJQ7MMWytdMjJwaP1YBV1lebo4f7I4OUOIXAV@mail.gmail.com>
-References: <1274523105-3327-1-git-send-email-pavan.sss1991@gmail.com>
-	 <201005221757.38376.jnareb@gmail.com>
-	 <AANLkTinbzlRsmQekpLlFQC3xOMB2ZUurLqJoyFCnHZFG@mail.gmail.com>
-	 <201005222059.54995.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Petr Baudis <pasky@ucw.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 22 21:18:20 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: What's cooking extra
+Date: Sat, 22 May 2010 21:42:14 +0200
+Message-ID: <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
+References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org> <20100519170656.GA30161@pvv.org> <20100522130916.GA28452@localhost>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Finn Arne Gangstad <finnag@pvv.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat May 22 21:42:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFuDD-0004KN-1f
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 21:18:19 +0200
+	id 1OFuaY-0006Js-5r
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 21:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757983Ab0EVTSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 15:18:14 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46314 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755773Ab0EVTSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 15:18:13 -0400
-Received: by gwaa20 with SMTP id a20so966207gwa.19
-        for <git@vger.kernel.org>; Sat, 22 May 2010 12:18:12 -0700 (PDT)
+	id S1758030Ab0EVTmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 15:42:20 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:63752 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755756Ab0EVTmT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 15:42:19 -0400
+Received: by wwb13 with SMTP id 13so166445wwb.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 12:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=st1B8GMoX3MbcvyBrteUAOzU/fGwGhvz+ounB6Xy+Zo=;
-        b=mMnxLLlBQy9NlzKDs0ceIgmKAKtY/0C2f4N391eb/5mic0yq+U8DUshdoF+x8w5PwR
-         gMPBse2XY1RFhp5e9w3qHoFd4q74oc8A1Q9eIAf+nNl44YTe9Pw2CzcYj23Xe7i3Bt9Q
-         Kr8OM97tSTbtr7r7QQBdLfn7LQswUn/goxe00=
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=UPQ1OfsQFQeqgzxLE6ftSqMdlzjOyNOox9Ier6odnfg=;
+        b=OWYB6MZjXGfv6doX8kHdIWNwznEifmc2X81l9E96SjwCDcr7nwHqBPAT+17UgjfKSw
+         rKYmPRWCkuS4by0okEoF6bPWjEOW22iTCKtVZdh2mtXRAekKnh8rY8rq5wkHl36SwL6v
+         eN56SKDevFMG461rBP9x+PZgvjWmk5L7ah0Oo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=lthTLuWZXp6x2Dk2TBj9nGj0qH+kMEjeKXBCV21+2f5sJ2SmbQ2FfPjsaO3/4I96HQ
-         KKMnnXBtGatXiYILSK7zGsxq7TwTlJmpVbh4x0m6RZcZpofT0ViY2zplM04scuqF9hYd
-         PSj3J0lIzlhGkFf3fPuNTLhwWysjm2pFt1nLY=
-Received: by 10.91.161.39 with SMTP id n39mr1804781ago.55.1274555892885; Sat, 
-	22 May 2010 12:18:12 -0700 (PDT)
-Received: by 10.90.84.5 with HTTP; Sat, 22 May 2010 12:18:12 -0700 (PDT)
-In-Reply-To: <201005222059.54995.jnareb@gmail.com>
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=TiEqmAkvAOzn6uD+iYxZHRVZ+Gcx+Y8GfmkpgxMG+YQAeMgZnHZ/hcDsncSEXoN4Rd
+         p1oe0XSJ0xmcieJKhwy4Zb8w/qt4N+sp7ppNLUL6QdSo2PStkP9AWVqBfZQgQadzheYB
+         5fYj8a3wPOwhHE2fMgGPYn5yJ9p4Mp51Kbbfo=
+Received: by 10.216.169.72 with SMTP id m50mr1924919wel.169.1274557336321;
+        Sat, 22 May 2010 12:42:16 -0700 (PDT)
+Received: from [172.16.3.223] (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id 16sm1115465ewy.7.2010.05.22.12.42.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 22 May 2010 12:42:15 -0700 (PDT)
+In-Reply-To: <20100522130916.GA28452@localhost>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147539>
 
-No. It doesn't.
+On 22. mai 2010, at 15.09, Clemens Buchacher wrote:
 
-Do you want me to make that change to and send the patch again ?
+> On Wed, May 19, 2010 at 07:06:56PM +0200, Finn Arne Gangstad wrote:
+>> On Wed, May 19, 2010 at 07:33:32AM -0700, Junio C Hamano wrote:
+>> 
+>>> * (Eyvind Bernhardsen and Linus) Fixing the behaviour of crlf attribute;
+>>>   ignoring them when core.autocrlf is not in effect was a wrong design
+>>>   decision.
+>>> 
+>>>   I agree with what Linus said in the thread; I haven't yet looked at the
+>>>   discussion in the past few days.  Also I don't know where '[PATCH v2]
+>>>   Add "core.eol" config variable' fits in the picture.
+>> 
+>> I think this one is pretty much discussed by now, with the latest
+>> changes this should do pretty much what Linus wanted.
+> 
+> That is not the impression I got. Linus was objecting to the idea of new
+> attribute and configuration variables, which essentially do the same thing
+> but with slightly different semantics.
+> 
+> As soon as the existing crlf attribute is given priority over core.autocrlf,
+> all the problems discussed originally go away. So what exactly are the new
+> attributes supposed to do?
 
-- Pavan
+There is one new attribute, "eol", that is used for files which need a specific line ending.  Being able to "force" LF or CRLF line endings has been requested several times on the list, and is already sort of provided for by "crlf=input".
+
+Linus had lots of strong objections, but I also made lots of changes during the course of the discussion.
+
+> Also, could you post a truth table for all the parameters involved (eol,
+> crlf, core.autocrlf, core.eol). The documentation in the patches is too
+> confusing for me to understand even that.
+
+I'll do my best.  Basically there are two things to keep track of: "should this file be normalized as text?" and "which line endings should this file have in the working directory?".  There is an attribute for each, and two configuration variables that set the default values of the attributes.
+
+Unfortunately my mail client mangles ascii art, so I can't do a table.  This will have to suffice:
+
+Any file with the "text" attribute set will have its line endings normalized to LF in the repository.  If "text" is set to the special value "auto", git will only convert the file if it looks like a text file.
+
+The "eol" attribute is used for files that need a specific line ending.  Setting it also sets "text".
+
+core.eol controls which line endings to use for normalized files that don't have the "eol" attribute set, and defaults to the platform native line ending.
+
+When core.autocrlf is set, the default value of the "text" attribute is set to "auto" but with an extra safety feature: if a file contains CRs in the index, it won't be normalized.  The extra feature comes from Finn Arne's "safe autocrlf" patch.
+
+There is a backwards compatibility wrinkle in that core.autocrlf will override core.eol if the latter isn't explicitly set, so that "core.autocrlf=true" still results in CRLFs in the working directory on Linux.
+
+> And, renaming the crlf attribute to text? Where did Linus suggest that? If
+> we do that, we don't even have to talk about backwards compatibility any
+> more.
+
+In <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>:
+> So if you rename these things, keep them separate.  Make the "am I a
+> text-file" boolean be a boolean (plus "auto"), and just call it "text". 
+> And make the "what end of line to use" be just "eol" then.
+
+
+So he didn't suggest renaming it, but he did suggest a better name and UI than the one I came up with.  I expected objections to renaming the attribute, which is why that is a separate commit, but people seemed supportive overall.
+
+The "crlf" attribute will be used if it is present so backwards compatibility is preserved to a degree.  Scripts that test for the "crlf" attribute explicitly (such as git-cvsserver, which I fixed) will break.  I don't know how big a problem that is going to be in practice, but nobody raised it as an issue during the discussion.
+
+Compatibility with older clients is a valid concern, but older clients will ignore "crlf" as well as "text" unless core.autocrlf is set, so they will cause problems no matter what.
+-- 
+Eyvind
