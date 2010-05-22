@@ -1,113 +1,133 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH RFC] Add a config verbose option fetch and push
-Date: Sat, 22 May 2010 14:15:39 +0000
-Message-ID: <AANLkTilmv7Kp0LxXXB7bCOs6F55ymnedRCeF4SKkdlJK@mail.gmail.com>
-References: <4bf6b6f5.dd79dc0a.5533.2acd@mx.google.com>
-	 <201005221244.32213.trast@student.ethz.ch>
-	 <AANLkTimQzAM7qA32FRFvQC1cx7UEEKtBxjU89whrSqF5@mail.gmail.com>
-	 <201005221534.18529.trast@student.ethz.ch>
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: Re: What's the best way to make my company migrate to Git?
+Date: Sat, 22 May 2010 17:52:31 +0200
+Message-ID: <1274543552.21346.166.camel@Luffy>
+References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
+	 <4BF7B751.7050704@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Nathan W. Panike" <nathan.panike@gmail.com>, git@vger.kernel.org,
-	Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat May 22 16:15:54 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Sat May 22 17:52:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFpUX-0001fJ-FE
-	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 16:15:53 +0200
+	id 1OFr0G-0000mc-8X
+	for gcvg-git-2@lo.gmane.org; Sat, 22 May 2010 17:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519Ab0EVOPl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 May 2010 10:15:41 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36059 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753142Ab0EVOPk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 May 2010 10:15:40 -0400
-Received: by iwn6 with SMTP id 6so2268123iwn.19
-        for <git@vger.kernel.org>; Sat, 22 May 2010 07:15:39 -0700 (PDT)
+	id S1755139Ab0EVPwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 May 2010 11:52:39 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57093 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752248Ab0EVPwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 May 2010 11:52:38 -0400
+Received: by wyb29 with SMTP id 29so569851wyb.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 08:52:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=L3iyANIh+NuDah5w57kLpxKG5KXM6mY1jx/laLR8SkU=;
-        b=RwOIXXw/d0ry3c/BVTXoTwXQZvlsSaWyZwRnkOXYnCjmBAJEPXdGxuNhiicerw+ivi
-         8AixmC6ZB/OakQr06GzVrrwS5GvM7nc4/0oMNkk3VHCDJWJRF4wh/jWrXh3UZqEqJ8Zv
-         N1koDTouTF1lC2n7gul+xCwAcCi9RmL6bFmsI=
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=QH+eFIdI27zhRZ0IsiarvKbS4b0G5cH6PXZSUUglg5U=;
+        b=OtVzI7v5PkOo2oUGVdKvfbUXcYOudA8X9FBEgCs9PgzucvTsPdHNt8qSU7yatPaP1h
+         KsnBlc8vvw91+NdyS0b1ff5wnAS2+ZnbPZUvQK+4JbjKe56365DPcFKtNsORfYG/gVQX
+         6L2UvOl7rScxZCykcsqIX3oLAIoOQIIP2qDG8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LvXpj9RQEQIllp+NgkTF/x2C1BUQz3BenUXRB9L9VL18xM+Mu58+5RIpoPsi54kt4N
-         n2vyCvSK2cLirxIf25bfiZO1QYVX73JkVyaHJwmKz+Sl5ghx0XvG9wKQHf86mLizwJh3
-         TkhDCDkVOY1HxwoS7i+6WMB5PXNs4sOE9BW0c=
-Received: by 10.231.120.159 with SMTP id d31mr2093787ibr.89.1274537739103; 
-	Sat, 22 May 2010 07:15:39 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sat, 22 May 2010 07:15:39 -0700 (PDT)
-In-Reply-To: <201005221534.18529.trast@student.ethz.ch>
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=pmbN0ukRIx2CBg7oPzYozNo7UKDg66Yy1q5lrz2M0vI8v+3tdHVOiA1J1Oe4W3Tp6o
+         P5CjxYDN7EFxoRGKIgNon8HS+XnzrxIRpRw8jzy+JV7nBHgtqFQdZFwXxmoJDoVhQ4nF
+         KwJ5OvTnb/ceVCRelQvAIl9AraRVdQPlXAeag=
+Received: by 10.227.151.138 with SMTP id c10mr2844272wbw.219.1274543556152;
+        Sat, 22 May 2010 08:52:36 -0700 (PDT)
+Received: from [192.168.1.2] (host32-6-dynamic.52-82-r.retail.telecomitalia.it [82.52.6.32])
+        by mx.google.com with ESMTPS id t20sm16278538wbc.22.2010.05.22.08.52.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 22 May 2010 08:52:34 -0700 (PDT)
+In-Reply-To: <4BF7B751.7050704@pileofstuff.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147528>
 
-On Sat, May 22, 2010 at 13:34, Thomas Rast <trast@student.ethz.ch> wrot=
-e:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Sat, May 22, 2010 at 10:44, Thomas Rast <trast@student.ethz.ch> w=
-rote:
->> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> > That would completely ruin the scriptability of almost all command=
-s.
->> > Imagine the user added the following options as default:
->> > =C2=A0add --edit
-> [...]
->> > I'm sure you can find one option that changes the command in somet=
-hing
->> > completely different *for every command*.
->>
->> Sure. But so would adding this as git-add to your $PATH:
->>
->> =C2=A0 =C2=A0 #!/bin/sh
->> =C2=A0 =C2=A0 /usr/lib/git-core/git-add --edit $@
->
-> Two points:
->
-> * This way is not documented in git-config(1), as the proposed
-> =C2=A0interface would have to be; hence, it is not "official".
->
-> * More importantly, it doesn't work; for builtins such as git-add, no=
-t
-> =C2=A0even if you put it under the `git --exec-path` (yes, I've teste=
-d
-> =C2=A0this).
+Il giorno sab, 22/05/2010 alle 11.52 +0100, Andrew Sayers ha scritto:
+> Hi Daniele,
+> 
+> I'm a developer getting towards the end of introducing my company to 
+> Git.  Here are some thoughts based on the (mis)steps I took.
 
-I actually tested it too and found that it didn't work. Then thought
-"meh, it's pseudocode" and pressed "Send".
+thanks
 
-Aside from the specific implementation it's easy to make that work the
-right way. You can alias the git command itself and munge its
-arguments before passing them on to Git itself.
 
-Anyway, this feature isn't something I actually care about. I only
-wanted to suggest that if we're going to get lots of proposals to add
-a specific config flag for some specific option in some specific
-tool. That maybe it would be easier for everyone if there was some
-general facility to do so. It would cut down on special-case code in
-individual tools.
+> I found that advocating specific steps wasn't that effective - I just 
+> came across as being pushy and hard to work with.  It was more effective 
+> to politely show off what I could do with git-svn, and let people get 
+> jealous enough to work the "how" out for themselves.  Here are some 
+> examples:
+> 
+> I would quietly bisect a hard-to-fix bug, then .... [big-snip]
+> 
+> Over the course of a few months, people became convinced that Git was 
+> something that makes you more productive.  Our lead developer had a go 
+> with git-svn for a while, before our boss decided we should all make the 
+> switch.
 
->> Git already has plenty of ways to shoot yourself in the foot.
->
-> Can't argue with that.
+I'm already doing this stuff..
+but i'm in the *lead developer* position now, so, if I say that they had
+to start using git (at least my team) they will..
 
-And perhaps a general facility might actually improve scriptability. A
-determined user is going to override Git anyway, even if that means
-some gross hack involving munging $PATH and overriding of Git
-itself. At least if such users were pointed to a general facility
-script writers could set GIT_IGNORE_CRAZY_USER_DIRECTIVES=3D1 or
-something like that.
+But I don't thing going throw git-svn is a good idea.. it has some
+limitation over the normal git and you have to be more careful about
+rebasing (interactive) and you should avoid merge (as much as I
+understood it).
+
+I'd like to make the big move going directly to git.
+I don't think i'll had the time to do it now, the new project is already
+going on.. but I'd like to have all prepared and ready for the next
+one :)
+
+
+> I tried to make git-svn as painless as possible with some svn-like 
+> aliases and a cheatsheet, which I'd be happy to upload if the list could 
+> suggest a good place to put a PDF and some text.
+
+I think that may be useful to many.
+In my specific case it wouldn't help, since everybody is used to click
+around with the git-svn graphical interface, they don't even know the
+svn commands to do those stuffs. They are almost all windows-minded :)
+you know: "writing when you can click? why?" - I use to think the
+opposite :)
+
+What i mean here is: git should be graphical, at least at the beginning,
+better if inside eclipse itself.
+
+> The move worked for a while, but it turned out that one-and-a-half git 
+> experts supporting the rest of the team wasn't enough to stop people 
+> from making rookie mistakes like `git merge`ing into an SVN branch with 
+> unpushed changes.  We had to accelerate our move to git on the server, 
+> and I got a lot of exercise and not much work done that month as I 
+> dashed from desk to desk.
+
+that's what I fear, because we usually are overladen of work and we
+can't stand some slow down if it last more then 2-3 days in a row.
+If that happen I'll be the one who will be blamed for the issue :)
+
+> Things gradually calmed down as people got more comfortable with git. 
+> But I expect to be occasionally called over for a long time as people 
+> learn new tricks - "how do I, like, cherry-unpick a single commit?"
+
+Well.. that's ok.. the problem is with things I don't know about git
+like: what's the best way to manage binary files? how do I manage
+submodules? and so on... if I don't know how to properly reply to those
+questions I'll obtain the opposite effect :)
+
+Thanks for your experience,
+
+Daniele
