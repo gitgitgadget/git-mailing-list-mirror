@@ -1,61 +1,62 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCHv3 GSoC] git-instaweb: Configure it to work with new
-	gitweb structure
-Date: Sun, 23 May 2010 09:56:45 +0000
-Message-ID: <20100523095645.GD3426@dcvr.yhbt.net>
-References: <1274599968-3749-1-git-send-email-pavan.sss1991@gmail.com>
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: export one commit id from a repository
+Date: Sun, 23 May 2010 12:08:50 +0200
+Message-ID: <htauri$17m$1@dough.gmane.org>
+References: <ht8mu6$hjo$1@dough.gmane.org> <20100522135047.GA10999@toroid.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
-	pasky@ucw.cz
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 23 11:56:48 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 23 12:09:13 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OG7vJ-0002ZL-0B
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 11:56:45 +0200
+	id 1OG87M-00075w-4v
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 12:09:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753870Ab0EWJ4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 05:56:40 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:41302 "EHLO dcvr.yhbt.net"
+	id S1754025Ab0EWKJF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 May 2010 06:09:05 -0400
+Received: from lo.gmane.org ([80.91.229.12]:59658 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753594Ab0EWJ4j (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 May 2010 05:56:39 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 407B31F4EF;
-	Sun, 23 May 2010 09:56:39 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <1274599968-3749-1-git-send-email-pavan.sss1991@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753885Ab0EWKJC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 May 2010 06:09:02 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OG879-000725-6b
+	for git@vger.kernel.org; Sun, 23 May 2010 12:08:59 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 23 May 2010 12:08:59 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 23 May 2010 12:08:59 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <20100522135047.GA10999@toroid.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147569>
 
-Pavan Kumar Sunkara <pavan.sss1991@gmail.com> wrote:
-> While at it, change apache2 configuration to use the same access log
-> and error log files as the rest of web servers supported by
-> git-instaweb.
+Thanks a lot for your answer.
 
-Hi Pavan, I'm late to this thread, but I'm leaning against forcing
-access logs onto people.  I don't believe access logs are necessary for
-instaweb.  Error logs are important for debugging breakage, yes, but
-access logs aren't worth the trouble IMHO.
+That's what I was looking for :-)
 
-Also, using the same error log paths might make it confusing to people
-switching between web servers.  In fact, it may be the most confusing
-for those folks if they're trying different web servers and forgetting
-to shut down the previous server before starting the next.  They could
-end up seeing confusing log messages from the wrong server if they
-look in the error log to debug the problem.
-
-I'm not sure why Mongoose has access logs enabled by default, but I know
-I conciously left it out by default for lighttpd/apache/webrick.
-
--- 
-Eric Wong
+Abhijit Menon-Sen wrote:
+> At 2010-05-22 15:41:26 +0200, gelonida@gmail.com wrote:
+>> I'd like to be able to concurrently (multiuser) create tar files from
+>> certain commmit ids.
+> 
+> git archive --prefix=foo/ $sha1 | gzip > foo.tar.gz
+> 
+> See git-archive(1).
+> 
+> -- ams
