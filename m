@@ -1,291 +1,227 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCHv3 GSoC] git-instaweb: Configure it to work with new gitweb structure
-Date: Sun, 23 May 2010 13:02:48 +0530
-Message-ID: <1274599968-3749-1-git-send-email-pavan.sss1991@gmail.com>
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
-	normalperson@yhbt.net, pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Sun May 23 09:36:07 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: [tig PATCH] fix off-by-one on parent selection
+Date: Sun, 23 May 2010 03:40:52 -0400
+Message-ID: <20100523074051.GA16730@coredump.intra.peff.net>
+References: <20100510085504.GA2283@coredump.intra.peff.net>
+ <AANLkTim8cQ-1oBE-BOwbjTlyn2E2V64NvM_6Drs3kTAS@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sun May 23 09:41:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OG5j7-0002MO-Gl
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 09:36:02 +0200
+	id 1OG5ny-0003rC-7t
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 09:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975Ab0EWHdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 03:33:10 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:65278 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751263Ab0EWHdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 May 2010 03:33:08 -0400
-Received: by pxi18 with SMTP id 18so1018766pxi.19
-        for <git@vger.kernel.org>; Sun, 23 May 2010 00:33:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=3JXf2rZD+Ej52x8nvB4yB8rNRmSshGt364at3JvB+Nw=;
-        b=bA3bB5Cnr3q4S8XYI9bDq/WaP0tTtcI7Ry8lPJRUIJZq4Speyc5+y9RjuOVoBZnr/q
-         IQ8w5Ig9jraV/SP7ii2m7U+cyIC7oI2YIEBFXwvUqvZYIJi6kX/Y8sMPHyoQgeIR3elX
-         4Z5N6/E7fj0etb9ng3pkF6YFn6BcDevKGDM5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=BTX3dL6dIi9ro2LS5TYsno09h3hOttp3e+cbF8kfph01/3AWC0Lp5uXHz9SCuA1w71
-         0KB6rBGRG1pST51ItZkNaB5gmvmyu16wNnDfIIGO1hy350L6FDsTCS+yGts9gAHnkbpu
-         JeYTDG2Dt9dcITBETlof0NvdKSKuvJqHr/1Ok=
-Received: by 10.114.164.37 with SMTP id m37mr3398100wae.39.1274599985074;
-        Sun, 23 May 2010 00:33:05 -0700 (PDT)
-Received: from localhost.localdomain ([202.63.112.23])
-        by mx.google.com with ESMTPS id c1sm26317986wam.19.2010.05.23.00.33.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 23 May 2010 00:33:04 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.18.g74211d.dirty
+	id S1752081Ab0EWHk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 May 2010 03:40:57 -0400
+Received: from peff.net ([208.65.91.99]:60966 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751667Ab0EWHk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 May 2010 03:40:56 -0400
+Received: (qmail 20812 invoked by uid 107); 23 May 2010 07:40:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 23 May 2010 03:40:57 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 May 2010 03:40:52 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTim8cQ-1oBE-BOwbjTlyn2E2V64NvM_6Drs3kTAS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147555>
 
-git-instaweb in its current form (re)creates gitweb.cgi and
-(some of) required static files in $GIT_DIR/gitweb/ directory.
-Splitting gitweb would make it difficult for git-instaweb to
-continue with this method.
+On Sat, May 22, 2010 at 01:19:12PM -0400, Jonas Fonseca wrote:
 
-Use the instaweb.gitwebdir config variable to point git-instaweb script
-to a global directory which contains gitweb files as server root
-and the httpd.conf along with server logs and pid go into
-'$(GIT_DIR)/gitweb' directory.
+> > AFAICT, fixing it would mean improving iobuf_read to differentiate "no
+> > output" from "there were errors". I'll leave that sort of infrastructure
+> > refactoring to you if you want to do it. The resulting bug is quite
+> > minor.
+> 
+> The spaced damaged patch below fixes the first error.
+> --- >8 --- >8 --- >8 ---
+> diff --git a/tig.c b/tig.c
+> index 35b0cfa..f5bb1b9 100644
+> --- a/tig.c
+> +++ b/tig.c
+> @@ -1028,7 +1028,7 @@ io_read_buf(struct io *io, char buf[], size_t bufsize)
+>                 string_ncopy_do(buf, bufsize, result, strlen(result));
+>         }
+> 
+> -       return io_done(io) && result;
+> +       return io_done(io) && !io_error(io);
+>  }
+> 
+>  static bool
+> --- 8< --- 8< --- 8< ---
 
-While at it, change apache2 configuration to use the same access log
-and error log files as the rest of web servers supported by
-git-instaweb.
+Yeah, that works for me. I was hesitant to do it because I wasn't sure
+if other callers were relying on that behavior, but it looks like all
+calls properly check the output for sanity.
 
-Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
----
+> However, it seems that the output of the command that was previously
+> used for fetching parents and the current one pretty printing using
+> the %P flag is also the cause of the breakage.
+> 
+> In the tig repository, trying to "blame" the parent of b801d8b2b shows
+> reproduces the problem. Commit b801d8b2b replaced cgit.c with tig.c,
+> which means there is no parent blame to show.
+> 
+> Before:
+> > git rev-list -1 --parents b801d8b2b -- tig.c
+> b801d8b2bc1a6aac6b9744f21f7a10a51e16c53e
+> .. i.e no parents as expected.
+> 
+> Now:
+> > git log --no-color -1 --pretty=format:%P b801d8b2b -- tig.c
+> a7bc4b1447f974fbbe400c3657d9ec3d0fda133e
+> .. i.e. the parent of b801d8b2b, but where tig.c does not exist.
 
-This patch is based on 'jn/gitweb-install' in the next branch by Jakub Nareski
-and my previous 2 patches:
-* gitweb: Move static files into seperate subdirectory
- http://article.gmane.org/gmane.comp.version-control.git/147321
-* gitweb: Set default destination directory for installing gitweb in Makefile
- http://article.gmane.org/gmane.comp.version-control.git/147160
+This confused me at first, because those outputs should be the same, but
+now I see: the pretty %P does not respect history simplification, so you
+get the _true_ parent of b801d8b2b, and not the simplified one when
+limiting history to 'tig.c'.
 
- Makefile        |   11 ++------
- git-instaweb.sh |   71 ++++++++++++++++++++----------------------------------
- 2 files changed, 29 insertions(+), 53 deletions(-)
+So yes, the rev-list version is better, because it at least realizes
+that tig.c has no parent.
 
-diff --git a/Makefile b/Makefile
-index caf2f64..9161172 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1426,6 +1426,7 @@ gitexecdir_SQ = $(subst ','\'',$(gitexecdir))
- template_dir_SQ = $(subst ','\'',$(template_dir))
- htmldir_SQ = $(subst ','\'',$(htmldir))
- prefix_SQ = $(subst ','\'',$(prefix))
-+gitwebdir_SQ = $(subst ','\'',$(gitwebdir))
+But I think neither is ideal. What we probably want is to detect the
+rename between the two, and do the blame from the parent using cgit.c.
+git-blame will already recognize content coming from another file and
+give us that filename, but we are moving to the parent ourselves, so we
+have to do that rename detection manually (IOW, this behavior triggers
+_only_ when you are trying to blame the parent of a commit which
+simultaneously introduced the line and moved the filename).
+
+Patch is below. After writing it, I realized that tig.c is not
+actually a rename of cgit.c (they are too dissimilar). It does provide
+the correct "Path 'tig.c' does not exist in the parent". And you can see
+the rename-following behavior with something like:
+
+  perl -e 'print "$_\n" for 1..1000' >old
+  git add . && git commit -m added
+  perl -pe 's/^1$/foo/' <old >new
+  git add new && git rm old && git commit -m moved
+
+Now try "tig blame new". For all of the lines but the first, blaming the
+parent gets you the correct "The selected commit has no parents". But
+parent-blaming the first line will correctly re-blame using the filename
+"old".
+
+There are some possible optimizations that I didn't implement:
+
+  1. With this patch, we always check for a rename to the parent. But we
+     really only need to do so if the commit in question introduced the
+     file. One way to detect that is by first running "git diff-tree
+     $file", and only doing the rename detection if the file was added.
+     We could also potentially use the rev-list in select_commit_parent
+     to see that we have no parents. That would mean combining
+     select_commit_parent and my new follow_parent_rename.
+
+  2. The diff-tree could potentially be combined with the one we execute
+     immediately after in setup_blame_parent_line. But I don't think it
+     is worth it. In the rename-follow, we have to look at _all_ of the
+     files, as they are potential sources. But in
+     setup_blame_parent_line, we are generating diffs and can restrict
+     our diff to only the file of interest. I don't think there is a way
+     to say "consider all files as rename sources, but only show the
+     patch for this one file".
+
+diff --git a/tig.c b/tig.c
+index 28679f9..cfa26ce 100644
+--- a/tig.c
++++ b/tig.c
+@@ -3991,12 +3991,12 @@ open_commit_parent_menu(char buf[SIZEOF_STR], int *parents)
+ }
  
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
- PERL_PATH_SQ = $(subst ','\'',$(PERL_PATH))
-@@ -1592,15 +1593,8 @@ git-instaweb: git-instaweb.sh gitweb/gitweb.cgi gitweb/static/gitweb.css gitweb/
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
--	    -e '/@@GITWEB_CGI@@/r gitweb/gitweb.cgi' \
--	    -e '/@@GITWEB_CGI@@/d' \
--	    -e '/@@GITWEB_CSS@@/r $(GITWEB_CSS)' \
--	    -e '/@@GITWEB_CSS@@/d' \
--	    -e '/@@GITWEB_JS@@/r $(GITWEB_JS)' \
--	    -e '/@@GITWEB_JS@@/d' \
-+	    -e 's|@@GITWEBDIR@@|$(gitwebdir_SQ)|g' \
- 	    -e 's|@@PERL@@|$(PERL_PATH_SQ)|g' \
--            -e 's|@@GITWEB_CSS_NAME@@|$(GITWEB_CSS)|' \
--            -e 's|@@GITWEB_JS_NAME@@|$(GITWEB_JS)|' \
- 	    $@.sh > $@+ && \
- 	chmod +x $@+ && \
- 	mv $@+ $@
-@@ -1972,6 +1966,7 @@ install: all
- 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
- ifndef NO_PERL
- 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
-+	$(MAKE) -C gitweb gitwebdir=$(gitwebdir_SQ) install
- endif
- ifndef NO_PYTHON
- 	$(MAKE) -C git_remote_helpers prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index f608014..b3e9192 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -24,6 +24,7 @@ restart        restart the web server
- fqgitdir="$GIT_DIR"
- local="$(git config --bool --get instaweb.local)"
- httpd="$(git config --get instaweb.httpd)"
-+root="$(git config --get instaweb.gitwebdir)"
- port=$(git config --get instaweb.port)
- module_path="$(git config --get instaweb.modulepath)"
+ static bool
+-select_commit_parent(const char *id, char rev[SIZEOF_REV], const char *path)
++select_commit_parent(const char *id, char rev[SIZEOF_REV])
+ {
+ 	char buf[SIZEOF_STR * 4];
+ 	const char *revlist_argv[] = {
+ 		"git", "log", "--no-color", "-1",
+-			"--pretty=format:%P", id, "--", path, NULL
++			"--pretty=format:%P", id, "--", NULL
+ 	};
+ 	int parents;
  
-@@ -34,6 +35,9 @@ conf="$GIT_DIR/gitweb/httpd.conf"
- # if installed, it doesn't need further configuration (module_path)
- test -z "$httpd" && httpd='lighttpd -f'
+@@ -4006,10 +4006,7 @@ select_commit_parent(const char *id, char rev[SIZEOF_REV], const char *path)
+ 		return FALSE;
  
-+# Default is @@GITWEBDIR@@
-+test -z "$root" && root='@@GITWEBDIR@@'
+ 	} else if (parents == 0) {
+-		if (path)
+-			report("Path '%s' does not exist in the parent", path);
+-		else
+-			report("The selected commit has no parents");
++		report("The selected commit has no parents");
+ 		return FALSE;
+ 	}
+ 
+@@ -4022,6 +4019,48 @@ select_commit_parent(const char *id, char rev[SIZEOF_REV], const char *path)
+ 	return TRUE;
+ }
+ 
++static int
++follow_parent_rename(const char *id, const char *parent, const char *dest,
++		     char source[SIZEOF_STR])
++{
++	const char *diff_argv[] = {
++		"git", "diff-tree", "-z", "--name-status", "-M",
++		parent, id, "--", NULL
++	};
++	struct io io = {};
++	char *buf;
 +
- # any untaken local port will do...
- test -z "$port" && port=1234
++	if (!io_run(&io, diff_argv, opt_cdup, IO_RD))
++		return FALSE;
++
++	while ((buf = io_get(&io, 0, TRUE))) {
++		int status = buf[0];
++
++		if (!(buf = io_get(&io, 0, TRUE)))
++			break;
++
++		if (status == 'A' && !strcmp(buf, dest)) {
++			report("Path '%s' does not exist in the parent", dest);
++			io_done(&io);
++			return FALSE;
++		}
++
++		if (status == 'R') {
++			string_ncopy_do(source, SIZEOF_STR, buf, strlen(buf));
++			if (!(buf = io_get(&io, 0, TRUE)))
++				break;
++			if (!strcmp(buf, dest)) {
++				io_done(&io);
++				return TRUE;
++			}
++		}
++	}
++
++	string_ncopy_do(source, SIZEOF_STR, dest, strlen(dest));
++	io_done(&io);
++	return TRUE;
++}
++
+ /*
+  * Pager backend
+  */
+@@ -5190,9 +5229,9 @@ blame_request(struct view *view, enum request request, struct line *line)
  
-@@ -57,7 +61,7 @@ resolve_full_httpd () {
- 		# these days and those are not in most users $PATHs
- 		# in addition, we may have generated a server script
- 		# in $fqgitdir/gitweb.
--		for i in /usr/local/sbin /usr/sbin "$fqgitdir/gitweb"
-+		for i in /usr/local/sbin /usr/sbin "$root" "$fqgitdir/gitweb"
- 		do
- 			if test -x "$i/$httpd_only"
- 			then
-@@ -159,8 +163,8 @@ done
- mkdir -p "$GIT_DIR/gitweb/tmp"
- GIT_EXEC_PATH="$(git --exec-path)"
- GIT_DIR="$fqgitdir"
--export GIT_EXEC_PATH GIT_DIR
--
-+GITWEB_CONFIG="$fqgitdir/gitweb/gitweb_config.perl"
-+export GIT_EXEC_PATH GIT_DIR GITWEB_CONFIG
- 
- webrick_conf () {
- 	# generate a standalone server script in $fqgitdir/gitweb.
-@@ -192,7 +196,7 @@ EOF
- 
- 	cat >"$conf" <<EOF
- :Port: $port
--:DocumentRoot: "$fqgitdir/gitweb"
-+:DocumentRoot: "$root"
- :DirectoryIndex: ["gitweb.cgi"]
- :PidFile: "$fqgitdir/pid"
- EOF
-@@ -201,7 +205,7 @@ EOF
- 
- lighttpd_conf () {
- 	cat > "$conf" <<EOF
--server.document-root = "$fqgitdir/gitweb"
-+server.document-root = "$root"
- server.port = $port
- server.modules = ( "mod_setenv", "mod_cgi" )
- server.indexfiles = ( "gitweb.cgi" )
-@@ -212,7 +216,7 @@ server.errorlog = "$fqgitdir/gitweb/error.log"
- # variable above and uncomment this
- #accesslog.filename = "$fqgitdir/gitweb/access.log"
- 
--setenv.add-environment = ( "PATH" => env.PATH )
-+setenv.add-environment = ( "PATH" => env.PATH, "GITWEB_CONFIG" => env.GITWEB_CONFIG )
- 
- cgi.assign = ( ".cgi" => "" )
- 
-@@ -277,14 +281,15 @@ EOF
- 
- apache2_conf () {
- 	test -z "$module_path" && module_path=/usr/lib/apache2/modules
--	mkdir -p "$GIT_DIR/gitweb/logs"
- 	bind=
- 	test x"$local" = xtrue && bind='127.0.0.1:'
- 	echo 'text/css css' > "$fqgitdir/mime.types"
- 	cat > "$conf" <<EOF
- ServerName "git-instaweb"
--ServerRoot "$fqgitdir/gitweb"
--DocumentRoot "$fqgitdir/gitweb"
-+ServerRoot "$root"
-+DocumentRoot "$root"
-+ErrorLog "$fqgitdir/gitweb/error.log"
-+CustomLog "$fqgitdir/gitweb/access.log" combined
- PidFile "$fqgitdir/pid"
- Listen $bind$port
- EOF
-@@ -303,13 +308,14 @@ EOF
- 	# check to see if Dennis Stosberg's mod_perl compatibility patch
- 	# (<20060621130708.Gcbc6e5c@leonov.stosberg.net>) has been applied
- 	if test -f "$module_path/mod_perl.so" &&
--	   sane_grep 'MOD_PERL' "$GIT_DIR/gitweb/gitweb.cgi" >/dev/null
-+	   sane_grep 'MOD_PERL' "$root/gitweb.cgi" >/dev/null
- 	then
- 		# favor mod_perl if available
- 		cat >> "$conf" <<EOF
- LoadModule perl_module $module_path/mod_perl.so
- PerlPassEnv GIT_DIR
- PerlPassEnv GIT_EXEC_DIR
-+PerlPassEnv GITWEB_CONFIG
- <Location /gitweb.cgi>
- 	SetHandler perl-script
- 	PerlResponseHandler ModPerl::Registry
-@@ -353,7 +359,7 @@ mongoose_conf() {
- # For detailed description of every option, visit
- # http://code.google.com/p/mongoose/wiki/MongooseManual
- 
--root		$fqgitdir/gitweb
-+root		$root
- ports		$port
- index_files	gitweb.cgi
- #ssl_cert	$fqgitdir/gitweb/ssl_cert.pem
-@@ -361,7 +367,7 @@ error_log	$fqgitdir/gitweb/error.log
- access_log	$fqgitdir/gitweb/access.log
- 
- #cgi setup
--cgi_env		PATH=$PATH,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH
-+cgi_env		PATH=$PATH,GIT_DIR=$GIT_DIR,GIT_EXEC_PATH=$GIT_EXEC_PATH,GITWEB_CONFIG=$GITWEB_CONFIG
- cgi_interp	$PERL
- cgi_ext		cgi,pl
- 
-@@ -370,41 +376,16 @@ mime_types	.gz=application/x-gzip,.tar.gz=application/x-tgz,.tgz=application/x-t
- EOF
- }
- 
--
--script='
--s#^(my|our) \$projectroot =.*#$1 \$projectroot = "'$(dirname "$fqgitdir")'";#;
--s#(my|our) \$gitbin =.*#$1 \$gitbin = "'$GIT_EXEC_PATH'";#;
--s#(my|our) \$projects_list =.*#$1 \$projects_list = \$projectroot;#;
--s#(my|our) \$git_temp =.*#$1 \$git_temp = "'$fqgitdir/gitweb/tmp'";#;'
--
--gitweb_cgi () {
--	cat > "$1.tmp" <<\EOFGITWEB
--@@GITWEB_CGI@@
--EOFGITWEB
--	# Use the configured full path to perl to match the generated
--	# scripts' 'hashpling' line
--	"$PERL" -p -e "$script" "$1.tmp"  > "$1"
--	chmod +x "$1"
--	rm -f "$1.tmp"
--}
--
--gitweb_css () {
--	cat > "$1" <<\EOFGITWEB
--@@GITWEB_CSS@@
--
--EOFGITWEB
--}
--
--gitweb_js () {
--	cat > "$1" <<\EOFGITWEB
--@@GITWEB_JS@@
--
--EOFGITWEB
-+gitweb_conf() {
-+	cat > "$fqgitdir/gitweb/gitweb_config.perl" <<EOF
-+#!/usr/bin/perl
-+our \$projectroot = "$(dirname "$fqgitdir")";
-+our \$git_temp = "$fqgitdir/gitweb/tmp";
-+our \$projects_list = \$projectroot;
-+EOF
- }
- 
--gitweb_cgi "$GIT_DIR/gitweb/gitweb.cgi"
--gitweb_css "$GIT_DIR/@@GITWEB_CSS_NAME@@"
--gitweb_js  "$GIT_DIR/@@GITWEB_JS_NAME@@"
-+gitweb_conf
- 
- case "$httpd" in
- *lighttpd*)
--- 
-1.7.1.18.g74211d.dirty
+ 	case REQ_PARENT:
+ 		if (check_blame_commit(blame, TRUE) &&
+-		    select_commit_parent(blame->commit->id, opt_ref,
+-					 blame->commit->filename)) {
+-			string_copy(opt_file, blame->commit->filename);
++		    select_commit_parent(blame->commit->id, opt_ref) &&
++		    follow_parent_rename(blame->commit->id, opt_ref,
++					 blame->commit->filename, opt_file)) {
+ 			setup_blame_parent_line(view, blame);
+ 			open_view(view, REQ_VIEW_BLAME, OPEN_REFRESH);
+ 		}
