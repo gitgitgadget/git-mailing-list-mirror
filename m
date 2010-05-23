@@ -1,60 +1,72 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Sun, 23 May 2010 16:06:21 +0100
-Message-ID: <4BF9446D.7010502@pileofstuff.org>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>	 <4BF7B751.7050704@pileofstuff.org> <AANLkTim8NfxY75tpHIEx1LMatWQ5P-LgCaNSeNp2KFa3@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [PATCH] diff: Support visibility modifiers in the PHP hunk header
+ regexp
+Date: Sun, 23 May 2010 20:05:40 +0200
+Message-ID: <20100523180540.GA29729@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Lin Mac <mkl0301@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 23 17:07:23 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 23 20:05:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGClr-0003fq-2p
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 17:07:19 +0200
+	id 1OGFYf-0002UB-OF
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 20:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932Ab0EWPG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 11:06:29 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:20153 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752686Ab0EWPG2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 May 2010 11:06:28 -0400
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100523150626.YKUE10460.mtaout02-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
-          Sun, 23 May 2010 16:06:26 +0100
-Received: from [192.168.1.5] (really [80.6.134.127])
-          by aamtaout04-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100523150626.OHIL1593.aamtaout04-winn.ispmail.ntl.com@[192.168.1.5]>;
-          Sun, 23 May 2010 16:06:26 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <AANLkTim8NfxY75tpHIEx1LMatWQ5P-LgCaNSeNp2KFa3@mail.gmail.com>
-X-Cloudmark-Analysis: v=1.1 cv=W3tOLUehizD4qj6VhtReFuw5MKb8d+XqjIxlDsIazEA= c=1 sm=0 a=BxPs6DqL8UcA:10 a=UBIxAjGgU1YA:10 a=8nJEP1OIZ-IA:10 a=RswB3GubnPvYj9p5-TwA:9 a=PVcqN9QxL52edkW31B9Mj6Psds0A:4 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1753043Ab0EWSFq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 May 2010 14:05:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57864 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752881Ab0EWSFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 May 2010 14:05:45 -0400
+Received: (qmail invoked by alias); 23 May 2010 18:05:43 -0000
+Received: from i59F570AF.versanet.de (EHLO atjola.homenet) [89.245.112.175]
+  by mail.gmx.net (mp055) with SMTP; 23 May 2010 20:05:43 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+Zr2t+AqaZ+84uKwJT+z1EHu39qpLdP3WoWWGwT3
+	xe6N27jVQ2YPnz
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147580>
 
-On 23/05/10 10:11, Lin Mac wrote:
-> My colleague shows amazing insterest on "git add -p".
-> "see? you could decided what to add to the commit and what no to. you
-> don't have to always clean the code before you commit...."
-> With git-svn, he started to use git since then.
+Starting with PHP5, class methods can have a visibility modifier, which
+caused the methods not to be matched by the existing regexp, so extend
+the regexp to match those modifiers. And while we're at it, allow the
+"static" modifier as well.
 
-I had a similar experience - a colleague with a habit of making huge
-commits happily cleaned up his act when he was shown this.  More
-generally, it seems like everyone reacts to the list of git features
-with "that one's weird, I don't care about that one, that one's
-irritating, WHERE HAS THIS BEEN ALL MY LIFE!, don't care about that one,
-that one doesn't make sense...".  A major part of selling people on git
-is finding the one thing that they each immediately love.
+Since the "static" modifier can appear either before or after the
+visibility modifier, let's just allow any number of modifiers to appear
+in any order, as that simplifies the regexp and shouldn't cause any
+false positives.
 
-	- Andrew
+Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+ userdiff.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/userdiff.c b/userdiff.c
+index 67003fb..c49cc1b 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -45,7 +45,9 @@ PATTERNS("pascal",
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
+ 	 "|<>|<=3D|>=3D|:=3D|\\.\\."
+ 	 "|[^[:space:]]|[\x80-\xff]+"),
+-PATTERNS("php", "^[\t ]*((function|class).*)",
++PATTERNS("php",
++	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
++	 "^[\t ]*(class.*)$",
+ 	 /* -- */
+ 	 "[a-zA-Z_][a-zA-Z0-9_]*"
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
+--=20
+1.7.1.227.g12cb1
