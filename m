@@ -1,112 +1,84 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] decode file:// and ssh:// URLs
-Date: Sun, 23 May 2010 05:19:44 -0400
-Message-ID: <20100523091944.GB16520@coredump.intra.peff.net>
-References: <20100523091612.GB26123@coredump.intra.peff.net>
+Subject: Re: [PATCH] Show branch information in short output of git status
+Date: Sun, 23 May 2010 05:23:48 -0400
+Message-ID: <20100523092348.GA16811@coredump.intra.peff.net>
+References: <AANLkTikM3B-9wFBuUzwpP2j9FpT34p9yysX-oLg5hZRj@mail.gmail.com>
+ <20100505050640.GC8779@coredump.intra.peff.net>
+ <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
+ <20100512133537.GA28956@coredump.intra.peff.net>
+ <AANLkTilkFHK1UIvSLEstXFIOJTsit02EZe1Wsoj_zRRX@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dave Abrahams <dave@boostpro.com>
-X-From: git-owner@vger.kernel.org Sun May 23 11:19:55 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun May 23 11:24:03 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OG7Le-0005EB-24
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 11:19:54 +0200
+	id 1OG7Pd-0006qB-0O
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 11:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572Ab0EWJTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 05:19:49 -0400
-Received: from peff.net ([208.65.91.99]:40957 "EHLO peff.net"
+	id S1753715Ab0EWJX4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 May 2010 05:23:56 -0400
+Received: from peff.net ([208.65.91.99]:52793 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751796Ab0EWJTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 May 2010 05:19:48 -0400
-Received: (qmail 21187 invoked by uid 107); 23 May 2010 09:19:49 -0000
+	id S1752855Ab0EWJXy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 May 2010 05:23:54 -0400
+Received: (qmail 21219 invoked by uid 107); 23 May 2010 09:23:54 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 23 May 2010 05:19:49 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 May 2010 05:19:44 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 23 May 2010 05:23:54 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 May 2010 05:23:48 -0400
 Content-Disposition: inline
-In-Reply-To: <20100523091612.GB26123@coredump.intra.peff.net>
+In-Reply-To: <AANLkTilkFHK1UIvSLEstXFIOJTsit02EZe1Wsoj_zRRX@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147564>
 
-We generally treat these as equivalent to "/path/to/repo"
-and "host:path_to_repo" respectively. However, they are URLs
-and as such may be percent-encoded. The current code simply
-uses them as-is without any decoding.
+On Fri, May 14, 2010 at 08:54:07AM +0200, Knittl wrote:
 
-With this patch, we will now percent-decode any file:// or
-ssh:// url (or ssh+git, git+ssh, etc) at the transport
-layer. We continue to treat plain paths and "host:path"
-syntax literally.
+> > That being said, I still get "Initial commit on master". I think th=
+at
+> > stat_tracking_branch just gives up if the branch doesn't exist (whi=
+ch
+> > does make some sense). So in practice, I think your original and th=
+is
+> > one actually behave the same (sorry, I know that changing it was my
+> > suggestion).
+>=20
+> yep, that's what i discovered too=E2=80=94but i don't care if this co=
+ndition
+> is 3 lines up or down. if stat_tracking_branch decides it will work
+> for initial commits, then this code will do the expected thing
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I think this also impacts git:// URLs. Which I is probably a good thing,
-but I haven't looked extensively for unexpected fallouts.
+Agreed.
 
- connect.c        |    8 +++++++-
- t/t5601-clone.sh |   12 ++++++++++++
- 2 files changed, 19 insertions(+), 1 deletions(-)
+> should be no problem. the second patch changed quite a bit, so i
+> thought it is easier to review when i send it as a separate patch. th=
+e
+> final patch can be squashed of course
 
-diff --git a/connect.c b/connect.c
-index 9ae991a..0119bd3 100644
---- a/connect.c
-+++ b/connect.c
-@@ -5,6 +5,7 @@
- #include "refs.h"
- #include "run-command.h"
- #include "remote.h"
-+#include "url.h"
- 
- static char *server_capabilities;
- 
-@@ -450,7 +451,7 @@ static struct child_process no_fork;
- struct child_process *git_connect(int fd[2], const char *url_orig,
- 				  const char *prog, int flags)
- {
--	char *url = xstrdup(url_orig);
-+	char *url;
- 	char *host, *path;
- 	char *end;
- 	int c;
-@@ -466,6 +467,11 @@ struct child_process *git_connect(int fd[2], const char *url_orig,
- 	 */
- 	signal(SIGCHLD, SIG_DFL);
- 
-+	if (is_url(url_orig))
-+		url = url_decode(url_orig);
-+	else
-+		url = xstrdup(url_orig);
-+
- 	host = strstr(url, "://");
- 	if (host) {
- 		*host = '\0';
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 678cee5..8abb71a 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -176,4 +176,16 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
- 	)
- '
- 
-+test_expect_success 'respect url-encoding of file://' '
-+	git init x+y &&
-+	test_must_fail git clone "file://$PWD/x+y" xy-url &&
-+	git clone "file://$PWD/x%2By" xy-url
-+'
-+
-+test_expect_success 'do not respect url-encoding of non-url path' '
-+	git init x+y &&
-+	test_must_fail git clone x%2By xy-regular &&
-+	git clone x+y xy-regular
-+'
-+
- test_done
--- 
-1.7.1.356.gc7d3.dirty
+OK.  Nobody else seems to be commenting, so I would go ahead and put
+together your final patch, cc-ing the maintainer.
+
+> > =C2=A02. Your patch has wrapped lines which make it impossible to a=
+pply
+> > =C2=A0 =C2=A0 without fixing up manually. This is a common gmail pr=
+oblem. =C2=A0See
+> > =C2=A0 =C2=A0 the "gmail" section of SubmittingPatches.
+>=20
+> ok, browsed through that. i think i will just put my branch into a
+> pasteservice or on a fileserver, unless the email way is *really*
+> preferred=E2=80=94what about email attachments?
+
+Inline email is best, but I think an email attachment would be preferre=
+d
+to putting it on some out-of-band service (it's nice for the mailing
+list archive to have a record of everything).
+
+-Peff
