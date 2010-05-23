@@ -1,107 +1,75 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [tig PATCH] fix off-by-one on parent selection
-Date: Sun, 23 May 2010 03:55:03 -0400
-Message-ID: <20100523075503.GA24598@coredump.intra.peff.net>
-References: <20100510085504.GA2283@coredump.intra.peff.net>
- <AANLkTim8cQ-1oBE-BOwbjTlyn2E2V64NvM_6Drs3kTAS@mail.gmail.com>
- <20100523074051.GA16730@coredump.intra.peff.net>
+Subject: Re: Possible bug with argument parsing in git blame
+Date: Sun, 23 May 2010 04:00:02 -0400
+Message-ID: <20100523080002.GB24598@coredump.intra.peff.net>
+References: <AANLkTikn1-Ua6G7eAc8UD8DJx0vpc-5-BOoxsi2mx2BC@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Sun May 23 09:55:29 2010
+To: Debayan Banerjee <debayanin@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 23 10:00:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OG61x-0008Fp-8X
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 09:55:29 +0200
+	id 1OG66Y-0001Xo-1C
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 10:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752268Ab0EWHzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 03:55:11 -0400
-Received: from peff.net ([208.65.91.99]:52366 "EHLO peff.net"
+	id S1752896Ab0EWIAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 May 2010 04:00:08 -0400
+Received: from peff.net ([208.65.91.99]:50612 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751900Ab0EWHzK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 May 2010 03:55:10 -0400
-Received: (qmail 20853 invoked by uid 107); 23 May 2010 07:55:09 -0000
+	id S1751900Ab0EWIAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 May 2010 04:00:07 -0400
+Received: (qmail 20884 invoked by uid 107); 23 May 2010 08:00:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 23 May 2010 03:55:09 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 May 2010 03:55:03 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 23 May 2010 04:00:08 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 23 May 2010 04:00:02 -0400
 Content-Disposition: inline
-In-Reply-To: <20100523074051.GA16730@coredump.intra.peff.net>
+In-Reply-To: <AANLkTikn1-Ua6G7eAc8UD8DJx0vpc-5-BOoxsi2mx2BC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147557>
 
-On Sun, May 23, 2010 at 03:40:52AM -0400, Jeff King wrote:
+On Mon, May 17, 2010 at 03:51:18PM +0530, Debayan Banerjee wrote:
 
-> Now try "tig blame new". For all of the lines but the first, blaming the
-> parent gets you the correct "The selected commit has no parents". But
-> parent-blaming the first line will correctly re-blame using the filename
-> "old".
+> debayan@deep-blur:~/testrepo$ git blame 22621a32..8486802f --
+> dir/subdir/newsubdir/b
+> 
+> 81531975 b                      (debayan 2010-05-13 15:32:17 +0530  1) four
+> 81531975 b                      (debayan 2010-05-13 15:32:17 +0530  2) five
+> d700ac9c b                      (debayan 2010-05-13 15:33:27 +0530  3) blah
+> 2656ab56 b                      (debayan 2010-05-13 15:33:34 +0530  4) bleh
+> d0c6e851 b                      (debayan 2010-05-13 15:42:21 +0530  5) foo
+> 7bf5510e b                      (debayan 2010-05-13 15:42:53 +0530  6) yo
+> c4515289 b                      (debayan 2010-05-13 15:43:10 +0530  7) lala
+> a257c7e4 b                      (debayan 2010-05-13 16:03:46 +0530  8) yes
+> ed8e4601 b                      (debayan 2010-05-13 16:03:55 +0530  9) np
+> e96d14bf dir/subdir/newsubdir/b (debayan 2010-05-13 16:05:05 +0530 10) yo
+> dace00d1 dir/subdir/newsubdir/b (debayan 2010-05-13 16:05:11 +0530 11) boye
+> 8486802f dir/subdir/newsubdir/b (debayan 2010-05-13 16:07:51 +0530 12) what?
+> 
+> debayan@deep-blur:~/testrepo$ git blame 22621a32..8486802f
+> dir/subdir/newsubdir/b
+> fatal: cannot stat path 22621a32..8486802f: No such file or directory
+> 
+> The only difference between the first and the second command is the
+> "--" separator.  Is this normal behaviour?
 
-By the way, there is one minor bug remaining after this patch:
+I can't reproduce the problem here. For example, in git.git, both of the
+following produce the same output:
 
->  	case REQ_PARENT:
->  		if (check_blame_commit(blame, TRUE) &&
-> -		    select_commit_parent(blame->commit->id, opt_ref,
-> -					 blame->commit->filename)) {
-> -			string_copy(opt_file, blame->commit->filename);
-> +		    select_commit_parent(blame->commit->id, opt_ref) &&
-> +		    follow_parent_rename(blame->commit->id, opt_ref,
-> +					 blame->commit->filename, opt_file)) {
->  			setup_blame_parent_line(view, blame);
->  			open_view(view, REQ_VIEW_BLAME, OPEN_REFRESH);
->  		}
+  git blame HEAD~5..HEAD~3 alloc.c
+  git blame HEAD~5..HEAD~3 -- alloc.c
 
-We may write some new filename into opt_file in the follow_parent_rename
-call, but setup_blame_parent_line always diffs the original file. Which
-means we lose the line position when following a rename.
+Can you provide the exact set of commands to replicate your repository
+state and show the failure?
 
-We need to do the equivalent of:
+Also, I tested with the current 'master'. Are you using an older version
+of git?
 
-  git diff -U0 \
-    opt_ref:opt_file \
-    blame->commit->id:blame->commit->filename
-
-IOW, to blame directly between the two blobs. Sadly, I don't think there
-is a plumbing command to do this, so we are stuck using regular "git
-diff", which may have surprises in the config.
-
-The patch below works for my simple tests.  I think we probably want to
-be doing this anyway for the multiple-parent case. I didn't test, but I
-don't think that diff-tree invocation is going to produce any output for
-a merge commit.
-
-diff --git a/tig.c b/tig.c
-index cfa26ce..4388c2f 100644
---- a/tig.c
-+++ b/tig.c
-@@ -5177,15 +5177,21 @@ check_blame_commit(struct blame *blame, bool check_null_id)
- static void
- setup_blame_parent_line(struct view *view, struct blame *blame)
- {
-+	char from[SIZEOF_REF+SIZEOF_STR];
-+	char to[SIZEOF_REF+SIZEOF_STR];
- 	const char *diff_tree_argv[] = {
--		"git", "diff-tree", "-U0", blame->commit->id,
--			"--", blame->commit->filename, NULL
-+		"git", "diff", "--no-textconv", "--no-extdiff", "--no-color",
-+		"-U0", from, to, "--", NULL
- 	};
- 	struct io io = {};
- 	int parent_lineno = -1;
- 	int blamed_lineno = -1;
- 	char *line;
- 
-+	snprintf(from, sizeof(from), "%s:%s", opt_ref, opt_file);
-+	snprintf(to, sizeof(to), "%s:%s", blame->commit->id,
-+		 blame->commit->filename);
-+
- 	if (!io_run(&io, diff_tree_argv, NULL, IO_RD))
- 		return;
- 
+-Peff
