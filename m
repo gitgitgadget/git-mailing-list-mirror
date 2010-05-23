@@ -1,160 +1,192 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: What's cooking extra
-Date: Sun, 23 May 2010 00:27:46 +0200
-Message-ID: <20100522222746.GA2694@localhost>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
- <20100519170656.GA30161@pvv.org>
- <20100522130916.GA28452@localhost>
- <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
+Subject: [PATCH] setup: do not change to work tree prematurely
+Date: Sun, 23 May 2010 02:07:19 +0200
+Message-ID: <20100523000719.GA32380@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 23 00:31:38 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?B?RnLpZOlyaWMgQnJp6HJl?= <fbriere@fbriere.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 23 02:10:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OFxEH-0000h6-Mk
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 00:31:38 +0200
+	id 1OFymI-0005a5-Pd
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 02:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759035Ab0EVW1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 May 2010 18:27:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45201 "EHLO
+	id S1755477Ab0EWAHo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 May 2010 20:07:44 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58298 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759016Ab0EVW1z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 May 2010 18:27:55 -0400
-Received: by fxm5 with SMTP id 5so1669273fxm.19
-        for <git@vger.kernel.org>; Sat, 22 May 2010 15:27:53 -0700 (PDT)
+	with ESMTP id S1752770Ab0EWAHn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 May 2010 20:07:43 -0400
+Received: by fxm5 with SMTP id 5so1687795fxm.19
+        for <git@vger.kernel.org>; Sat, 22 May 2010 17:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=Uv2o6YXe/J42qF7YtwTVt3drXsMFHx/k5ATZR/Jdv0w=;
-        b=CcYBogJxxXOC/Yls8JktNRh++gF0rzneLIKvn7xnMiZzR/JEqi/+ryB44Npelw0PJX
-         mvPNzfQm3oL3YKtepRZJdGaJiC5/vE7MPAyP/r452NaA/TkYjGSmppbvRsDjSQpueVEp
-         UD8yrm/O3bIvO5OzPiejGybHgc+PKZdenwUsQ=
+         :cc:subject:message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=9VQQdTNQIxyme2ESYQWXnoXGNv4jLRYpd4mZHWmuRho=;
+        b=OiOwiUbONz8etQOJ8E5QVhIcCIAMURmmkTV0/KJG4iVx22a2HUDkf6RRvmVO2mjTEQ
+         P0UIZk51SbkylQY8a5rsk9qLri4ZweQKcWrM2RkTonT+d/5SWg6d0eFWgM1JEpze7/+N
+         no5AwZZivHtlq+ELrf6Ip60JquMR65vwflVc4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
+        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
+         :content-type:content-disposition:content-transfer-encoding
          :user-agent;
-        b=g/vdbDixBa2ANtDKg9B2+fPXds4rSSnyKctCFR9NPsufnE8JjZzaaCYhFJXzfaEY5L
-         OLvdL/ZVTE36kL2b9TjN/D83jJ1GrMxiKiOVTAO0b0/InteW0fdrqto3ou8RXCQu12p5
-         F5aaQqxxuNfgPi8aGPRL3x/fjES99Y/YoTyJU=
-Received: by 10.223.98.24 with SMTP id o24mr3048899fan.29.1274567272439;
-        Sat, 22 May 2010 15:27:52 -0700 (PDT)
+        b=H3jpsW29PKR3usi3a590motuXh28OW/VQBg1ZvDlIC5Q44j6K54wfzKt6UZnI+qOr8
+         /mmDT0x7vX9lo+B0j4qq2x1k1Ev+a+78mn12vRaT4ulvHN+qHKGrj7lQTRTCwsfeRyVj
+         hVIAN/kV62cc8OZQxDKryJqdccYc0bFNDaLco=
+Received: by 10.223.5.81 with SMTP id 17mr3160508fau.42.1274573262008;
+        Sat, 22 May 2010 17:07:42 -0700 (PDT)
 Received: from darc.lan (p549A5187.dip.t-dialin.net [84.154.81.135])
-        by mx.google.com with ESMTPS id 2sm11462827fav.13.2010.05.22.15.27.50
+        by mx.google.com with ESMTPS id z12sm11789157fah.21.2010.05.22.17.07.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 22 May 2010 15:27:51 -0700 (PDT)
+        Sat, 22 May 2010 17:07:41 -0700 (PDT)
 Received: from drizzd by darc.lan with local (Exim 4.71)
 	(envelope-from <drizzd@localhost>)
-	id 1OFxAY-00010y-2n; Sun, 23 May 2010 00:27:46 +0200
+	id 1OFyit-0008Sd-LZ; Sun, 23 May 2010 02:07:19 +0200
 Content-Disposition: inline
-In-Reply-To: <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147552>
 
-Hi Eyvind,
+If the work tree is known and a git command is invoked from within
+a git directory, git_setup_directory() will try to find the
+relative path from the work tree to the git dir. After doing so it
+changes directories to the work tree. It fails to update the
+relative path to the git directory, however.
 
-Thanks for the extended summary. I still have several doubts, as
-detailed below. But I understand that this has been heavily
-discussed and if the discussion has indeed come to a conclusion,
-then I will not complain about it now.
+Instead, do not change the working directory at this point and wait
+for git_setup_work_tree() to handle this correctly.
 
-On Sat, May 22, 2010 at 09:42:14PM +0200, Eyvind Bernhardsen wrote:
-> On 22. mai 2010, at 15.09, Clemens Buchacher wrote:
-> 
-> > As soon as the existing crlf attribute is given priority over
-> > core.autocrlf, all the problems discussed originally go away.
-> > So what exactly are the new attributes supposed to do?
+This fixes the following bug.
 
-For all my comments below I am assuming that the behavior of
-autocrlf will be changed to respect the crlf/text attribute by
-default.
+$ cd .git
+$ git --work-tree=3D/tmp/git symbolic-ref HEAD
+fatal: ref HEAD is not a symbolic ref
 
-> There is one new attribute, "eol", that is used for files which
-> need a specific line ending.  Being able to "force" LF or CRLF
-> line endings has been requested several times on the list, and is
-> already sort of provided for by "crlf=input".
+Reported-by: Fr=E9d=E9ric Bri=E8re <fbriere@fbriere.net>
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
 
-[...]
-> Any file with the "text" attribute set will have its line endings
-> normalized to LF in the repository.  If "text" is set to the
-> special value "auto", git will only convert the file if it looks
-> like a text file.
-> 
-> The "eol" attribute is used for files that need a specific line
-> ending.  Setting it also sets "text".
+I am not 100% certain that my analysis is correct, since I still do
+not understand the setup code. But as far as setup_git_directory()
+is concerned, I think this is the intended behavior.
 
-If a file needs specific line endings, why enable conversion for
-this file at all? Just make sure the repository contains the
-correct version and unset the crlf attribute.
-
-> core.eol controls which line endings to use for normalized files
-> that don't have the "eol" attribute set, and defaults to the
-> platform native line ending.
-
-That makes sense to me, except for the part where I need a per-file
-attribute.
-
-> When core.autocrlf is set, the default value of the "text"
-> attribute is set to "auto" but with an extra safety feature: if a
-> file contains CRs in the index, it won't be normalized.  The
-> extra feature comes from Finn Arne's "safe autocrlf" patch.
-> 
-> There is a backwards compatibility wrinkle in that core.autocrlf
-> will override core.eol if the latter isn't explicitly set, so
-> that "core.autocrlf=true" still results in CRLFs in the working
-> directory on Linux.
-
-This also makes sense. I just fear that making this frequently
-misunderstood feature even more complex will only confuse users
-further.
-
-I do see the value of a global core.eol option, however, since it
-allows me to convert to LF instead of CRLF, which AFAIK is not
-currently possible.
-
-On the other hand, this will cause users to stop caring whether or
-not a file in the repository has LF or CRLF line endings. I am not
-sure if that is a good thing, but I suppose it is better than what
-we have now.
-
-> > And, renaming the crlf attribute to text? Where did Linus suggest that? If
-> > we do that, we don't even have to talk about backwards compatibility any
-> > more.
-> 
-> In <alpine.LFD.2.00.1005121824260.3711@i5.linux-foundation.org>:
-> > So if you rename these things, keep them separate.  Make the "am I a
-> > text-file" boolean be a boolean (plus "auto"), and just call it "text". 
-> > And make the "what end of line to use" be just "eol" then.
-
-I see. Well, if we rename the "crlf" attribute then we will have a
-macro attribute "binary" and an attribute "text", which are not the
-opposite of each other. That is a bit strange.
-
-> The "crlf" attribute will be used if it is present so backwards
-> compatibility is preserved to a degree.
-
-Ah, ok. That is fine then.
-
-> Scripts that test for
-> the "crlf" attribute explicitly (such as git-cvsserver, which I
-> fixed) will break.  I don't know how big a problem that is going
-> to be in practice, but nobody raised it as an issue during the
-> discussion.
-
-I agree that should not be a big issue.
-
-Regards,
 Clemens
+
+ dir.c   |   33 +++++++++++++++++++--------------
+ dir.h   |    1 +
+ setup.c |   14 +++++++++-----
+ 3 files changed, 29 insertions(+), 19 deletions(-)
+
+diff --git a/dir.c b/dir.c
+index cb83332..7bf208d 100644
+--- a/dir.c
++++ b/dir.c
+@@ -926,6 +926,24 @@ int file_exists(const char *f)
+ 	return lstat(f, &sb) =3D=3D 0;
+ }
+=20
++char *get_relative_path(char *cwd, const char *dir)
++{
++	if (!dir)
++		return NULL;
++	if (!is_absolute_path(dir))
++		dir =3D make_absolute_path(dir);
++
++	while (*dir && *dir =3D=3D *cwd) {
++		dir++;
++		cwd++;
++	}
++	if (*dir)
++		return NULL;
++	if (*cwd =3D=3D '/')
++		return cwd + 1;
++	return cwd;
++}
++
+ /*
+  * get_relative_cwd() gets the prefix of the current working directory
+  * relative to 'dir'.  If we are not inside 'dir', it returns NULL.
+@@ -942,25 +960,12 @@ int file_exists(const char *f)
+  */
+ char *get_relative_cwd(char *buffer, int size, const char *dir)
+ {
+-	char *cwd =3D buffer;
+-
+ 	if (!dir)
+ 		return NULL;
+ 	if (!getcwd(buffer, size))
+ 		die_errno("can't find the current directory");
+=20
+-	if (!is_absolute_path(dir))
+-		dir =3D make_absolute_path(dir);
+-
+-	while (*dir && *dir =3D=3D *cwd) {
+-		dir++;
+-		cwd++;
+-	}
+-	if (*dir)
+-		return NULL;
+-	if (*cwd =3D=3D '/')
+-		return cwd + 1;
+-	return cwd;
++	return get_relative_path(buffer, dir);
+ }
+=20
+ int is_inside_dir(const char *dir)
+diff --git a/dir.h b/dir.h
+index 3bead5f..3bcda1f 100644
+--- a/dir.h
++++ b/dir.h
+@@ -79,6 +79,7 @@ extern void add_exclude(const char *string, const cha=
+r *base,
+ 			int baselen, struct exclude_list *which);
+ extern int file_exists(const char *);
+=20
++extern char *get_relative_path(char *cwd, const char *dir);
+ extern char *get_relative_cwd(char *buffer, int size, const char *dir)=
+;
+ extern int is_inside_dir(const char *dir);
+=20
+diff --git a/setup.c b/setup.c
+index 5716d90..67b5122 100644
+--- a/setup.c
++++ b/setup.c
+@@ -525,13 +525,17 @@ const char *setup_git_directory(void)
+=20
+ 	/* If the work tree is not the default one, recompute prefix */
+ 	if (inside_work_tree < 0) {
++		const char *work_tree =3D get_git_work_tree();
+ 		static char buffer[PATH_MAX + 1];
+ 		char *rel;
+-		if (retval && chdir(retval))
+-			die_errno ("Could not jump back into original cwd");
+-		rel =3D get_relative_cwd(buffer, PATH_MAX, get_git_work_tree());
+-		if (rel && *rel && chdir(get_git_work_tree()))
+-			die_errno ("Could not jump to working directory");
++		if (retval) {
++			if (!is_absolute_path(retval))
++				retval =3D make_absolute_path(retval);
++			strncpy(buffer, retval, PATH_MAX);
++			buffer[PATH_MAX] =3D '\0';
++			rel =3D get_relative_path(buffer, work_tree);
++		} else
++			rel =3D get_relative_cwd(buffer, PATH_MAX, work_tree);
+ 		return rel && *rel ? strcat(rel, "/") : NULL;
+ 	}
+=20
+--=20
+1.7.0.5.3.ga76e
