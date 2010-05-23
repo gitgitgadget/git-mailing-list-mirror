@@ -1,109 +1,80 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: What's cooking extra
-Date: Sun, 23 May 2010 13:51:27 +0200
-Message-ID: <20100523115127.GA20443@localhost>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
- <20100519170656.GA30161@pvv.org>
- <20100522130916.GA28452@localhost>
- <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
- <20100522222746.GA2694@localhost>
- <CDD31343-2352-434B-B875-2013DAF49CE7@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC/PATCHv3] git-instaweb: Add support for running gitweb via 
+	'plackup'
+Date: Sun, 23 May 2010 12:38:02 +0000
+Message-ID: <AANLkTikSXOrF-mS3XzVAohgoNXXNZwN3jBw6Sh4TnK6M@mail.gmail.com>
+References: <1274356584-2400-1-git-send-email-jnareb@gmail.com>
+	 <1274392538-29687-1-git-send-email-jnareb@gmail.com>
+	 <201005222330.43532.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 23 13:51:44 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 23 14:38:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OG9iY-0002JA-6B
-	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 13:51:42 +0200
+	id 1OGARn-0001Am-6v
+	for gcvg-git-2@lo.gmane.org; Sun, 23 May 2010 14:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753660Ab0EWLvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 07:51:36 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53354 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753469Ab0EWLvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 May 2010 07:51:35 -0400
-Received: by fxm5 with SMTP id 5so1819280fxm.19
-        for <git@vger.kernel.org>; Sun, 23 May 2010 04:51:33 -0700 (PDT)
+	id S1752397Ab0EWMiH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 May 2010 08:38:07 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52903 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751902Ab0EWMiE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 May 2010 08:38:04 -0400
+Received: by iwn6 with SMTP id 6so2793415iwn.19
+        for <git@vger.kernel.org>; Sun, 23 May 2010 05:38:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=5++MBu9Nfvl9Uz+BQPcEtVJeASR2ktbEGxQVXuqN6lg=;
-        b=KKkogfpd9Rt7ciiAtaCAMOTJuIhsiaDD3O5mXznOQvmdEOvxNyV0puHhkktJ/+2R6E
-         /wL8P3MnOeCDfrK+7O6fZMumw161zkZ6f3Jyz5MHboneajcjjpAKcdtQhiZZOJXNrTtv
-         98rn6EQJY5oWNtbvRowGDBBkQMTiU8NhdaOwI=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vxEI3HF8m/6dfSrsOdouy+z3WESpyhXwLYMX7Iv4C8E=;
+        b=dr3rq8NjcDrR9MmzfI7rrH3JkAqV0r0brzwXsIP0ZONFYj0mGQ0jZ+N2oF4rWLlYJN
+         pEJllmxeC1LdTZb85YRdpEMD4K+k2OQTjXvsf+aiXYpfYkefx1R4il1yyWwCpXgQcTAd
+         LXbM81xioK2h1P8Jb656mSFOWMflmDxG4Dj0w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=LCcFt9EsBcCZqMLjO9XsnKvU5lsSuCerqlej0OhYfUuOkJTHVK5jBHm3KLQHALtItt
-         xcaSo4JG3MLKCiZbRzGknjGkKzK2Oo+4FY093jJ1Hj+v58vCGgchxMu5GxyNBpRZh8m3
-         k1o4cZI1EKTOsFUNdMFcPdxOOT362BJU1wwE8=
-Received: by 10.223.47.130 with SMTP id n2mr3599826faf.55.1274615493148;
-        Sun, 23 May 2010 04:51:33 -0700 (PDT)
-Received: from darc.lan (p549A5187.dip.t-dialin.net [84.154.81.135])
-        by mx.google.com with ESMTPS id 2sm14219017fav.13.2010.05.23.04.51.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 23 May 2010 04:51:32 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OG9iK-0005PE-1F; Sun, 23 May 2010 13:51:28 +0200
-Content-Disposition: inline
-In-Reply-To: <CDD31343-2352-434B-B875-2013DAF49CE7@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NsL6VPiG+njuk8NrZWNl/7qA0mUgkszxQCql+IfAyIZrucC/qjzcVCo4ENGSgtKZ2h
+         JOs+ZYtCTkPzfgwNTQed06PokqVlwz59L8TwpdCSHHi2yDzsBMr4C3binZ+YxTmsvnqb
+         FdH+XzLqreHB+UbF0qyfIRfcHKWZyo+Odu4tQ=
+Received: by 10.231.150.4 with SMTP id w4mr3994144ibv.41.1274618282175; Sun, 
+	23 May 2010 05:38:02 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sun, 23 May 2010 05:38:02 -0700 (PDT)
+In-Reply-To: <201005222330.43532.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147575>
 
-On Sun, May 23, 2010 at 12:36:51PM +0200, Eyvind Bernhardsen wrote:
+2010/5/22 Jakub Narebski <jnareb@gmail.com>:
+> Webrick, which is in similar situation, uses httpd.conf config file i=
+n
+> YAML. =C2=A0Unfortunately there is no config / serialization reader i=
+n Perl
+> core, so if we have to go this route either the config file would hav=
+e
+> to be in Perl, or gitweb.psgi wrapper would have to include some simp=
+le
+> config file parsing.
 
-> On 23. mai 2010, at 00.27, Clemens Buchacher wrote:
-> 
-> >> The "eol" attribute is used for files that need a specific line
-> >> ending.  Setting it also sets "text".
-> > 
-> > If a file needs specific line endings, why enable conversion for
-> > this file at all? Just make sure the repository contains the
-> > correct version and unset the crlf attribute.
-> 
-> Yeah, that's what I initially thought too, but it makes sense to
-> be able to use normalization to prevent line ending breakages in
-> your repository.  If a file needs CRLFs for some tool to work,
-> you don't want anyone to inadvertently convert it to LF, and
-> "eol=crlf" makes git enforce that.
+You could easily do (pseudocode):
 
-Unsetting crlf/text already disables converting it to LF. The user
-would have to change the line endings in his work tree and commit
-the file with wrong line endings. I do not see how this can happen
-inadvertently.
+    unless (eval { require Config::Any; 1 }) {
+        do $conf_file;
+    } else {
+        my $parser =3D Config::Any->new( ... );
+         $parser->docnf( $conf_file );
+     }
 
-> > I do see the value of a global core.eol option, however, since it
-> > allows me to convert to LF instead of CRLF, which AFAIK is not
-> > currently possible.
-> 
-> Actually, since git normalizes to LF, "eol=lf" simply means
-> "convert on input but not on output", which is what
-> "core.autocrlf=input" currently does.  The fact that you didn't
-> know this reflects the poor usability of core.autocrlf, which is
-> one of the things this series is trying to rectify :)
-
-No, I am aware of autocrlf=input, but apparently I did not
-understand the meaning of eol=lf correctly. So if a file has CRLF
-endings in the repository, and eol=lf, it will _not_ be converted
-to LF in the work tree? Conversely, if it has LF endings in the
-repository, and eol=crlf, it _will_ be converted to CRLF in the
-work tree?
-
-I was expecting eol=lf and eol=crlf to be symmetric, which is also
-the reason for my reply to Finn's safe crlf patch.
+Then you'd read (eval) a perl config file by default, but remain
+compatible with saner config formats for users prepared to install
+things from the CPAN.
