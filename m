@@ -1,94 +1,75 @@
-From: Tomas Pospisek <tpo@sourcepole.ch>
-Subject: Re: Bug? file at the same time being deleted and not registered
-Date: Mon, 24 May 2010 16:46:44 +0200 (CEST)
-Message-ID: <alpine.DEB.2.00.1005241642040.5109@tpo-laptop>
-References: <alpine.DEB.2.00.1005232245220.18372@tpo-laptop> <20100523234459.GA8285@coredump.intra.peff.net> <alpine.DEB.2.00.1005240932130.7107@tpo-laptop> <20100524082430.GA18755@coredump.intra.peff.net> <alpine.DEB.2.00.1005241027580.8425@tpo-laptop>
- <20100524084932.GA21051@coredump.intra.peff.net> <alpine.DEB.2.00.1005241228100.5304@tpo-laptop>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [GSoC 2010] The 1st week
+Date: Mon, 24 May 2010 22:57:15 +0800
+Message-ID: <AANLkTikSafHBj7VwjwjTVeW3ohL60dOp4sKfZW_vZzCM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 24 16:47:08 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon May 24 16:57:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGYvr-0004wb-KC
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 16:47:07 +0200
+	id 1OGZ5t-0001kU-UM
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 16:57:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754286Ab0EXOrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 10:47:01 -0400
-Received: from pizol.sourcepole.ch ([80.74.153.203]:58446 "EHLO
-	pizol.sourcepole.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754049Ab0EXOrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 10:47:00 -0400
-Received: from cable-dynamic-87-245-106-94.shinternet.ch ([87.245.106.94] helo=localhost)
-	by mail.sp-metanet with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.69)
-	(envelope-from <tpo_hp@sourcepole.ch>)
-	id 1OGYva-0001JI-JY; Mon, 24 May 2010 16:46:55 +0200
-X-X-Sender: tpo@tpo-laptop
-In-Reply-To: <alpine.DEB.2.00.1005241228100.5304@tpo-laptop>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-SA-Score: -4.1
+	id S1757083Ab0EXO5S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 10:57:18 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:47285 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754533Ab0EXO5Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 10:57:16 -0400
+Received: by qyk13 with SMTP id 13so5499558qyk.1
+        for <git@vger.kernel.org>; Mon, 24 May 2010 07:57:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=tRX0mW90Eo1JOsIUKH8eFjKLC2SRLk9YLLXqbtoliIU=;
+        b=nVF13GkuPUMFBiVZe1oHdHwqpg/Kj9E5dCY/zqINTMlguFfuEjMvsZEuEnSpOSCOYM
+         JYeLBA8EjsJFRjIxIhOAB3utpLqjvARlX9bbJWciwWq1U3LV/HGdGJOZMKaMU8KWfMqX
+         pc91Jg03uJnIhbT4n+FIqvhaiJ8nrpccC3bdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=ggeFl67eh1gVrRHLz6FRvlJblhTaNCtf4Dhu8+1AVdrnUn32udQnoGBdEq1Kw+RBgu
+         MZwq0I3Gb48taPeD4t7UMUMagou2qVKOolGmmWPVTpchB77QJQmjnq5CgS3Cgza2ekXl
+         ngs4VaqZvbNbFmnhEJNM/G7tr0q4RcRXdzp/w=
+Received: by 10.224.72.143 with SMTP id m15mr3033033qaj.231.1274713035363; 
+	Mon, 24 May 2010 07:57:15 -0700 (PDT)
+Received: by 10.229.110.18 with HTTP; Mon, 24 May 2010 07:57:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147634>
 
-On Mon, 24 May 2010, Tomas Pospisek wrote:
+Hi,
 
-> On Mon, 24 May 2010, Jeff King wrote:
->
->> On Mon, May 24, 2010 at 10:29:02AM +0200, Tomas Pospisek wrote:
->> 
->>>> If it's empty or 32 bytes, then that explains what status is reporting
->>>> (but the question still remains how we got into that state).
->>> 
->>> There's no .git/index file there:
->>>
->>>  $ ls -l .git/
->>>  total 36
->>>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 branches
->>>  -rw-r--r-- 1 tpo tpo    4 2010-05-23 21:36 COMMIT_EDITMSG
->>>  -rw-r--r-- 1 tpo tpo   73 2010-05-23 21:36 description
->>>  -rw-r--r-- 1 tpo tpo   23 2010-05-23 21:36 HEAD
->>>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 hooks
->>>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 info
->>>  drwxr-xr-x 3 tpo tpo 4096 2010-05-23 21:36 logs
->>>  drwxr-xr-x 7 tpo tpo 4096 2010-05-24 09:26 objects
->>>  drwxr-xr-x 4 tpo tpo 4096 2010-05-23 21:36 refs
->> 
->> Thanks. That means "git status" is at least reporting the right thing.
->> Now we just need to figure out why, when the strace of commit shows it
->> being written and renamed into place, the index file is missing.
->> 
->> I tried setting up a simple mhddfs mount to reproduce your problem, but
->> everything works fine for me. What version of mhddfs are you using? I'm
->> using version 0.1.28. I wonder if git is somehow triggering an mhddfs
->> bug. Looking through the svn logs for mhddfs, between 0.1.27 and 0.1.28,
->> there is a commit with message "fixed rename bug".
->
-> Oh wow (trying to reproduce the bug just from the strace). It's mhddfs. Look:
->
-> $ touch bla
-> $ touch bla.lock
-> $ echo asdf > bla.lock
-> $ mv bla.lock bla
-> $ ls
-> $ # nothing here
->
-> That's a quite catastrophic bug in mhddfs :-((( ! Argh.
->
-> Moving this over to mhddfs.
+   This is the first week of gsoc 2010 coding phrase, and it is a good
+time to summary the previous work and make a plan for the following
+two weeks.
 
-OK, I'm waering sackcloth and ashes. The problem was a config fault of 
-mine - one of the backing fs/partitions was included *twice* in the mhdffs 
-fs setup in /etc/fstab. And as of now mhdffs doesn't detect a user 
-composing the mhddfs filesystem in a braindammaged way.
+What's done:
+1. Get familiar with Git code base and have read the code of 'git
+blame', revision walk, 'git log'.
+2. Try to make some patches for git:
+    1. * by/blame-doc-m-c (2010-05-06) 1 commit, in 'next'
+    2. * by/log-follow (2010-05-10) 4 commits, in 'next'
+    3. the '--graph improvement', in discuss and I think ready for inclusion.
+3. Start to write some code for the line level browser feature. And it
+is in the 'playaround' branch in http://repo.or.cz/w/line.git . Now,
+the code can parse multiple line ranges for multiple files in only one
+revision.
 
-http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=582888
-*t
+What's following next 2 weeks:
+In next 2 weeks, I will try to make up a version of line level browser
+that supports code modification trace and this version will print all
+the diff hunks that touch the interesting lines.
+
+Regards!
+Bo
+-- 
+My blog: http://blog.morebits.org
