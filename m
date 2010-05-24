@@ -1,9 +1,7 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 2/3] t7502-commit: add summary output tests for empty and merge commits
-Date: Mon, 24 May 2010 17:47:31 +0800
-Message-ID: <1274694452-4200-3-git-send-email-rctay89@gmail.com>
-References: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
- <1274694452-4200-2-git-send-email-rctay89@gmail.com>
+Subject: [PATCH 0/3] commit: fix abbrev-sha regression
+Date: Mon, 24 May 2010 17:47:29 +0800
+Message-ID: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
 Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
 To: "Git Mailing List" <git@vger.kernel.org>
 X-From: git-owner@vger.kernel.org Mon May 24 11:48:16 2010
@@ -13,101 +11,123 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGUGc-0007Tl-6Y
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 11:48:14 +0200
+	id 1OGUGb-0007Tl-1c
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 11:48:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348Ab0EXJry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 05:47:54 -0400
+	id S1755267Ab0EXJrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 05:47:48 -0400
 Received: from mail-pz0-f185.google.com ([209.85.222.185]:47671 "EHLO
 	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754553Ab0EXJrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 05:47:53 -0400
-Received: by mail-pz0-f185.google.com with SMTP id 15so2011588pzk.15
-        for <git@vger.kernel.org>; Mon, 24 May 2010 02:47:52 -0700 (PDT)
+	with ESMTP id S1754397Ab0EXJrr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 05:47:47 -0400
+Received: by pzk15 with SMTP id 15so2011588pzk.15
+        for <git@vger.kernel.org>; Mon, 24 May 2010 02:47:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=2rXxtNmmcKVTQ4QO411xMeiz/5afS+DdEhMmQZWti3c=;
-        b=MbbNnMTyH7yYZAF5KLWPda6GhNVRv8Y6WMA80eDwQaUdNjNYpHqKsik35GtYuEFR7R
-         0/d/h+Zh8Wn9QOHGLMCVxhHK5tWug9gHGJAiSRYXNj/3j2yGcjzf2qSulga0uY9mQWDP
-         ClzVoVW428Wt4U+Vn4tAF37d8ggHqArDNymmc=
+         :message-id:x-mailer;
+        bh=/QSJIxmS4BGyjt9KvOhui2E/BwS7/lDha5S7lNpPOu4=;
+        b=uI5Ud9F0/aEZO8UsI+R/To251AeJkxd/+PcrddLZkmFwYbOaw4k0Rg6zGifKFztb4T
+         h6FgqROQCJeCjJAx0r3zB4iL5n6UDYYrnYB1HBUzqGCP8BuElNybq2phpmAWpnavcIbk
+         i40A5iw8GYbo2R2s8qTtmH/mD8beuVpClq3pI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Rsw4FHLmd2R9Q+YaJ4vfZOu8KW3DMWgaS4Ndhm3kE/mSJeQLHhhFZLZ3HLH62X/j9n
-         eM7/JX2XzXySAJ0vxG88roBw0QFrTaw8N8YfMDK+ENI3AMQEVf2tyNjbVoh5WjyPUbW7
-         mMJDWkbP9puagaVuH0rfpuuL2wQ/W6t1ZDgXM=
-Received: by 10.114.19.19 with SMTP id 19mr4672731was.17.1274694472396;
-        Mon, 24 May 2010 02:47:52 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=qJI+050UdeZ4OaWrtowglZgOkx/YBWJehQPWSHZtzanMHoMBxCzndzT2ZEuDl5JGDo
+         AJ4d3Iu+moV+uZC370fAcMuikps4btz80Ff7jz08/XWgBIatGwqu13AAEMKyCORuXAeC
+         3tVVAfuURRU3/zh0tm8yw7Zn+/ibsN7eL08s0=
+Received: by 10.114.237.2 with SMTP id k2mr4622117wah.214.1274694467271;
+        Mon, 24 May 2010 02:47:47 -0700 (PDT)
 Received: from localhost.localdomain (cm218.zeta152.maxonline.com.sg [116.87.152.218])
-        by mx.google.com with ESMTPS id n29sm37041273wae.4.2010.05.24.02.47.49
+        by mx.google.com with ESMTPS id n29sm37041273wae.4.2010.05.24.02.47.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 24 May 2010 02:47:51 -0700 (PDT)
+        Mon, 24 May 2010 02:47:46 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.259.g405af
-In-Reply-To: <1274694452-4200-2-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147619>
 
-After c197702 (pretty: Respect --abbrev option), non-abbreviated hashes
-began to appear, leading to failures for these tests.
+After c197702 (pretty: Respect --abbrev option), the summary output for
+git-commit began to throw up non-abbreviated SHA-1s.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- t/t7502-commit.sh |   29 +++++++++++++++++++++++++++--
- 1 files changed, 27 insertions(+), 2 deletions(-)
+For example,
 
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 589e8e6..8a4a277 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -4,10 +4,10 @@ test_description='git commit porcelain-ish'
- 
- . ./test-lib.sh
- 
--# Arguments: [<prefix] [<commit message>]
-+# Arguments: [<prefix] [<commit message>] [<commit options>]
- check_summary_oneline() {
- 	test_tick &&
--	git commit -m "$2" | head -1 > act &&
-+	echo "$3" | xargs git commit -m "$2" | head -1 > act &&
- 
- 	# branch name
- 	SUMMARY_PREFIX="$(git name-rev --name-only HEAD)" &&
-@@ -36,6 +36,31 @@ test_expect_success 'output summary format' '
- 	check_summary_oneline "" "a change"
- '
- 
-+test_expect_failure 'output summary format for commit with an empty diff' '
-+
-+	check_summary_oneline "" "empty" "--allow-empty"
-+'
-+
-+test_expect_failure 'output summary format for merges' '
-+
-+	git checkout -b recursive-base &&
-+	test_commit base file1 &&
-+
-+	git checkout -b recursive-a recursive-base &&
-+	test_commit commit-a file1 &&
-+
-+	git checkout -b recursive-b recursive-base &&
-+	test_commit commit-b file1 &&
-+
-+	# conflict
-+	git checkout recursive-a &&
-+	test_must_fail git merge recursive-b &&
-+	# resolve the conflict
-+	echo commit-a > file1 &&
-+	git add file1 &&
-+	check_summary_oneline "" "Merge"
-+'
-+
- test_expect_success 'the basics' '
- 
- 	# this is needed for the "partial removal" test to pass
--- 
-1.7.1.189.g07419
+  $ git commit --allow-empty -m "empty"
+  [master f869bf09c8eefee54094bb21387241aaf5f10324] empty
+
+I also notice that this happens for merges after conflict resolutions.
+
+This afflicts 'master', but not any release.
+
+Here's the hunk that fixed it:
+
+-->8--
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a4e4966..ab4a7cf 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1166,6 +1166,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 		struct pretty_print_context ctx = {0};
+ 		struct strbuf buf = STRBUF_INIT;
+ 		ctx.date_mode = DATE_NORMAL;
++		ctx.abbrev = DEFAULT_ABBREV;
+ 		format_commit_message(commit, format.buf + 7, &buf, &ctx);
+ 		printf("%s\n", buf.buf);
+ 		strbuf_release(&buf);
+-->8--
+
+However, I noticed that this would also work:
+
+-->8--
+diff --git a/builtin/commit.c b/builtin/commit.c
+index ab4a7cf..13a30ab 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1148,7 +1148,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+        rev.verbose_header = 1;
+        rev.show_root_diff = 1;
+        get_commit_format(format.buf, &rev);
+-       rev.always_show_header = 0;
++       rev.always_show_header = 1;
+        rev.diffopt.detect_rename = 1;
+        rev.diffopt.rename_limit = 100;
+        rev.diffopt.break_opt = 0;
+-->8--
+
+This would make the code block that handled the situation in which
+log_tree_commit() did not print any output redundant, so perhaps this
+would also follow:
+
+-->8--
+diff --git a/builtin/commit.c b/builtin/commit.c
+index ab4a7cf..e8def55 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1163,13 +1163,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+                initial_commit ? " (root-commit)" : "");
+
+        if (!log_tree_commit(&rev, commit)) {
+-               struct pretty_print_context ctx = {0};
+-               struct strbuf buf = STRBUF_INIT;
+-               ctx.date_mode = DATE_NORMAL;
+-               ctx.abbrev = DEFAULT_ABBREV;
+-               format_commit_message(commit, format.buf + 7, &buf, &ctx);
+-               printf("%s\n", buf.buf);
+-               strbuf_release(&buf);
++               die("unable to print summary");
+        }
+        strbuf_release(&format);
+ }
+-->8--
+
+In a sense, it reverts parts of bf82a15 (commit: do not add extra LF at
+the end of the summary.), except for the extra LF. Would this be a more
+sensible route?
+
+Contents:
+[PATCH 0/3] commit: fix abbrev-sha regression
+[PATCH 1/3] t7502-commit: add tests for summary output
+[PATCH 2/3] t7502-commit: add summary output tests for empty and merge commits
+[PATCH 3/3] commit: show abbreviated sha for commits with empty diffs
