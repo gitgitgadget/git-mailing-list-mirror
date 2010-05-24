@@ -1,71 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Bug? file at the same time being deleted and not registered
-Date: Mon, 24 May 2010 04:49:33 -0400
-Message-ID: <20100524084932.GA21051@coredump.intra.peff.net>
-References: <alpine.DEB.2.00.1005232245220.18372@tpo-laptop>
- <20100523234459.GA8285@coredump.intra.peff.net>
- <alpine.DEB.2.00.1005240932130.7107@tpo-laptop>
- <20100524082430.GA18755@coredump.intra.peff.net>
- <alpine.DEB.2.00.1005241027580.8425@tpo-laptop>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Tomas Pospisek <tpo@sourcepole.ch>
-X-From: git-owner@vger.kernel.org Mon May 24 10:49:57 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH] show-branch: use DEFAULT_ABBREV instead of 7
+Date: Mon, 24 May 2010 16:50:44 +0800
+Message-ID: <1274691044-5516-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 24 10:51:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGTMD-0003aQ-B3
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 10:49:57 +0200
+	id 1OGTNM-00047O-Bk
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 10:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753604Ab0EXItk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 04:49:40 -0400
-Received: from peff.net ([208.65.91.99]:59744 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750888Ab0EXItj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 04:49:39 -0400
-Received: (qmail 2559 invoked by uid 107); 24 May 2010 08:49:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 24 May 2010 04:49:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 24 May 2010 04:49:33 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1005241027580.8425@tpo-laptop>
+	id S1756065Ab0EXIvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 04:51:01 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:42735 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755542Ab0EXIvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 04:51:00 -0400
+Received: by pvg4 with SMTP id 4so698464pvg.19
+        for <git@vger.kernel.org>; Mon, 24 May 2010 01:51:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=E10e2yQ3jJ6KmR0keg5Q9rkiijlWtAiLNxqV5JnKpLM=;
+        b=SEDrafN7+Pdh2JpMeMw6wVYxZld3Tal85jFQJjja2y+LD+U3A/UgcVHdEpqKMpIycF
+         UslGu0wyxsmTU/zyVTNqwvBnzjDTON41lHuTl9M7vJ+UjBDe1u/UP9SlxGlGnlng1WlY
+         WGq6DyON++y7OKpVpB28/QRs86/HJjjk5cyM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Sf7OUx58O5JxpIYgxwKnOR6YFZiTvCIcMjAm3NZHRc2uVM0GHAeB+DcfHCsCYfls3C
+         VUeSGNPT8kSfx1FxqRE+qhxbeVW93c5/qPXDgLsIBclMSxIrZNulcdV7IHxegIVY/8Jv
+         wt3JD/vMkcrmrwD3ZCrXQcXcfaCsnRT/7hDaE=
+Received: by 10.114.97.17 with SMTP id u17mr4589081wab.145.1274691059887;
+        Mon, 24 May 2010 01:50:59 -0700 (PDT)
+Received: from localhost.localdomain (cm218.zeta152.maxonline.com.sg [116.87.152.218])
+        by mx.google.com with ESMTPS id d16sm36640712wam.12.2010.05.24.01.50.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 24 May 2010 01:50:58 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.259.g405af
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147612>
 
-On Mon, May 24, 2010 at 10:29:02AM +0200, Tomas Pospisek wrote:
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ builtin/show-branch.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-> >If it's empty or 32 bytes, then that explains what status is reporting
-> >(but the question still remains how we got into that state).
-> 
-> There's no .git/index file there:
-> 
->  $ ls -l .git/
->  total 36
->  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 branches
->  -rw-r--r-- 1 tpo tpo    4 2010-05-23 21:36 COMMIT_EDITMSG
->  -rw-r--r-- 1 tpo tpo   73 2010-05-23 21:36 description
->  -rw-r--r-- 1 tpo tpo   23 2010-05-23 21:36 HEAD
->  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 hooks
->  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 info
->  drwxr-xr-x 3 tpo tpo 4096 2010-05-23 21:36 logs
->  drwxr-xr-x 7 tpo tpo 4096 2010-05-24 09:26 objects
->  drwxr-xr-x 4 tpo tpo 4096 2010-05-23 21:36 refs
-
-Thanks. That means "git status" is at least reporting the right thing.
-Now we just need to figure out why, when the strace of commit shows it
-being written and renamed into place, the index file is missing.
-
-I tried setting up a simple mhddfs mount to reproduce your problem, but
-everything works fine for me. What version of mhddfs are you using? I'm
-using version 0.1.28. I wonder if git is somehow triggering an mhddfs
-bug. Looking through the svn logs for mhddfs, between 0.1.27 and 0.1.28,
-there is a commit with message "fixed rename bug".
-
--Peff
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index e20fcf3..e8719aa 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -313,7 +313,8 @@ static void show_one_commit(struct commit *commit, int no_name)
+ 		}
+ 		else
+ 			printf("[%s] ",
+-			       find_unique_abbrev(commit->object.sha1, 7));
++			       find_unique_abbrev(commit->object.sha1,
++						  DEFAULT_ABBREV));
+ 	}
+ 	puts(pretty_str);
+ 	strbuf_release(&pretty);
+--
+1.7.1.189.g07419
