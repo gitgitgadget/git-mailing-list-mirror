@@ -1,88 +1,90 @@
-From: Tomas Pospisek <tpo@sourcepole.ch>
-Subject: Re: Bug? file at the same time being deleted and not registered
-Date: Mon, 24 May 2010 12:32:19 +0200 (CEST)
-Message-ID: <alpine.DEB.2.00.1005241228100.5304@tpo-laptop>
-References: <alpine.DEB.2.00.1005232245220.18372@tpo-laptop> <20100523234459.GA8285@coredump.intra.peff.net> <alpine.DEB.2.00.1005240932130.7107@tpo-laptop> <20100524082430.GA18755@coredump.intra.peff.net> <alpine.DEB.2.00.1005241027580.8425@tpo-laptop>
- <20100524084932.GA21051@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 24 12:32:43 2010
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: [PATCH 3/7] Add buffer pool library
+Date: Mon, 24 May 2010 20:37:59 +1000
+Message-ID: <59ECADA1-5F48-4C0E-B3C5-C2F7D7687C8F@cordelta.com>
+References: <1274650832-7411-1-git-send-email-artagnon@gmail.com>  <1274650832-7411-4-git-send-email-artagnon@gmail.com> <20100524074757.GC3412@m62s10.vlinux.de> <AANLkTim8olZLKoi4Uk_nPpxhCYKX7b_yUDBrWVW_rm57@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Peter Baumann <waste.manager@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 24 12:38:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGUxd-0007Cn-SW
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 12:32:42 +0200
+	id 1OGV2z-0000X6-1t
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 12:38:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755235Ab0EXKcg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 06:32:36 -0400
-Received: from pizol.sourcepole.ch ([80.74.153.203]:57485 "EHLO
-	pizol.sourcepole.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753974Ab0EXKcf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 06:32:35 -0400
-Received: from cable-dynamic-87-245-106-94.shinternet.ch ([87.245.106.94] helo=localhost)
-	by mail.sp-metanet with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.69)
-	(envelope-from <tpo_hp@sourcepole.ch>)
-	id 1OGUxN-00014k-4v; Mon, 24 May 2010 12:32:30 +0200
-X-X-Sender: tpo@tpo-laptop
-In-Reply-To: <20100524084932.GA21051@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-SA-Score: -4.2
+	id S1755755Ab0EXKiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 06:38:07 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:48692 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755542Ab0EXKiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 06:38:05 -0400
+Received: by pvg4 with SMTP id 4so732208pvg.19
+        for <git@vger.kernel.org>; Mon, 24 May 2010 03:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=O6sPEEH65DSulebK6IGUwtOyqEOhl9jtyTzo7As6QMo=;
+        b=rtJTeqPKu45BNFBZxYZdWUtK/Iprz86sAD7ZqnfZHWlIaCDtLSJ5VRJ9pFcju7OYux
+         APf1xEyUAz4/O1r1BKUk2FZOBGbpcqN0GWTx57i8LuDZr/opfYOLw/SOFy/b7+rR1MTe
+         Lyvg7JowaCS8FlkSDUDyQcM3FayYRRU00nr3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=m7Bqng15+4E4CfkzxmUAOUSzQQwFyt+MSx91zxnSmpWDPuTHDCA/cVQj0a040O41eg
+         OI/bYL796J5LfJSf/ej+BbYaHvCnhO/XKeKWuvnlspiGhUlLSXntG35oPJUnfwjk3A/U
+         ZquCLg2QYTK7X8EA7Ns3G8z2uugPFTUnlqEq0=
+Received: by 10.115.38.23 with SMTP id q23mr4675539waj.212.1274697484409;
+        Mon, 24 May 2010 03:38:04 -0700 (PDT)
+Received: from [192.168.1.2] (d122-109-106-179.mit3.act.optusnet.com.au [122.109.106.179])
+        by mx.google.com with ESMTPS id d16sm37382319wam.0.2010.05.24.03.38.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 24 May 2010 03:38:03 -0700 (PDT)
+In-Reply-To: <AANLkTim8olZLKoi4Uk_nPpxhCYKX7b_yUDBrWVW_rm57@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147624>
 
-On Mon, 24 May 2010, Jeff King wrote:
+Hi,
 
-> On Mon, May 24, 2010 at 10:29:02AM +0200, Tomas Pospisek wrote:
->
->>> If it's empty or 32 bytes, then that explains what status is reporting
->>> (but the question still remains how we got into that state).
->>
->> There's no .git/index file there:
->>
->>  $ ls -l .git/
->>  total 36
->>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 branches
->>  -rw-r--r-- 1 tpo tpo    4 2010-05-23 21:36 COMMIT_EDITMSG
->>  -rw-r--r-- 1 tpo tpo   73 2010-05-23 21:36 description
->>  -rw-r--r-- 1 tpo tpo   23 2010-05-23 21:36 HEAD
->>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 hooks
->>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 info
->>  drwxr-xr-x 3 tpo tpo 4096 2010-05-23 21:36 logs
->>  drwxr-xr-x 7 tpo tpo 4096 2010-05-24 09:26 objects
->>  drwxr-xr-x 4 tpo tpo 4096 2010-05-23 21:36 refs
->
-> Thanks. That means "git status" is at least reporting the right thing.
-> Now we just need to figure out why, when the strace of commit shows it
-> being written and renamed into place, the index file is missing.
->
-> I tried setting up a simple mhddfs mount to reproduce your problem, but
-> everything works fine for me. What version of mhddfs are you using? I'm
-> using version 0.1.28. I wonder if git is somehow triggering an mhddfs
-> bug. Looking through the svn logs for mhddfs, between 0.1.27 and 0.1.28,
-> there is a commit with message "fixed rename bug".
+> @David: I'll take the responsibility of cleaning it up/ modifying it
+> and getting it merged into git.git. You can work on the repository
+> independently, and I'll pull relevant changes into git.git.
 
-Oh wow (trying to reproduce the bug just from the strace). It's mhddfs. 
-Look:
+@Ram: On that note, can you sign off on your patches so I can
+merge them.
 
-$ touch bla
-$ touch bla.lock
-$ echo asdf > bla.lock
-$ mv bla.lock bla
-$ ls
-$ # nothing here
+>> If this is David's code, shouldn't you then preserve authorship?
 
-That's a quite catastrophic bug in mhddfs :-((( ! Argh.
 
-Moving this over to mhddfs.
+[PATCH 2/7] Add cpp macro implementation of treaps
+Authored mostly by Jason Evans.
+Heavily culled and adapted to use the object pool library by
+David Barr.
 
-Thanks a lot Jeff!
-*t
+[PATCH 7/7] Add handler for SVN dump
+Originally authored by in Java by Stefan Hegny and others.
+Ported to C and rewritten by David Barr.
+
+Both released under two clause BSD licenses.
+
+Patches 3 to 6 authored primarily by David Barr with
+contributions in the form of cleanup and documentation from
+Ramkumar Ramachadra.
+Released under two-clause BSD license but easily relicensed
+due to proximity of authors.
+
+-- David Barr.
