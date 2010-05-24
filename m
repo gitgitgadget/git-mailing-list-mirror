@@ -1,75 +1,109 @@
-From: Tomas Pospisek <tpo@sourcepole.ch>
-Subject: Re: Bug? file at the same time being deleted and not registered
-Date: Mon, 24 May 2010 11:26:44 +0200 (CEST)
-Message-ID: <alpine.DEB.2.00.1005241125210.3664@tpo-laptop>
-References: <alpine.DEB.2.00.1005232245220.18372@tpo-laptop> <20100523234459.GA8285@coredump.intra.peff.net> <alpine.DEB.2.00.1005240932130.7107@tpo-laptop> <20100524082430.GA18755@coredump.intra.peff.net> <alpine.DEB.2.00.1005241027580.8425@tpo-laptop>
- <20100524084932.GA21051@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon May 24 11:27:05 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH 1/3] t7502-commit: add tests for summary output
+Date: Mon, 24 May 2010 17:47:30 +0800
+Message-ID: <1274694452-4200-2-git-send-email-rctay89@gmail.com>
+References: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 24 11:48:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGTw8-00089x-FZ
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 11:27:04 +0200
+	id 1OGUGb-0007Tl-NN
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 11:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753718Ab0EXJ07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 05:26:59 -0400
-Received: from pizol.sourcepole.ch ([80.74.153.203]:56422 "EHLO
-	pizol.sourcepole.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753014Ab0EXJ06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 05:26:58 -0400
-Received: from cable-dynamic-87-245-106-94.shinternet.ch ([87.245.106.94] helo=localhost)
-	by mail.sp-metanet with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.69)
-	(envelope-from <tpo_hp@sourcepole.ch>)
-	id 1OGTvt-000583-Qy; Mon, 24 May 2010 11:26:55 +0200
-X-X-Sender: tpo@tpo-laptop
-In-Reply-To: <20100524084932.GA21051@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-SA-Score: -4.2
+	id S1755334Ab0EXJrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 05:47:53 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:40284 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754397Ab0EXJrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 05:47:51 -0400
+Received: by pwi2 with SMTP id 2so446247pwi.19
+        for <git@vger.kernel.org>; Mon, 24 May 2010 02:47:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=/Upu2yrCwyt3SP5oVpOFgPJSI08v0UlrjGnmegYuwa0=;
+        b=AqhgmiiLoz0rp+xDgkA7BprqWHkpzcq4B7k61GJt3la5GbPeYVhXGTyDYeVgmedAHm
+         3xqrHfbdpOK0m+cdDHvWXxQpXehOnAP9oiFuR4qNa7oIcvRWxiDQ7Bf5vD3ZwuOn7/yh
+         x7ubtiCDYVEheNYE1IqJm6URR3xHgotj+FFao=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=wgM6eIOzCqXcyvSPoM8IbmOWeP0VoMXtAjxyvp/kP/JxknaPqZhoFOSrsf5zszsUKp
+         zmICUDbxP3VG4iA8UWSJMHmb9OU7E2UI8EwexfdIU4nJwKYyiyoPx3nawMGxOOiDDehW
+         EBUOdUAtR9hblA+iQMt7xwLOKHWAAjnTmVokM=
+Received: by 10.115.85.21 with SMTP id n21mr4642154wal.111.1274694469581;
+        Mon, 24 May 2010 02:47:49 -0700 (PDT)
+Received: from localhost.localdomain (cm218.zeta152.maxonline.com.sg [116.87.152.218])
+        by mx.google.com with ESMTPS id n29sm37041273wae.4.2010.05.24.02.47.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 24 May 2010 02:47:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.259.g405af
+In-Reply-To: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147616>
 
-On Mon, 24 May 2010, Jeff King wrote:
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
+ t/t7502-commit.sh |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
 
-> On Mon, May 24, 2010 at 10:29:02AM +0200, Tomas Pospisek wrote:
->
->>> If it's empty or 32 bytes, then that explains what status is reporting
->>> (but the question still remains how we got into that state).
->>
->> There's no .git/index file there:
->>
->>  $ ls -l .git/
->>  total 36
->>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 branches
->>  -rw-r--r-- 1 tpo tpo    4 2010-05-23 21:36 COMMIT_EDITMSG
->>  -rw-r--r-- 1 tpo tpo   73 2010-05-23 21:36 description
->>  -rw-r--r-- 1 tpo tpo   23 2010-05-23 21:36 HEAD
->>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 hooks
->>  drwxr-xr-x 2 tpo tpo 4096 2010-05-23 21:36 info
->>  drwxr-xr-x 3 tpo tpo 4096 2010-05-23 21:36 logs
->>  drwxr-xr-x 7 tpo tpo 4096 2010-05-24 09:26 objects
->>  drwxr-xr-x 4 tpo tpo 4096 2010-05-23 21:36 refs
->
-> Thanks. That means "git status" is at least reporting the right thing.
-> Now we just need to figure out why, when the strace of commit shows it
-> being written and renamed into place, the index file is missing.
->
-> I tried setting up a simple mhddfs mount to reproduce your problem, but
-> everything works fine for me. What version of mhddfs are you using? I'm
-> using version 0.1.28. I wonder if git is somehow triggering an mhddfs
-> bug. Looking through the svn logs for mhddfs, between 0.1.27 and 0.1.28,
-> there is a commit with message "fixed rename bug".
-
-It's version 0.1.28-1 from Ubuntu.
-
-*t
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index 844fb43..589e8e6 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -4,8 +4,44 @@ test_description='git commit porcelain-ish'
+ 
+ . ./test-lib.sh
+ 
++# Arguments: [<prefix] [<commit message>]
++check_summary_oneline() {
++	test_tick &&
++	git commit -m "$2" | head -1 > act &&
++
++	# branch name
++	SUMMARY_PREFIX="$(git name-rev --name-only HEAD)" &&
++
++	# append the "special" prefix, like "root-commit", "detached HEAD"
++	if test -n "$1"
++	then
++		SUMMARY_PREFIX="$SUMMARY_PREFIX ($1)"
++	fi
++
++	# abbrev SHA-1
++	SUMMARY_POSTFIX="$(git log -1 --pretty='format:%h')"
++	echo "[$SUMMARY_PREFIX $SUMMARY_POSTFIX] $2" >exp &&
++
++	test_cmp exp act
++}
++
++test_expect_success 'output summary format' '
++
++	echo new >file1 &&
++	git add file1 &&
++	check_summary_oneline "root-commit" "initial" &&
++
++	echo change >>file1 &&
++	git add file1 &&
++	check_summary_oneline "" "a change"
++'
++
+ test_expect_success 'the basics' '
+ 
++	# this is needed for the "partial removal" test to pass
++	git rm file1 &&
++	git commit -m "cleanup" &&
++
+ 	echo doing partial >"commit is" &&
+ 	mkdir not &&
+ 	echo very much encouraged but we should >not/forbid &&
+-- 
+1.7.1.189.g07419
