@@ -1,143 +1,79 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: Use "git pull --ff-only" by default?
-Date: Mon, 24 May 2010 10:22:45 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC74483234FAA@xmail3.se.axis.com>
-References: <A612847CFE53224C91B23E3A5B48BAC74483234E90@xmail3.se.axis.com>
- <4BF68F5F.9010309@drmicha.warpmail.net>
- <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
- <4BF6A445.1030105@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Bug? file at the same time being deleted and not registered
+Date: Mon, 24 May 2010 04:24:30 -0400
+Message-ID: <20100524082430.GA18755@coredump.intra.peff.net>
+References: <alpine.DEB.2.00.1005232245220.18372@tpo-laptop>
+ <20100523234459.GA8285@coredump.intra.peff.net>
+ <alpine.DEB.2.00.1005240932130.7107@tpo-laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon May 24 10:23:01 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Tomas Pospisek <tpo@sourcepole.ch>
+X-From: git-owner@vger.kernel.org Mon May 24 10:24:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGSw8-0001Eq-JH
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 10:23:00 +0200
+	id 1OGSxk-0001xv-OS
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 10:24:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753634Ab0EXIWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 04:22:53 -0400
-Received: from miranda.se.axis.com ([193.13.178.8]:51374 "EHLO
-	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753783Ab0EXIWw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 May 2010 04:22:52 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o4O8Mk6s019559;
-	Mon, 24 May 2010 10:22:46 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Mon, 24 May 2010 10:22:46 +0200
-Thread-Topic: Use "git pull --ff-only" by default?
-Thread-Index: Acr4+QCBnFUwc60ISdSTZnJuchHYugCHVWyw
-In-Reply-To: <4BF6A445.1030105@drmicha.warpmail.net>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1756728Ab0EXIYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 04:24:35 -0400
+Received: from peff.net ([208.65.91.99]:53444 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756104Ab0EXIYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 04:24:34 -0400
+Received: (qmail 2422 invoked by uid 107); 24 May 2010 08:24:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 24 May 2010 04:24:36 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 24 May 2010 04:24:30 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1005240932130.7107@tpo-laptop>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147609>
 
-> -----Original Message-----
-> From: Michael J Gruber [mailto:git@drmicha.warpmail.net]
-> Sent: den 21 maj 2010 17:18
-> To: Peter Kjellerstedt
-> Cc: git@vger.kernel.org
-> Subject: Re: Use "git pull --ff-only" by default?
+On Mon, May 24, 2010 at 10:02:14AM +0200, Tomas Pospisek wrote:
+
+> >Can you try running the output of "git diff-files --name-only" and "git
+> >ls-files -o" through xxd or something that would show individual bytes?
+> >My suspicion is that the "a_file" shown in each may not be bit-for-bit
+> >identical.
 > 
-> Peter Kjellerstedt venit, vidit, dixit 21.05.2010 16:47:
-> >> -----Original Message-----
-> >> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org]
-> >> On Behalf Of Michael J Gruber
-> >> Sent: den 21 maj 2010 15:49
-> >> To: Peter Kjellerstedt
-> >> Cc: git@vger.kernel.org
-> >> Subject: Re: Use "git pull --ff-only" by default?
-> >>
-> >> Peter Kjellerstedt venit, vidit, dixit 21.05.2010 14:59:
-> >>> Is there some way to make "git pull --ff-only" be the default?
-> >>> I could not find anything about this in "git config --help" and
-> >>> also the lack of a --no-ff-only option for git pull (it exists
-> >>> for git merge) indicates that there is no such support.
-> >>>
-> >>> I did considered the branch.<name>.mergeoptions configuration
-> >>> option, but it does not seem appropriate as it only applies to
-> >>> a specific branch, whereas I want it to apply to all branches
-> >>> by default.
-> >>>
-> >>> Yes, I know I could do "git config alias.pl 'pull --ff-only'",
-> >>> but since my intensions are for this to be the default for all
-> >>> developers in our organization (most of whom have no git knowledge
-> >>> at all yet) to avoid unnecessary branches caused by the developers
-> >>> hacking directly on master rather than a topic branch, I would
-> >>> very much prefer a configuration option rather than an alias (as
-> >>> I am unlikely to get the developers to remember to do "git pl"
-> >>> instead of "git pull").
-> >>
-> >> Problem is they have to remember to set your new config, or, if you
-> >> are able to set all developers system config, they have to refrain 
-> >> from overriding it.
-> >
-> > They would get it by default from our setup scripts. If they then
-> > choose to turn it off, so be it.
-> 
-> If you're relying on setup scripts, you can
-> 
-> git config alias.pull 'pull --ff-only'
+>  $ git diff-files --name-only
+>  $ # no output at all
 
-I forgot to mention that I had tried that. It does not work as git 
-explicitly does not allow one to use a git command name as an alias 
-name. And I think this is a good policy since it prevents people 
-from aliasing plumbing commands to do weird things. However, I would
-like to see some way to affect the defaults of porcelain commands.
+Hrm, I had originally thought that your "git status" output showed
+a_file as deleted in the working tree, which is why I suggested
+diff-files. But looking at your output again, I see that it is scheduled
+for deletion. In other words, the index entry has been removed entirely,
+as if "git rm --cached a_file" had been issued.
 
-> >>> My idea was to add something like merge.options and pull.options
-> >>> as configuration options (I want to be able to specify the options
-> >>> separately for pull and merge). However, I wanted throw this out
-> >>> here first before starting to hack away at the code, in case I
-> >>> missed something obvious, or if others find this to be an
-> >>> incredibly stupid idea...
-> >>
-> >> In general, you can't control reliably what people do in their
-> >> repos.
-> >
-> > I sure wish I had more control over it, but that is a separate
-> > discussion. ;)
-> >
-> >> But you can control what kind of pushes into a central repo you
-> >> allow. That is the usual approach: Let them mess up their repos, 
-> >> they'll learn their lesson when they can't push ;)
-> >
-> > Can you differentiate between an automatic merge which happened
-> > because the user had made some local changes before pulling (which
-> > I do not want to appear in the central repo), and a real merge of
-> > a topic branch (which I do want)?
-> 
-> I can't, and neither can Git. Who can?
+So I think I was on the wrong track with the filename-munging, then.
+Sorry to lead you astray. But the problem is that your index is missing
+or bogus, which is even weirder.
 
-Exactly. Which is why I would like for --ff-only to be the default
-as I think that is more sane in an environment where most of the
-users are git newbies.
+Looking at your strace dump, I see it writing out the index (it writes
+to index.lock and then renames it into place). Can you take a look at
+your .git/index file? It should be 104 bytes and look something like:
 
-> I think this boils down to having a few people who are allowed to push
-> merges because they can make these decisions. Even if people don't
-> merge "origin" but their own branches they can create a mess, so you 
-> cannot differentiate based on that.
+  $ xxd .git/index
+  0000000: 4449 5243 0000 0002 0000 0001 4bfa 367d  DIRC........K.6}
+  0000010: 0000 0000 4bfa 367d 0000 0000 0000 0900  ....K.6}........
+  0000020: 0099 801d 0000 81a4 0000 03e8 0000 03e8  ................
+  0000030: 0000 0000 e69d e29b b2d1 d643 4b8b 29ae  ...........CK.).
+  0000040: 775a d8c2 e48c 5391 0006 615f 6669 6c65  wZ....S...a_file
+  0000050: 0000 0000 1f80 d668 c07b 5955 8678 4360  .......h.{YU.xC`
+  0000060: 8215 6238 89be 9b4d
 
-In a larger organization this does not work. Most of our developers
-are responsible for at least one subsystem and expected to be the one 
-responsible for its master branch. We cannot rely on a few git veterans 
-to be the only ones with merging rights; it would never be accepted by 
-the management...
+It won't match byte-for-byte because there is stat information in there,
+but you should see a_file.
 
-> Michael
+If it's empty or 32 bytes, then that explains what status is reporting
+(but the question still remains how we got into that state).
 
-//Peter
+-Peff
