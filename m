@@ -1,8 +1,8 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: serious performance issues with images, audio files, and other
  "non-code" data
-Date: Sun, 23 May 2010 18:16:09 -0700
-Message-ID: <7vaarq14me.fsf@alter.siamese.dyndns.org>
+Date: Mon, 24 May 2010 01:39:55 -0400
+Message-ID: <20100524053955.GA4528@coredump.intra.peff.net>
 References: <4BEAF941.6040609@puckerupgames.com>
  <20100514051049.GF6075@coredump.intra.peff.net>
  <4BED47EA.9090905@puckerupgames.com>
@@ -14,62 +14,73 @@ References: <4BEAF941.6040609@puckerupgames.com>
  <alpine.LFD.2.00.1005181557250.12758@xanadu.home>
  <4BF9C678.6010108@puckerupgames.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
 To: John <john@puckerupgames.com>
-X-From: git-owner@vger.kernel.org Mon May 24 03:16:29 2010
+X-From: git-owner@vger.kernel.org Mon May 24 07:40:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGMHN-00046R-0s
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 03:16:29 +0200
+	id 1OGQOe-0007vM-Le
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 07:40:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090Ab0EXBQW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 May 2010 21:16:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55225 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751835Ab0EXBQV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 May 2010 21:16:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D92EB6E2E;
-	Sun, 23 May 2010 21:16:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Z7R9p/rqB7s+ySU5GGcA9OpCXW8=; b=B5v4Gi
-	H+8eWBhOQ4uHFLHu87dj3RnR3s29eSupVZnyiRmfxDgRMUE09M3wAUJcCQn1SM+v
-	M4l9WwtYD1qgoKdIFYQiZOHGlHXA/L0jnKUhJZlSOS8SKhJ/xfhutQ0FG2x+UTMV
-	31zkodqYK2Ye2mB2NFODJlY7JptN2/cvWNVBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ontWb+HEi1fEMffxsaVVnPhC2Vs4HF4O
-	hxe0Hwfc2yg3+CNhBAx8kCcMYHu1Z2PUtSAQm8bvHDr12jZAv/zY1wpaa1o0WnQx
-	JYcuFt8ZncKZNWDiu1Ne8nZoS1jhRzqIBBYF+PL9bBTmIxZ+Lr4ATDiD5O2wFkmf
-	WrVg6uf2oc4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD827B6E2D;
-	Sun, 23 May 2010 21:16:15 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 11AE1B6E2C; Sun, 23 May
- 2010 21:16:10 -0400 (EDT)
-In-Reply-To: <4BF9C678.6010108@puckerupgames.com> (john@puckerupgames.com's
- message of "Sun\, 23 May 2010 20\:21\:12 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F3288C66-66D1-11DF-9E96-D033EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751771Ab0EXFkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 01:40:00 -0400
+Received: from peff.net ([208.65.91.99]:34604 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751244Ab0EXFkA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 01:40:00 -0400
+Received: (qmail 492 invoked by uid 107); 24 May 2010 05:40:01 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 24 May 2010 01:40:01 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 24 May 2010 01:39:55 -0400
+Content-Disposition: inline
+In-Reply-To: <4BF9C678.6010108@puckerupgames.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147600>
 
-John <john@puckerupgames.com> writes:
+On Sun, May 23, 2010 at 08:21:12PM -0400, John wrote:
 
+> *.jpg  binary -delta
+> *.png  binary -delta
+> *.psd  binary -delta
+> *.gz  binary -delta
+> *.bz2  binary -delta
+> .. and so on.
+>
+> [...]
+>
 > Is there any reason why someone would NOT want the above
 > ".gitattributes" defined by default?
 
-Other than that our originally intended target audience are people who use
-git as a source code control system, not much.
+I delta jpgs in one of my repositories. It is useful if the exif
+metadata changes but the image data does not. I assume you could do the
+same with other formats which have compressed and uncompressed portions
+(I also do it with video containers).  I don't think it would ever make
+sense to try to delta gzip'd or bzip'd contents.
+
+I also don't use "binary", as I use a custom diff driver instead (binary
+implies "-diff").
+
+As for what should be the default, until now the default has always
+been that no gitattributes are defined by default. This is nice because
+it's simple to understand; git doesn't care about filenames unless you
+tell it to. The downside obviously is that it may not perform optimally
+for some unusual workloads without extra configuration.
+
+We could probably do defaults for some common extensions, but I'm not
+really sure where such a thing should end up. For example, I consider
+*.psd a uselessly obscure extension, as Adobe doesn't write software for
+my platform of choice. Not that I mind having it in git, but rather that
+we are inevitably going to miss somebody's pet extension, and then we
+are right back where we started with them needing to configure, except
+now they also have to figure out which extensions have default
+attributes.
+
+-Peff
