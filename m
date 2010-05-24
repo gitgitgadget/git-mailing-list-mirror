@@ -1,92 +1,99 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: What's cooking extra
-Date: Mon, 24 May 2010 16:47:34 +0400
-Message-ID: <20100524124734.GD3005@dpotapov.dyndns.org>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
- <20100519170656.GA30161@pvv.org>
- <20100522130916.GA28452@localhost>
- <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
- <20100522222746.GA2694@localhost>
- <CDD31343-2352-434B-B875-2013DAF49CE7@gmail.com>
- <20100523115127.GA20443@localhost>
- <744D05D2-FC47-45E5-92A1-CD93B0901E0C@gmail.com>
- <20100524094905.GA10811@localhost>
+Subject: Re: Use "git pull --ff-only" by default?
+Date: Mon, 24 May 2010 16:56:37 +0400
+Message-ID: <20100524125637.GE3005@dpotapov.dyndns.org>
+References: <A612847CFE53224C91B23E3A5B48BAC74483234E90@xmail3.se.axis.com>
+ <4BF68F5F.9010309@drmicha.warpmail.net>
+ <A612847CFE53224C91B23E3A5B48BAC74483234EDE@xmail3.se.axis.com>
+ <4BF6A445.1030105@drmicha.warpmail.net>
+ <A612847CFE53224C91B23E3A5B48BAC74483234FAA@xmail3.se.axis.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon May 24 14:47:49 2010
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Mon May 24 14:57:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGX4K-0001od-Og
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 14:47:45 +0200
+	id 1OGXDO-0005b8-Sl
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 14:57:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756900Ab0EXMrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 08:47:40 -0400
-Received: from fg-out-1718.google.com ([72.14.220.157]:53485 "EHLO
+	id S1753064Ab0EXM4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 08:56:44 -0400
+Received: from fg-out-1718.google.com ([72.14.220.154]:58779 "EHLO
 	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756810Ab0EXMrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 08:47:39 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1849772fga.1
-        for <git@vger.kernel.org>; Mon, 24 May 2010 05:47:37 -0700 (PDT)
+	with ESMTP id S1752178Ab0EXM4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 08:56:43 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1852815fga.1
+        for <git@vger.kernel.org>; Mon, 24 May 2010 05:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=dBO1SX63d5/tFxn7RhqS29C7Gsej68frkNbdJLA9AQg=;
-        b=U5jKE05phem89VG+0G9vaeMLAwFgoYa8GZHBZXq9L+Udo6t4B6XQaGGPAuNH4zNDa8
-         8wI693t4HP4beDS3hSR/DAeOS9wrl1/qYT3AVY1JxoL/klaUIfvwrDLHPminR5TDXW6Z
-         5Y7ti4Cf9cev0hHDKKJWp6ZaIj1UaEA4ypdIU=
+        bh=kByyrxRSGqdQBAI51gi/jEs9e+zZPO/CHA8F4/9HT+0=;
+        b=YhaBPkW5g0ZTwxVFQY5N+nKJZJFyTRYl6UWJFe103WAU+xtUxz3ls+WelcmvEJohKN
+         qj7KNwYbb3Ls2abkwihKuFKgWB7F6zXYf90MbLMykEmeDnXOknwhFfpNKFN8f8WIyMmy
+         VfHcymt9nZEhQxNswTD02MTEjKvgY0FMbNhWg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=uu2QaP3juDNHnJLtDqKobt5/SB6UKDOxGzV9ynOL49UOaDsYEBZj7FYo1CBkc1R9w9
-         xMLQMT9SWuU345aiDFuCh12rQFtttRHR29fEK+aRk/A371AF8dtQJnBBP0/LRxNEqUJF
-         xzw3rGaBJxStGEzPWW3r5oK0QKF2Rnkdbs8QA=
-Received: by 10.86.22.31 with SMTP id 31mr8292032fgv.24.1274705257738;
-        Mon, 24 May 2010 05:47:37 -0700 (PDT)
+        b=gbWi/rOgiGVSRjbLFvYaWdNSiDtMKdMhocy5+tTOIgTpx0lvuySnHA6SP6xkJkdOcE
+         C3SP5sYFGTUcq88uC9n1kZG0XAAyrDMuZnd3sSwq8mIXBJ6XkruU8kVJAib+Z8r6n+pL
+         KAPf91kfYxEH4fb6qRpHuSAWaA1p9NjUtIRCw=
+Received: by 10.87.50.6 with SMTP id c6mr8251833fgk.41.1274705801410;
+        Mon, 24 May 2010 05:56:41 -0700 (PDT)
 Received: from localhost (ppp85-140-126-0.pppoe.mtu-net.ru [85.140.126.0])
-        by mx.google.com with ESMTPS id 4sm9484056fgg.2.2010.05.24.05.47.35
+        by mx.google.com with ESMTPS id e3sm6947409fga.19.2010.05.24.05.56.39
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 24 May 2010 05:47:36 -0700 (PDT)
+        Mon, 24 May 2010 05:56:40 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100524094905.GA10811@localhost>
+In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74483234FAA@xmail3.se.axis.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147631>
 
-On Mon, May 24, 2010 at 11:49:05AM +0200, Clemens Buchacher wrote:
+On Mon, May 24, 2010 at 10:22:45AM +0200, Peter Kjellerstedt wrote:
 > 
-> Just because a feature is requested doesn't mean it's useful, or
-> even harmless. This has nothing to do with version control in the
-> first place, so I do not see why we should suffer the additional
-> complication.
+> I forgot to mention that I had tried that. It does not work as git 
+> explicitly does not allow one to use a git command name as an alias 
+> name. And I think this is a good policy since it prevents people 
+> from aliasing plumbing commands to do weird things. However, I would
+> like to see some way to affect the defaults of porcelain commands.
 
-IMHO, ability to enforce a specific for particular types of files is
-a good thing, and if you can say that these files must have CRLF, it
-should be possible to say that those files must have LF. At least, it
-would be a logic thing to do. I don't see how it can be harmful.
+Though, some porcelain commands (such as "branch") should never be used
+in scripts, many others do not have low-level analogue, so they are
+commonly used in scripts.
 
 > 
-> With CRLF file in the repository, core.autocrlf=true and
-> core.eol=lf,
+> > I think this boils down to having a few people who are allowed to push
+> > merges because they can make these decisions. Even if people don't
+> > merge "origin" but their own branches they can create a mess, so you 
+> > cannot differentiate based on that.
+> 
+> In a larger organization this does not work. Most of our developers
+> are responsible for at least one subsystem and expected to be the one 
+> responsible for its master branch.
 
-I wonder if this combination should be allowed. core.autocrlf=true
-always implied that the native EOL is CRLF. So I do not think any
-reasonable behavior can be deduced for this combination. Can you
-imagine _anyone_ who would want to have such settings? Otherwise,
-it is better to error out if this combination is encountered.
+Right. Now, if only one person who is responsible for this subsystem is
+expected to be able to push changes to the master branch then this
+person will never need "git pull --ff-only". In fact, when he pulls
+changes from others, he needs a real merge. So, this alone a very strong
+argument against making ff-only by default in any configuration.
+
+And if you think that "pull --ff-only" is very useful for some reason,
+nobody prevents to add an alias for that command, but this command
+should never be called as "pull", because "pull" has always been about
+merging changes, and if it does something different, you should call it
+differently. Why don't call it as "fast-forward" or "ff" for short?
 
 
 Dmitry
