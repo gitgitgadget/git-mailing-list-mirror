@@ -1,79 +1,78 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: What's cooking extra
-Date: Mon, 24 May 2010 22:45:36 +0200
-Message-ID: <E260F2DD-EA1E-4828-BAE4-62F7F18C5444@gmail.com>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org> <20100519170656.GA30161@pvv.org> <20100522130916.GA28452@localhost> <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com> <20100522222746.GA2694@localhost> <CDD31343-2352-434B-B875-2013DAF49CE7@gmail.com> <20100523115127.GA20443@localhost> <744D05D2-FC47-45E5-92A1-CD93B0901E0C@gmail.com> <20100524094905.GA10811@localhost> <20100524124734.GD3005@dpotapov.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
+From: Giuseppe Scrivano <gscrivano@gnu.org>
+Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
+Date: Mon, 24 May 2010 22:51:32 +0200
+Message-ID: <87pr0lja5n.fsf@gnu.org>
+References: <878w7ieu4p.fsf@thor.thematica.it>
+	<4BF12C96.9030802@drmicha.warpmail.net> <87vdamu2es.fsf@thor.thematica.it>
+	<4BF14508.8040307@drmicha.warpmail.net> <87d3wutt34.fsf@thor.thematica.it>
+	<4BF2614E.50003@drmicha.warpmail.net>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Clemens Buchacher <drizzd@aon.at>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 24 22:46:00 2010
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon May 24 22:51:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGeXA-0008HE-8k
-	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 22:46:00 +0200
+	id 1OGecV-0002RJ-Sx
+	for gcvg-git-2@lo.gmane.org; Mon, 24 May 2010 22:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756710Ab0EXUpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 16:45:42 -0400
-Received: from mail-ew0-f216.google.com ([209.85.219.216]:45100 "EHLO
-	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756198Ab0EXUpk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 May 2010 16:45:40 -0400
-Received: by ewy8 with SMTP id 8so378131ewy.28
-        for <git@vger.kernel.org>; Mon, 24 May 2010 13:45:39 -0700 (PDT)
+	id S1756194Ab0EXUv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 May 2010 16:51:27 -0400
+Received: from fg-out-1718.google.com ([72.14.220.153]:13783 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756007Ab0EXUv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 16:51:26 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so2012000fga.1
+        for <git@vger.kernel.org>; Mon, 24 May 2010 13:51:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=CEUxPLQFDPCwjEEeAspfZtKyqJPwFpJQTdNaX+t6W3c=;
-        b=gTdeHDICFFBBm34n5UiUYRhVBpjrktCA3SLTfmlmx2XM2PFpFVO9w+tlFyNuTbTsAK
-         B14HSA8dOdNzYcEzW2azXefNFHn9r0qbKu2aZXYD/Z2MD/qQVegwXMEzilsQ6gLQDtvo
-         deEEtK6ixZP0Xhbw0BjVxL2ORzLkEBkIx90Hw=
+        h=domainkey-signature:received:received:sender:received:from:to:cc
+         :subject:references:date:in-reply-to:message-id:user-agent
+         :mime-version:content-type;
+        bh=qfBE3DQw5MsNevxURuWeHAzfaT76zIiwNEGoAAYWB+A=;
+        b=FFis8Hxm/6zgdvM6XImiQkxysY373MGrK3oiIkuSpccpzPGwEzf9nbm2Ok5anj4wVh
+         WhLJrssQrPHa/DqzHWl9mG7ick2htM1D9M62fRSmBV604/jEu3MZGxMVAPSMdyMeeJoQ
+         AAlldYX59Sd1qJTKT63KNNYWbKHKuGnxakzs8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=EqLZlLFnrxzOa8EY5wWkOy/7VTwTBruKtJYGoJcs4H3jA9eE7BDU6ExJulgHsP1kPY
-         ChtwHDZFpPvzWbATywyFrcLZ5zQmJCW+CwOoE51XatV8LuazC7RisFmOocDt3BObSvYg
-         4p0KDBXaZ6eMNxP7WaFk/35Q9BThCCQQ+4Ajw=
-Received: by 10.213.19.14 with SMTP id y14mr21816eba.29.1274733939022;
-        Mon, 24 May 2010 13:45:39 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 15sm2061018ewy.0.2010.05.24.13.45.38
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        b=TSCQ13OxfZ1ohxNP7c5nwaQ/6GcDFCdC270GIu6zSfgnw3NW8Z6jb0AMjdCnoqiIzH
+         6YRtgAOLqvII4uBf5d45didy2jyuwsQdNgX59b3/b5GtmatgzevCHq65zMgEniMEjUY3
+         voagorr/WdmhfSvEvlVSbWtMsXKlH786JqhfA=
+Received: by 10.223.40.136 with SMTP id k8mr5147567fae.24.1274734284531;
+        Mon, 24 May 2010 13:51:24 -0700 (PDT)
+Received: from helvete (dynamic-adsl-84-222-166-164.clienti.tiscali.it [84.222.166.164])
+        by mx.google.com with ESMTPS id 2sm21278040faf.3.2010.05.24.13.51.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 24 May 2010 13:45:38 -0700 (PDT)
-In-Reply-To: <20100524124734.GD3005@dpotapov.dyndns.org>
-X-Mailer: Apple Mail (2.1078)
+        Mon, 24 May 2010 13:51:23 -0700 (PDT)
+Received: from localhost ([127.0.0.1] helo=helvete)
+	by helvete with esmtp (Exim 4.71)
+	(envelope-from <gscrivano@gnu.org>)
+	id 1OGecW-0000ms-QP; Mon, 24 May 2010 22:51:32 +0200
+In-Reply-To: <4BF2614E.50003@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Tue, 18 May 2010 11:43:42 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147648>
 
-On 24. mai 2010, at 14.47, Dmitry Potapov wrote:
+Hello Michael,
 
-> On Mon, May 24, 2010 at 11:49:05AM +0200, Clemens Buchacher wrote:
->> With CRLF file in the repository, core.autocrlf=true and
->> core.eol=lf,
-> 
-> I wonder if this combination should be allowed. core.autocrlf=true
-> always implied that the native EOL is CRLF. So I do not think any
-> reasonable behavior can be deduced for this combination. Can you
-> imagine _anyone_ who would want to have such settings? Otherwise,
-> it is better to error out if this combination is encountered.
 
-It errors out when core.autocrlf=input conflicts with core.eol, but allows an explicitly set core.eol to override (with no warning) when core.autocrlf=true.  That way, the meaning of core.autocrlf can later be changed to simply enable normalization without touching the output format--unfortunately removing any sense to the name.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Leaving core.autocrlf to mean what its name implies would require a new config variable (core.autotext?) for people who want automatic normalization but LFs in their working directory.
+> I haven't checked whether this covers all code paths but other than that
+> it looks OK to me, and the tests pass.
 
-I'll be semi-offline for the next week or so, so any update of the series will have to wait until I get back.
--- 
-Eyvind
+is the patch ready for inclusion?
+
+
+Thanks,
+Giuseppe
