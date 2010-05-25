@@ -1,90 +1,79 @@
-From: =?ISO-8859-1?Q?D=E9vai_Tam=E1s?= <devait@vnet.hu>
-Subject: Re: [PATCH] Man page section reference should be in uppercase
-Date: Tue, 25 May 2010 20:45:22 +0200
-Message-ID: <1274813122.1178.8.camel@localhost.localdomain>
-References: <1274756484-27867-1-git-send-email-ayiehere@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git log follow question
+Date: Tue, 25 May 2010 11:49:25 -0700 (PDT)
+Message-ID: <alpine.LFD.2.00.1005251141580.3689@i5.linux-foundation.org>
+References: <006d01caf300$703e96a0$50bbc3e0$@burgmann.anu.edu.au> <20100514043704.GC6075@coredump.intra.peff.net> <alpine.LFD.2.00.1005140730030.3711@i5.linux-foundation.org> <20100525093140.GA32460@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 25 20:45:52 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Albert Krawczyk <albert@burgmann.anu.edu.au>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 25 20:52:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGz8R-0006io-JR
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 20:45:51 +0200
+	id 1OGzEr-0002Mp-Rw
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 20:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932667Ab0EYSpa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 14:45:30 -0400
-Received: from a.relay.invitel.net ([62.77.203.3]:60043 "EHLO
-	a.relay.invitel.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932294Ab0EYSpa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 14:45:30 -0400
-Received: from mail.invitel.hu (mail.invitel.hu [213.163.59.4])
-	by a.relay.invitel.net (Invitel Core SMTP Transmitter) with ESMTP id 49FFC11A21B;
-	Tue, 25 May 2010 20:45:28 +0200 (CEST)
-Received: from [192.168.0.2] ([91.82.29.244])
- by mail.invitel.hu (Invitel Messaging Server)
- with ESMTPA id <0L2Z000GJO3NRT11@invitel.hu>; Tue,
- 25 May 2010 20:45:24 +0200 (CEST)
-In-reply-to: <1274756484-27867-1-git-send-email-ayiehere@gmail.com>
-X-Mailer: Evolution 2.6.2
+	id S1758895Ab0EYSwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 14:52:25 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:46578 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756378Ab0EYSwY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 14:52:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4PIqCSx020223
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 25 May 2010 11:52:13 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4PIqB81008791;
+	Tue, 25 May 2010 11:52:11 -0700
+In-Reply-To: <20100525093140.GA32460@coredump.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+X-Spam-Status: No, hits=-3.444 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147722>
 
-2010. 05. 25, kedd keltez=C3=A9ssel 11.01-kor Nazri Ramliy ezt =C3=ADrt=
-a:
-> From: nazri <ayiehere@gmail.com>
->=20
-> The advice given by git push when doing a non-fast-forward push refer=
-s
-> to the section 'Note about fast-forwards' in the git-push(1) man page=
-=2E
->=20
-> The section name should really be all in uppercase, as in 'NOTE ABOUT
-> FAST-FORWARDS' because that is how it is shown by git push --help.
->=20
 
-I don't really agree with this, but it might be only my personal
-preference. Reasons:
 
-The section title in the man page is "typeset" in a "different font" to
-be easily distinguishable from the surrounding text -- therefore it's
-all capital. On the other hand, changing the reference in the advice
-given by git-push to be all uppercase will give a needless emphasis on
-the referred section title. This is wrong IMHO, because the main point
-of the advice is not this reference, but the earlier sentences (i.e. th=
-e
-push was rejected).
+On Tue, 25 May 2010, Jeff King wrote:
+> 
+> Thanks for the input. I took a look at it myself and it is a bit more
+> complex than just turning on pruning. I have a prototype --follow that
+> handles arbitrary pathspecs instead of single files; instead of
+> replacing the single-file pathspec, it just widens the pathspec as it
+> traverses history.
 
-> Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
-> ---
->  builtin/push.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->=20
-> diff --git a/builtin/push.c b/builtin/push.c
-> index f4358b9..0694200 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -130,8 +130,8 @@ static int push_with_options(struct transport *tr=
-ansport, int flags)
-> =20
->  	if (nonfastforward && advice_push_nonfastforward) {
->  		fprintf(stderr, "To prevent you from losing history, non-fast-forw=
-ard updates were rejected\n"
-> -				"Merge the remote changes before pushing again.  See the 'Note a=
-bout\n"
-> -				"fast-forwards' section of 'git push --help' for details.\n");
-> +				"Merge the remote changes before pushing again.  See the 'NOTE A=
-BOUT\n"
-> +				"FAST-FORWARDS' section of 'git push --help' for details.\n");
->  	}
-> =20
->  	return 1;
+Doing it "right" is actually a _lot_ more complex than that.
+
+Think especially about the case of the file having been renamed in one 
+branch, and in another branch it was created from scratch, and then a 
+merge that sorts it all out (think two people aiming for the same thing, 
+just doing it differently - but with similar approaches).
+
+Now, imagine reaching the common commit by walking _one_ of the chains 
+before having walked the other one fully. So now you're looking at a 
+commit using one set of pathnames, and then later on you'll hit the _same_ 
+commit (through the other branch), but with another set of pathnames. But 
+by then you've already handled that commit.
+
+The above isn't an issue with the regular pathname pruning, because the 
+pruning rules never change - so the order of handling commits never 
+matter, and you can do the pruning before/independently of having done any 
+history following.
+
+And it's not an issue with the current total hack, because the current 
+total hack doesn't even _try_ to handle it, and doesn't even really try to 
+do anything proper. The current hack is very much by design was a "hey, 
+this is about as good as CVS/SVN could ever do", rather than anything that 
+has any good design.
+
+		Linus
