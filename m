@@ -1,77 +1,75 @@
-From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
-Subject: (Mosty harmless) protocol error when pushing
-Date: Tue, 25 May 2010 08:51:34 +0200
-Message-ID: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCHv5 GSoC] gitweb: Move static files into seperate subdirectory
+Date: Tue, 25 May 2010 08:32:58 +0200
+Message-ID: <201005250832.58350.chriscool@tuxfamily.org>
+References: <1274714564-7553-1-git-send-email-pavan.sss1991@gmail.com> <201005250624.31097.chriscool@tuxfamily.org> <AANLkTikOMuugbWqnbkUYwPsxq6z9Eo3E3MrX1jIE5juS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org\"" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 25 08:51:44 2010
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, Petr Baudis <pasky@ucw.cz>,
+	git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 25 09:02:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGnzL-0007cE-JZ
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 08:51:43 +0200
+	id 1OGo9S-0004OP-DL
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:02:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932295Ab0EYGvh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 02:51:37 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:52254 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932199Ab0EYGvg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 02:51:36 -0400
-Received: by wyb29 with SMTP id 29so2102937wyb.19
-        for <git@vger.kernel.org>; Mon, 24 May 2010 23:51:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=iYOaOIDwvb/diE/pVuQBiWpuXLL24hbQwbGnhtZ+k5I=;
-        b=MuEu34Al2pA9wBBdlDhmhDCHI/E7448DN1kSSVzl3lARo1HkCiHI3zYVE8msf7ZtWQ
-         gVccPq/G7pl6C5f4d0b3ZF9oLVNWF7Lu+etS6kd1J2Cyu5iZZsrRBcnYu/eg10/rH15E
-         2SyyPdRRTUtrXQ0sWp1yGBbOcp1eYj46LRxTU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=vArdEUTdwusyKVf9dRyr1S68Qw0IRthHUQ/Fv45aoVN1LomQRntJYHyrMt+mswwrUZ
-         egH4uFdYiOlftsffjvVGQ9uNESpd59+QrRfBV9ztV4rfG+ucH0n3NrPNv4E6ddIuR01y
-         QXt0RUV9idt21MGDAPInt9WtQyn6zW++A+rfE=
-Received: by 10.216.156.193 with SMTP id m43mr4234675wek.11.1274770294130; 
-	Mon, 24 May 2010 23:51:34 -0700 (PDT)
-Received: by 10.216.183.204 with HTTP; Mon, 24 May 2010 23:51:34 -0700 (PDT)
+	id S1753260Ab0EYHCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 03:02:04 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:40504 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752487Ab0EYHCC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 03:02:02 -0400
+Received: from smtp3-g21.free.fr (localhost [127.0.0.1])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 428B6818085;
+	Tue, 25 May 2010 09:01:54 +0200 (CEST)
+Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP;
+	Tue, 25 May 2010 09:01:53 +0200 (CEST)
+User-Agent: KMail/1.12.2 (Linux/2.6.31-20-generic; KDE/4.3.2; x86_64; ; )
+In-Reply-To: <AANLkTikOMuugbWqnbkUYwPsxq6z9Eo3E3MrX1jIE5juS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147671>
 
-I am not sure whether this has been reported before.
-I follow this mailing list, but I don't read all emails in
-detail, so I could have missed a bug report or a fix
-for the problem.
+On Tuesday 25 May 2010 06:51:18 Pavan Kumar Sunkara wrote:
+> On Tue, May 25, 2010 at 9:54 AM, Christian Couder
+> 
+> <chriscool@tuxfamily.org> wrote:
+> > On Tuesday 25 May 2010 06:30:49 Pavan Kumar Sunkara wrote:
 
-Anyway, what seems to happen is that some protocol
-error happens when an automatic GC is triggered
-during a push. The push succeeded, despite the
-error messages.
+> >> It's not a problem with the version, it's a problem with your system.
+> >> echo -e didn't create a binary as expected. You can tell it by seeing
+> >> this line:
+> >>
+> >> bar => sub/bar | 0
+> >>
+> >> rather than this
+> >>
+> >> bar => sub/bar | Bin 5 -> 5 Bytes
+> >>
+> >> Change your script to copy a binary file into bar instead of using
+> >> 'echo -e 'bar\()' and you will see the difference.
+> >
+> > Yeah I changed "#!/bin/sh" to "#!/bin/bash" and it does not work now.
+> > It's a problem because /bin/sh is dash on kubuntu.
+> >
+> > Thanks,
+> > Christian.
+> 
+> Manually adding the diff lines for both the binary files and applying
+> that patch worked for me.
+>  So, shall I send it to git list for now ?
 
-My version of git is 1.7.1.86.g0e460. Here is
-what happened (I force-pushed a single branch):
+Yes please!
 
-Counting objects: 270, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (71/71), done.
-Writing objects: 100% (184/184), 151.33 KiB, done.
-Total 184 (delta 157), reused 134 (delta 113)
-Auto packing the repository for optimum performance.
-fatal: protocol error: bad line length character: Remo
-error: error in sideband demultiplexer
-To git@github.com:bjorng/otp.git
- + 7651a63...874192d bg/nif_error -> bg/nif_error (forced update)
-error: failed to push some refs to 'git@github.com:bjorng/otp.git'
-
---=20
-Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
+Thanks,
+Christian.
