@@ -1,79 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git log follow question
-Date: Tue, 25 May 2010 11:49:25 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1005251141580.3689@i5.linux-foundation.org>
-References: <006d01caf300$703e96a0$50bbc3e0$@burgmann.anu.edu.au> <20100514043704.GC6075@coredump.intra.peff.net> <alpine.LFD.2.00.1005140730030.3711@i5.linux-foundation.org> <20100525093140.GA32460@coredump.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Maintaining an html branch
+Date: Tue, 25 May 2010 14:21:11 -0500
+Message-ID: <20100525192111.GA7279@progeny.tock>
+References: <AANLkTimMVn8fMVBmfNi4vR3kk3cXF2gq0Y9Ij5w3cl15@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Albert Krawczyk <albert@burgmann.anu.edu.au>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 25 20:52:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Christos Trochalakis <yatiohi@ideopolis.gr>
+X-From: git-owner@vger.kernel.org Tue May 25 21:21:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGzEr-0002Mp-Rw
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 20:52:30 +0200
+	id 1OGzgQ-0001Yg-39
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 21:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758895Ab0EYSwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 14:52:25 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:46578 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756378Ab0EYSwY (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 14:52:24 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [140.211.169.55])
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4PIqCSx020223
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 25 May 2010 11:52:13 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id o4PIqB81008791;
-	Tue, 25 May 2010 11:52:11 -0700
-In-Reply-To: <20100525093140.GA32460@coredump.intra.peff.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-X-Spam-Status: No, hits=-3.444 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1758559Ab0EYTUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 15:20:49 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:40028 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758530Ab0EYTUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 15:20:48 -0400
+Received: by wwg30 with SMTP id 30so158822wwg.19
+        for <git@vger.kernel.org>; Tue, 25 May 2010 12:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=145AOTOQRsuO+lBsvYOcsFhEFHJlwrAc5uTPq7xc7js=;
+        b=NnNdsdurB+3RYFz7jswo227MRkFgYRiF681MfbGy+VMo65erKI8SbD0gLLm9XpLu5l
+         84bOTJcIfv7e6qwvgjZE1UcdVVXuENGHmKOIdVTxuJI2Zx516BLlqAopdoysNaj3mXi8
+         0y7MUo/wI7HEFwUJ6hFzlGj/wJ+SDW58dAkSo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XqiKZYHO++t6Fo4dEpq+rU/hXnLWixWe8xcveFnNUqgwaL2/1X6FBdK2MnCUkoLSvE
+         rF4NyKw9fl6a8U5GBi4zbUhbC/WvuW//RVRO9w5nRKYQ96KufMJMszflG27oY4ShupsE
+         ffzrJbRfWL28DpS4NzrlunRC9H954mmYP6HP0=
+Received: by 10.216.86.1 with SMTP id v1mr5011460wee.215.1274815245859;
+        Tue, 25 May 2010 12:20:45 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id d75sm1840742wek.8.2010.05.25.12.20.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 25 May 2010 12:20:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimMVn8fMVBmfNi4vR3kk3cXF2gq0Y9Ij5w3cl15@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147723>
 
+Hi Christos,
 
+Christos Trochalakis wrote:
 
-On Tue, 25 May 2010, Jeff King wrote:
-> 
-> Thanks for the input. I took a look at it myself and it is a bit more
-> complex than just turning on pruning. I have a prototype --follow that
-> handles arbitrary pathspecs instead of single files; instead of
-> replacing the single-file pathspec, it just widens the pathspec as it
-> traverses history.
+> I would like to maintain an html branch for my repo, containing files
+> under my '_site/' dir that is not version controlled.
+[...]
+> rm .git/html.index
+> export GIT_INDEX_FILE=.git/html.index
+[...]
 
-Doing it "right" is actually a _lot_ more complex than that.
+Looks reasonable.  Way I suggest a simpler way?
 
-Think especially about the case of the file having been renamed in one 
-branch, and in another branch it was created from scratch, and then a 
-merge that sorts it all out (think two people aiming for the same thing, 
-just doing it differently - but with similar approaches).
+If your goal is to publish an html branch with the rest of your
+branches, I would recommend using a separate local repository that
+pushes to the same remote repository[1].
 
-Now, imagine reaching the common commit by walking _one_ of the chains 
-before having walked the other one fully. So now you're looking at a 
-commit using one set of pathnames, and then later on you'll hit the _same_ 
-commit (through the other branch), but with another set of pathnames. But 
-by then you've already handled that commit.
+If the goal is to stay under draconian disk quotas by not maintaining
+two local repositories, one with the web site checked out all the
+time, I suggest using contrib/workdir/git-new-workdir.
 
-The above isn't an issue with the regular pathname pruning, because the 
-pruning rules never change - so the order of handling commits never 
-matter, and you can do the pruning before/independently of having done any 
-history following.
+Hope that helps,
+Jonathan
 
-And it's not an issue with the current total hack, because the current 
-total hack doesn't even _try_ to handle it, and doesn't even really try to 
-do anything proper. The current hack is very much by design was a "hey, 
-this is about as good as CVS/SVN could ever do", rather than anything that 
-has any good design.
-
-		Linus
+[1] See http://thread.gmane.org/gmane.comp.version-control.git/142831/focus=142865
+for an example.
