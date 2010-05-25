@@ -1,69 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC][PATCH] Print the usage string on stdout instead of stderr.
-Date: Tue, 25 May 2010 08:46:34 +0200
-Message-ID: <4BFB724A.3020800@drmicha.warpmail.net>
-References: <878w7ieu4p.fsf@thor.thematica.it>	<4BF12C96.9030802@drmicha.warpmail.net> <87vdamu2es.fsf@thor.thematica.it>	<4BF14508.8040307@drmicha.warpmail.net> <87d3wutt34.fsf@thor.thematica.it>	<4BF2614E.50003@drmicha.warpmail.net> <87pr0lja5n.fsf@gnu.org>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: (Mosty harmless) protocol error when pushing
+Date: Tue, 25 May 2010 08:51:34 +0200
+Message-ID: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Scrivano <gscrivano@gnu.org>
-X-From: git-owner@vger.kernel.org Tue May 25 08:47:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org\"" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 25 08:51:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGnux-0005av-EE
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 08:47:11 +0200
+	id 1OGnzL-0007cE-JZ
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 08:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186Ab0EYGrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 02:47:06 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54437 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932069Ab0EYGrF (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 02:47:05 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id F05D0F7DF3;
-	Tue, 25 May 2010 02:46:47 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 25 May 2010 02:46:47 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=MqLHWrfrsy/7wiqD21HYEu8puM0=; b=Ww63sgryhdJFgSbJ/RhUzI4mNcP6lQms2/CbCBF7JZfubs4XNx35USaqa0N+QYk93uG5vXX+a9myc458WRmOa+bgybyQzI/osGxbzm1RjN71M5DuSq55laxmuLMBSViNiZkzA2EoDFIvq3wADK+qvR4ko9yuz3gLjTt7/piftS4=
-X-Sasl-enc: c14y18b33bESfhqUB8B3ai5jeH3flJ8i5QxJU4mooKQL 1274770007
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 760665928D;
-	Tue, 25 May 2010 02:46:47 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
-In-Reply-To: <87pr0lja5n.fsf@gnu.org>
+	id S932295Ab0EYGvh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 02:51:37 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52254 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932199Ab0EYGvg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 02:51:36 -0400
+Received: by wyb29 with SMTP id 29so2102937wyb.19
+        for <git@vger.kernel.org>; Mon, 24 May 2010 23:51:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=iYOaOIDwvb/diE/pVuQBiWpuXLL24hbQwbGnhtZ+k5I=;
+        b=MuEu34Al2pA9wBBdlDhmhDCHI/E7448DN1kSSVzl3lARo1HkCiHI3zYVE8msf7ZtWQ
+         gVccPq/G7pl6C5f4d0b3ZF9oLVNWF7Lu+etS6kd1J2Cyu5iZZsrRBcnYu/eg10/rH15E
+         2SyyPdRRTUtrXQ0sWp1yGBbOcp1eYj46LRxTU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=vArdEUTdwusyKVf9dRyr1S68Qw0IRthHUQ/Fv45aoVN1LomQRntJYHyrMt+mswwrUZ
+         egH4uFdYiOlftsffjvVGQ9uNESpd59+QrRfBV9ztV4rfG+ucH0n3NrPNv4E6ddIuR01y
+         QXt0RUV9idt21MGDAPInt9WtQyn6zW++A+rfE=
+Received: by 10.216.156.193 with SMTP id m43mr4234675wek.11.1274770294130; 
+	Mon, 24 May 2010 23:51:34 -0700 (PDT)
+Received: by 10.216.183.204 with HTTP; Mon, 24 May 2010 23:51:34 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147670>
 
-Giuseppe Scrivano venit, vidit, dixit 24.05.2010 22:51:
-> Hello Michael,
-> 
-> 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> I haven't checked whether this covers all code paths but other than that
->> it looks OK to me, and the tests pass.
-> 
-> is the patch ready for inclusion?
+I am not sure whether this has been reported before.
+I follow this mailing list, but I don't read all emails in
+detail, so I could have missed a bug report or a fix
+for the problem.
 
-You're the author, you should know ;)
+Anyway, what seems to happen is that some protocol
+error happens when an automatic GC is triggered
+during a push. The push succeeded, despite the
+error messages.
 
-Note that I can't include your patch. That's up to Junio, and he's been
-lagging back for good reasons (as you could read on the list) and is in
-the process of keeping up.
+My version of git is 1.7.1.86.g0e460. Here is
+what happened (I force-pushed a single branch):
 
-I gave you my partial ack'ed-by (see above) and a homework problem to
-answer: Have you checked whether this covers all code paths (all
-help/usage callers)? If yes then it's a good idea to resend v2 of your
-patch as a reply to this thread but with subject "[PATCH v2]..." as it
-is hard to find otherwise, and cc to Junio.
+Counting objects: 270, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (71/71), done.
+Writing objects: 100% (184/184), 151.33 KiB, done.
+Total 184 (delta 157), reused 134 (delta 113)
+Auto packing the repository for optimum performance.
+fatal: protocol error: bad line length character: Remo
+error: error in sideband demultiplexer
+To git@github.com:bjorng/otp.git
+ + 7651a63...874192d bg/nif_error -> bg/nif_error (forced update)
+error: failed to push some refs to 'git@github.com:bjorng/otp.git'
 
-Cheers,
-Michael
+--=20
+Bj=C3=B6rn Gustavsson, Erlang/OTP, Ericsson AB
