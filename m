@@ -1,13 +1,8 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH 6/6 rebase-version] Make --color-words work well with --graph.
-Date: Tue, 25 May 2010 17:02:34 +0800
-Message-ID: <1274778154-29976-7-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH 1/6 rebase-version] Add a prefix output callback to diff output.
+Date: Tue, 25 May 2010 17:02:29 +0800
+Message-ID: <1274778154-29976-2-git-send-email-struggleyb.nku@gmail.com>
 References: <1274778154-29976-1-git-send-email-struggleyb.nku@gmail.com>
- <1274778154-29976-2-git-send-email-struggleyb.nku@gmail.com>
- <1274778154-29976-3-git-send-email-struggleyb.nku@gmail.com>
- <1274778154-29976-4-git-send-email-struggleyb.nku@gmail.com>
- <1274778154-29976-5-git-send-email-struggleyb.nku@gmail.com>
- <1274778154-29976-6-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com, trast@student.ethz.ch, peff@peff.net
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue May 25 11:04:00 2010
@@ -17,261 +12,288 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGq3L-0006pk-C7
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 11:03:59 +0200
+	id 1OGq3M-0006pk-0F
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 11:04:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932230Ab0EYJDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 05:03:17 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:46547 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756404Ab0EYJDK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 05:03:10 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 3so456090pvg.19
-        for <git@vger.kernel.org>; Tue, 25 May 2010 02:03:10 -0700 (PDT)
+	id S932276Ab0EYJDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 05:03:23 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:52593 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756521Ab0EYJCu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 05:02:50 -0400
+Received: by pxi18 with SMTP id 18so1861182pxi.19
+        for <git@vger.kernel.org>; Tue, 25 May 2010 02:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=vCLByjqsa0IhMbxI/Cd/8rUONuWrJ8wcizZf8kIjvEA=;
-        b=P+00dC+xSBJpb0untdgHtRViUKASLvFVj2kA5O0XV/DR7ia3z7BJP/TCDu1RoXo4lQ
-         Qpq+V/dFSz3eEcQfOlvRPZ/eoVyd5xojas1WlfIwPmZ2D8Bg/sIPCAKGkRKRStzYpUl+
-         5mqySgfYssuri9fJ3GPgrEuCIGSZa5hj8MCxE=
+        bh=dSDPWz8+QFrn9yaMsvtmS6dip8sosc/ioIJWy14sUks=;
+        b=h6XlFYfV0b9LEtmTODdzmTCE7hzZf8q/E6byC7Cv2M5y4YtjLMNf2JRLVFBKFEk15h
+         /jsTPdBdLsGk9SBI3r9/nuOZFsti7N99/4yo7cOk3/mE3f7Q5H7qAy2VUSVbo7/MpdIL
+         zAretJ5z+z2NvlrdXm5ZzEvNqrt00oFq25JEI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=bg6Hn4Ezd4eCeIjUi7Jkw89dQ7w2akp01ztJeJKOt1VvhB/LA8Koj0y80dEwsbsWyl
-         sBgoER7BhaiYzK8ok6QOmGrmSw/k9fl4wShXLt+O99F7Yhttiv+T6jmi4gY6mr5pTij8
-         vKIfzkNXZd78jjwR3KwNlAGNR2lievK194mTo=
-Received: by 10.114.49.4 with SMTP id w4mr5902934waw.88.1274778189748;
-        Tue, 25 May 2010 02:03:09 -0700 (PDT)
+        b=smeU2/uMpqUD7Q726QfflNkPxCk1TfXUjnqeL2TVKD0ZvHl4jXUXQ+UP14pMF3XKAf
+         pOutio12yEO8FUIjFJfQmXoFpbIfE857dWPJRT4mhxRBRFw2Mdjzq/DcHdAHYr3B50B6
+         Vy920VM/mVAHLuF30ev+EZ2InXdn/4uT8MCHo=
+Received: by 10.115.103.40 with SMTP id f40mr5950192wam.38.1274778169445;
+        Tue, 25 May 2010 02:02:49 -0700 (PDT)
 Received: from localhost.localdomain ([58.68.143.99])
-        by mx.google.com with ESMTPS id d16sm46058650wam.0.2010.05.25.02.03.05
+        by mx.google.com with ESMTPS id d16sm46058650wam.0.2010.05.25.02.02.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 25 May 2010 02:03:08 -0700 (PDT)
+        Tue, 25 May 2010 02:02:48 -0700 (PDT)
 X-Mailer: git-send-email 1.6.0.4
-In-Reply-To: <1274778154-29976-6-git-send-email-struggleyb.nku@gmail.com>
+In-Reply-To: <1274778154-29976-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147695>
 
-'--color-words' algorithm can be described as:
-
-1. collect a the minus/plus lines of a diff hunk, divided into minus-lines and plus-lines;
-2. break both minus-lines and plus-lines into words and place them into two
-   mmfile_t with one word for each line;
-3. use xdiff to run diff on the two mmfile_t to get the words level diff;
-
-And for the common parts of the both file, we output the plus side text.
-diff_words->current_plus is used to trace the current position of the plus file
-which printed. diff_words->last_minus is used to trace the last minus word
-printed.
-
-For '--graph' to work with '--color-words', we need to output the graph prefix
-on each line of color words output. Generally, there are two conditions on
-which we should output the prefix.
-1. diff_words->last_minus == 0 && diff_words->current_plus == diff_words->plus.text.ptr
-   that is: the plus text must start as a new line, and if there is no minus
-   word printed, a graph prefix must be printed.
-2. diff_words->current_plus > diff_words->plus.text.ptr && *(diff_words->current_plus - 1) == '\n'
-   that is: a graph prefix must be printed following a '\n'
+The callback allow to output some prefix string for
+each line of diff output.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- diff.c |  106 +++++++++++++++++++++++++++++++++++++++++++++++++++++----------
- 1 files changed, 89 insertions(+), 17 deletions(-)
+ diff.c |   62 +++++++++++++++++++++++++++++++++++---------------------------
+ diff.h |    5 +++++
+ 2 files changed, 40 insertions(+), 27 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 067260b..0e87dd2 100644
+index 494f560..e2f910a 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -624,7 +624,8 @@ struct diff_words_style diff_words_styles[] = {
- struct diff_words_data {
- 	struct diff_words_buffer minus, plus;
- 	const char *current_plus;
--	FILE *file;
-+	int last_minus;
+@@ -194,8 +194,8 @@ struct emit_callback {
+ 	sane_truncate_fn truncate;
+ 	const char **label_path;
+ 	struct diff_words_data *diff_words;
 +	struct diff_options *opt;
- 	regex_t *word_regex;
- 	enum diff_words_type type;
- 	struct diff_words_style *style;
-@@ -633,10 +634,15 @@ struct diff_words_data {
- static int fn_out_diff_words_write_helper(FILE *fp,
- 					  struct diff_words_style_elem *st_el,
- 					  const char *newline,
--					  size_t count, const char *buf)
-+					  size_t count, const char *buf,
-+					  const char *line_prefix)
+ 	int *found_changesp;
+-	FILE *file;
+ 	struct strbuf *header;
+ };
+ 
+@@ -282,11 +282,19 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+ 	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
+ }
+ 
+-static void emit_line_0(FILE *file, const char *set, const char *reset,
++static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
+ 			int first, const char *line, int len)
  {
-+	int print = 0;
+ 	int has_trailing_newline, has_trailing_carriage_return;
+ 	int nofirst;
++	FILE *file = o->file;
 +
- 	while (count) {
- 		char *p = memchr(buf, '\n', count);
-+		if (print)
-+			fputs(line_prefix, fp);
- 		if (p != buf) {
- 			if (st_el->color && fputs(st_el->color, fp) < 0)
- 				return -1;
-@@ -654,6 +660,7 @@ static int fn_out_diff_words_write_helper(FILE *fp,
- 			return -1;
- 		count -= p + 1 - buf;
- 		buf = p + 1;
-+		print = 1;
++	if (o->output_prefix) {
++		struct strbuf *msg = NULL;
++		msg = o->output_prefix(o, o->output_prefix_data);
++		assert(msg);
++		fwrite(msg->buf, msg->len, 1, file);
++	}
+ 
+ 	if (len == 0) {
+ 		has_trailing_newline = (first == '\n');
+@@ -316,10 +324,10 @@ static void emit_line_0(FILE *file, const char *set, const char *reset,
+ 		fputc('\n', file);
+ }
+ 
+-static void emit_line(FILE *file, const char *set, const char *reset,
++static void emit_line(struct diff_options *o, const char *set, const char *reset,
+ 		      const char *line, int len)
+ {
+-	emit_line_0(file, set, reset, line[0], line+1, len-1);
++	emit_line_0(o, set, reset, line[0], line+1, len-1);
+ }
+ 
+ static int new_blank_line_at_eof(struct emit_callback *ecbdata, const char *line, int len)
+@@ -341,15 +349,15 @@ static void emit_add_line(const char *reset,
+ 	const char *set = diff_get_color(ecbdata->color_diff, DIFF_FILE_NEW);
+ 
+ 	if (!*ws)
+-		emit_line_0(ecbdata->file, set, reset, '+', line, len);
++		emit_line_0(ecbdata->opt, set, reset, '+', line, len);
+ 	else if (new_blank_line_at_eof(ecbdata, line, len))
+ 		/* Blank line at EOF - paint '+' as well */
+-		emit_line_0(ecbdata->file, ws, reset, '+', line, len);
++		emit_line_0(ecbdata->opt, ws, reset, '+', line, len);
+ 	else {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line_0(ecbdata->file, set, reset, '+', "", 0);
++		emit_line_0(ecbdata->opt, set, reset, '+', "", 0);
+ 		ws_check_emit(line, len, ecbdata->ws_rule,
+-			      ecbdata->file, set, reset, ws);
++			      ecbdata->opt->file, set, reset, ws);
  	}
- 	return 0;
- }
-@@ -664,11 +671,20 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
- 	struct diff_words_style *style = diff_words->style;
- 	int minus_first, minus_len, plus_first, plus_len;
- 	const char *minus_begin, *minus_end, *plus_begin, *plus_end;
-+	struct diff_options *opt = diff_words->opt;
-+	struct strbuf *msgbuf;
-+	char *line_prefix = "";
- 
- 	if (line[0] != '@' || parse_hunk_header(line, len,
- 			&minus_first, &minus_len, &plus_first, &plus_len))
- 		return;
- 
-+	assert(opt);
-+	if (opt->output_prefix) {
-+		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
-+
- 	/* POSIX requires that first be decremented by one if len == 0... */
- 	if (minus_len) {
- 		minus_begin = diff_words->minus.orig[minus_first].begin;
-@@ -684,21 +700,57 @@ static void fn_out_diff_words_aux(void *priv, char *line, unsigned long len)
- 	} else
- 		plus_begin = plus_end = diff_words->plus.orig[plus_first].end;
- 
--	if (diff_words->current_plus != plus_begin)
--		fn_out_diff_words_write_helper(diff_words->file,
-+	/*
-+	 * '--color-words' algorithm can be described as:
-+	 *
-+	 * 1. collect a the minus/plus lines of a diff hunk, divided into minus-lines and plus-lines;
-+	 * 2. break both minus-lines and plus-lines into words and place them into two
-+	 *    mmfile_t with one word for each line;
-+	 * 3. use xdiff to run diff on the two mmfile_t to get the words level diff;
-+	 *
-+	 * And for the common parts of the both file, we output the plus side text.
-+	 * diff_words->current_plus is used to trace the current position of the plus file
-+	 * which printed. diff_words->last_minus is used to trace the last minus word
-+	 * printed.
-+	 *
-+	 * For '--graph' to work with '--color-words', we need to output the graph prefix
-+	 * on each line of color words output. Generally, there are two conditions on
-+	 * which we should output the prefix.
-+	 * 1. diff_words->last_minus == 0 && diff_words->current_plus == diff_words->plus.text.ptr
-+	 *    that is: the plus text must start as a new line, and if there is no minus
-+	 *    word printed, a graph prefix must be printed.
-+	 * 2. diff_words->current_plus > diff_words->plus.text.ptr && *(diff_words->current_plus - 1) == '\n'
-+	 *    that is: a graph prefix must be printed following a '\n'
-+	 */
-+	if ((diff_words->last_minus == 0 &&
-+		diff_words->current_plus == diff_words->plus.text.ptr) ||
-+		(diff_words->current_plus > diff_words->plus.text.ptr &&
-+		*(diff_words->current_plus - 1) == '\n')) {
-+		fputs(line_prefix, diff_words->opt->file);
-+	}
-+	if (diff_words->current_plus != plus_begin) {
-+		fn_out_diff_words_write_helper(diff_words->opt->file,
- 				&style->ctx, style->newline,
- 				plus_begin - diff_words->current_plus,
--				diff_words->current_plus);
--	if (minus_begin != minus_end)
--		fn_out_diff_words_write_helper(diff_words->file,
-+				diff_words->current_plus, line_prefix);
-+		if (*(plus_begin - 1) == '\n')
-+			fputs(line_prefix, diff_words->opt->file);
-+	}
-+	if (minus_begin != minus_end) {
-+		fn_out_diff_words_write_helper(diff_words->opt->file,
- 				&style->old, style->newline,
--				minus_end - minus_begin, minus_begin);
--	if (plus_begin != plus_end)
--		fn_out_diff_words_write_helper(diff_words->file,
-+				minus_end - minus_begin, minus_begin,
-+				line_prefix);
-+	}
-+	if (plus_begin != plus_end) {
-+		fn_out_diff_words_write_helper(diff_words->opt->file,
- 				&style->new, style->newline,
--				plus_end - plus_begin, plus_begin);
-+				plus_end - plus_begin, plus_begin,
-+				line_prefix);
-+	}
- 
- 	diff_words->current_plus = plus_end;
-+	diff_words->last_minus = minus_first;
  }
  
- /* This function starts looking at *begin, and returns 0 iff a word was found. */
-@@ -779,16 +831,29 @@ static void diff_words_show(struct diff_words_data *diff_words)
- 	mmfile_t minus, plus;
- 	struct diff_words_style *style = diff_words->style;
- 
-+	struct diff_options *opt = diff_words->opt;
-+	struct strbuf *msgbuf;
-+	char *line_prefix = "";
-+
-+	assert(opt);
-+	if (opt->output_prefix) {
-+		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
-+
- 	/* special case: only removal */
- 	if (!diff_words->plus.text.size) {
--		fn_out_diff_words_write_helper(diff_words->file,
-+		fputs(line_prefix, diff_words->opt->file);
-+		fn_out_diff_words_write_helper(diff_words->opt->file,
- 			&style->old, style->newline,
--			diff_words->minus.text.size, diff_words->minus.text.ptr);
-+			diff_words->minus.text.size,
-+			diff_words->minus.text.ptr, line_prefix);
- 		diff_words->minus.text.size = 0;
+@@ -370,23 +378,23 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	if (len < 10 ||
+ 	    memcmp(line, atat, 2) ||
+ 	    !(ep = memmem(line + 2, len - 2, atat, 2))) {
+-		emit_line(ecbdata->file, plain, reset, line, len);
++		emit_line(ecbdata->opt, plain, reset, line, len);
  		return;
  	}
+ 	ep += 2; /* skip over @@ */
  
- 	diff_words->current_plus = diff_words->plus.text.ptr;
-+	diff_words->last_minus = 0;
+ 	/* The hunk header in fraginfo color */
+-	emit_line(ecbdata->file, frag, reset, line, ep - line);
++	emit_line(ecbdata->opt, frag, reset, line, ep - line);
  
- 	memset(&xpp, 0, sizeof(xpp));
- 	memset(&xecfg, 0, sizeof(xecfg));
-@@ -802,11 +867,18 @@ static void diff_words_show(struct diff_words_data *diff_words)
- 	free(minus.ptr);
- 	free(plus.ptr);
- 	if (diff_words->current_plus != diff_words->plus.text.ptr +
--			diff_words->plus.text.size)
--		fn_out_diff_words_write_helper(diff_words->file,
-+			diff_words->plus.text.size) {
-+		if ((diff_words->current_plus == diff_words->plus.text.ptr &&
-+			diff_words->last_minus == 0) ||
-+			(diff_words->current_plus > diff_words->plus.text.ptr &&
-+			*(diff_words->current_plus - 1) == '\n'))
-+			fputs(line_prefix, diff_words->opt->file);
-+		fn_out_diff_words_write_helper(diff_words->opt->file,
- 			&style->ctx, style->newline,
- 			diff_words->plus.text.ptr + diff_words->plus.text.size
--			- diff_words->current_plus, diff_words->current_plus);
-+			- diff_words->current_plus, diff_words->current_plus,
-+			line_prefix);
-+	}
- 	diff_words->minus.text.size = diff_words->plus.text.size = 0;
+ 	/* blank before the func header */
+ 	for (cp = ep; ep - line < len; ep++)
+ 		if (*ep != ' ' && *ep != '\t')
+ 			break;
+ 	if (ep != cp)
+-		emit_line(ecbdata->file, plain, reset, cp, ep - cp);
++		emit_line(ecbdata->opt, plain, reset, cp, ep - cp);
+ 
+ 	if (ep < line + len)
+-		emit_line(ecbdata->file, func, reset, ep, line + len - ep);
++		emit_line(ecbdata->opt, func, reset, ep, line + len - ep);
  }
  
-@@ -1905,8 +1977,8 @@ static void builtin_diff(const char *name_a,
+ static struct diff_tempfile *claim_diff_tempfile(void) {
+@@ -446,7 +454,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 		len = endp ? (endp - data + 1) : size;
+ 		if (prefix != '+') {
+ 			ecb->lno_in_preimage++;
+-			emit_line_0(ecb->file, old, reset, '-',
++			emit_line_0(ecb->opt, old, reset, '-',
+ 				    data, len);
+ 		} else {
+ 			ecb->lno_in_postimage++;
+@@ -458,7 +466,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
+ 	if (!endp) {
+ 		const char *plain = diff_get_color(ecb->color_diff,
+ 						   DIFF_PLAIN);
+-		emit_line_0(ecb->file, plain, reset, '\\',
++		emit_line_0(ecb->opt, plain, reset, '\\',
+ 			    nneof, strlen(nneof));
+ 	}
+ }
+@@ -508,7 +516,7 @@ static void emit_rewrite_diff(const char *name_a,
+ 	ecbdata.color_diff = color_diff;
+ 	ecbdata.found_changesp = &o->found_changes;
+ 	ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
+-	ecbdata.file = o->file;
++	ecbdata.opt = o;
+ 	if (ecbdata.ws_rule & WS_BLANK_AT_EOF) {
+ 		mmfile_t mf1, mf2;
+ 		mf1.ptr = (char *)data_one;
+@@ -840,7 +848,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
  
- 			ecbdata.diff_words =
- 				xcalloc(1, sizeof(struct diff_words_data));
--			ecbdata.diff_words->file = o->file;
- 			ecbdata.diff_words->type = o->word_diff;
-+			ecbdata.diff_words->opt = o;
- 			if (!o->word_regex)
- 				o->word_regex = userdiff_word_regex(one);
- 			if (!o->word_regex)
+ 	if (ecbdata->header) {
+-		fprintf(ecbdata->file, "%s", ecbdata->header->buf);
++		fprintf(ecbdata->opt->file, "%s", ecbdata->header->buf);
+ 		strbuf_reset(ecbdata->header);
+ 		ecbdata->header = NULL;
+ 	}
+@@ -852,9 +860,9 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		name_a_tab = strchr(ecbdata->label_path[0], ' ') ? "\t" : "";
+ 		name_b_tab = strchr(ecbdata->label_path[1], ' ') ? "\t" : "";
+ 
+-		fprintf(ecbdata->file, "%s--- %s%s%s\n",
++		fprintf(ecbdata->opt->file, "%s--- %s%s%s\n",
+ 			meta, ecbdata->label_path[0], reset, name_a_tab);
+-		fprintf(ecbdata->file, "%s+++ %s%s%s\n",
++		fprintf(ecbdata->opt->file, "%s+++ %s%s%s\n",
+ 			meta, ecbdata->label_path[1], reset, name_b_tab);
+ 		ecbdata->label_path[0] = ecbdata->label_path[1] = NULL;
+ 	}
+@@ -872,15 +880,15 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		find_lno(line, ecbdata);
+ 		emit_hunk_header(ecbdata, line, len);
+ 		if (line[len-1] != '\n')
+-			putc('\n', ecbdata->file);
++			putc('\n', ecbdata->opt->file);
+ 		return;
+ 	}
+ 
+ 	if (len < 1) {
+-		emit_line(ecbdata->file, reset, reset, line, len);
++		emit_line(ecbdata->opt, reset, reset, line, len);
+ 		if (ecbdata->diff_words
+ 		    && ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN)
+-			fputs("~\n", ecbdata->file);
++			fputs("~\n", ecbdata->opt->file);
+ 		return;
+ 	}
+ 
+@@ -896,11 +904,11 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		}
+ 		diff_words_flush(ecbdata);
+ 		if (ecbdata->diff_words->type == DIFF_WORDS_PORCELAIN) {
+-			emit_line(ecbdata->file, plain, reset, line, len);
+-			fputs("~\n", ecbdata->file);
++			emit_line(ecbdata->opt, plain, reset, line, len);
++			fputs("~\n", ecbdata->opt->file);
+ 		} else {
+ 			/* don't print the prefix character */
+-			emit_line(ecbdata->file, plain, reset, line+1, len-1);
++			emit_line(ecbdata->opt, plain, reset, line+1, len-1);
+ 		}
+ 		return;
+ 	}
+@@ -912,7 +920,7 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
+ 		ecbdata->lno_in_preimage++;
+ 		if (line[0] == ' ')
+ 			ecbdata->lno_in_postimage++;
+-		emit_line(ecbdata->file, color, reset, line, len);
++		emit_line(ecbdata->opt, color, reset, line, len);
+ 	} else {
+ 		ecbdata->lno_in_postimage++;
+ 		emit_add_line(reset, ecbdata, line + 1, len - 1);
+@@ -1477,7 +1485,7 @@ static void checkdiff_consume(void *priv, char *line, unsigned long len)
+ 		fprintf(data->o->file, "%s:%d: %s.\n",
+ 			data->filename, data->lineno, err);
+ 		free(err);
+-		emit_line(data->o->file, set, reset, line, 1);
++		emit_line(data->o, set, reset, line, 1);
+ 		ws_check_emit(line + 1, len - 1, data->ws_rule,
+ 			      data->o->file, set, reset, ws);
+ 	} else if (line[0] == ' ') {
+@@ -1787,7 +1795,7 @@ static void builtin_diff(const char *name_a,
+ 		ecbdata.ws_rule = whitespace_rule(name_b ? name_b : name_a);
+ 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
+ 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
+-		ecbdata.file = o->file;
++		ecbdata.opt = o;
+ 		ecbdata.header = header.len ? &header : NULL;
+ 		xpp.flags = XDF_NEED_MINIMAL | o->xdl_opts;
+ 		xecfg.ctxlen = o->context;
+diff --git a/diff.h b/diff.h
+index 9ace08c..b4eefa7 100644
+--- a/diff.h
++++ b/diff.h
+@@ -9,6 +9,7 @@
+ struct rev_info;
+ struct diff_options;
+ struct diff_queue_struct;
++struct strbuf;
+ 
+ typedef void (*change_fn_t)(struct diff_options *options,
+ 		 unsigned old_mode, unsigned new_mode,
+@@ -25,6 +26,8 @@ typedef void (*add_remove_fn_t)(struct diff_options *options,
+ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
+ 		struct diff_options *options, void *data);
+ 
++typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data);
++
+ #define DIFF_FORMAT_RAW		0x0001
+ #define DIFF_FORMAT_DIFFSTAT	0x0002
+ #define DIFF_FORMAT_NUMSTAT	0x0004
+@@ -130,6 +133,8 @@ struct diff_options {
+ 	add_remove_fn_t add_remove;
+ 	diff_format_fn_t format_callback;
+ 	void *format_callback_data;
++	diff_prefix_fn_t output_prefix;
++	void *output_prefix_data;
+ };
+ 
+ enum color_diff {
 -- 
 1.6.0.4
