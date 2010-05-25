@@ -1,115 +1,93 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] t9129: fix UTF-8 locale detection
-Date: Tue, 25 May 2010 09:33:52 +0200
-Message-ID: <4BFB7D60.6090602@drmicha.warpmail.net>
-References: <1274193685-5468-1-git-send-email-yann@droneaud.fr>	 <4BF2BABC.2010405@drmicha.warpmail.net>	 <1274202486.4228.22.camel@localhost> <1274720888.4838.13.camel@localhost>
+Subject: Re: What's the best way to make my company migrate to Git?
+Date: Tue, 25 May 2010 09:42:55 +0200
+Message-ID: <4BFB7F7F.5090407@drmicha.warpmail.net>
+References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com> <4BF7B751.7050704@pileofstuff.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Yann Droneaud <yann@droneaud.fr>
-X-From: git-owner@vger.kernel.org Tue May 25 09:34:17 2010
+Content-Transfer-Encoding: 7bit
+Cc: Daniele Segato <daniele.bilug@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Tue May 25 09:43:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGoeT-0002AY-Q1
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:34:14 +0200
+	id 1OGonL-00066y-VS
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754356Ab0EYHeH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 03:34:07 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33951 "EHLO
+	id S1752026Ab0EYHnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 03:43:19 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57970 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754040Ab0EYHeG (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 03:34:06 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DB1E2F80F2;
-	Tue, 25 May 2010 03:34:05 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 25 May 2010 03:34:05 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=kwS4mFBS0JnBJF04xGzXtkhpIVs=; b=jEvUMsM6xc0YIit/2aWXqL1FrH627EX4i1nbj1ilJgu89r4Oi6HDi2GrSqFzntZ75irMC0WpWKsPDKcqT5N3NtuMnfzFwkcRTKGbogNeVqY8nGO1adbK0oooRPM7El/6nTNOApSu5Gmbc99lEG9zqqPgq5UMVm/SJjwNGTQ0FTY=
-X-Sasl-enc: jNkght4AeQCGEO2dhwJgSeeDdhZsJ2bNoVlxbz7dBJ1p 1274772845
+	by vger.kernel.org with ESMTP id S1750742Ab0EYHnS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 03:43:18 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 9244BF82BA;
+	Tue, 25 May 2010 03:43:08 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 25 May 2010 03:43:08 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=NSYZFMkzg+fR1esWjTHj1FeL+VM=; b=JKDcxFiYUZ13yM0W4X5U+c/igU+sWsMKQOrQAa99TM/+x1N5d/pyEx7ONgC0HPKf0CCLo9Zw4L0oczOfO8DT/Iz2IynfCGKVFRjJibCQxV+dduHJQ9h+oqeMqHwv/AvyPtDF4QUc+IzWpfxIBMGfy8rrWUlKTMFkBas/PP711Hg=
+X-Sasl-enc: a0nxEWrcXERhpkS08w8Ig6lA+lccIApwRl2dL/T3dN3z 1274773388
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id EA8DE4E2AAB;
-	Tue, 25 May 2010 03:34:04 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DEF714920A;
+	Tue, 25 May 2010 03:43:07 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
-In-Reply-To: <1274720888.4838.13.camel@localhost>
+In-Reply-To: <4BF7B751.7050704@pileofstuff.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147680>
 
-Yann Droneaud venit, vidit, dixit 24.05.2010 19:08:
-> Le mardi 18 mai 2010 =C3=A0 19:08 +0200, Yann Droneaud a =C3=A9crit :
->> Le mardi 18 mai 2010 =C3=A0 18:05 +0200, Michael J Gruber a =C3=A9cr=
-it :
->>> Yann Droneaud venit, vidit, dixit 18.05.2010 16:41:
->>>> Since I don't have en_US.utf8, some tests failed:
->>
->>>>
->>>> On my system locale -a reports:
->>>>
->>>>    en_US
->>>>    en_US.ISO-8859-1
->>>>    en_US.UTF-8
->>>>
->>>
->>> locale -a|grep en_US
->>> en_US
->>> en_US.iso88591
->>> en_US.iso885915
->>> en_US.utf8
->>>
->>> This is on Fedora 13, which is not exactly exotic. What is your sys=
-tem?
->>>
->>
->=20
-> I've checked carefully multiple system and configuration, and found w=
-hy
-> we have some little locale problem here.
->=20
-> Since glibc 2.3, a file can hold all locales in file "locale-archive"
-> instead of having a tons of directory. To store all the locales in th=
-is
-> file, it uses an index based on a "normalized" codeset, e.g. it conve=
-rts
-> codeset to lowercase, removes dash and minus.=20
-> So when one ask for the locale list, locale first go through the
-> "locale-archive" content and report normalized codeset (utf8)  instea=
-d
-> of canonical codeset (UTF-8), then it proceed with the legacy locales
-> directories, using for them the canonical codeset.
->=20
-> Until recently, Mandriva Linux doesn't make use of "locale-archive", =
-so
-> UTF-8 locales were reported. Version in development uses
-> "locale-archive" + legacy locale directories, hence the mix I've
-> reported. Other Linux distributions like Fedora and Ubuntu uses only
-> "locale-archive" and so, have only "normalized" codeset.
-> POSIX doesn't specify the output of locale -a, so it's not really a b=
-ug
-> to show "normalized" codeset name.
->=20
-> But all others "POSIX" system I've found report "canonical" codeset,
-> e.g. UTF-8 (all but latest cygwin).=20
->=20
-> Here's the bug report:
-> http://sourceware.org/bugzilla/show_bug.cgi?id=3D11629
+Andrew Sayers venit, vidit, dixit 22.05.2010 12:52:
+> Hi Daniele,
+> 
+> I'm a developer getting towards the end of introducing my company to 
+> Git.  Here are some thoughts based on the (mis)steps I took.
+> 
+> 
+> I found that advocating specific steps wasn't that effective - I just 
+> came across as being pushy and hard to work with.  It was more effective 
+> to politely show off what I could do with git-svn, and let people get 
+> jealous enough to work the "how" out for themselves.  Here are some 
+> examples:
+> 
+> I would quietly bisect a hard-to-fix bug, then say "if it's any help, 
+> git tells me it was introduced by so-and-so in revision N".  Sometimes 
+> it was no help, but sometimes it was enough to provoke the appropriate 
+> "aha!" for the bug.
+> 
+> I would nonchalantly use as many git features as I could while showing 
+> people my work.  So "here's the diff for my work... grr whitespace ... 
+> hang on I'll add `-w`... anyway, these are the REAL differences...". The 
+> fact it was all in glorious technicolour went without mention.
+> 
+> When we had a big merge that nobody was looking forward to, I said "let 
+> me do it!  It'll give me a chance to practice my git-fu".
+> 
+> When I used svn on somebody else's command-line, I'd blame the mistakes 
+> I made on being spoiled by Git.  So "I'll just do an `svn log`... argh 
+> no!  Control-C!  Control-C!  Right, `svn log | less`... my bad, git 
+> pipes to less automatically."
+> 
+> 
+> Over the course of a few months, people became convinced that Git was 
+> something that makes you more productive.  Our lead developer had a go 
+> with git-svn for a while, before our boss decided we should all make the 
+> switch.
+> 
+> I tried to make git-svn as painless as possible with some svn-like 
+> aliases and a cheatsheet, which I'd be happy to upload if the list could 
+> suggest a good place to put a PDF and some text.
 
-Thanks a lot for doing the leg work! Is there any way to, say,
-set_local(a) and check whether get_locale() =3D=3D a up to equivalence?
+Feel free to contribute to the Git Wiki maybe at
 
->=20
-> BTW, I will shortly provided a fix for the testcase, which will handl=
-e
-> all cases.
->=20
-> Regards.
->=20
+https://git.wiki.kernel.org/index.php/GitDocumentation
 
-Thanks,
+in the "User contributed Documentation" section.
+
 Michael
