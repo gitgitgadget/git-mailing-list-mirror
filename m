@@ -1,96 +1,175 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] git-blame.el: Add (require 'format-spec)
-Date: Tue, 25 May 2010 15:44:15 +0200
-Message-ID: <87r5l0gkpc.fsf_-_@krank.kagedal.org>
-References: <87vdgm3e1k.fsf@osv.gnss.ru> <m2fx7qae49.fsf@igel.home>
-	<87ljhi3cao.fsf@osv.gnss.ru> <87fx7q4p6h.fsf@lysator.liu.se>
-	<87einafojx.fsf@osv.gnss.ru> <87d42s3pv2.fsf@lysator.liu.se>
-	<AANLkTikPArJ0s8BTN7QH3CeqU98BGHobKax3IrjMXPrh@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Tue May 25 16:13:42 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] Documentation+t5708: document and test status -s -b
+Date: Tue, 25 May 2010 16:52:03 +0200
+Message-ID: <d007399dfec8e1346f6b3ba5d1f34469026fb90f.1274798738.git.git@drmicha.warpmail.net>
+References: <4BFBD8A3.8040203@drmicha.warpmail.net>
+Cc: Jeff King <peff@peff.net>,
+	Daniel Knittl-Frank <knittl89+git@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 25 16:52:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGut1-00016P-7F
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 16:13:39 +0200
+	id 1OGvUY-00068P-MH
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 16:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758578Ab0EYONc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 10:13:32 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:34365 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758233Ab0EYONb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 10:13:31 -0400
-X-Greylist: delayed 1753 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 May 2010 10:13:31 EDT
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id A6AAC400A6;
-	Tue, 25 May 2010 15:44:16 +0200 (CEST)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id 9B35640006; Tue, 25 May 2010 15:44:16 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [62.20.90.206])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 64096400B4;
-	Tue, 25 May 2010 15:44:16 +0200 (CEST)
-Received: by krank (Postfix, from userid 1000)
-	id 0674960741; Tue, 25 May 2010 15:44:15 +0200 (CEST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-In-Reply-To: <AANLkTikPArJ0s8BTN7QH3CeqU98BGHobKax3IrjMXPrh@mail.gmail.com>
-	(Alex Unleashed's message of "Fri, 14 May 2010 15:13:35 +0200")
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1758520Ab0EYOwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 10:52:21 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50187 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756228Ab0EYOwU (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 10:52:20 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7FB7FF7C5A;
+	Tue, 25 May 2010 10:52:19 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 25 May 2010 10:52:19 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=ZVQljt0+SsfT0NqWRbdoIDhK/Zs=; b=E86BEqj5exVozFMefRhOqRH32LsUo/sHnnDvjdmqYMd3JI182p6oc5Gtr7sNwYguuZ5nBHYZR1+Gj3lT1S6q5bSPmLw+pyUedOuS8Kxs9QzRNOqBcqWtXqOGxsZ8l/ioRNC9WB7dJrDfEtdg4db6XGEHj8XndyyWa987vUjnUUU=
+X-Sasl-enc: 8ldeEHl37GLGad/9kBYslV98mj++h/JMTqMryTAaWwO1 1274799138
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B71414B3C01;
+	Tue, 25 May 2010 10:52:18 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.342.g1c280
+In-Reply-To: <4BFBD8A3.8040203@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147713>
 
-
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
-> On Sun, Dec 6, 2009 at 8:43 PM, David K=C3=A5gedal <davidk@lysator.li=
-u.se> wrote:
-> > Sergei Organov <osv@javad.com> writes:
-> >
-> >> Then there should be (require 'format-spec) in git-blame.el, right=
-? Due
-> >> to:
-> >
-> > Of course. I must have missed that since I already had it loaded.
->=20
-> Has this oneliner been submitted for inclusion in git.git yet?
-> Yesterday I stumbled upon format-spec missing on a fresh install of
-> Ubuntu 10.04's emacs package.. Just require'ing it fixes the problem.
+Since I liked -b so much...
+Cheers!
 
-Apparently not, but here is the patch.
+ Documentation/git-status.txt |   12 +++++++++-
+ t/t7508-status.sh            |   47 +++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 56 insertions(+), 3 deletions(-)
 
- contrib/emacs/git-blame.el |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
-index 7f4c792..d351cfb 100644
---- a/contrib/emacs/git-blame.el
-+++ b/contrib/emacs/git-blame.el
-@@ -79,6 +79,7 @@
- ;;; Code:
-=20
- (eval-when-compile (require 'cl))			      ; to use `push', `pop'
-+(require 'format-spec)
-=20
- (defface git-blame-prefix-face
-   '((((background dark)) (:foreground "gray"
---=20
-1.7.0.4
-
-
---=20
-David K=C3=A5gedal
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 2d4bbfc..beb1c8a 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -27,6 +27,10 @@ OPTIONS
+ --short::
+ 	Give the output in the short-format.
+ 
++-b::
++--branch::
++	Show the branch and tracking info even in short-format.
++
+ --porcelain::
+ 	Give the output in a stable, easy-to-parse format for scripts.
+ 	Currently this is identical to --short output, but is guaranteed
+@@ -73,7 +77,7 @@ In short-format, the status of each path is shown as
+ where `PATH1` is the path in the `HEAD`, and ` -> PATH2` part is
+ shown only when `PATH1` corresponds to a different path in the
+ index/worktree (i.e. the file is renamed). The 'XY' is a two-letter
+-status code.
++status code. 
+ 
+ The fields (including the `->`) are separated from each other by a
+ single space. If a filename contains whitespace or other nonprintable
+@@ -120,6 +124,10 @@ Ignored files are not listed.
+     ?           ?    untracked
+     -------------------------------------------------
+ 
++If -b is used the short-format status is preceded by a line
++
++## branchname tracking info
++
+ There is an alternate -z format recommended for machine parsing.  In
+ that format, the status field is the same, but some other things
+ change.  First, the '->' is omitted from rename entries and the field
+@@ -128,7 +136,7 @@ order is reversed (e.g 'from -> to' becomes 'to from'). Second, a NUL
+ and the terminating newline (but a space still separates the status
+ field from the first filename).  Third, filenames containing special
+ characters are not specially formatted; no quoting or
+-backslash-escaping is performed.
++backslash-escaping is performed. Fourth, there is no branch line.
+ 
+ CONFIGURATION
+ -------------
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 008d571..9e08107 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -107,13 +107,32 @@ A  dir2/added
+ ?? untracked
+ EOF
+ 
+-test_expect_success 'status -s (2)' '
++test_expect_success 'status -s' '
+ 
+ 	git status -s >output &&
+ 	test_cmp expect output
+ 
+ '
+ 
++cat >expect <<\EOF
++## master
++ M dir1/modified
++A  dir2/added
++?? dir1/untracked
++?? dir2/modified
++?? dir2/untracked
++?? expect
++?? output
++?? untracked
++EOF
++
++test_expect_success 'status -s -b' '
++
++	git status -s -b >output &&
++	test_cmp expect output
++
++'
++
+ cat >expect <<EOF
+ # On branch master
+ # Changes to be committed:
+@@ -437,6 +456,25 @@ test_expect_success 'status -s with color.status' '
+ '
+ 
+ cat >expect <<\EOF
++## <GREEN>master<RESET>
++ <RED>M<RESET> dir1/modified
++<GREEN>A<RESET>  dir2/added
++<BLUE>??<RESET> dir1/untracked
++<BLUE>??<RESET> dir2/modified
++<BLUE>??<RESET> dir2/untracked
++<BLUE>??<RESET> expect
++<BLUE>??<RESET> output
++<BLUE>??<RESET> untracked
++EOF
++
++test_expect_success 'status -s -b with color.status' '
++
++	git status -s -b | test_decode_color >output &&
++	test_cmp expect output
++
++'
++
++cat >expect <<\EOF
+  M dir1/modified
+ A  dir2/added
+ ?? dir1/untracked
+@@ -469,6 +507,13 @@ test_expect_success 'status --porcelain ignores color.status' '
+ git config --unset color.status
+ git config --unset color.ui
+ 
++test_expect_success 'status --porcelain ignores -b' '
++
++	git status --porcelain -b >output &&
++	test_cmp expect output
++
++'
++
+ cat >expect <<\EOF
+ # On branch master
+ # Changes to be committed:
+-- 
+1.7.1.342.g1c280
