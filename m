@@ -1,73 +1,60 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Show branch information in short output of git status
-Date: Tue, 25 May 2010 10:10:54 +0200
-Message-ID: <4BFB860E.1070006@drmicha.warpmail.net>
-References: <AANLkTikM3B-9wFBuUzwpP2j9FpT34p9yysX-oLg5hZRj@mail.gmail.com> <20100505050640.GC8779@coredump.intra.peff.net> <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com> <20100512133537.GA28956@coredump.intra.peff.net> <AANLkTilkFHK1UIvSLEstXFIOJTsit02EZe1Wsoj_zRRX@mail.gmail.com> <20100523092348.GA16811@coredump.intra.peff.net> <4BFB79F6.5070501@drmicha.warpmail.net> <20100525072240.GA20408@coredump.intra.peff.net>
+From: Anthony Youngman <anthony@youngman.org.uk>
+Subject: Re: What's cooking extra
+Date: Tue, 25 May 2010 09:27:00 +0100
+Message-ID: <4BFB89D4.5070308@youngman.org.uk>
+References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org> <20100519170656.GA30161@pvv.org> <20100522130916.GA28452@localhost> <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com> <20100522222746.GA2694@localhost> <CDD31343-2352-434B-B875-2013DAF49CE7@gmail.com> <20100523115127.GA20443@localhost> <744D05D2-FC47-45E5-92A1-CD93B0901E0C@gmail.com> <20100524094905.GA10811@localhost> <986EE696-5997-40AD-929C-D82D40D7242E@gmail.com> <20100524221128.GA29588@localhost> <246B0C3F-EBD3-41EC-B0FD-300BD1DBF43E@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Knittl <knittl89@googlemail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 25 10:11:18 2010
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 25 10:28:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGpEL-0001TR-6P
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 10:11:17 +0200
+	id 1OGpVD-0000Fv-Lb
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 10:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752880Ab0EYILK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 04:11:10 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49196 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753061Ab0EYILI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 04:11:08 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 12230F76C8;
-	Tue, 25 May 2010 04:11:08 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 25 May 2010 04:11:08 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=8kezohxd/M7J6Gh4PQXRPGBT7gg=; b=Pu0rQGtI+bufJjf3VTwNR+efSutfYXA4jI1UkDws37Ik45i0pKibuHAY34IZ3WWpXA1dutrGn5FS/nrdHN4k5H3JDx9rod9sOzLZLLaeV9JB4KNQIcdx2RBVYl7Fr64xvzFtRR2KN+SM5ru7beyXaLV9fLZgDyr9/p8sY5XnK+4=
-X-Sasl-enc: Is0lAk25zjj5lDVkYh8YloobwjoMc2gihhzfH3wxFujC 1274775067
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3CAC44E1442;
-	Tue, 25 May 2010 04:11:07 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
-In-Reply-To: <20100525072240.GA20408@coredump.intra.peff.net>
+	id S1754415Ab0EYI2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 04:28:38 -0400
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:62448 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754082Ab0EYI2h (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 04:28:37 -0400
+Received: from dyn-62-56-66-208.dslaccess.co.uk ([62.56.66.208] helo=[192.168.2.2])
+	by lon1-post-1.mail.demon.net with esmtpa (AUTH thewolery)
+	(Exim 4.69)
+	id 1OGpV6-0001jU-X2; Tue, 25 May 2010 08:28:36 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100418 Thunderbird/3.0.4
+In-Reply-To: <246B0C3F-EBD3-41EC-B0FD-300BD1DBF43E@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147682>
 
-Jeff King venit, vidit, dixit 25.05.2010 09:22:
-> On Tue, May 25, 2010 at 09:19:18AM +0200, Michael J Gruber wrote:
-> 
->> I'm really wondering what the problem is with git-send-email + GMail's
->> smtp. I'm not saying there is none: I'm just observing that we seem to
->> attract a lot of new contributors lately and that the email-inline-patch
->> requirement seems to be a hurdle to quite a few. I've created a mob
->> branch at
-> 
-> I don't use gmail, but my impression was that the problem is one of:
-> 
->   1. pushing to gmail's drafts folder via imap, and then using the web
->      interface to send the email
-> 
->   2. cutting and pasting into the web interface
-> 
-> I would hope that sending directly via SMTP with git-send-email would
-> not get munged. That is pretty broken otherwise.
+On 05/25/10 07:41, Eyvind Bernhardsen wrote:
+> The "safe autocrlf" patch fixes this by not trying to normalize any files that are not already normalized in the index.  This is what you noticed: the files do not show up as dirty and will not have their line endings converted.  The tradeoff is that setting "core.autocrlf" no longer normalizes all text files, only new ones and ones that are already normalized.
+>
+> You (rightly) expected line endings to be normalized to LF when core.eol=lf, and I do need to fix that in the documentation.  Safe autocrlf _only_ works if you want CRLF line endings in your working directory.
+>   
+Just a suggestion ...
+For core.autocrlf (or somewhere else more appropriate) could we add to
+false and true the option "force"?
 
-Well, I know what the problem is with GMail's IMAP and web, but it's
-good to have it summed up this concisely ;)
+Bearing in mind "force" is always considered "a bit dangerous", that
+merely means "I don't care if it has crlf in the repository, change all
+commits to lf" (and checkouts to crlf if appropriate).
 
-I'm wondering what the problem is with GMail's SMTP: Technically there
-is none, but people shy away from using it (together with
-git-send-email). It does not even require setting up an MTA like
-sendmail or msmtp. But, apparently, this is a hurdle, which is why I
-brought up the mob-auto-send.
+Yep, things are likely to break, but I'm thinking this is the sort of
+situation where a lead dev could say to themselves "I know what I'm
+doing, we need to clean up, and if I set that as my options, then I know
+I can fix any resulting mess".
 
-Michael
+Cheers,
+Wol
