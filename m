@@ -1,106 +1,109 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: What's cooking extra
-Date: Tue, 25 May 2010 00:11:28 +0200
-Message-ID: <20100524221128.GA29588@localhost>
-References: <7vsk5o9d1f.fsf@alter.siamese.dyndns.org>
- <20100519170656.GA30161@pvv.org>
- <20100522130916.GA28452@localhost>
- <50199F1F-3513-43A6-8990-957F3D0AF58C@gmail.com>
- <20100522222746.GA2694@localhost>
- <CDD31343-2352-434B-B875-2013DAF49CE7@gmail.com>
- <20100523115127.GA20443@localhost>
- <744D05D2-FC47-45E5-92A1-CD93B0901E0C@gmail.com>
- <20100524094905.GA10811@localhost>
- <986EE696-5997-40AD-929C-D82D40D7242E@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCHv3] git-instaweb: Add support for running gitweb via  'plackup'
+Date: Tue, 25 May 2010 02:11:02 +0200
+Message-ID: <201005250211.04469.jnareb@gmail.com>
+References: <1274356584-2400-1-git-send-email-jnareb@gmail.com> <201005222330.43532.jnareb@gmail.com> <AANLkTikSXOrF-mS3XzVAohgoNXXNZwN3jBw6Sh4TnK6M@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 25 00:11:42 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 25 02:09:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGfs4-0003MD-H5
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 00:11:40 +0200
+	id 1OGhi0-0003s1-KN
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 02:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757008Ab0EXWLf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 May 2010 18:11:35 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51966 "EHLO
+	id S932308Ab0EYAJS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 May 2010 20:09:18 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48237 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755726Ab0EXWLe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 May 2010 18:11:34 -0400
-Received: by fxm5 with SMTP id 5so2689924fxm.19
-        for <git@vger.kernel.org>; Mon, 24 May 2010 15:11:32 -0700 (PDT)
+	with ESMTP id S932188Ab0EYAJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 May 2010 20:09:18 -0400
+Received: by fxm5 with SMTP id 5so2753669fxm.19
+        for <git@vger.kernel.org>; Mon, 24 May 2010 17:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=DWkRU4E4c4ZQAoq22ROkk9abs8Gvk7UdWL5o1TDexlM=;
-        b=flSH8xPKbOPMrScDzK4lUiJh6PD0DMzpTwgbwjT2dM104oJcGp6o2/wRoN7sL9aLWo
-         /rfH9Jg/8lN+m0G4nUp1Ire+31dYRR9iereKDv1S1+gk3an3sxGATPb2KrOvyMNn4pbG
-         Zt1WmiGvZCFo/DSmv4UzznblR6bmNZOJE8Foo=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=3xJrcKPLlgw1z6aSPEl6qwASmeRbRhucrcpG00vdNgU=;
+        b=JN9gGjJRtj2GVE+TB81x3Jl2P1eT0xBTPgygsxVlv5BK0FWe+JmvAHQMhtib2ic68I
+         DCQFnffz6zmGBPCuTGLGnYcmRVZcMw8sgcllx0yTTEbSjlYCexYLGkoa4zTBcB6VC9MC
+         Ggo1+DhMyX/pc646gjvuZSVBpUygmTmLNJlXg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=mTk3q/yfWB9W02ouW9J46BYOFssklIIHLpYgSvAxdc01bllF7HlRybBIxPqzdxYmkn
-         nZRbUq0jR7JyhrOINuwJ+qzd5q33eZxRmlIZ9fJxG5HKoQfZ8BUNg/GhAOT/EJIK8qrN
-         TtRXMLf3quY++9k2a4AgSGgT+NyNxpXk8Cp8s=
-Received: by 10.223.10.11 with SMTP id n11mr5223129fan.3.1274739092853;
-        Mon, 24 May 2010 15:11:32 -0700 (PDT)
-Received: from darc.lan (p549A704B.dip.t-dialin.net [84.154.112.75])
-        by mx.google.com with ESMTPS id y12sm21567522faj.5.2010.05.24.15.11.31
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=MTl2dGrA/BYtlnDFwAbbiKksqrLjx+uKfXFWfq5ZI1x4qCl7eTQ5IK2gkWOPkF6W1+
+         LIBifkPiJo2Y/MXTTb8WPjhTJGbPtklcMpY62Ykc2Ra/SlrTIjgJMUB276tTxIcrpKBz
+         xaLVnt7kNXl4QQfss7ziYLWXBsIGi955bnpwQ=
+Received: by 10.87.68.26 with SMTP id v26mr9296556fgk.40.1274746156418;
+        Mon, 24 May 2010 17:09:16 -0700 (PDT)
+Received: from [192.168.1.15] (abvf124.neoplus.adsl.tpnet.pl [83.8.203.124])
+        by mx.google.com with ESMTPS id e3sm7807255fga.24.2010.05.24.17.09.14
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 24 May 2010 15:11:32 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OGfrs-0007uV-I8; Tue, 25 May 2010 00:11:28 +0200
+        Mon, 24 May 2010 17:09:14 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTikSXOrF-mS3XzVAohgoNXXNZwN3jBw6Sh4TnK6M@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <986EE696-5997-40AD-929C-D82D40D7242E@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147654>
 
-On Mon, May 24, 2010 at 11:11:40PM +0200, Eyvind Bernhardsen wrote:
+On Sun, 23 May 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> 2010/5/22 Jakub Narebski <jnareb@gmail.com>:
+> >
+> > Webrick, which is in similar situation, uses httpd.conf config file=
+ in
+> > YAML.  Unfortunately there is no config / serialization reader in P=
+erl
+> > core, so if we have to go this route either the config file would h=
+ave
+> > to be in Perl, or gitweb.psgi wrapper would have to include some si=
+mple
+> > config file parsing.
+>=20
+> You could easily do (pseudocode):
+>=20
+>     unless (eval { require Config::Any; 1 }) {
+>     	do $conf_file;
+>     } else {
+>     	my $parser =3D Config::Any->new( ... );
+>     	$parser->docnf( $conf_file );
+>     }
+>=20
+> Then you'd read (eval) a perl config file by default, but remain
+> compatible with saner config formats for users prepared to install
+> things from the CPAN.
 
-> If you later discover that you want normalized text files in your
-> repository, you _will_ have to convert all your files.  That's a
-> bit tricky, but it's not the huge problem you're making it out to
-> be, and it only has to be done once.
+I was thinking more about something like that:
 
-I am not just making this stuff up. These things have bitten me in
-the past, and there have been complaints about it in #git. And even
-after finding the solution I always felt like crlf handling in git
-was really broken. I was hoping that after enabling the new eol
-handling, these weird effects would go away, but obviously they
-don't.
+  my @opts =3D qw(--env deployment);
+  while (<>) {
+  	chomp;
+  	next unless $_;  # skip empty lines
+  	next if /^\s*#/; # skip comments
+  	if (/^\s*(.*?)\s*=3D\s*(.*)\s*$/) {
+  		push @opts, '--'.lc($1), $2;
+  	}
+  }
 
-Maybe for you it does not seem like such a big deal, because you
-are now so familiar with the inner workings of this algorithm. But
-to a naive user like me it is very counter-intuitive.
+where httpd.conf would look like this:
 
-I am not saying that the new features are all wrong. Some of them
-really are a major improvement. My main point is that it is still
-confusing and that in itself will cause issues for many people.
+  port =3D 1234
+  host =3D 127.0.0.1
 
-And I don't see why we cannot do better. In the first scenario of
-my previous post (no attributes set), since I already enable
-core.eol = lf, couldn't we handle that as if text=auto were set on
-every file?  Isn't that what core.autocrlf = true means in this
-case?
-
-And once we normalized the file to LF, why don't we also checkout
-that version, or at least mark it as dirty in the index, so a reset
---hard will fix it up?
-
-Regards,
-Clemens
+Anyway, if such code is to be be added, it would be added in a separate
+commit.
+--=20
+Jakub Narebski
+Poland
