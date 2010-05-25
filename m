@@ -1,62 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Show branch information in short output of git status
-Date: Tue, 25 May 2010 03:22:41 -0400
-Message-ID: <20100525072240.GA20408@coredump.intra.peff.net>
-References: <AANLkTikM3B-9wFBuUzwpP2j9FpT34p9yysX-oLg5hZRj@mail.gmail.com>
- <20100505050640.GC8779@coredump.intra.peff.net>
- <AANLkTikDkrNrzPmIhmcBRKtLKV70f4Kp8wTw6I6ctB4O@mail.gmail.com>
- <20100512133537.GA28956@coredump.intra.peff.net>
- <AANLkTilkFHK1UIvSLEstXFIOJTsit02EZe1Wsoj_zRRX@mail.gmail.com>
- <20100523092348.GA16811@coredump.intra.peff.net>
- <4BFB79F6.5070501@drmicha.warpmail.net>
+From: Albert Krawczyk <u4232169@anu.edu.au>
+Subject: Re: [GSoC 2010] The 1st week
+Date: Tue, 25 May 2010 17:26:31 +1000
+Message-ID: <4BFB7BA7.2080004@anu.edu.au>
+References: <AANLkTikSafHBj7VwjwjTVeW3ohL60dOp4sKfZW_vZzCM@mail.gmail.com>  <15312_1274768714_4BFB6D49_15312_1749_67_20100525062457.GB10898@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Knittl <knittl89@googlemail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 25 09:23:01 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 25 09:27:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGoTd-0005Vd-Dd
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:23:01 +0200
+	id 1OGoXY-0007VC-FZ
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099Ab0EYHWx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 03:22:53 -0400
-Received: from peff.net ([208.65.91.99]:35740 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752860Ab0EYHWp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 03:22:45 -0400
-Received: (qmail 16461 invoked by uid 107); 25 May 2010 07:22:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 25 May 2010 03:22:47 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 25 May 2010 03:22:41 -0400
-Content-Disposition: inline
-In-Reply-To: <4BFB79F6.5070501@drmicha.warpmail.net>
+	id S1752220Ab0EYH06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 03:26:58 -0400
+Received: from anumail9.anu.edu.au ([130.56.64.135]:43525 "EHLO
+	anumail9.anu.edu.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751067Ab0EYH06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 03:26:58 -0400
+Received: from mailout2.anu.edu.au (mailout2.anu.edu.au [130.56.64.233])
+	by anumail9.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4P7QXKr020195;
+	Tue, 25 May 2010 17:26:33 +1000 (EST)
+Received: from mailout2.anu.edu.au (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id 063169E83C1;
+	Tue, 25 May 2010 17:26:33 +1000 (EST)
+Received: from smtphost.anu.edu.au (ds2.anu.edu.au [130.56.64.54])
+	by mailout2.anu.edu.au (Postfix) with ESMTP id B25789E83C0;
+	Tue, 25 May 2010 17:26:32 +1000 (EST)
+Received: from [192.168.0.150] (burg237222.anu.edu.au [150.203.237.222])
+	by smtphost.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4P7QWIS000839;
+	Tue, 25 May 2010 17:26:32 +1000 (EST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <15312_1274768714_4BFB6D49_15312_1749_67_20100525062457.GB10898@coredump.intra.peff.net>
+X-PMX-Version: 5.5.9.395186, Antispam-Engine: 2.7.2.376379, Antispam-Data: 2010.5.25.71518 internal
+X-PMX-Outbound: anu.edu.au
+X-PMX-Info: from-anu
+X-PerlMx-Spam: Gauge=IIIIIIII, Probability=8%, Report='
+ BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_500_599 0, BODY_SIZE_7000_LESS 0, FROM_EDU_TLD 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0, __TO_MALFORMED_2 0, __USER_AGENT 0'
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147676>
 
-On Tue, May 25, 2010 at 09:19:18AM +0200, Michael J Gruber wrote:
+On 25/05/2010 4:24 PM, Jeff King wrote:
+> Speaking of which, I haven't finished polishing the --follow patches
+> from our earlier thread. I was taking a look at making history
+> simplification (including --parents) work.
+>    
+I've been looking at getting --follow --parents to print correctly, 
+however the Git code is way over my head. If somebody else smarter then 
+me could have a look at that, it would be amazing...
 
-> I'm really wondering what the problem is with git-send-email + GMail's
-> smtp. I'm not saying there is none: I'm just observing that we seem to
-> attract a lot of new contributors lately and that the email-inline-patch
-> requirement seems to be a hurdle to quite a few. I've created a mob
-> branch at
+I will keep trying, but I don't know how long it'll take me to get my 
+head around the Git diff generation.
 
-I don't use gmail, but my impression was that the problem is one of:
-
-  1. pushing to gmail's drafts folder via imap, and then using the web
-     interface to send the email
-
-  2. cutting and pasting into the web interface
-
-I would hope that sending directly via SMTP with git-send-email would
-not get munged. That is pretty broken otherwise.
-
--Peff
+Albert
