@@ -1,95 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: (Mosty harmless) protocol error when pushing
-Date: Tue, 25 May 2010 03:28:24 -0400
-Message-ID: <20100525072824.GA19612@coredump.intra.peff.net>
-References: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: serious performance issues with images, audio files, and other
+ "non-code" data
+Date: Tue, 25 May 2010 09:28:36 +0200
+Message-ID: <4BFB7C24.10609@drmicha.warpmail.net>
+References: <4BEAF941.6040609@puckerupgames.com> <20100514051049.GF6075@coredump.intra.peff.net> <4BED47EA.9090905@puckerupgames.com> <20100517231642.GB12092@coredump.intra.peff.net> <4BF2E168.2020706@puckerupgames.com> <20100518191933.GB2383@coredump.intra.peff.net> <alpine.LFD.2.00.1005181528550.12758@xanadu.home> <20100518194105.GA4723@coredump.intra.peff.net> <alpine.LFD.2.00.1005181557250.12758@xanadu.home> <4BF9C678.6010108@puckerupgames.com> <7vaarq14me.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: =?utf-8?B?QmrDtnJu?= Gustavsson <bgustavsson@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 25 09:28:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: John <john@puckerupgames.com>, Nicolas Pitre <nico@fluxnic.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 25 09:28:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGoZ0-0008Bw-5U
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:28:34 +0200
+	id 1OGoZL-0008JP-JX
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:28:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752392Ab0EYH23 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 03:28:29 -0400
-Received: from peff.net ([208.65.91.99]:51340 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751166Ab0EYH23 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 03:28:29 -0400
-Received: (qmail 17597 invoked by uid 107); 25 May 2010 07:28:31 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 25 May 2010 03:28:31 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 25 May 2010 03:28:24 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
+	id S1753709Ab0EYH2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 03:28:51 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60938 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753333Ab0EYH2u (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 03:28:50 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 26FCBF7FDC;
+	Tue, 25 May 2010 03:28:50 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 25 May 2010 03:28:50 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vqJ5KSd04HjkLbomBWC5uzMMS+s=; b=gGzScvG9UPz2xzfKo/SvM6mJP1TuXdoQYy7OdfpmI9mRvx3xsB4Bypa5tcBC1ZLL64J0c3w9vYJhyjoErcrYwHF7UUjoBC5q1JiCY9zI7ixOQQzBjsXRvb6XtpuLK6M457y8HIsTrx8qGCqQNX3msaxstupRMQJLoO4Al3NIim0=
+X-Sasl-enc: wmXNji/bfqaK4kc2P472uOLNw8DTIf6k+NhTNtL+/Pww 1274772529
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 313EB448EE;
+	Tue, 25 May 2010 03:28:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100519 Lightning/1.0b2pre Lanikai/3.1pre
+In-Reply-To: <7vaarq14me.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147678>
 
-On Tue, May 25, 2010 at 08:51:34AM +0200, Bj=C3=B6rn Gustavsson wrote:
+Junio C Hamano venit, vidit, dixit 24.05.2010 03:16:
+> John <john@puckerupgames.com> writes:
+> 
+>> Is there any reason why someone would NOT want the above
+>> ".gitattributes" defined by default?
+> 
+> Other than that our originally intended target audience are people who use
+> git as a source code control system, not much.
+> 
 
-> I am not sure whether this has been reported before.
-> I follow this mailing list, but I don't read all emails in
-> detail, so I could have missed a bug report or a fix
-> for the problem.
+and other than that many people use clean/smudge filters to make git
+happily and efficiently deltify compressed file formats (such as gz,
+bz2, zip) and still keep compressed checkouts...
 
-I haven't seen it before, and I do read most of the emails (OK, I skip
-some of the boring ones. :) ).
+and other than that which you (plural) and I are not thinking of right now.
 
-> Counting objects: 270, done.
-> Delta compression using up to 8 threads.
-> Compressing objects: 100% (71/71), done.
-> Writing objects: 100% (184/184), 151.33 KiB, done.
-> Total 184 (delta 157), reused 134 (delta 113)
-> Auto packing the repository for optimum performance.
-> fatal: protocol error: bad line length character: Remo
-> error: error in sideband demultiplexer
-> To git@github.com:bjorng/otp.git
->  + 7651a63...874192d bg/nif_error -> bg/nif_error (forced update)
-> error: failed to push some refs to 'git@github.com:bjorng/otp.git'
+Let the defaults be as they are (fit for source control in the proper
+sense), it's easy enough to change them for other use cases.
 
-I wasn't able to reproduce here, but I wonder if this would help
-(more or less a cut-and-paste from the hook-running code in
-receive-pack):
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index bb34757..c0a6a3b 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -843,7 +843,20 @@ int cmd_receive_pack(int argc, const char **argv, =
-const char *prefix)
- 			const char *argv_gc_auto[] =3D {
- 				"gc", "--auto", "--quiet", NULL,
- 			};
--			run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
-+			struct child_process proc;
-+
-+			memset(&proc, 0, sizeof(proc));
-+			proc.no_stdin =3D 1;
-+			proc.stdout_to_stderr =3D 1;
-+			proc.err =3D use_sideband ? -1 : 0;
-+			proc.git_cmd =3D 1;
-+			proc.argv =3D argv_gc_auto;
-+
-+			if (!start_command(&proc)) {
-+				if (use_sideband)
-+					copy_to_sideband(proc.err, -1, NULL);
-+				finish_command(&proc);
-+			}
- 		}
- 		if (auto_update_server_info)
- 			update_server_info(0);
-
-Unfortunately I can't actually test it. :)
-
--Peff
+Michael
