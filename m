@@ -1,65 +1,95 @@
-From: Albert Krawczyk <u4232169@anu.edu.au>
-Subject: Re: [GSoC 2010] The 1st week
-Date: Tue, 25 May 2010 17:26:31 +1000
-Message-ID: <4BFB7BA7.2080004@anu.edu.au>
-References: <AANLkTikSafHBj7VwjwjTVeW3ohL60dOp4sKfZW_vZzCM@mail.gmail.com>  <15312_1274768714_4BFB6D49_15312_1749_67_20100525062457.GB10898@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: (Mosty harmless) protocol error when pushing
+Date: Tue, 25 May 2010 03:28:24 -0400
+Message-ID: <20100525072824.GA19612@coredump.intra.peff.net>
+References: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bo Yang <struggleyb.nku@gmail.com>, git@vger.kernel.org,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 25 09:27:04 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?utf-8?B?QmrDtnJu?= Gustavsson <bgustavsson@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 25 09:28:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGoXY-0007VC-FZ
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:27:04 +0200
+	id 1OGoZ0-0008Bw-5U
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 09:28:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab0EYH06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 03:26:58 -0400
-Received: from anumail9.anu.edu.au ([130.56.64.135]:43525 "EHLO
-	anumail9.anu.edu.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751067Ab0EYH06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 03:26:58 -0400
-Received: from mailout2.anu.edu.au (mailout2.anu.edu.au [130.56.64.233])
-	by anumail9.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4P7QXKr020195;
-	Tue, 25 May 2010 17:26:33 +1000 (EST)
-Received: from mailout2.anu.edu.au (localhost.localdomain [127.0.0.1])
-	by localhost (Postfix) with SMTP id 063169E83C1;
-	Tue, 25 May 2010 17:26:33 +1000 (EST)
-Received: from smtphost.anu.edu.au (ds2.anu.edu.au [130.56.64.54])
-	by mailout2.anu.edu.au (Postfix) with ESMTP id B25789E83C0;
-	Tue, 25 May 2010 17:26:32 +1000 (EST)
-Received: from [192.168.0.150] (burg237222.anu.edu.au [150.203.237.222])
-	by smtphost.anu.edu.au (8.14.3/8.14.3) with ESMTP id o4P7QWIS000839;
-	Tue, 25 May 2010 17:26:32 +1000 (EST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <15312_1274768714_4BFB6D49_15312_1749_67_20100525062457.GB10898@coredump.intra.peff.net>
-X-PMX-Version: 5.5.9.395186, Antispam-Engine: 2.7.2.376379, Antispam-Data: 2010.5.25.71518 internal
-X-PMX-Outbound: anu.edu.au
-X-PMX-Info: from-anu
-X-PerlMx-Spam: Gauge=IIIIIIII, Probability=8%, Report='
- BODYTEXTP_SIZE_3000_LESS 0, BODY_SIZE_1000_LESS 0, BODY_SIZE_2000_LESS 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_500_599 0, BODY_SIZE_7000_LESS 0, FROM_EDU_TLD 0, __BOUNCE_CHALLENGE_SUBJ 0, __BOUNCE_NDR_SUBJ_EXEMPT 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __MOZILLA_MSGID 0, __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0, __TO_MALFORMED_2 0, __USER_AGENT 0'
+	id S1752392Ab0EYH23 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 May 2010 03:28:29 -0400
+Received: from peff.net ([208.65.91.99]:51340 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751166Ab0EYH23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 03:28:29 -0400
+Received: (qmail 17597 invoked by uid 107); 25 May 2010 07:28:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 25 May 2010 03:28:31 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 25 May 2010 03:28:24 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147677>
 
-On 25/05/2010 4:24 PM, Jeff King wrote:
-> Speaking of which, I haven't finished polishing the --follow patches
-> from our earlier thread. I was taking a look at making history
-> simplification (including --parents) work.
->    
-I've been looking at getting --follow --parents to print correctly, 
-however the Git code is way over my head. If somebody else smarter then 
-me could have a look at that, it would be amazing...
+On Tue, May 25, 2010 at 08:51:34AM +0200, Bj=C3=B6rn Gustavsson wrote:
 
-I will keep trying, but I don't know how long it'll take me to get my 
-head around the Git diff generation.
+> I am not sure whether this has been reported before.
+> I follow this mailing list, but I don't read all emails in
+> detail, so I could have missed a bug report or a fix
+> for the problem.
 
-Albert
+I haven't seen it before, and I do read most of the emails (OK, I skip
+some of the boring ones. :) ).
+
+> Counting objects: 270, done.
+> Delta compression using up to 8 threads.
+> Compressing objects: 100% (71/71), done.
+> Writing objects: 100% (184/184), 151.33 KiB, done.
+> Total 184 (delta 157), reused 134 (delta 113)
+> Auto packing the repository for optimum performance.
+> fatal: protocol error: bad line length character: Remo
+> error: error in sideband demultiplexer
+> To git@github.com:bjorng/otp.git
+>  + 7651a63...874192d bg/nif_error -> bg/nif_error (forced update)
+> error: failed to push some refs to 'git@github.com:bjorng/otp.git'
+
+I wasn't able to reproduce here, but I wonder if this would help
+(more or less a cut-and-paste from the hook-running code in
+receive-pack):
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index bb34757..c0a6a3b 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -843,7 +843,20 @@ int cmd_receive_pack(int argc, const char **argv, =
+const char *prefix)
+ 			const char *argv_gc_auto[] =3D {
+ 				"gc", "--auto", "--quiet", NULL,
+ 			};
+-			run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
++			struct child_process proc;
++
++			memset(&proc, 0, sizeof(proc));
++			proc.no_stdin =3D 1;
++			proc.stdout_to_stderr =3D 1;
++			proc.err =3D use_sideband ? -1 : 0;
++			proc.git_cmd =3D 1;
++			proc.argv =3D argv_gc_auto;
++
++			if (!start_command(&proc)) {
++				if (use_sideband)
++					copy_to_sideband(proc.err, -1, NULL);
++				finish_command(&proc);
++			}
+ 		}
+ 		if (auto_update_server_info)
+ 			update_server_info(0);
+
+Unfortunately I can't actually test it. :)
+
+-Peff
