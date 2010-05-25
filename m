@@ -1,74 +1,76 @@
-From: John <john@puckerupgames.com>
-Subject: Re: serious performance issues with images, audio files, and other
- "non-code" data
-Date: Tue, 25 May 2010 12:12:49 -0400
-Message-ID: <4BFBF701.6060901@puckerupgames.com>
-References: <4BEAF941.6040609@puckerupgames.com> <20100514051049.GF6075@coredump.intra.peff.net> <4BED47EA.9090905@puckerupgames.com> <20100517231642.GB12092@coredump.intra.peff.net> <4BF2E168.2020706@puckerupgames.com> <20100518191933.GB2383@coredump.intra.peff.net> <alpine.LFD.2.00.1005181528550.12758@xanadu.home> <20100518194105.GA4723@coredump.intra.peff.net> <alpine.LFD.2.00.1005181557250.12758@xanadu.home> <4BF9C678.6010108@puckerupgames.com> <7vaarq14me.fsf@alter.siamese.dyndns.org> <4BFB7C24.10609@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue May 25 18:15:00 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [WIP PATCH] Plug SVN exporter into remote helper
+Date: Tue, 25 May 2010 19:00:17 +0200
+Message-ID: <1274806818-10904-1-git-send-email-artagnon@gmail.com>
+Cc: David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 25 18:59:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGwmR-0000Ii-Gv
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 18:14:59 +0200
+	id 1OGxTJ-0003n3-NW
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 18:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493Ab0EYQOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 12:14:19 -0400
-Received: from mailbigip.dreamhost.com ([208.97.132.5]:41479 "EHLO
-	postalmail-a4.g.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932403Ab0EYQOQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 May 2010 12:14:16 -0400
-Received: from [10.3.1.118] (unknown [65.202.32.252])
-	by postalmail-a4.g.dreamhost.com (Postfix) with ESMTP id 5E61E11E115;
-	Tue, 25 May 2010 09:14:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <4BFB7C24.10609@drmicha.warpmail.net>
+	id S1758989Ab0EYQ7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 12:59:10 -0400
+Received: from mail-ew0-f216.google.com ([209.85.219.216]:46472 "EHLO
+	mail-ew0-f216.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756484Ab0EYQ7J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 12:59:09 -0400
+Received: by ewy8 with SMTP id 8so604062ewy.28
+        for <git@vger.kernel.org>; Tue, 25 May 2010 09:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=c2KAQ6upDbvyi3lbMsQC7ictVkWuDdwLedt4w+s7/+Q=;
+        b=lMZOq5zzfzBinevedDgIMvnv7YMfAzDAbs0U3ppjmUgmZAsDQuvo0gkuXitx1FuNSM
+         oMd4bcwMBXBs3YQdDgzPdUpYGaKDNRzp37Hb2m0mOBKSAViCF0Se6y4EnS9dTZ/ZQ+tE
+         XYygkKo/r9M8nuNYLL0Nrvv9XDdyqji5CIpAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=fdvrX2OOrXzTjAFnF6foaXkhxkuEnInLnYbnDdK8fGwGMrHPZ0CVoOgZQLdLmn06bL
+         96u8KodSuhmFDfEiXNzd3sw005oZlSryUxfqj+LxYDpNvDXuPJAei3pKUzZi6c4SPhKL
+         KN7wUMIp4/Qg47WUOVuJZagEO1SruJXKiDcW4=
+Received: by 10.213.3.66 with SMTP id 2mr613744ebm.32.1274806745205;
+        Tue, 25 May 2010 09:59:05 -0700 (PDT)
+Received: from localhost (nat-wireless.itu.dk [130.226.142.243])
+        by mx.google.com with ESMTPS id 14sm2571778ewy.6.2010.05.25.09.59.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 25 May 2010 09:59:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147715>
 
-On 05/25/2010 03:28 AM, Michael J Gruber wrote:
-> Junio C Hamano venit, vidit, dixit 24.05.2010 03:16:
->> John<john@puckerupgames.com>  writes:
->>
->>> Is there any reason why someone would NOT want the above
->>> ".gitattributes" defined by default?
->>
->> Other than that our originally intended target audience are people who use
->> git as a source code control system, not much.
->>
->
-> and other than that many people use clean/smudge filters to make git
-> happily and efficiently deltify compressed file formats (such as gz,
-> bz2, zip) and still keep compressed checkouts...
->
-> and other than that which you (plural) and I are not thinking of right now.
->
-> Let the defaults be as they are (fit for source control in the proper
-> sense), it's easy enough to change them for other use cases.
+Hi,
 
-That's fine. We all have different ideas what revision control means. So long as it's clear what git 
-considers "source" and what it considers out of scope, what the defaults are, and what the 
-limitations are, potential users can more fairly evaluate git to see if it fits their needs.
+This is a work-in-progress based on master, and is not intended for
+inclusion anytime in the near future. The remote helper should now
+have a valid import capability. To use it, you must:
 
-For example, code libraries and shell utilities may not require anything more complicated than 
-line-by-line text-based patches in revision control.
+0. Checkout the `git-merge` branch of my svn-dump-fast-export fork
+   into a fresh vcs-svn/ subdirectory on git.git `master`, and then
+   build it with the Makefile rule provided.
+1. Call the remote with a valid file (relative path is alright) passed
+   in as an argv[1].
+2. Give it the command "import foo" following by two newlines where
+   "foo" is any arbitrary string that isn't blank.
 
-On the other hand, projects such as web sites, mobile phone apps, desktop applications, (and games 
-:) have lots of "source" that is not code.  Even XML, which is text-based, but not line-based (and 
-need not contain any newlines), may present a problem for git in this respect.
+[1]: http://github.com/artagnon/svn-dump-fast-export
 
-Perhaps a section in the manual with a header such as "Handling non-text files", or "Revision 
-control for media, XML, and other non line-oriented files" would clear this all up. You could almost 
-cull the body of it from this thread and other similar threads.
+Ramkumar Ramachandra (1):
+  Add remote SVN helper
+
+ .gitignore   |    1 +
+ Makefile     |   14 ++++-
+ remote-svn.c |  191 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 205 insertions(+), 1 deletions(-)
+ create mode 100644 remote-svn.c
