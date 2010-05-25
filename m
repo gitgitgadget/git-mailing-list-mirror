@@ -1,68 +1,65 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] git-remote-svn: Week 4
-Date: Tue, 25 May 2010 19:11:01 +0200
-Message-ID: <AANLkTimFqlbYz6BL02N7UiAsGDpspFJTrLwQYWOMi-vS@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: serious performance issues with images, audio files,
+ and other "non-code" data
+Date: Tue, 25 May 2010 13:18:49 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1005251317550.24526@xanadu.home>
+References: <4BEAF941.6040609@puckerupgames.com>
+ <20100514051049.GF6075@coredump.intra.peff.net>
+ <4BED47EA.9090905@puckerupgames.com>
+ <20100517231642.GB12092@coredump.intra.peff.net>
+ <4BF2E168.2020706@puckerupgames.com>
+ <20100518191933.GB2383@coredump.intra.peff.net>
+ <alpine.LFD.2.00.1005181528550.12758@xanadu.home>
+ <20100518194105.GA4723@coredump.intra.peff.net>
+ <alpine.LFD.2.00.1005181557250.12758@xanadu.home>
+ <4BF9C678.6010108@puckerupgames.com> <7vaarq14me.fsf@alter.siamese.dyndns.org>
+ <4BFB7C24.10609@drmicha.warpmail.net> <4BFBF701.6060901@puckerupgames.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 25 19:11:35 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: John <john@puckerupgames.com>
+X-From: git-owner@vger.kernel.org Tue May 25 19:19:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OGxf6-00032C-0g
-	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 19:11:28 +0200
+	id 1OGxmY-0007gF-K0
+	for gcvg-git-2@lo.gmane.org; Tue, 25 May 2010 19:19:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754168Ab0EYRLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 13:11:23 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:34487 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800Ab0EYRLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 13:11:22 -0400
-Received: by qyk13 with SMTP id 13so7564892qyk.1
-        for <git@vger.kernel.org>; Tue, 25 May 2010 10:11:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=H/sdXZGBWJp1BU1iFs24SUYG45E+PkG/jSWIQ4YFrAg=;
-        b=W+HhdXhuuftJMZjsigkDutbyRBuXvfBBIYK9ux/BdCenfV64SF1sn2uu/QLpQvbAyW
-         g19T8qz7qEcsjS25GvPM9XkDuFHwuBkP0vuUFVuqhaIOA8A08y7MDdnqLMXAGhDqMukP
-         tWmgXHdNfCOC8wxWdIgfH1qRh6Mfux73hgLjQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:cc:content-type;
-        b=Wy47YJa9YRiqrL7998PM2r5JswuqIyqe//iUYnzMIhhVHz5N5LE7TfxIaGHuCTrJq6
-         aQoLpie++IgFzZeFMGxk+VHmXJXDkUoz8+7Or9j8C21M10lN4MIKp2QxJ/gaTbVOKVhU
-         Bs5kBf4WxF8XkstHcHNWoEXCMUZUr1bYYldmI=
-Received: by 10.224.87.83 with SMTP id v19mr4197113qal.392.1274807481369; Tue, 
-	25 May 2010 10:11:21 -0700 (PDT)
-Received: by 10.229.50.3 with HTTP; Tue, 25 May 2010 10:11:01 -0700 (PDT)
+	id S933006Ab0EYRTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 13:19:04 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:18821 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932719Ab0EYRTD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 13:19:03 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L2Z00F19K3D4Q30@VL-MH-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 25 May 2010 13:18:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4BFBF701.6060901@puckerupgames.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147718>
 
-Hi,
+On Tue, 25 May 2010, John wrote:
 
-This comes a day late, owing to the fact that we've been working on a
-new optimization branch of the SVN exporter [1]. The remote helper now
-has an import capability which invokes svn-dump-fast-export with a
-dump file. I'm maintaining a branch of svn-dump-fast-export [2] that I
-intend to merge into git.git soon- I've already sent some patches from
-there to the list. I'd appreciate it if someone could review this
-series (or the corresponding code on GitHub). David and I will
-hopefully finish "memory" this week, and I'll start writing an SVN
-client that's able to dump a remote repository to a file (sort of a
-stripped down version of `svnsync` + `svnadmin dump`) towards the
-later half of this week.
+> Perhaps a section in the manual with a header such as "Handling non-text
+> files", or "Revision control for media, XML, and other non line-oriented
+> files" would clear this all up. You could almost cull the body of it from this
+> thread and other similar threads.
 
--- Ram
+That is indeed a good idea.
 
-[1]: Branch "memory" of http://github.com/barrbrain/svn-dump-fast-export
-[2]: Branch "git-merge" of http://github.com/artagnon/svn-dump-fast-export
+Do you volunteer?
+
+
+Nicolas
