@@ -1,76 +1,80 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [GSoC update] git-remote-svn: Week 4
-Date: Wed, 26 May 2010 10:50:26 +0800
-Message-ID: <AANLkTimu5d2ofkjERW8zcgIGqsnbnGazsDaltL1r6n6H@mail.gmail.com>
-References: <AANLkTimFqlbYz6BL02N7UiAsGDpspFJTrLwQYWOMi-vS@mail.gmail.com>
+From: Gabriel Burca <gburca-gmane@ebixio.com>
+Subject: Re: Error when cloning gc'ed repository
+Date: Tue, 25 May 2010 21:15:49 +0000 (UTC)
+Message-ID: <loom.20100525T230522-721@post.gmane.org>
+References: <hj6ms0$vcg$1@ger.gmane.org> <hj9tr4$5vi$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 26 04:50:35 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 26 04:55:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OH6hW-0006J3-LZ
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 04:50:34 +0200
+	id 1OH6m4-0007UR-5K
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 04:55:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933612Ab0EZCu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 22:50:28 -0400
-Received: from mail-gx0-f227.google.com ([209.85.217.227]:57077 "EHLO
-	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933557Ab0EZCu1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 22:50:27 -0400
-Received: by gxk27 with SMTP id 27so1934564gxk.1
-        for <git@vger.kernel.org>; Tue, 25 May 2010 19:50:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=M8TDb0c7eBAfb8uK5UfAxIxWvMPjHc6r2gzVzRGi3nI=;
-        b=To28fbOHCanhSrEnGqnxfDJGJuecnKqvBfGh9GQtG3UcianZ4n4cEBtMWnhTtI26xV
-         9ybPKx1KHuQB8ClE7NdiGH3BjXOhjj0O1NlhvHCek3iTrqZTD8goFeq3ARmOcUYG4PaT
-         m30NAGXmGdIpqLQ4NCFkImYbGYSdxPnk2d70c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=V2Ga2sQK52d8XGfGYvi9MYq313lwHfCAAoj+OrY6SFN4hHVjfFCOKyvgtD/hJ5frjD
-         vqoYPEkVlyBhBMFOJZJWmsasFYnFITqOQ0h6ZyzsSx+x0lYfJ+ofXNYzTvL6ygCrASdj
-         8Wt7kT7bvuMqJhF01yYjQE6AP3PMLmDIdIaJI=
-Received: by 10.90.61.20 with SMTP id j20mr4233491aga.150.1274842226312; Tue, 
-	25 May 2010 19:50:26 -0700 (PDT)
-Received: by 10.90.90.2 with HTTP; Tue, 25 May 2010 19:50:26 -0700 (PDT)
-In-Reply-To: <AANLkTimFqlbYz6BL02N7UiAsGDpspFJTrLwQYWOMi-vS@mail.gmail.com>
+	id S1759181Ab0EZCzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 22:55:10 -0400
+Received: from lo.gmane.org ([80.91.229.12]:48294 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758814Ab0EZCzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 22:55:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OH6ls-0007RB-EU
+	for git@vger.kernel.org; Wed, 26 May 2010 04:55:04 +0200
+Received: from il27-ig12.motorola.com ([il27-ig12.motorola.com])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 May 2010 04:55:04 +0200
+Received: from gburca-gmane by il27-ig12.motorola.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 26 May 2010 04:55:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 136.182.2.26 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 (.NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147731>
 
-> I'd appreciate it if someone could review this
-> series (or the corresponding code on GitHub). David and I will
-> hopefully finish "memory" this week, and I'll start writing an SVN
-> client that's able to dump a remote repository to a file (sort of a
-> stripped down version of `svnsync` + `svnadmin dump`) towards the
-> later half of this week.
+Andre Loker <loker <at> gmx.de> writes:
 
-Would it be able to automatically convert an svn repo that started
-life without the trunk/branches/tags hierarchy, but was added
-after-the-fact?
+> 
+> Andre Loker wrote:
+> > Hi,
+> > 
+> > $ git clone git <at> theserver:the/repository.git
+> > Initialized empty Git repository in /e/Temp/dr/.git/
+> > remote: Counting objects: 1396, done.
+> > remote: Compressing objects: 100% (654/654), done.
+> > fatal: The remote end hung up unexpectedly
+> > fatal: early EOFs:  47% (657/1396)
+> > fatal: index-pack failed
+> 
+> To answer the question myself: it seems that it is a problem with 
+> openssh under cygwin 1.7.1. I found a similar problem here:
+> 
+> http://www.mail-archive.com/cygwin <at> cygwin.com/msg103749.html
+> 
+> The proposed workaround is to use plink instead of openssh. I tried it 
+> and so far it seems to work. It's not as nice as openssh, but at least 
+> it's a workaround until the issue is solved.
 
-I know I might be asking too much here :)
 
-I'm currently planning on migrating my $DAY_JOB team from svn to git,
-and I'm thinking of testing your work if it could do the above without
-manual intervention.
+I downgraded just the openssh package in cygwin from 5.5p1-1 to 5.4p1-1 and the
+problem went away. This was easier than switching to putty/plink.
 
-For what it's worth, I'm happy with git-svn, and just thought that I
-might be able to give you feedback since I'm currently in the midst of
-migrating.
+Before the downgrade my rate of failure was 100%. I was doing a "git remote
+update origin", not a clone, but the symptoms were the same as Andre's.
 
-nazri
+-- 
+Gabriel Burca
