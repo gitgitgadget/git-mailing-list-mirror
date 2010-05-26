@@ -1,114 +1,63 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Fwd: [PATCH] Man page section reference should be in uppercase
-Date: Wed, 26 May 2010 16:33:26 +0800
-Message-ID: <AANLkTingglKSMHOcHXTg3hGF_czcFsnWLTd3GuSp-Mm6@mail.gmail.com>
-References: <1274756484-27867-1-git-send-email-ayiehere@gmail.com>
-	 <1274813122.1178.8.camel@localhost.localdomain>
-	 <AANLkTilKSLCGMgHwB4TdojtemnxYLrGsAJGHQcLJNVwL@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 26 10:42:01 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] completion: --set-upstream option for git-branch
+Date: Wed, 26 May 2010 10:46:41 +0200
+Message-ID: <72c4f4098dea94e21d44b8f76965ff1cb26eab72.1274863387.git.git@drmicha.warpmail.net>
+References: <20100525195303.GA8174@atjola.homenet>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 26 10:47:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHCBc-0005CW-No
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 10:42:01 +0200
+	id 1OHCGl-0007UC-Ut
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 10:47:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756099Ab0EZIlq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 04:41:46 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58752 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752790Ab0EZIlp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 04:41:45 -0400
-Received: by gyg13 with SMTP id 13so2647804gyg.19
-        for <git@vger.kernel.org>; Wed, 26 May 2010 01:41:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=/ri76ylmxq4o+SNPK5TNnlKm1DeoeGMMMEyxge8+NZk=;
-        b=WZDfWh9qaxBvkz4IH6gmuWAqv3FiVL6+K8T0OSji23f/PMI+fpKbwcZI8/w5PUUMK4
-         71nTjoU1jooxIHx+pjdSfJYFFWJN08pd7ZUEZ3HLhfu/2FIpPWcB6Gh/56fBNXLk29xY
-         iAQqfD/2jX7Rl+e5eoQGCd6xyGJeLEM3Y3kpU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=t4HT64yj5o/uJEbp55+k0KWymGCAJTHQzasbki+3xqF8vcaWY0PephiPBjEzTewbzo
-         cDhFEL+DrmJY8pvqCw4FjatPS4R5BMtF8X4DcxVTCQG3Z4WUCzMKeErtB54wQravNggP
-         qFOKjQ67apzGREhB7sUvrMUVsl7PYtpZo3GlQ=
-Received: by 10.91.173.6 with SMTP id a6mr4175026agp.110.1274862806490; Wed, 
-	26 May 2010 01:33:26 -0700 (PDT)
-Received: by 10.90.90.2 with HTTP; Wed, 26 May 2010 01:33:26 -0700 (PDT)
-In-Reply-To: <AANLkTilKSLCGMgHwB4TdojtemnxYLrGsAJGHQcLJNVwL@mail.gmail.com>
+	id S933939Ab0EZIrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 04:47:14 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:55399 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933391Ab0EZIrN (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 04:47:13 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7C274F878C;
+	Wed, 26 May 2010 04:46:59 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 26 May 2010 04:46:59 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=ns/0aKq42Ia/4a0/3ieg7YLn+wQ=; b=pUvkV/P0npmSgJYlxFQRZJlYSR+0iBaIT+MMeRpZbNuholJe8VXcY9RmXWp8Ve17LFcOLyiyB/ZEI8Nued9pLcYJXLa+Cznt5v4Yc2xnjlrSSyJowGcsAwqoZVUZUWlfqs5Pz/hjO3He0BV7E+E2p6oRMDPw/kigdUOo6inDqRk=
+X-Sasl-enc: p1aN0r9ml5R5GOy+Lf5TdX/yrtXikXcQnBk7kY/mJOWv 1274863617
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0FAD04D25FE;
+	Wed, 26 May 2010 04:46:57 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.345.g59eb63
+In-Reply-To: <20100525195303.GA8174@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147784>
 
-I forgot to reply to the list as well when sending the (now forwarded)
-message below.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+On that note, I'm still wondering what's wrong with this one ;)
 
-Apparently only D=E9vai Tam=E1s received it, and replied to me:
+ contrib/completion/git-completion.bash |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-D=E9vai Tam=E1s wrote to me:
-> I didn't know that. Thanks for pointing out.
-
-Apology for the top-posting-ish nature of this email.
-
-I guess when forwarding an email verbatim, it's ok to top post it with =
-a
-header of some sort?
-
-nazri.
-
----------- Forwarded message ----------
-=46rom: Nazri Ramliy <ayiehere@gmail.com>
-Date: Wed, May 26, 2010 at 9:52 AM
-Subject: Re: [PATCH] Man page section reference should be in uppercase
-To: D=E9vai Tam=E1s <devait@vnet.hu>
-
-
-On Wed, May 26, 2010 at 2:45 AM, D=E9vai Tam=E1s <devait@vnet.hu> wrote=
-:
-> I don't really agree with this, but it might be only my personal
-> preference. Reasons:
->
-> The section title in the man page is "typeset" in a "different font" =
-to
-> be easily distinguishable from the surrounding text -- therefore it's
-> all capital. On the other hand, changing the reference in the advice
-> given by git-push to be all uppercase will give a needless emphasis o=
-n
-> the referred section title. This is wrong IMHO, because the main poin=
-t
-> of the advice is not this reference, but the earlier sentences (i.e. =
-the
-> push was rejected).
-
-Keeping the reference to be in lowercase goes against what is
-currently practiced the man pages of git commands. =A0Have a look at th=
-e
-output of
-
-=A0 =A0 =A0 =A0$ git grep '"[A-z ]\+" section'
-
-See how all of them use all-caps when referring to man page sections.
-
-If the user is already familiar with the non-fast-forward push issue,
-they would know how to proceed and ignored the 'needless' emphasis.
-
-But for a user who is clueless about the non-fast-forward push issue th=
-e
-emphasis is good and even more important than that is that it is
-spelled out in the same exact form as how it will be rendered when the
-user run 'git push --help', IMHO.
-
-nazri.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 545bd4b..57245a8 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -797,6 +797,7 @@ _git_branch ()
+ 		__gitcomp "
+ 			--color --no-color --verbose --abbrev= --no-abbrev
+ 			--track --no-track --contains --merged --no-merged
++			--set-upstream
+ 			"
+ 		;;
+ 	*)
+-- 
+1.7.1.345.g59eb63
