@@ -1,93 +1,135 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [PATCH 3/5] checkout --orphan: respect -l option always
-Date: Wed, 26 May 2010 17:13:02 +0200
-Message-ID: <AANLkTikKAkwHYj6OvfEJM1YE8w2TZL2oeMBrj28V3CwX@mail.gmail.com>
-References: <1274488119-6989-1-git-send-email-erick.mattos@gmail.com>
-	 <1274488119-6989-4-git-send-email-erick.mattos@gmail.com>
-	 <7vzkznqmir.fsf@alter.siamese.dyndns.org>
-	 <AANLkTimT3sI3yuM8RZai-eWDk8Z5Rmc28RLGOx_i-RXa@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+Date: Wed, 26 May 2010 17:31:31 +0200
+Message-ID: <4BFD3ED3.3000709@drmicha.warpmail.net>
+References: <1274488119-6989-1-git-send-email-erick.mattos@gmail.com> 	<1274488119-6989-4-git-send-email-erick.mattos@gmail.com> 	<7vzkznqmir.fsf@alter.siamese.dyndns.org> <AANLkTimT3sI3yuM8RZai-eWDk8Z5Rmc28RLGOx_i-RXa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 26 17:13:26 2010
+X-From: git-owner@vger.kernel.org Wed May 26 17:32:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHIIQ-0005GT-6X
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 17:13:26 +0200
+	id 1OHIap-00005B-5N
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 17:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755524Ab0EZPNF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 11:13:05 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:36383 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755396Ab0EZPNE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 11:13:04 -0400
-Received: by wwb13 with SMTP id 13so411947wwb.19
-        for <git@vger.kernel.org>; Wed, 26 May 2010 08:13:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=L1QPLQSHCO3igRZ1UfROJUeurm/g3xHKJmRTQNHMhG8=;
-        b=FHC1de4Kx4afLi1Cz3jfkDDL0wz5/8IEBy6awEuR5Nmu7biq0SSAHGzwG4uyWmLdVl
-         VCrYU6M/cAFURqLHhkZA3Xqdg9zW5ai6Tz2zKyQsdziR+IOgu9U5knqPf2vlo6PBNKDB
-         J7qoGy5FppPiulPVxT5k7KpQKErckTgzFg3c4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=QTRFIk6HhkzTAREJrr0bHshuhbY996LD1JuZLpo2zjqOMCINn018riZGgiFO5jY/HA
-         6Mt5xqCQQstOI4R6k4zIelZXJEbyr5hZ8ni1cosX9B0VX7ZCOA++FXEUNVvMh8n0WiGX
-         uymvpb6ruyr9HapiLGco4QSA24COXwlWSaO2I=
-Received: by 10.216.86.140 with SMTP id w12mr5663101wee.95.1274886782596; Wed, 
-	26 May 2010 08:13:02 -0700 (PDT)
-Received: by 10.216.21.73 with HTTP; Wed, 26 May 2010 08:13:02 -0700 (PDT)
+	id S1755546Ab0EZPcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 11:32:18 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:43390 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755538Ab0EZPcR (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 11:32:17 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C8C62F81C6;
+	Wed, 26 May 2010 11:31:45 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 26 May 2010 11:31:45 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=5kUI5XJPu6jWXlzfr4LIanGQ6rE=; b=YPxkAp/e10+YCVg/KhqUimpO1RpH1jYnBkGkODMC9mS6jPnhugKDGj7vyQTrbvbZYJ2W+o1tisXQdxDHMXQmUZ82hb1k5sDBGq+aV3kmBL0aIxHIX9ygidwZpMrUXvcrgdEwq4Z98VQPwc4rLLsNjkuoex5nX7FQqG2p6ifORCI=
+X-Sasl-enc: N4Flujrd3y+ttAq+pScXmfUMxFcCzZT0q0LBXyyIW5QB 1274887905
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B2BB54D7BAC;
+	Wed, 26 May 2010 11:31:44 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
 In-Reply-To: <AANLkTimT3sI3yuM8RZai-eWDk8Z5Rmc28RLGOx_i-RXa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147805>
 
-On Wed, May 26, 2010 at 4:52 PM, Erick Mattos <erick.mattos@gmail.com> =
-wrote:
+Erick Mattos venit, vidit, dixit 26.05.2010 16:52:
 > Hi,
->
+> 
 > 2010/5/26 Junio C Hamano <gitster@pobox.com>
 >>
 >> Erick Mattos <erick.mattos@gmail.com> writes:
->> > @@ -684,8 +709,8 @@ int cmd_checkout(int argc, const char **argv, =
-const char *prefix)
->> > =A0 =A0 =A0 if (opts.new_orphan_branch) {
->> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (opts.new_branch)
->> > =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("--orphan and -b a=
-re mutually exclusive");
->> > - =A0 =A0 =A0 =A0 =A0 =A0 if (opts.track > 0 || opts.new_branch_lo=
-g)
->> > - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("--orphan cannot be =
-used with -t or -l");
->> > + =A0 =A0 =A0 =A0 =A0 =A0 if (opts.track > 0)
->> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("--orphan should not=
- be used with -t");
+>>> @@ -684,8 +709,8 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+>>>       if (opts.new_orphan_branch) {
+>>>               if (opts.new_branch)
+>>>                       die("--orphan and -b are mutually exclusive");
+>>> -             if (opts.track > 0 || opts.new_branch_log)
+>>> -                     die("--orphan cannot be used with -t or -l");
+>>> +             if (opts.track > 0)
+>>> +                     die("--orphan should not be used with -t");
 >>
->> Why s/cannot/should not/? =A0Just being curious.
->
+>> Why s/cannot/should not/?  Just being curious.
+> 
 > I have typed that text, not changed the original so this is not a fix
-> to your text.=A0 Anyway for me "should not" is more polite, like "you
-> should not yell" meaning you really can not do it.=A0 Or "you should =
-not
+> to your text.  Anyway for me "should not" is more polite, like "you
+> should not yell" meaning you really can not do it.  Or "you should not
 > disrespect the captain".
 
-I don't think it makes sense to try and be polite when we're actually
-refusing... "should not" implies that it possible but not recommended.
-And in this case it's impossible, because we die()...
+"should not" means you can but you should not. "die" certainly means you
+cannot. This is not a matter of politeness but of correctness.
 
---=20
-Erik "kusma" Faye-Lund
+> 
+> But that is not a fix.
+
+There's a "-" line with "cannot" and a "+" line with "should not". So
+you certainly changed what was there before.
+
+> 
+>>> +test_expect_success 'giving up --orphan not committed when -l and core.logAllRefUpdates = false deletes reflog' '
+
+Really long line here ;)
+
+>>> +     git checkout master &&
+>>> +     git checkout -l --orphan eta &&
+>>> +     test -f .git/logs/refs/heads/eta &&
+>>> +     test_must_fail PAGER= git reflog show eta &&
+>>> +     git checkout master &&
+>>> +     ! test -f .git/logs/refs/heads/eta &&
+>>> +     test_must_fail PAGER= git reflog show eta
+>>> +'
+>>
+>> I don't quite understand the title of this test, nor am I convinced that
+>> testing for .git/logs/refs/heads/eta is necessarily a good thing to do
+>> here.  "eta" branch is first prepared in an unborn state with the working
+>> tree and the index prepared to commit what is in 'master', and the first
+>> "git reflog" would fail because there is no eta branch at that point yet.
+>> Moving to 'master' from that state would still leave "eta" branch unborn
+>> and we will not see "git reflog" for that branch (we will fail "git log
+>> eta" too for that matter).  Perhaps two "test -f .git/logs/refs/heads/eta"
+>> shouldn't be there?  It feels that it is testing a bit too low level an
+>> implementation detail.
+> 
+> So I need to explain the solution:
+> 
+> When config core.logAllRefUpdates is set to false what really happens
+> is that the reflog is not created and any reflog change is saved only
+> when you have an existent reflog.
+> 
+> What I did was to make a "touch reflog".  Creating it, when the new
+
+You mean checkout -l --orphan does that touch? There is none in the
+test. Does ordinary checkout with -l does that, too?
+
+> branch get eventually saved then the reflog would be written normally.
+>  But in case somebody give up this new branch before the first save,
+> moving back to a regular branch would leave a ghost reflog.
+
+The touched entry (is left), not a reflog, I assume, otherwise the
+reflog command should not fail.
+
+> 
+> I have coded the cleaning commands for that and the test is just a
+> check of this behavior.
+
+Which command does the cleaning? "reflog show" or "checkout master"?
+
+> 
+> The first "test -f .git/logs/refs/heads/eta" tests if reflog was
+> created and the second if it was deleted.  No big deal.
+> 
+> Regards
+
+I haven't followed this series due to earlier worries about --orphan but
+I'm wondering about this cleaning up behind the back. Maybe it's just a
+matter of explanations, though.
+
+Michael
