@@ -1,76 +1,90 @@
-From: Tim Henigan <tim.henigan@gmail.com>
-Subject: [PATCH] Documentation/SubmittingPatches: Fix typo in GMail section
-Date: Wed, 26 May 2010 08:36:10 -0400
-Message-ID: <AANLkTinWWEMB3VjX0HOnulzJG4KEddqdSQ9ls724_wO5@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 26 14:36:21 2010
+From: James Tucker <jftucker@gmail.com>
+Subject: bug with 'cl' as alias for 'clone'
+Date: Wed, 26 May 2010 09:48:25 -0300
+Message-ID: <E4D176D9-E1D2-4C8F-8F18-11060E49ED80@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 26 14:48:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHFqM-00050h-CQ
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 14:36:18 +0200
+	id 1OHG2H-0002nd-SW
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 14:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754854Ab0EZMgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 May 2010 08:36:16 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46605 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754849Ab0EZMgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 08:36:12 -0400
-Received: by wyb29 with SMTP id 29so3169066wyb.19
-        for <git@vger.kernel.org>; Wed, 26 May 2010 05:36:11 -0700 (PDT)
+	id S1754894Ab0EZMsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 08:48:32 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:43841 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754673Ab0EZMs3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 08:48:29 -0400
+Received: by qyk13 with SMTP id 13so9015750qyk.1
+        for <git@vger.kernel.org>; Wed, 26 May 2010 05:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=kzk4nSOit+wO9i2BE8IWvT4vVxdlyqbqyKtIgPMJlIk=;
-        b=svVgRlFVUiUQlQSjgCLOtDckwJ87i47uo1J6bDkkOr3U8npGrwFykUd6jwxAdD2d7S
-         kyty+xKJm0Z6fSPGFT/S4+JFRkD9MQq5KKeccJCKNEgEGe22zChb/WEXa6xz6+jkYhdL
-         W7k9TYD864dr5W9g0owu/gM68Xj6eUg17nMXU=
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:to:mime-version
+         :x-mailer;
+        bh=Cyxw1qaAZl9ucpY+Xe19VxIXsP/iI340ZLdl5/PMHEY=;
+        b=hlUQdLayJ4MNGUEuMDE3sSmOCS4sa+SsOBFligtWQnuxXuWG/sdQ1OGoTx8nxDcpkW
+         Wf53U3CEVUvAGija4LLAIXrECqq/xQt3FJGIwm0WWRttQK7Iau2FWp/WvIlePUOnRY/a
+         bw5zE+UenTM1MYWQSqd7viFcGw3SbClQMiZ/w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=HBRWHXKZP7JtFtFuIAfnFJBlt2OhEXY7BBgUF9pcz7oY09ikv+vEb0kJA8WajoJ2NO
-         vEpTJoQzJGFk22AJUInx4SYQ0J7p7LOJt1Ydg8IxkRmHfMhCswLK0/HQSo7o8D3tZ356
-         QUCpPYTkulA4Tz3kQ384bZUlGrDVPldKaRnxg=
-Received: by 10.216.85.14 with SMTP id t14mr124452wee.110.1274877370835; Wed, 
-	26 May 2010 05:36:10 -0700 (PDT)
-Received: by 10.216.52.74 with HTTP; Wed, 26 May 2010 05:36:10 -0700 (PDT)
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :to:mime-version:x-mailer;
+        b=nGjwDNsuhQoyv4MbXpgZkQPvloyKUBgkYy3WRIx4c6n1Mr7sObUNsuwsB/JU+n4yU4
+         T38iRcsm4iLO9s7v88MTBnRGVxZlxndoT1LxPK9fvpcaoYamSXYhUzlFPrQtvCuF9NMN
+         +cybj/6Tyh8RcrOBwna7tQqiTLg0GepIw28QM=
+Received: by 10.224.29.208 with SMTP id r16mr4065199qac.212.1274878108754;
+        Wed, 26 May 2010 05:48:28 -0700 (PDT)
+Received: from [192.168.2.111] ([199.172.208.176])
+        by mx.google.com with ESMTPS id 6sm222294qwd.13.2010.05.26.05.48.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 26 May 2010 05:48:27 -0700 (PDT)
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147793>
 
-Commit e498257d introduced a typo while improving the GMail section
-of SubmittingPatches.
+I've been running the following aliases for a long time now:
 
-Signed-off-by: Tim Henigan <tim.henigan@gmail.com>
----
+alias g='git' # in bash
 
-This patch was based on 'maint'.
+% cat ~/.gitconfig | grep clone
+  cl = clone
 
- Documentation/SubmittingPatches |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+This appears to still be calling the right UI command:
 
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 22e3808..84248da 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -520,7 +520,7 @@ Gmail
+% g cl
+You must specify a repository to clone.
+...
 
- GMail does not appear to have any way to turn off line wrapping in the web
- interface, so this will mangle any emails that you send.  You can however
--use "git send e-mail" and send your patches through the GMail SMTP server, or
-+use "git send-email" and send your patches through the GMail SMTP server, or
- use any IMAP email client to connect to the google IMAP server and forward
- the emails through that.
+But when I try to actually clone a repository:
 
--- 
-1.7.0.2.msysgit.0
+% ls rdbi
+ls: rdbi: No such file or directory
+% g cl http://github.com/erikh/rdbi.git
+fatal: cannot set work tree after initialization
+* ls -la rdbi/
+total 0
+drwxr-xr-x    2 raggi  staff    68 26 May 09:46 .
+drwxr-xr-x  251 raggi  staff  8534 26 May 09:46 ..
+
+So then, I try it with 'clone' instead of 'cl', and it works (after removing the dead initialized repo in ./rdbi):
+
+* rm -rf rdbi/
+% g clone http://github.com/erikh/rdbi.git
+Initialized empty Git repository in ...
+
+I could look into this later on when I'm not at $work, but as I have no knowledge of the UI internals, it'd be great if someone in the know could track this down.
+
+Thanks in advance,
+
+James
