@@ -1,88 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] t7502-commit: add summary output tests for empty and
- merge commits
-Date: Tue, 25 May 2010 22:07:45 -0700
-Message-ID: <7vvdabp7xa.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 2/3] t7502-commit: add summary output tests for empty and 
+	merge commits
+Date: Wed, 26 May 2010 13:19:42 +0800
+Message-ID: <AANLkTikuukaZNVY8ikn3v1zdzGHUDLBC55fGih7Dgs7L@mail.gmail.com>
 References: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
- <1274694452-4200-2-git-send-email-rctay89@gmail.com>
- <1274694452-4200-3-git-send-email-rctay89@gmail.com>
+	 <1274694452-4200-2-git-send-email-rctay89@gmail.com>
+	 <1274694452-4200-3-git-send-email-rctay89@gmail.com>
+	 <7vvdabp7xa.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Jeff King" <peff@peff.net>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 26 07:08:05 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 26 07:20:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OH8qY-0005ZO-Dv
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 07:08:02 +0200
+	id 1OH91x-0003YD-5t
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 07:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933430Ab0EZFHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 May 2010 01:07:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48186 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751420Ab0EZFHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 01:07:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E79C6B67CD;
-	Wed, 26 May 2010 01:07:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=yLyzveDjbyecAZtROiITtHax1Rc=; b=YRs/YNV3jy/ifrmxequ90Fs
-	D98J4glEuiMZCqzQMjoDRJRs4JsniO3SZhQrlhukAMGKS0wrZOxuioV85lV5bkaM
-	qrcrAdBbB74XWPq5IbKVVWZjpNHUnziC0/4/lELSYghLASQT2lvWZnTnt4e5sjsu
-	FN1KqBBnjU8BmYu2iy/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=bhvoF+Cg89d2uiB8rm7evsVKyMhMH0MHpCSh48rlL6seQBSp6
-	+OTnQCEAjII1ObtN3k7KSeAkqXKuO1Yb2PDu0Prr1eNSmetPWn7atF3oyjJT2X9D
-	Fpc7fHEHpMlIv7B+J9jbl7FQPgzXipJa4ZukY7movZHxfiasVpmjyH0gSs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AFB4BB67CC;
-	Wed, 26 May 2010 01:07:50 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 80190B67CA; Wed, 26 May
- 2010 01:07:46 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A1F9C2BA-6884-11DF-8DA3-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933720Ab0EZFTo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 01:19:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42253 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750887Ab0EZFTn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 01:19:43 -0400
+Received: by gyg13 with SMTP id 13so2545424gyg.19
+        for <git@vger.kernel.org>; Tue, 25 May 2010 22:19:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GZ1EKeCm123ctJSRSpI/zFuyfgfPQemi+X3fqQlKdu8=;
+        b=dNgWykyhcjLthrAxORDQUzCqvAt6zXvhafK6XkkMK5U4c/MP9exNiQjR8VDMKVWh2I
+         ER0Yz/ufgwoS75RO5CUBolFoVRQd5J8FspWcO4zPP+CSo4O0rnCNvclaL4SXcWJm8pet
+         eg6hJfMp0SKjJW5IpBnXZvwmDmqEoSJE7Zb8w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NyH0M9Axzj9zIjiXxWDmSAcLh963Yn6CvyQ3aHkKyZvPedKxT+1SnhK/1zTI/ttl61
+         7dVVLaO8+sVEvZdW/6HmhdQjySWTJFhxHiFa9qALc0kQd95o1fVEL4J7WrmDLnwRqd4d
+         WlfkL0yfP1wn3xhjuaxydowGQRKeRyl+GW9ms=
+Received: by 10.231.120.37 with SMTP id b37mr5984389ibr.81.1274851182533; Tue, 
+	25 May 2010 22:19:42 -0700 (PDT)
+Received: by 10.231.33.12 with HTTP; Tue, 25 May 2010 22:19:42 -0700 (PDT)
+In-Reply-To: <7vvdabp7xa.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147743>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+Hi,
 
-> After c197702 (pretty: Respect --abbrev option), non-abbreviated hashes
-> began to appear, leading to failures for these tests.
+On Wed, May 26, 2010 at 1:07 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tay Ray Chuan <rctay89@gmail.com> writes:
 >
-> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
-> ---
->  t/t7502-commit.sh |   29 +++++++++++++++++++++++++++--
->  1 files changed, 27 insertions(+), 2 deletions(-)
+>> After c197702 (pretty: Respect --abbrev option), non-abbreviated has=
+hes
+>> began to appear, leading to failures for these tests.
+>>
+>> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+>> ---
+>> =A0t/t7502-commit.sh | =A0 29 +++++++++++++++++++++++++++--
+>> =A01 files changed, 27 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+>> index 589e8e6..8a4a277 100755
+>> --- a/t/t7502-commit.sh
+>> +++ b/t/t7502-commit.sh
+>> @@ -4,10 +4,10 @@ test_description=3D'git commit porcelain-ish'
+>>
+>> =A0. ./test-lib.sh
+>>
+>> -# Arguments: [<prefix] [<commit message>]
+>> +# Arguments: [<prefix] [<commit message>] [<commit options>]
+>> =A0check_summary_oneline() {
+>> =A0 =A0 =A0 test_tick &&
+>> - =A0 =A0 git commit -m "$2" | head -1 > act &&
+>> + =A0 =A0 echo "$3" | xargs git commit -m "$2" | head -1 > act &&
 >
-> diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-> index 589e8e6..8a4a277 100755
-> --- a/t/t7502-commit.sh
-> +++ b/t/t7502-commit.sh
-> @@ -4,10 +4,10 @@ test_description='git commit porcelain-ish'
->  
->  . ./test-lib.sh
->  
-> -# Arguments: [<prefix] [<commit message>]
-> +# Arguments: [<prefix] [<commit message>] [<commit options>]
->  check_summary_oneline() {
->  	test_tick &&
-> -	git commit -m "$2" | head -1 > act &&
-> +	echo "$3" | xargs git commit -m "$2" | head -1 > act &&
+> Why do you have to fork xargs? =A0Wouldn't/shouldn't
+>
+> =A0 =A0git commit ${3+"$3"} -m "$2"
+>
+> work?
 
-Why do you have to fork xargs?  Wouldn't/shouldn't
+It would. Blame it on my poor shell-fu. :)
 
-    git commit ${3+"$3"} -m "$2"
-
-work?
+--=20
+Cheers,
+Ray Chuan
