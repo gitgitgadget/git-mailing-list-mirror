@@ -1,74 +1,89 @@
-From: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>
-Subject: Re: [PATCH 0/2] Setting git tree of a patch (improved version)
-Date: Wed, 26 May 2010 17:34:22 +0200
-Message-ID: <AANLkTiltxW_teNgNxZnJLqbiO3Du6al3K48wlcDooVZd@mail.gmail.com>
-References: <AANLkTimIxtmaUNxp-LNy_ui5__BEBetcjTYE17ygIXD2@mail.gmail.com>
-	 <20100524184908.30884.65042.stgit@sambuntu>
-	 <AANLkTimgpjn5KZpujtmXfd7UtEfJTg-3UcmIjvFor0bX@mail.gmail.com>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Migrate from svn to git
+Date: Wed, 26 May 2010 17:13:51 +0200
+Message-ID: <4BFD3AAF.4080403@fechner.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: =?ISO-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>,
-	kha@treskal.com, git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 26 17:34:30 2010
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 26 17:37:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHIco-0001HR-Gs
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 17:34:30 +0200
+	id 1OHIfw-0003I1-1u
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 17:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755492Ab0EZPeY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 May 2010 11:34:24 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45368 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754843Ab0EZPeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 11:34:23 -0400
-Received: by fxm5 with SMTP id 5so4553675fxm.19
-        for <git@vger.kernel.org>; Wed, 26 May 2010 08:34:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=TG2Kp4QyA6n3/wjiz617vbpxcTziW8XVDzu0inyuEo0=;
-        b=aMqBn4M2OwJzaTnhIW7f1h2JgRzCYA7Q+V77T+S7UoE7xfMi5liixfM1JkXenc/uYj
-         R5L11EX9ck6LNyIHFVbgmO2xiZgUse0V5Fn/8+AkdPimWUPIRuWGLsDB9yRFieKwqdU/
-         lE0HoP7eZeZQQe5Ceu0aumlCyPgBcUmuCfXY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=PJ8OVxWDMIZnH7h2MW2it10lv63hXTLMKNtBMF8iB6MXigYJWikY4aa1SrnTnZuSEe
-         8HZmKwV5wVVhB0tbmu1Q3n2HLJlwCcKcTR+arx1Ixv/FAtYG6hnRKR5priymtvVNuNqk
-         lZ5UxmkyzX3Jr9XWVfPjRqD8sjfRN5QU24/zs=
-Received: by 10.204.47.74 with SMTP id m10mr1067765bkf.19.1274888062090; Wed, 
-	26 May 2010 08:34:22 -0700 (PDT)
-Received: by 10.204.76.68 with HTTP; Wed, 26 May 2010 08:34:22 -0700 (PDT)
-In-Reply-To: <AANLkTimgpjn5KZpujtmXfd7UtEfJTg-3UcmIjvFor0bX@mail.gmail.com>
+	id S1754941Ab0EZPhT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 11:37:19 -0400
+Received: from anny.lostinspace.de ([80.190.182.2]:31131 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753981Ab0EZPhS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 May 2010 11:37:18 -0400
+X-Greylist: delayed 597 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 May 2010 11:37:18 EDT
+Received: from server.idefix.lan (ppp-93-104-103-160.dynamic.mnet-online.de [93.104.103.160])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.3/8.14.3) with ESMTP id o4QFRC88046097
+	for <git@vger.kernel.org>; Wed, 26 May 2010 17:27:16 +0200 (CEST)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (unknown [127.0.0.1])
+	by server.idefix.lan (Postfix) with ESMTP id 5DFFC4F8B
+	for <git@vger.kernel.org>; Wed, 26 May 2010 17:27:12 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at server.idefix.lan
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sIF66w7kmnaz for <git@vger.kernel.org>;
+	Wed, 26 May 2010 17:24:13 +0200 (CEST)
+Received: from matthias-fechners-macbook.local (tmo-104-100.customers.d1-online.com [80.187.104.100])
+	by server.idefix.lan (Postfix) with ESMTPA id 3354E4E71
+	for <git@vger.kernel.org>; Wed, 26 May 2010 17:24:09 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.5 (anny.lostinspace.de [80.190.182.2]); Wed, 26 May 2010 17:27:16 +0200 (CEST)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147807>
 
-On Tue, May 25, 2010 at 2:26 PM, Catalin Marinas
-<catalin.marinas@gmail.com> wrote:
-> The patches look fine to me.
->
-> Do you want me to merge them directly or I grab them via some git tree
-> (or Karl's).
+Hi,
 
-You can grab them from git://github.com/gustavh/stgit.git in the
-'set-tree' branch.
+I hope that is the correct list to ask some questions.
+I understood that the idea behind git is completely different and I like 
+the idea behind git.
 
-Somewhat unrelated, I have a string of patches in my 'proposed' branch
-(same repository) which contain various fixes to the Emacs mode.
-Would you like me to post them here as one patch series or would you
-prefer to handle it some other way?
+But for the svn repository I want to convert I need some features and 
+I'm not sure how / if to implement them in git.
 
-Karl has a bit too high latency these days, so it's inconvenient to go
-via his branch(es).
+Corrently the svn repo is divided into trunk branches and tags.
+In each of this directory like trunk i have directories like hardware, 
+software, docu and more.
 
-- Gustav
+For each of this subdirectories I have usergroups defined which has no 
+access, read access or rw access.
+
+If I understood the manual correctly I can stick on that structure and 
+easily work here with the unix-permission to grant access to the folders?
+I think I have to test then acl with freebsd to have more then one group 
+for each directory.
+
+
+The second question is, I someone commits some files with svn an email 
+is sent to a svn-commit mailinglist so changes can easily be discussed.
+The current mail is sent in html format with a colored diff, so it is 
+easier to read.
+
+Is something similar possible with git or do you suggest a complete 
+approach?
+
+Thanks a lot for answers.
+
+Bye,
+Matthias
+
+-- 
+"Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to produce bigger and better idiots. So far, the universe is winning." -- Rich Cook
