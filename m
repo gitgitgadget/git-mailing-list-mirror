@@ -1,72 +1,76 @@
-From: Dale Rowley <ddrowley@gmail.com>
-Subject: Re: [PATCH 1/1] run-command.c: ignore bad permissions on dirs in
- PATH
-Date: Tue, 25 May 2010 20:36:51 -0600
-Message-ID: <4BFC8943.6090504@gmail.com>
-References: <4BFB3C0A.2030505@gmail.com> <7vaarownmv.fsf@alter.siamese.dyndns.org> <4BFB75DD.7030201@viscovery.net>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: [GSoC update] git-remote-svn: Week 4
+Date: Wed, 26 May 2010 10:50:26 +0800
+Message-ID: <AANLkTimu5d2ofkjERW8zcgIGqsnbnGazsDaltL1r6n6H@mail.gmail.com>
+References: <AANLkTimFqlbYz6BL02N7UiAsGDpspFJTrLwQYWOMi-vS@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed May 26 04:37:28 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 26 04:50:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OH6Uo-0002Eg-0s
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 04:37:26 +0200
+	id 1OH6hW-0006J3-LZ
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 04:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933765Ab0EZChI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 May 2010 22:37:08 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:64744 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933501Ab0EZChG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 May 2010 22:37:06 -0400
-Received: by pwi2 with SMTP id 2so1355749pwi.19
-        for <git@vger.kernel.org>; Tue, 25 May 2010 19:37:06 -0700 (PDT)
+	id S933612Ab0EZCu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 May 2010 22:50:28 -0400
+Received: from mail-gx0-f227.google.com ([209.85.217.227]:57077 "EHLO
+	mail-gx0-f227.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933557Ab0EZCu1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 May 2010 22:50:27 -0400
+Received: by gxk27 with SMTP id 27so1934564gxk.1
+        for <git@vger.kernel.org>; Tue, 25 May 2010 19:50:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=qsr/D9uV0QWRQ3SudDDx2Ocu3JEEZGbSZpoIxxL31tU=;
-        b=MWuk2EWkg4LRUcg9sj3S8gFu77enpurn6N8LwZJd606rdFsarOUs7JxPONWcXT/N/t
-         QBHTkqA+B4nBlXlqTc9AfIiDQ7AgOzg6+d1+LEGi/49qTDeeot/JLI1aR89qwndvh/Zm
-         tLrQsKfSEq75Wx82tdjErRuaoxCr6q7M1D7Hw=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=M8TDb0c7eBAfb8uK5UfAxIxWvMPjHc6r2gzVzRGi3nI=;
+        b=To28fbOHCanhSrEnGqnxfDJGJuecnKqvBfGh9GQtG3UcianZ4n4cEBtMWnhTtI26xV
+         9ybPKx1KHuQB8ClE7NdiGH3BjXOhjj0O1NlhvHCek3iTrqZTD8goFeq3ARmOcUYG4PaT
+         m30NAGXmGdIpqLQ4NCFkImYbGYSdxPnk2d70c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=k5+jQVhqs+OM/sHY8e66Cxd3hCmy5fxm8wisTSFNjMhdN+2eWMBNa0tbpiSsHEcmL5
-         v60RA0AGTZ/hJ0X2Xv6wiUzIgHBmkvbdu9wzplYsg/kHvrSXIDcAUXXW09Oq+Qv6wM8/
-         WMYuLFyNJodp3c7Cm3uTIVZf4Jjt4IOsron9A=
-Received: by 10.142.249.16 with SMTP id w16mr5448908wfh.134.1274841424410;
-        Tue, 25 May 2010 19:37:04 -0700 (PDT)
-Received: from [192.168.2.3] (97-118-8-44.hlrn.qwest.net [97.118.8.44])
-        by mx.google.com with ESMTPS id v41sm1875968wfh.21.2010.05.25.19.37.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 25 May 2010 19:37:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.8) Gecko/20100411 Thunderbird/3.0.3
-In-Reply-To: <4BFB75DD.7030201@viscovery.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=V2Ga2sQK52d8XGfGYvi9MYq313lwHfCAAoj+OrY6SFN4hHVjfFCOKyvgtD/hJ5frjD
+         vqoYPEkVlyBhBMFOJZJWmsasFYnFITqOQ0h6ZyzsSx+x0lYfJ+ofXNYzTvL6ygCrASdj
+         8Wt7kT7bvuMqJhF01yYjQE6AP3PMLmDIdIaJI=
+Received: by 10.90.61.20 with SMTP id j20mr4233491aga.150.1274842226312; Tue, 
+	25 May 2010 19:50:26 -0700 (PDT)
+Received: by 10.90.90.2 with HTTP; Tue, 25 May 2010 19:50:26 -0700 (PDT)
+In-Reply-To: <AANLkTimFqlbYz6BL02N7UiAsGDpspFJTrLwQYWOMi-vS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147730>
 
-> That is, when you write a new git command and forget to set execute
-> permission, you lose the "Permission denied" error. (Ditto if you
-> accidentally remove execute permission from an existing external git command.)
+> I'd appreciate it if someone could review this
+> series (or the corresponding code on GitHub). David and I will
+> hopefully finish "memory" this week, and I'll start writing an SVN
+> client that's able to dump a remote repository to a file (sort of a
+> stripped down version of `svnsync` + `svnadmin dump`) towards the
+> later half of this week.
 
-True, but after getting the warning that 'git-frob' doesn't exist, it
-would probably only take a minute to figure out that 'git-frob'
-permissions need to be fixed, and then it's understandable why git
-choked on it. In contrast, it took me a while to discover my PATH
-permissions problem, and even then it wasn't clear why git should die
-because of a permissions problem on a directory that had little to do
-with git.
+Would it be able to automatically convert an svn repo that started
+life without the trunk/branches/tags hierarchy, but was added
+after-the-fact?
 
-Dale
+I know I might be asking too much here :)
+
+I'm currently planning on migrating my $DAY_JOB team from svn to git,
+and I'm thinking of testing your work if it could do the above without
+manual intervention.
+
+For what it's worth, I'm happy with git-svn, and just thought that I
+might be able to give you feedback since I'm currently in the midst of
+migrating.
+
+nazri
