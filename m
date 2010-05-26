@@ -1,99 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git log follow question
-Date: Wed, 26 May 2010 01:58:23 -0400
-Message-ID: <20100526055823.GA30409@coredump.intra.peff.net>
-References: <006d01caf300$703e96a0$50bbc3e0$@burgmann.anu.edu.au>
- <20100514043704.GC6075@coredump.intra.peff.net>
- <alpine.LFD.2.00.1005140730030.3711@i5.linux-foundation.org>
- <20100525093140.GA32460@coredump.intra.peff.net>
- <alpine.LFD.2.00.1005251141580.3689@i5.linux-foundation.org>
+From: =?UTF-8?Q?Bj=C3=B6rn_Gustavsson?= <bgustavsson@gmail.com>
+Subject: Re: (Mosty harmless) protocol error when pushing
+Date: Wed, 26 May 2010 07:58:29 +0200
+Message-ID: <AANLkTilc9-B79EhmmO2t-VsHFZdupQn8zX9LFYRrn5of@mail.gmail.com>
+References: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
+	 <20100525072824.GA19612@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Albert Krawczyk <albert@burgmann.anu.edu.au>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed May 26 07:58:32 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 26 07:58:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OH9dP-0001kQ-L0
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 07:58:31 +0200
+	id 1OH9dY-0001nr-MV
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 07:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932769Ab0EZF61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 May 2010 01:58:27 -0400
-Received: from peff.net ([208.65.91.99]:58894 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751443Ab0EZF60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 01:58:26 -0400
-Received: (qmail 30328 invoked by uid 107); 26 May 2010 05:58:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 26 May 2010 01:58:29 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 May 2010 01:58:23 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1005251141580.3689@i5.linux-foundation.org>
+	id S933185Ab0EZF6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 01:58:35 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:63937 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752509Ab0EZF6e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 May 2010 01:58:34 -0400
+Received: by wwb13 with SMTP id 13so46626wwb.19
+        for <git@vger.kernel.org>; Tue, 25 May 2010 22:58:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=LZ5Fdw2kQWwgKyC8UyM+xZ/qBcnvpZnGRryRv6im1to=;
+        b=Dw296bQ0oIqg/6Q1GHvjXA4EDl0a7MxLmiMD/mYadjeARmJRV5oN6Wh/TAhBeg3Hf8
+         mpUeaVfL/po7tyBRTv7ZkUnI06Uj2CnnSaAn+xe3YpwUDkld3ZXuh7EreK4lccdQNiKf
+         v+sI/LPyotoZQ1FkR5L2sG1HrBrcm84VhH65o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YkHc8dj3FqJ2qmmT3f2PjGYXFGWs/YsDqvnFyeo71+0osY4brevW1pZXpMpdQ1AOtQ
+         yVk45NsHPmdHKdpZJRopqN6tqyG76wrbXRCyvctlWp/DPVAKIp98DyNmLWwlMvs+tZ3m
+         Bknud6wVG6/SsHPR7Gd0jZubRmTO+UjIst+cw=
+Received: by 10.216.160.12 with SMTP id t12mr4789062wek.154.1274853509226; 
+	Tue, 25 May 2010 22:58:29 -0700 (PDT)
+Received: by 10.216.183.204 with HTTP; Tue, 25 May 2010 22:58:29 -0700 (PDT)
+In-Reply-To: <20100525072824.GA19612@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147748>
 
-On Tue, May 25, 2010 at 11:49:25AM -0700, Linus Torvalds wrote:
-
-> On Tue, 25 May 2010, Jeff King wrote:
-> > 
-> > Thanks for the input. I took a look at it myself and it is a bit more
-> > complex than just turning on pruning. I have a prototype --follow that
-> > handles arbitrary pathspecs instead of single files; instead of
-> > replacing the single-file pathspec, it just widens the pathspec as it
-> > traverses history.
-> 
-> Doing it "right" is actually a _lot_ more complex than that.
-
-Did you mean doing history rewriting right is more complex than that, or
-did you mean that handling multiple follow pathspecs is more complex
-than pathspec-widening (where "handling multiple pathspecs" means making
-"--follow subdir" work about as well as "--follow file", but not
-actually doing real history rewriting)?
-
-If the former, I agree.
-
-If the latter, I am not sure it is any worse than the single-file follow
-case.
-
-For example, consider this history:
-
-  echo content >file && git add . && git commit -m base
-  git mv file new && git commit -m moved
-  sleep 1 ;# to ensure timestamp difference
-  git checkout -b other HEAD^
-  echo changes >>file && git commit -a -m changes
-  git merge master
-
-We'll traverse in this order:
-
-  merge
-  changes (to file)
-  moved (from file to new)
-  base (create file)
-
-If I do "git log --follow new" with the current master, I will see only
-"moved" and "base". I don't see "changes" because it operates on "file",
-not "new". But if we reverse the order in which the two branches'
-commits were made, then we will parse "moved" first, and we _will_ see
-"changes", because we've updated our pathspec. So it matters when we
-traverse the rename.
-
-For "base" and everything prior to it, in general we will already have
-traversed the rename because we try to do things in date order. But in
-the face of clock skew, it is possible to follow the ancestry down
-before hitting a rename on another branch.
-
-So my point is that even with the current --follow, there are already
-corner cases where traversal order matters. Which is maybe the point you
-were trying to make, too, but I was unclear from your example if you
-meant that the problem was _worse_ with simple expansion of pathspecs
-(i.e., not actually turning on revs->prune) than the current --follow.
-
--Peff
+MjAxMC81LzI1IEplZmYgS2luZyA8cGVmZkBwZWZmLm5ldD46Cgo+IGRpZmYgLS1naXQgYS9idWls
+dGluL3JlY2VpdmUtcGFjay5jIGIvYnVpbHRpbi9yZWNlaXZlLXBhY2suYwo+IGluZGV4IGJiMzQ3
+NTcuLmMwYTZhM2IgMTAwNjQ0Cj4gLS0tIGEvYnVpbHRpbi9yZWNlaXZlLXBhY2suYwo+ICsrKyBi
+L2J1aWx0aW4vcmVjZWl2ZS1wYWNrLmMKPiBAQCAtODQzLDcgKzg0MywyMCBAQCBpbnQgY21kX3Jl
+Y2VpdmVfcGFjayhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZp
+eCkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGNvbnN0IGNoYXIgKmFyZ3Zf
+Z2NfYXV0b1tdID0gewo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgImdjIiwgIi0tYXV0byIsICItLXF1aWV0IiwgTlVMTCwKPiDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoH07Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCBydW5fY29tbWFuZF92X29wdChhcmd2X2djX2F1dG8sIFJVTl9HSVRfQ01EKTsKPiArIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cnVjdCBjaGlsZF9wcm9jZXNzIHByb2M7Cj4g
+Kwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgbWVtc2V0KCZwcm9jLCAwLCBz
+aXplb2YocHJvYykpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcHJvYy5u
+b19zdGRpbiA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBwcm9jLnN0
+ZG91dF90b19zdGRlcnIgPSAxOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+cHJvYy5lcnIgPSB1c2Vfc2lkZWJhbmQgPyAtMSA6IDA7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCBwcm9jLmdpdF9jbWQgPSAxOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgcHJvYy5hcmd2ID0gYXJndl9nY19hdXRvOwo+ICsKPiArIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghc3RhcnRfY29tbWFuZCgmcHJvYykpIHsKPiArIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICh1c2Vfc2lkZWJh
+bmQpCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBjb3B5X3RvX3NpZGViYW5kKHByb2MuZXJyLCAtMSwgTlVMTCk7Cj4gKyDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBmaW5pc2hfY29tbWFuZCgmcHJv
+Yyk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9Cj4gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqB9Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiAoYXV0b191cGRhdGVfc2Vy
+dmVyX2luZm8pCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB1cGRhdGVfc2Vy
+dmVyX2luZm8oMCk7Cj4KPiBVbmZvcnR1bmF0ZWx5IEkgY2FuJ3QgYWN0dWFsbHkgdGVzdCBpdC4g
+OikKClRoYW5rcyEKClVuZm9ydHVuYXRlbHksIEkgd2FzIGFsc28gdW5hYmxlIHRvIHJlcHJvZHVj
+ZSB0aGUgcHJvYmxlbSwKc28gSSBjYW4ndCB0ZXN0IGl0IGVpdGhlci4KClRoZXJlIGlzIG5vIGVh
+c3kgd2F5IHRvIGZvcmNlIGEgR0Mgb24gbXkgcmVwb3NpdG9yeSBhdCBnaXRodWIsCnNvIEkgdHJp
+ZWQgdG8gcHVzaCB0byBhIGxvY2FsIHJlcG9zaXRvcnkgaGF2aW5nIHRvbyBtYW55IGxvb3NlCm9i
+amVjdHMgdXNpbmcgdGhlICJmaWxlOiIgcHJvdG9jb2wgYnV0IHRoZSBwcm9ibGVtIGRpZCBub3Qg
+b2NjdXIKKGkuZS4gdGhlIHJlcG9zaXRvcnkgd2FzIGF1dG8gcGFja2VkIGJ1dCB0aGUgcHJvdG9j
+b2wgZXJyb3IgZGlkCm5vdCBoYXBwZW4pLgoKLS0gCkJqw7ZybiBHdXN0YXZzc29uLCBFcmxhbmcv
+T1RQLCBFcmljc3NvbiBBQgo=
