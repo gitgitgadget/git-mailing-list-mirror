@@ -1,104 +1,88 @@
-From: Konrad Karl <kk_konrad@gmx.at>
-Subject: .gitignore: according to what rules does this work
-Date: Wed, 26 May 2010 18:23:06 +0200
-Message-ID: <2033.90713218159$1274891002@news.gmane.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Migrate from svn to git
+Date: Wed, 26 May 2010 16:23:35 +0000
+Message-ID: <AANLkTikD6Op5TO0EtQWLQ0N6zD0Kr-pltW76rY1Dvx5D@mail.gmail.com>
+References: <4BFD3AAF.4080403@fechner.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 26 18:23:19 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Matthias Fechner <idefix@fechner.net>
+X-From: git-owner@vger.kernel.org Wed May 26 18:23:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHJO1-0007AF-LK
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 18:23:17 +0200
+	id 1OHJOV-0007UE-Lq
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 18:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755540Ab0EZQXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 May 2010 12:23:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60008 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755054Ab0EZQXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 12:23:10 -0400
-Received: (qmail invoked by alias); 26 May 2010 16:23:08 -0000
-Received: from dinoc9.indmath.uni-linz.ac.at (EHLO localhost) [140.78.117.79]
-  by mail.gmx.net (mp011) with SMTP; 26 May 2010 18:23:08 +0200
-X-Authenticated: #25381063
-X-Provags-ID: V01U2FsdGVkX19bpUxju3Bb+Vuajl1ZrGT5WihOE5oLOhXRzkELQ3
-	i5ZWamkeZhjLGA
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-08-17)
-X-Y-GMX-Trusted: 0
+	id S1755391Ab0EZQXn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 12:23:43 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52626 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755054Ab0EZQXm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 May 2010 12:23:42 -0400
+Received: by gyg13 with SMTP id 13so3044422gyg.19
+        for <git@vger.kernel.org>; Wed, 26 May 2010 09:23:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=p5nn/DK1KPB3V5rSAtWCNNRzdHbeEaPwnlwSTSd9kqw=;
+        b=MhPmAPk2/m545ulBzw8+2b61wF3HjHKt5vLMzn822wDyupON2MgWj4hrsgTEs0QoM/
+         YA2v2UdVKTE8agdqBh/1X6pSUamb6nZqH/PkKYo+ejWyAEHRC6IF/becMLKjEo7gNNe8
+         i7WP2cHdwKF22WqkdRLs3PhouoTjy44ksr1r8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=DyWXd4xJ95bEh26ggmXFICbLnfasf4BevR1zbueOMB9/KUaaaU0lgNbvnPqONPY5oL
+         FLnhEKwZQVW4TH/gGy/7nsNvv0JQ5JjggJ5ukDyBIzMwtESdv+Ta4AGAH3u1TRAyalOK
+         cmvMKZYLdo5pT/Zdd5cFRRSCT3fi3hCZzfMT0=
+Received: by 10.231.178.132 with SMTP id bm4mr7503890ibb.62.1274891015589; 
+	Wed, 26 May 2010 09:23:35 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 26 May 2010 09:23:35 -0700 (PDT)
+In-Reply-To: <4BFD3AAF.4080403@fechner.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147810>
 
-I have the following directory layout and want to exclude
-dir2 .. dirN
+On Wed, May 26, 2010 at 15:13, Matthias Fechner <idefix@fechner.net> wrote:
+> I hope that is the correct list to ask some questions.
+> I understood that the idea behind git is completely different and I like the
+> idea behind git.
+>
+> But for the svn repository I want to convert I need some features and I'm
+> not sure how / if to implement them in git.
+>
+> Corrently the svn repo is divided into trunk branches and tags.
+> In each of this directory like trunk i have directories like hardware,
+> software, docu and more.
+>
+> For each of this subdirectories I have usergroups defined which has no
+> access, read access or rw access.
+>
+> If I understood the manual correctly I can stick on that structure and
+> easily work here with the unix-permission to grant access to the folders?
+> I think I have to test then acl with freebsd to have more then one group for
+> each directory.
 
-The following arrangement of .gitignore seems to work ok
-but I was unable to find docs about the double asterisks.
+No. Git isn't centralized. Anyone can clone the repo and change
+anything the want. You implement control by setting a policy on what
+you merge back into your tree, which is considered canonical.
 
-./.gitignore:
+There are several on-commit filtering programs available that can do
+that automatically based on paths within the repository.
 
-*
-*/
-!.gitignore
-!/dir1/
+> The second question is, I someone commits some files with svn an email is
+> sent to a svn-commit mailinglist so changes can easily be discussed.
+> The current mail is sent in html format with a colored diff, so it is easier
+> to read.
+>
+> Is something similar possible with git or do you suggest a complete
+> approach?
 
-
-dir1/.gitignore:
-
-!**
-!**/
-
-these two lines seem to be enough to have all subdirectories
-within dir1 being included (which is desired) but why?
-
-|-- .gitignore
-|-- dir1
-|   |-- .gitignore
-|   |-- file1
-|   |-- subdir1
-|   |   |-- file1
-|   |   `-- subsubdir1
-|   |       |-- file1
-|   |       `-- subsubsubdir1
-|   |           `-- file1
-|   `-- subdir2
-|       `-- file1
-|-- dir2
-|   `-- file1
-.
-.
-.
---- dirN
-    `--file1
-
-git add . says:
-....
-# Changes to be committed:
-#   (use "git rm --cached <file>..." to unstage)
-#
-#       new file:   .gitignore
-#       new file:   dir1/.gitignore
-#       new file:   dir1/file1
-#       new file:   dir1/subdir1/file1
-#       new file:   dir1/subdir1/subsubdir1/file1
-#       new file:   dir1/subdir1/subsubdir1/subsubsubdir1/file1
-#       new file:   dir1/subdir2/file1
-
-Before discovering this I was playing like this:
-
-!*
-!*/
-!*/*
-!*/*/ 
-
-and so on.
-
-Greetings,
-Konrad
+There are a lot of these scripts available in contrib and elsewhere.
