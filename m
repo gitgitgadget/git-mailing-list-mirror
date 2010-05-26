@@ -1,159 +1,130 @@
 From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH 3/5] checkout --orphan: respect -l option always
-Date: Wed, 26 May 2010 15:04:33 -0300
-Message-ID: <AANLkTiksYeRzqNTdOMxb3oliuVna6kAxbHM8nxx6gNCO@mail.gmail.com>
+Subject: Re: [PATCH 2/5] refs: split log_ref_write logic into log_ref_setup
+Date: Wed, 26 May 2010 15:11:05 -0300
+Message-ID: <AANLkTikPypcmGB6NuTl-SQZR3lnIvdmVG5E8wjVAlIej@mail.gmail.com>
 References: <1274488119-6989-1-git-send-email-erick.mattos@gmail.com> 
-	<1274488119-6989-4-git-send-email-erick.mattos@gmail.com> 
-	<7vzkznqmir.fsf@alter.siamese.dyndns.org> <AANLkTimT3sI3yuM8RZai-eWDk8Z5Rmc28RLGOx_i-RXa@mail.gmail.com> 
-	<4BFD3ED3.3000709@drmicha.warpmail.net>
+	<1274488119-6989-3-git-send-email-erick.mattos@gmail.com> 
+	<7v632bs13c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed May 26 20:11:04 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 26 20:11:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHL4J-0002B9-CN
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 20:11:03 +0200
+	id 1OHL4o-0002X7-JB
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 20:11:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757059Ab0EZSK5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 14:10:57 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36245 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754081Ab0EZSK4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 14:10:56 -0400
-Received: by gyg13 with SMTP id 13so3153946gyg.19
-        for <git@vger.kernel.org>; Wed, 26 May 2010 11:10:55 -0700 (PDT)
+	id S1757252Ab0EZSL3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 14:11:29 -0400
+Received: from mail-gx0-f215.google.com ([209.85.217.215]:33368 "EHLO
+	mail-gx0-f215.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755289Ab0EZSL2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 May 2010 14:11:28 -0400
+X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 May 2010 14:11:28 EDT
+Received: by gxk7 with SMTP id 7so2667276gxk.17
+        for <git@vger.kernel.org>; Wed, 26 May 2010 11:11:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
          :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=+ohDP+MfUMjlDCxHmR+oMn32vxQaEQF1+PB0u7NEbhk=;
-        b=W9qKU/BfrYQUJXrtdRTE1och5/W2ElmIBnL9GpujxL29eiUICzUdveQzFwwUy7dCZZ
-         TR1C5xC3WD9GrRxiElosehq9xcJERMlEPzWk8EhhW5Wv/uP2INqEHqRnEkkvAvsWfwwv
-         q7MCDfTQW51YyqzdHqCP2XNRMl517QmSRkN6A=
+        bh=/w3G8RfQVGolNnbAHrNfwgaparyXQVxouSnB/c+SJcw=;
+        b=vksJ/OYYOYghK7x0Jj5NOyzZzu76UdiSQuwwvyISQ7cV+otnSHclqpFOsEdOIj8D5n
+         DUz4mkb2Zy4zAHrZbHQ/qNno4fWj7ueh7vXnauCB5Hu03h8enhPnMY3HjTlX/lOkPZdw
+         LV8qOL49MOcDGkzV6ibcfmy1vxB55356dAFwI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=hpgq1JMGcx9NvLjZP3A3Qj7LGGBwjOZhy9rar3ud6yo2nfgUQHmtBIrAGQcwTen+L7
-         a4FpZRBVBsEkoyWlzPMa6U6aXjHLSjpHIFP8pApuQX298uRjVG7W6dycF+dfBzFuT1lN
-         xY1VY50OOi61tL6oZXm4ainLeGBJiczcNQc34=
-Received: by 10.150.213.10 with SMTP id l10mr9580568ybg.351.1274897093335; 
-	Wed, 26 May 2010 11:04:53 -0700 (PDT)
-Received: by 10.151.39.17 with HTTP; Wed, 26 May 2010 11:04:33 -0700 (PDT)
-In-Reply-To: <4BFD3ED3.3000709@drmicha.warpmail.net>
+        b=ijqoUc9HFt/2B5gUbKU3qgzJlfqWlbhQau0i361kmp5mKIHmwITvsh0UM1FHDaYRSi
+         JdPWFuSnubygPWRhRhVbH+6qweavvlO16lPWBCTM4E1qCBcGkMcv2mCCqE/p/YeT98wm
+         taEMA/vT5kHXrDwCaexu8TXJMC0tVytw9GuLY=
+Received: by 10.151.88.8 with SMTP id q8mr9168030ybl.67.1274897487180; Wed, 26 
+	May 2010 11:11:27 -0700 (PDT)
+Received: by 10.151.39.17 with HTTP; Wed, 26 May 2010 11:11:05 -0700 (PDT)
+In-Reply-To: <7v632bs13c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147815>
 
-Hi,
+Hi there,
 
-2010/5/26 Michael J Gruber <git@drmicha.warpmail.net>:
->> But that is not a fix.
+2010/5/26 Junio C Hamano <gitster@pobox.com>:
+> I have a slight suspicion that it would have made the patch smaller a=
+nd
+> easier to read if you kept the name of the on-stack log_file[] as-is,=
+ and
+> named the retval parameter logfile_p or soemthing.
+
+The size of the patch is indeed by the split/insertion which
+complicates the diff's life.
+If you compare both blobs you see it is not a hard change.  But we can
+not hope for computer's intelligence during this lifetime.  ;-D
+
+>  Also you would need to
+> make this buffer "static char log_file[]", no?  Otherwise you would b=
+e
+> returning a pointer to a dead buffer to the caller.
+
+Not really.  git_snpath() is taking care of setting up the buffer
+dynamically in the heap.  The calling function presents its buffer by
+reference thus only the pointer's address which its content is later
+changed to point to the dynamic one.
+
+>> +static int log_ref_write(const char *ref_name, const unsigned char =
+*old_sha1,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0const unsigned char *new_sha1, const char *msg)
+>> +{
+>> + ...
+>> + =C2=A0 =C2=A0 result =3D log_ref_setup(ref_name, &log_file);
+>> + =C2=A0 =C2=A0 if (result)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return result;
+>> +
+>> + =C2=A0 =C2=A0 logfd =3D open(log_file, oflags);
 >
-> There's a "-" line with "cannot" and a "+" line with "should not". So
-> you certainly changed what was there before.
+> Yuck, the caller needs to call "setup" which discards the file descri=
+ptor
+> opened for writing and then open it again itself?
 
-Everybody know what a minus or a plus sign means in a diff. ;-)
+The separation of logic of setup from writing of the reflog and the
+consequently created log_ref_setup was meant to just prepare the
+reflog file.  This way it can be used consistently on different
+functions.
 
-What I have meant was that I had typed the whole line myself after
-some previous removal while I was making the changes during
-"deletion/moving lines" actions.  No big deal, just a mistake.
+At the moment It is being used on log_ref_write() and in
+update_refs_for_switch().  In the first case it is interesting that
+the reflog keeps opened to be used.  On the later case it is not.  So,
+one of the calling functions would have to do something.
 
-The real message change here is from blocking -t an -l to blocking
-only -t.  As I had told I have not realized the 'should not/cannot'
-issue.
+We have two approaches to that:
+1. keeping the reflog opened and making sure the calling function close=
+ it.
+2. closing it and making the calling function open it or not as needed.
 
->>>> + =C2=A0 =C2=A0 git checkout master &&
->>>> + =C2=A0 =C2=A0 git checkout -l --orphan eta &&
->>>> + =C2=A0 =C2=A0 test -f .git/logs/refs/heads/eta &&
->>>> + =C2=A0 =C2=A0 test_must_fail PAGER=3D git reflog show eta &&
->>>> + =C2=A0 =C2=A0 git checkout master &&
->>>> + =C2=A0 =C2=A0 ! test -f .git/logs/refs/heads/eta &&
->>>> + =C2=A0 =C2=A0 test_must_fail PAGER=3D git reflog show eta
->>>> +'
->>>
->>> I don't quite understand the title of this test, nor am I convinced=
- that
->>> testing for .git/logs/refs/heads/eta is necessarily a good thing to=
- do
->>> here. =C2=A0"eta" branch is first prepared in an unborn state with =
-the working
->>> tree and the index prepared to commit what is in 'master', and the =
-first
->>> "git reflog" would fail because there is no eta branch at that poin=
-t yet.
->>> Moving to 'master' from that state would still leave "eta" branch u=
-nborn
->>> and we will not see "git reflog" for that branch (we will fail "git=
- log
->>> eta" too for that matter). =C2=A0Perhaps two "test -f .git/logs/ref=
-s/heads/eta"
->>> shouldn't be there? =C2=A0It feels that it is testing a bit too low=
- level an
->>> implementation detail.
->>
->> So I need to explain the solution:
->>
->> When config core.logAllRefUpdates is set to false what really happen=
-s
->> is that the reflog is not created and any reflog change is saved onl=
-y
->> when you have an existent reflog.
->>
->> What I did was to make a "touch reflog". =C2=A0Creating it, when the=
- new
->
-> You mean checkout -l --orphan does that touch? There is none in the
-> test. Does ordinary checkout with -l does that, too?
+I have chosen 2 because of:
+* I think it is safer to have any function closing open files,
+cleaning variables or
+  resources used by it whenever possible.
+* It is more elegant that the function does what it is meant to do, in =
+this case
+  setting up the file only.
+* It possibly keeps the code cleaner because only one 'close' for this =
+function
+  needs to be done and in the same place it happened the correspondent =
+'open'.
+* No approach was going to cost any resources more.
 
-This is not done by a test.  It is part of the whole implementation.
-It is done only when needed: on that special corner case.
+Now just a question, Junio:
 
-Please read the patches mainly the 2/5 and 3/5.
+I forgot to sign-off those patches, should I have to send them again?
 
->> branch get eventually saved then the reflog would be written normall=
-y.
->> =C2=A0But in case somebody give up this new branch before the first =
-save,
->> moving back to a regular branch would leave a ghost reflog.
->
-> The touched entry (is left), not a reflog, I assume, otherwise the
-> reflog command should not fail.
->
->>
->> I have coded the cleaning commands for that and the test is just a
->> check of this behavior.
->
-> Which command does the cleaning? "reflog show" or "checkout master"?
->
->>
->> The first "test -f .git/logs/refs/heads/eta" tests if reflog was
->> created and the second if it was deleted. =C2=A0No big deal.
->>
->> Regards
->
-> I haven't followed this series due to earlier worries about --orphan =
-but
-> I'm wondering about this cleaning up behind the back. Maybe it's just=
- a
-> matter of explanations, though.
->
-> Michael
->
-
-Your questions are too unaware of the code.  ;-)  As I don't think you
-are asking me to explain each single line then I imagine you have not
-read the patches, just the chat.  Please read the patch series.  I
-will be very glad to answer any further questions then.
-
-Best regards
+Regards
