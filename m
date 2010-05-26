@@ -1,79 +1,78 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+From: Paul Walker <PWalker752@aol.com>
 Subject: Re: installation issue when building with NO_CURL=YesPlease
-Date: Wed, 26 May 2010 21:03:30 +0200
-Message-ID: <4BFD7082.1080608@dirk.my1.cc>
-References: <5B1E2CF0-4BC4-43FF-A372-EB3582DA6286@aol.com>            <AANLkTimsGdv-La_poLpdrvuGChD6_sAD77fcjqKn5PAd@mail.gmail.com>            <8E0CE121-DB2F-4017-AB46-282562B072FB@aol.com>            <4BFD680E.8000603@dirk.my1.cc> <80typu1ozt.fsf@tiny.isode.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>,
-	Paul Walker <PWalker752@aol.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	git@drmicha.warpmail.net
-To: Bruce Stephens <bruce.stephens@isode.com>
-X-From: git-owner@vger.kernel.org Wed May 26 21:03:40 2010
+Date: Wed, 26 May 2010 15:41:36 +0100
+Message-ID: <24D3B56E-0EA0-4E1C-BF42-F5BF71891F78@aol.com>
+References: <5B1E2CF0-4BC4-43FF-A372-EB3582DA6286@aol.com> <4BFD290B.6050502@drmicha.warpmail.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed May 26 21:06:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHLtD-0002Bs-QA
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 21:03:40 +0200
+	id 1OHLw5-0003xf-N7
+	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 21:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844Ab0EZTDc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 15:03:32 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.35]:51514 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753836Ab0EZTDb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 15:03:31 -0400
-X-Greylist: delayed 2159 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 May 2010 15:03:31 EDT
-Received: from [84.176.97.116] (helo=[192.168.2.100])
-	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1OHLt3-0003hQ-NP; Wed, 26 May 2010 21:03:29 +0200
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <80typu1ozt.fsf@tiny.isode.net>
-X-Df-Sender: 757646
+	id S1754627Ab0EZTGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 May 2010 15:06:32 -0400
+Received: from omr-d33.mx.aol.com ([205.188.249.131]:47451 "EHLO
+	omr-d33.mx.aol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753921Ab0EZTGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 May 2010 15:06:32 -0400
+Received: from oms-db02.r1000.mx.aol.com (oms-db02.r1000.mx.aol.com [205.188.58.2])
+	by omr-d33.mx.aol.com (8.14.1/8.14.1) with ESMTP id o4QJ4b8B019942;
+	Wed, 26 May 2010 15:05:08 -0400
+Received: from mtaout-da05.r1000.mx.aol.com (mtaout-da05.r1000.mx.aol.com [172.29.51.133])
+	by oms-db02.r1000.mx.aol.com (AOL Outbound OMS Interface) with ESMTP id CB6EB1C0001A6;
+	Wed, 26 May 2010 15:04:38 -0400 (EDT)
+Received: from [192.168.0.3] (unknown [92.30.139.179])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mtaout-da05.r1000.mx.aol.com (MUA/Third Party Client Interface) with ESMTPSA id 2950BE000093;
+	Wed, 26 May 2010 15:04:38 -0400 (EDT)
+In-Reply-To: <4BFD290B.6050502@drmicha.warpmail.net>
+X-Mailer: Apple Mail (2.936)
+x-aol-global-disposition: S
+X-SPAM-FLAG: YES
+X-AOL-SCOLL-SCORE: 0:2:441332928:93952408  
+X-AOL-SCOLL-URL_COUNT: 0  
+x-aol-sid: 3039ac1d33854bfd70c60efa
+X-AOL-IP: 92.30.139.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147821>
 
-Am 26.05.2010 20:45 schrieb Bruce Stephens:
-> Dirk S=C3=BCsserott <newsletter@dirk.my1.cc> writes:
->=20
-> [...]
->=20
->> I had a similar problem when "make install"ing under AIX. Not with
->> NO_CURL but with some other NO_* option. I forgot which.
->> This yealded to an empty $(REMOTE_***_ALIASES) macro
->> (REMOTE_CURL_ALIASES in your case) which my AIX shell cannot handle.
+
+On 26 May 2010, at 14:58, Michael J Gruber wrote:
+
+> Paul Walker venit, vidit, dixit 26.05.2010 15:35:
+>> As I could not find any bug reporting information on the wiki I
+>> thought I would mention this here, please let me know if there is a
+>> better forum for bug reports.  I believe the latest git release
+>> (1.7.1.) has an installation bug when building with
+>> "NO_CURL=YesPlease".  Looking at the Makefile line 1999 it reads
 >>
->> It reads "for p in; do" which makes it unhappy. I solved my problem
->> with the SHELL_PATH environment variable (look at the first few line=
-s
->> in the Makefile).
+>> for p in $(REMOTE_CURL_ALIASES); do
 >>
->> $ SHELL_PATH=3D/bin/bash NO_SOMETHING=3DYesPlease make install
->>
->> then worked fine for me.
->=20
-> It wouldn't be too horrible to fix the Makefiles, though.  Doing stuf=
-f
-> like this works portably (judging by what some OpenSSL Makefiles do):
->=20
-> 	foo=3D"$(REMOTE_CURL_ALIASES)"; for i in $$foo; do \
->=20
-> [...]
->=20
+>> which results in "/bin/sh: syntax error at line 1 : `;' unexpected"  
+>> as
+>> REMOTE_CURL_ALIASES is empty.
+>
+> That seems to depend on the shell. My bash 4.1.2 doesn't care. What  
+> does
+> /bin/sh --version say for you?
+>
+> Michael
 
-Bruce,
-
-I just saw that Michael posted a patch which tests for the emptyness of=
-=20
-REMOTE_CURL_ALIASES. Probably that's a more convenient solution.
-
-Dirk
+I am struggling to work this out as my version of sh does not support  
+the --version flag.
+I tried a bunch of other options provided by google with not success.
+If it helps I believe that /bin/sh is a version of ksh that comes with  
+AIX 6.1
