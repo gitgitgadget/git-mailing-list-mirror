@@ -1,78 +1,85 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: git fast-export/fast-import *facepalm*
-Date: Thu, 27 May 2010 15:18:57 -0700
-Message-ID: <AANLkTimQWW3WLqa0vWmKTYKsbVvnZiStEJI0N9N5tfng@mail.gmail.com>
-References: <AANLkTinV5mEACphA-nW9URce0Mh9xyu3UjWmfBqL6cLN@mail.gmail.com>
-	<20100527210328.GN16470@spearce.org>
-	<AANLkTik9QxiAjZHigx0YS5ybZwj6U7l0fK-byUmBirnO@mail.gmail.com>
-	<AANLkTinrUWtqx34U3-FFnyAXXYFkQiwrXc6USXJYR2xE@mail.gmail.com>
-	<AANLkTin-SCsgxAUCCYILIHaq-sLDfCgTDfY_Kvc5UVSt@mail.gmail.com>
-	<AANLkTinJd1hZE6LiJRHWYknS7e2YUHtKApTaKfpPPfKJ@mail.gmail.com>
+From: "Edward Z. Yang" <ezyang@MIT.EDU>
+Subject: Re: git-ftp for /contrib
+Date: Thu, 27 May 2010 18:46:59 -0400
+Message-ID: <1275000359-sup-1204@ezyang>
+References: <1274987983.17078.35.camel@zoulou.moser.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 28 00:19:09 2010
+Cc: git <git@vger.kernel.org>
+To: =?utf-8?q?Ren=C3=A9_Moser?= <mail@renemoser.net>
+X-From: git-owner@vger.kernel.org Fri May 28 00:52:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHlPw-0004dn-Cx
-	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 00:19:08 +0200
+	id 1OHlvy-0007Tx-GW
+	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 00:52:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932918Ab0E0WTA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 18:19:00 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:60862 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759122Ab0E0WS7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 18:18:59 -0400
-Received: by qyk13 with SMTP id 13so716367qyk.1
-        for <git@vger.kernel.org>; Thu, 27 May 2010 15:18:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xptxmNtHd7dws6jvpEVJqMqAjauMJfaSDOtlGYOGcM8=;
-        b=Tts+ItIxPy1V/Glhcg6Zk7aSidvcqyIXd5fSxzfBWFKfjbBUXmhHPrXH0jsrpJr0JC
-         sPkLxN6KN4I8GhCKELXNFjLj+ikGnnSUsrs4XVQ3G79ENjWb2jzWdhmyrtRJeyf4e+1H
-         b8CWAgQKnopAH3KZBaKUArhSOVk3aImJ9tPkc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XKbFBGrIaE3WeAxQ/CBKhN+1N3WAllNlGxY9Y7//eEceMsRDXZYZesSEtLDH0mbFYa
-         8sisoeUL2qfTnVpzxCq6SeV1kgRGi8JGU5xnY0HtpCDg+zwPZY3c3nBNAxNztKGtmI+B
-         g1/ixJQEZaIkgGrLHyVlmUGlNvpWxpSc0XF6k=
-Received: by 10.224.96.89 with SMTP id g25mr6371971qan.42.1274998737458; Thu, 
-	27 May 2010 15:18:57 -0700 (PDT)
-Received: by 10.229.26.74 with HTTP; Thu, 27 May 2010 15:18:57 -0700 (PDT)
-In-Reply-To: <AANLkTinJd1hZE6LiJRHWYknS7e2YUHtKApTaKfpPPfKJ@mail.gmail.com>
+	id S1753064Ab0E0WwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 May 2010 18:52:08 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:53846 "EHLO
+	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751777Ab0E0WwG (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 18:52:06 -0400
+X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 May 2010 18:52:06 EDT
+X-AuditID: 1209190f-b7b20ae000003f85-30-4bfef6654a9c
+Received: from mailhub-auth-4.mit.edu (MAILHUB-AUTH-4.MIT.EDU [18.7.62.39])
+	by dmz-mailsec-scanner-4.mit.edu (Symantec Brightmail Gateway) with SMTP id 92.E3.16261.566FEFB4; Thu, 27 May 2010 18:47:01 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o4RMl1R5013918;
+	Thu, 27 May 2010 18:47:01 -0400
+Received: from localhost (ool-44c4de0a.dyn.optonline.net [68.196.222.10])
+	(authenticated bits=0)
+        (User authenticated as ezyang@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o4RMkxqI004797;
+	Thu, 27 May 2010 18:47:00 -0400 (EDT)
+In-reply-to: <1274987983.17078.35.camel@zoulou.moser.lan>
+User-Agent: Sup/git
+X-Brightmail-Tracker: AAAAAQCq+Kk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147904>
 
-On Thu, May 27, 2010 at 3:11 PM, Avery Pennarun <apenwarr@gmail.com> wr=
-ote:
-> On Thu, May 27, 2010 at 6:06 PM, Chris Packham <judge.packham@gmail.c=
-om> wrote:
->> They're showing up with 'gitk --all'. I've made a backup so I can
->> expire the reflog and see if they go away.
->
-> gitk --all shouldn't be showing stuff just because it's in the reflog=
-=2E
-> =C2=A0Does it have a branchname tag next to it? =C2=A0Have you exit/r=
-estarted
-> gitk or are you just using its refresh button? =C2=A0The latter doesn=
-'t
-> work very well across branch deletion.
->
-> Avery
->
+Excerpts from Ren=C3=A9 Moser's message of Thu May 27 15:19:43 -0400 20=
+10:
+> Hi
+>=20
+> I scripted a small tool called git-ftp for optimal interaction betwee=
+n
+> git and ftp. I use it quite often and I thought it might fit in the
+> contrib section of git.
+>=20
+> Please have a look at http://github.com/resmo/git-ftp and give me som=
+e
+> feedback. See README and an (almost outdated) screencast.
+>=20
+> Thanks for the great work.
+> =20
+> Ren=C3=A9 Moser
+>=20
 
-The commits do have tags. I'll try deleting them and gc'ing again.
+What a coincidence! I've also made a small Python script for git<->ftp
+synchronization, unsurprisingly called the same thing.
+
+http://github.com/ezyang/git-ftp
+
+(Unfortunately, since it's written in Python it seems pretty unlikely
+to go into the contrib section of git.)
+
+Cheers,
+Edward
