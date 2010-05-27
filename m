@@ -1,70 +1,46 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: Libgit2 on the Summer of Code
-Date: Thu, 27 May 2010 21:35:34 +0300
-Message-ID: <20100527183534.GA10414@LK-Perkele-V2.elisa-laajakaista.fi>
-References: <AANLkTil-M3kQGbRZIacItlwr37Lf3lso7FspftLr43_F@mail.gmail.com>
- <20100527174636.GB9909@LK-Perkele-V2.elisa-laajakaista.fi>
- <20100527180554.GM16470@spearce.org>
+From: =?ISO-8859-1?Q?Ren=E9?= Moser <mail@renemoser.net>
+Subject: git-ftp for /contrib
+Date: Thu, 27 May 2010 21:19:43 +0200
+Message-ID: <1274987983.17078.35.camel@zoulou.moser.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Vicent Marti <tanoku@gmail.com>, git@vger.kernel.org,
-	srabbelier@gmail.com
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu May 27 20:37:22 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 27 21:19:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHhxK-0000VX-1g
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 20:37:22 +0200
+	id 1OHicR-0005z2-PE
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 21:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759089Ab0E0ShP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 May 2010 14:37:15 -0400
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:47932 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754928Ab0E0ShN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 May 2010 14:37:13 -0400
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 5D766C804E;
-	Thu, 27 May 2010 21:37:11 +0300 (EEST)
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A069345A5DE; Thu, 27 May 2010 21:37:11 +0300
-Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 1C71F2BD50;
-	Thu, 27 May 2010 21:37:07 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <20100527180554.GM16470@spearce.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1757986Ab0E0TTs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 15:19:48 -0400
+Received: from host-194.50.176.240.colo-4.net ([194.50.176.240]:59325 "EHLO
+	ns1.resmo.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757634Ab0E0TTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 May 2010 15:19:41 -0400
+Received: from [192.168.123.12] (adsl-84-226-69-170.adslplus.ch [84.226.69.170])
+	by ns1.resmo.ch (Postfix) with ESMTPSA id 6533184679D
+	for <git@vger.kernel.org>; Thu, 27 May 2010 21:19:43 +0200 (CEST)
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147894>
 
-On Thu, May 27, 2010 at 11:05:54AM -0700, Shawn O. Pearce wrote:
-> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
-> > * Where algorithm in git_revpool_table__hash() is from? Since it appears to
-> > hash binary object IDs, wouldn't just simple sum/xor over words be sufficient
-> > (all SHA-1 output bits are very nearly independent). Or do you need to be
-> > compatible with some other implementation (doesn't appear so, because hash
-> > is computed differently depending on endianess)?
-> 
-> If you need a hash value for a SHA-1, why not just cast the unsigned
-> char* to unsigned int* and load the first int as the hash code?
-> The output of SHA-1 is pretty evenly distributed, using the first
-> few bytes as an int should yield a sufficient distribution throughout
-> the hashtable.
+Hi
 
-Yeah, With pseudorandom function[*], all ways of reducing the output to n bits are
-at most as good as just taking first n bits. But if reducing output to [0, m),
-the best way (distribution-wise, not speed-wise) is to take remainder of the whole
-value divided by m...
+I scripted a small tool called git-ftp for optimal interaction between
+git and ftp. I use it quite often and I thought it might fit in the
+contrib section of git.
 
-[*] SHA-1 is not pseudorandom function, but for virtually all practical purposes
-it is.
+Please have a look at http://github.com/resmo/git-ftp and give me some
+feedback. See README and an (almost outdated) screencast.
 
--Ilari
+Thanks for the great work.
+=20
+Ren=C3=A9 Moser
