@@ -1,66 +1,107 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Come talk with us, we don't bite :)
-Date: Thu, 27 May 2010 17:57:05 +0200
-Message-ID: <AANLkTintGlEWMHDmXLPL0RZyCohWmMrfKAgYPd5Gz2Ia@mail.gmail.com>
-References: <AANLkTimKYmJgbt2rY1PWLIMYNE_M2nOhktRQ5vh19KI4@mail.gmail.com>
+From: Ivan Uemlianin <ivan@llaisdy.com>
+Subject: Re: git pull works remotely but not locally
+Date: Thu, 27 May 2010 17:21:50 +0100
+Message-ID: <4BFE9C1E.7050308@llaisdy.com>
+References: <4BFE750B.5030007@llaisdy.com> <AANLkTikmrBQ1aUQeAZKB8pdgwXjureozZOzEHq8CF4kb@mail.gmail.com> <4BFE83A7.4020604@llaisdy.com> <AANLkTinn_D2nrZDoczHqvAFKdCxxubK0N0jHr-nE94JP@mail.gmail.com> <4BFE8A99.5060906@llaisdy.com> <20100527151514.GB18590@coredump.intra.peff.net> <4BFE8DF8.8050301@llaisdy.com> <20100527153812.GA23484@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Vicent Marti <tanoku@gmail.com>, Git List <git@vger.kernel.org>,
-	Scott Chacon <schacon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 27 17:57:14 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu May 27 18:22:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHfSL-000686-AJ
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 17:57:13 +0200
+	id 1OHfqq-0005uU-1w
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 18:22:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757895Ab0E0P5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 May 2010 11:57:08 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43524 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756763Ab0E0P5G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 May 2010 11:57:06 -0400
-Received: by gwaa12 with SMTP id a12so92456gwa.19
-        for <git@vger.kernel.org>; Thu, 27 May 2010 08:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=/ogfIG2gpJVmFhtAyYlQTDxc9RH60eXkGCeP8AqpkxQ=;
-        b=GljKpOqXgZLJlOxSV8GUgdhAozS1xEaSiU/yhniLMwZIaLMLSpKwg2jSzVuzEq/muP
-         M3Y0g+hM8CQjja5evfAvoUAtTYNYRqsnn5k83Z310vUim6G+jwOWuu+ela418c3frw8z
-         Rp+lp2aE3Y8ssqxKOExWKPIutBHiDIhBIrNfE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=wqEGTfunEaQMnYvHll5CIeBa+3oIMz9aSYhfDQzizQnQlyIjykZNkowxsQ50M3oY5D
-         s8YPP6BRSxq0386c12Oztn/N/2glMPqOe5WHnqzyinsCnqoQnFfy9O6EU7AKG4oohNzL
-         P1OWaNmkfdr2H9XSzznImjZaQgl1pzlAs1D5Q=
-Received: by 10.101.106.12 with SMTP id i12mr12657519anm.27.1274975825100; 
-	Thu, 27 May 2010 08:57:05 -0700 (PDT)
-Received: by 10.100.154.8 with HTTP; Thu, 27 May 2010 08:57:05 -0700 (PDT)
-In-Reply-To: <AANLkTimKYmJgbt2rY1PWLIMYNE_M2nOhktRQ5vh19KI4@mail.gmail.com>
+	id S1757134Ab0E0QVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 May 2010 12:21:53 -0400
+Received: from mail.ukfsn.org ([77.75.108.10]:55585 "EHLO mail.ukfsn.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755411Ab0E0QVw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 May 2010 12:21:52 -0400
+Received: from localhost (smtp-filter.ukfsn.org [192.168.54.205])
+	by mail.ukfsn.org (Postfix) with ESMTP id EF797DEC52
+	for <git@vger.kernel.org>; Thu, 27 May 2010 17:21:50 +0100 (BST)
+Received: from mail.ukfsn.org ([192.168.54.25])
+	by localhost (smtp-filter.ukfsn.org [192.168.54.205]) (amavisd-new, port 10024)
+	with ESMTP id LukyUP8KKF75 for <git@vger.kernel.org>;
+	Thu, 27 May 2010 17:21:50 +0100 (BST)
+Received: from ivan-uemlianins-macbook-pro.local (unknown [217.33.230.66])
+	by mail.ukfsn.org (Postfix) with ESMTP id C1008DEB75
+	for <git@vger.kernel.org>; Thu, 27 May 2010 17:21:50 +0100 (BST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <20100527153812.GA23484@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147885>
 
-On Thu, May 27, 2010 at 17:42, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> A very important part of Summer of Code is interacting with the
-> community. Not just by sending your code to the list regularly so that
-> everybody can see what you up to, but also by participating in the
-> discussion on the mailing list, asking questions, and voice your
-> thoughts on the project. I just checked to make sure, and I haven't
-> seen any mails from you on the git list yet, not even so much as an
-> introduction! This makes me sad, cos I think your project is _really_
-> awesome, and I would love to hear more about it, how it's going, and
-> what you are up to in general.
+On 27/05/2010 16:38, Jeff King wrote:
+> Then the next thing to try is probably (assuming you are running Linux):
+>    
+Well, kind of: it's CentOS, which I'm finding quite recalcitrant (e.g. I 
+had to install strace).
+>    strace -f -e execve git pull
+>
+> Though I suspect we may just see:
+>
+>    execve("/opt/libexec/git-core/git-core/git-pull", ...) = -1 EACCES (Permission denied)
+>
+> which doesn't help much. I just want to be sure that is the source of
+> the problem.
+>    
+No, the output is interesting.  The permissions denied is from the 
+erroneous /root install (see separate email):
 
-Well, we _do_ "bite", so to speak. It's just that it only make you healthier.
-Assuming you don't go crazy in the process, of course...
+     [pid  3485] execve("/root/libexec/git-core/git-pull", ["git-pull"], 
+[/* 18 vars */]) = -1 EACCES (Permission denied)
+
+It looks in /opt/bin, but not /opt/libexec.
+
+It could be a botched git install or it could be a botched PATH --- I 
+have had to fiddle about with it a bit.  For example, /opt/libexec is 
+not on my PATH  ...  In fact my PATH *is* botched:
+
+     $ $PATH
+     bash: /opt/bin:<snip/>:/usr/bin:/root/bin: No such file or directory
+
+Those last two items don't look good at all.  And:
+
+     $ PATH=/opt/libexec/git-core/:$PATH
+     $ git pull
+     remote: Counting objects: 8, done.
+     ...
+      1 files changed, 2 insertions(+), 1 deletions(-)
+
+Working!
+
+So:
+- git itself is probably OK
+- I have a botched PATH, which I should fix asap
+
+Does git expect certain paths to be on a user's PATH?  If so perhaps 
+that is all that is wrong.
+
+Best wishes
+
+Ivan
+
+-- 
+============================================================
+Ivan A. Uemlianin
+Speech Technology Research and Development
+
+                     ivan@llaisdy.com
+                      www.llaisdy.com
+                          llaisdy.wordpress.com
+                      www.linkedin.com/in/ivanuemlianin
+
+     "Froh, froh! Wie seine Sonnen, seine Sonnen fliegen"
+                      (Schiller, Beethoven)
+============================================================
