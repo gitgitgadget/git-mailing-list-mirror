@@ -1,97 +1,126 @@
-From: Albert Dvornik <dvornik+git@gmail.com>
-Subject: Re: [msysGit] Re: [PATCH] compat: Add another rudimentary poll() 
-	emulation
-Date: Thu, 27 May 2010 09:43:32 -0400
-Message-ID: <AANLkTikU4ZzX4yYVSCOuLxjp56cmmolHk1u0U-fhfTtN@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH] compat: Add another rudimentary poll() emulation
+Date: Thu, 27 May 2010 15:46:28 +0200
+Message-ID: <AANLkTik2UAA51BZWIKadAcIg8t2xg1u980Gq_IOSyz6o@mail.gmail.com>
 References: <1274948384-167-1-git-send-email-abcd@gentoo.org>
 	<1274948384-167-2-git-send-email-abcd@gentoo.org>
 	<20100527101043.GA4390@progeny.tock>
 	<AANLkTikYa2vq4PrKrO2QIkHVxYqbhUZRw42kQq875FNT@mail.gmail.com>
-	<AANLkTikfaWVEPkHBRF8WHNWmyXIH9f7wRju1wSRC_lwm@mail.gmail.com>
-	<AANLkTinXwM1fem6E3RgnLW9vqLD1fV7JvaQnxzZVRakA@mail.gmail.com>
-	<AANLkTinX8nK68rZtN5dwJ-fGQm4gR2G84xo9raxb4vLY@mail.gmail.com>
-	<AANLkTiliJFXWKXnksQryvAivadrkTUeZ1Wu7FkUGm2YZ@mail.gmail.com>
+	<AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
+	<AANLkTil_dqbXChKpMJ_ZFTuNrF8tQRwJd5j4SkLOaPaJ@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marko Kreen <markokr@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Jonathan Callen <abcd@gentoo.org>, git@vger.kernel.org,
 	mduft@gentoo.org, Sverre Rabbelier <srabbelier@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	msysGit <msysgit@googlegroups.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 27 15:43:40 2010
+To: Marko Kreen <markokr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 27 15:46:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHdN5-00083j-Kx
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 15:43:39 +0200
+	id 1OHdQD-0001Su-14
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 15:46:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753762Ab0E0Nnf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 09:43:35 -0400
-Received: from mail-qy0-f183.google.com ([209.85.221.183]:44204 "EHLO
-	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751527Ab0E0Nne convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 09:43:34 -0400
-Received: by qyk13 with SMTP id 13so10954515qyk.1
-        for <git@vger.kernel.org>; Thu, 27 May 2010 06:43:33 -0700 (PDT)
+	id S1756944Ab0E0Nqd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 09:46:33 -0400
+Received: from mail-wy0-f180.google.com ([74.125.82.180]:58479 "EHLO
+	mail-wy0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754810Ab0E0Nqc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 09:46:32 -0400
+X-Greylist: delayed 2917 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 May 2010 09:46:31 EDT
+Received: by wyb36 with SMTP id 36so178870wyb.11
+        for <git@vger.kernel.org>; Thu, 27 May 2010 06:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=+YE/4EUnkkqAKUvdkXq7yhMM33S2o1CHO5Oz7k4iRGo=;
-        b=rjjJwlBze1TVU/AdGyvrxu0p97jAY9lYiJXVocr5xRtAblsgMe4+bqCNzvkSt6+z7i
-         KLtHuwIy5Z4uTtMEO2mBPsiIXkCGdfb05hgsfwgIUnznDdrmo4OGoX+SVYO+opr5iTEB
-         NkBPIA+BAVBQ/my5eH1CmSo/gLSv8mv10ofdc=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=SkclasIjUzh8BezwB3PIVXRY5Si1zFpG3BU/Tgob6Ck=;
+        b=UYDL34xQLfnMyOZC+CNPn27Z4fR62EmNqaSCsDEZXsxk+SirJKJM9Ty1Rq5H+6Ovfn
+         qS1nbwuRIhDDTf9K3E8t4zaE6YsHiYtVp9jiYS9/Jbu1SaKA21yj9uzyA2gDbE4xJFmm
+         Q67HVCBpH6F7eA9ZlmoCKUnUmVt9nEoXY8sAo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=DPgBw0v5l0DjTRNB/hNleRR7jLKN/tBkfpqJjZsK/rKVHgTpeBgR+f7eBOXr8BFbYL
-         Uafidm8K3BPMQWl0bn+5tHCW7PUmPmhF46XNd81VNSmCx8vns+ILB+u+qBwII2iKv3/A
-         CHpLxpaJ9ubqHfQ2o332tM0JsJh8G4axoQTog=
-Received: by 10.224.79.102 with SMTP id o38mr5683206qak.358.1274967812756; 
-	Thu, 27 May 2010 06:43:32 -0700 (PDT)
-Received: by 10.229.74.193 with HTTP; Thu, 27 May 2010 06:43:32 -0700 (PDT)
-In-Reply-To: <AANLkTiliJFXWKXnksQryvAivadrkTUeZ1Wu7FkUGm2YZ@mail.gmail.com>
-X-Google-Sender-Auth: pNq1kO9ZQnY_EWVG9dKZuvDVqC8
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=uo3CSljpFMnQrglpFSoQdoObtG4/TUqKsa17ChdkxJZ/65zxDFCa8lrNksmDu8iBMe
+         Lnggu4f8taA7uN9/m+SbEaQgq8rYa5gPFaSPvIVpoIIg2kZYNeksojOtC69TgzHARXDH
+         5zenQsvtWAc7gZ6iRkPkHtLLCYYQJYGtMdcAs=
+Received: by 10.227.129.15 with SMTP id m15mr9808662wbs.170.1274967989977; 
+	Thu, 27 May 2010 06:46:29 -0700 (PDT)
+Received: by 10.216.21.73 with HTTP; Thu, 27 May 2010 06:46:28 -0700 (PDT)
+In-Reply-To: <AANLkTil_dqbXChKpMJ_ZFTuNrF8tQRwJd5j4SkLOaPaJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147856>
 
-On Thu, May 27, 2010 at 8:57 AM, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
-> On Thu, May 27, 2010 at 2:36 PM, Marko Kreen <markokr@gmail.com> wrot=
-e:
-[...]
->> Hm, good catch. =A0Seems such compat poll() cannot be done without
->> OS-specific hacks.
+On Thu, May 27, 2010 at 3:29 PM, Marko Kreen <markokr@gmail.com> wrote:
+> On 5/27/10, Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+>> On Thu, May 27, 2010 at 1:00 PM, Erik Faye-Lund
+>> =A0<kusmabite@googlemail.com> wrote:
+>> =A0> On Thu, May 27, 2010 at 12:10 PM, Jonathan Nieder <jrnieder@gma=
+il.com> wrote:
+>> =A0>> Implement the subset of poll() semantics needed by git in term=
+s of
+>> =A0>> select(), for use by the Interix port. =A0Inspired by commit 6=
+ed807f
+>> =A0>> (Windows: A rudimentary poll() emulation, 2007-12-01).
+>> =A0>>
+>> =A0>
+>> =A0> A possible problem with this approach is that the maximum numbe=
+r of
+>> =A0> file descriptors poll can handle limited by RLIMIT_NOFILE, wher=
+eas the
+>> =A0> maximum number of file descriptors select can handle is limited=
+ by
+>> =A0> FD_SETSIZE.
+>> =A0>
+>> =A0> I don't think this is a big problem in reality, though - both v=
+alues
+>> =A0> seem to be pretty high in most implementations. And IIRC git-da=
+emon is
+>> =A0> the only one who needs more than 2, and it doesn't even check
+>> =A0> RLIMIT_NOFILE.
+>> =A0>
 >>
+>>
+>> To be clear: I think this strategy is the best option (at least for
+>> =A0non-Windows, where select() might be our only option).
+>>
+>> =A0But perhaps you should include a check along the lines of this:
+>>
+>> =A0if (nfds > FD_SETSIZE)
+>> =A0 =A0 =A0 =A0 return errno =3D EINVAL, error("poll: nfds must be b=
+elow %d", FD_SETSIZE);
+>>
+>> =A0Just so we can know when the code fails :)
 >
-> Perhaps getrlimit() could overridden to return FD_SETSIZE for both th=
-e
-> soft and hard limit when asking about RLIMIT_NOFILE? In such cases,
-> anyone who passes nfds above FD_SETSIZE hasn't consulted
-> RLIMIT_NOFILE, and should be outside the standard. But your point
-> might have been about a limitless poll()-implementation, like the cod=
-e
-> you linked tried to achieve. In that context, no. I doubt it's
-> possible to do in a robust fashion.
+> Well, per your own FD_SET example, the FD_SETSIZE on windows
+> means different thing than FD_SETSIZE on old-style bitmap-based
+> select() implementation.
+>
+> On Unix, it's max fd number + 1, on windows it's max count.
+>
 
-This is getting far off-topic, but I do think it's possible to do in a
-robust fashion if you are willing to sacrifice some performance [i.e.
-we should not consider this for Git =3D) ], by creating multiple fd_set
-structures and only shoving up to FD_SETSIZE descriptors into each.
-Cycling between the structures would cause some extra latency and a
-LOT more code complexity, but it should work.
+Are you sure this applies for all Unix, not just some given Unix-y syst=
+em?
 
---bert
+> RLIMIT_NOFILE - I don't see why it is relevant here, as you
+> get error on open() when you cross the limit. =A0So how can you
+> pass more than that meny fds to select()/poll()?
+>
+
+Good point, this was my bad.
+
+--=20
+Erik "kusma" Faye-Lund
