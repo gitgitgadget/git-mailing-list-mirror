@@ -1,107 +1,83 @@
-From: Ivan Uemlianin <ivan@llaisdy.com>
-Subject: Re: git pull works remotely but not locally
-Date: Thu, 27 May 2010 16:07:05 +0100
-Message-ID: <4BFE8A99.5060906@llaisdy.com>
-References: <4BFE750B.5030007@llaisdy.com> <AANLkTikmrBQ1aUQeAZKB8pdgwXjureozZOzEHq8CF4kb@mail.gmail.com> 	<4BFE83A7.4020604@llaisdy.com> <AANLkTinn_D2nrZDoczHqvAFKdCxxubK0N0jHr-nE94JP@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: (Mosty harmless) protocol error when pushing
+Date: Thu, 27 May 2010 11:12:23 -0400
+Message-ID: <20100527151222.GA18590@coredump.intra.peff.net>
+References: <AANLkTikbFaNhiDngY7Cgk0Ce0YhmNBGIpXtn7abjXnPR@mail.gmail.com>
+ <20100525072824.GA19612@coredump.intra.peff.net>
+ <AANLkTilc9-B79EhmmO2t-VsHFZdupQn8zX9LFYRrn5of@mail.gmail.com>
+ <20100527113305.GB7865@LK-Perkele-V2.elisa-laajakaista.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu May 27 17:07:16 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?QmrDtnJu?= Gustavsson <bgustavsson@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu May 27 17:12:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHefz-0007ze-Dv
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 17:07:15 +0200
+	id 1OHel5-0002mu-La
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 17:12:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755744Ab0E0PHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 May 2010 11:07:08 -0400
-Received: from mail.ukfsn.org ([77.75.108.10]:53423 "EHLO mail.ukfsn.org"
+	id S1752789Ab0E0PMZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 11:12:25 -0400
+Received: from peff.net ([208.65.91.99]:47456 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754132Ab0E0PHH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 May 2010 11:07:07 -0400
-Received: from localhost (smtp-filter.ukfsn.org [192.168.54.205])
-	by mail.ukfsn.org (Postfix) with ESMTP id 88F72DEC4B
-	for <git@vger.kernel.org>; Thu, 27 May 2010 16:07:06 +0100 (BST)
-Received: from mail.ukfsn.org ([192.168.54.25])
-	by localhost (smtp-filter.ukfsn.org [192.168.54.205]) (amavisd-new, port 10024)
-	with ESMTP id 2yyRtH8AqJyU for <git@vger.kernel.org>;
-	Thu, 27 May 2010 16:07:06 +0100 (BST)
-Received: from ivan-uemlianins-macbook-pro.local (unknown [217.33.230.66])
-	by mail.ukfsn.org (Postfix) with ESMTP id 55E10DEC3D
-	for <git@vger.kernel.org>; Thu, 27 May 2010 16:07:06 +0100 (BST)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <AANLkTinn_D2nrZDoczHqvAFKdCxxubK0N0jHr-nE94JP@mail.gmail.com>
+	id S1750904Ab0E0PMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 May 2010 11:12:25 -0400
+Received: (qmail 22725 invoked by uid 107); 27 May 2010 15:12:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Thu, 27 May 2010 11:12:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 27 May 2010 11:12:23 -0400
+Content-Disposition: inline
+In-Reply-To: <20100527113305.GB7865@LK-Perkele-V2.elisa-laajakaista.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147870>
 
-Dear All
+On Thu, May 27, 2010 at 02:33:05PM +0300, Ilari Liusvaara wrote:
 
-Thanks for your comments.
+> I can't reproduce it either.
+>=20
+> I tried testing using git:// over TLS. I could trigger the auto-gc,
+> but got no messages about it (hmm... other sideband messages do
+> work...) and no protocol error.
 
-On Thu, May 27, 2010 at 4:37 PM, Ivan Uemlianin<ivan@llaisdy.com>  wrote:
+Same here. But look at Bj=C3=B6rn's original error, which contained:
 
-> >  git-pull is 755, and I can run /path/to/git-pull (I get an error and it
-> >  crashes, but I have the permission).
->    
+  fatal: protocol error: bad line length character: Remo
 
-On 27/05/2010 15:47, Sverre Rabbelier wrote:
-> ...
-> That's not supposed to happen, what does it say? Also, is it possible
-> you have an old git install lying around? It might be that it's partly
-> using the old, and partly using the new install.
->    
+So I think it may not just be an auto-gc, but an auto-gc which provokes
+prune-packed to say:
 
-On 27/05/2010 15:50, Ramkumar Ramachandra wrote:
-> ...
-> Your error comes from run-command.c:290 - Maybe it tries to execute
-> git-pull and (wrongly) reports that it wasn't able to execute it? What
-> error (and return status) do you get when you execute the script
-> yourself?
-> It looks like there's something wrong with your installation of Git.
-> Perhaps you'd like to re-install
->    
-The error is like this:
+  Removing duplicate objects: 100% (256/256), done.
 
-     $ /opt/libexec/git-core/git-pull
-     /opt/libexec/git-core/git-pull: line 11: git-sh-setup: No such file 
-or directory
+which happens only when it takes more than 2 seconds to remove all of
+the objects. But I was still not able to reproduce it, even after
+removing the delay:
 
-I'm calling git-pull from my clone of the repos, so I don't have 
-git-sh-setup in my current directory.  That all seems fine: I imagine 
-git-pull is not intended to be called directly.
+diff --git a/builtin/prune-packed.c b/builtin/prune-packed.c
+index f9463de..da1ab20 100644
+--- a/builtin/prune-packed.c
++++ b/builtin/prune-packed.c
+@@ -48,7 +48,7 @@ void prune_packed_objects(int opts)
+=20
+ 	if (opts =3D=3D VERBOSE)
+ 		progress =3D start_progress_delay("Removing duplicate objects",
+-			256, 95, 2);
++			256, 95, 0);
+=20
+ 	if (len > PATH_MAX - 42)
+ 		die("impossible object directory");
 
-The git is a recent install from source, on a Centos machine.  There was 
-no git previous.
+I notice that the original problem was seen when pushing to github. I
+wonder if they are running an older version, or even a custom version
+that behaves differently (perhaps with stdout and stderr file
+descriptors set up differently for the gc or something like that).
 
-As for reinstalling: unless something else is broken, I'm happy with 
-"git fetch; git merge origin".  However, I should like to understand why 
-git pull is not working.
-
-Best wishes
-
-Ivan
-
-
-
-
--- 
-============================================================
-Ivan A. Uemlianin
-Speech Technology Research and Development
-
-                     ivan@llaisdy.com
-                      www.llaisdy.com
-                          llaisdy.wordpress.com
-                      www.linkedin.com/in/ivanuemlianin
-
-     "Froh, froh! Wie seine Sonnen, seine Sonnen fliegen"
-                      (Schiller, Beethoven)
-============================================================
+-Peff
