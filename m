@@ -1,137 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] fsck: fix bogus commit header check
-Date: Wed, 26 May 2010 16:50:34 -0500
-Message-ID: <20100526215034.GA6872@progeny.tock>
+From: Adam Monsen <haircut@gmail.com>
+Subject: Re: request for help with buildnumber-maven-plugin git integration
+Date: Thu, 27 May 2010 04:15:35 +0000 (UTC)
+Message-ID: <loom.20100527T061506-817@post.gmane.org>
+References: <loom.20100514T010951-900@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 26 23:50:47 2010
+X-From: git-owner@vger.kernel.org Thu May 27 06:15:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHOUr-0006x6-Tr
-	for gcvg-git-2@lo.gmane.org; Wed, 26 May 2010 23:50:42 +0200
+	id 1OHUVb-0007YK-Bg
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 06:15:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243Ab0EZVug convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 May 2010 17:50:36 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58184 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753925Ab0EZVuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 May 2010 17:50:35 -0400
-Received: by gyg13 with SMTP id 13so3366467gyg.19
-        for <git@vger.kernel.org>; Wed, 26 May 2010 14:50:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=qcuqGqYWXwHG8tBEQeFA8cz/8NreUARJbQDgsP4po50=;
-        b=Vr+nx53CCzuokvm90LITiNHBLBBf5yPIYa/ADlNjVNyCFPS2kdm11iYBuel7i8jlcl
-         kunP2ovjwimoJUPqFwGJs+CU+oILD3HCmMbBpMA7oYsc9Yd6DuLxnePywV64X/1wxryr
-         crRUD8JdMzCxTph5fMMWe9K4QJ+4cS0vCCWiA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=vOAflBsuBiyEWg/5V7wfc+qUHvT08XiQFM8EZchRAApZQAvnQZIb9fgCoJ2ZpiADdZ
-         0kcnb0ehTrpC7iOZPCG77nf6VD1m41ymPD2/g8BQEcMHvNTs/DR4YkqTzdXlFd27dzfD
-         3QuN75qBs8aae5k7L+txw8dnlgy+tcJYSHwAM=
-Received: by 10.101.134.6 with SMTP id l6mr11992874ann.50.1274910633727;
-        Wed, 26 May 2010 14:50:33 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 14sm219656gxk.7.2010.05.26.14.50.32
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 26 May 2010 14:50:32 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932807Ab0E0EPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 May 2010 00:15:46 -0400
+Received: from lo.gmane.org ([80.91.229.12]:43524 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751114Ab0E0EPp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 May 2010 00:15:45 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OHUVS-0007Ve-Sn
+	for git@vger.kernel.org; Thu, 27 May 2010 06:15:43 +0200
+Received: from c-67-183-136-182.hsd1.wa.comcast.net ([67.183.136.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 27 May 2010 06:15:42 +0200
+Received: from haircut by c-67-183-136-182.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 27 May 2010 06:15:42 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.183.136.182 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3 ( .NET CLR 3.5.30729))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147827>
 
-daae1922 (fsck: check ident lines in commit objects, 2010-04-24)
-taught fsck to expect commit objects to have the form
+I wrote, about a week ago:
+> Maven is a build system used by many Java-based projects. Some
+> folks have added Git support, allowing the inclusion of build
+> identifiers (like branches and commit hashes) in products of Maven
+> builds. But they need help to complete it. Is anyone interested in
+> helping?
+>
+> This is something we (Mifos) need, so if you do help, know that
+> you'll be helping to end world poverty.
 
-  tree <object name>
-  <parents>
-  author <valid ident string>
-  committer <valid ident string>
+FYI, I gave up trying to fix the integration tests, or to modify the
+plugin to suit my needs. I instead used groovy script right in my
+POM, and set project properties that are filtered into a file
+included in our war.
 
-  log message
+Here's the Groovy snippet I used, modified to have shorter names to
+prevent wrapping:
 
-The check is overly strict: for example, it errors out with the
-message =E2=80=9Cexpected blank line=E2=80=9D for perfectly valid commi=
-ts with an
-"encoding ISO-8859-1" line.
+  def env = System.getenv()
+  def gitcmd = "git"
+  if (env['OS'] =~ /^Windows/)
+      gitcmd = "cmd /c ${gitcmd}"
+  def gcmd = """${gitcmd} log --pretty=format:%H -n1""".execute()
+  project.properties['mifos_commit'] = gcmd.in.text
+  project.properties['mifos_build'] = env['BUILD_TAG'] ?: 'DEV'
+  project.properties['mifos_date'] = "" + new Date()
 
-Later it might make sense to teach fsck about the rest of the header
-and warn about unrecognized header lines, but for simplicity, let=E2=80=
-=99s
-accept arbitrary trailing lines for now.
+"BUILD_TAG" is something set by the Hudson continuous integration
+server (that's what we use).
 
-Reported-by: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Patch is against jn/fsck-ident (daae1922).
+Here's the script, in vivo (commit 5dfe4d1abda09713b296ea2524):
+http://tinyurl.com/3xcxp9n
 
-As you might expect, this triggers for some real-world repos.
-Many thanks to Tuncer for the catch.
+I figured trading lots of lines of Java, XML, etc. for 8 lines of
+maintainable/portable Groovy was a good move.
 
- fsck.c          |    2 --
- t/t1450-fsck.sh |    8 ++++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/fsck.c b/fsck.c
-index ae9ae1a..3d05d4a 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -311,8 +311,6 @@ static int fsck_commit(struct commit *commit, fsck_=
-error error_func)
- 	err =3D fsck_ident(&buffer, &commit->object, error_func);
- 	if (err)
- 		return err;
--	if (*buffer !=3D '\n')
--		return error_func(&commit->object, FSCK_ERROR, "invalid format - exp=
-ected blank line");
- 	if (!commit->tree)
- 		return error_func(&commit->object, FSCK_ERROR, "could not load commi=
-t's tree %s", sha1_to_hex(tree_sha1));
-=20
-diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
-index 22a80c8..759cf12 100755
---- a/t/t1450-fsck.sh
-+++ b/t/t1450-fsck.sh
-@@ -5,7 +5,9 @@ test_description=3D'git fsck random collection of tests=
-'
- . ./test-lib.sh
-=20
- test_expect_success setup '
-+	git config i18n.commitencoding ISO-8859-1 &&
- 	test_commit A fileA one &&
-+	git config --unset i18n.commitencoding &&
- 	git checkout HEAD^0 &&
- 	test_commit B fileB two &&
- 	git tag -d A B &&
-@@ -28,6 +30,12 @@ test_expect_success 'loose objects borrowed from alt=
-ernate are not missing' '
- 	)
- '
-=20
-+test_expect_success 'valid objects appear valid' '
-+	{ git fsck 2>out; true; } &&
-+	! grep error out &&
-+	! grep fatal out
-+'
-+
- # Corruption tests follow.  Make sure to remove all traces of the
- # specific corruption you test afterwards, lest a later test trip over
- # it.
---=20
-1.7.1.232.g3072.dirty
+Hope this helps someone else using Maven and git who needs build
+identifiers available as properties,
+-Adam
