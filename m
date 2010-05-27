@@ -1,99 +1,68 @@
-From: Vicent Marti <tanoku@gmail.com>
-Subject: Libgit2 on the Summer of Code
-Date: Thu, 27 May 2010 18:25:32 +0200
-Message-ID: <AANLkTil-M3kQGbRZIacItlwr37Lf3lso7FspftLr43_F@mail.gmail.com>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: [PATCH v2 0/3] commit: fix abbrev-sha regression
+Date: Thu, 27 May 2010 17:58:04 +0100
+Message-ID: <1274979484.4448.1.camel@walleee>
+References: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
+	 <1274974492-4692-1-git-send-email-rctay89@gmail.com>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, srabbelier@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 27 18:32:21 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 27 18:58:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHg0K-0003Nz-L3
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 18:32:20 +0200
+	id 1OHgPk-0000mz-UN
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 18:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754228Ab0E0QcQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 12:32:16 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:60399 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954Ab0E0QcP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 12:32:15 -0400
-Received: by fg-out-1718.google.com with SMTP id l26so261493fgb.1
-        for <git@vger.kernel.org>; Thu, 27 May 2010 09:32:14 -0700 (PDT)
+	id S1759190Ab0E0Q6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 May 2010 12:58:11 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:52127 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758092Ab0E0Q6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 May 2010 12:58:09 -0400
+Received: by wwb34 with SMTP id 34so148585wwb.19
+        for <git@vger.kernel.org>; Thu, 27 May 2010 09:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=Zf94FcaF7M1PznDkKDw3pE7wvbhOfnGvMMs9arHHPJg=;
-        b=qvS4eFSMGDBg2FSnbGI2MDkgmiGtE6bBsfF6j3RISTxdYQo6kl1/0zmJFh0R+uTTlj
-         oQMli1Zr8P3h7V7oW1toK/fokoosoiyzwxoKEmJ/VNrml5V3QkgvOFyuA6h/nErSAvlw
-         YSNdd9wviN2whWsun9hfEqHwnukFyGXO41Yz8=
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=dNAItZ5bLnmfVAStEupMBoRPPO4+XDrctNhxO01iF+A=;
+        b=rWsgV4ZnBkxbC8LCkBfct4T5hX1pDur2h7kqWWlr39jzwWdZERfmNTnXr+DqE7g59l
+         f6WadoJe8bxfsx3EGKv95tgAibnyiqTKgRX2pRm5zou4sU3/WviHIqyVbZRYoW7h2eoF
+         d1ELsJ4EHgxyKImvfTBuZIWQXkmmusR4sJiAI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=SL/3tj1FmC/+OAak168ZvjHHbTzBx9AzNJklTNw2xq5oMio/8gcgeMevTB0z379iI5
-         g9cHIqzXEdlR6JFYrgXG1ntWIJMchMnv3MDzGG5ca/irsdIr4BXpCBtdRKbfI+LPwlLz
-         LrY2FFbeB9v24oAZYlp57BFAV6a00nkX1KZU4=
-Received: by 10.103.50.17 with SMTP id c17mr397789muk.2.1274977933151; Thu, 27 
-	May 2010 09:32:13 -0700 (PDT)
-Received: by 10.102.220.12 with HTTP; Thu, 27 May 2010 09:25:32 -0700 (PDT)
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=BKnIBrkB+kBSPvsCabYdAQSUcd15tslDzmiy16EVueknvSAU01rIHTxl66Q0TBNkC1
+         pawNYzF22Tk53SPD/GpjWnhJN09By4cTXhzRf92wkyHeG795X+6+fL1V/9i8ifTun1st
+         ncWQYXZj52oVBOgLZroLjkQQubidnmpXcQcZ8=
+Received: by 10.227.143.78 with SMTP id t14mr10048509wbu.224.1274979486887;
+        Thu, 27 May 2010 09:58:06 -0700 (PDT)
+Received: from [192.168.0.3] (5acc3abb.bb.sky.com [90.204.58.187])
+        by mx.google.com with ESMTPS id y31sm9687165wby.4.2010.05.27.09.58.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 27 May 2010 09:58:06 -0700 (PDT)
+In-Reply-To: <1274974492-4692-1-git-send-email-rctay89@gmail.com>
+X-Mailer: Evolution 2.26.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147887>
 
-Hello fine gentlemen,
+On Thu, 2010-05-27 at 23:34 +0800, Tay Ray Chuan wrote:
+> After c197702 (pretty: Respect --abbrev option), the summary output for
+> git-commit began to throw up non-abbreviated SHA-1s.
 
-I believe a short introduction is due. My name is Vicent Marti and I'm
-the Google Summer of Code student who will be working on libgit2 this
-year. If you haven't heard of it before, libgit2 [1] is a C library
-which intents to re implement all of Git's core in a saner, reentrant
-manner, with proper error handling and all the usual stuff you'd
-expect from an actual library (including a less restrictive license).
-
-I'm being kindly mentored by Scott Chacon on this task, and it seems I
-might have been a *tad* too much mentored (;d), because I've spent so
-much time discussing things with Scott and the other libgit2
-developers that Sverre Rabbelier had to remind me that there's an
-actual Git mailing list and I haven't even introduced myself to it
-yet.
-
-Well, fear do not. I'm here (a couple weeks late, but here after all)
-and although I have been slacking on the community interaction part of
-the Summer of Code, the actual project is well under tracks:
-
-All the milestones for the first coding period are mostly finished
-(yay for that) and you can find the code and follow my progress on my
-public github repo [2]. There is some documentation in place, and
-there are some tests in place. In the following days I'll aim for
-about 90% code coverage on the tests, to finish the documentation, and
-then prepare the patch series for review on this list.
-
-Meanwhile, you are very much welcome to start flaming away before the
-patch series are ready. We have roughly one month and a half to fix up
-my code to the project's standards; hopefully it won't be *that* bad
-and I will be able to implement some extra features before the
-evaluation.
-
-Oh, and before I forget, my awesome mentor Scott is writing some Ruby
-bindings for the library [3], which at the moment are mostly in-sync
-with all the new functionality I've added. Those will come in handy if
-you want to try out the new features of Libgit2 with a more friendly
-interface... as friendly as Ruby can be, that is. ;/
-
-Thanks for your time, I'm looking forward to your input and I promise
-I'll be much more active on this list from now on.
-
-Cheers,
-Vicent Mart=ED
-http://www.bellverde.org
-
-[1]: http://repo.or.cz/w/libgit2.git
-[2]: http://github.com/tanoku/libgit2-gsoc2010
-[3]: http://github.com/schacon/ribbit
+Please CC: me on any future versions of this series, if there are any
+-- 
+-- Will
