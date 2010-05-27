@@ -1,13 +1,16 @@
-From: Albert Dvornik <dvornik@gmail.com>
-Subject: Re: [msysGit] Re: [PATCH] compat: Add another rudimentary poll() 
-	emulation
-Date: Thu, 27 May 2010 10:05:02 -0400
-Message-ID: <AANLkTimyFxEYjQLefWvExBarhZAwoXNLDUum2lVj4Q3B@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH] compat: Add another rudimentary poll() emulation
+Date: Thu, 27 May 2010 16:06:44 +0200
+Message-ID: <AANLkTikDcZRHpKp9phlThK5x-8A0OfTYIlhGkqookiFj@mail.gmail.com>
 References: <1274948384-167-1-git-send-email-abcd@gentoo.org>
 	<1274948384-167-2-git-send-email-abcd@gentoo.org>
 	<20100527101043.GA4390@progeny.tock>
 	<AANLkTikYa2vq4PrKrO2QIkHVxYqbhUZRw42kQq875FNT@mail.gmail.com>
 	<AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
+	<AANLkTil_dqbXChKpMJ_ZFTuNrF8tQRwJd5j4SkLOaPaJ@mail.gmail.com>
+	<AANLkTik2UAA51BZWIKadAcIg8t2xg1u980Gq_IOSyz6o@mail.gmail.com>
+	<AANLkTiko_Azw-cXNFe11oXkijvtER2I9qiRE_gVFouht@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -17,85 +20,117 @@ Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Johannes Sixt <j6t@kdbg.org>,
 	msysGit <msysgit@googlegroups.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu May 27 16:05:25 2010
+To: Marko Kreen <markokr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 27 16:06:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHdhy-0006pA-DQ
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 16:05:14 +0200
+	id 1OHdja-0008Ly-FO
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 16:06:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384Ab0E0OFF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 10:05:05 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:52215 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751557Ab0E0OFD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 10:05:03 -0400
-Received: by pvg3 with SMTP id 3so1658736pvg.19
-        for <git@vger.kernel.org>; Thu, 27 May 2010 07:05:02 -0700 (PDT)
+	id S1751978Ab0E0OGr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 May 2010 10:06:47 -0400
+Received: from mail-wy0-f180.google.com ([74.125.82.180]:57168 "EHLO
+	mail-wy0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751063Ab0E0OGq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 May 2010 10:06:46 -0400
+Received: by wyb36 with SMTP id 36so201830wyb.11
+        for <git@vger.kernel.org>; Thu, 27 May 2010 07:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sYyPKgzXnA1q5IRcodEyXRs0zKX9dtuF7AfBrQRdSpw=;
-        b=wMsKvIrU4HECwYoDO6CkVf7LTMSBjJ62tXDdIXqGynhLoSQq/QTyf0Rkgd4Xyldyez
-         7jfGw+U4V/3P/BoBpVvoWlkZ9S0eJ1wcIGq4wR72A1FRujjOWl32FuIM2fQM0VEK5h2j
-         88CqH/tQ1OXDrHE7tdzEB9NP/OX2sKDg5Ag7U=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=51C6qG7T5UdO73Gv/Z3vHyzjH4bf4nNI8kZbAG5Wmdk=;
+        b=FZHyuU8iNsUVk/G1zhRAKgcepIBmw9JTgo38CxO+MC74n7KPe3XnWZiMuR+T0Axirw
+         y4CxtsKToekIicH/dtd2gqV03cFA/QEW+HsjkvtYs7xHdyK9/OGgTpmiUrx5mf2zU7to
+         q8AaXdtI4ErcLS1ihz4/FpwnE0/1KkTVQcf40=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xhgwjlHLb7OQfWgmS9wUkDJ3ZKIRpHJyEoqtBvDNzUWyNLCE+ZNmrP65q2j6pGI3Rm
-         SH9A06nCl0EO9a7chQhBFk74cDCKiniJfjQXwSk6OakQ6oliqjx2bVxu2F1I0uNxoCgB
-         GCBXLnHTMxUy+JbinwqnbA8UVmERGPuEMfCJQ=
-Received: by 10.229.186.139 with SMTP id cs11mr2284754qcb.19.1274969102222; 
-	Thu, 27 May 2010 07:05:02 -0700 (PDT)
-Received: by 10.229.74.193 with HTTP; Thu, 27 May 2010 07:05:02 -0700 (PDT)
-In-Reply-To: <AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=Bjk4VyItgmIO+EecK7ckJlwfW0Oyv53pPEuwv+kZsmyptZKaWB7eHTru7Smac/ZfGp
+         CJq6sbYhG7TPZqQdKLorkIQ/8tCH5gaORkz/qMNfLJ27jV4eR+RdrOt98rarn4PJZOII
+         9PX7i3z4qYrBomdWJz2Iki4Ak3H8LvcVWLqxo=
+Received: by 10.216.91.3 with SMTP id g3mr70942wef.101.1274969204301; Thu, 27 
+	May 2010 07:06:44 -0700 (PDT)
+Received: by 10.216.21.73 with HTTP; Thu, 27 May 2010 07:06:44 -0700 (PDT)
+In-Reply-To: <AANLkTiko_Azw-cXNFe11oXkijvtER2I9qiRE_gVFouht@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147859>
 
-On Thu, May 27, 2010 at 9:06 AM, Erik Faye-Lund
-<kusmabite@googlemail.com> wrote:
-[...]
-> But perhaps you should include a check along the lines of this:
+On Thu, May 27, 2010 at 3:58 PM, Marko Kreen <markokr@gmail.com> wrote:
+> On 5/27/10, Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+>> On Thu, May 27, 2010 at 3:29 PM, Marko Kreen <markokr@gmail.com> wro=
+te:
+>> =A0> On 5/27/10, Erik Faye-Lund <kusmabite@googlemail.com> wrote:
+>> =A0>> On Thu, May 27, 2010 at 1:00 PM, Erik Faye-Lund
+>> =A0>> =A0<kusmabite@googlemail.com> wrote:
+>> =A0>> =A0> On Thu, May 27, 2010 at 12:10 PM, Jonathan Nieder <jrnied=
+er@gmail.com> wrote:
+>> =A0>> =A0>> Implement the subset of poll() semantics needed by git i=
+n terms of
+>> =A0>> =A0>> select(), for use by the Interix port. =A0Inspired by co=
+mmit 6ed807f
+>> =A0>> =A0>> (Windows: A rudimentary poll() emulation, 2007-12-01).
+>> =A0>> =A0>>
+>> =A0>> =A0>
+>> =A0>> =A0> A possible problem with this approach is that the maximum=
+ number of
+>> =A0>> =A0> file descriptors poll can handle limited by RLIMIT_NOFILE=
+, whereas the
+>> =A0>> =A0> maximum number of file descriptors select can handle is l=
+imited by
+>> =A0>> =A0> FD_SETSIZE.
+>> =A0>> =A0>
+>> =A0>> =A0> I don't think this is a big problem in reality, though - =
+both values
+>> =A0>> =A0> seem to be pretty high in most implementations. And IIRC =
+git-daemon is
+>> =A0>> =A0> the only one who needs more than 2, and it doesn't even c=
+heck
+>> =A0>> =A0> RLIMIT_NOFILE.
+>> =A0>> =A0>
+>> =A0>>
+>> =A0>>
+>> =A0>> To be clear: I think this strategy is the best option (at leas=
+t for
+>> =A0>> =A0non-Windows, where select() might be our only option).
+>> =A0>>
+>> =A0>> =A0But perhaps you should include a check along the lines of t=
+his:
+>> =A0>>
+>> =A0>> =A0if (nfds > FD_SETSIZE)
+>> =A0>> =A0 =A0 =A0 =A0 return errno =3D EINVAL, error("poll: nfds mus=
+t be below %d", FD_SETSIZE);
+>> =A0>>
+>> =A0>> =A0Just so we can know when the code fails :)
+>> =A0>
+>> =A0> Well, per your own FD_SET example, the FD_SETSIZE on windows
+>> =A0> means different thing than FD_SETSIZE on old-style bitmap-based
+>> =A0> select() implementation.
+>> =A0>
+>> =A0> On Unix, it's max fd number + 1, on windows it's max count.
+>> =A0>
+>>
+>>
+>> Are you sure this applies for all Unix, not just some given Unix-y s=
+ystem?
 >
-> if (nfds > FD_SETSIZE)
-> =A0 =A0 =A0 =A0return errno =3D EINVAL, error("poll: nfds must be bel=
-ow %d", FD_SETSIZE);
+> Not sure. =A0Just pointing out that the above check is not
+> universal enough.
 >
-> Just so we can know when the code fails :)
 
-If you're checking against FD_SETSIZE (which is IMO a good idea), you
-should consider that
-(a) on the one system I'm aware of where fd_set doesn't use a bitmap
-(Windows), FD_SETSIZE is a limit on the number of descriptors added to
-the set, but
-(b) on systems where fd_set uses a bitmap (i.e. Linux, perhaps all
-UNIXes, etc), FD_SETSIZE is a limit on *each descriptor value*.  This
-is also what POSIX says.
+Isn't it? How could one possibly pass more than max fd number + 1 file
+descriptors, since they start at 0? I guess one could specify a given
+fd more than once, but that'd be kind of redundant... and also very
+unlikely in our case ;)
 
-So on the latter systems, we want something like this before each FD_SE=
-T:
-
-if (ufds[i].fd >=3D FD_SETSIZE) {
-    errno =3D EINVAL;
-    return error("poll: each fd must be below %d", FD_SETSIZE);
-}
-
-(The reason to have it in the loop, rather than just check maxfd
-afterwards, is that FD_SET with an argument that's too big can trash
-the stack.)
-
-Of course, on Windows this would impose a limitation that all
-descriptors be < 64, which is probably crazy.  Which means that you'd
-have to actually distinguish the two types.  Sigh.
-
---bert
+--=20
+Erik "kusma" Faye-Lund
