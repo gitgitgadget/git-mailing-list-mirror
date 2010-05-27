@@ -1,69 +1,87 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: git pull works remotely but not locally
-Date: Thu, 27 May 2010 21:53:54 +0200
-Message-ID: <201005272153.54239.j6t@kdbg.org>
-References: <4BFE750B.5030007@llaisdy.com> <AANLkTimDOOjbCRJMOlW8sTEtiHdI4AqjdOcdFug7MD94@mail.gmail.com> <4BFE9172.9080209@llaisdy.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: git fast-export/fast-import *facepalm*
+Date: Thu, 27 May 2010 13:46:38 -0700
+Message-ID: <AANLkTinV5mEACphA-nW9URce0Mh9xyu3UjWmfBqL6cLN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ivan Uemlianin <ivan@llaisdy.com>
-X-From: git-owner@vger.kernel.org Thu May 27 21:57:15 2010
+Content-Type: text/plain; charset=UTF-8
+To: GIT <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu May 27 22:46:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHjCb-0008VX-Ky
-	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 21:57:13 +0200
+	id 1OHjyZ-0006iB-MI
+	for gcvg-git-2@lo.gmane.org; Thu, 27 May 2010 22:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756560Ab0E0T4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 May 2010 15:56:50 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:47258 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751497Ab0E0T4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 May 2010 15:56:49 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id CC25EA7EEA;
-	Thu, 27 May 2010 21:56:24 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 4FE7D19F758;
-	Thu, 27 May 2010 21:53:54 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <4BFE9172.9080209@llaisdy.com>
-Content-Disposition: inline
+	id S1756581Ab0E0Uqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 May 2010 16:46:40 -0400
+Received: from mail-qy0-f183.google.com ([209.85.221.183]:43032 "EHLO
+	mail-qy0-f183.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755281Ab0E0Uqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 May 2010 16:46:39 -0400
+Received: by qyk13 with SMTP id 13so588084qyk.1
+        for <git@vger.kernel.org>; Thu, 27 May 2010 13:46:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=IUTGN8ZQbUBoI8I2FKTlj8Ly129XqZ8vHUzEwresQPY=;
+        b=IvZ9DHmbOQ7lLVeRLXj+DTx706ZZ28foDrOVW7GsnaobuHnyXVFPrfX22B6PBqutgI
+         aWlMvwz2EwM9eCIwzhYndJ3cYVqdvAILT6AbqKrDu5Dr5BXCzLS2N0gWDa9EdtFzoIcX
+         FlaepD+HURFEEPCPCTzOh7/H5g9THHzZBbc8o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=PN4RJaVsIMirn4zMwxLGNydYXD5vJ7Tc/FpwnIHjXBneUV6leoJtIAEwRfcIGvKp4Q
+         HdSQX/k6GG/MUHWPQ8HyrFLbQ4Xvg0VTdzn98qx5e9ILXoCVfkARL6lEi8TQpmcWo7ff
+         ATxClJZ+zG7aTGXkCMxXURt+/QUuzPFw5+vy8=
+Received: by 10.224.121.212 with SMTP id i20mr5963268qar.11.1274993198670; 
+	Thu, 27 May 2010 13:46:38 -0700 (PDT)
+Received: by 10.229.26.74 with HTTP; Thu, 27 May 2010 13:46:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147897>
 
-On Donnerstag, 27. Mai 2010, Ivan Uemlianin wrote:
-> - I did configure with prefix=/opt
-> - odd thing: nothing was installed into /opt: it all went into /root (I
-> might have been root for the whole process, which I know is bad).  I
-> just cp'd everything over to /opt, and everything worked OK (until now).
+Hi,
 
-My guess is:
+I've had a bit of a brain melt and have done something silly with git
+fast-import and was hoping someone would be able to get me out of the
+mess I've created.
 
-- You built as root.
-- I don't know what went wrong with the command that involved prefix=/opt.
-- But when you finally build using 'make', it picked the default prefix, which 
-is /root when you are root.
-- This hard-codes the libexec path to /root/libexec/git-core.
-- Even after you copy the stuff to /opt, git looks in /root/libexec/...
-- As a normal user you do not have access to /root, ergo, Permission denied.
+Basically I've got a linux repository which for various reasons isn't
+based of any of the kernel.org ones but reflects our kernel
+development on top of vanilla kernel tarballs. When we update we take
+the tarball and extract and commit it to a vendor branch then merge
+that with our main. A little strange but it works for us (despite
+having to go hunting on kernel.org when we want the external history).
 
-Rebuild as normal user with
+My brain melt came when I wanted to get the set of changes between 2
+versions from a public branch and import them into our repository.
+Having just learned about git fast-export I decided that it was the
+right tool for the job so I did the following
 
-   make prefix=/opt
+(cd linux-2.6.32.y; git fast-export v2.6.32.12..v2.6.32.14) | git fast-import
 
-and install as root with
+What I've ended up with is a repository with a detached set of changes i.e
 
-   make prefix=/opt install
+o -o   l - l - l - l - l - l     o - master
+     \                          /
+      o - o - o - o - o - o
 
-(Yes, prefix must be given also for 'make install'.)
+o = our commits
+l = linux commits
 
--- Hannes
+Because the code is common textually I think what I really should have done is
+
+(cd linux-2.6.32.y; git format-patch v2.6.32.12..v2.6.32.14) | git am
+
+Which I'll give a try in a minute. In the meantime is there anyway for
+me to safely remove the upstream linux commits without loosing our
+commits in the process?
+
+Thanks,
+Chris
