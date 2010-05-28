@@ -1,109 +1,70 @@
-From: Ivan Uemlianin <ivan@llaisdy.com>
-Subject: Re: git pull works remotely but not locally
-Date: Fri, 28 May 2010 09:24:39 +0100
-Message-ID: <4BFF7DC7.6030806@llaisdy.com>
-References: <4BFE750B.5030007@llaisdy.com> <AANLkTimDOOjbCRJMOlW8sTEtiHdI4AqjdOcdFug7MD94@mail.gmail.com> <4BFE9172.9080209@llaisdy.com> <201005272153.54239.j6t@kdbg.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git push from bare repo
+Date: Fri, 28 May 2010 11:15:17 +0200
+Message-ID: <4BFF89A5.7020802@op5.se>
+References: <3197051701046e645c8ff2ae7dca872a@ns-linux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 28 10:24:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?R29yYW4gTWVracSH?= <meka@ns-linux.org>
+X-From: git-owner@vger.kernel.org Fri May 28 11:15:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHus6-0004A3-4h
-	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 10:24:50 +0200
+	id 1OHvfP-0006XP-CV
+	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 11:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754640Ab0E1IYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 May 2010 04:24:44 -0400
-Received: from mail.ukfsn.org ([77.75.108.10]:38655 "EHLO mail.ukfsn.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752759Ab0E1IYl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 May 2010 04:24:41 -0400
-Received: from localhost (smtp-filter.ukfsn.org [192.168.54.205])
-	by mail.ukfsn.org (Postfix) with ESMTP id 3E835DEC64
-	for <git@vger.kernel.org>; Fri, 28 May 2010 09:24:40 +0100 (BST)
-Received: from mail.ukfsn.org ([192.168.54.25])
-	by localhost (smtp-filter.ukfsn.org [192.168.54.205]) (amavisd-new, port 10024)
-	with ESMTP id KJda2yc+krBy for <git@vger.kernel.org>;
-	Fri, 28 May 2010 09:24:40 +0100 (BST)
-Received: from ivan-uemlianins-macbook-pro.local (unknown [217.33.230.66])
-	by mail.ukfsn.org (Postfix) with ESMTP id C1459DEBD6
-	for <git@vger.kernel.org>; Fri, 28 May 2010 09:24:39 +0100 (BST)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <201005272153.54239.j6t@kdbg.org>
+	id S1757617Ab0E1JPc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 May 2010 05:15:32 -0400
+Received: from na3sys009aog103.obsmtp.com ([74.125.149.71]:42988 "HELO
+	na3sys009aog103.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753893Ab0E1JPW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 May 2010 05:15:22 -0400
+Received: from source ([72.14.220.153]) by na3sys009aob103.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKS/+JqCIFrdyi+ObFpTlqqJo0XkroLfmk@postini.com; Fri, 28 May 2010 02:15:22 PDT
+Received: by fg-out-1718.google.com with SMTP id d23so463822fga.12
+        for <git@vger.kernel.org>; Fri, 28 May 2010 02:15:19 -0700 (PDT)
+Received: by 10.204.83.26 with SMTP id d26mr5170925bkl.157.1275038119638;
+        Fri, 28 May 2010 02:15:19 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id h21sm9582427bkh.11.2010.05.28.02.15.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 May 2010 02:15:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
+In-Reply-To: <3197051701046e645c8ff2ae7dca872a@ns-linux.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147919>
 
-Dear Hannes
+On 05/28/2010 08:57 AM, Goran Meki=C4=87 wrote:
+>=20
+>      I have to push from first server to second (yeah, the names are =
+great
+> :o) when ever someone pushes to first server. It should be done using
+> post-receive hook, for example. The problem is that I can not specify=
+ ssh
+> key, and even if I could, anything but 600 perm for the key is reject=
+ed.
+> What would be the best way to acomplish this? Thanx!
+>=20
 
-Yes, you have pinpointed it.  I installed as root, but I thought I had 
-followed the other instructions (using ./configure) and did
+Why can't you specify ssh key, and why can't you set the key to have pe=
+rms
+0600 and let it reside in a directory with perms 0700?
 
-    # make configure
-    # ./configure --prefix=/opt
-    # make
-    # make install
+The post-receive hook is just a shell-script, basically.
 
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-In any case, I have deleted everything and reinstalled properly.  Now 
-git pull is working as it should.
-
-Thank you all for your patience and help.
-
-Best wishes
-
-Ivan
-
-
-On 27/05/2010 20:53, Johannes Sixt wrote:
-> On Donnerstag, 27. Mai 2010, Ivan Uemlianin wrote:
->    
->> - I did configure with prefix=/opt
->> - odd thing: nothing was installed into /opt: it all went into /root (I
->> might have been root for the whole process, which I know is bad).  I
->> just cp'd everything over to /opt, and everything worked OK (until now).
->>      
-> My guess is:
->
-> - You built as root.
-> - I don't know what went wrong with the command that involved prefix=/opt.
-> - But when you finally build using 'make', it picked the default prefix, which
-> is /root when you are root.
-> - This hard-codes the libexec path to /root/libexec/git-core.
-> - Even after you copy the stuff to /opt, git looks in /root/libexec/...
-> - As a normal user you do not have access to /root, ergo, Permission denied.
->
-> Rebuild as normal user with
->
->     make prefix=/opt
->
-> and install as root with
->
->     make prefix=/opt install
->
-> (Yes, prefix must be given also for 'make install'.)
->
-> -- Hannes
->    
-
-
--- 
-============================================================
-Ivan A. Uemlianin
-Speech Technology Research and Development
-
-                     ivan@llaisdy.com
-                      www.llaisdy.com
-                          llaisdy.wordpress.com
-                      www.linkedin.com/in/ivanuemlianin
-
-     "Froh, froh! Wie seine Sonnen, seine Sonnen fliegen"
-                      (Schiller, Beethoven)
-============================================================
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
