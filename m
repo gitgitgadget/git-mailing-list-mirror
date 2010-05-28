@@ -1,74 +1,55 @@
-From: Tor Arntsen <tor@spacetec.no>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: cvs update vs. git pull
-Date: Fri, 28 May 2010 11:46:12 +0200
-Message-ID: <AANLkTinw1rlvcdHB8kEbpt-kK5Bjzf1aLGPhlPwDz6GC@mail.gmail.com>
+Date: Fri, 28 May 2010 11:54:18 +0200
+Message-ID: <vpqhblss65x.fsf@bauges.imag.fr>
 References: <d876ae6b75ab8d9debe5b97f84a4386a.squirrel@resmo.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ren=E9_Moser?= <mail@renemoser.net>
-X-From: git-owner@vger.kernel.org Fri May 28 11:46:20 2010
+To: =?iso-8859-1?Q?Ren=E9?= Moser <mail@renemoser.net>
+X-From: git-owner@vger.kernel.org Fri May 28 11:54:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHw8x-0001BQ-BD
-	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 11:46:19 +0200
+	id 1OHwHG-00046x-Nl
+	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 11:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757971Ab0E1JqO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 May 2010 05:46:14 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43588 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753930Ab0E1JqN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 May 2010 05:46:13 -0400
-Received: by fxm10 with SMTP id 10so564572fxm.19
-        for <git@vger.kernel.org>; Fri, 28 May 2010 02:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=Sw7jUpGz0oKALoZulEixxRMIfOX7g2paWI7MIglQ/CA=;
-        b=xvGR/4j1t++QrkwCrNYn5QyJ4wsCz2wiBd0WLFjJlA5i2JKpPnNkhlYpFrIIVbYqK/
-         CPyq52M3Zt3gLcY0HzGJkXDIA0CCadjI3+3c56GaPdTZHCdkn2T0NQv3Q6kTA7T8V6G6
-         1N+9V4tgkQeeRc/SvADsusIWeBVybHYCbjaDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=sgheudtPypdTfJzUE6gbVYn/2mD2/pkj6qMl7R2iTHro8rY3UTsHtXNrUzrGTWv+H7
-         6hmdoFfGujjaOMoXOFK0Q4iiR41eUOygRn+Yy4Pl2iDb8mj7/T+JSU7o6lVvuyeM19Tt
-         EHyJ5n4/a9DPcnB5E5i0hT0elzpn435TjSNhk=
-Received: by 10.239.189.147 with SMTP id t19mr2879hbh.64.1275039972056; Fri, 
-	28 May 2010 02:46:12 -0700 (PDT)
-Received: by 10.239.179.197 with HTTP; Fri, 28 May 2010 02:46:12 -0700 (PDT)
+	id S1758010Ab0E1Jye convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 May 2010 05:54:34 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42791 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754655Ab0E1Jyd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 May 2010 05:54:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o4S9lA03008092
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 28 May 2010 11:47:10 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OHwGg-0000Ke-Cy; Fri, 28 May 2010 11:54:18 +0200
 In-Reply-To: <d876ae6b75ab8d9debe5b97f84a4386a.squirrel@resmo.ch>
-X-Google-Sender-Auth: B0_XOiUGUebDyZkKJDSgq09Wcck
+ (=?iso-8859-1?Q?=22Ren=E9?= Moser"'s message of "Fri\, 28 May 2010
+ 11\:21\:12 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 28 May 2010 11:47:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o4S9lA03008092
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1275644832.91484@9c2P+SobHkzqVkVEcOgB+Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147923>
 
-On Fri, May 28, 2010 at 11:21, Ren=E9 Moser <mail@renemoser.net> wrote:
-> Hi
->
-> I use git since a while for my own projects (how surprise).
->
-> The company I work for still uses a CVS(nt), and this sucks, time to
-> changed that. We have a use case we often have problems with. If git =
-would
-> solve this problem, I would really have a good arg for the managers.
->
-> The codebase managed by CVS is quite huge and therefore we have daily=
- and
-> nightly builds.
-
-So do we, where I work.
+Ren=E9 Moser <mail@renemoser.net> writes:
 
 > One problem we have is, that if there is a commit to cvs while the cv=
 s
@@ -76,18 +57,18 @@ s
 we
 > get some inconsistence, the build will fail.
 
-Yes. That's how it works with CVS. We try to work around that problem
-by using automatic tags ('nightly'-something) set individually on each
-module, common for the whole repo, and then we 'cvs export' by tag
-instead of cvs update. This works reasonably well (and is reproducible
-due to the tag), but is not anywhere as fast as git would be.
+Git will also bring a big performance improvement here. The duration
+of the "git pull" will be mostly O(number of modifications since last
+pull), not O(total number of files).
 
 > So the question is, if we would use git, this inconsistence would not=
  be
 > possible because the git pull will get the state of the sha1. Right?
 
-Git commits are atomic, so you won't see that inconsistency problem
-with git. So, Right.
+Actually, if you use almost anything but CVS (i.e. even SVN can do
+that), you will get "atomic commits", i.e. a commit touching multiple
+files is either seen as completed or not seen at all.
 
-
--Tor
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
