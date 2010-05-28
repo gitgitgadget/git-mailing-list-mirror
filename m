@@ -1,77 +1,81 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
 Subject: Re: cvs update vs. git pull
-Date: Fri, 28 May 2010 13:07:00 +0000
-Message-ID: <AANLkTikPWfNhL1HxYQdtdPeJpHxrm5qDkkwbXFM6MAV2@mail.gmail.com>
+Date: Fri, 28 May 2010 17:58:24 +0200
+Message-ID: <201005281758.24183.robin.rosenberg@dewire.com>
 References: <d876ae6b75ab8d9debe5b97f84a4386a.squirrel@resmo.ch>
-	<vpqhblss65x.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Ren=C3=A9_Moser?= <mail@renemoser.net>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri May 28 15:07:15 2010
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?q?Ren=E9_Moser?= <mail@renemoser.net>
+X-From: git-owner@vger.kernel.org Fri May 28 17:58:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OHzHK-0007JS-ED
-	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 15:07:10 +0200
+	id 1OI1xC-0004WQ-Bo
+	for gcvg-git-2@lo.gmane.org; Fri, 28 May 2010 17:58:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381Ab0E1NHE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 May 2010 09:07:04 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56633 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753715Ab0E1NHC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 May 2010 09:07:02 -0400
-Received: by gwaa12 with SMTP id a12so881930gwa.19
-        for <git@vger.kernel.org>; Fri, 28 May 2010 06:07:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=r4kHdVt3JUTBmr5BXbW3X+d0J9xeMIEAtiaQjVpx7DA=;
-        b=cqxtsu9Nph2drBbnZBTUmgVH0GkRLBdNwhSxhA/z8oWPm7ZRqAmYVa8WxwqCjCeZC8
-         EBdnRPOrZgGcXUqjb9oUWtZ14ctjz+S4cNI8bOnYxVrXIMN0RPmN8XgOMXAN7F7saDGw
-         bvpJKc56ei7iCJ611NVQ+ENGEAm+SvhyNGRUA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=t2+j0v52qcMzCG/210Nv9rhSd3tEtorTzWxEo8HoqAs7pVnhLOngItPmWOp8YJoo5+
-         ajZyjQ6oRb2+Ki1owRpecPkbYBLMC3IC3RvvWSru7x6VjqIV6y1sSCOY2BLgMC1/mJXd
-         Tc8o9HwVsFeUtsPYk6bisGNSJqPbvpSUuUTWI=
-Received: by 10.42.5.206 with SMTP id 14mr257782icx.17.1275052020932; Fri, 28 
-	May 2010 06:07:00 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Fri, 28 May 2010 06:07:00 -0700 (PDT)
-In-Reply-To: <vpqhblss65x.fsf@bauges.imag.fr>
+	id S1758915Ab0E1P63 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 May 2010 11:58:29 -0400
+Received: from mail.dewire.com ([83.140.172.130]:17179 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757664Ab0E1P62 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 May 2010 11:58:28 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 8FC2513979B1;
+	Fri, 28 May 2010 17:58:26 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qvP-+jCrWF0x; Fri, 28 May 2010 17:58:25 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 4720C13979AD;
+	Fri, 28 May 2010 17:58:25 +0200 (CEST)
+User-Agent: KMail/1.13.2 (Linux/2.6.32-22-generic; KDE/4.4.2; i686; ; )
+In-Reply-To: <d876ae6b75ab8d9debe5b97f84a4386a.squirrel@resmo.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147929>
 
-On Fri, May 28, 2010 at 09:54, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Ren=C3=A9 Moser <mail@renemoser.net> writes:
->
->> One problem we have is, that if there is a commit to cvs while the c=
-vs
->> update of the build job is running (and this takes 20 minutes), then=
- we
->> get some inconsistence, the build will fail.
->
-> Git will also bring a big performance improvement here. The duration
-> of the "git pull" will be mostly O(number of modifications since last
-> pull), not O(total number of files).
+fredagen den 28 maj 2010 11.21.12 skrev  Ren=E9 Moser:
+> Hi
+>=20
+> I use git since a while for my own projects (how surprise).
+>=20
+> The company I work for still uses a CVS(nt), and this sucks, time to
+> changed that. We have a use case we often have problems with. If git =
+would
+> solve this problem, I would really have a good arg for the managers.
+>=20
+> The codebase managed by CVS is quite huge and therefore we have daily=
+ and
+> nightly builds.
+>=20
+> One problem we have is, that if there is a commit to cvs while the cv=
+s
+> update of the build job is running (and this takes 20 minutes), then =
+we
+> get some inconsistence, the build will fail.
 
-A while back I tried converting a huge (~40k directories) CVS
-repository to SVN and Git. Both CVS and SVN took around 10 minutes to
-cvs/svn up. git clone took around 8 minutes but each pull was around
-5-15 seconds (I/O and network bound).
+Perform export/checkout using a timestamp to avoid this. You should als=
+o=20
+require that no checkins to your branch have happend during a period, s=
+ay 10=20
+minutes, before starting the build.
 
-They eventually picked Bazaar for non-technical reasons. But yeah,
-Git's much faster to upgrade than CVS/SVN.
+> So the question is, if we would use git, this inconsistence would not=
+ be
+> possible because the git pull will get the state of the sha1. Right?
+
+Yes. It's hard to predict what happens when you have multiple repos inv=
+olved,=20
+in the build. Requiring no changes (on the build branch) in all repos i=
+s one
+option.
+
+-- robin
