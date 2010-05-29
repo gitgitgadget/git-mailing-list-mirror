@@ -1,59 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: fix "git show -C -C" output when renaming a binary
- file
-Date: Fri, 28 May 2010 18:11:06 -0700
-Message-ID: <7v1vcv5x79.fsf@alter.siamese.dyndns.org>
-References: <20100526025013.25696.26816.chriscool@tuxfamily.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH v2 3/3] commit::print_summary(): set rev_info.always_show_header 
+	to 1
+Date: Sat, 29 May 2010 09:41:49 +0800
+Message-ID: <AANLkTim3hT-kloICHNeuodeisYUqccLhEDq_5rCeBRSC@mail.gmail.com>
+References: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
+	<1274974492-4692-1-git-send-email-rctay89@gmail.com>
+	<1274974492-4692-2-git-send-email-rctay89@gmail.com>
+	<1274974492-4692-3-git-send-email-rctay89@gmail.com>
+	<1274974492-4692-4-git-send-email-rctay89@gmail.com>
+	<7vd3wf5x7n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Greg Bacon <gbacon@dbresearch.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat May 29 03:11:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 29 03:41:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIAaF-0005bd-Hz
-	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 03:11:27 +0200
+	id 1OIB3j-0004hd-W2
+	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 03:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756071Ab0E2BLW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 May 2010 21:11:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58667 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755888Ab0E2BLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 May 2010 21:11:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E3A4FB77BF;
-	Fri, 28 May 2010 21:11:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=cUj+AXUUlyv18m5x/RkHR0z
-	gKmwvlWDIoNG0QFKhOaFCQynHWQ7QkBL5TWHav59yXp6eN8ndEEAAHQ8yRsB8LZV
-	i4g2UIxU0GkTK/6Hss9sQCKY8JsQ+TNy4uepq7uqv/ZHGNHgyY9xZJOfa5Zt1Q4o
-	3JPEO98sCtnx1irtJHZI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=c/Q5jjUEQ6Y+l3uVdpwtXWfs77spc3tN+x0oWq+QAc9YlotG2
-	3/FrTtwYz4opq7t72jCpKU8R2soasyLjFESeuiMKjEIjqU1RyViG+NyHmxP1KmA9
-	2ZGSUvkWk9AyCY2qaIfPxljMDJfwdQL9AFmwlmAhAPw+mS8toa62kDHu0I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71553B77BE;
-	Fri, 28 May 2010 21:11:14 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58E7AB77BC; Fri, 28 May
- 2010 21:11:07 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1394FF70-6ABF-11DF-B0B3-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752710Ab0E2Blv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 May 2010 21:41:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47034 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327Ab0E2Blu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 May 2010 21:41:50 -0400
+Received: by gwaa12 with SMTP id a12so1495618gwa.19
+        for <git@vger.kernel.org>; Fri, 28 May 2010 18:41:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2YcC6OHWCBRGGrsRaLC3WJicRiKaxe2TJCw5FlaqCFg=;
+        b=dFxii5FqU1aE70c5RdJ/3EJ2/XMTD5UtznCenl5+b0nA7ig7O1IW7LBdbuo7NQU2qB
+         FYdAxfNqoKc9a5ixXRCMQLJekaCTQDasPd63MkqwCnpa6RtJdeDbTZySkAoGWY4++tYZ
+         AUgF+f2AkGBChJBa0v5CnoH6gHwnEhhkDJHaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=C9lcMCpQ5mdWcXrJhXRbQS80d5iwK90fQmf512Oz0KapMxmmUab9NP27VMxWTirh8x
+         A2C0YpAVVCPaLdBxya4CxxrsEEkbTc+NTeCfso1xvY+kIEDlfauXKE700uKGD4VQHNpy
+         Iqs8RMUlhM6ZqPqV0eXuHfm5lTlp0iejPQxIw=
+Received: by 10.231.194.194 with SMTP id dz2mr1350264ibb.74.1275097309059; 
+	Fri, 28 May 2010 18:41:49 -0700 (PDT)
+Received: by 10.231.33.12 with HTTP; Fri, 28 May 2010 18:41:49 -0700 (PDT)
+In-Reply-To: <7vd3wf5x7n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147948>
 
-Thanks.
+On Sat, May 29, 2010 at 9:10 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tay Ray Chuan <rctay89@gmail.com> writes:
+>> Quoting log-tree.c:560:
+>>
+>> =A0 =A0 =A0 shown =3D log_tree_diff(opt, commit, &log);
+>> =A0 =A0 =A0 if (!shown && opt->loginfo && opt->always_show_header) {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 log.parent =3D NULL;
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 show_log(opt);
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 shown =3D 1;
+>> =A0 =A0 =A0 }
+>>
+>> This is the only area that always_show_header is checked, so the
+>> setting of this flag should only affect this area.
+>
+> Hmm, but also setting this flag would affect anything that changes
+> behaviour depending on the value of log.parent, no?
+
+A cursory look at log-tree.c leads me to believe only show_log() cares
+about log.parent.
+
+In any case, if you look a few more lines up, you would notice another
+log.parent =3D NULL:
+
+@552
+	struct log_info log;
+	int shown;
+
+	log.commit =3D commit;
+	log.parent =3D NULL;
+	opt->loginfo =3D &log;
+
+	shown =3D log_tree_diff(opt, commit, &log);
+	if (!shown && opt->loginfo && opt->always_show_header) {
+		log.parent =3D NULL;
+		show_log(opt);
+		shown =3D 1;
+	}
+
+Therefore, I suspect that log.parent =3D NULL is a kind of
+initialization for show_log() (log_tree_diff() does call show_log()
+too).
+
+>> + =A0 =A0 if (!log_tree_commit(&rev, commit))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 die("unable to print summary");
+>
+> When always_show_header is set, what are the situations where
+> log_tree_commit() might return false? =A0I think your fix depends on =
+the
+> fact that it will never return false (which I think is a correct thin=
+g to
+> assume---after all that is what "always_show" means ;-).
+
+Based on my reading, I can't think of any.
+
+--=20
+Cheers,
+Ray Chuan
