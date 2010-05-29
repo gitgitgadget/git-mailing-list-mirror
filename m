@@ -1,132 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH svn-dump-fast-export] Reference documentation
-Date: Sat, 29 May 2010 01:16:21 -0500
-Message-ID: <20100529061621.GA6513@progeny.tock>
-Mime-Version: 1.0
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: [PATCH svn-dump-fast-export] Reference documentation
+Date: Sat, 29 May 2010 16:59:18 +1000
+Message-ID: <9DEABC23-A416-4099-BF01-B9ACFC3284F7@cordelta.com>
+References: <20100529061621.GA6513@progeny.tock>
+Mime-Version: 1.0 (Apple Message framework v1078)
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sat May 29 08:16:17 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 29 08:59:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIFLD-0007Td-MQ
-	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 08:16:16 +0200
+	id 1OIG16-0001NA-Ib
+	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 08:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751411Ab0E2GQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 May 2010 02:16:05 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:60602 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243Ab0E2GQB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 May 2010 02:16:01 -0400
-Received: by gyg13 with SMTP id 13so1587090gyg.19
-        for <git@vger.kernel.org>; Fri, 28 May 2010 23:16:00 -0700 (PDT)
+	id S1751932Ab0E2G7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 May 2010 02:59:25 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41460 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751811Ab0E2G7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 May 2010 02:59:24 -0400
+Received: by pwj2 with SMTP id 2so74459pwj.19
+        for <git@vger.kernel.org>; Fri, 28 May 2010 23:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=pDTwMzHFOqlOziBiTEAJphxBffF1l1iXcRKwbB+h1as=;
-        b=oiMtngKVGO89VF7V3NcfOdsvPbfxhmDrGuk48mDsNrT0Q0rNstaSIZnI79WKHsBc11
-         I8GaDj9nJR+fvllOrnQJyjKIW+Im94hylShkSpwQtYtF3Ryx5GtH7pTHLBgwpKcRjP3c
-         bu0NOo49vyu7lyl76tA7YWvaLM/B1YdtSfFgc=
+        h=domainkey-signature:received:received:sender:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=n6bU+XN5qy4W3Ttf6JmtD6uXXArAsQ97z/9APogOK8A=;
+        b=JEjtEh5nC8qifZ7zBsMaBuJuh8H7bEXYz1MDSDeb5h7pjuWdVHQW2gLt80Yk1JAjoO
+         00sIYSe10HV1T7F4LX9MpWrbqX/3u6WiPCTL38YPl6yy+GDSPbvOPnj9YSkgFkbgslKa
+         2niScXB3aHc6k/Y6iFrPpdzooKZTRSMApxypI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=qRxjUD57lUuDch3KTvbEOQEn+d3NvqMoj+pROHiZzOIxbfuWF1XEtH7VhiFhUb6tTr
-         XwEJuqSjisJzr8PG0frV4vhNK4MCpyH++rTrYqRiK5fCcSVvlSPGHRT0ZBxze6XimRw8
-         1Gm6raVuSs/xM4TqUYWKzgpnn3eh5ZT3+YLfo=
-Received: by 10.231.178.162 with SMTP id bm34mr1670257ibb.86.1275113760326;
-        Fri, 28 May 2010 23:16:00 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id t28sm14525353ibg.6.2010.05.28.23.15.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 28 May 2010 23:15:59 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=sender:subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=mFFwWNJPWg2uy3Ccg3uGHe6O3s6StxB40HqxGqcgXY3muB1WBbl8WwZFlkQRPrQBXZ
+         EiO6J8pywIY5NEQGVjhz7+IPNLFEeDetddTZ7/CURPDd7W3DETTxIzNdJrJ72NcU+6hH
+         gK6SLm32whpSCfoFwuhFDBVyxxH3X2041uj90=
+Received: by 10.142.55.4 with SMTP id d4mr964457wfa.309.1275116363636;
+        Fri, 28 May 2010 23:59:23 -0700 (PDT)
+Received: from [192.168.1.2] (d122-109-106-179.mit3.act.optusnet.com.au [122.109.106.179])
+        by mx.google.com with ESMTPS id d16sm26690584wam.12.2010.05.28.23.59.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 28 May 2010 23:59:23 -0700 (PDT)
+In-Reply-To: <20100529061621.GA6513@progeny.tock>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147957>
 
-Add a simple manual page (in asciidoc format) to document
-the svn-fe command.
+Hi,
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Patch is against git://github.com/barrbrain/svn-dump-fast-export.git master
+> Add a simple manual page (in asciidoc format) to document
+> the svn-fe command.
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Patch is against git://github.com/barrbrain/svn-dump-fast-export.git master
 
-Thoughts?
+This patch has now been accepted into that repository.
 
- svn-fe.txt |   56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 56 insertions(+), 0 deletions(-)
- create mode 100644 svn-fe.txt
+> Thoughts?
 
-diff --git a/svn-fe.txt b/svn-fe.txt
-new file mode 100644
-index 0000000..bfd3a68
---- /dev/null
-+++ b/svn-fe.txt
-@@ -0,0 +1,56 @@
-+svn-fe(1)
-+=========
-+
-+NAME
-+----
-+svn-fe - convert an SVN "dumpfile" to a fast-import stream
-+
-+SYNOPSIS
-+--------
-+svnadmin dump --incremental REPO | svn-fe [url] | git fast-import
-+
-+DESCRIPTION
-+-----------
-+Converts a textual representation of a Subversion repository into
-+input suitable for git-fast-import(1) and similar importers.
-+
-+INPUT FORMAT
-+------------
-+Subversion's repository dump format is documented in full in
-+`notes/dump-load-format.txt` from the Subversion source tree.
-+Files in this format can be generated using the 'svnadmin dump' or
-+'svk admin dump' command.
-+
-+OUTPUT FORMAT
-+-------------
-+The fast-import format is documented by the git-fast-import(1)
-+manual page.
-+
-+NOTES
-+-----
-+Subversion dumps do not record a separate author and committer for
-+each revision, nor a separate display name and email address for
-+each author.  Like git-svn(1), 'svn-fe' will use the name
-+
-+---------
-+user <user@UUID>
-+---------
-+
-+as committer, where 'user' is the value of the `svn:author` property
-+and 'UUID' the repository's identifier.
-+
-+To support incremental imports, 'svn-fe' will put a `git-svn-id`
-+line at the end of each commit log message if passed an url on the
-+command line.  This line has the form `git-svn-id: URL@REVNO UUID`.
-+
-+Empty directories and unknown properties are silently discarded.
-+
-+The resulting repository will generally require further processing
-+to put each project in its own repository and to separate the history
-+of each branch.  The 'git filter-branch --subdirectory-filter' command
-+may be useful for this purpose.
-+
-+SEE ALSO
-+--------
-+git-svn(1), svn2git(1), svk(1), git-filter-branch(1), git-fast-import(1),
-+https://svn.apache.org/repos/asf/subversion/trunk/notes/dump-load-format.txt
--- 
-1.7.1
+Couldn't have done it better myself.
+
+Incremental dump support is still a TODO.
+
+--
+David Barr
