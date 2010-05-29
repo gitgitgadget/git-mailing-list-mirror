@@ -1,101 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 6/6] Make --color-words work well with --graph
-Date: Fri, 28 May 2010 18:10:46 -0700
-Message-ID: <7viq675x7t.fsf@alter.siamese.dyndns.org>
-References: <1274858637-13243-1-git-send-email-struggleyb.nku@gmail.com>
- <1274858637-13243-2-git-send-email-struggleyb.nku@gmail.com>
- <1274858637-13243-3-git-send-email-struggleyb.nku@gmail.com>
- <1274858637-13243-4-git-send-email-struggleyb.nku@gmail.com>
+Subject: Re: [PATCH v2 3/3] commit::print_summary(): set
+ rev_info.always_show_header to 1
+Date: Fri, 28 May 2010 18:10:52 -0700
+Message-ID: <7vd3wf5x7n.fsf@alter.siamese.dyndns.org>
+References: <1274694452-4200-1-git-send-email-rctay89@gmail.com>
+ <1274974492-4692-1-git-send-email-rctay89@gmail.com>
+ <1274974492-4692-2-git-send-email-rctay89@gmail.com>
+ <1274974492-4692-3-git-send-email-rctay89@gmail.com>
+ <1274974492-4692-4-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 29 03:10:59 2010
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 29 03:11:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIAZn-0005RO-0P
-	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 03:10:59 +0200
+	id 1OIAZz-0005YP-0z
+	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 03:11:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755992Ab0E2BK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 May 2010 21:10:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57990 "EHLO
+	id S1756030Ab0E2BLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 May 2010 21:11:06 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58191 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755888Ab0E2BKz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 May 2010 21:10:55 -0400
+	with ESMTP id S1755888Ab0E2BLC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 May 2010 21:11:02 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 47FE6B77B7;
-	Fri, 28 May 2010 21:10:55 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ED563B77BA;
+	Fri, 28 May 2010 21:11:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=eInziLMtAyTOEd5lLIcUpJvqO+c=; b=Cn8B/VKhz9/WhcasyEYA9ek
-	iIdIZL9JPvdsZr+cdzssuzQOMWjQrUjC1pWCApAEfUeK3x4wCkT8B13B5XA2qBih
-	C5oAeWWe5mTC3jyeEkRA8fBiHCp8EpEaJOsn51OjS1z/UIhoLiw7P2LXezj8LLed
-	lpiBz3L9mL3sxiZcCQn0=
+	sasl; bh=iHCdXnN68/qu4NbVDCpBgaQx0VI=; b=Y/S/cA5MsMhfwn6DjuqYli0
+	LUvr5J5QirE8LloIxFH2JSZcwAbYHV8AEehTm7nKiJsv3L/4ic/4gDAGhUx/Gppt
+	vokei3Xndsho5J6vN+oYjS7xvBAFTEljpJzhFK0IYFsKXxXBh9SAFXvbScN0lHpS
+	9yxfcnTwefQp+/IeFYIg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=OflHwUV61imVKNPBrC5OR8lkEuKVWHyXzMl44WaS1FuKPmy6R
-	bREAiMn94tq+fkRAilOsYSYydDcv3vwDUPYRc2wX/KsGg65tdylD1WvHr2SrSDBb
-	wuvDvi3iZyg36EqKC11gPtAJGoMkqujsfQIWPtZQaDrppeui00HpuhKPyA=
+	dns; s=sasl; b=SMtVk5lCsuXat5EdxbVotdkcbQ6giXq64b/PQhuJ4kvt+sywF
+	5j5LM771jfvPfW/XA4vBBpGCFE+y7wLt8T2N49GaGmIuO+73VFdiENiieAfWBJa6
+	V3s54bI8Z5h2g350B5c/HhuO5Y7t+SZnXqwRCZ8v1FT5DPQ9jZRuz79glA=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 081E4B77B5;
-	Fri, 28 May 2010 21:10:52 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71809B77B8;
+	Fri, 28 May 2010 21:10:58 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23747B77B3; Fri, 28 May
- 2010 21:10:47 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 75262B77B6; Fri, 28 May
+ 2010 21:10:53 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 06370710-6ABF-11DF-B680-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0A0D3044-6ABF-11DF-91FB-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147945>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+Tay Ray Chuan <rctay89@gmail.com> writes:
 
-> '--color-words' algorithm can be described as:
+> This attempts to fix a regression in git-commit, where non-abbreviated
+> SHA-1s were printed in the summary.
 >
-> 1. collect a the minus/plus lines of a diff hunk, divided into minus-lines and plus-lines;
-> 2. break both minus-lines and plus-lines into words and place them into two
->    mmfile_t with one word for each line;
-> 3. use xdiff to run diff on the two mmfile_t to get the words level diff;
+> One possible fix would be to set ctx.abbrev to DEFAULT_ABBREV in the
+> `if` block. However, we remove this codeblock altogether, and set
+> rev.always_show_header.
+>
+> This way, we use back the same show_log() mechanism (instead of
+> format_commit_message()).
 
-Please wrap lines at reasonable length, and indent bulleted lists like
-this a bit from the left, with a blank line between each item, like this:
+I like the removal of the handcrafted call to f-c-m.  Thanks.
 
-|'--color-words' algorithm can be described as:
-|
-|  1. collect a the minus/plus lines of a diff hunk, divided into
-|     minus-lines and plus-lines;
-|
-|  2. break both minus-lines and plus-lines into words and place them
-|     into two mmfile_t with one word for each line;
-|
-|  3. use xdiff to run diff on the two mmfile_t to get the words level
-|     diff;
-|
-|And for the common parts of the both file, we output the plus side...
-| ...
-|For '--graph' to work with '--color-words', we need to output the
-|graph prefix on each line of color words output. Generally, there are
-|two conditions on which we should output the prefix.
-|
-|  1. diff_words->last_minus == 0 &&
-|     diff_words->current_plus == diff_words->plus.text.ptr
-|
-|     that is: the plus text must start as a new line, and if there is
-|     no minus word printed, a graph prefix must be printed.
-|
-|  2. diff_words->current_plus > diff_words->plus.text.ptr &&
-|     *(diff_words->current_plus - 1) == '\n'
-|
-|     that is: a graph prefix must be printed following a '\n'.
+> Quoting log-tree.c:560:
+>
+> 	shown = log_tree_diff(opt, commit, &log);
+> 	if (!shown && opt->loginfo && opt->always_show_header) {
+> 		log.parent = NULL;
+> 		show_log(opt);
+> 		shown = 1;
+> 	}
+>
+> This is the only area that always_show_header is checked, so the
+> setting of this flag should only affect this area.
 
-Same thing for the in-code comments; it would probably be easier to read
-if you made a small helper function (that a compiler would inline for you)
-that decides if you would want to show the line_prefix, and make that big
-comment a comment to that helper function.
+Hmm, but also setting this flag would affect anything that changes
+behaviour depending on the value of log.parent, no?
+
+> +	if (!log_tree_commit(&rev, commit))
+> +		die("unable to print summary");
+
+When always_show_header is set, what are the situations where
+log_tree_commit() might return false?  I think your fix depends on the
+fact that it will never return false (which I think is a correct thing to
+assume---after all that is what "always_show" means ;-).
