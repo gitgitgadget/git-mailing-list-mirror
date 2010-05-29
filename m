@@ -1,53 +1,128 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: Any easy way to represent the first commit in a branch?
-Date: Sat, 29 May 2010 11:36:55 +0800
-Message-ID: <AANLkTinU1dMd1mA2mpoO0rB9OaOofuekPFSCFoFd2Bf1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 29 05:37:20 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 3/4] revert: allow cherry-picking a range of commits
+Date: Sat, 29 May 2010 06:40:42 +0200
+Message-ID: <20100529044044.569.7874.chriscool@tuxfamily.org>
+References: <20100529043738.569.85482.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 29 06:41:37 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OICrM-0001bb-IV
-	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 05:37:16 +0200
+	id 1OIDrc-0007PG-4M
+	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 06:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757141Ab0E2Dg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 May 2010 23:36:58 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35657 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757085Ab0E2Dg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 May 2010 23:36:56 -0400
-Received: by vws9 with SMTP id 9so1871104vws.19
-        for <git@vger.kernel.org>; Fri, 28 May 2010 20:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=4zrtH5vcVHOEZnaDNfHqVS0IygfPTBLa26o92dC1OFg=;
-        b=Oj2KAjLR0U42IAxlLpYER8uvUMMKuUTEYl1qqQy+7jd/VYqcPS6XjdSU65x0YYi3hl
-         28v3+b3/cteKUhTM4LgpqbA0jPzhU1IDSVfgK4UXznVPBAr5GpzQHEAiFAnpSLMvyMx5
-         oiQSyaBHbr7ie9qxb5EO/YV2DbQfLimHX3WBo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=gYFneP/IhQxQ0qZgNlwQRFcOevRtMrHXjWVZaLV7dJegTrb5twJ5izlx+9kCU1DvcN
-         Mrywj9ftUAIq33cAj8M/EPXWQd7/koj0ix7S/nh7QhC3MfvIN9E0cKOjjn1brLZo51KT
-         lIruDbh+7DVIAabultYiJIssEzUGJS8IlALg0=
-Received: by 10.224.44.206 with SMTP id b14mr668991qaf.256.1275104215723; Fri, 
-	28 May 2010 20:36:55 -0700 (PDT)
-Received: by 10.229.83.145 with HTTP; Fri, 28 May 2010 20:36:55 -0700 (PDT)
+	id S1751225Ab0E2El1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 May 2010 00:41:27 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56292 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751056Ab0E2El0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 May 2010 00:41:26 -0400
+Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 94E1C818049;
+	Sat, 29 May 2010 06:41:19 +0200 (CEST)
+X-git-sha1: 56ceb9a9d3543a1d02992286449eb0f6be6ac8f6 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20100529043738.569.85482.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147951>
 
-something like HEAD@root ?
+This makes it possible to pass a range of commits like A..B
+to "git cherry-pick" and to "git revert" to process many
+commits instead of just one.
 
-I know i can do it with
+But there is currently no way to continue cherry-picking or
+reverting if there is a problem with one commit. It's also
+not possible to abort the whole process. Some future work
+should provide the --continue and --abort options to do
+just that.
 
-git rev-list --reverse --first-parent HEAD | head -1
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/revert.c |   43 +++++++++++++++++++++++++++++++++++++------
+ 1 files changed, 37 insertions(+), 6 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 70372dc..c281a80 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -53,7 +53,6 @@ static void parse_args(int argc, const char **argv)
+ {
+ 	const char * const * usage_str =
+ 		action == REVERT ?  revert_usage : cherry_pick_usage;
+-	unsigned char sha1[20];
+ 	int noop;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('n', "no-commit", &no_commit, "don't automatically commit"),
+@@ -82,11 +81,6 @@ static void parse_args(int argc, const char **argv)
+ 		usage_with_options(usage_str, options);
+ 
+ 	commit_name = argv[0];
+-	if (get_sha1(commit_name, sha1))
+-		die ("Cannot find '%s'", commit_name);
+-	commit = lookup_commit_reference(sha1);
+-	if (!commit)
+-		exit(1);
+ }
+ 
+ struct commit_message {
+@@ -522,6 +516,9 @@ static int do_pick_commit()
+ 
+ static int revert_or_cherry_pick(int argc, const char **argv)
+ {
++	const char *dotdot;
++	unsigned char sha1[20];
++
+ 	git_config(git_default_config, NULL);
+ 	me = action == REVERT ? "revert" : "cherry-pick";
+ 	setenv(GIT_REFLOG_ACTION, me, 0);
+@@ -545,6 +542,40 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	if (read_cache() < 0)
+ 		die("git %s: failed to read the index", me);
+ 
++	dotdot = strstr(commit_name, "..");
++	if (dotdot) {
++		struct rev_info revs;
++		const char *argv[4];
++		int argc = 0;
++
++		argv[argc++] = NULL;
++		if (action != REVERT)
++			argv[argc++] = "--reverse";
++		argv[argc++] = commit_name;
++		argv[argc++] = NULL;
++
++		init_revisions(&revs, NULL);
++		setup_revisions(argc - 1, argv, &revs, NULL);
++		if (prepare_revision_walk(&revs))
++			die("revision walk setup failed");
++
++		if (!revs.commits)
++			die("empty range passed");
++
++		while ( (commit = get_revision(&revs)) ) {
++			int res = do_pick_commit();
++			if (res)
++				return res;
++		}
++		return 0;
++	}
++
++	if (get_sha1(commit_name, sha1))
++		die ("Cannot find '%s'", commit_name);
++	commit = lookup_commit_reference(sha1);
++	if (!commit)
++		exit(1);
++
+ 	return do_pick_commit();
+ }
+ 
+-- 
+1.7.1.346.g7c1d7.dirty
