@@ -1,111 +1,75 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Re: [PATCH 3/7] Add buffer pool library
-Date: Sat, 29 May 2010 20:55:24 +1000
-Message-ID: <512B4EA0-463F-4CF2-94AB-404BF1BAE229@cordelta.com>
-References: <1274650832-7411-1-git-send-email-artagnon@gmail.com> <1274650832-7411-4-git-send-email-artagnon@gmail.com> <20100529085124.GA6847@progeny.tock>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=windows-1252
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: Git push from bare repo
+Date: Sat, 29 May 2010 13:01:57 +0200
+Message-ID: <htqs75$tco$1@dough.gmane.org>
+References: <3197051701046e645c8ff2ae7dca872a@ns-linux.org> <4BFF89A5.7020802@op5.se> <3529f1c81d1062a941056914c612d8c2@ns-linux.org> <36AD1DE8-9E28-4373-94CF-72E88ABBB309@bjhargrave.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 29 12:55:50 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 29 13:06:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIJhk-0007SA-As
-	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 12:55:48 +0200
+	id 1OIJsG-0002uV-RF
+	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 13:06:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755125Ab0E2Kza convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 May 2010 06:55:30 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:55914 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751663Ab0E2Kz3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 May 2010 06:55:29 -0400
-Received: by pxi18 with SMTP id 18so888690pxi.19
-        for <git@vger.kernel.org>; Sat, 29 May 2010 03:55:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=Dy5ZvR0B6VdhpOjpVTonwGCUUwXIBRbWCXXyoHHXSgI=;
-        b=CvA1MOR1A2Aql6d2ysFszIC/KAGfcoj+2n0+BydkDiFfx5S5MNlOGMyV5vT4P8d2q/
-         7UsTFu+Ruy4WThp1yq2kmuiPCxpfpuGHHH0IiqGRvB/XHTnI1TafYhLv896P2DN59qvN
-         9ptKsyKwIuClj4c3ttUzj+QqriqmrhOcOCWP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=TFqdfFLEZeOKJ+ET/NzK/POaQbf8eq+VZZ+i/JtFo2XkzKtE3aVQYnd6KxVbCglmAk
-         XfjDrz55DDPCw/VJpG9hiiu6sjeI4tq1jjYpW9O1PiPuPgSV5z/ZLBL3EhvxXlhrQlVe
-         0ZbbO1a+MkpZNRI1SOezFX0/97FK9ya1zFt3c=
-Received: by 10.114.4.37 with SMTP id 37mr1328627wad.120.1275130529100;
-        Sat, 29 May 2010 03:55:29 -0700 (PDT)
-Received: from [192.168.1.2] (d122-109-106-179.mit3.act.optusnet.com.au [122.109.106.179])
-        by mx.google.com with ESMTPS id c1sm28359578wam.19.2010.05.29.03.55.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 29 May 2010 03:55:28 -0700 (PDT)
-In-Reply-To: <20100529085124.GA6847@progeny.tock>
-X-Mailer: Apple Mail (2.1078)
+	id S1755725Ab0E2LCQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 May 2010 07:02:16 -0400
+Received: from lo.gmane.org ([80.91.229.12]:54728 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753018Ab0E2LCP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 May 2010 07:02:15 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OIJnv-00018S-Bs
+	for git@vger.kernel.org; Sat, 29 May 2010 13:02:11 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 May 2010 13:02:11 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 May 2010 13:02:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <36AD1DE8-9E28-4373-94CF-72E88ABBB309@bjhargrave.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147963>
 
-Ji Jonathan,
-
->> line_buffer creates a couple of static buffers and expose an API for
->> using them.
+BJ Hargrave wrote:
+> On May 28, 2010, at 08:28 , Goran Meki=C4=87 wrote:
+>>    There's more then one developer and 600 is set to just one user.
+>> Post-receive hook is executed as developer doing push. The accounts =
+are in
+>> LDAP, but I can't set all their UID number to same number because it=
+'s
+>> used
+>> for PAM. I was thinking about ACL. Is that even a solution? The dumb=
+ one
+>> would be cron, but I wish I avoid pushing when there's no change.
+>>
 >=20
-> So this provides a thread-unsafe fgets() and fread() where the caller
-> does not have to supply a buffer.  Sounds convenient.
+> What about having a script which does the push have setuid to the own=
+er of the key. Then the post-receive hook can invoke that script which =
+will have access to the ssh key to do the push.
+That should work.
 
-Very convenient indeed. Its primary reason for existence is to assist
-debugging the svn dump parser.
 
-> Missing From: line and sign-off.
+another option would be, that the post receive hook copies the ssh-key
+file, changes its permission andcontinues only then to push.
 
-I'm sure Ram will fix this up in the next rebase.
 
->> +char *buffer_read_line(void)
->> +{
->> +    char *end;
->=20
-> style nitpick: use tabs to indent.
-
-Will read git style guide and try to match for convenience.
-
-> Why not fgets()?
-
-Historical reasons, can be factored out.
-
-> So if this buffer library is in use, all input needs to pass through
-> it?  I would prefer to avoid that if possible.
-
-The design is almost single-caller anyway...
-
->> +        line_len +=3D offset;
->> +    }
->> +    while (offset < len && !feof(stdin)) {
->> +        offset +=3D fread(&s[offset], 1, len - offset, stdin);
->> +    }
->=20
-> On error, wouldn=92t this be an infinite loop?  Maybe:
->=20
->  offset +=3D fread(&s[offset], 1, len - offset, stdin);
->  if (ferror(stdin)) {
-> 	free(s);
-> 	return NULL;
-> }
->=20
-> One iteration should be sufficient, since fread loops internally
-
-Thanks for the tip.
-
---
-David Barr
+If all users have ssh access to first server AND to second server and
+all users use ssh-agent, then all users had just to make sure, that the=
+y
+do agent forwarding in their .ssh/config script.
