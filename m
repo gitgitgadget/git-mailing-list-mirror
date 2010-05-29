@@ -1,75 +1,130 @@
-From: Gelonida <gelonida@gmail.com>
-Subject: Re: Git push from bare repo
-Date: Sat, 29 May 2010 13:01:57 +0200
-Message-ID: <htqs75$tco$1@dough.gmane.org>
-References: <3197051701046e645c8ff2ae7dca872a@ns-linux.org> <4BFF89A5.7020802@op5.se> <3529f1c81d1062a941056914c612d8c2@ns-linux.org> <36AD1DE8-9E28-4373-94CF-72E88ABBB309@bjhargrave.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/7] Add API for string-specific memory pool
+Date: Sat, 29 May 2010 06:38:00 -0500
+Message-ID: <20100529113800.GA7925@progeny.tock>
+References: <1274650832-7411-1-git-send-email-artagnon@gmail.com>
+ <1274650832-7411-6-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 29 13:06:41 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 29 13:37:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIJsG-0002uV-RF
-	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 13:06:41 +0200
+	id 1OIKMH-0006fs-My
+	for gcvg-git-2@lo.gmane.org; Sat, 29 May 2010 13:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755725Ab0E2LCQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 May 2010 07:02:16 -0400
-Received: from lo.gmane.org ([80.91.229.12]:54728 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753018Ab0E2LCP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 May 2010 07:02:15 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OIJnv-00018S-Bs
-	for git@vger.kernel.org; Sat, 29 May 2010 13:02:11 +0200
-Received: from unicorn.dungeon.de ([81.56.82.123])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 29 May 2010 13:02:11 +0200
-Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 29 May 2010 13:02:11 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <36AD1DE8-9E28-4373-94CF-72E88ABBB309@bjhargrave.com>
+	id S1756161Ab0E2Lhg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 May 2010 07:37:36 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43455 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755735Ab0E2Lhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 May 2010 07:37:35 -0400
+Received: by gwaa12 with SMTP id a12so1652706gwa.19
+        for <git@vger.kernel.org>; Sat, 29 May 2010 04:37:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=HsLASzF5lhLaDvW1vKsZS1fhqpdI6i8uioCDGJNfp5w=;
+        b=srji8yuU2JyskVYw405p653e9FprdjmABb2KGIIVKVcsBFDkE/oHP+6tX58hHSURFZ
+         tmSvJ8Oo7oPK0x64rxaIvGaKV5BnxGZkrhfK8hBgVJKzhsRyZx7PdF3AAXuA4zaNHNLM
+         /5lpNaH29xv4gB7hlc2x7iCUQohYk/ZfgFdwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Io4rS00Ao1IoJgDOqFsDYxXdZZFgdkpvGpNAkSBawTRD1GPUTrlBzVMDtEBsv+fu94
+         Oe/mQEjzBmhucsjwzVEcqoCOMIjcY+RZmElFoiv/XBJXwId7FndVv9JZNt2cIgN3e7nc
+         E6ufzdJM1VnKBGBZISrLImYr/A4eruJD+HMFg=
+Received: by 10.231.158.131 with SMTP id f3mr2126501ibx.54.1275133054193;
+        Sat, 29 May 2010 04:37:34 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id t28sm15653859ibg.18.2010.05.29.04.37.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 29 May 2010 04:37:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1274650832-7411-6-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147964>
 
-BJ Hargrave wrote:
-> On May 28, 2010, at 08:28 , Goran Meki=C4=87 wrote:
->>    There's more then one developer and 600 is set to just one user.
->> Post-receive hook is executed as developer doing push. The accounts =
-are in
->> LDAP, but I can't set all their UID number to same number because it=
-'s
->> used
->> for PAM. I was thinking about ACL. Is that even a solution? The dumb=
- one
->> would be cron, but I wish I avoid pushing when there's no change.
->>
->=20
-> What about having a script which does the push have setuid to the own=
-er of the key. Then the post-receive hook can invoke that script which =
-will have access to the ssh key to do the push.
-That should work.
+Ramkumar Ramachandra wrote:
 
+> string_pool uses the macros in the memory pool library to create a
+> memory pool for strings and expose an API for handling the
+> strings.
 
-another option would be, that the post receive hook copies the ssh-key
-file, changes its permission andcontinues only then to push.
+This interns strings so they can be compared by address.  Interesting.
+The use of offsets instead of pointers here mean it is possible to
+back the pool by a file, if I understand correctly.
 
+> Taken directly from David Michael Barr's svn-dump-fast-export
+> repository.
 
-If all users have ssh access to first server AND to second server and
-all users use ssh-agent, then all users had just to make sure, that the=
-y
-do agent forwarding in their .ssh/config script.
+Missing From: and sign-off.
+
+[...]
+> +static int node_indentity_cmp(node_t *a, node_t *b)
+> +{
+> +    int r =3D node_value_cmp(a, b);
+> +    return r ? r : (((uintptr_t) a) > ((uintptr_t) b))
+> +        - (((uintptr_t) a) < ((uintptr_t) b));
+
+nitpick: could use fewer parentheses.
+
+	return r ? r : (((uintptr_t) a > (uintptr_t) b) - ...
+
+Are the casts to uintptr_t necessary?  C99 says, under "Relational
+operators", paragraph 5:
+
+  When two pointers are compared, the result depends on the relative
+  locations in the address space of the objects pointed to. If two
+  pointers to object or incomplete types both point to the same
+  object, or both point one past the last element of the same array
+  object, they compare equal. If the objects pointed to are members of
+  the same aggregate object,
+  [etc]
+
+which seems to suggest that no, simple expressions like (a > b) should
+be okay, but then it finishes with
+
+  In all other cases, the behavior is undefined.
+
+so I guess it is safer to keep the casts.
+
+> diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
+> new file mode 100644
+> index 0000000..fb9e6b8
+> --- /dev/null
+> +++ b/vcs-svn/string_pool.h
+> @@ -0,0 +1,11 @@
+> +#ifndef STRING_POOL_H_
+> +#define	STRING_POOL_H_
+
+style nitpick: should use space instead of tab
+
+> +
+> +#include <stdint.h>
+> +#include <stdio.h>
+
+Should use "../git-compat-util.h" for portability: unfortunately, some
+platforms git supports still don=E2=80=99t have stdint.h iirc.
+
+Except as noted above,
+
+  Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks for the pleasant read.
+Jonathan
