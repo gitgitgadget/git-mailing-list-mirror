@@ -1,98 +1,107 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] Makefile: remove redundant munging of @@INSTLIBDIR@@
-Date: Sun, 30 May 2010 17:12:41 +0000
-Message-ID: <1275239561-31437-1-git-send-email-avarab@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2] compat: Add another rudimentary poll() 
+	emulation
+Date: Sun, 30 May 2010 21:19:30 +0200
+Message-ID: <201005302119.30340.j6t@kdbg.org>
+References: <1274948384-167-1-git-send-email-abcd@gentoo.org> <AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com> <20100530003718.GA27024@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 30 19:19:26 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: kusmabite@gmail.com,
+ Jonathan Callen <abcd@gentoo.org>,
+ git@vger.kernel.org,
+ mduft@gentoo.org,
+ Sverre Rabbelier <srabbelier@gmail.com>,
+ Michael J Gruber <git@drmicha.warpmail.net>,
+ msysGit <msysgit@googlegroups.com>,
+ Marko Kreen <markokr@gmail.com>,
+ Albert Dvornik <dvornik+git@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: msysgit+bncCJOK-OFUEPL1iuAEGgTMuvPH@googlegroups.com Sun May 30 21:22:50 2010
 connect(): No such file or directory
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Return-path: <msysgit+bncCJOK-OFUEPL1iuAEGgTMuvPH@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ww0-f58.google.com ([74.125.82.58])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OImAY-00041E-5Y
-	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 19:19:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751449Ab0E3RMw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 May 2010 13:12:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56681 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751346Ab0E3RMw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 May 2010 13:12:52 -0400
-Received: by fxm10 with SMTP id 10so1859804fxm.19
-        for <git@vger.kernel.org>; Sun, 30 May 2010 10:12:50 -0700 (PDT)
+	(envelope-from <msysgit+bncCJOK-OFUEPL1iuAEGgTMuvPH@googlegroups.com>)
+	id 1OIo5w-00055Y-Cw
+	for gcvm-msysgit@m.gmane.org; Sun, 30 May 2010 21:22:48 +0200
+Received: by wwb34 with SMTP id 34sf295047wwb.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 30 May 2010 12:22:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=ekpd/rH9DY+GTtHOicl1ixj1+sYCeGUv9/MfInyP4vk=;
-        b=w08DrWnx3+xBfiyfTq93OjRBqgQKCe8rrVxlR6f3B3jwHDO0GXpaaO4SLpRxTGTwgh
-         Cl1Q/g7mYjP/N221BR2ICobQZZwjzBy2pKIMDU1YHv9PxwLHsNM0ro9ZNP3nDvKyXwxQ
-         0WUIISQBak5VA9S3Lw2rXfHoDg5xdm2gyBcEY=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:message-id
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding:content-disposition;
+        bh=usSuAWgptIYySco7sE6vSvXZRK1egbiKsjLg5Ci/iV8=;
+        b=F7Nsl9/BcYKR0FbGKgiS3UDFfjlsg7RgSbmloqfjPtQOyl5jyQ6SCvLj95qWV9yyd2
+         YUXfSnGuKEXYbpg6gaK/OfaDLcyzqUo1deWVA7NprOIKTWVqE6GCtUnyIRehAh36o/Xh
+         stALL9NGcpJc+vhsPCMovVFW107DUymGX+axc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=KhHP3WP2Wo2zHWXJe57tig/YAxjcE5rIkG105PQvr8hNr8P4NQ/sG7ZV9n54sHpaIY
-         rBHr89wpcDwxr/LQU6E5oU8gnrjtfHXof/MxB5ATH9Ynj6AY4nzHfIE0ZH/AlR5s71I3
-         FGTp7vUXLllBbst+bgq7r3fvZyrvHUCxLw6Pw=
-Received: by 10.223.127.196 with SMTP id h4mr4030671fas.56.1275239570462;
-        Sun, 30 May 2010 10:12:50 -0700 (PDT)
-Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
-        by mx.google.com with ESMTPS id 7sm31929299far.6.2010.05.30.10.12.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 30 May 2010 10:12:49 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.237.gf48e9
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148011>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:from:to:subject:date:user-agent:cc
+         :references:in-reply-to:mime-version:message-id
+         :x-original-authentication-results:x-original-sender:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding:content-disposition;
+        b=Xv9EkoRPA3LjjBPNLVZl6gebGU8ZJWDey6JE+rJim4tk/usHozBwVkbmTHdINDpBHY
+         ShYKMtDwMMOBivWiwQaJeh5W9zAt+qpJAxR5bDTK0jfrAAqhzUYfNrvhMluoI8jhdmuc
+         mQ0DDUTAKVwG8Y0zIk2IlQ3EKfTjW4IBk2Xs8=
+Received: by 10.223.6.91 with SMTP id 27mr101211fay.45.1275247346054;
+        Sun, 30 May 2010 12:22:26 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.86.126.32 with SMTP id y32ls868501fgc.0.p; Sun, 30 May 2010 
+	12:22:25 -0700 (PDT)
+Received: by 10.87.38.12 with SMTP id q12mr338927fgj.8.1275247345150;
+        Sun, 30 May 2010 12:22:25 -0700 (PDT)
+Received: by 10.87.38.12 with SMTP id q12mr338926fgj.8.1275247345131;
+        Sun, 30 May 2010 12:22:25 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp4.bon.at [195.3.86.186])
+        by gmr-mx.google.com with ESMTP id 22si4942935fas.4.2010.05.30.12.22.25;
+        Sun, 30 May 2010 12:22:25 -0700 (PDT)
+Received-SPF: neutral (google.com: 195.3.86.186 is neither permitted nor denied by best guess record for domain of j6t@kdbg.org) client-ip=195.3.86.186;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 825B7A7EB9;
+	Sun, 30 May 2010 21:21:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 6662519F758;
+	Sun, 30 May 2010 21:19:30 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20100530003718.GA27024@progeny.tock>
+X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com: 
+	195.3.86.186 is neither permitted nor denied by best guess record for domain 
+	of j6t@kdbg.org) smtp.mail=j6t@kdbg.org
+X-Original-Sender: j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, 
+	<mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, 
+	<mailto:msysgit+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148012>
 
-Junio originally added this in f6276fe159 for use in `unshift @INC,
-'@@INSTLIBDIR@@'' in git-fmt-merge-msg.perl. That program was since
-then rewritten in C in 00449f992b. And since 6fcca938b0 all Perl
-programs use `use lib' to set their @INC path.
+On Sonntag, 30. Mai 2010, Jonathan Nieder wrote:
+> I would be interested to hear whether this works on msysgit and Interix.
 
-There's been no @@INSTLIBDIR@@ in any Perl script to replace since
-then. So there's no reason to keep it around.
+It cannot work on msysgit because
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
+- on Windows, select() works only for sockets, but we poll() on pipes, too;
 
-I saw this when doing Perl/Gettext support. @@INSTLIBDIR@@ hasn't been
-used for anything but the 'use lib' line there since mid-2006.
+- in our emulation layer, fds that are sockets must be unpacked with 
+_get_osfhandle() before they can be passed to FD_SET() because (as Paolo has 
+pointed out) FD_SET() must be populated with handles, not fds.
 
- Makefile |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index d5d6565..64e30db 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1562,11 +1562,10 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
- 	sed -e '1{' \
- 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
- 	    -e '	h' \
--	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "=
-@@INSTLIBDIR@@"));=3D' \
-+	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "=
-'"$$INSTLIBDIR"'"));=3D' \
- 	    -e '	H' \
- 	    -e '	x' \
- 	    -e '}' \
--	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
- 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
- 	    $@.perl >$@+ && \
- 	chmod +x $@+ && \
---=20
-1.7.1.237.gf48e9
+-- Hannes
