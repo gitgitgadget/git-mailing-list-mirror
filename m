@@ -1,202 +1,262 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH 5/5] Add infrastructure to make shellscripts translatable
-Date: Sat, 29 May 2010 22:45:25 +0000
-Message-ID: <1275173125-21010-6-git-send-email-avarab@gmail.com>
-References: <1275173125-21010-1-git-send-email-avarab@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] compat: Add another rudimentary poll() emulation
+Date: Sat, 29 May 2010 19:37:18 -0500
+Message-ID: <20100530003718.GA27024@progeny.tock>
+References: <1274948384-167-1-git-send-email-abcd@gentoo.org>
+ <1274948384-167-2-git-send-email-abcd@gentoo.org>
+ <20100527101043.GA4390@progeny.tock>
+ <AANLkTikYa2vq4PrKrO2QIkHVxYqbhUZRw42kQq875FNT@mail.gmail.com>
+ <AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff Epler <jepler@unpythonic.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 30 00:46:20 2010
+Cc: Jonathan Callen <abcd@gentoo.org>, git@vger.kernel.org,
+	mduft@gentoo.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Sixt <j6t@kdbg.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Marko Kreen <markokr@gmail.com>,
+	Albert Dvornik <dvornik+git@gmail.com>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Sun May 30 02:38:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIUnL-0006Bn-PK
-	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 00:46:20 +0200
+	id 1OIWXt-00006m-2N
+	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 02:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756964Ab0E2WqB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 May 2010 18:46:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64345 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756887Ab0E2Wpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 May 2010 18:45:55 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 10so1533818fxm.19
-        for <git@vger.kernel.org>; Sat, 29 May 2010 15:45:55 -0700 (PDT)
+	id S1757085Ab0E3Agv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 May 2010 20:36:51 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59619 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756835Ab0E3Agu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 May 2010 20:36:50 -0400
+Received: by gyg13 with SMTP id 13so1923915gyg.19
+        for <git@vger.kernel.org>; Sat, 29 May 2010 17:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=y3gB5p7zTbkDv+RTasB461l6uiifghl4xPcErVBmook=;
-        b=Y0mflhPcarawOkFk/C5NmI/SkOo6TuTfsL3kBdhtol6XubxJCY7GB1j9ovjz7+RUOJ
-         y/tavEscYksRtYrWjoEG0CmFpeER+cQIDzgA2tmMkkzAawtATYp8WgfUxrSrV4JQSIlk
-         rcbKw46tBdC69aCk4o/IEDwkUMAr7yn5OnAQk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=HCiiYT4a8KMaFJ5aa4B7JCLy7hWTSbe2w04fdSdxIrE=;
+        b=ZhYq4GKxLCiwrqOkxZV8DvrzonmAUtBnNUhv78jhb40xxumkPqobtOvKJrTl3yqyTV
+         XqoZYKgVv3/cwEc04dJ2k2Z9m8PLTkMyAdv0aucGcuhP4LU8bm0JyBghWHC+NqSgqZJz
+         29Prl+teCuQUA6gFRCkHFXjIN7o2mzl5aErPc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=KuNgCkV5pi/fZ2rWmEqn/T055Raq+kS8yr4z39ymAiXXTt5JURAkIyUASauDtRcvF9
-         5ZMgFwPzYfwVc/0jz3rYS1cVa5m6fHVtL9Pl9lDoFit4E7wMtm1TK2TtnANj4qwAiU26
-         wqxGp+l6dDzTGxpA9HqXtxn8kLjNsRi9v/7+U=
-Received: by 10.223.144.84 with SMTP id y20mr2803418fau.78.1275173154898;
-        Sat, 29 May 2010 15:45:54 -0700 (PDT)
-Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
-        by mx.google.com with ESMTPS id y12sm24351890faj.17.2010.05.29.15.45.53
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=WqZHxhsx2KaxZFrXwcl0LajSb/VZVvxibKjl7GnEVZJ9BpwDPk8IfY5pwYvRvpzpQK
+         ohABmzPPWKen5oXIfLHlH6J7Ed15BsM48ia3HdnJHoMbzj7+4k2NopzdYHYjCQ/VAdVP
+         43ixTdmDKcFiWDXY9z6A1zLUo3vyV+u+ot+vM=
+Received: by 10.231.155.3 with SMTP id q3mr3154732ibw.20.1275179807544;
+        Sat, 29 May 2010 17:36:47 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id t28sm18442473ibg.6.2010.05.29.17.36.44
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 29 May 2010 15:45:54 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.242.ge2b63.dirty
-In-Reply-To: <1275173125-21010-1-git-send-email-avarab@gmail.com>
+        Sat, 29 May 2010 17:36:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147979>
 
-Use GNU's gettext.sh in git-sh-setup if it's available, otherwise
-fallback on our own custom functions.
+Implement the subset of poll() semantics needed by git in terms of
+select(), for use by the Interix port.  Inspired by commit 6ed807f
+(Windows: A rudimentary poll() emulation, 2007-12-01).
 
-A couple of strings in git-pull.sh are now translatable as a proof of
-concept, including a multiline string.
+This will only poll on descriptors with value <=3D the maximum fd that
+select() can portably handle, FD_SETSIZE - 1.  On Windows (and not on
+Unix), in principle git could permit higher fds as long as the number
+of descriptors used in a single select() call was limited to
+=46D_SETSIZE; but such a facility would be rarely used, since the numbe=
+r
+of sockets the =E2=80=98git daemon=E2=80=99 parent process keeps open t=
+ends to be very
+small.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+Helped-by: Erik Faye-Lund <kusmabite@googlemail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>
+Cc: Jonathan Callen <abcd@gentoo.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile        |    7 +++++--
- git-pull.sh     |   15 ++++++++-------
- git-sh-setup.sh |   33 +++++++++++++++++++++++++++++++++
- 3 files changed, 46 insertions(+), 9 deletions(-)
+Erik Faye-Lund wrote:
+
+> But perhaps you should include a check along the lines of this:
+>=20
+> if (nfds > FD_SETSIZE)
+> 	return errno =3D EINVAL, error("poll: nfds must be below %d", FD_SET=
+SIZE);
+>=20
+> Just so we can know when the code fails :)
+
+Good catch, thanks.  I opted to check each fd instead so the NO_POLL
+code can be safely used on Unix for debugging.
+
+Other changes from v1:
+
+ . use COMPAT_CFLAGS instead of BASIC_CFLAGS
+ . timeout is a number of milliseconds, not seconds
+ . lightly tested on Linux
+
+I would be interested to hear whether this works on msysgit and Interix=
+=2E
+Thanks again for the help.
+
+ Makefile          |    8 +++++++
+ compat/poll.c     |   56 +++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ compat/poll.h     |   13 ++++++++++++
+ git-compat-util.h |    6 ++++-
+ 4 files changed, 82 insertions(+), 1 deletions(-)
+ create mode 100644 compat/poll.c
+ create mode 100644 compat/poll.h
 
 diff --git a/Makefile b/Makefile
-index 4de0627..dce2faa 100644
+index 2f5d631..ed9f03b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -272,6 +272,7 @@ mandir =3D share/man
- infodir =3D share/info
- gitexecdir =3D libexec/git-core
- sharedir =3D $(prefix)/share
-+localedir =3D $(sharedir)/locale
- template_dir =3D share/git-core/templates
- htmldir =3D share/doc/git-doc
- ifeq ($(prefix),/usr)
-@@ -285,7 +286,7 @@ lib =3D lib
- # DESTDIR=3D
- pathsep =3D :
-=20
--export prefix bindir sharedir sysconfdir
-+export prefix bindir sharedir localedir sysconfdir
-=20
- CC =3D gcc
- AR =3D ar
-@@ -1455,6 +1456,7 @@ htmldir_SQ =3D $(subst ','\'',$(htmldir))
- prefix_SQ =3D $(subst ','\'',$(prefix))
- sharedir_SQ =3D $(subst ','\'',$(sharedir))
-=20
-+LOCALEDIR_SQ =3D $(subst ','\'',$(localedir))
- SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
- PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
- PYTHON_PATH_SQ =3D $(subst ','\'',$(PYTHON_PATH))
-@@ -1548,6 +1550,7 @@ $(RM) $@ $@+ && \
- sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
-     -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+    -e 's|@@LOCALEDIR@@|$(LOCALEDIR_SQ)|g' \
-     -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
-     -e $(BROKEN_PATH_FIX) \
-     $@.sh >$@+
-@@ -1881,7 +1884,7 @@ cscope:
- 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
-=20
- pot:
--	$(XGETTEXT) -k_ -o po/git.pot $(C_OBJ:o=3Dc)
-+	$(XGETTEXT) -k_ -o po/git.pot $(C_OBJ:o=3Dc) $(SCRIPT_SH)
-=20
- POFILES :=3D $(wildcard po/*.po)
- MOFILES :=3D $(patsubst po/%.po,share/locale/%/LC_MESSAGES/git.mo,$(PO=
-=46ILES))
-diff --git a/git-pull.sh b/git-pull.sh
-index 1a4729f..22a6da2 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -121,8 +121,8 @@ error_on_no_merge_candidates () {
- 	do
- 		case "$opt" in
- 		-t|--t|--ta|--tag|--tags)
--			echo "Fetching tags only, you probably meant:"
--			echo "  git fetch --tags"
-+			gettext "Fetching tags only, you probably meant:"; echo
-+			gettext "  git fetch --tags"; echo
- 			exit 1
- 		esac
- 	done
-@@ -154,11 +154,12 @@ error_on_no_merge_candidates () {
- 		echo "a branch. Because this is not the default configured remote"
- 		echo "for your current branch, you must specify a branch on the comm=
-and line."
- 	elif [ -z "$curr_branch" ]; then
--		echo "You are not currently on a branch, so I cannot use any"
--		echo "'branch.<branchname>.merge' in your configuration file."
--		echo "Please specify which remote branch you want to use on the comm=
-and"
--		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
--		echo "See git-pull(1) for details."
-+        gettext "You are not currently on a branch, so I cannot use an=
-y
-+'branch.<branchname>.merge' in your configuration file.
-+Please specify which remote branch you want to use on the command
-+line and try again (e.g. 'git pull <repository> <refspec>').
-+See git-pull(1) for details.";
-+        echo
- 	elif [ -z "$upstream" ]; then
- 		echo "You asked me to pull without telling me which branch you"
- 		echo "want to $op_type $op_prep, and 'branch.${curr_branch}.merge' i=
-n"
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 6131670..c8010f2 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -211,3 +211,36 @@ case $(uname -s) in
- 	}
- 	;;
- esac
+@@ -111,6 +111,9 @@ all::
+ #
+ # Define NO_PTHREADS if you do not have or do not want to use Pthreads=
+=2E
+ #
++# Define NO_POLL if you have a problem with the poll() system call (e.=
+g.
++# Interix).
++#
+ # Define NO_PREAD if you have a problem with pread() system call (e.g.
+ # cygwin1.dll before v1.5.22).
+ #
+@@ -470,6 +473,7 @@ LIB_H +=3D commit.h
+ LIB_H +=3D compat/bswap.h
+ LIB_H +=3D compat/cygwin.h
+ LIB_H +=3D compat/mingw.h
++LIB_H +=3D compat/poll.h
+ LIB_H +=3D compat/win32/pthread.h
+ LIB_H +=3D csum-file.h
+ LIB_H +=3D decorate.h
+@@ -1284,6 +1288,10 @@ endif
+ ifdef OBJECT_CREATION_USES_RENAMES
+ 	COMPAT_CFLAGS +=3D -DOBJECT_CREATION_MODE=3D1
+ endif
++ifdef NO_POLL
++	COMPAT_CFLAGS +=3D -DNO_POLL
++	COMPAT_OBJS +=3D compat/poll.o
++endif
+ ifdef NO_PREAD
+ 	COMPAT_CFLAGS +=3D -DNO_PREAD
+ 	COMPAT_OBJS +=3D compat/pread.o
+diff --git a/compat/poll.c b/compat/poll.c
+new file mode 100644
+index 0000000..0b3c2ae
+--- /dev/null
++++ b/compat/poll.c
+@@ -0,0 +1,56 @@
++#include "../git-compat-util.h"
 +
-+# Try to use libintl's gettext.sh, or fall back to English if we
-+# can't.
-+. gettext.sh
-+if test $? -ne 0
-+then
-+    TEXTDOMAIN=3Dgit
-+    export TEXDTOMAIN
-+    TEXTDOMAINDIR=3D"@@LOCALEDIR@@"
-+    export TEXTDOMAINDIR
-+else
-+    # Since GNU gettext.sh isn't available we'll have to define our
-+    # own dummy functions.
++static int msleep(int timeout)
++{
++	struct timeval tv;
++	tv.tv_sec =3D 0;
++	tv.tv_usec =3D 1000 * timeout;
++	return select(0, NULL, NULL, NULL, &tv);
++}
 +
-+    # This code adapted from NessusClient-1.0.2's nessusclient-mkcert
-+    # by Michel Arboi <arboi@alussinan.org>. The original code is
-+    # under the GPLv2.
++static int validate_fd(const struct git_pollfd *ufd)
++{
++	const int fd =3D ufd->fd;
++	if (ufd->events !=3D POLLIN) {
++		errno =3D EINVAL;
++		return error("poll: unsupported events");
++	}
++	if (fd >=3D FD_SETSIZE) {
++		errno =3D EINVAL;
++		return error("poll: fd must be below %d", FD_SETSIZE);
++	}
++	return fd;
++}
 +
-+    # Not everyone has echo -n
-+    case $(echo -n) in
-+        \-n)    Xn=3D   ; Xc=3D'\c' ;;
-+        *)      Xn=3D-n ; Xc=3D
-+    esac
++int git_poll(struct git_pollfd *ufds, int nfds, int timeout)
++{
++	int i, maxfd, result;
++	fd_set fds;
 +
-+    gettext () {
-+        echo $Xn "$1" $Xc
-+    }
++	if (timeout >=3D 0) {
++		if (nfds !=3D 0) {
++			errno =3D EINVAL;
++			return error("poll timeout not supported");
++		}
++		return msleep(timeout);
++	}
 +
-+    eval_gettext () {
-+        eval_gettext_var=3D"echo $1"
-+        echo $Xn `eval $eval_gettext_var` $Xc
-+    }
-+fi
++	FD_ZERO(&fds);
++	maxfd =3D -1;
++	for (i =3D 0; i < nfds; i++) {
++		const int fd =3D validate_fd(&ufds[i]);
++		if (fd < 0)
++			return fd;
++		maxfd =3D (fd > maxfd) ? fd : maxfd;
++		FD_SET(fd, &fds);
++	}
++
++	result =3D select(maxfd + 1, &fds, NULL, NULL, NULL);
++	if (result < 0)
++		return result;
++	for (i =3D 0; i < nfds; i++) {
++		if (FD_ISSET(ufds[i].fd, &fds))
++			ufds[i].revents |=3D POLLIN;
++	}
++	return result;
++}
+diff --git a/compat/poll.h b/compat/poll.h
+new file mode 100644
+index 0000000..65775ab
+--- /dev/null
++++ b/compat/poll.h
+@@ -0,0 +1,13 @@
++#ifndef POLLIN
++#define POLLIN 1
++#define POLLHUP 2
++#endif
++
++#define pollfd git_pollfd
++#define poll git_poll
++struct git_pollfd {
++	int fd;		/* file descriptor */
++	short events;	/* requested events */
++	short revents;	/* returned events */
++};
++extern int git_poll(struct git_pollfd *fds, int nfds, int timeout);
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 824c175..2494378 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -94,13 +94,17 @@
+ #include <utime.h>
+ #ifndef __MINGW32__
+ #include <sys/wait.h>
+-#include <sys/poll.h>
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
+ #include <termios.h>
+ #ifndef NO_SYS_SELECT_H
+ #include <sys/select.h>
+ #endif
++#ifdef NO_POLL
++#include "compat/poll.h"
++#else
++#include <sys/poll.h>
++#endif
+ #include <netinet/in.h>
+ #include <netinet/tcp.h>
+ #include <arpa/inet.h>
 --=20
-1.7.1.242.ge2b63.dirty
+1.7.1
