@@ -1,60 +1,58 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH v2] gitk: Show notes by default (like git log do)
-Date: Sun, 30 May 2010 12:22:31 +1000
-Message-ID: <20100530022231.GF2538@brick.ozlabs.ibm.com>
-References: <1274349041-7886-1-git-send-email-kirr@mns.spb.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] decode file:// and ssh:// URLs
+Date: Sun, 30 May 2010 01:30:02 -0400
+Message-ID: <20100530053002.GA19219@coredump.intra.peff.net>
+References: <20100523091612.GB26123@coredump.intra.peff.net>
+ <20100523091944.GB16520@coredump.intra.peff.net>
+ <20100527105014.GA7865@LK-Perkele-V2.elisa-laajakaista.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Sun May 30 04:24:56 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Dave Abrahams <dave@boostpro.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sun May 30 07:30:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIYCu-00079B-Co
-	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 04:24:56 +0200
+	id 1OIb6O-0007uh-AB
+	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 07:30:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754327Ab0E3CWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 May 2010 22:22:51 -0400
-Received: from ozlabs.org ([203.10.76.45]:57183 "EHLO ozlabs.org"
+	id S1751101Ab0E3FaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 May 2010 01:30:04 -0400
+Received: from peff.net ([208.65.91.99]:45129 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753333Ab0E3CWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 May 2010 22:22:50 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 6BCEAB7D4C; Sun, 30 May 2010 12:22:48 +1000 (EST)
+	id S1750986Ab0E3FaD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 May 2010 01:30:03 -0400
+Received: (qmail 27693 invoked by uid 107); 30 May 2010 05:30:07 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 30 May 2010 01:30:07 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 30 May 2010 01:30:02 -0400
 Content-Disposition: inline
-In-Reply-To: <1274349041-7886-1-git-send-email-kirr@mns.spb.ru>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100527105014.GA7865@LK-Perkele-V2.elisa-laajakaista.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/147983>
 
-On Thu, May 20, 2010 at 01:50:41PM +0400, Kirill Smelkov wrote:
+On Thu, May 27, 2010 at 01:50:15PM +0300, Ilari Liusvaara wrote:
 
-> Starting from ~ git-1.6.6, log, show & whatchanged show notes by default.
+> > With this patch, we will now percent-decode any file:// or
+> > ssh:// url (or ssh+git, git+ssh, etc) at the transport
+> > layer. We continue to treat plain paths and "host:path"
+> > syntax literally.
 > 
-> On the other hand, gitk does not show notes by default, because under
-> the hood it calls `git log --pretty=raw ...` to get the log, and in
-> `git log` notes are turned off, when user specifies format or pretty
-> settings.
-> 
-> Yes, it is possible to invoke `gitk --show-notes` explicitly, but since
-> from user's perspective, gitk is gui enabled git log, it would be
-> logical for gitk to show notes by default too for consistency.
-> 
-> In git, --show-notes was introduced in 66b2ed (Fix "log" family not to
-> be too agressive about showing notes) which predates 1.6.6.2
-> 
-> Notes can still be supressed with `gitk --no-notes`.
-> 
-> Cc: Michael J Gruber <git@drmicha.warpmail.net>
-> Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+> One possible fallout: IPv6 scope syntax uses literal '%' in host
+> part. The relevant RFC indicates it should be escaped, but in the past
+> connect would fail if it was... But then, who uses that syntax...
 
-Thanks, applied.
+Bleh. I am not happy about breaking a syntax people might be using, but
+the current behavior is broken, which will cause problems for some other
+people. Short of doing some context-sensitive "is this probably a
+literal % in the host" heuristic (which I really think is a bad idea), I
+think we will have to break one or the other.
 
-Paul.
+-Peff
