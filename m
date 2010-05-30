@@ -1,132 +1,122 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH] diff.c: Ensure "index $from..$to" line contains unambiguous
- SHA1s
-Date: Sun, 30 May 2010 15:37:17 +0200
-Message-ID: <201005301537.18039.johan@herland.net>
+From: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>
+Subject: [RFC] Storing empty directories in Git
+Date: Sun, 30 May 2010 16:29:11 +0200
+Message-ID: <20100530142908.GA7180@triton>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 30 16:22:33 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="WIyZ46R2i8wDzkSu"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 30 16:29:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIjPK-0002pj-FM
-	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 16:22:30 +0200
+	id 1OIjVw-0005AT-Hu
+	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 16:29:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271Ab0E3OTf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 May 2010 10:19:35 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:46515 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754267Ab0E3OTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 May 2010 10:19:35 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L3800E0XJ677C60@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 30 May 2010 15:37:19 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 29BCA1EA555C_C026A0FB	for <git@vger.kernel.org>; Sun,
- 30 May 2010 13:37:18 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 7CF8F1EA2BBC_C026A0EF	for <git@vger.kernel.org>; Sun,
- 30 May 2010 13:37:18 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L3800DI0J667340@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 30 May 2010 15:37:18 +0200 (MEST)
+	id S1754517Ab0E3O3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 May 2010 10:29:15 -0400
+Received: from smtp.domeneshop.no ([194.63.248.54]:43455 "EHLO
+	smtp.domeneshop.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754437Ab0E3O3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 May 2010 10:29:15 -0400
+Received: from sfn-inkubator-70-227.hib.no ([158.37.70.227] helo=triton)
+	by smtp.domeneshop.no with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.71)
+	(envelope-from <sunny@sunbase.org>)
+	id 1OIjVp-0005dY-Km
+	for git@vger.kernel.org; Sun, 30 May 2010 16:29:13 +0200
+Mail-Followup-To: =?utf-8?Q?=C3=98yvind_A=2E?= Holm <sunny@sunbase.org>,
+	git@vger.kernel.org
+Content-Disposition: inline
+OpenPGP: id=94A506E5; url=http://www.sunbase.org/pubkey.asc
+X-Request-PGP: http://www.sunbase.org/pubkey.asc
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148006>
 
-In the metainfo section of git diffs there's an "index" line providing
-abbreviated (unless --full-index is used) blob SHA1s from the
-pre-/post-images used to generate the diff. These provide hints that
-can be used to reconstruct a 3-way merge when applying the patch
-(see the --3way option to 'git am' for more details).
 
-In order for this to work, however, the blob SHA1s must not be
-abbreviated into ambiguity.
+--WIyZ46R2i8wDzkSu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This patch eliminates the possible ambiguity by using find_unique_abbrev()
-to produce the abbreviated SHA1s (instead of blind abbreviation by way of
-"%.*s").
+I sometimes need to store empty directories in Git, and instead of=20
+putting empty .gitignore files everywhere as has been suggested, I=20
+created two small shell scripts (git-store-dirs and git-restore-dirs) to=20
+store all empty directories in a file named ".emptydirs" at the top of=20
+the working tree. The directories are stored as null-separated strings=20
+to avoid problems with wacky things like \n or semicolons in the=20
+directory names.
 
-A testcase verifying the fix is also included.
+Is this a viable method of fixing the emptydir problem? A default file=20
+name like ".gitdirectories" could be used, or maybe it=E2=80=99s possible t=
+o=20
+store a file like this inside the .git/ area if we can come up with a=20
+way to store this metadata properly.
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- diff.c                              |    6 +++---
- t/t4043-diff-index-unique-abbrev.sh |   35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 3 deletions(-)
- create mode 100755 t/t4043-diff-index-unique-abbrev.sh
+The scripts are stored at http://gist.github.com/419015 , but I also=20
+include them here:
 
-diff --git a/diff.c b/diff.c
-index 494f560..1aefa66 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2419,9 +2419,9 @@ static void fill_metainfo(struct strbuf *msg,
- 			    (!fill_mmfile(&mf, two) && diff_filespec_is_binary(two)))
- 				abbrev = 40;
- 		}
--		strbuf_addf(msg, "index %.*s..%.*s",
--			    abbrev, sha1_to_hex(one->sha1),
--			    abbrev, sha1_to_hex(two->sha1));
-+		strbuf_addf(msg, "index %s..",
-+			    find_unique_abbrev(one->sha1, abbrev));
-+		strbuf_addstr(msg, find_unique_abbrev(two->sha1, abbrev));
- 		if (one->mode == two->mode)
- 			strbuf_addf(msg, " %06o", one->mode);
- 		strbuf_addch(msg, '\n');
-diff --git a/t/t4043-diff-index-unique-abbrev.sh b/t/t4043-diff-index-unique-abbrev.sh
-new file mode 100755
-index 0000000..d5ce72b
---- /dev/null
-+++ b/t/t4043-diff-index-unique-abbrev.sh
-@@ -0,0 +1,35 @@
-+#!/bin/sh
-+
-+test_description='test unique sha1 abbreviation on "index from..to" line'
-+. ./test-lib.sh
-+
-+cat >expect_initial <<EOF
-+100644 blob 51d2738463ea4ca66f8691c91e33ce64b7d41bb1	foo
-+EOF
-+
-+cat >expect_update <<EOF
-+100644 blob 51d2738efb4ad8a1e40bed839ab8e116f0a15e47	foo
-+EOF
-+
-+test_expect_success 'setup' '
-+	echo 4827 > foo &&
-+	git add foo &&
-+	git commit -m "initial" &&
-+	git cat-file -p HEAD: > actual &&
-+	test_cmp expect_initial actual &&
-+	echo 11742 > foo &&
-+	git commit -a -m "update" &&
-+	git cat-file -p HEAD: > actual &&
-+	test_cmp expect_update actual
-+'
-+
-+cat >expect <<EOF
-+index 51d27384..51d2738e 100644
-+EOF
-+
-+test_expect_success 'diff does not produce ambiguous index line' '
-+	git diff HEAD^..HEAD | grep index > actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-1.7.0.4
+### git-store-dirs {{{
+
+#!/bin/sh
+
+# git-store-dirs
+# Store a list of all directories to $dirfile to be able to restore empty=
+=20
+# directories. The list is \0-separated in case there are some directory na=
+mes=20
+# containing (ugh) \n. Use git-restore-dirs(1) to recreate directories.
+
+dirfile=3D.emptydirs
+test -d .git/. || { echo $0: Has to be run from the toplevel of the working=
+ tree >&2; exit 1; }
+find -type d -empty -print0 | grep -E -v -z '/\.git(/|$)' | LC_ALL=3DC sort=
+ -z >$dirfile
+git add $dirfile
+
+### }}}
+### git-restore-dirs {{{
+
+#!/bin/sh
+
+# git-restore-dirs
+# Restore empty directories created by git-store-dirs(1)
+
+dirfile=3D.emptydirs
+test -d .git/. || { echo $0: Has to be run from the toplevel of the working=
+ tree >&2; exit 1; }
+test -e $dirfile || { echo $0: No $dirfile file found >&2; exit 1; }
+xargs -0 mkdir -p <$dirfile
+
+### }}}
+
+Cheers,
+=C3=98yvind
+
++-| =C3=98yvind A. Holm <sunny@sunbase.org> - N 60.39548=C2=B0 E 5.31735=C2=
+=B0 |-+
+| OpenPGP: 0xFB0CBEE894A506E5 - http://www.sunbase.org/pubkey.asc |
+| Fingerprint: A006 05D6 E676 B319 55E2  E77E FB0C BEE8 94A5 06E5 |
++------------| 06a9d9be-6bf2-11df-8623-90e6ba3022ac |-------------+
+
+--WIyZ46R2i8wDzkSu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkwCdjQACgkQ+wy+6JSlBuUkogCffuNsvlmVEPblgR0OvUX2TvcJ
+Ff0AoIhGpZl++bGZz297xVPmJX0vxkk0
+=wv+F
+-----END PGP SIGNATURE-----
+
+--WIyZ46R2i8wDzkSu--
