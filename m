@@ -1,76 +1,98 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/7] Add API for string-specific memory pool
-Date: Sun, 30 May 2010 18:52:55 +0200
-Message-ID: <AANLkTikiuFeGkDizLTmB_3AQgiU9vL3C_Tgxg_lf4LgL@mail.gmail.com>
-References: <1274650832-7411-1-git-send-email-artagnon@gmail.com> 
-	<1274650832-7411-6-git-send-email-artagnon@gmail.com> <20100529113800.GA7925@progeny.tock>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] Makefile: remove redundant munging of @@INSTLIBDIR@@
+Date: Sun, 30 May 2010 17:12:41 +0000
+Message-ID: <1275239561-31437-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 30 18:53:27 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 30 19:19:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIllP-0008U1-8b
-	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 18:53:27 +0200
+	id 1OImAY-00041E-5Y
+	for gcvg-git-2@lo.gmane.org; Sun, 30 May 2010 19:19:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308Ab0E3QxR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 May 2010 12:53:17 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36012 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913Ab0E3QxQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 May 2010 12:53:16 -0400
-Received: by vws11 with SMTP id 11so1207517vws.19
-        for <git@vger.kernel.org>; Sun, 30 May 2010 09:53:15 -0700 (PDT)
+	id S1751449Ab0E3RMw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 May 2010 13:12:52 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56681 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346Ab0E3RMw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 May 2010 13:12:52 -0400
+Received: by fxm10 with SMTP id 10so1859804fxm.19
+        for <git@vger.kernel.org>; Sun, 30 May 2010 10:12:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=9PiZ3vIbjW4N3tMZ21FKwTep/jFv/tW034Y4t2WL8mY=;
-        b=T5X0k/fUJ83GRyg1GGUH9h8liu8yCKam55jJy1eHkpRKft4DEkSxKYKNkgKa6fDMxp
-         RroTqy/TdkTex49/V9YXQQD2ZKUmTRWJwqvg1gW4jlnzNXhmtPB5VTS4FvudFza336A1
-         93xafDV1HBmKxXk240ykVKm1L8kXL6N5fUOxA=
+        bh=ekpd/rH9DY+GTtHOicl1ixj1+sYCeGUv9/MfInyP4vk=;
+        b=w08DrWnx3+xBfiyfTq93OjRBqgQKCe8rrVxlR6f3B3jwHDO0GXpaaO4SLpRxTGTwgh
+         Cl1Q/g7mYjP/N221BR2ICobQZZwjzBy2pKIMDU1YHv9PxwLHsNM0ro9ZNP3nDvKyXwxQ
+         0WUIISQBak5VA9S3Lw2rXfHoDg5xdm2gyBcEY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=w/yb9KwuZwzpvpQgV+dTY9gIQiWCJ6/Jqe154Eo37szNWlRSCS1/nZiWqQnQcffMDF
-         +GkYTVZpdAIWpAFSL01Kqyrk8JEI/3pqj1ViB/mD90htleSxsKUI63x0nUYnaGGi5Gzd
-         gLUp/lmRnQuKuurzmOzT3NFXLahxMJry8vpC4=
-Received: by 10.229.182.16 with SMTP id ca16mr479647qcb.88.1275238395117; Sun, 
-	30 May 2010 09:53:15 -0700 (PDT)
-Received: by 10.229.50.3 with HTTP; Sun, 30 May 2010 09:52:55 -0700 (PDT)
-In-Reply-To: <20100529113800.GA7925@progeny.tock>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=KhHP3WP2Wo2zHWXJe57tig/YAxjcE5rIkG105PQvr8hNr8P4NQ/sG7ZV9n54sHpaIY
+         rBHr89wpcDwxr/LQU6E5oU8gnrjtfHXof/MxB5ATH9Ynj6AY4nzHfIE0ZH/AlR5s71I3
+         FGTp7vUXLllBbst+bgq7r3fvZyrvHUCxLw6Pw=
+Received: by 10.223.127.196 with SMTP id h4mr4030671fas.56.1275239570462;
+        Sun, 30 May 2010 10:12:50 -0700 (PDT)
+Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
+        by mx.google.com with ESMTPS id 7sm31929299far.6.2010.05.30.10.12.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 30 May 2010 10:12:49 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.237.gf48e9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148011>
 
-Hi again,
+Junio originally added this in f6276fe159 for use in `unshift @INC,
+'@@INSTLIBDIR@@'' in git-fmt-merge-msg.perl. That program was since
+then rewritten in C in 00449f992b. And since 6fcca938b0 all Perl
+programs use `use lib' to set their @INC path.
 
-Jonathan Nieder wrote:
->> +static int node_indentity_cmp(node_t *a, node_t *b)
->> +{
->> + =C2=A0 =C2=A0int r =3D node_value_cmp(a, b);
->> + =C2=A0 =C2=A0return r ? r : (((uintptr_t) a) > ((uintptr_t) b))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0- (((uintptr_t) a) < ((uintptr_t) b));
+There's been no @@INSTLIBDIR@@ in any Perl script to replace since
+then. So there's no reason to keep it around.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> nitpick: could use fewer parentheses.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return r ? r : (((uintptr_t) a > (uintptr_=
-t) b) - ...
+---
 
-Actually, this triggers a compiler error on GCC:
-string_pool.c:34: warning: comparisons like =E2=80=98X<=3DY<=3DZ=E2=80=99=
- do not have
-their mathematical meaning
+I saw this when doing Perl/Gettext support. @@INSTLIBDIR@@ hasn't been
+used for anything but the 'use lib' line there since mid-2006.
 
--- Ram
+ Makefile |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d5d6565..64e30db 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1562,11 +1562,10 @@ $(patsubst %.perl,%,$(SCRIPT_PERL)): % : %.perl
+ 	sed -e '1{' \
+ 	    -e '	s|#!.*perl|#!$(PERL_PATH_SQ)|' \
+ 	    -e '	h' \
+-	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "=
+@@INSTLIBDIR@@"));=3D' \
++	    -e '	s=3D.*=3Duse lib (split(/$(pathsep)/, $$ENV{GITPERLLIB} || "=
+'"$$INSTLIBDIR"'"));=3D' \
+ 	    -e '	H' \
+ 	    -e '	x' \
+ 	    -e '}' \
+-	    -e 's|@@INSTLIBDIR@@|'"$$INSTLIBDIR"'|g' \
+ 	    -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    $@.perl >$@+ && \
+ 	chmod +x $@+ && \
+--=20
+1.7.1.237.gf48e9
