@@ -1,70 +1,74 @@
-From: Pico Geyer <pico@xiplink.com>
-Subject: Using git am -p 2 with binary patches
-Date: Mon, 31 May 2010 17:59:29 +0200
-Message-ID: <4C03DCE1.2000201@xiplink.com>
+From: Johannes Schneider <mailings@cedarsoft.com>
+Subject: Commit to other branch
+Date: Mon, 31 May 2010 17:46:09 +0200
+Message-ID: <4C03D9C1.1060404@cedarsoft.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 31 18:08:17 2010
+X-From: git-owner@vger.kernel.org Mon May 31 18:12:29 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJ7XD-0002KD-FP
-	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 18:08:15 +0200
+	id 1OJ7bI-0004va-2G
+	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 18:12:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755194Ab0EaQIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 12:08:09 -0400
-Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:48352 "EHLO
-	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751581Ab0EaQII (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 May 2010 12:08:08 -0400
-X-Greylist: delayed 513 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 May 2010 12:08:08 EDT
-Received: from relay6.relay.iad.emailsrvr.com (localhost [127.0.0.1])
-	by relay6.relay.iad.emailsrvr.com (SMTP Server) with ESMTP id 8DE4216D037
-	for <git@vger.kernel.org>; Mon, 31 May 2010 11:59:33 -0400 (EDT)
-Received: by relay6.relay.iad.emailsrvr.com (Authenticated sender: pgeyer-AT-xiplink.com) with ESMTPSA id D08CB16D01A
-	for <git@vger.kernel.org>; Mon, 31 May 2010 11:59:32 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100330 Shredder/3.0.4
+	id S1756489Ab0EaQMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 12:12:22 -0400
+Received: from hosting.cedarsoft.com ([188.40.238.168]:35837 "EHLO
+	cedarsoft.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756183Ab0EaQMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 12:12:22 -0400
+X-Greylist: delayed 1571 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 May 2010 12:12:21 EDT
+Received: from [192.168.0.36] (HSI-KBW-109-193-057-134.hsi7.kabel-badenwuerttemberg.de [109.193.57.134])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by cedarsoft.eu (Postfix) with ESMTP id 6733412E6002
+	for <git@vger.kernel.org>; Mon, 31 May 2010 17:48:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Lightning/1.0b2pre Thunderbird/3.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148049>
 
-Hi all.
+Hi guys,
 
-I've been trying to apply a set of patches from one repository to a completely independent repository (no shared history).
-Since the paths are different, I'm applying the patches with git am -p 2
-I noticed that whenever my patches contain binary files, git-am fails to apply the patch.
+I often run in that scenario:
+I see a small bugfix/typo/missing documentation. Of course I just add a
+bit of code to fix that issue...
+Then I'd like to commit that change as own commit. And most of the time
+this is possible without any problems (git commit <file>).
+But as I am *always* working on a topic branch, it takes some work to
+commit that change to another branch.
 
-Here's a simple test case:
-mkdir gittmp
-cd gittmp
-git init
-mkdir subdir
-echo "abcdefghijklmnop" > blah.txt
-tar -czf subdir/binfile.tgz blah.txt
-git add subdir/binfile.tgz
-git commit -m "Added binary file"
-git format-patch --root HEAD
-git am -p 2 0001-Added-binary-file.patch
+I tried to "git stash "
+But then *all* changes are stashed (including my changes)...
 
-And the output that I get is:
-Applying: Added binary file
-fatal: git diff header lacks filename information when removing 2 leading pathname components (line 9)
-Patch failed at 0001 Added binary file
-When you have resolved this problem run "git am --resolved".
-If you would prefer to skip this patch, instead run "git am --skip".
-To restore the original branch and stop patching run "git am --abort".
+So at the moment I do that:
 
-Is this a bug in git-am or git-apply?
-Or is there a good reason why this doesn't work?
+git commit <file> (on wrong branch)
+git stash
+git checkout pu
+git cherry-pick
+git checkout my-topic
+git reset --hard
+git stash apply
 
-I'm using the latest git version (1.7.1)
+And that is much to much work. I just want to do something like that:
 
-Thanks in advance.
-Pico
+git commit <file> -b pu
+
+But I don't think that is possible at the moment... Any hints, how I
+could solve that? How do you do that?
+
+
+Thanks,
+
+Johannes
+
+-- 
+Johannes Schneider - blog.cedarsoft.com
