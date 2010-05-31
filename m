@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 6/8] revert: add tests to check cherry-picking many commits
-Date: Mon, 31 May 2010 21:42:37 +0200
-Message-ID: <20100531194240.28729.28049.chriscool@tuxfamily.org>
+Subject: [PATCH 7/8] Documentation/cherry-pick: describe passing more than one
+	commit
+Date: Mon, 31 May 2010 21:42:38 +0200
+Message-ID: <20100531194240.28729.50475.chriscool@tuxfamily.org>
 References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,151 +10,140 @@ Cc: git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 05:04:44 2010
+X-From: git-owner@vger.kernel.org Tue Jun 01 05:05:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJHmR-0000XE-FX
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:04:39 +0200
+	id 1OJHmt-0000pF-G9
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:05:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770Ab0FADEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 23:04:32 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:42068 "EHLO smtp3-g21.free.fr"
+	id S1754052Ab0FADEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 23:04:51 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:42084 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753603Ab0FADEb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 May 2010 23:04:31 -0400
+	id S1753603Ab0FADEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 23:04:36 -0400
 Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 62E6481805F;
-	Tue,  1 Jun 2010 05:04:23 +0200 (CEST)
-X-git-sha1: 362a85c5476f90de71dd8f281546c827b0aed0fe 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 68B91818040;
+	Tue,  1 Jun 2010 05:04:28 +0200 (CEST)
+X-git-sha1: a1443e887ae8952968c0864165f3ae5935413e6d 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20100531193359.28729.55562.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148068>
 
-Note that there is an expected failure when running:
-
-	git cherry-pick -3 fourth
-
-that's because:
-
-	git rev-list --no-walk -3 fourth
-
-produce only one commit and not 3 as "--no-walk" seems to
-take over "-3".
+And while at it, add an "Examples" section.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t3508-cherry-pick-many-commits.sh |   95 +++++++++++++++++++++++++++++++++++
- 1 files changed, 95 insertions(+), 0 deletions(-)
- create mode 100755 t/t3508-cherry-pick-many-commits.sh
+ Documentation/git-cherry-pick.txt |   64 +++++++++++++++++++++++++++++--------
+ 1 files changed, 50 insertions(+), 14 deletions(-)
 
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-new file mode 100755
-index 0000000..3b87efe
---- /dev/null
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -0,0 +1,95 @@
-+#!/bin/sh
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index d71607a..df2742a 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -3,24 +3,29 @@ git-cherry-pick(1)
+ 
+ NAME
+ ----
+-git-cherry-pick - Apply the change introduced by an existing commit
++git-cherry-pick - Apply the change introduced by some existing commits
+ 
+ SYNOPSIS
+ --------
+-'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>
++'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>...
+ 
+ DESCRIPTION
+ -----------
+-Given one existing commit, apply the change the patch introduces, and record a
+-new commit that records it.  This requires your working tree to be clean (no
+-modifications from the HEAD commit).
 +
-+test_description='test cherry-picking many commits'
++Given one or more existing commits, apply the changes that the related
++patches introduce, and record some new commits that record them.  This
++requires your working tree to be clean (no modifications from the HEAD
++commit).
+ 
+ OPTIONS
+ -------
+-<commit>::
+-	Commit to cherry-pick.
++<commit>...::
++	Commits to cherry-pick.
+ 	For a more complete list of ways to spell commits, see the
+ 	"SPECIFYING REVISIONS" section in linkgit:git-rev-parse[1].
++	Sets of commits can also be given but no traversal is done
++	by default, see linkgit:git-rev-list[1] and its '--no-walk'
++	option.
+ 
+ -e::
+ --edit::
+@@ -55,13 +60,12 @@ OPTIONS
+ 
+ -n::
+ --no-commit::
+-	Usually the command automatically creates a commit.
+-	This flag applies the change necessary to cherry-pick
+-	the named commit to your working tree and the index,
+-	but does not make the commit.  In addition, when this
+-	option is used, your index does not have to match the
+-	HEAD commit.  The cherry-pick is done against the
+-	beginning state of your index.
++	Usually the command automatically creates some commits.  This
++	flag applies the change necessary to cherry-pick the named
++	commits to your working tree and the index, but does not make
++	the commits.  In addition, when this option is used, your
++	index does not have to match the HEAD commit.  The cherry-pick
++	is done against the beginning state of your index.
+ +
+ This is useful when cherry-picking more than one commits'
+ effect to your index in a row.
+@@ -75,6 +79,38 @@ effect to your index in a row.
+ 	cherry-pick'ed commit, then a fast forward to this commit will
+ 	be performed.
+ 
++Examples
++--------
++git cherry-pick master::
 +
-+. ./test-lib.sh
++	Apply the changes specified by the commit pointed to by master
++	and create a new commit with these changes.
 +
-+test_expect_success setup '
-+	echo first > file1 &&
-+	git add file1 &&
-+	test_tick &&
-+	git commit -m "first" &&
-+	git tag first &&
++git cherry-pick master~3..master::
++git cherry-pick ^master~3 master::
 +
-+	git checkout -b other &&
-+	for val in second third fourth
-+	do
-+		echo $val >> file1 &&
-+		git add file1 &&
-+		test_tick &&
-+		git commit -m "$val" &&
-+		git tag $val
-+	done
-+'
++	Apply the changes specified by the last 3 commits pointed to
++	by master and create 3 new commits with these changes.
 +
-+test_expect_success 'cherry-pick first..fourth works' '
-+	git checkout master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick first..fourth &&
-+	git diff --quiet other &&
-+	git diff --quiet HEAD other &&
-+	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+'
++git cherry-pick master\~3 master~2::
 +
-+test_expect_success 'cherry-pick --ff first..fourth works' '
-+	git checkout master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick --ff first..fourth &&
-+	git diff --quiet other &&
-+	git diff --quiet HEAD other &&
-+	test "$(git rev-parse --verify HEAD)" = "$(git rev-parse --verify fourth)"
-+'
++	Apply the changes specified by the fourth and third last
++	commits pointed to by master and create 2 new commits with
++	these changes.
 +
-+test_expect_success 'cherry-pick -n first..fourth works' '
-+	git checkout master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick -n first..fourth &&
-+	git diff --quiet other &&
-+	git diff --cached --quiet other &&
-+	git diff --quiet HEAD first
-+'
++git cherry-pick -n master~1 next::
 +
-+test_expect_success 'revert first..fourth works' '
-+	git checkout master &&
-+	git reset --hard fourth &&
-+	test_tick &&
-+	git revert first..fourth &&
-+	git diff --quiet first &&
-+	git diff --cached --quiet first &&
-+	git diff --quiet HEAD first
-+'
++	Apply to the working tree and the index the changes specified
++	by the second last commit pointed to by master and by the last
++	commit pointed to by next, but do not create any commit with
++	these changes.
 +
-+test_expect_success 'revert ^first fourth works' '
-+	git checkout master &&
-+	git reset --hard fourth &&
-+	test_tick &&
-+	git revert ^first fourth &&
-+	git diff --quiet first &&
-+	git diff --cached --quiet first &&
-+	git diff --quiet HEAD first
-+'
++git cherry-pick --ff ..next::
 +
-+test_expect_success 'revert fourth fourth~1 fourth~2 works' '
-+	git checkout master &&
-+	git reset --hard fourth &&
-+	test_tick &&
-+	git revert fourth fourth~1 fourth~2 &&
-+	git diff --quiet first &&
-+	git diff --cached --quiet first &&
-+	git diff --quiet HEAD first
-+'
++	If possible fast forward to the existing commits already in
++	next but not in HEAD, otherwise apply the changes specified by
++	these commits and create new commits with these changes.
 +
-+test_expect_failure 'cherry-pick -3 fourth works' '
-+	git checkout master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git cherry-pick -3 fourth &&
-+	git diff --quiet other &&
-+	git diff --quiet HEAD other &&
-+	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+'
-+
-+test_done
+ Author
+ ------
+ Written by Junio C Hamano <gitster@pobox.com>
 -- 
 1.7.1.361.g42de.dirty
