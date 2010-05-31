@@ -1,131 +1,84 @@
-From: Fred <fred@akafred.com>
-Subject: Re: git+svn - repo upgrade from 1.6.6.4 to 1.7.1 fails
-Date: Mon, 31 May 2010 14:27:06 +0200
-Message-ID: <AANLkTilTx0Eh5WTxucWRVcvFcFUQoYfauU953pXx-P5N@mail.gmail.com>
-References: <AANLkTin-k5zIDZysiLbTusqDwqxGWDxxAOPljLuRlIMD@mail.gmail.com> 
-	<AANLkTikYYjl6Gv8SRMvtmzW1pyzkyu_mwLyEGHdWuH00@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] compat: Add another rudimentary poll() emulation
+Date: Mon, 31 May 2010 07:46:15 -0500
+Message-ID: <20100531124615.GA2864@progeny.tock>
+References: <1274948384-167-1-git-send-email-abcd@gentoo.org>
+ <1274948384-167-2-git-send-email-abcd@gentoo.org>
+ <20100527101043.GA4390@progeny.tock>
+ <AANLkTikYa2vq4PrKrO2QIkHVxYqbhUZRw42kQq875FNT@mail.gmail.com>
+ <AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
+ <20100530003718.GA27024@progeny.tock>
+ <AANLkTinNHDZD-9uQjWr8N97tgP1SP9angXlXMUUc673x@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 31 14:34:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: kusmabite@gmail.com, Jonathan Callen <abcd@gentoo.org>,
+	git@vger.kernel.org, mduft@gentoo.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Sixt <j6t@kdbg.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Marko Kreen <markokr@gmail.com>
+To: Albert Dvornik <dvornik+git@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 31 14:46:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJ4Cm-0001Yr-NO
-	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 14:34:57 +0200
+	id 1OJ4O0-0000br-Ql
+	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 14:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915Ab0EaMev convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 May 2010 08:34:51 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:44163 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753767Ab0EaMeu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 May 2010 08:34:50 -0400
-Received: by gye5 with SMTP id 5so175536gye.19
-        for <git@vger.kernel.org>; Mon, 31 May 2010 05:34:48 -0700 (PDT)
+	id S1754066Ab0EaMq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 08:46:27 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52120 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751745Ab0EaMq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 08:46:26 -0400
+Received: by iwn6 with SMTP id 6so482469iwn.19
+        for <git@vger.kernel.org>; Mon, 31 May 2010 05:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=KtheHwNEsjn7wXUZzqb1pnEH0UoTH1cQPSHJxrsKsMQ=;
-        b=shK5uwDXzAw2DuCP709n82H0GpIrYDIKzKDwyiyMqOwMgSaujHz80wLEsAYoqwtY0G
-         GhVxq/ygPu4j23TOq2UXv56OulNW0Y7zd9+AdhES+9TtSu/CieAMV18SWmrp4ZBuDe33
-         7sKYIyxJJ7NLGOawt67HsxCTI9leACZptt+V0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=3ew1vrHUVtMQlCw/imVWEdyQQUSMT7dd0lpxHgWJSLA=;
+        b=xC02iu1GthQcFlgi36x00h3A2uvmg72NgT/+PwYEunUSyk6Sxg3o/k/dZUDxYanqrE
+         9o2MoVKSwaEol4Y5Yl9edSUaxmw63QHFBzL2l2OAlpWjhIHQQuzTX1kHs+7zdjiH0yvG
+         W/ce57eM/JwX+PWA7j6tzlGAZY3dpTt6dSgxI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=TxaYfJ4sIC6WHNjKbxtGeyCq24DnKO8yV5ezl6fSliJX5JmwmChyhd61La7ifuNrAw
-         lq95hBqtPFlhrNPbrJbvctgQbhIsByv+GMMK2RwY51O5SOy1DqXptOWjqZwYmLfEf9W0
-         /chq0ThBILg4ffqZ3rQAROBqKUMy368ZGFAQo=
-Received: by 10.101.145.16 with SMTP id x16mr4661463ann.226.1275308846267; 
-	Mon, 31 May 2010 05:27:26 -0700 (PDT)
-Received: by 10.100.210.10 with HTTP; Mon, 31 May 2010 05:27:06 -0700 (PDT)
-In-Reply-To: <AANLkTikYYjl6Gv8SRMvtmzW1pyzkyu_mwLyEGHdWuH00@mail.gmail.com>
-X-Google-Sender-Auth: ruDAM2ViHprOY4R1UoHDoksLL0g
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=sQv1enddhuTOp0HD3UMBB23Te071d8ZN1HStshByEfgD5c0cgYxroygMckhQYLI7Uo
+         +JzhEk85/kTfYZBvj7twt8WVI3ZbP7QsyTXEl8rOfC/CsG7JVZn9sjxTjJOs7qfmyUue
+         nU9UWcBHvtjnbRecv+29oBkbilfRggOUNq2/c=
+Received: by 10.231.169.145 with SMTP id z17mr5806386iby.3.1275309984664;
+        Mon, 31 May 2010 05:46:24 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id d9sm26122710ibl.10.2010.05.31.05.46.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 31 May 2010 05:46:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinNHDZD-9uQjWr8N97tgP1SP9angXlXMUUc673x@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148042>
 
-On 31 May 2010 13:09, Fred <fred@akafred.com> wrote:
-> Hi,=A0I have a project with two remotes - one git and one svn. One
-> branch is only used for "git svn rebase", and then I cherrypick or
-> merge from it into my master branch. Most work is done in the master
-> branch (or other topic branches only available in git)
->
-> The repo was created under git 1.6.6.4. After updating git a while
-> back (to 1.7.1) it was time to merge inn a few things from svn - so i
-> switched to my "subversion" branch and did a
->
-> $ git svn rebase
->
-> Migrating from a git-svn v1 layout...
-> Data from a previous version of git-svn exists, but
-> .git/svn
-> (required for this version (1.7.1) of git-svn) does not exist.
-> Done migrating from a git-svn v1 layout
-> Unable to determine upstream SVN information from working tree histor=
-y
-> ---
-> I read this as: "I see your repo has some svn stuff and that it is
-> backlevel. I'll fix it for you. Oh shit, now I can't determine what
-> svn revision you are on."
->
-> Any ideas on how to resolve this? We're a dozen developers relying on
-> this so it would be nice find a way with minimal impact to the
-> users...
->
-> For now I'll do the rebasing in a back-level git client...
->
-> - Fred
->
+Albert Dvornik wrote:
 
-Additional info:
+> For the general case, you'd want
+>        tv.tv_sec = timeout / 1000;
+>        tv.tv_usec = 1000 * (timeout % 1000);
 
-$ git log --grep=3D^git-svn-id --first-parent
+Thanks for the catch.  Actually, it is not so unlikely that someone
+would ask the autocorrect to wait longer than a second.
 
-returns mulitple commits - the first one here:
+On Linux this is not an issue, but maybe Interix cares.  Posix is
+vague and only says "the timeout period is given in seconds and
+microseconds", staying silent on what the range of valid values is.
 
-commit e2f9e115f07fa1fb0932f893c6f94173f9dc4515
-Author: geir <geir@f9caaf5b-9695-4c42-8d37-d0d3d7799616>
-Date:   Mon Apr 26 12:37:09 2010 +0000
-
-    Modofied search for ED01119000 from web. Handles the case that the
-user enters the birth date as a complete ssn or as 8 digits in
-
-    git-svn-id: svn://svnserver/Decision/decisionmaker/trunk@45839
-f9caaf5b-9695-4c42-8d37-d0d3d7799616
-
-----
-
-And here is the config-file - only changed the github username to xxx
-
-[core]
-	repositoryformatversion =3D 0
-	filemode =3D true
-	bare =3D false
-	logallrefupdates =3D true
-	ignorecase =3D true
-[svn-remote "svn"]
-	url =3D svn://svnserver/
-	fetch =3D Decision/decisionmaker/trunk:refs/remotes/trunk
-	branches =3D Decision/decisionmaker/branches/*:refs/remotes/*
-	tags =3D Decision/decisionmaker/tags/*:refs/remotes/tags/*
-[remote "origin"]
-	fetch =3D +refs/heads/*:refs/remotes/origin/*
-	url =3D git@github.com:xxx/decisionmaker.git
-[branch "master"]
-	remote =3D origin
-	merge =3D refs/heads/master
-[branch "subversion"]
-        remote =3D origin
-        merge =3D refs/heads/subversion
-
----
+Jonathan
