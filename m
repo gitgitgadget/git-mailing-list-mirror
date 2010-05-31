@@ -1,67 +1,91 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Mon, 31 May 2010 21:04:38 +0100
-Message-ID: <4C041656.7000008@pileofstuff.org>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com> <4BF7B751.7050704@pileofstuff.org> <4BFB7F7F.5090407@drmicha.warpmail.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] git-am: suggest what to do with superfluous patches
+Date: Mon, 31 May 2010 22:17:49 +0200
+Message-ID: <AANLkTinRafLwhzxUuijdBzfzxLtTb_ua3aM1IxVCCgfa@mail.gmail.com>
+References: <4C01B855.7080409@gmail.com> <7vwrujzx3t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Daniele Segato <daniele.bilug@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon May 31 22:04:56 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Dale Rowley <ddrowley@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 31 22:18:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJBED-0001U5-Uw
-	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 22:04:54 +0200
+	id 1OJBRA-00010G-LU
+	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 22:18:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757236Ab0EaUEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 16:04:48 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:46405 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757148Ab0EaUEs (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 May 2010 16:04:48 -0400
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100531200445.ERMZ3192.mtaout02-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
-          Mon, 31 May 2010 21:04:45 +0100
-Received: from [192.168.1.5] (really [80.6.134.127])
-          by aamtaout04-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100531200440.GGKU1593.aamtaout04-winn.ispmail.ntl.com@[192.168.1.5]>;
-          Mon, 31 May 2010 21:04:40 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <4BFB7F7F.5090407@drmicha.warpmail.net>
-X-Cloudmark-Analysis: v=1.1 cv=W3tOLUehizD4qj6VhtReFuw5MKb8d+XqjIxlDsIazEA= c=1 sm=0 a=BxPs6DqL8UcA:10 a=UBIxAjGgU1YA:10 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=zTY05mJ1PRwknYYWGp4A:9 a=0DPBJ0yU-3FDVb2-SnUA:7 a=XjBnBXOCfgvcGhIXK7jqTsklNyYA:4 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1757293Ab0EaUSL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 May 2010 16:18:11 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:54168 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757194Ab0EaUSK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 May 2010 16:18:10 -0400
+Received: by vws9 with SMTP id 9so1195939vws.19
+        for <git@vger.kernel.org>; Mon, 31 May 2010 13:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5k7lebJv4MLMvd3a3C0xz2jYDQ2FVYZZ5wD4GbUUx9M=;
+        b=jxH6NDAwTkJ4TCMQvDqV3AgrP1aSpAFjtHw+x8ZZiVaouQ0rqFuWstFfbguJoy/MJy
+         fzAncgbt1ltx7rIE22HHJ9jCNcLH6NQf4VVMI/6xF0gibMDzSZcS9jES4YkSqDLSAvVt
+         SV9Zakk/Y05FqVwWvBHtLC+FOUJL82QE4pakc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=lNErNwE0U6oq+dnw7c2rUes+vdrBranhQNhliUCZNZXjlMLMhaHKg8ADhEnwsVRD6M
+         s+VDCprcmkrwPwrcq2CVeCF9uo6hpEPfbOXxpkZbGnTT4Bsu8bd8aX+bpqDaQQisHvz8
+         1gAnclptgNWflBH40i3uB4I8DHWveOsChrJsw=
+Received: by 10.224.12.201 with SMTP id y9mr1947332qay.235.1275337089141; Mon, 
+	31 May 2010 13:18:09 -0700 (PDT)
+Received: by 10.229.50.3 with HTTP; Mon, 31 May 2010 13:17:49 -0700 (PDT)
+In-Reply-To: <7vwrujzx3t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148053>
 
-On 25/05/10 08:42, Michael J Gruber wrote:
-> 
-> Feel free to contribute to the Git Wiki maybe at
-> 
-> https://git.wiki.kernel.org/index.php/GitDocumentation
-> 
-> in the "User contributed Documentation" section.
-> 
-> Michael
-> 
+Hi Junio,
 
-Thanks for the hint - this turned into rather more than just uploading a
-PDF, and I've now finished a complete write-up here:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Jan Kr=C3=BCger <jk@jk.gs> writes:
+>> diff --git a/git-am.sh b/git-am.sh
+>> index 87ffae2..43ea52c 100755
+>> --- a/git-am.sh
+>> +++ b/git-am.sh
+>> @@ -726,6 +726,8 @@ do
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 resolved=3D
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git diff-index --qu=
+iet --cached HEAD -- && {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 echo "No changes - did you forget to use 'git add'?"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 echo "If there is nothing left to stage, chances are that something=
+ else"
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 echo "already introduced the same changes; you might want to skip t=
+his patch."
+>
+> The exact wording I'd let people to fight out, but I think this is
+> probably better than Ramkumar's one that says "if you dropped". =C2=A0=
+The user
+> may not know that he is doing an equivalent of dropping as a side eff=
+ect
+> of the new base that had accepted the same change, and your message n=
+udges
+> the reader to realize that.
 
-	https://git.wiki.kernel.org/index.php/SvnMigration
+I didn't see this patch on the list- did Jan send it to the list?
+Yeah, the wording here is nicer, except you might also want to include
+an explicit note on using "$cmdline --skip".
 
-The "User contributed Documentation" section seems to be mostly off-wiki
-links, so I added a link from "Documentation on this Wiki" - I hope
-that's ok.
-
-	- Andrew
+-- Ram
