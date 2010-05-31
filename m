@@ -1,74 +1,67 @@
-From: Johannes Schneider <mailings@cedarsoft.com>
-Subject: Commit to other branch
-Date: Mon, 31 May 2010 17:46:09 +0200
-Message-ID: <4C03D9C1.1060404@cedarsoft.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Commit to other branch
+Date: Mon, 31 May 2010 18:28:48 +0200
+Message-ID: <vpq8w70m3wf.fsf@bauges.imag.fr>
+References: <4C03D9C1.1060404@cedarsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon May 31 18:12:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schneider <mailings@cedarsoft.com>
+X-From: git-owner@vger.kernel.org Mon May 31 18:29:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJ7bI-0004va-2G
-	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 18:12:28 +0200
+	id 1OJ7rY-0007Yj-Se
+	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 18:29:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756489Ab0EaQMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 12:12:22 -0400
-Received: from hosting.cedarsoft.com ([188.40.238.168]:35837 "EHLO
-	cedarsoft.eu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756183Ab0EaQMW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 May 2010 12:12:22 -0400
-X-Greylist: delayed 1571 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 May 2010 12:12:21 EDT
-Received: from [192.168.0.36] (HSI-KBW-109-193-057-134.hsi7.kabel-badenwuerttemberg.de [109.193.57.134])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by cedarsoft.eu (Postfix) with ESMTP id 6733412E6002
-	for <git@vger.kernel.org>; Mon, 31 May 2010 17:48:46 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Lightning/1.0b2pre Thunderbird/3.0.4
+	id S1756213Ab0EaQ3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 12:29:11 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:32877 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752430Ab0EaQ3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 12:29:09 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o4VGLUjG030248
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 31 May 2010 18:21:30 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OJ7r6-0002O1-HU; Mon, 31 May 2010 18:28:48 +0200
+In-Reply-To: <4C03D9C1.1060404@cedarsoft.com> (Johannes Schneider's message of "Mon\, 31 May 2010 17\:46\:09 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 31 May 2010 18:21:31 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o4VGLUjG030248
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1275927693.77506@PTsn6+mxHXCJgtuwJy1PwA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148050>
 
-Hi guys,
+Johannes Schneider <mailings@cedarsoft.com> writes:
 
-I often run in that scenario:
-I see a small bugfix/typo/missing documentation. Of course I just add a
-bit of code to fix that issue...
-Then I'd like to commit that change as own commit. And most of the time
-this is possible without any problems (git commit <file>).
-But as I am *always* working on a topic branch, it takes some work to
-commit that change to another branch.
+> I tried to "git stash "
+> But then *all* changes are stashed (including my changes)...
 
-I tried to "git stash "
-But then *all* changes are stashed (including my changes)...
+Not completely answering the question, but "git stash -k"
+(--keep-index) allows you to do a selective stash. If you have
+relevant changes staged, and want to commit the unstaged ones
+elsewhere, you can do something like
 
-So at the moment I do that:
-
-git commit <file> (on wrong branch)
-git stash
-git checkout pu
-git cherry-pick
-git checkout my-topic
-git reset --hard
-git stash apply
-
-And that is much to much work. I just want to do something like that:
-
-git commit <file> -b pu
-
-But I don't think that is possible at the moment... Any hints, how I
-could solve that? How do you do that?
-
-
-Thanks,
-
-Johannes
+git stash -k
+git checkout elsewhere
+git commit
+git checkout back-to-your-branch
+git stash pop
 
 -- 
-Johannes Schneider - blog.cedarsoft.com
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
