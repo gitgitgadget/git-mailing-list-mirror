@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 2/8] revert: use run_command_v_opt() instead of execv_git_cmd()
-Date: Mon, 31 May 2010 21:42:33 +0200
-Message-ID: <20100531194240.28729.9964.chriscool@tuxfamily.org>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
+Subject: [PATCH 0/8] implement cherry-picking many commits
+Date: Mon, 31 May 2010 21:42:31 +0200
+Message-ID: <20100531193359.28729.55562.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
@@ -16,47 +15,54 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJHmA-0000OY-4D
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:04:22 +0200
+	id 1OJHm9-0000OY-4B
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409Ab0FADEO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 23:04:14 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:42005 "EHLO smtp3-g21.free.fr"
+	id S1753005Ab0FADEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 23:04:04 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:41980 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753260Ab0FADEL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 May 2010 23:04:11 -0400
+	id S1752898Ab0FADEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 23:04:01 -0400
 Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 7836881805D;
-	Tue,  1 Jun 2010 05:04:03 +0200 (CEST)
-X-git-sha1: 44c3bd68a1090167c81dac93abc0d8b5015cb938 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 263D3818040;
+	Tue,  1 Jun 2010 05:03:53 +0200 (CEST)
 X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20100531193359.28729.55562.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148062>
 
-This is needed by the following commits, because we are going
-to cherry pick many commits instead of just one.
+This a patch series to implement cherry-picking and reverting
+many commits instead of just one.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/revert.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+There is still no way to continue or abort the process when
+cherry-picking or reverting fails, but this can be implemented
+later.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 5df0d69..9085894 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -530,7 +530,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 			args[i++] = defmsg;
- 		}
- 		args[i] = NULL;
--		return execv_git_cmd(args);
-+		return run_command_v_opt(args, RUN_GIT_CMD);
- 	}
- 	free_message(&msg);
- 	free(defmsg);
--- 
-1.7.1.361.g42de.dirty
+Changes since the previous RFC series are the following:
+
+- now use the equivalent of 'git rev-list --no-walk "$@"' to
+enumerate the commits (suggested by Junio)
+- added a patch to cleanup the code related to the -x option
+(suggested by Ram)
+- added a commit to change help_msg() and its callers
+- added 2 documentation patches 
+
+Christian Couder (8):
+  revert: cleanup code for -x option
+  revert: use run_command_v_opt() instead of execv_git_cmd()
+  revert: refactor code into a do_pick_commit() function
+  revert: change help_msg() to take no argument
+  revert: allow cherry-picking more than one commit
+  revert: add tests to check cherry-picking many commits
+  Documentation/cherry-pick: describe passing more than one commit
+  Documentation/revert: describe passing more than one commit
+
+ Documentation/git-cherry-pick.txt   |   64 ++++++++++++++++-----
+ Documentation/git-revert.txt        |   52 +++++++++++------
+ builtin/revert.c                    |  109 ++++++++++++++++++++++-------------
+ t/t3508-cherry-pick-many-commits.sh |   95 ++++++++++++++++++++++++++++++
+ 4 files changed, 249 insertions(+), 71 deletions(-)
+ create mode 100755 t/t3508-cherry-pick-many-commits.sh
