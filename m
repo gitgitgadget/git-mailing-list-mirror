@@ -1,115 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Mac OS 9 (Lamp) port
-Date: Mon, 31 May 2010 00:49:48 -0500
-Message-ID: <20100531054947.GB3328@progeny.tock>
-References: <1274948384-167-1-git-send-email-abcd@gentoo.org>
- <1274948384-167-2-git-send-email-abcd@gentoo.org>
- <20100527101043.GA4390@progeny.tock>
- <AANLkTikYa2vq4PrKrO2QIkHVxYqbhUZRw42kQq875FNT@mail.gmail.com>
- <AANLkTikezlVaX8ARkRw8kEk9wL9RL_5I6X3vK83nzFUl@mail.gmail.com>
- <20100530003718.GA27024@progeny.tock>
- <67A778DE-DB7E-40A3-9BE8-4D17F09B847F@gmail.com>
- <20100531031906.GA465@progeny.tock>
- <2776E3E5-234F-4A94-B06A-F4D83D87A414@gmail.com>
+From: Yang Zhang <yanghatespam@gmail.com>
+Subject: Simplifying work across multiple projects (while tracking 
+	relationships among commit histories)
+Date: Sun, 30 May 2010 23:41:28 -0700
+Message-ID: <AANLkTimC0SoVAG-2xByZFFitl2KNlAhYlAw5fN_XqriT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joshua Juran <jjuran@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 31 07:49:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 31 08:41:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OIxs8-0000Zu-Fq
-	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 07:49:12 +0200
+	id 1OIyh9-0007VA-BK
+	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 08:41:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796Ab0EaFtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 01:49:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47339 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752690Ab0EaFtF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 May 2010 01:49:05 -0400
-Received: by iwn6 with SMTP id 6so419987iwn.19
-        for <git@vger.kernel.org>; Sun, 30 May 2010 22:49:02 -0700 (PDT)
+	id S1755314Ab0EaGlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 02:41:50 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:59654 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754643Ab0EaGlt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 02:41:49 -0400
+Received: by fg-out-1718.google.com with SMTP id l26so610809fgb.1
+        for <git@vger.kernel.org>; Sun, 30 May 2010 23:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=/0fE7+SQASsg0tJFg0L4bncAi6OpMIHsNmhehWIdcIc=;
-        b=iXnIwRin/BfrJcLXGH0rRLmpkTivpq/TqYwSlQ79QofFRF0cYgNsbTx4b/ofafO6RK
-         ZfibsZrNPk4XDLrgvPP3cVlutqCqYb9sy/Es5DQn2HG8hJCJ0ey3KcL+zrDmKgL1eUzD
-         iw5pv6u4kO6wa54DnR5g9CJOB1/sGFq9eOIw0=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=QMjS7ezC7allKMD/2hamjzEzzKkBYpACIHIG4kuwy8g=;
+        b=D88pqbVSeBFxPx4nYBxJqDTr24hPzD05P0tzyyzd9WfG0CtxOb+MQhdgQvvtJttdnS
+         X3TlzFtVkAibTcrdSX036cpFVwMCrFZgzZzLvgHX0fOQgtuUpYfZxyOURF/EePBTJ2j+
+         r3bFMO9awoK49oPb+TxDTfo0jR1Z3xCdZ4B0o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=nvDrykM3cfJD+DLgPeiTFGpexw9Ilxu/p9Q346RclWoT+dBFmdtsG4/r2Um8G0yUAD
-         QHExYNo4D9RlwITrTISS5UQxx4O4SgoSGLIGTYYPPbZuNGJmLmQc7HTZ2X2pQ8HDyy47
-         c4fdfrdrii4q2R7Z+8vmW3kUMYb75FWh1aNQM=
-Received: by 10.231.148.130 with SMTP id p2mr5200270ibv.11.1275284942799;
-        Sun, 30 May 2010 22:49:02 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id b3sm24674499ibf.1.2010.05.30.22.49.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 30 May 2010 22:49:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <2776E3E5-234F-4A94-B06A-F4D83D87A414@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=bOy/K7QrcDxdfPbDcvWBmKhmXUy4XaGu70ibWCgdRNCz93CgvaEkJD3M7jp7KL5eFy
+         H/tWg/wX/X2h8Ax+DzC2CFuAG979VBTNmX64ubW7fw1mlg3beSEoCp+6CnFhZTrLIEdh
+         Ar8nyGHkH1Z6Wi2yhImhHulbtAdBrA1fii9GE=
+Received: by 10.103.85.26 with SMTP id n26mr1603041mul.5.1275288108136; Sun, 
+	30 May 2010 23:41:48 -0700 (PDT)
+Received: by 10.204.143.70 with HTTP; Sun, 30 May 2010 23:41:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148034>
 
-Joshua Juran wrote:
+After looking at some of the tools/techniques out there for working
+with multiple git projects (submodules, subtree merge, braid, repo),
+it seems that none are really well-suited for our use case. We're
+developing a large system consisting of several components (libraries,
+servers, applications, etc.). None of these components will ever exist
+or be released as a stand-alone product. We're in "rapid development"
+mode, so we're not even close to dealing with e.g. manually
+maintaining information on versions/dependencies, and we just want
+very tight integration among all the components -- yet the components
+do deserve their own disentangled histories and (eventually)
+independent branches/tags/versions/etc.
 
-> diff --git a/server-info.c b/server-info.c
-> index 4098ca2..a9a0188 100644
-> --- a/server-info.c
-> +++ b/server-info.c
-> @@ -132,8 +132,8 @@ static int read_pack_info_file(const char *infofile)
-> 
->  static int compare_info(const void *a_, const void *b_)
->  {
-> -       struct pack_info *const *a = a_;
-> -       struct pack_info *const *b = b_;
-> +       const struct pack_info *const *a = a_;
-> +       const struct pack_info *const *b = b_;
-> 
->         if (0 <= (*a)->old_num && 0 <= (*b)->old_num)
->                 /* Keep the order in the original */
-> 
-> I certainly won't defend Metrowerks C 2.4.1, but the patch is
-> harmless enough.
+If we were using svn, all the code would live in a single repository,
+and that would be all there was to think about this. However, it seems
+that our use case (surprisingly) doesn't have a lot of good support in
+the DVCS world.
 
-Yes, it is even a good change.
+For now, we'll probably just have some simple scripts that basically
+do 'for i in $projects' loops for pulls, pushes, commits, etc.
+However, this loses a lot of information that should be tracked about
+the version/dependency information among the projects -- information
+that at the same time we're not interested in manually tracking. We're
+currently thinking of having a simple system that is initially set up
+with a dependency graph among projects, e.g.:
 
-It just emphasized for me that Metrowerks is a little confused
-about type qualifiers.
+  a: no dependencies
+  b: depends on a
 
-> 	#define alloc_n(type, n)  ((type*)xmalloc(sizeof (type) * n))
-> 
-> to factor the multiplication out of the calling code.
+and whenever a commit is made to a project with dependencies (b), the
+commit (perhaps in the commit message) contains a reference to the
+particular versions of the dependent project(s) (a) that were checked
+out.
 
-Maybe, imitating the signature of calloc:
+The tool could simplify the use of such a scheme, e.g.:
 
- #define malloc_n(n, type) ((type *)xmalloc((n) * sizeof(type)))
+- automatically augmenting commit messages with this information
+- on commits/pushes, first commit/push the dependent projects
+- checking out consistent versions of all the projects (or subgraphs thereof)
 
-For structs with variable-length arrays at the end:
-
- #define malloc_plus(type, extra) ((type *)xmalloc(sizeof(type) + (extra)))
-
-That should cover most of the calls in git.
-
-> I just want git to work on Lamp, and if
-> there's community interest in C++ compatibility then I can assist
-> with that.
-
-There probably is not much direct interest.  But if in the process we
-gain a little type-safety and portability, that would be nice. :)
-
-Thanks for your hard work,
-Jonathan
+Does this make sense to others? Are we overlooking a better/existing
+approach? Would it be worth building this? Suggestions on design
+improvements to such a tool over what was described (e.g. better
+approach than augmenting commit messages)?
+--
+Yang Zhang
+http://yz.mit.edu/
