@@ -1,84 +1,69 @@
-From: Fred <fred@akafred.com>
-Subject: Fwd: git+svn - repo upgrade from 1.6.6.4 to 1.7.1 fails
-Date: Mon, 31 May 2010 13:09:54 +0200
-Message-ID: <AANLkTikYYjl6Gv8SRMvtmzW1pyzkyu_mwLyEGHdWuH00@mail.gmail.com>
-References: <AANLkTin-k5zIDZysiLbTusqDwqxGWDxxAOPljLuRlIMD@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: Migrate from svn to git
+Date: Mon, 31 May 2010 07:01:44 -0500
+Message-ID: <AANLkTinKsGPo0-ETmVOSH6fY64GLLwVm2dNBGyjAvrin@mail.gmail.com>
+References: <4BFD3AAF.4080403@fechner.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 31 13:20:42 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Matthias Fechner <idefix@fechner.net>
+X-From: git-owner@vger.kernel.org Mon May 31 14:02:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJ32w-00065R-4M
-	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 13:20:42 +0200
+	id 1OJ3hI-0001Cc-MJ
+	for gcvg-git-2@lo.gmane.org; Mon, 31 May 2010 14:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287Ab0EaLUg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 May 2010 07:20:36 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:40309 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751729Ab0EaLUg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 May 2010 07:20:36 -0400
-Received: by gye5 with SMTP id 5so131718gye.19
-        for <git@vger.kernel.org>; Mon, 31 May 2010 04:20:35 -0700 (PDT)
+	id S1753799Ab0EaMCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 08:02:19 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57721 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447Ab0EaMCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 08:02:18 -0400
+Received: by fxm10 with SMTP id 10so2384592fxm.19
+        for <git@vger.kernel.org>; Mon, 31 May 2010 05:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=v+Atr/Tx71ga+NTR/k3TD4WwLnY9ER/pzy6x0udFaE4=;
-        b=n56WdLpWlsT5FGNX6VNb847XkX9V4sy1gK5xDJCh5c36dUGNGz10DgiERy7LuJZ9Of
-         MjvVDzFBCfbxBH9i68v+Z/Bj9WUso+kYHWEihxQOLq0AbdrLf7lh/LKaX6Uj2tJwxzzy
-         jvZzlWDxwNw1ixpMDJgj+6Z7XTtY/lD8obr7E=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=VUz4xcABvHNGYWWz7M3BkOFvdaGXm7SKYEnHn4C9rgE=;
+        b=NaggF+1hywUcEm+bB0OeVm8jtKROI9auEMasRFCcfzBd19kzptUk40HcBqSPPsD2fc
+         ltqPTsOpSZlkkv9g+FayEJP+7CFegqElCx6QoyPqLhJAPq+OMHx/W4NV0uROLBe1bw5J
+         8gXZ14vztjAAZI+Vqs3Ds71fB77MnvyOlD+GY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=s42eV1Et6zK23Fmi1wS+2FHTa+PljfnTDrrcLtJT0u3E/x9sO0vg2IwQCpA+swlMWO
-         5sDc8aKKW2Nacu5hku3pbdCV/4aHkm8XqtGecWIhkC7CdsQfo+jDr8x0EuRfestdkkYz
-         qJgn3vtV9iy0Enuj5Fiql+j4mcpaAs1cWIGag=
-Received: by 10.101.201.37 with SMTP id d37mr4589556anq.56.1275304509707; Mon, 
-	31 May 2010 04:15:09 -0700 (PDT)
-Received: by 10.100.210.10 with HTTP; Mon, 31 May 2010 04:09:54 -0700 (PDT)
-In-Reply-To: <AANLkTin-k5zIDZysiLbTusqDwqxGWDxxAOPljLuRlIMD@mail.gmail.com>
-X-Google-Sender-Auth: wKBNp9kGieCbrAE-BLIzz-kSRjs
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=BKYMsQIrBhrSASckh0DrwCpr7StQ/NIX2ZnqlQI6LGe0S9PDFxENSLSc5NHjYFBzzX
+         M0x2YXg+9eYCAhwyvjlGiSluE7XOLaKiNk33dBMYX2ML7BoRjmA5qDN7YBMD7TrwPST6
+         vL2uIjaVL1VF/ZF/tbra0dQv4f5u0n/RSezAg=
+Received: by 10.239.188.65 with SMTP id o1mr363306hbh.83.1275307334546; Mon, 
+	31 May 2010 05:02:14 -0700 (PDT)
+Received: by 10.239.189.143 with HTTP; Mon, 31 May 2010 05:01:44 -0700 (PDT)
+In-Reply-To: <4BFD3AAF.4080403@fechner.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148038>
 
-Hi,=A0I have a project with two remotes - one git and one svn. One
-branch is only used for "git svn rebase", and then I cherrypick or
-merge from it into my master branch. Most work is done in the master
-branch (or other topic branches only available in git)
+On Wed, May 26, 2010 at 10:13, Matthias Fechner <idefix@fechner.net> wrote:
+> The second question is, I someone commits
+> some files with svn an email is sent to a
+> svn-commit mailinglist so changes can easily
+> be discussed.
 
-The repo was created under git 1.6.6.4. After updating git a while
-back (to 1.7.1) it was time to merge inn a few things from svn - so i
-switched to my "subversion" branch and did a
+Shouldn't the discussion happen before the commit?
 
-$ git svn rebase
+> The current mail is sent in html format with
+> a colored diff, so it is easier to read.
 
-Migrating from a git-svn v1 layout...
-Data from a previous version of git-svn exists, but
-=2Egit/svn
-(required for this version (1.7.1) of git-svn) does not exist.
-Done migrating from a git-svn v1 layout
-Unable to determine upstream SVN information from working tree history
----
-I read this as: "I see your repo has some svn stuff and that it is
-backlevel. I'll fix it for you. Oh shit, now I can't determine what
-svn revision you are on."
+I would rather receive the raw diff and let my own preferred tools
+display the information in way that I personally like.
 
-Any ideas on how to resolve this? We're a dozen developers relying on
-this so it would be nice find a way with minimal impact to the
-users...
+Keep in mind that `git diff' is capable of displaying the diff with color.
 
-=46or now I'll do the rebasing in a back-level git client...
-
-- Fred
+Michael Witten
