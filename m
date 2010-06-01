@@ -1,124 +1,146 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Makefile: Use $(sharedir)/gitweb for target 'install-gitweb'
-Date: Tue, 1 Jun 2010 21:50:02 +0200
-Message-ID: <201006012150.02970.jnareb@gmail.com>
-References: <1275405080-17326-1-git-send-email-pavan.sss1991@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Best way to apply textconv to a working tree file
+Date: Tue, 1 Jun 2010 15:50:36 -0400
+Message-ID: <20100601195036.GA18220@sigill.intra.peff.net>
+References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
+ <vpqd3walot1.fsf@bauges.imag.fr>
+ <20100601171359.GD9702@sigill.intra.peff.net>
+ <vpqtypmaceb.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Petr Baudis <pasky@ucw.cz>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 21:48:05 2010
+Content-Type: text/plain; charset=utf-8
+Cc: clement.poulain@ensimag.imag.fr, git@vger.kernel.org,
+	diane.gasselin@ensimag.imag.fr, axel.bonnet@ensimag.imag.fr
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 01 21:50:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJXRR-0003uA-EV
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 21:48:01 +0200
+	id 1OJXU7-0005HA-0M
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 21:50:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752416Ab0FATrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 15:47:55 -0400
-Received: from fg-out-1718.google.com ([72.14.220.156]:28775 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751364Ab0FATrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 15:47:55 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1932697fga.1
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 12:47:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=R7ULThEozAol9N9Az8fMpFGYPv1XwxGbGGAXscX/Xb8=;
-        b=sTqVNU9I7PT0Up/rGyvrGL8+tyeICqvGnfyv7An+WuSCSMwPIsPt9fFHvIJ7xoGngY
-         F8G0lMObAOc1T4Yj1DrGioXK1DWQExR2RQUxuyPTfLrvulY9sDGYOL8BlgLSX7PC4c81
-         hyRll7Z4hRNaVp4UEmj0qb3nEWXYv7gma/J0w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=wiBs/7h2lB8Lf3KYIJaelWQuUq9A/LY+Qqv5ologb50FOq3sBbQRl1afnAQDzSFumM
-         i2lF7mUNSS9Td4H7aMEn5CV/4WIfaWzi3bV5xugRGI0XWzQ6XqL0XGxPT6Hi2McELHa8
-         yJ8Fb6kK59t1EGP0e78ccRmuspupt/90c+jLQ=
-Received: by 10.223.64.205 with SMTP id f13mr7550225fai.98.1275421673161;
-        Tue, 01 Jun 2010 12:47:53 -0700 (PDT)
-Received: from [192.168.1.15] (abvg224.neoplus.adsl.tpnet.pl [83.8.204.224])
-        by mx.google.com with ESMTPS id j23sm48559836faa.2.2010.06.01.12.47.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 12:47:51 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1275405080-17326-1-git-send-email-pavan.sss1991@gmail.com>
+	id S1754531Ab0FATul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 15:50:41 -0400
+Received: from peff.net ([208.65.91.99]:34163 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753118Ab0FATuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 15:50:40 -0400
+Received: (qmail 2333 invoked by uid 107); 1 Jun 2010 19:50:46 -0000
+Received: from adsl-99-133-187-56.dsl.bltnin.sbcglobal.net (HELO sigill.intra.peff.net) (99.133.187.56)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Jun 2010 15:50:46 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jun 2010 15:50:36 -0400
 Content-Disposition: inline
+In-Reply-To: <vpqtypmaceb.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148155>
 
-On Tue, 1 June 2010, Pavan Kumar Sunkara wrote:
+On Tue, Jun 01, 2010 at 07:30:36PM +0200, Matthieu Moy wrote:
 
-> Export gitwebdir variable so that when user types the command
-> 'make install-gitweb', gitweb is installed in $(sharedir)/gitweb
-> rather than /var/www/cgi-bin. Now, $(sharedir)/gitweb is default
-> for both 'install' and 'install-gitweb' targets.
+> > It would be nice if there was some way in the get_sha1* functions to
+> > save some context, like tree context and filename. This would be helpful
+> > for something like "git show HEAD:foo.txt", which probably should be
+> > respecting autocrlf and smudge/clean filters.
 > 
-> Remove 'gitwebdir=$(gitwebdir_SQ)' from gitweb part of 'install'
-> target which is unneccessary now.
-> 
-> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+> Yup. The code to do the parsing is already there, it "just" needs to
+> be made available through a clean API.
 
-For what it is worth:
+I was thinking of something like the patch below, which applies
+clean/smudge filters to the output of "cat-file -p".
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+It keeps a global context for the last sha1 looked up. Probably
+get_sha1_with_mode should be folded into get_sha1_with_context, as mode
+is really just another case of this exact sort of mid-lookup context.
+And then we don't get a proliferation of "get_sha1_with_*" functions,
+which doesn't scale.  I'll leave that as an exercise for your students.
+:)
 
-(But I have not tested it!)
+You could get fancier, including things like which ref we ended up
+looking at to get to the object. I seem to recall running into a
+situation where I wanted to know "foo" when looking up "foo^", but I
+don't remember where now.  I think it makes sense to keep it simple for
+now, and people could add more context elements as needed.
 
-> ---
->  Makefile |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index 8f011a5..32e3146 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -294,7 +294,7 @@ lib = lib
->  # DESTDIR=
->  pathsep = :
->  
-> -export prefix bindir sharedir sysconfdir
-> +export prefix bindir sharedir gitwebdir sysconfdir
-
-Nitpick: why not
-
-  +export prefix bindir sharedir sysconfdir gitwebdir
-
-i.e. have 'gitwebdir' last?  Not that it matters, though....
-
->  
->  CC = gcc
->  AR = ar
-> @@ -2049,7 +2049,7 @@ install: all
->  	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
->  ifndef NO_PERL
->  	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
-> -	$(MAKE) -C gitweb gitwebdir=$(gitwebdir_SQ) install
-> +	$(MAKE) -C gitweb install
-
-Nice.
-
->  endif
->  ifndef NO_PYTHON
->  	$(MAKE) -C git_remote_helpers prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
-> -- 
-> 1.7.1.447.g40f7.dirty
-> 
-> 
-
--- 
-Jakub Narebski
-Poland
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index a933eaa..4d1e634 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -87,6 +87,7 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+ 	void *buf;
+ 	unsigned long size;
+ 
++	object_resolve_context_init(&the_resolve_context);
+ 	if (get_sha1(obj_name, sha1))
+ 		die("Not a valid object name %s", obj_name);
+ 
+@@ -129,6 +130,18 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+ 			pprint_tag(sha1, buf, size);
+ 			return 0;
+ 		}
++		if (type == OBJ_BLOB) {
++			struct strbuf out = STRBUF_INIT;
++
++			if (!the_resolve_context.path[0])
++				break;
++			if (convert_to_working_tree(the_resolve_context.path,
++						buf, size, &out) < 0)
++				die("unable to prepare blob for printing");
++			free(buf);
++			size = out.len;
++			buf = strbuf_detach(&out, NULL);
++		}
+ 
+ 		/* otherwise just spit out the data */
+ 		break;
+diff --git a/cache.h b/cache.h
+index c966023..c030083 100644
+--- a/cache.h
++++ b/cache.h
+@@ -730,6 +730,13 @@ static inline unsigned int hexval(unsigned char c)
+ #define MINIMUM_ABBREV 4
+ #define DEFAULT_ABBREV 7
+ 
++struct object_resolve_context {
++	unsigned char tree[20];
++	char path[PATH_MAX];
++};
++extern struct object_resolve_context the_resolve_context;
++void object_resolve_context_init(struct object_resolve_context *orc);
++
+ extern int get_sha1(const char *str, unsigned char *sha1);
+ extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int gently, const char *prefix);
+ static inline int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
+diff --git a/sha1_name.c b/sha1_name.c
+index bf92417..cc049bf 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -7,6 +7,13 @@
+ #include "refs.h"
+ #include "remote.h"
+ 
++struct object_resolve_context the_resolve_context;
++
++void object_resolve_context_init(struct object_resolve_context *orc)
++{
++	memset(orc, 0, sizeof(*orc));
++}
++
+ static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
+ {
+ 	struct alternate_object_database *alt;
+@@ -1104,6 +1111,10 @@ int get_sha1_with_mode_1(const char *name, unsigned char *sha1, unsigned *mode,
+ 							   tree_sha1, object_name);
+ 				free(object_name);
+ 			}
++			hashcpy(the_resolve_context.tree, tree_sha1);
++			strncpy(the_resolve_context.path, filename,
++				sizeof(the_resolve_context.path));
++			the_resolve_context.path[sizeof(the_resolve_context.path)] = '\0';
+ 			return ret;
+ 		} else {
+ 			if (!gently)
