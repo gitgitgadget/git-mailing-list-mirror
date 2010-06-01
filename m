@@ -1,98 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/8] revert: use run_command_v_opt() instead of
- execv_git_cmd()
-Date: Mon, 31 May 2010 23:01:15 -0500
-Message-ID: <20100601040115.GA22401@progeny.tock>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
- <20100531194240.28729.9964.chriscool@tuxfamily.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: HELP: cannot clone a repository via http_proxy on FC13
+Date: Tue, 1 Jun 2010 12:03:54 +0800
+Message-ID: <AANLkTinyKoH4QiTnIbBQ60sMNZHKqtYejk-t2ygj9naK@mail.gmail.com>
+References: <AANLkTimefBKp5So03RKaZRqQXePO1KY6EgMRxN0zsf8M@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Jun 01 06:01:30 2010
+Cc: git@vger.kernel.org
+To: Sylvia Liu <sylviaonlyone@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 01 06:04:03 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJIfP-0002IA-9z
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 06:01:27 +0200
+	id 1OJIht-0003fF-3m
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 06:04:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750748Ab0FAEBW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 00:01:22 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:36490 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750716Ab0FAEBV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 00:01:21 -0400
-Received: by gwaa12 with SMTP id a12so3244791gwa.19
-        for <git@vger.kernel.org>; Mon, 31 May 2010 21:01:21 -0700 (PDT)
+	id S1750837Ab0FAED4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 00:03:56 -0400
+Received: from mail-yw0-f179.google.com ([209.85.211.179]:64449 "EHLO
+	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731Ab0FAED4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 00:03:56 -0400
+Received: by ywh9 with SMTP id 9so3209870ywh.17
+        for <git@vger.kernel.org>; Mon, 31 May 2010 21:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=xbdn568NIxMIxZwo+9kRL81jWaThPy/q8xEH58sbQ7c=;
-        b=jAT8mZHyjXfUtLHNlNOVNkZK8+CGKr0lWjL8ANEokCbLeC66EUsU5FGY/80dUXuvc2
-         NNq3EAUQlDCP8whtWpNuQOJzvH47qCBktj4qZzMKZhKuI1TwNmZP9wN0WfHOD9fbFK2Z
-         MKG19/6r6/32HB79tKt2AKGfB2G8AqvZh9SSg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hhdgyKlLr7Cy1+cP1FMreP67vkZ0sGBRuwSrjcDM9nQ=;
+        b=JlKP40uxrgbdUTOsbEXIfWUpJyqtDjVCyj0ioiQNYcZh1hHoQRw9ZcTppz5wGrHu9d
+         f3auyxdT1b7tP2yx/2N8BUQyO4y4TOOvUYsqwQgErmctzkQ0ff4Mobt4CGfRGyI1Cbf+
+         1gHwoZMFB50bTeqFunmfS5EIk/nSIQtgfme5E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=d8Gy0Y+dPyH5l5S1qnEPq4ORt7c3oeAaTl4Yf/hjvMet6/Cwz6mLIyOYmYCHdhy2jb
-         5U5t7KqWfxh/PG1rEgKOh7Em/Bs+OapHqW5FjVPJxtSFsPqx/VwoP7rahshaxhXCU59B
-         dxoGy/Mss+iAmC5wLqvn3BheXgGw4S9pidgLk=
-Received: by 10.231.125.87 with SMTP id x23mr6988524ibr.88.1275364880668;
-        Mon, 31 May 2010 21:01:20 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id b3sm29392855ibf.19.2010.05.31.21.01.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 31 May 2010 21:01:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100531194240.28729.9964.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ql93mR28fZkMjY9ZhaXbBRDE40C6KkH0BPg+Iw/BoYYJqLKQT0MKA8+BTwbLfy22LV
+         zcgU+uCsRX4DJAnHkXjBE89is3sWUFmhnFB4M0W59qC/XSB3dIJmClf7E+69a+01LtP0
+         RLBCs3RtF4oH7oK2Orri/TJDRCPZdhEpB80hA=
+Received: by 10.231.195.16 with SMTP id ea16mr6910770ibb.64.1275365034240; 
+	Mon, 31 May 2010 21:03:54 -0700 (PDT)
+Received: by 10.231.33.12 with HTTP; Mon, 31 May 2010 21:03:54 -0700 (PDT)
+In-Reply-To: <AANLkTimefBKp5So03RKaZRqQXePO1KY6EgMRxN0zsf8M@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148074>
 
-Christian Couder wrote:
+Hi,
 
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 5df0d69..9085894 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -530,7 +530,7 @@ static int revert_or_cherry_pick(int argc, const =
-char **argv)
->  			args[i++] =3D defmsg;
->  		}
->  		args[i] =3D NULL;
-> -		return execv_git_cmd(args);
-> +		return run_command_v_opt(args, RUN_GIT_CMD);
->  	}
->  	free_message(&msg);
->  	free(defmsg);
+On Tue, Jun 1, 2010 at 11:30 AM, Sylvia Liu <sylviaonlyone@gmail.com> w=
+rote:
+> I tried this command:
+> =A0 sudo git clone
+> http://git.gitorious.org/meego-developer-tools/image-creator.git
 
-Doesn=E2=80=99t this leak msg and defmsg?  Maybe it would make sense to=
- free
-the in-core copy of the commit message before the if (!no_commit)
-block.
+Probably not related, but why sudo?
 
-	int ret;
+> got the error messages as follow:
+> =A0 Initialized empty Git repository in
+> /home/sylvia/workarea/DEV_TOOLS/test/image-creator/.git/
+> =A0 error: Failed connect to git.gitorious.org:80; Operation now in
+> progress while accessing
+> http://git.gitorious.org/meego-developer-tools/image-creator.git/info=
+/refs
+>
+> =A0 fatal: HTTP request failed
 
-	...
-	ret =3D 0;
-	free_message(&msg);
-	if (!no_commit)
-		ret =3D commit_for_cherry_pick(signoff, edit, defmsg);
-	free(defmsg);
-	return ret;
+Can you try
 
-Jonathan
+  $ GIT_CURL_VERBOSE=3D1 git clone
+http://git.gitorious.org/meego-developer-tools/image-creator.git
+
+and paste the output here?
+
+--=20
+Cheers,
+Ray Chuan
