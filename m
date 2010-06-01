@@ -1,87 +1,110 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: How to add daily tags for a central repo?
-Date: Tue, 01 Jun 2010 10:52:31 +0200
-Message-ID: <4C04CA4F.40106@drmicha.warpmail.net>
-References: <1275369711233-5124575.post@n2.nabble.com>	<4C04AC1E.7040502@drmicha.warpmail.net>	<AANLkTim02FQ3BfV88iylMqbHA5sBbJvp5TmWg52OXCzn@mail.gmail.com>	<4C04BF33.70300@drmicha.warpmail.net> <AANLkTinHU5z5njEpx1S_6DIR5ECauJbzWlcM95wNUVxf@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 5/8] revert: allow cherry-picking more than one commit
+Date: Tue, 1 Jun 2010 04:03:17 -0500
+Message-ID: <20100601090317.GB32320@progeny.tock>
+References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
+ <20100531194240.28729.9164.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Roy Lee <roylee17@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 10:53:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Jun 01 11:03:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJNDX-0007gm-Ph
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 10:53:00 +0200
+	id 1OJNNe-00071C-3N
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 11:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755594Ab0FAIwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 04:52:54 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:47039 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753647Ab0FAIwx (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 04:52:53 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 7C4C7F8446;
-	Tue,  1 Jun 2010 04:52:53 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 01 Jun 2010 04:52:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=qpA2yJMLICEfieuJ25aJWgOf1EM=; b=VPkrvgc4+jfBYW5zcjgqCahJBiyUe6VF3jG+p9PJ5FTVSJWdbr6woGuUpLmJTaDgl32idQ8T6Obrgp59UK9jBtrQL4D2r+SARENLl5TlJftkBalX70KjY96mJH/9pRnyc1N4+wuWYrPch1yut4yQMoXozjYZiXV4l1fQPXcyWNM=
-X-Sasl-enc: NGFUu1NqHt6OBRHMkCTkUSu0wlGQOQG8treeknuu//PM 1275382373
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D5E6249F535;
-	Tue,  1 Jun 2010 04:52:52 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <AANLkTinHU5z5njEpx1S_6DIR5ECauJbzWlcM95wNUVxf@mail.gmail.com>
+	id S1754045Ab0FAJDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 05:03:20 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51564 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753328Ab0FAJDT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 05:03:19 -0400
+Received: by iwn6 with SMTP id 6so708413iwn.19
+        for <git@vger.kernel.org>; Tue, 01 Jun 2010 02:03:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=JhfyiJx/4sbw1Vck+M0or09r/+2ZyBO5sp0QgWYlcg0=;
+        b=ArP5Emtf3rbWyy6pp7Qi/wiRVnLUQyFW+zTQw6fDYEXM3sFSlPyYLkr5tklqsebQo8
+         //igYnGjSsbI7u0ZWCjgelGKX/sJUeQD9uNXLF491kEpB/L2X6gq7U5XulQBIYvdgU5o
+         7LxkOQAWA/woPY8uf/cg2vxuOTqw3lxg6XNPg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=wgHCs8nHO7dExY8KIzOwPDkMHP3RZI8A5RvPJ/k7o9nTd0hHdvmdIb8he1etwv8Dh1
+         kwRJQu3mDD9KXZ6vbZXdiJQdJ5yPlq2tm+uFDOLhlmahk7a3FebGc7JfoHZNBdhPvsjB
+         FwU2/0Z3BbDrgA02K+Kc1tpS5hseyTl64/uDQ=
+Received: by 10.231.183.19 with SMTP id ce19mr7431823ibb.35.1275382998624;
+        Tue, 01 Jun 2010 02:03:18 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id r12sm30425474ibi.8.2010.06.01.02.03.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 01 Jun 2010 02:03:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100531194240.28729.9164.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148094>
 
-Roy Lee venit, vidit, dixit 01.06.2010 10:25:
-> On Tue, Jun 1, 2010 at 4:05 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Roy Lee venit, vidit, dixit 01.06.2010 09:55:
->>> Hi Michael,
->>>
->> Well, as I wrote: HEAD@{datetimespec} for the HEAD,
->> branchname@{datetimespec} for a branch "branchname". datetimespec is
->> decribed in git rev-parse's manpage but can be what you'd think (e.g.
->> "date time") and more ("yesterday").
->> If you really want to inspect the reflog (not the commits listed in the
->> reflog) use "git log -g" or, unsurprisingly, "git reflog".
->>
->>> Or any alternatives for developer to query this information.
->>
->> The reflog is local to the repo, which is why you would create tags on
->> the central repo based on the reflog there, if that is your "trusted
->> time and push reference source".
-> 
-> Does this mean the tagging must be done on the server?
+Christian Couder wrote:
 
-Yes.
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -520,8 +516,33 @@ static int do_pick_commit()
+>  	return 0;
+>  }
+>  
+> +static void prepare_revs(struct rev_info *revs)
+> +{
+> +	int argc = 0;
+> +	int i;
+> +	const char **argv = xmalloc((commit_argc + 4) * sizeof(*argv));
+> +
+> +	argv[argc++] = NULL;
+> +	argv[argc++] = "--no-walk";
+> +	if (action != REVERT)
+> +		argv[argc++] = "--reverse";
+> +	for (i = 0; i < commit_argc; i++)
+> +		argv[argc++] = commit_argv[i];
+> +	argv[argc++] = NULL;
+> +
+> +	init_revisions(revs, NULL);
+> +	setup_revisions(argc - 1, argv, revs, NULL);
+> +	if (prepare_revision_walk(revs))
+> +		die("revision walk setup failed");
+> +
+> +	if (!revs->commits)
+> +		die("empty commit set passed");
+> +}
 
-> Is there any way to query this information from a client repo,
-> do the tagging locally, and than push the tag back to the server?
+Tiny one-time leak.  Maybe avoiding it will make debugging tools
+happier.
 
-No.
+The rest of the patch of course looks good.  Thanks.
 
-This answer assumes that what you want to do is the following:
-
-* Create a tag for the state of a ref (such as HEAD) on the central repo
-at a specific date and time.
-
-No client can know this. Reflogs are local. The point of your tagging
-(as I understand it) is to create an authoritative date based tag, and
-only the central repo has the necessary info.
-
-If you want to do something different you should say so ;) But note that
-committer and author dates are completely bogus from the point of view
-of "was in the central repo at a certain date", they have nothing to do
-with that.
-
-Michael
+diff --git a/builtin/revert.c b/builtin/revert.c
+index b90955f..a73f66b 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -532,6 +532,7 @@ static void prepare_revs(struct rev_info *revs)
+ 
+ 	init_revisions(revs, NULL);
+ 	setup_revisions(argc - 1, argv, revs, NULL);
++	free(argv);
+ 	if (prepare_revision_walk(revs))
+ 		die("revision walk setup failed");
+ 
