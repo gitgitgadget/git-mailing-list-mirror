@@ -1,99 +1,64 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC v2 1/6] Add infrastructure for translating Git with gettext
-Date: Tue, 01 Jun 2010 10:01:34 -0700 (PDT)
-Message-ID: <m3eigqr8hf.fsf@localhost.localdomain>
-References: <1275173125-21010-1-git-send-email-avarab@gmail.com>
-	<1275252857-21593-2-git-send-email-avarab@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Best way to apply textconv to a working tree file
+Date: Tue, 1 Jun 2010 13:04:27 -0400
+Message-ID: <20100601170426.GC9702@sigill.intra.peff.net>
+References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeff Epler <jepler@unpythonic.net>
-To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 19:02:18 2010
+Cc: git@vger.kernel.org, diane.gasselin@ensimag.imag.fr,
+	axel.bonnet@ensimag.imag.fr, matthieu.moy@grenoble-inp.fr
+To: =?utf-8?Q?Cl=C3=A9ment?= Poulain <clement.poulain@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 01 19:04:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJUqx-00050f-4X
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 19:02:11 +0200
+	id 1OJUtK-00071N-Ov
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 19:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757032Ab0FARBm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 13:01:42 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:32849 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756725Ab0FARBi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 13:01:38 -0400
-Received: by fxm8 with SMTP id 8so1156585fxm.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 10:01:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=u9j4qC7FpFevLyWhij3uZsl3LXl7FLfUHz8JieknsvI=;
-        b=Y/d4rw/4aGI4i1GXl34S992vdFqYiuGmx4/3k4mbv82mOb+NNYkv6FUBEK+KDrCK4l
-         pLMXvhPg7RA72VGELFWSccWZsHTKgabsguQq3J5eJGSI/7O9X6eUQfqBc1Tsoe3V3FCt
-         K8qHyHsMdqZU98UCPOiFExMNs0lwp5/Nk0UQg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=pnJQO9J6YXfZHX+sxpgKHX9EbU7o2yjTPDR/AzX/qdgpXe2mn5JKAcWSfaHMWGYmJt
-         SNsjT4rWNcFdRzBhJjDVhQVJqYj6Q++CdkuMzuzlWZ9kj0Qz//u641mCHUyY/oItq/Pj
-         v1CdD+IKIEgwGg0VFFUTraP11iuYEC5mpfxIQ=
-Received: by 10.204.81.150 with SMTP id x22mr843843bkk.101.1275411695253;
-        Tue, 01 Jun 2010 10:01:35 -0700 (PDT)
-Received: from localhost.localdomain (abvg224.neoplus.adsl.tpnet.pl [83.8.204.224])
-        by mx.google.com with ESMTPS id v2sm3933567bkz.13.2010.06.01.10.01.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 10:01:34 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o51H3O52001722;
-	Tue, 1 Jun 2010 19:03:29 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o51H38VK001718;
-	Tue, 1 Jun 2010 19:03:08 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1275252857-21593-2-git-send-email-avarab@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1756775Ab0FAREc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 13:04:32 -0400
+Received: from peff.net ([208.65.91.99]:49545 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751485Ab0FAREa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 13:04:30 -0400
+Received: (qmail 32654 invoked by uid 107); 1 Jun 2010 17:04:36 -0000
+Received: from adsl-99-133-187-56.dsl.bltnin.sbcglobal.net (HELO sigill.intra.peff.net) (99.133.187.56)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Jun 2010 13:04:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jun 2010 13:04:27 -0400
+Content-Disposition: inline
+In-Reply-To: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148140>
 
-=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
+On Tue, Jun 01, 2010 at 03:41:05PM +0200, Cl=C3=A9ment Poulain wrote:
 
-> From: Jeff Epler <jepler@unpythonic.net>
->=20
-> Change the build process to use GNU's libintl if it's available. If
-> not we define our own skeleton replacement functions which degrade
-> gracefully to English.
+> We are wondering what is the best way to do the textconv. Here are so=
+me
+> solutions we thought about:
 
-Very nice.
+One solution you didn't mention would be to do it all yourself:
 
->=20
-> Signed-off-by: Jeff Epler <jepler@unpythonic.net>
-> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
-> ---
->  Makefile    |   26 ++++++++++++
->  gettext.c   |   17 ++++++++
->  gettext.h   |   15 +++++++
->  git.c       |    3 +
->  wt-status.c |  129 ++++++++++++++++++++++++++++++-------------------=
-----------
->  5 files changed, 126 insertions(+), 64 deletions(-)
->  create mode 100644 gettext.c
->  create mode 100644 gettext.h
+  driver=3D`git check-attr diff "$file" | cut -d: -f3`
+  textconv=3D`git config diff.$driver.textconv`
+  $textconv <$file >$file.converted
 
-Could you also provide change to configure.ac, so that ./configure
-would detect if we have gettext installed or not?  Thanks in advance.
+This has the advantage of working with existing versions of git. The
+downside is that it's more code (e.g., my parsing above is quite sloppy
+and loose. Doing it right would be a few more lines).
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+=46urthermore, it doesn't use the textconv cache at all. For working tr=
+ee
+files, this might not matter (if you pull the sha1 out of the index,
+though, you can still check the cache, and unchanged working tree files
+are likely to be in the cache). But for blobs in general, the cache is
+worth using.
+
+-Peff
