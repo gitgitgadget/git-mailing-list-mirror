@@ -1,73 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 7/8] Documentation/cherry-pick: describe passing more than 
-	one commit
-Date: Tue, 1 Jun 2010 12:26:01 +0200
-Message-ID: <AANLkTikjCFLj8ZxKI-kiLOqYDg9YYIkX8-lRxNATNGcO@mail.gmail.com>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org> 
-	<20100531194240.28729.50475.chriscool@tuxfamily.org> <20100601095124.GA1033@progeny.tock>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Recovering from commit --amend in rebase --interactive
+Date: Tue, 1 Jun 2010 11:40:09 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1006011136590.2352@ds9.cixit.se>
+References: <alpine.DEB.2.00.1006011022030.2352@ds9.cixit.se> <4C04D78A.2090103@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 12:27:03 2010
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Tue Jun 01 12:40:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJOgV-0004cr-My
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 12:27:00 +0200
+	id 1OJOtU-0004ol-LN
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 12:40:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755922Ab0FAK0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 06:26:25 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:42254 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755885Ab0FAK0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 06:26:22 -0400
-Received: by vws11 with SMTP id 11so813548vws.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 03:26:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=Vp0VZI80wK5E3Zr10aUtKPf2hYuoWu6lIbP0zHaG8h4=;
-        b=YZ+02XiYNMa2VKoWVEXqapEkPsShCp8U0WWA4Kn2MYzyUBFv65ocvePak2m6pcEXwz
-         A+iVjYe6th1rG2LQhZgqruqbeLp34YthzYMXyQoZGWziivJYbUtXCwqh9rKq8+jiNqIZ
-         uQ9cdmscj7ufLFVzMyXWTMbtYbsr5qYAzVrY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=pczmmveRIe/KBkufW7i+aS9eKOAZjbmN0c9k3aj7DuGJszU5z3f70ZrEdpBecGv4yq
-         8k227mESw6G/PaB3YlpYy0JulLFzZx/GDeCR+xCgMJ4pMkMeXYI8QXk2sL8sCrrZjiZa
-         batXr6HVraOVzuptOgzvswKZ5iQohbu4SQGCo=
-Received: by 10.224.73.73 with SMTP id p9mr2182288qaj.320.1275387981418; Tue, 
-	01 Jun 2010 03:26:21 -0700 (PDT)
-Received: by 10.229.50.3 with HTTP; Tue, 1 Jun 2010 03:26:01 -0700 (PDT)
-In-Reply-To: <20100601095124.GA1033@progeny.tock>
+	id S1752313Ab0FAKkR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 06:40:17 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:44438 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751364Ab0FAKkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 06:40:16 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o51Ae9DN018048
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 1 Jun 2010 12:40:09 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o51Ae9Wp018045;
+	Tue, 1 Jun 2010 12:40:09 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <4C04D78A.2090103@panasas.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 01 Jun 2010 12:40:09 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148108>
 
-Hi,
+Boaz Harrosh:
 
-Jonathan Nieder wrote:
-> Christian Couder wrote:
->> +Examples
->> +--------
+> The prints are clear enough.
+
+The problem is that you stop reading them after a while. I've been usin=
+g=20
+rebase actively for a couple of years, so I don't necessary pay much=20
+attention to what it says anymore.
+
+And besides, if I forget to do the edits in another xterm, the help tex=
+t is=20
+usually gone by the time I need to continue anyway...
+
+> What?!? no, why. Just empty out the message at editor and save. It wi=
+ll=20
+> abort any commit and do nothing.
+
+Oh. That's useful to know next time it happens :-)
+
+
+Jan Kr=FCger:
+
+> It might be easy to miss, but it's there, right in the editor:
 >
-> These are a little repetitive.
+> # Please enter the commit message for your changes. Lines starting
+> # with '#' will be ignored, and *an empty message aborts the commit*.
+> (Emphasis added)
 
-Since you also posted an "Examples" section for the git-revert, you
-could especially showcase options that aren't in git-revert (--ff and
--x) here.
-Also, you might want to include a reference to git-revert in this
-document, in a "See Also" section perhaps?
+Indeed. There goes thinking you know what you do after having used the=20
+tools for a long time... :-)
 
--- Ram
+--=20
+\\// Peter - http://www.softwolves.pp.se/
