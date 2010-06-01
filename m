@@ -1,81 +1,95 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/8] revert: change help_msg() to take no argument
-Date: Tue, 1 Jun 2010 01:40:35 -0400
-Message-ID: <20100601054034.GA6638@sigill.intra.peff.net>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
- <20100531194240.28729.49459.chriscool@tuxfamily.org>
- <20100601050815.GB22441@progeny.tock>
+Subject: Re: [PATCH] Documentation/checkout: clarify description
+Date: Tue, 1 Jun 2010 02:10:47 -0400
+Message-ID: <20100601061046.GA7360@sigill.intra.peff.net>
+References: <20100530084153.GA5447@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+Cc: git@vger.kernel.org, Tomas Carnecky <tom@dbservice.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 07:40:49 2010
+X-From: git-owner@vger.kernel.org Tue Jun 01 08:10:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJKDV-0007m6-Rr
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 07:40:46 +0200
+	id 1OJKgj-0007B4-Oi
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585Ab0FAFkk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 01:40:40 -0400
-Received: from peff.net ([208.65.91.99]:35942 "EHLO peff.net"
+	id S1751995Ab0FAGKx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 02:10:53 -0400
+Received: from peff.net ([208.65.91.99]:42227 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751543Ab0FAFkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 01:40:39 -0400
-Received: (qmail 24525 invoked by uid 107); 1 Jun 2010 05:40:45 -0000
+	id S1750833Ab0FAGKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 02:10:52 -0400
+Received: (qmail 24669 invoked by uid 107); 1 Jun 2010 06:10:55 -0000
 Received: from adsl-99-133-187-56.dsl.bltnin.sbcglobal.net (HELO sigill.intra.peff.net) (99.133.187.56)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Jun 2010 01:40:45 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jun 2010 01:40:35 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Jun 2010 02:10:55 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jun 2010 02:10:47 -0400
 Content-Disposition: inline
-In-Reply-To: <20100601050815.GB22441@progeny.tock>
+In-Reply-To: <20100530084153.GA5447@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148080>
 
-On Tue, Jun 01, 2010 at 12:08:15AM -0500, Jonathan Nieder wrote:
+On Sun, May 30, 2010 at 03:41:53AM -0500, Jonathan Nieder wrote:
 
->   Automatic cherry-pick failed.
->     After resolving the conflicts,
->   mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
->   and commit the result with:=20
->=20
->   	git commit -c 8a7cdf
->=20
-> Is there any reason not to suggest =E2=80=98git commit=E2=80=99 witho=
-ut the -c?  This
-> way, the template message includes a helpful Conflicts: string, too.
+> To the first-time reader, it may not be obvious that =E2=80=98git che=
+ckout=E2=80=99
+> has two modes, nor that if no branch is specified it will read
+> from the index.
 
-You cc'd me, which I guess means you git-blame'd the line in question.
-But you really need to parent-blame about five steps back to find
-f52463a (cherry-pick: Suggest a better method to retain authorship,
-2007-03-04) from Dscho, which introduced the "commit -c" suggestion.
+OK, I can see how we might not explain the modes well, but...
 
-So the answer to your question is that "-c" will retain the proper
-authorship of the cherry-picked commit. We could instead:
+> diff --git a/Documentation/git-checkout.txt b/Documentation/git-check=
+out.txt
+> index 4505eb6..99bd7f2 100644
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -15,26 +15,32 @@ SYNOPSIS
+> =20
+>  DESCRIPTION
+>  -----------
+> +Retrieves files from the index or specified tree and writes them
+> +to the working tree.
+> =20
+> -When <paths> are not given, this command switches branches by
+> -updating the index, working tree, and HEAD to reflect the specified
+> -branch.
 
-  1. Say only "git commit" when author =3D=3D committer.
+How is this first paragraph helping? It seems to be describing just one
+mode. You then go on to describe each mode in turn, which makes sense,
+but this first paragraph just seems out of place. If you're going to sa=
+y
+anything, you should say "there are two different modes, one for X and
+one for Y. The first mode is...".
 
-  2. When author and committer do not match, explicitly say "git commit
-     --author=3D...". This retains the "conflicts" information from the
-     template.
+> +'git checkout' [-b <new branch>] [<branch>]::
+> =20
+> +	When <paths> are not given, this command switches branches by
+> +	updating the index, working tree, and HEAD to reflect the
+> +	specified branch.
 
-Those are both easy.  Alternatively, we could actually make it stash th=
+In 76cfadf, I split this into
+
+  git checkout [<branch>]
+  git checkout -b <new branch> [<start_point>]
+
+I wonder if we should do the same here (the distinction is that
+<start_point> is treated differently from <branch>, especially with
+respect to creating a detached HEAD).
+
+Also, does it make sense to say "When <paths> are not given"? The "this
+command" presumably refers to the one directly above, which has no
+<paths>. Might it be easier to understand if we say "in this form of th=
 e
-original authorship information somewhere (in addition to the commit
-message template) and then pull it out automatically. That's harder, bu=
-t
-probably what the user would want (and it behaves more like a rebase
-conflict).
+command" or something like that? Since we are now listing each form in
+turn, the user can presumably figure out which form they are trying to
+use.
 
 -Peff
