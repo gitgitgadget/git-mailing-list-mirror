@@ -1,60 +1,96 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH] Documentation/pretty-{formats,options}: better reference 
-	for "format:<string>"
-Date: Wed, 2 Jun 2010 01:56:37 +0800
-Message-ID: <AANLkTinPczm1_UWtjDyYzP9QSLBhXX45bVgm-UBgULgi@mail.gmail.com>
-References: <1275414886-942-1-git-send-email-ayiehere@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jun 01 19:56:45 2010
+From: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+Subject: [PATCH] send-email: Ask for in-reply message ID even if from and to is already known
+Date: Tue,  1 Jun 2010 20:08:50 +0200
+Message-ID: <1275415730-15360-1-git-send-email-alexander.stein@informatik.tu-chemnitz.de>
+References: <vpqtypmn4bm.fsf@bauges.imag.fr>
+Cc: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 01 20:09:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJVhk-0007Kv-HH
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 19:56:44 +0200
+	id 1OJVu1-0004zO-S1
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 20:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757187Ab0FAR4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 13:56:39 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:52046 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754182Ab0FAR4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 13:56:38 -0400
-Received: by gwaa12 with SMTP id a12so3812149gwa.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 10:56:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type;
-        bh=u3G0KiGyq+obu/sxyqTz68uA64NcykPi+4DnyVgAtCM=;
-        b=hiP0Wx7jadoDVaB0LMaE+mJ+IDioDUTlqPNd5GmisHDe/mH5QSQedIPosGhavQFqR+
-         1lgH7k14x5lQ9Zqvv30T0zh+8AuJaySMp5NHdevyzsAMcDBDnJdQz9U0AJpWbwSul9TQ
-         SewAKfDWH/f9sBTG6G/cwtmULI7lNpp+3QOIU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=hQCTZLP6+FvxAxj0SkEDCfCtR8S3mMMzjC8ZfaC6NhmiDJCEl7qNM7eP25Ku1Tkcba
-         8lVmGxs0WAtL7/7OyQryyjrtb8kSNWpVp8rs/+x2ze74CJsLaZrJeKrgmojnaNoHsX8H
-         CdQ44Db/o1S45ZaFHvW3YQEqcu724xSg1LIf4=
-Received: by 10.91.129.4 with SMTP id g4mr3150950agn.11.1275414997874; Tue, 01 
-	Jun 2010 10:56:37 -0700 (PDT)
-Received: by 10.90.90.2 with HTTP; Tue, 1 Jun 2010 10:56:37 -0700 (PDT)
-In-Reply-To: <1275414886-942-1-git-send-email-ayiehere@gmail.com>
+	id S1754441Ab0FASJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 14:09:14 -0400
+Received: from jack.hrz.tu-chemnitz.de ([134.109.132.46]:48856 "EHLO
+	jack.hrz.tu-chemnitz.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920Ab0FASJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 14:09:13 -0400
+Received: from 77-64-189-43.dynamic.primacom.net ([77.64.189.43] helo=localhost.localdomain)
+	by jack.hrz.tu-chemnitz.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <alexander.stein@informatik.tu-chemnitz.de>)
+	id 1OJVtn-0002i4-Gf; Tue, 01 Jun 2010 20:09:12 +0200
+X-Mailer: git-send-email 1.6.4.4
+In-Reply-To: <vpqtypmn4bm.fsf@bauges.imag.fr>
+X-Spam-Score: -0.9 (/)
+X-Spam-Report: --- Start der SpamAssassin 3.3.0 Textanalyse (-0.9 Punkte)
+	Fragen an/questions to:  Postmaster TU Chemnitz <postmaster@tu-chemnitz.de>
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	*  0.1 TVD_RCVD_IP TVD_RCVD_IP
+	--- Ende der SpamAssassin Textanalyse
+X-Scan-Signature: 113af25641a082a643d611852bb712c6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148151>
 
-On Wed, Jun 2, 2010 at 1:54 AM, Nazri Ramliy <ayiehere@gmail.com> wrote:
-> This patch makes the placholder easier to find by adding a reference
+This patch removes the prompting variable so git send-email always asks
+for a in-reply message ID (unless specified on command line) even when
+sendemail.from and sendemail.to is set in ~/.gitconfig or .git/config
 
-Sorry for the typo.
+Signed-off-by: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+---
+ git-send-email.perl |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
-s/placholder/placeholder/
-
-nazri
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 111c981..4487472 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -136,7 +136,7 @@ my $auth;
+ sub unique_email_list(@);
+ sub cleanup_compose_files();
+ 
+-# Variables we fill in automatically, or via prompting:
++# Variables we fill in automatically:
+ my (@to,$no_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
+ 	$initial_reply_to,$initial_subject,@files,
+ 	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
+@@ -669,19 +669,16 @@ sub ask {
+ 	return undef;
+ }
+ 
+-my $prompting = 0;
+ if (!defined $sender) {
+ 	$sender = $repoauthor || $repocommitter || '';
+ 	$sender = ask("Who should the emails appear to be from? [$sender] ",
+ 	              default => $sender);
+ 	print "Emails will be sent from: ", $sender, "\n";
+-	$prompting++;
+ }
+ 
+ if (!@to) {
+ 	my $to = ask("Who should the emails be sent to? ");
+ 	push @to, parse_address_line($to) if defined $to; # sanitized/validated later
+-	$prompting++;
+ }
+ 
+ sub expand_aliases {
+@@ -703,7 +700,7 @@ sub expand_one_alias {
+ @initial_cc = expand_aliases(@initial_cc);
+ @bcclist = expand_aliases(@bcclist);
+ 
+-if ($thread && !defined $initial_reply_to && $prompting) {
++if ($thread && !defined $initial_reply_to) {
+ 	$initial_reply_to = ask(
+ 		"Message-ID to be used as In-Reply-To for the first email? ");
+ }
+-- 
+1.6.4.4
