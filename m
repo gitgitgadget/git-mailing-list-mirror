@@ -1,86 +1,68 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2] git-instaweb: Add option to reuse previous config file
-Date: Wed, 2 Jun 2010 00:24:35 +0200
-Message-ID: <201006020024.36458.jnareb@gmail.com>
-References: <1275429589-30634-1-git-send-email-pavan.sss1991@gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: How to add daily tags for a central repo?
+Date: Wed, 2 Jun 2010 01:20:40 +0300
+Message-ID: <20100601222040.GA28776@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <1275369711233-5124575.post@n2.nabble.com>
+ <4C04AC1E.7040502@drmicha.warpmail.net>
+ <AANLkTim02FQ3BfV88iylMqbHA5sBbJvp5TmWg52OXCzn@mail.gmail.com>
+ <4C04BF33.70300@drmicha.warpmail.net>
+ <AANLkTinHU5z5njEpx1S_6DIR5ECauJbzWlcM95wNUVxf@mail.gmail.com>
+ <4C04CA4F.40106@drmicha.warpmail.net>
+ <AANLkTinpmkLhbBeqtdK9auG6NfqEsHqPWhrpUL18nFsG@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, pasky@ucw.cz
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 00:22:35 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Roy Lee <roylee17@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 00:22:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJZqz-0006yu-Pw
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 00:22:34 +0200
+	id 1OJZrJ-00074k-BO
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 00:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756821Ab0FAWW3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 18:22:29 -0400
-Received: from fg-out-1718.google.com ([72.14.220.153]:3466 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754605Ab0FAWW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 18:22:28 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so1992333fga.1
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 15:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=ewGKUGvCALYAyTuxRf3SHjtUoiBGY5ahCtBC+iwP/Ac=;
-        b=E0aCoNfqsBOgX1CaiCYx+7eTp0Ri3l5YY40t/SFUEQbgQgMmPOpv2OCFv6jIwtKNb9
-         LmhUb8xBIP3v/sdyIBifvtFWOpZPrr8D4WdFwMy9StIgu8iD5fADgO6wP6XmLPaJ5zdZ
-         4chkzAG5sg4agxhgs/M9VGN87ZNV4p80O5MdY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KpTlZVjYC43MSWQI/yGsIKwEbKJEI1RzxGbaTEVruaLDGwFnZg2+V+IVjNnT3MieKD
-         JKhz7lhoLgRzILGLNBli3xSxvY7dYSVn747u5i0u3uudupgHjbb7Lk1jORPYGNJuWf0f
-         dHLwIlF20Mn0pcOukN/ux+KyhREPm6zzYPQ+g=
-Received: by 10.87.47.3 with SMTP id z3mr12273833fgj.74.1275430945981;
-        Tue, 01 Jun 2010 15:22:25 -0700 (PDT)
-Received: from [192.168.1.15] (abvg224.neoplus.adsl.tpnet.pl [83.8.204.224])
-        by mx.google.com with ESMTPS id 21sm10503184fkx.10.2010.06.01.15.22.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 15:22:25 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1275429589-30634-1-git-send-email-pavan.sss1991@gmail.com>
+	id S1756839Ab0FAWWr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 18:22:47 -0400
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:54036 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754605Ab0FAWWq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 18:22:46 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 8FFC0EF6BE;
+	Wed,  2 Jun 2010 01:22:45 +0300 (EEST)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A037DE8E876; Wed, 02 Jun 2010 01:22:45 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 578304033;
+	Wed,  2 Jun 2010 01:22:42 +0300 (EEST)
 Content-Disposition: inline
+In-Reply-To: <AANLkTinpmkLhbBeqtdK9auG6NfqEsHqPWhrpUL18nFsG@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148163>
 
-Pavan Kumar Sunkara wrote:
-
-> Add an option to git-instaweb which allows the usage of the old
-> gitweb_config.perl situated in '.git/gitweb' dir. When the option
-> is in use, gitweb_config.perl generated by git-instaweb won't be
-> overwritten.
+On Tue, Jun 01, 2010 at 05:45:16PM +0800, Roy Lee wrote:
 > 
-> Usage:
-> 	git instaweb --reuse-config
+> I've been using reflog locally for some time, but never thought that
+> it could be used in this way -- combining with timespec to get the
+> timestamps of updates to the server. :)
 > 
-> Example:
-> 	When I use git-instaweb, it is tiring to add customised
-> configuration (like highlight featues enabling) to the gitweb_config.perl
-> file everytime I initiate the server. With this,it's enough to use
-> this option.
-> 
-> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+> The only problem now is that the tag creator might not have the access
+> to shell on the central server. To grant the shell access for the tag creator
+> may be a quick way to circumvent this. But I think I'll try if git can export
+> the reflog to the client in a native way or with some trickery.
+ 
+Have an automated script that creates the tags and runs from cron or somesuch
+(or from post-update hook)?
 
-This addresses my issues:
+If you don't want to use tags, you can use refs in other namespaces (but these
+would still be sent as refs to client, increasing bandwidth usage a bit).
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
--- 
-Jakub Narebski
-Poland
+-Ilari
