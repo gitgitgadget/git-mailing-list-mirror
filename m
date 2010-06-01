@@ -1,91 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Best way to apply textconv to a working tree file
-Date: Tue, 01 Jun 2010 19:30:36 +0200
-Message-ID: <vpqtypmaceb.fsf@bauges.imag.fr>
-References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
-	<vpqd3walot1.fsf@bauges.imag.fr>
-	<20100601171359.GD9702@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Remove stray error message from sed
+Date: Tue, 01 Jun 2010 10:44:17 -0700
+Message-ID: <7veigqvea6.fsf@alter.siamese.dyndns.org>
+References: <1275384022-12131-1-git-send-email-artagnon@gmail.com>
+ <1275384022-12131-4-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: clement.poulain@ensimag.imag.fr, git@vger.kernel.org,
-	diane.gasselin@ensimag.imag.fr, axel.bonnet@ensimag.imag.fr
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 01 19:30:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 01 19:44:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJVIh-0001IC-Id
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 19:30:51 +0200
+	id 1OJVVx-0000gF-9t
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 19:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755580Ab0FARar convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 13:30:47 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46718 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753695Ab0FARaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 13:30:46 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o51HNHvo006849
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Jun 2010 19:23:17 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OJVIS-0008GQ-Qe; Tue, 01 Jun 2010 19:30:36 +0200
-In-Reply-To: <20100601171359.GD9702@sigill.intra.peff.net> (Jeff King's message of "Tue\, 1 Jun 2010 13\:14\:00 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 01 Jun 2010 19:23:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o51HNHvo006849
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1276017801.06793@HHimK9P0aygZygH7d9k8Bw
+	id S1756400Ab0FARo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 13:44:28 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59606 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754948Ab0FARo1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 13:44:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 616F4B867D;
+	Tue,  1 Jun 2010 13:44:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+bB9UUmnvSomOF8nqkGQqdZXjpg=; b=Crcuqp
+	TPKIUS1iTNRr7vUogRkbVl5544YGtjjn3TRoZdUSdSFMuHssynvGxDnyPD5fygUn
+	YxZYevY7zhpselTJukUnE1VdyoaiAO7IYBpdF/m8V1Q8YCP4kHJcW/PyawzaDMoe
+	oU0muHCX/XqtMjUlBlhwyaN2T8yrcc/0A01Rw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xbFwAYBmAFYKmDZXavAEAiIJmFj+DzVU
+	vyFVB0Jp3lSmnZQ8LgyE9tOCfJeZoDb5Y/G7Jh7JTBDf1JJaoqgW8g1teEwG1SFz
+	ilO9za7ofEqh57Adb9RaYftc3Uo0PfRAQfAOAEEAlA7d/q45klWHGKR7tmAeiOLj
+	Lkw+R0g1lgw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1901B867A;
+	Tue,  1 Jun 2010 13:44:22 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 21B54B8675; Tue,  1 Jun
+ 2010 13:44:18 -0400 (EDT)
+In-Reply-To: <1275384022-12131-4-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Tue\,  1 Jun 2010 11\:20\:22 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 50512108-6DA5-11DF-A574-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148147>
 
-Jeff King <peff@peff.net> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
->> git cat-file --textconv <blob-sha1>            # Run textconv on blo=
-b
+> When --continue is invoked without any changes, the following stray
+> error message appears- sed: can't read $dotest/final-commit: No such
+> file or directory. Remove this by making sure that the file actually
+> exists.
+
 >
-> This wouldn't work. The textconv is defined by the diff driver, which=
- is
-> associated with a pathname,
-
-Right, forget it.
-
->> git cat-file --textconv <tree-sha1>:<filename> # Run textconv on fil=
-e
->>                                                # (in object database=
-)
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> ---
+>  git-am.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 >
-> This could work in theory, but will not be as easy to implement as yo=
-u
-> hope.
+> diff --git a/git-am.sh b/git-am.sh
+> index 04f02a8..e61f47a 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -693,7 +693,7 @@ do
+>  	else
+>  	    action=yes
+>  	fi
+> -	FIRSTLINE=$(sed 1q "$dotest/final-commit")
+> +	test -e "$dotest/final-commit" && FIRSTLINE=$(sed 1q "$dotest/final-commit")
 
-Actually, Cl=E9ment has already hit the issue.
+This will let the command follow the same codepath as before but the
+change in behaviour is that it does not reset FIRSTLINE to an empty
+string.  Does this difference affect what the user sees after this part of
+the code?
 
-> complex as "HEAD@{12:00 yesterday}:foo.c"
+I would generally prefer to use "test -f" not "-e" (simply because it came
+later and I am an old-timer), but if you want to use something newer than
+"test -f", it might be worth using "test -r" instead, as readability (not
+existence) is what you are after anyway.
 
-_that_ is the actual example I was looking for ;-) (with a : inside
-the pathname to make sure you can't search it from the right).
-
-> It would be nice if there was some way in the get_sha1* functions to
-> save some context, like tree context and filename. This would be help=
-ful
-> for something like "git show HEAD:foo.txt", which probably should be
-> respecting autocrlf and smudge/clean filters.
-
-Yup. The code to do the parsing is already there, it "just" needs to
-be made available through a clean API.
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>  
+>  	if test $action = skip
+>  	then
+> -- 
+> 1.7.1
