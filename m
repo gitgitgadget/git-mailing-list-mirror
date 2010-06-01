@@ -1,88 +1,170 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] Documentation: A...B shortcut for checkout and rebase
-Date: Tue,  1 Jun 2010 17:16:42 +0200
-Message-ID: <380480a004c2d5f80ba96324562172f3b2b42f3e.1275405181.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nanako Shiraishi <nanako3@lavabit.com>
+From: Jeremiah Foster <jeremiah.foster@pelagicore.com>
+Subject: Re: http-smart-backend: can clone, cannot push
+Date: Tue, 1 Jun 2010 17:24:25 +0200
+Message-ID: <B61D22CA-45BA-49DA-984B-A7F7090FAE55@pelagicore.com>
+References: <E66CC81A-CCED-4D8E-AE7C-C02FB0AF6F6C@pelagicore.com> <AANLkTimqncJ7aqi_0AvjNimyIPsbVN1zSkAQ1LrPhwne@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 01 17:17:24 2010
+X-From: git-owner@vger.kernel.org Tue Jun 01 17:24:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJTDX-0007Ex-0y
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 17:17:23 +0200
+	id 1OJTKW-0004lg-KB
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 17:24:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756279Ab0FAPRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 11:17:18 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:35489 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755823Ab0FAPRR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 11:17:17 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3CE09F8A80;
-	Tue,  1 Jun 2010 11:17:09 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 01 Jun 2010 11:17:09 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=Z7fhH6gnjH8J00VVT7yjuybKZ8E=; b=j+Pp3dUrfpPdmYEL7Pf6PyKPzUG0zMN4oakCVtpmn9LnnlSUV0UanAKvNU9Z3lIPOgTIU/dv1aS0NxMhDEZUTFrt2t/cACl7MgOCNwuYOLCcj6gjTyaILNI3TLRaMxRg9sYxy9g0Vdmvlkoh9rQDTvLgbuL4Uq0bZJO9UekgfOI=
-X-Sasl-enc: /rLGxhKupG5QNGGnq0xokhKszvoSKeKoQHrQSKyd3kVU 1275405423
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 59A934E5900;
-	Tue,  1 Jun 2010 11:17:03 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.351.ge2633e
+	id S1756691Ab0FAPYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 11:24:31 -0400
+Received: from av9-2-sn2.hy.skanova.net ([81.228.8.180]:33348 "EHLO
+	av9-2-sn2.hy.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756382Ab0FAPYb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 11:24:31 -0400
+Received: by av9-2-sn2.hy.skanova.net (Postfix, from userid 502)
+	id 73FD037EE7; Tue,  1 Jun 2010 17:24:29 +0200 (CEST)
+Received: from smtp4-1-sn2.hy.skanova.net (smtp4-1-sn2.hy.skanova.net [81.228.8.92])
+	by av9-2-sn2.hy.skanova.net (Postfix) with ESMTP id 434E537E7C
+	for <git@vger.kernel.org>; Tue,  1 Jun 2010 17:24:29 +0200 (CEST)
+Received: from [10.8.36.139] (194-237-7-146.customer.telia.com [194.237.7.146])
+	by smtp4-1-sn2.hy.skanova.net (Postfix) with ESMTP id 3631137E45
+	for <git@vger.kernel.org>; Tue,  1 Jun 2010 17:24:29 +0200 (CEST)
+In-Reply-To: <AANLkTimqncJ7aqi_0AvjNimyIPsbVN1zSkAQ1LrPhwne@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148126>
 
-Describe the A...B shortcuts for checkout and rebase [-i] which were
-introduced in these commits:
 
-619a64e ("checkout A...B" switches to the merge base between A and B, 2009-10-18)
-61dfa1b ("rebase --onto A...B" replays history on the merge base between A and B, 2009-11-20)
-230a456 (rebase -i: teach --onto A...B syntax, 2010-01-07)
+On Jun 1, 2010, at 15:15, Tay Ray Chuan wrote:
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-The style in the two hunks is different so that it matches the surrounding
-text. Talking about a style guide...
+> On Tue, Jun 1, 2010 at 8:28 PM, Jeremiah Foster
+> <jeremiah.foster@pelagicore.com> wrote:
+>>        I cannot push however. This is what git says:
+>> 
+>>        $ ~/administrivia >  git push origin master
+>>        error: Cannot access URL https://git.pelagicore.net/var/www/git/administrivia.git/, return code 22
+>>        fatal: git-http-push failed
+> 
+> Can you paste the output for
+> 
+>  $ GIT_CURL_VERBOSE=1 git push origin master
 
- Documentation/git-checkout.txt |    4 ++++
- Documentation/git-rebase.txt   |    4 ++++
- 2 files changed, 8 insertions(+), 0 deletions(-)
+This is the output :
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 4505eb6..afda5c3 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -154,6 +154,10 @@ edits from your current working tree.
- As a special case, the `"@\{-N\}"` syntax for the N-th last branch
- checks out the branch (instead of detaching).  You may also specify
- `-` which is synonymous with `"@\{-1\}"`.
-++
-+As a further special case, you may use `"A...B"` as a shortcut for the
-+merge base of `A` and `B` if there is exactly one merge base. You can
-+leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
- 
- <new_branch>::
- 	Name for the new branch.
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 5863dec..50ba2e4 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -206,6 +206,10 @@ OPTIONS
- 	--onto option is not specified, the starting point is
- 	<upstream>.  May be any valid commit, and not just an
- 	existing branch name.
-++
-+As a special case, you may use "A...B" as a shortcut for the
-+merge base of A and B if there is exactly one merge base. You can
-+leave out at most one of A and B, in which case it defaults to HEAD.
- 
- <upstream>::
- 	Upstream branch to compare against.  May be any valid commit,
--- 
-1.7.1.351.ge2633e
+   GIT_CURL_VERBOSE=1 git push origin master
+* About to connect() to git.pelagicore.net port 443 (#0)
+*   Trying 109.74.195.212... * connected
+* Connected to git.pelagicore.net (109.74.195.212) port 443 (#0)
+* found 142 certificates in /etc/ssl/certs/ca-certificates.crt
+*        server certificate verification SKIPPED
+*        common name: www.pelagicore.net (does not match 'git.pelagicore.net')
+*        server certificate expiration date OK
+*        server certificate activation date OK
+*        certificate public key: RSA
+*        certificate version: #1
+*        subject: CN=www.pelagicore.net
+*        start date: Mon, 08 Feb 2010 13:49:15 GMT
+*        expire date: Thu, 06 Feb 2020 13:49:15 GMT
+*        issuer: CN=www.pelagicore.net
+*        compression: NULL
+*        cipher: AES-128-CBC
+*        MAC: SHA1
+> GET /var/www/git/administrivia.git/info/refs?service=git-receive-pack HTTP/1.1
+User-Agent: git/1.7.1
+Host: git.pelagicore.net
+Accept: */*
+Pragma: no-cache
+
+* The requested URL returned error: 403
+* Closing connection #0
+* About to connect() to git.pelagicore.net port 443 (#0)
+*   Trying 109.74.195.212... * connected
+* Connected to git.pelagicore.net (109.74.195.212) port 443 (#0)
+* found 142 certificates in /etc/ssl/certs/ca-certificates.crt
+* SSL re-using session ID
+*        server certificate verification SKIPPED
+*        common name: www.pelagicore.net (does not match 'git.pelagicore.net')
+*        server certificate expiration date OK
+*        server certificate activation date OK
+*        certificate public key: RSA
+*        certificate version: #1
+*        subject: CN=www.pelagicore.net
+*        start date: Mon, 08 Feb 2010 13:49:15 GMT
+*        expire date: Thu, 06 Feb 2020 13:49:15 GMT
+*        issuer: CN=www.pelagicore.net
+*        compression: NULL
+*        cipher: AES-128-CBC
+*        MAC: SHA1
+> GET /var/www/git/administrivia.git/info/refs HTTP/1.1
+User-Agent: git/1.7.1
+Host: git.pelagicore.net
+Accept: */*
+Pragma: no-cache
+
+< HTTP/1.1 200 OK
+< Date: Tue, 01 Jun 2010 13:41:02 GMT
+< Server: Apache/2.2.15 (Debian)
+< Expires: Fri, 01 Jan 1980 00:00:00 GMT
+< Pragma: no-cache
+< Cache-Control: no-cache, max-age=0, must-revalidate
+< Content-Length: 59
+< Vary: Accept-Encoding
+< Content-Type: text/plain
+< 
+* Connection #0 to host git.pelagicore.net left intact
+* Re-using existing connection! (#0) with host git.pelagicore.net
+* Connected to git.pelagicore.net (109.74.195.212) port 443 (#0)
+> GET /var/www/git/administrivia.git/HEAD HTTP/1.1
+User-Agent: git/1.7.1
+Host: git.pelagicore.net
+Accept: */*
+Pragma: no-cache
+
+< HTTP/1.1 200 OK
+< Date: Tue, 01 Jun 2010 13:41:03 GMT
+< Server: Apache/2.2.15 (Debian)
+< Expires: Fri, 01 Jan 1980 00:00:00 GMT
+< Pragma: no-cache
+< Cache-Control: no-cache, max-age=0, must-revalidate
+< Content-Length: 23
+< Last-Modified: Tue, 01 Jun 2010 08:29:13 GMT
+< Vary: Accept-Encoding
+< Content-Type: text/plain
+< 
+* Connection #0 to host git.pelagicore.net left intact
+* About to connect() to git.pelagicore.net port 443 (#0)
+*   Trying 109.74.195.212... * connected
+* Connected to git.pelagicore.net (109.74.195.212) port 443 (#0)
+* found 142 certificates in /etc/ssl/certs/ca-certificates.crt
+*        server certificate verification SKIPPED
+*        common name: www.pelagicore.net (does not match 'git.pelagicore.net')
+*        server certificate expiration date OK
+*        server certificate activation date OK
+*        certificate public key: RSA
+*        certificate version: #1
+*        subject: CN=www.pelagicore.net
+*        start date: Mon, 08 Feb 2010 13:49:15 GMT
+*        expire date: Thu, 06 Feb 2020 13:49:15 GMT
+*        issuer: CN=www.pelagicore.net
+*        compression: NULL
+*        cipher: AES-128-CBC
+*        MAC: SHA1
+> PROPFIND /var/www/git/administrivia.git/ HTTP/1.1
+User-Agent: git/1.7.1
+Host: git.pelagicore.net
+Accept: */*
+Depth: 0
+Content-Type: text/xml
+Content-Length: 187
+Expect: 100-continue
+
+< HTTP/1.1 100 Continue
+* The requested URL returned error: 404
+* Closing connection #0
+error: Cannot access URL https://git.pelagicore.net/var/www/git/administrivia.git/, return code 22
+fatal: git-http-push failed
