@@ -1,53 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 1/3] Set cmdline globally, not in stop_here_user_resolve
-Date: Tue, 01 Jun 2010 11:27:04 +0200
-Message-ID: <4C04D268.6070908@viscovery.net>
-References: <1275384022-12131-1-git-send-email-artagnon@gmail.com> <1275384022-12131-2-git-send-email-artagnon@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Recovering from commit --amend in rebase --interactive
+Date: Tue, 1 Jun 2010 10:27:23 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1006011022030.2352@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 11:27:19 2010
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 01 11:27:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJNkk-0007Ml-9q
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 11:27:18 +0200
+	id 1OJNky-0007at-6t
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 11:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755570Ab0FAJ1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 05:27:12 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:33371 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753212Ab0FAJ1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 05:27:11 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OJNkZ-0007V5-2V; Tue, 01 Jun 2010 11:27:07 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 0FB9E1660F;
-	Tue,  1 Jun 2010 11:27:04 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <1275384022-12131-2-git-send-email-artagnon@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1752981Ab0FAJ10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 05:27:26 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:59870 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750833Ab0FAJ1Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 05:27:25 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o519RNdW013992
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 1 Jun 2010 11:27:23 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o519RNU5013988;
+	Tue, 1 Jun 2010 11:27:23 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 01 Jun 2010 11:27:23 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148100>
 
-Am 6/1/2010 11:20, schrieb Ramkumar Ramachandra:
-> Set the $cmdline variable globally, so it can be used in other code
-> fragments as well. Also, instead of hardcoding the string "git am",
-> use the command line argument "$0".
+Hi!
 
-Did you test this? "$0" prints the full path to git-am. This does not
-count as user-friendly in my book!
+I am a frequent user of rebase --interactive, and sometimes I do change a 
+commit to "edit", which presents me with an already committed change, which 
+I can fix up, and do "git commit --amend" on.
 
--- Hannes
+However, sometimes I get conflicts during rebase. In some cases I have 
+already seen that conflict, so rerere handles it for me. I am still dropped 
+out of rebase to manually add the fixes, though.
+
+The problem now is that is way too easy to just do a "git commit --amend" 
+like in the case above, and thus overwriting the previous commit 
+unintentionally.
+
+Is there an easy way of working around the issue?
+
+
+Last time this happened to me, I *did* notice my mistake as I entered the 
+editor, since it came up with the previous commit's message. However, as the 
+commit message file was in a good shape, I found no way to break out of the 
+amend. I ended up using "git reflog" to find out what I overwrote, then "git 
+diff $commitid > savedpatch" to remember what the change that I mistakenly 
+amended was, then "git checkout $commitid" and "git apply savedpatch" and 
+"git add" on the changed files. What I am wondering if there is an easier 
+way of recovering?
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
