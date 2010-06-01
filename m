@@ -1,72 +1,72 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] rebase -i -p: document shortcomings
-Date: Tue, 1 Jun 2010 13:40:38 +0200
-Message-ID: <AANLkTimy22yhbxDEfcIg5nPxguWslCIrIEk6wH9kzZqg@mail.gmail.com>
-References: <20100601014335.GA21970@progeny.tock> <AANLkTimjcHpbbpfwNoZGq3_1TjfLAzJL3C8Jcp6LeyW0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Florian Weimer <fw@deneb.enyo.de>,
-	=?UTF-8?B?SsO2cmcgU29tbWVy?= <joerg@alea.gnuu.de>
-To: Greg Price <price@ksplice.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 13:41:07 2010
+From: Jeremiah Foster <jeremiah.foster@pelagicore.com>
+Subject: http-smart-backend: can clone, cannot push
+Date: Tue, 1 Jun 2010 14:28:21 +0200
+Message-ID: <E66CC81A-CCED-4D8E-AE7C-C02FB0AF6F6C@pelagicore.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 01 14:28:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJPqF-0001bH-CP
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 13:41:07 +0200
+	id 1OJQa7-0002UI-2j
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 14:28:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754882Ab0FALlA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 07:41:00 -0400
-Received: from mail-yw0-f179.google.com ([209.85.211.179]:53188 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752791Ab0FALk7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 07:40:59 -0400
-Received: by ywh9 with SMTP id 9so3430424ywh.17
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 04:40:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=akaswQ3P25jbFjeqGyN5oepTuDSyosrlNQ83Z1SH3z8=;
-        b=nWBMaAspkHVV9FJXHLIhDLQwj3Ln7bTZrC/aJ1nDIDYhBkayMVRTALxEI3ZRcYf/OW
-         tRAkL8X1n2c1E6m2Kb6piyL6GH/bF6J7dJf4XNNef8Oa/oN+bpFYGle2oubA8pQHr8F/
-         yO3edWuF6C9CBANrBxXNmdq4csvompuF5GEgk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TEy2MGXhWyRUa4/TQQJ7xOmfd+5yvny65cauxiHfzo3T7aqFvmfyF/fKH5ovNpsbVx
-         LeEoQrs9newJo57ldpAicfWEgYEu9ne3fsEcFlF0suBYs3iGebNWH5gU8yPz3yUc9xRE
-         cGmq34i9JS7RQ4RswlS+7ISBKsJdBVAMi/QtY=
-Received: by 10.150.235.4 with SMTP id i4mr6101411ybh.356.1275392458659; Tue, 
-	01 Jun 2010 04:40:58 -0700 (PDT)
-Received: by 10.151.61.12 with HTTP; Tue, 1 Jun 2010 04:40:38 -0700 (PDT)
-In-Reply-To: <AANLkTimjcHpbbpfwNoZGq3_1TjfLAzJL3C8Jcp6LeyW0@mail.gmail.com>
+	id S1756111Ab0FAM2Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 08:28:24 -0400
+Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:58680 "EHLO
+	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755580Ab0FAM2X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 08:28:23 -0400
+Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
+	id EF2D737E59; Tue,  1 Jun 2010 14:28:21 +0200 (CEST)
+Received: from smtp3-2-sn3.vrr.skanova.net (smtp3-2-sn3.vrr.skanova.net [81.228.9.102])
+	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP id 9FDA137E42
+	for <git@vger.kernel.org>; Tue,  1 Jun 2010 14:28:21 +0200 (CEST)
+Received: from [10.8.36.139] (194-237-7-146.customer.telia.com [194.237.7.146])
+	by smtp3-2-sn3.vrr.skanova.net (Postfix) with ESMTP id 927CE37E48
+	for <git@vger.kernel.org>; Tue,  1 Jun 2010 14:28:21 +0200 (CEST)
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148110>
 
-Heya,
+Hello,
 
-On Tue, Jun 1, 2010 at 04:22, Greg Price <price@ksplice.com> wrote:
-> Thanks, this is long needed. =C2=A0I regret that I haven't had time i=
-n
-> several months to continue work on the real fix.
+	I've set up a directory to serve git repos under /var/www/git using:
 
-Is it your or Jonathan's intent on finishing Dscho's work on rebase -i =
--p?
+	- apache2
+	- git 1.7.1
+	
+	The apache config file is literally pasted from the http-smart-backend documentation, modified for my installation. I clone successfully over https using the smart backend. I know this because when you use the smart backend you get this type of message:
 
---=20
-Cheers,
+	git clone https://git.pelagicore.net/var/www/git/administrivia.git
+	Initialized empty Git repository in /home/jeremiah/administrivia/.git/
+	remote: Counting objects: 69, done.
+	remote: Compressing objects: 100% (47/47), done.
+	remote: Total 69 (delta 15), reused 0 (delta 0)
+	Unpacking objects: 100% (69/69), done.
 
-Sverre Rabbelier
+	As opposed to a more terse message when using a 'dumb' http transport.
+
+	I cannot push however. This is what git says:
+	
+	$ ~/administrivia >  git push origin master
+	error: Cannot access URL https://git.pelagicore.net/var/www/git/administrivia.git/, return code 22
+	fatal: git-http-push failed
+
+	And this is what the logs say:
+
+	[Tue Jun 01 14:25:54 2010] [error] [client 109.74.195.212] Request not supported: '/var/www/git/administrivia.git/'
+
+	How is that I can clone with the smart transport, and not push?
+
+Thanks,
+
+Jeremiah
