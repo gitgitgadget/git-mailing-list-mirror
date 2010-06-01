@@ -1,77 +1,68 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH 3/4] revert: allow cherry-picking a range of commits
-Date: Tue, 1 Jun 2010 05:12:49 +0200
-Message-ID: <201006010512.49804.chriscool@tuxfamily.org>
-References: <20100529043738.569.85482.chriscool@tuxfamily.org> <alpine.DEB.1.00.1005291743300.1638@bonsai2> <201005300845.52141.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Jun 01 05:13:06 2010
+From: Tim Smith <tzs@tzs.net>
+Subject: hook to deal correctly with OS X packages?
+Date: Mon, 31 May 2010 18:56:50 -0700
+Message-ID: <30C845A9-5D6D-4D60-94A7-49C076F6691A@tzs.net>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 01 05:13:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJHub-0004e4-EO
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:13:05 +0200
+	id 1OJHvD-0004xS-HN
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab0FADM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 23:12:59 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56924 "EHLO smtp3-g21.free.fr"
+	id S1753709Ab0FADNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 23:13:39 -0400
+Received: from pass12.dizinc.com ([72.29.74.7]:45838 "EHLO pass12.dizinc.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752957Ab0FADM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 May 2010 23:12:58 -0400
-Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 27A2E818047;
-	Tue,  1 Jun 2010 05:12:50 +0200 (CEST)
-User-Agent: KMail/1.12.2 (Linux/2.6.31-20-generic; KDE/4.3.2; x86_64; ; )
-In-Reply-To: <201005300845.52141.chriscool@tuxfamily.org>
+	id S1752968Ab0FADNi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 May 2010 23:13:38 -0400
+X-Greylist: delayed 4603 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 May 2010 23:13:38 EDT
+Received: from c-24-16-250-127.hsd1.wa.comcast.net ([24.16.250.127]:61742 helo=[192.168.1.11])
+	by pass12.dizinc.com with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.69)
+	(envelope-from <tzs@tzs.net>)
+	id 1OJGir-0006wj-Ul
+	for git@vger.kernel.org; Mon, 31 May 2010 21:56:54 -0400
+X-Mailer: Apple Mail (2.1078)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - pass12.dizinc.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - tzs.net
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148071>
 
-On Sunday 30 May 2010 08:45:52 Christian Couder wrote:
-> On Saturday 29 May 2010 17:47:10 Johannes Schindelin wrote:
-Hi Dscho,
 
-> Hi Dscho,
-> 
-> > Hi,
-> >
-> > On Sat, 29 May 2010, Christian Couder wrote:
-> > > diff --git a/builtin/revert.c b/builtin/revert.c
-> > > index 70372dc..c281a80 100644
-> > > --- a/builtin/revert.c
-> > > +++ b/builtin/revert.c
-> > > @@ -545,6 +542,40 @@ static int revert_or_cherry_pick(int argc, const
-> > > char **argv) if (read_cache() < 0)
-> > >  		die("git %s: failed to read the index", me);
-> > >
-> > > +	dotdot = strstr(commit_name, "..");
-> > > +	if (dotdot) {
-> > > +		struct rev_info revs;
-> > > +		const char *argv[4];
-> > > +		int argc = 0;
-> > > +
-> > > +		argv[argc++] = NULL;
-> > > +		if (action != REVERT)
-> > > +			argv[argc++] = "--reverse";
-> > > +		argv[argc++] = commit_name;
-> > > +		argv[argc++] = NULL;
-> >
-> > Maybe "--no-merges"?
-> 
-> I will have a look at it. Thanks!
+On OS X there are document files that aren't really files. They are directories with a metadata attribute that says they are logically files. For example, the popular outliner OmniOutliner stores it outlines that way. An OmniOutliner "document" consists of a directory that contains a "contents.xml" file that has the outline, plus any other files that you've attached to the outline.
 
-I decided against using it as it would be incompatible with the -m option to 
-revert or cherry-pick a merge.
+This poses a bit of a problem for VCS systems, because from the user point of view, the directory is opaque. Content is added or removed by the programs that edit the document, not directly by the user, and so 
 
-Thanks,
-Christian.
+On Mercurial, which I've been evaluating for a couple of months as a replacement for Subversion at work, this can be handled easily with a pre-commit hook:
+
+	[hooks]
+	pre-commit = mdfind -0 -onlyin . "kMDItemContentTypeTree = 'com.apple.package'" | xargs -0 hg addremove
+ 
+That mdfind command finds things marked as com.apple.package. For each, the hook adds to the commit any new files found in the package, and removes anything that's been deleted.
+
+I'm done evaluating Mercurial and now it's Git's turn. I'm liking it so far, but am stumped as to how to do the equivalent of the above Mercurial hook.
+
+Does this sound about right? Use a pre-commit hook that checks all the files that have been staged, and see if any of them are in a directory that is a package. If so, it needs to add any changes from those directories that are not staged, and add any untracked files from those directories.
+
+This means that if the user makes a change to a document, and wants it to be committed, the user has to stage at least one file from the package directory. It also means that the user can't partially stage on of these documents, but I think that's an acceptable limitation.
+
+Thanks!
+
+-- 
+--Tim Smith
