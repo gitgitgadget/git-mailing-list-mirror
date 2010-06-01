@@ -1,204 +1,139 @@
-From: Antriksh Pany <antriksh.pany@gmail.com>
-Subject: Re: [PATCH 8/8] Documentation/revert: describe passing more than one 
-	commit
-Date: Tue, 1 Jun 2010 14:28:57 +0100
-Message-ID: <AANLkTilu8C68FlLkNg_3wEjRRX25TaydZCve_P4r4_X7@mail.gmail.com>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
-	<20100531194240.28729.15284.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Jun 01 15:29:10 2010
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [PATCH] git-instaweb: Add option to reuse previous config file
+Date: Tue,  1 Jun 2010 19:14:05 +0530
+Message-ID: <1275399845-13311-1-git-send-email-pavan.sss1991@gmail.com>
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
+	pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Tue Jun 01 15:51:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJRWn-0001uR-FQ
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 15:29:09 +0200
+	id 1OJRs8-0002LJ-7X
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 15:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756406Ab0FAN3D convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 09:29:03 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:57533 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756098Ab0FAN3A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 09:29:00 -0400
-Received: by gwaa12 with SMTP id a12so3528382gwa.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 06:28:59 -0700 (PDT)
+	id S1756725Ab0FANul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 09:50:41 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:34431 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756695Ab0FANuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 09:50:40 -0400
+Received: by pwj2 with SMTP id 2so1145893pwj.19
+        for <git@vger.kernel.org>; Tue, 01 Jun 2010 06:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=eDGQ/o1pN030dVVJpbuydf5EicuLp52gPwC8/sAtw6Y=;
-        b=kB3Twi8HskbRS2ERsqQO+8Qrq+tKWkPQ3m18jUhWXIXAeX6yeJNSItbTKLMwzN0BOU
-         OzrA2NrdsTRhmp5QStFL6Hm4kPDhiAnj+9jYaNYJ7g6byLNrMiWJjuI1NWjwoYY9RYe7
-         Q4ayZwEBoEPgZYJH2yLxaRAZixPJyRL+dCTxQ=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=umUdOsPEKjY5Jg8pBhHHNUqGI0S0fhoOTc8qXx34S7A=;
+        b=E18XBZOfXFl041F3OTIozxov5fi990LGt1J2atJsBSJHSV3ONl5kHr7M2uE8m41AU6
+         iwMFGtGVFvySQip6ox1Z9dsGNX5tmSiw6+GeaPAN49UnAh7VFsxVdBW4EohhA73q5KRl
+         Aq7obnmCLb+VgyS+01VppqRHi6jC58Su8eXsw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Soh3Rf3JNZSmWTVWWvoHZBQw4CFZJEUU50AsjDmtdAs3u5MhKuw0PGqwZw7M5wsBaG
-         NskyU1LSbQdWF4mbi37qoedd/Ge51P3/U613mN+U8uG4j4VMMsXxB6MydTvrCzkgTnbW
-         MQRD2pakprx/7AU5Z7Yrf75Zt2XWIwgvLMbQY=
-Received: by 10.151.16.4 with SMTP id t4mr6212364ybi.107.1275398937281; Tue, 
-	01 Jun 2010 06:28:57 -0700 (PDT)
-Received: by 10.151.111.3 with HTTP; Tue, 1 Jun 2010 06:28:57 -0700 (PDT)
-In-Reply-To: <20100531194240.28729.15284.chriscool@tuxfamily.org>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=NuYH5w9j3B1LSFdh5YT6LcOdSUfNGPPEvJLolQKGFaLduM341WwO2d4kiK06bDvCkk
+         qZYv/nbESk4Htc7xil9wrek7Vbn4H7mEphGZPfXj4YT8PWccgqdypUOI5PmDyVlKI2Nd
+         otQDXmXXxr66WS4x4d5KrdmHZUfI2yyqPatf8=
+Received: by 10.141.187.20 with SMTP id o20mr4535176rvp.13.1275399860875;
+        Tue, 01 Jun 2010 06:44:20 -0700 (PDT)
+Received: from localhost.localdomain ([202.63.112.23])
+        by mx.google.com with ESMTPS id b2sm41186rvn.7.2010.06.01.06.44.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 01 Jun 2010 06:44:16 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.390.gb0a41.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148114>
 
-On Mon, May 31, 2010 at 8:42 PM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> And while at it, add an "Examples" section.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
-> =A0Documentation/git-revert.txt | =A0 52 ++++++++++++++++++++++++++++=
--------------
-> =A01 files changed, 35 insertions(+), 17 deletions(-)
->
-> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.=
-txt
-> index c66bf80..5740f37 100644
-> --- a/Documentation/git-revert.txt
-> +++ b/Documentation/git-revert.txt
-> @@ -3,20 +3,22 @@ git-revert(1)
->
-> =A0NAME
-> =A0----
-> -git-revert - Revert an existing commit
-> +git-revert - Revert some existing commits
->
-> =A0SYNOPSIS
-> =A0--------
-> -'git revert' [--edit | --no-edit] [-n] [-m parent-number] [-s] <comm=
-it>
-> +'git revert' [--edit | --no-edit] [-n] [-m parent-number] [-s] <comm=
-it>...
->
-> =A0DESCRIPTION
-> =A0-----------
-> -Given one existing commit, revert the change the patch introduces, a=
-nd record a
-> -new commit that records it. =A0This requires your working tree to be=
- clean (no
-> -modifications from the HEAD commit).
->
-> -Note: 'git revert' is used to record a new commit to reverse the
-> -effect of an earlier commit (often a faulty one). =A0If you want to
-> +Given one or more existing commits, revert the changes that the
-> +related patches introduce, and record some new commits that record
-> +them. =A0This requires your working tree to be clean (no modificatio=
-ns
-> +from the HEAD commit).
-> +
-> +Note: 'git revert' is used to record some new commits to reverse the
-> +effect of some earlier commits (often only a faulty one). =A0If you =
-want to
-> =A0throw away all uncommitted changes in your working directory, you
-> =A0should see linkgit:git-reset[1], particularly the '--hard' option.=
- =A0If
-> =A0you want to extract specific files as they were in another commit,=
- you
-> @@ -26,10 +28,13 @@ both will discard uncommitted changes in your wor=
-king directory.
->
-> =A0OPTIONS
-> =A0-------
-> -<commit>::
-> - =A0 =A0 =A0 Commit to revert.
-> +<commit>...::
-> + =A0 =A0 =A0 Commits to revert.
-> =A0 =A0 =A0 =A0For a more complete list of ways to spell commit names=
-, see
-> =A0 =A0 =A0 =A0"SPECIFYING REVISIONS" section in linkgit:git-rev-pars=
-e[1].
-> + =A0 =A0 =A0 Sets of commits can also be given but no traversal is d=
-one by
-> + =A0 =A0 =A0 default, see linkgit:git-rev-list[1] and its '--no-walk=
-'
-> + =A0 =A0 =A0 option.
->
-> =A0-e::
-> =A0--edit::
-> @@ -59,14 +64,13 @@ more details.
->
-> =A0-n::
-> =A0--no-commit::
-> - =A0 =A0 =A0 Usually the command automatically creates a commit with
-> - =A0 =A0 =A0 a commit log message stating which commit was
-> - =A0 =A0 =A0 reverted. =A0This flag applies the change necessary
-> - =A0 =A0 =A0 to revert the named commit to your working tree
-> - =A0 =A0 =A0 and the index, but does not make the commit. =A0In addi=
-tion,
-> - =A0 =A0 =A0 when this option is used, your index does not have to m=
-atch
-> - =A0 =A0 =A0 the HEAD commit. =A0The revert is done against the
-> - =A0 =A0 =A0 beginning state of your index.
-> + =A0 =A0 =A0 Usually the command automatically creates some commits =
-with
-> + =A0 =A0 =A0 commit log messages stating which commits were reverted=
-=2E =A0This
-> + =A0 =A0 =A0 flag applies the changes necessary to revert the named =
-commits
-> + =A0 =A0 =A0 to your working tree and the index, but does not make t=
-he
-> + =A0 =A0 =A0 commits. =A0In addition, when this option is used, your=
- index
-> + =A0 =A0 =A0 does not have to match the HEAD commit. =A0The revert i=
-s done
-> + =A0 =A0 =A0 against the beginning state of your index.
-> =A0+
-> =A0This is useful when reverting more than one commits'
-> =A0effect to your index in a row.
-> @@ -75,6 +79,20 @@ effect to your index in a row.
-> =A0--signoff::
-> =A0 =A0 =A0 =A0Add Signed-off-by line at the end of the commit messag=
-e.
->
-> +Examples
-> +--------
-> +git revert HEAD~3::
-> +
-> + =A0 =A0 =A0 Revert the changes specified by the fourth last commit =
-in HEAD
-> + =A0 =A0 =A0 and create a new commit with the reverted changes.
-> +
-> +git revert -n master\~5..master~2::
+Add an option to git-instaweb which allows the usage of the old
+gitweb_config.perl situated in '.git/gitweb' dir. When the option
+is in use, gitweb_conf() won't be used and thus the gitweb_config.perl
+won't be overwritten.
 
-Is the backslash correct?
+Usage:
+	git instaweb --reuse-config
 
-> +
-> + =A0 =A0 =A0 Revert the changes done by commits from the fiveth last=
- commit
+Example:
+	When I use git-instaweb, it is hard to add the line (Use of
+highlighting support) $feature{'highlight'}{'default'] = [1]; to the
+gitweb_config.perl file everytime I initiate the server. With this,
+it's enough to use this option.
 
-'fifth' instead of 'fiveth' may be more appropriate :)
+Also update Documentation of git-instaweb
 
-> + =A0 =A0 =A0 in master (included) to the third last commit in master
-> + =A0 =A0 =A0 (included), but do not create any commit with the rever=
-ted
-> + =A0 =A0 =A0 changes. The revert only modifies the working tree and =
-the
-> + =A0 =A0 =A0 index.
->
-> =A0Author
-> =A0------
-> --
-> 1.7.1.361.g42de.dirty
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+---
+ Documentation/git-instaweb.txt |    5 ++++-
+ git-instaweb.sh                |    8 +++++++-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
+index 2c3c4d2..0e7e20b 100644
+--- a/Documentation/git-instaweb.txt
++++ b/Documentation/git-instaweb.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git instaweb' [--local] [--httpd=<httpd>] [--port=<port>]
+-               [--browser=<browser>]
++               [--browser=<browser>] [--reuse-config]
+ 'git instaweb' [--start] [--stop] [--restart]
+ 
+ DESCRIPTION
+@@ -49,6 +49,9 @@ OPTIONS
+ 	linkgit:git-web--browse[1] for more information about this. If
+ 	the script fails, the URL will be printed to stdout.
+ 
++--reuse-config::
++	The previous gitweb_config.perl will not be overwritten.
++
+ --start::
+ 	Start the httpd instance and exit.  This does not generate
+ 	any of the configuration files for spawning a new instance.
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 1af4d5a..7b8b8d1 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -13,6 +13,7 @@ p,port=        the port to bind to
+ d,httpd=       the command to launch
+ b,browser=     the browser to launch
+ m,module-path= the module path (only needed for apache2)
++reuse-config	To use the previous gitweb_config.perl file from GIT_DIR. It will not be overwritten.
+  Action
+ stop           stop the web server
+ start          start the web server
+@@ -27,6 +28,7 @@ httpd="$(git config --get instaweb.httpd)"
+ root="$(git config --get instaweb.gitwebdir)"
+ port=$(git config --get instaweb.port)
+ module_path="$(git config --get instaweb.modulepath)"
++no_reuse=true
+ 
+ conf="$GIT_DIR/gitweb/httpd.conf"
+ 
+@@ -171,6 +173,10 @@ do
+ 		shift
+ 		module_path="$1"
+ 		;;
++	--reuse-config)
++		shift
++		no_reuse=false
++		;;
+ 	--)
+ 		;;
+ 	*)
+@@ -551,7 +557,7 @@ our \$projects_list = \$projectroot;
+ EOF
+ }
+ 
+-gitweb_conf
++test "$no_reuse" = true && gitweb_conf
+ 
+ resolve_full_httpd
+ mkdir -p "$fqgitdir/gitweb/$httpd_only"
+-- 
+1.7.1.390.gb0a41.dirty
