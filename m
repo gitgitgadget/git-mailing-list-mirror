@@ -1,112 +1,68 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Best way to apply textconv to a working tree file
-Date: Tue, 01 Jun 2010 18:07:06 +0200
-Message-ID: <vpqd3walot1.fsf@bauges.imag.fr>
-References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
+From: Alexander Iljin <ajsoft@yandex.ru>
+Subject: Re: What's the best way to make my company migrate to Git?
+Date: Tue, 1 Jun 2010 23:14:15 +0700
+Message-ID: <1533278916.20100601231415@yandex.ru>
+References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com> <4BF7B751.7050704@pileofstuff.org> <4BFB7F7F.5090407@drmicha.warpmail.net> <4C041656.7000008@pileofstuff.org> <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com>
+Reply-To: =?utf-8?B?0JDQu9C10LrRgdCw0L3QtNGAINCY0LvRjNC40L0=?= 
+	  <ajsoft@yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, <diane.gasselin@ensimag.imag.fr>,
-	<axel.bonnet@ensimag.imag.fr>
-To: clement.poulain@ensimag.imag.fr
-X-From: git-owner@vger.kernel.org Tue Jun 01 18:10:19 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: Andrew Sayers <andrew-git@pileofstuff.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Daniele Segato <daniele.bilug@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 01 18:22:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJU2k-0007fV-Nl
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 18:10:19 +0200
+	id 1OJUES-0007JX-Ue
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 18:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757102Ab0FAQKM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 12:10:12 -0400
-Received: from imag.imag.fr ([129.88.30.1]:49967 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757027Ab0FAQKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 12:10:11 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o51G767L020707
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Jun 2010 18:07:06 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OJTze-0006cI-Eu; Tue, 01 Jun 2010 18:07:06 +0200
-In-Reply-To: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
- (=?iso-8859-1?Q?=22Cl=E9ment?= Poulain"'s message of "Tue\, 01 Jun 2010
- 15\:41\:05 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 01 Jun 2010 18:07:07 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1751438Ab0FAQWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 12:22:20 -0400
+Received: from forward1.mail.yandex.net ([77.88.46.6]:58982 "EHLO
+	forward1.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751266Ab0FAQWT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 12:22:19 -0400
+X-Greylist: delayed 405 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jun 2010 12:22:19 EDT
+Received: from smtp1.mail.yandex.net (smtp1.mail.yandex.net [77.88.46.101])
+	by forward1.mail.yandex.net (Yandex) with ESMTP id 87A7369E90BE;
+	Tue,  1 Jun 2010 20:15:33 +0400 (MSD)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1275408933; bh=6rILQKE/zwVumUfMB2diEVYjJQ/OaBKhgoy9OEWRatE=;
+	h=Date:From:Reply-To:Message-ID:To:CC:Subject:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding;
+	b=crFeZ3kvoTnz0YeH1LU8dtTCjyylFscAVgynl9EX6fJfBgX2CfTyZpjKa8MM+v4us
+	 RPxfil5ksSPDI7zKan8wvGX8vzLTg+qzqrazfi9ASohYRn63UFlfg6UuUtVsYnFOf2
+	 eTZdbNJ5cZFhPQ/W8lisTp7rrwhE0gBL4JJV1zJE=
+Received: from h88-115-108.sibinet.com (unknown [88.204.115.108])
+	by smtp1.mail.yandex.net (Yandex) with ESMTPA id 11095290096;
+	Tue,  1 Jun 2010 20:15:32 +0400 (MSD)
+X-Priority: 3 (Normal)
+In-Reply-To: <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com>
+X-Yandex-TimeMark: 1275408933
+X-Yandex-Spam: 1
+X-Yandex-Front: smtp1.mail.yandex.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148136>
 
-[ Just had IRL discussion with Cl=E9ment and his co-workers ]
+Hello!
 
-Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr> writes:
+DS> You also can't create new Subversion branches or tags with git-svn,
+DS> you'll had to use subversion directly for that.
 
-> In order to add textconv support to "git-gui blame", we have to run
-> textconv on a file which is in the working tree.
-> Currently, "git-gui blame" uses the Tcl function 'open' to display th=
-e
-> content of the working-tree file. This doesn't allow us to run textco=
-nv on
-> it.
+  Another point: you can't contribute to branches via git-svn, you can
+  only commit to trunk. It is easy to be confused if you've created a
+  feature branch in Git. If you then want to git-svn dcommit a
+  half-done work, you will mess up the trunk.
 
-There are actually two distinct issues :
 
-1) The textconv functionality has an API, but isn't available as
-   plumbing for scripting purposes (and git gui would like to be able
-   to call textconv from the command-line).
-
-2) If one solves issue 1) by adding textconv support to "git
-   cat-file", then we can call textconv on a blob in the object
-   database, but not on a worktree file. Hence, we still need to add
-   support to display worktree files in "git cat-file".
-
-> - For revisions, "git-gui blame" is based on "git cat-file blob
-> <sha1:path>". Therefore, we thought of adding a "--textconv" option o=
-n
-> cat-file as well as a "--working-tree" option ("git cat-file --workin=
-g-tree
-> <file>" will display the content of <file> in the working-tree)
->
-> - Use the "-p" (pretty print) cat-file's option, with a path beginnin=
-g by
-> ./ (to avoid ambiguous name like HEAD)
-
-After thinking about it, I think a mix of these solutions would be
-OK:
-
-git cat-file --textconv <blob-sha1>            # Run textconv on blob
-
-git cat-file --textconv <tree-sha1>:<filename> # Run textconv on file
-                                               # (in object database)
-
-git cat-file --textconv ./<filename>           # Run textconv on file
-                                               # (in worktree)
-
-This preserves the property "1st argument is an option, 2nd argument
-is the thing to do the cat-file on", hence avoid any possible
-ambiguities in command-line option parsing.
-
-Another option would be to resurect the WOKRTREE/STAGE magit tokens [1]
-proposal, and allow
-
-git cat-file --textconv WORKTREE:<filename>
-
-That sounds the most natural to me, but it's probably the most
-controversial too ...
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/133087
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+---=====---
+ Alexander
