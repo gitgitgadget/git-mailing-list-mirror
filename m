@@ -1,125 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/8] revert: change help_msg() to take no argument
-Date: Tue, 1 Jun 2010 01:27:45 -0500
-Message-ID: <20100601062745.GA27593@progeny.tock>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
- <20100531194240.28729.49459.chriscool@tuxfamily.org>
- <20100601050815.GB22441@progeny.tock>
- <20100601054034.GA6638@sigill.intra.peff.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: What's the best way to make my company migrate to Git?
+Date: Tue, 01 Jun 2010 08:28:37 +0200
+Message-ID: <4C04A895.6030606@drmicha.warpmail.net>
+References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com> <4BF7B751.7050704@pileofstuff.org> <4BFB7F7F.5090407@drmicha.warpmail.net> <4C041656.7000008@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 01 08:27:57 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Daniele Segato <daniele.bilug@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Tue Jun 01 08:29:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJKx9-0000JO-FP
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:27:55 +0200
+	id 1OJKyI-00011A-01
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753326Ab0FAG1v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 02:27:51 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:57809 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751926Ab0FAG1u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 02:27:50 -0400
-Received: by gwaa12 with SMTP id a12so3299967gwa.19
-        for <git@vger.kernel.org>; Mon, 31 May 2010 23:27:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=CAV3rLOGbF4O1sbABmYSgllJZbCNzHcCu93lltj4aI4=;
-        b=v+wGtqJbkM4HL7ICsgAzqjUcpHHZIk/P6uZFz+XAxk06qQnliDf4H+YWa7GZYnbOiS
-         y3caqtQD29OC0sfppihVAgg1+xuLDf9v5rHV0xkMxqj+irYItNtflGRNhWyTer9gupst
-         LzO1uDTRZPnktVrj7hWlv2tcFX1RGR3LMnPYQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=XUdT9QP3NoXENo4P5sLwibnw5pqDll1eFNY1FO8HLG28uxvLZv8V1L0d7W/bSjIXVm
-         cKYrPQtqdlImd0W4XqWk0/0C/0Gsz3pRVEam8JMpDTJyvFWZjYarJZhoqGjPXzrOoJvn
-         yfxAq1/XHwl/LQXYAq7FBVXoWFXOdEZYSEY6E=
-Received: by 10.231.187.3 with SMTP id cu3mr7163013ibb.75.1275373669321;
-        Mon, 31 May 2010 23:27:49 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id d9sm29896865ibl.10.2010.05.31.23.27.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 31 May 2010 23:27:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100601054034.GA6638@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753488Ab0FAG3A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 02:29:00 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:32898 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753430Ab0FAG27 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 02:28:59 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 9C231F8181;
+	Tue,  1 Jun 2010 02:28:58 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 01 Jun 2010 02:28:58 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=JkLTtysxAm67Ayjb2lmL5Mx4N5o=; b=QalAYMWAhZabNRUmlo/4quM2dWwqSKKcTbXB76l/ytS0km3H7JznUzFt8DSHPU0L73ILJTzmpdaHj7EFm0iKca4g86l/lgG7h8vcDv0xmLdUEegS+DMw9ePDXEQv0c2+rsmzHK1wxWc4OXwizAEwy0PwZFC6Gvg08G2fvivhoIU=
+X-Sasl-enc: dbqSgWkWg8kT4JOH4TB4elNQcCsS/3AJ4xl7v1VJ/yAM 1275373738
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DC0314FACC;
+	Tue,  1 Jun 2010 02:28:57 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <4C041656.7000008@pileofstuff.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148082>
 
-Jeff King wrote:
+Andrew Sayers venit, vidit, dixit 31.05.2010 22:04:
+> On 25/05/10 08:42, Michael J Gruber wrote:
+>>
+>> Feel free to contribute to the Git Wiki maybe at
+>>
+>> https://git.wiki.kernel.org/index.php/GitDocumentation
+>>
+>> in the "User contributed Documentation" section.
+>>
+>> Michael
+>>
+> 
+> Thanks for the hint - this turned into rather more than just uploading a
+> PDF, and I've now finished a complete write-up here:
+> 
+> 	https://git.wiki.kernel.org/index.php/SvnMigration
 
-> You cc'd me, which I guess means you git-blame'd the line in question=
-=2E
-> But you really need to parent-blame about five steps back
+Thanks a lot for your work!
 
-Worse, I used =E2=80=98git log -- builtin-revert.c=E2=80=99 and stopped=
- reading when
-it seemed you must know be current maintainer for that line.  Sorry
-about that.
+> 
+> The "User contributed Documentation" section seems to be mostly off-wiki
+> links, so I added a link from "Documentation on this Wiki" - I hope
+> that's ok.
 
-> we could actually make it stash the
-> original authorship information somewhere (in addition to the commit
-> message template) and then pull it out automatically.
+Absolutely. "User contributed" would have been the place for a (link to
+the pdf), and "Doc. on" is the right place your new Wiki page.
 
-I think that can wait for cherry-pick --continue.
-
-Here=E2=80=99s an ugly patch to use --author.  I call it ugly because t=
-he
-relevant part of t3507-cherry-pick-conflict.sh output looks like
-this:
-
-| Automatic cherry-pick failed.  After resolving the conflicts,
-| mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
-| and commit the result with:=20
-|=20
-|         git commit --author=3D'A U Thor <author@example.com>' \
-|                     --date=3D'1112912113 -0700'
-
-In other words, the command is long and the date human-unfriendly.
-
-Anyway, given that cherry-pick --continue is just around the corner, I
-withdraw my complaint about the =E2=80=98commit -c=E2=80=99 version.
-
-Thanks for the pointer.
-
-diff --git a/builtin/revert.c b/builtin/revert.c
-index bbafc41..9b8e7d6 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -252,9 +252,16 @@ static char *help_msg(void)
- 		"and commit the result");
-=20
- 	if (action =3D=3D CHERRY_PICK) {
-+		const char *ident =3D git_author_info(IDENT_ERROR_ON_NO_NAME);
-+		const char *ident_end =3D ident ? strchr(ident, '>') : NULL;
-+		if (!ident_end || ident_end[1] !=3D ' ')
-+			die("git_author_info returned nonsense");
- 		strbuf_addf(&helpbuf, " with: \n"
- 			"\n"
--			"        git commit\n");
-+			"        git commit --author=3D'%.*s' \\\n"
-+			"                    --date=3D'%s'\n",
-+			(int) (ident_end + 1 - ident), ident,
-+			ident_end + 2);
- 	}
- 	else
- 		strbuf_addch(&helpbuf, '.');
+Thanks again,
+Michael
