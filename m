@@ -1,89 +1,98 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [GSoC 2010] The 2nd week
-Date: Tue, 1 Jun 2010 14:41:01 +0800
-Message-ID: <AANLkTinelswhPBZJNBDo8VesCxBgRlEZezwcY9dWyaF4@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to add daily tags for a central repo?
+Date: Tue, 01 Jun 2010 08:43:42 +0200
+Message-ID: <4C04AC1E.7040502@drmicha.warpmail.net>
+References: <1275369711233-5124575.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jun 01 08:41:21 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: roylee17 <roylee17@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 01 08:44:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJLA6-0000CE-AM
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:41:18 +0200
+	id 1OJLCv-0001uv-6J
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753873Ab0FAGlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 02:41:07 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:41842 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753562Ab0FAGlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 02:41:04 -0400
-Received: by vws11 with SMTP id 11so567997vws.19
-        for <git@vger.kernel.org>; Mon, 31 May 2010 23:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=Gb/jvk4qFMKKHTTlOAdr+ZjqOG+mOq7sJaYicE2mKW4=;
-        b=FE8i0UmpYIc7jRajMdzm6Xo2/GDppgddqz+9QSlincOkZ/2OF5g/aRJhZH5xaGq9EI
-         OFSrJgfPrP/X05gp1EP7Kw9C7zCARblUV6+xCW2uH4D9MCbTFcwzXAWNCBB6Au+rl86V
-         WLkbJhhrBziy4L+1y/3lqVN5O2BvGVs/S274A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Ldi140yzlv1UEAiqjMpXWB6s9/oiOc64A080SP+kGNfMYxs/FNyXs4XpeCX1lZ8BkF
-         sSrjW6DOa1qlO5kzjLgJoun2M/WcjB835d2z5o4gj6z28ebDbZtgcd9EVsjiKz+g0cAV
-         cJ3nsVF0lYg0NXyI5tXO8gFUPxSrX1cBaxpfs=
-Received: by 10.224.88.25 with SMTP id y25mr2094701qal.226.1275374462068; Mon, 
-	31 May 2010 23:41:02 -0700 (PDT)
-Received: by 10.229.110.18 with HTTP; Mon, 31 May 2010 23:41:01 -0700 (PDT)
+	id S1752882Ab0FAGoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 02:44:07 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:44893 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751485Ab0FAGoF (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 02:44:05 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D269DF7EC0;
+	Tue,  1 Jun 2010 02:44:03 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 01 Jun 2010 02:44:03 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=rPrYk/W3MWW9L0AuoQZlehDgMWA=; b=T7C+B9NzWjmSf24XH8VsJ2YeKkM2UlofVd9BRmcMZfFlL1M2cjk0ETnIOsZDs0PDut2/+zhaISlfvvyRqGAxBJKh508pLf/fMImszFRHbglZqAqKIGFFuZHxyyXf1W8v13MlPACkRguqb1deEVC6Q2+VcI6BT1mSd2HdyB3uwT8=
+X-Sasl-enc: yCrXnmfJV76R8H9NqbfUx1YxHoRp+VAio+e9ncEevcau 1275374643
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2F5594BD222;
+	Tue,  1 Jun 2010 02:44:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <1275369711233-5124575.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148084>
 
-Hi,
+roylee17 venit, vidit, dixit 01.06.2010 07:21:
+> 
+> Hi,
+> 
+> We currently host our projects on a central server.
+> For the daily build purpose, I currently using a script to do the following
+> steps:
+> 
+>   1. clone the project from the central server
+> 
+>   2. find the target commit for a specified date
+>       commit=`git log origin/master -n1 --format=%H --until="${timespec}
+> 00:00:00"`
+> 
+>   3. tag the commit
+>       git tag -f daily/${timespec} ${commit}
+> 
+>   4. push the tag up to the central server
+> 
+> This usually works fine and allows us to tag earlier commit with past dates
+> 
+> However, it depends on the "COMMIT DATE", which is a local time to the
+> developer who
+> committed the changes.
+> And if some developer didn't have the time or date configured correctly on
+> his machine,
+> the changes committed by him may not be included in a tag, even it is pushed
+> to the 
+> on a date earlier than the target date to tag.
+> 
+> Alternatively, we can queue the job to do the following steps "on a target
+> date":
+> 
+> 1. clone the project from the central server
+> 2. tag the "latest commit"
+> 3. push the tag to the server
+> 
+> But I'd like to know better ways to do the daily tag things?
 
-   I have deal with many graduated works personally in my college, so
-it is a busy week for me and this update comes a little later.  Of
-course, I get progress on git development. Generally:
-1. follow the issues of '--graph improvement' series;
-2. try to find out a way to deal with the range split/combine problem.
+Having these tags seems strange to me. Imagine someone pushing a patch
+series one-by-one around midnight, or pushing a commit and, shortly
+after, a fixup. You'll end up with a tag pointing to a commit in the middle.
 
-And I think it is worth to mention how we will deal with the line
-ranges when we follow the history, my mentor Thomas give the idea to
-use a topo-order traverse, and I get a detail solution from that.
+The commit time is totally unreliable, as you noticed, also because
+authors may commit locally, then push later.
 
-The line level browser will start at certain commit and its line
-ranges, the ranges will not split/combine when we just encounter
-linear history. But when it comes the merge commit, one branch will
-take part of the ranges and other branches will take others. That
-means the ranges will split here and will combine again after we reach
-the common ancestor of all branches. Since, we will not know what a
-commit's interesting ranges until all its children branches' commit's
-ranges combine, so we need to walk the commits in topo-order and to
-get the parents' commits' interesting ranges when we reach a commit.
-This will make sure, when we reach some commit, its ranges is combined
-and valid. Generally,
-1. Sort all the commits in topo-order and put the sorted list in [list];
-2. Pull one commit from [list], split the ranges according parents of
-current commit, output the diff between current commit and each
-parent;
-3. Loop 2 until exhaust the [list];
+That being said, if you're really interested in the state of a branch on
+the central server at a certain point in time it's easiest to enable
+reflogs on the central repository (by setting core.logAllRefUpdates or
+enabling individually) and to tag the commit HEAD@{datetimespec} (or
+branchname@...). No need for cloning.
 
-Of course, the commit touch no interesting ranges will be ignored.
-
-The point here is we will traverse the commit graph twice to achieve
-this, I think it is the only way to do this and if there is some
-smarter way to do this, please point me out, thanks!
-
--- 
-Regards!
-Bo
-----------------------------
-My blog: http://blog.morebits.org
-Why Git: http://www.whygitisbetterthanx.com/
+Cheers,
+Michael
