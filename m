@@ -1,95 +1,125 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Documentation/checkout: clarify description
-Date: Tue, 1 Jun 2010 02:10:47 -0400
-Message-ID: <20100601061046.GA7360@sigill.intra.peff.net>
-References: <20100530084153.GA5447@progeny.tock>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/8] revert: change help_msg() to take no argument
+Date: Tue, 1 Jun 2010 01:27:45 -0500
+Message-ID: <20100601062745.GA27593@progeny.tock>
+References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
+ <20100531194240.28729.49459.chriscool@tuxfamily.org>
+ <20100601050815.GB22441@progeny.tock>
+ <20100601054034.GA6638@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Tomas Carnecky <tom@dbservice.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 08:10:58 2010
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 01 08:27:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJKgj-0007B4-Oi
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:10:58 +0200
+	id 1OJKx9-0000JO-FP
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 08:27:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751995Ab0FAGKx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 02:10:53 -0400
-Received: from peff.net ([208.65.91.99]:42227 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750833Ab0FAGKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 02:10:52 -0400
-Received: (qmail 24669 invoked by uid 107); 1 Jun 2010 06:10:55 -0000
-Received: from adsl-99-133-187-56.dsl.bltnin.sbcglobal.net (HELO sigill.intra.peff.net) (99.133.187.56)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Jun 2010 02:10:55 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jun 2010 02:10:47 -0400
+	id S1753326Ab0FAG1v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 02:27:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:57809 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751926Ab0FAG1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 02:27:50 -0400
+Received: by gwaa12 with SMTP id a12so3299967gwa.19
+        for <git@vger.kernel.org>; Mon, 31 May 2010 23:27:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=CAV3rLOGbF4O1sbABmYSgllJZbCNzHcCu93lltj4aI4=;
+        b=v+wGtqJbkM4HL7ICsgAzqjUcpHHZIk/P6uZFz+XAxk06qQnliDf4H+YWa7GZYnbOiS
+         y3caqtQD29OC0sfppihVAgg1+xuLDf9v5rHV0xkMxqj+irYItNtflGRNhWyTer9gupst
+         LzO1uDTRZPnktVrj7hWlv2tcFX1RGR3LMnPYQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=XUdT9QP3NoXENo4P5sLwibnw5pqDll1eFNY1FO8HLG28uxvLZv8V1L0d7W/bSjIXVm
+         cKYrPQtqdlImd0W4XqWk0/0C/0Gsz3pRVEam8JMpDTJyvFWZjYarJZhoqGjPXzrOoJvn
+         yfxAq1/XHwl/LQXYAq7FBVXoWFXOdEZYSEY6E=
+Received: by 10.231.187.3 with SMTP id cu3mr7163013ibb.75.1275373669321;
+        Mon, 31 May 2010 23:27:49 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id d9sm29896865ibl.10.2010.05.31.23.27.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 31 May 2010 23:27:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100530084153.GA5447@progeny.tock>
+In-Reply-To: <20100601054034.GA6638@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148081>
 
-On Sun, May 30, 2010 at 03:41:53AM -0500, Jonathan Nieder wrote:
+Jeff King wrote:
 
-> To the first-time reader, it may not be obvious that =E2=80=98git che=
-ckout=E2=80=99
-> has two modes, nor that if no branch is specified it will read
-> from the index.
+> You cc'd me, which I guess means you git-blame'd the line in question=
+=2E
+> But you really need to parent-blame about five steps back
 
-OK, I can see how we might not explain the modes well, but...
+Worse, I used =E2=80=98git log -- builtin-revert.c=E2=80=99 and stopped=
+ reading when
+it seemed you must know be current maintainer for that line.  Sorry
+about that.
 
-> diff --git a/Documentation/git-checkout.txt b/Documentation/git-check=
-out.txt
-> index 4505eb6..99bd7f2 100644
-> --- a/Documentation/git-checkout.txt
-> +++ b/Documentation/git-checkout.txt
-> @@ -15,26 +15,32 @@ SYNOPSIS
-> =20
->  DESCRIPTION
->  -----------
-> +Retrieves files from the index or specified tree and writes them
-> +to the working tree.
-> =20
-> -When <paths> are not given, this command switches branches by
-> -updating the index, working tree, and HEAD to reflect the specified
-> -branch.
+> we could actually make it stash the
+> original authorship information somewhere (in addition to the commit
+> message template) and then pull it out automatically.
 
-How is this first paragraph helping? It seems to be describing just one
-mode. You then go on to describe each mode in turn, which makes sense,
-but this first paragraph just seems out of place. If you're going to sa=
-y
-anything, you should say "there are two different modes, one for X and
-one for Y. The first mode is...".
+I think that can wait for cherry-pick --continue.
 
-> +'git checkout' [-b <new branch>] [<branch>]::
-> =20
-> +	When <paths> are not given, this command switches branches by
-> +	updating the index, working tree, and HEAD to reflect the
-> +	specified branch.
+Here=E2=80=99s an ugly patch to use --author.  I call it ugly because t=
+he
+relevant part of t3507-cherry-pick-conflict.sh output looks like
+this:
 
-In 76cfadf, I split this into
+| Automatic cherry-pick failed.  After resolving the conflicts,
+| mark the corrected paths with 'git add <paths>' or 'git rm <paths>'
+| and commit the result with:=20
+|=20
+|         git commit --author=3D'A U Thor <author@example.com>' \
+|                     --date=3D'1112912113 -0700'
 
-  git checkout [<branch>]
-  git checkout -b <new branch> [<start_point>]
+In other words, the command is long and the date human-unfriendly.
 
-I wonder if we should do the same here (the distinction is that
-<start_point> is treated differently from <branch>, especially with
-respect to creating a detached HEAD).
+Anyway, given that cherry-pick --continue is just around the corner, I
+withdraw my complaint about the =E2=80=98commit -c=E2=80=99 version.
 
-Also, does it make sense to say "When <paths> are not given"? The "this
-command" presumably refers to the one directly above, which has no
-<paths>. Might it be easier to understand if we say "in this form of th=
-e
-command" or something like that? Since we are now listing each form in
-turn, the user can presumably figure out which form they are trying to
-use.
+Thanks for the pointer.
 
--Peff
+diff --git a/builtin/revert.c b/builtin/revert.c
+index bbafc41..9b8e7d6 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -252,9 +252,16 @@ static char *help_msg(void)
+ 		"and commit the result");
+=20
+ 	if (action =3D=3D CHERRY_PICK) {
++		const char *ident =3D git_author_info(IDENT_ERROR_ON_NO_NAME);
++		const char *ident_end =3D ident ? strchr(ident, '>') : NULL;
++		if (!ident_end || ident_end[1] !=3D ' ')
++			die("git_author_info returned nonsense");
+ 		strbuf_addf(&helpbuf, " with: \n"
+ 			"\n"
+-			"        git commit\n");
++			"        git commit --author=3D'%.*s' \\\n"
++			"                    --date=3D'%s'\n",
++			(int) (ident_end + 1 - ident), ident,
++			ident_end + 2);
+ 	}
+ 	else
+ 		strbuf_addch(&helpbuf, '.');
