@@ -1,68 +1,90 @@
-From: Tim Smith <tzs@tzs.net>
-Subject: hook to deal correctly with OS X packages?
-Date: Mon, 31 May 2010 18:56:50 -0700
-Message-ID: <30C845A9-5D6D-4D60-94A7-49C076F6691A@tzs.net>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 01 05:13:44 2010
+From: Sylvia Liu <sylviaonlyone@gmail.com>
+Subject: HELP: cannot clone a repository via http_proxy on FC13
+Date: Tue, 1 Jun 2010 11:30:00 +0800
+Message-ID: <AANLkTimefBKp5So03RKaZRqQXePO1KY6EgMRxN0zsf8M@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 01 05:30:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJHvD-0004xS-HN
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:13:43 +0200
+	id 1OJIB9-0004DL-4L
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 05:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709Ab0FADNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 May 2010 23:13:39 -0400
-Received: from pass12.dizinc.com ([72.29.74.7]:45838 "EHLO pass12.dizinc.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752968Ab0FADNi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 May 2010 23:13:38 -0400
-X-Greylist: delayed 4603 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 May 2010 23:13:38 EDT
-Received: from c-24-16-250-127.hsd1.wa.comcast.net ([24.16.250.127]:61742 helo=[192.168.1.11])
-	by pass12.dizinc.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <tzs@tzs.net>)
-	id 1OJGir-0006wj-Ul
-	for git@vger.kernel.org; Mon, 31 May 2010 21:56:54 -0400
-X-Mailer: Apple Mail (2.1078)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - pass12.dizinc.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tzs.net
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754156Ab0FADaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 May 2010 23:30:04 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:57545 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754042Ab0FADaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 May 2010 23:30:01 -0400
+Received: by pvg11 with SMTP id 11so1567319pvg.19
+        for <git@vger.kernel.org>; Mon, 31 May 2010 20:30:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=ah0wD8M/OdmGSXXV19XsLKHPIDQcEdshi3I1+kaW3tk=;
+        b=WyvTZNgEtNZK4jyykimGN83gdSTW/w/L01RqPhxt6GTiGeWWPRkjRFj/w4pa3lUNcP
+         wxwdfTV7UUZfmPn3KNfYVGbuWhH5UyiTvLI3uXsdSNi8kUBP52JtqjJeDXb59zBVMcXD
+         2bQDS5Rh+X7pbWaioInT6OEbJx/AUO8iUY+Vk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=VL9UmVQlMycJXU6IJtspb/xhDM2KyUIsUE+LjQ8F3wMWivPfG8MHMSJBFZAzQmaDkQ
+         YbqqCPrRQ3cWl8JBtrDHIfTLmWfVB5hoEob2xXohjzpwUREVz6tg8uvJgexqaZ+xYEeP
+         9VJv94k2Wl9YfE33F2xUovJW6UOfGzbeL77fc=
+Received: by 10.142.121.1 with SMTP id t1mr3531431wfc.100.1275363000078; Mon, 
+	31 May 2010 20:30:00 -0700 (PDT)
+Received: by 10.143.40.20 with HTTP; Mon, 31 May 2010 20:30:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148072>
 
+Hello,
 
-On OS X there are document files that aren't really files. They are directories with a metadata attribute that says they are logically files. For example, the popular outliner OmniOutliner stores it outlines that way. An OmniOutliner "document" consists of a directory that contains a "contents.xml" file that has the outline, plus any other files that you've attached to the outline.
+I cannot use git clone to get data from a repository.
 
-This poses a bit of a problem for VCS systems, because from the user point of view, the directory is opaque. Content is added or removed by the programs that edit the document, not directly by the user, and so 
+I encountered the problem and searched on line without any solutions.
+So could you please help me on this?
 
-On Mercurial, which I've been evaluating for a couple of months as a replacement for Subversion at work, this can be handled easily with a pre-commit hook:
+First, I have setup the http_proxy as an environment variable. And I
+can use wget to download the repository page.
 
-	[hooks]
-	pre-commit = mdfind -0 -onlyin . "kMDItemContentTypeTree = 'com.apple.package'" | xargs -0 hg addremove
- 
-That mdfind command finds things marked as com.apple.package. For each, the hook adds to the commit any new files found in the package, and removes anything that's been deleted.
+--- On my FC13
+System: Fedora 13
+Kernel version: 2.6.33.4-95.fc13.i686.PAE
+Git version: 1.7.0.1
 
-I'm done evaluating Mercurial and now it's Git's turn. I'm liking it so far, but am stumped as to how to do the equivalent of the above Mercurial hook.
+I tried this command:
+   sudo git clone
+http://git.gitorious.org/meego-developer-tools/image-creator.git
 
-Does this sound about right? Use a pre-commit hook that checks all the files that have been staged, and see if any of them are in a directory that is a package. If so, it needs to add any changes from those directories that are not staged, and add any untracked files from those directories.
+got the error messages as follow:
+   Initialized empty Git repository in
+/home/sylvia/workarea/DEV_TOOLS/test/image-creator/.git/
+   error: Failed connect to git.gitorious.org:80; Operation now in
+progress while accessing
+http://git.gitorious.org/meego-developer-tools/image-creator.git/info/refs
 
-This means that if the user makes a change to a document, and wants it to be committed, the user has to stage at least one file from the package directory. It also means that the user can't partially stage on of these documents, but I think that's an acceptable limitation.
+   fatal: HTTP request failed
 
-Thanks!
+--- On my FC12
+I also tried on Fedora 12, same error exist.
 
--- 
---Tim Smith
+--- On my Kubuntu: it is working well.
+System: Kubuntu
+Kernel version: 2.6.31-21-generic
+Git version: 1.6.3.3
+
+Seems it is something wrong with Fedora.
+Can you help me on this?
+Thanks a lot.
+
+BR,
+Sylvia
