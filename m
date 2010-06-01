@@ -1,98 +1,137 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] git-instaweb: Add option to reuse previous config file
-Date: Tue, 1 Jun 2010 23:31:37 +0200
-Message-ID: <201006012331.37871.jnareb@gmail.com>
-References: <1275399845-13311-1-git-send-email-pavan.sss1991@gmail.com> <201006012240.18755.jnareb@gmail.com> <AANLkTinmDi-4nZm9x81FlDbp9mJMLoWmom2qUKnSLIrZ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Petr Baudis <pasky@ucw.cz>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 01 23:29:43 2010
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [PATCHv2] git-instaweb: Add option to reuse previous config file
+Date: Wed,  2 Jun 2010 03:29:49 +0530
+Message-ID: <1275429589-30634-1-git-send-email-pavan.sss1991@gmail.com>
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
+	pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Wed Jun 02 00:00:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJZ1p-0003JA-82
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 23:29:41 +0200
+	id 1OJZVb-00071M-TT
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 00:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757422Ab0FAV3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 17:29:25 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37385 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757151Ab0FAV3Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 17:29:24 -0400
-Received: by fxm8 with SMTP id 8so1395959fxm.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 14:29:23 -0700 (PDT)
+	id S1757497Ab0FAWAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 18:00:00 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:64598 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757338Ab0FAV76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 17:59:58 -0400
+Received: by pwj2 with SMTP id 2so1399441pwj.19
+        for <git@vger.kernel.org>; Tue, 01 Jun 2010 14:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6ow7xsRl2iNT4JA9LgFDWyBVopWfC0kn7Z2Irkws0Ro=;
-        b=D8bXBFrduWamA80w2k0tpjxAJInvq35P4z/9EUuHf6+EnyaweRcr7V2tX7PZyyEDKF
-         FzD36kijHSrV+KTurMWtDWVfGoPWw9RwmaTOzyFORip/jo5v+DRVnnbwYU10ZFxJQLWe
-         xvLFg8AxxdTKWCNmHvqBoaTuj13B09o6OdOMw=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=ic8zuwefiZ4xGa/UXnOZc4FIbPxGZkRnTPNVHJBfggg=;
+        b=w/JUOeVQvz0DD7aDx7ShGiA9ZFkX/Z+lMGBwPCONu+dweB9vyXE7oQMTLzSQRfDTI1
+         AttV1nw+ePP4ntA+KO4c0KmKeugoaZ+O00WkQV15GwwTpxRt9tKPewvPK0/W4F9Qli4T
+         vgIPb3K1WBh6xdPwQhNFegbjq9we7dO0xLJUk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=AIlH0dBCM5yxgJJfjUYlWbZ+gnfroclO3zUdn9TvgTmc7YAXF48Mcs6P7XYvYuAuur
-         8IjNStmfpBuzVblHS7UPWH0ENLo5UBTqKqiQ/JS87tnRzFn/0iTrIurnngqFHYFrrTTg
-         e6VTsmcrGiuroJNoMlHV6oGaAqcmwEhrN8aW8=
-Received: by 10.223.17.136 with SMTP id s8mr7719795faa.41.1275427762410;
-        Tue, 01 Jun 2010 14:29:22 -0700 (PDT)
-Received: from [192.168.1.15] (abvg224.neoplus.adsl.tpnet.pl [83.8.204.224])
-        by mx.google.com with ESMTPS id r12sm48905395fah.20.2010.06.01.14.29.21
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=R1xYJT+hPkXV9lS+1s5Vwfs9moS9sFlGUMmX2Z+vyKPETe/CL56E5x1wjtBfmQI7R+
+         T/WHBmmT17tb4GsjyaZfskp4YdgNEnJmxSEo51/upbvERU4BtDskyxVnrOuSjVyIC6lz
+         ve6jy6MhtkirSWPKfuGfStFz7VzxubL7909HE=
+Received: by 10.140.55.13 with SMTP id d13mr5310575rva.119.1275429597806;
+        Tue, 01 Jun 2010 14:59:57 -0700 (PDT)
+Received: from localhost.localdomain ([202.63.112.23])
+        by mx.google.com with ESMTPS id b10sm5648992rvn.3.2010.06.01.14.59.54
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 14:29:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTinmDi-4nZm9x81FlDbp9mJMLoWmom2qUKnSLIrZ@mail.gmail.com>
-Content-Disposition: inline
+        Tue, 01 Jun 2010 14:59:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.443.g62265.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148161>
 
-Pavan Kumar Sunkara wrote:
-> 2010/6/2 Jakub Narebski <jnareb@gmail.com>
-> 
-> > On Tue, 1 June 2010, Pavan Kumar Sunkara wrote:
-> >
-> > > Add an option to git-instaweb which allows the usage of the old
-> > > gitweb_config.perl situated in '.git/gitweb' dir. When the option
-> > > is in use, gitweb_conf() won't be used and thus the gitweb_config.perl
-> > > won't be overwritten.
-> >
-> > I think that the correct solution would be to avoid overwriting
-> > (customized) git-instaweb's gitweb_config.perl, but to generate it if
-> > it does not exist.
-> 
-> So, you say that there is no use of this option ?
-> Well, what happens if someone want's to overwrite their 
-> gitweb_config.perl?
+Add an option to git-instaweb which allows the usage of the old
+gitweb_config.perl situated in '.git/gitweb' dir. When the option
+is in use, gitweb_config.perl generated by git-instaweb won't be
+overwritten.
 
-No, I am not saying that.
+Usage:
+	git instaweb --reuse-config
 
-If git-instaweb is invoked *without* --reuse-config, the gitweb_config.perl
-would be regenerated whether it exists or not, overwriting your changes.
+Example:
+	When I use git-instaweb, it is tiring to add customised
+configuration (like highlight featues enabling) to the gitweb_config.perl
+file everytime I initiate the server. With this,it's enough to use
+this option.
 
-If git-instaweb is invoked *with* --reuse-config, the gitweb_config.perl
-would be generated if it does not exist (so if you delete gitweb_config.perl
-and then run 'git instaweb --reuse-config' it would not fail), and reused
-if it does exist.
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+---
+ Documentation/git-instaweb.txt |    5 ++++-
+ git-instaweb.sh                |    8 +++++++-
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-  test "$no_reuse" = true || test ! -e "$GITWEB_CONFIG" && gitweb_conf
-
-or something like that (the test if $GITWEB_CONFIG file exists might be
-moved to the fragment of code that sets no_reuse to true instead).
-
+diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
+index 2c3c4d2..0e7e20b 100644
+--- a/Documentation/git-instaweb.txt
++++ b/Documentation/git-instaweb.txt
+@@ -9,7 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git instaweb' [--local] [--httpd=<httpd>] [--port=<port>]
+-               [--browser=<browser>]
++               [--browser=<browser>] [--reuse-config]
+ 'git instaweb' [--start] [--stop] [--restart]
+ 
+ DESCRIPTION
+@@ -49,6 +49,9 @@ OPTIONS
+ 	linkgit:git-web--browse[1] for more information about this. If
+ 	the script fails, the URL will be printed to stdout.
+ 
++--reuse-config::
++	The previous gitweb_config.perl will not be overwritten.
++
+ --start::
+ 	Start the httpd instance and exit.  This does not generate
+ 	any of the configuration files for spawning a new instance.
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 1af4d5a..1c704a3 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -13,6 +13,7 @@ p,port=        the port to bind to
+ d,httpd=       the command to launch
+ b,browser=     the browser to launch
+ m,module-path= the module path (only needed for apache2)
++reuse-config    reuse previous gitweb_config.perl from GIT_DIR
+  Action
+ stop           stop the web server
+ start          start the web server
+@@ -27,6 +28,7 @@ httpd="$(git config --get instaweb.httpd)"
+ root="$(git config --get instaweb.gitwebdir)"
+ port=$(git config --get instaweb.port)
+ module_path="$(git config --get instaweb.modulepath)"
++no_reuse=true
+ 
+ conf="$GIT_DIR/gitweb/httpd.conf"
+ 
+@@ -171,6 +173,10 @@ do
+ 		shift
+ 		module_path="$1"
+ 		;;
++	--reuse-config)
++		shift
++		no_reuse=false
++		;;
+ 	--)
+ 		;;
+ 	*)
+@@ -551,7 +557,7 @@ our \$projects_list = \$projectroot;
+ EOF
+ }
+ 
+-gitweb_conf
++test "$no_reuse" = true || test ! -e "$GITWEB_CONFIG" && gitweb_conf
+ 
+ resolve_full_httpd
+ mkdir -p "$fqgitdir/gitweb/$httpd_only"
 -- 
-Jakub Narebski
-Poland
+1.7.1.443.g62265.dirty
