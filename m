@@ -1,89 +1,88 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCH] Makefile: Use $(sharedir)/gitweb for target 'install-gitweb'
-Date: Tue,  1 Jun 2010 20:41:20 +0530
-Message-ID: <1275405080-17326-1-git-send-email-pavan.sss1991@gmail.com>
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
-	pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Tue Jun 01 17:11:39 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] Documentation: A...B shortcut for checkout and rebase
+Date: Tue,  1 Jun 2010 17:16:42 +0200
+Message-ID: <380480a004c2d5f80ba96324562172f3b2b42f3e.1275405181.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 01 17:17:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJT7y-0002Qq-3Z
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 17:11:38 +0200
+	id 1OJTDX-0007Ex-0y
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 17:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756255Ab0FAPLd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 11:11:33 -0400
-Received: from mail-pz0-f185.google.com ([209.85.222.185]:48781 "EHLO
-	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756148Ab0FAPLd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 11:11:33 -0400
-Received: by pzk15 with SMTP id 15so1501694pzk.15
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 08:11:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=7IXkyQgH76bVeaN9GRy4gcjw+oPi035w16LFkzHyU8w=;
-        b=RKPlsT1AebE7PHUMPzp5wWVNBDC6XrZlbHNVQ1fK0S1jWPzCySyGqTIrIVliFZl0uE
-         aMqVO4a3V3isH5r4TmSBuNrA2BOXSpNjDZLPCauK42N5kHxW9B/99Wr4zbdaRy9Q2B1P
-         w4IZ4Vyq00ckCsRXil012A/pAS5UthliS7428=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qSKjgq/3Oi1MCncaiKWqJIsWdbMdY6S92u+jC2yk8yQhJpr/LOZJNXDdk/5vzCXbZ5
-         iYNiH5Kp4o7+FEVFxNdpI4YNDMVbD13BHB868C44/g1tYMi2SE3IVHSk4tsWQG87GRdK
-         5MlI8+xN0QBoB2hmxCyHzBJlaQGaaoyPznBCA=
-Received: by 10.141.88.12 with SMTP id q12mr4638065rvl.188.1275405092511;
-        Tue, 01 Jun 2010 08:11:32 -0700 (PDT)
-Received: from localhost.localdomain ([202.63.112.23])
-        by mx.google.com with ESMTPS id l29sm5307472rvb.16.2010.06.01.08.11.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 08:11:31 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.447.g40f7.dirty
+	id S1756279Ab0FAPRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jun 2010 11:17:18 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:35489 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755823Ab0FAPRR (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 11:17:17 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3CE09F8A80;
+	Tue,  1 Jun 2010 11:17:09 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Tue, 01 Jun 2010 11:17:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=Z7fhH6gnjH8J00VVT7yjuybKZ8E=; b=j+Pp3dUrfpPdmYEL7Pf6PyKPzUG0zMN4oakCVtpmn9LnnlSUV0UanAKvNU9Z3lIPOgTIU/dv1aS0NxMhDEZUTFrt2t/cACl7MgOCNwuYOLCcj6gjTyaILNI3TLRaMxRg9sYxy9g0Vdmvlkoh9rQDTvLgbuL4Uq0bZJO9UekgfOI=
+X-Sasl-enc: /rLGxhKupG5QNGGnq0xokhKszvoSKeKoQHrQSKyd3kVU 1275405423
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 59A934E5900;
+	Tue,  1 Jun 2010 11:17:03 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.351.ge2633e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148125>
 
-Export gitwebdir variable so that when user types the command
-'make install-gitweb', gitweb is installed in $(sharedir)/gitweb
-rather than /var/www/cgi-bin. Now, $(sharedir)/gitweb is default
-for both 'install' and 'install-gitweb' targets.
+Describe the A...B shortcuts for checkout and rebase [-i] which were
+introduced in these commits:
 
-Remove 'gitwebdir=$(gitwebdir_SQ)' from gitweb part of 'install'
-target which is unneccessary now.
+619a64e ("checkout A...B" switches to the merge base between A and B, 2009-10-18)
+61dfa1b ("rebase --onto A...B" replays history on the merge base between A and B, 2009-11-20)
+230a456 (rebase -i: teach --onto A...B syntax, 2010-01-07)
 
-Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Makefile |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+The style in the two hunks is different so that it matches the surrounding
+text. Talking about a style guide...
 
-diff --git a/Makefile b/Makefile
-index 8f011a5..32e3146 100644
---- a/Makefile
-+++ b/Makefile
-@@ -294,7 +294,7 @@ lib = lib
- # DESTDIR=
- pathsep = :
+ Documentation/git-checkout.txt |    4 ++++
+ Documentation/git-rebase.txt   |    4 ++++
+ 2 files changed, 8 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 4505eb6..afda5c3 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -154,6 +154,10 @@ edits from your current working tree.
+ As a special case, the `"@\{-N\}"` syntax for the N-th last branch
+ checks out the branch (instead of detaching).  You may also specify
+ `-` which is synonymous with `"@\{-1\}"`.
+++
++As a further special case, you may use `"A...B"` as a shortcut for the
++merge base of `A` and `B` if there is exactly one merge base. You can
++leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
  
--export prefix bindir sharedir sysconfdir
-+export prefix bindir sharedir gitwebdir sysconfdir
+ <new_branch>::
+ 	Name for the new branch.
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 5863dec..50ba2e4 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -206,6 +206,10 @@ OPTIONS
+ 	--onto option is not specified, the starting point is
+ 	<upstream>.  May be any valid commit, and not just an
+ 	existing branch name.
+++
++As a special case, you may use "A...B" as a shortcut for the
++merge base of A and B if there is exactly one merge base. You can
++leave out at most one of A and B, in which case it defaults to HEAD.
  
- CC = gcc
- AR = ar
-@@ -2049,7 +2049,7 @@ install: all
- 	$(MAKE) -C templates DESTDIR='$(DESTDIR_SQ)' install
- ifndef NO_PERL
- 	$(MAKE) -C perl prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
--	$(MAKE) -C gitweb gitwebdir=$(gitwebdir_SQ) install
-+	$(MAKE) -C gitweb install
- endif
- ifndef NO_PYTHON
- 	$(MAKE) -C git_remote_helpers prefix='$(prefix_SQ)' DESTDIR='$(DESTDIR_SQ)' install
+ <upstream>::
+ 	Upstream branch to compare against.  May be any valid commit,
 -- 
-1.7.1.447.g40f7.dirty
+1.7.1.351.ge2633e
