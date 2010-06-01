@@ -1,139 +1,112 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Tue, 1 Jun 2010 18:00:54 +0200
-Message-ID: <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>
-	<4BF7B751.7050704@pileofstuff.org>
-	<4BFB7F7F.5090407@drmicha.warpmail.net>
-	<4C041656.7000008@pileofstuff.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Best way to apply textconv to a working tree file
+Date: Tue, 01 Jun 2010 18:07:06 +0200
+Message-ID: <vpqd3walot1.fsf@bauges.imag.fr>
+References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Tue Jun 01 18:01:19 2010
+Cc: <git@vger.kernel.org>, <diane.gasselin@ensimag.imag.fr>,
+	<axel.bonnet@ensimag.imag.fr>
+To: clement.poulain@ensimag.imag.fr
+X-From: git-owner@vger.kernel.org Tue Jun 01 18:10:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJTu0-0001Q3-Mh
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 18:01:17 +0200
+	id 1OJU2k-0007fV-Nl
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Jun 2010 18:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932212Ab0FAQBB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 12:01:01 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:59775 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932162Ab0FAQA7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Jun 2010 12:00:59 -0400
-Received: by gwaa12 with SMTP id a12so3696042gwa.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 09:00:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vGDWteRo4H9eYyr6lfqTrc1FrZ3pmSHHz5KlHkNUYts=;
-        b=co4rsqX8gtlR/DaPzoPDdlXILTRzMVigift8VO+afd8HRbWfsta5B4aUlaya+JRpGO
-         dRmqXbL6RC405MehXbeaij2ofZ0tfEb4eBrdgtDvpdh7gv7pwhCUpxixSNLrv16LrNa1
-         I8vcMERuCNsPEdaSbjXYRJ4b/YvvwRCx/rPsQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RBMKCzHghB8iViFFhavMK7mhHw4cwqbgtoRX3wS3MqbuFa5yZ3nc7bugogE+GG7KkI
-         q0waQWzrsJe/+S1WlEMYO29RsBtITxwCbuOCHTOsuT/orVr2u/YMHv7p8JfvKvX5vqYd
-         z8RGd2poKdnG8gEv74/Dt+z206WiPKIUtbYDk=
-Received: by 10.100.246.37 with SMTP id t37mr7138537anh.17.1275408057687; Tue, 
-	01 Jun 2010 09:00:57 -0700 (PDT)
-Received: by 10.100.34.5 with HTTP; Tue, 1 Jun 2010 09:00:54 -0700 (PDT)
-In-Reply-To: <4C041656.7000008@pileofstuff.org>
+	id S1757102Ab0FAQKM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 12:10:12 -0400
+Received: from imag.imag.fr ([129.88.30.1]:49967 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757027Ab0FAQKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 12:10:11 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o51G767L020707
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 1 Jun 2010 18:07:06 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OJTze-0006cI-Eu; Tue, 01 Jun 2010 18:07:06 +0200
+In-Reply-To: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr>
+ (=?iso-8859-1?Q?=22Cl=E9ment?= Poulain"'s message of "Tue\, 01 Jun 2010
+ 15\:41\:05 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 01 Jun 2010 18:07:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148135>
 
-On Mon, May 31, 2010 at 10:04 PM, Andrew Sayers
-<andrew-git@pileofstuff.org> wrote:
-> On 25/05/10 08:42, Michael J Gruber wrote:
->>
->> Feel free to contribute to the Git Wiki maybe at
->>
->> https://git.wiki.kernel.org/index.php/GitDocumentation
->>
->> in the "User contributed Documentation" section.
->>
->> Michael
->>
+[ Just had IRL discussion with Cl=E9ment and his co-workers ]
+
+Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr> writes:
+
+> In order to add textconv support to "git-gui blame", we have to run
+> textconv on a file which is in the working tree.
+> Currently, "git-gui blame" uses the Tcl function 'open' to display th=
+e
+> content of the working-tree file. This doesn't allow us to run textco=
+nv on
+> it.
+
+There are actually two distinct issues :
+
+1) The textconv functionality has an API, but isn't available as
+   plumbing for scripting purposes (and git gui would like to be able
+   to call textconv from the command-line).
+
+2) If one solves issue 1) by adding textconv support to "git
+   cat-file", then we can call textconv on a blob in the object
+   database, but not on a worktree file. Hence, we still need to add
+   support to display worktree files in "git cat-file".
+
+> - For revisions, "git-gui blame" is based on "git cat-file blob
+> <sha1:path>". Therefore, we thought of adding a "--textconv" option o=
+n
+> cat-file as well as a "--working-tree" option ("git cat-file --workin=
+g-tree
+> <file>" will display the content of <file> in the working-tree)
 >
-> Thanks for the hint - this turned into rather more than just uploadin=
-g a
-> PDF, and I've now finished a complete write-up here:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0https://git.wiki.kernel.org/index.php/SvnM=
-igration
+> - Use the "-p" (pretty print) cat-file's option, with a path beginnin=
+g by
+> ./ (to avoid ambiguous name like HEAD)
 
+After thinking about it, I think a mix of these solutions would be
+OK:
 
-That's a great job!
+git cat-file --textconv <blob-sha1>            # Run textconv on blob
 
-I want to point out some difficulties I encountered switching from
-Subversion to Git-SVN.
-I'd like to discuss them here before, eventually, contributing them to
-that page.
+git cat-file --textconv <tree-sha1>:<filename> # Run textconv on file
+                                               # (in object database)
 
+git cat-file --textconv ./<filename>           # Run textconv on file
+                                               # (in worktree)
 
-=3D Empty directories =3D
-Git do not track directories, it tracks content. That means you'll not
-get/commit empty directory in your
-working tree.
-Sometimes empty directory may be needed by some fancy script or
-external software you use with your
-project (example, ANT).
+This preserves the property "1st argument is an option, 2nd argument
+is the thing to do the cat-file on", hence avoid any possible
+ambiguities in command-line option parsing.
 
-Developers should be aware of this: if they really need to create an
-empty directory they can both
-create it through subversion both create a "dummy" file in the
-directory and commit it, if that's an option.
+Another option would be to resurect the WOKRTREE/STAGE magit tokens [1]
+proposal, and allow
 
+git cat-file --textconv WORKTREE:<filename>
 
-=3D Subversion ignore =3D
-You can't control subversion ignores from git-svn. And git-svn do not
-automatically synchronize with the
-subversion ignores. The team should be aware of these to avoid issues.
+That sounds the most natural to me, but it's probably the most
+controversial too ...
 
+[1] http://thread.gmane.org/gmane.comp.version-control.git/133087
 
-=3D Local patch =3D
-Most subversion user keeps some modified files in their local checkout
-never committing it remotely.
-This may be handy for some situation where you want to enable some
-debug-specific feature or whatever you need.
-With Git, if the file is remotely tracked (with Subversion you'll say
-"already committed") you can't keep a file like that:
-it will prevent you from "pushing" files to the remote repository or
-checking out other local/remote branches.
-You'll had to "stash" your patch and re-apply it later.
-
-=3D local/remote branches =3D
-Git-svn branches "track" the remote branches by adding a string in
-each commit you "git svn dcommit" on
-subversion repository. You can have many local branches tracking the
-same remote subversion branch.
-To start to track a new remote branch you have to "git checkout -b
-localBranchName remoteBranchName",
-which is not very user friendly :)
-
-You also can't create new Subversion branches or tags with git-svn,
-you'll had to use subversion directly for that.
-
-
-
-=46eel free to correct me or better describe those issue with a
-better/more friendly english.
-=46eel also free to add to this list.
-
-
-Regards,
-Daniele Segato
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
