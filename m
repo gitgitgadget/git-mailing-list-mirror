@@ -1,88 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/8] Documentation/cherry-pick: describe passing more
- than one commit
-Date: Wed, 2 Jun 2010 01:14:52 -0500
-Message-ID: <20100602061452.GA9439@progeny.tock>
-References: <20100531193359.28729.55562.chriscool@tuxfamily.org>
- <20100531194240.28729.50475.chriscool@tuxfamily.org>
- <20100601095124.GA1033@progeny.tock>
- <201006020757.34186.chriscool@tuxfamily.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 1/5] t/t5800: skip if python version is older than 2.5
+Date: Wed, 2 Jun 2010 08:21:00 +0200
+Message-ID: <AANLkTinQrdJeTxoZ207kvv5R_3qUj5ocGgAlC22SQyOg@mail.gmail.com>
+References: <Wt_M4qptcPdpY0Q3jqUbfIk6yMCN9Ja5RCtRUsADK5OJGrz7R_Cq1oGpeQoN7A9uCvw38jm63Jo@cipher.nrlssc.navy.mil> 
+	<Wt_M4qptcPdpY0Q3jqUbfCU_HpY9NEjqs9eujZFD2rsUj5HRo__oQm7EUCxzXu38mC0y-ilUA14@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed Jun 02 08:14:57 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Jun 02 08:21:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJhE8-0003TE-PW
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 08:14:57 +0200
+	id 1OJhKQ-0005ms-NV
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 08:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754370Ab0FBGOu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 02:14:50 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:37994 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752020Ab0FBGOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 02:14:49 -0400
-Received: by gwaa12 with SMTP id a12so4323471gwa.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 23:14:48 -0700 (PDT)
+	id S1755428Ab0FBGVW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 02:21:22 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:61605 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752375Ab0FBGVV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 02:21:21 -0400
+Received: by gye5 with SMTP id 5so1883686gye.19
+        for <git@vger.kernel.org>; Tue, 01 Jun 2010 23:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=/q3A+if+hRY2iXlhWmppP3szjN5erDiwQFe8oS1NNIA=;
-        b=pwCLwLLai2wDjTEVmfPAdhro/mArej9z2cdS0VAzZ4XhdMpWqNZKYv19Hio+2X+Qsh
-         t/6Qtp6F+Q2MvzIYhCIATRGCppvnWMjxzQKijaZVKKdywr7/EoQ2Qr7lC/OVcrObNEEO
-         9j+CN68NYtWPeujFGUWaiqK3cweU53FzxG/g0=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SR1RZrIMk1FjZXm6uHiTODxW4kvU3dRisMR+FOcdUpc=;
+        b=VRpO6mX/9x+DypuNQBZ5Edjn57p9RfIlFyXhgVyYHLtmg0qTNm9+m9IktDCYNw097h
+         llQ/QKtB0cLW+k7Y5rlimSOQ2sRrZGnm9n4tgOonOaovHUNWrhO0VZiRH/hqAFKXch/R
+         lUTGxklfTqL5aASA+5hWAS4l06rqexZ5nMC4w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ad/aOd8jG6nRIOSKa00kqlLVl24AaOOJbBeliCPLwdHx9IXYQ9I2ER9JWPqohJOhj7
-         9EiOtdAHQkcxVNW/grs/FPCBgODUYiiALsK1oC9zgwjooqmkR2cKJm7mVty/9MdPl3lp
-         KdwNYA/oxG5VNhyZwcWK4oktMHv5MtJOGd5j0=
-Received: by 10.42.3.197 with SMTP id 5mr7331874icp.24.1275459286308;
-        Tue, 01 Jun 2010 23:14:46 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id f1sm35021914ibg.15.2010.06.01.23.14.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 23:14:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201006020757.34186.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UA4NVGEboRUZZ6P/N3gwPpD8SDzctbrjE4jAny44vizUtBeZiaoa30xbKDs/LkKkrj
+         AEFsX0jRYnyvTQ3ySW2bOa1wUaW9hGfCaAQVlP+sOtY+6kgCev3RseUn9o884VVPzusO
+         9PSL1WRgpFdLEmLB8XTHEu/qsN0E091NtCKyo=
+Received: by 10.151.61.20 with SMTP id o20mr7636253ybk.436.1275459680234; Tue, 
+	01 Jun 2010 23:21:20 -0700 (PDT)
+Received: by 10.151.61.12 with HTTP; Tue, 1 Jun 2010 23:21:00 -0700 (PDT)
+In-Reply-To: <Wt_M4qptcPdpY0Q3jqUbfCU_HpY9NEjqs9eujZFD2rsUj5HRo__oQm7EUCxzXu38mC0y-ilUA14@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148218>
 
-Christian Couder wrote:
-> On Tuesday 01 June 2010 11:51:24 Jonathan Nieder wrote:
+Heya,
 
->> git rev-list master -- README | git cherry-pick -n --stdin::
->>=20
->> 	Apply the changes introduced by all commits on the master
->> 	branch that touched README to the working tree and index,
->> 	so the result can be inspected and made into a single new
->> 	commit if suitable.
->
-> I think "--reverse" is needed after "rev-list" and cherry-pick has no=
- --stdin=20
-> option.
+On Wed, Jun 2, 2010 at 02:13, Brandon Casey <casey@nrlssc.navy.mil> wro=
+te:
+> This test script depends on the git-remote-testgit python script. =C2=
+=A0This
+> python script makes use of the hashlib module which was released in p=
+ython
+> version 2.5. =C2=A0So, add a new pre-requisite named PYTHON_2_5_OR_NE=
+WER to
+> test-lib.sh and check for it in t5800.
 
-That=E2=80=99s too bad. :(  git show inherits it from rev-list.
+Perhaps instead we can change git-remote-testgit to do:
 
-Your new series looks good.  Maybe I will obfuscate the examples some
-other day.
+"try:
+import hashlib
+except ImportError:
+import ?? as hashlib
+"
 
-Thanks,
-Jonathan
+Otoh, python 2.5 has been out for a while (and is in fact only
+downloadable as a source-only release these days). To be exact, it was
+released on September 19, 2006.
+
+
+--=20
+Cheers,
+
+Sverre Rabbelier
