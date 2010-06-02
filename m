@@ -1,86 +1,71 @@
-From: Sylvain Rabot <srabot@steek.com>
-Subject: [PATCH] documentation: git-mergetool updated to warn against builtin tools invocations
-Date: Wed,  2 Jun 2010 19:57:33 +0200
-Message-ID: <1275501453-13081-1-git-send-email-srabot@steek.com>
-Cc: gitster@pobox.com, sylvain@abstraction.fr,
-	Sylvain Rabot <srabot@steek.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 02 20:07:46 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] refs: split log_ref_write logic into log_ref_setup
+Date: Wed, 02 Jun 2010 11:14:30 -0700
+Message-ID: <7vzkzdcneh.fsf@alter.siamese.dyndns.org>
+References: <1274488119-6989-1-git-send-email-erick.mattos@gmail.com>
+ <1274488119-6989-3-git-send-email-erick.mattos@gmail.com>
+ <7v632bs13c.fsf@alter.siamese.dyndns.org>
+ <AANLkTikPypcmGB6NuTl-SQZR3lnIvdmVG5E8wjVAlIej@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 20:14:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJsLy-0003Ig-0e
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 20:07:46 +0200
+	id 1OJsSi-0006tt-Ho
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 20:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932580Ab0FBSHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 14:07:40 -0400
-Received: from sarca.steek.com ([62.39.111.200]:44023 "EHLO sarca.steek.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932486Ab0FBSHj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 14:07:39 -0400
-X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Jun 2010 14:07:39 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by sarca.steek.com (Postfix) with ESMTP id ED56B94F5;
-	Wed,  2 Jun 2010 19:57:54 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at sarca.steek.com
-Received: from sarca.steek.com ([127.0.0.1])
-	by localhost (sarca.steek.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id tx+WZigbMuh3; Wed,  2 Jun 2010 19:57:52 +0200 (CEST)
-Received: from khety (bdn33-3-82-245-81-137.fbx.proxad.net [82.245.81.137])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by sarca.steek.com (Postfix) with ESMTPS id AAA6F94F8;
-	Wed,  2 Jun 2010 19:57:52 +0200 (CEST)
-Received: from srabot by khety with local (Exim 4.69)
-	(envelope-from <srabot@steek.com>)
-	id 1OJsCO-0003PZ-7d; Wed, 02 Jun 2010 19:57:52 +0200
-X-Mailer: git-send-email 1.7.1
+	id S932641Ab0FBSOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 14:14:39 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37042 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932599Ab0FBSOj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 14:14:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C9F9B846E;
+	Wed,  2 Jun 2010 14:14:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bDVtT/QY6L5nJXCL8sV+UKi8n6Q=; b=vMQDVa
+	KLl/66XRMdHME52nhS/g/7LiM9masG+vAEErPvmHUMptA4W8fLh2M5SqM9vPrNuM
+	pDIiVJuDFJFd+G5H41wpreMmQlMAU+NxN9kT9pZ7J3Rsfnce9oHYqsb5KzvOt+rh
+	MlLgiGlTvocMen1TdBdVdZX7lC0BXbj5fSB7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QjztTniRG6waQKZy98Njthdh/0/NxkYd
+	/nCiSt199V3DpUmB0zOnuTkRnHTuCpbZ4OV8V78v3LCH4g7BtYW1NyfzWW2hqMug
+	DuZtkuzQ3RERHWPXbp6SF2KaQpDqqk7hgZLtNJQIOuExETqUUTFQWPCL5mvfaEwp
+	Ic/ojO9eU1E=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 49FAFB846D;
+	Wed,  2 Jun 2010 14:14:35 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7F06BB846C; Wed,  2 Jun
+ 2010 14:14:32 -0400 (EDT)
+In-Reply-To: <AANLkTikPypcmGB6NuTl-SQZR3lnIvdmVG5E8wjVAlIej@mail.gmail.com>
+ (Erick Mattos's message of "Wed\, 26 May 2010 15\:11\:05 -0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B2FE4506-6E72-11DF-94B3-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148268>
 
-For known tools such as meld, diffuse, p4merge, git-mergetool ignores the
-mergetool.<tool>.* configurations. It took me a while to understand why my
-mergetool.diffuse.cmd configuration was not taken care of.
+Erick Mattos <erick.mattos@gmail.com> writes:
 
-This documentation update warns against this behavior and explains how
-to setup a customized command line invocation for known diff tools.
+> Now just a question, Junio:
+>
+> I forgot to sign-off those patches, should I have to send them again?
 
-Signed-off-by: Sylvain Rabot <srabot@steek.com>
----
- Documentation/git-mergetool.txt |   15 +++++++++++++++
- 1 files changed, 15 insertions(+), 0 deletions(-)
+I would have appreciated a whole re-send while I was too distracted by
+non-git stuff during the past few weeks, but now I am more or less settled
+in, it's Ok to just send a separate "Signed-off-by:" like this one:
 
-diff --git a/Documentation/git-mergetool.txt b/Documentation/git-mergetool.txt
-index 55735fa..ac41d7c 100644
---- a/Documentation/git-mergetool.txt
-+++ b/Documentation/git-mergetool.txt
-@@ -45,6 +45,21 @@ Instead of running one of the known merge tool programs,
- by specifying the command line to invoke in a configuration
- variable `mergetool.<tool>.cmd`.
- +
-+Be aware that 'git mergetool' has some predefined invocation commands builtin
-+for known diff tools like meld, diffuse, p4merge ... etc. It means that if
-+you set the merge.tool configuration to one of these tools, the 
-+mergetool.<tool>.* configurations will not be taken care of. If you
-+really want to customize the invocation of one of these tools, 
-+set `merge.tool` to "custom" or whatever you want and `mergetool.custom.cmd` 
-+to "/usr/bin/<tool> $LOCAL $MERGED $REMOTE"
-++
-+-------------
-+[merge]
-+    tool = diffuse-custom
-+[mergetool "diffuse-custom"]
-+    cmd = diffuse $LOCAL $MERGED $REMOTE
-+-------------
-++
- When 'git mergetool' is invoked with this tool (either through the
- `-t` or `--tool` option or the `merge.tool` configuration
- variable) the configured command line will be invoked with `$BASE`
--- 
-1.7.1
+    http://article.gmane.org/gmane.comp.version-control.git/148230/raw
