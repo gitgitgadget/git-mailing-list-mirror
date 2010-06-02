@@ -1,84 +1,74 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH 1/5] t/t5800: skip if python version is older than 2.5
-Date: Wed, 02 Jun 2010 10:15:23 -0500
-Message-ID: <ECbjGSsMA4ZIaSU1sgkRHSvxlxbZZwsEBdVFoyCTLeEuJTxU_EI8Xw@cipher.nrlssc.navy.mil>
-References: <Wt_M4qptcPdpY0Q3jqUbfIk6yMCN9Ja5RCtRUsADK5OJGrz7R_Cq1oGpeQoN7A9uCvw38jm63Jo@cipher.nrlssc.navy.mil> <Wt_M4qptcPdpY0Q3jqUbfCU_HpY9NEjqs9eujZFD2rsUj5HRo__oQm7EUCxzXu38mC0y-ilUA14@cipher.nrlssc.navy.mil> <AANLkTinQrdJeTxoZ207kvv5R_3qUj5ocGgAlC22SQyOg@mail.gmail.com> <meC0HM60UnAajjHuTX-y8qZO2Unmc9VZYk1ZAHZ86LlKSy4E9Rfc_w@cipher.nrlssc.navy.mil>
+From: Jim Ramsay <i.am@jimramsay.com>
+Subject: Repost: [PATCH] gitk: Decode the "-n" argument properly for Edit View
+Date: Wed, 02 Jun 2010 11:16:57 -0400
+Message-ID: <20100602111657.2e91faec@vrm378-02.vrm378.am.mot.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 17:17:58 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jun 02 17:24:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJphe-0006IZ-DR
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 17:17:58 +0200
+	id 1OJpnX-0001Gz-13
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 17:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932580Ab0FBPRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 11:17:52 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37643 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932340Ab0FBPRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 11:17:52 -0400
-Received: by mail.nrlssc.navy.mil id o52FFNOb020968; Wed, 2 Jun 2010 10:15:23 -0500
-In-Reply-To: <meC0HM60UnAajjHuTX-y8qZO2Unmc9VZYk1ZAHZ86LlKSy4E9Rfc_w@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 02 Jun 2010 15:15:23.0549 (UTC) FILETIME=[6C347CD0:01CB0266]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S932605Ab0FBPX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 11:23:57 -0400
+Received: from mail.usask.ca ([128.233.192.26]:41716 "EHLO mail2.usask.ca"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932340Ab0FBPX4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 11:23:56 -0400
+X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Jun 2010 11:23:56 EDT
+Received: from conversion-daemon.mail2.usask.ca by mail2.usask.ca
+ (Sun Java(tm) System Messaging Server 6.3-6.03 (built Mar 14 2008; 32bit))
+ id <0L3E00A007JRRC00@mail2.usask.ca> for git@vger.kernel.org; Wed,
+ 02 Jun 2010 09:17:01 -0600 (CST)
+Received: from vrm378-02.vrm378.am.mot.com ([144.190.95.61])
+ by mail2.usask.ca (Sun Java(tm) System Messaging Server 6.3-6.03 (built Mar 14
+ 2008; 32bit)) with ESMTPSA id <0L3E00AKU7SCRD00@mail2.usask.ca>; Wed,
+ 02 Jun 2010 09:17:01 -0600 (CST)
+X-Mailer: Claws Mail 3.7.5 (GTK+ 2.18.7; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148262>
 
-On 06/02/2010 09:44 AM, Brandon Casey wrote:
-> On 06/02/2010 01:21 AM, Sverre Rabbelier wrote:
->> Heya,
->>
->> On Wed, Jun 2, 2010 at 02:13, Brandon Casey <casey@nrlssc.navy.mil> wrote:
->>> This test script depends on the git-remote-testgit python script.  This
->>> python script makes use of the hashlib module which was released in python
->>> version 2.5.  So, add a new pre-requisite named PYTHON_2_5_OR_NEWER to
->>> test-lib.sh and check for it in t5800.
->> Perhaps instead we can change git-remote-testgit to do:
->>
->> "try:
->> import hashlib
->> except ImportError:
->> import ?? as hashlib
->> "
-> 
-> I can only guess at what that does. :)
+Running 'gitk -n 42' and selecting View > Edit View... would previously
+put the '-n' half of the argument-pair in the box labeled "Additional
+arguments to git log" and the '42' in "Branches & Tags".  Parse this
+pair properly and use the numerical portion for the 'limit' value.
 
-Correction, I have no idea what that does.
+Signed-off-by: Jim Ramsay <i.am@jimramsay.com>
+---
+ gitk-git/gitk |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
-Here's the patch:
-
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index 9253922..1371497 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -1,6 +1,9 @@
- #!/usr/bin/env python
- 
--import hashlib
-+try:
-+    import hashlib
-+except ImportError:
-+    import ?? as hashlib
- import sys
- import os
- sys.path.insert(0, os.getenv("GITPYTHONLIB","."))
-
-
-
-I get:
-
-  File "<snip>/git-remote-testgit", line 6
-    import ?? as hashlib
-           ^
-SyntaxError: invalid syntax
+diff --git a/gitk-git/gitk b/gitk-git/gitk
+index 1b0e09a..f93e7e5 100644
+--- a/gitk-git/gitk
++++ b/gitk-git/gitk
+@@ -3907,6 +3907,17 @@ proc decode_view_opts {n view_args} {
+     set oargs [list]
+     set refargs [list]
+     foreach arg $view_args {
++	# Decode 2-argument '-n 42' as 'limit'
++	if {[info exists haslimitarg]} {
++	    set newviewopts($n,limit) $arg
++	    set found(limit) 1
++	    unset haslimitarg
++	    continue
++	}
++	if {$arg eq "-n"} {
++	    set haslimitarg 1
++	    continue
++	}
+ 	if {[regexp -- {^-([0-9]+)$} $arg arg cnt]
+ 	    && ![info exists found(limit)]} {
+ 	    set newviewopts($n,limit) $cnt
+-- 
+1.7.0.2
