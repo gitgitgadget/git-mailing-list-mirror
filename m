@@ -1,86 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 3/3] git am: Remove stray error message from sed
-Date: Wed,  2 Jun 2010 10:33:37 +0200
-Message-ID: <1275467617-23065-4-git-send-email-artagnon@gmail.com>
-References: <1275467617-23065-1-git-send-email-artagnon@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 02 10:40:06 2010
+From: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
+Subject: Re: [PATCH] git-compat-util.h: use apparently more common __sgi
+ macro to detect SGI IRIX
+Date: Wed, 2 Jun 2010 08:43:31 +0000
+Message-ID: <20100602084331.GA1782@thor.il.thewrittenword.com>
+References: <20100514093838.421864000@mlists.thewrittenword.com>
+ <4gJWLBIdRVtK7gq22o-LadCixyvOA-9FlEvk-ZrCHyUsGwArvR9oPkV-qlez-T-Nsn0v6UO633Y@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org, drafnel@gmail.com
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Jun 02 10:43:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJjUY-0002jQ-8i
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 10:40:02 +0200
+	id 1OJjY2-00052K-5r
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 10:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754441Ab0FBIj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 04:39:57 -0400
-Received: from mail-ew0-f223.google.com ([209.85.219.223]:58327 "EHLO
-	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752375Ab0FBIj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 04:39:56 -0400
-Received: by ewy23 with SMTP id 23so553572ewy.1
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 01:39:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=X4WKMKRXjBqYg8vFCtwfbmPwk3aQGU8hRJYAfI8BFRk=;
-        b=o8TuzC2CXtRHZeXQ/gTBsMnUIaiuX7fjsseQ4djXjc5EgIC5rW6KM1Ed5EZ8n5eYwt
-         +6bG02e/OOagtwJEWdJKghwungl1FXB7r+jbtpjs6TGFY1JMW+tBgRvFfxUVllBR0o07
-         wmw6xy1Bt5fYdosBZhQYilMJ41XPU94Bm8EPk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=TntazHrbl+2gADcGtmn8I5JifgTYA0HpF5lrEtdiQ9828fHB8o7FZ64jXeYrQk2ut4
-         4utLz0O2XtTCBDXZDRzTXagyJTRprf7KN5Uyn3aIsUhPYLkYQNuEOV4sXUP5vWz6vOf0
-         9UucoIXAkaDwFOriCd5c325SkWckmWp1mbbYc=
-Received: by 10.213.29.1 with SMTP id o1mr387335ebc.43.1275467543004;
-        Wed, 02 Jun 2010 01:32:23 -0700 (PDT)
-Received: from localhost (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id 13sm4288233ewy.13.2010.06.02.01.32.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 02 Jun 2010 01:32:22 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1275467617-23065-1-git-send-email-artagnon@gmail.com>
+	id S1752459Ab0FBInd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 04:43:33 -0400
+Received: from mail1.thewrittenword.com ([69.67.212.77]:60649 "EHLO
+	mail1.thewrittenword.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059Ab0FBInc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 04:43:32 -0400
+Received: from mail1.il.thewrittenword.com (emma-internal-gw.il.thewrittenword.com [192.168.13.25])
+	by mail1.thewrittenword.com (Postfix) with ESMTP id BFC2E5CCE;
+	Wed,  2 Jun 2010 09:01:10 +0000 (UTC)
+X-DKIM: Sendmail DKIM Filter v2.4.4 mail1.thewrittenword.com BFC2E5CCE
+Received: from thor.il.thewrittenword.com (thor.il.thewrittenword.com [10.191.57.1])
+	by mail1.il.thewrittenword.com (Postfix) with ESMTP id 7490FE1B;
+	Wed,  2 Jun 2010 08:43:31 +0000 (UTC)
+Received: by thor.il.thewrittenword.com (Postfix, from userid 1048)
+	id 64AD1BAB6; Wed,  2 Jun 2010 08:43:31 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4gJWLBIdRVtK7gq22o-LadCixyvOA-9FlEvk-ZrCHyUsGwArvR9oPkV-qlez-T-Nsn0v6UO633Y@cipher.nrlssc.navy.mil>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96.1 at maetel.il.thewrittenword.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148230>
 
-When --continue is invoked without any changes, the following stray
-error message appears- sed: can't read $dotest/final-commit: No such
-file or directory. Remove this by making sure that the file actually
-exists.
+Hi Brandon,
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-am.sh |    8 +++++++-
- 1 files changed, 7 insertions(+), 1 deletions(-)
+On Tue, Jun 01, 2010 at 08:55:36PM -0500, Brandon Casey wrote:
+> From: Gary V. Vaughan <git@mlists.thewrittenword.com>
+> 
+> IRIX 6.5.26m does not define the 'sgi' macro, but it does define an '__sgi'
+> macro.  Since later IRIX versions (6.5.29m) define both macros, and since
+> an underscore prefixed macro is preferred anyway, use '__sgi' to detect
+> compilation on SGI IRIX.
+> 
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 
-diff --git a/git-am.sh b/git-am.sh
-index a52c2b4..062b5a7 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -693,8 +693,13 @@ do
- 	else
- 	    action=yes
- 	fi
--	FIRSTLINE=$(sed 1q "$dotest/final-commit")
-+
-+	if test -f "$dotest/final-commit"
-+	then
-+		FIRSTLINE=$(sed 1q "$dotest/final-commit")
-+	else
-+		FIRSTLINE=""
-+	fi
- 
- 	if test $action = skip
- 	then
+Signed-off-by: Gary V. Vaughan <gary@thewrittenword.com>
+
+> Here's a resubmit of your patch with an updated commit message.  Since the
+> __sgi macro seems to be more common than the sgi macro, I modified your
+> patch to check for only the __sgi macro.  I know Junio suggested checking
+> for both macros, but I'm the one that Junio was talking about when he made
+> his comments, and __sgi works for me.
+
+Sure, that's fine.  I only need the __sgi part for git to compile
+correctly on my IRIX machines, so if you feel that the non-underscore
+flavour is superfluous then I won't miss it! ;)
+
+> It's such a simple little patch, but still I removed your signed-off-by line
+> since I modified the patch, and I am not you.  Please do reply to this message
+> with a signed-off-by if you sign off on the patch.  Junio will add it to the
+> patch when he applies the it.
+
+Done.
+
+Cheers,
 -- 
-1.7.1
+Gary V. Vaughan (gary@thewrittenword.com)
