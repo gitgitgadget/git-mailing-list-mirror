@@ -1,80 +1,65 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [PATCH] Makefile: Use $(sharedir)/gitweb for target 
-	'install-gitweb'
-Date: Wed, 2 Jun 2010 20:19:04 +0530
-Message-ID: <AANLkTinIaY65N_DyDq6RrS6AyLeksL_ZfiawwDZySzB3@mail.gmail.com>
-References: <1275405080-17326-1-git-send-email-pavan.sss1991@gmail.com>
-	<201006012150.02970.jnareb@gmail.com>
-	<7vfx16qcmm.fsf@alter.siamese.dyndns.org>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 1/5] t/t5800: skip if python version is older than 2.5
+Date: Wed, 02 Jun 2010 09:44:26 -0500
+Message-ID: <meC0HM60UnAajjHuTX-y8qZO2Unmc9VZYk1ZAHZ86LlKSy4E9Rfc_w@cipher.nrlssc.navy.mil>
+References: <Wt_M4qptcPdpY0Q3jqUbfIk6yMCN9Ja5RCtRUsADK5OJGrz7R_Cq1oGpeQoN7A9uCvw38jm63Jo@cipher.nrlssc.navy.mil> <Wt_M4qptcPdpY0Q3jqUbfCU_HpY9NEjqs9eujZFD2rsUj5HRo__oQm7EUCxzXu38mC0y-ilUA14@cipher.nrlssc.navy.mil> <AANLkTinQrdJeTxoZ207kvv5R_3qUj5ocGgAlC22SQyOg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Petr Baudis <pasky@ucw.cz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 16:49:16 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 16:49:58 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJpFp-0006p5-GQ
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 16:49:13 +0200
+	id 1OJpGW-0007HD-FY
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 16:49:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757021Ab0FBOtH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 10:49:07 -0400
-Received: from mail-yw0-f179.google.com ([209.85.211.179]:44588 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752056Ab0FBOtF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 10:49:05 -0400
-Received: by ywh9 with SMTP id 9so5062287ywh.17
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 07:49:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Cc7ZNmh1XJmWeEPHfC9XTHgGZnB9lHqeu8R9g0In2wU=;
-        b=YWW2G7mEPvCFzLssBcSEfGmqDiQol2If7E/pnIsA2f8MJOpjhjmr3A0sXly2N6Df3p
-         V9k6xOEU9zy22vuYEc8aUkB8rhJLczpL4RzZnAou+9oMS2BmY4Oq3hGdsylH4xClcJh2
-         iwd9K0wBDKGxtHus4OIamJ129xcWExSf22v7g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rcAZwYxhhtucsgZSb5ZRyZJC9VULlvWhBZKkM835Gh7hWs5y06fj+Al0kCc7aEoxm1
-         znNPs/1wR8CaW2raH34e3Q8G+iIkEBVA0ylBDYJ//hhtm7okj4BRrgZVyFxDGOmsXSQF
-         Ctz31caPu6ruCQxqLcpDQhf7QtzJ5rYxPe5gI=
-Received: by 10.101.129.17 with SMTP id g17mr8810186ann.101.1275490145033; 
-	Wed, 02 Jun 2010 07:49:05 -0700 (PDT)
-Received: by 10.100.126.20 with HTTP; Wed, 2 Jun 2010 07:49:04 -0700 (PDT)
-In-Reply-To: <7vfx16qcmm.fsf@alter.siamese.dyndns.org>
+	id S1757975Ab0FBOtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 10:49:51 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50572 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755530Ab0FBOtu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 10:49:50 -0400
+Received: by mail.nrlssc.navy.mil id o52EiQWv018005; Wed, 2 Jun 2010 09:44:26 -0500
+In-Reply-To: <AANLkTinQrdJeTxoZ207kvv5R_3qUj5ocGgAlC22SQyOg@mail.gmail.com>
+X-OriginalArrivalTime: 02 Jun 2010 14:44:26.0868 (UTC) FILETIME=[19897340:01CB0262]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148257>
 
->
-> I am wondering if we would also want to do something with this line
->
-> =A0 =A0gitwebdir ?=3D /var/www/cgi-bin
->
-> in gitweb/Makefile. =A0This is orthogonal to the patch under discussi=
-on
-> does, though.
->
->
+On 06/02/2010 01:21 AM, Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Wed, Jun 2, 2010 at 02:13, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+>> This test script depends on the git-remote-testgit python script.  This
+>> python script makes use of the hashlib module which was released in python
+>> version 2.5.  So, add a new pre-requisite named PYTHON_2_5_OR_NEWER to
+>> test-lib.sh and check for it in t5800.
+> 
+> Perhaps instead we can change git-remote-testgit to do:
+> 
+> "try:
+> import hashlib
+> except ImportError:
+> import ?? as hashlib
+> "
 
-Well, Let us say that we use /var/www/cgi-bin as default if user
-downloads only gitweb and install it.
-If he is installing git, then gitweb needs to be installed in
-$(sharedir)/gitweb. Putting it as default in main Makefile is
-supported.
+I can only guess at what that does. :)
 
-So, It won't be orthogonal to the patch.
+> Otoh, python 2.5 has been out for a while (and is in fact only
+> downloadable as a source-only release these days). To be exact, it was
+> released on September 19, 2006.
 
-Thanks,
-Pavan.
+That's only long in python years. :)
+
+RedHat's latest operating system still has version 2.4.3.
+
+-brandon
