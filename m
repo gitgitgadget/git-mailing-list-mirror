@@ -1,11 +1,11 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH/RFC v4 6/7] gettext: Sanity tests for Git's Gettext support
-Date: Wed,  2 Jun 2010 01:06:03 +0000
-Message-ID: <1275440764-26153-7-git-send-email-avarab@gmail.com>
+Subject: [PATCH/RFC v4 2/7] gettext: Add a Gettext interface for shell scripts
+Date: Wed,  2 Jun 2010 01:05:59 +0000
+Message-ID: <1275440764-26153-3-git-send-email-avarab@gmail.com>
 References: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Jeff Epler <jepler@unpythonic.net>,
@@ -19,147 +19,190 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJcPq-0004k8-TN
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 03:06:43 +0200
+	id 1OJcPo-0004k8-NZ
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 03:06:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757514Ab0FBBG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jun 2010 21:06:28 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
+	id S1757469Ab0FBBGT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jun 2010 21:06:19 -0400
 Received: from mail-fx0-f46.google.com ([209.85.161.46]:55589 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757504Ab0FBBGZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jun 2010 21:06:25 -0400
+	with ESMTP id S1756793Ab0FBBGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jun 2010 21:06:17 -0400
 Received: by mail-fx0-f46.google.com with SMTP id 8so1482447fxm.19
-        for <git@vger.kernel.org>; Tue, 01 Jun 2010 18:06:25 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 01 Jun 2010 18:06:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=0u53Eqn0j7qyy11UPw2dJKqZ75oMKU0tBZdEKLDnF3w=;
-        b=O887SFwABS85fiboT0jcbBLdG/xOtFB0JfJdGU76m5Ui998CAEHWpgaSHlk5zIntgK
-         d+5Cs3uOu6I9pggH4KGmZh4djbs7HAqWD+MPUn/MY0gIMWtPaRF2brvPK56RyY2pTFDV
-         l62QvvBSf9U+E/QHj4IkNXAXX1JHIyu9UmR2g=
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=esho48d41aS42zIOgyjiKdzHWa5IMAJuleOqNE9Qwpo=;
+        b=YuQPEZl7KURdxFgzw4ieOQCnZnn4kcpOm64ORPndgfiNqKanwrJFoyki0q8wyRlUTw
+         njuOBzETxoqeSQy6VgPHNVgZk84qn/ELpgyuyK1fibQM0ZphffNgTZT5+AWz0KTUG3BD
+         UEz1qtk85OHNM5crBR/DQfr4rxAC6/K88hr8k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=UqolEFqA6Trgh88tetv4vbUfmn3uCna5zYSr6bpdU3bw+CX5QN0Wx7uDIvLpc0NxaR
-         Ed3wOvTiezaM6FW7NBMaVzwG0vuewr1f8/9mytmSyEc/ribOEyFbPJTHpq+siUTutRjy
-         p1TYqS6wn7YDRkP9jV5v7N4nZV4J6ELI9pRfI=
-Received: by 10.223.60.3 with SMTP id n3mr7854535fah.83.1275440784700;
-        Tue, 01 Jun 2010 18:06:24 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=s1yAvRO/HTcmJ+w6ScZMgQrVd6RthXmlOheszxe1wM5oOK7L0AHNrCszr9ZOkgMFT+
+         LKLl1MoI+UpAD4TSm3TexwDL6N8xbnPCV7Y4fPS4q6gpOMHjvg/IJHaVBKgkGrfKwgLC
+         CGvfgPOxWL0wMWhef3WCcbOjYyrVbqTKwh/2E=
+Received: by 10.223.92.153 with SMTP id r25mr7885584fam.76.1275440776009;
+        Tue, 01 Jun 2010 18:06:16 -0700 (PDT)
 Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
-        by mx.google.com with ESMTPS id 13sm49688716fad.7.2010.06.01.18.06.22
+        by mx.google.com with ESMTPS id 13sm49688716fad.7.2010.06.01.18.06.14
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 01 Jun 2010 18:06:23 -0700 (PDT)
+        Tue, 01 Jun 2010 18:06:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.251.gec7f5.dirty
 In-Reply-To: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148187>
 
-These tests check if Git's C, Shell and Perl wrappers for Gettext are
-working.
+Use GNU's gettext.sh in git-sh-setup if it's available, otherwise
+fallback on our own custom functions.
+
+A couple of strings in git-pull.sh are now translatable as a proof of
+concept, including a multiline string.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 ---
- t/t0200-gettext.sh |   73 ++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 73 insertions(+), 0 deletions(-)
- create mode 100755 t/t0200-gettext.sh
+ Makefile        |    7 +++++--
+ git-pull.sh     |   15 ++++++++-------
+ git-sh-setup.sh |   38 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 51 insertions(+), 9 deletions(-)
 
-diff --git a/t/t0200-gettext.sh b/t/t0200-gettext.sh
-new file mode 100755
-index 0000000..ff2f9f9
---- /dev/null
-+++ b/t/t0200-gettext.sh
-@@ -0,0 +1,73 @@
-+#!/bin/sh
-+D=3D`pwd`
-+export GIT_TEXTDOMAINDIR=3D$D/../share/locale
+diff --git a/Makefile b/Makefile
+index 4de0627..dce2faa 100644
+--- a/Makefile
++++ b/Makefile
+@@ -272,6 +272,7 @@ mandir =3D share/man
+ infodir =3D share/info
+ gitexecdir =3D libexec/git-core
+ sharedir =3D $(prefix)/share
++localedir =3D $(sharedir)/locale
+ template_dir =3D share/git-core/templates
+ htmldir =3D share/doc/git-doc
+ ifeq ($(prefix),/usr)
+@@ -285,7 +286,7 @@ lib =3D lib
+ # DESTDIR=3D
+ pathsep =3D :
+=20
+-export prefix bindir sharedir sysconfdir
++export prefix bindir sharedir localedir sysconfdir
+=20
+ CC =3D gcc
+ AR =3D ar
+@@ -1455,6 +1456,7 @@ htmldir_SQ =3D $(subst ','\'',$(htmldir))
+ prefix_SQ =3D $(subst ','\'',$(prefix))
+ sharedir_SQ =3D $(subst ','\'',$(sharedir))
+=20
++LOCALEDIR_SQ =3D $(subst ','\'',$(localedir))
+ SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
+ PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
+ PYTHON_PATH_SQ =3D $(subst ','\'',$(PYTHON_PATH))
+@@ -1548,6 +1550,7 @@ $(RM) $@ $@+ && \
+ sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
+     -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
++    -e 's|@@LOCALEDIR@@|$(LOCALEDIR_SQ)|g' \
+     -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
+     -e $(BROKEN_PATH_FIX) \
+     $@.sh >$@+
+@@ -1881,7 +1884,7 @@ cscope:
+ 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
+=20
+ pot:
+-	$(XGETTEXT) -k_ -o po/git.pot $(C_OBJ:o=3Dc)
++	$(XGETTEXT) -k_ -o po/git.pot $(C_OBJ:o=3Dc) $(SCRIPT_SH)
+=20
+ POFILES :=3D $(wildcard po/*.po)
+ MOFILES :=3D $(patsubst po/%.po,share/locale/%/LC_MESSAGES/git.mo,$(PO=
+=46ILES))
+diff --git a/git-pull.sh b/git-pull.sh
+index 1a4729f..22a6da2 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -121,8 +121,8 @@ error_on_no_merge_candidates () {
+ 	do
+ 		case "$opt" in
+ 		-t|--t|--ta|--tag|--tags)
+-			echo "Fetching tags only, you probably meant:"
+-			echo "  git fetch --tags"
++			gettext "Fetching tags only, you probably meant:"; echo
++			gettext "  git fetch --tags"; echo
+ 			exit 1
+ 		esac
+ 	done
+@@ -154,11 +154,12 @@ error_on_no_merge_candidates () {
+ 		echo "a branch. Because this is not the default configured remote"
+ 		echo "for your current branch, you must specify a branch on the comm=
+and line."
+ 	elif [ -z "$curr_branch" ]; then
+-		echo "You are not currently on a branch, so I cannot use any"
+-		echo "'branch.<branchname>.merge' in your configuration file."
+-		echo "Please specify which remote branch you want to use on the comm=
+and"
+-		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
+-		echo "See git-pull(1) for details."
++        gettext "You are not currently on a branch, so I cannot use an=
+y
++'branch.<branchname>.merge' in your configuration file.
++Please specify which remote branch you want to use on the command
++line and try again (e.g. 'git pull <repository> <refspec>').
++See git-pull(1) for details.";
++        echo
+ 	elif [ -z "$upstream" ]; then
+ 		echo "You asked me to pull without telling me which branch you"
+ 		echo "want to $op_type $op_prep, and 'branch.${curr_branch}.merge' i=
+n"
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index 6131670..53cfc42 100644
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -211,3 +211,41 @@ case $(uname -s) in
+ 	}
+ 	;;
+ esac
 +
-+test_description=3D'Gettext support for Git'
-+. ./test-lib.sh
-+. ../../git-sh-setup
++# Try to use libintl's gettext.sh, or fall back to English if we
++# can't.
++. gettext.sh
++if test $? -eq 0
++then
++	TEXTDOMAIN=3Dgit
++	export TEXTDOMAIN
++	if [ -z "$GIT_TEXTDOMAINDIR" ]
++	then
++		TEXTDOMAINDIR=3D"@@LOCALEDIR@@"
++	else
++		TEXTDOMAINDIR=3D$GIT_TEXTDOMAINDIR
++	fi
++	export TEXTDOMAINDIR
++else
++	# Since GNU gettext.sh isn't available we'll have to define our
++	# own dummy functions.
 +
-+test_expect_success 'sanity: $TEXTDOMAIN is git' '
-+    test $TEXTDOMAIN =3D "git"
-+'
++	# This code adapted from NessusClient-1.0.2's nessusclient-mkcert
++	# by Michel Arboi <arboi@alussinan.org>. The original code is
++	# under the GPLv2.
 +
-+test_expect_success 'sanity: $TEXTDOMAINDIR exists' '
-+    test -d $TEXTDOMAINDIR &&
-+    test $TEXTDOMAINDIR =3D $GIT_TEXTDOMAINDIR
-+'
++	# Not everyone has echo -n
++	case $(echo -n) in
++		\-n)	Xn=3D	  ; Xc=3D'\c' ;;
++		*)		Xn=3D-n ; Xc=3D
++	esac
 +
-+test_expect_success 'sanity: Icelandic locale was compiled' '
-+    test -f $TEXTDOMAINDIR/is/LC_MESSAGES/git.mo
-+'
++	gettext () {
++		echo $Xn "$1" $Xc
++	}
 +
-+test_expect_success 'sanity: gettext("") metadata is OK' '
-+    LC_ALL=3Dis_IS.UTF-8 gettext "" > expect &&
-+    grep "Project-Id-Version: Git" expect &&
-+    grep "Git Mailing List <git@vger.kernel.org>" expect &&
-+    grep "Content-Type: text/plain; charset=3DUTF-8" expect &&
-+    grep "Content-Transfer-Encoding: 8bit" expect
-+'
-+
-+test_expect_success 'sanity: gettext(unknown) is passed through' '
-+    printf "This is not a translation string"  > expect
-+    gettext "This is not a translation string" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'sanity: C program git-status reads our message ca=
-talog ' '
-+    > foo &&
-+    test_commit foo "a message"
-+    git checkout -b topic/gettext-testing &&
-+    git status | grep topic/gettext-testing > expect
-+    echo "# On branch topic/gettext-testing" > actual
-+    test_cmp expect actual &&
-+    LC_ALL=3Dis_IS.UTF-8 git status | grep topic/gettext-testing > exp=
-ect
-+    echo "# =C3=81 greininni topic/gettext-testing" > actual
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'sanity: Perl program Git::I18N reads our message =
-catalog ' '
-+    echo "On branch " > expect &&
-+    perl -I"$D/../perl" -MGit::I18N -le "print gettext(q[On branch ])"=
- > actual &&
-+    test_cmp expect actual &&
-+
-+    echo "=C3=81 greininni " > expect &&
-+    LC_ALL=3Dis_IS.UTF-8 perl -I"$D/../perl" -MGit::I18N -le "print ge=
-ttext(q[On branch ])" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'Setup another Git repository for testing' '
-+    mkdir parent &&
-+    (cd parent && git init &&
-+     echo one >file && git add file &&
-+     git commit -m one)
-+'
-+
-+test_expect_success 'sanity: Shell program git-pull reads our message =
-catalog' '
-+    cd parent &&
-+    (git pull --tags "../" >out 2>err || :) &&
-+    grep "Fetching tags only" err &&
-+    (LC_ALL=3Dis_IS.UTF-8 git pull --tags "../" >out 2>err || :) &&
-+    grep "N=C3=A6 a=C3=B0eins =C3=AD" err=20
-+'
-+
-+test_done
++	eval_gettext () {
++		eval_gettext_var=3D"echo $1"
++		echo $Xn `eval $eval_gettext_var` $Xc
++	}
++fi
 --=20
 1.7.1.251.gec7f5.dirty
