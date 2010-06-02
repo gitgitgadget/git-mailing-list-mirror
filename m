@@ -1,59 +1,80 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: [PATCH 1/5] t/t5800: skip if python version is older than 2.5
-Date: Wed, 02 Jun 2010 09:46:14 -0500
-Message-ID: <771D_fbE1nXD6XdR0EsexE96n7NZJ1WvuJ__1wNJTGHLKi4dsHGk0g@cipher.nrlssc.navy.mil>
-References: <Wt_M4qptcPdpY0Q3jqUbfIk6yMCN9Ja5RCtRUsADK5OJGrz7R_Cq1oGpeQoN7A9uCvw38jm63Jo@cipher.nrlssc.navy.mil> <Wt_M4qptcPdpY0Q3jqUbfCU_HpY9NEjqs9eujZFD2rsUj5HRo__oQm7EUCxzXu38mC0y-ilUA14@cipher.nrlssc.navy.mil> <4C05FC18.4090402@viscovery.net>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [PATCH] Makefile: Use $(sharedir)/gitweb for target 
+	'install-gitweb'
+Date: Wed, 2 Jun 2010 20:19:04 +0530
+Message-ID: <AANLkTinIaY65N_DyDq6RrS6AyLeksL_ZfiawwDZySzB3@mail.gmail.com>
+References: <1275405080-17326-1-git-send-email-pavan.sss1991@gmail.com>
+	<201006012150.02970.jnareb@gmail.com>
+	<7vfx16qcmm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Brandon Casey <drafnel@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jun 02 16:48:23 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 16:49:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJpEt-0006Bi-OE
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 16:48:16 +0200
+	id 1OJpFp-0006p5-GQ
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 16:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755725Ab0FBOsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 10:48:10 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:50559 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754564Ab0FBOsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 10:48:08 -0400
-Received: by mail.nrlssc.navy.mil id o52EkFCC018197; Wed, 2 Jun 2010 09:46:15 -0500
-In-Reply-To: <4C05FC18.4090402@viscovery.net>
-X-OriginalArrivalTime: 02 Jun 2010 14:46:15.0404 (UTC) FILETIME=[5A3ABAC0:01CB0262]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1757021Ab0FBOtH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 10:49:07 -0400
+Received: from mail-yw0-f179.google.com ([209.85.211.179]:44588 "EHLO
+	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752056Ab0FBOtF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 10:49:05 -0400
+Received: by ywh9 with SMTP id 9so5062287ywh.17
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 07:49:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Cc7ZNmh1XJmWeEPHfC9XTHgGZnB9lHqeu8R9g0In2wU=;
+        b=YWW2G7mEPvCFzLssBcSEfGmqDiQol2If7E/pnIsA2f8MJOpjhjmr3A0sXly2N6Df3p
+         V9k6xOEU9zy22vuYEc8aUkB8rhJLczpL4RzZnAou+9oMS2BmY4Oq3hGdsylH4xClcJh2
+         iwd9K0wBDKGxtHus4OIamJ129xcWExSf22v7g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rcAZwYxhhtucsgZSb5ZRyZJC9VULlvWhBZKkM835Gh7hWs5y06fj+Al0kCc7aEoxm1
+         znNPs/1wR8CaW2raH34e3Q8G+iIkEBVA0ylBDYJ//hhtm7okj4BRrgZVyFxDGOmsXSQF
+         Ctz31caPu6ruCQxqLcpDQhf7QtzJ5rYxPe5gI=
+Received: by 10.101.129.17 with SMTP id g17mr8810186ann.101.1275490145033; 
+	Wed, 02 Jun 2010 07:49:05 -0700 (PDT)
+Received: by 10.100.126.20 with HTTP; Wed, 2 Jun 2010 07:49:04 -0700 (PDT)
+In-Reply-To: <7vfx16qcmm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148256>
 
-On 06/02/2010 01:37 AM, Johannes Sixt wrote:
-> Am 6/2/2010 2:13, schrieb Brandon Casey:
->> +if ! test_have_prereq PYTHON_2_5_OR_NEWER
->>  then
->> +	say 'skipping git remote-testgit tests: requires Python 2.5 or newer'
-> ...
->> +++ b/t/test-lib.sh
->> +if test_have_prereq PYTHON && "$PYTHON_PATH" -c '
->> +import sys
->> +if sys.hexversion < 0x02050000:
->> +    sys.exit(1)
->> +'
->> +then
->> +	test_set_prereq PYTHON_2_5_OR_NEWER
->> +fi
-> 
-> Please don't burden all test script invocations with this check when the
-> result is used in only one place.
+>
+> I am wondering if we would also want to do something with this line
+>
+> =A0 =A0gitwebdir ?=3D /var/www/cgi-bin
+>
+> in gitweb/Makefile. =A0This is orthogonal to the patch under discussi=
+on
+> does, though.
+>
+>
 
-Very good point.
+Well, Let us say that we use /var/www/cgi-bin as default if user
+downloads only gitweb and install it.
+If he is installing git, then gitweb needs to be installed in
+$(sharedir)/gitweb. Putting it as default in main Makefile is
+supported.
+
+So, It won't be orthogonal to the patch.
+
+Thanks,
+Pavan.
