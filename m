@@ -1,80 +1,85 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: [PATCH] git-compat-util.h: use apparently more common __sgi macro 
-	to detect SGI IRIX
-Date: Wed, 2 Jun 2010 11:56:56 +0200
-Message-ID: <AANLkTinvmNM_nKQnZNgQMWstrevG4RfcjW7RdCILVLYF@mail.gmail.com>
-References: <20100514093838.421864000@mlists.thewrittenword.com>
-	<4gJWLBIdRVtK7gq22o-LadCixyvOA-9FlEvk-ZrCHyUsGwArvR9oPkV-qlez-T-Nsn0v6UO633Y@cipher.nrlssc.navy.mil>
+From: =?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>
+Subject: Re: Best way to apply textconv to a working tree file
+Date: Wed, 02 Jun 2010 11:56:59 +0200
+Organization: Ensimag
+Message-ID: <1725d013942b49b804102cca573d2999@ensimag.fr>
+References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr> <20100601170426.GC9702@sigill.intra.peff.net>
+Reply-To: clement.poulain@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, drafnel@gmail.com,
-	"Gary V. Vaughan" <git@mlists.thewrittenword.com>,
-	"Gary V. Vaughan" <gary@thewrittenword.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jun 02 11:57:08 2010
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 02 11:57:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJkh6-000858-CV
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 11:57:04 +0200
+	id 1OJkhb-0008Mv-Vm
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 11:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753708Ab0FBJ47 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 05:56:59 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40895 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752131Ab0FBJ46 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 05:56:58 -0400
-Received: by fxm8 with SMTP id 8so1686194fxm.19
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 02:56:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=JF00JNx29wUp+XPhzOHkog332mvUUbjDbzREmVeuwNQ=;
-        b=l5qX6QhdwukM3URiZOQl59zfSHDExbgWwvEuZSAZDdpsVOBbLBbvT+RyXbSvm5cs7K
-         IsOu6BQdkyvxfLqqNfhVf6VAsZ3Lrb+bV0/m4DBUqXJl0Pmo0ose2+QLfDAaXFIb0XC2
-         FrZ56gzGL3wCpCowhfwgF5355qWsOYxy8SyMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=jQiLE1ht6VlT5T3cbN3hPdSzaOaKYRebjL7hdCawLhWyBeITIX53yjMXgcXHF3Nuql
-         L5+3nhwQDgTSbyR6hKs637TLXMZ5yHlrWBDQTn5dKF1w7fCVICPx+d4DFvNZXP1yQ8im
-         PPyE5ZnrH0Vc6+5koDEK8I2EucqIvUGwxEyH8=
-Received: by 10.239.132.65 with SMTP id 1mr580331hbq.25.1275472616868; Wed, 02 
-	Jun 2010 02:56:56 -0700 (PDT)
-Received: by 10.239.156.209 with HTTP; Wed, 2 Jun 2010 02:56:56 -0700 (PDT)
-In-Reply-To: <4gJWLBIdRVtK7gq22o-LadCixyvOA-9FlEvk-ZrCHyUsGwArvR9oPkV-qlez-T-Nsn0v6UO633Y@cipher.nrlssc.navy.mil>
-X-Google-Sender-Auth: tPAKSE0KfKAh9CC_efyBjLCs2E8
+	id S1757679Ab0FBJ5P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 05:57:15 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49514 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754014Ab0FBJ5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 05:57:04 -0400
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o529nahN032169
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 2 Jun 2010 11:49:37 +0200
+Received: from ensicom.imag.fr (web-ensimag [195.221.228.24])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o529ux2W009330
+	for <git@vger.kernel.org>; Wed, 2 Jun 2010 11:56:59 +0200
+Received: from webmail.ensimag.fr (localhost [127.0.0.1])
+	by ensicom.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id o529uxdE032702
+	for <git@vger.kernel.org>; Wed, 2 Jun 2010 11:56:59 +0200
+In-Reply-To: <20100601170426.GC9702@sigill.intra.peff.net>
+X-Sender: clement.poulain@ensimag.imag.fr
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 02 Jun 2010 11:49:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o529nahN032169
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
+MailScanner-NULL-Check: 1276076980.09494@u97bunu23vxLaPFOU8RhPw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148239>
 
-On Wed, Jun 2, 2010 at 03:55, Brandon Casey <casey@nrlssc.navy.mil> wro=
-te:
-> From: Gary V. Vaughan <git@mlists.thewrittenword.com>
->
-> IRIX 6.5.26m does not define the 'sgi' macro, but it does define an '=
-__sgi'
-> macro. =A0Since later IRIX versions (6.5.29m) define both macros, and=
- since
-> an underscore prefixed macro is preferred anyway, use '__sgi' to dete=
-ct
-> compilation on SGI IRIX.
+On Tue, 1 Jun 2010 13:04:27 -0400, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 01, 2010 at 03:41:05PM +0200, Cl=C3=A9ment Poulain wrote:
+>=20
+>> We are wondering what is the best way to do the textconv. Here are s=
+ome
+>> solutions we thought about:
+>=20
+> One solution you didn't mention would be to do it all yourself:
+>=20
+>   driver=3D`git check-attr diff "$file" | cut -d: -f3`
+>   textconv=3D`git config diff.$driver.textconv`
+>   $textconv <$file >$file.converted
+>=20
+> This has the advantage of working with existing versions of git. The
+> downside is that it's more code (e.g., my parsing above is quite slop=
+py
+> and loose. Doing it right would be a few more lines).
+>=20
+> Furthermore, it doesn't use the textconv cache at all. For working tr=
+ee
+> files, this might not matter (if you pull the sha1 out of the index,
+> though, you can still check the cache, and unchanged working tree fil=
+es
+> are likely to be in the cache). But for blobs in general, the cache i=
+s
+> worth using.
+>=20
+> -Peff
 
-Yes, __sgi is the one to use. It's been there on all the SGI systems
-I've used, at least back to IRIX 5.3 (I don't recall for sure about
-4.0.5 but my guess is yes). 'sgi' is often there too, also on IRIX 6.2
-(with the old MIPS compiler), but on both 6.2 and 6.5 it goes away if
-you use certain other options, e.g. -ansi. __sgi, on the other hand,
-is always there - it doesn't depend on any other compiler options.
-
--Tor
+It seems to really fit for git gui.=20
+About the cache : this method will be only used by git gui (when it's
+launched) on working tree files, so it seems OK for me.
+Thank you
