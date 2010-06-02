@@ -1,83 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: git locate
-Date: Wed, 02 Jun 2010 13:27:52 +0200
-Message-ID: <vpqwruhwu6f.fsf@bauges.imag.fr>
-References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com>
-	<alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de>
-	<m3zl49bk0o.fsf@localhost.localdomain>
-	<alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302>
-	<4B579BA8.8050000@gmail.com>
-	<fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com>
-	<AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com>
+Date: Wed, 2 Jun 2010 13:29:19 +0200
+Message-ID: <AANLkTinBwk_l-prWXHiAE8UoSMaJMebHm5Y7J8TOScYR@mail.gmail.com>
+References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com> 
+	<alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de> <m3zl49bk0o.fsf@localhost.localdomain> 
+	<alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302> 
+	<4B579BA8.8050000@gmail.com> <fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com> 
+	<AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com> 
 	<AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
-	<80y6ex3f8b.fsf@tiny.isode.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
-To: Bruce Stephens <bruce.stephens@isode.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 13:28:04 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 13:29:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJm79-000418-NC
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 13:28:04 +0200
+	id 1OJm8o-0004lI-IQ
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 13:29:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757636Ab0FBL16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 07:27:58 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:34755 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751616Ab0FBL16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 07:27:58 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o52BKVug010415
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 2 Jun 2010 13:20:31 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OJm6y-0003Bi-PM; Wed, 02 Jun 2010 13:27:52 +0200
-In-Reply-To: <80y6ex3f8b.fsf@tiny.isode.net> (Bruce Stephens's message of "Wed\, 02 Jun 2010 11\:23\:32 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Jun 2010 13:20:31 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o52BKVug010415
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1276082434.20696@k5DOTcqeKFe5D1Q9fkopig
+	id S1757879Ab0FBL3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 07:29:42 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36198 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757854Ab0FBL3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 07:29:40 -0400
+Received: by bwz11 with SMTP id 11so382833bwz.19
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 04:29:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=5JVuVzIZ6UxhnlW/e/K+wzVDbeuFoP8ER64sq/zEL9A=;
+        b=cXS7VNgZqGPPzQ9rYpYxNjNkSJVN+g6ARGwh7Br5fx0UzgAHm78ha+DvLJ/HRjB6dw
+         yoFJJPiIHdBHHqw/DdYHUsOtFYIBPH2lEVWP1870yYrl7UOuI8JUGLaqQCy6ePJihpvW
+         CkbcBgO1bW/8rbNtE40v+88o7E1KCF7w3XGto=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=nA2SvOwXENxVipUR9lFr6SW/PbaQrARltVV2voln7F+TeKxJ1DMO+KbK7UsRrTfkXm
+         xQaFwPM/D3j03JULLLvRlm1AR87Jd19Gr4Nu0lwAF3X9tiwa5jfEOdQ6nNFiXPssh1Zx
+         faSPvfPd1f3qa/OgLpG98qMFOuceS1pH4IcoI=
+Received: by 10.204.81.85 with SMTP id w21mr1676323bkk.92.1275478179182; Wed, 
+	02 Jun 2010 04:29:39 -0700 (PDT)
+Received: by 10.204.70.79 with HTTP; Wed, 2 Jun 2010 04:29:19 -0700 (PDT)
+In-Reply-To: <AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148245>
 
-Bruce Stephens <bruce.stephens@isode.com> writes:
-
-> John Tapsell <johnflux@gmail.com> writes:
->
-> [...]
->
->> Actually could someone help me with this.. the trouble is that this
->> returns paths relative to the root.
+On Wed, Jun 2, 2010 at 12:02 PM, John Tapsell <johnflux@gmail.com> wrote:
+> On 2 June 2010 14:00, John Tapsell <johnflux@gmail.com> wrote:
+>> On 15 February 2010 22:20, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+>>> Heya,
+>>>
+>>> On Thu, Jan 21, 2010 at 01:11, SungHyun Nam <goweol@gmail.com> wrote:
+>>>> The alias 'git locate' and the command 'git ls-files' runs
+>>>> differently if I run them in a subdirectory.
+>>>> Is it expected?
+>>>
+>>> I just ran into this (I wanted to alias 'git find' but to me the 'run
+>>> ls-files from cwd' is desirable. Also, I prefer to have a trailing
+>>> glob as well, so I added one :). An easy solution is to drop
+>>> 'git-find' in your path somewhere:
 >>
->> Can I get it to find all the files, but relative to where I am now?
+>> I have finally settled on:
+>>
+>> [alias]
+>>    locate = !sh -c 'git ls-files | grep --color=auto "$1"' -
 >
-> Something like this is probably part of the answer, which allows an
-> alias like this to work:
 >
-> 	locate = !cd $GIT_CWD && sh -c 'git ls-files "*$1*"' -
+> Actually could someone help me with this.. the trouble is that this
+> returns paths relative to the root.
+>
+> Can I get it to find all the files, but relative to where I am now?
 
-There's a patch pending to do more or less the same thing:
+Make it a git command, not an alias. You'll then be fine. put
+git-locate somewhere in your $PATH
 
-  http://thread.gmane.org/gmane.comp.version-control.git/146360/focus=146450
+--<--
+#!/bin/sh
+git ls-files | grep --color=auto "$1"
+--<--
 
-Read Junio's reply there:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/146360/focus=146450
-
+Of course you need to chmod u+x for it.
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
