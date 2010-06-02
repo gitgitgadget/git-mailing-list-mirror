@@ -1,117 +1,83 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC v4 1/7] Add infrastructure for translating Git with 
-	gettext
-Date: Wed, 2 Jun 2010 10:56:05 +0000
-Message-ID: <AANLkTinzZUaFBzNHzxBA94ECeUKdejVGqSQF1TUtOrrk@mail.gmail.com>
-References: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com>
-	<1275440764-26153-2-git-send-email-avarab@gmail.com>
-	<alpine.DEB.2.00.1006021006590.23247@ds9.cixit.se>
-	<AANLkTilClUTkrpnMhBTlcBZC-r2OemT4m22bDnc6fRPy@mail.gmail.com>
-	<alpine.DEB.2.00.1006021109010.23247@ds9.cixit.se>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git locate
+Date: Wed, 02 Jun 2010 13:27:52 +0200
+Message-ID: <vpqwruhwu6f.fsf@bauges.imag.fr>
+References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com>
+	<alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de>
+	<m3zl49bk0o.fsf@localhost.localdomain>
+	<alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302>
+	<4B579BA8.8050000@gmail.com>
+	<fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com>
+	<AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com>
+	<AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
+	<80y6ex3f8b.fsf@tiny.isode.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Wed Jun 02 12:57:53 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>
+To: Bruce Stephens <bruce.stephens@isode.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 13:28:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJldw-00087H-Bn
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 12:57:52 +0200
+	id 1OJm79-000418-NC
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 13:28:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757636Ab0FBK4J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 06:56:09 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64482 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751540Ab0FBK4G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 06:56:06 -0400
-Received: by gye5 with SMTP id 5so1987003gye.19
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 03:56:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2PfGwDzGrcnET1Bgvi7Z1utRqEC/bOLTMktY01AlmDo=;
-        b=Aw37VpK5/3p6gSnr2+MZPcUJ70Ap5IRxnythH9sd7Leg3e1xt4YkQj8d/C85Kg/Mjw
-         kHmgR98G1dWPQurdQ/0Q6YjUjY5EV2Onp0PDFq5B9bhQUkMN1ohVGq/spizsjAlyV+8N
-         OLNZQq1OQmGYzXbjSdi5Ad/Y5hL8f+ZpMxQt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mmFvbbkwFvKrR0noHEZXlREfGg2MLAZtUjXZM891pJ6/8mkEEGwcvRynosUnNDTwbI
-         VDSBgKPsnW9bfpm4hSy1xCEuF9pWd8O8Xx5kSY9j/QddrtO8PnB/IQhK0Ft+7JHCKB/2
-         BI32YuLkC7jkhIx5N0L9HPqPcN36viQmWM+Ck=
-Received: by 10.231.184.73 with SMTP id cj9mr9726115ibb.1.1275476165778; Wed, 
-	02 Jun 2010 03:56:05 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Wed, 2 Jun 2010 03:56:05 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1006021109010.23247@ds9.cixit.se>
+	id S1757636Ab0FBL16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 07:27:58 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:34755 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751616Ab0FBL16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 07:27:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o52BKVug010415
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 Jun 2010 13:20:31 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OJm6y-0003Bi-PM; Wed, 02 Jun 2010 13:27:52 +0200
+In-Reply-To: <80y6ex3f8b.fsf@tiny.isode.net> (Bruce Stephens's message of "Wed\, 02 Jun 2010 11\:23\:32 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Jun 2010 13:20:31 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o52BKVug010415
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1276082434.20696@k5DOTcqeKFe5D1Q9fkopig
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148244>
 
-On Wed, Jun 2, 2010 at 10:11, Peter Krefting <peter@softwolves.pp.se> w=
-rote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+Bruce Stephens <bruce.stephens@isode.com> writes:
+
+> John Tapsell <johnflux@gmail.com> writes:
 >
->> Making things like wt-status.c translatable is going to be hard to d=
-o
->> properly. It uses a lot of lego (sticking strings incrementally toge=
-ther),
+> [...]
 >
-> However, preparing them for translation is probably going to make the=
-m
-> better anyway, as this kind of string building is incredibly brittle,=
- even
-> for English strings.
-
-Yeah, but they aren't better as they are now. Personally I'd rather
-incrementally add translation support correctly than do an incomplete
-job of it and wait for the complaints (and subsequent fixes) to come
-in.
-
-But maybe that's counter-productive. Just making the English strings
-translatable as-is is still going to make most of Git translatable,
-and it isn't going to be that bad for languages like German and
-=46rench.
-
-Maybe worse is better :)
-
-> You also have to look out for pluralisation issues, fortunately Gette=
-xt does
-> have support for the various types of plural forms that are used, so =
-it
-> should be possible. The problem is just identifying where they are ne=
-eded.
-
-Yeah. I'm going to support pluralisation (and maybe msgctxt) across
-the C-Perl-Shell stack when there's a need for it. I haven't found any
-message in Git yet that requires it, but then again I haven't looked
-hard either.
-
-It would be useful to have an example of a message that could use
-pluralization, even better examples in all of C, Perl and Shell.
-
->> and due to the coloring of output this'll be particularly hard to co=
-nvert.
+>> Actually could someone help me with this.. the trouble is that this
+>> returns paths relative to the root.
+>>
+>> Can I get it to find all the files, but relative to where I am now?
 >
-> Is the colouring based on knowing the contents of the actual text, or=
- is it
-> enough to know the markers? I admit not having looked at the colourin=
-g code
-> at all...
+> Something like this is probably part of the answer, which allows an
+> alias like this to work:
+>
+> 	locate = !cd $GIT_CWD && sh -c 'git ls-files "*$1*"' -
 
-There's nothing wrong with coloring in particular, it's just that due
-to the nature of the current implementation code that does coloring
-ends up being a bad offender in the "assemble the strings a few bytes
-at a time with strcat()" department.
+There's a patch pending to do more or less the same thing:
 
-That can be fixed, it just takes a bit of time and tedium.
+  http://thread.gmane.org/gmane.comp.version-control.git/146360/focus=146450
+
+Read Junio's reply there:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/146360/focus=146450
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
