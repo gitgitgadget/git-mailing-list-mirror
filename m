@@ -1,94 +1,83 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: git locate
-Date: Wed, 2 Jun 2010 13:29:19 +0200
-Message-ID: <AANLkTinBwk_l-prWXHiAE8UoSMaJMebHm5Y7J8TOScYR@mail.gmail.com>
-References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com> 
-	<alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de> <m3zl49bk0o.fsf@localhost.localdomain> 
-	<alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302> 
-	<4B579BA8.8050000@gmail.com> <fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com> 
-	<AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com> 
-	<AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH/RFC v4 1/7] Add infrastructure for translating Git with
+  gettext
+Date: Wed, 2 Jun 2010 12:31:17 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1006021224170.4751@ds9.cixit.se>
+References: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com> <1275440764-26153-2-git-send-email-avarab@gmail.com> <alpine.DEB.2.00.1006021006590.23247@ds9.cixit.se> <AANLkTilClUTkrpnMhBTlcBZC-r2OemT4m22bDnc6fRPy@mail.gmail.com>
+ <alpine.DEB.2.00.1006021109010.23247@ds9.cixit.se> <AANLkTinzZUaFBzNHzxBA94ECeUKdejVGqSQF1TUtOrrk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 13:29:46 2010
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 02 13:31:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJm8o-0004lI-IQ
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 13:29:46 +0200
+	id 1OJmAP-0005UG-Az
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 13:31:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757879Ab0FBL3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 07:29:42 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:36198 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757854Ab0FBL3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 07:29:40 -0400
-Received: by bwz11 with SMTP id 11so382833bwz.19
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 04:29:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=5JVuVzIZ6UxhnlW/e/K+wzVDbeuFoP8ER64sq/zEL9A=;
-        b=cXS7VNgZqGPPzQ9rYpYxNjNkSJVN+g6ARGwh7Br5fx0UzgAHm78ha+DvLJ/HRjB6dw
-         yoFJJPiIHdBHHqw/DdYHUsOtFYIBPH2lEVWP1870yYrl7UOuI8JUGLaqQCy6ePJihpvW
-         CkbcBgO1bW/8rbNtE40v+88o7E1KCF7w3XGto=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=nA2SvOwXENxVipUR9lFr6SW/PbaQrARltVV2voln7F+TeKxJ1DMO+KbK7UsRrTfkXm
-         xQaFwPM/D3j03JULLLvRlm1AR87Jd19Gr4Nu0lwAF3X9tiwa5jfEOdQ6nNFiXPssh1Zx
-         faSPvfPd1f3qa/OgLpG98qMFOuceS1pH4IcoI=
-Received: by 10.204.81.85 with SMTP id w21mr1676323bkk.92.1275478179182; Wed, 
-	02 Jun 2010 04:29:39 -0700 (PDT)
-Received: by 10.204.70.79 with HTTP; Wed, 2 Jun 2010 04:29:19 -0700 (PDT)
-In-Reply-To: <AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
+	id S1757891Ab0FBLbV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 07:31:21 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:38771 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751860Ab0FBLbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 07:31:20 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o52BVHVN010148
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 2 Jun 2010 13:31:17 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o52BVHB8010144;
+	Wed, 2 Jun 2010 13:31:17 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTinzZUaFBzNHzxBA94ECeUKdejVGqSQF1TUtOrrk@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 02 Jun 2010 13:31:17 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148246>
 
-On Wed, Jun 2, 2010 at 12:02 PM, John Tapsell <johnflux@gmail.com> wrote:
-> On 2 June 2010 14:00, John Tapsell <johnflux@gmail.com> wrote:
->> On 15 February 2010 22:20, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->>> Heya,
->>>
->>> On Thu, Jan 21, 2010 at 01:11, SungHyun Nam <goweol@gmail.com> wrote:
->>>> The alias 'git locate' and the command 'git ls-files' runs
->>>> differently if I run them in a subdirectory.
->>>> Is it expected?
->>>
->>> I just ran into this (I wanted to alias 'git find' but to me the 'run
->>> ls-files from cwd' is desirable. Also, I prefer to have a trailing
->>> glob as well, so I added one :). An easy solution is to drop
->>> 'git-find' in your path somewhere:
->>
->> I have finally settled on:
->>
->> [alias]
->>    locate = !sh -c 'git ls-files | grep --color=auto "$1"' -
->
->
-> Actually could someone help me with this.. the trouble is that this
-> returns paths relative to the root.
->
-> Can I get it to find all the files, but relative to where I am now?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 
-Make it a git command, not an alias. You'll then be fine. put
-git-locate somewhere in your $PATH
+> But maybe that's counter-productive. Just making the English strings=20
+> translatable as-is is still going to make most of Git translatable, a=
+nd it=20
+> isn't going to be that bad for languages like German and French.
 
---<--
-#!/bin/sh
-git ls-files | grep --color=auto "$1"
---<--
+I think this is the best approach. Without actually making *everything*=
+=20
+available for translation it is impossible to weed out the problems. So=
+me of=20
+the easier "hack" strings (plural word%s, sentence %s%s building, etc) =
+can=20
+be fixed during conversion, the rest can be done later as complai^Wcomm=
+ents=20
+come in.
 
-Of course you need to chmod u+x for it.
--- 
-Duy
+> It would be useful to have an example of a message that could use=20
+> pluralization, even better examples in all of C, Perl and Shell.
+
+There is the "Your branch is ahead of..." messages, they were introduce=
+d in=20
+commit b0030db331141bedfaf02f34a83f18712c0ae011, and are currently usin=
+g a=20
+"commit%s" form, where the %s either maps to an empty string or "s". Sh=
+ould=20
+be fairly trivial to fix. I think there are other examples as well, but=
+=20
+that's the first one I came to think of. :-)
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
