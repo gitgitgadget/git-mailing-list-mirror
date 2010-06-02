@@ -1,93 +1,110 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Wed, 02 Jun 2010 09:15:24 +0200
-Message-ID: <4C06050C.2040505@drmicha.warpmail.net>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>	<4BF7B751.7050704@pileofstuff.org>	<4BFB7F7F.5090407@drmicha.warpmail.net>	<4C041656.7000008@pileofstuff.org> <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com>
+From: Roy Lee <roylee17@gmail.com>
+Subject: Re: How to add daily tags for a central repo?
+Date: Wed, 2 Jun 2010 15:55:11 +0800
+Message-ID: <AANLkTilbhfc_lyV6C_daaDZJvN5B-jvIUYyTBMeimtJD@mail.gmail.com>
+References: <1275369711233-5124575.post@n2.nabble.com>
+	<4C04AC1E.7040502@drmicha.warpmail.net>
+	<AANLkTim02FQ3BfV88iylMqbHA5sBbJvp5TmWg52OXCzn@mail.gmail.com>
+	<4C04BF33.70300@drmicha.warpmail.net>
+	<AANLkTinHU5z5njEpx1S_6DIR5ECauJbzWlcM95wNUVxf@mail.gmail.com>
+	<4C04CA4F.40106@drmicha.warpmail.net>
+	<AANLkTinpmkLhbBeqtdK9auG6NfqEsHqPWhrpUL18nFsG@mail.gmail.com>
+	<7vaareoxmv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Andrew Sayers <andrew-git@pileofstuff.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 09:16:07 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 02 09:55:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJiBL-0002RY-8h
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 09:16:07 +0200
+	id 1OJinK-00046o-HR
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 09:55:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752454Ab0FBHQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 03:16:00 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:56061 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751892Ab0FBHP7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 03:15:59 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id BD1CAF8F84;
-	Wed,  2 Jun 2010 03:15:48 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 02 Jun 2010 03:15:48 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=fiwoBn9J9P1lB9D6EBPo0F0Yda0=; b=ZLMMMEBH3OkYme4EBHbW/ybm4r3P349SAOK3C/1aYAwRzT2dkV8rdDSh3HbPB9AHjSaYz7NRpINE4HqeUfUiIR5k8VVUh/386nnZqIM3T8llaq8Z4VFS/QgELCp+o8MZoZO06Ad+G47s/KAkXv//ySvFFdWQ/7Pxs52OT0QhR9I=
-X-Sasl-enc: DxjynmGxrG+GRRwTul6LQeUAUctWpYr4rrOK8ryDGiFw 1275462946
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 341184A21CD;
-	Wed,  2 Jun 2010 03:15:46 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com>
+	id S1757654Ab0FBHzO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 03:55:14 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:47518 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753847Ab0FBHzM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 03:55:12 -0400
+Received: by vws11 with SMTP id 11so2221752vws.19
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 00:55:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RN3EvU3BmuwrilXFVfPrEj1YBlFYoct8AMokHVCqB6s=;
+        b=LUK0IELSlk+zxIB4QxWMnh+lgptEqgXbmSEIjDY1t93+I7GwTJxjaoGWMdPA0DQ0FR
+         tIH4d7dRNRYoohZvvbDMXMN5nzJnDt9n7i0jSFqR8nZwF+PaC6sUrmHPkrbG3sJuQGI1
+         X+YLecWVYNLV9+oD/gMHUovs0Rzbhrh4yX2TI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=pKlAcnUSClZwH3/ctUDxVFs6Xe4kJ5feSN1+jY4EDn9tBSyG5AiLbx6S+osfgmQRJV
+         eIy4T+GeGBinnQxzSMGl5tpz8kFToKRfJ9QSN32vIpJuSuHKu/nDK3lL6w5dMVGdQCmG
+         RDHDHe4uYCwSbidmb8kLIe/nJP9NREoaZ8CQI=
+Received: by 10.229.250.211 with SMTP id mp19mr1288508qcb.42.1275465311191; 
+	Wed, 02 Jun 2010 00:55:11 -0700 (PDT)
+Received: by 10.229.247.1 with HTTP; Wed, 2 Jun 2010 00:55:11 -0700 (PDT)
+In-Reply-To: <7vaareoxmv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148225>
 
-Daniele Segato venit, vidit, dixit 01.06.2010 18:00:
-> On Mon, May 31, 2010 at 10:04 PM, Andrew Sayers
-> <andrew-git@pileofstuff.org> wrote:
->> On 25/05/10 08:42, Michael J Gruber wrote:
->>>
->>> Feel free to contribute to the Git Wiki maybe at
->>>
->>> https://git.wiki.kernel.org/index.php/GitDocumentation
->>>
->>> in the "User contributed Documentation" section.
->>>
->>> Michael
->>>
+Hi,
+
+On Wed, Jun 2, 2010 at 12:40 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Roy Lee <roylee17@gmail.com> writes:
+>
+>>> * Create a tag for the state of a ref (such as HEAD) on the central=
+ repo
+>>> at a specific date and time.
 >>
->> Thanks for the hint - this turned into rather more than just uploading a
->> PDF, and I've now finished a complete write-up here:
->>
->>        https://git.wiki.kernel.org/index.php/SvnMigration
-> 
-> 
-> That's a great job!
-> 
-> I want to point out some difficulties I encountered switching from
-> Subversion to Git-SVN.
-> I'd like to discuss them here before, eventually, contributing them to
-> that page.
+>> Yes, for the daily build stuff.
+>
+> If this is really "the daily build", the easiest is to
+>
+> =A0- arrange the "daily build" environment to be kept up-to-date (eit=
+her
+> =A0 developers will be pushing into it, or there is another canonical
+> =A0 central repository developer pushes into, and the daily build
+> =A0 repository pulls from that canonical central repository via cron =
+just
+> =A0 before starting to build);
+>
+> =A0- tag the version that is being built; and
+>
+> =A0- do the "daily build".
+>
+> Even if the automated "daily build" runs an hour after midnight, I
+> wouldn't imagine that you would want to grab the version that was the
+> latest as of midnight, building that slightly stale one, excluding th=
+e
+> development that happened within an our since that version.
 
-Andrew's main thrust is how to migrate a team, not how to migrate a code
-base, and even less about the technical differences between svn and git.
-And that makes it especially valuable.
+The daily build process for our company is still under development.
 
-I'd suggest not mixing these things. Andrew's page fills a gap about the
-social aspects of the migration, and does so very well. He mentions very
-few technical aspects, only those which you need to take into account
-for planning out your team migration, i.e. relevant to advocacy, change
-of philosophy, avoiding typical pitfalls.
+I'll feel more comfortable if the timing of tagging can be decoupled wi=
+th
+the target revision date. In case one day the mechanism is asked to tag
+more branches on during different time interval or even backtrack to
+snapshots earlier than now.
 
-There's already a score of pages about technical differences between git
-and svn. So, please, add your technical aspects to those (or improve and
-correct them), and/or link to corresponding or new pages from
-SvnMigration under "See Also".
+So far, the reflog mechanism seems to be able to fulfill this requireme=
+nt,
+since it allows us to backtrack earlier updates and do the tagging.
+I'm taking it as a starting point or as a building block unless more at=
+tractive
+alternatives show up.
 
-If you have additions to the migration aspects feel free to add them to
-SvnMigration, of course. I know there's no sharp line but I don't want
-to see a can of technical worms opened on that page :)
-
-Cheers,
-Michael
+Regards,
+Roy
