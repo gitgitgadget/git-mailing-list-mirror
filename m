@@ -1,85 +1,89 @@
-From: =?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>
-Subject: Re: Best way to apply textconv to a working tree file
-Date: Wed, 02 Jun 2010 11:56:59 +0200
-Organization: Ensimag
-Message-ID: <1725d013942b49b804102cca573d2999@ensimag.fr>
-References: <a1ace6b77167a2ad4b4995e8c4d09761@ensimag.fr> <20100601170426.GC9702@sigill.intra.peff.net>
-Reply-To: clement.poulain@ensimag.imag.fr
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: git locate
+Date: Wed, 2 Jun 2010 19:02:00 +0900
+Message-ID: <AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
+References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com>
+	<alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de>
+	<m3zl49bk0o.fsf@localhost.localdomain>
+	<alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302>
+	<4B579BA8.8050000@gmail.com>
+	<fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com>
+	<AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 02 11:57:40 2010
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 02 12:02:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJkhb-0008Mv-Vm
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 11:57:36 +0200
+	id 1OJkmG-0002DM-Mr
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 12:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757679Ab0FBJ5P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 05:57:15 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:49514 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754014Ab0FBJ5E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 05:57:04 -0400
-Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o529nahN032169
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 2 Jun 2010 11:49:37 +0200
-Received: from ensicom.imag.fr (web-ensimag [195.221.228.24])
-	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o529ux2W009330
-	for <git@vger.kernel.org>; Wed, 2 Jun 2010 11:56:59 +0200
-Received: from webmail.ensimag.fr (localhost [127.0.0.1])
-	by ensicom.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id o529uxdE032702
-	for <git@vger.kernel.org>; Wed, 2 Jun 2010 11:56:59 +0200
-In-Reply-To: <20100601170426.GC9702@sigill.intra.peff.net>
-X-Sender: clement.poulain@ensimag.imag.fr
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 02 Jun 2010 11:49:37 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o529nahN032169
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
-MailScanner-NULL-Check: 1276076980.09494@u97bunu23vxLaPFOU8RhPw
+	id S932327Ab0FBKCE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 06:02:04 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:32872 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757751Ab0FBKCB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 06:02:01 -0400
+Received: by pvg11 with SMTP id 11so2234585pvg.19
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 03:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=HbsZWkGzTvYjvCz2m9lln0d1cl/m7sfJXF4tErYvhSI=;
+        b=jxf4cEJ6hm16gR4wu4bS3N8IU0NO1fjYvpR0FxUPyCEM3KOerNXShwedIjhwoc0Ufv
+         7lIYUsZvAQpSyqy75q29nb4wkoAFozX7giBycJ3zX13hewDVbOD3w2JfqlORwzWsrkmY
+         qcpqYDSpDndmrMSBE+raS+KVIJzDNi/OO9NKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=H7gRjhZzCW4Syo76ZnT+9I4LoL94SdjTpQa6fz6PTX9g14lM+fTAm5etcY+tekkCHI
+         RrDi/XH9QCMVH6Yv4v8ThB7rC+JXhnBPh8XiVicxU9VsxxfoDRRJpKbuWOZ60g6X67m8
+         FQpZiNJBrhS7Y1S84IkNE1TpajBY2wsMj3TAo=
+Received: by 10.115.135.24 with SMTP id m24mr6669221wan.129.1275472920269; 
+	Wed, 02 Jun 2010 03:02:00 -0700 (PDT)
+Received: by 10.115.79.12 with HTTP; Wed, 2 Jun 2010 03:02:00 -0700 (PDT)
+In-Reply-To: <AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148240>
 
-On Tue, 1 Jun 2010 13:04:27 -0400, Jeff King <peff@peff.net> wrote:
-> On Tue, Jun 01, 2010 at 03:41:05PM +0200, Cl=C3=A9ment Poulain wrote:
->=20
->> We are wondering what is the best way to do the textconv. Here are s=
-ome
->> solutions we thought about:
->=20
-> One solution you didn't mention would be to do it all yourself:
->=20
->   driver=3D`git check-attr diff "$file" | cut -d: -f3`
->   textconv=3D`git config diff.$driver.textconv`
->   $textconv <$file >$file.converted
->=20
-> This has the advantage of working with existing versions of git. The
-> downside is that it's more code (e.g., my parsing above is quite slop=
-py
-> and loose. Doing it right would be a few more lines).
->=20
-> Furthermore, it doesn't use the textconv cache at all. For working tr=
-ee
-> files, this might not matter (if you pull the sha1 out of the index,
-> though, you can still check the cache, and unchanged working tree fil=
-es
-> are likely to be in the cache). But for blobs in general, the cache i=
-s
-> worth using.
->=20
-> -Peff
+On 2 June 2010 14:00, John Tapsell <johnflux@gmail.com> wrote:
+> On 15 February 2010 22:20, Sverre Rabbelier <srabbelier@gmail.com> wr=
+ote:
+>> Heya,
+>>
+>> On Thu, Jan 21, 2010 at 01:11, SungHyun Nam <goweol@gmail.com> wrote=
+:
+>>> The alias 'git locate' and the command 'git ls-files' runs
+>>> differently if I run them in a subdirectory.
+>>> Is it expected?
+>>
+>> I just ran into this (I wanted to alias 'git find' but to me the 'ru=
+n
+>> ls-files from cwd' is desirable. Also, I prefer to have a trailing
+>> glob as well, so I added one :). An easy solution is to drop
+>> 'git-find' in your path somewhere:
+>
+> I have finally settled on:
+>
+> [alias]
+> =C2=A0 =C2=A0locate =3D !sh -c 'git ls-files | grep --color=3Dauto "$=
+1"' -
 
-It seems to really fit for git gui.=20
-About the cache : this method will be only used by git gui (when it's
-launched) on working tree files, so it seems OK for me.
-Thank you
+
+Actually could someone help me with this.. the trouble is that this
+returns paths relative to the root.
+
+Can I get it to find all the files, but relative to where I am now?
+
+John
