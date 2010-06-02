@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH/RFC v5 1/2] Add infrastructure for translating Git with gettext
-Date: Wed,  2 Jun 2010 22:33:12 +0000
-Message-ID: <1275517993-23093-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH/RFC v5 2/2] Add initial C, Shell and Perl gettext translations
+Date: Wed,  2 Jun 2010 22:33:13 +0000
+Message-ID: <1275517993-23093-3-git-send-email-avarab@gmail.com>
 References: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,918 +12,554 @@ Cc: Jakub Narebski <jnareb@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 03 00:34:24 2010
+X-From: git-owner@vger.kernel.org Thu Jun 03 00:34:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJwVy-000786-Vk
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 00:34:23 +0200
+	id 1OJwWD-0007FC-V4
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 00:34:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758852Ab0FBWeU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 18:34:20 -0400
+	id S1758872Ab0FBWeY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 18:34:24 -0400
 Received: from mail-fx0-f46.google.com ([209.85.161.46]:55745 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758103Ab0FBWeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 18:34:18 -0400
+	with ESMTP id S1758103Ab0FBWeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 18:34:23 -0400
 Received: by mail-fx0-f46.google.com with SMTP id 8so2317385fxm.19
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 15:34:17 -0700 (PDT)
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 15:34:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=IexNOsF6QXal69939IGv4xcXhqERiUQjFA5d3LP7x9A=;
-        b=c7vaBL2W7PMJhFGv5HkZw4mMKWYe9/0PwG9zIXguzWJ1cAGjA2KIdIP4RlziIyBy3l
-         JiviwMPadaFBjMic9LlilG71gJEodmoyecUldYB+UtjkuUdunurxsbCk/N8uEQmEc8UJ
-         pPrFy8JPXseXF0CNLuXC02fKiqXOWEXsPxJFw=
+        bh=N1abzut1jRPiz8EHMTptMq+TRnrAYt3vK2n/BrD+vjQ=;
+        b=rJ2efGzs6NOZibQjTQ1jiSiwO9REU1K5N28guwyqfAUNE3iLq8WmjrE2L7415Y+zeu
+         8ZIpPF3o0dvOxQe1JEmFGC5nPF8AqW1kUmB2PfubhMhurw7lL/HCDPvFtueFfcSV/K71
+         HmhMjSP+QVs6Jlf0jPejxsZFM4xH7WfkhAsms=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=Kn5iJovwrz6LEHnBvMLkNnL5JjxB2tbv/+fVyeaZo9l0RgyVyr9CgeDB9k8dXgnQgn
-         zpN2PWnncfuD9ZCwaGvWd3iYQvesqRjCHvnp6sBRqXiOgJQox0nkxJFMIg6A+aMVmQ2l
-         TSi+PqP+DB1Y0gmv/r0pIqYAvO85j2lPsOWR4=
-Received: by 10.223.143.9 with SMTP id s9mr9349460fau.52.1275518056938;
-        Wed, 02 Jun 2010 15:34:16 -0700 (PDT)
+        b=aE2Ibg8zhgBAOGk9DF0tSA9luPQVIFcO2QclbTAE4ne7NQnHvyguzlntoA9wPLDnJq
+         JU+zlGvAF7X+vlHJpy2lhWNunlTZngvRsZ/o+rdsx7JjrWh7MN4m8LziaO2/lj/kYkCG
+         V6rTRmIVLjxNAFkTwkMQSxgNvBhe4aD7AMZIQ=
+Received: by 10.223.53.91 with SMTP id l27mr9372998fag.0.1275518062103;
+        Wed, 02 Jun 2010 15:34:22 -0700 (PDT)
 Received: from localhost.localdomain (dslb-188-098-088-194.pools.arcor-ip.net [188.98.88.194])
-        by mx.google.com with ESMTPS id r12sm54317663fah.20.2010.06.02.15.34.14
+        by mx.google.com with ESMTPS id r12sm54317663fah.20.2010.06.02.15.34.19
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 02 Jun 2010 15:34:15 -0700 (PDT)
+        Wed, 02 Jun 2010 15:34:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.242.g290e3.dirty
 In-Reply-To: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148275>
 
-All of the interface messages in Git core are currently hardcoded in
-English. Change that by optionally enabling translation of the core C,
-Shell and Perl programs via GNU gettext. If you set the appropriate
-LC_* variables Git will speak your language, provided that someone has
-submitted a translation.
+Change the git status, git pull, and git send-email commands to have
+at least one translatable string. Each command uses a different core
+language, so this makes a good example of how C, Shell and Perl
+programs can be translated using gettext.
 
-If gettext isn't available, or if Git is compiled with
-NO_GETTEXT=3DYesPlease, then Git fall back on its previous behavior of
-only speaking English.
-
-With NO_GETTEXT=3DYesPlease gettext support will be #defined away for C
-programs. For Shell and Perl programs we rely on the git message
-catalog not being avalalable. That's a reasonable assumption since the
-*.po files won't be installed on the system during make install.
-
-The gettext wrappers that are provided in the patch are only the bare
-minimum required to begin translation work. In particular I haven't
-added wrappers for the gettext functions that enable plural support,
-or those that provide message context (msgctxt). Those can be added
-later. The intent is to start with a small subset and see what we need
-later, not to start with something that's unnecessarily large right
-away.
-
-Implementation and usage notes:
-
- * General:
-
-   Gettext .mo files will be installed and looked for in the standard
-   $(prefix)/share/locale path. GIT_TEXTDOMAINDIR can also be set to
-   override that. But this is only intended to be used to test Git
-   itself.
-
- * Perl:
-
-   Perl code that wants to be localized should use the new Git::I18n
-   module. It imports a __ function into the caller's package by
-   default.
-
-   Instead of using the high level Locale::TextDomain interface I've
-   opted to use the low-level (equivalent to the C interface)
-   Locale::Messages module, which Locale::TextDomain itself uses.
-
-   Locale::TextDomain does a lot of redundant work we don't need, and
-   some of it would potentially introduce bugs. It tries to set the
-   $TEXTDOMAIN based on package of the caller, and has its own
-   hardcoded paths where it'll search for messages.
-
-   I found it easier just to completely avoid it rather than try to
-   circumvent its behavior. In any case, this is an issue wholly
-   internal Git::I18N. Its guts can be changed later if that's deemed
-   necessary.
-
- * Shell:
-
-   Shell code that wants to be localized should use the new
-   git-sh-i18n library. It's just a wrapper for the system's
-   gettext.sh.
-
-   If gettext.sh isn't available we'll fall back on a dumb
-   printf(1)-powered fall-through wrapper.
-
-   I originally tried to detect if the system supported `echo -n' but
-   I found this to be a waste of time. My benchmarks on Linux, Solaris
-   and FreeBSD reveal that printf(1) is fast enough, especially since
-   we aren't calling gettext() from within any tight loops.
-
-This patch is based on work by Jeff Epler <jepler@unpythonic.net> who
-did the initial Makefile / C work, and a lot of comments from the Git
-mailing list.
+Since this introduces translation into the real Git tools more tests
+can be added to check if they translations actually work for real core
+tools.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- .gitignore                         |    2 +
- Makefile                           |   44 ++++++++++++++-
- config.mak.in                      |    1 +
- configure.ac                       |    6 ++
- gettext.c                          |   25 +++++++++
- gettext.h                          |   13 +++++
- git-sh-i18n.sh                     |   33 +++++++++++
- git.c                              |    3 +
- perl/Git/I18N.pm                   |   77 ++++++++++++++++++++++++++
- perl/Makefile                      |    3 +-
- perl/Makefile.PL                   |   14 +++++-
- po/.gitignore                      |    1 +
- po/is.po                           |   48 ++++++++++++++++
- t/t0200-gettext.sh                 |  104 ++++++++++++++++++++++++++++=
-++++++++
- t/t0200-gettext/test.c             |   11 ++++
- t/t0200-gettext/test.perl          |   11 ++++
- t/t0200-gettext/test.sh            |   14 +++++
- t/t0201-gettext-shell-fallbacks.sh |   40 ++++++++++++++
- t/test-lib.sh                      |    1 +
- 19 files changed, 447 insertions(+), 4 deletions(-)
- create mode 100644 gettext.c
- create mode 100644 gettext.h
- create mode 100644 git-sh-i18n.sh
- create mode 100644 perl/Git/I18N.pm
- create mode 100644 po/.gitignore
- create mode 100644 po/is.po
- create mode 100755 t/t0200-gettext.sh
- create mode 100644 t/t0200-gettext/test.c
- create mode 100644 t/t0200-gettext/test.perl
- create mode 100644 t/t0200-gettext/test.sh
- create mode 100755 t/t0201-gettext-shell-fallbacks.sh
+ git-pull.sh            |   16 ++++---
+ git-send-email.perl    |    3 +-
+ po/is.po               |   27 +++++++++++-
+ t/t0200-gettext.sh     |   42 +++++++++++++++++++
+ t/t0200-gettext/test.c |    1 -
+ wt-status.c            |  107 ++++++++++++++++++++++++----------------=
+--------
+ 6 files changed, 132 insertions(+), 64 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 14e2b6b..6c2b193 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -125,6 +125,7 @@
- /git-rm
- /git-send-email
- /git-send-pack
-+/git-sh-i18n
- /git-sh-setup
- /git-shell
- /git-shortlog
-@@ -204,3 +205,4 @@
- *.pdb
- /Debug/
- /Release/
-+/share/
-diff --git a/Makefile b/Makefile
-index d5d6565..32f5e52 100644
---- a/Makefile
-+++ b/Makefile
-@@ -272,6 +272,7 @@ mandir =3D share/man
- infodir =3D share/info
- gitexecdir =3D libexec/git-core
- sharedir =3D $(prefix)/share
-+localedir =3D $(sharedir)/locale
- template_dir =3D share/git-core/templates
- htmldir =3D share/doc/git-doc
- ifeq ($(prefix),/usr)
-@@ -285,7 +286,7 @@ lib =3D lib
- # DESTDIR=3D
- pathsep =3D :
+diff --git a/git-pull.sh b/git-pull.sh
+index 1a4729f..0d95722 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -9,6 +9,7 @@ LONG_USAGE=3D'Fetch one or more remote refs and merge i=
+t/them into the current HEA
+ SUBDIRECTORY_OK=3DYes
+ OPTIONS_SPEC=3D
+ . git-sh-setup
++. git-sh-i18n
+ set_reflog_action "pull $*"
+ require_work_tree
+ cd_to_toplevel
+@@ -121,8 +122,8 @@ error_on_no_merge_candidates () {
+ 	do
+ 		case "$opt" in
+ 		-t|--t|--ta|--tag|--tags)
+-			echo "Fetching tags only, you probably meant:"
+-			echo "  git fetch --tags"
++			gettext "Fetching tags only, you probably meant:"; echo
++			gettext "  git fetch --tags"; echo
+ 			exit 1
+ 		esac
+ 	done
+@@ -154,11 +155,12 @@ error_on_no_merge_candidates () {
+ 		echo "a branch. Because this is not the default configured remote"
+ 		echo "for your current branch, you must specify a branch on the comm=
+and line."
+ 	elif [ -z "$curr_branch" ]; then
+-		echo "You are not currently on a branch, so I cannot use any"
+-		echo "'branch.<branchname>.merge' in your configuration file."
+-		echo "Please specify which remote branch you want to use on the comm=
+and"
+-		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
+-		echo "See git-pull(1) for details."
++		gettext "You are not currently on a branch, so I cannot use any
++'branch.<branchname>.merge' in your configuration file.
++Please specify which remote branch you want to use on the command
++line and try again (e.g. 'git pull <repository> <refspec>').
++See git-pull(1) for details.";
++		echo
+ 	elif [ -z "$upstream" ]; then
+ 		echo "You asked me to pull without telling me which branch you"
+ 		echo "want to $op_type $op_prep, and 'branch.${curr_branch}.merge' i=
+n"
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 111c981..4977fdf 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -26,6 +26,7 @@ use Term::ANSIColor;
+ use File::Temp qw/ tempdir tempfile /;
+ use Error qw(:try);
+ use Git;
++use Git::I18N;
 =20
--export prefix bindir sharedir sysconfdir
-+export prefix bindir sharedir sysconfdir localedir
+ Getopt::Long::Configure qw/ pass_through /;
 =20
- CC =3D gcc
- AR =3D ar
-@@ -297,6 +298,8 @@ RPMBUILD =3D rpmbuild
- TCL_PATH =3D tclsh
- TCLTK_PATH =3D wish
- PTHREAD_LIBS =3D -lpthread
-+XGETTEXT =3D xgettext
-+MSGFMT =3D msgfmt
-=20
- export TCL_PATH TCLTK_PATH
-=20
-@@ -358,6 +361,7 @@ SCRIPT_SH +=3D git-web--browse.sh
- SCRIPT_LIB +=3D git-mergetool--lib
- SCRIPT_LIB +=3D git-parse-remote
- SCRIPT_LIB +=3D git-sh-setup
-+SCRIPT_LIB +=3D git-sh-i18n
-=20
- SCRIPT_PERL +=3D git-add--interactive.perl
- SCRIPT_PERL +=3D git-difftool.perl
-@@ -523,6 +527,7 @@ LIB_H +=3D userdiff.h
- LIB_H +=3D utf8.h
- LIB_H +=3D xdiff-interface.h
- LIB_H +=3D xdiff/xdiff.h
-+LIB_H +=3D gettext.h
-=20
- LIB_OBJS +=3D abspath.o
- LIB_OBJS +=3D advice.o
-@@ -564,6 +569,7 @@ LIB_OBJS +=3D entry.o
- LIB_OBJS +=3D environment.o
- LIB_OBJS +=3D exec_cmd.o
- LIB_OBJS +=3D fsck.o
-+LIB_OBJS +=3D gettext.o
- LIB_OBJS +=3D graph.o
- LIB_OBJS +=3D grep.o
- LIB_OBJS +=3D hash.o
-@@ -1386,6 +1392,12 @@ ifdef USE_NED_ALLOCATOR
-        COMPAT_OBJS +=3D compat/nedmalloc/nedmalloc.o
- endif
-=20
-+ifdef NO_GETTEXT
-+	COMPAT_CFLAGS +=3D -DNO_GETTEXT
-+else
-+	LIBINTL =3D -lintl
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK=3DNoThanks
- endif
-@@ -1415,6 +1427,7 @@ ifndef V
- 	QUIET_BUILT_IN =3D @echo '   ' BUILTIN $@;
- 	QUIET_GEN      =3D @echo '   ' GEN $@;
- 	QUIET_LNCP     =3D @echo '   ' LN/CP $@;
-+	QUIET_MSGFMT   =3D @echo '   ' MSGFMT $@;
- 	QUIET_SUBDIR0  =3D +@subdir=3D
- 	QUIET_SUBDIR1  =3D ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
- 			 $(MAKE) $(PRINT_DIR) -C $$subdir
-@@ -1442,7 +1455,9 @@ gitexecdir_SQ =3D $(subst ','\'',$(gitexecdir))
- template_dir_SQ =3D $(subst ','\'',$(template_dir))
- htmldir_SQ =3D $(subst ','\'',$(htmldir))
- prefix_SQ =3D $(subst ','\'',$(prefix))
-+sharedir_SQ =3D $(subst ','\'',$(sharedir))
-=20
-+LOCALEDIR_SQ =3D $(subst ','\'',$(localedir))
- SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))
- PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
- PYTHON_PATH_SQ =3D $(subst ','\'',$(PYTHON_PATH))
-@@ -1491,7 +1506,7 @@ ifndef NO_TCLTK
- 	$(QUIET_SUBDIR0)gitk-git $(QUIET_SUBDIR1) all
- endif
- ifndef NO_PERL
--	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH=3D'$(PERL_PATH_SQ)' p=
-refix=3D'$(prefix_SQ)' all
-+	$(QUIET_SUBDIR0)perl $(QUIET_SUBDIR1) PERL_PATH=3D'$(PERL_PATH_SQ)' p=
-refix=3D'$(prefix_SQ)' localedir=3D'$(localedir_SQ)' all
- endif
- ifndef NO_PYTHON
- 	$(QUIET_SUBDIR0)git_remote_helpers $(QUIET_SUBDIR1) PYTHON_PATH=3D'$(=
-PYTHON_PATH_SQ)' prefix=3D'$(prefix_SQ)' all
-@@ -1536,6 +1551,7 @@ $(RM) $@ $@+ && \
- sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
-     -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
-+    -e 's|@@LOCALEDIR@@|$(LOCALEDIR_SQ)|g' \
-     -e 's/@@NO_CURL@@/$(NO_CURL)/g' \
-     -e $(BROKEN_PATH_FIX) \
-     $@.sh >$@+
-@@ -1868,6 +1884,21 @@ cscope:
- 	$(RM) cscope*
- 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
-=20
-+pot:
-+	$(XGETTEXT) --add-comments --keyword=3D_ --output=3Dpo/git.pot --lang=
-uage=3DC $(C_OBJ:o=3Dc) t/t0200-gettext/test.c
-+	$(XGETTEXT) --add-comments --join-existing --output=3Dpo/git.pot --la=
-nguage=3DShell $(SCRIPT_SH) t/t0200-gettext/test.sh
-+	$(XGETTEXT) --add-comments --join-existing --keyword=3D__ --output=3D=
-po/git.pot --language=3DPerl $(SCRIPT_PERL) t/t0200-gettext/test.perl
-+
-+POFILES :=3D $(wildcard po/*.po)
-+MOFILES :=3D $(patsubst po/%.po,share/locale/%/LC_MESSAGES/git.mo,$(PO=
-=46ILES))
-+MODIRS :=3D $(patsubst po/%.po,share/locale/%/LC_MESSAGES/,$(POFILES))
-+ifndef NO_GETTEXT
-+all:: $(MOFILES)
-+endif
-+share/locale/%/LC_MESSAGES/git.mo: po/%.po
-+	@mkdir -p $(dir $@)
-+	$(QUIET_MSGFMT)$(MSGFMT) -o $@ $<
-+
- ### Detect prefix changes
- TRACK_CFLAGS =3D $(subst ','\'',$(ALL_CFLAGS)):\
-              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix=
-_SQ)
-@@ -1980,6 +2011,11 @@ install: all
- 	$(INSTALL) $(ALL_PROGRAMS) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) -m 644 $(SCRIPT_LIB) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
- 	$(INSTALL) $(install_bindir_programs) '$(DESTDIR_SQ)$(bindir_SQ)'
-+ifndef NO_GETTEXT
-+	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(sharedir_SQ)/locale'
-+	(cd share && tar cf - locale) | \
-+		(cd '$(DESTDIR_SQ)$(sharedir_SQ)' && umask 022 && tar xof -)
-+endif
- 	$(MAKE) -C templates DESTDIR=3D'$(DESTDIR_SQ)' install
- ifndef NO_PERL
- 	$(MAKE) -C perl prefix=3D'$(prefix_SQ)' DESTDIR=3D'$(DESTDIR_SQ)' ins=
-tall
-@@ -2127,6 +2163,10 @@ ifndef NO_TCLTK
- 	$(MAKE) -C git-gui clean
- endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS GIT-BUILD-OPTIONS
-+ifndef NO_GETTEXT
-+	$(RM) po/git.pot
-+	$(RM) -r share/
-+endif
-=20
- .PHONY: all install clean strip
- .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_moder=
-n_shell
-diff --git a/config.mak.in b/config.mak.in
-index 0d4b64d..a15f3c1 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -32,6 +32,7 @@ NO_CURL=3D@NO_CURL@
- NO_EXPAT=3D@NO_EXPAT@
- NO_LIBGEN_H=3D@NO_LIBGEN_H@
- HAVE_PATHS_H=3D@HAVE_PATHS_H@
-+NO_GETTEXT=3D@NO_GETTEXT@
- NEEDS_LIBICONV=3D@NEEDS_LIBICONV@
- NEEDS_SOCKET=3D@NEEDS_SOCKET@
- NEEDS_RESOLV=3D@NEEDS_RESOLV@
-diff --git a/configure.ac b/configure.ac
-index 71038fc..7bebfd8 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -730,6 +730,12 @@ AC_CHECK_HEADER([paths.h],
- [HAVE_PATHS_H=3D])
- AC_SUBST(HAVE_PATHS_H)
- #
-+# Define NO_GETTEXT if you don't have libintl.h
-+AC_CHECK_HEADER([libintl.h],
-+[NO_GETTEXT=3D],
-+[NO_GETTEXT=3DYesPlease])
-+AC_SUBST(NO_GETTEXT)
-+#
- # Define NO_STRCASESTR if you don't have strcasestr.
- GIT_CHECK_FUNC(strcasestr,
- [NO_STRCASESTR=3D],
-diff --git a/gettext.c b/gettext.c
-new file mode 100644
-index 0000000..22cdcc1
---- /dev/null
-+++ b/gettext.c
-@@ -0,0 +1,25 @@
-+#ifdef NO_GETTEXT
-+void git_setup_gettext(void) {}
-+#else
-+#include "exec_cmd.h"
-+#include <libintl.h>
-+#include <stdlib.h>
-+
-+void git_setup_gettext(void) {
-+	char *podir;
-+	char *envdir =3D getenv("GIT_TEXTDOMAINDIR");
-+
-+	if (envdir) {
-+		(void)bindtextdomain("git", envdir);
-+	} else {
-+		podir =3D (char *)system_path("share/locale");
-+		if (!podir) return;
-+		(void)bindtextdomain("git", podir);
-+		free(podir);
-+	}
-+
-+	(void)setlocale(LC_MESSAGES, "");
-+	(void)setlocale(LC_CTYPE, "");
-+	(void)textdomain("git");
-+}
-+#endif
-diff --git a/gettext.h b/gettext.h
-new file mode 100644
-index 0000000..a99da6a
---- /dev/null
-+++ b/gettext.h
-@@ -0,0 +1,13 @@
-+#ifndef GETTEXT_H
-+#define GETTEXT_H
-+
-+void git_setup_gettext(void);
-+
-+#ifdef NO_GETTEXT
-+#define _(s) (s)
-+#else
-+#include <libintl.h>
-+#define _(s) gettext(s)
-+#endif
-+
-+#endif
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-new file mode 100644
-index 0000000..ae1d5cd
---- /dev/null
-+++ b/git-sh-i18n.sh
-@@ -0,0 +1,33 @@
-+#!/bin/sh
-+#
-+# This is what Git uses internally to bootstrap its gettext
-+# shellscript interface.
-+
-+# Try to use libintl's gettext.sh, or fall back to English if we
-+# can't.
-+. gettext.sh
-+
-+if test $? -eq 0 && test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
-+then
-+	TEXTDOMAIN=3Dgit
-+	export TEXTDOMAIN
-+	if [ -z "$GIT_TEXTDOMAINDIR" ]
-+	then
-+		TEXTDOMAINDIR=3D"@@LOCALEDIR@@"
-+	else
-+		TEXTDOMAINDIR=3D"$GIT_TEXTDOMAINDIR"
-+	fi
-+	export TEXTDOMAINDIR
-+else
-+	# Since gettext.sh isn't available we'll have to define our own
-+	# dummy pass-through functions.
-+
-+	gettext () {
-+		printf "%s" "$1"
-+	}
-+
-+	eval_gettext () {
-+		gettext_eval=3D"printf '%s' \"$1\""
-+		printf "%s" "`eval \"$gettext_eval\"`"
-+	}
-+fi
-diff --git a/git.c b/git.c
-index 99f0363..d749eab 100644
---- a/git.c
-+++ b/git.c
-@@ -3,6 +3,7 @@
- #include "cache.h"
- #include "quote.h"
- #include "run-command.h"
-+#include "gettext.h"
-=20
- const char git_usage_string[] =3D
- 	"git [--version] [--exec-path[=3DGIT_EXEC_PATH]] [--html-path]\n"
-@@ -490,6 +491,8 @@ int main(int argc, const char **argv)
- 	if (!cmd)
- 		cmd =3D "git-help";
-=20
-+	git_setup_gettext();
-+
- 	/*
- 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
- 	 *
-diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
-new file mode 100644
-index 0000000..cabdcec
---- /dev/null
-+++ b/perl/Git/I18N.pm
-@@ -0,0 +1,77 @@
-+package Git::I18N;
-+use strict;
-+use warnings;
-+use Exporter;
-+use base 'Exporter';
-+
-+our $VERSION =3D '0.01';
-+
-+our @EXPORT =3D qw(__);
-+our @EXPORT_OK =3D @EXPORT;
-+
-+sub __ ($);
-+
-+sub __bootstrap_locale_messages {
-+	our $TEXTDOMAIN =3D 'git';
-+	our $TEXTDOMAINDIR =3D $ENV{GIT_TEXTDOMAINDIR} || '++LOCALEDIR++';
-+
-+	require POSIX;
-+	POSIX->import(qw(setlocale));
-+	# Non-core prerequisite module
-+	require Locale::Messages;
-+	Locale::Messages->import(qw(:locale_h :libintl_h));
-+
-+	setlocale(LC_MESSAGES(), '');
-+	setlocale(LC_CTYPE(), '');
-+	textdomain($TEXTDOMAIN);
-+	bindtextdomain($TEXTDOMAIN =3D> $TEXTDOMAINDIR);
-+
-+	return;
-+}
-+
-+BEGIN
-+{
-+	local ($@, $!);
-+	eval { __bootstrap_locale_messages() };
-+	if ($@) {
-+		# Oh noes, no Locale::Messages here
-+		*__	 =3D sub ($) { $_[0] };
-+	} else {
-+		*__	 =3D sub ($) { goto &Locale::Messages::gettext };
-+	}
-+}
-+
-+1;
-+
-+__END__
-+
-+=3Dhead1 NAME
-+
-+Git::I18N - Perl interface to Git's Gettext localizations
-+
-+=3Dhead1 SYNOPSIS
-+
-+	use Git::I18N;
-+
-+	print __("Welcome to Git!\n");
-+
-+	printf __("The following error occured: %s\n"), $error;
-+
-+=3Dhead1 DESCRIPTION
-+
-+Git's internal interface to Gettext via L<Locale::Messages>. If
-+L<Locale::Messages> can't be loaded (it's not a core module) we
-+provide stub passthrough fallbacks.
-+
-+=3Dhead1 FUNCTIONS
-+
-+=3Dhead2 __($)
-+
-+L<Locale::Messages>'s gettext function if all goes well, otherwise our
-+passthrough fallback function.
-+
-+=3Dhead1 AUTHOR
-+
-+E<AElig>var ArnfjE<ouml>rE<eth> Bjarmason <avarab@gmail.com>
-+
-+=3Dcut
-diff --git a/perl/Makefile b/perl/Makefile
-index 4ab21d6..4e624ff 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -5,6 +5,7 @@ makfile:=3Dperl.mak
-=20
- PERL_PATH_SQ =3D $(subst ','\'',$(PERL_PATH))
- prefix_SQ =3D $(subst ','\'',$(prefix))
-+localedir_SQ =3D $(subst ','\'',$(localedir))
-=20
- ifndef V
- 	QUIET =3D @
-@@ -38,7 +39,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo '	echo $(instdir_SQ)' >> $@
- else
- $(makfile): Makefile.PL ../GIT-CFLAGS
--	$(PERL_PATH) $< PREFIX=3D'$(prefix_SQ)'
-+	$(PERL_PATH) $< PREFIX=3D'$(prefix_SQ)' --localedir=3D'$(localedir_SQ=
-)'
- endif
-=20
- # this is just added comfort for calling make directly in perl dir
-diff --git a/perl/Makefile.PL b/perl/Makefile.PL
-index 0b9deca..456d45b 100644
---- a/perl/Makefile.PL
-+++ b/perl/Makefile.PL
-@@ -1,4 +1,12 @@
-+use strict;
-+use warnings;
- use ExtUtils::MakeMaker;
-+use Getopt::Long;
-+
-+# Sanity: die at first unknown option
-+Getopt::Long::Configure qw/ pass_through /;
-+
-+GetOptions("localedir=3Ds" =3D> \my $localedir);
-=20
- sub MY::postamble {
- 	return <<'MAKE_FRAG';
-@@ -16,7 +24,10 @@ endif
- MAKE_FRAG
+@@ -674,7 +675,7 @@ if (!defined $sender) {
+ 	$sender =3D $repoauthor || $repocommitter || '';
+ 	$sender =3D ask("Who should the emails appear to be from? [$sender] "=
+,
+ 	              default =3D> $sender);
+-	print "Emails will be sent from: ", $sender, "\n";
++	printf __("Emails will be sent from: %s\n"), $sender;
+ 	$prompting++;
  }
 =20
--my %pm =3D ('Git.pm' =3D> '$(INST_LIBDIR)/Git.pm');
-+my %pm =3D (
-+	'Git.pm' =3D> '$(INST_LIBDIR)/Git.pm',
-+	'Git/I18N.pm' =3D> '$(INST_LIBDIR)/Git/I18N.pm',
-+);
-=20
- # We come with our own bundled Error.pm. It's not in the set of defaul=
-t
- # Perl modules so install it if it's not available on the system yet.
-@@ -33,6 +44,7 @@ WriteMakefile(
- 	NAME            =3D> 'Git',
- 	VERSION_FROM    =3D> 'Git.pm',
- 	PM		=3D> \%pm,
-+	PM_FILTER	=3D> qq[\$(PERL) -pe "s<\\Q++LOCALEDIR++\\E><$localedir>"],
- 	MAKEFILE	=3D> 'perl.mak',
- 	INSTALLSITEMAN3DIR =3D> '$(SITEPREFIX)/share/man/man3'
- );
-diff --git a/po/.gitignore b/po/.gitignore
-new file mode 100644
-index 0000000..221000e
---- /dev/null
-+++ b/po/.gitignore
-@@ -0,0 +1 @@
-+/*.pot
 diff --git a/po/is.po b/po/is.po
-new file mode 100644
-index 0000000..ac4317b
---- /dev/null
+index ac4317b..72437c3 100644
+--- a/po/is.po
 +++ b/po/is.po
-@@ -0,0 +1,48 @@
-+msgid ""
-+msgstr ""
-+"Project-Id-Version: Git\n"
-+"Report-Msgid-Bugs-To: \n"
-+"POT-Creation-Date: 2010-06-02 17:35+0000\n"
-+"PO-Revision-Date: 2010-06-02 16:01+0000\n"
-+"Last-Translator: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
+@@ -2,8 +2,8 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: Git\n"
+ "Report-Msgid-Bugs-To: \n"
+-"POT-Creation-Date: 2010-06-02 17:35+0000\n"
+-"PO-Revision-Date: 2010-06-02 16:01+0000\n"
++"POT-Creation-Date: 2010-06-02 19:43+0000\n"
++"PO-Revision-Date: 2010-06-02 19:35+0000\n"
+ "Last-Translator: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
 =2Ecom>\n"
-+"Language-Team: Git Mailing List <git@vger.kernel.org>\n"
-+"MIME-Version: 1.0\n"
-+"Content-Type: text/plain; charset=3DUTF-8\n"
-+"Content-Transfer-Encoding: 8bit\n"
-+"X-Poedit-Language: English\n"
-+"X-Poedit-SourceCharset: utf-8\n"
+ "Language-Team: Git Mailing List <git@vger.kernel.org>\n"
+ "MIME-Version: 1.0\n"
+@@ -12,6 +12,20 @@ msgstr ""
+ "X-Poedit-Language: English\n"
+ "X-Poedit-SourceCharset: utf-8\n"
+=20
++#: wt-status.c:63 wt-status.c:79 wt-status.c:98 wt-status.c:110
++#: wt-status.c:622
++msgid "On branch "
++msgstr "=C3=81 greininni "
 +
-+#. TRANSLATORS: This is a test. You don't need to translate it.
-+#: t/t0200-gettext/test.c:6
-+msgid "TEST: A C test string"
-+msgstr "TILRAUN: C tilraunastrengur"
++#: wt-status.c:629
++msgid "Not currently on any branch."
++msgstr "Ekki =C3=A1 neinni grein."
 +
-+#. TRANSLATORS: This is a test. You don't need to translate it.
-+#: t/t0200-gettext/test.c:9
++#: wt-status.c:663
 +#, c-format
-+msgid "TEST: A C test string %s"
-+msgstr "TILRAUN: C tilraunastrengur %s"
++msgid "# No changes\n"
++msgstr "# Engar breytingar\n"
 +
-+#. TRANSLATORS: This is a test. You don't need to translate it.
-+#: t/t0200-gettext/test.sh:8
-+msgid "TEST: A Shell test string"
-+msgstr "TILRAUN: Skeljartilraunastrengur"
+ #. TRANSLATORS: This is a test. You don't need to translate it.
+ #: t/t0200-gettext/test.c:6
+ msgid "TEST: A C test string"
+@@ -23,6 +37,10 @@ msgstr "TILRAUN: C tilraunastrengur"
+ msgid "TEST: A C test string %s"
+ msgstr "TILRAUN: C tilraunastrengur %s"
+=20
++#: git-pull.sh:124
++msgid "Fetching tags only, you probably meant:"
++msgstr "N=C3=A6 a=C3=B0eins =C3=AD t=C3=B6gg, =C3=BE=C3=BA =C3=A1ttir =
+l=C3=ADkast til vi=C3=B0:"
 +
-+#. TRANSLATORS: This is a test. You don't need to translate it.
-+#: t/t0200-gettext/test.sh:11
-+#, sh-format
-+msgid "TEST: A Shell test $variable"
-+msgstr "TILRAUN: Skeljartilraunastrengur me=C3=B0 breytunni $variable"
-+
-+#. This is a phony Perl program that's only here to test xgettext
-+#. message extraction
-+#. TRANSLATORS: This is a test. You don't need to translate it.
-+#: t/t0200-gettext/test.perl:5
-+msgid "TEST: A Perl test string"
-+msgstr "TILRAUN: Perl tilraunastrengur"
-+
-+#. TRANSLATORS: This is a test. You don't need to translate it.
-+#: t/t0200-gettext/test.perl:8
+ #. TRANSLATORS: This is a test. You don't need to translate it.
+ #: t/t0200-gettext/test.sh:8
+ msgid "TEST: A Shell test string"
+@@ -34,6 +52,11 @@ msgstr "TILRAUN: Skeljartilraunastrengur"
+ msgid "TEST: A Shell test $variable"
+ msgstr "TILRAUN: Skeljartilraunastrengur me=C3=B0 breytunni $variable"
+=20
++#: git-send-email.perl:678
 +#, perl-format
-+msgid "TEST: A Perl test variable %s"
-+msgstr "TILRAUN: Perl tilraunastrengur me=C3=B0 breytunni %s"
++msgid "Emails will be sent from: %s\n"
++msgstr "P=C3=B3starnir ver=C3=B0a sendir fr=C3=A1: %s\n"
++
+ #. This is a phony Perl program that's only here to test xgettext
+ #. message extraction
+ #. TRANSLATORS: This is a test. You don't need to translate it.
 diff --git a/t/t0200-gettext.sh b/t/t0200-gettext.sh
-new file mode 100755
-index 0000000..7b01ce4
---- /dev/null
+index 7b01ce4..95f05ec 100755
+--- a/t/t0200-gettext.sh
 +++ b/t/t0200-gettext.sh
-@@ -0,0 +1,104 @@
-+#!/bin/sh
-+D=3D`pwd`
-+GIT_TEXTDOMAINDIR=3D"$D/../share/locale"
-+GIT_POROOT=3D"$D/../po"
-+export GIT_TEXTDOMAINDIR GIT_POROOT
-+
-+test_description=3D'Gettext support for Git'
-+. ./test-lib.sh
-+. ../../git-sh-i18n
-+
-+test_expect_success 'sanity: $TEXTDOMAIN is git' '
-+    test $TEXTDOMAIN =3D "git"
-+'
-+
-+test_expect_success 'sanity: $TEXTDOMAINDIR exists' '
-+    test -d "$TEXTDOMAINDIR" &&
-+    test "$TEXTDOMAINDIR" =3D "$GIT_TEXTDOMAINDIR"
-+'
-+
-+test_expect_success 'sanity: Icelandic locale was compiled' '
-+    test -f "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
-+'
-+
-+test_expect_success 'sanity: No gettext("") data for fantasy locale' '
-+    LANGUAGE=3Dis LC_ALL=3Dtlh_TLH.UTF-8 gettext "" > real-locale &&
-+    test_expect_failure test -s real-locale
-+'
-+
-+test_expect_success 'sanity: Some gettext("") data for real locale' '
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "" > fantasy-locale &&
-+    test -s fantasy-locale
-+'
-+
-+# TODO: When we have more locales, generalize this to test them
-+# all. Maybe we'll need a dir->locale map for that.
-+test_expect_success 'sanity: gettext("") metadata is OK' '
-+    # Return value may be non-zero
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "" > zero-expect &&
-+    grep "Project-Id-Version: Git" zero-expect &&
-+    grep "Git Mailing List <git@vger.kernel.org>" zero-expect &&
-+    grep "Content-Type: text/plain; charset=3DUTF-8" zero-expect &&
-+    grep "Content-Transfer-Encoding: 8bit" zero-expect
-+'
-+
-+test_expect_success 'sanity: gettext(unknown) is passed through' '
-+    printf "This is not a translation string"  > expect &&
-+    gettext "This is not a translation string" > actual &&
-+    eval_gettext "This is not a translation string" > actual &&
-+    test_cmp expect actual
-+'
-+
-+# xgettext from C
-+test_expect_success 'xgettext: C extraction' '
-+    printf "TILRAUN: C tilraunastrengur" > expect &&
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "TEST: A C test string"=
- > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'xgettext: C extraction with %s' '
-+    printf "TILRAUN: C tilraunastrengur %%s" > expect &&
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "TEST: A C test string =
-%s" > actual &&
-+    test_cmp expect actual
-+'
-+
-+# xgettext from Shell
-+test_expect_success 'xgettext: Shell extraction' '
-+    printf "TILRAUN: Skeljartilraunastrengur" > expect &&
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "TEST: A Shell test str=
-ing" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'xgettext: Shell extraction with $variable' '
-+    printf "TILRAUN: Skeljartilraunastrengur me=C3=B0 breytunni a var =
-i able" > x-expect &&
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 variable=3D"a var i able" eval_=
-gettext "TEST: A Shell test \$variable" > x-actual &&
-+    test_cmp x-expect x-actual
-+'
-+
-+# xgettext from Perl
-+test_expect_success 'xgettext: Perl extraction' '
-+    printf "TILRAUN: Perl tilraunastrengur" > expect &&
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "TEST: A Perl test stri=
-ng" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'xgettext: Perl extraction with %s' '
-+    printf "TILRAUN: Perl tilraunastrengur me=C3=B0 breytunni %%s" > e=
-xpect &&
-+    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 gettext "TEST: A Perl test vari=
-able %s" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'xgettext: Perl _() strings are not extracted' '
-+    > expect &&
-+    grep "A Perl string xgettext will not get" $GIT_POROOT/is.po > act=
-ual;
-+    test_cmp expect actual
-+'
-+
-+# xgettext extracts comments
-+test_expect_success 'xgettext: Comment extraction with --add-comments'=
+@@ -101,4 +101,46 @@ test_expect_success 'xgettext: Comment extraction =
+with --add-comments' '
+     test_cmp expect actual
  '
-+    grep "TRANSLATORS: This is a test" ../t0200-gettext/* | wc -l > ex=
-pect &&
-+    grep "TRANSLATORS: This is a test" $GIT_POROOT/is.po  | wc -l > ac=
-tual &&
+=20
++# Actually execute some C, Perl and Shell code that uses Gettext
++test_expect_success 'C: git-status reads our message catalog ' '
++    > foo &&
++    test_commit "some-file" &&
++    git checkout -b topic/gettext-testing &&
++    LANGUAGE=3DC LC_ALL=3DC git status | grep topic/gettext-testing > =
+expect &&
++    echo "# On branch topic/gettext-testing" > actual &&
++    test_cmp expect actual &&
++
++    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 git status | grep topic/gettext=
+-testing > expect &&
++    echo "# =C3=81 greininni topic/gettext-testing" > actual &&
 +    test_cmp expect actual
 +'
 +
-+test_done
++test_expect_success 'Perl: Git::I18N reads our message catalog ' '
++    # Bail out if the system doesn not have Locale::Messages
++    perl -MLocale::Messages -e1 2>/dev/null || return 0
++
++    echo "On branch " > expect &&
++    LANGUAGE=3DC LC_ALL=3DC perl -I"$D/../perl" -MGit::I18N -le "print=
+ __(q[On branch ])" > actual &&
++    test_cmp expect actual &&
++
++    echo "=C3=81 greininni " > expect &&
++    LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 perl -I"$D/../perl" -MGit::I18N=
+ -le "print __(q[On branch ])" > actual &&
++    test_cmp expect actual
++'
++
++test_expect_success 'Shell: git-pull reads our message catalog' '
++    # Repository for testing
++    mkdir parent &&
++    (cd parent && git init &&
++     echo one >file && git add file &&
++     git commit -m one) &&
++
++    # Actual test
++    (cd parent &&
++    (LANGUAGE=3DC LC_ALL=3DC git pull --tags "../" >out 2>err);
++    grep "Fetching tags only" err &&
++    (LANGUAGE=3Dis LC_ALL=3Dis_IS.UTF-8 git pull --tags ../ >out 2>err=
+ || :) &&
++    grep "N=C3=A6 a=C3=B0eins =C3=AD" err)
++'
++
+ test_done
 diff --git a/t/t0200-gettext/test.c b/t/t0200-gettext/test.c
-new file mode 100644
-index 0000000..9fa4c23
---- /dev/null
+index 9fa4c23..171bcc6 100644
+--- a/t/t0200-gettext/test.c
 +++ b/t/t0200-gettext/test.c
-@@ -0,0 +1,11 @@
-+/* This is a phony C program that's only here to test xgettext message=
- extraction */
-+
-+int main(void)
-+{
-+	/* TRANSLATORS: This is a test. You don't need to translate it. */
-+	puts(_("TEST: A C test string"));
-+
-+	/* TRANSLATORS: This is a test. You don't need to translate it. */
-+	printf(_("TEST: A C test string %s"), "variable");
-+}
-+=09
-diff --git a/t/t0200-gettext/test.perl b/t/t0200-gettext/test.perl
-new file mode 100644
-index 0000000..8c50ef0
---- /dev/null
-+++ b/t/t0200-gettext/test.perl
-@@ -0,0 +1,11 @@
-+# This is a phony Perl program that's only here to test xgettext
-+# message extraction
-+
-+# TRANSLATORS: This is a test. You don't need to translate it.
-+print __("TEST: A Perl test string");
-+
-+# TRANSLATORS: This is a test. You don't need to translate it.
-+printf __("TEST: A Perl test variable %s"), "moo";
-+
-+# TRANSLATORS: If you see this, Git has a bug
-+print _"TEST: A Perl string xgettext will not get";
-diff --git a/t/t0200-gettext/test.sh b/t/t0200-gettext/test.sh
-new file mode 100644
-index 0000000..022d607
---- /dev/null
-+++ b/t/t0200-gettext/test.sh
-@@ -0,0 +1,14 @@
-+# This is a phony Shell program that's only here to test xgettext
-+# message extraction
-+
-+# so the above comment won't be folded into the next one by xgettext
-+echo
-+
-+# TRANSLATORS: This is a test. You don't need to translate it.
-+gettext "TEST: A Shell test string"
-+
-+# TRANSLATORS: This is a test. You don't need to translate it.
-+eval_gettext "TEST: A Shell test \$variable"
-+
-+# TRANSLATORS: If you see this, Git has a bug
-+_("TEST: A Shell string xgettext won't get")
-diff --git a/t/t0201-gettext-shell-fallbacks.sh b/t/t0201-gettext-shell=
--fallbacks.sh
-new file mode 100755
-index 0000000..827adb2
---- /dev/null
-+++ b/t/t0201-gettext-shell-fallbacks.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+D=3D`pwd`
-+GIT_TEXTDOMAINDIR=3D"$D/../share/locale"
-+GIT_INTERNAL_GETTEXT_TEST_FALLBACKS=3DYesPlease
-+
-+export GIT_TEXTDOMAINDIR GIT_INTERNAL_GETTEXT_TEST_FALLBACKS
-+
-+test_description=3D'Gettext Shell fallbacks'
-+. ./test-lib.sh
-+. ../../git-sh-i18n
-+
-+test_expect_success 'sanity: $GIT_INTERNAL_GETTEXT_TEST_FALLBACKS is s=
-et' '
-+	test_expect_failure test -z "$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS"
-+'
-+
-+test_expect_success 'gettext: our gettext() fallback has pass-through =
-semantics' '
-+    printf "test" > expect &&
-+    gettext "test" > actual &&
-+    test_cmp expect actual &&
-+    printf "test more words" > expect &&
-+    gettext "test more words" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'eval_gettext: our eval_gettext() fallback has pas=
-s-through semantics' '
-+    printf "test" > expect &&
-+    eval_gettext "test" > actual &&
-+    test_cmp expect actual &&
-+    printf "test more words" > expect &&
-+    eval_gettext "test more words" > actual &&
-+    test_cmp expect actual
-+'
-+
-+test_expect_success 'eval_gettext: our eval_gettext() fallback can int=
-erpolate variables' '
-+    printf "test YesPlease" > expect &&
-+    eval_gettext "test \$GIT_INTERNAL_GETTEXT_TEST_FALLBACKS" > actual=
- &&
-+    test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 454880a..cb3c9c5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -37,6 +37,7 @@ ORIGINAL_TERM=3D$TERM
- # For repeatability, reset the environment to known value.
- LANG=3DC
- LC_ALL=3DC
-+LANGUAGE=3DC
- PAGER=3Dcat
- TZ=3DUTC
- TERM=3Ddumb
+@@ -8,4 +8,3 @@ int main(void)
+ 	/* TRANSLATORS: This is a test. You don't need to translate it. */
+ 	printf(_("TEST: A C test string %s"), "variable");
+ }
+-=09
+diff --git a/wt-status.c b/wt-status.c
+index 14e0acc..484a866 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -9,6 +9,7 @@
+ #include "quote.h"
+ #include "run-command.h"
+ #include "remote.h"
++#include "gettext.h"
+=20
+ static char default_wt_status_colors[][COLOR_MAXLEN] =3D {
+ 	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
+@@ -49,16 +50,16 @@ static void wt_status_print_unmerged_header(struct =
+wt_status *s)
+ {
+ 	const char *c =3D color(WT_STATUS_HEADER, s);
+=20
+-	color_fprintf_ln(s->fp, c, "# Unmerged paths:");
++	color_fprintf_ln(s->fp, c, _("# Unmerged paths:"));
+ 	if (!advice_status_hints)
+ 		return;
+ 	if (s->in_merge)
+ 		;
+ 	else if (!s->is_initial)
+-		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to u=
+nstage)", s->reference);
++		color_fprintf_ln(s->fp, c, _("#   (use \"git reset %s <file>...\" to=
+ unstage)"), s->reference);
+ 	else
+-		color_fprintf_ln(s->fp, c, "#   (use \"git rm --cached <file>...\" t=
+o unstage)");
+-	color_fprintf_ln(s->fp, c, "#   (use \"git add/rm <file>...\" as appr=
+opriate to mark resolution)");
++		color_fprintf_ln(s->fp, c, _("#   (use \"git rm --cached <file>...\"=
+ to unstage)"));
++	color_fprintf_ln(s->fp, c, _("#   (use \"git add/rm <file>...\" as ap=
+propriate to mark resolution)"));
+ 	color_fprintf_ln(s->fp, c, "#");
+ }
+=20
+@@ -66,15 +67,15 @@ static void wt_status_print_cached_header(struct wt=
+_status *s)
+ {
+ 	const char *c =3D color(WT_STATUS_HEADER, s);
+=20
+-	color_fprintf_ln(s->fp, c, "# Changes to be committed:");
++	color_fprintf_ln(s->fp, c, _("# Changes to be committed:"));
+ 	if (!advice_status_hints)
+ 		return;
+ 	if (s->in_merge)
+ 		; /* NEEDSWORK: use "git reset --unresolve"??? */
+ 	else if (!s->is_initial)
+-		color_fprintf_ln(s->fp, c, "#   (use \"git reset %s <file>...\" to u=
+nstage)", s->reference);
++		color_fprintf_ln(s->fp, c, _("#   (use \"git reset %s <file>...\" to=
+ unstage)"), s->reference);
+ 	else
+-		color_fprintf_ln(s->fp, c, "#   (use \"git rm --cached <file>...\" t=
+o unstage)");
++		color_fprintf_ln(s->fp, c, _("#   (use \"git rm --cached <file>...\"=
+ to unstage)"));
+ 	color_fprintf_ln(s->fp, c, "#");
+ }
+=20
+@@ -84,16 +85,16 @@ static void wt_status_print_dirty_header(struct wt_=
+status *s,
+ {
+ 	const char *c =3D color(WT_STATUS_HEADER, s);
+=20
+-	color_fprintf_ln(s->fp, c, "# Changed but not updated:");
++	color_fprintf_ln(s->fp, c, _("# Changed but not updated:"));
+ 	if (!advice_status_hints)
+ 		return;
+ 	if (!has_deleted)
+-		color_fprintf_ln(s->fp, c, "#   (use \"git add <file>...\" to update=
+ what will be committed)");
++		color_fprintf_ln(s->fp, c, _("#   (use \"git add <file>...\" to upda=
+te what will be committed)"));
+ 	else
+-		color_fprintf_ln(s->fp, c, "#   (use \"git add/rm <file>...\" to upd=
+ate what will be committed)");
+-	color_fprintf_ln(s->fp, c, "#   (use \"git checkout -- <file>...\" to=
+ discard changes in working directory)");
++		color_fprintf_ln(s->fp, c, _("#   (use \"git add/rm <file>...\" to u=
+pdate what will be committed)"));
++	color_fprintf_ln(s->fp, c, _("#   (use \"git checkout -- <file>...\" =
+to discard changes in working directory)"));
+ 	if (has_dirty_submodules)
+-		color_fprintf_ln(s->fp, c, "#   (commit or discard the untracked or =
+modified content in submodules)");
++		color_fprintf_ln(s->fp, c, _("#   (commit or discard the untracked o=
+r modified content in submodules)"));
+ 	color_fprintf_ln(s->fp, c, "#");
+ }
+=20
+@@ -102,10 +103,10 @@ static void wt_status_print_other_header(struct w=
+t_status *s,
+ 					 const char *how)
+ {
+ 	const char *c =3D color(WT_STATUS_HEADER, s);
+-	color_fprintf_ln(s->fp, c, "# %s files:", what);
++	color_fprintf_ln(s->fp, c, _("# %s files:"), what);
+ 	if (!advice_status_hints)
+ 		return;
+-	color_fprintf_ln(s->fp, c, "#   (use \"git %s <file>...\" to include =
+in what will be committed)", how);
++	color_fprintf_ln(s->fp, c, _("#   (use \"git %s <file>...\" to includ=
+e in what will be committed)"), how);
+ 	color_fprintf_ln(s->fp, c, "#");
+ }
+=20
+@@ -122,20 +123,20 @@ static void wt_status_print_unmerged_data(struct =
+wt_status *s,
+ 	const char *c =3D color(WT_STATUS_UNMERGED, s);
+ 	struct wt_status_change_data *d =3D it->util;
+ 	struct strbuf onebuf =3D STRBUF_INIT;
+-	const char *one, *how =3D "bug";
++	const char *one, *how =3D _("bug");
+=20
+ 	one =3D quote_path(it->string, -1, &onebuf, s->prefix);
+ 	color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "#\t");
+ 	switch (d->stagemask) {
+-	case 1: how =3D "both deleted:"; break;
+-	case 2: how =3D "added by us:"; break;
+-	case 3: how =3D "deleted by them:"; break;
+-	case 4: how =3D "added by them:"; break;
+-	case 5: how =3D "deleted by us:"; break;
+-	case 6: how =3D "both added:"; break;
+-	case 7: how =3D "both modified:"; break;
++	case 1: how =3D _("both deleted:"); break;
++	case 2: how =3D _("added by us:"); break;
++	case 3: how =3D _("deleted by them:"); break;
++	case 4: how =3D _("added by them:"); break;
++	case 5: how =3D _("deleted by us:"); break;
++	case 6: how =3D _("both added:"); break;
++	case 7: how =3D _("both modified:"); break;
+ 	}
+-	color_fprintf(s->fp, c, "%-20s%s\n", how, one);
++	color_fprintf(s->fp, c, _("%-20s%s\n"), how, one);
+ 	strbuf_release(&onebuf);
+ }
+=20
+@@ -163,11 +164,11 @@ static void wt_status_print_change_data(struct wt=
+_status *s,
+ 		if (d->new_submodule_commits || d->dirty_submodule) {
+ 			strbuf_addstr(&extra, " (");
+ 			if (d->new_submodule_commits)
+-				strbuf_addf(&extra, "new commits, ");
++				strbuf_addf(&extra, _("new commits, "));
+ 			if (d->dirty_submodule & DIRTY_SUBMODULE_MODIFIED)
+-				strbuf_addf(&extra, "modified content, ");
++				strbuf_addf(&extra, _("modified content, "));
+ 			if (d->dirty_submodule & DIRTY_SUBMODULE_UNTRACKED)
+-				strbuf_addf(&extra, "untracked content, ");
++				strbuf_addf(&extra, _("untracked content, "));
+ 			strbuf_setlen(&extra, extra.len - 2);
+ 			strbuf_addch(&extra, ')');
+ 		}
+@@ -178,34 +179,34 @@ static void wt_status_print_change_data(struct wt=
+_status *s,
+ 	one =3D quote_path(one_name, -1, &onebuf, s->prefix);
+ 	two =3D quote_path(two_name, -1, &twobuf, s->prefix);
+=20
+-	color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "#\t");
++	color_fprintf(s->fp, color(WT_STATUS_HEADER, s), _("#\t"));
+ 	switch (status) {
+ 	case DIFF_STATUS_ADDED:
+-		color_fprintf(s->fp, c, "new file:   %s", one);
++		color_fprintf(s->fp, c, _("new file:   %s"), one);
+ 		break;
+ 	case DIFF_STATUS_COPIED:
+-		color_fprintf(s->fp, c, "copied:     %s -> %s", one, two);
++		color_fprintf(s->fp, c, _("copied:     %s -> %s"), one, two);
+ 		break;
+ 	case DIFF_STATUS_DELETED:
+-		color_fprintf(s->fp, c, "deleted:    %s", one);
++		color_fprintf(s->fp, c, _("deleted:    %s"), one);
+ 		break;
+ 	case DIFF_STATUS_MODIFIED:
+-		color_fprintf(s->fp, c, "modified:   %s", one);
++		color_fprintf(s->fp, c, _("modified:   %s"), one);
+ 		break;
+ 	case DIFF_STATUS_RENAMED:
+-		color_fprintf(s->fp, c, "renamed:    %s -> %s", one, two);
++		color_fprintf(s->fp, c, _("renamed:    %s -> %s"), one, two);
+ 		break;
+ 	case DIFF_STATUS_TYPE_CHANGED:
+-		color_fprintf(s->fp, c, "typechange: %s", one);
++		color_fprintf(s->fp, c, _("typechange: %s"), one);
+ 		break;
+ 	case DIFF_STATUS_UNKNOWN:
+-		color_fprintf(s->fp, c, "unknown:    %s", one);
++		color_fprintf(s->fp, c, _("unknown:    %s"), one);
+ 		break;
+ 	case DIFF_STATUS_UNMERGED:
+-		color_fprintf(s->fp, c, "unmerged:   %s", one);
++		color_fprintf(s->fp, c, _("unmerged:   %s"), one);
+ 		break;
+ 	default:
+-		die("bug: unhandled diff status %c", status);
++		die(_("bug: unhandled diff status %c"), status);
+ 	}
+ 	if (extra.len) {
+ 		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "%s", extra.buf);
+@@ -618,14 +619,14 @@ void wt_status_print(struct wt_status *s)
+ 	const char *branch_color =3D color(WT_STATUS_HEADER, s);
+=20
+ 	if (s->branch) {
+-		const char *on_what =3D "On branch ";
++		const char *on_what =3D _("On branch ");
+ 		const char *branch_name =3D s->branch;
+ 		if (!prefixcmp(branch_name, "refs/heads/"))
+ 			branch_name +=3D 11;
+ 		else if (!strcmp(branch_name, "HEAD")) {
+ 			branch_name =3D "";
+ 			branch_color =3D color(WT_STATUS_NOBRANCH, s);
+-			on_what =3D "Not currently on any branch.";
++			on_what =3D _("Not currently on any branch.");
+ 		}
+ 		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
+ 		color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
+@@ -635,7 +636,7 @@ void wt_status_print(struct wt_status *s)
+=20
+ 	if (s->is_initial) {
+ 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+-		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "# Initial commi=
+t");
++		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), _("# Initial com=
+mit"));
+ 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+ 	}
+=20
+@@ -647,38 +648,38 @@ void wt_status_print(struct wt_status *s)
+ 		wt_status_print_submodule_summary(s, 1);  /* unstaged */
+ 	}
+ 	if (s->show_untracked_files) {
+-		wt_status_print_other(s, &s->untracked, "Untracked", "add");
++		wt_status_print_other(s, &s->untracked, _("Untracked"), _("add"));
+ 		if (s->show_ignored_files)
+-			wt_status_print_other(s, &s->ignored, "Ignored", "add -f");
++			wt_status_print_other(s, &s->ignored, _("Ignored"), _("add -f"));
+ 	} else if (s->commitable)
+-		fprintf(s->fp, "# Untracked files not listed%s\n",
++		fprintf(s->fp, _("# Untracked files not listed%s\n"),
+ 			advice_status_hints
+-			? " (use -u option to show untracked files)" : "");
++			? _(" (use -u option to show untracked files)") : "");
+=20
+ 	if (s->verbose)
+ 		wt_status_print_verbose(s);
+ 	if (!s->commitable) {
+ 		if (s->amend)
+-			fprintf(s->fp, "# No changes\n");
++			fprintf(s->fp, _("# No changes\n"));
+ 		else if (s->nowarn)
+ 			; /* nothing */
+ 		else if (s->workdir_dirty)
+-			printf("no changes added to commit%s\n",
++			printf(_("no changes added to commit%s\n"),
+ 				advice_status_hints
+-				? " (use \"git add\" and/or \"git commit -a\")" : "");
++				? _(" (use \"git add\" and/or \"git commit -a\")") : "");
+ 		else if (s->untracked.nr)
+-			printf("nothing added to commit but untracked files present%s\n",
++			printf(_("nothing added to commit but untracked files present%s\n")=
+,
+ 				advice_status_hints
+-				? " (use \"git add\" to track)" : "");
++				? _(" (use \"git add\" to track)") : "");
+ 		else if (s->is_initial)
+ 			printf("nothing to commit%s\n", advice_status_hints
+-				? " (create/copy files and use \"git add\" to track)" : "");
++				? _(" (create/copy files and use \"git add\" to track)") : "");
+ 		else if (!s->show_untracked_files)
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (use -u to show untracked files)" : "");
++			printf(_("nothing to commit%s\n"), advice_status_hints
++				? _(" (use -u to show untracked files)") : "");
+ 		else
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (working directory clean)" : "");
++			printf(_("nothing to commit%s\n"), advice_status_hints
++				? _(" (working directory clean)") : "");
+ 	}
+ }
+=20
 --=20
 1.7.1.242.g290e3.dirty
