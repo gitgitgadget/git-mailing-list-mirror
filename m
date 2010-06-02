@@ -1,62 +1,140 @@
-From: Jeremiah Foster <jeremiah.foster@pelagicore.com>
-Subject: Re: http-smart-backend: can clone, cannot push
-Date: Wed, 2 Jun 2010 17:16:24 +0200
-Message-ID: <825A1E57-48AE-4BA5-AD5C-431DA8E959DA@pelagicore.com>
-References: <E66CC81A-CCED-4D8E-AE7C-C02FB0AF6F6C@pelagicore.com> <AANLkTimqncJ7aqi_0AvjNimyIPsbVN1zSkAQ1LrPhwne@mail.gmail.com> <B61D22CA-45BA-49DA-984B-A7F7090FAE55@pelagicore.com> <AANLkTin43VO3FA9dEjAx9w6FRwLK7FpqqO5rA6wKFZgn@mail.gmail.com> <3A4DAEA3-C7F4-4163-9ABA-37443BB025AB@pelagicore.com> <20100601155833.GT16470@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Ian Molton <ian.molton@collabora.co.uk>
+Subject: git-quiltimport
+Date: Wed, 02 Jun 2010 16:07:37 +0100
+Message-ID: <4C0673B9.20801@collabora.co.uk>
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="------------050903090405050608090709"
+Cc: ebiederm@lnxi.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 02 17:16:42 2010
+X-From: git-owner@vger.kernel.org Wed Jun 02 17:17:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJpgN-0005U7-Qb
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 17:16:40 +0200
+	id 1OJpgw-0005uq-TS
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 17:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932597Ab0FBPQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 11:16:32 -0400
-Received: from av8-2-sn3.vrr.skanova.net ([81.228.9.184]:38495 "EHLO
-	av8-2-sn3.vrr.skanova.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932567Ab0FBPQb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 11:16:31 -0400
-Received: by av8-2-sn3.vrr.skanova.net (Postfix, from userid 502)
-	id 998BB37E98; Wed,  2 Jun 2010 17:16:29 +0200 (CEST)
-Received: from smtp3-2-sn3.vrr.skanova.net (smtp3-2-sn3.vrr.skanova.net [81.228.9.102])
-	by av8-2-sn3.vrr.skanova.net (Postfix) with ESMTP id 64ACD37EAD
-	for <git@vger.kernel.org>; Wed,  2 Jun 2010 17:16:24 +0200 (CEST)
-Received: from [10.8.36.139] (194-237-7-146.customer.telia.com [194.237.7.146])
-	by smtp3-2-sn3.vrr.skanova.net (Postfix) with ESMTP id 52B0E37E52
-	for <git@vger.kernel.org>; Wed,  2 Jun 2010 17:16:24 +0200 (CEST)
-In-Reply-To: <20100601155833.GT16470@spearce.org>
-X-Mailer: Apple Mail (2.1078)
+	id S932602Ab0FBPQw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 11:16:52 -0400
+Received: from bhuna.collabora.co.uk ([93.93.128.226]:41617 "EHLO
+	bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932567Ab0FBPQv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 11:16:51 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(Authenticated sender: ian)
+	with ESMTPSA id EE177602668
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100515 Icedove/3.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148260>
+
+This is a multi-part message in MIME format.
+--------------050903090405050608090709
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+I've written a little patch to git-quiltimport that helps it with some stupid
+ quilt repos.
+
+Its still no use to me because it cant understand .bz2 compressed patches,
+ but I thought this might help some folk out.
+
+Hopefully t-bird wont mangle my patch...
 
 
-On Jun 1, 2010, at 17:58, Shawn O. Pearce wrote:
+--------------050903090405050608090709
+Content-Type: text/x-patch;
+ name="0001-Add-a-series-option-to-git-quiltimport.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="0001-Add-a-series-option-to-git-quiltimport.patch"
 
-Thanks Shawn, and everyone else who commented on this thread - I appreciate the help.
+>From 475ce14394d75cadcc5c77ab1060a9a81bceaac4 Mon Sep 17 00:00:00 2001
+From: Ian Molton <ian.molton@collabora.co.uk>
+Date: Wed, 2 Jun 2010 15:59:25 +0100
+Subject: [PATCH] Add a --series option to git-quiltimport
 
-> Jeremiah Foster <jeremiah.foster@pelagicore.com> wrote:
->> Maybe I _have_ to be authenticated since the documentation states:
->> "If the client is authenticated, thereceive-pack service is enabled,
->> which serves git send-pack clients, which is invoked from git push."
-> 
-> Yes.
-> 
-> A flaw of the smart HTTP transport is the servers are
-> nearly impossible to configure for anonymous clone and
-> authenticated push via the same URL.  The servers just
-> can't seem to be configured to require authentication
-> for the $GIT_DIR/info/refs?service=git-receive-pack request.
+	This allows git-quiltimport to handle quilt patchsets with the
+series fil in a nonstandard location.
+---
+ Documentation/git-quiltimport.txt |    7 +++++++
+ git-quiltimport.sh                |   10 ++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-I created a system to authenticate and then I could push and pull with the same URL. Thanks again for the help and I'm going to try to write up a short blog post about using this because I think it is a really great way to share git repos.
+diff --git a/Documentation/git-quiltimport.txt b/Documentation/git-quiltimport.txt
+index 579e8d2..da509e0 100644
+--- a/Documentation/git-quiltimport.txt
++++ b/Documentation/git-quiltimport.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git quiltimport' [--dry-run | -n] [--author <author>] [--patches <dir>]
++                  [--series <file>]
+ 
+ 
+ DESCRIPTION
+@@ -49,6 +50,12 @@ The default for the patch directory is patches
+ or the value of the $QUILT_PATCHES environment
+ variable.
+ 
++--series <file>::
++	The file to read the series information from.
+++
++The default location for the series file is a
++file called series in the patch directory.
++
+ Author
+ ------
+ Written by Eric Biederman <ebiederm@lnxi.com>
+diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+index 9a6ba2b..85f27b1 100755
+--- a/git-quiltimport.sh
++++ b/git-quiltimport.sh
+@@ -5,7 +5,8 @@ git quiltimport [options]
+ --
+ n,dry-run     dry run
+ author=       author name and email address for patches without any
+-patches=      path to the quilt series and patches
++patches=      path to the quilt patches
++series=       quilt series file (default to $QUILT_PATCHES/series)
+ "
+ SUBDIRECTORY_ON=Yes
+ . git-sh-setup
+@@ -26,6 +27,10 @@ do
+ 		shift
+ 		QUILT_PATCHES="$1"
+ 		;;
++        --series)
++		shift
++		QUILT_SERIES="$1"
++		;;
+ 	--)
+ 		shift
+ 		break;;
+@@ -47,6 +52,7 @@ fi
+ 
+ # Quilt patch directory
+ : ${QUILT_PATCHES:=patches}
++: ${QUILT_SERIES:=$QUILT_PATCHES/series}
+ if ! [ -d "$QUILT_PATCHES" ] ; then
+ 	echo "The \"$QUILT_PATCHES\" directory does not exist."
+ 	exit 1
+@@ -134,5 +140,5 @@ do
+ 		commit=$( (echo "$SUBJECT"; echo; cat "$tmp_msg") | git commit-tree $tree -p $commit) &&
+ 		git update-ref -m "quiltimport: $patch_name" HEAD $commit || exit 4
+ 	fi
+-done 3<"$QUILT_PATCHES/series"
++done 3<"$QUILT_SERIES"
+ rm -rf $tmp_dir || exit 5
+-- 
+1.7.1
 
-Jeremiah
+
+--------------050903090405050608090709--
