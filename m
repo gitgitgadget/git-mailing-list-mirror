@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/8] revert: cleanup code for -x option
-Date: Wed, 02 Jun 2010 07:58:34 +0200
-Message-ID: <20100602055842.21504.54618.chriscool@tuxfamily.org>
+Subject: [PATCH v2 2/8] revert: use run_command_v_opt() instead of
+	execv_git_cmd()
+Date: Wed, 02 Jun 2010 07:58:35 +0200
+Message-ID: <20100602055842.21504.65497.chriscool@tuxfamily.org>
 References: <20100602055131.21504.71923.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -11,88 +12,79 @@ Cc: git@vger.kernel.org,
 	Jeff King <peff@peff.net>,
 	Antriksh Pany <antriksh.pany@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 07:59:20 2010
+X-From: git-owner@vger.kernel.org Wed Jun 02 07:59:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJgz1-0006qU-D4
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 07:59:19 +0200
+	id 1OJgz7-0006sT-3K
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 07:59:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305Ab0FBF7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 01:59:13 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:47682 "EHLO smtp3-g21.free.fr"
+	id S1753357Ab0FBF7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jun 2010 01:59:18 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47773 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752231Ab0FBF7M (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 01:59:12 -0400
+	id S1752231Ab0FBF7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jun 2010 01:59:18 -0400
 Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 9FFD3818015;
-	Wed,  2 Jun 2010 07:59:04 +0200 (CEST)
-X-git-sha1: b05c168d71858f8cae91b5bf79af330c315f12a8 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 1227C818100;
+	Wed,  2 Jun 2010 07:59:09 +0200 (CEST)
+X-git-sha1: 56c827e8b7477fd6c42cc1f1c16a92594d8a7d9c 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20100602055131.21504.71923.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148209>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148210>
 
-There was some dead code and option -x appeared in the short
-help message of git revert (when running "git revert -h")
-which was wrong.
+This is needed by the following commits, because we are going
+to cherry pick many commits instead of just one.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/revert.c |    8 +-------
- 1 files changed, 1 insertions(+), 7 deletions(-)
+ builtin/revert.c |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 7976b5a..5df0d69 100644
+index 5df0d69..02f18c2 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -58,7 +58,6 @@ static void parse_args(int argc, const char **argv)
- 	struct option options[] = {
- 		OPT_BOOLEAN('n', "no-commit", &no_commit, "don't automatically commit"),
- 		OPT_BOOLEAN('e', "edit", &edit, "edit the commit message"),
--		OPT_BOOLEAN('x', NULL, &no_replay, "append commit name when cherry-picking"),
- 		OPT_BOOLEAN('r', NULL, &noop, "no-op (backward compatibility)"),
- 		OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
-@@ -71,6 +70,7 @@ static void parse_args(int argc, const char **argv)
+@@ -508,6 +508,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		}
+ 	}
  
- 	if (action == CHERRY_PICK) {
- 		struct option cp_extra[] = {
-+			OPT_BOOLEAN('x', NULL, &no_replay, "append commit name"),
- 			OPT_BOOLEAN(0, "ff", &allow_ff, "allow fast-forward"),
- 			OPT_END(),
- 		};
-@@ -379,10 +379,6 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 	setenv(GIT_REFLOG_ACTION, me, 0);
- 	parse_args(argc, argv);
- 
--	/* this is copied from the shell script, but it's never triggered... */
--	if (action == REVERT && !no_replay)
--		die("revert is incompatible with replay");
--
- 	if (allow_ff) {
++	free_message(&msg);
++
+ 	/*
+ 	 *
+ 	 * If we are cherry-pick, and if the merge did not result in
+@@ -520,7 +522,9 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 	if (!no_commit) {
+ 		/* 6 is max possible length of our args array including NULL */
+ 		const char *args[6];
++		int res;
+ 		int i = 0;
++
+ 		args[i++] = "commit";
+ 		args[i++] = "-n";
  		if (signoff)
- 			die("cherry-pick --ff cannot be used with --signoff");
-@@ -546,14 +542,12 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- {
- 	if (isatty(0))
- 		edit = 1;
--	no_replay = 1;
- 	action = REVERT;
- 	return revert_or_cherry_pick(argc, argv);
- }
+@@ -530,9 +534,12 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 			args[i++] = defmsg;
+ 		}
+ 		args[i] = NULL;
+-		return execv_git_cmd(args);
++		res = run_command_v_opt(args, RUN_GIT_CMD);
++		free(defmsg);
++
++		return res;
+ 	}
+-	free_message(&msg);
++
+ 	free(defmsg);
  
- int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- {
--	no_replay = 0;
- 	action = CHERRY_PICK;
- 	return revert_or_cherry_pick(argc, argv);
- }
+ 	return 0;
 -- 
 1.7.1.362.g8d752
