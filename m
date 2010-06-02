@@ -1,79 +1,117 @@
-From: Bruce Stephens <bruce.stephens@isode.com>
-Subject: Re: git locate
-Date: Wed, 02 Jun 2010 11:23:32 +0100
-Message-ID: <80y6ex3f8b.fsf@tiny.isode.net>
-References: <43d8ce651001191717l58d10919j691f4e5b056fe9b5@mail.gmail.com>
-            <alpine.DEB.1.00.1001200224270.4985@pacific.mpi-cbg.de>
-            <m3zl49bk0o.fsf@localhost.localdomain>
-            <alpine.DEB.1.00.1001201021060.31129@intel-tinevez-2-302>
-            <4B579BA8.8050000@gmail.com>
-            <fabb9a1e1002150520v29cf8d59ke27cde3e9697b011@mail.gmail.com>
-            <AANLkTim6cLkr5BFTRTh2nZGwsfVgHZi3M-b9IER8dHf3@mail.gmail.com>
-            <AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC v4 1/7] Add infrastructure for translating Git with 
+	gettext
+Date: Wed, 2 Jun 2010 10:56:05 +0000
+Message-ID: <AANLkTinzZUaFBzNHzxBA94ECeUKdejVGqSQF1TUtOrrk@mail.gmail.com>
+References: <AANLkTimhxqGRPjYz-k5f-LTIk6KajEwUuGJWt-dAKZQT@mail.gmail.com>
+	<1275440764-26153-2-git-send-email-avarab@gmail.com>
+	<alpine.DEB.2.00.1006021006590.23247@ds9.cixit.se>
+	<AANLkTilClUTkrpnMhBTlcBZC-r2OemT4m22bDnc6fRPy@mail.gmail.com>
+	<alpine.DEB.2.00.1006021109010.23247@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 02 12:23:41 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Wed Jun 02 12:57:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJl6p-00030H-1d
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 12:23:39 +0200
+	id 1OJldw-00087H-Bn
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Jun 2010 12:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932425Ab0FBKXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 06:23:36 -0400
-Received: from rufus.isode.com ([62.3.217.251]:34619 "EHLO rufus.isode.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932419Ab0FBKXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 06:23:33 -0400
-Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
-          by rufus.isode.com (submission channel) via TCP with ESMTPA 
-          id <TAYxIgBeGays@rufus.isode.com>; Wed, 2 Jun 2010 11:23:30 +0100
-Received: by tiny.isode.net (sSMTP sendmail emulation);
-          Wed, 02 Jun 2010 11:23:34 +0100
-X-Hashcash: 1:20:100602:git@vger.kernel.org::hEXN6YhXGUs9blnz:0000000000000000000000000000000000000000004hsF
-X-Hashcash: 1:20:100602:johnflux@gmail.com::GD3HypoFEzetBEhV:0000000000000000000000000000000000000000000DRgo
-In-Reply-To: <AANLkTil38OLw3J6ZPvv2wNu98QuTXJKtNwRZP0NDZPWn@mail.gmail.com>
-	(John Tapsell's message of "Wed, 2 Jun 2010 19:02:00 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1757636Ab0FBK4J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 06:56:09 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:64482 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751540Ab0FBK4G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 06:56:06 -0400
+Received: by gye5 with SMTP id 5so1987003gye.19
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 03:56:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2PfGwDzGrcnET1Bgvi7Z1utRqEC/bOLTMktY01AlmDo=;
+        b=Aw37VpK5/3p6gSnr2+MZPcUJ70Ap5IRxnythH9sd7Leg3e1xt4YkQj8d/C85Kg/Mjw
+         kHmgR98G1dWPQurdQ/0Q6YjUjY5EV2Onp0PDFq5B9bhQUkMN1ohVGq/spizsjAlyV+8N
+         OLNZQq1OQmGYzXbjSdi5Ad/Y5hL8f+ZpMxQt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mmFvbbkwFvKrR0noHEZXlREfGg2MLAZtUjXZM891pJ6/8mkEEGwcvRynosUnNDTwbI
+         VDSBgKPsnW9bfpm4hSy1xCEuF9pWd8O8Xx5kSY9j/QddrtO8PnB/IQhK0Ft+7JHCKB/2
+         BI32YuLkC7jkhIx5N0L9HPqPcN36viQmWM+Ck=
+Received: by 10.231.184.73 with SMTP id cj9mr9726115ibb.1.1275476165778; Wed, 
+	02 Jun 2010 03:56:05 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 2 Jun 2010 03:56:05 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1006021109010.23247@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148243>
 
-John Tapsell <johnflux@gmail.com> writes:
-
-[...]
-
-> Actually could someone help me with this.. the trouble is that this
-> returns paths relative to the root.
+On Wed, Jun 2, 2010 at 10:11, Peter Krefting <peter@softwolves.pp.se> w=
+rote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
-> Can I get it to find all the files, but relative to where I am now?
+>> Making things like wt-status.c translatable is going to be hard to d=
+o
+>> properly. It uses a lot of lego (sticking strings incrementally toge=
+ther),
+>
+> However, preparing them for translation is probably going to make the=
+m
+> better anyway, as this kind of string building is incredibly brittle,=
+ even
+> for English strings.
 
-Something like this is probably part of the answer, which allows an
-alias like this to work:
+Yeah, but they aren't better as they are now. Personally I'd rather
+incrementally add translation support correctly than do an incomplete
+job of it and wait for the complaints (and subsequent fixes) to come
+in.
 
-	locate = !cd $GIT_CWD && sh -c 'git ls-files "*$1*"' -
+But maybe that's counter-productive. Just making the English strings
+translatable as-is is still going to make most of Git translatable,
+and it isn't going to be that bad for languages like German and
+=46rench.
 
-That doesn't give you all the files (just those below where you are).
+Maybe worse is better :)
 
-diff --git a/git.c b/git.c
-index 99f0363..81c877b 100644
---- a/git.c
-+++ b/git.c
-@@ -178,6 +178,10 @@ static int handle_alias(int *argcp, const char ***argv)
-                        }
-                        trace_printf("trace: alias to shell cmd: %s => %s\n",
-                                     alias_command, alias_string + 1);
-+                       if (!subdir || !*subdir)
-+                         setenv("GIT_CWD", "./", 1);
-+                       else
-+                         setenv("GIT_CWD", subdir, 1);
-                        ret = system(alias_string + 1);
-                        if (ret >= 0 && WIFEXITED(ret) &&
-                            WEXITSTATUS(ret) != 127)
+> You also have to look out for pluralisation issues, fortunately Gette=
+xt does
+> have support for the various types of plural forms that are used, so =
+it
+> should be possible. The problem is just identifying where they are ne=
+eded.
+
+Yeah. I'm going to support pluralisation (and maybe msgctxt) across
+the C-Perl-Shell stack when there's a need for it. I haven't found any
+message in Git yet that requires it, but then again I haven't looked
+hard either.
+
+It would be useful to have an example of a message that could use
+pluralization, even better examples in all of C, Perl and Shell.
+
+>> and due to the coloring of output this'll be particularly hard to co=
+nvert.
+>
+> Is the colouring based on knowing the contents of the actual text, or=
+ is it
+> enough to know the markers? I admit not having looked at the colourin=
+g code
+> at all...
+
+There's nothing wrong with coloring in particular, it's just that due
+to the nature of the current implementation code that does coloring
+ends up being a bad offender in the "assemble the strings a few bytes
+at a time with strcat()" department.
+
+That can be fixed, it just takes a bit of time and tedium.
