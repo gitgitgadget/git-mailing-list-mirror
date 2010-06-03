@@ -1,75 +1,94 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 0/4] Don't warn about missing EOL for symlinks
-Date: Thu, 03 Jun 2010 21:55:58 +0200
-Message-ID: <4C0808CE.2000506@drmicha.warpmail.net>
-References: <cover.1275575236.git.git@drmicha.warpmail.net> <vpq1vco41go.fsf@bauges.imag.fr> <4C07C2E8.508@drmicha.warpmail.net> <20100603170724.GB22779@coredump.intra.peff.net>
+Date: Thu, 3 Jun 2010 16:17:59 -0400
+Message-ID: <20100603201759.GA20120@sigill.intra.peff.net>
+References: <cover.1275575236.git.git@drmicha.warpmail.net>
+ <vpq1vco41go.fsf@bauges.imag.fr>
+ <4C07C2E8.508@drmicha.warpmail.net>
+ <20100603170724.GB22779@coredump.intra.peff.net>
+ <4C0808CE.2000506@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 03 21:56:09 2010
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jun 03 22:18:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKGWO-0005kL-F2
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 21:56:08 +0200
+	id 1OKGrm-00010f-6C
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 22:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756368Ab0FCT4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 15:56:01 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:39991 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754943Ab0FCT4A (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 15:56:00 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 02882F932A;
-	Thu,  3 Jun 2010 15:55:53 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 03 Jun 2010 15:55:54 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=4o64d+c9LnlvSx4o8UPvbOpGIlU=; b=JFojhARY83s7M3Pr49kDXJJNo39dTCh8jGFjP62M3RaihBARQTcHp8QBxNALxGtRwiBx//XPb28STYdafxCaWHUXu9lzMAdYgXYiefiBy0F+vefdVJuZps2FvkeOGLpkYRW4FiZ9pTfvM/IPNFEVthvtKxPllUpxEu9fL+VdN2A=
-X-Sasl-enc: u/s5Cch2c2MOaIhHjVYWV5H/ci0GCM3BNQYt3qNm0Vrr 1275594949
-Received: from localhost.localdomain (p54859BA9.dip0.t-ipconnect.de [84.133.155.169])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B232C5180E;
-	Thu,  3 Jun 2010 15:55:48 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <20100603170724.GB22779@coredump.intra.peff.net>
+	id S1754833Ab0FCUSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 16:18:08 -0400
+Received: from peff.net ([208.65.91.99]:37639 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753783Ab0FCUSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 16:18:06 -0400
+Received: (qmail 1974 invoked by uid 107); 3 Jun 2010 20:18:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 03 Jun 2010 16:18:09 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jun 2010 16:18:00 -0400
+Content-Disposition: inline
+In-Reply-To: <4C0808CE.2000506@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148359>
 
-Jeff King venit, vidit, dixit 03.06.2010 19:07:
-> On Thu, Jun 03, 2010 at 04:57:44PM +0200, Michael J Gruber wrote:
+On Thu, Jun 03, 2010 at 09:55:58PM +0200, Michael J Gruber wrote:
+
+> > Yes, but you are breaking "git diff | git apply", aren't you? It is
 > 
->> May I kindly direct you to the next parts you cut out, especially the
->> one talking about "described thorougly along with the
->> rationale in 3/4", and to the commit message of 3/4? :)
->>
->> I'm not breaking existing tests, of course, which also test
->> format-patch/apply cycles with symlinks.
-> 
-> Yes, but you are breaking "git diff | git apply", aren't you? It is
+> We don't have any tests for that then. I ran all tests with my patch.
 
-We don't have any tests for that then. I ran all tests with my patch.
+That doesn't mean people don't do it, or that we don't want to support
+it. The tests _can_ be wrong or incomplete. :)
 
-> already broken with textconv, but that is a new feature that people opt
-> into by using it. Symlink patches are a feature that has worked fine
-> until now with the above command.
-> 
-> I don't think "but they should be using plumbing to generate patches"
-> is the right answer, either. Yes, we expect the diff porcelain to behave
-> differently depending on configuration, but with the exception of
-> textconv, it always produces an actual applicable patch.
+> ...which is why you need to use diff --no-textconv for scripting, which
+> is why I use that to decide about the symlink warnings!
 
-...which is why you need to use diff --no-textconv for scripting, which
-is why I use that to decide about the symlink warnings!
+But until now, people who didn't use textconv _didn't_ need to use diff
+--no-textconv. So you are breaking things for them.
 
-One could introduce a separate config for that, of course, if you mind
-unguarded diff|apply. But don't you think that those "No newline"
-warnings are just plain stupid for symlinks?
+Plus, it is not about scripting versus not scripting. I may use "git
+diff >foo.diff" manually to generate a diff. I think most users would
+expect the result to be applicable by git-apply.
 
-Michael
+Perhaps textconv opened a can of worms here that we should not have. I
+think it is slightly less bad in the case of textconv for two reasons:
+
+  1. You at least have to start using the textconv feature to shoot
+     yourself in the foot, so hopefully you are aware of it and its
+     implications (or at least feel a little dumb when the implications
+     bite you. :) ).
+
+  2. Trying to apply a textconv patch is _obviously_ wrong. The
+     application will fail, you'll look at it and say "Oh, this isn't
+     even close to right. Clearly the binary part is missing." Somebody
+     who tries to apply a symlink patch which has suppressed the "no
+     newline" message will silently get a newline in their symlink
+     value, won't they (or even if it does get rejected, it is not
+     obvious that it is the missing newline indicator that is the
+     problem).
+
+> One could introduce a separate config for that, of course, if you mind
+> unguarded diff|apply. But don't you think that those "No newline"
+> warnings are just plain stupid for symlinks?
+
+I do think they make the output harder for humans to read. But I also
+think that producing working, correct diffs is an important job for "git
+diff". Unfortunately because the diff format serves the dual purpose of
+being human and machine-readable, these sorts of conflicts are
+inevitable.
+
+Another source of this conflict is colorization. The solution we took
+there is show it only when output goes to the terminal or pager. Perhaps
+we should do the same here (and arguably, that would be the right thing
+for textconv, too).
+
+-Peff
