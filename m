@@ -1,161 +1,111 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Recovering from commit --amend in rebase --interactive
-Date: Thu, 3 Jun 2010 05:54:56 +0000
-Message-ID: <AANLkTinint0-KxXr8mIK6b6Yom1oBc0Qed-Jp48wofJf@mail.gmail.com>
-References: <alpine.DEB.2.00.1006011022030.2352@ds9.cixit.se>
-	<20100601115755.04ff4a0d@jk.gs>
-	<AANLkTinNpIjirZQL1lBi3t4i6_utCIUMuXc8q2gSJvmO@mail.gmail.com>
-	<7viq619fah.fsf@alter.siamese.dyndns.org>
+From: Simo Melenius <simo.melenius@iki.fi>
+Subject: Re: Bug? "git branch" failing to list all branches
+Date: Thu, 3 Jun 2010 09:00:14 +0300
+Message-ID: <AANLkTinCNgsIf_MsiysfphKm3MCW2Uio_xiemfDZraH7@mail.gmail.com>
+References: <AANLkTimTOucIfzSxsYNvmML7MALwj0E3BUASIIKIN1lN@mail.gmail.com>
+	<20100603042218.GA21254@progeny.tock>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 07:55:11 2010
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 08:00:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OK3OT-0006dY-AX
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 07:55:05 +0200
+	id 1OK3Td-0008Qb-TR
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 08:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932402Ab0FCFy7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 01:54:59 -0400
-Received: from mail-yw0-f179.google.com ([209.85.211.179]:44537 "EHLO
-	mail-yw0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932299Ab0FCFy6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 01:54:58 -0400
-Received: by ywh9 with SMTP id 9so6036375ywh.17
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 22:54:58 -0700 (PDT)
+	id S932328Ab0FCGAT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 02:00:19 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47177 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752726Ab0FCGAR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 02:00:17 -0400
+Received: by gye5 with SMTP id 5so2854750gye.19
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 23:00:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lbXtz3pGEHKP2aDWoQrBz2hQ1Vh54VkY+5uowr/yFpU=;
-        b=DWuEVKj3UhZ7H4uDedTHuLGrfBqFmQxiblMqfNjUpepFCnPoS5QCSVCo1sCrncAwOr
-         QTdl03fIga0FokPr2jcAY/iqflX80AzW3SrfpGiNVy/aJA+/m7ZZRoUB4ybaqFBLK6S8
-         eHrgb2kau1et2gQaybjS6Zgqdwjh1cifd7ATQ=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=MHVIiqXnp0sw8K4wNi0UvjZJ7NxF4G0cqgsZnd8uTTg=;
+        b=r4u6xsGIvVQDaWLJ1/QZoB4FVYU40IcDmJ3lSXFnSGx25c73a/wl+ySmuFtpFEwYuI
+         wFUPt4fgoaUKlbzQTdyYoHW3HOCy42ZDCLUdLtbNUpUJHeXP+gXkxj1/tjo9kLBLDh8n
+         kESlNLpd9SCxYL6IvhytH5M/gnZcBgbNwYJ40=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=O+VcrDB4eGNiNqvWb79erdjhq9yKbMwSRbmjWy+yZ8rGHGwAqAp9wVso1Arm7WiBhJ
-         Xj7jOoq4O57aMJk9nm3VxloRTjPYifjbP1o18YQBbvghPv51Vb7/lj93BEKEOY51NYv/
-         fzzpr+/FskvibN3nD2WvWpjg3YcEETHe9cR/I=
-Received: by 10.231.185.6 with SMTP id cm6mr11245762ibb.72.1275544496226; Wed, 
-	02 Jun 2010 22:54:56 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Wed, 2 Jun 2010 22:54:56 -0700 (PDT)
-In-Reply-To: <7viq619fah.fsf@alter.siamese.dyndns.org>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=LuwtHuNZ7eDrlb2XHJ/U35ufYlpy0/pd+oFBtpNvwEq7hcrfl8jE8NyYh+/7MDEByd
+         vdwcZjJzgVZ47b654i91CAI5ws0CKqUzSy3ZrpPuQR4MYbt5b8zYaOemU9msdOT0cYBR
+         gnEVxJT2OZ3zIgDA/zeOW7W02pThE3/uJhU8Q=
+Received: by 10.150.55.33 with SMTP id d33mr9154465yba.58.1275544814351; Wed, 
+	02 Jun 2010 23:00:14 -0700 (PDT)
+Received: by 10.150.186.2 with HTTP; Wed, 2 Jun 2010 23:00:14 -0700 (PDT)
+In-Reply-To: <20100603042218.GA21254@progeny.tock>
+X-Google-Sender-Auth: PJ_RpYjdwjPHzPtFKNFq_9Rtbd8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148293>
 
-On Wed, Jun 2, 2010 at 23:37, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>> In general, it might be helpful to warn very loudly upon doing a co=
-mmit
->>> --amend after fixing conflicts, but an implementation would probabl=
-y be
->>> ugly and for all I know, there might be people who frequently cause
->>> conflicts while amending; those guys would probably be quite annoye=
-d at
->>> such a warning.
->>
->> I've also introduced the error Peter describes into my history becau=
-se
->> I wasn't careful. That required some splitting / reflog fixes later.
->>
->> Perhaps the best way to solve this would be to change the content of
->> COMMIT_EDITMSG in cases like these so it gives you an explicit warni=
-ng
->> about what you're about to do.
->>
->> We already do this for merges, from builtin/commit.c:
->
-> Very good point. =C2=A0"Users are told when the command gives back co=
-ntrol, is
-> the best "rebase -i" could do, but by definition the users are free t=
-o
-> shoot themselves in the foot when given control, and "commit --amend"=
- is
-> the only sensible place to give further safeguard against this issue.
+On 3 June 2010 07:22, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> I noticed this because "git branch -a" and "git branch -av"
+>> unexpectedly gave a very different output.
+> Hmm --- so the error message must not have been very visible...
 
-As it happens I shot myself in the foot with this yesterday, here's a
-log of what I did:
+I have been working with such set of repositories that most of them
+have one or two broken refs. I probably saw it but didn't care because
+it was a known issue. If I had called git branch from a script and
+piped the output somewhere while relying on exit status, I wouldn't
+have noticed anything.
 
-    aoeu git (404M) $ git reset HEAD^
-    Unstaged changes after reset:
-    M       .gitignore
-    M       Makefile
-    M       config.mak.in
-    M       configure.ac
-    M       git.c
-    M       wt-status.c
-    aoeu git (404M) $ git st
-     M .gitignore
-     M Makefile
-     M config.mak.in
-     M configure.ac
-     M git.c
-     M wt-status.c
-    ?? gettext.c
-    ?? gettext.h
-    ?? po/
-    aoeu git (404M) $ git diff
-    aoeu git (404M) $ git show
+> Will this make =E2=80=98git branch=E2=80=99 exit with status zero? =C2=
+=A0Scripts and people
+> with fancy prompts benefit from a nonzero exit status.
 
-        At this point the amend message should warn me that I'm about t=
-o
-        merge stuff into the previous commit:
+My change doesn't change the current behaviour. At least git 1.7.0.4
+didn't give a nonzero exit status either. It would be good if it did.
 
-    aoeu git (404M) $ git commit --amend
-    Waiting for Emacs...
-    [detached HEAD f9d39c1379537fb3afdfba244c61a7328dc394f2] Merge
-branch 'maint'
-     Author: Junio C Hamano <gitster@pobox.com>
-    aoeu git (404M) $ git st
-     M wt-status.c
-    ?? gettext.c
-    ?? gettext.h
-    ?? po/
+I could add that to my patch. I'm, however, unsure of what's the best
+way to communicate the error from append_ref() to cmd_branch(). A
+static variable in branch.c would of course do.
 
-Actually, related to that I think this documentation section could use
-some work:
+However, if the git codebase has somewhere a global mechanism for
+signalling errors by, for example, raising some flag when error() is
+called, using that mechanism would be better, right?
 
-    http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_sp=
-litting_commits
+> If I have 37 branches and an error is encountered looking up one of
+> them, with this patch the error message will scroll off the screen.
+> Is this worth worrying about? =C2=A0It depends on what the usual caus=
+es for
+> broken branch refs are and whether they require attention or can be
+> safely ignored.
 
-At the time I was:
+Since this only concerns the printing of branches, often for
+interactive viewing or bash completion, and does not affect any of the
+operations that modify the repository, I think it's sufficient that
+the error message is still readable from stderr for those who are
+interested.
 
-    * Going back in my history
-    * Splitting apart some hunks to an older commit from that commit
-    * recommiting the altered commit, leaving its commit info alone
-    * Stashing the changes I'd removed into several stashes
-    * git rebase --continue and applying all the stashes to one big com=
-mit later
+> One other thought: this patch is line-wrapped, which means it cannot
+> be mechanically applied. =C2=A0Documentation/SubmittingPatches has so=
+me
+> tips on sending a patch unmangled (and please also see the section
+> labelled "Sign your work").
 
-I.e.:
-
-    git rebase -i master
-    ...
-    git reset HEAD^
-    git stash save --patch "stash git-pull.sh"
-    git add -u
-    git commit -c e06ef88fead1510587ff32715beaccf622dec2ce
-    git rebase --continue
-
-The "Commit the now-current index with whatever commit message is
-appropriate now" part of the docs assumes that you don't want to keep
-your old commit info around for the new rewritten commit.
+Yeah, I have a kosher patch locally. I just copypasted the diff part
+here for discussion.
 
 
-Anyway, </braindump>. This is just one example of how the rebase
-process could be friendlier with some minor changes, and how the
-documentation could be improved.
+Simo
+
+--=20
+() Today is the car of the cdr of your life.
+/\ http://arc.pasp.de/
