@@ -1,74 +1,75 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
-Date: Thu, 3 Jun 2010 21:53:47 +0200
-Message-ID: <7E7FBDDC-2504-4145-8822-E28ED410B799@gmail.com>
-References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 21:53:57 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 0/4] Don't warn about missing EOL for symlinks
+Date: Thu, 03 Jun 2010 21:55:58 +0200
+Message-ID: <4C0808CE.2000506@drmicha.warpmail.net>
+References: <cover.1275575236.git.git@drmicha.warpmail.net> <vpq1vco41go.fsf@bauges.imag.fr> <4C07C2E8.508@drmicha.warpmail.net> <20100603170724.GB22779@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 03 21:56:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKGUH-0004RK-5b
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 21:53:57 +0200
+	id 1OKGWO-0005kL-F2
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 21:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756429Ab0FCTxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 15:53:52 -0400
-Received: from mail-ew0-f223.google.com ([209.85.219.223]:52930 "EHLO
-	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755793Ab0FCTxv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 15:53:51 -0400
-Received: by ewy23 with SMTP id 23so127983ewy.1
-        for <git@vger.kernel.org>; Thu, 03 Jun 2010 12:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=VU7MQCWObURiqua8Cqug6wNkM2GeYy5iz0oikuStjBw=;
-        b=G4NWoKTeir9FKs0HI1narTvxd0nsgKLoIUG0GWO2oWS5/T0PSyNwujv18CkA5CkUtt
-         axb9nT6O9YfLw2oZ8t7NZbV2YCXsAuizOqha4e/p9D+c142AWhPoQq2ygL3poU7EzhkH
-         prwDb5R5aL7c3SlkjtBGpV6IhZ/6HFX3M4vPI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=BGb3Q2j3aqKeXkNGJ3XqUKmmmNpoxEVF2eN+KdW5UanJD0dDfrMiadK0Cj8ULrHbbw
-         49D/91ANsOj98muC3a5J7XWgR+x+FWAixnAnvCGIPE01uLyluA3TwipSFTHkAEeD+xoh
-         WD5Vbk2Ngc9o1ErmnX/jZawN2KSeUo8nIdV/0=
-Received: by 10.213.15.146 with SMTP id k18mr6914121eba.80.1275594828840;
-        Thu, 03 Jun 2010 12:53:48 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id 13sm240521ewy.13.2010.06.03.12.53.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 03 Jun 2010 12:53:48 -0700 (PDT)
-In-Reply-To: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1078)
+	id S1756368Ab0FCT4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 15:56:01 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:39991 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754943Ab0FCT4A (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 15:56:00 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 02882F932A;
+	Thu,  3 Jun 2010 15:55:53 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 03 Jun 2010 15:55:54 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=4o64d+c9LnlvSx4o8UPvbOpGIlU=; b=JFojhARY83s7M3Pr49kDXJJNo39dTCh8jGFjP62M3RaihBARQTcHp8QBxNALxGtRwiBx//XPb28STYdafxCaWHUXu9lzMAdYgXYiefiBy0F+vefdVJuZps2FvkeOGLpkYRW4FiZ9pTfvM/IPNFEVthvtKxPllUpxEu9fL+VdN2A=
+X-Sasl-enc: u/s5Cch2c2MOaIhHjVYWV5H/ci0GCM3BNQYt3qNm0Vrr 1275594949
+Received: from localhost.localdomain (p54859BA9.dip0.t-ipconnect.de [84.133.155.169])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B232C5180E;
+	Thu,  3 Jun 2010 15:55:48 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <20100603170724.GB22779@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148358>
 
-Hi,
-
-On 3. juni 2010, at 01.36, Junio C Hamano wrote:
-
-> * eb/core-eol (2010-05-19) 4 commits
-> - Add "core.eol" config variable
-> - Rename the "crlf" attribute "text"
-> - Add per-repository eol normalization
-> - Add tests for per-repository eol normalization
-> (this branch uses fg/autocrlf.)
+Jeff King venit, vidit, dixit 03.06.2010 19:07:
+> On Thu, Jun 03, 2010 at 04:57:44PM +0200, Michael J Gruber wrote:
 > 
-> Will merge to 'next'.
+>> May I kindly direct you to the next parts you cut out, especially the
+>> one talking about "described thorougly along with the
+>> rationale in 3/4", and to the commit message of 3/4? :)
+>>
+>> I'm not breaking existing tests, of course, which also test
+>> format-patch/apply cycles with symlinks.
+> 
+> Yes, but you are breaking "git diff | git apply", aren't you? It is
 
-I have a fixup for the "core.eol" commit that modifies "core.autocrlf"'s behaviour and fixes the documentation, as discussed on the list.  Unfortunately it's on a machine that's not accessible to me right now, but I'll send it tomorrow.
--- 
-Eyvind
+We don't have any tests for that then. I ran all tests with my patch.
+
+> already broken with textconv, but that is a new feature that people opt
+> into by using it. Symlink patches are a feature that has worked fine
+> until now with the above command.
+> 
+> I don't think "but they should be using plumbing to generate patches"
+> is the right answer, either. Yes, we expect the diff porcelain to behave
+> differently depending on configuration, but with the exception of
+> textconv, it always produces an actual applicable patch.
+
+...which is why you need to use diff --no-textconv for scripting, which
+is why I use that to decide about the symlink warnings!
+
+One could introduce a separate config for that, of course, if you mind
+unguarded diff|apply. But don't you think that those "No newline"
+warnings are just plain stupid for symlinks?
+
+Michael
