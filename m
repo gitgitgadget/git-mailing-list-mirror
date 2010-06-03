@@ -1,154 +1,126 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [PATCH GSoC 1/3] gitweb: Create Gitweb::Config module
-Date: Thu, 3 Jun 2010 21:41:00 +0530
-Message-ID: <AANLkTimoA95U0vivTzrc0XZ8i6q-SfCFA6RgMWK67OWl@mail.gmail.com>
-References: <1275573356-21466-1-git-send-email-pavan.sss1991@gmail.com>
-	<20100603152030.GD20775@machine.or.cz>
-	<201006031755.29814.jnareb@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Installing on AIX fails
+Date: Thu, 03 Jun 2010 18:12:13 +0200
+Message-ID: <4C07D45D.50503@drmicha.warpmail.net>
+References: <AANLkTinKjEBkn-9ajO4QXyHqY0EOQBGPRgNREaC_p_vQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 18:11:22 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Dario Rodriguez <soft.d4rio@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 18:13:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKD0p-00059p-R0
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 18:11:20 +0200
+	id 1OKD2W-0006Ie-9v
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 18:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756404Ab0FCQLL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 12:11:11 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:51834 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755271Ab0FCQLJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 12:11:09 -0400
-Received: by gwaa12 with SMTP id a12so187062gwa.19
-        for <git@vger.kernel.org>; Thu, 03 Jun 2010 09:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UFxt1BGlpI6p7fwSkrWBKFVYTS5rTM35D4vuKRzJ1Sg=;
-        b=b2aye2XYm1I2tGxLJJtePFpwZXn+50xWI9i/Lb8C3u90Y+CgxIVAUHVu3ncXQ22d3s
-         bylLk6/+9raFT1Qx8t+mrM9emlO4IkzjAne8ISCPfbqadTkgIVWZ2daYBr4rejSG5mMX
-         h+C5ihpcugzeydyGO1cl+vJHDgvW1RdPM1wpU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DOy4ocJ8hCDQiW7sQVLYV0RuKozOs5+bDjAcSrXH1y6zVDvoT1UPynWV0yPReMP1cz
-         P7VGD+JzqAif3ByUA3qaDvLrFQ+r3QdATU0Hfq54y9xm7cNvLp6k5OVxecPg6GM04pvg
-         Aoig4LmazjhRVg5jojdkAZSfr6GGJpJPGGpN0=
-Received: by 10.101.129.17 with SMTP id g17mr10701929ann.101.1275581461571; 
-	Thu, 03 Jun 2010 09:11:01 -0700 (PDT)
-Received: by 10.100.126.20 with HTTP; Thu, 3 Jun 2010 09:11:00 -0700 (PDT)
-In-Reply-To: <201006031755.29814.jnareb@gmail.com>
+	id S1752692Ab0FCQMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 12:12:37 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:41993 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752004Ab0FCQMf (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 12:12:35 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 57A4FF846B;
+	Thu,  3 Jun 2010 12:12:34 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 03 Jun 2010 12:12:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=3PU9mfBNvX6OJB4MyvInDZdQhgY=; b=WroEBXEhx3ooMwRmTRFgzqAQlnAwozko7cKN96VkPe/Te14Ryh/OfGK4Limv3zS5/eHkKz9gtZxBr1dbXPYwMhyWOAyKKZ0mofsvczw5SiX5uLXW4hdkMKC+u/6wIbUUBXMlIsV8WheXEv/9YWpD4MVa3D+aiV/xyxZR/cTGx0w=
+X-Sasl-enc: g2AaWqsBUqEVOAp/MVVdEK2IF3OEPAOqAa56HRqf80fU 1275581554
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id C036549BCE;
+	Thu,  3 Jun 2010 12:12:33 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <AANLkTinKjEBkn-9ajO4QXyHqY0EOQBGPRgNREaC_p_vQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148343>
 
-2010/6/3 Jakub Narebski <jnareb@gmail.com>:
-> On Tue, 3 Jun 2010, Petr Baudis wrote:
->>
->> =A0 I have couple of concerns; maybe they were addressed in the prev=
-ious
->> discussion which I admit I did not read completely, but in that case
->> they ought to be addressed in the commit message as well.
->>
->> On Thu, Jun 03, 2010 at 07:25:54PM +0530, Pavan Kumar Sunkara wrote:
->> > -our $t0;
->> > -if (eval { require Time::HiRes; 1; }) {
->> > - =A0 $t0 =3D [Time::HiRes::gettimeofday()];
->>
->> Why is this moved to Gitweb::Config? Shouldn't this be rather part o=
-f
->> Gitweb::Request?
->
-> I also think that this should be either part of Gitweb::Request, oe
-> even be left in gitweb.perl. =A0I think having it in Gitweb::Request
-> would be a better idea, because it is about time (and number of git
-> commands) it took to process request.
+Dario Rodriguez venit, vidit, dixit 03.06.2010 17:32:
+> Hi all,
+> 
+> I was trying to install git in a development and testing server we
+> have. The first problem was that AIX 'make' tool does NOT support
+> conditionals in makefiles, and display errors such...
+> 
+> 
+> [...]
+> "Makefile", line 1003: make: Dependency line needs colon or double
+> colon operator.
+> "Makefile", line 1007: make: Dependency line needs colon or double
+> colon operator.
+> "Makefile", line 1009: make: Dependency line needs colon or double
+> colon operator.
+> "Makefile", line 1011: make: Dependency line needs colon or double
+> colon operator.
+> [...]
+> 
+> 
+> ... until I get stucked. Well, I solved this by just using GNU make,
+> then I compile:
+> 
+> 
+> $ /usr/linux/bin/make prefix=$HOME/apps/ NO_OPENSSL=1 NO_TCLTK=1
+> NO_EXPAT=1 PYTHON_PATH=/usr/local/bin/python
+> 
+> 
+> and it all works, with angels singing and everything... a testing repo
+> works fine for a test drive without installing, excepting 'git log'
+> that just don't display anything.
+> Now, when I feel good to install it...
+> 
+> 
+> $ /usr/linux/bin/make prefix=$HOME/apps/ NO_OPENSSL=1 NO_TCLTK=1
+> NO_EXPAT=1 PYTHON_PATH=/usr/local/bin/python install
+> 
+> [...]
+> install -d -m 755 '/myhomedir/apps/bin'
+> getopt: illegal option -- d
+> Usage: install [-c dira] [-f dirb] [-i] [-m] [-M mode] [-O owner]
+>                [-G group] [-S] [-n dirc] [-o] [-s] file [dirx ...]
+> make: *** [install] Error 2
+> 
+> 
+> 
+> Now the installing process fails because of the AIX 'install' tool and
+> I wonder, can I patch/configure the installing process for AIX? May be
+> a set of utils for building in such systems would help some people.
 
-Ok. It will be done.
+AIX tools are a pain in the back end. If you want to compile & install
+anything GNU there you need better tools. In case of install, there's
+often something in /usr/ucb or /usr/ccs.
 
+Are you using gcc or xlc btw?
 
->> > +
->> > +use Gitweb::Config;
->> >
->> > =A0BEGIN {
->> > =A0 =A0 CGI->compile() if $ENV{'MOD_PERL'};
->> > =A0}
->> >
->> > -our $version =3D "++GIT_VERSION++";
->> > +$version =3D "++GIT_VERSION++";
->
-> This change is not necessary.
->
-> =A0our $version =3D "++GIT_VERSION++";
->
-> would keep working even if '$version' is declared in other module and
-> exported by this module (is imported into current scope).
+> 
+> PD: If you don't understand me please let me know it and I will try
+> again : )  My english could be horrible since I'm Argentinian.
 
-Ok. Will change it.
+It's certainly good enough!
 
->> >
->> > =A0our ($my_url, $my_uri, $base_url, $path_info, $home_link);
->> > =A0sub evaluate_uri {
->> > @@ -68,402 +71,58 @@ sub evaluate_uri {
->> >
->> > =A0# core git executable to use
->> > =A0# this can just be "git" if your webserver has a sensible PATH
->> > -our $GIT =3D "++GIT_BINDIR++/git";
->> > +$GIT =3D "++GIT_BINDIR++/git";
->>
->> I dislike the new schema in one aspect - the list of configuration
->> variables together with their description is not at a single place
->> anymore: the build-time overridable variables have their description=
-s
->> still in gitweb.pl and only very brief mentions in Gitweb::Config, w=
-hile
->> the rest has moved fully to Gitweb::Config. I think it would be best=
- to
->> move all descriptions to Gitweb::Config and keep only the override
->> assignments in gitweb.pl. So, Gitweb::Config would have
->>
->> =A0 =A0 =A0 # core git executable to use
->> =A0 =A0 =A0 # this can just be "git" if your webserver has a sensibl=
-e PATH
->> =A0 =A0 =A0 our $GIT;
->
-> Good idea.
->
-> Perhaps we should provide some sane default fallback values, like for
-> example
->
-> =A0 =A0 =A0 =A0our $GIT =3D "git";
->
->>
->> and gitweb.pl would have _just_
->>
->> =A0 =A0 =A0 $GIT =3D "++GIT_BINDIR++/git";
->
-> I would say
->
-> =A0 =A0 =A0 =A0our $GIT =3D "++GIT_BINDIR++/git";
+> PD2: I don't know if AIX python path is always /usr/local/bin/python,
+> but I've seen that git Makefiles set /usr/local/bin/python for FreeBSD
+> only:
+> 
+> git_remote_helpers/Makefile:
+> ifndef PYTHON_PATH
+>         ifeq ($(uname_S),FreeBSD)
+>                 PYTHON_PATH = /usr/local/bin/python
+>         else
+>                 PYTHON_PATH = /usr/bin/python
+>         endif
+> endif
+> 
+> I think 'test' the file is a good way for auto-configuration.
 
-But, I think when we start reading the code, it would seem that 'our
-$GIT' implies that it is a variable created locally rather than an
-exported variable from Gitweb::Config module.
+You don't need to worry about python for git right now. It's set up for
+a few things which are yet to come.
 
-Even though it increases the patch size, I don't think it will be much
-of a concern when it comes to good redability of code.
-
-Jakub: Can you reply, what you think about this argument ?
-
-Thanks,
-Pavan.
+Cheers,
+Michael
