@@ -1,72 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Group the default git help message by topic
-Date: Wed, 02 Jun 2010 16:39:39 -0700
-Message-ID: <7vwruh80n8.fsf@alter.siamese.dyndns.org>
-References: <1274809430-36060-1-git-send-email-schacon@gmail.com>
- <AANLkTilWIRqnjjgGA3e9DDzw2MiHirjP2-W7PuPhonUs@mail.gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
+Date: Thu, 3 Jun 2010 11:13:45 +0800
+Message-ID: <AANLkTimuTIugURlYxwbk7wGW2IM11YTy4P91YDguLQUb@mail.gmail.com>
+References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 01:39:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 05:13:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OJxXK-0001Zm-T5
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 01:39:51 +0200
+	id 1OK0sT-0002LW-Pu
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 05:13:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933331Ab0FBXjq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jun 2010 19:39:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54703 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933321Ab0FBXjp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jun 2010 19:39:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 47966B736C;
-	Wed,  2 Jun 2010 19:39:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=hhMlyz6FOr/1dTklhquTX+/UVsI=; b=csURnuqLljNE3drr/7voFdI
-	KDMHVPQIxWwrmOJNMM9vVLvTlnmtJB75QP0u6UJee9IMPWVOD67AUB9ZfapFNv0V
-	GWdLBbGNjm4CvbKawoGKEcQk/umEg0zjMkl2ZmocjqTn88NilrwxBoOcf7Hjs/Vw
-	xDsgnSOzFE39Cag/iPGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=uZQcBvQBbXL6TRJt2uZ9qG0U5QR77OzJlbrE52xRpjuHs2mlQ
-	c4FGq7bN1bVOKhWgxzfmF6BCkAk42IUFjoRB8fAXo6KU82n78QSjDDXKH2VfD1u2
-	z/XJ7LqYc19mTv8WeNw46qDueEvisSByE45CtgwZaJ39XlPWXgRxCcprQc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 23462B736B;
-	Wed,  2 Jun 2010 19:39:43 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77FB2B736A; Wed,  2 Jun
- 2010 19:39:40 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1E91C874-6EA0-11DF-8443-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933755Ab0FCDNs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jun 2010 23:13:48 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38139 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933726Ab0FCDNr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Jun 2010 23:13:47 -0400
+Received: by iwn6 with SMTP id 6so1594619iwn.19
+        for <git@vger.kernel.org>; Wed, 02 Jun 2010 20:13:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=NCPBkbVz/UMnL8DN4OIU43MPfQUgwCMReE8ASyKbt04=;
+        b=N4WT63jgG0M3/fy/+kHOS2X+i/Xd1CMQ27yl4hDjNK0nF4vrSGM3qcVRAsbBtZePfd
+         PtG0jvITtOR/Qr9AG8Mmuf01UA9OkYZ0fJ367/dCEV2BVGS58FW3LNitecKqu+aDjqIn
+         jRssEgStPEPfxOV2ZvuVJqlwuJJBTGk+a2HuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=W/v6rFb/gs3NomNr08glhQw9459RQZeYXFpllra81iOvxUMroR6NylU3G1RIWuOBO4
+         ZUWfBZkXRrT6z8HVleBOgV5tqUp1t3WvYfK/EzC6VkM5A6YeAG70LRz0SR+LL8xInKtd
+         86bQ9kFZTUu5JRh5LPuGw1PJB11evPIszKlf0=
+Received: by 10.231.147.143 with SMTP id l15mr11101951ibv.9.1275534825989; 
+	Wed, 02 Jun 2010 20:13:45 -0700 (PDT)
+Received: by 10.231.14.199 with HTTP; Wed, 2 Jun 2010 20:13:45 -0700 (PDT)
+In-Reply-To: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148287>
 
-Scott Chacon <schacon@gmail.com> writes:
+Hi,
 
-> Also removes the common-cmd.h generation process, including parts of the
-> Makefile and the generate-cmdlist.sh file.
+On Thu, Jun 3, 2010 at 7:36 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> [New Topics]
+> [snip]
+> * tc/commit-abbrev-fix (2010-05-27) 3 commits
+> =A0- commit::print_summary(): set rev_info.always_show_header to 1
+> =A0- t7502-commit: add summary output tests for empty and merge commi=
+ts
+> =A0- t7502-commit: add tests for summary output
+>
+> Will merge to 'next'. =A0I am not quite happy about the "impossible t=
+o
+> trigger" die message, though. =A0It is a good defensive programming t=
+o catch
+> breakages caused by future changes that may invalidate the assumption=
+ this
+> patch makes, but then the message should be worded as such to state t=
+hat
+> assumption, I think.
 
-I think it is a good idea to change the presentation order from
-alphabetical to logical grouping.  However, the approach the patch takes
-encourages the command synopsis and its help message drift apart which is
-somewhat worrysome.
+I'll try to remember to re-send the third patch with your suggestion
+about the message.
 
-I also sense a hidden agenda of deprecating the word 'index' and replacing
-it with 'stage', but this is not a proper way to do so.  Please make it a
-separate patch.  IOW, keep the current command description but change the
-selection of commands and presentation order in one patch, and create
-another patch that does your s/index/stage/ thing.
+> [Cooking]
+> [snip]
+> * tc/merge-m-log (2010-05-11) 8 commits
+> =A0(merged to 'next' on 2010-05-21 at e889876)
+> =A0+ merge: --log appends shortlog to message if specified
+> =A0+ fmt-merge-msg: add function to append shortlog only
+> =A0+ fmt-merge-msg: refactor merge title formatting
+> =A0+ fmt-merge-msg: minor refactor of fmt_merge_msg()
+> =A0+ merge: rename variable
+> =A0+ merge: update comment
+> =A0+ t7604-merge-custom-message: show that --log doesn't append to -m
+> =A0+ t7604-merge-custom-message: shift expected output creation
 
-Thanks.
+=46WIW, I've been using this feature for as long as it's been cooking -
+no issues thus far.
+
+--=20
+Cheers,
+Ray Chuan
