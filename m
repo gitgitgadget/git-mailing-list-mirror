@@ -1,122 +1,64 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH GSoC 1/3] gitweb: Create Gitweb::Config module
-Date: Thu, 3 Jun 2010 17:20:30 +0200
-Message-ID: <20100603152030.GD20775@machine.or.cz>
-References: <1275573356-21466-1-git-send-email-pavan.sss1991@gmail.com>
+From: Vicent Marti <tanoku@gmail.com>
+Subject: Libgit2 GSoC Update
+Date: Thu, 3 Jun 2010 17:31:35 +0200
+Message-ID: <AANLkTileZ2gL8KRCri1fx98OI01A1DE5ZrcaeajHzbj1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 17:20:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 03 17:32:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKCDn-0000Au-Cs
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 17:20:39 +0200
+	id 1OKCOq-0006JN-E4
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 17:32:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756230Ab0FCPUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 11:20:34 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:53067 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756142Ab0FCPUe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jun 2010 11:20:34 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 4EF06862094; Thu,  3 Jun 2010 17:20:30 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1275573356-21466-1-git-send-email-pavan.sss1991@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756405Ab0FCPb7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 11:31:59 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48205 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756298Ab0FCPb6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 11:31:58 -0400
+Received: by fxm8 with SMTP id 8so191387fxm.19
+        for <git@vger.kernel.org>; Thu, 03 Jun 2010 08:31:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type:content-transfer-encoding;
+        bh=4H3GbVFBwzNyiJB8ITljhJwrJUfF9xOQoogrW89VPdI=;
+        b=QE7tQbuVp/tOr4aHDWBE+68xh2jMqnXcTBnHrH8N37cNQyiH6Jz7/xjxICGn2R0sQn
+         6gp2xJ9yOeRmEQOc9srwpYqhYRd35y+uLh4dw3p0QM4pt+juiMHk7Hlzle5Axq6HAlz1
+         t0Rdo9gLspoYGcTsGv3/h7wImV68nJb2n4nXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=LEcfjY5gly/Yk9a+tFQZNpAuEhHF2lwFOYyHSVN60taYdD6NghB5WkjkMZbwLWLWZ9
+         mfrrGR7kHF0G4hUkoOU83Ps53xqZsf4leD9wvUL0hHuoBc9ota3de6/RvQT09WTrPYLm
+         oUXLHkyLqtDsmWccPoaWev9recvHIdpN8xUsU=
+Received: by 10.204.81.137 with SMTP id x9mr2972061bkk.80.1275579116916; Thu, 
+	03 Jun 2010 08:31:56 -0700 (PDT)
+Received: by 10.204.69.205 with HTTP; Thu, 3 Jun 2010 08:31:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148334>
 
-  Hi!
+Hello gentlemen,
 
-  I think this is a good start!
+just a quick status update to note that I've fixed all the issues
+found on the previous review of the project. That first batch of
+patches, together with several fixes which Ramsay has kindly commited
+have been merged back into the libgit2 master repo [1].
 
-  I have couple of concerns; maybe they were addressed in the previous
-discussion which I admit I did not read completely, but in that case
-they ought to be addressed in the commit message as well.
+=46eel free to test it out and comment back, if you have time.
 
-On Thu, Jun 03, 2010 at 07:25:54PM +0530, Pavan Kumar Sunkara wrote:
-> -our $t0;
-> -if (eval { require Time::HiRes; 1; }) {
-> -	$t0 = [Time::HiRes::gettimeofday()];
+Cheers,
+Vicent Mart=ED
+http://www.bellverde.org
 
-Why is this moved to Gitweb::Config? Shouldn't this be rather part of
-Gitweb::Request?
-
-> +# __DIR__ is taken from Dir::Self __DIR__ fragment
-> +sub __DIR__ () {
-> +	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1]);
->  }
-> -our $number_of_git_cmds = 0;
-> +use lib __DIR__ . "/lib";
-
-Wouldn't it be more elegant to use FindBin? I'm just not sure how long
-is it part of core Perl.
-
-> +
-> +use Gitweb::Config;
->  
->  BEGIN {
->  	CGI->compile() if $ENV{'MOD_PERL'};
->  }
->  
-> -our $version = "++GIT_VERSION++";
-> +$version = "++GIT_VERSION++";
->  
->  our ($my_url, $my_uri, $base_url, $path_info, $home_link);
->  sub evaluate_uri {
-> @@ -68,402 +71,58 @@ sub evaluate_uri {
->  
->  # core git executable to use
->  # this can just be "git" if your webserver has a sensible PATH
-> -our $GIT = "++GIT_BINDIR++/git";
-> +$GIT = "++GIT_BINDIR++/git";
-
-I dislike the new schema in one aspect - the list of configuration
-variables together with their description is not at a single place
-anymore: the build-time overridable variables have their descriptions
-still in gitweb.pl and only very brief mentions in Gitweb::Config, while
-the rest has moved fully to Gitweb::Config. I think it would be best to
-move all descriptions to Gitweb::Config and keep only the override
-assignments in gitweb.pl. So, Gitweb::Config would have
-
-	# core git executable to use
-	# this can just be "git" if your webserver has a sensible PATH
-	our $GIT;
-
-and gitweb.pl would have _just_
-
-	$GIT = "++GIT_BINDIR++/git";
-
-How does that sound?
-
-
-I think you ought to add a comment in front of this section explaining
-that not all configuration variables are listed here anymore. Something
-like
-
-	# Only configuration variables with build-time overridable
-	# defaults are listed below. The complete set of variables
-	# with their descriptions is listed in Gitweb::Config.
-
->  # name of your site or organization to appear in page titles
->  # replace this with something more descriptive for clearer bookmarks
-> -our $site_name = "++GITWEB_SITENAME++"
-> +$site_name = "++GITWEB_SITENAME++"
->                   || ($ENV{'SERVER_NAME'} || "Untitled") . " Git";
-
-This looks like some new feature; please do that in a separate patch.
-(BTW, I assume that there are no other changes like this in the rest of
-the moved code blocks!)
-
--- 
-				Petr "Pasky" Baudis
-The true meaning of life is to plant a tree under whose shade
-you will never sit.
+[1]: http://repo.or.cz/w/libgit2.git
