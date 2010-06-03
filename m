@@ -1,85 +1,139 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] documentation: git-mergetool updated to warn against
- builtin tools invocations
-Date: Thu, 03 Jun 2010 09:45:04 +0200
-Message-ID: <4C075D80.70304@drmicha.warpmail.net>
-References: <1275501453-13081-1-git-send-email-srabot@steek.com> <7vbpbt9f9j.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Sylvain Rabot <srabot@steek.com>, git@vger.kernel.org,
-	sylvain@abstraction.fr, David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 09:45:33 2010
+From: Simo Melenius <simo.melenius@iki.fi>
+Subject: [PATCH 1/2] branch: exit status now reflects if branch listing finds an error
+Date: Thu,  3 Jun 2010 10:48:01 +0300
+Message-ID: <1275551282-21557-1-git-send-email-simo.melenius@iki.fi>
+References: <20100603065527.GA23439@progeny.tock>
+Cc: git@vger.kernel.org, Simo Melenius <simo.melenius@iki.fi>
+To: jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jun 03 09:49:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OK57M-0003nV-9I
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 09:45:32 +0200
+	id 1OK5Ah-0005LT-Hp
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 09:48:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755271Ab0FCHp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 03:45:27 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51125 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753808Ab0FCHp0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 03:45:26 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 86EF0F834E;
-	Thu,  3 Jun 2010 03:45:25 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 03 Jun 2010 03:45:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=v8cXwGa12c2jP4flzGFyLPWZduI=; b=edL/5GI+y2dDWOoyFSfPzjLLtmBwwJjS9wa2KZnbKB7mGdsEmG6xASUtgSlnHSYgscNL2mEat4JFXkRP9N4LhGXZGIIJ2ucuaaDGbDpsKRyBG+LKP6csP05z7inH5OGYQPtQSkpHetucYlJ7l1QwoxmUq+Fg3fZXaNMhuMZlLPI=
-X-Sasl-enc: M9tP7rR6AgfTEsBzrl5J71FL4Vl4CSg0TxpKWYdJOUYd 1275551125
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A221C4A91A;
-	Thu,  3 Jun 2010 03:45:24 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <7vbpbt9f9j.fsf@alter.siamese.dyndns.org>
+	id S1757925Ab0FCHsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 03:48:43 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44068 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757671Ab0FCHsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 03:48:39 -0400
+Received: by pwj2 with SMTP id 2so2096226pwj.19
+        for <git@vger.kernel.org>; Thu, 03 Jun 2010 00:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=HnIdWgdoNX2LnOcTGrjlg8lVwT222Yz0+H0Y1j9HVh0=;
+        b=SJS9CFgAJ68qbucweYXXYL+cKSRLvn1XONHuVgwIjyDptQe+VXuD+XJPkmB03rSXQO
+         XN3DsgKbd3Ovfd81BSuGiu1DkdDl7k2P+CuuhlUzkY4uQoT24O0DhxPCKMgIikxl4Yw3
+         V0AL5JYt8Q68rG1H6x20JtCoJFlaDy2CZg1fY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references;
+        b=qMXly7i1Vdkh6AN2zyOsvNirBgbnUrBZCFbUsFCr7dM86oCqHY1dUd7e4QD7uqNtKA
+         2yeocPMcUWVDzUbROc3xAO07LqxYE1frQta0v0p3y1d2oLvlgqrVbMz/KT2TxBPkUfBe
+         1KM4SXX2o7JEy37WinhVyX35EWWyNCR+tAEmY=
+Received: by 10.141.105.19 with SMTP id h19mr7751839rvm.281.1275551319172;
+        Thu, 03 Jun 2010 00:48:39 -0700 (PDT)
+Received: from localhost.localdomain (xdsl-83-150-84-41.nebulazone.fi [83.150.84.41])
+        by mx.google.com with ESMTPS id h11sm2833977rvm.0.2010.06.03.00.48.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jun 2010 00:48:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
+In-Reply-To: <20100603065527.GA23439@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148297>
 
-Junio C Hamano venit, vidit, dixit 03.06.2010 01:38:
-> Sylvain Rabot <srabot@steek.com> writes:
-> 
->> +Be aware that 'git mergetool' has some predefined invocation commands builtin
->> +for known diff tools like meld, diffuse, p4merge ... etc. It means that if
->> +you set the merge.tool configuration to one of these tools, the
->> +mergetool.<tool>.* configurations will not be taken care of. If you
->> +really want to customize the invocation of one of these tools,
->> +set `merge.tool` to "custom" or whatever you want and `mergetool.custom.cmd`
->> +to "/usr/bin/<tool> $LOCAL $MERGED $REMOTE"
-> 
-> Two half-points and three points (that makes them four in total ;-):
-> 
->  o If I read the above without "It means that", it still makes sense;
-> 
->  o "If you really" can go without "really";
-> 
->  * I had to read "will not be taken care of" twice; "are ignored" is
->    probably easier to understand;
-> 
->  * The description and the example makes it sound as if the command line
->    has to have these three tokens in the given order, but the whole point
->    of this mechanism is that you can launch whatever external command with
->    a custom command line, so "and `mergetool.custom.cmd` to a command line
->    to invoke the command.  $LOCAL $MERGED and $REMOTE on this command line
->    are substituted by ...." may be more reader-friendly.
-> 
->  * As a documentation update it is perfectly fine to describe this glitch,
->    but I wonder if we might want to lift this restriction (read: consider
->    this as a bug and fix it).
+If some refs could not be read when listing branches, this can now be
+observed in the exit status of the "git branch" command.
 
-Definitely. The current behaviour even means that when you have set up
-fancytool, and then a new git-mergetool version suddenly starts to
-support fancytool, possibly with different options, your existing
-configuration breaks. I.e., even for currently unsupported tools you
-have to use the procedure Silvain describes in order to protect against
-updates!
+Signed-off-by: Simo Melenius <simo.melenius@iki.fi>
+---
+ builtin/branch.c |   25 ++++++++++++++++++++-----
+ 1 files changed, 20 insertions(+), 5 deletions(-)
 
-Michael
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 6cf7e72..46ca59c 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -257,9 +257,16 @@ static char *resolve_symref(const char *src, const char *prefix)
+ 	return xstrdup(dst);
+ }
+ 
++struct append_ref_cb
++{
++	struct ref_list *ref_list;
++	int ret;
++};
++
+ static int append_ref(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+ {
+-	struct ref_list *ref_list = (struct ref_list*)(cb_data);
++	struct append_ref_cb *cb = (struct append_ref_cb*)(cb_data);
++	struct ref_list *ref_list = cb->ref_list;
+ 	struct ref_item *newitem;
+ 	struct commit *commit;
+ 	int kind, i;
+@@ -294,7 +301,10 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
+ 	if (ref_list->verbose || ref_list->with_commit || merge_filter != NO_FILTER) {
+ 		commit = lookup_commit_reference_gently(sha1, 1);
+ 		if (!commit)
+-			return error("branch '%s' does not point at a commit", refname);
++		{
++			cb->ret = error("branch '%s' does not point at a commit", refname);
++			return cb->ret;
++		}
+ 
+ 		/* Filter with with_commit if specified */
+ 		if (!is_descendant_of(commit, ref_list->with_commit))
+@@ -484,9 +494,10 @@ static void show_detached(struct ref_list *ref_list)
+ 	}
+ }
+ 
+-static void print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
++static int print_ref_list(int kinds, int detached, int verbose, int abbrev, struct commit_list *with_commit)
+ {
+ 	int i;
++	struct append_ref_cb cb;
+ 	struct ref_list ref_list;
+ 
+ 	memset(&ref_list, 0, sizeof(ref_list));
+@@ -496,7 +507,9 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
+ 	ref_list.with_commit = with_commit;
+ 	if (merge_filter != NO_FILTER)
+ 		init_revisions(&ref_list.revs, NULL);
+-	for_each_rawref(append_ref, &ref_list);
++	cb.ref_list = &ref_list;
++	cb.ret = 0;
++	for_each_rawref(append_ref, &cb);
+ 	if (merge_filter != NO_FILTER) {
+ 		struct commit *filter;
+ 		filter = lookup_commit_reference_gently(merge_filter_ref, 0);
+@@ -527,6 +540,8 @@ static void print_ref_list(int kinds, int detached, int verbose, int abbrev, str
+ 	}
+ 
+ 	free_ref_list(&ref_list);
++
++	return cb.ret;
+ }
+ 
+ static void rename_branch(const char *oldname, const char *newname, int force)
+@@ -679,7 +694,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 	if (delete)
+ 		return delete_branches(argc, argv, delete > 1, kinds);
+ 	else if (argc == 0)
+-		print_ref_list(kinds, detached, verbose, abbrev, with_commit);
++		return print_ref_list(kinds, detached, verbose, abbrev, with_commit);
+ 	else if (rename && (argc == 1))
+ 		rename_branch(head, argv[0], rename > 1);
+ 	else if (rename && (argc == 2))
+-- 
+1.7.0.4
