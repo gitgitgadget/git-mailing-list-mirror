@@ -1,100 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] separate quoting and relative path generation
-Date: Thu, 03 Jun 2010 15:16:33 -0700
-Message-ID: <7vocfr7oe6.fsf@alter.siamese.dyndns.org>
-References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
- <20100603133631.GA31565@localhost>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH 0/5] revision: --ancestry-path, take 2
+Date: Fri, 04 Jun 2010 01:17:32 +0200
+Message-ID: <1275607057-26645-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Fri Jun 04 00:16:50 2010
+Content-Type: TEXT/PLAIN
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, johan@herland.net
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 04 01:18:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKIiX-0003ZH-FI
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 00:16:49 +0200
+	id 1OKJfo-0007BM-0o
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 01:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751510Ab0FCWQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 18:16:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56959 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751617Ab0FCWQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jun 2010 18:16:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 39776B9285;
-	Thu,  3 Jun 2010 18:16:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5ALD1W+e3aio5ZI48pM5PaABSAU=; b=Vyvh1W
-	0rS3y3v0NDgptQ4e69Kme9cdCRsxabEqOmdDXamcvhOSDw/0bMMwX7qiBPuCR0kX
-	b5SVYRU4uoxy8PZ8uy8pMwGf0DXD0H4C2wgwtyM+QVtM42ZWAVE5yqqMV0tqlH//
-	vZlP9kdD3qsbV1xn9ssapwWVXH8jDTAlEsChk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w1kahDbflzZXQy9OCPz8Ws3WslpZHz4n
-	Hxqluh+KYN35cni7wgBX43kG/ns+zfdVf8Jk5MB+dQdSwgbdZ9Pc02uo4hHF6N4l
-	Zz/5A05tSKev2FNj8px+FuKsuyiQqa5J1HOvR0m0YEkYilvT0pfrbQmLhNbSN30T
-	lDo2AhXx8oA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 14155B9283;
-	Thu,  3 Jun 2010 18:16:38 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4365DB927C; Thu,  3 Jun
- 2010 18:16:35 -0400 (EDT)
-In-Reply-To: <20100603133631.GA31565@localhost> (Clemens Buchacher's message
- of "Thu\, 3 Jun 2010 15\:36\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ADA7C140-6F5D-11DF-8682-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754907Ab0FCXRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 19:17:52 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:40860 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752675Ab0FCXRv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 19:17:51 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L3G00DB8OPPCWC0@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 04 Jun 2010 01:17:49 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 255621EA57B8_C08381DB	for <git@vger.kernel.org>; Thu,
+ 03 Jun 2010 23:17:49 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 0FE341EA3037_C08381DF	for <git@vger.kernel.org>; Thu,
+ 03 Jun 2010 23:17:49 +0000 (GMT)
+Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L3G007W6OPOV330@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 04 Jun 2010 01:17:49 +0200 (MEST)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148369>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Hi,
 
-> +/* give path as relative to prefix */
-> +char *path_relative(const char *in, int len,
-> +		    struct strbuf *out, const char *prefix, int prefix_len)
-> +{
->  	if (len < 0)
->  		len = strlen(in);
-> +	if (prefix && prefix_len < 0)
-> +		prefix_len = strlen(prefix);
->  
->  	strbuf_setlen(out, 0);
->  	strbuf_grow(out, len);
->  
-> +	if (prefix_len > 0) {
-> +		int off = 0, i = 0;
-> +		while (i < prefix_len && i < len && prefix[i] == in[i]) {
-> +			if (prefix[i] == '/')
-> +				off = i + 1;
-> +			i++;
-> +		}
-> +		in += off;
-> +		len -= off;
-> +
-> +		while (i < prefix_len) {
-> +			if (prefix[i] == '/')
->  				strbuf_addstr(out, "../");
-> +			i++;
-> +		}
->  	}
-> +	strbuf_add(out, in, len);
-> +
-> +	return out->buf;
-> +}
+This is an attempt to resurrect the --ancestry-path patch that Junio
+provided on 2010-04-21. In addition to his original patch, I've added
+a fix for the interaction between --ancestry-path and history
+simplification, plus documentation and a couple of other small fixes.
 
-Hmm...  I wonder if we really want to always make a copy of the string in
-the majority of the case where there is no need to add ../ and the path
-does not have any funny characters that needs quoting.  In such a case,
-shouldn't write_name() be just moving the pointers into the original
-string to skip the $(cwd) part and writing the remainder of the string
-out, without any extra allocation nor copy?  IIUC, that is what the
-original did using write_name_quoted().
+I'm unsure if there are more bugs/problems in the interaction between
+--ancestry-path and other rev-list options that I'm not yet aware of.
+
+
+Have fun! :)
+
+...Johan
+
+
+Johan Herland (4):
+  Documentation/rev-list-options.txt: Fix missing line in example history graph
+  Documentation/rev-list-options.txt: Explain --ancestry-path
+  revision: Fix typo in --ancestry-path error message
+  revision: Turn off history simplification in --ancestry-path mode
+
+Junio C Hamano (1):
+  revision: --ancestry-path
+
+ Documentation/rev-list-options.txt |   52 ++++++++++++++++-
+ revision.c                         |  107 ++++++++++++++++++++++++++++++++++++
+ revision.h                         |    1 +
+ t/t6019-rev-list-ancestry-path.sh  |   73 ++++++++++++++++++++++++
+ 4 files changed, 230 insertions(+), 3 deletions(-)
+ create mode 100755 t/t6019-rev-list-ancestry-path.sh
