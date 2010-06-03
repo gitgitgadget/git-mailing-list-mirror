@@ -1,102 +1,78 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH 3/5] checkout --orphan: respect -l option always
-Date: Thu, 3 Jun 2010 13:28:48 -0300
-Message-ID: <AANLkTikUpyH6nmTfB4XbjQqJHHJOZiea4hn61tIH2ulR@mail.gmail.com>
-References: <1274488119-6989-1-git-send-email-erick.mattos@gmail.com> 
-	<1274488119-6989-4-git-send-email-erick.mattos@gmail.com> 
-	<7vzkznqmir.fsf@alter.siamese.dyndns.org> <AANLkTimT3sI3yuM8RZai-eWDk8Z5Rmc28RLGOx_i-RXa@mail.gmail.com> 
-	<AANLkTikKAkwHYj6OvfEJM1YE8w2TZL2oeMBrj28V3CwX@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH GSoC 1/3] gitweb: Create Gitweb::Config module
+Date: Thu, 3 Jun 2010 18:59:38 +0200
+Message-ID: <201006031859.39278.jnareb@gmail.com>
+References: <1275573356-21466-1-git-send-email-pavan.sss1991@gmail.com> <20100603152030.GD20775@machine.or.cz> <AANLkTikUmFA658jzd27cu1NmjJsV8T9Hkrd7z2WNY3R7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 18:29:16 2010
+Cc: Petr Baudis <pasky@suse.cz>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 19:00:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKDIC-0006nM-EC
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 18:29:16 +0200
+	id 1OKDlt-00011b-Uu
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 18:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755165Ab0FCQ3K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 12:29:10 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:35681 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752663Ab0FCQ3J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 12:29:09 -0400
-Received: by yxl31 with SMTP id 31so131895yxl.19
-        for <git@vger.kernel.org>; Thu, 03 Jun 2010 09:29:08 -0700 (PDT)
+	id S1755031Ab0FCQ7u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 12:59:50 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53622 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755224Ab0FCQ7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 12:59:48 -0400
+Received: by fxm8 with SMTP id 8so259419fxm.19
+        for <git@vger.kernel.org>; Thu, 03 Jun 2010 09:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=R6jfsMgoK9ykFGJMUL5ULPUcG37vJuvyNHWRDVk3l9Y=;
-        b=WpshzYvMQf3JD9I1M3g8qjcYGTRUph6oBysYNwlVONaLmJwvPAf3+5iWe+tRO1Q4ZD
-         oIywnb+IpH1e/HHWH6LzbaahoHTrp+bpO2HJBm8XsR/L2pNxpZe0Muv0fSIDHaCp+Qmr
-         lxNrolhfvcgcVLiXr1MlnQ0lvcV4oiG6GNM5I=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=LmHS5MLy4BRllzB0ojJtGNPcFeWuA/Eps9KDWWsW/DE=;
+        b=ts6z3N3JsGv4eBzBZXgMbcjRGNbNGzYrnN/whxEZFUUuaRizqUuRaTYckOO7l7Lvdm
+         UyEIqHO1Nvvk9GGse3ZOPQE5W6YmXYqe+0NRwzeTy5ojepGBVZ+Ew75opM0YVeD6liX6
+         5094YvK3cCHgunMAWtGdguzSCskQRHd0UyX2A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=QvHUnLnT2qbYXpgOIWH5siSQsxgQJRP86NLHHZ2yEiFqVq6tradCtt1ENXVMsYEtHx
-         wDfI5WblmmxInWL8+TjE3tyaLlHwIwqiAZ+rMbmbHH5pAKyB7nQsL9F/BOqG/JKekTtN
-         l6uLsOYcz3GvUZwxY8K5MGtF8lqt/pqU+Tjew=
-Received: by 10.151.92.12 with SMTP id u12mr9423179ybl.93.1275582548220; Thu, 
-	03 Jun 2010 09:29:08 -0700 (PDT)
-Received: by 10.151.39.17 with HTTP; Thu, 3 Jun 2010 09:28:48 -0700 (PDT)
-In-Reply-To: <AANLkTikKAkwHYj6OvfEJM1YE8w2TZL2oeMBrj28V3CwX@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=U9yKJbuOwbr1vvbLosHN0JPxDJgMNGXTFZM76LOndj9wB/YTH6Z8QSCbQjAHvHYsn6
+         DbZN6kCipoHQODkkxhw9faTP8ywsibACqBHpJNmnUNVxcrRfFnVsQKu7SeAY5bBPnU+W
+         dc+LZIJGWigotwA4D2YjQdHVx6ahtG1hhmJWc=
+Received: by 10.223.63.17 with SMTP id z17mr10598519fah.66.1275584387190;
+        Thu, 03 Jun 2010 09:59:47 -0700 (PDT)
+Received: from [192.168.1.15] (abvx149.neoplus.adsl.tpnet.pl [83.8.221.149])
+        by mx.google.com with ESMTPS id r25sm940944fai.11.2010.06.03.09.59.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jun 2010 09:59:45 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTikUmFA658jzd27cu1NmjJsV8T9Hkrd7z2WNY3R7@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148346>
 
-Hi Junio,
-
-Just a small fix...
-
-2010/5/26 Erik Faye-Lund <kusmabite@googlemail.com>:
-> On Wed, May 26, 2010 at 4:52 PM, Erick Mattos <erick.mattos@gmail.com=
-> wrote:
->> Hi,
->>
->> 2010/5/26 Junio C Hamano <gitster@pobox.com>
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Thu, Jun 3, 2010 at 15:20, Petr Baudis <pasky@suse.cz> wrote:
+>> On Thu, Jun 03, 2010 at 07:25:54PM +0530, Pavan Kumar Sunkara wrote:
 >>>
->>> Erick Mattos <erick.mattos@gmail.com> writes:
->>> > @@ -684,8 +709,8 @@ int cmd_checkout(int argc, const char **argv,=
- const char *prefix)
->>> > =C2=A0 =C2=A0 =C2=A0 if (opts.new_orphan_branch) {
->>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (opts.new_bra=
-nch)
->>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 die("--orphan and -b are mutually exclusive");
->>> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (opts.track > 0 ||=
- opts.new_branch_log)
->>> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 die("--orphan cannot be used with -t or -l");
->>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (opts.track > 0)
->>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 die("--orphan should not be used with -t");
->>>
->>> Why s/cannot/should not/? =C2=A0Just being curious.
->>
->> I have typed that text, not changed the original so this is not a fi=
-x
->> to your text.=C2=A0 Anyway for me "should not" is more polite, like =
-"you
->> should not yell" meaning you really can not do it.=C2=A0 Or "you sho=
-uld not
->> disrespect the captain".
->
-> I don't think it makes sense to try and be polite when we're actually
-> refusing... "should not" implies that it possible but not recommended=
-=2E
-> And in this case it's impossible, because we die()...
+>>> +our @ISA =3D qw(Exporter);
+>=20
+> This is also re-arranging deck chairs on the Titanic, but 'use base
+> qw(Exporter)' is nicer.
 
-If you agree, please do that 's/should not/cannot/' on pu.
+Or simply 'use Exporter qw(import);', as Perl 5.8+ supports=20
+'use Module LIST' form.
 
-Regards
+--=20
+Jakub Narebski
+Poland
