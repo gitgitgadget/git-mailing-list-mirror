@@ -1,131 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Bug? "git branch" failing to list all branches
-Date: Thu, 3 Jun 2010 01:55:28 -0500
-Message-ID: <20100603065527.GA23439@progeny.tock>
-References: <AANLkTimTOucIfzSxsYNvmML7MALwj0E3BUASIIKIN1lN@mail.gmail.com>
- <20100603042218.GA21254@progeny.tock>
- <AANLkTinCNgsIf_MsiysfphKm3MCW2Uio_xiemfDZraH7@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] documentation: git-mergetool updated to warn against
+ builtin tools invocations
+Date: Thu, 03 Jun 2010 09:45:04 +0200
+Message-ID: <4C075D80.70304@drmicha.warpmail.net>
+References: <1275501453-13081-1-git-send-email-srabot@steek.com> <7vbpbt9f9j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Simo Melenius <simo.melenius@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Jun 03 08:55:23 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Sylvain Rabot <srabot@steek.com>, git@vger.kernel.org,
+	sylvain@abstraction.fr, David Aguilar <davvid@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 09:45:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OK4Kp-0000YV-9R
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 08:55:23 +0200
+	id 1OK57M-0003nV-9I
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 09:45:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751862Ab0FCGzS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 02:55:18 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48740 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750749Ab0FCGzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jun 2010 02:55:15 -0400
-Received: by iwn6 with SMTP id 6so1673329iwn.19
-        for <git@vger.kernel.org>; Wed, 02 Jun 2010 23:55:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=5paKxHuFJQIUaBcRV6CYyBB1Dgdp/joZ4dHRnVhKjio=;
-        b=EV7d2nnQwE4KTVlmYyfSvBrNUqBaZFDCaEgUYzYxTTf9zQ8X75eilQZ91Zjm0LLCLO
-         SoQaLG8Bv/3k+pyhmxA8CzOPJno1sUECsPgo4JSyMtJzsl+/4JKOdtvl2mark385lUlw
-         5ZFTNUMSnlAkEsi3pnuIe5T63jKpe2WTdajG8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=smLHFOeHON68e1akBvGpVnB+0j/mISx9i27ni/brAXgv61dI+HCgmqXRo46cdirSSm
-         EwAP87xAQz8R2rFtQeIrFiMFMZSX9Rv8B+xXkwCZW5z09kSKD92cubMdaZXqkoVcJC0+
-         neZHkhlLK7HMX9PQwluUCOA1cDdwVbhNhZaIU=
-Received: by 10.231.169.129 with SMTP id z1mr11413840iby.26.1275548112890;
-        Wed, 02 Jun 2010 23:55:12 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id a8sm40547961ibi.11.2010.06.02.23.55.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 02 Jun 2010 23:55:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinCNgsIf_MsiysfphKm3MCW2Uio_xiemfDZraH7@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755271Ab0FCHp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 03:45:27 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51125 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753808Ab0FCHp0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 03:45:26 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 86EF0F834E;
+	Thu,  3 Jun 2010 03:45:25 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 03 Jun 2010 03:45:25 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=v8cXwGa12c2jP4flzGFyLPWZduI=; b=edL/5GI+y2dDWOoyFSfPzjLLtmBwwJjS9wa2KZnbKB7mGdsEmG6xASUtgSlnHSYgscNL2mEat4JFXkRP9N4LhGXZGIIJ2ucuaaDGbDpsKRyBG+LKP6csP05z7inH5OGYQPtQSkpHetucYlJ7l1QwoxmUq+Fg3fZXaNMhuMZlLPI=
+X-Sasl-enc: M9tP7rR6AgfTEsBzrl5J71FL4Vl4CSg0TxpKWYdJOUYd 1275551125
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A221C4A91A;
+	Thu,  3 Jun 2010 03:45:24 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.5pre) Gecko/20100526 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <7vbpbt9f9j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148296>
 
-Simo Melenius wrote:
+Junio C Hamano venit, vidit, dixit 03.06.2010 01:38:
+> Sylvain Rabot <srabot@steek.com> writes:
+> 
+>> +Be aware that 'git mergetool' has some predefined invocation commands builtin
+>> +for known diff tools like meld, diffuse, p4merge ... etc. It means that if
+>> +you set the merge.tool configuration to one of these tools, the
+>> +mergetool.<tool>.* configurations will not be taken care of. If you
+>> +really want to customize the invocation of one of these tools,
+>> +set `merge.tool` to "custom" or whatever you want and `mergetool.custom.cmd`
+>> +to "/usr/bin/<tool> $LOCAL $MERGED $REMOTE"
+> 
+> Two half-points and three points (that makes them four in total ;-):
+> 
+>  o If I read the above without "It means that", it still makes sense;
+> 
+>  o "If you really" can go without "really";
+> 
+>  * I had to read "will not be taken care of" twice; "are ignored" is
+>    probably easier to understand;
+> 
+>  * The description and the example makes it sound as if the command line
+>    has to have these three tokens in the given order, but the whole point
+>    of this mechanism is that you can launch whatever external command with
+>    a custom command line, so "and `mergetool.custom.cmd` to a command line
+>    to invoke the command.  $LOCAL $MERGED and $REMOTE on this command line
+>    are substituted by ...." may be more reader-friendly.
+> 
+>  * As a documentation update it is perfectly fine to describe this glitch,
+>    but I wonder if we might want to lift this restriction (read: consider
+>    this as a bug and fix it).
 
-> My change doesn't change the current behaviour. At least git 1.7.0.4
-> didn't give a nonzero exit status either. It would be good if it did.
->=20
-> I could add that to my patch. I'm, however, unsure of what's the best
-> way to communicate the error from append_ref() to cmd_branch(). A
-> static variable in branch.c would of course do.
+Definitely. The current behaviour even means that when you have set up
+fancytool, and then a new git-mergetool version suddenly starts to
+support fancytool, possibly with different options, your existing
+configuration breaks. I.e., even for currently unsupported tools you
+have to use the procedure Silvain describes in order to protect against
+updates!
 
-I see.  You can use the cb_data argument to pass a result back:
-
- struct append_ref_cb {
- 	struct ref_list *ref_list;
- 	int err;
- };
-
-A static variable might be simpler.
-
-But that is a separate topic (for a separate patch).  I can pick it up
-if you don=E2=80=99t.
-
->> If I have 37 branches and an error is encountered looking up one of
->> them, with this patch the error message will scroll off the screen.
->> Is this worth worrying about? =C2=A0It depends on what the usual cau=
-ses for
->> broken branch refs are and whether they require attention or can be
->> safely ignored.
->
-> Since this only concerns the printing of branches, often for
-> interactive viewing or bash completion, and does not affect any of th=
-e
-> operations that modify the repository, I think it's sufficient that
-> the error message is still readable from stderr for those who are
-> interested.
-
-Sorry, I must have been unclear.  Let me illustrate with an example:
-
- $ git branch
- * (no branch)
-   cc/sequencer-rebase-i
-   db/svn-fe
- error: branch 'dk/hash' does not point at a commit.
-   gp/debian-pu
-   gp/sid-patches
-   jl/gitk-submodule
-   jk/pull-rebase-message
-   jn/debian-build-depends
-   js/grep-open
-   ks/gitk-notes
-   nd/gitbox
-   nd/setup
-   rr/svn-remote
-   sb/sequencer-dev
-   sb/sequencer-rfc
- ...
-
-If this scrolls on for too long, I will not see the message.  Now if
-the error is due to some kind of corruption or a broken script, I
-would want to know about it right away, even if I can carry on with
-my work without.  So in that case, it would make sense to add at the
-end:
-
- fatal: some refs could not be read.
-
-On the other hand, maybe there is some harmless process that often
-creates these broken refs and such a message would be a nuisance.
-
-Hoping that is clearer,
-Jonathan
+Michael
