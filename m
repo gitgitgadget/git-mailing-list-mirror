@@ -1,68 +1,101 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+From: Eugene Sajine <euguess@gmail.com>
 Subject: Re: Aliasing with parameters doesn't seem to work properly in git 
 	1.7.0.5
-Date: Thu, 3 Jun 2010 17:04:03 +0200
-Message-ID: <AANLkTilcESWIptCX3ZIVTrdI9JcC4XrHp9KTjR-jqzj7@mail.gmail.com>
+Date: Thu, 3 Jun 2010 11:15:35 -0400
+Message-ID: <AANLkTik0438juR__hD87KJlqRTYOIyCncnwZ0hF1_tDC@mail.gmail.com>
 References: <AANLkTilEZknW7m0n3y8SX5oAaZiUTorgqfX3jTB8mnDC@mail.gmail.com>
+	<AANLkTikWBzHLCQzC57bZQwCB6MxOYS8R5Y-UBZoh_ndS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 17:04:16 2010
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 17:15:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKBxu-0006XW-45
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 17:04:14 +0200
+	id 1OKC92-0005A3-1l
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 17:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511Ab0FCPEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 11:04:08 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55766 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755064Ab0FCPEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jun 2010 11:04:07 -0400
-Received: by fxm8 with SMTP id 8so167675fxm.19
-        for <git@vger.kernel.org>; Thu, 03 Jun 2010 08:04:04 -0700 (PDT)
-Received: by 10.102.12.10 with SMTP id 10mr3412353mul.96.1275577444020; Thu, 
-	03 Jun 2010 08:04:04 -0700 (PDT)
-Received: by 10.103.178.17 with HTTP; Thu, 3 Jun 2010 08:04:03 -0700 (PDT)
-In-Reply-To: <AANLkTilEZknW7m0n3y8SX5oAaZiUTorgqfX3jTB8mnDC@mail.gmail.com>
+	id S1756029Ab0FCPPj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 11:15:39 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:52318 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755182Ab0FCPPi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 11:15:38 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so488072fga.1
+        for <git@vger.kernel.org>; Thu, 03 Jun 2010 08:15:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=jxAnuYae2aOGKuoEd+FTTRE9H//W2kYaTqw2Uu6Ic+g=;
+        b=Nxin0N0v1eCe+D+tNVCWUFQZbvm6qmp93YpYK4aKYjrfKrHoyG5htEt25bAXOFeE9j
+         PAmxGQNpftdAQ5cYbV1OxC/2QAJg0YUOTfSOXgi584Yl/qcyXmIW5PuL5fpS8x7FFWs/
+         RgIjNvdoP+Y6so36Uvxdq30MFZy/fNlCHnXco=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=lws15Z5OpBd3mZa4bjZIae/KWqva9Ghf/ZeuXBVt1E86TIeQBJCe77he4zhCjT6Buq
+         chprYd19u+NJ8BTXSmJi5jkHm5QBrkh0XqhrAaJJUspafTSs3GcMjobWATl4q0Xjw78P
+         xRgR7UtYyZQD5jCefhm9J/GWRzyQHvgZlZzy0=
+Received: by 10.87.67.13 with SMTP id u13mr15960810fgk.66.1275578135876; Thu, 
+	03 Jun 2010 08:15:35 -0700 (PDT)
+Received: by 10.86.62.1 with HTTP; Thu, 3 Jun 2010 08:15:35 -0700 (PDT)
+In-Reply-To: <AANLkTikWBzHLCQzC57bZQwCB6MxOYS8R5Y-UBZoh_ndS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148332>
 
-On Thu, Jun 3, 2010 at 4:52 PM, Eugene Sajine <euguess@gmail.com> wrote:
-[...]
-
- so instead of command like this:
+On Thu, Jun 3, 2010 at 10:55 AM, Jacob Helwig <jacob.helwig@gmail.com> wrote:
+> On Thu, Jun 3, 2010 at 07:52, Eugene Sajine <euguess@gmail.com> wrote:
+>> Hi,
+>>
+>> i'm trying to create an alias like this:
+>>
+>> cln = !sh -c 'git clone git://server/"$1"'
+>>
+>> the idea is to make a shortcut, so instead of command like this:
+>>
+>> $git clone git://server/folder/repo.git
+>>
+>> i can have something like this:
+>>
+>> $git cln folder/repo.git
+>>
+>> or even
+>> $git cln folder/repo
+>>
+>> if the alias is like this:
+>> cln = !sh -c 'git clone git://server/"$1".git'
+>>
+>> this doesn't work as it tries to initialize a repo called server.git
+>> and then fails because "remote hang up unexpecedly"
+>> is there something wrong in expansion of this alias or the alias
+>> itself is not valid?
+>>
+>> Any ideas?
+>>
+>> Thanks,
+>> Eugene
 >
-> $git clone git://server/folder/repo.git
 >
-> i can have something like this:
+> You need " -" at the end of your alias for the parameters to get through.
 >
-> $git cln folder/repo.git
+> Try using:
 >
-> or even
-> $git cln folder/repo
+> cln = !sh -c 'git clone git://server/"$1"' -
+>
+> or
+>
+> cln = !sh -c 'git clone git://server/"$1".git' -
+>
 
-Then, you can the url.<url>.insteadof mechanism:
+This worked - thank you!!
 
-[url "<actual url base>"]
-      insteadOf = <other url base>
-
-       For example, with this:
-
-[url "git://git.host.xz/"]
-      insteadOf = work:
-
-you can clone it with: git clone work:project.
-
-See git-clone and/or git-config man page for more information.
-
-HTH,
-Santi
+Eugene
