@@ -1,165 +1,183 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Installing on AIX fails
-Date: Thu, 3 Jun 2010 20:21:54 +0000
-Message-ID: <AANLkTin-jf2ihZlAy-p4-75PSe6X78tz8XlzySE5fogN@mail.gmail.com>
-References: <AANLkTinKjEBkn-9ajO4QXyHqY0EOQBGPRgNREaC_p_vQ@mail.gmail.com>
-	<AANLkTilsQaMQyDP_od2NrfwIV7gvoD3R-yKNlMJjVKCA@mail.gmail.com>
-	<AANLkTikfQdwDoZylaKC_siuwaLrLP4JkMh2fnvwNbxqe@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Dario Rodriguez <soft.d4rio@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 03 22:22:00 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] Refactor parse_date for approxidate functions
+Date: Thu,  3 Jun 2010 22:28:55 +0200
+Message-ID: <1275596935-17312-1-git-send-email-artagnon@gmail.com>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 03 22:35:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKGvP-00036q-Ta
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 22:22:00 +0200
+	id 1OKH8H-0001dh-4x
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 22:35:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754494Ab0FCUVz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jun 2010 16:21:55 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48057 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754178Ab0FCUVy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 16:21:54 -0400
-Received: by iwn37 with SMTP id 37so283221iwn.19
-        for <git@vger.kernel.org>; Thu, 03 Jun 2010 13:21:54 -0700 (PDT)
+	id S1755907Ab0FCUfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 16:35:10 -0400
+Received: from mail-ew0-f223.google.com ([209.85.219.223]:36406 "EHLO
+	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754494Ab0FCUfI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 16:35:08 -0400
+Received: by ewy23 with SMTP id 23so137480ewy.1
+        for <git@vger.kernel.org>; Thu, 03 Jun 2010 13:35:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=nxCo7u1x1QKvZQsjIqfktplibOvZjhXOxw0wsZbXl40=;
-        b=WVsPI0MVvOgWsZenSD58/7YUfTUvvZ63zjx99oabpMdVoamBBgtoMSUFhJ3EBKk/S9
-         6mjHX9S+7Yi6NyzfM+mdv5vYnzv+mYHcAR6RDbFXmpikMh722tzFbWzB9IjC6p+yleju
-         4wh2tDSlGrNd8DBFelwtG6e7bFen9pvIIEMJs=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=HBekqnpy6pdqqScWnyNMK1AJWIx112NlnzNr0c+rzRw=;
+        b=szaYXACcfP7gxOaErL5d2CKEHhvT4IN4S4rgWXidWof9pteNRPqaPxlTdElpqAdThh
+         s9sS7DYQJwHQFS2ReGDPquSJcqqyIpCiLjbUS5PqWHlJgAtO9J0JrlxvzoAr1hzBd11F
+         reMWi0WckyJmKs42r2k0D2GNHpbAzAqme7YPE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=qVt9HaD03ZJzFaa/OsTRiTbqD1pdi4dRKq+ZCt0mIpFe9y3r9xHVOFO+p4Dhm3qoFJ
-         9PWk/w6+K5anmOGIEI7uTEJlFTqJJG4kLYdh2UjCpKN3X8o5DU3YgzPdSW2SCMjijMyy
-         hWAi2cuPb68dQXa0pnSKUrOfCl/u+G+PT9gy8=
-Received: by 10.231.148.145 with SMTP id p17mr560743ibv.28.1275596514126; Thu, 
-	03 Jun 2010 13:21:54 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Thu, 3 Jun 2010 13:21:54 -0700 (PDT)
-In-Reply-To: <AANLkTikfQdwDoZylaKC_siuwaLrLP4JkMh2fnvwNbxqe@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=AyZkkbngYXDhe8DW8bMiclhEJU2TFh4hz3vN/UZ55aSViI0ZtdsOzYOL1x+vmgOr9f
+         RRneSV06YyCsoqjuImoKnECW1DPz65SeketdA6ZQa6lyd1tWehIPXcVnBJoa5yC4hq0c
+         zmRqttcCpa9RkGQ6cqLO7L9KIkQKtFxUyH2Bg=
+Received: by 10.213.32.195 with SMTP id e3mr4482620ebd.18.1275597299776;
+        Thu, 03 Jun 2010 13:34:59 -0700 (PDT)
+Received: from localhost (port865.ds1-suoe.adsl.cybercity.dk [212.242.163.112])
+        by mx.google.com with ESMTPS id 15sm261604ewy.12.2010.06.03.13.34.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 03 Jun 2010 13:34:59 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148361>
 
-On Thu, Jun 3, 2010 at 20:01, Dario Rodriguez <soft.d4rio@gmail.com> wr=
-ote:
-> On Thu, Jun 3, 2010 at 12:41 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on
-> <avarab@gmail.com> wrote:
->> On Thu, Jun 3, 2010 at 15:32, Dario Rodriguez <soft.d4rio@gmail.com>=
- wrote:
->>> and it all works, with angels singing and everything... a testing r=
-epo
->>> works fine for a test drive without installing, excepting 'git log'
->>> that just don't display anything.
->>
->> How about PAGER=3D/bin/cat git log? If that works what's your pager,=
- and
->> do other git commands that use the pager (like git show) work or fai=
-l?
->>
->
-> PAGER is not set by default as I see, but... isn't there any default
-> pager for git in case of PAGER being unset?
->
-> Using /bin/cat or /bin/more it works (either 'log' or 'show')
+approxidate_relative and approxidate_careful both use parse_date to
+dump the timestamp to a character buffer and parse it back into a long
+unsigned using strtoul(). Avoid doing this by creating a new
+parse_date_toffset method.
 
-What do you mean by "disappears" anyway, was it like $(echo|less), or
-did it just return with no output? What was the exit code?
+Noticed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ date.c |   56 +++++++++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 37 insertions(+), 19 deletions(-)
 
-In any case, running git's make test might reveal other problems on
-AIX worth fixing. Maybe do that and post the results?
-
->>> $ /usr/linux/bin/make prefix=3D$HOME/apps/ NO_OPENSSL=3D1 NO_TCLTK=3D=
-1
->>> NO_EXPAT=3D1 PYTHON_PATH=3D/usr/local/bin/python install
->>>
->>> [...]
->>> install -d -m 755 '/myhomedir/apps/bin'
->>> getopt: illegal option -- d
->>> Usage: install [-c dira] [-f dirb] [-i] [-m] [-M mode] [-O owner]
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 [-G group] [-S] [-=
-n dirc] [-o] [-s] file [dirx ...]
->>> make: *** [install] Error 2
->>>
->>> Now the installing process fails because of the AIX 'install' tool =
-and
->>> I wonder, can I patch/configure the installing process for AIX? May=
- be
->>> a set of utils for building in such systems would help some people.
->>
->> Does AIX's install have something equivalent to GNU install's -d? Th=
-e
->> -c and -f options look likely from that synopsis.
->>
->
-> I don't know since I just use this system for development and testing
-> (I'm debian user), but let me post the manpage info, for -c and -f:
->
-> -c DirectoryA Installs a new command file in the DirectoryA variable =
-only if
-> that file does not already exist there. If it finds a copy of File th=
-ere, it
-> issues a message and exits without overwriting the file. This flag ca=
-n be used
-> alone or with the -s, -M, -O, -G, or -S flag.
->
-> -f DirectoryB Forces installation of File in DirectoryB whether or no=
-t File
-> already exists. If the file being installed does not already exist, t=
-he command
-> sets the permission code and owner of the new file to 755 and bin, re=
-spectively.
-> This flag can be used alone or with the -o,-s, -M, -O, -G, or -S flag=
-=2E
-
-Looks like there's no equivalent to -d. FWIW perl uses a installperl
-script that also works on AIX. Maybe a similar fallback or default
-would make sense for Git.
-
->>> PD2: I don't know if AIX python path is always /usr/local/bin/pytho=
-n,
->>> but I've seen that git Makefiles set /usr/local/bin/python for Free=
-BSD
->>> only:
->>>
->>> git_remote_helpers/Makefile:
->>> ifndef PYTHON_PATH
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0ifeq ($(uname_S),FreeBSD)
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0PYTHON_PATH =
-=3D /usr/local/bin/python
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0PYTHON_PATH =
-=3D /usr/bin/python
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0endif
->>> endif
->>
->> That's presumably because Python is most likely installed via the
->> ports system on FreeBSD which drops it in /usr/local. How did you
->> install Python on AIX? Is it from some IBM package or another method
->> that's the most common & standard way to do it on AIX?.
->>
->
-> Again, I don't know since I'm not the sysadmin. I just looked for
-> python and found it's in /usr/local/bin
-
-Does using /usr/bin/env python instead work?
-
-    $ cat /tmp/py.py
-    #!/usr/bin/env python
-    print "hello"
-    $ /tmp/py.py
-    hello
+diff --git a/date.c b/date.c
+index 002aa3c..21b4096 100644
+--- a/date.c
++++ b/date.c
+@@ -585,11 +585,17 @@ static int date_string(unsigned long date, int offset, char *buf, int len)
+ 
+ /* Gr. strptime is crap for this; it doesn't have a way to require RFC2822
+    (i.e. English) day/month names, and it doesn't work correctly with %z. */
+-int parse_date(const char *date, char *result, int maxlen)
++int parse_date_toffset(const char *date, unsigned long *timestamp, int *offset)
+ {
+ 	struct tm tm;
+-	int offset, tm_gmt;
+-	time_t then;
++	int tm_gmt;
++	unsigned long dummy_timestamp;
++	int dummy_offset;
++
++	if(!timestamp)
++		timestamp = &dummy_timestamp;
++	if(!offset)
++		offset = &dummy_offset;
+ 
+ 	memset(&tm, 0, sizeof(tm));
+ 	tm.tm_year = -1;
+@@ -599,7 +605,7 @@ int parse_date(const char *date, char *result, int maxlen)
+ 	tm.tm_hour = -1;
+ 	tm.tm_min = -1;
+ 	tm.tm_sec = -1;
+-	offset = -1;
++	*offset = -1;
+ 	tm_gmt = 0;
+ 
+ 	for (;;) {
+@@ -611,11 +617,11 @@ int parse_date(const char *date, char *result, int maxlen)
+ 			break;
+ 
+ 		if (isalpha(c))
+-			match = match_alpha(date, &tm, &offset);
++			match = match_alpha(date, &tm, offset);
+ 		else if (isdigit(c))
+-			match = match_digit(date, &tm, &offset, &tm_gmt);
++			match = match_digit(date, &tm, offset, &tm_gmt);
+ 		else if ((c == '-' || c == '+') && isdigit(date[1]))
+-			match = match_tz(date, &offset);
++			match = match_tz(date, offset);
+ 
+ 		if (!match) {
+ 			/* BAD CRAP */
+@@ -626,16 +632,26 @@ int parse_date(const char *date, char *result, int maxlen)
+ 	}
+ 
+ 	/* mktime uses local timezone */
+-	then = tm_to_time_t(&tm);
+-	if (offset == -1)
+-		offset = (then - mktime(&tm)) / 60;
++	*timestamp = tm_to_time_t(&tm);
++	if (*offset == -1)
++		*offset = (*timestamp - mktime(&tm)) / 60;
+ 
+-	if (then == -1)
++	if (*timestamp == -1)
+ 		return -1;
+ 
+ 	if (!tm_gmt)
+-		then -= offset * 60;
+-	return date_string(then, offset, result, maxlen);
++		*timestamp -= *offset * 60;
++	return 1; /* success */
++}
++
++int parse_date(const char *date, char *result, int maxlen)
++{
++	unsigned long timestamp;
++	int offset;
++	if(parse_date_toffset(date, &timestamp, &offset) > 0)
++		return date_string(timestamp, offset, result, maxlen);
++	else
++		return -1;
+ }
+ 
+ enum date_mode parse_date_format(const char *format)
+@@ -983,11 +999,12 @@ static unsigned long approxidate_str(const char *date,
+ 
+ unsigned long approxidate_relative(const char *date, const struct timeval *tv)
+ {
+-	char buffer[50];
++	unsigned long timestamp;
++	int offset;
+ 	int errors = 0;
+ 
+-	if (parse_date(date, buffer, sizeof(buffer)) > 0)
+-		return strtoul(buffer, NULL, 0);
++	if(parse_date_toffset(date, &timestamp, &offset) > 0)
++		return timestamp;
+ 
+ 	return approxidate_str(date, tv, &errors);
+ }
+@@ -995,14 +1012,15 @@ unsigned long approxidate_relative(const char *date, const struct timeval *tv)
+ unsigned long approxidate_careful(const char *date, int *error_ret)
+ {
+ 	struct timeval tv;
+-	char buffer[50];
++	unsigned long timestamp;
++	int offset;
+ 	int dummy = 0;
+ 	if (!error_ret)
+ 		error_ret = &dummy;
+ 
+-	if (parse_date(date, buffer, sizeof(buffer)) > 0) {
++	if(parse_date_toffset(date, &timestamp, &offset) > 0) {
+ 		*error_ret = 0;
+-		return strtoul(buffer, NULL, 0);
++		return timestamp;
+ 	}
+ 
+ 	gettimeofday(&tv, NULL);
+-- 
+1.7.1
