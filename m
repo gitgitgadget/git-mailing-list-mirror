@@ -1,89 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/4] diff: make treatment of missing EOL at EOF configurable
-Date: Thu,  3 Jun 2010 16:35:21 +0200
-Message-ID: <77f4ffc1e89c4a5e34c74882dcf4761b486f5b48.1275575236.git.git@drmicha.warpmail.net>
-References: <cover.1275575236.git.git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 03 16:36:55 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
+Date: Thu, 3 Jun 2010 16:36:25 +0200
+Message-ID: <201006031636.25418.trast@student.ethz.ch>
+References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 03 16:37:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKBXN-0005fL-GX
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 16:36:49 +0200
+	id 1OKBXw-00061N-EA
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 16:37:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754727Ab0FCOfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 10:35:52 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:40710 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755397Ab0FCOft (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Jun 2010 10:35:49 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8BA8EF8EC3
-	for <git@vger.kernel.org>; Thu,  3 Jun 2010 10:35:48 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 03 Jun 2010 10:35:48 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id:in-reply-to:references; s=smtpout; bh=THsgSNNMwT3MTaOyrGaSDZCd3s8=; b=i86gvOEYYkE87N0j13a6uSMhTOX8DgbBnJdxCU2rDjxEA2M0T5cGGPuFfQvODELVBgLgNTJVDXlgSdoFGuwI+yZd5SdEnTxfgSkZt1ulB98h+1WQCEAc0hM0VmXbeSFxiujiGrgSfIBnPlxLSUvMzrS4Fqznuyzzyzpx9gc5WDI=
-X-Sasl-enc: VPSoidTNmd5iOF4yajWvxDXEOXN51o2PpahOgDLBVrR9 1275575748
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F25BF50EBF;
-	Thu,  3 Jun 2010 10:35:47 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.351.ge2633e
-In-Reply-To: <cover.1275575236.git.git@drmicha.warpmail.net>
+	id S1755772Ab0FCOgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 10:36:51 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:18714 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755695Ab0FCOgt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 10:36:49 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 3 Jun
+ 2010 16:36:47 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 3 Jun
+ 2010 16:36:27 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148326>
 
-Make this one of the WS_* flags so that we can later turn the warning
-for missing EOL at EOF on and off as per config or blob type.
+Junio C Hamano wrote:
+> * ld/discovery-limit-to-fs (2010-04-04) 1 commit
+>  - write-index: check and warn when worktree crosses a filesystem boundary
+> 
+> There might have been some valid objections to this but I cannot recall.
+> Will merge to 'next' unless I hear something within a few days.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- cache.h |    3 ++-
- diff.c  |    5 +++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+Hmm, this actually got me wondering a bit if you meant my comment on
+the original series, relating to my use of tmpfs for t/ [1].  Peff
+pointed me to an existing and better solution and you rightfully
+ignored this.
 
-diff --git a/cache.h b/cache.h
-index c966023..dc72b8f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1048,8 +1048,9 @@ void shift_tree_by(const unsigned char *, const unsigned char *, unsigned char *
- #define WS_CR_AT_EOL           010
- #define WS_BLANK_AT_EOF        020
- #define WS_TAB_IN_INDENT       040
-+#define WS_NO_EOL_AT_EOF      0100
- #define WS_TRAILING_SPACE      (WS_BLANK_AT_EOL|WS_BLANK_AT_EOF)
--#define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB)
-+#define WS_DEFAULT_RULE (WS_TRAILING_SPACE|WS_SPACE_BEFORE_TAB|WS_NO_EOL_AT_EOF)
- extern unsigned whitespace_rule_cfg;
- extern unsigned whitespace_rule(const char *);
- extern unsigned parse_whitespace_rule(const char *);
-diff --git a/diff.c b/diff.c
-index ff44bcc..7950df6 100644
---- a/diff.c
-+++ b/diff.c
-@@ -455,7 +455,7 @@ static void emit_rewrite_lines(struct emit_callback *ecb,
- 		size -= len;
- 		data += len;
- 	}
--	if (!endp) {
-+	if (!endp && (ecb->ws_rule & WS_NO_EOL_AT_EOF)) {
- 		const char *plain = diff_get_color(ecb->color_diff,
- 						   DIFF_PLAIN);
- 		emit_line_0(ecb->file, plain, reset, '\\',
-@@ -918,7 +918,8 @@ static void fn_out_consume(void *priv, char *line, unsigned long len)
- 		emit_add_line(reset, ecbdata, line + 1, len - 1);
- 	}
- 	if (line[len-1] != '\n')
--		fputs("\n\\ No newline at end of file\n", ecbdata->file);
-+		fputs((ecbdata->ws_rule & WS_NO_EOL_AT_EOF)
-+			? "\n\\ No newline at end of file\n" : "\n", ecbdata->file);
- }
- 
- static char *pprint_rename(const char *a, const char *b)
+The patch above is the one at [2] and did not get any replies, so I
+think you do not even have to wait :-)
+
+(FWIW, I think it's a good idea to warn but I didn't look at the patch
+much.)
+
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/142436/focus=143617
+[2] http://thread.gmane.org/gmane.comp.version-control.git/142436/focus=143959
+
 -- 
-1.7.1.351.ge2633e
+Thomas Rast
+trast@{inf,student}.ethz.ch
