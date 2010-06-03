@@ -1,65 +1,65 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
-Date: Thu, 3 Jun 2010 16:36:25 +0200
-Message-ID: <201006031636.25418.trast@student.ethz.ch>
-References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 0/4] Don't warn about missing EOL for symlinks
+Date: Thu, 03 Jun 2010 16:47:51 +0200
+Message-ID: <vpq1vco41go.fsf@bauges.imag.fr>
+References: <cover.1275575236.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 03 16:37:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jun 03 16:51:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKBXw-00061N-EA
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 16:37:24 +0200
+	id 1OKBlH-00070t-Ix
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Jun 2010 16:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755772Ab0FCOgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 10:36:51 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:18714 "EHLO gwse.ethz.ch"
+	id S1755137Ab0FCOvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jun 2010 10:51:04 -0400
+Received: from imag.imag.fr ([129.88.30.1]:54228 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755695Ab0FCOgt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jun 2010 10:36:49 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 3 Jun
- 2010 16:36:47 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 3 Jun
- 2010 16:36:27 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
+	id S1755055Ab0FCOvD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jun 2010 10:51:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o53ElpGG022506
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 3 Jun 2010 16:47:51 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OKBi3-0002AQ-Jo; Thu, 03 Jun 2010 16:47:51 +0200
+In-Reply-To: <cover.1275575236.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu\,  3 Jun 2010 16\:35\:19 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 03 Jun 2010 16:47:51 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148327>
 
-Junio C Hamano wrote:
-> * ld/discovery-limit-to-fs (2010-04-04) 1 commit
->  - write-index: check and warn when worktree crosses a filesystem boundary
-> 
-> There might have been some valid objections to this but I cannot recall.
-> Will merge to 'next' unless I hear something within a few days.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Hmm, this actually got me wondering a bit if you meant my comment on
-the original series, relating to my use of tmpfs for t/ [1].  Peff
-pointed me to an existing and better solution and you rightfully
-ignored this.
+> "No newline at end of file" always confuses me when looking at a diff for
+> symlinks. "File? Huh? Didn't Git recognize my symlink?"
 
-The patch above is the one at [2] and did not get any replies, so I
-think you do not even have to wait :-)
+For interactive use, I do understand. But how do you deal with the
+(improbable) case of a user actually adding a newline at the end of
+the target of the symlink, and then using format-patch and am to apply
+the changes somewhere else?
 
-(FWIW, I think it's a good idea to warn but I didn't look at the patch
-much.)
+You probably want to make sure your patch doesn't modify format-patch.
 
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/142436/focus=143617
-[2] http://thread.gmane.org/gmane.comp.version-control.git/142436/focus=143959
+BTW, I disagree that the message is a "warning": it's actually a piece
+of information, part of the patch, but that we find annoying in this
+case.
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
