@@ -1,98 +1,150 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH 2/4] textconv: make diff_options accessible from blame
-Date: Fri, 04 Jun 2010 09:59:47 +0200
-Message-ID: <vpqy6evut1o.fsf@bauges.imag.fr>
-References: <1275562038-7468-1-git-send-email-axel.bonnet@ensimag.imag.fr>
-	<1275562038-7468-2-git-send-email-axel.bonnet@ensimag.imag.fr>
-	<1275562038-7468-3-git-send-email-axel.bonnet@ensimag.imag.fr>
-	<7vvd9z5owr.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Axel Bonnet <axel.bonnet@ensimag.imag.fr>, git@vger.kernel.org,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 04 10:07:19 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v3 3/3] commit::print_summary(): set rev_info.always_show_header to 1
+Date: Fri,  4 Jun 2010 16:21:00 +0800
+Message-ID: <1275639660-5344-1-git-send-email-rctay89@gmail.com>
+References: <AANLkTimuTIugURlYxwbk7wGW2IM11YTy4P91YDguLQUb@mail.gmail.com>, <7v4ohlatwn.fsf@alter.siamese.dyndns.org>, <1274974492-4692-4-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 04 10:22:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKRvx-0007sC-61
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 10:07:17 +0200
+	id 1OKSAT-0006uy-UJ
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 10:22:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752883Ab0FDIHH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jun 2010 04:07:07 -0400
-Received: from imag.imag.fr ([129.88.30.1]:59185 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752815Ab0FDIHE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jun 2010 04:07:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o547xmNl014479
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 4 Jun 2010 09:59:48 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OKRoh-0004Mh-VI; Fri, 04 Jun 2010 09:59:48 +0200
-In-Reply-To: <7vvd9z5owr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 03 Jun 2010 22\:48\:20 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 04 Jun 2010 09:59:48 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1753208Ab0FDIWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jun 2010 04:22:10 -0400
+Received: from mail-pz0-f185.google.com ([209.85.222.185]:35955 "EHLO
+	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752676Ab0FDIWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jun 2010 04:22:07 -0400
+Received: by pzk15 with SMTP id 15so735509pzk.15
+        for <git@vger.kernel.org>; Fri, 04 Jun 2010 01:22:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=Pogv5mu0yHspGjdWrBkMjeD+C5wcZasIk8n/Jbez42s=;
+        b=PwiNwGGtFHIrT72pDigBwJQL9lMGei+vqkU3DVB45aQQFN94coxehEOqR7sQTjE/bK
+         DTsyRO6GXNdxdF66nAp70sjB0oyrCLuu2Y2LsMd/BSdnRRzicf9S65GCEIG+EP1rWgVD
+         JdJyUS/Mx6JUkDjaS3wKMvW9ntcY8jH8a7DQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=lWk4u6LlLFEj9uOCpXMPhYQiKa/SEa3Tfuc1Jd/iAPvfbAl5G21fpeEDtWwHzN8Y6E
+         lCS6VvCSPjJGJRgz6NdAbTUt0T5LQ9ZimZpHwlJM3kLLcW9uUgp9mcMPtjUUCc0tCrQp
+         ON/s+iUwjJsdY8T0m4s3pwA372Vw5hMS3iU4w=
+Received: by 10.115.134.10 with SMTP id l10mr8323092wan.138.1275639726436;
+        Fri, 04 Jun 2010 01:22:06 -0700 (PDT)
+Received: from localhost.localdomain (cm249.zeta152.maxonline.com.sg [116.87.152.249])
+        by mx.google.com with ESMTPS id a23sm6681845wam.2.2010.06.04.01.21.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Jun 2010 01:22:05 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.352.g12d15
+In-Reply-To: <AANLkTimuTIugURlYxwbk7wGW2IM11YTy4P91YDguLQUb@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148385>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This attempts to fix a regression in git-commit, where non-abbreviated
+SHA-1s were printed in the summary.
 
-> Axel Bonnet <axel.bonnet@ensimag.imag.fr> writes:
->
->> Diff_options specify whether conversion is activated or not. Blame n=
-eeds
->> to access these options in order to concert files with external driv=
-ers
->>
->> Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
->> Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr=
->
->> Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
->
-> The name of Cl=E9ment is spelled correctly on the mail header while S=
--o-b
-> line is corrupt.
+One possible fix would be to set ctx.abbrev to DEFAULT_ABBREV in the
+`if` block.
 
-Actually, it's valid UTF-8, but there's no header specifying the
-encoding in the email, therefore, the reader's default applies. My
-mailer displays it correctly, but yours doesn't.
+However, we remove this codeblock altogether, and set
+rev.always_show_header. This way, we use back the same show_log()
+mechanism (instead of format_commit_message()).
 
-> Perhaps you have recorded your commits in UTF-8 but allowed your MUA
-> to send in 8859-1?
+Quoting log-tree.c:560:
 
-The MUA seems to be git-send-email. According to the source (I didn't
-find it in the doc), git-send-email looks at the patch's headers to
-specify the encoding.
+	shown = log_tree_diff(opt, commit, &log);
+	if (!shown && opt->loginfo && opt->always_show_header) {
+		log.parent = NULL;
+		show_log(opt);
+		shown = 1;
+	}
 
-On my machine, the patch applies well, and if I re-export it using
-format-patch, I do get the headers:
+This is the only area that always_show_header is checked, so the
+setting of this flag should only affect this area.
 
-Content-Type: text/plain; charset=3DUTF-8
-Content-Transfer-Encoding: 8bit
+Also, we now die() if log_tree_commit() returns false. Based on the
+existing underlying codepaths (log_tree_commit(), log_tree_diff(),
+log_tree_diff_flush(), to name a few), this should not occur; changes to
+these codepaths may warrant a revision of our handling of this
+situation. Tests #2 and #3 in t7502 should aid in detecting such
+breakages.
 
-If I send myself the patch with git-send-email, I also get the headers
-in the email (I tried from ensibm, which is the machine which sent the
-patch serie). So, it doesn't look like a bug in git, but rather a
-miss-use.
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
 
-Axel, can you give us the exact command(s) you used to send the patch?
+This is a reworked version of the third patch of the
+'tc/commit-abbrev-fix' series; there are no changes to the first and
+second patches.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Changes from v2:
+ - shift around 2nd and 3rd paras.
+ - mention the die() and our assumption that it won't be triggered, as
+   suggested by Junio.
+
+ builtin/commit.c  |   13 ++++---------
+ t/t7502-commit.sh |    4 ++--
+ 2 files changed, 6 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a4e4966..2884d0c 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1148,7 +1148,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 	rev.verbose_header = 1;
+ 	rev.show_root_diff = 1;
+ 	get_commit_format(format.buf, &rev);
+-	rev.always_show_header = 0;
++	rev.always_show_header = 1;
+ 	rev.diffopt.detect_rename = 1;
+ 	rev.diffopt.rename_limit = 100;
+ 	rev.diffopt.break_opt = 0;
+@@ -1162,14 +1162,9 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 				head,
+ 		initial_commit ? " (root-commit)" : "");
+
+-	if (!log_tree_commit(&rev, commit)) {
+-		struct pretty_print_context ctx = {0};
+-		struct strbuf buf = STRBUF_INIT;
+-		ctx.date_mode = DATE_NORMAL;
+-		format_commit_message(commit, format.buf + 7, &buf, &ctx);
+-		printf("%s\n", buf.buf);
+-		strbuf_release(&buf);
+-	}
++	if (!log_tree_commit(&rev, commit))
++		die("unable to print summary");
++
+ 	strbuf_release(&format);
+ }
+
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index b10541d..08c0247 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -36,12 +36,12 @@ test_expect_success 'output summary format' '
+ 	check_summary_oneline "" "a change"
+ '
+
+-test_expect_failure 'output summary format for commit with an empty diff' '
++test_expect_success 'output summary format for commit with an empty diff' '
+
+ 	check_summary_oneline "" "empty" "--allow-empty"
+ '
+
+-test_expect_failure 'output summary format for merges' '
++test_expect_success 'output summary format for merges' '
+
+ 	git checkout -b recursive-base &&
+ 	test_commit base file1 &&
+--
+1.7.1.189.g07419
