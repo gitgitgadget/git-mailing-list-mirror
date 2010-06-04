@@ -1,124 +1,457 @@
-From: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-Subject: Re: [RFC/PATCH 4/4] t/t8006: test textconv support for blame
-Date: Fri, 4 Jun 2010 10:55:34 +0200
-Message-ID: <AANLkTil7Y6PPkbmzuID4vY_fhEwvP4qa2UG5jC1qLtTG@mail.gmail.com>
-References: <1275562038-7468-1-git-send-email-axel.bonnet@ensimag.imag.fr> 
-	<1275562038-7468-4-git-send-email-axel.bonnet@ensimag.imag.fr> 
-	<1275562038-7468-5-git-send-email-axel.bonnet@ensimag.imag.fr> 
-	<201006031744.07569.j6t@kdbg.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 04 10:56:02 2010
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [RFC/PATCH] gitweb: Create Gitweb::Escape module
+Date: Fri,  4 Jun 2010 14:37:17 +0530
+Message-ID: <1275642437-4846-1-git-send-email-pavan.sss1991@gmail.com>
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
+	pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Fri Jun 04 11:07:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKSh7-0006pa-Pe
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 10:56:02 +0200
+	id 1OKSsI-0003uU-2X
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 11:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754899Ab0FDIzw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jun 2010 04:55:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43790 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754431Ab0FDIzv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Jun 2010 04:55:51 -0400
-Received: by fxm8 with SMTP id 8so616828fxm.19
-        for <git@vger.kernel.org>; Fri, 04 Jun 2010 01:55:49 -0700 (PDT)
+	id S1754102Ab0FDJH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jun 2010 05:07:28 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:50480 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753933Ab0FDJH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jun 2010 05:07:27 -0400
+Received: by pxi8 with SMTP id 8so183678pxi.19
+        for <git@vger.kernel.org>; Fri, 04 Jun 2010 02:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=LsZf2otMOD1n42MpjzhKNEgD+OM4pC7yLALBnhYop3Y=;
-        b=UY13tyYJcMK9XfgC38D5RGPQWsJUcokOx5k0o2+aprwwlmRBpSCMxdlcZomBfLLbf3
-         Tpaxtkf78A1Y7n9AmLmro1xbxW2PKl1awkC3rvj/o4wn0DZfhILTAPsTwAv60oCN55LF
-         xSPHSPU91mQhvu5F5kAdlWHiqIh30wl3lZVtQ=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=EJu+UpxbAWhFZUzBi9/CHkjat2esD7Dm8hWzhM6l1Hc=;
+        b=aOPAP6gDZNx7FG3unWx/EJz4BmVUNFbIn8Ez4jMmhGIWQ6bz0tHlPq8ruUQPLVvXGV
+         KVM5nVlgKByCXg177JJglMxLRFVVlRawwsBFarvLV2X6ANPiNYoU/YwX4i7nNQ8YHfPK
+         +XIDgYkws2/GBDUqOlvzm2huVn1lEqvwVUEuQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=HpCrCKVFnhPsm/cawp+JLiR6tJV7+L7SWhBvLB940TiCyQC5vdVZdDCVAmKxfOAnkE
-         4bAiwF9bxYphJELlIB4nYjg7BVQY9kc9zYF9a3hiWo8LDCH7ukKjyNyiCqgT69UALm6U
-         08pmg7lw3/k8sHxIoVEg2AsgfJvoOinbgd0js=
-Received: by 10.239.166.84 with SMTP id a20mr73823hbe.85.1275641749214; Fri, 
-	04 Jun 2010 01:55:49 -0700 (PDT)
-Received: by 10.239.172.204 with HTTP; Fri, 4 Jun 2010 01:55:34 -0700 (PDT)
-In-Reply-To: <201006031744.07569.j6t@kdbg.org>
-X-Google-Sender-Auth: AQ9dKkn7s4T2bBcwlbJ7IAm8JKE
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=k4dVJjViKMAId6hyqc2YBtCxYjiRnCPVa/glM0w4o6I4LUg8WpEZLUY7jezzCkf3gu
+         NvAquZfBdJA87WTPwXoBhOthbQ8QpbsA1xJvML0yAQGmrF3MAR18BC9/a49AHNvOufGK
+         Uyp7iEwi0XpZKN7OWwhVvd8sYEiXLdoHRFuFI=
+Received: by 10.114.32.31 with SMTP id f31mr8327681waf.195.1275642446539;
+        Fri, 04 Jun 2010 02:07:26 -0700 (PDT)
+Received: from localhost.localdomain ([202.63.112.23])
+        by mx.google.com with ESMTPS id d16sm6999247wam.12.2010.06.04.02.07.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Jun 2010 02:07:25 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.447.g2b98e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148389>
 
-Le 3 juin 2010 17:44, Johannes Sixt <j6t@kdbg.org> a =E9crit :
-> On Donnerstag, 3. Juni 2010, Axel Bonnet wrote:
->> +cat >helper <<'EOF'
->> +#!/bin/sh
->> +sed 's/^/converted: /' "$@" >helper.out
->> +cat helper.out
->> +EOF
->
-> You don't need an intermediate file here, do you? Without it, this te=
-xtconv
-> script is a one-liner; now, isn't it possible to configure a shell co=
-mmand as
-> textconv command, i.e., without this helper script?
->
+Create a Gitweb::Escape module in 'gitweb/lib/Gitweb/Escape.pm'
+to store all the quoting/unquoting and escaping subroutines
+regarding the gitweb.perl script.
 
-Ok. We don't use the intermediate file anymore. Actually, we used what
-has been done for textconv test for diff.
-I didn't find a way to directly specify the sed command as textconv
-command without using ./helper though.
+Subroutines moved:
+	to_utf8
+	esc_param
+	esc_url
+	esc_html
+	esc_path
+	quot_cec
+	quot_upr
+	unquote
+	untabify
 
-cat >helper <<'EOF'
-#!/bin/sh
-sed 's/^/converted: /' "$@"
-EOF
-chmod +x helper
+Subroutines yet to move: (Contains not yet packaged subs & vars)
+	None
 
->> +test_expect_success 'setup ' '
->> + =A0 =A0 echo test 1 >one.bin &&
->> + =A0 =A0 echo test number 2 >two.bin &&
->> + =A0 =A0 ln one.bin link.bin &&
->
-> Do you need a hard link? Can't you just copy the file at the right ti=
-me?
->
+Update gitweb/Makefile to install gitweb modules alongside gitwe
 
-At first, we wanted to test how links handle textconv but it behaves
-as regular file so the test is not really relevant. It will be
-deleted.
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+---
+ gitweb/Makefile             |    1 +
+ gitweb/gitweb.perl          |  157 +--------------------------------------
+ gitweb/lib/Gitweb/Escape.pm |  175 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 177 insertions(+), 156 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/Escape.pm
 
->> +test_expect_success 'blame with --no-textconv' '
->> + =A0 =A0 git blame --no-textconv one.bin | grep Number2 >blame
->> + =A0 =A0 find_blame <blame >result
->
-> It would be nice if you could write this like, e.g.,
->
-> =A0 =A0 =A0 =A0git blame --no-textconv one.bin >blame &&
-> =A0 =A0 =A0 =A0find_blame Number2 <blame >result
->
-> so that the git command is not part of a pipeline (otherwise, unexpec=
-ted exit
-> codes would go undetected).
->
-> Please look for missing '&&', you forgot it in many places.
->
-
-We did the appropriate changes.
-Thanks a lot for your comments!
-
-Diane
-
-> -- Hannes
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 15646b2..4343396 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -114,6 +114,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
+ # Files: gitweb/lib/Gitweb
+ GITWEB_LIB_GITWEB += lib/Gitweb/Config.pm
+ GITWEB_LIB_GITWEB += lib/Gitweb/Request.pm
++GITWEB_LIB_GITWEB += lib/Gitweb/Escape.pm
+ 
+ GITWEB_REPLACE = \
+ 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index b30ac48..9e54983 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -12,7 +12,6 @@ use warnings;
+ use CGI qw(:standard :escapeHTML -nosticky);
+ use CGI::Util qw(unescape);
+ use CGI::Carp qw(fatalsToBrowser set_message);
+-use Encode;
+ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
+@@ -27,6 +26,7 @@ use lib __DIR__ . "/lib";
+ 
+ use Gitweb::Config;
+ use Gitweb::Request;
++use Gitweb::Escape;
+ 
+ BEGIN {
+ 	CGI->compile() if $ENV{'MOD_PERL'};
+@@ -762,161 +762,6 @@ sub validate_project {
+ 	}
+ }
+ 
+-# decode sequences of octets in utf8 into Perl's internal form,
+-# which is utf-8 with utf8 flag set if needed.  gitweb writes out
+-# in utf-8 thanks to "binmode STDOUT, ':utf8'" at beginning
+-sub to_utf8 {
+-	my $str = shift;
+-	return undef unless defined $str;
+-	if (utf8::valid($str)) {
+-		utf8::decode($str);
+-		return $str;
+-	} else {
+-		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+-	}
+-}
+-
+-# quote unsafe chars, but keep the slash, even when it's not
+-# correct, but quoted slashes look too horrible in bookmarks
+-sub esc_param {
+-	my $str = shift;
+-	return undef unless defined $str;
+-	$str =~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
+-	$str =~ s/ /\+/g;
+-	return $str;
+-}
+-
+-# quote unsafe chars in whole URL, so some charactrs cannot be quoted
+-sub esc_url {
+-	my $str = shift;
+-	return undef unless defined $str;
+-	$str =~ s/([^A-Za-z0-9\-_.~();\/;?:@&=])/sprintf("%%%02X", ord($1))/eg;
+-	$str =~ s/\+/%2B/g;
+-	$str =~ s/ /\+/g;
+-	return $str;
+-}
+-
+-# replace invalid utf8 character with SUBSTITUTION sequence
+-sub esc_html {
+-	my $str = shift;
+-	my %opts = @_;
+-
+-	return undef unless defined $str;
+-
+-	$str = to_utf8($str);
+-	$str = $cgi->escapeHTML($str);
+-	if ($opts{'-nbsp'}) {
+-		$str =~ s/ /&nbsp;/g;
+-	}
+-	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
+-	return $str;
+-}
+-
+-# quote control characters and escape filename to HTML
+-sub esc_path {
+-	my $str = shift;
+-	my %opts = @_;
+-
+-	return undef unless defined $str;
+-
+-	$str = to_utf8($str);
+-	$str = $cgi->escapeHTML($str);
+-	if ($opts{'-nbsp'}) {
+-		$str =~ s/ /&nbsp;/g;
+-	}
+-	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
+-	return $str;
+-}
+-
+-# Make control characters "printable", using character escape codes (CEC)
+-sub quot_cec {
+-	my $cntrl = shift;
+-	my %opts = @_;
+-	my %es = ( # character escape codes, aka escape sequences
+-		"\t" => '\t',   # tab            (HT)
+-		"\n" => '\n',   # line feed      (LF)
+-		"\r" => '\r',   # carrige return (CR)
+-		"\f" => '\f',   # form feed      (FF)
+-		"\b" => '\b',   # backspace      (BS)
+-		"\a" => '\a',   # alarm (bell)   (BEL)
+-		"\e" => '\e',   # escape         (ESC)
+-		"\013" => '\v', # vertical tab   (VT)
+-		"\000" => '\0', # nul character  (NUL)
+-	);
+-	my $chr = ( (exists $es{$cntrl})
+-		    ? $es{$cntrl}
+-		    : sprintf('\%2x', ord($cntrl)) );
+-	if ($opts{-nohtml}) {
+-		return $chr;
+-	} else {
+-		return "<span class=\"cntrl\">$chr</span>";
+-	}
+-}
+-
+-# Alternatively use unicode control pictures codepoints,
+-# Unicode "printable representation" (PR)
+-sub quot_upr {
+-	my $cntrl = shift;
+-	my %opts = @_;
+-
+-	my $chr = sprintf('&#%04d;', 0x2400+ord($cntrl));
+-	if ($opts{-nohtml}) {
+-		return $chr;
+-	} else {
+-		return "<span class=\"cntrl\">$chr</span>";
+-	}
+-}
+-
+-# git may return quoted and escaped filenames
+-sub unquote {
+-	my $str = shift;
+-
+-	sub unq {
+-		my $seq = shift;
+-		my %es = ( # character escape codes, aka escape sequences
+-			't' => "\t",   # tab            (HT, TAB)
+-			'n' => "\n",   # newline        (NL)
+-			'r' => "\r",   # return         (CR)
+-			'f' => "\f",   # form feed      (FF)
+-			'b' => "\b",   # backspace      (BS)
+-			'a' => "\a",   # alarm (bell)   (BEL)
+-			'e' => "\e",   # escape         (ESC)
+-			'v' => "\013", # vertical tab   (VT)
+-		);
+-
+-		if ($seq =~ m/^[0-7]{1,3}$/) {
+-			# octal char sequence
+-			return chr(oct($seq));
+-		} elsif (exists $es{$seq}) {
+-			# C escape sequence, aka character escape code
+-			return $es{$seq};
+-		}
+-		# quoted ordinary character
+-		return $seq;
+-	}
+-
+-	if ($str =~ m/^"(.*)"$/) {
+-		# needs unquoting
+-		$str = $1;
+-		$str =~ s/\\([^0-7]|[0-7]{1,3})/unq($1)/eg;
+-	}
+-	return $str;
+-}
+-
+-# escape tabs (convert tabs to spaces)
+-sub untabify {
+-	my $line = shift;
+-
+-	while ((my $pos = index($line, "\t")) != -1) {
+-		if (my $count = (8 - ($pos % 8))) {
+-			my $spaces = ' ' x $count;
+-			$line =~ s/\t/$spaces/;
+-		}
+-	}
+-
+-	return $line;
+-}
+-
+ sub project_in_list {
+ 	my $project = shift;
+ 	my @list = git_get_projects_list();
+diff --git a/gitweb/lib/Gitweb/Escape.pm b/gitweb/lib/Gitweb/Escape.pm
+new file mode 100644
+index 0000000..f6ea209
+--- /dev/null
++++ b/gitweb/lib/Gitweb/Escape.pm
+@@ -0,0 +1,175 @@
++#!/usr/bin/perl
++#
++# Gitweb::Escape -- gitweb's quoting/unquoting, escaping package
++#
++# This program is licensed under the GPLv2
++
++package Gitweb::Escape;
++
++use strict;
++use warnings;
++use Exporter qw(import);
++
++our @ISA = qw(Exporter);
++our @EXPORT = qw(&to_utf8 &esc_param &esc_url &esc_html &esc_path &quot_cec &quot_upr &unquote &untabify);
++
++use Encode;
++use Gitweb::Config;
++use Gitweb::Request;
++
++# decode sequences of octets in utf8 into Perl's internal form,
++# which is utf-8 with utf8 flag set if needed.  gitweb writes out
++# in utf-8 thanks to "binmode STDOUT, ':utf8'" at beginning
++sub to_utf8 {
++	my $str = shift;
++	return undef unless defined $str;
++	if (utf8::valid($str)) {
++		utf8::decode($str);
++		return $str;
++	} else {
++		return decode($fallback_encoding, $str, Encode::FB_DEFAULT);
++	}
++}
++
++# quote unsafe chars, but keep the slash, even when it's not
++# correct, but quoted slashes look too horrible in bookmarks
++sub esc_param {
++	my $str = shift;
++	return undef unless defined $str;
++	$str =~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
++	$str =~ s/ /\+/g;
++	return $str;
++}
++
++# quote unsafe chars in whole URL, so some charactrs cannot be quoted
++sub esc_url {
++	my $str = shift;
++	return undef unless defined $str;
++	$str =~ s/([^A-Za-z0-9\-_.~();\/;?:@&=])/sprintf("%%%02X", ord($1))/eg;
++	$str =~ s/\+/%2B/g;
++	$str =~ s/ /\+/g;
++	return $str;
++}
++
++# replace invalid utf8 character with SUBSTITUTION sequence
++sub esc_html {
++	my $str = shift;
++	my %opts = @_;
++
++	return undef unless defined $str;
++
++	$str = to_utf8($str);
++	$str = $cgi->escapeHTML($str);
++	if ($opts{'-nbsp'}) {
++		$str =~ s/ /&nbsp;/g;
++	}
++	$str =~ s|([[:cntrl:]])|(($1 ne "\t") ? quot_cec($1) : $1)|eg;
++	return $str;
++}
++
++# quote control characters and escape filename to HTML
++sub esc_path {
++	my $str = shift;
++	my %opts = @_;
++
++	return undef unless defined $str;
++
++	$str = to_utf8($str);
++	$str = $cgi->escapeHTML($str);
++	if ($opts{'-nbsp'}) {
++		$str =~ s/ /&nbsp;/g;
++	}
++	$str =~ s|([[:cntrl:]])|quot_cec($1)|eg;
++	return $str;
++}
++
++# Make control characters "printable", using character escape codes (CEC)
++sub quot_cec {
++	my $cntrl = shift;
++	my %opts = @_;
++	my %es = ( # character escape codes, aka escape sequences
++		"\t" => '\t',   # tab            (HT)
++		"\n" => '\n',   # line feed      (LF)
++		"\r" => '\r',   # carrige return (CR)
++		"\f" => '\f',   # form feed      (FF)
++		"\b" => '\b',   # backspace      (BS)
++		"\a" => '\a',   # alarm (bell)   (BEL)
++		"\e" => '\e',   # escape         (ESC)
++		"\013" => '\v', # vertical tab   (VT)
++		"\000" => '\0', # nul character  (NUL)
++	);
++	my $chr = ( (exists $es{$cntrl})
++		    ? $es{$cntrl}
++		    : sprintf('\%2x', ord($cntrl)) );
++	if ($opts{-nohtml}) {
++		return $chr;
++	} else {
++		return "<span class=\"cntrl\">$chr</span>";
++	}
++}
++
++# Alternatively use unicode control pictures codepoints,
++# Unicode "printable representation" (PR)
++sub quot_upr {
++	my $cntrl = shift;
++	my %opts = @_;
++
++	my $chr = sprintf('&#%04d;', 0x2400+ord($cntrl));
++	if ($opts{-nohtml}) {
++		return $chr;
++	} else {
++		return "<span class=\"cntrl\">$chr</span>";
++	}
++}
++
++# git may return quoted and escaped filenames
++sub unquote {
++	my $str = shift;
++
++	sub unq {
++		my $seq = shift;
++		my %es = ( # character escape codes, aka escape sequences
++			't' => "\t",   # tab            (HT, TAB)
++			'n' => "\n",   # newline        (NL)
++			'r' => "\r",   # return         (CR)
++			'f' => "\f",   # form feed      (FF)
++			'b' => "\b",   # backspace      (BS)
++			'a' => "\a",   # alarm (bell)   (BEL)
++			'e' => "\e",   # escape         (ESC)
++			'v' => "\013", # vertical tab   (VT)
++		);
++
++		if ($seq =~ m/^[0-7]{1,3}$/) {
++			# octal char sequence
++			return chr(oct($seq));
++		} elsif (exists $es{$seq}) {
++			# C escape sequence, aka character escape code
++			return $es{$seq};
++		}
++		# quoted ordinary character
++		return $seq;
++	}
++
++	if ($str =~ m/^"(.*)"$/) {
++		# needs unquoting
++		$str = $1;
++		$str =~ s/\\([^0-7]|[0-7]{1,3})/unq($1)/eg;
++	}
++	return $str;
++}
++
++# escape tabs (convert tabs to spaces)
++sub untabify {
++	my $line = shift;
++
++	while ((my $pos = index($line, "\t")) != -1) {
++		if (my $count = (8 - ($pos % 8))) {
++			my $spaces = ' ' x $count;
++			$line =~ s/\t/$spaces/;
++		}
++	}
++
++	return $line;
++}
++
++1;
+-- 
+1.7.1.447.g2b98e.dirty
