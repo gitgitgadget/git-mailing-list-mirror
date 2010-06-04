@@ -1,60 +1,65 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH 0/6] Merge David's SVN exporter into git.git
-Date: Fri, 04 Jun 2010 15:47:26 +0200
-Message-ID: <4C0903EE.1050304@drmicha.warpmail.net>
-References: <1275657988-29765-1-git-send-email-artagnon@gmail.com> 	<4C090025.6010905@drmicha.warpmail.net> <AANLkTilOcQyYHfVz5rQwKZmvD5w-SATwlscR_E3PnbYi@mail.gmail.com>
+Date: Fri, 4 Jun 2010 15:41:41 +0200
+Message-ID: <AANLkTilOcQyYHfVz5rQwKZmvD5w-SATwlscR_E3PnbYi@mail.gmail.com>
+References: <1275657988-29765-1-git-send-email-artagnon@gmail.com> 
+	<4C090025.6010905@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>,
 	David Michael Barr <david.barr@cordelta.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 04 15:48:09 2010
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jun 04 15:49:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKXFl-0002AB-Le
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 15:48:05 +0200
+	id 1OKXHQ-0003DK-KT
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 15:49:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756081Ab0FDNr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jun 2010 09:47:59 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:56893 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755967Ab0FDNr7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Jun 2010 09:47:59 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A8B16F8D03;
-	Fri,  4 Jun 2010 09:47:53 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 04 Jun 2010 09:47:53 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=uNFOhYJKSOGWH80zYW003DY28lw=; b=R9Hj6Mo0yQz7KR8D+9mEbaLaXs0Bv2hmMA0lCmOZY68Ss8gidIZBHivT4e6c0HtVf60/tnBDv4J7fhfSSCTMcBsogGPARJRV1HKGcH54UXstwJU3FXsNJHBRo676NdnpPT2LbsZMK9/pEoCin4mgb/dUe9UzFN4pkTH3s3qIlP4=
-X-Sasl-enc: 526CEaW78OeJAMQ2HMCLmJBjtIduAnjy1+kufzdUkmst 1275659269
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3B70E4DA7AB;
-	Fri,  4 Jun 2010 09:47:48 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <AANLkTilOcQyYHfVz5rQwKZmvD5w-SATwlscR_E3PnbYi@mail.gmail.com>
+	id S1755967Ab0FDNto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jun 2010 09:49:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55652 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754168Ab0FDNtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jun 2010 09:49:43 -0400
+Received: by gye5 with SMTP id 5so885708gye.19
+        for <git@vger.kernel.org>; Fri, 04 Jun 2010 06:49:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=B4zhw2YD72GmVIYFMTl2/AbJYOKJktoxZ3KHZ9iTgH4=;
+        b=nChXEvWHV23wXI0AKqVBUti90TUpnmI/Te1+vs44qdscbiZB7uXdz/6P61syL+9HrK
+         3DOLndwtLqzC3Prf+nidMPHTZcg2qzMUIDMxpSwnbXe6ChyviSmCD3WGoKuxN4cR+RVV
+         AeBq9JN6r7RXqqhI3TuIqCtgyEKdOlYUAvoDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=nxZh+xyzFB/0917RK8zqjNHbVOPWWuMJ8jc/RrPNxh/pFsAVgW6lNayoKZsRK4+GFs
+         OdIL4RIzb3SIVoeq9bmG8XM1dMmh6msUJ1997ckKJC5/dwBiaalatLGJZfvdcNO4rrLi
+         s4uJHF4d8hW3MhdaxbrciOhLF2p6Pshh++woY=
+Received: by 10.229.190.80 with SMTP id dh16mr2585383qcb.29.1275658921180; 
+	Fri, 04 Jun 2010 06:42:01 -0700 (PDT)
+Received: by 10.229.182.85 with HTTP; Fri, 4 Jun 2010 06:41:41 -0700 (PDT)
+In-Reply-To: <4C090025.6010905@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148417>
 
-Ramkumar Ramachandra venit, vidit, dixit 04.06.2010 15:41:
-> Hi,
-> 
-> Sverre and Michael: I'm awfully sorry about this- I didn't realize
-> that I could change the author while committing. I've re-posted the
-> series now with the author corrected.
+Hi,
 
-Please don't feel sorry. We're here to help each other learn, and we
-take turns in the learner's seat ;)
+Sverre and Michael: I'm awfully sorry about this- I didn't realize
+that I could change the author while committing. I've re-posted the
+series now with the author corrected.
 
-Cheers,
-Michael
+Thanks,
+Ram
