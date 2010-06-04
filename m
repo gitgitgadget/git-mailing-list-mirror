@@ -1,89 +1,73 @@
 From: Simo Melenius <simo.melenius@iki.fi>
-Subject: [PATCH 2/2] branch: don't fail listing branches if one of the commits wasn't found
-Date: Fri,  4 Jun 2010 12:50:11 +0300
-Message-ID: <1275645011-28795-2-git-send-email-simo.melenius@iki.fi>
-References: <AANLkTilGOtScr7AyF_Dsm5ItTm2QBv_aPdBXRUDH29Ad@mail.gmail.com>
-Cc: git@vger.kernel.org, Simo Melenius <simo.melenius@iki.fi>
-To: jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Fri Jun 04 11:51:23 2010
+Subject: Re: [PATCH 2/2] branch: don't fail listing branches if one of the 
+	commits wasn't found
+Date: Fri, 4 Jun 2010 12:48:14 +0300
+Message-ID: <AANLkTilGOtScr7AyF_Dsm5ItTm2QBv_aPdBXRUDH29Ad@mail.gmail.com>
+References: <20100603065527.GA23439@progeny.tock>
+	<1275551282-21557-2-git-send-email-simo.melenius@iki.fi>
+	<20100604024344.GB26311@progeny.tock>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 04 11:53:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKTYg-0001EJ-6k
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 11:51:22 +0200
+	id 1OKTaz-0002I3-PO
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 11:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087Ab0FDJvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jun 2010 05:51:17 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:59811 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753330Ab0FDJvR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jun 2010 05:51:17 -0400
-Received: by pwi3 with SMTP id 3so74096pwi.19
-        for <git@vger.kernel.org>; Fri, 04 Jun 2010 02:50:58 -0700 (PDT)
+	id S1754102Ab0FDJxk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jun 2010 05:53:40 -0400
+Received: from mail-yw0-f187.google.com ([209.85.211.187]:52467 "EHLO
+	mail-yw0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754092Ab0FDJxk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Jun 2010 05:53:40 -0400
+X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Jun 2010 05:53:39 EDT
+Received: by ywh17 with SMTP id 17so241020ywh.1
+        for <git@vger.kernel.org>; Fri, 04 Jun 2010 02:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=sFcuOq0MCy15nhAZCHjySDqWj0lTEkmwETKkIHmnodI=;
-        b=oJDA2Ht1TCmz1hjgipRjF7fbMw+OLL39s6ReEgyxrT4ifTzvURHyYLGUu+khVBG+gj
-         IUXJ2fz1580VVldFcyHktdCUfz1RHyik/02TdJgmL8+TwhQUEU45/xt2fMEkq27IYXSy
-         GyHe5GfavBrnEv2XnKpEnPauoZslxsUkJ6r5s=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=HAH4Fj9qOG58MNBKRTZ77Ni0eu+LzXU3dI5UZYPIvKo=;
+        b=GJUEnGWsRfxU6+i/e3mrbodIK7H9UY9n81iMYdaQ4rzrr0T3QLaUNLkeujsUR2NS7a
+         27Zi+VHWCAnuajfkP5F0e81pRtuC2pVxfoQTHi0T0lCmDwuyPtBg6OXdL/HiEF1Cgp1d
+         PE96NHJJy6omptjHtRTMRSre73gLEAioF8C4A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=Cw0YEmv+2vL0ZFRkkIVxfuUHmiM43SD7CV9852llhfHmWKrTzcrStB7oLG+XH5CVGf
-         T9uEykjamzvfiLXCQfYZwAcMZq8vnCm4aWC6FwMIdO998T/W4Ou1lyjeIP+i2qKIq0dN
-         SXtRPGmDpJh9OEqEkNCG46UcYJ8RIenn7IOnM=
-Received: by 10.115.65.14 with SMTP id s14mr8264055wak.209.1275645039662;
-        Fri, 04 Jun 2010 02:50:39 -0700 (PDT)
-Received: from localhost.localdomain (xdsl-83-150-84-41.nebulazone.fi [83.150.84.41])
-        by mx.google.com with ESMTPS id b6sm7290819wam.9.2010.06.04.02.50.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Jun 2010 02:50:39 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4
-In-Reply-To: <AANLkTilGOtScr7AyF_Dsm5ItTm2QBv_aPdBXRUDH29Ad@mail.gmail.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=NZXdryAZnKk15SlqWiYSVrtcUMMQnhRJzsp9xS2bsv0PdRNDqDmWizUFZJFTSay4HD
+         vsF+2XBte0gkwJDHsqHpspu2go7gy+txYsNqvhncY90OhOUxLMT0W03SRhQUF+vkYEn+
+         Eqcq+L2nLTBQPYQDVA5SCWfQx/ynd6LgQZ8IY=
+Received: by 10.150.213.17 with SMTP id l17mr10166295ybg.37.1275644894290; 
+	Fri, 04 Jun 2010 02:48:14 -0700 (PDT)
+Received: by 10.150.140.20 with HTTP; Fri, 4 Jun 2010 02:48:14 -0700 (PDT)
+In-Reply-To: <20100604024344.GB26311@progeny.tock>
+X-Google-Sender-Auth: I5o0P52C0wsUY-losPAnBw8aHEE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148396>
 
-When listing branches with ref lookups, if one of the known raw refs
-doesn't point to a commit then "git branch" would return error(),
-terminating the whole for_each_rawref() iteration and possibly hiding
-any remaining refs.
+On 4 June 2010 05:43, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Except as pointed out by Sverre[1],
+> =C2=A0Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Signed-off-by: Simo Melenius <simo.melenius@iki.fi>
----
- builtin/branch.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+Thanks, I'll now resend the polished versions of these patches.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 72a486c..2371ca0 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -301,7 +301,7 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 		commit = lookup_commit_reference_gently(sha1, 1);
- 		if (!commit) {
- 			cb->ret = error("branch '%s' does not point at a commit", refname);
--			return cb->ret;
-+			return 0;
- 		}
- 
- 		/* Filter with with_commit if specified */
-@@ -539,6 +539,9 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 
- 	free_ref_list(&ref_list);
- 
-+	if (cb.ret)
-+		error("some refs could not be read");
-+
- 	return cb.ret;
- }
- 
--- 
-1.7.0.4
+
+Simo
+
+--=20
+() Today is the car of the cdr of your life.
+/\ http://arc.pasp.de/
