@@ -1,148 +1,65 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: Re: [PATCH] documentation: git-mergetool updated to warn against 
- builtin tools invocations
-Date: Fri, 04 Jun 2010 23:29:30 +0200
-Message-ID: <1275686970.2510.1.camel@kheops>
-References: <1275501453-13081-1-git-send-email-srabot@steek.com>
-	 <7vbpbt9f9j.fsf@alter.siamese.dyndns.org>
-	 <AANLkTikPHdRWsHUI-YwEkECtIbj425hKxzy8_JrA4_ny@mail.gmail.com>
-Reply-To: sylvain@abstraction.fr
+From: =?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>
+Subject: Resurrecting : git-gui: use textconv filter
+Date: Sat, 05 Jun 2010 00:21:35 +0200
+Organization: Ensimag
+Message-ID: <32937075d59e3275bb0762764a101607@ensimag.fr>
+Reply-To: clement.poulain@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-zhGcw2rU4rwFdHOMHEZK"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 04 23:29:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Clemens Buchacher <drizzd@aon.at>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 05 00:22:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKeSe-0002Vo-3u
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 23:29:52 +0200
+	id 1OKfHK-00021y-FM
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 00:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756866Ab0FDV3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jun 2010 17:29:47 -0400
-Received: from lo.gmane.org ([80.91.229.12]:43451 "EHLO lo.gmane.org"
+	id S1757088Ab0FDWVn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jun 2010 18:21:43 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54487 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754767Ab0FDV3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jun 2010 17:29:46 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OKeSX-0002Rp-80
-	for git@vger.kernel.org; Fri, 04 Jun 2010 23:29:45 +0200
-Received: from smj33-1-82-233-66-33.fbx.proxad.net ([82.233.66.33])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 04 Jun 2010 23:29:45 +0200
-Received: from sylvain by smj33-1-82-233-66-33.fbx.proxad.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 04 Jun 2010 23:29:45 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: smj33-1-82-233-66-33.fbx.proxad.net
-In-Reply-To: <AANLkTikPHdRWsHUI-YwEkECtIbj425hKxzy8_JrA4_ny@mail.gmail.com>
-X-Mailer: Evolution 2.28.3 
+	id S1754177Ab0FDWVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jun 2010 18:21:43 -0400
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o54ME5VO027055
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 5 Jun 2010 00:14:05 +0200
+Received: from ensicom.imag.fr (web-ensimag [195.221.228.24])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o54MLa82014919;
+	Sat, 5 Jun 2010 00:21:36 +0200
+Received: from webmail.ensimag.fr (localhost [127.0.0.1])
+	by ensicom.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id o54MLZLO028290;
+	Sat, 5 Jun 2010 00:21:36 +0200
+X-Sender: clement.poulain@ensimag.imag.fr
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 05 Jun 2010 00:14:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o54ME5VO027055
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148441>
 
+Hi,
 
---=-zhGcw2rU4rwFdHOMHEZK
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+After proposing a patch adding textconv support to "git blame"
+(http://thread.gmane.org/gmane.comp.version-control.git/148310), we are=
+ now
+looking to have git-gui use it. Clemens Buchacher (Cc-ed) sent us a pat=
+ch
+he made a while ago:
+http://thread.gmane.org/gmane.comp.version-control.git/145015.
+There's no answer to the thread, and as a part of our work is based on =
+it,
+we would like it to be submitted to you again.
 
-On Thu, 2010-06-03 at 12:55 +0200, Sylvain Rabot wrote:
-> On Thu, Jun 3, 2010 at 01:38, Junio C Hamano <gitster@pobox.com> wrote:
-> > Sylvain Rabot <srabot@steek.com> writes:
-> >
-> >> +Be aware that 'git mergetool' has some predefined invocation commands=
- builtin
-> >> +for known diff tools like meld, diffuse, p4merge ... etc. It means th=
-at if
-> >> +you set the merge.tool configuration to one of these tools, the
-> >> +mergetool.<tool>.* configurations will not be taken care of. If you
-> >> +really want to customize the invocation of one of these tools,
-> >> +set `merge.tool` to "custom" or whatever you want and `mergetool.cust=
-om.cmd`
-> >> +to "/usr/bin/<tool> $LOCAL $MERGED $REMOTE"
-> >
-> > Two half-points and three points (that makes them four in total ;-):
-> >
-> >  o If I read the above without "It means that", it still makes sense;
->=20
-> Ok
->=20
-> >
-> >  o "If you really" can go without "really";
->=20
-> Ok
->=20
-> >
-> >  * I had to read "will not be taken care of" twice; "are ignored" is
-> >   probably easier to understand;
->=20
-> Ok
->=20
-> >
-> >  * The description and the example makes it sound as if the command lin=
-e
-> >   has to have these three tokens in the given order, but the whole poin=
-t
-> >   of this mechanism is that you can launch whatever external command wi=
-th
-> >   a custom command line, so "and `mergetool.custom.cmd` to a command li=
-ne
-> >   to invoke the command.  $LOCAL $MERGED and $REMOTE on this command li=
-ne
-> >   are substituted by ...." may be more reader-friendly.
->=20
-> Ok
->=20
-> >
-> >  * As a documentation update it is perfectly fine to describe this glit=
-ch,
-> >   but I wonder if we might want to lift this restriction (read: conside=
-r
-> >   this as a bug and fix it).
->=20
-> I agree, I wil take a look, I'm not a sh expert but I can try.
-> If I succeed I will send you a patch, otherwise I will send you a
-> corrected version of this patch.
-
-I'm about to send a patch, before, can I assume that all users have
-sed ?=20
-
->=20
-> >
-> >> ++
-> >> +-------------
-> >> +[merge]
-> >> +    tool =3D diffuse-custom
-> >> +[mergetool "diffuse-custom"]
-> >> +    cmd =3D diffuse $LOCAL $MERGED $REMOTE
-> >> +-------------
-> >> ++
-> >
-> > Thanks.
-> >
->=20
-
---=20
-Sylvain Rabot <sylvain@abstraction.fr>
-
---=-zhGcw2rU4rwFdHOMHEZK
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEABECAAYFAkwJcDMACgkQ+TklUoyVcydGDgCgr+iAaPuK4m/Agqwovhh1Y3A3
-NXUAoLIAn9mp3uYlOcb2qRvJ6oqdy/A8
-=iuGU
------END PGP SIGNATURE-----
-
---=-zhGcw2rU4rwFdHOMHEZK--
+Thank you,
+Cl=C3=A9ment
