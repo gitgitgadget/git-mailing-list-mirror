@@ -1,87 +1,148 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
-Date: Fri, 4 Jun 2010 16:18:11 -0500
-Message-ID: <20100604211811.GA7471@progeny.tock>
-References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: [PATCH] documentation: git-mergetool updated to warn against 
+ builtin tools invocations
+Date: Fri, 04 Jun 2010 23:29:30 +0200
+Message-ID: <1275686970.2510.1.camel@kheops>
+References: <1275501453-13081-1-git-send-email-srabot@steek.com>
+	 <7vbpbt9f9j.fsf@alter.siamese.dyndns.org>
+	 <AANLkTikPHdRWsHUI-YwEkECtIbj425hKxzy8_JrA4_ny@mail.gmail.com>
+Reply-To: sylvain@abstraction.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"Gary V. Vaughan" <git@mlists.thewrittenword.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 04 23:18:27 2010
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-zhGcw2rU4rwFdHOMHEZK"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 04 23:29:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKeHY-0005Xu-BN
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 23:18:24 +0200
+	id 1OKeSe-0002Vo-3u
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 23:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329Ab0FDVST convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jun 2010 17:18:19 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:36833 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751862Ab0FDVSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jun 2010 17:18:18 -0400
-Received: by pxi8 with SMTP id 8so446703pxi.19
-        for <git@vger.kernel.org>; Fri, 04 Jun 2010 14:18:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=RzLyyZtbeRovrsSdhsfDqldyBVNRpkhpYMsBJukn0F8=;
-        b=gx0ZpuT7ne0fb+9MnZcOhovZLBSjjxHPpEFUTUYKm9JRehgqS0KOktYsGKe6jfzZS4
-         hY0feEBriBsXuCIxoduQiQ9SNjKTN4m/bScfIJWW1catH3458c2cJM3Mu7JD8IvqIDKu
-         x723TC/WZCOeS9d/IxpLIiTVRDwoYArzLmQl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=L/zZDlhQOnvyQwQKCJJj3oWxbZdPgAgozJUSV1bW5ay7dJY79Gle9Oo7dt1cDgzFLJ
-         lwnaCnjZLai64woYrisNckX+egujtR6rwvqFn3RRdCemPcoEHE/D92G7y2nNdXsALd/B
-         iLrMLRkfTtu3tovUy3CPV9mkDoSyjD2bWWRj0=
-Received: by 10.143.25.38 with SMTP id c38mr8545010wfj.251.1275686297717;
-        Fri, 04 Jun 2010 14:18:17 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v41sm1000461wfh.9.2010.06.04.14.18.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 04 Jun 2010 14:18:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756866Ab0FDV3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jun 2010 17:29:47 -0400
+Received: from lo.gmane.org ([80.91.229.12]:43451 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754767Ab0FDV3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jun 2010 17:29:46 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OKeSX-0002Rp-80
+	for git@vger.kernel.org; Fri, 04 Jun 2010 23:29:45 +0200
+Received: from smj33-1-82-233-66-33.fbx.proxad.net ([82.233.66.33])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 Jun 2010 23:29:45 +0200
+Received: from sylvain by smj33-1-82-233-66-33.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 04 Jun 2010 23:29:45 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: smj33-1-82-233-66-33.fbx.proxad.net
+In-Reply-To: <AANLkTikPHdRWsHUI-YwEkECtIbj425hKxzy8_JrA4_ny@mail.gmail.com>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148440>
 
-Junio C Hamano wrote:
 
-> * gv/portable (2010-05-14) 18 commits
-[...]
->  - Do not use "diff" found on PATH while building and installing
+--=-zhGcw2rU4rwFdHOMHEZK
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-That patch (d1b1a919) breaks merge-one-file when run outside the test
-suite as far as I can tell.
+On Thu, 2010-06-03 at 12:55 +0200, Sylvain Rabot wrote:
+> On Thu, Jun 3, 2010 at 01:38, Junio C Hamano <gitster@pobox.com> wrote:
+> > Sylvain Rabot <srabot@steek.com> writes:
+> >
+> >> +Be aware that 'git mergetool' has some predefined invocation commands=
+ builtin
+> >> +for known diff tools like meld, diffuse, p4merge ... etc. It means th=
+at if
+> >> +you set the merge.tool configuration to one of these tools, the
+> >> +mergetool.<tool>.* configurations will not be taken care of. If you
+> >> +really want to customize the invocation of one of these tools,
+> >> +set `merge.tool` to "custom" or whatever you want and `mergetool.cust=
+om.cmd`
+> >> +to "/usr/bin/<tool> $LOCAL $MERGED $REMOTE"
+> >
+> > Two half-points and three points (that makes them four in total ;-):
+> >
+> >  o If I read the above without "It means that", it still makes sense;
+>=20
+> Ok
+>=20
+> >
+> >  o "If you really" can go without "really";
+>=20
+> Ok
+>=20
+> >
+> >  * I had to read "will not be taken care of" twice; "are ignored" is
+> >   probably easier to understand;
+>=20
+> Ok
+>=20
+> >
+> >  * The description and the example makes it sound as if the command lin=
+e
+> >   has to have these three tokens in the given order, but the whole poin=
+t
+> >   of this mechanism is that you can launch whatever external command wi=
+th
+> >   a custom command line, so "and `mergetool.custom.cmd` to a command li=
+ne
+> >   to invoke the command.  $LOCAL $MERGED and $REMOTE on this command li=
+ne
+> >   are substituted by ...." may be more reader-friendly.
+>=20
+> Ok
+>=20
+> >
+> >  * As a documentation update it is perfectly fine to describe this glit=
+ch,
+> >   but I wonder if we might want to lift this restriction (read: conside=
+r
+> >   this as a bug and fix it).
+>=20
+> I agree, I wil take a look, I'm not a sh expert but I can try.
+> If I succeed I will send you a patch, otherwise I will send you a
+> corrected version of this patch.
 
-Maybe it could be made portable with =E2=80=98git diff --no-index=E2=80=
-=99?
+I'm about to send a patch, before, can I assume that all users have
+sed ?=20
 
-diff --git a/git-merge-one-file.sh b/git-merge-one-file.sh
-index 3145009..d067894 100755
---- a/git-merge-one-file.sh
-+++ b/git-merge-one-file.sh
-@@ -107,7 +107,7 @@ case "${1:-.}${2:-.}${3:-.}" in
- 		# remove lines that are unique to ours.
- 		orig=3D`git-unpack-file $2`
- 		sz0=3D`wc -c <"$orig"`
--		$DIFF -u -La/$orig -Lb/$orig $orig $src2 | git apply --no-add
-+		diff -u -La/$orig -Lb/$orig $orig $src2 | git apply --no-add
- 		sz1=3D`wc -c <"$orig"`
-=20
- 		# If we do not have enough common material, it is not
+>=20
+> >
+> >> ++
+> >> +-------------
+> >> +[merge]
+> >> +    tool =3D diffuse-custom
+> >> +[mergetool "diffuse-custom"]
+> >> +    cmd =3D diffuse $LOCAL $MERGED $REMOTE
+> >> +-------------
+> >> ++
+> >
+> > Thanks.
+> >
+>=20
+
 --=20
+Sylvain Rabot <sylvain@abstraction.fr>
+
+--=-zhGcw2rU4rwFdHOMHEZK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEABECAAYFAkwJcDMACgkQ+TklUoyVcydGDgCgr+iAaPuK4m/Agqwovhh1Y3A3
+NXUAoLIAn9mp3uYlOcb2qRvJ6oqdy/A8
+=iuGU
+-----END PGP SIGNATURE-----
+
+--=-zhGcw2rU4rwFdHOMHEZK--
