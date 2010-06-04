@@ -1,87 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] branch: don't fail listing branches if one of the
- commits wasn't found
-Date: Thu, 3 Jun 2010 21:43:45 -0500
-Message-ID: <20100604024344.GB26311@progeny.tock>
-References: <20100603065527.GA23439@progeny.tock>
- <1275551282-21557-2-git-send-email-simo.melenius@iki.fi>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 2/4] textconv: make diff_options accessible from
+ blame
+Date: Thu, 03 Jun 2010 22:48:20 -0700
+Message-ID: <7vvd9z5owr.fsf@alter.siamese.dyndns.org>
+References: <1275562038-7468-1-git-send-email-axel.bonnet@ensimag.imag.fr>
+ <1275562038-7468-2-git-send-email-axel.bonnet@ensimag.imag.fr>
+ <1275562038-7468-3-git-send-email-axel.bonnet@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	gitster@pobox.com
-To: Simo Melenius <simo.melenius@iki.fi>
-X-From: git-owner@vger.kernel.org Fri Jun 04 04:43:26 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>
+To: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 04 07:48:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKMsY-00042l-16
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 04:43:26 +0200
+	id 1OKPlp-0007F8-4r
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Jun 2010 07:48:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216Ab0FDCnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jun 2010 22:43:20 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47583 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932079Ab0FDCnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jun 2010 22:43:20 -0400
-Received: by iwn37 with SMTP id 37so537076iwn.19
-        for <git@vger.kernel.org>; Thu, 03 Jun 2010 19:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=9bd5pExOyQ+coHXvtfDHT/XA0qVvx08XyTRRPZ4EziU=;
-        b=eQQMx7lZNHFzBjSN/hqlY7mXEEm3jG86HXlzYsxcgwqfmvUMsWz8k9yZ1QzCM8Jfz7
-         dNgGD7LL88S9LO5dvX1TOPaUikCsAQRT261DalzEHhkRRGSXsVD7Fjt/L91pgvOipnXG
-         qE6xIjNzH8HzyDWHoEbW44jhrKgKprlOsa6i4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vGBI62oO+3YOT/kyjKyiPpweGrxkI5xnGo825ImEftCmfmzwF3Ek3cx0uhZC4NEYVC
-         lDqBcSMdzzrBsKcmWvCMdYSAXUvvvsls4RVm/xLSy6utv1SUPUmkRqgvdzCj8megUaO4
-         8uiQd5qU1U4F0pSG7kmVyk+vSfguHxJ1Ceepw=
-Received: by 10.231.142.158 with SMTP id q30mr233466ibu.145.1275619399363;
-        Thu, 03 Jun 2010 19:43:19 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id a8sm3080069ibi.11.2010.06.03.19.43.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 03 Jun 2010 19:43:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1275551282-21557-2-git-send-email-simo.melenius@iki.fi>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751719Ab0FDFsf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jun 2010 01:48:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39497 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751239Ab0FDFsf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Jun 2010 01:48:35 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A6BD8B90DD;
+	Fri,  4 Jun 2010 01:48:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=QOF8CpeqoM8yBeWa4G+TWuQ1P
+	w0=; b=gABqrEFfAuGxDY+rP1Yn8nftiwgxZJTCJdz2AlqvUkwzd6OOJc7TyMrLn
+	FflMwkE7AC5ZZ3SuBoE81gMn7ldKR6Q+f1yMWGROBDFwDgpqDX+Smw/eh3SYX7Pr
+	CWoU0J2l7cR9LxDjwMg6SCSGmqVWzy025eVU+LEidYwCDbw4sc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=QuG2XvaQkiJdr+fu6sv
+	AkmrkYy8RGOnjix768/8LgLo7Z8Md3ZCArqIoAyaWZnTwU3h7NvqO+qZsazDfvgL
+	O7gdiwS9CM8RS9Ax+3mmuJMdOOYhIPIdUUSqLUjHP7OdFRRdfon8ZTGlKT9/Rmp4
+	gAhXAETk/dQhDHPBFu5AUuw4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4C561B90DC;
+	Fri,  4 Jun 2010 01:48:29 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6AAAFB90D8; Fri,  4 Jun
+ 2010 01:48:24 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CD350268-6F9C-11DF-B64B-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148378>
 
-Simo Melenius wrote:
+Axel Bonnet <axel.bonnet@ensimag.imag.fr> writes:
 
-> Signed-off-by: Simo Melenius <simo.melenius@iki.fi>
+> Diff_options specify whether conversion is activated or not. Blame ne=
+eds
+> to access these options in order to concert files with external drive=
+rs
+>
+> Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+> Signed-off-by: Cl=C3=83=C2=A9ment Poulain <clement.poulain@ensimag.im=
+ag.fr>
+> Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
 
-Except as pointed out by Sverre[1],
+The name of Cl=C3=A9ment is spelled correctly on the mail header while =
+S-o-b
+line is corrupt.  Perhaps you have recorded your commits in UTF-8 but
+allowed your MUA to send in 8859-1?  This comment applies to all the
+patches in the series.
 
-  Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index fc15863..63b497c 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -89,7 +89,8 @@ struct origin {
+>   * Given an origin, prepare mmfile_t structure to be used by the
+>   * diff machinery
+>   */
+> -static void fill_origin_blob(struct origin *o, mmfile_t *file)
+> +static void fill_origin_blob(struct diff_options opt,
+> +			     struct origin *o, mmfile_t *file)
+>  {
+>  	if (!o->file.ptr) {
+>  		enum object_type type;
 
-Thanks.
+Two points.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/148253/focus=148350
+ * Generally we do not want to pass structures by value.  It is especia=
+lly
+   true when the structure is bigger than one word, and accesses to the
+   variable in the callee is read-only.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 2242743..d2d3c26 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -542,7 +542,7 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 	free_ref_list(&ref_list);
- 
- 	if (cb.ret)
--		error("some refs could not be read, review stderr");
-+		error("some refs could not be read");
- 
- 	return cb.ret;
- }
--- 
+ * The callee does not seem to use the new parameter yet.  You might wa=
+nt
+   to defer this change until fill-origin-blob actually starts using it=
+=2E
