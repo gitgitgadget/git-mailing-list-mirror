@@ -1,95 +1,60 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: Resurrecting : git-gui: use textconv filter
-Date: Sat, 5 Jun 2010 10:38:21 +0200
-Message-ID: <20100605083821.GB1151@localhost>
-References: <32937075d59e3275bb0762764a101607@ensimag.fr>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] git-mergetool--lib.sh: fix mergetool.<tool>.* configurations ignored for known tools
+Date: Sat, 05 Jun 2010 11:11:54 +0200
+Message-ID: <m2fx11n8rp.fsf@igel.home>
+References: <1275705112-8088-1-git-send-email-sylvain@abstraction.fr>
+	<1275705112-8088-2-git-send-email-sylvain@abstraction.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: =?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 05 10:39:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Sylvain Rabot <sylvain@abstraction.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 05 11:13:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKouk-00008q-HS
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 10:39:34 +0200
+	id 1OKpRk-0006rr-5e
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 11:13:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932596Ab0FEIja convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 04:39:30 -0400
-Received: from ey-out-2122.google.com ([74.125.78.24]:28958 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932571Ab0FEIj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 04:39:28 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so132328eya.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 01:39:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=i99t6BtpBEgzoFCck20W6buD0jAMmmMBjuVzVXPGYPE=;
-        b=ZKpFGpygmUCOB//gg6RYgzv1J6Z8l9ux4JelJwRM/0laisMCkWoX586+m+0N+r+G2P
-         /rP0DWn3rDA1w1LYI+FHh5QlAtLjLxq+8fvwpItPKE9Y6AwWJ/SHUi8D+IONjh7nrZu+
-         1lwJPRLPHKSQUJUnAZNrWakXQS+xvsJoZ49XA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        b=SEPxOk+RE5fd6+OAeKTZUY7SntnkPyYs1aFvqRDQZZOC5c4RxdgTgPlNVOW/ewn6O/
-         mRLTEg3Q4D4vzdfmwm3Xa0+fpmb/1c2CSKT3uztSoHt5FnIzQPaVGsKguL/QSL7ED0Zp
-         ha0STbuw3n7oe8vqglVeeSkXnv5/RDAvH4RME=
-Received: by 10.213.35.18 with SMTP id n18mr6951850ebd.10.1275727166976;
-        Sat, 05 Jun 2010 01:39:26 -0700 (PDT)
-Received: from darc.lan ([80.123.242.182])
-        by mx.google.com with ESMTPS id 16sm1219573ewy.7.2010.06.05.01.39.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 01:39:26 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OKotZ-0000g4-Qs; Sat, 05 Jun 2010 10:38:21 +0200
-Content-Disposition: inline
-In-Reply-To: <32937075d59e3275bb0762764a101607@ensimag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932648Ab0FEJL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jun 2010 05:11:57 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:44948 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932576Ab0FEJL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 05:11:56 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 54F001C15798;
+	Sat,  5 Jun 2010 11:11:54 +0200 (CEST)
+Received: from igel.home (ppp-88-217-114-32.dynamic.mnet-online.de [88.217.114.32])
+	by mail.mnet-online.de (Postfix) with ESMTP id 4085E1C0014E;
+	Sat,  5 Jun 2010 11:11:54 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 20CEDCA297; Sat,  5 Jun 2010 11:11:54 +0200 (CEST)
+X-Yow: What PROGRAM are they watching?
+In-Reply-To: <1275705112-8088-2-git-send-email-sylvain@abstraction.fr>
+	(Sylvain Rabot's message of "Sat, 5 Jun 2010 04:31:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148462>
 
-On Sat, Jun 05, 2010 at 12:21:35AM +0200, Cl=E9ment Poulain wrote:
-> After proposing a patch adding textconv support to "git blame"
-> (http://thread.gmane.org/gmane.comp.version-control.git/148310), we a=
-re now
-> looking to have git-gui use it. Clemens Buchacher (Cc-ed) sent us a p=
-atch
-> he made a while ago:
-> http://thread.gmane.org/gmane.comp.version-control.git/145015.
-> There's no answer to the thread, and as a part of our work is based o=
-n it,
-> we would like it to be submitted to you again.
+Sylvain Rabot <sylvain@abstraction.fr> writes:
 
-A month back, Shawn told me he was too busy to work on git-gui. But
-you can simply add my patch to your series, and send it all in
-together. You should Cc Shawn, since he is the maintainer of
-git-gui.
+> +			if !test -f "$merge_tool_path/$merge_tool_cmd_base"; then
 
-By the way, if you link to a message on the mailing list, it's
-useful to provide the Message-ID like this.
+Missing space after '!'.
 
- http://mid.gmane.org/20100415193944.GA5848@localhost
+> +			elif !test -x "$merge_tool_path/$merge_tool_cmd_base"; then
 
-That way the message can also be found in other archives. You can
-get the Message-ID by appending /raw to the non-threaded message
-link.
+Likewise.
 
- http://article.gmane.org/gmane.comp.version-control.git/145015/raw
+Andreas.
 
-Regards,
-Clemens
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
