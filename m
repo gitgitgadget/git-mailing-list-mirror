@@ -1,72 +1,96 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/4] diff/xdiff: refactor EOF-EOL detection
-Date: Sat, 05 Jun 2010 20:58:28 +0200
-Message-ID: <4C0A9E54.50703@drmicha.warpmail.net>
-References: <cover.1275575236.git.git@drmicha.warpmail.net> <08e635cee993d97e2a38d7766ced11c064ef7d87.1275575236.git.git@drmicha.warpmail.net> <7vsk537p8k.fsf@alter.siamese.dyndns.org> <4C08AD75.6040307@drmicha.warpmail.net> <7vpr060ys0.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC v7 1/2] Add infrastructure for translating Git with
+ gettext
+Date: Sat, 5 Jun 2010 14:27:17 -0500
+Message-ID: <20100605192717.GB5273@progeny.tock>
+References: <1275704035-6552-1-git-send-email-avarab@gmail.com>
+ <1275704035-6552-2-git-send-email-avarab@gmail.com>
+ <20100605025702.GA2019@progeny.tock>
+ <AANLkTil541q0RtZsEmnLOtUNxfltvcFCGxpxR-myhyDl@mail.gmail.com>
+ <20100605033626.GA2252@progeny.tock>
+ <AANLkTimHZdT3vfuUyG1cnanE3WLrhDGqqw5JyYfza6wD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 05 20:59:40 2010
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 05 21:27:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKyap-0001Ej-F4
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 20:59:39 +0200
+	id 1OKz1f-0005z6-Tl
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 21:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752159Ab0FES6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 14:58:31 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:50700 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751940Ab0FES6a (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 14:58:30 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 83309F8AAE;
-	Sat,  5 Jun 2010 14:58:19 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Sat, 05 Jun 2010 14:58:19 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Ob5ndgE6cmTxvfoXzsLP8Rq4Azg=; b=QkAllCrxwTpVbmx51OaTwAvp1063yOEzdjnaEhRm2hC2IccXtfX79mxGpwYMs7t2bkxwqiSFnObiEPTjlDYq/CxcEOyMUOGGotIGtr9MTUXgvQK76TGPcQ2PitwTk/eYOJ85Bg6FahNYUcP1xCtOjAp2WblE1cluYvhb4OOCwkc=
-X-Sasl-enc: 7G4mmKAcOiQjyJfNjUPwvMcqParBBERSsbWxwJLOl+/H 1275764299
-Received: from localhost.localdomain (p548580F5.dip0.t-ipconnect.de [84.133.128.245])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B95714A6B2E;
-	Sat,  5 Jun 2010 14:58:18 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <7vpr060ys0.fsf@alter.siamese.dyndns.org>
+	id S1754245Ab0FET1T convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 15:27:19 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58347 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751719Ab0FET1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 15:27:18 -0400
+Received: by iwn37 with SMTP id 37so2137188iwn.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 12:27:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vOHldZv434xEqyVSYNbP+ewBfmrKaqtTrIpSILF7kzk=;
+        b=u2UF6edvoRCRerpgIgHIFT2U+PoLAWlRUH5fR0DNuphpZo00hfGcfK4pePB2PhKxDI
+         GbXDS+F5sXI0mp2FZsUKxeN8IVCXQAwlg0Mm12Xo7Guf51CphnQpfvwYUTS+4TFTPTaK
+         3F3YLcQlRVuxFJfE3li4qNqx3atG4wZNHMOWw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=F6K2ZeBEoH1zhe0vvngyTlIn0tJe9y47y3WByGFXo7LqUQoX+TdWhDRMYUecU47IdT
+         iDCzhhh4GP2vyMLIxekv2jMs+whgsjo0sGD7KReNHSKGHJ84vKPHhQggxcf9NKV1py4K
+         X8jgl4S+uChB1FEn2vcVOMvsWWD0b+GBUIgA8=
+Received: by 10.231.114.144 with SMTP id e16mr2454019ibq.188.1275766037358;
+        Sat, 05 Jun 2010 12:27:17 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id t28sm11771608ibg.0.2010.06.05.12.27.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 05 Jun 2010 12:27:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimHZdT3vfuUyG1cnanE3WLrhDGqqw5JyYfza6wD@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148487>
 
-Junio C Hamano venit, vidit, dixit 05.06.2010 08:38:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> In 3/4, that "No NL at EOF" is suppressed for symlinks *when textconv is
->> in effect only*, i.e. when we don't (necessarily) produce a diff fit to
->> be applied anyways.
-> 
-> Sorry, that doesn't change a thing at all.  The presense of incomplete
-> line is part of the information diff gives you.
-> 
-> It can be done by defining a custom textconv filter that adds a trailing
-> LF to a blob that ends in an incomplete line, and what your patch 3/4 does
-> is essentially to create such a built-in textconv filter and *force* users
-> to use it unconditionally for all paths unless the user explicitly asks
-> not to use *any* textconv.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-No, not for all paths, only for symlinks. And, as not only I have
-pointed out, diffs with textconv (which is the default) may produce
-"incomplete" diffs anyways. The only difference is that people would
-have to set up textconv filters before.
+> IMO trying to plan in advance what we should and shouldn't translate
+> is a bit premature.
+>=20
+> I think it's better to just add glue so that everything can be
+> translated, then we can try decide later if some arbitrary subset
+> shouldn't have translations (even for human readable error messages)
+> and act appropriately.
 
-That is why there seems to be consensus in statu nascendi (on that other
-branch of the thread) that we should protect against textconv in the
-same way as we do for color, i.e. based on whether stdout = tty. Then my
-symlink treatment would be conditional in the same way as it is
-conditional on textconv.
+Certainly there is no need to commit to decisions that will have no
+observable effect.  However, setlocale()
 
-Michael
+ - takes some small amount of time (probably negligible);
+
+ - changes the semantics of regular expression matching
+   (this affects =E2=80=98git grep=E2=80=99, =E2=80=98git diff=E2=80=99=
+'s search for a function
+   header, and http-backend=E2=80=99s service-command regexps);
+
+ - changes the human language used for strerror().
+
+We could avoid these issues by turning translations off by default and
+calling it experimental, which might be the right thing to do anyway.
+
+Alternatively we can make some choice and stick to it (e.g., all git
+commands use setlocale(), or just the translated ones, or whatever).
+I just want to ensure it is a conscious choice.
+
+Jonathan
