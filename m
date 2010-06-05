@@ -1,239 +1,203 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Improve parent blame to detect renames by using the previous information
-Date: Sat,  5 Jun 2010 15:56:05 -0400
-Message-ID: <1275767765-8509-1-git-send-email-fonseca@diku.dk>
-References: <20100523075503.GA24598@coredump.intra.peff.net>
+Subject: Re: [TIG PATCH] Improve parent blame to detect renames by using the 
+	previous information
+Date: Sat, 5 Jun 2010 15:57:05 -0400
+Message-ID: <AANLkTilNKxzRhLoYzPopjFYfubJpWw7Gu4Jc-RGLosa1@mail.gmail.com>
+References: <20100523075503.GA24598@coredump.intra.peff.net> 
+	<1275767765-8509-1-git-send-email-fonseca@diku.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 05 21:56:17 2010
+X-From: git-owner@vger.kernel.org Sat Jun 05 21:57:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKzTb-0002vJ-9S
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 21:56:15 +0200
+	id 1OKzUt-0003vQ-VW
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 21:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757505Ab0FET4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 15:56:10 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59562 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757009Ab0FET4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 15:56:09 -0400
-Received: by vws5 with SMTP id 5so1367593vws.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 12:56:08 -0700 (PDT)
+	id S932623Ab0FET51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jun 2010 15:57:27 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44597 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932100Ab0FET5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 15:57:25 -0400
+Received: by iwn37 with SMTP id 37so2148835iwn.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 12:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=BgCwIALmAgu2bFe0AeSdXbeE6+pX8PHVGFGcZkuMO3U=;
-        b=DXbclwGyOWr6Q6fk9wS0OpLXYgL1nY1mrYJlZucctDJycWaQaW00nDy3Qwy7InH8XM
-         zi+oivyXmg3EaH6dauz2iaaVDTMDg40zfCZQM2dybUWiCjiyQuzNQ37djz2jDmdnaTqw
-         mHis/HzWxraHSgoYqEO6ZlTz2Y84vwMj9CaY8=
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=JhmCXUJg2+wSDyOYo7gzfyJ+JMEfkcFg5rIDKGVS85w=;
+        b=UlsStQW5bY7yaNNUVyFXZZDpxbAPLeYHMyyxe10X1ytQtHrjbkpDk4aADZXgMqWUF/
+         NznbOjcuNyN5cIznX+i7hgfghapUY3uwDJZJ6BuIAlCm5/dzeGVBVSqOWUNMUxZZF6dp
+         p9i6hXrdcZgJJoODZG1nAoXP+PPLo6fH1QkMs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=CvMePboQi4fL3TQfbKtCKCpvl7JwSRn6KWk76oin4k2ELr36cB8ra3X4cgvwZS8Fp3
-         pfk+rCXpuXLd1I8MrKGph10bB2SF4cj3UPunUqf03nfFaMXiCizFu7xchix/rxjskzCf
-         pGvpGpgA3pQBqgoqsBpdPxJn/KeKcQNNl8r1w=
-Received: by 10.224.99.148 with SMTP id u20mr6504590qan.360.1275767767787;
-        Sat, 05 Jun 2010 12:56:07 -0700 (PDT)
-Received: from antimatter.gateway.2wire.net (bas1-montreal42-1178030776.dsl.bell.ca [70.55.82.184])
-        by mx.google.com with ESMTPS id 8sm2093446qwj.20.2010.06.05.12.56.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 12:56:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.354.ge64bd
-In-Reply-To: <20100523075503.GA24598@coredump.intra.peff.net>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=qWRS3KVUIheMuHmtL0LUXi1L98MP7oCNNxuM/8yEemVKO3BvpHb8eGXghIRDG5IreW
+         Ej+LbUNFv0Wf4nXerRq0xUM8GqnLAzyvW2kUPzV39Hi9TuY6rarXai1MZIwNWihf5LCk
+         I/tbeRbiQCOCGsyXFMHWHOK75gPdofnayrG4k=
+Received: by 10.231.183.19 with SMTP id ce19mr15413699ibb.35.1275767845143; 
+	Sat, 05 Jun 2010 12:57:25 -0700 (PDT)
+Received: by 10.231.206.145 with HTTP; Sat, 5 Jun 2010 12:57:05 -0700 (PDT)
+In-Reply-To: <1275767765-8509-1-git-send-email-fonseca@diku.dk>
+X-Google-Sender-Auth: l3luLvJKDAYiIXmsyDpDCUcqphw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148492>
 
->From git commit 96e117099c0e4f7d508eb071f60b6275038f6f37:
-
- It gives the parent commit of the blamed commit, _and_ a path in that
- parent commit that corresponds to the blamed path --- in short, it is
- the origin that would have been blamed (or passed blame through) for
- the line _if_ the blamed commit did not change that line.
-
-This functionality was released in git version 1.6.3 in 2009-05-06.
----
- NEWS  |    2 +
- tig.c |   99 +++++++++++++++-------------------------------------------------
- 2 files changed, 25 insertions(+), 76 deletions(-)
-
- I finally got some more time to dig around this. What if we simply uses
- the information given by the porcelain output's previous line? It
- handles your simple test case, and navigating in the tig repository. It
- also makes it possible to delete a lot of code.
-
-diff --git a/NEWS b/NEWS
-index 190e5dc..499bdbc 100644
---- a/NEWS
-+++ b/NEWS
-@@ -38,6 +38,8 @@ Bug fixes:
-  - Fix unbind to behave as if the keybinding was never defined.
-  - Fix unbind to also cover built-in run requests.
-  - Fix parsing of unknown keymap names.
-+ - Blame view: fix parent blame to detect renames. It uses "previous"
-+   line info from the blame porcelain output added in git version 1.6.3.
- 
- tig-0.15
- --------
-diff --git a/tig.c b/tig.c
-index 01f48c3..044da28 100644
---- a/tig.c
-+++ b/tig.c
-@@ -3977,73 +3977,6 @@ parse_author_line(char *ident, const char **author, struct time *time)
- 	}
- }
- 
--static bool
--open_commit_parent_menu(char buf[SIZEOF_STR], int *parents)
--{
--	char rev[SIZEOF_REV];
--	const char *revlist_argv[] = {
--		"git", "log", "--no-color", "-1", "--pretty=format:%s", rev, NULL
--	};
--	struct menu_item *items;
--	char text[SIZEOF_STR];
--	bool ok = TRUE;
--	int i;
--
--	items = calloc(*parents + 1, sizeof(*items));
--	if (!items)
--		return FALSE;
--
--	for (i = 0; i < *parents; i++) {
--		string_copy_rev(rev, &buf[SIZEOF_REV * i]);
--		if (!io_run_buf(revlist_argv, text, sizeof(text)) ||
--		    !(items[i].text = strdup(text))) {
--			ok = FALSE;
--			break;
--		}
--	}
--
--	if (ok) {
--		*parents = 0;
--		ok = prompt_menu("Select parent", items, parents);
--	}
--	for (i = 0; items[i].text; i++)
--		free((char *) items[i].text);
--	free(items);
--	return ok;
--}
--
--static bool
--select_commit_parent(const char *id, char rev[SIZEOF_REV], const char *path)
--{
--	char buf[SIZEOF_STR * 4];
--	const char *revlist_argv[] = {
--		"git", "log", "--no-color", "-1",
--			"--pretty=format:%P", id, "--", path, NULL
--	};
--	int parents;
--
--	if (!io_run_buf(revlist_argv, buf, sizeof(buf)) ||
--	    (parents = strlen(buf) / 40) < 0) {
--		report("Failed to get parent information");
--		return FALSE;
--
--	} else if (parents == 0) {
--		if (path)
--			report("Path '%s' does not exist in the parent", path);
--		else
--			report("The selected commit has no parents");
--		return FALSE;
--	}
--
--	if (parents == 1)
--		parents = 0;
--	else if (!open_commit_parent_menu(buf, &parents))
--		return FALSE;
--
--	string_copy_rev(rev, &buf[41 * parents]);
--	return TRUE;
--}
--
- /*
-  * Pager backend
-  */
-@@ -4898,7 +4831,8 @@ struct blame_commit {
- 	const char *author;		/* Author of the commit. */
- 	struct time time;		/* Date from the author ident. */
- 	char filename[128];		/* Name of file. */
--	bool has_previous;		/* Was a "previous" line detected. */
-+	char parent_id[SIZEOF_REV];	/* Parent/previous SHA1 ID. */
-+	char parent_filename[128];	/* Parent/previous name of file. */
- };
- 
- struct blame {
-@@ -5097,7 +5031,11 @@ blame_read(struct view *view, char *line)
- 		string_ncopy(commit->title, line, strlen(line));
- 
- 	} else if (match_blame_header("previous ", &line)) {
--		commit->has_previous = TRUE;
-+		if (strlen(line) <= SIZEOF_REV)
-+			return FALSE;
-+		string_copy_rev(commit->parent_id, line);
-+		line += SIZEOF_REV;
-+		string_ncopy(commit->parent_filename, line, strlen(line));
- 
- 	} else if (match_blame_header("filename ", &line)) {
- 		string_ncopy(commit->filename, line, strlen(line));
-@@ -5153,15 +5091,21 @@ check_blame_commit(struct blame *blame, bool check_null_id)
- static void
- setup_blame_parent_line(struct view *view, struct blame *blame)
- {
-+	char from[SIZEOF_REF + SIZEOF_STR];
-+	char to[SIZEOF_REF + SIZEOF_STR];
- 	const char *diff_tree_argv[] = {
--		"git", "diff-tree", "-U0", blame->commit->id,
--			"--", blame->commit->filename, NULL
-+		"git", "diff", "--no-textconv", "--no-extdiff", "--no-color",
-+			"-U0", from, to, "--", NULL
- 	};
- 	struct io io;
- 	int parent_lineno = -1;
- 	int blamed_lineno = -1;
- 	char *line;
- 
-+	snprintf(from, sizeof(from), "%s:%s", opt_ref, opt_file);
-+	snprintf(to, sizeof(to), "%s:%s", blame->commit->id,
-+		 blame->commit->filename);
-+
- 	if (!io_run(&io, IO_RD, NULL, diff_tree_argv))
- 		return;
- 
-@@ -5204,10 +5148,13 @@ blame_request(struct view *view, enum request request, struct line *line)
- 		break;
- 
- 	case REQ_PARENT:
--		if (check_blame_commit(blame, TRUE) &&
--		    select_commit_parent(blame->commit->id, opt_ref,
--					 blame->commit->filename)) {
--			string_copy(opt_file, blame->commit->filename);
-+		if (!check_blame_commit(blame, TRUE))
-+			break;
-+		if (!*blame->commit->parent_id) {
-+			report("The selected commit has no parents");
-+		} else {
-+			string_copy_rev(opt_ref, blame->commit->parent_id);
-+			string_copy_rev(opt_file, blame->commit->parent_filename);
- 			setup_blame_parent_line(view, blame);
- 			open_view(view, REQ_VIEW_BLAME, OPEN_REFRESH);
- 		}
-@@ -5228,7 +5175,7 @@ blame_request(struct view *view, enum request request, struct line *line)
- 					"-C", "-M", "HEAD", "--", view->vid, NULL
- 			};
- 
--			if (!blame->commit->has_previous) {
-+			if (!*blame->commit->parent_id) {
- 				diff_index_argv[1] = "diff";
- 				diff_index_argv[2] = "--no-color";
- 				diff_index_argv[6] = "--";
--- 
-1.7.1.354.ge64bd
+U29ycnksIGZvcmdvdCB0byBwcmVmaXggdGhpcyBtYWlsIHByb3Blcmx5IC4uLgoKT24gU2F0LCBK
+dW4gNSwgMjAxMCBhdCAxNTo1NiwgSm9uYXMgRm9uc2VjYSA8Zm9uc2VjYUBkaWt1LmRrPiB3cm90
+ZToKPiBGcm9tIGdpdCBjb21taXQgOTZlMTE3MDk5YzBlNGY3ZDUwOGViMDcxZjYwYjYyNzUwMzhm
+NmYzNzoKPgo+IMKgSXQgZ2l2ZXMgdGhlIHBhcmVudCBjb21taXQgb2YgdGhlIGJsYW1lZCBjb21t
+aXQsIF9hbmRfIGEgcGF0aCBpbiB0aGF0Cj4gwqBwYXJlbnQgY29tbWl0IHRoYXQgY29ycmVzcG9u
+ZHMgdG8gdGhlIGJsYW1lZCBwYXRoIC0tLSBpbiBzaG9ydCwgaXQgaXMKPiDCoHRoZSBvcmlnaW4g
+dGhhdCB3b3VsZCBoYXZlIGJlZW4gYmxhbWVkIChvciBwYXNzZWQgYmxhbWUgdGhyb3VnaCkgZm9y
+Cj4gwqB0aGUgbGluZSBfaWZfIHRoZSBibGFtZWQgY29tbWl0IGRpZCBub3QgY2hhbmdlIHRoYXQg
+bGluZS4KPgo+IFRoaXMgZnVuY3Rpb25hbGl0eSB3YXMgcmVsZWFzZWQgaW4gZ2l0IHZlcnNpb24g
+MS42LjMgaW4gMjAwOS0wNS0wNi4KPiAtLS0KPiDCoE5FV1MgwqB8IMKgIMKgMiArCj4gwqB0aWcu
+YyB8IMKgIDk5ICsrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0KPiDCoDIgZmlsZXMgY2hhbmdlZCwgMjUgaW5zZXJ0aW9ucygrKSwg
+NzYgZGVsZXRpb25zKC0pCj4KPiDCoEkgZmluYWxseSBnb3Qgc29tZSBtb3JlIHRpbWUgdG8gZGln
+IGFyb3VuZCB0aGlzLiBXaGF0IGlmIHdlIHNpbXBseSB1c2VzCj4gwqB0aGUgaW5mb3JtYXRpb24g
+Z2l2ZW4gYnkgdGhlIHBvcmNlbGFpbiBvdXRwdXQncyBwcmV2aW91cyBsaW5lPyBJdAo+IMKgaGFu
+ZGxlcyB5b3VyIHNpbXBsZSB0ZXN0IGNhc2UsIGFuZCBuYXZpZ2F0aW5nIGluIHRoZSB0aWcgcmVw
+b3NpdG9yeS4gSXQKPiDCoGFsc28gbWFrZXMgaXQgcG9zc2libGUgdG8gZGVsZXRlIGEgbG90IG9m
+IGNvZGUuCj4KPiBkaWZmIC0tZ2l0IGEvTkVXUyBiL05FV1MKPiBpbmRleCAxOTBlNWRjLi40OTli
+ZGJjIDEwMDY0NAo+IC0tLSBhL05FV1MKPiArKysgYi9ORVdTCj4gQEAgLTM4LDYgKzM4LDggQEAg
+QnVnIGZpeGVzOgo+IMKgLSBGaXggdW5iaW5kIHRvIGJlaGF2ZSBhcyBpZiB0aGUga2V5YmluZGlu
+ZyB3YXMgbmV2ZXIgZGVmaW5lZC4KPiDCoC0gRml4IHVuYmluZCB0byBhbHNvIGNvdmVyIGJ1aWx0
+LWluIHJ1biByZXF1ZXN0cy4KPiDCoC0gRml4IHBhcnNpbmcgb2YgdW5rbm93biBrZXltYXAgbmFt
+ZXMuCj4gKyAtIEJsYW1lIHZpZXc6IGZpeCBwYXJlbnQgYmxhbWUgdG8gZGV0ZWN0IHJlbmFtZXMu
+IEl0IHVzZXMgInByZXZpb3VzIgo+ICsgwqAgbGluZSBpbmZvIGZyb20gdGhlIGJsYW1lIHBvcmNl
+bGFpbiBvdXRwdXQgYWRkZWQgaW4gZ2l0IHZlcnNpb24gMS42LjMuCj4KPiDCoHRpZy0wLjE1Cj4g
+wqAtLS0tLS0tLQo+IGRpZmYgLS1naXQgYS90aWcuYyBiL3RpZy5jCj4gaW5kZXggMDFmNDhjMy4u
+MDQ0ZGEyOCAxMDA2NDQKPiAtLS0gYS90aWcuYwo+ICsrKyBiL3RpZy5jCj4gQEAgLTM5NzcsNzMg
+KzM5NzcsNiBAQCBwYXJzZV9hdXRob3JfbGluZShjaGFyICppZGVudCwgY29uc3QgY2hhciAqKmF1
+dGhvciwgc3RydWN0IHRpbWUgKnRpbWUpCj4gwqAgwqAgwqAgwqB9Cj4gwqB9Cj4KPiAtc3RhdGlj
+IGJvb2wKPiAtb3Blbl9jb21taXRfcGFyZW50X21lbnUoY2hhciBidWZbU0laRU9GX1NUUl0sIGlu
+dCAqcGFyZW50cykKPiAtewo+IC0gwqAgwqAgwqAgY2hhciByZXZbU0laRU9GX1JFVl07Cj4gLSDC
+oCDCoCDCoCBjb25zdCBjaGFyICpyZXZsaXN0X2FyZ3ZbXSA9IHsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgICJnaXQiLCAibG9nIiwgIi0tbm8tY29sb3IiLCAiLTEiLCAiLS1wcmV0dHk9Zm9ybWF0
+OiVzIiwgcmV2LCBOVUxMCj4gLSDCoCDCoCDCoCB9Owo+IC0gwqAgwqAgwqAgc3RydWN0IG1lbnVf
+aXRlbSAqaXRlbXM7Cj4gLSDCoCDCoCDCoCBjaGFyIHRleHRbU0laRU9GX1NUUl07Cj4gLSDCoCDC
+oCDCoCBib29sIG9rID0gVFJVRTsKPiAtIMKgIMKgIMKgIGludCBpOwo+IC0KPiAtIMKgIMKgIMKg
+IGl0ZW1zID0gY2FsbG9jKCpwYXJlbnRzICsgMSwgc2l6ZW9mKCppdGVtcykpOwo+IC0gwqAgwqAg
+wqAgaWYgKCFpdGVtcykKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJldHVybiBGQUxTRTsKPiAt
+Cj4gLSDCoCDCoCDCoCBmb3IgKGkgPSAwOyBpIDwgKnBhcmVudHM7IGkrKykgewo+IC0gwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgc3RyaW5nX2NvcHlfcmV2KHJldiwgJmJ1ZltTSVpFT0ZfUkVWICogaV0p
+Owo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFpb19ydW5fYnVmKHJldmxpc3RfYXJndiwg
+dGV4dCwgc2l6ZW9mKHRleHQpKSB8fAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIShp
+dGVtc1tpXS50ZXh0ID0gc3RyZHVwKHRleHQpKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgb2sgPSBGQUxTRTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIGJyZWFrOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgfQo+IC0K
+PiAtIMKgIMKgIMKgIGlmIChvaykgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgKnBhcmVudHMg
+PSAwOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgb2sgPSBwcm9tcHRfbWVudSgiU2VsZWN0IHBh
+cmVudCIsIGl0ZW1zLCBwYXJlbnRzKTsKPiAtIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIGZvciAo
+aSA9IDA7IGl0ZW1zW2ldLnRleHQ7IGkrKykKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGZyZWUo
+KGNoYXIgKikgaXRlbXNbaV0udGV4dCk7Cj4gLSDCoCDCoCDCoCBmcmVlKGl0ZW1zKTsKPiAtIMKg
+IMKgIMKgIHJldHVybiBvazsKPiAtfQo+IC0KPiAtc3RhdGljIGJvb2wKPiAtc2VsZWN0X2NvbW1p
+dF9wYXJlbnQoY29uc3QgY2hhciAqaWQsIGNoYXIgcmV2W1NJWkVPRl9SRVZdLCBjb25zdCBjaGFy
+ICpwYXRoKQo+IC17Cj4gLSDCoCDCoCDCoCBjaGFyIGJ1ZltTSVpFT0ZfU1RSICogNF07Cj4gLSDC
+oCDCoCDCoCBjb25zdCBjaGFyICpyZXZsaXN0X2FyZ3ZbXSA9IHsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgICJnaXQiLCAibG9nIiwgIi0tbm8tY29sb3IiLCAiLTEiLAo+IC0gwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgIi0tcHJldHR5PWZvcm1hdDolUCIsIGlkLCAiLS0iLCBwYXRo
+LCBOVUxMCj4gLSDCoCDCoCDCoCB9Owo+IC0gwqAgwqAgwqAgaW50IHBhcmVudHM7Cj4gLQo+IC0g
+wqAgwqAgwqAgaWYgKCFpb19ydW5fYnVmKHJldmxpc3RfYXJndiwgYnVmLCBzaXplb2YoYnVmKSkg
+fHwKPiAtIMKgIMKgIMKgIMKgIMKgIChwYXJlbnRzID0gc3RybGVuKGJ1ZikgLyA0MCkgPCAwKSB7
+Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXBvcnQoIkZhaWxlZCB0byBnZXQgcGFyZW50IGlu
+Zm9ybWF0aW9uIik7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXR1cm4gRkFMU0U7Cj4gLQo+
+IC0gwqAgwqAgwqAgfSBlbHNlIGlmIChwYXJlbnRzID09IDApIHsKPiAtIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIGlmIChwYXRoKQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmVw
+b3J0KCJQYXRoICclcycgZG9lcyBub3QgZXhpc3QgaW4gdGhlIHBhcmVudCIsIHBhdGgpOwo+IC0g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgZWxzZQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgcmVwb3J0KCJUaGUgc2VsZWN0ZWQgY29tbWl0IGhhcyBubyBwYXJlbnRzIik7Cj4gLSDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCByZXR1cm4gRkFMU0U7Cj4gLSDCoCDCoCDCoCB9Cj4gLQo+IC0g
+wqAgwqAgwqAgaWYgKHBhcmVudHMgPT0gMSkKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHBhcmVu
+dHMgPSAwOwo+IC0gwqAgwqAgwqAgZWxzZSBpZiAoIW9wZW5fY29tbWl0X3BhcmVudF9tZW51KGJ1
+ZiwgJnBhcmVudHMpKQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIEZBTFNFOwo+IC0K
+PiAtIMKgIMKgIMKgIHN0cmluZ19jb3B5X3JldihyZXYsICZidWZbNDEgKiBwYXJlbnRzXSk7Cj4g
+LSDCoCDCoCDCoCByZXR1cm4gVFJVRTsKPiAtfQo+IC0KPiDCoC8qCj4gwqAqIFBhZ2VyIGJhY2tl
+bmQKPiDCoCovCj4gQEAgLTQ4OTgsNyArNDgzMSw4IEBAIHN0cnVjdCBibGFtZV9jb21taXQgewo+
+IMKgIMKgIMKgIMKgY29uc3QgY2hhciAqYXV0aG9yOyDCoCDCoCDCoCDCoCDCoCDCoCAvKiBBdXRo
+b3Igb2YgdGhlIGNvbW1pdC4gKi8KPiDCoCDCoCDCoCDCoHN0cnVjdCB0aW1lIHRpbWU7IMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIC8qIERhdGUgZnJvbSB0aGUgYXV0aG9yIGlkZW50LiAqLwo+IMKgIMKg
+IMKgIMKgY2hhciBmaWxlbmFtZVsxMjhdOyDCoCDCoCDCoCDCoCDCoCDCoCAvKiBOYW1lIG9mIGZp
+bGUuICovCj4gLSDCoCDCoCDCoCBib29sIGhhc19wcmV2aW91czsgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAvKiBXYXMgYSAicHJldmlvdXMiIGxpbmUgZGV0ZWN0ZWQuICovCj4gKyDCoCDCoCDCoCBjaGFy
+IHBhcmVudF9pZFtTSVpFT0ZfUkVWXTsgwqAgwqAgLyogUGFyZW50L3ByZXZpb3VzIFNIQTEgSUQu
+ICovCj4gKyDCoCDCoCDCoCBjaGFyIHBhcmVudF9maWxlbmFtZVsxMjhdOyDCoCDCoCDCoC8qIFBh
+cmVudC9wcmV2aW91cyBuYW1lIG9mIGZpbGUuICovCj4gwqB9Owo+Cj4gwqBzdHJ1Y3QgYmxhbWUg
+ewo+IEBAIC01MDk3LDcgKzUwMzEsMTEgQEAgYmxhbWVfcmVhZChzdHJ1Y3QgdmlldyAqdmlldywg
+Y2hhciAqbGluZSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHN0cmluZ19uY29weShjb21taXQt
+PnRpdGxlLCBsaW5lLCBzdHJsZW4obGluZSkpOwo+Cj4gwqAgwqAgwqAgwqB9IGVsc2UgaWYgKG1h
+dGNoX2JsYW1lX2hlYWRlcigicHJldmlvdXMgIiwgJmxpbmUpKSB7Cj4gLSDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBjb21taXQtPmhhc19wcmV2aW91cyA9IFRSVUU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCBpZiAoc3RybGVuKGxpbmUpIDw9IFNJWkVPRl9SRVYpCj4gKyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCByZXR1cm4gRkFMU0U7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBz
+dHJpbmdfY29weV9yZXYoY29tbWl0LT5wYXJlbnRfaWQsIGxpbmUpOwo+ICsgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgbGluZSArPSBTSVpFT0ZfUkVWOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc3Ry
+aW5nX25jb3B5KGNvbW1pdC0+cGFyZW50X2ZpbGVuYW1lLCBsaW5lLCBzdHJsZW4obGluZSkpOwo+
+Cj4gwqAgwqAgwqAgwqB9IGVsc2UgaWYgKG1hdGNoX2JsYW1lX2hlYWRlcigiZmlsZW5hbWUgIiwg
+JmxpbmUpKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzdHJpbmdfbmNvcHkoY29tbWl0LT5m
+aWxlbmFtZSwgbGluZSwgc3RybGVuKGxpbmUpKTsKPiBAQCAtNTE1MywxNSArNTA5MSwyMSBAQCBj
+aGVja19ibGFtZV9jb21taXQoc3RydWN0IGJsYW1lICpibGFtZSwgYm9vbCBjaGVja19udWxsX2lk
+KQo+IMKgc3RhdGljIHZvaWQKPiDCoHNldHVwX2JsYW1lX3BhcmVudF9saW5lKHN0cnVjdCB2aWV3
+ICp2aWV3LCBzdHJ1Y3QgYmxhbWUgKmJsYW1lKQo+IMKgewo+ICsgwqAgwqAgwqAgY2hhciBmcm9t
+W1NJWkVPRl9SRUYgKyBTSVpFT0ZfU1RSXTsKPiArIMKgIMKgIMKgIGNoYXIgdG9bU0laRU9GX1JF
+RiArIFNJWkVPRl9TVFJdOwo+IMKgIMKgIMKgIMKgY29uc3QgY2hhciAqZGlmZl90cmVlX2FyZ3Zb
+XSA9IHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgICJnaXQiLCAiZGlmZi10cmVlIiwgIi1VMCIs
+IGJsYW1lLT5jb21taXQtPmlkLAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+Ii0tIiwgYmxhbWUtPmNvbW1pdC0+ZmlsZW5hbWUsIE5VTEwKPiArIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgICJnaXQiLCAiZGlmZiIsICItLW5vLXRleHRjb252IiwgIi0tbm8tZXh0ZGlmZiIsICItLW5v
+LWNvbG9yIiwKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICItVTAiLCBmcm9t
+LCB0bywgIi0tIiwgTlVMTAo+IMKgIMKgIMKgIMKgfTsKPiDCoCDCoCDCoCDCoHN0cnVjdCBpbyBp
+bzsKPiDCoCDCoCDCoCDCoGludCBwYXJlbnRfbGluZW5vID0gLTE7Cj4gwqAgwqAgwqAgwqBpbnQg
+YmxhbWVkX2xpbmVubyA9IC0xOwo+IMKgIMKgIMKgIMKgY2hhciAqbGluZTsKPgo+ICsgwqAgwqAg
+wqAgc25wcmludGYoZnJvbSwgc2l6ZW9mKGZyb20pLCAiJXM6JXMiLCBvcHRfcmVmLCBvcHRfZmls
+ZSk7Cj4gKyDCoCDCoCDCoCBzbnByaW50Zih0bywgc2l6ZW9mKHRvKSwgIiVzOiVzIiwgYmxhbWUt
+PmNvbW1pdC0+aWQsCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJsYW1lLT5jb21taXQtPmZp
+bGVuYW1lKTsKPiArCj4gwqAgwqAgwqAgwqBpZiAoIWlvX3J1bigmaW8sIElPX1JELCBOVUxMLCBk
+aWZmX3RyZWVfYXJndikpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZXR1cm47Cj4KPiBAQCAt
+NTIwNCwxMCArNTE0OCwxMyBAQCBibGFtZV9yZXF1ZXN0KHN0cnVjdCB2aWV3ICp2aWV3LCBlbnVt
+IHJlcXVlc3QgcmVxdWVzdCwgc3RydWN0IGxpbmUgKmxpbmUpCj4gwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqBicmVhazsKPgo+IMKgIMKgIMKgIMKgY2FzZSBSRVFfUEFSRU5UOgo+IC0gwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgaWYgKGNoZWNrX2JsYW1lX2NvbW1pdChibGFtZSwgVFJVRSkgJiYKPiAtIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHNlbGVjdF9jb21taXRfcGFyZW50KGJsYW1lLT5jb21t
+aXQtPmlkLCBvcHRfcmVmLAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBibGFtZS0+Y29tbWl0LT5maWxlbmFtZSkpIHsKPiAtIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cmluZ19jb3B5KG9wdF9maWxlLCBibGFt
+ZS0+Y29tbWl0LT5maWxlbmFtZSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIWNoZWNr
+X2JsYW1lX2NvbW1pdChibGFtZSwgVFJVRSkpCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCBicmVhazsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghKmJsYW1lLT5jb21t
+aXQtPnBhcmVudF9pZCkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmVw
+b3J0KCJUaGUgc2VsZWN0ZWQgY29tbWl0IGhhcyBubyBwYXJlbnRzIik7Cj4gKyDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCB9IGVsc2Ugewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+c3RyaW5nX2NvcHlfcmV2KG9wdF9yZWYsIGJsYW1lLT5jb21taXQtPnBhcmVudF9pZCk7Cj4gKyDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdHJpbmdfY29weV9yZXYob3B0X2ZpbGUs
+IGJsYW1lLT5jb21taXQtPnBhcmVudF9maWxlbmFtZSk7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqBzZXR1cF9ibGFtZV9wYXJlbnRfbGluZSh2aWV3LCBibGFtZSk7Cj4gwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBvcGVuX3ZpZXcodmlldywgUkVRX1ZJRVdf
+QkxBTUUsIE9QRU5fUkVGUkVTSCk7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB9Cj4gQEAgLTUy
+MjgsNyArNTE3NSw3IEBAIGJsYW1lX3JlcXVlc3Qoc3RydWN0IHZpZXcgKnZpZXcsIGVudW0gcmVx
+dWVzdCByZXF1ZXN0LCBzdHJ1Y3QgbGluZSAqbGluZSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCItQyIsICItTSIsICJIRUFEIiwg
+Ii0tIiwgdmlldy0+dmlkLCBOVUxMCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqB9Owo+Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIWJsYW1lLT5j
+b21taXQtPmhhc19wcmV2aW91cykgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgaWYgKCEqYmxhbWUtPmNvbW1pdC0+cGFyZW50X2lkKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBkaWZmX2luZGV4X2FyZ3ZbMV0gPSAiZGlmZiI7
+Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBkaWZmX2lu
+ZGV4X2FyZ3ZbMl0gPSAiLS1uby1jb2xvciI7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqBkaWZmX2luZGV4X2FyZ3ZbNl0gPSAiLS0iOwo+IC0tCj4gMS43
+LjEuMzU0LmdlNjRiZAo+Cj4KCgoKLS0gCkpvbmFzIEZvbnNlY2EK
