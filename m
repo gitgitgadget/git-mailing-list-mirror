@@ -1,116 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Inline functions (Re: [PATCH/RFC v7 1/2] Add infrastructure for
- translating Git with gettext)
-Date: Sat, 5 Jun 2010 15:16:53 -0500
-Message-ID: <20100605201652.GA5652@progeny.tock>
-References: <1275704035-6552-1-git-send-email-avarab@gmail.com>
- <1275704035-6552-2-git-send-email-avarab@gmail.com>
- <20100605030059.GB2019@progeny.tock>
- <AANLkTilSJ_1STKGvat0llqYVZRI8_tQriE-hIBJPEldn@mail.gmail.com>
- <20100605033849.GB2252@progeny.tock>
- <AANLkTim3PcoLrYb46Bh3tK7Ir3v-K0EQ0czPaD5DIIOK@mail.gmail.com>
- <20100605185926.GA5273@progeny.tock>
- <AANLkTilRqVaVV5q-7NrserSDr0t4L1D_j8rNIWxtMYe1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 05 22:17:01 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC] gitweb: Run in FastCGI mode if gitweb script has .fcgi extension
+Date: Sat,  5 Jun 2010 23:11:18 +0200
+Message-ID: <1275772278-14709-1-git-send-email-jnareb@gmail.com>
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 05 23:09:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKznf-0002uB-VY
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 22:17:00 +0200
+	id 1OL0c8-0000mf-H7
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 23:09:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756539Ab0FEUQz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 16:16:55 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35359 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752523Ab0FEUQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 16:16:54 -0400
-Received: by iwn37 with SMTP id 37so2156773iwn.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 13:16:54 -0700 (PDT)
+	id S932731Ab0FEVJD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jun 2010 17:09:03 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64499 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932658Ab0FEVJB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 17:09:01 -0400
+Received: by fxm8 with SMTP id 8so1392005fxm.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 14:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=CMptCIM6TOohRJMbnqbkqZkMQH1UlAcvIgP88rgd9aU=;
-        b=a7eVIHAcpjsj3U9MAy2DQ8j23w7liMUYR8u/+15uQ8/UIlcO/+iconwJO0RXaLKeJc
-         COpG/vFtFRWqpiNmzu/zZ+KztD+o9jc3DxX8jYa6l2LfDzhhLmdRXsvyUnJw79SjjCho
-         CkgyIJslVTUadvijORc6oN3JuxR0bWonerRiE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=dQtTKCBWMiJEucBeuLMLASClLZKWCeG7NVM1n8PA3PY=;
+        b=x+T2qNRjf5+j8BA9mAH/HJyywjmrCfboF/rrsAA7Ug5OPrms1QMtTP858unhSuvB13
+         oc+a/boTIdxQiQJcSWcrE8AoiTG/kDpQvPyu+BqULA2S9e2O7bevZEjYGKEA3WyEpTKP
+         p3h02vk1jZ784ztsEaFvLRUScj0CX8I1hN5S0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=gC36byglhZr6JGIlNZIF1vB2WzUuKIIeEwAliged409ypvDB+rXjocrwvpzTE9BVIW
-         dmnJJzOmvMuF3/me2gXmVv18CuyAPgFmrZ5vNxPRZuhGp3DMpBt5mqlshX6AR5WbxRvt
-         PfCU8ZD1Dosm6fzCadJR654rxQBr3wAgkHgKI=
-Received: by 10.231.119.102 with SMTP id y38mr2455796ibq.135.1275769014069;
-        Sat, 05 Jun 2010 13:16:54 -0700 (PDT)
-Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id f1sm11920380ibg.15.2010.06.05.13.16.52
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=EHTh016aPa5ZJlIPJrjYDgj01GeJ7obB6I+k6sdRvesc1g2Zk+ZLsgYlYHG1YZJsLF
+         ukAyJuwWp4qtvpUFTJIHIpI7Z7zO7kwU2rPOzKamzEy3rumMFISfljrE1W4JW3xHiLzY
+         k+XyKH17of/ZDXWhWNB9OAC9XfUSv1CIJ8T94=
+Received: by 10.223.64.194 with SMTP id f2mr13447464fai.2.1275772139524;
+        Sat, 05 Jun 2010 14:08:59 -0700 (PDT)
+Received: from localhost.localdomain (aehn204.neoplus.adsl.tpnet.pl [79.186.195.204])
+        by mx.google.com with ESMTPS id y12sm11953192faj.5.2010.06.05.14.08.56
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 13:16:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTilRqVaVV5q-7NrserSDr0t4L1D_j8rNIWxtMYe1@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sat, 05 Jun 2010 14:08:58 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148494>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+If the name of the script ($SCRIPT_NAME or $SCRIPT_FILENAME CGI
+environment variable, or __FILE__ literal) ends with '.fcgi'
+extension, run gitweb in FastCGI mode, as if it was run with
+'--fastcgi' / '--fcgi' option.
 
-> As an aside, I'd appreciate a document pointer, what are the
-> implications here exactly?
+This is intended for easy deploying gitweb using FastCGI
+interface.
 
-Oh, good point!  I clean forgot to provide that.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This patch is based on a0446e7 commit (gitweb: Add support for
+FastCGI, using CGI::Fast, 2010-05-07), currently in 'next' 
+(from 'jn/gitweb-fastcgi' branch).
 
-"static inline" functions are just like macros, except each argument
-is evaluated exactly once and the arguments are typechecked.
+I have not actually tested that it runs as FastCGI script.
 
-In the older dialect, what I was suggesting would be written as
-follows:
+Now to run gitweb using FastCGI, all one has to do is to rename it
+from gitweb.cgi to gitweb.fcgi.  And of course configure web server
+to run it using FastCGI interface.
 
- #ifdef NO_GETTEXT
- #define git_setup_gettext() do { } while(0)
- #else
- extern void git_setup_gettext(void);
- #endif
+ gitweb/gitweb.perl |   21 +++++++++++++--------
+ 1 files changed, 13 insertions(+), 8 deletions(-)
 
-The feature has been part of GCC and various compilers for a long time
-now.  It was finally officially adopted when the C99 standard came
-out.  It "degrades gracefully" in that the Makefile will define inline
-to nothing on those very old compilers known not to support it, making
-these into static functions (which is kind of ugly but with most
-optimizers it tends to produce the same result).
-
-GCC documentation:
-
-  http://gcc.gnu.org/onlinedocs/gcc/Inline.html
-
-C99 documentation (see the "most current draft" of the revised C99
-and navigate with PDF bookmarks to Language =E2=86=92 Declarations =E2=86=
-=92
-=46unction specifiers =E2=86=92 Semantics):
-
-  http://www.open-std.org/jtc1/sc22/wg14/www/projects#9899
-
-More important than all that is how the construct gets used and why.
-=46or this, see SECTION 2 item 2 ("Ifdefs are ugly") of
-linux-2.6/Documentation/SubmittingPatches[1]: and take a look at some
-of the surrounding code (maybe include/linux/kernel.h would be
-analogous) for examples.
-
-Hope that helps,
-Jonathan
-
-[1] http://git.kernel.org/?p=3Dlinux/kernel/git/torvalds/linux-2.6.git;=
-a=3Dblob;f=3DDocumentation/SubmittingPatches
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c42c16f..47ef993 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1056,19 +1056,24 @@ our $is_last_request = sub { 1 };
+ our ($pre_dispatch_hook, $post_dispatch_hook, $pre_listen_hook);
+ our $CGI = 'CGI';
+ our $cgi;
++sub configure_as_fcgi {
++	require CGI::Fast;
++	our $CGI = 'CGI::Fast';
++
++	my $request_number = 0;
++	# let each child service 100 requests
++	our $is_last_request = sub { ++$request_number > 100 };
++}
+ sub evaluate_argv {
++	my $script_name = $ENV{'SCRIPT_NAME'} || $ENV{'SCRIPT_FILENAME'} || __FILE__;
++	configure_as_fcgi()
++		if $script_name =~ /\.fcgi$/;
++
+ 	return unless (@ARGV);
+ 
+ 	require Getopt::Long;
+ 	Getopt::Long::GetOptions(
+-		'fastcgi|fcgi|f' => sub {
+-			require CGI::Fast;
+-			our $CGI = 'CGI::Fast';
+-
+-			my $request_number = 0;
+-			# let each child service 100 requests
+-			our $is_last_request = sub { ++$request_number > 100 };
+-		},
++		'fastcgi|fcgi|f' => \&configure_as_fcgi,
+ 		'nproc|n=i' => sub {
+ 			my ($arg, $val) = @_;
+ 			return unless eval { require FCGI::ProcManager; 1; };
+-- 
+1.7.0.1
