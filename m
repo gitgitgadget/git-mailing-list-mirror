@@ -1,88 +1,80 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: Re: [PATCH] git-mergetool--lib.sh: fix mergetool.<tool>.*
- configurations ignored for known tools
-Date: Sun, 06 Jun 2010 00:42:29 +0200
-Message-ID: <1275777749.18270.23.camel@kheops>
-References: <1275705112-8088-1-git-send-email-sylvain@abstraction.fr>
-	 <1275705112-8088-2-git-send-email-sylvain@abstraction.fr>
-	 <m2fx11n8rp.fsf@igel.home>
-Reply-To: sylvain@abstraction.fr
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
+Date: Sun, 6 Jun 2010 01:57:24 +0200
+Message-ID: <AANLkTimKwCDlW_uaCusZcmV2IttqORlUwSqkVnD3no6q@mail.gmail.com>
+References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org> <20100604211811.GA7471@progeny.tock> 
+	<7v39x1z72z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-MUNXUKCHnO7syFPQ2HG4"
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Jun 06 00:42:45 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"Gary V. Vaughan" <git@mlists.thewrittenword.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 06 01:57:53 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OL24h-0001Rh-3J
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 00:42:43 +0200
+	id 1OL3FO-0003tT-Iy
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 01:57:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933466Ab0FEWmg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 18:42:36 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:60344 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933381Ab0FEWmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 18:42:35 -0400
-Received: by wwc33 with SMTP id 33so323108wwc.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 15:42:34 -0700 (PDT)
-Received: by 10.227.143.66 with SMTP id t2mr12177041wbu.116.1275777754259;
-        Sat, 05 Jun 2010 15:42:34 -0700 (PDT)
-Received: from [192.168.0.77] (smj33-1-82-233-66-33.fbx.proxad.net [82.233.66.33])
-        by mx.google.com with ESMTPS id u36sm23032855wbv.0.2010.06.05.15.42.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 15:42:33 -0700 (PDT)
-In-Reply-To: <m2fx11n8rp.fsf@igel.home>
-X-Mailer: Evolution 2.28.3 
+	id S933826Ab0FEX5p convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 19:57:45 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47515 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933819Ab0FEX5p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 19:57:45 -0400
+Received: by gwb15 with SMTP id 15so552578gwb.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 16:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MrqFCikvH+4TQfMEwDSPQDsgoP+Vguq3AHV47W6v29c=;
+        b=BDmbjx+45j1H8cbDnYRYON2In2i4kVfdqqPg+0Zc/9YwgPZIwrX5JFaWxda+8tEiE/
+         gGe16/O0x9FTER7jlDFszmwZqKKn7F6tVkyeU7DbxY8JPfh/7+9Z+Fj0JGjTUamaQ7ae
+         BR0+Ns7fbavDpRdQIgygBB5td9CxgumaZ9Z3g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=T9nak7N38+Z1KHJkH0vH/97NTMRFFOPBqU0DFvMx4zlYwZl/WX234su84nR0JmsTD8
+         eGh3Xu1HkdyUS9M+W+HXhACGrudrv6bolmI29kjrR9PLOk3ThCJhb2/x1oLPGuox4tW6
+         2Y1grqULuzuYbdnaIA9mHaVnhi1QrMQJxTELE=
+Received: by 10.151.18.38 with SMTP id v38mr12170875ybi.420.1275782264072; 
+	Sat, 05 Jun 2010 16:57:44 -0700 (PDT)
+Received: by 10.151.61.12 with HTTP; Sat, 5 Jun 2010 16:57:24 -0700 (PDT)
+In-Reply-To: <7v39x1z72z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148504>
 
+Heya,
 
---=-MUNXUKCHnO7syFPQ2HG4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sat, Jun 5, 2010 at 20:07, Junio C Hamano <gitster@pobox.com> wrote:
+>> That patch (d1b1a919) breaks merge-one-file when run outside the tes=
+t
+>> suite as far as I can tell.
+>
+> Thanks for catching. =C2=A0I wonder if something like this would be b=
+etter in
+> that it wouldn't break people who do not use custom "DIFF" while it w=
+ould
+> help people who do at the same time...
+>
+> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0=
+ =C2=A02 ++
+> =C2=A0git-merge-one-file.sh | =C2=A0 =C2=A02 +-
 
-On Sat, 2010-06-05 at 11:11 +0200, Andreas Schwab wrote:
-> Sylvain Rabot <sylvain@abstraction.fr> writes:
->=20
-> > +			if !test -f "$merge_tool_path/$merge_tool_cmd_base"; then
->=20
-> Missing space after '!'.
->=20
-> > +			elif !test -x "$merge_tool_path/$merge_tool_cmd_base"; then
->=20
-> Likewise.
->=20
-> Andreas.
->=20
+No addition to the test suite to catch this in the future?
 
-Thanks,=20
-
-I have updated the patch, you can find it here
-git://git.abstraction.fr/~sylvain/git.git in the mergetool-lib branch.
-
-http://git.abstraction.fr/~sylvain/?p=3Dgit.git;a=3Dcommitdiff;h=3D905bfb5c=
-ea0750a67bf9bcc2baf22079054742fa
 
 --=20
-Sylvain Rabot <sylvain@abstraction.fr>
+Cheers,
 
---=-MUNXUKCHnO7syFPQ2HG4
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEABECAAYFAkwK0tEACgkQ+TklUoyVcyfiagCfYKdHAHXFefxQdFndJId+epqe
-m0QAniLemTklubyDyrnjaiZXVPt6qo7S
-=FdJS
------END PGP SIGNATURE-----
-
---=-MUNXUKCHnO7syFPQ2HG4--
+Sverre Rabbelier
