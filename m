@@ -1,81 +1,108 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
-Date: Sat, 5 Jun 2010 13:09:30 +0200
-Message-ID: <20100605110930.GA10526@localhost>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH RFC] gettext: Support building on non-GNU with -lintl
+Date: Sat, 05 Jun 2010 04:42:50 -0700 (PDT)
+Message-ID: <m3aar9r9ek.fsf@localhost.localdomain>
+References: <1275669370-6004-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Peter Rabbitson <ribasushi@cpan.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 05 13:10:46 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 05 13:43:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKrGy-0001CW-Rp
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 13:10:41 +0200
+	id 1OKrmF-00068Q-Mf
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 13:43:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932872Ab0FELKU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 07:10:20 -0400
-Received: from mail-ew0-f223.google.com ([209.85.219.223]:65040 "EHLO
-	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932827Ab0FELKT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 07:10:19 -0400
-Received: by ewy23 with SMTP id 23so8112ewy.1
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 04:10:16 -0700 (PDT)
+	id S933113Ab0FELmy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 07:42:54 -0400
+Received: from fg-out-1718.google.com ([72.14.220.158]:39412 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933033Ab0FELmx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 07:42:53 -0400
+Received: by fg-out-1718.google.com with SMTP id l26so440328fgb.1
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 04:42:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=ENbMLcA5Xb5a2NIxk7RLlwWoObEN21dGapsBmYz/kqo=;
-        b=ln+v5AGgdy9WUhkb4giaZMYLLE5+rAhalrvKfG+WmKuTABYux8NxzuEga1xCbClbmx
-         krh/0dPzB0smXnr7QVsMkfI5jgSbTBBAEW1vC11vLVSKKcoCXV7oUYkHWe1ETYdun27O
-         xOU4IWNFY9/w/QT0GW2NfEGGhZUMWs3Ym/nkM=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=rcYIWydWEQM3PidCe0PB1JY3kEipRMOsGp8qqu/M31k=;
+        b=sQCU7gbUi5bhHiCzELhNf1tD4Y62pvpLGWzEwA5FrM/fqQ4Ov4eSPLMbmMeLqVCidE
+         nERmvDd9L3wjwL34wwzapZNo/vJKTzAR6uegGaEnT62+TRyi+Q0kb8sLdfZoPDYusg1x
+         pQIuiiE3wrUkpVhvrOjOJSFn9LQ1bcSLu9Efo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:mime-version
-         :content-type:content-disposition:user-agent;
-        b=luw7WnZw99rWE7dSV88nSJWw352o+FK5Rtci0QtFHtvILerFr5iHYeXyanNEDSGR0q
-         6R3j410HCvAA890O5X+7lbRnt8oejohdNKa6BC4gv1k81gG5Ls3tWo9kVCWy6wMfwNF0
-         4+j7Ye/v6cA2tC6Dbt+XNb+pXAJJE/otVigHY=
-Received: by 10.213.34.75 with SMTP id k11mr9041538ebd.45.1275736215198;
-        Sat, 05 Jun 2010 04:10:15 -0700 (PDT)
-Received: from darc.lan ([80.123.242.182])
-        by mx.google.com with ESMTPS id 14sm1311808ewy.14.2010.06.05.04.10.14
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=l/HuCp58Tob3lqfcqNXMUF4hAyjS9amYss8NIcv4aSiUUKoHE9NJZ6zN9QewFhpB8S
+         m5FOFpiCxDE53RgTKUZWmC2b9Gl/LUh6Pbn7OwUrTYcWNurwBp7MXQZqXq6oo79ajk3U
+         aFnuNEOuimoQ/0AUQNSSl1K34QQhUL6KJ/KeA=
+Received: by 10.102.13.11 with SMTP id 11mr4266802mum.74.1275738170947;
+        Sat, 05 Jun 2010 04:42:50 -0700 (PDT)
+Received: from localhost.localdomain (aehn204.neoplus.adsl.tpnet.pl [79.186.195.204])
+        by mx.google.com with ESMTPS id y6sm3251346mug.20.2010.06.05.04.42.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 04:10:14 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OKrFq-0002qd-DQ; Sat, 05 Jun 2010 13:09:30 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sat, 05 Jun 2010 04:42:50 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o55Bil6X004345;
+	Sat, 5 Jun 2010 13:44:57 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o55Bia45004341;
+	Sat, 5 Jun 2010 13:44:36 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1275669370-6004-1-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148467>
 
-Hi,
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
 
-Peter and I just stumbled on the following interpretations of the
-checkout command.
+> Change the build process on non-GNU systems to use -lintl if
+> NO_GETTEXT hasn't been set.
+>=20
+> Systems that use the GNU C Library don't need this, but on others the
+> GNU libintl library is an externally install package, so we need to
+> explicitly link to it.
+>=20
+> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+> ---
 
- git checkout origin/frotz      -> detaches HEAD
- git checkout -t origin/frotz   -> git checkout -b frotz origin/frotz
- git checkout frotz             -> git checkout -b frotz origin/frotz
- git checkout -t frotz          -> fatal: Missing branch name
+[...]
+> diff --git a/Makefile b/Makefile
+> index 5169aec..1dfcd65 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -28,6 +28,15 @@ all::
+>  # Define NO_EXPAT if you do not have expat installed.  git-http-push=
+ is
+>  # not built, and you cannot push using http:// and https:// transpor=
+ts.
+>  #
+> +# Define NO_GETTEXT if you don't have libintl installed, or don't wa=
+nt
+> +# to build Git with localization support.
+> +#
+> +# Define NEEDS_LIBINTL if you haven't defined NO_GETTEXT=3DYesPlease=
+,
+> +# but your system needs to be explicitly linked to -lintl. This is
+> +# defined automatically if we're building gettext support on systems
+> +# where we expect not to use glibc (which has libintl included in
+> +# libc).
 
-I was surprised by the third one, which I was expecting to fail.
-Apparently it's a DWIM feature introduced in commit 70c9ac2f. I
-doubt that is what the user was trying to do if they ran that
-command. If anything, this behavior will serve to confuse them.
+Could you add test for NEEDS_LIBINTL to configure.ac?  Thanks in
+advance.
 
-I think git checkout -t <remote>/<branch> is short enough for
-creating a new tracking branch. For something even shorter, we can
-create an alias. But I'd prefer to keep the already complex
-checkout command a little simpler.
-
-Regards,
-Clemens
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
