@@ -1,74 +1,98 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Sat, 05 Jun 2010 22:27:28 +0100
-Message-ID: <4C0AC140.6090808@pileofstuff.org>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>	<4BF7B751.7050704@pileofstuff.org>	<4BFB7F7F.5090407@drmicha.warpmail.net>	<4C041656.7000008@pileofstuff.org> <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com> <4C06050C.2040505@drmicha.warpmail.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC v8 0/2] Gettext support for Git
+Date: Sat, 05 Jun 2010 14:29:13 -0700 (PDT)
+Message-ID: <m3vd9xp3oz.fsf@localhost.localdomain>
+References: <1275772373-26718-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Daniele Segato <daniele.bilug@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Jun 05 23:27:43 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 05 23:29:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OL0u6-0006Dq-Ds
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 23:27:42 +0200
+	id 1OL0vj-0007R8-2K
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 23:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932955Ab0FEV1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 17:27:38 -0400
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:26795 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932884Ab0FEV1h (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 17:27:37 -0400
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100605212731.HCBO3075.mtaout03-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
-          Sat, 5 Jun 2010 22:27:31 +0100
-Received: from [192.168.1.5] (really [80.6.134.127])
-          by aamtaout02-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100605212731.LZRS1586.aamtaout02-winn.ispmail.ntl.com@[192.168.1.5]>;
-          Sat, 5 Jun 2010 22:27:31 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <4C06050C.2040505@drmicha.warpmail.net>
-X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=BxPs6DqL8UcA:10 a=UBIxAjGgU1YA:10 a=IkcTkHD0fZMA:10 a=Ou2gZ_vjsnL7LMxDcwoA:9 a=YFCn1RaoeE7mzwKe_1MA:7 a=1OVMJ_M5Xh-S1KRy9vcnS8PkS-YA:4 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S933183Ab0FEV3R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 17:29:17 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41897 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932702Ab0FEV3P convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 17:29:15 -0400
+Received: by bwz11 with SMTP id 11so623900bwz.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 14:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=wyYWKdHqc9yVau7LIh+M89Ls7D8GiZxiAVqeAZpFSkA=;
+        b=D/HiKD+cbyZmToSgP43oCHicmX1Cqk05SiR8JX/SzN4nSumlRZULc1kHxeKVTpug0T
+         M3a4/JdBcx1gXusoB9WCDsBBQ2wfnzrY7KfxUJFsVB/MNvkrMnEqH3TPHCWcoJk49h41
+         RkJlbO3PcTtfKd6yxcojyCQIdGHc1LB4uQpX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=miKrm+JgTfYjuKGB0LZSQ5bCVFj+vTx6QDg7v3BWTg422SYih3XSexpYHDaUn6HdKH
+         ANgEf7UyTprD4CvINqr0SLxNo23BY4jMEZpTPgzjtIlUNnmNKmo4lTDTNr1qzJRyxuPz
+         Yo7WmPeDueViAJU8jG3nBTgL3HbKPAvSfV840=
+Received: by 10.204.83.85 with SMTP id e21mr5226366bkl.42.1275773353849;
+        Sat, 05 Jun 2010 14:29:13 -0700 (PDT)
+Received: from localhost.localdomain (aehn204.neoplus.adsl.tpnet.pl [79.186.195.204])
+        by mx.google.com with ESMTPS id z17sm11700546bkx.0.2010.06.05.14.29.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 05 Jun 2010 14:29:13 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o55LV4di014976;
+	Sat, 5 Jun 2010 23:31:16 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o55LUr88014973;
+	Sat, 5 Jun 2010 23:30:53 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1275772373-26718-1-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148500>
 
-On 02/06/10 08:15, Michael J Gruber wrote:
-> 
-> Andrew's main thrust is how to migrate a team, not how to migrate a code
-> base, and even less about the technical differences between svn and git.
-> And that makes it especially valuable.
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
 
-I'm glad you like it, and I've now finished version 2.  I think I've
-covered most of the points raised in this thread without getting too far
-into technical issues that I agree belong on a different page.
+> This is version 8 of the series to make Git optionally translatable
+> with GNU gettext.
+>=20
+> Changes since version 7:
+[...]
 
-As well as a few typographic upgrades, I've added some text to the "Git
-as an SVN client" section - warnings for the issues that Daniele
-mentioned, and explaining git issues to SVN users.  I remember now the
-mental anguish I went through trying to explain what a local index is,
-so I thought I'd save other people the bother :)
+>    * Add back support (and a new test) for the no-op N_() macro. This
+>      is used for marking translations for later use, e.g.:
+>        =20
+>         const char help[] =3D
+>         	N_("See 'git help COMMAND' for more information on a specifi=
+c command.");
+>        =20
+>         int main(void)
+>         {
+>             puts(_(help));
 
-As promised, I've also added a "traps for the unwary" section, although
-I'm quite tempted to make it a page on its own.  The intended audience
-and writing style is necessarily quite different, and it awkwardly bulks
-up the table of contents.  I'll probably leave it there unless it gets
-any bigger or people think splitting it out is a particularly good idea.
+Shouldn't you add also corresponding N__ subroutine to Git::I18N
+module?
 
-One issue I haven't addressed is unpushed commits.  I want to write
-something like "consider setting GIT_PS1_SHOWUNPUSHED to remind people
-when they have committed but not yet pushed", so I'm going to see if I
-can add support to git-completion.bash for such an option.
+  # Dummy functions for string marking.
+  sub N__($) {
+  	return shift;
+  }
 
-	- Andrew
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
