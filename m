@@ -1,80 +1,77 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: [PATCH 2/2] git-gui - provide commit-type to the hooks/pre-commit script
-Date: Sat,  5 Jun 2010 13:43:20 -0400
-Message-ID: <1275759800-16577-1-git-send-email-mlevedahl@gmail.com>
-References: <1275759590-16342-1-git-send-email-mlevedahl@gmail.com>
-Cc: git@vger.kernel.org, Mark Levedahl <mlevedahl@gmail.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sat Jun 05 19:43:39 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] optimize path_relative()
+Date: Sat, 05 Jun 2010 11:07:19 -0700
+Message-ID: <7vaar9z73c.fsf@alter.siamese.dyndns.org>
+References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
+ <20100603133631.GA31565@localhost> <7vocfr7oe6.fsf@alter.siamese.dyndns.org>
+ <20100604074442.GA5117@localhost> <20100605073728.GA19159@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sat Jun 05 20:07:35 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKxPC-0008T8-5p
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 19:43:34 +0200
+	id 1OKxmP-0003Iy-Sv
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 20:07:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328Ab0FERn3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 13:43:29 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35876 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752Ab0FERn2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 13:43:28 -0400
-Received: by vws5 with SMTP id 5so1258888vws.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 10:43:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=BB8jIjqXnea6QKqMnQ4WN/rDrkgddNqp1i3fqnY9NXE=;
-        b=wc1Eiq2m6YZuWWPZDyG+VVl+sqRgoR8MxplGYDbCB0zcWoFA2d4mlzIaqR1OaDacq4
-         QjkmB3z2K2ErO2A1d8zjScc/JoHFveBVpmAmwdeAP+jlAqg4wNWu0Sme+gxE42fHm8pF
-         L53cjnh2SNE0pO9d1fi4QggLjIXjxx8Gck9Zs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Ch8b2Zj1cWg+/FM9B0qDuG4hsXYfNVLHtCz8AO2xciecffPKYXzai6IUnqeToooxLI
-         7PJj8OvOpiZfjpMMs9Agad5daFp5tqQrVNVUzR928OuwFL9iGm+ON+nf2d/FEwyUV18Z
-         9JjzfCteOjkrbLDI2l2iKjGRw/c9IhlOVzmC0=
-Received: by 10.224.96.166 with SMTP id h38mr6980536qan.199.1275759807375;
-        Sat, 05 Jun 2010 10:43:27 -0700 (PDT)
-Received: from mark-laptop.lan (pool-71-191-167-79.washdc.fios.verizon.net [71.191.167.79])
-        by mx.google.com with ESMTPS id 6sm4488252qwk.18.2010.06.05.10.43.26
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 10:43:27 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.270.g2a29a
-In-Reply-To: <1275759590-16342-1-git-send-email-mlevedahl@gmail.com>
+	id S1752129Ab0FESH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jun 2010 14:07:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38906 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328Ab0FESH2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 14:07:28 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 406A2B9B90;
+	Sat,  5 Jun 2010 14:07:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=hlA251vHkbrx/m0eTIZcvF323Sg=; b=Ttup6ZP7a3Q+M/8WIeGpf3M
+	kjywLqjVdAGMy25pyjp66ezDg5FiepgjYeGbNA5+DQmDOS7dy7Cp2hlzw4RDIJv3
+	5/xcxV2ljSe+Gb4oDX2DCoP14042mof9iZqh/RCLtA9qw9VkndcCytmhBVQZ1JMs
+	/muiPQuRASBzBra/kDJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=q/lW2O9NREHMrdRpYMbRzOhL3reXYnCLjcmrJud9hwppSOpvy
+	Y8dEOhgdEGRqA2K7GQ/8dUVHCnoXzaUrCMuHhLwC/xFUB2l4DHZnLBTURUCOwAuI
+	mkrOhCzErF8ckjcY+4QgQ6vt995Ejk17OVeciQOM5s/5vGbmVPzq6X9SXA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D0141B9B87;
+	Sat,  5 Jun 2010 14:07:23 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34D47B9B85; Sat,  5 Jun
+ 2010 14:07:21 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 31101616-70CD-11DF-8B0C-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148481>
 
-If hooks/pre-commit acts based upon the changes to be checked in
-rather than just the resulting content, the script needs to know which
-commit to use. For a normal commit, this is HEAD, but when amending this
-is HEAD~1. So, this modifies commit.c to pass $1 as normal|amend depending
-upon the commit type. Existing scripts are unaffected as they did not
-expect any argument so will silently ignore this extra bit of info.
+Clemens Buchacher <drizzd@aon.at> writes:
 
-Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
----
- git-gui/lib/commit.tcl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Avoid copying to strbuf in case a subset of the original string can
+> be returned.
+>
+> Since the strbuf is no longer guaranteed to be updated, this
+> function is different from quote_path_relative(). To avoid
+> confusion, do not export it.
+>
+> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 
-diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
-index 7f459cd..8150fa6 100644
---- a/git-gui/lib/commit.tcl
-+++ b/git-gui/lib/commit.tcl
-@@ -225,7 +225,7 @@ A good commit message has the following format:
- 
- 	# -- Run the pre-commit hook.
- 	#
--	set fd_ph [githook_read pre-commit]
-+	set fd_ph [githook_read pre-commit $commit_type]
- 	if {$fd_ph eq {}} {
- 		commit_commitmsg $curHEAD $msg_p
- 		return
--- 
-1.7.1.270.g2a29a
+The version of path_relative() after this patch looks much easier to
+follow.
+
+I noticed that there is a similar function write_name_quotedpfx() defined
+in the same file, and wondered if we can do something similar to avoid the
+whole allocation business.  But that would only be a microoptimize useful
+for write_name_quoted_relative() and not for quote_path_relative() that
+has a lot more callers, so it would probably not be worth it.
+
+Thanks.
