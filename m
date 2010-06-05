@@ -1,103 +1,95 @@
 From: Clemens Buchacher <drizzd@aon.at>
-Subject: [PATCH] setup: document prefix
-Date: Sat, 5 Jun 2010 10:04:20 +0200
-Message-ID: <20100605080420.GA1151@localhost>
-References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org>
- <20100603133631.GA31565@localhost>
- <7vocfr7oe6.fsf@alter.siamese.dyndns.org>
- <20100604074442.GA5117@localhost>
- <20100604075034.GB5117@localhost>
+Subject: Re: Resurrecting : git-gui: use textconv filter
+Date: Sat, 5 Jun 2010 10:38:21 +0200
+Message-ID: <20100605083821.GB1151@localhost>
+References: <32937075d59e3275bb0762764a101607@ensimag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 05 10:05:36 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: =?iso-8859-1?Q?Cl=E9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 05 10:39:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKoNs-0001BM-0o
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 10:05:36 +0200
+	id 1OKouk-00008q-HS
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 10:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755598Ab0FEIFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 04:05:10 -0400
-Received: from mail-ew0-f223.google.com ([209.85.219.223]:45029 "EHLO
-	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755011Ab0FEIFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 04:05:05 -0400
-Received: by ewy23 with SMTP id 23so497962ewy.1
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 01:05:03 -0700 (PDT)
+	id S932596Ab0FEIja convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 04:39:30 -0400
+Received: from ey-out-2122.google.com ([74.125.78.24]:28958 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932571Ab0FEIj2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 04:39:28 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so132328eya.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 01:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:sender:received:date:from:to
          :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=jSokn43ztOnQ0zBoX0POW8eC2uz+lmkv6PbFh21brkU=;
-        b=SGpolKrRrvaL0enyoQdqUasJ3Zf5xSF5wUI6/qzWCOjuCJK5d99ziwJVkhMD1OiNLn
-         IIDqs4JZpy2l3/+ANbSkZKCr7GrC/+V2v/4lgc+nfNEIUIdoXagwtmOFDei12cmjJ5UR
-         Dglg1CUzuRB1qfcxlycRwkjeKK51/oPM4HDWE=
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=i99t6BtpBEgzoFCck20W6buD0jAMmmMBjuVzVXPGYPE=;
+        b=ZKpFGpygmUCOB//gg6RYgzv1J6Z8l9ux4JelJwRM/0laisMCkWoX586+m+0N+r+G2P
+         /rP0DWn3rDA1w1LYI+FHh5QlAtLjLxq+8fvwpItPKE9Y6AwWJ/SHUi8D+IONjh7nrZu+
+         1lwJPRLPHKSQUJUnAZNrWakXQS+xvsJoZ49XA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=F08nbr2wOL/hbxGkTcCBULUdVVXNv7a0yuzwIA4SJNblJJLa+EQHfMLwp65RrHhHwN
-         KBKw4p5q6PRnNkMnkMz6sDgS/ZcGO6Z4+DnbniBYr9eGxpn5fSh21tUZECH19F1n7pwE
-         shaqIAE7IAZPKeY8sLwNSBcmjf7NXnRz1RriA=
-Received: by 10.213.34.130 with SMTP id l2mr9087099ebd.66.1275725103606;
-        Sat, 05 Jun 2010 01:05:03 -0700 (PDT)
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        b=SEPxOk+RE5fd6+OAeKTZUY7SntnkPyYs1aFvqRDQZZOC5c4RxdgTgPlNVOW/ewn6O/
+         mRLTEg3Q4D4vzdfmwm3Xa0+fpmb/1c2CSKT3uztSoHt5FnIzQPaVGsKguL/QSL7ED0Zp
+         ha0STbuw3n7oe8vqglVeeSkXnv5/RDAvH4RME=
+Received: by 10.213.35.18 with SMTP id n18mr6951850ebd.10.1275727166976;
+        Sat, 05 Jun 2010 01:39:26 -0700 (PDT)
 Received: from darc.lan ([80.123.242.182])
-        by mx.google.com with ESMTPS id 14sm1219918ewy.2.2010.06.05.01.05.02
+        by mx.google.com with ESMTPS id 16sm1219573ewy.7.2010.06.05.01.39.26
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Jun 2010 01:05:03 -0700 (PDT)
+        Sat, 05 Jun 2010 01:39:26 -0700 (PDT)
 Received: from drizzd by darc.lan with local (Exim 4.71)
 	(envelope-from <drizzd@localhost>)
-	id 1OKoMe-0000SN-Vp; Sat, 05 Jun 2010 10:04:20 +0200
+	id 1OKotZ-0000g4-Qs; Sat, 05 Jun 2010 10:38:21 +0200
 Content-Disposition: inline
-In-Reply-To: <20100604075034.GB5117@localhost>
+In-Reply-To: <32937075d59e3275bb0762764a101607@ensimag.fr>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148461>
 
-Signed-off-by: Clemens Buchacher <drizzd@aon.at>
----
+On Sat, Jun 05, 2010 at 12:21:35AM +0200, Cl=E9ment Poulain wrote:
+> After proposing a patch adding textconv support to "git blame"
+> (http://thread.gmane.org/gmane.comp.version-control.git/148310), we a=
+re now
+> looking to have git-gui use it. Clemens Buchacher (Cc-ed) sent us a p=
+atch
+> he made a while ago:
+> http://thread.gmane.org/gmane.comp.version-control.git/145015.
+> There's no answer to the thread, and as a part of our work is based o=
+n it,
+> we would like it to be submitted to you again.
 
-On Fri, Jun 04, 2010 at 09:50:34AM +0200, Clemens Buchacher wrote:
->
-> By the way, I noticed that we rely on the fact that a non-empty
-> prefix ends with '/'. Is that ok?
+A month back, Shawn told me he was too busy to work on git-gui. But
+you can simply add my patch to your series, and send it all in
+together. You should Cc Shawn, since he is the maintainer of
+git-gui.
 
-I checked and the prefix does always end in a slash currently, but
-this guarantee is well hidden in the code. I would feel more at
-ease to continue relying on this with the comment below.
+By the way, if you link to a message on the mailing list, it's
+useful to provide the Message-ID like this.
+
+ http://mid.gmane.org/20100415193944.GA5848@localhost
+
+That way the message can also be found in other archives. You can
+get the Message-ID by appending /raw to the non-threaded message
+link.
+
+ http://article.gmane.org/gmane.comp.version-control.git/145015/raw
 
 Regards,
 Clemens
-
- setup.c |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index 5716d90..0e4cfe6 100644
---- a/setup.c
-+++ b/setup.c
-@@ -519,6 +519,12 @@ int check_repository_format(void)
- 	return check_repository_format_gently(NULL);
- }
- 
-+/*
-+ * Returns the "prefix", a path to the current working directory
-+ * relative to the work tree root, or NULL, if the current working
-+ * directory is not a strict subdirectory of the work tree root. The
-+ * prefix always ends with a '/' character.
-+ */
- const char *setup_git_directory(void)
- {
- 	const char *retval = setup_git_directory_gently(NULL);
--- 
-1.7.1.2.ga1f6e
