@@ -1,203 +1,116 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [TIG PATCH] Improve parent blame to detect renames by using the 
-	previous information
-Date: Sat, 5 Jun 2010 15:57:05 -0400
-Message-ID: <AANLkTilNKxzRhLoYzPopjFYfubJpWw7Gu4Jc-RGLosa1@mail.gmail.com>
-References: <20100523075503.GA24598@coredump.intra.peff.net> 
-	<1275767765-8509-1-git-send-email-fonseca@diku.dk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Inline functions (Re: [PATCH/RFC v7 1/2] Add infrastructure for
+ translating Git with gettext)
+Date: Sat, 5 Jun 2010 15:16:53 -0500
+Message-ID: <20100605201652.GA5652@progeny.tock>
+References: <1275704035-6552-1-git-send-email-avarab@gmail.com>
+ <1275704035-6552-2-git-send-email-avarab@gmail.com>
+ <20100605030059.GB2019@progeny.tock>
+ <AANLkTilSJ_1STKGvat0llqYVZRI8_tQriE-hIBJPEldn@mail.gmail.com>
+ <20100605033849.GB2252@progeny.tock>
+ <AANLkTim3PcoLrYb46Bh3tK7Ir3v-K0EQ0czPaD5DIIOK@mail.gmail.com>
+ <20100605185926.GA5273@progeny.tock>
+ <AANLkTilRqVaVV5q-7NrserSDr0t4L1D_j8rNIWxtMYe1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 05 21:57:36 2010
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 05 22:17:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKzUt-0003vQ-VW
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 21:57:36 +0200
+	id 1OKznf-0002uB-VY
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 22:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932623Ab0FET51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Jun 2010 15:57:27 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44597 "EHLO
+	id S1756539Ab0FEUQz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 16:16:55 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:35359 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932100Ab0FET5Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Jun 2010 15:57:25 -0400
-Received: by iwn37 with SMTP id 37so2148835iwn.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 12:57:25 -0700 (PDT)
+	with ESMTP id S1752523Ab0FEUQy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 16:16:54 -0400
+Received: by iwn37 with SMTP id 37so2156773iwn.19
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 13:16:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=JhmCXUJg2+wSDyOYo7gzfyJ+JMEfkcFg5rIDKGVS85w=;
-        b=UlsStQW5bY7yaNNUVyFXZZDpxbAPLeYHMyyxe10X1ytQtHrjbkpDk4aADZXgMqWUF/
-         NznbOjcuNyN5cIznX+i7hgfghapUY3uwDJZJ6BuIAlCm5/dzeGVBVSqOWUNMUxZZF6dp
-         p9i6hXrdcZgJJoODZG1nAoXP+PPLo6fH1QkMs=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=CMptCIM6TOohRJMbnqbkqZkMQH1UlAcvIgP88rgd9aU=;
+        b=a7eVIHAcpjsj3U9MAy2DQ8j23w7liMUYR8u/+15uQ8/UIlcO/+iconwJO0RXaLKeJc
+         COpG/vFtFRWqpiNmzu/zZ+KztD+o9jc3DxX8jYa6l2LfDzhhLmdRXsvyUnJw79SjjCho
+         CkgyIJslVTUadvijORc6oN3JuxR0bWonerRiE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=qWRS3KVUIheMuHmtL0LUXi1L98MP7oCNNxuM/8yEemVKO3BvpHb8eGXghIRDG5IreW
-         Ej+LbUNFv0Wf4nXerRq0xUM8GqnLAzyvW2kUPzV39Hi9TuY6rarXai1MZIwNWihf5LCk
-         I/tbeRbiQCOCGsyXFMHWHOK75gPdofnayrG4k=
-Received: by 10.231.183.19 with SMTP id ce19mr15413699ibb.35.1275767845143; 
-	Sat, 05 Jun 2010 12:57:25 -0700 (PDT)
-Received: by 10.231.206.145 with HTTP; Sat, 5 Jun 2010 12:57:05 -0700 (PDT)
-In-Reply-To: <1275767765-8509-1-git-send-email-fonseca@diku.dk>
-X-Google-Sender-Auth: l3luLvJKDAYiIXmsyDpDCUcqphw
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=gC36byglhZr6JGIlNZIF1vB2WzUuKIIeEwAliged409ypvDB+rXjocrwvpzTE9BVIW
+         dmnJJzOmvMuF3/me2gXmVv18CuyAPgFmrZ5vNxPRZuhGp3DMpBt5mqlshX6AR5WbxRvt
+         PfCU8ZD1Dosm6fzCadJR654rxQBr3wAgkHgKI=
+Received: by 10.231.119.102 with SMTP id y38mr2455796ibq.135.1275769014069;
+        Sat, 05 Jun 2010 13:16:54 -0700 (PDT)
+Received: from progeny.tock (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id f1sm11920380ibg.15.2010.06.05.13.16.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 05 Jun 2010 13:16:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTilRqVaVV5q-7NrserSDr0t4L1D_j8rNIWxtMYe1@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148493>
 
-U29ycnksIGZvcmdvdCB0byBwcmVmaXggdGhpcyBtYWlsIHByb3Blcmx5IC4uLgoKT24gU2F0LCBK
-dW4gNSwgMjAxMCBhdCAxNTo1NiwgSm9uYXMgRm9uc2VjYSA8Zm9uc2VjYUBkaWt1LmRrPiB3cm90
-ZToKPiBGcm9tIGdpdCBjb21taXQgOTZlMTE3MDk5YzBlNGY3ZDUwOGViMDcxZjYwYjYyNzUwMzhm
-NmYzNzoKPgo+IMKgSXQgZ2l2ZXMgdGhlIHBhcmVudCBjb21taXQgb2YgdGhlIGJsYW1lZCBjb21t
-aXQsIF9hbmRfIGEgcGF0aCBpbiB0aGF0Cj4gwqBwYXJlbnQgY29tbWl0IHRoYXQgY29ycmVzcG9u
-ZHMgdG8gdGhlIGJsYW1lZCBwYXRoIC0tLSBpbiBzaG9ydCwgaXQgaXMKPiDCoHRoZSBvcmlnaW4g
-dGhhdCB3b3VsZCBoYXZlIGJlZW4gYmxhbWVkIChvciBwYXNzZWQgYmxhbWUgdGhyb3VnaCkgZm9y
-Cj4gwqB0aGUgbGluZSBfaWZfIHRoZSBibGFtZWQgY29tbWl0IGRpZCBub3QgY2hhbmdlIHRoYXQg
-bGluZS4KPgo+IFRoaXMgZnVuY3Rpb25hbGl0eSB3YXMgcmVsZWFzZWQgaW4gZ2l0IHZlcnNpb24g
-MS42LjMgaW4gMjAwOS0wNS0wNi4KPiAtLS0KPiDCoE5FV1MgwqB8IMKgIMKgMiArCj4gwqB0aWcu
-YyB8IMKgIDk5ICsrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0KPiDCoDIgZmlsZXMgY2hhbmdlZCwgMjUgaW5zZXJ0aW9ucygrKSwg
-NzYgZGVsZXRpb25zKC0pCj4KPiDCoEkgZmluYWxseSBnb3Qgc29tZSBtb3JlIHRpbWUgdG8gZGln
-IGFyb3VuZCB0aGlzLiBXaGF0IGlmIHdlIHNpbXBseSB1c2VzCj4gwqB0aGUgaW5mb3JtYXRpb24g
-Z2l2ZW4gYnkgdGhlIHBvcmNlbGFpbiBvdXRwdXQncyBwcmV2aW91cyBsaW5lPyBJdAo+IMKgaGFu
-ZGxlcyB5b3VyIHNpbXBsZSB0ZXN0IGNhc2UsIGFuZCBuYXZpZ2F0aW5nIGluIHRoZSB0aWcgcmVw
-b3NpdG9yeS4gSXQKPiDCoGFsc28gbWFrZXMgaXQgcG9zc2libGUgdG8gZGVsZXRlIGEgbG90IG9m
-IGNvZGUuCj4KPiBkaWZmIC0tZ2l0IGEvTkVXUyBiL05FV1MKPiBpbmRleCAxOTBlNWRjLi40OTli
-ZGJjIDEwMDY0NAo+IC0tLSBhL05FV1MKPiArKysgYi9ORVdTCj4gQEAgLTM4LDYgKzM4LDggQEAg
-QnVnIGZpeGVzOgo+IMKgLSBGaXggdW5iaW5kIHRvIGJlaGF2ZSBhcyBpZiB0aGUga2V5YmluZGlu
-ZyB3YXMgbmV2ZXIgZGVmaW5lZC4KPiDCoC0gRml4IHVuYmluZCB0byBhbHNvIGNvdmVyIGJ1aWx0
-LWluIHJ1biByZXF1ZXN0cy4KPiDCoC0gRml4IHBhcnNpbmcgb2YgdW5rbm93biBrZXltYXAgbmFt
-ZXMuCj4gKyAtIEJsYW1lIHZpZXc6IGZpeCBwYXJlbnQgYmxhbWUgdG8gZGV0ZWN0IHJlbmFtZXMu
-IEl0IHVzZXMgInByZXZpb3VzIgo+ICsgwqAgbGluZSBpbmZvIGZyb20gdGhlIGJsYW1lIHBvcmNl
-bGFpbiBvdXRwdXQgYWRkZWQgaW4gZ2l0IHZlcnNpb24gMS42LjMuCj4KPiDCoHRpZy0wLjE1Cj4g
-wqAtLS0tLS0tLQo+IGRpZmYgLS1naXQgYS90aWcuYyBiL3RpZy5jCj4gaW5kZXggMDFmNDhjMy4u
-MDQ0ZGEyOCAxMDA2NDQKPiAtLS0gYS90aWcuYwo+ICsrKyBiL3RpZy5jCj4gQEAgLTM5NzcsNzMg
-KzM5NzcsNiBAQCBwYXJzZV9hdXRob3JfbGluZShjaGFyICppZGVudCwgY29uc3QgY2hhciAqKmF1
-dGhvciwgc3RydWN0IHRpbWUgKnRpbWUpCj4gwqAgwqAgwqAgwqB9Cj4gwqB9Cj4KPiAtc3RhdGlj
-IGJvb2wKPiAtb3Blbl9jb21taXRfcGFyZW50X21lbnUoY2hhciBidWZbU0laRU9GX1NUUl0sIGlu
-dCAqcGFyZW50cykKPiAtewo+IC0gwqAgwqAgwqAgY2hhciByZXZbU0laRU9GX1JFVl07Cj4gLSDC
-oCDCoCDCoCBjb25zdCBjaGFyICpyZXZsaXN0X2FyZ3ZbXSA9IHsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgICJnaXQiLCAibG9nIiwgIi0tbm8tY29sb3IiLCAiLTEiLCAiLS1wcmV0dHk9Zm9ybWF0
-OiVzIiwgcmV2LCBOVUxMCj4gLSDCoCDCoCDCoCB9Owo+IC0gwqAgwqAgwqAgc3RydWN0IG1lbnVf
-aXRlbSAqaXRlbXM7Cj4gLSDCoCDCoCDCoCBjaGFyIHRleHRbU0laRU9GX1NUUl07Cj4gLSDCoCDC
-oCDCoCBib29sIG9rID0gVFJVRTsKPiAtIMKgIMKgIMKgIGludCBpOwo+IC0KPiAtIMKgIMKgIMKg
-IGl0ZW1zID0gY2FsbG9jKCpwYXJlbnRzICsgMSwgc2l6ZW9mKCppdGVtcykpOwo+IC0gwqAgwqAg
-wqAgaWYgKCFpdGVtcykKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJldHVybiBGQUxTRTsKPiAt
-Cj4gLSDCoCDCoCDCoCBmb3IgKGkgPSAwOyBpIDwgKnBhcmVudHM7IGkrKykgewo+IC0gwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgc3RyaW5nX2NvcHlfcmV2KHJldiwgJmJ1ZltTSVpFT0ZfUkVWICogaV0p
-Owo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKCFpb19ydW5fYnVmKHJldmxpc3RfYXJndiwg
-dGV4dCwgc2l6ZW9mKHRleHQpKSB8fAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgIShp
-dGVtc1tpXS50ZXh0ID0gc3RyZHVwKHRleHQpKSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgb2sgPSBGQUxTRTsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIGJyZWFrOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IC0gwqAgwqAgwqAgfQo+IC0K
-PiAtIMKgIMKgIMKgIGlmIChvaykgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgKnBhcmVudHMg
-PSAwOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgb2sgPSBwcm9tcHRfbWVudSgiU2VsZWN0IHBh
-cmVudCIsIGl0ZW1zLCBwYXJlbnRzKTsKPiAtIMKgIMKgIMKgIH0KPiAtIMKgIMKgIMKgIGZvciAo
-aSA9IDA7IGl0ZW1zW2ldLnRleHQ7IGkrKykKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGZyZWUo
-KGNoYXIgKikgaXRlbXNbaV0udGV4dCk7Cj4gLSDCoCDCoCDCoCBmcmVlKGl0ZW1zKTsKPiAtIMKg
-IMKgIMKgIHJldHVybiBvazsKPiAtfQo+IC0KPiAtc3RhdGljIGJvb2wKPiAtc2VsZWN0X2NvbW1p
-dF9wYXJlbnQoY29uc3QgY2hhciAqaWQsIGNoYXIgcmV2W1NJWkVPRl9SRVZdLCBjb25zdCBjaGFy
-ICpwYXRoKQo+IC17Cj4gLSDCoCDCoCDCoCBjaGFyIGJ1ZltTSVpFT0ZfU1RSICogNF07Cj4gLSDC
-oCDCoCDCoCBjb25zdCBjaGFyICpyZXZsaXN0X2FyZ3ZbXSA9IHsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgICJnaXQiLCAibG9nIiwgIi0tbm8tY29sb3IiLCAiLTEiLAo+IC0gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgIi0tcHJldHR5PWZvcm1hdDolUCIsIGlkLCAiLS0iLCBwYXRo
-LCBOVUxMCj4gLSDCoCDCoCDCoCB9Owo+IC0gwqAgwqAgwqAgaW50IHBhcmVudHM7Cj4gLQo+IC0g
-wqAgwqAgwqAgaWYgKCFpb19ydW5fYnVmKHJldmxpc3RfYXJndiwgYnVmLCBzaXplb2YoYnVmKSkg
-fHwKPiAtIMKgIMKgIMKgIMKgIMKgIChwYXJlbnRzID0gc3RybGVuKGJ1ZikgLyA0MCkgPCAwKSB7
-Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXBvcnQoIkZhaWxlZCB0byBnZXQgcGFyZW50IGlu
-Zm9ybWF0aW9uIik7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXR1cm4gRkFMU0U7Cj4gLQo+
-IC0gwqAgwqAgwqAgfSBlbHNlIGlmIChwYXJlbnRzID09IDApIHsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIGlmIChwYXRoKQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmVw
-b3J0KCJQYXRoICclcycgZG9lcyBub3QgZXhpc3QgaW4gdGhlIHBhcmVudCIsIHBhdGgpOwo+IC0g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgZWxzZQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgcmVwb3J0KCJUaGUgc2VsZWN0ZWQgY29tbWl0IGhhcyBubyBwYXJlbnRzIik7Cj4gLSDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCByZXR1cm4gRkFMU0U7Cj4gLSDCoCDCoCDCoCB9Cj4gLQo+IC0g
-wqAgwqAgwqAgaWYgKHBhcmVudHMgPT0gMSkKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHBhcmVu
-dHMgPSAwOwo+IC0gwqAgwqAgwqAgZWxzZSBpZiAoIW9wZW5fY29tbWl0X3BhcmVudF9tZW51KGJ1
-ZiwgJnBhcmVudHMpKQo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmV0dXJuIEZBTFNFOwo+IC0K
-PiAtIMKgIMKgIMKgIHN0cmluZ19jb3B5X3JldihyZXYsICZidWZbNDEgKiBwYXJlbnRzXSk7Cj4g
-LSDCoCDCoCDCoCByZXR1cm4gVFJVRTsKPiAtfQo+IC0KPiDCoC8qCj4gwqAqIFBhZ2VyIGJhY2tl
-bmQKPiDCoCovCj4gQEAgLTQ4OTgsNyArNDgzMSw4IEBAIHN0cnVjdCBibGFtZV9jb21taXQgewo+
-IMKgIMKgIMKgIMKgY29uc3QgY2hhciAqYXV0aG9yOyDCoCDCoCDCoCDCoCDCoCDCoCAvKiBBdXRo
-b3Igb2YgdGhlIGNvbW1pdC4gKi8KPiDCoCDCoCDCoCDCoHN0cnVjdCB0aW1lIHRpbWU7IMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIC8qIERhdGUgZnJvbSB0aGUgYXV0aG9yIGlkZW50LiAqLwo+IMKgIMKg
-IMKgIMKgY2hhciBmaWxlbmFtZVsxMjhdOyDCoCDCoCDCoCDCoCDCoCDCoCAvKiBOYW1lIG9mIGZp
-bGUuICovCj4gLSDCoCDCoCDCoCBib29sIGhhc19wcmV2aW91czsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAvKiBXYXMgYSAicHJldmlvdXMiIGxpbmUgZGV0ZWN0ZWQuICovCj4gKyDCoCDCoCDCoCBjaGFy
-IHBhcmVudF9pZFtTSVpFT0ZfUkVWXTsgwqAgwqAgLyogUGFyZW50L3ByZXZpb3VzIFNIQTEgSUQu
-ICovCj4gKyDCoCDCoCDCoCBjaGFyIHBhcmVudF9maWxlbmFtZVsxMjhdOyDCoCDCoCDCoC8qIFBh
-cmVudC9wcmV2aW91cyBuYW1lIG9mIGZpbGUuICovCj4gwqB9Owo+Cj4gwqBzdHJ1Y3QgYmxhbWUg
-ewo+IEBAIC01MDk3LDcgKzUwMzEsMTEgQEAgYmxhbWVfcmVhZChzdHJ1Y3QgdmlldyAqdmlldywg
-Y2hhciAqbGluZSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHN0cmluZ19uY29weShjb21taXQt
-PnRpdGxlLCBsaW5lLCBzdHJsZW4obGluZSkpOwo+Cj4gwqAgwqAgwqAgwqB9IGVsc2UgaWYgKG1h
-dGNoX2JsYW1lX2hlYWRlcigicHJldmlvdXMgIiwgJmxpbmUpKSB7Cj4gLSDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBjb21taXQtPmhhc19wcmV2aW91cyA9IFRSVUU7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBpZiAoc3RybGVuKGxpbmUpIDw9IFNJWkVPRl9SRVYpCj4gKyDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCByZXR1cm4gRkFMU0U7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBz
-dHJpbmdfY29weV9yZXYoY29tbWl0LT5wYXJlbnRfaWQsIGxpbmUpOwo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgbGluZSArPSBTSVpFT0ZfUkVWOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc3Ry
-aW5nX25jb3B5KGNvbW1pdC0+cGFyZW50X2ZpbGVuYW1lLCBsaW5lLCBzdHJsZW4obGluZSkpOwo+
-Cj4gwqAgwqAgwqAgwqB9IGVsc2UgaWYgKG1hdGNoX2JsYW1lX2hlYWRlcigiZmlsZW5hbWUgIiwg
-JmxpbmUpKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBzdHJpbmdfbmNvcHkoY29tbWl0LT5m
-aWxlbmFtZSwgbGluZSwgc3RybGVuKGxpbmUpKTsKPiBAQCAtNTE1MywxNSArNTA5MSwyMSBAQCBj
-aGVja19ibGFtZV9jb21taXQoc3RydWN0IGJsYW1lICpibGFtZSwgYm9vbCBjaGVja19udWxsX2lk
-KQo+IMKgc3RhdGljIHZvaWQKPiDCoHNldHVwX2JsYW1lX3BhcmVudF9saW5lKHN0cnVjdCB2aWV3
-ICp2aWV3LCBzdHJ1Y3QgYmxhbWUgKmJsYW1lKQo+IMKgewo+ICsgwqAgwqAgwqAgY2hhciBmcm9t
-W1NJWkVPRl9SRUYgKyBTSVpFT0ZfU1RSXTsKPiArIMKgIMKgIMKgIGNoYXIgdG9bU0laRU9GX1JF
-RiArIFNJWkVPRl9TVFJdOwo+IMKgIMKgIMKgIMKgY29uc3QgY2hhciAqZGlmZl90cmVlX2FyZ3Zb
-XSA9IHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgICJnaXQiLCAiZGlmZi10cmVlIiwgIi1VMCIs
-IGJsYW1lLT5jb21taXQtPmlkLAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-Ii0tIiwgYmxhbWUtPmNvbW1pdC0+ZmlsZW5hbWUsIE5VTEwKPiArIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgICJnaXQiLCAiZGlmZiIsICItLW5vLXRleHRjb252IiwgIi0tbm8tZXh0ZGlmZiIsICItLW5v
-LWNvbG9yIiwKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgICItVTAiLCBmcm9t
-LCB0bywgIi0tIiwgTlVMTAo+IMKgIMKgIMKgIMKgfTsKPiDCoCDCoCDCoCDCoHN0cnVjdCBpbyBp
-bzsKPiDCoCDCoCDCoCDCoGludCBwYXJlbnRfbGluZW5vID0gLTE7Cj4gwqAgwqAgwqAgwqBpbnQg
-YmxhbWVkX2xpbmVubyA9IC0xOwo+IMKgIMKgIMKgIMKgY2hhciAqbGluZTsKPgo+ICsgwqAgwqAg
-wqAgc25wcmludGYoZnJvbSwgc2l6ZW9mKGZyb20pLCAiJXM6JXMiLCBvcHRfcmVmLCBvcHRfZmls
-ZSk7Cj4gKyDCoCDCoCDCoCBzbnByaW50Zih0bywgc2l6ZW9mKHRvKSwgIiVzOiVzIiwgYmxhbWUt
-PmNvbW1pdC0+aWQsCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJsYW1lLT5jb21taXQtPmZp
-bGVuYW1lKTsKPiArCj4gwqAgwqAgwqAgwqBpZiAoIWlvX3J1bigmaW8sIElPX1JELCBOVUxMLCBk
-aWZmX3RyZWVfYXJndikpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqByZXR1cm47Cj4KPiBAQCAt
-NTIwNCwxMCArNTE0OCwxMyBAQCBibGFtZV9yZXF1ZXN0KHN0cnVjdCB2aWV3ICp2aWV3LCBlbnVt
-IHJlcXVlc3QgcmVxdWVzdCwgc3RydWN0IGxpbmUgKmxpbmUpCj4gwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqBicmVhazsKPgo+IMKgIMKgIMKgIMKgY2FzZSBSRVFfUEFSRU5UOgo+IC0gwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgaWYgKGNoZWNrX2JsYW1lX2NvbW1pdChibGFtZSwgVFJVRSkgJiYKPiAtIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHNlbGVjdF9jb21taXRfcGFyZW50KGJsYW1lLT5jb21t
-aXQtPmlkLCBvcHRfcmVmLAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBibGFtZS0+Y29tbWl0LT5maWxlbmFtZSkpIHsKPiAtIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cmluZ19jb3B5KG9wdF9maWxlLCBibGFt
-ZS0+Y29tbWl0LT5maWxlbmFtZSk7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIWNoZWNr
-X2JsYW1lX2NvbW1pdChibGFtZSwgVFJVRSkpCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBicmVhazsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmICghKmJsYW1lLT5jb21t
-aXQtPnBhcmVudF9pZCkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgcmVw
-b3J0KCJUaGUgc2VsZWN0ZWQgY29tbWl0IGhhcyBubyBwYXJlbnRzIik7Cj4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCB9IGVsc2Ugewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-c3RyaW5nX2NvcHlfcmV2KG9wdF9yZWYsIGJsYW1lLT5jb21taXQtPnBhcmVudF9pZCk7Cj4gKyDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzdHJpbmdfY29weV9yZXYob3B0X2ZpbGUs
-IGJsYW1lLT5jb21taXQtPnBhcmVudF9maWxlbmFtZSk7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBzZXR1cF9ibGFtZV9wYXJlbnRfbGluZSh2aWV3LCBibGFtZSk7Cj4gwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBvcGVuX3ZpZXcodmlldywgUkVRX1ZJRVdf
-QkxBTUUsIE9QRU5fUkVGUkVTSCk7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB9Cj4gQEAgLTUy
-MjgsNyArNTE3NSw3IEBAIGJsYW1lX3JlcXVlc3Qoc3RydWN0IHZpZXcgKnZpZXcsIGVudW0gcmVx
-dWVzdCByZXF1ZXN0LCBzdHJ1Y3QgbGluZSAqbGluZSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCItQyIsICItTSIsICJIRUFEIiwg
-Ii0tIiwgdmlldy0+dmlkLCBOVUxMCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqB9Owo+Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIWJsYW1lLT5j
-b21taXQtPmhhc19wcmV2aW91cykgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgaWYgKCEqYmxhbWUtPmNvbW1pdC0+cGFyZW50X2lkKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBkaWZmX2luZGV4X2FyZ3ZbMV0gPSAiZGlmZiI7
-Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBkaWZmX2lu
-ZGV4X2FyZ3ZbMl0gPSAiLS1uby1jb2xvciI7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqBkaWZmX2luZGV4X2FyZ3ZbNl0gPSAiLS0iOwo+IC0tCj4gMS43
-LjEuMzU0LmdlNjRiZAo+Cj4KCgoKLS0gCkpvbmFzIEZvbnNlY2EK
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+
+> As an aside, I'd appreciate a document pointer, what are the
+> implications here exactly?
+
+Oh, good point!  I clean forgot to provide that.
+
+"static inline" functions are just like macros, except each argument
+is evaluated exactly once and the arguments are typechecked.
+
+In the older dialect, what I was suggesting would be written as
+follows:
+
+ #ifdef NO_GETTEXT
+ #define git_setup_gettext() do { } while(0)
+ #else
+ extern void git_setup_gettext(void);
+ #endif
+
+The feature has been part of GCC and various compilers for a long time
+now.  It was finally officially adopted when the C99 standard came
+out.  It "degrades gracefully" in that the Makefile will define inline
+to nothing on those very old compilers known not to support it, making
+these into static functions (which is kind of ugly but with most
+optimizers it tends to produce the same result).
+
+GCC documentation:
+
+  http://gcc.gnu.org/onlinedocs/gcc/Inline.html
+
+C99 documentation (see the "most current draft" of the revised C99
+and navigate with PDF bookmarks to Language =E2=86=92 Declarations =E2=86=
+=92
+=46unction specifiers =E2=86=92 Semantics):
+
+  http://www.open-std.org/jtc1/sc22/wg14/www/projects#9899
+
+More important than all that is how the construct gets used and why.
+=46or this, see SECTION 2 item 2 ("Ifdefs are ugly") of
+linux-2.6/Documentation/SubmittingPatches[1]: and take a look at some
+of the surrounding code (maybe include/linux/kernel.h would be
+analogous) for examples.
+
+Hope that helps,
+Jonathan
+
+[1] http://git.kernel.org/?p=3Dlinux/kernel/git/torvalds/linux-2.6.git;=
+a=3Dblob;f=3DDocumentation/SubmittingPatches
