@@ -1,138 +1,89 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH RFC] gettext: Support building on non-GNU with -lintl
-Date: Sat, 5 Jun 2010 14:57:38 +0000
-Message-ID: <AANLkTin5HPiXcgr3WKcbCSn-48BOHXUIL-E7Kw69ap6Q@mail.gmail.com>
-References: <1275669370-6004-1-git-send-email-avarab@gmail.com>
-	<m3aar9r9ek.fsf@localhost.localdomain>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz
+ origin/frotz"
+Date: Sat, 5 Jun 2010 17:02:25 +0200
+Message-ID: <20100605150225.GA16594@localhost>
+References: <20100605110930.GA10526@localhost>
+ <AANLkTilbg2nGr_sVmJLboMgXbas_qsB4V6gYxDxcDgKy@mail.gmail.com>
+ <20100605135811.GA14862@localhost>
+ <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 05 16:57:48 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Peter Rabbitson <ribasushi@cpan.org>,
+	Jeff King <peff@peff.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 05 17:03:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OKuoj-0007et-CA
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 16:57:45 +0200
+	id 1OKuuk-0003qx-Ae
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Jun 2010 17:03:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933423Ab0FEO5k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 10:57:40 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45618 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933432Ab0FEO5k convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 10:57:40 -0400
-Received: by iwn37 with SMTP id 37so2006761iwn.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 07:57:38 -0700 (PDT)
+	id S1755433Ab0FEPDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jun 2010 11:03:52 -0400
+Received: from mail-ew0-f223.google.com ([209.85.219.223]:35665 "EHLO
+	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754292Ab0FEPDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Jun 2010 11:03:52 -0400
+Received: by ewy23 with SMTP id 23so37700ewy.1
+        for <git@vger.kernel.org>; Sat, 05 Jun 2010 08:03:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AlVO1dPq9zzY5Zjqryx9HSy3jXxUJ4xaLYHBQO5ISUk=;
-        b=SK5i/kXP+thxt29Cl2R0vFQ3FPqxRFYB8mt4rAmFjCUJ7lzc2gR14mRknb0TXgftMG
-         Nk2vAeuOo2RIMrAg9UimasFZ7EDarMQR7amImF0yyqqpxl987KST2mpKuOcfaJrL7Fdc
-         X1WDOgTz+Ecjlq5NBha3lm3VK+WuXqShM4kdE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Sl36/eH4/Ss1DBu2BUN5jwCkrr7JKlYrBxZViLHvI5I=;
+        b=FfJSLyxAkFFC936I/gdr6d4SUofXuRj9zxYohajDaIlKISVThccaHO9Fc67RJaRq7q
+         j7dhILcJseIzjmOouqlbGY7WDWyrypjrao82FnTl74emR4hI2LjwJr8lDbGQ0rEcktop
+         6rjeloEAd1Rt9kc59A0THmeTFfadAKfRC0s5E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=b18nxmWkPYd9s27MstSEhUjP/FZK/53A31QH1AWM41V0Hl8/5Khxu/sA5BYazAH/T/
-         bNBiPAyQNXwFn3MEI3msJE3ErwgJDN5XjoBAj5qykNoGBiCNSzLC4LKvHJbhykMwW8Am
-         9AGjjCsY4Xuq/oTshIq2CsTmryt6V6az75Gd4=
-Received: by 10.231.111.209 with SMTP id t17mr2220360ibp.182.1275749858658; 
-	Sat, 05 Jun 2010 07:57:38 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sat, 5 Jun 2010 07:57:38 -0700 (PDT)
-In-Reply-To: <m3aar9r9ek.fsf@localhost.localdomain>
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=IA2hQLN9XcLpO+ujzWYmQK3H4KH2dFlqGWa7JeNaM2IXHB0Oqd2qtEXqolSWK595ob
+         JT1EyvM1QPDrYnfGBm1cu0NQM+FwXalOCBw1ZtI7328vkMAesNWCAyFbyY9ldwILPD8W
+         3/gH4BiR5ENTUwGQsaWnhnFiDiTshHSceoupk=
+Received: by 10.213.35.193 with SMTP id q1mr9429678ebd.38.1275750228540;
+        Sat, 05 Jun 2010 08:03:48 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id 13sm1406616ewy.5.2010.06.05.08.03.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 05 Jun 2010 08:03:47 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OKutF-0004Oj-Qv; Sat, 05 Jun 2010 17:02:25 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148475>
 
-On Sat, Jun 5, 2010 at 11:42, Jakub Narebski <jnareb@gmail.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
->> Change the build process on non-GNU systems to use -lintl if
->> NO_GETTEXT hasn't been set.
->>
->> Systems that use the GNU C Library don't need this, but on others th=
-e
->> GNU libintl library is an externally install package, so we need to
->> explicitly link to it.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.=
-com>
->> ---
->
-> [...]
->> diff --git a/Makefile b/Makefile
->> index 5169aec..1dfcd65 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -28,6 +28,15 @@ all::
->> =C2=A0# Define NO_EXPAT if you do not have expat installed. =C2=A0gi=
-t-http-push is
->> =C2=A0# not built, and you cannot push using http:// and https:// tr=
-ansports.
->> =C2=A0#
->> +# Define NO_GETTEXT if you don't have libintl installed, or don't w=
-ant
->> +# to build Git with localization support.
->> +#
->> +# Define NEEDS_LIBINTL if you haven't defined NO_GETTEXT=3DYesPleas=
-e,
->> +# but your system needs to be explicitly linked to -lintl. This is
->> +# defined automatically if we're building gettext support on system=
-s
->> +# where we expect not to use glibc (which has libintl included in
->> +# libc).
->
-> Could you add test for NEEDS_LIBINTL to configure.ac? =C2=A0Thanks in
-> advance.
+On Sat, Jun 05, 2010 at 04:03:30PM +0200, Sverre Rabbelier wrote:
+> On Sat, Jun 5, 2010 at 15:58, Clemens Buchacher <drizzd@aon.at> wrote:
+> 
+> > I could not make much sense of the thread that came with the patch.
+> > The discussion first seems to conclude that it is a bad idea, only
+> > to implement it anyway.
+> 
+> I think it would be useful here to have some links to relevant posts,
+> or at least to the relevant thread.
 
-Done:
+The discussion ends with this posting
+http://mid.gmane.org/7viqesz3mk.fsf@alter.siamese.dyndns.org ,
+which basically says "we all agree this is bad."
 
-    $ uname -s ; (git clean -dxf; gmake configure  &&
-CPPFLAGS=3D"-I/usr/local/include" ./configure) > /dev/null && egrep
-"INTL|GETTEXT" config.mak.autogen
-    FreeBSD
-    GIT_VERSION =3D 1.7.0.4.732.ge63cf.dirty
-    NO_GETTEXT=3D
-    NEEDS_LIBINTL=3DYesPlease
+Then Junio changes his mind his mind and posts the patches.
+http://mid.gmane.org/7vzl7pyvzl.fsf@alter.siamese.dyndns.org
 
-The patch needed to get it working:
-
-diff --git a/config.mak.in b/config.mak.in
-index a15f3c1..c49072c 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -36,6 +36,7 @@ NO_GETTEXT=3D@NO_GETTEXT@
- NEEDS_LIBICONV=3D@NEEDS_LIBICONV@
- NEEDS_SOCKET=3D@NEEDS_SOCKET@
- NEEDS_RESOLV=3D@NEEDS_RESOLV@
-+NEEDS_LIBINTL=3D@NEEDS_LIBINTL@
- NEEDS_LIBGEN=3D@NEEDS_LIBGEN@
- NO_SYS_SELECT_H=3D@NO_SYS_SELECT_H@
- NO_D_INO_IN_DIRENT=3D@NO_D_INO_IN_DIRENT@
-diff --git a/configure.ac b/configure.ac
-index 7bebfd8..74879b4 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -559,6 +559,12 @@ AC_CHECK_LIB([c], [basename],
- AC_SUBST(NEEDS_LIBGEN)
- test -n "$NEEDS_LIBGEN" && LIBS=3D"$LIBS -lgen"
-
-+AC_CHECK_LIB([c], [gettext],
-+[NEEDS_LIBINTL=3D],
-+[NEEDS_LIBINTL=3DYesPlease])
-+AC_SUBST(NEEDS_LIBINTL)
-+test -n "$NEEDS_LIBINTL" && LIBS=3D"$LIBS -lintl"
-+
- ## Checks for header files.
- AC_MSG_NOTICE([CHECKS for header files])
- #
+Whether the feature has merit or not is suddenly not an issue any
+more and the discussion veers off in other directions about minor
+technical details and about the --nodwim/--noguess option, the
+notion of which I find ridiculous by the way. But it further
+illustrates how random and anti-DWIM this feature really is.
