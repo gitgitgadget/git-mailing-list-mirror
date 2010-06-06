@@ -1,228 +1,112 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCH/RFC] gitweb: Create Gitweb::Git module
-Date: Mon,  7 Jun 2010 02:54:11 +0530
-Message-ID: <1275859451-21787-1-git-send-email-pavan.sss1991@gmail.com>
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
-	pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Sun Jun 06 23:24:34 2010
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
+Date: Sun, 6 Jun 2010 14:26:08 -0700
+Message-ID: <AANLkTilvHl-8eA6CbEDs4ty3h0h670L_enGsXunHxaPE@mail.gmail.com>
+References: <20100605110930.GA10526@localhost> <AANLkTilbg2nGr_sVmJLboMgXbas_qsB4V6gYxDxcDgKy@mail.gmail.com> 
+	<20100605135811.GA14862@localhost> <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com> 
+	<20100606161805.GA6239@coredump.intra.peff.net> <20100606165554.GB10104@localhost> 
+	<AANLkTinTI3XaE6P_WZ_k56fgI4LNOLSalv_1GlVZNO7n@mail.gmail.com> 
+	<20100606173233.GA11041@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Sverre Rabbelier <srabbelier@gmail.com>,
+	git@vger.kernel.org, Peter Rabbitson <ribasushi@cpan.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Jun 06 23:26:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLNKc-0008EE-A0
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 23:24:34 +0200
+	id 1OLNMZ-0001QG-1k
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 23:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754650Ab0FFVYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 17:24:25 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:54998 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754561Ab0FFVYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 17:24:24 -0400
-Received: by pxi8 with SMTP id 8so886519pxi.19
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 14:24:23 -0700 (PDT)
+	id S1753728Ab0FFV0a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jun 2010 17:26:30 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:51179 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606Ab0FFV03 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Jun 2010 17:26:29 -0400
+Received: by vws5 with SMTP id 5so2465702vws.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 14:26:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=4hhhp4c93oagDh7s7SaeeQazSFWM6LwwbNEHaCq1ZZY=;
-        b=GSbTvKmAd8MProPhwYViNFtNTF6QZF3vWqGvkD9aLl+WDhzCyXcDVEA5QAw5EKFsKe
-         VA0xCRPz6oG9sj1S66ZKuloiHUF6cC6tcV9ULn880/dseYG5sUgHmmTlLoUygYC1IfFO
-         q6rEJoSWZPkVgMFBek5ZVf2r/LkCkqyl1euTQ=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=d6otlRCZqWIAyDlddgx1t2o7HMLWVyCVeoX8uodwOeo=;
+        b=K/CgreS55jnaRz4p9Di0cmBpC4Z/RoId+m/t4dX5Bp2Xr3agpX1msSZ6ikQVTiC0I5
+         /ewHPuxffJiXCLzKM9Xl8cHAtx+8T0c9fZLv/P/A7ki3ALCw4LCROPuV8IuvmGxMtI7i
+         wXAOcoWgPCGAJpFwefsNVcAYpxWLrmIDUFZtU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=JxLWg1/M5rHBVMS3TC9buLosgawTr2Aze00U6kJ2YDO2xVhxPHugfhg9pcdjcuu9fd
-         PGT+1JaMbBoxly+KsefUO6C7u6POcp5Ocb0EczdX0sismEmkRiS00ynxAt1tjc87Evu3
-         ya0et9RiFkWVzTO8N5LWS+hh/0ImBKsxbvG3U=
-Received: by 10.114.54.28 with SMTP id c28mr10891346waa.169.1275859463394;
-        Sun, 06 Jun 2010 14:24:23 -0700 (PDT)
-Received: from localhost.localdomain ([202.63.112.132])
-        by mx.google.com with ESMTPS id a23sm32273801wam.2.2010.06.06.14.24.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 14:24:18 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.450.g21d56
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Q4V7XtOxLtL47MmebridORLsozOwC+I2yNgA2hLXhtPozApS5PzAsGaM1q/3v5szwP
+         P3yVAYEN9uqfVz0OlX5i6uYBN93yXARG6otAe+n/q3nAeALQTe7rWpnWezetIwgBO8Tb
+         5QQILdXu3mbK+hItkAQiC+TNdlJTMNlgASC1U=
+Received: by 10.229.215.213 with SMTP id hf21mr1661339qcb.255.1275859588280; 
+	Sun, 06 Jun 2010 14:26:28 -0700 (PDT)
+Received: by 10.229.24.3 with HTTP; Sun, 6 Jun 2010 14:26:08 -0700 (PDT)
+In-Reply-To: <20100606173233.GA11041@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148545>
 
-Create a Gitweb::Git module in 'gitweb/lib/Gitweb/Git.pm'
-to store essential git variables and subs regarding the
-gitweb.perl script
+On Sun, Jun 6, 2010 at 10:32, Clemens Buchacher <drizzd@aon.at> wrote:
+> On Sun, Jun 06, 2010 at 09:59:08AM -0700, Jacob Helwig wrote:
+>> On Sun, Jun 6, 2010 at 09:55, Clemens Buchacher <drizzd@aon.at> wrot=
+e:
+>> >
+>> > I argue that people are more likely to be surprised and confused b=
+y
+>> > this feature rather than being accustomed to it already. I am also
+>> > waiting to hear from someone who actively uses this feature.
+>> >
+>>
+>> I am someone that "actively" uses this feature. =C2=A0I will often h=
+ave
+>> repositories that I use on multiple machines, and will forget which
+>> remote branches I have local tracking branches for, on which machine=
+s.
+>> =C2=A0I'll end up just doing `git checkout $random-branch`, thinking=
+ I'm on
+>> one of the machines where I've already setup the local branch, and
+>> find it quite handy that Git _does_ DWIM.
+>
+> I see. But would it be so terrible to have to type "git checkout -t
+> origin/branch" instead?
+>
 
-Subroutines moved:
-	evaluate_git_version
-	git_cmd
-	quote_command
+Given that `git checkout branch` already exists & works: Yes.
 
-Subroutines yet to move: (Contains not yet packaged subs & vars)
-	None
+You're talking about removing a feature, so (as already pointed out)
+there's a fairly high burden of proof to show that it's actually a
+mis-feature, that is so dangerous/confusing that it _needs_ to be
+removed.
 
-Update gitweb/Makefile to install gitweb modules alongside gitweb
+> Also, isn't this more like "foretell what I really want" rather
+> than "do what it means"? Who would guess that "git checkout
+> $branch" means "create $branch tracking <random-remote>/$branch"?
+>
 
-Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
----
- gitweb/Makefile          |    1 +
- gitweb/gitweb.perl       |   35 +++-----------------------------
- gitweb/lib/Gitweb/Git.pm |   48 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 53 insertions(+), 31 deletions(-)
- create mode 100644 gitweb/lib/Gitweb/Git.pm
+This is very much "fortell what I really want", which is exactly what
+DWIM (Do What I Mean) means (as Sverre already pointed out).  I'm not
+guessing that `git checkout $branch` means `git branch -t $branch
+origin/$branch && git checkout $branch`; I'm assuming that `git branch
+-t $branch origin/$branch` was already done at some point in the past,
+and Git is adding that bit in for me, which is what _I_ really meant
+to do.
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 4343396..fcd4042 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -115,6 +115,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
- GITWEB_LIB_GITWEB += lib/Gitweb/Config.pm
- GITWEB_LIB_GITWEB += lib/Gitweb/Request.pm
- GITWEB_LIB_GITWEB += lib/Gitweb/Escape.pm
-+GITWEB_LIB_GITWEB += lib/Gitweb/Git.pm
- 
- GITWEB_REPLACE = \
- 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e95aaf7..59a65a8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -24,12 +24,11 @@ sub __DIR__ () {
- }
- use lib __DIR__ . "/lib";
- 
-+use Gitweb::Git;
- use Gitweb::Config;
- use Gitweb::Request;
- use Gitweb::Escape;
- 
--our $number_of_git_cmds = 0;
--
- BEGIN {
- 	CGI->compile() if $ENV{'MOD_PERL'};
- }
-@@ -39,9 +38,8 @@ BEGIN {
- # with their descriptions is listed in Gitweb::Config.
- $version = "++GIT_VERSION++";
- 
--# core git executable to use
--# this can just be "git" if your webserver has a sensible PATH
--our $GIT = "++GIT_BINDIR++/git";
-+#only this variable has it's root in Gitweb::Git
-+$GIT = "++GIT_BINDIR++/git";
- 
- $projectroot = "++GITWEB_PROJECTROOT++";
- $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
-@@ -77,7 +75,6 @@ sub gitweb_get_feature {
- 		$feature{$name}{'override'},
- 		@{$feature{$name}{'default'}});
- 	# project specific override is possible only if we have project
--	our $git_dir; # global variable, declared later
- 	if (!$override || !defined $git_dir) {
- 		return @defaults;
- 	}
-@@ -197,13 +194,6 @@ sub get_loadavg {
- 	return 0;
- }
- 
--# version of the core git binary
--our $git_version;
--sub evaluate_git_version {
--	our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
--	$number_of_git_cmds++;
--}
--
- sub check_loadavg {
- 	if (defined $maxload && get_loadavg() > $maxload) {
- 		die_error(503, "The load average on the server is too high");
-@@ -492,10 +482,8 @@ sub evaluate_and_validate_params {
- 	}
- }
- 
--# path to the current git repository
--our $git_dir;
- sub evaluate_git_dir {
--	our $git_dir = "$projectroot/$project" if $project;
-+	$git_dir = "$projectroot/$project" if $project;
- }
- 
- our (@snapshot_fmts, $git_avatar);
-@@ -1548,21 +1536,6 @@ sub get_feed_info {
- ## ----------------------------------------------------------------------
- ## git utility subroutines, invoking git commands
- 
--# returns path to the core git executable and the --git-dir parameter as list
--sub git_cmd {
--	$number_of_git_cmds++;
--	return $GIT, '--git-dir='.$git_dir;
--}
--
--# quote the given arguments for passing them to the shell
--# quote_command("command", "arg 1", "arg with ' and ! characters")
--# => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
--# Try to avoid using this function wherever possible.
--sub quote_command {
--	return join(' ',
--		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
--}
--
- # get HEAD ref of given project as hash
- sub git_get_head_hash {
- 	return git_get_full_hash(shift, 'HEAD');
-diff --git a/gitweb/lib/Gitweb/Git.pm b/gitweb/lib/Gitweb/Git.pm
-new file mode 100644
-index 0000000..9961e6d
---- /dev/null
-+++ b/gitweb/lib/Gitweb/Git.pm
-@@ -0,0 +1,48 @@
-+#!/usr/bin/perl
-+#
-+# Gitweb::Git -- gitweb git package
-+#
-+# This program is licensed under the GPLv2
-+
-+package Gitweb::Git;
-+
-+use strict;
-+use warnings;
-+use Exporter qw(import);
-+
-+our @EXPORT = qw($GIT $number_of_git_cmds $git_version $git_dir
-+                 git_cmd quote_command evaluate_git_version);
-+
-+# core git executable to use
-+# this can just be "git" if your webserver has a sensible PATH
-+our $GIT;
-+
-+our $number_of_git_cmds = 0;
-+
-+# version of the core git binary
-+our $git_version;
-+
-+# path to the current git repository
-+our $git_dir;
-+
-+# returns path to the core git executable and the --git-dir parameter as list
-+sub git_cmd {
-+	$number_of_git_cmds++;
-+	return $GIT, '--git-dir='.$git_dir;
-+}
-+
-+# quote the given arguments for passing them to the shell
-+# quote_command("command", "arg 1", "arg with ' and ! characters")
-+# => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
-+# Try to avoid using this function wherever possible.
-+sub quote_command {
-+	return join(' ',
-+		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
-+}
-+
-+sub evaluate_git_version {
-+	$git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
-+	$number_of_git_cmds++;
-+}
-+
-+1;
--- 
-1.7.1.450.g21d56
+> And this is exactly _why_ it can be marginally useful if the
+> foretelling is correct, but all the more confusing if it's not.
+>
+
+Other than "unexpected success", how is the DWIM behavior confusing,
+given that it says exactly what it's doing when the DWIM behavior is
+invoked?  I'm still not clear what the confusion you're referring to
+is on this one.
