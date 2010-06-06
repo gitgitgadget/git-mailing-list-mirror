@@ -1,78 +1,74 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz
- origin/frotz"
-Date: Sun, 6 Jun 2010 18:55:54 +0200
-Message-ID: <20100606165554.GB10104@localhost>
-References: <20100605110930.GA10526@localhost>
- <AANLkTilbg2nGr_sVmJLboMgXbas_qsB4V6gYxDxcDgKy@mail.gmail.com>
- <20100605135811.GA14862@localhost>
- <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com>
- <20100606161805.GA6239@coredump.intra.peff.net>
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
+Date: Sun, 6 Jun 2010 09:59:08 -0700
+Message-ID: <AANLkTinTI3XaE6P_WZ_k56fgI4LNOLSalv_1GlVZNO7n@mail.gmail.com>
+References: <20100605110930.GA10526@localhost> <AANLkTilbg2nGr_sVmJLboMgXbas_qsB4V6gYxDxcDgKy@mail.gmail.com> 
+	<20100605135811.GA14862@localhost> <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com> 
+	<20100606161805.GA6239@coredump.intra.peff.net> <20100606165554.GB10104@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Peter Rabbitson <ribasushi@cpan.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jun 06 18:56:09 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Sverre Rabbelier <srabbelier@gmail.com>,
+	git@vger.kernel.org, Peter Rabbitson <ribasushi@cpan.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Jun 06 18:59:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLJ8q-0000YD-Lg
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 18:56:09 +0200
+	id 1OLJCB-00036r-Ru
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 18:59:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755881Ab0FFQ4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 12:56:00 -0400
-Received: from ey-out-2122.google.com ([74.125.78.26]:16212 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755837Ab0FFQz7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 12:55:59 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so169189eya.19
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 09:55:58 -0700 (PDT)
+	id S1754352Ab0FFQ7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 12:59:30 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:58596 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751682Ab0FFQ73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 12:59:29 -0400
+Received: by vws5 with SMTP id 5so2245722vws.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 09:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=qqfi+RlYpRKn/7Zh/33IeIJS9Z4rpyCixSmqDS6va5c=;
-        b=jjGk/D7kOsYoEkcTaHl0WBy5Os6SNaBpqFaSZ7Hy4x6IDuX2b7WiF6w8mrmPFAzz+5
-         jFtCFSkofrVlX7G6yHRSGfSL8oUBb5TOUVL8h2Aim+O/P9SsNz66DKn5b2h7c8jwTZIg
-         CMyEJFl3wuL9TUoXDbUKSrlJK2hCeDulI9Z8Y=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=umf2vekcje6MxUbAV6v5WLrY817ztpkc8lLPn2Bkv7w=;
+        b=KB05nSl2wl0UsokrfJ66CYjRl1A97czpgB2UoK/83LnGi/YLwtFKLcGZoi2Sn4BlTV
+         LanINX1u6bRDu9HUwiNmb4/alp1iPowEOkHWcyzEHbtVM2tFBoC7NVgIWzUvv1Xzyn35
+         1UgnislQy2xkd4r0S1WYa+wR8jQko2t0XIDtA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:bcc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=iz25+UkdqE6Tqm4DfOjwB60EcY0+eEy5b+P+7w6uLgVxbrHr/uH9lkkaL17x2H7Zue
-         uuya6z/N3zF+pUL99ZvGgH8ObW1m/iIeNYmuTkggpVQbZHtO/QN/N++6D4oYmsEd2Si6
-         n1TgCFJahMRaHUApyv4HS7ABJyzbwJMrF4AWA=
-Received: by 10.213.9.67 with SMTP id k3mr317314ebk.78.1275843358243;
-        Sun, 06 Jun 2010 09:55:58 -0700 (PDT)
-Received: from darc.lan ([80.123.242.182])
-        by mx.google.com with ESMTPS id 16sm2087252ewy.11.2010.06.06.09.55.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 09:55:57 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OLJ8c-0002im-Li; Sun, 06 Jun 2010 18:55:54 +0200
-Content-Disposition: inline
-In-Reply-To: <20100606161805.GA6239@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=AcOZju//rni/Sqrj3QHvqllHcHtrMI3//Dm/kO6Dz6SRxQpSx/u99k3u1u95ediVV4
+         h6cwDvSphSNtz3X/M5V+bWjhWy264RBkt3mik/QrLa3jPPBhwWR4CWjjL37prk1mPbBC
+         BT86VJRXHYSN7bX690MWPxhxtiKXDdzjpEyGg=
+Received: by 10.224.65.147 with SMTP id j19mr114712qai.252.1275843568402; Sun, 
+	06 Jun 2010 09:59:28 -0700 (PDT)
+Received: by 10.229.24.3 with HTTP; Sun, 6 Jun 2010 09:59:08 -0700 (PDT)
+In-Reply-To: <20100606165554.GB10104@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148527>
 
-On Sun, Jun 06, 2010 at 12:18:05PM -0400, Jeff King wrote:
+On Sun, Jun 6, 2010 at 09:55, Clemens Buchacher <drizzd@aon.at> wrote:
+> On Sun, Jun 06, 2010 at 12:18:05PM -0400, Jeff King wrote:
+>
+>> Moreover, the burden for arguing against it is a little higher. It is no
+>> longer "I think this is a bad idea" but "I think this is a bad idea, and
+>> it is so bad that it is worth changing behavior that users may have
+>> become accustomed to".
+>
+> I argue that people are more likely to be surprised and confused by
+> this feature rather than being accustomed to it already. I am also
+> waiting to hear from someone who actively uses this feature.
+>
 
-> Moreover, the burden for arguing against it is a little higher. It is no
-> longer "I think this is a bad idea" but "I think this is a bad idea, and
-> it is so bad that it is worth changing behavior that users may have
-> become accustomed to".
-
-I argue that people are more likely to be surprised and confused by
-this feature rather than being accustomed to it already. I am also
-waiting to hear from someone who actively uses this feature.
+I am someone that "actively" uses this feature.  I will often have
+repositories that I use on multiple machines, and will forget which
+remote branches I have local tracking branches for, on which machines.
+ I'll end up just doing `git checkout $random-branch`, thinking I'm on
+one of the machines where I've already setup the local branch, and
+find it quite handy that Git _does_ DWIM.
