@@ -1,108 +1,146 @@
-From: William Pursell <bill.pursell@gmail.com>
-Subject: Re: permissions
-Date: Sat, 05 Jun 2010 23:36:50 -1000
-Message-ID: <4C0B6C32.1090700@wpursell.net>
-References: <4C0A19FE.1020802@wpursell.net>	<m27hmdn704.fsf@igel.home>	<4C0A9615.4090307@wpursell.net> <AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
+From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
+Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
+Date: Sun, 6 Jun 2010 12:50:08 +0200 (CEST)
+Organization: Roxen Internet Software AB
+Message-ID: <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com>
+References: <cover.1275309129.git.grubba@grubba.org> <7vfx16oxmz.fsf@alter.siamese.dyndns.org>
+ <Pine.GSO.4.63.1006031543340.22466@shipon.roxen.com> <20100604005603.GA25806@progeny.tock>
+ <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: William Pursell <bill.pursell@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 06 11:37:01 2010
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-579758561-1275821408=:27465"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 06 12:50:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLCHt-0000Wy-DK
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 11:37:01 +0200
+	id 1OLDR7-0006g7-Es
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 12:50:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751682Ab0FFJg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 05:36:56 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:49169 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738Ab0FFJgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 05:36:55 -0400
-Received: by pwj5 with SMTP id 5so506799pwj.19
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 02:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=fFSojv3M5OblMRLZ1bY5Y24SCodKGCf4r96aMp5TEQs=;
-        b=VqLPIJioHeD0Up/c+xwyL/f2Y4bq24981EiaBzB1ASmDW+vfr9o+NlS3BA21yatvQw
-         QIz6E7bT5SiK9UXTVPT+tqjMHc9c3x7MFaFyBh7udVBqldzYpJbYnPwMWIi+gz+L2uve
-         Yy9oaRRfuARuvk7numdzkgFJI4jJgPVJ14Og4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=SQkgsglvYJ5sDYOdqRMYS298pRiAJ1EnOOO9KfX8aVDdR3yFg3/O3TFA/OEwmNgEKY
-         swi+6lTzJKV4O/NbqIC1KGB9DnnVqfhwfVD0PJDNx2n2m8rrh8C6eUWEVsHE2BTJTmH+
-         3EnCgfcDKzaeM0/MoDG612/nJsWz/IrH47aMQ=
-Received: by 10.142.56.4 with SMTP id e4mr9488096wfa.308.1275817014920;
-        Sun, 06 Jun 2010 02:36:54 -0700 (PDT)
-Received: from clam.westell.com (udp278831uds.hawaiiantel.net [72.234.51.251])
-        by mx.google.com with ESMTPS id a23sm27213464wam.2.2010.06.06.02.36.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 02:36:53 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.24 (Macintosh/20100228)
-In-Reply-To: <AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
+	id S1755837Ab0FFKuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 06:50:16 -0400
+Received: from mail.roxen.com ([212.247.29.220]:54245 "EHLO mail.roxen.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755738Ab0FFKuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 06:50:12 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.roxen.com (Postfix) with ESMTP id 7CBEA62820A;
+	Sun,  6 Jun 2010 12:50:10 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at roxen.com
+Received: from mail.roxen.com ([212.247.29.220])
+	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id D5MTVAT99fOw; Sun,  6 Jun 2010 12:50:08 +0200 (CEST)
+Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
+	by mail.roxen.com (Postfix) with ESMTP id B2ED96281D1;
+	Sun,  6 Jun 2010 12:50:08 +0200 (CEST)
+In-Reply-To: <20100604194201.GB21492@progeny.tock>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148512>
 
-Alex Riesen wrote:
-> On Sat, Jun 5, 2010 at 20:23, William Pursell <bill.pursell@gmail.com> wrote:
->> fatal: Not a git repository (or any of the parent directories): .git
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+---559023410-579758561-1275821408=:27465
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Fri, 4 Jun 2010, Jonathan Nieder wrote:
+
+> Henrik Grubbström wrote:
+>> On Thu, 3 Jun 2010, Jonathan Nieder wrote:
+>
+>>> If you wait for some
+>>> real change to piggy-back onto, on the other hand, then the per-file
+>>> normalization patches will make it hard to find what changed.
 >>
->> That's just weird.  And if there is a git repository in a
->> directory above, there may be great confusion, weeping
->> and gnashing of teeth.
-> 
-> How about just this? (I assume cwd does hold current working directory).
+>> This seems more like an argument against repositories where
+>> renormalizations have occurred, than against the feature as such.
+>
+> No, it is an argument against making the process of renormalization
+> more painful than it has to be (and against piggy-backing in general).
+> It is kindest to have a flag day and yank the carriage returns off all
+> at once like a bandage.
 
-<patch snipped>
+In the crlf case, yes, probably. In the ident case there might be good 
+reasons to want to have the ident strings stay unmodified as long as 
+possible (since otherwise there'll be two ident strings that identify
+the same code).
 
-The problem is permissions, not that it's "not a git repository".
-The error message should be "permission denied".  The easy solution
-is to abort with "permission denied" whenever that is encountered,
-but the trouble with that is that it breaks the current work flow
-in which a broken dir (or one for which the user lacks
-priveleges) is bypassed and a valid object directory higher
-up in the filesystem tree is used.
+Currently (as I believe you know), git has no detection of when the 
+conversion mode for a file has changed, and it might even take a while 
+before the users notice that the repository is not normalized. eg:
 
-Consider the case in which /etc/.git has mode 777 while
-/etc/sysconfig/.git has mode 700, each .git owned by root.
-(Granted, git is for recording development history and
-not so much for storing history of config files, but
-I believe this is a relevant use case.)  /etc/sysconfig/foo
-is tracked by /etc/sysconfig/.git but not by /etc/.git.
-Regular user in /etc/sysconfig invokes 'git log foo'
-and is told: absolutely nothing.   And when
-'git status' is invoked, the message is that foo is
-untracked.
+   0) There's a repository with some files containing crlf line endings.
 
-Now, if /etc/.git does track /etc/sysconfig/foo,
-then a regular user in /etc/sysconfig that invokes
-'git log foo' sees the history tracked in /etc/.git,
-but root in /etc/sysconfig sees the history tracked
-by /etc/sysconfig/.git.  This is confusing.  The regular
-user in /etc/sysconfig should simply get 'permission denied'
-on all invocations of git.
+   1) User A notices that git now has native support for crlf
+      line endings, and adds the attribute eol=crlf for the
+      affected files.
 
-A related question is: does anyone actually prefer (or
-rely on) the current model in which ../.git is
-used in the event that .git is borked or the user
-lacks permission?  It seems to me that if an
-object directory is discovered which is borked
-or which is unreadable, git must abort with an
-error message indicating the relevant problem.
+   2) User A does a git status, sees that .gitattributes is
+      modified, and commits it.
 
--- 
-William Pursell
+   3) User A does a new git status, and has a clean index.
+
+   4) User B who has been developing on the project for a while
+      does a git pull from user A, and gets the new .gitattributes.
+
+   5) User B does a git status, and has a clean index.
+
+   6) User C is new to the project and does an initial git clone,
+      and ends up with a dirty index.
+
+I believe we both agree that the above is undesireable behaviour. The 
+above behaviour also means that it's likely that there are repositorys
+out there which contain unnormalized files.
+
+What my patch set achieves is that user C above also gets a clean index.
+
+What it seems you want is that user A above should have all files that got 
+denormalized by the attribute change marked dirty at 2 (and 3).
+
+With a minor change of the read-cache.c:ce_compare_data() patch (returning 
+1 if conv_flags has CONV_NORM_NEEDED), you should get the behaviour you 
+want (all files which are unnormalized in the repository will be dirty).
+
+As I believe both behaviours may be desireable a config option and/or 
+attribute is needed. Any suggestions for a name (and default value)?
+
+>> Well, diff and blame would be confused by a crlf renormalization
+>> regardless of whether the renormalization was piggy-backed or not.
+>
+> Only if they cross the revision where renormalization occurred.
+
+Which is true in both cases.
+
+> Wouldn't something like
+>
+> /foo.c -ident has_foreign_ident
+>
+> work?
+
+Yes, but it sort of reduces the usefulness of macros if you need to expand 
+them by hand... :-)
+
+Better to fix the bug and wait for the fix to enter a released version.
+
+>>   * Hooks are not copied by git clone. Support for copying of hooks
+>>     to non-POSIX-like systems is not something I'd like to attempt.
+>
+> Can't you include a hooks/pre-commit file and a HACKING file: "copy
+> this file to .git/hooks if you want your patches to be accepted"?
+
+Yes, but you still have to remember to do it everytime you clone the 
+repository.
+
+Thanks for taking the time to discuss the problem.
+
+--
+Henrik Grubbström					grubba@grubba.org
+Roxen Internet Software AB				grubba@roxen.com
+---559023410-579758561-1275821408=:27465--
