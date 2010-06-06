@@ -1,83 +1,91 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] commit.txt: clarify how --author argument is used
-Date: Sun,  6 Jun 2010 19:31:34 -0400
-Message-ID: <1275867094-8634-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <junio@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 07 01:33:08 2010
+From: Eli Barzilay <eli@barzilay.org>
+Subject: Re: rebase --continue confusion
+Date: Sun, 6 Jun 2010 19:42:40 -0400
+Message-ID: <19468.12912.509183.102990@winooski.ccs.neu.edu>
+References: <4C01B855.7080409@gmail.com>
+	<m3bpbo1f3f.fsf@winooski.ccs.neu.edu>
+	<20100606221853.GG6993@coredump.intra.peff.net>
+	<19468.8730.59682.76355@winooski.ccs.neu.edu>
+	<20100606224601.GB11424@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 07 01:42:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLPL2-0007VZ-3f
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 01:33:08 +0200
+	id 1OLPUN-00079F-CG
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 01:42:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639Ab0FFXbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 19:31:51 -0400
-Received: from mail-yw0-f187.google.com ([209.85.211.187]:48416 "EHLO
-	mail-yw0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751395Ab0FFXbv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 19:31:51 -0400
-Received: by ywh17 with SMTP id 17so197291ywh.1
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 16:31:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=s+129J+7gCbXLfAa7pekwIV0uNxkTcAFLz6vLjyhDUw=;
-        b=byO9XiohOORTmcpfj3utYxpZ5+KVsvAa9vwyzsy8zf9/DKRut4HkVqmXSf2Ros+4Oi
-         DQqEgPQkEUMHAple+VrjvSkS42950MTphe7H2rySi3n3tEQdAK6ZxG+Bb6OdTxEntTUX
-         YzQ7i2acPEO22ocpAILnHbdAGhOQDZxAtvyjg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=mjKIe/iOR1JSptLvl01gaIf1eHqvDLV2zmDcGz/fOlXDwSN2xJ6lCoDe1cPRetgGf3
-         u6U4Df6zPe/vkMAUsXaJJnUzzJqFhkpMoWCykrRpj0aGWJWpNtnm5ffuuc3bG132JcK5
-         0FOfBY76fxuWuo/yztOlLw3UcmDyXfIAPLHwQ=
-Received: by 10.150.187.10 with SMTP id k10mr13415501ybf.190.1275867109841;
-        Sun, 06 Jun 2010 16:31:49 -0700 (PDT)
-Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
-        by mx.google.com with ESMTPS id f1sm13013192ybh.2.2010.06.06.16.31.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 16:31:49 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
+	id S1752824Ab0FFXmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 19:42:42 -0400
+Received: from winooski.ccs.neu.edu ([129.10.115.117]:60780 "EHLO barzilay.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752432Ab0FFXml (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 19:42:41 -0400
+Received: from eli by barzilay.org with local (Exim 4.66)
+	(envelope-from <eli@barzilay.org>)
+	id 1OLPUG-0004H5-Gq; Sun, 06 Jun 2010 19:42:40 -0400
+In-Reply-To: <20100606224601.GB11424@coredump.intra.peff.net>
+X-Mailer: VM 8.0.12 under 23.1.1 (x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148563>
 
-commit --author was added by 146ea06 (git commit --author=$name: look $name up
-in existing commits), but its documentation was sorely lacking compared to its
-excellent commit message. This commit tries to improve the documentation.
+On Jun  6, Jeff King wrote:
+> On Sun, Jun 06, 2010 at 06:32:58PM -0400, Eli Barzilay wrote:
+> 
+> > > >   $ git add foo
+> > > >   $ git status -s
+> > > >   M  foo
+> > > >   $ git commit --amend foo
+> > > >   # On branch master
+> > > >   # No changes
+> > > >   $ git status -s
+> > > >   M  foo
+> > > 
+> > > I'm confused. Is there some context for when you are issuing these
+> > > commands?  Because the "git commit --amend foo" should actually
+> > > commit foo, and does for me.
+> > 
+> > Heh, in that case it was more effective than I thought...  My point in
+> > the previous posts was also about missing information (in that case,
+> > make `git add' tell you when adding it canceled previously added
+> > changes, and also make `git status' tell you if you're in the middle
+> > of a merge or rebase and in a clean state).
+> > 
+> > In any case, here's the prelude to the above:
+> > 
+> >   $ mkdir t; cd t; git init
+> >   $ echo foo > foo; git add foo; git commit -m foo
+> >   $ echo bar > foo; git commit -o foo -m bar
+> >   $ echo foo > foo
+> 
+> Ah, I see. Your problem has nothing to do with explicit pathnames (which
+> I thought was the interesting bit from your snippet), but rather that
+> you are amending it to the same as HEAD^.
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- Documentation/git-commit.txt |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+Yes.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 32c482f..c28603e 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -95,10 +95,11 @@ OPTIONS
- 	read the message from the standard input.
- 
- --author=<author>::
--	Override the author name used in the commit.  You can use the
--	standard `A U Thor <author@example.com>` format.  Otherwise,
--	an existing commit that matches the given string and its author
--	name is used.
-+	Override the commit author. Specify an explicit author using the
-+	standard `A U Thor <author@example.com>` format. Otherwise <author>
-+	is assumed to be a pattern and is used to search for an existing
-+	commit by that author (i.e. rev-list --all -i --author=<author>);
-+	the commit author is then copied from the first such commit found.
- 
- --date=<date>::
- 	Override the author date used in the commit.
+
+> Probably it would be helpful in the case of an amend to indicate
+> what has happened (you have no changes, but it is not immediately
+> obvious that you have no changes against HEAD^, not HEAD). We could
+> even suggest "git reset HEAD^", which is probably what you want (the
+> only other thing you could want is to create a commit with no
+> changes, which we generally try to avoid).
+
+Yes, that sounds reasonable.  (When I realized what happened I
+wondered why it didn't do the reset itself, but that would obviously
+be a bad idea.)
+
 -- 
-1.7.1
+          ((lambda (x) (x x)) (lambda (x) (x x)))          Eli Barzilay:
+                    http://barzilay.org/                   Maze is Life!
