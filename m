@@ -1,94 +1,228 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] bash completion: Support "unpushed commits" warnings in __git_ps1
-Date: Sun, 06 Jun 2010 14:07:48 -0700 (PDT)
-Message-ID: <m3r5kjq3ac.fsf@localhost.localdomain>
-References: <4C0AE640.3040503@pileofstuff.org>
-	<201006062014.59386.trast@student.ethz.ch>
-	<4C0C09BF.4070503@pileofstuff.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sun Jun 06 23:08:06 2010
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [PATCH/RFC] gitweb: Create Gitweb::Git module
+Date: Mon,  7 Jun 2010 02:54:11 +0530
+Message-ID: <1275859451-21787-1-git-send-email-pavan.sss1991@gmail.com>
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
+	pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Sun Jun 06 23:24:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLN4Z-0004nH-Mq
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 23:08:00 +0200
+	id 1OLNKc-0008EE-A0
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 23:24:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754279Ab0FFVHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 17:07:54 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:50835 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754042Ab0FFVHx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 17:07:53 -0400
-Received: by wyi11 with SMTP id 11so1965329wyi.19
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 14:07:51 -0700 (PDT)
+	id S1754650Ab0FFVYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 17:24:25 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:54998 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754561Ab0FFVYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 17:24:24 -0400
+Received: by pxi8 with SMTP id 8so886519pxi.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 14:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=qExhTZSKFL+iqCcu4Earr9f+9BNoaaoB0HlUnCn88v4=;
-        b=bqlOpDYZMRoEV8/UfokbTGHTjjybQVtqP2DGZ2u/J+0yPpuvqofLrI/XkWgQq6y4ql
-         9qhoGvbYPr0TQj/kAOLfzpimbn8Tg6WVcgF4APNcdAoHrHg3Wx5KxF4XUdz75EDGKQYh
-         DhKCT3MJpSL4ppya/TrJ1krLeDQVDp4ROaVQI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=4hhhp4c93oagDh7s7SaeeQazSFWM6LwwbNEHaCq1ZZY=;
+        b=GSbTvKmAd8MProPhwYViNFtNTF6QZF3vWqGvkD9aLl+WDhzCyXcDVEA5QAw5EKFsKe
+         VA0xCRPz6oG9sj1S66ZKuloiHUF6cC6tcV9ULn880/dseYG5sUgHmmTlLoUygYC1IfFO
+         q6rEJoSWZPkVgMFBek5ZVf2r/LkCkqyl1euTQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=sI942ockaIFNhyD35L1e4pr+UzIbOkwSaOxm4zdWuV22yMJxf3Rj+opaidecWZ0L7Z
-         weprL1jkHox3dqIuPUf3ABWHh5SEYEXCxj4vK91/2bv1Z+/4zEXew/OLe9W35AsdgVwU
-         0V8tmJe8y200BhyWfOBht17hk8JvTzasSumLw=
-Received: by 10.227.127.132 with SMTP id g4mr13038488wbs.177.1275858470311;
-        Sun, 06 Jun 2010 14:07:50 -0700 (PDT)
-Received: from localhost.localdomain (abwd128.neoplus.adsl.tpnet.pl [83.8.227.128])
-        by mx.google.com with ESMTPS id q6sm6072654wbc.11.2010.06.06.14.07.47
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=JxLWg1/M5rHBVMS3TC9buLosgawTr2Aze00U6kJ2YDO2xVhxPHugfhg9pcdjcuu9fd
+         PGT+1JaMbBoxly+KsefUO6C7u6POcp5Ocb0EczdX0sismEmkRiS00ynxAt1tjc87Evu3
+         ya0et9RiFkWVzTO8N5LWS+hh/0ImBKsxbvG3U=
+Received: by 10.114.54.28 with SMTP id c28mr10891346waa.169.1275859463394;
+        Sun, 06 Jun 2010 14:24:23 -0700 (PDT)
+Received: from localhost.localdomain ([202.63.112.132])
+        by mx.google.com with ESMTPS id a23sm32273801wam.2.2010.06.06.14.24.16
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 14:07:48 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o56L76ih016854;
-	Sun, 6 Jun 2010 23:07:17 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o56L6aDM016840;
-	Sun, 6 Jun 2010 23:06:36 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4C0C09BF.4070503@pileofstuff.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Sun, 06 Jun 2010 14:24:18 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.450.g21d56
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148544>
 
-Andrew Sayers <andrew-git@pileofstuff.org> writes:
+Create a Gitweb::Git module in 'gitweb/lib/Gitweb/Git.pm'
+to store essential git variables and subs regarding the
+gitweb.perl script
 
-> I don't see how to actually split out the branch name without calling
-> sed or using one of the disallowed ${} constructs.  So I compared the
-> following commands on my PC (2.1 GHz dual-core Athlon) using a
-> repository with 100 empty commits between HEAD and a git-svn-id:
-> 
-> time git log | \
-> 	sed -ne "/^    git-svn-id: / { s/^    git-svn-id: "\
-> 	"$remote_branch\/\([^@]*\).*/\1/p ; q }"
-> 
-> time git log -1 --grep="^git-svn-id: $remote_branch" | \
-> 	sed -ne "s/^    git-svn-id: $remote_branch\/\([^@]*\).*/\1/p"
+Subroutines moved:
+	evaluate_git_version
+	git_cmd
+	quote_command
 
-What disallowed ${} constructs?
+Subroutines yet to move: (Contains not yet packaged subs & vars)
+	None
 
-First, ${var#pattern}, ${var##pattern}, ${var%pattern} and ${var%%pattern}
-are POSIX, so you can use it in git shell scripts.
+Update gitweb/Makefile to install gitweb modules alongside gitweb
 
-Second, this is _bash_ completion, so you can use also bash-specific
-expansion, like ${var/pattern/string} or ${var//pattern/string}.
+Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+---
+ gitweb/Makefile          |    1 +
+ gitweb/gitweb.perl       |   35 +++-----------------------------
+ gitweb/lib/Gitweb/Git.pm |   48 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+), 31 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/Git.pm
 
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 4343396..fcd4042 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -115,6 +115,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
+ GITWEB_LIB_GITWEB += lib/Gitweb/Config.pm
+ GITWEB_LIB_GITWEB += lib/Gitweb/Request.pm
+ GITWEB_LIB_GITWEB += lib/Gitweb/Escape.pm
++GITWEB_LIB_GITWEB += lib/Gitweb/Git.pm
+ 
+ GITWEB_REPLACE = \
+ 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e95aaf7..59a65a8 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -24,12 +24,11 @@ sub __DIR__ () {
+ }
+ use lib __DIR__ . "/lib";
+ 
++use Gitweb::Git;
+ use Gitweb::Config;
+ use Gitweb::Request;
+ use Gitweb::Escape;
+ 
+-our $number_of_git_cmds = 0;
+-
+ BEGIN {
+ 	CGI->compile() if $ENV{'MOD_PERL'};
+ }
+@@ -39,9 +38,8 @@ BEGIN {
+ # with their descriptions is listed in Gitweb::Config.
+ $version = "++GIT_VERSION++";
+ 
+-# core git executable to use
+-# this can just be "git" if your webserver has a sensible PATH
+-our $GIT = "++GIT_BINDIR++/git";
++#only this variable has it's root in Gitweb::Git
++$GIT = "++GIT_BINDIR++/git";
+ 
+ $projectroot = "++GITWEB_PROJECTROOT++";
+ $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
+@@ -77,7 +75,6 @@ sub gitweb_get_feature {
+ 		$feature{$name}{'override'},
+ 		@{$feature{$name}{'default'}});
+ 	# project specific override is possible only if we have project
+-	our $git_dir; # global variable, declared later
+ 	if (!$override || !defined $git_dir) {
+ 		return @defaults;
+ 	}
+@@ -197,13 +194,6 @@ sub get_loadavg {
+ 	return 0;
+ }
+ 
+-# version of the core git binary
+-our $git_version;
+-sub evaluate_git_version {
+-	our $git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
+-	$number_of_git_cmds++;
+-}
+-
+ sub check_loadavg {
+ 	if (defined $maxload && get_loadavg() > $maxload) {
+ 		die_error(503, "The load average on the server is too high");
+@@ -492,10 +482,8 @@ sub evaluate_and_validate_params {
+ 	}
+ }
+ 
+-# path to the current git repository
+-our $git_dir;
+ sub evaluate_git_dir {
+-	our $git_dir = "$projectroot/$project" if $project;
++	$git_dir = "$projectroot/$project" if $project;
+ }
+ 
+ our (@snapshot_fmts, $git_avatar);
+@@ -1548,21 +1536,6 @@ sub get_feed_info {
+ ## ----------------------------------------------------------------------
+ ## git utility subroutines, invoking git commands
+ 
+-# returns path to the core git executable and the --git-dir parameter as list
+-sub git_cmd {
+-	$number_of_git_cmds++;
+-	return $GIT, '--git-dir='.$git_dir;
+-}
+-
+-# quote the given arguments for passing them to the shell
+-# quote_command("command", "arg 1", "arg with ' and ! characters")
+-# => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
+-# Try to avoid using this function wherever possible.
+-sub quote_command {
+-	return join(' ',
+-		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
+-}
+-
+ # get HEAD ref of given project as hash
+ sub git_get_head_hash {
+ 	return git_get_full_hash(shift, 'HEAD');
+diff --git a/gitweb/lib/Gitweb/Git.pm b/gitweb/lib/Gitweb/Git.pm
+new file mode 100644
+index 0000000..9961e6d
+--- /dev/null
++++ b/gitweb/lib/Gitweb/Git.pm
+@@ -0,0 +1,48 @@
++#!/usr/bin/perl
++#
++# Gitweb::Git -- gitweb git package
++#
++# This program is licensed under the GPLv2
++
++package Gitweb::Git;
++
++use strict;
++use warnings;
++use Exporter qw(import);
++
++our @EXPORT = qw($GIT $number_of_git_cmds $git_version $git_dir
++                 git_cmd quote_command evaluate_git_version);
++
++# core git executable to use
++# this can just be "git" if your webserver has a sensible PATH
++our $GIT;
++
++our $number_of_git_cmds = 0;
++
++# version of the core git binary
++our $git_version;
++
++# path to the current git repository
++our $git_dir;
++
++# returns path to the core git executable and the --git-dir parameter as list
++sub git_cmd {
++	$number_of_git_cmds++;
++	return $GIT, '--git-dir='.$git_dir;
++}
++
++# quote the given arguments for passing them to the shell
++# quote_command("command", "arg 1", "arg with ' and ! characters")
++# => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
++# Try to avoid using this function wherever possible.
++sub quote_command {
++	return join(' ',
++		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
++}
++
++sub evaluate_git_version {
++	$git_version = qx("$GIT" --version) =~ m/git version (.*)$/ ? $1 : "unknown";
++	$number_of_git_cmds++;
++}
++
++1;
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.1.450.g21d56
