@@ -1,76 +1,108 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 1/4] diff/xdiff: refactor EOF-EOL detection
-Date: Sun, 6 Jun 2010 11:01:02 +0200
-Message-ID: <201006061101.02156.j6t@kdbg.org>
-References: <cover.1275575236.git.git@drmicha.warpmail.net> <4C08AD75.6040307@drmicha.warpmail.net> <7vfx10yfmn.fsf@alter.siamese.dyndns.org>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: Re: permissions
+Date: Sat, 05 Jun 2010 23:36:50 -1000
+Message-ID: <4C0B6C32.1090700@wpursell.net>
+References: <4C0A19FE.1020802@wpursell.net>	<m27hmdn704.fsf@igel.home>	<4C0A9615.4090307@wpursell.net> <AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 06 11:04:19 2010
+Cc: William Pursell <bill.pursell@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 06 11:37:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLBmD-00019w-K2
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 11:04:17 +0200
+	id 1OLCHt-0000Wy-DK
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 11:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754218Ab0FFJEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 05:04:08 -0400
-Received: from bsmtp4.bon.at ([195.3.86.186]:22265 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751543Ab0FFJEG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 05:04:06 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 46E37A7EC1;
-	Sun,  6 Jun 2010 11:03:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 6148A19F5F4;
-	Sun,  6 Jun 2010 11:01:02 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <7vfx10yfmn.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1751682Ab0FFJg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 05:36:56 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49169 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750738Ab0FFJgz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 05:36:55 -0400
+Received: by pwj5 with SMTP id 5so506799pwj.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 02:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=fFSojv3M5OblMRLZ1bY5Y24SCodKGCf4r96aMp5TEQs=;
+        b=VqLPIJioHeD0Up/c+xwyL/f2Y4bq24981EiaBzB1ASmDW+vfr9o+NlS3BA21yatvQw
+         QIz6E7bT5SiK9UXTVPT+tqjMHc9c3x7MFaFyBh7udVBqldzYpJbYnPwMWIi+gz+L2uve
+         Yy9oaRRfuARuvk7numdzkgFJI4jJgPVJ14Og4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=SQkgsglvYJ5sDYOdqRMYS298pRiAJ1EnOOO9KfX8aVDdR3yFg3/O3TFA/OEwmNgEKY
+         swi+6lTzJKV4O/NbqIC1KGB9DnnVqfhwfVD0PJDNx2n2m8rrh8C6eUWEVsHE2BTJTmH+
+         3EnCgfcDKzaeM0/MoDG612/nJsWz/IrH47aMQ=
+Received: by 10.142.56.4 with SMTP id e4mr9488096wfa.308.1275817014920;
+        Sun, 06 Jun 2010 02:36:54 -0700 (PDT)
+Received: from clam.westell.com (udp278831uds.hawaiiantel.net [72.234.51.251])
+        by mx.google.com with ESMTPS id a23sm27213464wam.2.2010.06.06.02.36.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 06 Jun 2010 02:36:53 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.24 (Macintosh/20100228)
+In-Reply-To: <AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148511>
 
-On Sonntag, 6. Juni 2010, Junio C Hamano wrote:
-> Symlinks are minority among the tracked contents (e.g. in git.git there is
-> only one), and they are almost always a single incomplete line.  When they
-> change, you do want to notice, and I happen to find it a good visual aid
-> to have these incomplete line indicators, in addition to the unusual
-> 120000 mode on the index line.
+Alex Riesen wrote:
+> On Sat, Jun 5, 2010 at 20:23, William Pursell <bill.pursell@gmail.com> wrote:
+>> fatal: Not a git repository (or any of the parent directories): .git
+>>
+>> That's just weird.  And if there is a git repository in a
+>> directory above, there may be great confusion, weeping
+>> and gnashing of teeth.
+> 
+> How about just this? (I assume cwd does hold current working directory).
 
-You make whole lot of assumptions, don't you?
+<patch snipped>
 
-A repository cannot have many tracked symlinks? They change infrequently? 
-Additional clues are needed to notice that they change?
+The problem is permissions, not that it's "not a git repository".
+The error message should be "permission denied".  The easy solution
+is to abort with "permission denied" whenever that is encountered,
+but the trouble with that is that it breaks the current work flow
+in which a broken dir (or one for which the user lacks
+priveleges) is bypassed and a valid object directory higher
+up in the filesystem tree is used.
 
-> Peff uses --textconv to show changes to the exif information on his photo
-> collections.  If he has any symlinks, and if he finds that removal of "\No
-> newline" is a regression and not an improvement, what recourse does your
-> patch give him?  Saying --no-textconv to work around that regression is
-> not a solution, isn't it?
+Consider the case in which /etc/.git has mode 777 while
+/etc/sysconfig/.git has mode 700, each .git owned by root.
+(Granted, git is for recording development history and
+not so much for storing history of config files, but
+I believe this is a relevant use case.)  /etc/sysconfig/foo
+is tracked by /etc/sysconfig/.git but not by /etc/.git.
+Regular user in /etc/sysconfig invokes 'git log foo'
+and is told: absolutely nothing.   And when
+'git status' is invoked, the message is that foo is
+untracked.
 
-Oh, I'm pretty sure that Peff wouldn't use --textconv on his repository if he 
-cared that diffs contained complete reproducible information.
+Now, if /etc/.git does track /etc/sysconfig/foo,
+then a regular user in /etc/sysconfig that invokes
+'git log foo' sees the history tracked in /etc/.git,
+but root in /etc/sysconfig sees the history tracked
+by /etc/sysconfig/.git.  This is confusing.  The regular
+user in /etc/sysconfig should simply get 'permission denied'
+on all invocations of git.
 
-> If you start from a false premise that "\No newline" was an unnecessary
-> warning,
+A related question is: does anyone actually prefer (or
+rely on) the current model in which ../.git is
+used in the event that .git is borked or the user
+lacks permission?  It seems to me that if an
+object directory is discovered which is borked
+or which is unreadable, git must abort with an
+error message indicating the relevant problem.
 
-That's a strawman. Michael never meant it that way although he said it 
-(unfortunately).
-
-For me, the 120000 mode is visual clue enough (and a very strong visual 
-trigger, BTW) when I browse through a diff. It's appropriate that "\No 
-newline" is suppressed for symbolic links so that it does not distract from 
-the mode line, because "\No newline" is a much strong trigger (that makes 
-alarm bells ring).
-
--- Hannes
+-- 
+William Pursell
