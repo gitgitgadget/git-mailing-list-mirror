@@ -1,94 +1,80 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Improve parent blame to detect renames by using the
- previous information
-Date: Sun, 6 Jun 2010 18:35:45 -0400
-Message-ID: <20100606223545.GA11424@coredump.intra.peff.net>
-References: <20100523075503.GA24598@coredump.intra.peff.net>
- <1275767765-8509-1-git-send-email-fonseca@diku.dk>
+Subject: Re: rebase --continue confusion
+Date: Sun, 6 Jun 2010 18:46:01 -0400
+Message-ID: <20100606224601.GB11424@coredump.intra.peff.net>
+References: <4C01B855.7080409@gmail.com>
+ <m3bpbo1f3f.fsf@winooski.ccs.neu.edu>
+ <20100606221853.GG6993@coredump.intra.peff.net>
+ <19468.8730.59682.76355@winooski.ccs.neu.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Mon Jun 07 00:35:53 2010
+To: Eli Barzilay <eli@barzilay.org>
+X-From: git-owner@vger.kernel.org Mon Jun 07 00:54:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLORc-0001sn-OD
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 00:35:53 +0200
+	id 1OLOk1-0000Vd-SG
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 00:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751491Ab0FFWfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 18:35:48 -0400
-Received: from peff.net ([208.65.91.99]:39575 "EHLO peff.net"
+	id S1751567Ab0FFWqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 18:46:08 -0400
+Received: from peff.net ([208.65.91.99]:47499 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750717Ab0FFWfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 18:35:47 -0400
-Received: (qmail 13922 invoked by uid 107); 6 Jun 2010 22:35:56 -0000
+	id S1750997Ab0FFWqG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 18:46:06 -0400
+Received: (qmail 13967 invoked by uid 107); 6 Jun 2010 22:46:12 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Jun 2010 18:35:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jun 2010 18:35:45 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Jun 2010 18:46:12 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jun 2010 18:46:01 -0400
 Content-Disposition: inline
-In-Reply-To: <1275767765-8509-1-git-send-email-fonseca@diku.dk>
+In-Reply-To: <19468.8730.59682.76355@winooski.ccs.neu.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148561>
 
-On Sat, Jun 05, 2010 at 03:56:05PM -0400, Jonas Fonseca wrote:
+On Sun, Jun 06, 2010 at 06:32:58PM -0400, Eli Barzilay wrote:
 
->  I finally got some more time to dig around this. What if we simply uses
->  the information given by the porcelain output's previous line? It
->  handles your simple test case, and navigating in the tig repository. It
->  also makes it possible to delete a lot of code.
+> > >   $ git add foo
+> > >   $ git status -s
+> > >   M  foo
+> > >   $ git commit --amend foo
+> > >   # On branch master
+> > >   # No changes
+> > >   $ git status -s
+> > >   M  foo
+> > 
+> > I'm confused. Is there some context for when you are issuing these
+> > commands?  Because the "git commit --amend foo" should actually
+> > commit foo, and does for me.
+> 
+> Heh, in that case it was more effective than I thought...  My point in
+> the previous posts was also about missing information (in that case,
+> make `git add' tell you when adding it canceled previously added
+> changes, and also make `git status' tell you if you're in the middle
+> of a merge or rebase and in a clean state).
+> 
+> In any case, here's the prelude to the above:
+> 
+>   $ mkdir t; cd t; git init
+>   $ echo foo > foo; git add foo; git commit -m foo
+>   $ echo bar > foo; git commit -o foo -m bar
+>   $ echo foo > foo
 
-Yes, I think that is the right way to go. The whole time I was doing the
-other patches, I kept thinking that we had something like this in the
-blame output, but when I looked I couldn't find it (which I can't see
-how I would manage now, it's quite obvious to see).
+Ah, I see. Your problem has nothing to do with explicit pathnames (which
+I thought was the interesting bit from your snippet), but rather that
+you are amending it to the same as HEAD^.
 
-So I think it does the right thing, and I see you also included my fix:
-
-> +	char from[SIZEOF_REF + SIZEOF_STR];
-> +	char to[SIZEOF_REF + SIZEOF_STR];
->  	const char *diff_tree_argv[] = {
-> -		"git", "diff-tree", "-U0", blame->commit->id,
-> -			"--", blame->commit->filename, NULL
-> +		"git", "diff", "--no-textconv", "--no-extdiff", "--no-color",
-> +			"-U0", from, to, "--", NULL
->  	};
->  	struct io io;
->  	int parent_lineno = -1;
->  	int blamed_lineno = -1;
->  	char *line;
->  
-> +	snprintf(from, sizeof(from), "%s:%s", opt_ref, opt_file);
-> +	snprintf(to, sizeof(to), "%s:%s", blame->commit->id,
-> +		 blame->commit->filename);
-> +
-
-to handle the line-jumping properly.
-
-One minor bug:
-
-> @@ -5204,10 +5148,13 @@ blame_request(struct view *view, enum request request, struct line *line)
->  		break;
->  
->  	case REQ_PARENT:
-> -		if (check_blame_commit(blame, TRUE) &&
-> -		    select_commit_parent(blame->commit->id, opt_ref,
-> -					 blame->commit->filename)) {
-> -			string_copy(opt_file, blame->commit->filename);
-> +		if (!check_blame_commit(blame, TRUE))
-> +			break;
-> +		if (!*blame->commit->parent_id) {
-> +			report("The selected commit has no parents");
-> +		} else {
-> +			string_copy_rev(opt_ref, blame->commit->parent_id);
-> +			string_copy_rev(opt_file, blame->commit->parent_filename);
-
-This second string_copy_rev should be a string_ncopy, shouldn't it?
+Probably it would be helpful in the case of an amend to indicate what
+has happened (you have no changes, but it is not immediately obvious
+that you have no changes against HEAD^, not HEAD). We could even
+suggest "git reset HEAD^", which is probably what you want (the only
+other thing you could want is to create a commit with no changes, which
+we generally try to avoid).
 
 -Peff
