@@ -1,146 +1,86 @@
-From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
-Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
-Date: Sun, 6 Jun 2010 12:50:08 +0200 (CEST)
-Organization: Roxen Internet Software AB
-Message-ID: <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com>
-References: <cover.1275309129.git.grubba@grubba.org> <7vfx16oxmz.fsf@alter.siamese.dyndns.org>
- <Pine.GSO.4.63.1006031543340.22466@shipon.roxen.com> <20100604005603.GA25806@progeny.tock>
- <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock>
+From: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
+	<clement.poulain@ensimag.imag.fr>
+Subject: [RFC/PATCH 0/4] git-gui blame: use textconv
+Date: Sun,  6 Jun 2010 13:30:44 +0200
+Message-ID: <1275823848-7151-1-git-send-email-clement.poulain@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-579758561-1275821408=:27465"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 06 12:50:42 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: spearce@spearce.org, drizzd@aon.at, matthieu.moy@grenoble-inp.fr,
+	=?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
+	<clement.poulain@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 06 13:31:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLDR7-0006g7-Es
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 12:50:37 +0200
+	id 1OLE59-0005re-GU
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 13:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755837Ab0FFKuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 06:50:16 -0400
-Received: from mail.roxen.com ([212.247.29.220]:54245 "EHLO mail.roxen.com"
+	id S1757793Ab0FFLbw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jun 2010 07:31:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52851 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755738Ab0FFKuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 06:50:12 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.roxen.com (Postfix) with ESMTP id 7CBEA62820A;
-	Sun,  6 Jun 2010 12:50:10 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at roxen.com
-Received: from mail.roxen.com ([212.247.29.220])
-	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id D5MTVAT99fOw; Sun,  6 Jun 2010 12:50:08 +0200 (CEST)
-Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
-	by mail.roxen.com (Postfix) with ESMTP id B2ED96281D1;
-	Sun,  6 Jun 2010 12:50:08 +0200 (CEST)
-In-Reply-To: <20100604194201.GB21492@progeny.tock>
+	id S1757791Ab0FFLbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 07:31:50 -0400
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o56BO71w030374
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 6 Jun 2010 13:24:07 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o56BVgxX007111;
+	Sun, 6 Jun 2010 13:31:42 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o56BVg86008004;
+	Sun, 6 Jun 2010 13:31:42 +0200
+Received: (from poulainc@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o56BVgV1008001;
+	Sun, 6 Jun 2010 13:31:42 +0200
+X-Mailer: git-send-email 1.6.6.7.ga5fe3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 06 Jun 2010 13:24:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o56BO71w030374
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148513>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+This patch adds support of textconv to git-gui blame. It is based on th=
+e work already done here: http://mid.gmane.org/1275562038-7468-1-git-se=
+nd-email-axel.bonnet@ensimag.imag.fr, and uses a git-gui patch done by =
+Clemens Buchacher (http://mid.gmane.org/20100415193944.GA5848@localhost=
+) which adds textconv support to git-gui diff.
 
----559023410-579758561-1275821408=:27465
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+git-gui blame is based on cat-file to get the content of the file in di=
+fferent revisions. So the patch adds textconv support to cat-file.
 
-On Fri, 4 Jun 2010, Jonathan Nieder wrote:
+After a discussion with Jeff King and Matthieu Moy, it appears that cre=
+ating a context cache is a good way to know the pathname of the concern=
+ed blob, as textconv needs a pathname to work. The first part of the pa=
+tch adds this cache
 
-> Henrik Grubbström wrote:
->> On Thu, 3 Jun 2010, Jonathan Nieder wrote:
->
->>> If you wait for some
->>> real change to piggy-back onto, on the other hand, then the per-file
->>> normalization patches will make it hard to find what changed.
->>
->> This seems more like an argument against repositories where
->> renormalizations have occurred, than against the feature as such.
->
-> No, it is an argument against making the process of renormalization
-> more painful than it has to be (and against piggy-backing in general).
-> It is kindest to have a flag day and yank the carriage returns off all
-> at once like a bandage.
+Cl=C3=A9ment Poulain (4):
+  sha1_name: creating context cache
+  textconv: support for cat-file
+  git-gui: use textconv filter for diff and blame
+  t/t8007: test textconv support for cat-file
 
-In the crlf case, yes, probably. In the ident case there might be good 
-reasons to want to have the ident strings stay unmodified as long as 
-possible (since otherwise there'll be two ident strings that identify
-the same code).
-
-Currently (as I believe you know), git has no detection of when the 
-conversion mode for a file has changed, and it might even take a while 
-before the users notice that the repository is not normalized. eg:
-
-   0) There's a repository with some files containing crlf line endings.
-
-   1) User A notices that git now has native support for crlf
-      line endings, and adds the attribute eol=crlf for the
-      affected files.
-
-   2) User A does a git status, sees that .gitattributes is
-      modified, and commits it.
-
-   3) User A does a new git status, and has a clean index.
-
-   4) User B who has been developing on the project for a while
-      does a git pull from user A, and gets the new .gitattributes.
-
-   5) User B does a git status, and has a clean index.
-
-   6) User C is new to the project and does an initial git clone,
-      and ends up with a dirty index.
-
-I believe we both agree that the above is undesireable behaviour. The 
-above behaviour also means that it's likely that there are repositorys
-out there which contain unnormalized files.
-
-What my patch set achieves is that user C above also gets a clean index.
-
-What it seems you want is that user A above should have all files that got 
-denormalized by the attribute change marked dirty at 2 (and 3).
-
-With a minor change of the read-cache.c:ce_compare_data() patch (returning 
-1 if conv_flags has CONV_NORM_NEEDED), you should get the behaviour you 
-want (all files which are unnormalized in the repository will be dirty).
-
-As I believe both behaviours may be desireable a config option and/or 
-attribute is needed. Any suggestions for a name (and default value)?
-
->> Well, diff and blame would be confused by a crlf renormalization
->> regardless of whether the renormalization was piggy-backed or not.
->
-> Only if they cross the revision where renormalization occurred.
-
-Which is true in both cases.
-
-> Wouldn't something like
->
-> /foo.c -ident has_foreign_ident
->
-> work?
-
-Yes, but it sort of reduces the usefulness of macros if you need to expand 
-them by hand... :-)
-
-Better to fix the bug and wait for the fix to enter a released version.
-
->>   * Hooks are not copied by git clone. Support for copying of hooks
->>     to non-POSIX-like systems is not something I'd like to attempt.
->
-> Can't you include a hooks/pre-commit file and a HACKING file: "copy
-> this file to .git/hooks if you want your patches to be accepted"?
-
-Yes, but you still have to remember to do it everytime you clone the 
-repository.
-
-Thanks for taking the time to discuss the problem.
-
---
-Henrik Grubbström					grubba@grubba.org
-Roxen Internet Software AB				grubba@roxen.com
----559023410-579758561-1275821408=:27465--
+ builtin/blame.c              |    8 ++--
+ builtin/cat-file.c           |   24 ++++++++++++++-
+ cache.h                      |    8 +++++
+ git-gui/git-gui.sh           |   28 +++++++++++++++++-
+ git-gui/lib/blame.tcl        |   18 ++++++++++-
+ git-gui/lib/diff.tcl         |    5 ++-
+ git-gui/lib/option.tcl       |    1 +
+ sha1_name.c                  |   19 ++++++++++++
+ t/t8007-cat-file-textconv.sh |   66 ++++++++++++++++++++++++++++++++++=
+++++++++
+ 9 files changed, 168 insertions(+), 9 deletions(-)
+ create mode 100755 t/t8007-cat-file-textconv.sh
