@@ -1,107 +1,101 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: Re: [PATCH/RFC v2] gitweb: Run in FastCGI mode if gitweb script has 
-	.fcgi extension
-Date: Mon, 7 Jun 2010 01:48:03 +0530
-Message-ID: <AANLkTimApmqQmbsIkfKmgXAMTaoQqDV5fU3S7SwXoScY@mail.gmail.com>
-References: <1275772278-14709-1-git-send-email-jnareb@gmail.com>
-	<201006062209.53176.jnareb@gmail.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: Re: [PATCH] bash completion: Support "unpushed commits" warnings
+ in __git_ps1
+Date: Sun, 06 Jun 2010 21:49:03 +0100
+Message-ID: <4C0C09BF.4070503@pileofstuff.org>
+References: <4C0AE640.3040503@pileofstuff.org> <201006062014.59386.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 06 22:18:18 2010
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sun Jun 06 22:49:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLMIS-0004K7-JX
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 22:18:16 +0200
+	id 1OLMmV-0000Q1-4F
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 22:49:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754015Ab0FFUSG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Jun 2010 16:18:06 -0400
-Received: from mail-yw0-f187.google.com ([209.85.211.187]:47496 "EHLO
-	mail-yw0-f187.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585Ab0FFUSE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Jun 2010 16:18:04 -0400
-Received: by ywh17 with SMTP id 17so145385ywh.1
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 13:18:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FRFOBoyHBqerZ+TmVmDg7/8TeeHeSxlSa7LGMMrJqYw=;
-        b=HSLsIfoYKmh/pz70ISXd3jEzuKt64QFVCeOQeLTALEmvjDDJwFTnn6hJkqmCnUSysu
-         u9hQXOgHAbEYTsEX806mmKk9dpY2sd6RO/Qdd6yNlQ89Vln7BYXuMM0v1Mr9eMDhlxRy
-         r4R27GyHaihCoOZf9hiAUmsq2tViUss1g+t5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lvAuG7f5IwkS0K6MSzrwobCzMXVhZ/vB00AJQiFl8Mjm1veCaM/gPzKeOVFgTYKazE
-         brrXkUYJzuZX/sCvzbVqE7woyXFkfZ6dxzME7Y4g9o6dv2+18ERixGCTqq3JPNSG3HfK
-         y/96m4+m2X8FJ00YNSfych0uyoSqv6hTdH04E=
-Received: by 10.101.6.1 with SMTP id j1mr14331050ani.200.1275855483235; Sun, 
-	06 Jun 2010 13:18:03 -0700 (PDT)
-Received: by 10.100.126.20 with HTTP; Sun, 6 Jun 2010 13:18:03 -0700 (PDT)
-In-Reply-To: <201006062209.53176.jnareb@gmail.com>
+	id S1753719Ab0FFUtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 16:49:08 -0400
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:46292 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752072Ab0FFUtH (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Jun 2010 16:49:07 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20100606204906.YIWM3075.mtaout03-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Sun, 6 Jun 2010 21:49:06 +0100
+Received: from [192.168.1.5] (really [80.6.134.127])
+          by aamtaout03-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20100606204905.ZMOD1598.aamtaout03-winn.ispmail.ntl.com@[192.168.1.5]>;
+          Sun, 6 Jun 2010 21:49:05 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <201006062014.59386.trast@student.ethz.ch>
+X-Cloudmark-Analysis: v=1.1 cv=W3tOLUehizD4qj6VhtReFuw5MKb8d+XqjIxlDsIazEA= c=1 sm=0 a=jbOMyiAj6TwA:10 a=yQWWgrYGNuUA:10 a=8nJEP1OIZ-IA:10 a=c9vwdAxW17_VmMjYZh0A:9 a=1i3J3LqiGvyvQuq9XbtaxZABM_gA:4 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148542>
 
-> @@ -1056,19 +1056,24 @@ our $is_last_request =3D sub { 1 };
-> =A0our ($pre_dispatch_hook, $post_dispatch_hook, $pre_listen_hook);
-> =A0our $CGI =3D 'CGI';
-> =A0our $cgi;
-> +sub configure_as_fcgi {
-> + =A0 =A0 =A0 require CGI::Fast;
-> + =A0 =A0 =A0 our $CGI =3D 'CGI::Fast';
-> +
-> + =A0 =A0 =A0 my $request_number =3D 0;
-> + =A0 =A0 =A0 # let each child service 100 requests
-> + =A0 =A0 =A0 our $is_last_request =3D sub { ++$request_number > 100 =
-};
-> +}
+On 06/06/10 19:14, Thomas Rast wrote:
+> 
+> At least the svn/git setting should definitely be configurable through
+> git-config, so that it becomes per-repo configurable.  Also, you could
+> try to trigger the svn mode by default if a svn-remote.svn.url exists.
+> 
 
-You missed to put a new line in here.
+I'm not averse to adding a config setting, or to exploring the
+"--no-metadata" case.  I am concerned about the strict time constraints
+for code called in a command prompt though.  For instance, calling
+git-svn could easily make your prompt take over half a second to respond
+because of all the Perl you'd have to compile.  I'd also want a few
+real-world use cases and a nod from Shawn before diverging any further
+from the existing GIT_PS1_FOO= convention.
 
-> =A0sub evaluate_argv {
-> + =A0 =A0 =A0 my $script_name =3D $ENV{'SCRIPT_NAME'} || $ENV{'SCRIPT=
-_FILENAME'} || __FILE__;
-> + =A0 =A0 =A0 configure_as_fcgi()
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if $script_name =3D~ /\.fcgi$/;
-> +
-> =A0 =A0 =A0 =A0return unless (@ARGV);
->
-> =A0 =A0 =A0 =A0require Getopt::Long;
-> =A0 =A0 =A0 =A0Getopt::Long::GetOptions(
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 'fastcgi|fcgi|f' =3D> sub {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 require CGI::Fast;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 our $CGI =3D 'CGI::Fast=
-';
-> -
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $request_number =3D =
-0;
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # let each child servic=
-e 100 requests
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 our $is_last_request =3D=
- sub { ++$request_number > 100 };
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 },
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 'fastcgi|fcgi|f' =3D> \&configure_as_fc=
-gi,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0'nproc|n=3Di' =3D> sub {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0my ($arg, $val) =3D @_=
-;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0return unless eval { r=
-equire FCGI::ProcManager; 1; };
-> --
-> 1.7.0.1
+Having said all that, I'm quite happy to resubmit with
+GIT_PS1_SHOWUNPUSHED=svn treated like GIT_PS1_SHOWUNPUSHED=1 when
+$GIT_DIR/svn doesn't exist.
 
-Thanks,
-Pavan.
+> How about starting with
+> 
+>   git log -1 --first-parent --grep="^git-svn-id: $remote_branch"
+> 
+> which should be faster and is also closer to the truth.  It still
+> doesn't work if the repo was cloned with --no-metadata.  Doing it
+> right probably would require a new informational command in git-svn
+> that reports the branch name.
+
+Good idea about "-1" and "--grep", but multi-parent commits aren't
+compatible with SVN, so I don't see how "--first-parent" is useful here?
+ In fact I'm tempted to look for merge commits and print a big warning
+when one is found.
+
+I don't see how to actually split out the branch name without calling
+sed or using one of the disallowed ${} constructs.  So I compared the
+following commands on my PC (2.1 GHz dual-core Athlon) using a
+repository with 100 empty commits between HEAD and a git-svn-id:
+
+time git log | \
+	sed -ne "/^    git-svn-id: / { s/^    git-svn-id: "\
+	"$remote_branch\/\([^@]*\).*/\1/p ; q }"
+
+time git log -1 --grep="^git-svn-id: $remote_branch" | \
+	sed -ne "s/^    git-svn-id: $remote_branch\/\([^@]*\).*/\1/p"
+
+The former averaged about 0.017 seconds, whereas the latter averaged
+about 0.015.  So when I resubmit this patch, I'll include your version
+if merge commits are somehow useful to SVNers, or a merge warning otherwise.
+
+Incidentally, a quick bit of etiquette - would you rather I submitted an
+RFC patch or two with these changes, or wait until the discussion has
+reached a more stable point?
+
+	- Andrew
