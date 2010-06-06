@@ -1,64 +1,56 @@
-From: Mike Solomon <mikesol@UFL.EDU>
-Subject: Moving a branch to a different node
-Date: Sun, 06 Jun 2010 23:01:31 +0200
-Message-ID: <C831D94B.1D9DF%mikesol@ufl.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/4] diff/xdiff: refactor EOF-EOL detection
+Date: Sun, 6 Jun 2010 18:03:05 -0400
+Message-ID: <20100606220304.GC6993@coredump.intra.peff.net>
+References: <cover.1275575236.git.git@drmicha.warpmail.net>
+ <08e635cee993d97e2a38d7766ced11c064ef7d87.1275575236.git.git@drmicha.warpmail.net>
+ <7vsk537p8k.fsf@alter.siamese.dyndns.org>
+ <4C08AD75.6040307@drmicha.warpmail.net>
+ <7vpr060ys0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 07 00:01:42 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 07 00:03:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLNuX-0006CH-SJ
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 00:01:42 +0200
+	id 1OLNw2-0007eL-W9
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 00:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218Ab0FFWBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 18:01:37 -0400
-Received: from smtp04.osg.ufl.edu ([128.227.74.71]:33480 "EHLO smtp.ufl.edu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754396Ab0FFWBg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 18:01:36 -0400
-X-Greylist: delayed 3907 seconds by postgrey-1.27 at vger.kernel.org; Sun, 06 Jun 2010 18:01:36 EDT
-Received: from [10.101.0.156] (nsc.ciup.fr [193.52.24.125])
-	(authenticated bits=0)
-	by smtp.ufl.edu (8.14.0/8.14.0/3.0.0) with ESMTP id o56KuPBu006112
-	for <git@vger.kernel.org>; Sun, 6 Jun 2010 16:56:26 -0400
-User-Agent: Microsoft-Entourage/11.4.0.080122
-Thread-Topic: Moving a branch to a different node
-Thread-Index: AcsFu3A5ruBmSXGuEd+kFAARJHM+bg==
-X-Proofpoint-Virus-Version: vendor=fsecure engine=1.12.8161:2.4.5,1.2.40,4.0.166 definitions=2010-06-06_01:2010-02-06,2010-06-06,2010-06-06 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 ipscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx engine=5.0.0-1005130000 definitions=main-1006060160
-X-Spam-Level: *
-X-UFL-Spam-Level: *
+	id S1755228Ab0FFWDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 18:03:09 -0400
+Received: from peff.net ([208.65.91.99]:58807 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754396Ab0FFWDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 18:03:08 -0400
+Received: (qmail 12369 invoked by uid 107); 6 Jun 2010 22:03:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Jun 2010 18:03:15 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jun 2010 18:03:05 -0400
+Content-Disposition: inline
+In-Reply-To: <7vpr060ys0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148549>
 
-Hey git users,
-    I am working on a project where I proceeded by the following steps:
+On Fri, Jun 04, 2010 at 11:38:39PM -0700, Junio C Hamano wrote:
 
-starting from master...
-1) create branch foo
-2) work in foo, make some commits, then a patch named Foo
-3) create a branch bar while in foo
-4) work in bar, make some commits, then a patch named Bar
+> It can be done by defining a custom textconv filter that adds a trailing
+> LF to a blob that ends in an incomplete line, and what your patch 3/4 does
+> is essentially to create such a built-in textconv filter and *force* users
+> to use it unconditionally for all paths unless the user explicitly asks
+> not to use *any* textconv.
 
-git show-branch gives me
+Side note: it would be kind of cool to have .gitattributes selectable on
+file mode, so you could implement this feature entirely as a textconv on
+symlinks.  And then you could pretty-print them however you liked.
 
-! [master] Hello
- * [foo] Foo
-  ! [bar] Bar
+That may be going overboard, though.
 
-I would like to make bar split off of master instead of foo so that I can
-format a patch that can be applied to master (Bar) without having to first
-apply Foo.  Is there a way to do that?
-
-Thank you!
-~Mike
+-Peff
