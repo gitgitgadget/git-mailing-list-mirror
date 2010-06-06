@@ -1,80 +1,76 @@
-From: Steven Michalske <smichalske@gmail.com>
-Subject: Re: What's the best way to make my company migrate to Git?
-Date: Sun, 6 Jun 2010 01:19:08 -0700
-Message-ID: <EBDDE922-E7D4-4668-BFA4-9770D9ABD4F2@gmail.com>
-References: <AANLkTikwpjtJnR856CHr_O3856JoMrFBgOQGODXNBbeI@mail.gmail.com>	<4BF7B751.7050704@pileofstuff.org>	<4BFB7F7F.5090407@drmicha.warpmail.net>	<4C041656.7000008@pileofstuff.org> <AANLkTinO_Z-1myhT-0TBIjELiEd4H-NnESs-AjTIpEf9@mail.gmail.com> <4C06050C.2040505@drmicha.warpmail.net> <4C0AC140.6090808@pileofstuff.org>
-Mime-Version: 1.0 (Apple Message framework v1068)
-Content-Type: text/plain; charset=us-ascii; format=flowed; delsp=yes
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 1/4] diff/xdiff: refactor EOF-EOL detection
+Date: Sun, 6 Jun 2010 11:01:02 +0200
+Message-ID: <201006061101.02156.j6t@kdbg.org>
+References: <cover.1275575236.git.git@drmicha.warpmail.net> <4C08AD75.6040307@drmicha.warpmail.net> <7vfx10yfmn.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Daniele Segato <daniele.bilug@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sun Jun 06 10:19:22 2010
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 06 11:04:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLB4j-0001fG-J0
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 10:19:21 +0200
+	id 1OLBmD-00019w-K2
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 11:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343Ab0FFITP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 04:19:15 -0400
-Received: from mail-pz0-f185.google.com ([209.85.222.185]:63455 "EHLO
-	mail-pz0-f185.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752260Ab0FFITN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 04:19:13 -0400
-Received: by pzk15 with SMTP id 15so1770979pzk.15
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 01:19:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=AwlWzXRwSdEFLiLSdFDQk2l/J8CTVugpYCA6v7Q8QTE=;
-        b=Eg9HGpDNVTo4COPDxVBq6pnVil6O2YaEmyjFOyVP5isL8geEoGsfvWEYJHiBZn0mjc
-         2mY+JLDMPeJHW9/eKoSKh54YXON83tuRzaOM0EMGpWvq4y0e+6EKmAaTsKt4tABQl8ee
-         N5UQ4tLB4QiVDjm+D34KeWdUPYkA5nJJYBb2M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=TyLWXPhSzQYvqyWzMlRgdgyVAsySsqArQWVo8JX+bJaGs68SJz1pBjqoWZqdAF9jO8
-         cQNoFfflmJfyRCZ0Jo1Bm66qN1+OhNu2dVMzTsnA/hWIp7A8co74VA5P9iacQ+cquh+b
-         0UH+hnzeot2v+1J4sdJEE0a1hC+dUwlJRX9aM=
-Received: by 10.143.154.1 with SMTP id g1mr9848349wfo.36.1275812351701;
-        Sun, 06 Jun 2010 01:19:11 -0700 (PDT)
-Received: from [192.168.1.105] (c-98-234-104-87.hsd1.ca.comcast.net [98.234.104.87])
-        by mx.google.com with ESMTPS id b6sm26652553wam.9.2010.06.06.01.19.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 01:19:10 -0700 (PDT)
-In-Reply-To: <4C0AC140.6090808@pileofstuff.org>
-X-Mailer: Apple Mail (2.1068)
+	id S1754218Ab0FFJEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 05:04:08 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:22265 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751543Ab0FFJEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 05:04:06 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 46E37A7EC1;
+	Sun,  6 Jun 2010 11:03:58 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 6148A19F5F4;
+	Sun,  6 Jun 2010 11:01:02 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <7vfx10yfmn.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148510>
 
-Resent, HTML multipart got treated as spam......
+On Sonntag, 6. Juni 2010, Junio C Hamano wrote:
+> Symlinks are minority among the tracked contents (e.g. in git.git there is
+> only one), and they are almost always a single incomplete line.  When they
+> change, you do want to notice, and I happen to find it a good visual aid
+> to have these incomplete line indicators, in addition to the unusual
+> 120000 mode on the index line.
 
-On Jun 5, 2010, at 2:27 PM, Andrew Sayers wrote:
+You make whole lot of assumptions, don't you?
 
-> I remember now the
-> mental anguish I went through trying to explain what a local index is,
-> so I thought I'd save other people the bother :)
+A repository cannot have many tracked symlinks? They change infrequently? 
+Additional clues are needed to notice that they change?
 
-I liked the idea that its an envelope, and you add changes to the open  
-envelope.
+> Peff uses --textconv to show changes to the exif information on his photo
+> collections.  If he has any symlinks, and if he finds that removal of "\No
+> newline" is a regression and not an improvement, what recourse does your
+> patch give him?  Saying --no-textconv to work around that regression is
+> not a solution, isn't it?
 
-Committing the changes are sealing the envelope and putting it on the  
-pile of papers on your desk
+Oh, I'm pretty sure that Peff wouldn't use --textconv on his repository if he 
+cared that diffs contained complete reproducible information.
 
-A push is mailing the envelope.
+> If you start from a false premise that "\No newline" was an unnecessary
+> warning,
 
-Fetch is going to the mail box getting the envelopes and throwing the  
-letters on the table, but not opening them.
+That's a strawman. Michael never meant it that way although he said it 
+(unfortunately).
 
-Everyone knows envelopes!
+For me, the 120000 mode is visual clue enough (and a very strong visual 
+trigger, BTW) when I browse through a diff. It's appropriate that "\No 
+newline" is suppressed for symbolic links so that it does not distract from 
+the mode line, because "\No newline" is a much strong trigger (that makes 
+alarm bells ring).
+
+-- Hannes
