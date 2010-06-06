@@ -1,111 +1,85 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: branch --set-upstream considered harmful
-Date: Sun, 6 Jun 2010 15:21:57 -0400
-Message-ID: <AANLkTiln_xxnF-e33YA7kkfbBBcBMd40xag8JTW0eqws@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: permissions
+Date: Sun, 06 Jun 2010 12:54:05 -0700
+Message-ID: <7vvd9wvswy.fsf@alter.siamese.dyndns.org>
+References: <4C0A19FE.1020802@wpursell.net> <m27hmdn704.fsf@igel.home>
+ <4C0A9615.4090307@wpursell.net>
+ <AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
+ <4C0B6C32.1090700@wpursell.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 06 21:22:45 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: William Pursell <bill.pursell@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 06 21:54:29 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLLQh-0007qk-IF
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 21:22:43 +0200
+	id 1OLLvN-0004rv-MW
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 21:54:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599Ab0FFTV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 15:21:58 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:63848 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585Ab0FFTV5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 15:21:57 -0400
-Received: by iwn37 with SMTP id 37so2676056iwn.19
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 12:21:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=iV/sBmQlDb/rVc5LiFrc6RRC3aOGUIDLT31yX/c7A4s=;
-        b=Jxc2qQuHrGUqgcHiLRswpIe6JYGZaEbQJEljDPBqCWa61uvE+fIfq4UtcNMdAwx9fH
-         q/0dEH39EkEH+mIh5vTNPZ4fewXEIPb0ux7nP9lxslGSHehl9onD8yXiFmx1JJbuGOAm
-         tkG+7N9Y7CLhZmK/f7jAiPkxGHUHbFHX/N4UI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=m1apfa4nLtlRq2wOY8fEmzHPl81koZZB1l8sBAlkwYjpEUMW6VKRVaPRohS3tqi81J
-         5rFPyoLr2GKA7vxiy8SVYz+ZCrnDTq+sHmT2TWOH7HbzNUIEefUdNS2yCZygRwRihC1k
-         Y7qkYdq6ssp9A9fTioINnGBWF5rCZc8rHu50s=
-Received: by 10.231.119.71 with SMTP id y7mr3488815ibq.158.1275852117141; Sun, 
-	06 Jun 2010 12:21:57 -0700 (PDT)
-Received: by 10.231.16.134 with HTTP; Sun, 6 Jun 2010 12:21:57 -0700 (PDT)
+	id S1754015Ab0FFTyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 15:54:20 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46613 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751579Ab0FFTyU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 15:54:20 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4ED7B9BF7;
+	Sun,  6 Jun 2010 15:54:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zmjpg+t6BBEJcZYWbXRR1+Vm/7w=; b=rskLWM
+	Dzlx4UbXT3en0kzlnfU1Xj1GONdWhrnBKqUjIz+e9E1hbSrGJs+0vBZs7+b734Oa
+	qbKYsRI8OE6VLLsD4yqNOUY9cl140MLJIkV7hrWh/8htd/XUlcgWZl+aL2/FCO8f
+	/rBuPLj8c8ZS4/y0mAry2sGD1hpZUJIe83YXE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=gNxQ1bY1oKzGtX+zn9U9gHnSelXI1p2L
+	nJYTBYtnkFdocABry/xfHg2iLNdmmwiBC24pO2Kqu9NXFbWamLwJG4gSK/ueEpl1
+	SmCEh66Yi574m8hfza16HptTM9dB2LC5nFBFaLtQNR3JAk21W3eQQebmASxlB1Nz
+	pYilTXbLH+8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71C91B9BEF;
+	Sun,  6 Jun 2010 15:54:13 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9CB81B9BEE; Sun,  6 Jun
+ 2010 15:54:07 -0400 (EDT)
+In-Reply-To: <4C0B6C32.1090700@wpursell.net> (William Pursell's message of
+ "Sat\, 05 Jun 2010 23\:36\:50 -1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 47E89D1C-71A5-11DF-B7ED-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148537>
 
-Say I have an existing branch and it doesn't have a tracking config.
-(My local users often just do "checkout -b topic" instead of "checkout
--b topic origin/master".)
+William Pursell <bill.pursell@gmail.com> writes:
 
-I would naively expect this to work, while on that branch:
+> The problem is permissions, not that it's "not a git repository".
+> The error message should be "permission denied".  The easy solution
+> is to abort with "permission denied" whenever that is encountered,
+> but the trouble with that is that it breaks the current work flow
+> in which a broken dir (or one for which the user lacks
+> priveleges) is bypassed and a valid object directory higher
+> up in the filesystem tree is used.
 
-  (topic)$ git branch --set-upstream origin/master
+I think it is sane to abort with "permission denied", as it is "not a git
+repository" but it is "we cannot even determine if that .git we see is a
+git repository, and if it is, then we cannot do any git operation here as
+we cannot read it".  As to what you call "the current work flow", I think
+it is not like we _support_ such usage, but more like it _happens to_ work
+that way.
 
-But, um no:
+> A related question is: does anyone actually prefer (or rely on) the
+> current model in which ../.git is used in the event that .git is borked
+> or the user lacks permission?
 
-  (topic)$ git branch --set-upstream origin/master
-  Branch origin/master set up to track local branch topic.
-
-Doh!
-
-Well, maybe this works:
-
-  (topic)$ git branch --set-upstream origin/master topic
-  Branch origin/master set up to track local branch topic.
-
-Doh!^2
-
-Well, maybe we can say "HEAD" since that seems to mean "the current
-branch" everywhere else in gitland:
-
-  (topic)$ git branch --set-upstream HEAD origin/master
-  Branch HEAD set up to track remote branch master from origin.
-
-(Aside, being able to create a branch named HEAD is surely a bug, right?)
-
-Finally after exhausting all other possibilities (or finally making
-sense of --set-upstream in the man page), we realize:
-
-  (topic)$ git branch --set-upstream topic origin/master
-  Branch topic set up to track remote branch master from origin.
-
-Trying to make myself feel better, I realize that this works:
-
-  (topic)$ git branch topic --set-upstream origin/master
-
-So here's how I'm thinking about fixing it, but maybe I'm just making
-it even more confusing. What say you:
-
-  (topic)$ git branch --set-upstream=origin/master
-  Branch topic set up to track remote branch master from origin.
-
---track would be similarly enhanced, which allows a little more
-flexibility in creating a branch thusly:
-
-  $ git branch --track=origin/master topic
-
-Which creates topic, starting from HEAD, but tracking origin/master.
-(And I'd do the same for checkout's --track option.)
-
-I recognize that having both positional and non-positional forms of
---track/--set-upstream  may be confusing, but I think it's less
-confusing than set-upstream's current semantics, I'm loathe to
-introduce yet another option, and I don't want to break backward
-compatibility.
-
-Flames?
-
-j.
+So my answer to this is "nobody _should_", as it is not even "the current
+model", but "it happens to behave like that by accident".  That doesn't
+mean there isn't anybody who already does, though...
