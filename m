@@ -1,56 +1,68 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 1/4] diff/xdiff: refactor EOF-EOL detection
-Date: Sun, 6 Jun 2010 18:03:05 -0400
-Message-ID: <20100606220304.GC6993@coredump.intra.peff.net>
+Date: Sun, 6 Jun 2010 18:08:00 -0400
+Message-ID: <20100606220800.GD6993@coredump.intra.peff.net>
 References: <cover.1275575236.git.git@drmicha.warpmail.net>
- <08e635cee993d97e2a38d7766ced11c064ef7d87.1275575236.git.git@drmicha.warpmail.net>
- <7vsk537p8k.fsf@alter.siamese.dyndns.org>
  <4C08AD75.6040307@drmicha.warpmail.net>
- <7vpr060ys0.fsf@alter.siamese.dyndns.org>
+ <7vfx10yfmn.fsf@alter.siamese.dyndns.org>
+ <201006061101.02156.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 00:03:15 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Jun 07 00:08:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLNw2-0007eL-W9
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 00:03:15 +0200
+	id 1OLO0n-0003Ej-P7
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 00:08:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755228Ab0FFWDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 18:03:09 -0400
-Received: from peff.net ([208.65.91.99]:58807 "EHLO peff.net"
+	id S1755309Ab0FFWIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 18:08:04 -0400
+Received: from peff.net ([208.65.91.99]:56963 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754396Ab0FFWDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 18:03:08 -0400
-Received: (qmail 12369 invoked by uid 107); 6 Jun 2010 22:03:15 -0000
+	id S1754396Ab0FFWID (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 18:08:03 -0400
+Received: (qmail 12410 invoked by uid 107); 6 Jun 2010 22:08:11 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Jun 2010 18:03:15 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jun 2010 18:03:05 -0400
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Jun 2010 18:08:11 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jun 2010 18:08:00 -0400
 Content-Disposition: inline
-In-Reply-To: <7vpr060ys0.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <201006061101.02156.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148550>
 
-On Fri, Jun 04, 2010 at 11:38:39PM -0700, Junio C Hamano wrote:
+On Sun, Jun 06, 2010 at 11:01:02AM +0200, Johannes Sixt wrote:
 
-> It can be done by defining a custom textconv filter that adds a trailing
-> LF to a blob that ends in an incomplete line, and what your patch 3/4 does
-> is essentially to create such a built-in textconv filter and *force* users
-> to use it unconditionally for all paths unless the user explicitly asks
-> not to use *any* textconv.
+> > Peff uses --textconv to show changes to the exif information on his
+> > photo collections.  If he has any symlinks, and if he finds that
+> > removal of "\No newline" is a regression and not an improvement,
+> > what recourse does your patch give him?  Saying --no-textconv to
+> > work around that regression is not a solution, isn't it?
+> 
+> Oh, I'm pretty sure that Peff wouldn't use --textconv on his
+> repository if he cared that diffs contained complete reproducible
+> information.
 
-Side note: it would be kind of cool to have .gitattributes selectable on
-file mode, so you could implement this feature entirely as a textconv on
-symlinks.  And then you could pretty-print them however you liked.
+How did my name get dragged into this? ;P
 
-That may be going overboard, though.
+No, I wouldn't use textconv if I cared that my diffs contained complete
+reproducible information. But I think Junio's point is that the presence
+of that information is valuable to some users to read, regardless of
+applying patches. That is, I took his message to mean that he would want
+to have this feature off, even for human viewing of the diff. And there
+would be no way to turn off this feature, but not textconv.
+
+I don't necessarily agree with that; I don't personally care when
+viewing a symlink diff whether that line is there or not. But if there
+are people who do, then you have left them with no way out.
 
 -Peff
