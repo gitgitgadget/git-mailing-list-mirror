@@ -1,80 +1,119 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #01; Wed, 2)
-Date: Sun, 6 Jun 2010 01:57:24 +0200
-Message-ID: <AANLkTimKwCDlW_uaCusZcmV2IttqORlUwSqkVnD3no6q@mail.gmail.com>
-References: <7v4ohlatwn.fsf@alter.siamese.dyndns.org> <20100604211811.GA7471@progeny.tock> 
-	<7v39x1z72z.fsf@alter.siamese.dyndns.org>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: [PATCH] bash completion: Support "unpushed commits" warnings in __git_ps1
+Date: Sun, 06 Jun 2010 01:05:20 +0100
+Message-ID: <4C0AE640.3040503@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Gary V. Vaughan" <git@mlists.thewrittenword.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 06 01:57:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 06 02:05:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OL3FO-0003tT-Iy
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 01:57:50 +0200
+	id 1OL3Mv-0000ke-Q9
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 02:05:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933826Ab0FEX5p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jun 2010 19:57:45 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:47515 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933819Ab0FEX5p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 19:57:45 -0400
-Received: by gwb15 with SMTP id 15so552578gwb.19
-        for <git@vger.kernel.org>; Sat, 05 Jun 2010 16:57:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MrqFCikvH+4TQfMEwDSPQDsgoP+Vguq3AHV47W6v29c=;
-        b=BDmbjx+45j1H8cbDnYRYON2In2i4kVfdqqPg+0Zc/9YwgPZIwrX5JFaWxda+8tEiE/
-         gGe16/O0x9FTER7jlDFszmwZqKKn7F6tVkyeU7DbxY8JPfh/7+9Z+Fj0JGjTUamaQ7ae
-         BR0+Ns7fbavDpRdQIgygBB5td9CxgumaZ9Z3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=T9nak7N38+Z1KHJkH0vH/97NTMRFFOPBqU0DFvMx4zlYwZl/WX234su84nR0JmsTD8
-         eGh3Xu1HkdyUS9M+W+HXhACGrudrv6bolmI29kjrR9PLOk3ThCJhb2/x1oLPGuox4tW6
-         2Y1grqULuzuYbdnaIA9mHaVnhi1QrMQJxTELE=
-Received: by 10.151.18.38 with SMTP id v38mr12170875ybi.420.1275782264072; 
-	Sat, 05 Jun 2010 16:57:44 -0700 (PDT)
-Received: by 10.151.61.12 with HTTP; Sat, 5 Jun 2010 16:57:24 -0700 (PDT)
-In-Reply-To: <7v39x1z72z.fsf@alter.siamese.dyndns.org>
+	id S933842Ab0FFAFd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Jun 2010 20:05:33 -0400
+Received: from mtaout01-winn.ispmail.ntl.com ([81.103.221.47]:24032 "EHLO
+	mtaout01-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933840Ab0FFAFc (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jun 2010 20:05:32 -0400
+Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout01-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20100606000522.JMDY3266.mtaout01-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
+          Sun, 6 Jun 2010 01:05:22 +0100
+Received: from [192.168.1.5] (really [80.6.134.127])
+          by aamtaout02-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20100606000522.MSGA1586.aamtaout02-winn.ispmail.ntl.com@[192.168.1.5]>;
+          Sun, 6 Jun 2010 01:05:22 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=QhTB5avu2K0A:10 a=Lw_SFsgOoS4A:10 a=8nJEP1OIZ-IA:10 a=qOz2pZ_4AAAA:8 a=ZNpkEB24mIRGRLtqxGYA:9 a=Px76xpnyYzKKCsigSfGNZRLXTW0A:4 a=wPNLvfGTeEIA:10 a=7qzHkXPk5l4A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148505>
 
-Heya,
+People working in small teams sometimes forget to push their changes, causing
+general confusion.  A gentle reminder in the command prompt should help.
 
-On Sat, Jun 5, 2010 at 20:07, Junio C Hamano <gitster@pobox.com> wrote:
->> That patch (d1b1a919) breaks merge-one-file when run outside the tes=
-t
->> suite as far as I can tell.
->
-> Thanks for catching. =C2=A0I wonder if something like this would be b=
-etter in
-> that it wouldn't break people who do not use custom "DIFF" while it w=
-ould
-> help people who do at the same time...
->
-> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0=
- =C2=A02 ++
-> =C2=A0git-merge-one-file.sh | =C2=A0 =C2=A02 +-
+Users migrating from centralised version control systems are especially likely
+to forget, so I've included git-svn support as a special case.  Only SVN is
+supported because it's the only centralised version control system I have any
+experience with.  The code is designed to make adding other version control
+systems easy for anyone that's interested.
 
-No addition to the test suite to catch this in the future?
+Signed-off-by: Andrew Sayers <andrew-git@pileofstuff.org>
+---
+ contrib/completion/git-completion.bash |   33 ++++++++++++++++++++++++++++++-
+ 1 files changed, 31 insertions(+), 2 deletions(-)
 
-
---=20
-Cheers,
-
-Sverre Rabbelier
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d3fec32..4bb0fee 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -48,6 +48,12 @@
+ #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
+ #       untracked files, then a '%' will be shown next to the branch name.
+ #
++#       If you would like to see if there're unpushed commits, then
++#       you can set GIT_PS1_SHOWUNPUSHED to a nonempty value. If
++#       there're unpushed commits, then a '!' will be shown next to
++#       the branch name.  Setting GIT_PS1_SHOWUNPUSHED=svn will look
++#       for unpushed git-svn commits.
++#
+ # To submit patches:
+ #
+ #    *) Read Documentation/SubmittingPatches
+@@ -138,6 +144,7 @@ __git_ps1 ()
+ 		local s
+ 		local u
+ 		local c
++		local p
+ 
+ 		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+ 			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+@@ -167,12 +174,34 @@ __git_ps1 ()
+ 			      u="%"
+ 			   fi
+ 			fi
++
++			if [ -n "${GIT_PS1_SHOWUNPUSHED-}" ]; then
++			   local head
++			   local upstream
++			   if [ "${GIT_PS1_SHOWUNPUSHED-}" = "svn" ]; then # git-svn upstream checking
++			      local remote_branch=$( git config --get svn-remote.svn.url | sed 's/\//\\\//g' )
++			      upstream=$( git log | sed -ne "/^    git-svn-id: / { s/^    git-svn-id: $remote_branch\/\([^@]*\).*/\1/p ; q }" )
++			   else # git upstream checking
++			      upstream="@{upstream}"
++			   fi
++
++			   if git rev-parse --quiet "$upstream" HEAD 2>/dev/null | {
++			      read upstream
++			      read head
++			      [ -n "$head" -a -n "$upstream" -a "$head" != "$upstream" ]
++			   }; then
++			       p='!'
++			   else
++			       p=
++			   fi
++			fi
++
+ 		fi
+ 
+ 		if [ -n "${1-}" ]; then
+-			printf "$1" "$c${b##refs/heads/}$w$i$s$u$r"
++			printf "$1" "$c${b##refs/heads/}$w$i$s$u$r$p"
+ 		else
+-			printf " (%s)" "$c${b##refs/heads/}$w$i$s$u$r"
++			printf " (%s)" "$c${b##refs/heads/}$w$i$s$u$r$p"
+ 		fi
+ 	fi
+ }
