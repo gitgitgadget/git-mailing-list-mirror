@@ -1,83 +1,78 @@
 From: Clemens Buchacher <drizzd@aon.at>
 Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz
  origin/frotz"
-Date: Sun, 6 Jun 2010 18:46:42 +0200
-Message-ID: <20100606164642.GA10104@localhost>
+Date: Sun, 6 Jun 2010 18:55:54 +0200
+Message-ID: <20100606165554.GB10104@localhost>
 References: <20100605110930.GA10526@localhost>
- <vpqljas5e33.fsf@bauges.imag.fr>
+ <AANLkTilbg2nGr_sVmJLboMgXbas_qsB4V6gYxDxcDgKy@mail.gmail.com>
+ <20100605135811.GA14862@localhost>
+ <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com>
+ <20100606161805.GA6239@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Peter Rabbitson <ribasushi@cpan.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Jun 06 18:47:03 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Peter Rabbitson <ribasushi@cpan.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jun 06 18:56:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLIzx-0002wD-Tr
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 18:46:58 +0200
+	id 1OLJ8q-0000YD-Lg
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Jun 2010 18:56:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757816Ab0FFQqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 12:46:51 -0400
-Received: from mail-ew0-f223.google.com ([209.85.219.223]:57360 "EHLO
-	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755906Ab0FFQqu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 12:46:50 -0400
-Received: by ewy23 with SMTP id 23so225661ewy.1
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 09:46:48 -0700 (PDT)
+	id S1755881Ab0FFQ4A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 12:56:00 -0400
+Received: from ey-out-2122.google.com ([74.125.78.26]:16212 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755837Ab0FFQz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 12:55:59 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so169189eya.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 09:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:sender:received:date:from:to
          :cc:subject:message-id:references:mime-version:content-type
          :content-disposition:in-reply-to:user-agent;
-        bh=gprFkgf7fWnCEaDV1tIlvAUVE1DmUYEAn1o+QHIydx8=;
-        b=P2IeZXr9nkK98HESPx1zWZyF8EjN20E9aB6rhpH0mG8lgvhFB4LjPQpxBPlqxuoQCK
-         Py9h0ufOA9F45+7Uu+T7tWuARuuF8OVVqRNeQ54MTlmTCPslskfBHmd+n4TvQASXmohH
-         T0VMH9K9MhkWKC68I0Smen66lv2RmPtbkW1lU=
+        bh=qqfi+RlYpRKn/7Zh/33IeIJS9Z4rpyCixSmqDS6va5c=;
+        b=jjGk/D7kOsYoEkcTaHl0WBy5Os6SNaBpqFaSZ7Hy4x6IDuX2b7WiF6w8mrmPFAzz+5
+         jFtCFSkofrVlX7G6yHRSGfSL8oUBb5TOUVL8h2Aim+O/P9SsNz66DKn5b2h7c8jwTZIg
+         CMyEJFl3wuL9TUoXDbUKSrlJK2hCeDulI9Z8Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=sender:date:from:to:cc:bcc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        b=Tg1sls/wl9fAevU4yYzLyfR1PSs1Awo3bUndU0f18TO1M6x6HBKzCRz/j09xNGTrGB
-         BQDbaS0D3tiRiCFwckl3UYrLcq9Uo/nRcVoHeZPTETgpw6bP+s7xV9mI1Ck2FHSYzFR3
-         mtqzoxq/G6FjK7Jr+GRdI2Nf8djaUehmW+Krw=
-Received: by 10.213.31.140 with SMTP id y12mr346265ebc.26.1275842808403;
-        Sun, 06 Jun 2010 09:46:48 -0700 (PDT)
+        b=iz25+UkdqE6Tqm4DfOjwB60EcY0+eEy5b+P+7w6uLgVxbrHr/uH9lkkaL17x2H7Zue
+         uuya6z/N3zF+pUL99ZvGgH8ObW1m/iIeNYmuTkggpVQbZHtO/QN/N++6D4oYmsEd2Si6
+         n1TgCFJahMRaHUApyv4HS7ABJyzbwJMrF4AWA=
+Received: by 10.213.9.67 with SMTP id k3mr317314ebk.78.1275843358243;
+        Sun, 06 Jun 2010 09:55:58 -0700 (PDT)
 Received: from darc.lan ([80.123.242.182])
-        by mx.google.com with ESMTPS id 13sm2086569ewy.5.2010.06.06.09.46.46
+        by mx.google.com with ESMTPS id 16sm2087252ewy.11.2010.06.06.09.55.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 09:46:46 -0700 (PDT)
+        Sun, 06 Jun 2010 09:55:57 -0700 (PDT)
 Received: from drizzd by darc.lan with local (Exim 4.71)
 	(envelope-from <drizzd@localhost>)
-	id 1OLIzj-0002fA-0R; Sun, 06 Jun 2010 18:46:43 +0200
+	id 1OLJ8c-0002im-Li; Sun, 06 Jun 2010 18:55:54 +0200
 Content-Disposition: inline
-In-Reply-To: <vpqljas5e33.fsf@bauges.imag.fr>
+In-Reply-To: <20100606161805.GA6239@coredump.intra.peff.net>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148526>
 
-On Sun, Jun 06, 2010 at 06:18:56PM +0200, Matthieu Moy wrote:
+On Sun, Jun 06, 2010 at 12:18:05PM -0400, Jeff King wrote:
 
-> $ git clone git://git.kernel.org/pub/scm/git/git.git
-> $ cd git
-> $ git checkout next
-> error: pathspec 'next' did not match any file(s) known to git.
-> To create a local branch from the same named remote branch, use
->   git checkout -b next origin/next
-> 
-> The newbie does not immediately understand the difference between
-> local and remote branches, he's been told about the branch "next", and
-> wants to check it out.
+> Moreover, the burden for arguing against it is a little higher. It is no
+> longer "I think this is a bad idea" but "I think this is a bad idea, and
+> it is so bad that it is worth changing behavior that users may have
+> become accustomed to".
 
-That is exactly my point. Trying to read the user's mind is not a
-solution to this problem. The user does not even know what they are
-doing and will inevitably end up even more confused.
-
-The suggestion above would be perfect. It is an easy and obvious
-solution, and the user is even educated about their mistake.
+I argue that people are more likely to be surprised and confused by
+this feature rather than being accustomed to it already. I am also
+waiting to hear from someone who actively uses this feature.
