@@ -1,60 +1,60 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: branch --set-upstream considered harmful
-Date: Mon, 7 Jun 2010 08:37:16 +0200
-Message-ID: <201006070837.16713.trast@student.ethz.ch>
-References: <AANLkTiln_xxnF-e33YA7kkfbBBcBMd40xag8JTW0eqws@mail.gmail.com> <AANLkTikUkkWQl7cYuPiKGaJFYL_JlIGFCXXf7En8t0FN@mail.gmail.com> <AANLkTildT6TRd0sPlv1QbCLO7oOPHM-L1yWNIdhdp0ex@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] commit.c - provide commit-type to the
+ hooks/pre-commit script
+Date: Mon, 7 Jun 2010 02:38:17 -0400
+Message-ID: <20100607063817.GA23361@coredump.intra.peff.net>
+References: <1275759590-16342-1-git-send-email-mlevedahl@gmail.com>
+ <20100606221037.GE6993@coredump.intra.peff.net>
+ <4C0C912D.9080404@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Tay Ray Chuan <rctay89@gmail.com>, git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 08:37:39 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jun 07 08:38:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLVxr-0007Dp-DQ
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 08:37:39 +0200
+	id 1OLVya-0007tC-Hg
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 08:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382Ab0FGGhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 02:37:34 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:33910 "EHLO gwse.ethz.ch"
+	id S1754620Ab0FGGiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 02:38:20 -0400
+Received: from peff.net ([208.65.91.99]:35061 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751674Ab0FGGhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 02:37:34 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 7 Jun
- 2010 08:37:31 +0200
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 7 Jun
- 2010 08:37:17 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <AANLkTildT6TRd0sPlv1QbCLO7oOPHM-L1yWNIdhdp0ex@mail.gmail.com>
+	id S1754466Ab0FGGiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 02:38:19 -0400
+Received: (qmail 18182 invoked by uid 107); 7 Jun 2010 06:38:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 07 Jun 2010 02:38:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Jun 2010 02:38:17 -0400
+Content-Disposition: inline
+In-Reply-To: <4C0C912D.9080404@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148579>
 
-Jay Soffian wrote:
+On Mon, Jun 07, 2010 at 08:26:53AM +0200, Johannes Sixt wrote:
+
+> > Is there a reason to use the magic "amend" and "normal" words, if
+> > scripts are just going to end up changing them back into HEAD~1 and HEAD
+> > anyway?
 > 
-> Git is inconsistent.
-[...]
-> $ git branch --set-upstream=origin/master
-> $ git branch --set-upstream origin/master
+> pre-commit might act differently when a commit is amended, the most likely
+> reason I can think of is to always allow to amend. When you have only a
+> SHA1, you can get that information only with an additional process.
 
-Doesn't this just make it *more* confusing?
+Actually, I meant to provide the hook with the literal words "HEAD~1"
+and "HEAD", not the sha1. So they are effectively magic words, but they
+also happen to be useful for directly feeding to git commands.
 
-Either we document this, and the user will be left wondering why we
-have two almost identical (and by the conventions of many other
-programs, including git-send-email, *equivalent*) syntaxes doing,
-well, something not quite entirely unlike the same.
+It also extends naturally to indicating a merge commit ("HEAD" or
+"HEAD~1" followed by some other ref). I don't know if that is useful or
+not, but it seems like the same realm of information as whether or not
+we are amending.
 
-Or we don't, and the user will eventually typo it and wonder WTF he
-just did wrong.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+-Peff
