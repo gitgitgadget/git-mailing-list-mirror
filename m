@@ -1,118 +1,67 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] bash completion: Support "unpushed commits" warnings in __git_ps1
-Date: Mon, 7 Jun 2010 09:42:34 +0200
-Message-ID: <201006070942.34753.trast@student.ethz.ch>
-References: <4C0AE640.3040503@pileofstuff.org> <201006062014.59386.trast@student.ethz.ch> <4C0C09BF.4070503@pileofstuff.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
+Date: Mon, 07 Jun 2010 09:53:27 +0200
+Message-ID: <4C0CA577.6080103@gnu.org>
+References: <20100605110930.GA10526@localhost> <vpqljas5e33.fsf@bauges.imag.fr> <20100606164642.GA10104@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Mon Jun 07 09:42:45 2010
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Peter Rabbitson <ribasushi@cpan.org>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Jun 07 09:53:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLWyq-0001vi-Kr
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 09:42:44 +0200
+	id 1OLX9M-0003iB-Vb
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 09:53:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331Ab0FGHmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 03:42:40 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:36636 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932234Ab0FGHmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 03:42:39 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 7 Jun
- 2010 09:42:37 +0200
-Received: from thomas.localnet (129.132.210.56) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 7 Jun
- 2010 09:42:37 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <4C0C09BF.4070503@pileofstuff.org>
+	id S932212Ab0FGHxc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 03:53:32 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:43319 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756372Ab0FGHxb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 03:53:31 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1525776fga.1
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 00:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=w0DF5Iw14B49siMIdkYPQNUJnLuOsiRVjqiEbPa+CjE=;
+        b=NJs1rmxuyEaio2gxVsXzxWZ0f+dz4hBr7Pmwuc1++mz9N3Bc8dXJgvd2PsD3uyedyI
+         aMJvEsoW3Rk/htFT74cRkz6tK3wxwdOQC7cSqNRB94y7s2rrYUMgMD0rasFCY4blcmml
+         1zItcSAWx8NziKkm/Zq3Mr3LVgpaKAd9FYIMc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=g+rot4a4G7gzzoKUyRT/N0eu/v1m4CquH0A4yIzZ9X7MCJOtjH/6gCZjMf6gY4aVxX
+         NSO/isPHpY8WeUn/SOFUQkpYy93STWSv4RtoGgaGR1JnLAKuBHTNtRObDhgzV03aGopJ
+         zR8dwK+ZB9ZB83Mu305nk6K/Qi07Zh6oF4Neg=
+Received: by 10.87.68.7 with SMTP id v7mr22141780fgk.71.1275897209879;
+        Mon, 07 Jun 2010 00:53:29 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (s209p8.home.99maxprogres.cz [85.93.118.17])
+        by mx.google.com with ESMTPS id h2sm5611581fkh.25.2010.06.07.00.53.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jun 2010 00:53:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
+In-Reply-To: <20100606164642.GA10104@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148583>
 
-Andrew Sayers wrote:
-> 
-> I'm not averse to adding a config setting, or to exploring the
-> "--no-metadata" case.  I am concerned about the strict time constraints
-> for code called in a command prompt though.  For instance, calling
-> git-svn could easily make your prompt take over half a second to respond
-> because of all the Perl you'd have to compile.
+On 06/06/2010 06:46 PM, Clemens Buchacher wrote:
+> That is exactly my point. Trying to read the user's mind is not a
+> solution to this problem. The user does not even know what they are
+> doing and will inevitably end up even more confused.
 
-True, I forgot about that.
+Maybe you just want branch.autosetupmerge = false?
 
-> I'd also want a few
-> real-world use cases and a nod from Shawn before diverging any further
-> from the existing GIT_PS1_FOO= convention.
-
-> Having said all that, I'm quite happy to resubmit with
-> GIT_PS1_SHOWUNPUSHED=svn treated like GIT_PS1_SHOWUNPUSHED=1 when
-> $GIT_DIR/svn doesn't exist.
-
-There's the precedent of bash.showDirtyState that allows you to
-disable the +* indicators _per repository_.  The latter idea also
-sounds reasonable, though I personally would find the configuration
-more useful.  I have several repos that push to both git (for real
-work) and SVN (for buildbots) where I'd prefer the indicator to refer
-to git.
-
-> > How about starting with
-> > 
-> >   git log -1 --first-parent --grep="^git-svn-id: $remote_branch"
-> 
-> Good idea about "-1" and "--grep", but multi-parent commits aren't
-> compatible with SVN, so I don't see how "--first-parent" is useful here?
->  In fact I'm tempted to look for merge commits and print a big warning
-> when one is found.
-
-Please don't; you'd immediately lose me as a user :-)
-
-First, --first-parent is actually how git-svn looks for the
-git-svn-id, and any other search is liable to turn up wrong results.
-See working_head_info in git-svn.perl.
-
-Second, the behaviour of git-svn with merges is very useful and
-well-defined.  (Yes, there are stern warnings in the manpage, but if
-you know what you're doing just ignore them...)
-
-'git svn dcommit' will first determine the correct upstream branch
-according to the above logic, i.e., it *always* commits to the
-first-parent ancestry.  Then it commits the diff along this line of
-history (i.e., always diffing to the first parent) but it does rewrite
-the commits so that merges are preserved.
-
-In pictures, if you have
-
-    o---B---o---o---o    trunk
-         \
-          *---*---*---*    topic
-
-and run 'git checkout trunk; git merge topic; git svn dcommit' you get
-
-    o---B---o---o---o---M'    trunk
-         \             /
-          *---*---*---*    topic
-
-(writing M' since this is already the rewritten version of an original
-merge M).  M' looks to SVN like a 'git merge --squash topic' because
-git-svn doesn't (yet?) store the merge info.
-
-So you get to keep the git merge info, which is very useful for later
-merges of 'topic'.
-
-Note: NEVER run 'git checkout topic; git merge trunk'.  git-svn will
-think (because of the first-parent rule) that you want to commit on
-top of B!  I don't know what happens next but I expect it won't be too
-pretty.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Paolo
