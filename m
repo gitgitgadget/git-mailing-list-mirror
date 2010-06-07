@@ -1,84 +1,116 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: [RFT PATCH 2/2] win32: optimize pthread_cond_broadcast
-Date: Mon,  7 Jun 2010 15:38:12 +0200
-Message-ID: <1275917892-16437-3-git-send-email-bonzini@gnu.org>
-References: <1275917892-16437-1-git-send-email-bonzini@gnu.org>
-Cc: j.sixt@viscovery.net
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 07 15:38:26 2010
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: [PATCH 1/6] Add memory pool library
+Date: Mon, 7 Jun 2010 16:00:18 +0200
+Message-ID: <AANLkTimd_l0uKHTqgS211fv30hxd-k0pR55YoY4xCua1@mail.gmail.com>
+References: <1275658871-1473-1-git-send-email-artagnon@gmail.com>
+	<1275658871-1473-2-git-send-email-artagnon@gmail.com>
+	<20100604182928.GB20909@progeny.tock>
+	<AANLkTimzuJXjX4OJUkmQtLwjGDgHBaZUHSGA0xUUi6kY@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 07 16:00:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLcX3-00077y-P1
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 15:38:26 +0200
+	id 1OLcsO-0000qw-5U
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 16:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752396Ab0FGNiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 09:38:20 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:55385 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751589Ab0FGNiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 09:38:19 -0400
-Received: from bonzini by fencepost.gnu.org with local (Exim 4.69)
-	(envelope-from <bonzini@gnu.org>)
-	id 1OLcWw-0004u8-M8; Mon, 07 Jun 2010 09:38:18 -0400
-X-Mailer: git-send-email 1.7.0.1
-In-Reply-To: <1275917892-16437-1-git-send-email-bonzini@gnu.org>
+	id S1750844Ab0FGOAW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jun 2010 10:00:22 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45098 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750711Ab0FGOAU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jun 2010 10:00:20 -0400
+Received: by fxm8 with SMTP id 8so2096048fxm.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 07:00:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=Snu+V5BCaV7qpivEmKJhYqdHUjuNvQksCrnvZTi30HI=;
+        b=EsFQCdm3JFrtcmAMKP0zY/Dcm2HZR0mOLmRenlPhh7TszV9Eck7e3URiHAX1zX9dXJ
+         HKx17RaNkFmCRRjt1QgPMEgZfyZABPvSYgrdDSdQv4HeAmIsyoTCbPTHr5/THxdlJxrS
+         MJiL7LMtpeBfuPG8Zn22f835fzQXIjE2zFYQ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=jdq8aDAed8T91bY5F5Khk6riASO4LhuOJEXLKLP4a0T7ZYmN17LrgGPEzhUKVv2rZB
+         karpRmFuM5FvnrxiA4G1dDF+RI3NbK3PAvsEAC/fkdA/OKpZWc2iTaXn5QYLoydI/FPf
+         iCRJPnbPbvezSLZegLBnns+ffqAqMBuiVMhWM=
+Received: by 10.204.81.225 with SMTP id y33mr2091844bkk.150.1275919218231; 
+	Mon, 07 Jun 2010 07:00:18 -0700 (PDT)
+Received: by 10.204.57.195 with HTTP; Mon, 7 Jun 2010 07:00:18 -0700 (PDT)
+In-Reply-To: <AANLkTimzuJXjX4OJUkmQtLwjGDgHBaZUHSGA0xUUi6kY@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148598>
 
-If there is a single waiting thread, pthread_cond_signal is the
-same as pthread_cond_broadcast and no extra synchronization is
-necessary.
+On Mon, Jun 7, 2010 at 3:28 PM, Ramkumar Ramachandra <artagnon@gmail.co=
+m> wrote:
+>> Probably an ignorant question, but why? =A0I do not think the win32 =
+mmap
+>> emulation in git currently supports sysconf().
+>
+> I'm not sure why the pool capacity should be dependent on the page si=
+ze.
+>
 
-Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
----
- compat/win32/pthread.c |   19 ++++++++++---------
- 1 files changed, 10 insertions(+), 9 deletions(-)
+My guess would be that it's a performance-thing.
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 1a38981..d46a51c 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -172,9 +172,10 @@ int pthread_cond_broadcast(pthread_cond_t *cond)
- 	 * As in pthread_cond_signal, access to cond->waiters and
- 	 * cond->was_broadcast is locked via the external mutex.
- 	 */
--
--	if ((cond->was_broadcast = cond->waiters > 0)) {
-+	if (cond->waiters > 0) {
- 		BOOLEAN result;
-+		cond->was_broadcast = cond->waiters > 1;
-+
- 		/* wake up all waiters */
- 		result = ReleaseSemaphore(cond->sema, cond->waiters, NULL);
- 		if (!result)
-@@ -187,14 +188,14 @@ int pthread_cond_broadcast(pthread_cond_t *cond)
- 		 * yet. For this reason, we can be sure that no thread gets
- 		 * a chance to eat *more* than one slice. OTOH, it means
- 		 * that the last waiter must send us a wake-up.
-+		 *
-+		 * As an optimization, when there was exactly one waiter
-+		 * broadcast is the same as signal and we can skip this step.
- 		 */
--		WaitForSingleObject(cond->continue_broadcast, INFINITE);
--		/*
--		 * Since the external mutex is held, no thread can enter
--		 * cond_wait, and, hence, it is safe to reset this flag
--		 * without cond->waiters_lock held.
--		 */
--		cond->was_broadcast = 0;
-+		if (cond->was_broadcast) {
-+			WaitForSingleObject(cond->continue_broadcast, INFINITE);
-+			cond->was_broadcast = 0;
-+		}
- 	}
- 	return 0;
+Adding a win32-implementation of sysconf for this purpose isn't
+tricky, but perhaps it's a little bit overkill. Can't we just use some
+large power of two number? Hopefully, we could chose a size that is a
+multiple of the page-size on all systems...
+
+Anyway, this is roughly what a Windows-implementation of sysconf would
+look like (not tested - only checked that it compiles):
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index f90a114..526f0f9 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1473,3 +1473,13 @@ struct dirent *mingw_readdir(DIR *dir)
+ 	return (struct dirent*)&dir->dd_dir;
  }
--- 
-1.7.0.1
+ #endif // !NO_MINGW_REPLACE_READDIR
++
++long mingw_sysconf(int name)
++{
++	SYSTEM_INFO si;
++	if (name !=3D _SC_PAGESIZE)
++		return errno =3D EINVAL,
++		    error("sysconf emulation only supports _SC_PAGESIZE");
++	GetSystemInfo(&si);
++	return si.dwPageSize;
++}
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 6c6cbda..db28b0d 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -322,3 +322,7 @@ struct dirent *mingw_readdir(DIR *dir);
+  * Used by Pthread API implementation for Windows
+  */
+ extern int err_win_to_posix(DWORD winerr);
++
++#define _SC_PAGESIZE 0
++long mingw_sysconf(int name);
++#define sysconf mingw_sysconf
+
+--=20
+Erik "kusma" Faye-Lund
