@@ -1,134 +1,122 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: branch --set-upstream considered harmful
-Date: Mon, 07 Jun 2010 10:44:22 +0200
-Message-ID: <4C0CB166.9080407@drmicha.warpmail.net>
-References: <AANLkTiln_xxnF-e33YA7kkfbBBcBMd40xag8JTW0eqws@mail.gmail.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
+Date: Mon, 7 Jun 2010 10:59:47 +0200
+Message-ID: <20100607085947.GA3924@pvv.org>
+References: <cover.1275309129.git.grubba@grubba.org> <7vfx16oxmz.fsf@alter.siamese.dyndns.org> <Pine.GSO.4.63.1006031543340.22466@shipon.roxen.com> <20100604005603.GA25806@progeny.tock> <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock> <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 10:45:06 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Henrik =?iso-8859-1?Q?Grubbstr=F6m?= <grubba@roxen.com>
+X-From: git-owner@vger.kernel.org Mon Jun 07 11:00:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLXxB-00082E-LW
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 10:45:06 +0200
+	id 1OLYBa-0003dC-V4
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 10:59:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647Ab0FGIo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 04:44:59 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:38901 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751567Ab0FGIo5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jun 2010 04:44:57 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 67525F7D36;
-	Mon,  7 Jun 2010 04:44:46 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 07 Jun 2010 04:44:46 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=bvnU3d2kJqo9Xzez+ZmvSS0Vpd0=; b=Qh6Gs5hl79RXsQB1Iih5pzjbnLRW+ZScvEozKbgXsSH3tt+CnFgW1YdnU0eTmOXihi+Y6Bt/+T06+QStYbrwe/qKzPor6kM1E3ROVIA/Err9HA2iTuPwg9F0LRvYUA4sQhvG7Ns4JvNIXWwl0uSkWqxbOVU6ybYLtLKzWqRPH+0=
-X-Sasl-enc: rFqiC1WTOxhHTxELItpJJZhY585czRgLVdV4piU4/hFF 1275900285
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A88C34E5118;
-	Mon,  7 Jun 2010 04:44:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <AANLkTiln_xxnF-e33YA7kkfbBBcBMd40xag8JTW0eqws@mail.gmail.com>
+	id S1755056Ab0FGI7x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jun 2010 04:59:53 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:55925 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751521Ab0FGI7w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 04:59:52 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1OLYBP-0000at-Iv; Mon, 07 Jun 2010 10:59:47 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148588>
 
-Jay Soffian venit, vidit, dixit 06.06.2010 21:21:
-> Say I have an existing branch and it doesn't have a tracking config.
-> (My local users often just do "checkout -b topic" instead of "checkout
-> -b topic origin/master".)
-> 
-> I would naively expect this to work, while on that branch:
-> 
->   (topic)$ git branch --set-upstream origin/master
-> 
-> But, um no:
-> 
->   (topic)$ git branch --set-upstream origin/master
->   Branch origin/master set up to track local branch topic.
-> 
-> Doh!
-> 
-> Well, maybe this works:
-> 
->   (topic)$ git branch --set-upstream origin/master topic
->   Branch origin/master set up to track local branch topic.
-> 
-> Doh!^2
-> 
-> Well, maybe we can say "HEAD" since that seems to mean "the current
-> branch" everywhere else in gitland:
-> 
->   (topic)$ git branch --set-upstream HEAD origin/master
->   Branch HEAD set up to track remote branch master from origin.
-> 
-> (Aside, being able to create a branch named HEAD is surely a bug, right?)
-> 
-> Finally after exhausting all other possibilities (or finally making
-> sense of --set-upstream in the man page), we realize:
-> 
->   (topic)$ git branch --set-upstream topic origin/master
->   Branch topic set up to track remote branch master from origin.
-> 
-> Trying to make myself feel better, I realize that this works:
-> 
->   (topic)$ git branch topic --set-upstream origin/master
-> 
-> So here's how I'm thinking about fixing it, but maybe I'm just making
-> it even more confusing. What say you:
-> 
->   (topic)$ git branch --set-upstream=origin/master
->   Branch topic set up to track remote branch master from origin.
-> 
-> --track would be similarly enhanced, which allows a little more
-> flexibility in creating a branch thusly:
-> 
->   $ git branch --track=origin/master topic
-> 
-> Which creates topic, starting from HEAD, but tracking origin/master.
-> (And I'd do the same for checkout's --track option.)
-> 
-> I recognize that having both positional and non-positional forms of
-> --track/--set-upstream  may be confusing, but I think it's less
-> confusing than set-upstream's current semantics, I'm loathe to
-> introduce yet another option, and I don't want to break backward
-> compatibility.
-> 
-> Flames?
+On Sun, Jun 06, 2010 at 12:50:08PM +0200, Henrik Grubbstr=F6m wrote:
+[...]
+>
+> Currently (as I believe you know), git has no detection of when the =20
+> conversion mode for a file has changed, and it might even take a whil=
+e =20
+> before the users notice that the repository is not normalized. eg:
+>
+>   0) There's a repository with some files containing crlf line ending=
+s.
+>
+>   1) User A notices that git now has native support for crlf
+>      line endings, and adds the attribute eol=3Dcrlf for the
+>      affected files.
+>
+>   2) User A does a git status, sees that .gitattributes is
+>      modified, and commits it.
 
-I'm sorry, but you're completely right. I created a tracking branch
-config *for* a remote branch myself, and created one for the HEAD branch
-before looking up the man page and wondering about the braindead
-non-semantic way it works. We have that braindeadness in other places as
-well, e.g. "git rebase branchname" which does not rebase "branchname" at
-all (but the current branch).
+I think it would be best if git at this time could decide that the
+affected files also become dirty. The ideal commit is one that
+both alters the .gitattributes _and_ the affected files at the same
+time, and git should make it easy to create that commit.
 
-Ok, you want flame? I'll give you flame: This is not going to change. We
-have a "naturally grown" ui, and we don't do any changes to make it
-conceptually consistent unless it does not change any existing
-behaviour. [I'm exaggerating, of course, but you wanted flame, didn't you? ]
+> [...]
+>   6) User C is new to the project and does an initial git clone,
+>      and ends up with a dirty index.
 
-I like your --set-upstream= solution, by the way. Maybe people find it
-less confusing if there's an "--upstream=upstream" long option (no
-"set") and a "--set-upstream" subcommand. You know we have subcommands
-as options as well as arguments:
+And the reason for this is mostly that unless you perform some special
+actions, you will commit attributes and contents that are mismatched.
 
-branch --set-upstream
-config --get etc.
-remote add etc.
-noted edit etc.
-svn init etc.
-submodule add etc.
+In your suggested mode, whay would happen if you did this:
 
-Speaking of consistency :|
+$ git clone ......  (which has files that are "wrong" wrt line endings =
+and
+attributes for some .c files)
+$ touch *.c
 
-Michael
+Would it still believe all *.c files were clean? Does it require an
+actual other change at the same time to allow you to normalize the
+file? That would be detrimental I think.  Changing newlines is best
+done as a separate commit, intermingling newline changes and real
+changes in the same commmit is not where you want to go.
+
+However, for your ID string you obviously want this behaviour. I'm
+guessing that hook is alreasy set up so that if you just touch the
+file, it will still be treated as unmodified?
+
+>
+> What my patch set achieves is that user C above also gets a clean ind=
+ex.
+>
+> What it seems you want is that user A above should have all files tha=
+t=20
+> got denormalized by the attribute change marked dirty at 2 (and 3).
+
+That would indeed be a very welcome change.
+
+> As I believe both behaviours may be desireable a config option and/or=
+ =20
+> attribute is needed. Any suggestions for a name (and default value)?
+
+I think the default behaviour should be to mark files dirty if there
+are ANY attribute changes that could cause content changes done to
+them at all. I'm not sure that is exactly what your patch series is
+allowing us to track though?
+
+Just to be clear:
+
+If you add this to your .gitattributes
+
+*.c eol=3Dlf
+
+I think it would be very helpful if git then would treat all .c files
+as "stat-dirty" the next time it updates its index.
+
+A for config variables, what about:
+
+core.rereadOnAttributeChanges =3D [true]/false    (default =3D true)
+
+Which makes some sense for detecting it in 2, but not so much for
+ignoring it in 6.
+
+- Finn Arne
