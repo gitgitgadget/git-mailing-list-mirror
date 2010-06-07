@@ -1,151 +1,185 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: RFC: Making submodules "track" branches
-Date: Mon, 7 Jun 2010 23:29:07 +0000
-Message-ID: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 08 01:29:16 2010
+From: Dario Rodriguez <soft.d4rio@gmail.com>
+Subject: [PATCH/RFC] Fix for default pager
+Date: Mon,  7 Jun 2010 20:58:08 -0300
+Message-ID: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
+References: <Installing on AIX fails>
+Cc: Dario Rodriguez <soft.d4rio@gmail.com>, git@vger.kernel.org
+To: peff@peff.net, jrnieder@uchicago.edu
+X-From: git-owner@vger.kernel.org Tue Jun 08 01:58:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLlkn-0002z8-RL
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 01:29:14 +0200
+	id 1OLmDD-0001EO-WD
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 01:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751189Ab0FGX3K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jun 2010 19:29:10 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36790 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750907Ab0FGX3I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jun 2010 19:29:08 -0400
-Received: by iwn37 with SMTP id 37so3968420iwn.19
-        for <git@vger.kernel.org>; Mon, 07 Jun 2010 16:29:07 -0700 (PDT)
+	id S1751227Ab0FGX6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 19:58:31 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52032 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750834Ab0FGX6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 19:58:30 -0400
+Received: by gye5 with SMTP id 5so2687223gye.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 16:58:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=L2gpudhbjYJtfBchukNHTKGN5Pm7bO07kXIyrGERWrQ=;
-        b=BVVOrboj4ifYDLxgyzLFt1gtzobExHcs676Ni9rlxBXSfBgDyBfM7NmNPW4CrI7K63
-         5iW5AkTnn2F9Ct539GVU/qBDdn+sL/qgjFyw0wnrN2G6cQ92ODdZM4Vp5OB6rN6fCqwm
-         6bKAj79c5u2v8B1hEBOnq6FfDXANgg535dVCo=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:to;
+        bh=G2/pELLm7gC7P7ib6KfL9rll7ZlYUOzG6hlFrnh99Xs=;
+        b=ow+RyYvqsOprLDikug4MTxYWGZknvHjmAfer66KNxylrZQiwMXvbevfbVmPUzNMemm
+         P776H6sh4F83GC5YFQ3yP6NL0cD/6UeQKw2BYj+WV7R9bKnhliOQ+q7hzkokKUjyeVdR
+         piqbnCODC4nbLYJnZ8Pc/7sswc0rgljggt2Qo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=IT5cuWt8kyukq94dQQ8VKKSvYNz/BvQZjS7/FIXqB6p2QJlPJlF3i5zRSTDTJn16L3
-         zkWx219uftrnD5Nam9+9556uzyH2mfASaSAnLkWmMRVWy8MxGd0y2O3vZj4kJx42zr9p
-         yiq5x9aR1ZSlYL6o03RsPvqkmIFEt9xFkLmsM=
-Received: by 10.231.169.145 with SMTP id z17mr5807775iby.3.1275953347332; Mon, 
-	07 Jun 2010 16:29:07 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Mon, 7 Jun 2010 16:29:07 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=omHrMsTX1oQJhqAqt9Uppeiv9yZPtDREvYrfI2za48Z73f5767agHM9YVBmEwaQY3A
+         VLjVk0wor4zAGejmNPPiIFe31Zl37NVpNyNrHj2l2szJTKrar17Q1NgSo019bmwtE2OR
+         WNvVGq0Z8hChJevmFXC8V+s+8zNpa7bumGWME=
+Received: by 10.150.244.10 with SMTP id r10mr4066593ybh.414.1275955109239;
+        Mon, 07 Jun 2010 16:58:29 -0700 (PDT)
+Received: from localhost.localdomain ([190.50.19.248])
+        by mx.google.com with ESMTPS id u8sm2981495ybe.6.2010.06.07.16.58.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jun 2010 16:58:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.245.g7c42e.dirty
+In-Reply-To: <Installing on AIX fails>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148634>
 
-On Fri, May 21, 2010 at 16:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> Add a $toplevel variable accessible to `git submodule foreach`, it
-> contains the absolute path of the top level directory (where
-> .gitmodules is).
->
-> This makes it possible to e.g. read data in .gitmodules from within
-> foreach commands. I'm using this to configure the branch names I want
-> to track for each submodule:
->
-> =C2=A0 =C2=A0git submodule foreach 'git checkout $(git config --file =
-$toplevel/.gitmodules submodule.$name.branch) && git pull'
->
-> For a little history: This patch is borne out of my continuing fight
-> of trying to have Git track the branches of submodules, not just thei=
-r
-> commits.
->
-> Obviously that's not how they work (they only track commits), but I'm
-> just interested in being able to do:
->
-> =C2=A0 =C2=A0git submodule foreach 'git pull'
->
-> Of course that won't work because the submodule is in a disconnected
-> head, so I first have to connect it, but connect it *to what*.
->
-> For a while I was happy with this because as fate had it, it just so
-> happened to do what I meant:
->
-> =C2=A0 =C2=A0git submodule foreach 'git checkout $(git describe --all=
- --always) && git pull'
->
-> But then that broke down, if there's a tag and a branch the tag will
-> win out, and I can't git pull a branch:
->
-> =C2=A0 =C2=A0$ git branch -a
-> =C2=A0 =C2=A0* master
-> =C2=A0 =C2=A0 =C2=A0remotes/origin/HEAD -> origin/master
-> =C2=A0 =C2=A0 =C2=A0remotes/origin/master
-> =C2=A0 =C2=A0$ git tag -l
-> =C2=A0 =C2=A0release-0.0.6
-> =C2=A0 =C2=A0$ git describe --always --all
-> =C2=A0 =C2=A0release-0.0.6
->
-> So I figured that I might as well start tracking the branches I want
-> in .gitmodules itself:
->
-> =C2=A0 =C2=A0[submodule "yaml-mode"]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0path =3D yaml-mode
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0url =3D git://github.com/yoshiki/yaml-mode=
-=2Egit
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0branch =3D master
->
-> So now I can just do (as stated above):
->
-> =C2=A0 =C2=A0git submodule foreach 'git checkout $(git config --file =
-$toplevel/.gitmodules submodule.$name.branch) && git pull'
->
-> Maybe there's a less painful way to do *that* (I'd love to hear about
-> it). But regardless of that I think it's a good idea to be able to
-> know what the top-level is from git submodule foreach.
+All commands using pager:
 
-This patch is getting merged to next as per the June 2 What's cooking
-in Git post.
+Default pager was 'less' even when some systems such AIX and other basic
+or old systems do NOT have 'less' installed. In such case, git just
+does not display anything in pager-enabled functionalities such as 'git log'
+or 'git show', exiting with status 0.
 
-But I wonder how evil it would be to expand this this idea to allow
-the porcelain to track branches instead of commits at the porcelain
-level.
+With this patch, git will not use DEFAULT_PAGER macro anymore, instead,
+git will look for 'less' and 'more' in the most common paths.
+If there is no pager, returns NULL as if it's 'cat'.
 
-That /could/ work like this. The tree format would be exactly the
-same, i.e. bound to a specific commit:
+Obviously, the commit message needs to be rewritten :p
 
-    $ git ls-tree HEAD | grep subthing
-    160000 commit 37469ca3fae264e790e4daac0fa8f2ddf8039c93  subthing
+Signed-off-by: Dario Rodriguez <soft.d4rio@gmail.com>
+---
+ pager.c |   80 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 73 insertions(+), 7 deletions(-)
 
-*But*, the user could add some new submodule.*.* config key/values
-that specify what branch the module should track and whether 'git
-pull' on the master project should also pull new changes (from the
-'newstuff' branch) into the submodule:
-
-    [submodule "subthing"]
-        path =3D subthing
-        url =3D git://github.com/avar/subthing.git
-        branch =3D newstuff
-        update-on-pull =3D true
-
-Coupled with .gitignore this would allow for SVN-like externals that
-always track the latest version of upstream, but it'd all be done on
-the porcelain side.
-
-The checked out copy wouldn't match the commit in the tree, but the
-user could still git add && git commit it to record the new commit in
-the master repository history.
-
-The lack of this ability seems to be a fairly common complaint about
-submodules in Git, that you always have to do something in the parent
-project to update the submodules, even if you don't care about
-specific revisions, or the ability to roll back.
-
-I couldn't find a prior discussion of this on the list, maybe this has
-been beaten to death already.
+diff --git a/pager.c b/pager.c
+index dac358f..3cfbd73 100644
+--- a/pager.c
++++ b/pager.c
+@@ -2,10 +2,19 @@
+ #include "run-command.h"
+ #include "sigchain.h"
+ 
+-#ifndef DEFAULT_PAGER
+-#define DEFAULT_PAGER "less"
++#ifndef GIT_PAGER_ENVIRONMENT
++#define GIT_PAGER_ENVIRONMENT "GIT_PAGER"
+ #endif
+ 
++#ifndef GIT_PGR_LOOKUP_DBG_ENVIRONMENT
++#define GIT_PGR_LOOKUP_DBG_ENVIRONMENT "GIT_PAGER_LOOKUP_DEBUG"
++#endif
++
++#ifndef PAGER_ENVIRONMENT
++#define PAGER_ENVIRONMENT "PAGER"
++#endif
++
++
+ /*
+  * This is split up from the rest of git so that we can do
+  * something different on Windows.
+@@ -48,23 +57,80 @@ static void wait_for_pager_signal(int signo)
+ 	raise(signo);
+ }
+ 
+-const char *git_pager(int stdout_is_tty)
++static int is_executable(const char *name)
++{
++	struct stat st;
++
++	if (stat(name, &st) ||
++	    !S_ISREG(st.st_mode))
++		return 0;
++
++#ifdef WIN32
++{	/* cannot trust the executable bit, peek into the file instead */
++	char buf[3] = { 0 };
++	int n;
++	int fd = open(name, O_RDONLY);
++	st.st_mode &= ~S_IXUSR;
++	if (fd >= 0) {
++		n = read(fd, buf, 2);
++		if (n == 2)
++			/* DOS executables start with "MZ" */
++			if (!strcmp(buf, "#!") || !strcmp(buf, "MZ"))
++				st.st_mode |= S_IXUSR;
++		close(fd);
++	}
++}
++#endif
++	return st.st_mode & S_IXUSR;
++}
++
++const char *git_pager(int stdout_is_tty) 
+ {
++	static const char *pager_bins[] =
++		{ "less", "more", NULL };
++	static const char *common_binary_paths[] =
++		{ "/bin/","/usr/bin/","/usr/local/bin/",NULL };
++
+ 	const char *pager;
++	char **p1,**p2,*pager_heap;
++	char exe_name[255];
++	int pager_lkp_dbg=0;
+ 
+ 	if (!stdout_is_tty)
+ 		return NULL;
+ 
+-	pager = getenv("GIT_PAGER");
++	if(getenv(GIT_PGR_LOOKUP_DBG_ENVIRONMENT))
++		pager_lkp_dbg=1;
++
++	memset( exe_name,0,255 );
++	pager = getenv(GIT_PAGER_ENVIRONMENT);
+ 	if (!pager) {
+ 		if (!pager_program)
+ 			git_config(git_default_config, NULL);
+ 		pager = pager_program;
+ 	}
+ 	if (!pager)
+-		pager = getenv("PAGER");
+-	if (!pager)
+-		pager = DEFAULT_PAGER;
++		pager = getenv(PAGER_ENVIRONMENT);
++	if (!pager) {
++
++		for (p1=(char**)pager_bins; (*p1)&&(!pager)
++			;p1++)
++			for (p2=(char**)common_binary_paths; (*p2)&&(!pager)
++				;p2++) {
++				sprintf( exe_name,"%s%s",
++					 *p2,*p1 );
++				if (is_executable(exe_name)) {
++					pager_heap = (char*) malloc(sizeof(exe_name));
++					strcpy(pager_heap,exe_name);
++					pager = pager_heap;
++				}
++			}
++
++		if (pager_lkp_dbg)
++			fprintf(stderr, "Debug: Lookup for existent pagers, got [%s]\n",
++				(pager==NULL)?"(null)":pager);
++
++	}
+ 	else if (!*pager || !strcmp(pager, "cat"))
+ 		pager = NULL;
+ 
+-- 
+1.7.1.245.g7c42e.dirty
