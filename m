@@ -1,66 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 00/18] Portability patches for git-1.7.1
-Date: Mon, 07 Jun 2010 11:07:05 -0700
-Message-ID: <7vy6eqvhrq.fsf@alter.siamese.dyndns.org>
-References: <20100514093131.249094000@mlists.thewrittenword.com>
- <20100607154511.GA9718@thor.il.thewrittenword.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz
+ origin/frotz"
+Date: Mon, 7 Jun 2010 20:29:56 +0200
+Message-ID: <20100607182956.GA17343@localhost>
+References: <20100605110930.GA10526@localhost>
+ <AANLkTilbg2nGr_sVmJLboMgXbas_qsB4V6gYxDxcDgKy@mail.gmail.com>
+ <20100605135811.GA14862@localhost>
+ <AANLkTikE5BPD_DDqwEvPGxsMAIQCulpVwRKaCSnULcoP@mail.gmail.com>
+ <20100606161805.GA6239@coredump.intra.peff.net>
+ <20100606165554.GB10104@localhost>
+ <AANLkTinTI3XaE6P_WZ_k56fgI4LNOLSalv_1GlVZNO7n@mail.gmail.com>
+ <20100606173233.GA11041@localhost>
+ <AANLkTilvHl-8eA6CbEDs4ty3h0h670L_enGsXunHxaPE@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 20:07:25 2010
+Cc: Jeff King <peff@peff.net>, Sverre Rabbelier <srabbelier@gmail.com>,
+	git@vger.kernel.org, Peter Rabbitson <ribasushi@cpan.org>
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 07 20:31:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLgjM-0006Sa-KR
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 20:07:24 +0200
+	id 1OLh6T-0004NV-Rb
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 20:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890Ab0FGSHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 14:07:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62295 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751656Ab0FGSHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 14:07:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CE914BA1A7;
-	Mon,  7 Jun 2010 14:07:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=5NTj4syNmprPlG0W6Eq84frBH30=; b=kxC4VG
-	kfoFMozgru+w40Snfk9nqOO7iO34gCX0mduvB+Aejhi3aLDR6xn5Hy7R+RrIfNoy
-	OCH8cASir1unORYsiWK/PkNHwmcPHdly7/EIDhFXAYUu4rdCxHrsCYP0m6Dpjwie
-	Al35+pzEj2NtW4hb6Lw69hy92zDiSjN4CFvtM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cC8YIcn/O9VwiezLk/x/AkX997B9GMw1
-	0eP3c6Wd8wlr2mBMatx3TdyteBzKZuDMwDaJB4wFqgETJ7KP810ORWqXmFUH8TY4
-	Nk3HHj2qC8Bv6j8NPPeYYLfF55UBZ3NEzkmIp8L+rqprvX1jN4f4e8des+fnjpQR
-	wvnEqw/P0Rk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A391DBA1A6;
-	Mon,  7 Jun 2010 14:07:09 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CBF25BA19A; Mon,  7 Jun
- 2010 14:07:06 -0400 (EDT)
-In-Reply-To: <20100607154511.GA9718@thor.il.thewrittenword.com> (Gary V.
- Vaughan's message of "Mon\, 7 Jun 2010 15\:45\:11 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7D6F4020-725F-11DF-B30A-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753232Ab0FGSbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 14:31:12 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:46556 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751451Ab0FGSbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 14:31:08 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so1806812fga.1
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 11:31:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=nVf6Ze7OWbI927LOlYd9f7Rmx0/kdArDkmJ5bpwlOGY=;
+        b=szOlPF4DYt5wWZITN5VXL7DyqNXN89GE1qrJL8Kc8la81zoA3xlhRk81ULFprVTEkz
+         bXPnwfCqUwHWqa/4ZEyzoSkoTlGrFZwStvfzZWyV2XJksVsnq9mYWC7PEkDJ3f7i7TBP
+         3UFIWWA1LUk61hDFFIsL+WcrvVrjYh9vgRqmg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=m/7wQDZtivsIBKSmo1Qc6V5oBIUUmPoBGA4mpG3L+R0WcuofQ6K+u1H93VDdR9W/5E
+         gNbLMwj00AmHoArTwpBquLaaHJXPLXMprgI0kPQeB0xCzxtttjF+9tFIQzlg+d1iKpcW
+         /mmKEzNOKXYyYJ6glrqPdBVB92SxMwJUTmsig=
+Received: by 10.87.58.6 with SMTP id l6mr23518879fgk.15.1275935466938;
+        Mon, 07 Jun 2010 11:31:06 -0700 (PDT)
+Received: from darc.lan (p549A5B93.dip.t-dialin.net [84.154.91.147])
+        by mx.google.com with ESMTPS id p17sm6459124fka.46.2010.06.07.11.30.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jun 2010 11:31:06 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OLh5A-0004d7-ES; Mon, 07 Jun 2010 20:29:56 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTilvHl-8eA6CbEDs4ty3h0h670L_enGsXunHxaPE@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148614>
 
-"Gary V. Vaughan" <git@mlists.thewrittenword.com> writes:
-
-> Just bumping this thread so that it doesn't fall off the radar.
+On Sun, Jun 06, 2010 at 02:26:08PM -0700, Jacob Helwig wrote:
 >
-> Is there anything I can do to help reviewers or committers accept
-> or reject the patches in this set?
+> > And this is exactly _why_ it can be marginally useful if the
+> > foretelling is correct, but all the more confusing if it's not.
+> >
+> 
+> Other than "unexpected success", how is the DWIM behavior confusing,
+> given that it says exactly what it's doing when the DWIM behavior is
+> invoked?  I'm still not clear what the confusion you're referring to
+> is on this one.
 
-Isn't the series already cooking in 'next'?
+I am telling git to checkout a branch. Instead it creates a branch.
+That is what is confusing to me. Until I found the commit that
+introduced it, I was sure it must be a bug.
