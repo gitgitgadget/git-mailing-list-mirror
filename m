@@ -1,69 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Put quotes around branch names to prevent special
- characters from being interpreted by the shell.
-Date: Mon, 7 Jun 2010 02:01:47 -0400
-Message-ID: <20100607060147.GA20958@coredump.intra.peff.net>
-References: <1275666800-31852-1-git-send-email-bmeyer@rim.com>
- <20100606215505.GB6993@coredump.intra.peff.net>
- <AANLkTinZc1jiBmTJRsJXDe7A4ZAe001zJIWILGKQ8YoA@mail.gmail.com>
- <AANLkTik7PV-2u24UF78U6rtuffw4XUGS1F4hD2_ElrZZ@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] commit.c - provide commit-type to the hooks/pre-commit
+ script
+Date: Mon, 07 Jun 2010 08:26:53 +0200
+Message-ID: <4C0C912D.9080404@viscovery.net>
+References: <1275759590-16342-1-git-send-email-mlevedahl@gmail.com> <20100606221037.GE6993@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Benjamin C Meyer <bmeyer@rim.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 08:01:57 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Mark Levedahl <mlevedahl@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 07 08:27:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLVPH-0000dJ-TQ
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 08:01:56 +0200
+	id 1OLVnc-00061F-4a
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 08:27:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752937Ab0FGGBv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jun 2010 02:01:51 -0400
-Received: from peff.net ([208.65.91.99]:49451 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751737Ab0FGGBu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 02:01:50 -0400
-Received: (qmail 17948 invoked by uid 107); 7 Jun 2010 06:01:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 07 Jun 2010 02:01:59 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Jun 2010 02:01:47 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTik7PV-2u24UF78U6rtuffw4XUGS1F4hD2_ElrZZ@mail.gmail.com>
+	id S1753435Ab0FGG06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 02:26:58 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:58313 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752125Ab0FGG05 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 02:26:57 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OLVnS-0006Jt-L9; Mon, 07 Jun 2010 08:26:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 45B471660F;
+	Mon,  7 Jun 2010 08:26:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <20100606221037.GE6993@coredump.intra.peff.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148576>
 
-On Mon, Jun 07, 2010 at 05:48:11AM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+Am 6/7/2010 0:10, schrieb Jeff King:
+> On Sat, Jun 05, 2010 at 01:39:50PM -0400, Mark Levedahl wrote:
+> 
+>> -	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
+>> +	if (!no_verify && run_hook(index_file, "pre-commit", amend ? "amend" : "normal", NULL))
+>> [...]
+>> -	against=HEAD
+>> +	if test "$1" = "amend"
+>> +	then
+>> +		against=HEAD~1
+>> +	else
+>> +		against=HEAD
+>> +	fi
+> 
+> Is there a reason to use the magic "amend" and "normal" words, if
+> scripts are just going to end up changing them back into HEAD~1 and HEAD
+> anyway?
 
-> On Mon, Jun 7, 2010 at 05:10, Jay Soffian <jaysoffian@gmail.com> wrot=
-e:
-> > BTW, quotemeta is technically intended for use with regular
-> > expressions, isn't it?
->=20
-> Yes, it's completely insecure to use it for shell interpolation.
+pre-commit might act differently when a commit is amended, the most likely
+reason I can think of is to always allow to amend. When you have only a
+SHA1, you can get that information only with an additional process.
 
-It's intended for use with regexps, but I don't think it is insecure fo=
-r
-shell interpolation. According to perldoc, it quotes 'all characters no=
-t
-matching "/[A-Za-z_0-9]/"'. So it's excessive for shell quoting, but no=
-t
-insecure.
-
-> In Perl it's best to use the list form of system() so that the comman=
-d
-> will escape things for you automatically.
-
-Agreed, but it's not escaping things automatically. It simply skips the
-shell invocation entirely.
-
--Peff
+-- Hannes
