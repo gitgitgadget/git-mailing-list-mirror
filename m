@@ -1,71 +1,83 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
-Date: Mon, 07 Jun 2010 15:41:58 +0900
-Message-ID: <buobpbnz6mh.fsf@dhlpc061.dev.necel.com>
-References: <20100605110930.GA10526@localhost>
-	<vpqljas5e33.fsf@bauges.imag.fr> <20100606164642.GA10104@localhost>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: branch --set-upstream considered harmful
+Date: Mon, 7 Jun 2010 03:37:52 -0400
+Message-ID: <AANLkTim6JrB1JmwQYThSiVqubhb7Uy6HrZcQXbHNZEsl@mail.gmail.com>
+References: <AANLkTiln_xxnF-e33YA7kkfbBBcBMd40xag8JTW0eqws@mail.gmail.com>
+	<AANLkTikUkkWQl7cYuPiKGaJFYL_JlIGFCXXf7En8t0FN@mail.gmail.com>
+	<AANLkTildT6TRd0sPlv1QbCLO7oOPHM-L1yWNIdhdp0ex@mail.gmail.com>
+	<201006070837.16713.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Peter Rabbitson <ribasushi@cpan.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Jun 07 08:42:27 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jun 07 09:38:15 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLW2U-00033d-H9
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 08:42:26 +0200
+	id 1OLWuP-0005to-Nm
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 09:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754754Ab0FGGmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 02:42:21 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:60743 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754466Ab0FGGmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 02:42:21 -0400
-Received: from mailgate3.nec.co.jp ([10.7.69.197])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o576g08R029287;
-	Mon, 7 Jun 2010 15:42:00 +0900 (JST)
-Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
-	id o576g0o18062; Mon, 7 Jun 2010 15:42:00 +0900 (JST)
-Received: from relay51.aps.necel.com ([10.29.19.60]) by vgate01.nec.co.jp (8.11.7/3.7W-MAILSV-NEC) with ESMTP
-	id o576fx405073; Mon, 7 Jun 2010 15:41:59 +0900 (JST)
-Received: from relay51.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay51.aps.necel.com with ESMTP; Mon, 7 Jun 2010 15:41:59 +0900
-Received: from dhlpc061 ([10.114.113.131] [10.114.113.131]) by relay51.aps.necel.com with ESMTP; Mon, 7 Jun 2010 15:41:59 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id B90AD52E1B4; Mon,  7 Jun 2010 15:41:58 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <20100606164642.GA10104@localhost> (Clemens Buchacher's message
-	of "Sun, 6 Jun 2010 18:46:42 +0200")
+	id S932434Ab0FGHhy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 03:37:54 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53165 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932211Ab0FGHhx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 03:37:53 -0400
+Received: by iwn37 with SMTP id 37so3096727iwn.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 00:37:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=bwqkcRddWGD3O8OE1BzkK4aQYfl8WCqMm+5QZ5tbqPc=;
+        b=LBnvnFPFh1GRoQoAaTPdri3Gp80zamW90nLrMyT97fr25xy0IooP3fZux9cJQvA3Fe
+         azXKGIvnoYOv1ClYWD4P02vtNYLYYGD1X1aAqX9rNlPjtJroGuQov48/A82GFTowVAdv
+         0hPoL14+8vl5vZZfD64dio+Xzvmj8eRTx8C4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=I9IDoCQzR5nCCXFA3y/fRBSQE0tp+G9ch2vXSYcQpdRb0G9q8GPhiA3oK2w8c99PqX
+         jbVkS866xjYxm27EjutKG/v2dMqaFQ1c3Lcp/HG0EbT2i+v8z98zsMaYv+pi7vK3sci9
+         4evfS+fiK/KOtHacFLK/t7RYTvxnFmP9AXNcs=
+Received: by 10.231.124.73 with SMTP id t9mr3978526ibr.170.1275896272495; Mon, 
+	07 Jun 2010 00:37:52 -0700 (PDT)
+Received: by 10.231.16.134 with HTTP; Mon, 7 Jun 2010 00:37:52 -0700 (PDT)
+In-Reply-To: <201006070837.16713.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148581>
 
-Clemens Buchacher <drizzd@aon.at> writes:
-> The suggestion above would be perfect. It is an easy and obvious
-> solution, and the user is even educated about their mistake.
+On Mon, Jun 7, 2010 at 2:37 AM, Thomas Rast <trast@student.ethz.ch> wrote:
+> Jay Soffian wrote:
+>>
+>> Git is inconsistent.
+> [...]
+>> $ git branch --set-upstream=origin/master
+>> $ git branch --set-upstream origin/master
+>
+> Doesn't this just make it *more* confusing?
+>
+> Either we document this, and the user will be left wondering why we
+> have two almost identical (and by the conventions of many other
+> programs, including git-send-email, *equivalent*) syntaxes doing,
+> well, something not quite entirely unlike the same.
+>
+> Or we don't, and the user will eventually typo it and wonder WTF he
+> just did wrong.
 
-Of course, having been educated as to what's going on, the user would
-then be annoyed that they had to type all those boilerplate args when
-git clearly knew what they wanted to do... and that would be the case
-every time from then on...
+Please take a step back and see my original message. The thing that
+motivated this is that the existing invocation is, I claim,
+bass-ackwards. I was merely looking for a backwards compatible
+solution that doesn't introduce yet another argument. But, maybe
+set-upstream hasn't been around so long that breaking it (i.e., making
+it an option that requires an argument) wouldn't be a bad idea.
 
-I think this DWIM is actually pretty convenient, and very often does
-reflect what the user intuitively is trying to do when giving such args.
+Enough talk, I'll send up a patch when I get some more time.
 
-Given that git _does_ tell you what it's doing, and that it's easy
-enough to delete the new branch if it wasn't really wanted, it seems
-pretty harmless as well.  A campaign to delete this feature seems kind
-of silly...
-
--Miles
-
--- 
-I'm beginning to think that life is just one long Yoko Ono album; no rhyme
-or reason, just a lot of incoherent shrieks and then it's over.  --Ian Wolff
+j.
