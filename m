@@ -1,259 +1,381 @@
 From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [RFC/PATCH 1/4] gitweb: Move subroutines to Gitweb::Config module
-Date: Tue,  8 Jun 2010 02:20:41 +0530
-Message-ID: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com>
+Subject: [RFC/PATCH 2/4] gitweb: Create Gitweb::HTML::Link module
+Date: Tue,  8 Jun 2010 02:20:42 +0530
+Message-ID: <1275943844-24991-2-git-send-email-pavan.sss1991@gmail.com>
+References: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com>
 Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
 	pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Mon Jun 07 22:51:01 2010
+X-From: git-owner@vger.kernel.org Mon Jun 07 22:51:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLjHg-0006ic-V8
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 22:51:01 +0200
+	id 1OLjI5-00072v-3o
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 22:51:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554Ab0FGUuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 16:50:55 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:46715 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753482Ab0FGUuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 16:50:54 -0400
-Received: by pwj5 with SMTP id 5so1014636pwj.19
-        for <git@vger.kernel.org>; Mon, 07 Jun 2010 13:50:54 -0700 (PDT)
+	id S1753704Ab0FGUvT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 16:51:19 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:51197 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753560Ab0FGUvT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 16:51:19 -0400
+Received: by pvg16 with SMTP id 16so1588771pvg.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 13:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=0hcLygX2igu5YVK2PRQ/Mhh3HDnbGko9dd8AOB2W1h0=;
-        b=BJdAts97dZN5bcsx0Ltnc6AXswlRPMSZvKo3C8w6jF9z2gf8GnLGZka92eBaeTNoQF
-         Rncno2nz8zibnYU4FlHYGHLCJDtL08vph6c/BVCT2KWvlKfK9eeEq+tkY2mY/5xeK6Pq
-         sxuhnuTa1f6svJEe1NaG/qeFMoD0XrAJaxeDI=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=IGrV1qRDEXnQMC0KyVyFGWetXLHp/X4Jc19JlElcUfo=;
+        b=BYlKI+e85jHRXdM1sseHgSJuxjaLUiO5IQ8sMsOZ3MZ5s2lFoDHFIra3H70WY8tyBz
+         nWncZTjOuzhikfCSk3eitimoMh+1thEwvevrXzSUySN3g1JWflCrpUg94muhJp0MpD2r
+         ECWH6ctPPSfPgaTSsgeSMbOH8U2ZPbK5w6nKo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=LeZ1pQ1W0Zfhu10qlWZ+YPqIPEcObJy3QurqBUry1CyH+RiETQAJA1+EYhIH6z9bzv
-         /vpYzUYhIuv9uoDdHsqm9xVbKrETTbvNp9QajkwsTbG1ElCnxHXQ6P7zQFvC0KNgN1G5
-         owg4m5QdnoLG8hlIY8lYjLe3fpZY1ScNxixrE=
-Received: by 10.140.251.13 with SMTP id y13mr12386556rvh.116.1275943853946;
-        Mon, 07 Jun 2010 13:50:53 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=SHKmafDwrGnNwI92JMA7GDCwy1Ro0MKkTzbXPnru3nmCoj3AnxUDS2D5JYX6AD40on
+         HUNRKWGnLMIKwyFMI0KCqEI00WjoWEZeBLC0VvtbEpcoe74Ows3Hy7Ap1wVUSa8stuiT
+         VDTd+rYHWU4EeNPYe0pZj+oXdqIBhA0UOgsn0=
+Received: by 10.141.88.16 with SMTP id q16mr71343rvl.156.1275943877962;
+        Mon, 07 Jun 2010 13:51:17 -0700 (PDT)
 Received: from localhost.localdomain ([202.63.112.132])
-        by mx.google.com with ESMTPS id o38sm1180853rvp.2.2010.06.07.13.50.50
+        by mx.google.com with ESMTPS id o38sm1180853rvp.2.2010.06.07.13.51.14
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Jun 2010 13:50:52 -0700 (PDT)
+        Mon, 07 Jun 2010 13:51:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.454.ga8c50c
+In-Reply-To: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148625>
+
+Create Gitweb::HTML::Link module in 'gitweb/lib/Gitweb/HTML/Link.pm'
+to store the subroutines from the section 'action links' in the
+previous gitweb.perl
 
 Subroutines moved:
-	gitweb_get_feature
-	gitweb_check_feature
-	filter_snapshot_fmts
-	configure_gitweb_features
+	href
 
-Subroutines yet to move: (Contains not yet packaged subs & vars)
-	feature_bool
-	feature_avatar
-	feature_snapshot
-	feature_pathces
+Update 'gitweb/Makefile' to install this module alongside gitweb.
 
 Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 ---
- gitweb/gitweb.perl          |   67 --------------------------------------
- gitweb/lib/Gitweb/Config.pm |   74 +++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 72 insertions(+), 69 deletions(-)
+ gitweb/Makefile                |    5 +-
+ gitweb/gitweb.perl             |  123 +-----------------------------------
+ gitweb/lib/Gitweb/HTML/Link.pm |  137 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 142 insertions(+), 123 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/HTML/Link.pm
 
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index fcd4042..28f0858 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -116,6 +116,8 @@ GITWEB_LIB_GITWEB += lib/Gitweb/Config.pm
+ GITWEB_LIB_GITWEB += lib/Gitweb/Request.pm
+ GITWEB_LIB_GITWEB += lib/Gitweb/Escape.pm
+ GITWEB_LIB_GITWEB += lib/Gitweb/Git.pm
++# Files: gitweb/lib/Gitweb/HTML
++GITWEB_LIB_GITWEB_HTML += lib/Gitweb/HTML/Link.pm
+ 
+ GITWEB_REPLACE = \
+ 	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
+@@ -157,8 +159,9 @@ install: all
+ 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
+ 	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
+-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitweblibdir_SQ)/Gitweb'
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitweblibdir_SQ)/Gitweb/HTML'
+ 	$(INSTALL) -m 644 $(GITWEB_LIB_GITWEB) '$(DESTDIR_SQ)$(gitweblibdir_SQ)/Gitweb'
++	$(INSTALL) -m 644 $(GITWEB_LIB_GITWEB_HTML) '$(DESTDIR_SQ)$(gitweblibdir_SQ)/Gitweb/HTML'
+ 
+ ### Cleaning rules
+ 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 9b2fe09..3931064 100755
+index 3931064..bd11ae0 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -67,40 +67,6 @@ $strict_export = "++GITWEB_STRICT_EXPORT++";
- $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
- $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWEB_CONFIG_SYSTEM++";
+@@ -28,6 +28,7 @@ use Gitweb::Git;
+ use Gitweb::Config;
+ use Gitweb::Request;
+ use Gitweb::Escape;
++use Gitweb::HTML::Link;
  
--sub gitweb_get_feature {
--	my ($name) = @_;
--	return unless exists $feature{$name};
--	my ($sub, $override, @defaults) = (
--		$feature{$name}{'sub'},
--		$feature{$name}{'override'},
--		@{$feature{$name}{'default'}});
--	# project specific override is possible only if we have project
--	if (!$override || !defined $git_dir) {
--		return @defaults;
+ BEGIN {
+ 	CGI->compile() if $ENV{'MOD_PERL'};
+@@ -554,128 +555,6 @@ sub run {
+ run();
+ 
+ ## ======================================================================
+-## action links
+-
+-# possible values of extra options
+-# -full => 0|1      - use absolute/full URL ($my_uri/$my_url as base)
+-# -replay => 1      - start from a current view (replay with modifications)
+-# -path_info => 0|1 - don't use/use path_info URL (if possible)
+-sub href {
+-	my %params = @_;
+-	# default is to use -absolute url() i.e. $my_uri
+-	my $href = $params{-full} ? $my_url : $my_uri;
+-
+-	$params{'project'} = $project unless exists $params{'project'};
+-
+-	if ($params{-replay}) {
+-		while (my ($name, $symbol) = each %cgi_param_mapping) {
+-			if (!exists $params{$name}) {
+-				$params{$name} = $input_params{$name};
+-			}
+-		}
 -	}
--	if (!defined $sub) {
--		warn "feature $name is not overridable";
--		return @defaults;
+-
+-	my $use_pathinfo = gitweb_check_feature('pathinfo');
+-	if (defined $params{'project'} &&
+-	    (exists $params{-path_info} ? $params{-path_info} : $use_pathinfo)) {
+-		# try to put as many parameters as possible in PATH_INFO:
+-		#   - project name
+-		#   - action
+-		#   - hash_parent or hash_parent_base:/file_parent
+-		#   - hash or hash_base:/filename
+-		#   - the snapshot_format as an appropriate suffix
+-
+-		# When the script is the root DirectoryIndex for the domain,
+-		# $href here would be something like http://gitweb.example.com/
+-		# Thus, we strip any trailing / from $href, to spare us double
+-		# slashes in the final URL
+-		$href =~ s,/$,,;
+-
+-		# Then add the project name, if present
+-		$href .= "/".esc_url($params{'project'});
+-		delete $params{'project'};
+-
+-		# since we destructively absorb parameters, we keep this
+-		# boolean that remembers if we're handling a snapshot
+-		my $is_snapshot = $params{'action'} eq 'snapshot';
+-
+-		# Summary just uses the project path URL, any other action is
+-		# added to the URL
+-		if (defined $params{'action'}) {
+-			$href .= "/".esc_url($params{'action'}) unless $params{'action'} eq 'summary';
+-			delete $params{'action'};
+-		}
+-
+-		# Next, we put hash_parent_base:/file_parent..hash_base:/file_name,
+-		# stripping nonexistent or useless pieces
+-		$href .= "/" if ($params{'hash_base'} || $params{'hash_parent_base'}
+-			|| $params{'hash_parent'} || $params{'hash'});
+-		if (defined $params{'hash_base'}) {
+-			if (defined $params{'hash_parent_base'}) {
+-				$href .= esc_url($params{'hash_parent_base'});
+-				# skip the file_parent if it's the same as the file_name
+-				if (defined $params{'file_parent'}) {
+-					if (defined $params{'file_name'} && $params{'file_parent'} eq $params{'file_name'}) {
+-						delete $params{'file_parent'};
+-					} elsif ($params{'file_parent'} !~ /\.\./) {
+-						$href .= ":/".esc_url($params{'file_parent'});
+-						delete $params{'file_parent'};
+-					}
+-				}
+-				$href .= "..";
+-				delete $params{'hash_parent'};
+-				delete $params{'hash_parent_base'};
+-			} elsif (defined $params{'hash_parent'}) {
+-				$href .= esc_url($params{'hash_parent'}). "..";
+-				delete $params{'hash_parent'};
+-			}
+-
+-			$href .= esc_url($params{'hash_base'});
+-			if (defined $params{'file_name'} && $params{'file_name'} !~ /\.\./) {
+-				$href .= ":/".esc_url($params{'file_name'});
+-				delete $params{'file_name'};
+-			}
+-			delete $params{'hash'};
+-			delete $params{'hash_base'};
+-		} elsif (defined $params{'hash'}) {
+-			$href .= esc_url($params{'hash'});
+-			delete $params{'hash'};
+-		}
+-
+-		# If the action was a snapshot, we can absorb the
+-		# snapshot_format parameter too
+-		if ($is_snapshot) {
+-			my $fmt = $params{'snapshot_format'};
+-			# snapshot_format should always be defined when href()
+-			# is called, but just in case some code forgets, we
+-			# fall back to the default
+-			$fmt ||= $snapshot_fmts[0];
+-			$href .= $known_snapshot_formats{$fmt}{'suffix'};
+-			delete $params{'snapshot_format'};
+-		}
 -	}
--	return $sub->(@defaults);
--}
 -
--# A wrapper to check if a given feature is enabled.
--# With this, you can say
--#
--#   my $bool_feat = gitweb_check_feature('bool_feat');
--#   gitweb_check_feature('bool_feat') or somecode;
--#
--# instead of
--#
--#   my ($bool_feat) = gitweb_get_feature('bool_feat');
--#   (gitweb_get_feature('bool_feat'))[0] or somecode;
--#
--sub gitweb_check_feature {
--	return (gitweb_get_feature(@_))[0];
--}
--
--
- sub feature_bool {
- 	my $key = shift;
- 	my ($val) = git_get_project_config($key, '--bool');
-@@ -159,19 +125,6 @@ sub check_export_ok {
- 		(!$export_auth_hook || $export_auth_hook->($dir)));
- }
- 
--# process alternate names for backward compatibility
--# filter out unsupported (unknown) snapshot formats
--sub filter_snapshot_fmts {
--	my @fmts = @_;
--
--	@fmts = map {
--		exists $known_snapshot_format_aliases{$_} ?
--		       $known_snapshot_format_aliases{$_} : $_} @fmts;
--	@fmts = grep {
--		exists $known_snapshot_formats{$_} &&
--		!$known_snapshot_formats{$_}{'disabled'}} @fmts;
--}
--
- # Get loadavg of system, to compare against $maxload.
- # Currently it requires '/proc/loadavg' present to get loadavg;
- # if it is not present it returns 0, which means no load checking.
-@@ -486,26 +439,6 @@ sub evaluate_git_dir {
- 	$git_dir = "$projectroot/$project" if $project;
- }
- 
--our (@snapshot_fmts, $git_avatar);
--sub configure_gitweb_features {
--	# list of supported snapshot formats
--	our @snapshot_fmts = gitweb_get_feature('snapshot');
--	@snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
--
--	# check that the avatar feature is set to a known provider name,
--	# and for each provider check if the dependencies are satisfied.
--	# if the provider name is invalid or the dependencies are not met,
--	# reset $git_avatar to the empty string.
--	our ($git_avatar) = gitweb_get_feature('avatar');
--	if ($git_avatar eq 'gravatar') {
--		$git_avatar = '' unless (eval { require Digest::MD5; 1; });
--	} elsif ($git_avatar eq 'picon') {
--		# no dependencies
--	} else {
--		$git_avatar = '';
+-	# now encode the parameters explicitly
+-	my @result = ();
+-	for (my $i = 0; $i < @cgi_param_mapping; $i += 2) {
+-		my ($name, $symbol) = ($cgi_param_mapping[$i], $cgi_param_mapping[$i+1]);
+-		if (defined $params{$name}) {
+-			if (ref($params{$name}) eq "ARRAY") {
+-				foreach my $par (@{$params{$name}}) {
+-					push @result, $symbol . "=" . esc_param($par);
+-				}
+-			} else {
+-				push @result, $symbol . "=" . esc_param($params{$name});
+-			}
+-		}
 -	}
+-	$href .= "?" . join(';', @result) if scalar @result;
+-
+-	return $href;
 -}
 -
- # custom error handler: 'die <message>' is Internal Server Error
- sub handle_errors_html {
- 	my $msg = shift; # it is already HTML escaped
-diff --git a/gitweb/lib/Gitweb/Config.pm b/gitweb/lib/Gitweb/Config.pm
-index fdab9f7..3810fda 100644
---- a/gitweb/lib/Gitweb/Config.pm
-+++ b/gitweb/lib/Gitweb/Config.pm
-@@ -10,13 +10,16 @@ use strict;
- use warnings;
- use Exporter qw(import);
+-
+-## ======================================================================
+ ## validation, quoting/unquoting and escaping
  
--our @EXPORT = qw(evaluate_gitweb_config $version $projectroot $project_maxdepth $mimetypes_file
-+our @EXPORT = qw(evaluate_gitweb_config gitweb_check_feature gitweb_get_feature configure_gitweb_features
-+                 filter_snapshot_fmts $version $projectroot $project_maxdepth $mimetypes_file $git_avatar
-                  $projects_list @git_base_url_list $export_ok $strict_export $home_link_str $site_name
-                  $site_header $site_footer $home_text @stylesheets $stylesheet $logo $favicon $javascript
-                  $GITWEB_CONFIG $GITWEB_CONFIG_SYSTEM $logo_url $logo_label $export_auth_hook
-                  $projects_list_description_width $default_projects_order $default_blob_plain_mimetype
-                  $default_text_plain_charset $fallback_encoding @diff_opts $prevent_xss $maxload
--                 %avatar_size %known_snapshot_formats %known_snapshot_format_aliases %feature);
-+                 %avatar_size %known_snapshot_formats %feature @snapshot_fmts);
+ sub validate_action {
+diff --git a/gitweb/lib/Gitweb/HTML/Link.pm b/gitweb/lib/Gitweb/HTML/Link.pm
+new file mode 100644
+index 0000000..086809f
+--- /dev/null
++++ b/gitweb/lib/Gitweb/HTML/Link.pm
+@@ -0,0 +1,137 @@
++#!/usr/bin/perl
++#
++# Gitweb::HTML::Link -- gitweb's action links package
++#
++# This program is licensed under the GPLv2
 +
-+use Gitweb::Git qw($git_dir);
- 
- # The following variables are affected by build-time configuration
- # and hence their initialisation is put in gitweb.perl script
-@@ -425,4 +428,71 @@ sub evaluate_gitweb_config {
- 	}
- }
- 
++package Gitweb::HTML::Link;
 +
-+sub gitweb_get_feature {
-+	my ($name) = @_;
-+	return unless exists $feature{$name};
-+	my ($sub, $override, @defaults) = (
-+		$feature{$name}{'sub'},
-+		$feature{$name}{'override'},
-+		@{$feature{$name}{'default'}});
-+	# project specific override is possible only if we have project
-+	if (!$override || !defined $git_dir) {
-+		return @defaults;
++use strict;
++use warnings;
++use Exporter qw(import);
++
++our @EXPORT = qw(href);
++
++use Gitweb::Config qw(gitweb_check_feature %known_snapshot_formats @snapshot_fmts);
++use Gitweb::Request qw($project %cgi_param_mapping @cgi_param_mapping $my_url $my_uri %input_params);
++use Gitweb::Escape qw(esc_url esc_param);
++
++# possible values of extra options
++# -full => 0|1      - use absolute/full URL ($my_uri/$my_url as base)
++# -replay => 1      - start from a current view (replay with modifications)
++# -path_info => 0|1 - don't use/use path_info URL (if possible)
++sub href {
++	my %params = @_;
++	# default is to use -absolute url() i.e. $my_uri
++	my $href = $params{-full} ? $my_url : $my_uri;
++
++	$params{'project'} = $project unless exists $params{'project'};
++
++	if ($params{-replay}) {
++		while (my ($name, $symbol) = each %cgi_param_mapping) {
++			if (!exists $params{$name}) {
++				$params{$name} = $input_params{$name};
++			}
++		}
 +	}
-+	if (!defined $sub) {
-+		warn "feature $name is not overridable";
-+		return @defaults;
++
++	my $use_pathinfo = gitweb_check_feature('pathinfo');
++	if (defined $params{'project'} &&
++	    (exists $params{-path_info} ? $params{-path_info} : $use_pathinfo)) {
++		# try to put as many parameters as possible in PATH_INFO:
++		#   - project name
++		#   - action
++		#   - hash_parent or hash_parent_base:/file_parent
++		#   - hash or hash_base:/filename
++		#   - the snapshot_format as an appropriate suffix
++
++		# When the script is the root DirectoryIndex for the domain,
++		# $href here would be something like http://gitweb.example.com/
++		# Thus, we strip any trailing / from $href, to spare us double
++		# slashes in the final URL
++		$href =~ s,/$,,;
++
++		# Then add the project name, if present
++		$href .= "/".esc_url($params{'project'});
++		delete $params{'project'};
++
++		# since we destructively absorb parameters, we keep this
++		# boolean that remembers if we're handling a snapshot
++		my $is_snapshot = $params{'action'} eq 'snapshot';
++
++		# Summary just uses the project path URL, any other action is
++		# added to the URL
++		if (defined $params{'action'}) {
++			$href .= "/".esc_url($params{'action'}) unless $params{'action'} eq 'summary';
++			delete $params{'action'};
++		}
++
++		# Next, we put hash_parent_base:/file_parent..hash_base:/file_name,
++		# stripping nonexistent or useless pieces
++		$href .= "/" if ($params{'hash_base'} || $params{'hash_parent_base'}
++			|| $params{'hash_parent'} || $params{'hash'});
++		if (defined $params{'hash_base'}) {
++			if (defined $params{'hash_parent_base'}) {
++				$href .= esc_url($params{'hash_parent_base'});
++				# skip the file_parent if it's the same as the file_name
++				if (defined $params{'file_parent'}) {
++					if (defined $params{'file_name'} && $params{'file_parent'} eq $params{'file_name'}) {
++						delete $params{'file_parent'};
++					} elsif ($params{'file_parent'} !~ /\.\./) {
++						$href .= ":/".esc_url($params{'file_parent'});
++						delete $params{'file_parent'};
++					}
++				}
++				$href .= "..";
++				delete $params{'hash_parent'};
++				delete $params{'hash_parent_base'};
++			} elsif (defined $params{'hash_parent'}) {
++				$href .= esc_url($params{'hash_parent'}). "..";
++				delete $params{'hash_parent'};
++			}
++
++			$href .= esc_url($params{'hash_base'});
++			if (defined $params{'file_name'} && $params{'file_name'} !~ /\.\./) {
++				$href .= ":/".esc_url($params{'file_name'});
++				delete $params{'file_name'};
++			}
++			delete $params{'hash'};
++			delete $params{'hash_base'};
++		} elsif (defined $params{'hash'}) {
++			$href .= esc_url($params{'hash'});
++			delete $params{'hash'};
++		}
++
++		# If the action was a snapshot, we can absorb the
++		# snapshot_format parameter too
++		if ($is_snapshot) {
++			my $fmt = $params{'snapshot_format'};
++			# snapshot_format should always be defined when href()
++			# is called, but just in case some code forgets, we
++			# fall back to the default
++			$fmt ||= $snapshot_fmts[0];
++			$href .= $known_snapshot_formats{$fmt}{'suffix'};
++			delete $params{'snapshot_format'};
++		}
 +	}
-+	return $sub->(@defaults);
-+}
 +
-+# A wrapper to check if a given feature is enabled.
-+# With this, you can say
-+#
-+#   my $bool_feat = gitweb_check_feature('bool_feat');
-+#   gitweb_check_feature('bool_feat') or somecode;
-+#
-+# instead of
-+#
-+#   my ($bool_feat) = gitweb_get_feature('bool_feat');
-+#   (gitweb_get_feature('bool_feat'))[0] or somecode;
-+#
-+sub gitweb_check_feature {
-+	return (gitweb_get_feature(@_))[0];
-+}
-+
-+# process alternate names for backward compatibility
-+# filter out unsupported (unknown) snapshot formats
-+sub filter_snapshot_fmts {
-+	my @fmts = @_;
-+
-+	@fmts = map {
-+		exists $known_snapshot_format_aliases{$_} ?
-+		       $known_snapshot_format_aliases{$_} : $_} @fmts;
-+	@fmts = grep {
-+		exists $known_snapshot_formats{$_} &&
-+		!$known_snapshot_formats{$_}{'disabled'}} @fmts;
-+}
-+
-+our (@snapshot_fmts, $git_avatar);
-+sub configure_gitweb_features {
-+	# list of supported snapshot formats
-+	our @snapshot_fmts = gitweb_get_feature('snapshot');
-+	@snapshot_fmts = filter_snapshot_fmts(@snapshot_fmts);
-+
-+	# check that the avatar feature is set to a known provider name,
-+	# and for each provider check if the dependencies are satisfied.
-+	# if the provider name is invalid or the dependencies are not met,
-+	# reset $git_avatar to the empty string.
-+	our ($git_avatar) = gitweb_get_feature('avatar');
-+	if ($git_avatar eq 'gravatar') {
-+		$git_avatar = '' unless (eval { require Digest::MD5; 1; });
-+	} elsif ($git_avatar eq 'picon') {
-+		# no dependencies
-+	} else {
-+		$git_avatar = '';
++	# now encode the parameters explicitly
++	my @result = ();
++	for (my $i = 0; $i < @cgi_param_mapping; $i += 2) {
++		my ($name, $symbol) = ($cgi_param_mapping[$i], $cgi_param_mapping[$i+1]);
++		if (defined $params{$name}) {
++			if (ref($params{$name}) eq "ARRAY") {
++				foreach my $par (@{$params{$name}}) {
++					push @result, $symbol . "=" . esc_param($par);
++				}
++			} else {
++				push @result, $symbol . "=" . esc_param($params{$name});
++			}
++		}
 +	}
++	$href .= "?" . join(';', @result) if scalar @result;
++
++	return $href;
 +}
 +
- 1;
++1;
 -- 
 1.7.1.454.ga8c50c
