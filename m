@@ -1,139 +1,272 @@
-From: Zhang Le <r0bertz@gentoo.org>
-Subject: Re: [PATCH 1/2] [RFC] add --recode-patch option to git-mailinfo
-Date: Mon, 7 Jun 2010 09:44:36 +0800
-Message-ID: <20100607014434.GA24220@adriano>
-References: <1275825583-23913-1-git-send-email-r0bertz@gentoo.org>
- <7vr5kkvshz.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jI8keyz6grp/JLjh"
-Cc: git@vger.kernel.org, druggo@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 03:45:16 2010
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [PATCH] mailinfo: parse From header more strictly when run from rebase
+Date: Mon,  7 Jun 2010 00:45:45 -0400
+Message-ID: <1275885945-29241-1-git-send-email-jaysoffian@gmail.com>
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <junio@kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 07 06:46:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLROu-0003lW-7d
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 03:45:16 +0200
+	id 1OLUE4-0000x1-FL
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 06:46:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754279Ab0FGBpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 21:45:10 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:55105 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754084Ab0FGBpI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 21:45:08 -0400
-Received: by pxi8 with SMTP id 8so931233pxi.19
-        for <git@vger.kernel.org>; Sun, 06 Jun 2010 18:45:08 -0700 (PDT)
+	id S1752015Ab0FGEqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 00:46:08 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:57741 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751981Ab0FGEqC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 00:46:02 -0400
+Received: by gwb15 with SMTP id 15so891652gwb.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 21:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=R57/X1Cj2UqLr4LbhbmYLyHjKC3iAiHs7pGL20WgIdQ=;
-        b=srM0xpUZi3ZBlMAEf/58Pb8nqAhYHp2OwGrpeH1WwDA7No1xplE/9Ywhbnd41WmO3E
-         r4S+SFQC1NFUtcd7jdy0rMUSiiPmqVZMtbRQ8v1iCAWpE9SbHS2kc0SmuZCAg97ujFM0
-         VBC8k/0n2EETAWAaMxy1SxFNtxFsmAjgzXV9A=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=pXSgBIidFtjjSOIL7Wdh9oGyd9nEjBuzo9veKnVQ23Y=;
+        b=sL8Q8Ni7W9x3+dpZ75UpEIYsV0IlvB70CyyHbaUyfswBCsjpi9xu6BIcaK5wZcCgpH
+         F1ZVZXbGJgsonuOl5qLz0gJZuLtCSTAO/tWsPgRLiSpfRcWprbBU90UWN3g3hMjzwxIx
+         5fi8kT4/s7wRiFK9RYqOvfYSR0lF4A/z6Wtvg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IykyGHXGziSvkO6PMoYTCiEGrcYGoE958+hFr8m/097iLtApH8uv0MqQdLCJAePcmY
-         /+Jv1uTqCrna0xOdB0I8vYg6zqzjXvqbxqVhEsnyRCLXI1iVFObwEKC1GawokMFga+Ai
-         iRWTFUoSmKhJhu1yY2z+rrp8QDQIHnZd3Nm90=
-Received: by 10.142.207.12 with SMTP id e12mr10113553wfg.32.1275875108068;
-        Sun, 06 Jun 2010 18:45:08 -0700 (PDT)
-Received: from localhost ([119.122.45.205])
-        by mx.google.com with ESMTPS id f11sm34075800wai.23.2010.06.06.18.45.01
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=is5gdTWfMYKQNVYiL7sKF0Hm7tXrqRHSE4sYUvHUxRmKmCTHuP4/lVA6XoSgUNgsWV
+         /mXIZKk7f0rVk916F+L/BZsV5fc3sV9qL5C8gsNFyWeoYeKdnKdUC6hiS1ou1vVgOdCY
+         Q390sioGDCDTFVBwMQAc9p6/oQmxMR3pSdjS0=
+Received: by 10.150.13.1 with SMTP id 1mr13765085ybm.433.1275885960507;
+        Sun, 06 Jun 2010 21:46:00 -0700 (PDT)
+Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
+        by mx.google.com with ESMTPS id p5sm42226123ybe.12.2010.06.06.21.45.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Jun 2010 18:45:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vr5kkvshz.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sun, 06 Jun 2010 21:45:58 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148568>
 
+Given an email address of the form:
 
---jI8keyz6grp/JLjh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ author@example.com <author@example.com@11B4E7C6-762E-4CF5-B2EB-3F7BD596981D>
 
-On 13:03 Sun 06 Jun     , Junio C Hamano wrote:
-> Zhang Le <r0bertz@gentoo.org> writes:
->=20
-> > I have a translation project which uses UTF-8 as charset.
-> > So the patch must be encoded in UTF-8, not just the commit msg etc.
-> > And we use google group as our mailing list.
-> >
-> > Recently, due to unknown reason, mails saved from gmail are encoded usi=
-ng GB2312.
-> > This never happened before. I guess google has did something.
-> > But I haven't found how to change this behavior.
-> >
-> > So I took another way, i.e. add this option to git-mailinfo.
-> > I hope this could benefit others as well.
-> >
-> > Signed-off-by: Zhang Le <r0bertz@gentoo.org>
-> > ---
-> >  builtin/mailinfo.c  |    8 +++++++-
-> >  man1/git-mailinfo.1 |    7 ++++++-
->=20
-> Don't patch anything in man?/ as they are autogenerated files and not
-> source; patch the source file in Documentation/ directory instead.
+results in "author@example.com" being used as both the name and the
+address. This is due to an assumption in handle_from() that the
+first '@' denotes the address portion. The remainder of the string
+is then assumed to be the name, which is rejected by
+get_sane_name(), resulting in address being used for the name as
+well.
 
-Thanks, will do it.
+I considered making handle_from() smarter by instead looking first
+for an '@' contained by brackets. But get_sane_name() would still
+reject "author@example.com" for the name, resulting in
+"author@example.com@11B4E7C6-762E-4CF5-B2EB-3F7BD596981D" being used
+for both the name and the address. Hardly an improvement.
 
->=20
-> I take it that you recode from whatever encoding the mail message is in
-> (probably stated in "Content-type: ...; charset=3Dxxx" header) to the
-> encoding specified with --encoding option (defaulting to UTF-8), but it
-> wasn't very clear from the documentation.  We might want to improve=20
-> the descriptions of both this new option and --encoding option.
+In practice, I've only encountered this issue when rebasing commits
+that were generated by git svn. So instead of adding more heuristics
+to handle_from(), just make it stricter when run from rebase.
 
-That's exactly what this patch's purpose is.
-I will try to improve the doc.
+We use undocumented --no-inbody-headers to know when we're running
+from rebase and then assume the address is of the form:
 
->=20
-> Also it might be useful to find out what that "due to unknown reason" is,
-> at least to see if that is what Google did or what the user did.
+ name <email>
 
-One of my friend, Yang Xiaoguang, found that google tries to detect the
-language of the email and recode it using the native charset.
-For Simplified Chinese, it is GB2312.
-For Traditional Chinese, it is Big5.
+in which case email is extracted purely by brackets and name is
+trimmed only for whitespace.
 
-In the test, Yang sent all emails using UTF-8 charset.
-He sent those mails to a google group and then checked the "Content-type: .=
-=2E.;
-charset=3Dxxx" in gmail.
+Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+---
+ builtin/mailinfo.c                   |   15 ++++++++++++---
+ t/t5100-mailinfo.sh                  |    2 +-
+ t/t5100/0017                         |   17 +++++++++++++++++
+ t/t5100/info0017                     |    5 +++++
+ t/t5100/info0017--no-inbody-headers  |    5 +++++
+ t/t5100/patch0017                    |   12 ++++++++++++
+ t/t5100/patch0017--no-inbody-headers |   12 ++++++++++++
+ t/t5100/sample.mbox                  |   17 +++++++++++++++++
+ 8 files changed, 81 insertions(+), 4 deletions(-)
+ create mode 100644 t/t5100/0017
+ create mode 100644 t/t5100/info0017
+ create mode 100644 t/t5100/info0017--no-inbody-headers
+ create mode 100644 t/t5100/msg0017
+ create mode 100644 t/t5100/msg0017--no-inbody-headers
+ create mode 100644 t/t5100/patch0017
+ create mode 100644 t/t5100/patch0017--no-inbody-headers
 
-If the mail is written in Simplified Chinese, the charset became GB2312.
-If the mail is written in Traditional Chinese, the charset became Big5.
-If the mail is mixed with Simplified and Traditional Chinese, the charset
-remains as UTF-8.
-
---=20
-Zhang, Le
-Gentoo/Loongson Developer
-http://zhangle.is-a-geek.org
-0260 C902 B8F8 6506 6586 2B90 BC51 C808 1E4E 2973
-
---jI8keyz6grp/JLjh
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.15 (GNU/Linux)
-
-iEYEARECAAYFAkwMTwIACgkQvFHICB5OKXNgbwCffYZnsZxvV4ljzfJ8JbFx+gs3
-yT4An1bN8wFLy/S1yxZPW5f7vdl1cExM
-=Gq0e
------END PGP SIGNATURE-----
-
---jI8keyz6grp/JLjh--
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index 4a9729b..0cb5521 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -47,7 +47,7 @@ static void get_sane_name(struct strbuf *out, struct strbuf *name, struct strbuf
+ 	strbuf_addbuf(out, src);
+ }
+ 
+-static void parse_bogus_from(const struct strbuf *line)
++static void parse_bracketed_from(const struct strbuf *line, int strict)
+ {
+ 	/* John Doe <johndoe> */
+ 
+@@ -71,7 +71,8 @@ static void parse_bogus_from(const struct strbuf *line)
+ 	strbuf_reset(&name);
+ 	strbuf_add(&name, line->buf, bra - line->buf);
+ 	strbuf_trim(&name);
+-	get_sane_name(&name, &name, &email);
++	if (!strict)
++		get_sane_name(&name, &name, &email);
+ }
+ 
+ static void handle_from(const struct strbuf *from)
+@@ -80,12 +81,20 @@ static void handle_from(const struct strbuf *from)
+ 	size_t el;
+ 	struct strbuf f;
+ 
++	if (!use_inbody_headers) {
++		/* we're running from rebase, so we can assume the from header
++		 * is well-formed and use the stricter parse_bracketed_from
++		 */
++		parse_bracketed_from(from, 1);
++		return;
++	}
++
+ 	strbuf_init(&f, from->len);
+ 	strbuf_addbuf(&f, from);
+ 
+ 	at = strchr(f.buf, '@');
+ 	if (!at) {
+-		parse_bogus_from(from);
++		parse_bracketed_from(from, 0);
+ 		return;
+ 	}
+ 
+diff --git a/t/t5100-mailinfo.sh b/t/t5100-mailinfo.sh
+index ebc36c1..d8bbad8 100755
+--- a/t/t5100-mailinfo.sh
++++ b/t/t5100-mailinfo.sh
+@@ -11,7 +11,7 @@ test_expect_success 'split sample box' \
+ 	'git mailsplit -o. "$TEST_DIRECTORY"/t5100/sample.mbox >last &&
+ 	last=`cat last` &&
+ 	echo total is $last &&
+-	test `cat last` = 16'
++	test `cat last` = 17'
+ 
+ check_mailinfo () {
+ 	mail=$1 opt=$2
+diff --git a/t/t5100/0017 b/t/t5100/0017
+new file mode 100644
+index 0000000..085d414
+--- /dev/null
++++ b/t/t5100/0017
+@@ -0,0 +1,17 @@
++From 9251ac1cdbf624c31ec0a9996f0b38dc7bcdcd60 Mon Sep 17 00:00:00 2001
++From: author@example.com <author@example.com@11B4E7C6-762E-4CF5-B2EB-3F7BD596981D>
++Date: Sun, 6 Jun 2010 22:14:37 -0400
++Subject: initial
++
++---
++ hello |    1 +
++ 1 files changed, 1 insertions(+), 0 deletions(-)
++ create mode 100644 hello
++
++diff --git a/hello b/hello
++new file mode 100644
++index 0000000..ce01362
++--- /dev/null
+++++ b/hello
++@@ -0,0 +1 @@
+++hello
+diff --git a/t/t5100/info0017 b/t/t5100/info0017
+new file mode 100644
+index 0000000..992cfe0
+--- /dev/null
++++ b/t/t5100/info0017
+@@ -0,0 +1,5 @@
++Author: author@example.com
++Email: author@example.com
++Subject: initial
++Date: Sun, 6 Jun 2010 22:14:37 -0400
++
+diff --git a/t/t5100/info0017--no-inbody-headers b/t/t5100/info0017--no-inbody-headers
+new file mode 100644
+index 0000000..9d74dce
+--- /dev/null
++++ b/t/t5100/info0017--no-inbody-headers
+@@ -0,0 +1,5 @@
++Author: author@example.com
++Email: author@example.com@11B4E7C6-762E-4CF5-B2EB-3F7BD596981D
++Subject: initial
++Date: Sun, 6 Jun 2010 22:14:37 -0400
++
+diff --git a/t/t5100/msg0017 b/t/t5100/msg0017
+new file mode 100644
+index 0000000..e69de29
+diff --git a/t/t5100/msg0017--no-inbody-headers b/t/t5100/msg0017--no-inbody-headers
+new file mode 100644
+index 0000000..e69de29
+diff --git a/t/t5100/patch0017 b/t/t5100/patch0017
+new file mode 100644
+index 0000000..d5640e6
+--- /dev/null
++++ b/t/t5100/patch0017
+@@ -0,0 +1,12 @@
++---
++ hello |    1 +
++ 1 files changed, 1 insertions(+), 0 deletions(-)
++ create mode 100644 hello
++
++diff --git a/hello b/hello
++new file mode 100644
++index 0000000..ce01362
++--- /dev/null
+++++ b/hello
++@@ -0,0 +1 @@
+++hello
+diff --git a/t/t5100/patch0017--no-inbody-headers b/t/t5100/patch0017--no-inbody-headers
+new file mode 100644
+index 0000000..d5640e6
+--- /dev/null
++++ b/t/t5100/patch0017--no-inbody-headers
+@@ -0,0 +1,12 @@
++---
++ hello |    1 +
++ 1 files changed, 1 insertions(+), 0 deletions(-)
++ create mode 100644 hello
++
++diff --git a/hello b/hello
++new file mode 100644
++index 0000000..ce01362
++--- /dev/null
+++++ b/hello
++@@ -0,0 +1 @@
+++hello
+diff --git a/t/t5100/sample.mbox b/t/t5100/sample.mbox
+index de10312..50f71ea 100644
+--- a/t/t5100/sample.mbox
++++ b/t/t5100/sample.mbox
+@@ -683,3 +683,20 @@ index e69de29..d95f3ad 100644
+ @@ -0,0 +1 @@
+ +content
+ 
++From 9251ac1cdbf624c31ec0a9996f0b38dc7bcdcd60 Mon Sep 17 00:00:00 2001
++From: author@example.com <author@example.com@11B4E7C6-762E-4CF5-B2EB-3F7BD596981D>
++Date: Sun, 6 Jun 2010 22:14:37 -0400
++Subject: initial
++
++---
++ hello |    1 +
++ 1 files changed, 1 insertions(+), 0 deletions(-)
++ create mode 100644 hello
++
++diff --git a/hello b/hello
++new file mode 100644
++index 0000000..ce01362
++--- /dev/null
+++++ b/hello
++@@ -0,0 +1 @@
+++hello
+-- 
+1.7.1
