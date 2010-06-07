@@ -1,146 +1,105 @@
-From: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-Subject: [PATCH v2 1/3] textconv: make the API public
-Date: Mon,  7 Jun 2010 17:23:36 +0200
-Message-ID: <1275924218-20154-1-git-send-email-axel.bonnet@ensimag.imag.fr>
-References: <1275921713-3277-1-git-send-email-axel.bonnet@ensimag.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] gitweb: Create Gitweb::Git module
+Date: Mon, 7 Jun 2010 17:25:46 +0200
+Message-ID: <201006071725.51263.jnareb@gmail.com>
+References: <1275859451-21787-1-git-send-email-pavan.sss1991@gmail.com> <20100607144852.GN20775@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 07 17:24:11 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Mon Jun 07 17:26:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLeBL-0006II-7p
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 17:24:07 +0200
+	id 1OLeDI-0008TC-KB
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 17:26:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699Ab0FGPXv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 11:23:51 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from mx2.imag.fr ([129.88.30.17]:42699 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751517Ab0FGPXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 11:23:50 -0400
-Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o57FG5eT027974
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 7 Jun 2010 17:16:05 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o57FNiOh015993;
-	Mon, 7 Jun 2010 17:23:44 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o57FNifQ020982;
-	Mon, 7 Jun 2010 17:23:44 +0200
-Received: (from bonneta@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o57FNiaD020981;
-	Mon, 7 Jun 2010 17:23:44 +0200
-X-Mailer: git-send-email 1.6.6.7.ga5fe3
-In-Reply-To: <1275921713-3277-1-git-send-email-axel.bonnet@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 07 Jun 2010 17:16:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o57FG5eT027974
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: axel.bonnet@ensimag.imag.fr
+	id S1752009Ab0FGPZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 11:25:56 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:40685 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538Ab0FGPZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 11:25:55 -0400
+Received: by fxm8 with SMTP id 8so2181448fxm.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 08:25:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=RCtDPhvrNB5aeAoCeyJ1D0vdlfUIyRDxgaqeNdQjyvk=;
+        b=FcCKDrG/odBiJqEBioZERMEHYB0ta4Ot4YhRvW9r5c++j8rI+jAV/YALudf9ef4SQV
+         9B4i9T7OrsCZvkD1AXqJaAKjwI+3LKVtfE/Wx/Rr6At0CA4H9yF2OWTvrDuhkFmXKpjo
+         LNxGe3p7l5cT8aEr/xY3b7Xm96b/YfijUuv9c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OcGi6AKdhfOf8mC8REgtnzFchcL5QcLFNRM33XlA4BUoV7wqdrAheoZNZ+b+5ScIQ0
+         ZP66ljWiQJcfVpjcp/p6s4dBfYmoKSgitySZM9KGgCgtNhv5UDv2QW3gO+Yq/Rfk2LVX
+         LTpI8qiY0gHdChPTNUYcIuanIhQukrgXQTnqQ=
+Received: by 10.223.26.130 with SMTP id e2mr15268642fac.101.1275924353934;
+        Mon, 07 Jun 2010 08:25:53 -0700 (PDT)
+Received: from [192.168.1.15] (abwb99.neoplus.adsl.tpnet.pl [83.8.225.99])
+        by mx.google.com with ESMTPS id j23sm20765652faa.2.2010.06.07.08.25.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jun 2010 08:25:53 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20100607144852.GN20775@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148607>
 
-The textconv functionality allows one to convert a file into text befor=
-e
-running diff. But this functionality can be useful to other features
-such as blame.
+On Mon, Jun 07, 2010, Petr Baudis wrote:
+> On Mon, Jun 07, 2010 at 02:54:11AM +0530, Pavan Kumar Sunkara wrote:
 
-Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
----
- diff.c |   12 ++++--------
- diff.h |    8 ++++++++
- 2 files changed, 12 insertions(+), 8 deletions(-)
+> > @@ -1548,21 +1536,6 @@ sub get_feed_info {
+> >  ## ----------------------------------------------------------------------
+> >  ## git utility subroutines, invoking git commands
+> 
+> Is there any reason why didn't you move the rest of the commands from
+> this section to Gitweb::Git as well?
 
-diff --git a/diff.c b/diff.c
-index 494f560..b4a830f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -43,10 +43,6 @@ static char diff_colors[][COLOR_MAXLEN] =3D {
- 	GIT_COLOR_NORMAL,	/* FUNCINFO */
- };
-=20
--static void diff_filespec_load_driver(struct diff_filespec *one);
--static size_t fill_textconv(struct userdiff_driver *driver,
--			    struct diff_filespec *df, char **outbuf);
--
- static int parse_diff_color_slot(const char *var, int ofs)
- {
- 	if (!strcasecmp(var+ofs, "plain"))
-@@ -1629,7 +1625,7 @@ void diff_set_mnemonic_prefix(struct diff_options=
- *options, const char *a, const
- 		options->b_prefix =3D b;
- }
-=20
--static struct userdiff_driver *get_textconv(struct diff_filespec *one)
-+struct userdiff_driver *get_textconv(struct diff_filespec *one)
- {
- 	if (!DIFF_FILE_VALID(one))
- 		return NULL;
-@@ -4002,9 +3998,9 @@ static char *run_textconv(const char *pgm, struct=
- diff_filespec *spec,
- 	return strbuf_detach(&buf, outsize);
- }
-=20
--static size_t fill_textconv(struct userdiff_driver *driver,
--			    struct diff_filespec *df,
--			    char **outbuf)
-+size_t fill_textconv(struct userdiff_driver *driver,
-+		     struct diff_filespec *df,
-+		     char **outbuf)
- {
- 	size_t size;
-=20
-diff --git a/diff.h b/diff.h
-index 9ace08c..2a0e36d 100644
---- a/diff.h
-+++ b/diff.h
-@@ -9,6 +9,8 @@
- struct rev_info;
- struct diff_options;
- struct diff_queue_struct;
-+struct diff_filespec;
-+struct userdiff_driver;
-=20
- typedef void (*change_fn_t)(struct diff_options *options,
- 		 unsigned old_mode, unsigned new_mode,
-@@ -287,4 +289,10 @@ extern void diff_no_index(struct rev_info *, int, =
-const char **, int, const char
-=20
- extern int index_differs_from(const char *def, int diff_flags);
-=20
-+extern size_t fill_textconv(struct userdiff_driver *driver,
-+			    struct diff_filespec *df,
-+			    char **outbuf);
-+
-+extern struct userdiff_driver *get_textconv(struct diff_filespec *one)=
-;
-+
- #endif /* DIFF_H */
---=20
-1.6.6.7.ga5fe3
+Probably because they are less clear about being about running (git)
+commands, I guess?
+
+Let's examine those subroutines in more detail:
+
+* git_cmd - requires $GIT and $git_dir, also $number_of_git_cmds
+
+* quote_command - helper command, not exactly about running comands,
+  but about shell escaping / shell quoting.  Should it be in Gitweb::Git
+  or in Gitweb::Escape?
+
+* evaluate_git_version - requires $GIT, sets $number_of_git_cmds
+  and $git_version.  Does it belong to Gitweb::Git, or Gitweb::Config,
+  or perhaps Gitweb::Request?
+
+* git_get_hash (and wrappers: git_get_head_hash, git_get_full_hash,
+  git_get_short_hash) - requires $projectroot, something which other
+  commands do not require, and $git_dir.  Uses git_cmd().
+
+* git_get_type - uses git_cmd().
+
+* git_get_hash_by_path - uses git_cmd()
+* git_get_path_by_hash - uses git_cmd()
+
+Subroutines related to parsing per-repository configuration should be
+either in Gitweb::Config, or in a separate module, e.g. Gitweb::Git::Config
+(or something like that, like Gitweb::RepoConfig, etc.).
+
+Next there are 'git utility functions, directly accessing git repository'
+
+-- 
+Jakub Narebski
+Poland
