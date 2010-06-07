@@ -1,106 +1,139 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: rebase --continue confusion
-Date: Sun, 6 Jun 2010 20:41:46 -0400
-Message-ID: <20100607004146.GA25106@coredump.intra.peff.net>
-References: <4C01B855.7080409@gmail.com>
- <m3bpbo1f3f.fsf@winooski.ccs.neu.edu>
- <20100606221853.GG6993@coredump.intra.peff.net>
- <19468.8730.59682.76355@winooski.ccs.neu.edu>
- <20100606224601.GB11424@coredump.intra.peff.net>
- <19468.12912.509183.102990@winooski.ccs.neu.edu>
+From: Zhang Le <r0bertz@gentoo.org>
+Subject: Re: [PATCH 1/2] [RFC] add --recode-patch option to git-mailinfo
+Date: Mon, 7 Jun 2010 09:44:36 +0800
+Message-ID: <20100607014434.GA24220@adriano>
+References: <1275825583-23913-1-git-send-email-r0bertz@gentoo.org>
+ <7vr5kkvshz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Mon Jun 07 02:48:15 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="jI8keyz6grp/JLjh"
+Cc: git@vger.kernel.org, druggo@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 07 03:45:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLQVj-0003jE-48
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 02:48:15 +0200
+	id 1OLROu-0003lW-7d
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 03:45:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452Ab0FGAlv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jun 2010 20:41:51 -0400
-Received: from peff.net ([208.65.91.99]:54289 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753243Ab0FGAlu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jun 2010 20:41:50 -0400
-Received: (qmail 14391 invoked by uid 107); 7 Jun 2010 00:41:57 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sun, 06 Jun 2010 20:41:57 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Jun 2010 20:41:46 -0400
+	id S1754279Ab0FGBpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jun 2010 21:45:10 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:55105 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754084Ab0FGBpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jun 2010 21:45:08 -0400
+Received: by pxi8 with SMTP id 8so931233pxi.19
+        for <git@vger.kernel.org>; Sun, 06 Jun 2010 18:45:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=R57/X1Cj2UqLr4LbhbmYLyHjKC3iAiHs7pGL20WgIdQ=;
+        b=srM0xpUZi3ZBlMAEf/58Pb8nqAhYHp2OwGrpeH1WwDA7No1xplE/9Ywhbnd41WmO3E
+         r4S+SFQC1NFUtcd7jdy0rMUSiiPmqVZMtbRQ8v1iCAWpE9SbHS2kc0SmuZCAg97ujFM0
+         VBC8k/0n2EETAWAaMxy1SxFNtxFsmAjgzXV9A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IykyGHXGziSvkO6PMoYTCiEGrcYGoE958+hFr8m/097iLtApH8uv0MqQdLCJAePcmY
+         /+Jv1uTqCrna0xOdB0I8vYg6zqzjXvqbxqVhEsnyRCLXI1iVFObwEKC1GawokMFga+Ai
+         iRWTFUoSmKhJhu1yY2z+rrp8QDQIHnZd3Nm90=
+Received: by 10.142.207.12 with SMTP id e12mr10113553wfg.32.1275875108068;
+        Sun, 06 Jun 2010 18:45:08 -0700 (PDT)
+Received: from localhost ([119.122.45.205])
+        by mx.google.com with ESMTPS id f11sm34075800wai.23.2010.06.06.18.45.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 06 Jun 2010 18:45:05 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <19468.12912.509183.102990@winooski.ccs.neu.edu>
+In-Reply-To: <7vr5kkvshz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148566>
 
-On Sun, Jun 06, 2010 at 07:42:40PM -0400, Eli Barzilay wrote:
 
-> > Probably it would be helpful in the case of an amend to indicate
-> > what has happened (you have no changes, but it is not immediately
-> > obvious that you have no changes against HEAD^, not HEAD). We could
-> > even suggest "git reset HEAD^", which is probably what you want (the
-> > only other thing you could want is to create a commit with no
-> > changes, which we generally try to avoid).
-> 
-> Yes, that sounds reasonable.  (When I realized what happened I
-> wondered why it didn't do the reset itself, but that would obviously
-> be a bad idea.)
+--jI8keyz6grp/JLjh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I'm not convinced this comes up often enough to really be worth worrying
-about, but the patch is quite trivial, so why not?
+On 13:03 Sun 06 Jun     , Junio C Hamano wrote:
+> Zhang Le <r0bertz@gentoo.org> writes:
+>=20
+> > I have a translation project which uses UTF-8 as charset.
+> > So the patch must be encoded in UTF-8, not just the commit msg etc.
+> > And we use google group as our mailing list.
+> >
+> > Recently, due to unknown reason, mails saved from gmail are encoded usi=
+ng GB2312.
+> > This never happened before. I guess google has did something.
+> > But I haven't found how to change this behavior.
+> >
+> > So I took another way, i.e. add this option to git-mailinfo.
+> > I hope this could benefit others as well.
+> >
+> > Signed-off-by: Zhang Le <r0bertz@gentoo.org>
+> > ---
+> >  builtin/mailinfo.c  |    8 +++++++-
+> >  man1/git-mailinfo.1 |    7 ++++++-
+>=20
+> Don't patch anything in man?/ as they are autogenerated files and not
+> source; patch the source file in Documentation/ directory instead.
 
--- >8 --
-Subject: [PATCH] commit: give advice on empty amend
+Thanks, will do it.
 
-We generally disallow empty commits with "git commit". The
-output produced by the wt_status functions is generally
-sufficient to explain what happened.
+>=20
+> I take it that you recode from whatever encoding the mail message is in
+> (probably stated in "Content-type: ...; charset=3Dxxx" header) to the
+> encoding specified with --encoding option (defaulting to UTF-8), but it
+> wasn't very clear from the documentation.  We might want to improve=20
+> the descriptions of both this new option and --encoding option.
 
-With --amend commits, however, things are a little more
-confusing. We would create an empty commit not if you
-actually have staged changes _now_, but if your staged
-changes match HEAD^. In this case, it is not immediately
-obvious why "git commit" claims no changes, but "git status"
-does not. Furthermore, we should point the user in the
-direction of git reset, which would eliminate the empty
-commit entirely.
+That's exactly what this patch's purpose is.
+I will try to improve the doc.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/commit.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+>=20
+> Also it might be useful to find out what that "due to unknown reason" is,
+> at least to see if that is what Google did or what the user did.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 4b2a468..10b09b9 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -48,6 +48,11 @@ static const char implicit_ident_advice[] =
- "\n"
- "    git commit --amend --author='Your Name <you@example.com>'\n";
- 
-+static const char empty_amend_advice[] =
-+"You asked to amend the most recent commit, but doing so would make\n"
-+"it empty. You can repeat your command with --allow-empty, or you can\n"
-+"remove the commit entirely with \"git reset HEAD^\".\n";
-+
- static unsigned char head_sha1[20];
- 
- static char *use_message_buffer;
-@@ -706,6 +711,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	if (!commitable && !in_merge && !allow_empty &&
- 	    !(amend && is_a_merge(head_sha1))) {
- 		run_status(stdout, index_file, prefix, 0, s);
-+		if (amend)
-+			fputs(empty_amend_advice, stderr);
- 		return 0;
- 	}
- 
--- 
-1.7.1.458.g792cd.dirty
+One of my friend, Yang Xiaoguang, found that google tries to detect the
+language of the email and recode it using the native charset.
+For Simplified Chinese, it is GB2312.
+For Traditional Chinese, it is Big5.
+
+In the test, Yang sent all emails using UTF-8 charset.
+He sent those mails to a google group and then checked the "Content-type: .=
+=2E.;
+charset=3Dxxx" in gmail.
+
+If the mail is written in Simplified Chinese, the charset became GB2312.
+If the mail is written in Traditional Chinese, the charset became Big5.
+If the mail is mixed with Simplified and Traditional Chinese, the charset
+remains as UTF-8.
+
+--=20
+Zhang, Le
+Gentoo/Loongson Developer
+http://zhangle.is-a-geek.org
+0260 C902 B8F8 6506 6586 2B90 BC51 C808 1E4E 2973
+
+--jI8keyz6grp/JLjh
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.15 (GNU/Linux)
+
+iEYEARECAAYFAkwMTwIACgkQvFHICB5OKXNgbwCffYZnsZxvV4ljzfJ8JbFx+gs3
+yT4An1bN8wFLy/S1yxZPW5f7vdl1cExM
+=Gq0e
+-----END PGP SIGNATURE-----
+
+--jI8keyz6grp/JLjh--
