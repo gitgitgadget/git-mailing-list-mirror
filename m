@@ -1,122 +1,87 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
-Date: Mon, 7 Jun 2010 10:59:47 +0200
-Message-ID: <20100607085947.GA3924@pvv.org>
-References: <cover.1275309129.git.grubba@grubba.org> <7vfx16oxmz.fsf@alter.siamese.dyndns.org> <Pine.GSO.4.63.1006031543340.22466@shipon.roxen.com> <20100604005603.GA25806@progeny.tock> <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock> <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] Add infrastructure for translating Git with gettext
+Date: Mon, 7 Jun 2010 12:02:58 +0200
+Message-ID: <201006071203.00737.jnareb@gmail.com>
+References: <1275846453-3805-1-git-send-email-avarab@gmail.com> <1275846453-3805-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Henrik =?iso-8859-1?Q?Grubbstr=F6m?= <grubba@roxen.com>
-X-From: git-owner@vger.kernel.org Mon Jun 07 11:00:00 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff Epler <jepler@unpythonic.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 07 12:03:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLYBa-0003dC-V4
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 10:59:59 +0200
+	id 1OLZAt-0006N7-SD
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Jun 2010 12:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755056Ab0FGI7x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jun 2010 04:59:53 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:55925 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521Ab0FGI7w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 04:59:52 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1OLYBP-0000at-Iv; Mon, 07 Jun 2010 10:59:47 +0200
+	id S1755537Ab0FGKDO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jun 2010 06:03:14 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34888 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755197Ab0FGKDN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 06:03:13 -0400
+Received: by fxm8 with SMTP id 8so1906342fxm.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 03:03:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vP97ZBK9C96bl6W9ewDvtVDwkv2LRh1yY27tZ7a+18M=;
+        b=qcKUAbrriRfzjCtKBNHNKkJOt+ZfpndYVnK38gMKpixRx+9Y21LCwD9cBqxS+/j+03
+         1vwUKmGP0X+pTcxgNyddB5NJsA0JUY9ujoCFQ9z9u2smiEHvuGB11vZp1PUGpaNpbE2S
+         fd7kOZ0LXk4RQ6uoINJc5tZEg5H9DrtA87PxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=dNy6VApqeqkns2FNdj4SYMG7pmny+aki5scORy03nKtPx1wN3GxF72fMf2COfQyw9C
+         dGe/qroUUfcoKzjl9vqdvnSWqWgJ9hA4ANHg0WSgkGGfVny0S061iBkQ74fB3AdM5VXk
+         2b2hEnaGpggtxRjmeCQ7TOTY4bNAnuHczZeOU=
+Received: by 10.87.68.7 with SMTP id v7mr22392166fgk.71.1275904991701;
+        Mon, 07 Jun 2010 03:03:11 -0700 (PDT)
+Received: from [192.168.1.15] (abwb99.neoplus.adsl.tpnet.pl [83.8.225.99])
+        by mx.google.com with ESMTPS id h2sm5781734fkh.25.2010.06.07.03.03.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Jun 2010 03:03:10 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1275846453-3805-2-git-send-email-avarab@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148589>
 
-On Sun, Jun 06, 2010 at 12:50:08PM +0200, Henrik Grubbstr=F6m wrote:
-[...]
->
-> Currently (as I believe you know), git has no detection of when the =20
-> conversion mode for a file has changed, and it might even take a whil=
-e =20
-> before the users notice that the repository is not normalized. eg:
->
->   0) There's a repository with some files containing crlf line ending=
-s.
->
->   1) User A notices that git now has native support for crlf
->      line endings, and adds the attribute eol=3Dcrlf for the
->      affected files.
->
->   2) User A does a git status, sees that .gitattributes is
->      modified, and commits it.
+On Sun, 6 Jun 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-I think it would be best if git at this time could decide that the
-affected files also become dirty. The ideal commit is one that
-both alters the .gitattributes _and_ the affected files at the same
-time, and git should make it easy to create that commit.
+> diff --git a/INSTALL b/INSTALL
+> index 61086ab..f30d5bd 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -93,6 +93,14 @@ Issues of note:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0history graphi=
+cally, and in git-gui. =C2=A0If you don't want gitk or
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0git-gui, you c=
+an use NO_TCLTK.
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0- The GNU "libintl" librar=
+y is used by default for localizing
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0Git. It needs a get=
+text.h on the system for C code, gettext.sh
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =C2=A0for shell scripts, =
+and libintl-perl for Perl programs.
 
-> [...]
->   6) User C is new to the project and does an initial git clone,
->      and ends up with a dirty index.
+I think this addresses my concern about mentioning libintl-perl.
 
-And the reason for this is mostly that unless you perform some special
-actions, you will commit attributes and contents that are mismatched.
-
-In your suggested mode, whay would happen if you did this:
-
-$ git clone ......  (which has files that are "wrong" wrt line endings =
-and
-attributes for some .c files)
-$ touch *.c
-
-Would it still believe all *.c files were clean? Does it require an
-actual other change at the same time to allow you to normalize the
-file? That would be detrimental I think.  Changing newlines is best
-done as a separate commit, intermingling newline changes and real
-changes in the same commmit is not where you want to go.
-
-However, for your ID string you obviously want this behaviour. I'm
-guessing that hook is alreasy set up so that if you just touch the
-file, it will still be treated as unmodified?
-
->
-> What my patch set achieves is that user C above also gets a clean ind=
-ex.
->
-> What it seems you want is that user A above should have all files tha=
-t=20
-> got denormalized by the attribute change marked dirty at 2 (and 3).
-
-That would indeed be a very welcome change.
-
-> As I believe both behaviours may be desireable a config option and/or=
- =20
-> attribute is needed. Any suggestions for a name (and default value)?
-
-I think the default behaviour should be to mark files dirty if there
-are ANY attribute changes that could cause content changes done to
-them at all. I'm not sure that is exactly what your patch series is
-allowing us to track though?
-
-Just to be clear:
-
-If you add this to your .gitattributes
-
-*.c eol=3Dlf
-
-I think it would be very helpful if git then would treat all .c files
-as "stat-dirty" the next time it updates its index.
-
-A for config variables, what about:
-
-core.rereadOnAttributeChanges =3D [true]/false    (default =3D true)
-
-Which makes some sense for detecting it in 2, but not so much for
-ignoring it in 6.
-
-- Finn Arne
+--=20
+Jakub Narebski
+Poland
