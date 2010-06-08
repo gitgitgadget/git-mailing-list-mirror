@@ -1,118 +1,159 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: RFC: Making submodules "track" branches
-Date: Tue, 08 Jun 2010 11:34:34 -0400
-Message-ID: <4C0E630A.7020803@xiplink.com>
-References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com> <201006080912.31448.johan@herland.net>
+From: =?iso-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
+Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
+Date: Tue, 8 Jun 2010 17:52:37 +0200 (CEST)
+Organization: Roxen Internet Software AB
+Message-ID: <Pine.GSO.4.63.1006081731550.22466@shipon.roxen.com>
+References: <cover.1275309129.git.grubba@grubba.org> <7vfx16oxmz.fsf@alter.siamese.dyndns.org>
+ <Pine.GSO.4.63.1006031543340.22466@shipon.roxen.com> <20100604005603.GA25806@progeny.tock>
+ <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock>
+ <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com> <20100607085947.GA3924@pvv.org>
+ <Pine.GSO.4.63.1006071726170.22466@shipon.roxen.com> <20100607195013.GA27362@pvv.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Jun 08 17:41:30 2010
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-641078858-1276012357=:22466"
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Finn Arne Gangstad <finnag@pvv.org>
+X-From: git-owner@vger.kernel.org Tue Jun 08 17:53:01 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM0vh-0005wj-WE
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 17:41:30 +0200
+	id 1OM16p-0005J4-JB
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 17:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753951Ab0FHPlZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 11:41:25 -0400
-Received: from smtp222.iad.emailsrvr.com ([207.97.245.222]:59793 "EHLO
-	smtp222.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753484Ab0FHPlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 11:41:24 -0400
-X-Greylist: delayed 393 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jun 2010 11:41:24 EDT
-Received: from relay12.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay12.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id C6D0F1FF8E4;
-	Tue,  8 Jun 2010 11:34:50 -0400 (EDT)
-Received: by relay12.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 8B52F206EAF;
-	Tue,  8 Jun 2010 11:34:45 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <201006080912.31448.johan@herland.net>
+	id S1755183Ab0FHPwm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 11:52:42 -0400
+Received: from mail.roxen.com ([212.247.29.220]:49700 "EHLO mail.roxen.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754210Ab0FHPwl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 11:52:41 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.roxen.com (Postfix) with ESMTP id CC3926281BA;
+	Tue,  8 Jun 2010 17:52:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at roxen.com
+Received: from mail.roxen.com ([212.247.29.220])
+	by localhost (marge.roxen.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lQrxVwO-Ajvi; Tue,  8 Jun 2010 17:52:38 +0200 (CEST)
+Received: from shipon.roxen.com (shipon.roxen.com [212.247.28.156])
+	by mail.roxen.com (Postfix) with ESMTP id EB90F62816F;
+	Tue,  8 Jun 2010 17:52:37 +0200 (CEST)
+In-Reply-To: <20100607195013.GA27362@pvv.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148681>
 
-On 10-06-08 03:12 AM, Johan Herland wrote:
->=20
-> There are probably more issues that escape me now...
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks for bringing this up!  I'm also very interested in this topic.
+---559023410-641078858-1276012357=:22466
+Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-The main issue I see is that I don't always want my submodules to track=
- (or
-not track) a branch.  What I want changes depending on the circumstance=
-s.
+On Mon, 7 Jun 2010, Finn Arne Gangstad wrote:
 
-One aspect I really like about submodules is the ease of tagging.  I ca=
-n tag
-the super-repo, and know that whenever I checkout that tag I'll always =
-get
-the corresponding versions of the submodules as they were when the tag =
-was
-made.  It would actually be disastrous, at least in my case, if the
-submodules were at the latest HEAD of some branch instead.
+> On Mon, Jun 07, 2010 at 06:37:56PM +0200, Henrik Grubbström wrote:
+>>
+>> On Mon, 7 Jun 2010, Finn Arne Gangstad wrote:
+>>
+>>> I think it would be best if git at this time could decide that the
+>>> affected files also become dirty. The ideal commit is one that
+>>> both alters the .gitattributes _and_ the affected files at the same
+>>> time, and git should make it easy to create that commit.
+>>
+>> I agree in the case of newly added attributes. In the case of
+>> repositories already containing unnormalized files this however leads to
+>> problems.
+>> eg
+>>
+>>   Consider the case above, but a while later when the repository has been
+>>   fixed at HEAD. If an old version from before the normalization is
+>>   checked out, the index will once again become dirty, which means that
+>>   git will refuse the user to check out some other version unless the
+>>   --force flag is given. Excessive use of --force is not a good thing.
+>>   If the user is aware of the problem, and checking out old versions is
+>>   a common operation, toggling the suggested option might be a good
+>>   solution.
+>
+> Maybe I misunderstand something, but if you check out an older
+> version, the .gitattributes file will change to match the old version.
+> The old version should not have the conversion attributes set, and
+> should therefore result in a clean checkout?
 
-This goes for almost any commit in the super-repo's history, not just t=
-he
-tagged ones:  Whenever I checkout a historical committish, I want to ge=
-t the
-submodules as they were when that commit was made.  Even if I'm working=
- at
-the HEAD of some branch, often that branch is based on a historical com=
-mit
-and I want to use the submodules as they were when that historical comm=
-it was
-made.
+True, there's no problem before the attribute change, but there is 
+for commits between the attribute change and when the repository got 
+normalized (which can be a while with the current git).
 
-All that said, I do think submodule branch tracking is useful.  Quite o=
-ften a
-development topic will change the super-repo and one or more submodules=
-=2E  It
-would be extremely helpful to do that work in a branch that spans the
-super-repo and (a subset of) the submodules.  (In my mind this capabili=
-ty is
-one of the main benefits Google's "repo" tool has over submodules.)
+Re: configuration option naming:
 
-So, back to the issue at hand: Sometimes I want static (non-tracking)
-submodules, and sometimes I want dynamic (tracking) submodules.  IMO, t=
-his
-makes =C3=86var's proposed configuration-based approach impractical.  (=
-Of course,
-I'm not looking to replicate svn's externals...)
+   I've settled for core.normalizationPolicy, with the values
+   'strict' (default) for the behaviour requested by you and Jonathan,
+   and 'relaxed' for my initial behaviour.
 
-I'm not sure what the right approach is, but I have some thoughts:
+Teaser:
 
- - Maybe "git branch" should be able to create submodule-spanning branc=
-hes.
+   $ git init foo
+   warning: templates not found /home/grubba/share/git-core/templates
+   Initialized empty Git repository in /tmp/grubba/foo/.git/
+   $ cd foo
+   $ cat >expanded-keywords
+   $Id: some id string $
+   $ git add expanded-keywords
+   $ git commit -m 'Initial commit.'
+   [master (root-commit) 755d1f6] Initial commit.
+    1 files changed, 1 insertions(+), 0 deletions(-)
+    create mode 100644 expanded-keywords
+   $ git status
+   # On branch master
+   nothing to commit (working directory clean)
+   $ cat >.gitattributes
+   * ident
+   $ git status
+   # On branch master
+   # Changed but not updated:
+   #   (use "git add <file>..." to update what will be committed)
+   #   (use "git checkout -- <file>..." to discard changes in working directory)
+   #
+   #       modified:   expanded-keywords
+   #
+   # Untracked files:
+   #   (use "git add <file>..." to include in what will be committed)
+   #
+   #       .gitattributes
+   no changes added to commit (use "git add" and/or "git commit -a")
+   $ git config core.normalizationPolicy relaxed
+   $ git status
+   # On branch master
+   # Untracked files:
+   #   (use "git add <file>..." to include in what will be committed)
+   #
+   #       .gitattributes
+   nothing added to commit but untracked files present (use "git add" to track)
+   $ git config core.normalizationPolicy strict
+   $ git status
+   # On branch master
+   # Changed but not updated:
+   #   (use "git add <file>..." to update what will be committed)
+   #   (use "git checkout -- <file>..." to discard changes in working directory)
+   #
+   #       modified:   expanded-keywords
+   #
+   # Untracked files:
+   #   (use "git add <file>..." to include in what will be committed)
+   #
+   #       .gitattributes
+   no changes added to commit (use "git add" and/or "git commit -a")
+   $ rm .gitattributes
+   $ git status
+   # On branch master
+   nothing to commit (working directory clean)
 
- - If so, then checkout, merge, pull and other branch-related commands =
-should
-honor submodule-spanning branches.  "checkout" in particular needs to
-distinguish between when it's checking out an actual branch vs. some ot=
-her
-committish, and if the branch being checked out is submodule-spanning i=
-t
-should checkout the latest HEAD of that branch for the submodules as we=
-ll.
+Which I believe matches all the behaviours that have been requested.
 
- - It *may* be good enough to assume that matching branch names in the
-super-repo and the submodules are in fact submodule-spanning branches.
-
- - Automating all this is tricky.  In my super-repo I almost never want=
- to
-checkout the master HEAD of all my submodules.  In fact, many of my
-submodules are big (e.g. they're different Linux kernels), and are only
-needed when building particular things, so that checking all of them ou=
-t at
-once is almost always a huge waste of time.
-
-All this is probably not the kind of feedback you were hoping for!  :)
-
-		M.
+--
+Henrik Grubbström					grubba@grubba.org
+Roxen Internet Software AB				grubba@roxen.com
+---559023410-641078858-1276012357=:22466--
