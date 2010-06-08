@@ -1,146 +1,126 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH v6] gitk: Use git-difftool for external diffs when
-	available
-Date: Tue, 8 Jun 2010 01:10:42 -0700
-Message-ID: <20100608081040.GB14366@gmail.com>
-References: <20100417085230.GC6681@brick.ozlabs.ibm.com> <1271751079-18884-1-git-send-email-davvid@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Thomas Arcila <thomas.arcila@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Jun 08 10:10:57 2010
+From: Ian Ward Comfort <icomfort@stanford.edu>
+Subject: [PATCH] rebase -i: Abort cleanly if new base cannot be checked out
+Date: Tue,  8 Jun 2010 01:16:11 -0700
+Message-ID: <1275984971-20444-1-git-send-email-icomfort@stanford.edu>
+References: <AANLkTinaUiHz8gRi5JF3n45aNCoPqiNxwExIga-cyYnw@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: Matthieu Tourne <matthieu.tourne@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 08 10:16:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLttg-00020c-BE
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 10:10:56 +0200
+	id 1OLtyz-0005XI-6d
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 10:16:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752348Ab0FHIKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 04:10:50 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:61922 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751479Ab0FHIKs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 04:10:48 -0400
-Received: by pvg16 with SMTP id 16so1775840pvg.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 01:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=GeQW6x71HdleG5MX0oCng8BWSZzq8Was9v8uWObDNzo=;
-        b=vSN14DDYK57JgWAokKM5Gn8jnbD0sK6ff32QdM56kdk9lT+yTegp7+OBx+7PibRUGE
-         IQfXgYcVgqiGbA7aFUjQ0fs1swPRDPYLZDu7tnlrqC4JYsolD6Vk8aSiSD7Kd2g9Uxbe
-         TsDarwYVHOh7x91LTO9tBSvtRq7ahf8+uc5xQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jpOfHLg3lIVzxDSx3+y6AlmRyg/Bs5tvRd+tEx3YIjVdQStkILx64QONgJuOAnO+/m
-         e6gapjmc9M933vj35ocSRygLAB8f+6KqVF8ITsVFrZ10ZfRJN4nupAW6VzS0NR3J1ann
-         fXXYy9hwYXK99lQGDvf0h3Eb27JXxm7YA8GcA=
-Received: by 10.114.32.31 with SMTP id f31mr12718707waf.195.1275984646931;
-        Tue, 08 Jun 2010 01:10:46 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id c1sm47479351wam.7.2010.06.08.01.10.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Jun 2010 01:10:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1271751079-18884-1-git-send-email-davvid@gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752121Ab0FHIQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 04:16:17 -0400
+Received: from smtp3.Stanford.EDU ([171.67.219.83]:34703 "EHLO
+	smtp.stanford.edu" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751227Ab0FHIQP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 04:16:15 -0400
+Received: from smtp.stanford.edu (localhost.localdomain [127.0.0.1])
+	by localhost (Postfix) with SMTP id 2B8151A0C73;
+	Tue,  8 Jun 2010 01:16:15 -0700 (PDT)
+Received: from ashbury.stanford.edu (ashbury.Stanford.EDU [171.67.43.200])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp.stanford.edu (Postfix) with ESMTPS id 8E02E1A0C5D;
+	Tue,  8 Jun 2010 01:16:11 -0700 (PDT)
+Received: by ashbury.stanford.edu (Postfix, from userid 26037)
+	id 6BD0C1D0056; Tue,  8 Jun 2010 01:16:11 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
+In-Reply-To: <AANLkTinaUiHz8gRi5JF3n45aNCoPqiNxwExIga-cyYnw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148653>
 
-Hello,
+On 7 Jun 2010, at 5:06 PM, Matthieu Tourne wrote:
+> I tried to perform an interactive rebase of several commits in my tree.
+> In one of my commits I had performed a git rm --cached, on several files.
+> The resulting message was :
+>
+> error: Untracked working tree file 'foo' would be overwritten by merge.
+> shift: 1: can't shift that many
+>
+> I eventually removed the file from the fs, and the rebase worked.
+> The fact that the rebase is not working is probably not a bug, but the
+> last line looks like an sh bug.
 
-Is there anything else (besides sending this email) that I can
-do to help move this patch along?
+The last line is a side effect of dash, which apparently complains when asked
+to shift from an empty array, and it shouldn't be there. The best fix, though,
+isn't to silence shift but to eliminate that code path by fixing another bug
+in rebase--interactive. In the scenario you describe, git currently leaves the
+repository in the middle of an impossible rebase, with questionably-consistent
+state in .git/rebase-merge. The behavior is more compactly (if more
+nonsensically) exhibited with:
 
-I got another "gitk read-only repo broken" email this week,
-which is what reminded me... ;-)
+  $ git init test && cd test
+  $ touch A
+  $ git add A
+  $ git commit -m 'add' A
+  $ git rm --cached A
+  $ git commit -m 'remove'
+  $ GIT_EDITOR=: git rebase -i --no-ff HEAD^
 
-It's been a while.  I just rebased the patch against the latest
-master and it didn't have any conflicts.  Resend?
+Let's abort cleanly instead, since that's what non-interactive rebase does
+already.
 
-On Tue, Apr 20, 2010 at 01:11:19AM -0700, David Aguilar wrote:
-> git-difftool's '--extcmd=frotz' was added in 1.7.0 and
-> is the mechanism through which gitk launches the
-> configured 'extdifftool'.  When 'extdifftool' is
-> misconfigured an error dialog is used to display
-> git-difftool's stdout and stderr.
-> 
-> The existing implementation moved into 'proc gitkextdiff'
-> for use with git < 1.7.0.
-> 
-> One benefit of this change is that gitk's external diff
-> no longer requires write-access to the current directory.
-> 
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-> 
-> Changes since last time:
-> 
-> * Errors are shown using 'proc error_popup'
-> * The existing code moved into a tidy function
-> 
->  gitk |   25 +++++++++++++++++++++++++
->  1 files changed, 25 insertions(+), 0 deletions(-)
-> 
-> diff --git a/gitk b/gitk
-> index 1b0e09a..0533baf 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -3361,6 +3361,7 @@ proc external_diff {} {
->      global flist_menu_file
->      global diffids
->      global extdifftool
-> +    global git_version
->  
->      if {[llength $diffids] == 1} {
->          # no reference commit given
-> @@ -3380,6 +3381,30 @@ proc external_diff {} {
->          set diffidfrom [lindex $diffids 0]
->          set diffidto [lindex $diffids 1]
->      }
-> +    if {[package vcompare $git_version "1.7.0"] < 0} {
-> +        gitkextdiff $diffidfrom $diffidto
-> +        return
-> +    }
-> +
-> +    set cmd [list "git" "difftool" "--no-prompt" "--extcmd=$extdifftool"]
-> +    if {$diffidfrom ne $nullid && $diffidfrom ne $nullid2} {
-> +        lappend cmd $diffidfrom
-> +    }
-> +    if {$diffidto ne $nullid && $diffidto ne $nullid2} {
-> +        lappend cmd $diffidto
-> +    }
-> +    lappend cmd "--" $flist_menu_file
-> +
-> +    set pipe [open |$cmd r]
-> +    set stdout [read $pipe]
-> +    if {[catch {close $pipe} stderr] != 0} {
-> +        error_popup "git-difftool: $stdout $stderr"
-> +    }
-> +}
-> +
-> +proc gitkextdiff {diffidfrom diffidto} {
-> +    global flist_menu_file
-> +    global extdifftool
->  
->      # make sure that several diffs wont collide
->      set diffdir [gitknewtmpdir]
-> -- 
-> 1.7.1.rc2.5.gddd02
-> 
+---- 8< ----
 
+Untracked content in the working tree may prevent rebase -i from checking out
+the new base onto which it wants to replay commits, if the new base commit
+includes files at those (now untracked) paths. Currently, rebase -i dies
+uncleanly in this situation, updating ORIG_HEAD and leaving a useless
+.git/rebase-merge directory, with which the user can do nothing useful except
+rebase --abort. Make rebase -i abort the procedure itself instead, as
+non-interactive rebase already does, and add a test for this behavior.
+
+Signed-off-by: Ian Ward Comfort <icomfort@stanford.edu>
+---
+ git-rebase--interactive.sh    |    3 ++-
+ t/t3404-rebase-interactive.sh |   10 ++++++++++
+ 2 files changed, 12 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 436b7f5..6b86abc 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -974,8 +974,9 @@ EOF
+ 
+ 		test -d "$REWRITTEN" || test -n "$NEVER_FF" || skip_unnecessary_picks
+ 
++		output git checkout $ONTO || die_abort "could not detach HEAD"
+ 		git update-ref ORIG_HEAD $HEAD
+-		output git checkout $ONTO && do_rest
++		do_rest
+ 		;;
+ 	esac
+ 	shift
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index f20ea38..8d40915 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -146,6 +146,16 @@ test_expect_success 'abort' '
+ 	! test -d .git/rebase-merge
+ '
+ 
++test_expect_success 'abort with error when new base cannot be checked out' '
++	git rm --cached file1 &&
++	git commit -m "remove file in base" &&
++	test_must_fail git rebase -i master > output 2>&1 &&
++	grep "Untracked working tree file .file1. would be overwritten" \
++		output &&
++	! test -d .git/rebase-merge &&
++	git reset --hard HEAD^
++'
++
+ test_expect_success 'retain authorship' '
+ 	echo A > file7 &&
+ 	git add file7 &&
 -- 
-		David
+1.7.1
