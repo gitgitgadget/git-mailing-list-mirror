@@ -1,88 +1,82 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 0/2] Add optional parameters to the diff option "--ignore-submodules"
-Date: Wed, 09 Jun 2010 00:19:45 +0200
-Message-ID: <4C0EC201.9060309@web.de>
-References: <4C0E7037.8080403@web.de> <201006090011.14995.johan@herland.net>
+From: William Pursell <bill.pursell@gmail.com>
+Subject: Re: permissions
+Date: Tue, 08 Jun 2010 12:27:28 -1000
+Message-ID: <4C0EC3D0.6060509@wpursell.net>
+References: <4C0A19FE.1020802@wpursell.net> <m27hmdn704.fsf@igel.home> <4C0A9615.4090307@wpursell.net> <AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com> <4C0B6C32.1090700@wpursell.net> <7vvd9wvswy.fsf@alter.siamese.dyndns.org> <4C0E1AB1.2030702@wpursell.net> <AANLkTimAmSxq8dC-4bnpLsvN3JabQeTO6pDTh9ds7D0D@mail.gmail.com> <7vtypds09x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jun 09 00:20:23 2010
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	William Pursell <bill.pursell@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 00:27:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM79i-0002DT-Cd
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 00:20:22 +0200
+	id 1OM7Gl-0005zm-4p
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 00:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932305Ab0FHWTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 18:19:51 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:35849 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932313Ab0FHWTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 18:19:48 -0400
-Received: from smtp05.web.de  ( [172.20.4.166])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 23DBB16540808;
-	Wed,  9 Jun 2010 00:19:46 +0200 (CEST)
-Received: from [80.128.73.122] (helo=[192.168.178.26])
-	by smtp05.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OM798-0005iy-00; Wed, 09 Jun 2010 00:19:46 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <201006090011.14995.johan@herland.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+2XVAm3QHXV35fH5iHnA5g3jenqnN89uDB6KDV
-	KsYI1sZarnC/6pQQ05VS1njQAqXVl5z3hidX+g4bkkENxuxsJA
-	4U+4RYbAZ/rU4pSoydcA==
+	id S1756434Ab0FHW1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 18:27:33 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:45723 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755791Ab0FHW1d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 18:27:33 -0400
+Received: by pwj5 with SMTP id 5so1649018pwj.19
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 15:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=0Po+gfhwJnUs7g9tAeIyeOfkyjJakTvXPxqsBfkRvWY=;
+        b=YJvc6t6rItRPld9Qwpzh/AfWcglL1jKHbSJv4eNXVlrxSjd4sJt2f+Xm0paZCwJBlu
+         71APdbRgBgpRHi/Bmn8j8wLR7qoXTcpRCAdidB/U8+sAHH4fhDnYlp7b8jFbjRTkhohv
+         rRTEeXDGCBCJ8fBlxRpjx1L/33ar3sBZcbI6Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=W5FDZSYQUkWm3vEwEUrIfaElwR1xA1wCchbSr4bCWfTE0FpzKQthM5t7ONCkori48A
+         EJMLlAMIAs4X51icAP4VrfXkb/w+pQRllXJpv84ZsmyowVkub5j2hcRPqtfxF8Y4x9tO
+         XU1kQ7NlzYYlgnKZSsLLacYjtq4Dfag/DJUbk=
+Received: by 10.143.26.1 with SMTP id d1mr12481264wfj.311.1276036052514;
+        Tue, 08 Jun 2010 15:27:32 -0700 (PDT)
+Received: from clam.westell.com (udp278831uds.hawaiiantel.net [72.234.51.251])
+        by mx.google.com with ESMTPS id b6sm55654650wam.9.2010.06.08.15.27.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Jun 2010 15:27:31 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.24 (Macintosh/20100228)
+In-Reply-To: <7vtypds09x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148729>
 
-Am 09.06.2010 00:11, schrieb Johan Herland:
-> On Tuesday 08 June 2010, Jens Lehmann wrote:
->> After thinking some time about peoples expectations and troubles
->> with the recursive scanning of submodules, I came up with this:
->>
->> What about expanding the "--ignore-submodules" option of the git diff
->> family with three parameters:
->>
->> --ignore-submodules=all : Same behavior as "--ignore-submodules",
->>   submodules show never up as modified.
->>
->> --ignore-submodules=untracked : Don't consider submodules as modified
->>   when they only contain untracked files, but do if the commits in the
->>   superproject are different or tracked content is modified.
->>
->> --ignore-submodules=dirty : Don't consider submodules as modified
->>   when their work tree is dirty, no matter why. This is the pre 1.7.0
->>   behavior and doesn't recurse into submodules at all.
+Junio C Hamano wrote:
+> Alex Riesen <raa.lkml@gmail.com> writes:
 > 
-> Pardon my ignorance: Does this make "dirty" a superset of "untracked"? Or 
-> are they orthogonal. And how does "all" compare to "dirty"? Are they 
-> synonyms, or is "all" a superset of "dirty"?
+>> On Tue, Jun 8, 2010 at 12:25, William Pursell <bill.pursell@gmail.com> wrote:
+>>> Here's a patch.  This doesn't address the issue of a damaged
+>>> repository, but just catches access errors and permissions.
+>> The change looks fishy.
+>>
+>> The patch moves the function is_git_directory at the level of user
+>> interface where it wasn't before: it now complains and die.
+>> Not all callers of the function call it only to die if it fails.
+> 
+> Thanks for shooting it down before I had to look at it ;-)
 
-Sorry I didn't make that clear enough: "all" is a superset of "dirty" and
-"dirty" is a superset of "untracked".
-
-There are currently (since 1.7.0) three reasons a submodule is considered
-dirty:
-
-1) It contains untracked content
-2) It contains modified tracked content
-3) It contains newer commits than those committed in the superproject
-
-"all" would ignore 1), 2) & 3)
-"dirty" would ignore 1) & 2)
-"untracked" would ignore 1)
+The point of the patch is that it now complains and dies.
+Perhaps I'm being obtuse, but can you describe a situation
+in which this causes git to terminate inappropriately?
 
 
-> I agree with adding support for this in .gitmodules, to allow customizing on 
-> a per-submodule level.
 
-Yup, and different branches could handle that differently that way too.
+-- 
+William Pursell
