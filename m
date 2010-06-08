@@ -1,72 +1,118 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: permissions
-Date: Tue, 8 Jun 2010 16:52:57 +0200
-Message-ID: <AANLkTimAmSxq8dC-4bnpLsvN3JabQeTO6pDTh9ds7D0D@mail.gmail.com>
-References: <4C0A19FE.1020802@wpursell.net>
-	<m27hmdn704.fsf@igel.home>
-	<4C0A9615.4090307@wpursell.net>
-	<AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
-	<4C0B6C32.1090700@wpursell.net>
-	<7vvd9wvswy.fsf@alter.siamese.dyndns.org>
-	<4C0E1AB1.2030702@wpursell.net>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: RFC: Making submodules "track" branches
+Date: Tue, 08 Jun 2010 11:34:34 -0400
+Message-ID: <4C0E630A.7020803@xiplink.com>
+References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com> <201006080912.31448.johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: William Pursell <bill.pursell@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 08 16:58:19 2010
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Jun 08 17:41:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM0Fv-0000yq-6B
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 16:58:19 +0200
+	id 1OM0vh-0005wj-WE
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 17:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755441Ab0FHO6O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 10:58:14 -0400
-Received: from mail-yw0-f204.google.com ([209.85.211.204]:60811 "EHLO
-	mail-yw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755409Ab0FHO6N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 10:58:13 -0400
-X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jun 2010 10:58:11 EDT
-Received: by ywh42 with SMTP id 42so4055426ywh.15
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 07:58:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1X+AZJ7ZeiC5VGMlWqDC3hTLFl93BZdOFZVAgzTpTdA=;
-        b=EeXo7pIVgNg5ynT6EuWkldGjUbAQG7n0Mz2BMQUsTysoatIjpyAL0bFU7aAPhl+yGb
-         5VGauZc+HUeBbsPkGUpyn1BWxpR7j1lIkaqfWO09lJGv+bAr2VMrFqFGdAUnmAI0OJIT
-         7vF0vJHMDhUY5I0Exrzd3jpC76yJanYxB5Vl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=um+cMV0o9Vseqxz5qp5TpRji9caWMBRcaQm8AAXkWi/FA8MYQvJq2TbDrpHNf64ldK
-         EzkeqntHbYULx82eT0vMUQRK6eNX2HCbzwM2YaDqLzNJQdRdtEb2rTZYn+gqFS1tUKid
-         /QRdPqZv7fgC6tnkO3Dh3pChM3CQRWjomt2dk=
-Received: by 10.101.3.14 with SMTP id f14mr16565367ani.38.1276008780030; Tue, 
-	08 Jun 2010 07:53:00 -0700 (PDT)
-Received: by 10.100.123.13 with HTTP; Tue, 8 Jun 2010 07:52:57 -0700 (PDT)
-In-Reply-To: <4C0E1AB1.2030702@wpursell.net>
+	id S1753951Ab0FHPlZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 11:41:25 -0400
+Received: from smtp222.iad.emailsrvr.com ([207.97.245.222]:59793 "EHLO
+	smtp222.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753484Ab0FHPlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 11:41:24 -0400
+X-Greylist: delayed 393 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jun 2010 11:41:24 EDT
+Received: from relay12.relay.iad.mlsrvr.com (localhost [127.0.0.1])
+	by relay12.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id C6D0F1FF8E4;
+	Tue,  8 Jun 2010 11:34:50 -0400 (EDT)
+Received: by relay12.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 8B52F206EAF;
+	Tue,  8 Jun 2010 11:34:45 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <201006080912.31448.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148680>
 
-On Tue, Jun 8, 2010 at 12:25, William Pursell <bill.pursell@gmail.com> =
-wrote:
-> Here's a patch. =C2=A0This doesn't address the issue of a damaged
-> repository, but just catches access errors and permissions.
+On 10-06-08 03:12 AM, Johan Herland wrote:
+>=20
+> There are probably more issues that escape me now...
 
-The change looks fishy.
+Thanks for bringing this up!  I'm also very interested in this topic.
 
-The patch moves the function is_git_directory at the level of user
-interface where it wasn't before: it now complains and die.
-Not all callers of the function call it only to die if it fails.
+The main issue I see is that I don't always want my submodules to track=
+ (or
+not track) a branch.  What I want changes depending on the circumstance=
+s.
+
+One aspect I really like about submodules is the ease of tagging.  I ca=
+n tag
+the super-repo, and know that whenever I checkout that tag I'll always =
+get
+the corresponding versions of the submodules as they were when the tag =
+was
+made.  It would actually be disastrous, at least in my case, if the
+submodules were at the latest HEAD of some branch instead.
+
+This goes for almost any commit in the super-repo's history, not just t=
+he
+tagged ones:  Whenever I checkout a historical committish, I want to ge=
+t the
+submodules as they were when that commit was made.  Even if I'm working=
+ at
+the HEAD of some branch, often that branch is based on a historical com=
+mit
+and I want to use the submodules as they were when that historical comm=
+it was
+made.
+
+All that said, I do think submodule branch tracking is useful.  Quite o=
+ften a
+development topic will change the super-repo and one or more submodules=
+=2E  It
+would be extremely helpful to do that work in a branch that spans the
+super-repo and (a subset of) the submodules.  (In my mind this capabili=
+ty is
+one of the main benefits Google's "repo" tool has over submodules.)
+
+So, back to the issue at hand: Sometimes I want static (non-tracking)
+submodules, and sometimes I want dynamic (tracking) submodules.  IMO, t=
+his
+makes =C3=86var's proposed configuration-based approach impractical.  (=
+Of course,
+I'm not looking to replicate svn's externals...)
+
+I'm not sure what the right approach is, but I have some thoughts:
+
+ - Maybe "git branch" should be able to create submodule-spanning branc=
+hes.
+
+ - If so, then checkout, merge, pull and other branch-related commands =
+should
+honor submodule-spanning branches.  "checkout" in particular needs to
+distinguish between when it's checking out an actual branch vs. some ot=
+her
+committish, and if the branch being checked out is submodule-spanning i=
+t
+should checkout the latest HEAD of that branch for the submodules as we=
+ll.
+
+ - It *may* be good enough to assume that matching branch names in the
+super-repo and the submodules are in fact submodule-spanning branches.
+
+ - Automating all this is tricky.  In my super-repo I almost never want=
+ to
+checkout the master HEAD of all my submodules.  In fact, many of my
+submodules are big (e.g. they're different Linux kernels), and are only
+needed when building particular things, so that checking all of them ou=
+t at
+once is almost always a huge waste of time.
+
+All this is probably not the kind of feedback you were hoping for!  :)
+
+		M.
