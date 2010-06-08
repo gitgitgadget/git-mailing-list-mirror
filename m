@@ -1,87 +1,116 @@
-From: Carl Worth <cworth@cworth.org>
-Subject: Re: Make "git am" properly unescape lines matching ">>*From "
-Date: Tue, 08 Jun 2010 14:30:25 -0700
-Message-ID: <87wru9i55a.fsf@yoom.home.cworth.org>
-References: <87hbldjo0s.fsf@yoom.home.cworth.org> <87d3w1jlp0.fsf@yoom.home.cworth.org> <4C0EAE08.60904@zytor.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH/RFC] Fix for default pager
+Date: Tue, 08 Jun 2010 23:33:53 +0200
+Message-ID: <4C0EB741.9020905@op5.se>
+References: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>	<1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>	<AANLkTinydWk3GqGDww8FS7pmW16jAVazRkmT_GsRMIhy@mail.gmail.com>	<20100608053507.GB15156@coredump.intra.peff.net>	<AANLkTilvvpy4TBQF6g8boQL87FRB7kFDrVfYiHvOv6xu@mail.gmail.com>	<4C0E5103.7030501@viscovery.net>	<AANLkTilWg8hw5j20o-xGsVO-q_OeSmtKEKAO6O416qvH@mail.gmail.com>	<4C0E6810.3070301@viscovery.net>	<AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com>	<4C0E932B.3010702@viscovery.net> <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: git <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-To: "H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Tue Jun 08 23:30:43 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
+	Ben Walton <bwalton@artsci.utoronto.ca>,
+	git <git@vger.kernel.org>
+To: Dario Rodriguez <soft.d4rio@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 08 23:34:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM6Ne-0000ge-Om
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 23:30:43 +0200
+	id 1OM6R5-0002s1-Sz
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 23:34:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631Ab0FHVai (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 17:30:38 -0400
-Received: from u15218177.onlinehome-server.com ([74.208.220.233]:52840 "EHLO
-	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751533Ab0FHVah (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 17:30:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id D19B44196F2;
-	Tue,  8 Jun 2010 14:30:36 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Dr65KvDXYiWn; Tue,  8 Jun 2010 14:30:26 -0700 (PDT)
-Received: from yoom.home.cworth.org (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 687DC431FC1;
-	Tue,  8 Jun 2010 14:30:26 -0700 (PDT)
-Received: by yoom.home.cworth.org (Postfix, from userid 1000)
-	id 15DDF568FB6; Tue,  8 Jun 2010 14:30:26 -0700 (PDT)
-In-Reply-To: <4C0EAE08.60904@zytor.com>
-User-Agent: Notmuch/0.3.1-53-gd64d0cc (http://notmuchmail.org) Emacs/23.1.1 (i486-pc-linux-gnu)
+	id S1753982Ab0FHVeK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 17:34:10 -0400
+Received: from na3sys009aog103.obsmtp.com ([74.125.149.71]:32881 "HELO
+	na3sys009aog103.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751424Ab0FHVeJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 17:34:09 -0400
+Received: from source ([209.85.219.228]) by na3sys009aob103.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTA63TZJ+vbCWInl5bHQRhC6sP6Gm11jL@postini.com; Tue, 08 Jun 2010 14:34:09 PDT
+Received: by ewy28 with SMTP id 28so1458685ewy.18
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 14:34:04 -0700 (PDT)
+Received: by 10.213.34.205 with SMTP id m13mr5517071ebd.23.1276032843910;
+        Tue, 08 Jun 2010 14:34:03 -0700 (PDT)
+Received: from clix.int.op5.se (90-227-176-162-no128.tbcn.telia.com [90.227.176.162])
+        by mx.google.com with ESMTPS id 13sm3616088ewy.9.2010.06.08.14.34.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Jun 2010 14:34:03 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
+In-Reply-To: <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148721>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, 08 Jun 2010 13:54:32 -0700, "H. Peter Anvin" <hpa@zytor.com> wrote:
-> On 06/08/2010 01:47 PM, Carl Worth wrote:
-> > I've also noticed that format-patch is generating bogus mbox files
-> > without any escaping. (The only way it gets away with this is that
-> > mailsplit only treats "From " lines as separators if they end with
-> > something that looks quite a bit like the output of asctime.)
+On 06/08/2010 10:44 PM, Dario Rodriguez wrote:
+> On Tue, Jun 8, 2010 at 3:59 PM, Johannes Sixt<j.sixt@viscovery.net>  =
+wrote:
+>> Your repository has only 2 commits and its git log output is less th=
+an 1kB,
+>> i.e., sufficiently small to fit in a pipe's buffer.
+>>
+>> git log calls start_command to fork() the pager. The OS's scheduler =
+does not
+>> run the newly forked process immediately; rather, git log goes on wi=
+th its
+>> own business, writing output to the pipe that connects to the pager.=
+ Because
+>> your repository is so small, git log never has to wait that the page=
+r drains
+>> the pipe. git log finally reaches exit(0). At this time, an atexit()=
+ handler
+>> (wait_for_pager()) finally calls finish_command() to wait for the pa=
+ger.
+>>
+>> This is the first time that the forked child process can run. Only n=
+ow it
+>> turns out that the pager cannot be run. The child process closes the=
+ pipe
+>> and exits with an error, but it is too late: wait_for_pager() drops =
+the
+>> error return code of finish_command() to the floor. The parent proce=
+ss (git
+>> log) can complete with the exit code that it was given earlier, 0.
+>>
+>> Repeat your experiment with ./git log in git.git itself to see the
+>> difference.
+>>
+>> -- Hannes
+>>
 >=20
-> At the same time, it would be a fairly major lose to not be able to
-> generate individual messages easily.  I have personally considered the
-> fact that git format-patch produces something-vaguely-like mboxes rather
-> than individual plain RFC 2822 messages to be a bug; fixable by "tail"
-> but annoying.
+> Capisco&  touch=E9, with much more than 1k of info, git show ends wit=
+h a
+> "Broken Pipe"... seems hard to detect for little, recently started
+> projects since I added more than 60k of scripts and I need to do 'git
+> show' to understand that the problem is a broken pipe.
+>=20
+> Now, let me think about it... do we need the pager_preexec function? =
+I
+> mean... it works fine without it, and the function is there because o=
+f
+> a faulty 'less'.
+>=20
+> My problem is obvioulsly solved by adding PAGER=3Dmore in my default
+> environment, but I think this could be a litle bit embarrassing for a
+> new user, mostly in environments such this AIX :P
+>=20
 
-I totally agree. I said as much later on in the message. We should fix
-format-patch to not emit the "From " line when generating files for
-individual messages, (and we should fix send-email to accept such a bare
-file).
+Catering to AIX by default seems stupid beyond belief. AIX users today
+are, without fail, accustomed to having to tweak more or less everythin=
+g
+to make the system run smoothly with modern applications (where "modern=
+"
+is a generous term, including everything that's been written in the las=
+t
+10 or so years).
 
-That much is easy to agree on since it involves using mbox less, so the
-whole "which mbox format to use?" question goes away, (for these uses at
-least).
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-=2DCarl
-
-=2D-=20
-carl.d.worth@intel.com
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iD8DBQFMDrZx6JDdNq8qSWgRAh9sAKCgX+kFrxQdEYRKtFB+A9ovl+igOgCcD65b
-lZzznNR04vB5B17HcvoYucA=
-=RP05
------END PGP SIGNATURE-----
---=-=-=--
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
