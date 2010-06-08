@@ -1,116 +1,193 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH/RFC] Fix for default pager
-Date: Tue, 08 Jun 2010 23:33:53 +0200
-Message-ID: <4C0EB741.9020905@op5.se>
-References: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>	<1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>	<AANLkTinydWk3GqGDww8FS7pmW16jAVazRkmT_GsRMIhy@mail.gmail.com>	<20100608053507.GB15156@coredump.intra.peff.net>	<AANLkTilvvpy4TBQF6g8boQL87FRB7kFDrVfYiHvOv6xu@mail.gmail.com>	<4C0E5103.7030501@viscovery.net>	<AANLkTilWg8hw5j20o-xGsVO-q_OeSmtKEKAO6O416qvH@mail.gmail.com>	<4C0E6810.3070301@viscovery.net>	<AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com>	<4C0E932B.3010702@viscovery.net> <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: [RFC/PATCHv2] bash completion: Support "divergence from upstream"
+ warnings in __git_ps1
+Date: Tue, 08 Jun 2010 22:36:49 +0100
+Message-ID: <4C0EB7F1.1030707@pileofstuff.org>
+References: <4C0AE640.3040503@pileofstuff.org> <201006062014.59386.trast@student.ethz.ch> <4C0C09BF.4070503@pileofstuff.org> <201006070942.34753.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Jeff King <peff@peff.net>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	git <git@vger.kernel.org>
-To: Dario Rodriguez <soft.d4rio@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 08 23:34:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jun 08 23:37:54 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM6R5-0002s1-Sz
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 23:34:16 +0200
+	id 1OM6Ub-0004vf-Ft
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 23:37:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab0FHVeK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 17:34:10 -0400
-Received: from na3sys009aog103.obsmtp.com ([74.125.149.71]:32881 "HELO
-	na3sys009aog103.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751424Ab0FHVeJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 17:34:09 -0400
-Received: from source ([209.85.219.228]) by na3sys009aob103.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTA63TZJ+vbCWInl5bHQRhC6sP6Gm11jL@postini.com; Tue, 08 Jun 2010 14:34:09 PDT
-Received: by ewy28 with SMTP id 28so1458685ewy.18
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 14:34:04 -0700 (PDT)
-Received: by 10.213.34.205 with SMTP id m13mr5517071ebd.23.1276032843910;
-        Tue, 08 Jun 2010 14:34:03 -0700 (PDT)
-Received: from clix.int.op5.se (90-227-176-162-no128.tbcn.telia.com [90.227.176.162])
-        by mx.google.com with ESMTPS id 13sm3616088ewy.9.2010.06.08.14.34.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Jun 2010 14:34:03 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
-In-Reply-To: <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
+	id S1756316Ab0FHVht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 17:37:49 -0400
+Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:51222 "EHLO
+	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755330Ab0FHVhs (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 17:37:48 -0400
+Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout02-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20100608213741.XIBB3192.mtaout02-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
+          Tue, 8 Jun 2010 22:37:41 +0100
+Received: from [192.168.1.5] (really [80.6.134.127])
+          by aamtaout04-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20100608213712.GLM1593.aamtaout04-winn.ispmail.ntl.com@[192.168.1.5]>;
+          Tue, 8 Jun 2010 22:37:12 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <201006070942.34753.trast@student.ethz.ch>
+X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=ns1_rNwsptAA:10 a=uEzv4HemXiYA:10 a=8nJEP1OIZ-IA:10 a=qOz2pZ_4AAAA:8 a=zxblWZ4NWbfarmDdK9oA:9 a=5ywgQj-lR6YOf1umNKg2R-TMRiUA:4 a=wPNLvfGTeEIA:10 a=7qzHkXPk5l4A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148722>
 
-On 06/08/2010 10:44 PM, Dario Rodriguez wrote:
-> On Tue, Jun 8, 2010 at 3:59 PM, Johannes Sixt<j.sixt@viscovery.net>  =
-wrote:
->> Your repository has only 2 commits and its git log output is less th=
-an 1kB,
->> i.e., sufficiently small to fit in a pipe's buffer.
->>
->> git log calls start_command to fork() the pager. The OS's scheduler =
-does not
->> run the newly forked process immediately; rather, git log goes on wi=
-th its
->> own business, writing output to the pipe that connects to the pager.=
- Because
->> your repository is so small, git log never has to wait that the page=
-r drains
->> the pipe. git log finally reaches exit(0). At this time, an atexit()=
- handler
->> (wait_for_pager()) finally calls finish_command() to wait for the pa=
-ger.
->>
->> This is the first time that the forked child process can run. Only n=
-ow it
->> turns out that the pager cannot be run. The child process closes the=
- pipe
->> and exits with an error, but it is too late: wait_for_pager() drops =
-the
->> error return code of finish_command() to the floor. The parent proce=
-ss (git
->> log) can complete with the exit code that it was given earlier, 0.
->>
->> Repeat your experiment with ./git log in git.git itself to see the
->> difference.
->>
->> -- Hannes
->>
->=20
-> Capisco&  touch=E9, with much more than 1k of info, git show ends wit=
-h a
-> "Broken Pipe"... seems hard to detect for little, recently started
-> projects since I added more than 60k of scripts and I need to do 'git
-> show' to understand that the problem is a broken pipe.
->=20
-> Now, let me think about it... do we need the pager_preexec function? =
-I
-> mean... it works fine without it, and the function is there because o=
-f
-> a faulty 'less'.
->=20
-> My problem is obvioulsly solved by adding PAGER=3Dmore in my default
-> environment, but I think this could be a litle bit embarrassing for a
-> new user, mostly in environments such this AIX :P
->=20
+Add a notification in the command prompt specifying whether you're ahead of
+(>), behind (<), diverged from (<>) or at (=) your upstream.  This is
+especially helpful in small teams that (forget to) push to each other very
+frequently.
 
-Catering to AIX by default seems stupid beyond belief. AIX users today
-are, without fail, accustomed to having to tweak more or less everythin=
-g
-to make the system run smoothly with modern applications (where "modern=
-"
-is a generous term, including everything that's been written in the las=
-t
-10 or so years).
+Support git-svn upstream detection as a special case, as migraters from
+centralised version control systems are especially likely to forget to push.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Support for other types of upstream than SVN should be easy to add if anyone is
+so inclined.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Signed-off-by: Andrew Sayers <andrew-git@pileofstuff.org>
+---
+
+This patch includes Thomas Rast's feedback - thanks Thomas for the education :)
+
+This patch makes unashamed use of shell arrays and substring expansion that
+would normally not be allowed.  As Jakub Narebski mentioned, this is probably ok
+in a bash-specific script.
+
+Unlike other prompt options, I've put the divergence characters on the left of the
+branch name.  I'm really not sure about this, and I'd like to hear people's
+opinions.
+
+This patch produces output like this when I have unpushed commits:
+
+[andrew@pc myrepo >master] # my master is ahead of upstream
+
+Intuitively, I like having a ">" when I'm ahead, although it would be more
+logical to have something like this:
+
+[andrew@pc myrepo <master] # upstream less-than master
+
+Putting the symbol on the right makes this problem go away, but looks ridiculous
+if you use a prompt like PS1='\W:$(__git_ps1 "(%s)")> '
+
+myrepo:master>> # master greater-than upstream
+myrepo:master<> # master less-than upstream
+myrepo:master<>> # master and upstream have diverged
+
+I'd rather not rely on colour prompts to clear this up - using colour as the
+only way to convey important information to the user rarely ends well.
+
+Adding a "u" to the symbol could also clear this up:
+
+[andrew@pc myrepo u<master] # upstream less-than master
+
+Using "u<", "u=", "u>" and "<>" would mean that the prompt always used either
+two or zero characters, which would keep prompts lined up over time.  But it
+would also eat horizontal space for an issue you'd stop seeing after a few
+minutes.
+
+Finally, my apologies to anyone that tried to apply my previous patch - to make
+a long story short, it turns out I need this feature more than I realised :)
+
+ contrib/completion/git-completion.bash |   58 +++++++++++++++++++++++++++++++-
+ 1 files changed, 57 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 57245a8..1dc80fd 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -42,6 +42,14 @@
+ #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
+ #       untracked files, then a '%' will be shown next to the branch name.
+ #
++#       If you would like to see the difference bitween HEAD and its
++#       upstream, set GIT_PS1_SHOWUPSTREAM to a nonempty value.
++#       Unpushed commits (>), unmerged commits (<), both (<>) and
++#       neither (=) will be shown on the left of the branch name.  You
++#       can enable git-svn mode by setting GIT_PS1_SHOWUPSTREAM=svn
++#       and set the value per-repository with the bash.showUpstream
++#       variable.
++#
+ # To submit patches:
+ #
+ #    *) Read Documentation/SubmittingPatches
+@@ -132,6 +140,7 @@ __git_ps1 ()
+ 		local s
+ 		local u
+ 		local c
++		local p
+ 
+ 		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+ 			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+@@ -159,10 +168,57 @@ __git_ps1 ()
+ 			      u="%"
+ 			   fi
+ 			fi
++
++			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
++
++				# Note: 'p' is used as a temporary throughout this block,
++				# before finally being assigned its correct value
++
++				if p="$(git config --get bash.showUpstream)"
++				then
++					GIT_PS1_SHOWUPSTREAM="$p"
++				fi
++
++				local upstream
++
++				if [ "${GIT_PS1_SHOWUPSTREAM-}" = "svn" ]; then
++
++					# git-svn upstream checking
++					p="$( git config --get svn-remote.svn.url )"
++					upstream=( $( git log --first-parent -1 \
++						--grep="^git-svn-id: $p" ) )
++					upstream=${upstream[ ${#upstream[@]} - 2 ]}
++					upstream=${upstream%@*}
++					upstream=${upstream#*$p/}
++
++				else # git upstream checking
++				  upstream="@{upstream}"
++				fi
++
++				if p="$( git rev-list \
++						--left-right "$upstream"...HEAD 2>/dev/null )"
++				then
++					case "$p" in
++						\<*\>*|\>*\<* ) p="<>" ;;
++						*\<*          ) p="<"  ;;
++						*\>*          ) p=">"  ;;
++						""            ) p="="  ;;
++
++						# the following case shouldn't be possible
++						# if you see this, please report it as a bug
++						* ) p="?ERROR($p)?" ;;
++
++					esac
++				else
++					p=""
++				fi
++
++			fi
++
+ 		fi
+ 
+ 		local f="$w$i$s$u"
+-		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r"
++		printf "${1:- (%s)}" "$c$p${b##refs/heads/}${f:+ $f}$r"
+ 	fi
+ }
+ 
+-- 
+1.7.0.4
