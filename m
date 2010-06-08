@@ -1,113 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Add optional parameters to the diff option
- "--ignore-submodules"
-Date: Tue, 08 Jun 2010 10:28:28 -0700
-Message-ID: <7vhbldtow3.fsf@alter.siamese.dyndns.org>
-References: <4C0E7037.8080403@web.de>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: origin/branchname and tracking branch pointing to different 
+	commits?
+Date: Tue, 8 Jun 2010 13:50:51 -0400
+Message-ID: <AANLkTilfBqc3Qww-4MbAcxuqBIj0LdbW9R3QXjCiy_J4@mail.gmail.com>
+References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
+	<201001071813.01187.trast@student.ethz.ch>
+	<76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
+	<76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
+	<7v7hrtzbau.fsf@alter.siamese.dyndns.org>
+	<AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
+	<7vljaptp1j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johan Herland <johan@herland.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 08 19:28:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 08 19:51:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM2bZ-00019w-JX
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 19:28:49 +0200
+	id 1OM2xH-0007oK-HA
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 19:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754982Ab0FHR2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 13:28:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64958 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752200Ab0FHR2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 13:28:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D460BA778;
-	Tue,  8 Jun 2010 13:28:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4fpAZmV/STStsRbg0wiI7N5QyOw=; b=fc+ewV
-	gHCLnPAd+ljuwgOywDMBzH9VacaIu01dYLRreoXlfG69/rreSHYrzMC9Ald+/Plm
-	RZGc94eQkmI+92D68EcuoqXmYQSIoh1MqLPsj3FDLcC+tspVGqly2jb+0lcpiajH
-	5a49UKhAKaknxpXSMZ3SJrI07RY71+0pcRc0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sfPYBmSBQZJCLHIpdJlOt0820dw+GYBH
-	hcrvMx8DWJOkAN46u92Oa351/fL/vKNpxP0fo1GGFSiBcd7VzJmSoJ3wP90CpRI7
-	jFGrBdGlB9mUcL2sjDyDiMGGcj4QswLseVj0KhLU8K8ppB8V+LEXSEi2YTB8tleB
-	9H/GjFM1f9k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CA4B0BA773;
-	Tue,  8 Jun 2010 13:28:37 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4FEB0BA76F; Tue,  8 Jun
- 2010 13:28:30 -0400 (EDT)
-In-Reply-To: <4C0E7037.8080403@web.de> (Jens Lehmann's message of "Tue\, 08
- Jun 2010 18\:30\:47 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 45DEF5DC-7323-11DF-9B20-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756097Ab0FHRux convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 13:50:53 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:48896 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756040Ab0FHRuw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 13:50:52 -0400
+Received: by pwj5 with SMTP id 5so1482150pwj.19
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 10:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ewuUdlWeSn41BETyC0Qg+3N5LZdaabmALv6JbAo+F10=;
+        b=hQxBizohE1tnromKFAqPrmb3u6MFL1F5XDyp48QydwBwXt9GSDQtvRvDEG5p6jgWz6
+         CqztDhM4obTuSVdFvWnBKydGz7SUASKaj4RC4zQbZDv35+sSH0gXBBXtVCDr1NgZ8Hd0
+         X+tDlTfKc1XfsTak4h/8Pwb8VN6qGJjhODPaY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=oYxeBYAJdgpGjvDIImxkGh6ZEXGBfSQnbUHFuNiVbJaSvTMMa0ObJDY0FPYdnfsUR8
+         fYclGDx+4x5B8X+90u0Nw+zEUzJNrstsEIqQNIAeHlfZC+sxZOhukN2p2i8qmHCcLvCL
+         UELE4Me+JGUffcdRt4yCC2916sXkB1DxWmdm8=
+Received: by 10.229.186.212 with SMTP id ct20mr6129669qcb.39.1276019451920; 
+	Tue, 08 Jun 2010 10:50:51 -0700 (PDT)
+Received: by 10.229.239.210 with HTTP; Tue, 8 Jun 2010 10:50:51 -0700 (PDT)
+In-Reply-To: <7vljaptp1j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148696>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+>
+> In your transcript, they can say "git fetch" (or "git fetch origin") =
+and
+> branch is copied to origin/branch, so instead of doing:
+>
+> =C2=A0 =C2=A0$ git fetch origin branchname
+> =C2=A0 =C2=A0$ git log FETCH_HEAD ;# or whatever inspection using FET=
+CH_HEAD
+>
+> they can do
+>
+> =C2=A0 =C2=A0$ git fetch ;# or git fetch origin
+> =C2=A0 =C2=A0$ git log origin/branch ;# or whatever inspection using =
+it
+>
+> In short, teach them that they no longer have reason to learn or run =
+"git
+> fetch origin branchname".
+>
+>
 
-> After thinking some time about peoples expectations and troubles
-> with the recursive scanning of submodules, I came up with this:
->
-> What about expanding the "--ignore-submodules" option of the git diff
-> family with three parameters:
->
-> --ignore-submodules=all : Same behavior as "--ignore-submodules",
->   submodules show never up as modified.
->
-> --ignore-submodules=untracked : Don't consider submodules as modified
->   when they only contain untracked files, but do if the commits in the
->   superproject are different or tracked content is modified.
->
-> --ignore-submodules=dirty : Don't consider submodules as modified
->   when their work tree is dirty, no matter why. This is the pre 1.7.0
->   behavior and doesn't recurse into submodules at all.
->
-> The first patch is just a resend of a test case rename, the second
-> contains the implementation.
->
->
-> To make that more useful the default could be controlled by the
-> .git/config or .gitmodules file. So you could have two submodules:
->
-> [submodule "sub1"]
-> 	path = sub1
-> 	url = /home/me/sub1.git/
-> 	ignore = dirty
-> [submodule "sub2"]
-> 	path = sub2
-> 	url = /home/me/sub2.git/
-> 	ignore = untracked
->
-> Where sub1 will not be scanned for work tree modifications by "git
-> diff" and "git status" and for sub2 any untracked files inside the
-> submodule will be ignored. And then "git status" should learn the
-> "--ignore-submodule" option too. With a fourth parameter "none" it
-> would be possible to override the defaults from the configuration
-> anyway you want.
->
-> Opinions?
+Junio,
 
-The above outline (I haven't looked at the code) sounds sane.  We might
-even want to make untracked (or dirty) the default, if nothing is given
-from the command line nor configuration.
+Yes, that's pretty much what we are doing. we are using "git fetch
+origin" to update local remote branches (remote/branch) and then use
+the information in there to inspect what are the incoming changes. I
+was never teaching anybody to use "git fetch origin branch" So, we are
+on the same page here with you.
 
-I don't see a reason for patch 1/2, though.
+The confusion though is that "git pull origin master" uses FETCH_HEAD
+to store the information about remote master branch instead of
+origin/master branch.
+Therefore when people are using pull - they get confused why this
+branch (origin/master) was not updated. Do you think that FETCH_HEAD
+usage for pull still makes sense?
 
-Thanks.
+Thanks,
+Eugene
