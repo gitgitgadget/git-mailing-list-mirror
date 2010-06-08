@@ -1,63 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: origin/branchname and tracking branch pointing to different
- commits?
-Date: Tue, 8 Jun 2010 14:30:07 -0400
-Message-ID: <20100608183007.GA31293@coredump.intra.peff.net>
-References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
- <201001071813.01187.trast@student.ethz.ch>
- <76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
- <76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
- <7v7hrtzbau.fsf@alter.siamese.dyndns.org>
- <AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFT PATCH 2/2] win32: optimize pthread_cond_broadcast
+Date: Tue, 08 Jun 2010 20:46:17 +0200
+Message-ID: <4C0E8FF9.7020500@viscovery.net>
+References: <1275917892-16437-1-git-send-email-bonzini@gnu.org> <1275917892-16437-3-git-send-email-bonzini@gnu.org> <4C0E7015.8030504@viscovery.net> <4C0E71B2.1060904@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 08 20:30:21 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Paolo Bonzini <bonzini@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Jun 08 20:46:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM3Z5-0007Pp-Rv
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 20:30:20 +0200
+	id 1OM3om-0000Pm-NT
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 20:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041Ab0FHSaM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 14:30:12 -0400
-Received: from peff.net ([208.65.91.99]:57588 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753169Ab0FHSaL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 14:30:11 -0400
-Received: (qmail 10313 invoked by uid 107); 8 Jun 2010 18:30:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Tue, 08 Jun 2010 14:30:20 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jun 2010 14:30:07 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
+	id S1752936Ab0FHSq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 14:46:27 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:22962 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752221Ab0FHSq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 14:46:26 -0400
+Received: from [192.168.0.200] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id E8219CDF96;
+	Tue,  8 Jun 2010 20:46:22 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.8) Gecko/20100227 Thunderbird/3.0.3
+In-Reply-To: <4C0E71B2.1060904@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148701>
 
-On Tue, Jun 08, 2010 at 12:27:14PM -0400, Eugene Sajine wrote:
+Am 08.06.2010 18:37, schrieb Paolo Bonzini:
+> On 06/08/2010 06:30 PM, Johannes Sixt wrote:
+>> Am 07.06.2010 15:38, schrieb Paolo Bonzini:
+>>> @@ -172,9 +172,10 @@ int pthread_cond_broadcast(pthread_cond_t *cond)
+>>> * As in pthread_cond_signal, access to cond->waiters and
+>>> * cond->was_broadcast is locked via the external mutex.
+>>> */
+>>> -
+>>> - if ((cond->was_broadcast = cond->waiters> 0)) {
+>>> + if (cond->waiters> 0) {
+>>> BOOLEAN result;
+>>> + cond->was_broadcast = cond->waiters> 1;
+>>> +
+>>
+>> It is possible that you set was_broadcast to 1 here, while another
+>> thread still sees was_broadcast == 0 in cond_wait.
+>
+> That still cannot happen, because pthread_cond_wait will be locked on
+> the semaphore until the ReleaseSemaphore. The only race that exists is
+> between broadcast/signal's ReleaseSemaphore and wait's
+> WaitForSingleObject. This is benign, and exists before my patch. But in
+> all cases the code before ReleaseSemaphore is serialized WRT to the code
+> after wait's WaitForSingleObject.
 
-> I'm coming back to this topic as i see some confusion growing about
-> such behavior. Every now and then users come across this problem and
-> they expect pull to *really* behave as fetch and merge so it will
-> cause the update of remote/branchname branch. And it is kind of
-> difficult to justify why they have to do git fetch after pull...
-> 
-> Can somebody, please, take a look?
+I think I've stared at the code long enough now to see that you are right. 
+All counterexamples that I thought I could make up to disprove you didn't 
+do it :-)
 
-This was discussed a while back:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/127163
-
-and I even posted a patch, but never followed up (I think mostly just
-due to being busy).. There is some concern about unexpected ref updates,
-though.
-
--Peff
+-- Hannes
