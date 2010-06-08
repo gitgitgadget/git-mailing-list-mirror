@@ -1,211 +1,118 @@
-From: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>
-Subject: [PATCH v2 3/4] git gui: use textconv filter for diff and blame
-Date: Tue,  8 Jun 2010 15:49:17 +0200
-Message-ID: <1276004958-13540-4-git-send-email-clement.poulain@ensimag.imag.fr>
-References: <1276004958-13540-1-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276004958-13540-2-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276004958-13540-3-git-send-email-clement.poulain@ensimag.imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC/PATCH 1/4] gitweb: Move subroutines to Gitweb::Config module
+Date: Tue, 8 Jun 2010 13:50:23 +0000
+Message-ID: <AANLkTimq-46ghYT6TqXn1AB0NQIobcDaufsSJ5AEFE5z@mail.gmail.com>
+References: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com>
+	<201006081446.22587.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 08 15:50:10 2010
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 08 15:50:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLzBw-0003aO-Dh
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 15:50:08 +0200
+	id 1OLzCI-0003mn-GH
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 15:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755319Ab0FHNts convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 09:49:48 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38067 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755259Ab0FHNtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 09:49:45 -0400
-Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o58Dfwcd024966
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 8 Jun 2010 15:41:58 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o58Dnes6027962;
-	Tue, 8 Jun 2010 15:49:40 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o58Dnet6013682;
-	Tue, 8 Jun 2010 15:49:40 +0200
-Received: (from poulainc@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o58DneGw013681;
-	Tue, 8 Jun 2010 15:49:40 +0200
-X-Mailer: git-send-email 1.6.6.7.ga5fe3
-In-Reply-To: <1276004958-13540-3-git-send-email-clement.poulain@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 08 Jun 2010 15:41:58 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o58Dfwcd024966
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
+	id S1755328Ab0FHNuZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 09:50:25 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33582 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755259Ab0FHNuY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 09:50:24 -0400
+Received: by iwn37 with SMTP id 37so4618976iwn.19
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 06:50:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=l7rJCc2EHOQYOXK0ptH1zjy7vVAadTiEqxtBfSGxsxM=;
+        b=kEs70r+7dHfUtKJFOrzf9Xigqsb0M04iw5aODwCHo5kUv4aER/ICm25GQC9Zk5kKPX
+         fWF2mBPeMEwiXkdIh1muWoE1Sy0s5QlXuliU7vrffo2cno5EonnznYMjoTPkPgO59ROR
+         8lHWwWfuMPoMjNzykKi43dIuD3wzuNr1QEaFU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kVlxnKtC69NJa5oWZJD8C6RYytsIHcTZg4elsdHyyLlR/pCHPTjYdhKComq1tDEOni
+         V47WdR5h3xPfnViBY7CQoCuv0LUaApfO+sw1vUkrH1a5xkbq/6TJk5xeJlQX1+1vT3T2
+         2+abcAzm9esuoFXqIjmCw6JdIbPx8lbtbMaCc=
+Received: by 10.231.114.144 with SMTP id e16mr6112734ibq.188.1276005023634; 
+	Tue, 08 Jun 2010 06:50:23 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Tue, 8 Jun 2010 06:50:23 -0700 (PDT)
+In-Reply-To: <201006081446.22587.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148674>
 
-Create a checkbox "Use Textconv For Diffs and Blame" in git-gui options=
-=2E
-If checked and if the driver for the concerned file exists, git-gui cal=
-ls diff
-and blame with --textconv option
+2010/6/8 Jakub Narebski <jnareb@gmail.com>:
+> A few generic comments about this whole series.
+> [...]
+> Third, and I think most important, is that the whole splitting gitweb=
+ into
+> modules series seems to alck direction, some underlying architecture
+> design. =C2=A0For example Gitweb::HTML, Gitweb::HTML::Link, Gitweb::H=
+TML::String
+> seems to me too detailed, too fine-grained modules.
+>
+> It was not visible at first, because Gitweb::Config, Gitweb::Request =
+and to
+> a bit lesser extent Gitweb::Git fell out naturally. =C2=A0But should =
+there be
+> for example Gitweb::Escape module, or should its functionality be a p=
+art of
+> Gitweb::Util? =C2=A0Those issues needs to be addressed. =C2=A0Perhaps=
+ they were
+> discussed with this GSoC project mentors (via IRC, private email, IM)=
+, but
+> we don't know what is the intended architecture design of gitweb.
+>
+> Should we try for Model-Viewer-Controller pattern without backing MVC
+> (micro)framework? =C2=A0(One of design decisions for gitweb was have =
+it working
+> out of the box if Perl and git are installed, without requiring to in=
+stall
+> extra modules; but now we can install extra Perl modules e.g. from CP=
+AN
+> under lib/...). =C2=A0How should we organize gitweb code into package=
+s
+> (modules)?
+>
+> Perhaps having gitweb.perl, Gitweb::Git, Gitweb::Config, Gitweb::Requ=
+est,
+> Gitweb::Util and Gitweb would be enough? =C2=A0Should it be Gitweb::H=
+TML or
+> Gitweb::View? =C2=A0Etc., etc.,...
 
-Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>=20
-Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>=20
----
- git-gui/git-gui.sh     |   28 +++++++++++++++++++++++++++-
- git-gui/lib/blame.tcl  |   21 +++++++++++++++++++--
- git-gui/lib/diff.tcl   |    5 ++++-
- git-gui/lib/option.tcl |    1 +
- 4 files changed, 51 insertions(+), 4 deletions(-)
+I haven't contributed to Gitweb, nor do I have to deal with it. But
+I've followed this series and reviewed most of the Perl code in
+Git. Take these with a grain of salt.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 7d54511..59edf39 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -269,6 +269,17 @@ proc is_config_true {name} {
- 	}
- }
-=20
-+proc is_config_false {name} {
-+	global repo_config
-+	if {[catch {set v $repo_config($name)}]} {
-+		return 0
-+	} elseif {$v eq {false} || $v eq {0} || $v eq {no}} {
-+		return 1
-+	} else {
-+		return 0
-+	}
-+}
-+
- proc get_config {name} {
- 	global repo_config
- 	if {[catch {set v $repo_config($name)}]} {
-@@ -782,6 +793,7 @@ set default_config(user.email) {}
-=20
- set default_config(gui.encoding) [encoding system]
- set default_config(gui.matchtrackingbranch) false
-+set default_config(gui.textconv) true
- set default_config(gui.pruneduringfetch) false
- set default_config(gui.trustmtime) false
- set default_config(gui.fastcopyblame) false
-@@ -3405,6 +3417,19 @@ lappend diff_actions [list $ctxmsm entryconf [$c=
-txmsm index last] -state]
- $ctxmsm add separator
- create_common_diff_popup $ctxmsm
-=20
-+proc has_textconv {path} {
-+	if {[is_config_false gui.textconv]} {
-+		return 0
-+	}
-+	set filter [gitattr $path diff set]
-+	set textconv [get_config [join [list diff $filter textconv] .]]
-+	if {$filter ne {set} && $textconv ne {}} {
-+		return 1
-+	} else {
-+		return 0
-+	}
-+}
-+
- proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
- 	global current_diff_path file_states
- 	set ::cursorX $x
-@@ -3440,7 +3465,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y}=
- {
- 			|| {__} eq $state
- 			|| {_O} eq $state
- 			|| {_T} eq $state
--			|| {T_} eq $state} {
-+			|| {T_} eq $state
-+			|| [has_textconv $current_diff_path]} {
- 			set s disabled
- 		} else {
- 			set s normal
-diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
-index 786b50b..b0f2f23 100644
---- a/git-gui/lib/blame.tcl
-+++ b/git-gui/lib/blame.tcl
-@@ -449,11 +449,28 @@ method _load {jump} {
-=20
- 	$status show [mc "Reading %s..." "$commit:[escape_path $path]"]
- 	$w_path conf -text [escape_path $path]
-+
-+	set do_textconv 0
-+	if {![is_config_false gui.textconv]} {
-+		set filter [gitattr $path diff set]
-+		set textconv [get_config [join [list diff $filter textconv] .]]
-+		if {$filter ne {set} && $textconv ne {}} {
-+			set do_textconv 1
-+		}
-+	}
- 	if {$commit eq {}} {
--		set fd [open $path r]
-+		if {$do_textconv ne 0} {
-+			set fd [open "|$textconv $path" r]
-+		} else {
-+			set fd [open $path r]
-+		}
- 		fconfigure $fd -eofchar {}
- 	} else {
--		set fd [git_read cat-file blob "$commit:$path"]
-+		if {$do_textconv ne 0} {
-+			set fd [git_read cat-file --textconv "$commit:$path"]
-+		} else {
-+			set fd [git_read cat-file blob "$commit:$path"]
-+		}
- 	}
- 	fconfigure $fd \
- 		-blocking 0 \
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index ec8c11e..c628750 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -55,7 +55,7 @@ proc handle_empty_diff {} {
-=20
- 	set path $current_diff_path
- 	set s $file_states($path)
--	if {[lindex $s 0] ne {_M}} return
-+	if {[lindex $s 0] ne {_M} || [has_textconv $path]} return
-=20
- 	# Prevent infinite rescan loops
- 	incr diff_empty_count
-@@ -280,6 +280,9 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 			lappend cmd diff-files
- 		}
- 	}
-+	if {![is_config_false gui.textconv] && [git-version >=3D 1.6.1]} {
-+		lappend cmd --textconv
-+	}
-=20
- 	if {[string match {160000 *} [lindex $s 2]]
- 	 || [string match {160000 *} [lindex $s 3]]} {
-diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
-index d4c5e45..3807c8d 100644
---- a/git-gui/lib/option.tcl
-+++ b/git-gui/lib/option.tcl
-@@ -148,6 +148,7 @@ proc do_options {} {
- 		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
- 		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
- 		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
-+		{b gui.textconv {mc "Use Textconv For Diffs and Blames"}}
- 		{b gui.fastcopyblame {mc "Blame Copy Only On Changed Files"}}
- 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy=
- On"}}
- 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (day=
-s)"}}
---=20
-1.7.1.202.g79415.dirty
+It would be very useful for the future of our Perl code if we had a
+dual-life system in Git. I.e. a cpan/ directory where we could drop
+CPAN modules that should be shipped with Git.
+
+We already do this in a less sophisticated way for Error.pm, is there
+any reason not to expand it to install more CPAN modules if they
+aren't present on the system? That'd allow us to use them, but still
+only depend on vanilla Perl.
+
+Then we could just use e.g. Config::General (~3k lines of code)
+instead of writing our own config system. There are probably lots of
+wheels that we're inventing (and are going to invent) that have been
+done better elsewhere, with more testing.
+
+Unlike Python or Java, Perl's policy is for core modules is to only
+include those required to better bootstrap the CPAN toolchain. So if
+we continue sticking to core Perl our code is only going to drift
+further away from Perl best practices.
