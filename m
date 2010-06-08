@@ -1,60 +1,82 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
+From: Dario Rodriguez <soft.d4rio@gmail.com>
 Subject: Re: [PATCH/RFC] Fix for default pager
-Date: Mon, 07 Jun 2010 20:04:06 -0400
-Message-ID: <1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>
-References: <InstallingonAIXfails> <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 08 02:54:39 2010
+Date: Mon, 7 Jun 2010 23:14:58 -0300
+Message-ID: <AANLkTinydWk3GqGDww8FS7pmW16jAVazRkmT_GsRMIhy@mail.gmail.com>
+References: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
+	<1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git <git@vger.kernel.org>
+To: Ben Walton <bwalton@artsci.utoronto.ca>
+X-From: git-owner@vger.kernel.org Tue Jun 08 04:15:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLn5S-0002LK-DZ
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 02:54:38 +0200
+	id 1OLoLN-0004wH-O9
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 04:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839Ab0FHAyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jun 2010 20:54:33 -0400
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:45824 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751545Ab0FHAyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jun 2010 20:54:32 -0400
-X-Greylist: delayed 3025 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Jun 2010 20:54:32 EDT
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:49665 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1OLmIY-00050t-Dp
-	for git@vger.kernel.org; Mon, 07 Jun 2010 20:04:06 -0400
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1OLmIY-0006xB-Ct
-	for git@vger.kernel.org; Mon, 07 Jun 2010 20:04:06 -0400
-In-reply-to: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
-User-Agent: Sup/git
+	id S1752101Ab0FHCPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jun 2010 22:15:00 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:43434 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751426Ab0FHCO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jun 2010 22:14:59 -0400
+Received: by bwz11 with SMTP id 11so1055293bwz.19
+        for <git@vger.kernel.org>; Mon, 07 Jun 2010 19:14:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=YnD7E2pMtNhTx+zInZsjT8bdQZ7aOGQyIOE1vKwCV/I=;
+        b=OSHJyx5vidXwXAepIyGj2rMsVSxQTKcrxj05bdw9IPa/IUoz4vlaeWNPsea2Q/VXTE
+         gZ9d+QVx+cpc3Jxw/V0d46xsMfuAqkKV8BzMW1tGJI98rmMeewvOqez2VEJFThu4WYWF
+         2p0GnkocAa87rWeYm5m/dM0rEF6LMyz5IElCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=BO9eanFCwU9hHtSrkw/6YAdPXakQ9LO33k4O4BhYyJJJsSAiM91N9ZVHVn4jZ31yv4
+         fV24pxkcdyk9AJExm3hXppiZKMcHVbFAbwCg73EoLIdcVWlNkVSy1UXaW/ltDWGfCohp
+         /5YTvtZMIjrVQ2BRVA3tp3eHdGj33Ja63MUxs=
+Received: by 10.204.81.7 with SMTP id v7mr497688bkk.140.1275963298081; Mon, 07 
+	Jun 2010 19:14:58 -0700 (PDT)
+Received: by 10.204.46.80 with HTTP; Mon, 7 Jun 2010 19:14:58 -0700 (PDT)
+In-Reply-To: <1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148637>
 
-Excerpts from Dario Rodriguez's message of Mon Jun 07 19:58:08 -0400 2010:
+On Mon, Jun 7, 2010 at 9:04 PM, Ben Walton <bwalton@artsci.utoronto.ca> wrote:
+>
+> Why not set a sensible DEFAULT_PAGER value for the system in your
+> config.mak file instead?
+>
+> Just curious.
+>
 
-> Default pager was 'less' even when some systems such AIX and other
-> basic or old systems do NOT have 'less' installed. In such case, git
-> just does not display anything in pager-enabled functionalities such
-> as 'git log' or 'git show', exiting with status 0.
+I was thinking about it before coding the patch, and found some
+consequences. First of all, the most important thing I should
+understand is that most users will install git from binary,
+precompiled packages instead of the good download and compile. So this
+is actually a good reason to not do it that way (config.mak)... Some
+users may download the compiled binary while it's actually calling
+it's default pager.
 
-Why not set a sensible DEFAULT_PAGER value for the system in your
-config.mak file instead?
+But this is not the only reason. Let me give you an example: We
+develop (I'm actually working at Accenture) using several machines.
+When we need some tool, we compile it in our first machine, and
+install it for an specific user. In some other environments we cannot
+compile things (testing environments) so we transfer (FTP) those
+binary files. It's just another case, and the default pager could
+cause problems here (in fact, i experienced such problems).
 
-Just curious.
+Another case (or something as the first one): If you installed less
+(via your package system), then git, and then you happen to uninstall
+less... should GIT be uninstalled in absence of it's default pager?
 
-Thanks
--Ben
--- 
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+I think GIT must auto-detect it's pager based in what is on the system
+at runtime, don't you think so?
