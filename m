@@ -1,92 +1,146 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
-Date: Tue, 08 Jun 2010 10:07:49 +0200
-Message-ID: <4C0DFA55.8070800@drmicha.warpmail.net>
-References: <20100605110930.GA10526@localhost> <vpqljas5e33.fsf@bauges.imag.fr> <20100606164642.GA10104@localhost> <buobpbnz6mh.fsf@dhlpc061.dev.necel.com> <20100607185439.GB17343@localhost> <vpqzkz6fy9m.fsf@bauges.imag.fr> <20100607193226.GA19789@localhost>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v6] gitk: Use git-difftool for external diffs when
+	available
+Date: Tue, 8 Jun 2010 01:10:42 -0700
+Message-ID: <20100608081040.GB14366@gmail.com>
+References: <20100417085230.GC6681@brick.ozlabs.ibm.com> <1271751079-18884-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Miles Bader <miles@gnu.org>, git@vger.kernel.org,
-	Peter Rabbitson <ribasushi@cpan.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Jun 08 10:08:27 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Thomas Arcila <thomas.arcila@gmail.com>,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Jun 08 10:10:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLtrG-0000bF-Ih
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 10:08:26 +0200
+	id 1OLttg-00020c-BE
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 10:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752065Ab0FHIIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 04:08:20 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51999 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751227Ab0FHIIS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 04:08:18 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id B5E8EF86A1;
-	Tue,  8 Jun 2010 04:08:16 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 08 Jun 2010 04:08:16 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=CBsWcNLQwAMusR2jNJGyXZliplg=; b=onCPj24epZ7pnfJCzAEwiX2cLNet/lqgPK56CdYWUwcbqs77WFOrTeuWlLEsFhVU6Yqy7TFewPy/q4rBWV81iCfkI8jouqBpISaRyHRB06n4EeehRKBNR7IA9kPsuInh/hvCoD+UQPhfEOjG9QWWwfs5BsOrvLQOIgBYtw1G9F0=
-X-Sasl-enc: fX43ItplTk5Ajn410vkRUjxj0EO1cMCF1EMCzqPRl/NZ 1275984494
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 529BA4C1D5;
-	Tue,  8 Jun 2010 04:08:14 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <20100607193226.GA19789@localhost>
+	id S1752348Ab0FHIKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 04:10:50 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:61922 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479Ab0FHIKs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 04:10:48 -0400
+Received: by pvg16 with SMTP id 16so1775840pvg.19
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 01:10:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=GeQW6x71HdleG5MX0oCng8BWSZzq8Was9v8uWObDNzo=;
+        b=vSN14DDYK57JgWAokKM5Gn8jnbD0sK6ff32QdM56kdk9lT+yTegp7+OBx+7PibRUGE
+         IQfXgYcVgqiGbA7aFUjQ0fs1swPRDPYLZDu7tnlrqC4JYsolD6Vk8aSiSD7Kd2g9Uxbe
+         TsDarwYVHOh7x91LTO9tBSvtRq7ahf8+uc5xQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jpOfHLg3lIVzxDSx3+y6AlmRyg/Bs5tvRd+tEx3YIjVdQStkILx64QONgJuOAnO+/m
+         e6gapjmc9M933vj35ocSRygLAB8f+6KqVF8ITsVFrZ10ZfRJN4nupAW6VzS0NR3J1ann
+         fXXYy9hwYXK99lQGDvf0h3Eb27JXxm7YA8GcA=
+Received: by 10.114.32.31 with SMTP id f31mr12718707waf.195.1275984646931;
+        Tue, 08 Jun 2010 01:10:46 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id c1sm47479351wam.7.2010.06.08.01.10.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Jun 2010 01:10:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1271751079-18884-1-git-send-email-davvid@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148652>
 
-Clemens Buchacher venit, vidit, dixit 07.06.2010 21:32:
-> On Mon, Jun 07, 2010 at 09:17:25PM +0200, Matthieu Moy wrote:
->> Clemens Buchacher <drizzd@aon.at> writes:
->>
->>> But this is supposedly a feature which helps users who type "git
->>> checkout <branch>" by mistake, when they really wanted to do "git
->>> checkout -t <remote>/<branch>".
->>
->> Not sure what's the argument here, but aren't the two commands
->> equivalent? Do you prefer the second syntax "git checkout -t
->> <remote>/<branch>"? It's already a DWIM for "git checkout -b <branch>
->> -t <remote>/<branch>", and I find this one far more confusing:
->>
->> git checkout    <remote>/<branch> => detaches HEAD
->> git checkout -t <remote>/<branch> => creates a local branch automatically
+Hello,
+
+Is there anything else (besides sending this email) that I can
+do to help move this patch along?
+
+I got another "gitk read-only repo broken" email this week,
+which is what reminded me... ;-)
+
+It's been a while.  I just rebased the patch against the latest
+master and it didn't have any conflicts.  Resend?
+
+On Tue, Apr 20, 2010 at 01:11:19AM -0700, David Aguilar wrote:
+> git-difftool's '--extcmd=frotz' was added in 1.7.0 and
+> is the mechanism through which gitk launches the
+> configured 'extdifftool'.  When 'extdifftool' is
+> misconfigured an error dialog is used to display
+> git-difftool's stdout and stderr.
 > 
-> The intent with -t is clear. It is used only when you create a new
-> branch. Also, you specify the remote branch you're going to create
-> a new branch from.
+> The existing implementation moved into 'proc gitkextdiff'
+> for use with git < 1.7.0.
 > 
-> "git checkout <branch>", on the other hand, will create a branch
-> based on a remote branch, even though you neither asked for a new
-> branch, nor did you specify any remote at all.
+> One benefit of this change is that gitk's external diff
+> no longer requires write-access to the current directory.
+> 
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+> 
+> Changes since last time:
+> 
+> * Errors are shown using 'proc error_popup'
+> * The existing code moved into a tidy function
+> 
+>  gitk |   25 +++++++++++++++++++++++++
+>  1 files changed, 25 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitk b/gitk
+> index 1b0e09a..0533baf 100755
+> --- a/gitk
+> +++ b/gitk
+> @@ -3361,6 +3361,7 @@ proc external_diff {} {
+>      global flist_menu_file
+>      global diffids
+>      global extdifftool
+> +    global git_version
+>  
+>      if {[llength $diffids] == 1} {
+>          # no reference commit given
+> @@ -3380,6 +3381,30 @@ proc external_diff {} {
+>          set diffidfrom [lindex $diffids 0]
+>          set diffidto [lindex $diffids 1]
+>      }
+> +    if {[package vcompare $git_version "1.7.0"] < 0} {
+> +        gitkextdiff $diffidfrom $diffidto
+> +        return
+> +    }
+> +
+> +    set cmd [list "git" "difftool" "--no-prompt" "--extcmd=$extdifftool"]
+> +    if {$diffidfrom ne $nullid && $diffidfrom ne $nullid2} {
+> +        lappend cmd $diffidfrom
+> +    }
+> +    if {$diffidto ne $nullid && $diffidto ne $nullid2} {
+> +        lappend cmd $diffidto
+> +    }
+> +    lappend cmd "--" $flist_menu_file
+> +
+> +    set pipe [open |$cmd r]
+> +    set stdout [read $pipe]
+> +    if {[catch {close $pipe} stderr] != 0} {
+> +        error_popup "git-difftool: $stdout $stderr"
+> +    }
+> +}
+> +
+> +proc gitkextdiff {diffidfrom diffidto} {
+> +    global flist_menu_file
+> +    global extdifftool
+>  
+>      # make sure that several diffs wont collide
+>      set diffdir [gitknewtmpdir]
+> -- 
+> 1.7.1.rc2.5.gddd02
+> 
 
-You're making a very important point here:
-
-The existing DWIMery executes *different commands* depending on the
-circumstances (<branch> existing or not). "checkout" and "checkout
--t/-b" really are different commands.
-
-For me, DWIMery is OK in these cases:
-
-- completing refs (<name> may be refs/heads/<name> or refs/tags/<name> etc.)
-
-- Adding options without which the other options don't make sense
-(independent of the circumstances), such adding "-b" for "-t", or, even
-doing the DWIMery above since "--track" is requested explicitly.
-
-Changing the command (mode) is something fundamentally different.
-
-[In this specific case, it also keeps the user from learning what's
-going on, but that's a different issue.]
-
-But I'm afraid it's too late.
-
-Michael
+-- 
+		David
