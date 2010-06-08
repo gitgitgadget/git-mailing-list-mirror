@@ -1,124 +1,107 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: RFC: Making submodules "track" branches
-Date: Tue, 8 Jun 2010 20:23:49 +0000
-Message-ID: <AANLkTilYHfDrtCAcPPxB1AZnzch2ELTEiIFTW3N5LBEc@mail.gmail.com>
-References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com>
-	<201006080912.31448.johan@herland.net>
-	<4C0E630A.7020803@xiplink.com>
-	<AANLkTimtWrp1yimeooJ-ptAaDoxwpUc5KOP9HJUxx0X2@mail.gmail.com>
-	<4C0E9AC7.7080802@xiplink.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [RFC/PATCH 1/4] gitweb: Move subroutines to Gitweb::Config module
+Date: Wed, 9 Jun 2010 01:54:34 +0530
+Message-ID: <AANLkTimKsdn8Vww_4U4YQDPlpr_BgbVszwG64lEYl-cE@mail.gmail.com>
+References: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com>
+	<201006081446.22587.jnareb@gmail.com>
+	<20100608141321.GP20775@machine.or.cz>
+	<AANLkTiksOpUqxGc7Lo4clrLwOF6GvkT7CZH5CVeirtBr@mail.gmail.com>
+	<20100608195552.GA3408@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Jun 08 22:24:10 2010
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Jun 08 22:24:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM5LB-0001P6-LZ
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:24:06 +0200
+	id 1OM5Ln-0001ny-G0
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756305Ab0FHUXy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 16:23:54 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51505 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756278Ab0FHUXv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 16:23:51 -0400
-Received: by iwn37 with SMTP id 37so5025433iwn.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 13:23:50 -0700 (PDT)
+	id S1756312Ab0FHUYg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 16:24:36 -0400
+Received: from mail-yw0-f204.google.com ([209.85.211.204]:38214 "EHLO
+	mail-yw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756225Ab0FHUYf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 16:24:35 -0400
+Received: by ywh42 with SMTP id 42so4596607ywh.15
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 13:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=AOSiwUO5PIG6gNDac6GaG+v2l/qqas2EHRdZNnPcwcY=;
-        b=A/aOHB0RGsuM+tiw8lM9ijk2K/Px9HanqNJRfU3JxbLMvg71cQcGpK+cb60Ge+wzNA
-         HDtsebeEH9E+u+I5SodbQFdpmGyLEEj0PTm6wXj/mEii5drjGBPVVN6ASELySS19ndxk
-         /gr0AxcMtBwC/C2dz/c0IQozRgGlWzWSXDzvE=
+        bh=OVlkBxnWBnIx2e8OjbKkC6502v3cwGgPFVbjNqi9Z3g=;
+        b=yFFCKPTT78ecNtWPuyEMUmii4fcDIFSTwh6EXS7kNdnzWpD3H1p0vL3um1OcYH4pSs
+         T7Kz3tDrFqe2WzLVpGKCMZUW4jy7xhpfPKPl2uLwcrCob5BhqJfV1OflVPN1n5qh1P0w
+         rXqp6OCELYShh1kOh/IRQOuEVdBtP2SBvNxfs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=QiMVtvcZ1uwRNTfmezCDebkaZDDaX7sAcSulF5elaZHa5y9vJbEV8BRNjhlhWzZaIN
-         acwgFC7DyELQEEBFM1ZNxKab3rXSR4aFmiQcc0ZCPSOKTK9wc0lB2jGWkSIc/c4ztyaY
-         nr0Z+K+UE8kGteChy/lzAHuD7EHoRsviD/BAI=
-Received: by 10.231.120.100 with SMTP id c36mr2182501ibr.77.1276028629958; 
-	Tue, 08 Jun 2010 13:23:49 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Tue, 8 Jun 2010 13:23:49 -0700 (PDT)
-In-Reply-To: <4C0E9AC7.7080802@xiplink.com>
+        b=hOIZQooa/MXnjy+DHUwbUMio0OLF01OrJqWfw+LUtEfwRgfgJTVnOpi47vHDE8DBt7
+         DArrNwTOYWxSy8ilUXaF/N2+wXkYE5QftxySxXNlVX3PCzf5dsdlFEqQaaat9fojZwjG
+         jtznaSBsxXpanf7Uf8/CnnnmmUUPyquu4dRe0=
+Received: by 10.100.244.26 with SMTP id r26mr17259027anh.91.1276028674906; 
+	Tue, 08 Jun 2010 13:24:34 -0700 (PDT)
+Received: by 10.100.126.20 with HTTP; Tue, 8 Jun 2010 13:24:34 -0700 (PDT)
+In-Reply-To: <20100608195552.GA3408@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148709>
 
-On Tue, Jun 8, 2010 at 19:32, Marc Branchaud <marcnarc@xiplink.com> wro=
-te:
-> On 10-06-08 12:09 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Tue, Jun 8, 2010 at 15:34, Marc Branchaud <marcnarc@xiplink.com> =
-wrote:
->>>
->>> So, back to the issue at hand: Sometimes I want static (non-trackin=
-g)
->>> submodules, and sometimes I want dynamic (tracking) submodules. =C2=
-=A0IMO, this
->>> makes =C3=86var's proposed configuration-based approach impractical=
-=2E =C2=A0(Of course,
->>> I'm not looking to replicate svn's externals...)
->>
->> I'm proposing that you be able to configure how you want to handle
->> submodules on a per-submodule basis.
+On Wed, Jun 9, 2010 at 1:25 AM, Petr Baudis <pasky@suse.cz> wrote:
+> On Wed, Jun 09, 2010 at 12:52:11AM +0530, Pavan Kumar Sunkara wrote:
+>> I am graining Gitweb::HTML into Gitweb::HTML::* to reduce circular
+>> dependancies of the modules.
 >
-> Yes, and that's precisely the problem. =C2=A0For a given submodule, s=
-ometimes it
-> should track a branch and sometimes it shouldn't. =C2=A0Having to edi=
-t a
-> configuration to change that is impractical.
+> I'm sorry, I don't understand. How is splitting up Gitweb::HTML to
+> submodules helping to reduce circular dependencies? I don't quite see
+> that right now. :-( Can you give a concrete example? Perhaps it would=
+ be
+> better to refactor the few problematic users instead of convoluting t=
+he
+> whole module structure because of the offenders.
 
-See below.
+Ok. I will be combining them into a single module.
 
->> The exact semantics that I proposed may be impractical for some
->> reason, but the idea is that it'd be opt in. We'd perhaps have
->> multiple approaches (via config) to submodules, instead of the curre=
-nt
->> monolithic scheme.
+>> =A0 Gitweb::Parse
 >
-> Opting in or out can't just be a monolithic setting for each submodul=
-e. =C2=A0A
-> submodule's branch tracking has to be on or off depending on the circ=
-umstances.
+> What will this module do?
 
-I don't really get what the objection is exactly. How should "branch
-tracking" be achieved do you think?
+This module contains all the parse_* subroutines
 
-Anyway, right now what we track is set in a monolithic fashion by a
-combination of a commit pointer in a tree and what's being versioned
-in .gitmodules. If you want to change anything that's where you have
-to do it.
+Gitweb::Format contains all the format_* subroutines
 
-Why should it be any different when the submodule isn't tracking a
-specific commit? I.e. when it's "track the latest version of $thingy,
-whatever that is", instead of "track version $version of $thingy".
-
->> So if you didn't want a svn:externals like "always track trunk"
->> repository you'd just not set your superproject up to treat the
->> submodule like that.
 >
-> Yes, of course.
+>> =A0 Gitweb::Util
 >
-> I guess what I'm saying is that duplicating svn's externals doesn't s=
-eem all
-> that useful to me and I'd rather see git do better. =C2=A0I've no obj=
-ection if
-> folks want to have such a feature, but to me it's not what "submodule=
-s
-> tracking branches" should be about.
+> What will this module do?
 
-Obviously I have no objection to doing better, but how specifically
-should that be done? If the semantics you want are "give me the latest
-version of $URL, whatever that is" then the SVN semantics are pretty
-good.
+This modules contains all the git utility functions.
+
+>> =A0 Gitweb::Action::* (All action subs like git_blame, git_log)
+>
+> Do we need to do this right now? I think moving huge chunks of the co=
+de
+> around like this right now is unneccessary and it might just enlarge =
+the
+> patch queue and delay you in your main GSoC efforts; perhaps we could=
+ do
+> this later when the dust settles a bit and we are sure that the rest =
+of
+> the modular structure we have introduced fits well?
+
+I still have until this week in the timeline. Don't I ?
+I strongly hope that I will be able to finalise the patch queue by
+this week and will move on to develop write functionalities.
+
+Thanks,
+Pavan.
