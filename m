@@ -1,153 +1,93 @@
-From: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>
-Subject: [PATCH v2 4/4] t/t8007: test textconv support for cat-file
-Date: Tue,  8 Jun 2010 15:49:18 +0200
-Message-ID: <1276004958-13540-5-git-send-email-clement.poulain@ensimag.imag.fr>
-References: <1276004958-13540-1-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276004958-13540-2-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276004958-13540-3-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276004958-13540-4-git-send-email-clement.poulain@ensimag.imag.fr>
+From: Dario Rodriguez <soft.d4rio@gmail.com>
+Subject: Re: [PATCH/RFC] Fix for default pager
+Date: Tue, 8 Jun 2010 10:49:51 -0300
+Message-ID: <AANLkTilvvpy4TBQF6g8boQL87FRB7kFDrVfYiHvOv6xu@mail.gmail.com>
+References: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
+	<1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>
+	<AANLkTinydWk3GqGDww8FS7pmW16jAVazRkmT_GsRMIhy@mail.gmail.com>
+	<20100608053507.GB15156@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 08 15:50:08 2010
+Cc: Ben Walton <bwalton@artsci.utoronto.ca>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 08 15:50:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLzBv-0003aO-TF
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 15:50:08 +0200
+	id 1OLzBw-0003aO-UV
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 15:50:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755305Ab0FHNtp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 09:49:45 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:38063 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755138Ab0FHNtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 09:49:43 -0400
-Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o58DfxpC024968
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 8 Jun 2010 15:41:59 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o58Dnfr1027967;
-	Tue, 8 Jun 2010 15:49:41 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o58DnfG6013691;
-	Tue, 8 Jun 2010 15:49:41 +0200
-Received: (from poulainc@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o58DnfaU013690;
-	Tue, 8 Jun 2010 15:49:41 +0200
-X-Mailer: git-send-email 1.6.6.7.ga5fe3
-In-Reply-To: <1276004958-13540-4-git-send-email-clement.poulain@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 08 Jun 2010 15:41:59 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o58DfxpC024968
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
+	id S1755325Ab0FHNtz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 09:49:55 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:65264 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755320Ab0FHNtx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 09:49:53 -0400
+Received: by bwz11 with SMTP id 11so1166352bwz.19
+        for <git@vger.kernel.org>; Tue, 08 Jun 2010 06:49:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5RUJlK95HJzY7dauM3n/dFI1OlshiVo7eXvKzz3BJyg=;
+        b=Paj2i2eiZmuEHD2Hz54MncXBC1xdzIKUHmr31m+z3ucYbXDVvAv5BgGhXlFhtby5Ns
+         CDDEoUTFu85TTaduLVnx9U+nvjam/1ak0hKPDMxDSjD5Q7l+Xk+ts0wWZKhOF7R+x/z8
+         vn+TDh6erwiqf3HDK6Oypke4AggD07B5wXsh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wzcn9AvJlcMQ5RC3L7qCAPV97jxu9ZdNHuw69BthmH/2oDZN42rezDX3Uhk/pAxYW6
+         /83I1+dYwCw3hceM4xQ4kXiI0J54e48FkkeRMyXj5HhtiXD2iDv6MX5xakfP7c1Ovf7o
+         jXx0jS7P7ZkS227XME/uaU2OnTnfq6n/uQa0Q=
+Received: by 10.204.162.133 with SMTP id v5mr7762040bkx.6.1276004991655; Tue, 
+	08 Jun 2010 06:49:51 -0700 (PDT)
+Received: by 10.204.46.80 with HTTP; Tue, 8 Jun 2010 06:49:51 -0700 (PDT)
+In-Reply-To: <20100608053507.GB15156@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148672>
 
-Test the correct functionning of textconv with cat-file <sha1:blob>
-and cat-file HEAD^ <file>. Test the case when no driver is specified
+On Tue, Jun 8, 2010 at 2:35 AM, Jeff King <peff@peff.net> wrote:
+> If you are downloading a binary, the package compiler should do one o=
+f
+> two things:
+>
+> =A01. indicate a package dependency on 'less'
+>
 
-Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>=20
-Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>=20
----
- t/t8007-cat-file-textconv.sh |   70 ++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 70 insertions(+), 0 deletions(-)
- create mode 100755 t/t8007-cat-file-textconv.sh
+but... git will be uninstalled if you happen to uninstall less.
 
-diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.s=
-h
-new file mode 100755
-index 0000000..38ac05e
---- /dev/null
-+++ b/t/t8007-cat-file-textconv.sh
-@@ -0,0 +1,70 @@
-+#!/bin/sh
-+
-+test_description=3D'git cat-file textconv support'
-+. ./test-lib.sh
-+
-+cat >helper <<'EOF'
-+#!/bin/sh
-+sed 's/^/converted: /' "$@"
-+EOF
-+chmod +x helper
-+
-+test_expect_success 'setup ' '
-+	echo test >one.bin &&
-+	git add . &&
-+	GIT_AUTHOR_NAME=3DNumber1 git commit -a -m First --date=3D"2010-01-01=
- 18:00:00" &&
-+	echo test version 2 >one.bin &&
-+	GIT_AUTHOR_NAME=3DNumber2 git commit -a -m Second --date=3D"2010-01-0=
-1 20:00:00"
-+'
-+
-+cat >expected <<EOF
-+fatal: git cat-file --textconv: unable to run textconv on :one.bin
-+EOF
-+
-+test_expect_success 'no filter specified' '
-+	git cat-file --textconv :one.bin 2>result
-+	test_cmp expected result
-+'
-+
-+test_expect_success 'setup textconv filters' '
-+	echo "*.bin diff=3Dtest" >.gitattributes &&
-+	git config diff.test.textconv ./helper &&
-+	git config diff.test.cachetextconv false
-+'
-+
-+cat >expected <<EOF
-+test version 2
-+EOF
-+
-+test_expect_success 'cat-file without --textconv' '
-+	git cat-file blob :one.bin >result &&
-+	test_cmp expected result
-+'
-+
-+cat >expected <<EOF
-+test
-+EOF
-+
-+test_expect_success 'cat-file without --textconv on previous commit' '
-+	git cat-file -p HEAD^:one.bin >result &&
-+	test_cmp expected result
-+'
-+
-+cat >expected <<EOF
-+converted: test version 2
-+EOF
-+
-+test_expect_success 'cat-file --textconv on last commit' '
-+	git cat-file --textconv :one.bin >result &&
-+	test_cmp expected result
-+'
-+
-+cat >expected <<EOF
-+converted: test
-+EOF
-+
-+test_expect_success 'cat-file --textconv on previous commit' '
-+	git cat-file --textconv HEAD^:one.bin >result &&
-+	test_cmp expected result
-+'
-+test_done
---=20
-1.7.1.202.g79415.dirty
+> =A02. set DEFAULT_PAGER to 'more' (or whatever is appropriate for you=
+r
+> =A0 =A0 system)
+>
+
+and I know it's a very nice fallback default, but you still depending
+on the pager, and will display nothing and return 0 if 'more' fails to
+execute.
+
+Something needs to be changed... if the sane way is to keep default
+pager (almost setting 'more') instead of auto-detection... then we
+must say something to the user when the pager fails to execute. (*)
+Actually 'git' display nothing... and returns 0.
+
+> Yes, auto-detection means we can more flexibly "upgrade" to less when
+> the package suddenly appears. But if you really care about your pager=
+,
+> why not just set $PAGER?
+>
+
+good point, I agree. But again, back to (*), we must correct
+something... the other way is that if pager fails to execute, we
+cannot simply return 0.
+
+I could submit a patch for this, may be is a little bit better (or simp=
+ler).
