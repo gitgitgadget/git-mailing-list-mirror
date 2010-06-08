@@ -1,115 +1,113 @@
-From: Dario Rodriguez <soft.d4rio@gmail.com>
-Subject: Re: [PATCH/RFC] Fix for default pager
-Date: Tue, 8 Jun 2010 17:44:25 -0300
-Message-ID: <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
-References: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
-	<1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>
-	<AANLkTinydWk3GqGDww8FS7pmW16jAVazRkmT_GsRMIhy@mail.gmail.com>
-	<20100608053507.GB15156@coredump.intra.peff.net>
-	<AANLkTilvvpy4TBQF6g8boQL87FRB7kFDrVfYiHvOv6xu@mail.gmail.com>
-	<4C0E5103.7030501@viscovery.net>
-	<AANLkTilWg8hw5j20o-xGsVO-q_OeSmtKEKAO6O416qvH@mail.gmail.com>
-	<4C0E6810.3070301@viscovery.net>
-	<AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com>
-	<4C0E932B.3010702@viscovery.net>
+From: Carl Worth <cworth@cworth.org>
+Subject: Re: Make "git am" properly unescape lines matching ">>*From "
+Date: Tue, 08 Jun 2010 13:47:39 -0700
+Message-ID: <87d3w1jlp0.fsf@yoom.home.cworth.org>
+References: <87hbldjo0s.fsf@yoom.home.cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Ben Walton <bwalton@artsci.utoronto.ca>,
-	git <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jun 08 22:44:40 2010
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 08 22:47:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM5ey-0005te-9d
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:44:32 +0200
+	id 1OM5iG-00087r-18
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756297Ab0FHUo1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 16:44:27 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51553 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755330Ab0FHUo1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 16:44:27 -0400
-Received: by bwz11 with SMTP id 11so1303925bwz.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 13:44:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RKDtaATTBAaGvyrlrMOwndv1DZ3kIY5Mkw0oHCQFjDc=;
-        b=fDoNbBEFFfqjEVotlyiuSPqdGymwuWM9Z4B7gJU92vvEmbyavGsu1JHr7RNSJxb3qa
-         4NFNMEzwJnhexexyycwo82XjkCcFTGQ1E/8PRGGdzjfdZysx8Uj//SYrwtC+WV3h/Boh
-         +URjOepdMw8G/FMHeyJtixfiB+ryLZ7CMcs60=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uxV9sMpkyBo12cMzL432+fnik7WDQWSO6ZKUNHCuR3XK12zrTgvKG14pvwR0PeWIey
-         QZRgUQVFMGtTwVYHY5Axaf0bLMeVd68pdx2gJgGZwmKS2/Dsnmx1ZePQaVtMSLKNkwJH
-         ZLz3ufL0nepnvqSwjMXvGbNgwugohDGYSiy3I=
-Received: by 10.204.74.2 with SMTP id s2mr8219130bkj.28.1276029865292; Tue, 08 
-	Jun 2010 13:44:25 -0700 (PDT)
-Received: by 10.204.46.80 with HTTP; Tue, 8 Jun 2010 13:44:25 -0700 (PDT)
-In-Reply-To: <4C0E932B.3010702@viscovery.net>
+	id S1756405Ab0FHUrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 16:47:51 -0400
+Received: from u15218177.onlinehome-server.com ([74.208.220.233]:43641 "EHLO
+	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756344Ab0FHUrv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 16:47:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by olra.theworths.org (Postfix) with ESMTP id 703204196F0;
+	Tue,  8 Jun 2010 13:47:50 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
+Received: from olra.theworths.org ([127.0.0.1])
+	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id SKFZ2ZTiiT3l; Tue,  8 Jun 2010 13:47:40 -0700 (PDT)
+Received: from yoom.home.cworth.org (localhost [127.0.0.1])
+	by olra.theworths.org (Postfix) with ESMTP id 14C4E431FC1;
+	Tue,  8 Jun 2010 13:47:40 -0700 (PDT)
+Received: by yoom.home.cworth.org (Postfix, from userid 1000)
+	id C079F568FB5; Tue,  8 Jun 2010 13:47:39 -0700 (PDT)
+In-Reply-To: <87hbldjo0s.fsf@yoom.home.cworth.org>
+User-Agent: Notmuch/0.3.1-53-gd64d0cc (http://notmuchmail.org) Emacs/23.1.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148713>
 
-On Tue, Jun 8, 2010 at 3:59 PM, Johannes Sixt <j.sixt@viscovery.net> wr=
-ote:
-> Your repository has only 2 commits and its git log output is less tha=
-n 1kB,
-> i.e., sufficiently small to fit in a pipe's buffer.
->
-> git log calls start_command to fork() the pager. The OS's scheduler d=
-oes not
-> run the newly forked process immediately; rather, git log goes on wit=
-h its
-> own business, writing output to the pipe that connects to the pager. =
-Because
-> your repository is so small, git log never has to wait that the pager=
- drains
-> the pipe. git log finally reaches exit(0). At this time, an atexit() =
-handler
-> (wait_for_pager()) finally calls finish_command() to wait for the pag=
-er.
->
-> This is the first time that the forked child process can run. Only no=
-w it
-> turns out that the pager cannot be run. The child process closes the =
-pipe
-> and exits with an error, but it is too late: wait_for_pager() drops t=
-he
-> error return code of finish_command() to the floor. The parent proces=
-s (git
-> log) can complete with the exit code that it was given earlier, 0.
->
-> Repeat your experiment with ./git log in git.git itself to see the
-> difference.
->
-> -- Hannes
->
+--=-=-=
+Content-Transfer-Encoding: quoted-printable
 
-Capisco & touch=E9, with much more than 1k of info, git show ends with =
-a
-"Broken Pipe"... seems hard to detect for little, recently started
-projects since I added more than 60k of scripts and I need to do 'git
-show' to understand that the problem is a broken pipe.
+On Tue, 08 Jun 2010 12:57:23 -0700, Carl Worth <cworth@cworth.org> wrote:
+> I'm adding support to notmuch[1] to more easily pipe a thread full of
+> But I noticed that "git am" wasn't removing any of these added '>'
+> characters, so I was getting corrupted commit messages.
 
-Now, let me think about it... do we need the pager_preexec function? I
-mean... it works fine without it, and the function is there because of
-a faulty 'less'.
+I've also noticed that format-patch is generating bogus mbox files
+without any escaping. (The only way it gets away with this is that
+mailsplit only treats "From " lines as separators if they end with
+something that looks quite a bit like the output of asctime.)
 
-My problem is obvioulsly solved by adding PAGER=3Dmore in my default
-environment, but I think this could be a litle bit embarrassing for a
-new user, mostly in environments such this AIX :P
+This does mean that without changing format-patch, the patched "git am"
+could corrupt a commit message. This could happen if the commit message
+originally contained a line matching "^From " which would previously be
+passed through directly but will now be un-escaped to "From ".
 
-Cheers,
-Dario
+This does seem less likely than a message containing a line matching
+"^From " (which is the case that gets corrupted with an unpatched "git
+am") so one option would be to ignore this, and apply my patch. That's
+what I recommend for now.
+
+Alternately, we could fix format-patch to add the correct, (and
+reversible), escaping that is now expected by git-am.
+
+Any attempt to add escaping to format-patch should recognize that many
+users use the output of format-patch directly as content handed to their
+MUA. Such users will *not* want escaping, (they are effectively treating
+the format-patch output as a bare email message, not an mbox).
+
+So if someone were to attempt this, I'd suggest first changing
+format-patch to actually generate bare email messages when generating
+files containing only a single message. This is instead of the invalid
+mbox files it is generating now. This would be as simple as not emitting
+the initial "From " line.
+
+Then, when generating an actual mbox with multiple files, format-patch
+should do the correct escaping, (which is now expected by "git am"), and
+all of these cases of potential commit-message corruption should be
+eliminated.
+
+The other thing that would need to be fixed in this approach is to fix
+"git send-email" to do the right thing with a bare email message. From a
+quick glance at the code, it appears to be looking for an initial "From
+" line, even though it doesn't appear to handle an mbox with multiple
+messages. It looks for this line to distinguish an email message from
+some custom "send lots of email" format. It should be simple to instead
+distinguish a bare email message from the "send lots of email" format by
+a first line which looks like an email header.
+
+=2DCarl
+
+=2D-=20
+carl.d.worth@intel.com
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iD8DBQFMDqxr6JDdNq8qSWgRAn8vAJ9QehvLWIwlyAk3XpD6rzZn1fvSxACeKL0C
+PyQGnYBfDtKnzCfgMvfh7JQ=
+=AvHB
+-----END PGP SIGNATURE-----
+--=-=-=--
