@@ -1,144 +1,93 @@
-From: =?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>
-Subject: Re: [PATCH v2 1/4] sha1_name: add get_sha1_with_context()
-Date: Wed, 9 Jun 2010 00:30:31 +0200
-Message-ID: <AANLkTinI_ghLE5U3tQ0JFmvuU8DySLFtdl03sv0uW-Ab@mail.gmail.com>
-References: <1276004958-13540-1-git-send-email-clement.poulain@ensimag.imag.fr>
-	<1276004958-13540-2-git-send-email-clement.poulain@ensimag.imag.fr>
-	<vpqiq5t5rvd.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Making submodules "track" branches
+Date: Tue, 08 Jun 2010 16:09:31 -0700
+Message-ID: <7vbpblruj8.fsf@alter.siamese.dyndns.org>
+References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com>
+ <201006080912.31448.johan@herland.net> <4C0E6A8A.70608@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 09 00:30:40 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 09 01:10:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM7Jf-0007P8-7o
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 00:30:39 +0200
+	id 1OM7wZ-0000PD-EP
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 01:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932201Ab0FHWae convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 18:30:34 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:62385 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756499Ab0FHWad convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 18:30:33 -0400
-Received: by wyf28 with SMTP id 28so490142wyf.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 15:30:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=NalFEYfiby+zeHODgqC+/1mIJJOVIWm8D+oH6IMqdWU=;
-        b=eZGg34FqgmQjS3FC/9ieHrH8qZozxNPmRhJjOqox5MNH48+o9Bm+Hb0xGZ7+JepkJr
-         rscyVTTk9/Vtt/0ycMssXGlEd1JyKEaiVD8ceo8H+KXbUNOTwOz6F702YBsgDsk2Oo77
-         +BbWYXoJtz9pxPs6qtiIgWQS0jz+YCFYfIq2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=DkVxW4C8Blyoyw191MT1Zd+Ll5lrPGnj/76KISBeAN1gTsMPQb/JojJtHu9MaNslKo
-         +282CXGtZLAyB8NyrtMguEvlz68j06RCI6OochyokCEAWZ2Gg82qB/eK5v/RaxIVCErM
-         Vdd9cxjAULlnvq6lPbDUKhsDdvykdLIk/Sq5M=
-Received: by 10.216.154.74 with SMTP id g52mr4097127wek.106.1276036231577; 
-	Tue, 08 Jun 2010 15:30:31 -0700 (PDT)
-Received: by 10.216.90.149 with HTTP; Tue, 8 Jun 2010 15:30:31 -0700 (PDT)
-In-Reply-To: <vpqiq5t5rvd.fsf@bauges.imag.fr>
-X-Google-Sender-Auth: niXpquEKaCGsEqiL8ztCv5pi6ZU
+	id S1752662Ab0FHXJn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 19:09:43 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54734 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751961Ab0FHXJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 19:09:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 211DEBAEE3;
+	Tue,  8 Jun 2010 19:09:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=vN+oNQP1InbOSUCC4UcQl7GEHug=; b=xgnwphT0OQiwN/EcrJhHRO7
+	a21qTY6ct1ER9ybQZqkGxooW1Syd9UaBy87thzXSug7hzEYd2aP4i4hXhEG7mVJI
+	lTpOekEIpKB7HiBtfitLwLpiVz0JC+DssnbNE+Q68hMJSCnL+DUP9zeyOx6LQ6NQ
+	6XC9G70vG+JW6+CT5nss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=TuYqbiRBbZz+tjTxAWgqo/jr0xByMBPAgc2w0m4ftAKg8YW+e
+	Y0QZaPYZ4Eq1NOQQtlNYDEMeu7qzZ2z78nhc346ySExYrNz+/WUkcklQx5wJEQKt
+	0NME0lc3FZDQQIFdgfvcw9CZXX0AY2WxTDzy2/U4UmKkTTTfZ5BQA8yl+c=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CF94ABAEE2;
+	Tue,  8 Jun 2010 19:09:37 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3B5EBAEE1; Tue,  8 Jun
+ 2010 19:09:32 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E903275E-7352-11DF-ABB3-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148731>
 
-Le 8 juin 2010 19:57, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> a =C3=
-=A9crit :
-> This patch produces uncompilable code for me:
->
-> cc1: warnings being treated as errors
-> In file included from builtin.h:6,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from fast-imp=
-ort.c:147:
-> cache.h: In function =E2=80=98get_sha1_with_context=E2=80=99:
-> cache.h:748: error: implicit declaration of function =E2=80=98get_sha=
-1_with_context_1=E2=80=99
->
-> Forgot to add get_sha1_with_context_1 to cache.h?
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Uh, we compiled it almost ten times on both our pc and ensibm (our
-school server), whithout any problems. Seems that we need to check our
-compilation configurations.
+> Don't record a commit in the first place, following a branch is not bound
+> to a special commit, so pretending to do that might do more harm than good.
+> Just putting the 0-hash there might be the solution.
 
-> I'm not an expert in struct initializers, but after doing experiments
-> with GCC, this raises a warning
->
-> builtin/cat-file.c:90: error: missing braces around initializer
-> builtin/cat-file.c:90: error: (near initialization for =E2=80=98obj_c=
-ontext.tree=E2=80=99)
->
-> and the behavior is to flatten the arrays contained inside the
-> structure. So, your OBJECT_CONTEXT_INIT initializes the 3 first bytes
-> of tree to 0, and leaves other fields uninitialized.
->
-> You probably want something like this instead if you want to
-> initialize the whole struct:
->
-> {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-> =C2=A00, 0, 0, 0, 0, 0, 0, 0, 0, 0}, "", 0}
+Ugh.  Even though I understand that in some scenarios you would want to
+say "I don't care what commit is used for this submodule---just use the
+tip of the branch 'fred'", I don't think you want to use 0{40} in the
+superproject.  I think it would be Ok to add such a note to .gitmodules in
+the superproject, but I also think we should still record which _exact_
+commit was used to test and validate such a commit in the superproject
+when it was made.
 
-As you pointed out in your second answer, initialization is maybe no
-required, we have to check it tomorrow.
-Otherwise, an easy way to do it can be something like :
-void object_context_init(struct object_context *oc)
-{
-	memset(oc, 0, sizeof(*oc));
-}
+If you clone a superproject that contains such a submodule from an
+upstream, keeping them up-to-date while working on your own change, it is
+perfectly fine to choose to use whatever random commit that happens to be
+at the tip of 'fred' branch in a submodule (and needless to say, that
+commit might be your own commit that nobody else has, if you have been
+actively working in that submodule, that you haven't published), that is
+different from what the person who created the commit in the superproject
+had.  But at least you would need to be able to tell that the result of a
+build from such a state is different from what the superproject had.
+Recording 0{40} would make the information contained in the superproject
+tree meaningless.
 
->> --- a/sha1_name.c
->> +++ b/sha1_name.c
->> @@ -933,8 +933,8 @@ int interpret_branch_name(const char *name, stru=
-ct strbuf *buf)
->> =C2=A0 */
->> =C2=A0int get_sha1(const char *name, unsigned char *sha1)
->> =C2=A0{
->> - =C2=A0 =C2=A0 unsigned unused;
->> - =C2=A0 =C2=A0 return get_sha1_with_mode(name, sha1, &unused);
->> + =C2=A0 =C2=A0 struct object_context unused;
->> + =C2=A0 =C2=A0 return get_sha1_with_context(name, sha1, &unused);
->> =C2=A0}
->
-> This changes doesn't seem harmful, but it doesn't seem useful to me
-> either: get_sha1_with_mode still exists, right?
-
-Right. But the aim was to skip one function call (see the call-stack be=
-low)
-_with_mode =3D> _with_mode_1 =3D> _with_context_1
-whereas:
- _with_context =3D> _with_context_1
-
-> What does orc stand for? I understand "oc" for "object context", but
-> I'm curious about the r ;-).
-
-"orc" was for "object resolve context". This is an artifact of our
-previous version. We'll change it, it won't bother you no more ;-)
-
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 orc->path[sizeof(orc->pa=
-th)] =3D '\0';
->> +
->
-> Isn't this an off-by-one? The last element of an array of size N is
-> array[N-1] ...
->
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 orc->path[sizeof(orc->path)] =3D '\0';
->
-> Same here.
-
-That's true. Stupid error, we copied this line without checking it.
+Wouldn't it be enough to say --ignore-submodules for your day-to-day work,
+without lying in the gitlink entry in the superproject tree?  An entry
+"submodule.foo.branch = fred" in your .gitmodules will still tell your
+local git to update the submodule worktree to work on 'fred' branch.  At
+least, an arrangement like that would allow the build infrastructure to
+use --no-ignore-submodules when running its equivalent of GIT-VERSION-GEN
+to notice that what you are building is using something different from
+what the superproject specified to use in the submodule, while not bugging
+you with differences you do not care about (or you already know about and
+are irrelevant to the change you are working on).
