@@ -1,128 +1,116 @@
-From: Carl Worth <cworth@cworth.org>
-Subject: [PATCH] format-patch: Emit bare email rather than mbox for single messages.
-Date: Tue,  8 Jun 2010 16:43:35 -0700
-Message-ID: <1276040615-26008-1-git-send-email-cworth@cworth.org>
-Cc: Carl Worth <cworth@cworth.org>
-To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	"H. Peter Anvin" <hpa@zytor.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 01:44:25 2010
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 0/2] Add optional parameters to the diff option
+ "--ignore-submodules"
+Date: Wed, 09 Jun 2010 01:49:21 +0200
+Message-ID: <201006090149.22027.johan@herland.net>
+References: <4C0E7037.8080403@web.de> <201006090011.14995.johan@herland.net>
+ <4C0EC201.9060309@web.de>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 09 01:49:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM8T2-0006Gi-0o
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 01:44:24 +0200
+	id 1OM8Xx-0008Hx-P3
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 01:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014Ab0FHXnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 19:43:49 -0400
-Received: from u15218177.onlinehome-server.com ([74.208.220.233]:49675 "EHLO
-	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752971Ab0FHXnt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 19:43:49 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 61C114196F3;
-	Tue,  8 Jun 2010 16:43:48 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xHfHhy9v3TUI; Tue,  8 Jun 2010 16:43:36 -0700 (PDT)
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 4176C431FC1;
-	Tue,  8 Jun 2010 16:43:36 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4
+	id S1754120Ab0FHXtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 19:49:25 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:46875 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752431Ab0FHXtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 19:49:24 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L3P0054YZIBUGC0@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 09 Jun 2010 01:49:23 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id F09D81EA55B6_C0ED702B	for <git@vger.kernel.org>; Tue,
+ 08 Jun 2010 23:49:22 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 500981EA3EC9_C0ED702F	for <git@vger.kernel.org>; Tue,
+ 08 Jun 2010 23:49:22 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L3P00B3QZIAJN10@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 09 Jun 2010 01:49:22 +0200 (MEST)
+User-Agent: KMail/1.13.3 (Linux/2.6.33-ARCH; KDE/4.4.4; x86_64; ; )
+In-reply-to: <4C0EC201.9060309@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148737>
 
-We don't need an mbox when generating a file with just a single
-message. And tools tools such as "git am" and "git send-email" already
-handle a bare email rather than an mbox just fine. Users wanting to
-manually insert the output into an MUA are not likely to want an
-mbox-formatted file either.
+On Wednesday 09 June 2010, Jens Lehmann wrote:
+> Am 09.06.2010 00:11, schrieb Johan Herland:
+> > On Tuesday 08 June 2010, Jens Lehmann wrote:
+> >> After thinking some time about peoples expectations and troubles
+> >> with the recursive scanning of submodules, I came up with this:
+> >> 
+> >> What about expanding the "--ignore-submodules" option of the git diff
+> >> family with three parameters:
+> >> 
+> >> --ignore-submodules=all : Same behavior as "--ignore-submodules",
+> >> 
+> >>   submodules show never up as modified.
+> >> 
+> >> --ignore-submodules=untracked : Don't consider submodules as modified
+> >> 
+> >>   when they only contain untracked files, but do if the commits in the
+> >>   superproject are different or tracked content is modified.
+> >> 
+> >> --ignore-submodules=dirty : Don't consider submodules as modified
+> >> 
+> >>   when their work tree is dirty, no matter why. This is the pre 1.7.0
+> >>   behavior and doesn't recurse into submodules at all.
+> > 
+> > Pardon my ignorance: Does this make "dirty" a superset of "untracked"?
+> > Or are they orthogonal. And how does "all" compare to "dirty"? Are
+> > they synonyms, or is "all" a superset of "dirty"?
+> 
+> Sorry I didn't make that clear enough: "all" is a superset of "dirty" and
+> "dirty" is a superset of "untracked".
+> 
+> There are currently (since 1.7.0) three reasons a submodule is considered
+> dirty:
+> 
+> 1) It contains untracked content
+> 2) It contains modified tracked content
+> 3) It contains newer commits than those committed in the superproject
 
-Finally, git's current mbox formatting is not robust, (does not yet
-deal well with a commit message containing a line matching "^From ").
+I guess 3) really means that the submodule's HEAD points to a _different_ 
+(not necessarily _newer_) commit than what's referenced in the superproject.
 
-For all of these reasons, it's better to just generate an email
-message rather than an mbox when generating a file with a single
-message.
+> "all" would ignore 1), 2) & 3)
+> "dirty" would ignore 1) & 2)
+> "untracked" would ignore 1)
 
-Note that "format-patch --stdout" will still use the (less than
-totally robust) mbox format, even if there is only a single
-commit. This is because "git rebase" uses "format-patch --stdout" with
-"am --rebasing" which looks at the generated "From " line to find the
-commit identifier that is embedded there.
+...and just to complete my understanding of this, 3) requires only checking 
+the submodule's current HEAD, while 1) and 2) require traversing its work 
+tree (i.e. the equivalent of a 'git status'), hence the potential 
+expensiveness.
 
-Signed-off-by: Carl Worth <cworth@cworth.org>
----
+Also, I guess 2) includes both staged and unstaged modifications to tracked 
+content?
 
-This is as recently discussed by myself and H. Peter Anvin on the
-list.
+Thanks for your help. All the ideas in your cover letter seem good to me.
 
-Note that I originally claimed that git-send-email would need to be
-updated to support this mode, but I found that it actually already has
-the necessary code.
 
-Also, this patch doesn't add any new test cases only because the test
-suite seems to provide good coverange of "git format-patch" usage
-already, (generating and using both mbox and non-mbox output after
-this patch). Indeed the test suite showed me a problem I had with
-"git rebase" in an early version of this patch.
+...Johan
 
- builtin/log.c |    4 +++-
- log-tree.c    |    6 ++++--
- revision.h    |    3 ++-
- 3 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 976e16f..adbec9f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1205,7 +1205,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		get_patch_ids(&rev, &ids, prefix);
- 	}
- 
--	if (!use_stdout)
-+	if (use_stdout)
-+		rev.format_mbox = 1;
-+	else
- 		realstdout = xfdopen(xdup(1), "w");
- 
- 	if (prepare_revision_walk(&rev))
-diff --git a/log-tree.c b/log-tree.c
-index d3ae969..6aab273 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -217,8 +217,10 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
- 		subject = "Subject: ";
- 	}
- 
--	printf("From %s Mon Sep 17 00:00:00 2001\n", name);
--	graph_show_oneline(opt->graph);
-+	if (opt->format_mbox) {
-+		printf("From %s Mon Sep 17 00:00:00 2001\n", name);
-+		graph_show_oneline(opt->graph);
-+	}
- 	if (opt->message_id) {
- 		printf("Message-Id: <%s>\n", opt->message_id);
- 		graph_show_oneline(opt->graph);
-diff --git a/revision.h b/revision.h
-index 568f1c9..10cc747 100644
---- a/revision.h
-+++ b/revision.h
-@@ -88,7 +88,8 @@ struct rev_info {
- 			abbrev_commit:1,
- 			use_terminator:1,
- 			missing_newline:1,
--			date_mode_explicit:1;
-+			date_mode_explicit:1,
-+			format_mbox:1;
- 	unsigned int	disable_stdin:1;
- 
- 	enum date_mode date_mode;
 -- 
-1.7.0.4
+Johan Herland, <johan@herland.net>
+www.herland.net
