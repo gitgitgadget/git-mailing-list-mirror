@@ -1,85 +1,86 @@
-From: "H. Peter Anvin" <hpa@zytor.com>
-Subject: Re: Make "git am" properly unescape lines matching ">>*From "
-Date: Tue, 08 Jun 2010 13:50:08 -0700
-Message-ID: <4C0EAD00.8000706@zytor.com>
-References: <87hbldjo0s.fsf@yoom.home.cworth.org>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [RFC/PATCH 1/4] gitweb: Move subroutines to Gitweb::Config
+ module
+Date: Tue, 8 Jun 2010 22:50:29 +0200
+Message-ID: <20100608205029.GB3408@machine.or.cz>
+References: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com>
+ <201006081446.22587.jnareb@gmail.com>
+ <20100608141321.GP20775@machine.or.cz>
+ <AANLkTiksOpUqxGc7Lo4clrLwOF6GvkT7CZH5CVeirtBr@mail.gmail.com>
+ <20100608195552.GA3408@machine.or.cz>
+ <AANLkTimKsdn8Vww_4U4YQDPlpr_BgbVszwG64lEYl-cE@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Tue Jun 08 22:50:22 2010
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 08 22:50:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM5kZ-0001AX-Md
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:50:20 +0200
+	id 1OM5ks-0001Nu-BY
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:50:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755609Ab0FHUuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 16:50:12 -0400
-Received: from terminus.zytor.com ([198.137.202.10]:57987 "EHLO mail.zytor.com"
+	id S1755732Ab0FHUud convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 16:50:33 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:48684 "EHLO machine.or.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753848Ab0FHUuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 16:50:11 -0400
-Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
-	(authenticated bits=0)
-	by mail.zytor.com (8.14.3/8.14.3) with ESMTP id o58Ko8oq031374
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Tue, 8 Jun 2010 13:50:08 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Thunderbird/3.0.4
-In-Reply-To: <87hbldjo0s.fsf@yoom.home.cworth.org>
+	id S1753642Ab0FHUuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 16:50:32 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 6EC4386208F; Tue,  8 Jun 2010 22:50:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimKsdn8Vww_4U4YQDPlpr_BgbVszwG64lEYl-cE@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148715>
 
-On 06/08/2010 12:57 PM, Carl Worth wrote:
-> I'm adding support to notmuch[1] to more easily pipe a thread full of
-> patches to "git am". So I added support for notmuch to format a thread
-> (or any search) as an mbox.
-> 
-> When I did that, I was careful to escape lines from the bodies of email
-> messages that begin with zero or more '>' characters followed
-> immediately by "From " (From_ lines) by adding an initial '>'. [2]
-> 
-> But I noticed that "git am" wasn't removing any of these added '>'
-> characters, so I was getting corrupted commit messages.
-> 
-> I'll follow up this message with a patch that fixes that by making
-> git-mailsplit un-escape these lines. It's careful to do this only when
-> processing an actual mbox, using the existing detection of a bare email
-> message and not doing any un-escaping in that case.
-> 
-> I'll also follow up with a new test for both cases, (using "git am" with
-> both an mbox with escaped From_ lines and an email message without
-> escaped From_ lines).
-> 
+On Wed, Jun 09, 2010 at 01:54:34AM +0530, Pavan Kumar Sunkara wrote:
+> On Wed, Jun 9, 2010 at 1:25 AM, Petr Baudis <pasky@suse.cz> wrote:
+> > On Wed, Jun 09, 2010 at 12:52:11AM +0530, Pavan Kumar Sunkara wrote=
+:
+> >> =A0 Gitweb::Parse
+> >
+> > What will this module do?
+>=20
+> This module contains all the parse_* subroutines
 
-The problem with that is that it is not universally applied.  For what
-I've seen, some mbox-based programs simply rely on there being a
-Content-Length: header and don't need From lines to be escaped at all
-(and don't do anything useful if they are), some do the leading > trick
-(usually not reversably at all).
+Ok, that makes sense. It might be also possible to have them in
+Gitweb::Git, but I see href() invocations and such that would probably
+create layering violations.
 
-As far as I can tell, the Content-Length: is the most reliably handled
-format and probably is what we should use.  This is the "mboxcl2" format
-in your list.[*]  Unfortunately "mboxcl2" and "mboxrd" cannot be
-distinguished from each other by inspection, which is a major defect of
-both formats.
+> Gitweb::Format contains all the format_* subroutines
 
-The statement that "the entire "mbox" family of mailbox formats is
-gradually becoming irrelevant, and of only historical interest" is also
-pretty silly -- mbox is still the preferred format for moving groups of
-email from MUA to MUA, even if it is no longer used for active live
-spool storage.  But, of course, you knew that already.
+Here, I'm less decided. I would have put these in Gitweb::HTML, but I
+have no hard opinion, maybe that's clumping things too much - so no nac=
+k
+from me personally.
 
-	-hpa
+> >> =A0 Gitweb::Util
+> >
+> > What will this module do?
+>=20
+> This modules contains all the git utility functions.
 
-[*] There are apparently some MTA/MUAs which simply bypass the entire
-problem by base64-encoding any email that contains /^From /, just as if
-it contained NUL bytes.  It's a heavyweight, but thoroughly unambiguous
-way of dealing with the problem.
+Can you give an example, please?
+
+> I still have until this week in the timeline. Don't I ?
+> I strongly hope that I will be able to finalise the patch queue by
+> this week and will move on to develop write functionalities.
+
+Sure, my only concern is that if the queue of patches your future work
+will depend on gets too long and gets delayed too much in merging in,
+it will get much more difficult to produce further patches, get them
+reviewed and get them on the merging track.
+
+--=20
+				Petr "Pasky" Baudis
+The true meaning of life is to plant a tree under whose shade
+you will never sit.
