@@ -1,91 +1,113 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [RFT PATCH 2/2] win32: optimize pthread_cond_broadcast
-Date: Tue, 08 Jun 2010 18:37:06 +0200
-Message-ID: <4C0E71B2.1060904@gnu.org>
-References: <1275917892-16437-1-git-send-email-bonzini@gnu.org> <1275917892-16437-3-git-send-email-bonzini@gnu.org> <4C0E7015.8030504@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: origin/branchname and tracking branch pointing to different 
+ commits?
+Date: Tue, 08 Jun 2010 10:25:12 -0700
+Message-ID: <7vljaptp1j.fsf@alter.siamese.dyndns.org>
+References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
+ <201001071813.01187.trast@student.ethz.ch>
+ <76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
+ <76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
+ <7v7hrtzbau.fsf@alter.siamese.dyndns.org>
+ <AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Jun 08 18:37:21 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 08 19:25:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM1nj-0002R3-1d
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 18:37:19 +0200
+	id 1OM2YL-0007Kd-Tz
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 19:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462Ab0FHQhO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 12:37:14 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:52214 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755055Ab0FHQhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 12:37:13 -0400
-Received: by wyf28 with SMTP id 28so214538wyf.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 09:37:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=QTejkfQLoYQK1U3Yifk8oyd5dE3hAoeM8lNPnAn8+Wk=;
-        b=EOTM1NISMHt2XZQj77AHZ1AYoDzYpv/4bXAZe+rdJrnk4BTUQCDuipQhjNaLafm91h
-         +kUCVvlpCbxL6o/WsUPNNlmIi0ec3aPD6OXzNmDHPGukRXl2h9vZM8kEZkTZFGOMK0xX
-         mjDdS9b1VklL+7tb8ssOvnVXBjVY5cN3+08Zo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=t7pC1Q18ZjTt+poAzeV2dOagAE55MEnq0EyXDYr4Cb+Uy7PGPApThEWcutjIAxHDvd
-         ehFUfTAfE/O76RpTUMAjLw+e8mhU0KoIvqN6FcPPQNbBc166OW2ZiEFgQWSRIKaJAS9Y
-         G65X62/9rSKjCUZH/06dF5/9LfhgFN/YNu0h8=
-Received: by 10.227.136.147 with SMTP id r19mr4408271wbt.218.1276015030929;
-        Tue, 08 Jun 2010 09:37:10 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
-        by mx.google.com with ESMTPS id u36sm48102287wbv.0.2010.06.08.09.37.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Jun 2010 09:37:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
-In-Reply-To: <4C0E7015.8030504@viscovery.net>
+	id S1754901Ab0FHRZ0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jun 2010 13:25:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61492 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754366Ab0FHRZX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 13:25:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 889B5BA6B7;
+	Tue,  8 Jun 2010 13:25:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=TPcQiVQek8Fv
+	Q9vqVURvEQktbH8=; b=n/rdo2daBrKC0D8VAxsEYdwrJw8psVv1whleouFMWe5N
+	xlA4SfdBonPSosVvA0jEzSsAHuuoR57Sy6RhSZh5lE42LYG0HSy1T8X4JqPPBWVu
+	ZAoJOff4KvjQAnh+f2fV6DX/lxeymY9SmhfkyebiX8C1ABavSByS8sMYXExwcpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QXX30X
+	GSGztL+etnxf7q41W7hww4DNe2AkL0HO0a6qHbYhLgBUTq4B6+8WB4EzAxPzAogn
+	SoRQBa290N4p98KTiaGsPclfGykSnyrZlfM4OLKvVjSUXEGYQDbaAtBl1AWqoM+k
+	6oUKEhV/g/o9srSUtxl7iKiTWdkgMy7Rp+y3Y=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 560B9BA6B6;
+	Tue,  8 Jun 2010 13:25:18 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78E27BA6B4; Tue,  8 Jun
+ 2010 13:25:14 -0400 (EDT)
+In-Reply-To: <AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
+ (Eugene Sajine's message of "Tue\, 8 Jun 2010 12\:27\:14 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CEFD92C0-7322-11DF-94D0-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148693>
 
-On 06/08/2010 06:30 PM, Johannes Sixt wrote:
-> Am 07.06.2010 15:38, schrieb Paolo Bonzini:
->> @@ -172,9 +172,10 @@ int pthread_cond_broadcast(pthread_cond_t *cond)
->> * As in pthread_cond_signal, access to cond->waiters and
->> * cond->was_broadcast is locked via the external mutex.
->> */
->> -
->> - if ((cond->was_broadcast = cond->waiters> 0)) {
->> + if (cond->waiters> 0) {
->> BOOLEAN result;
->> + cond->was_broadcast = cond->waiters> 1;
->> +
+Eugene Sajine <euguess@gmail.com> writes:
+
+> On Thu, Jan 7, 2010 at 8:32 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> Eugene Sajine <euguess@gmail.com> writes:
+>>
+>>> $ git fetch origin branchname
+>>>
+>>> are both causing the output like this:
+>>>
+>>> From git://....
+>>> * branch =C2=A0 =C2=A0 =C2=A0branchname =C2=A0 =C2=A0-> FETCH_HEAD
+>>> ...
+>>>
+>>> but "git fetch" says:
+>>>
+>>> From git://....
+>>> * branch =C2=A0 =C2=A0 =C2=A0branchname =C2=A0 =C2=A0-> origin/bran=
+chname
+>>>
+>>> Is this inconsistent behavior necessary by design?
+>>
+>> It is by design...
 >
-> It is possible that you set was_broadcast to 1 here, while another
-> thread still sees was_broadcast == 0 in cond_wait.
+> I'm coming back to this topic as i see some confusion growing about
+> such behavior. Every now and then users come across this problem and
+> they expect pull to *really* behave as fetch and merge so it will
+> cause the update of remote/branchname branch. And it is kind of
+> difficult to justify why they have to do git fetch after pull...
+>
+> Can somebody, please, take a look?
 
-That still cannot happen, because pthread_cond_wait will be locked on 
-the semaphore until the ReleaseSemaphore.  The only race that exists is 
-between broadcast/signal's ReleaseSemaphore and wait's 
-WaitForSingleObject.  This is benign, and exists before my patch.  But 
-in all cases the code before ReleaseSemaphore is serialized WRT to the 
-code after wait's WaitForSingleObject.
 
-> That said, as long as this series buys performance only at the expense
-> of clarity, I'm rather opposed to it because we do not call cond_wait
-> and cond_broadcast in time-critical paths.
 
-Yes, it is less clear indeed.  I tried to compensate with comments but 
-that was not enough apparently.  As I said I did this patch for another 
-project where condvars are used in time-critical paths; if you do not 
-want to keep it, that's not a problem.
+In your transcript, they can say "git fetch" (or "git fetch origin") an=
+d
+branch is copied to origin/branch, so instead of doing:
 
-Paolo
+    $ git fetch origin branchname
+    $ git log FETCH_HEAD ;# or whatever inspection using FETCH_HEAD
+
+they can do
+
+    $ git fetch ;# or git fetch origin
+    $ git log origin/branch ;# or whatever inspection using it
+
+In short, teach them that they no longer have reason to learn or run "g=
+it
+fetch origin branchname".
