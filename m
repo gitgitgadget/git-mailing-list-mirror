@@ -1,168 +1,128 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC/PATCH 1/4] gitweb: Move subroutines to Gitweb::Config module
-Date: Wed, 9 Jun 2010 01:38:50 +0200
-Message-ID: <201006090138.52125.jnareb@gmail.com>
-References: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com> <20100608141321.GP20775@machine.or.cz> <AANLkTiksOpUqxGc7Lo4clrLwOF6GvkT7CZH5CVeirtBr@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 01:39:15 2010
+From: Carl Worth <cworth@cworth.org>
+Subject: [PATCH] format-patch: Emit bare email rather than mbox for single messages.
+Date: Tue,  8 Jun 2010 16:43:35 -0700
+Message-ID: <1276040615-26008-1-git-send-email-cworth@cworth.org>
+Cc: Carl Worth <cworth@cworth.org>
+To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	"H. Peter Anvin" <hpa@zytor.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 01:44:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM8Nu-00040Z-M7
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 01:39:07 +0200
+	id 1OM8T2-0006Gi-0o
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 01:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258Ab0FHXjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 19:39:00 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34647 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751837Ab0FHXi7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 19:38:59 -0400
-Received: by fxm8 with SMTP id 8so3287092fxm.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 16:38:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=GX1DesZz04uxR+TFQtcRmOBcSI6iO2ZoE1gL5q9FWdI=;
-        b=YNPF+lOYjF9kwKEZlKnmNZyiYxYDc2g2I7AZPsyETNL/M5verU9fym+k2EPONA93E4
-         zF9ngjPd6iHfnzrnYRVco8SQh/+NUQnDym99Y3vjaFVog7kukEUbFZ2uSFZAQYhIC95U
-         xz+RSahPzXqq7VYAYz3HZV+hXry2p2cPqXjIA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=XqqOJKhTaD+I7RRiNtxyPF9FwMH5kmoaohY5BRd4x5+K/1WlVVXZXMtjuj3VJppv9H
-         i/ZOkdzWlAn3oLpSskQVMyvFn3Y3cGVU2sgur6qREoULZ4Fecb5i9PUHn1Y99m3vq9Lb
-         GQcWBMvgsneS7LOxACg58vdkLRDTYyScIzOt8=
-Received: by 10.223.68.131 with SMTP id v3mr284233fai.82.1276040337451;
-        Tue, 08 Jun 2010 16:38:57 -0700 (PDT)
-Received: from [192.168.1.15] (abvo94.neoplus.adsl.tpnet.pl [83.8.212.94])
-        by mx.google.com with ESMTPS id 7sm595799far.18.2010.06.08.16.38.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Jun 2010 16:38:56 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTiksOpUqxGc7Lo4clrLwOF6GvkT7CZH5CVeirtBr@mail.gmail.com>
-Content-Disposition: inline
+	id S1754014Ab0FHXnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 19:43:49 -0400
+Received: from u15218177.onlinehome-server.com ([74.208.220.233]:49675 "EHLO
+	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752971Ab0FHXnt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 19:43:49 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by olra.theworths.org (Postfix) with ESMTP id 61C114196F3;
+	Tue,  8 Jun 2010 16:43:48 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
+Received: from olra.theworths.org ([127.0.0.1])
+	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id xHfHhy9v3TUI; Tue,  8 Jun 2010 16:43:36 -0700 (PDT)
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by olra.theworths.org (Postfix) with ESMTP id 4176C431FC1;
+	Tue,  8 Jun 2010 16:43:36 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148736>
 
-On Tue, 8 Jun 2010, Petr Baudis wrote:
-> On Tue, Jun 08, 2010 at 02:46:20PM +0200, Jakub Narebski wrote:
-> >
-> > Third, and I think most important, is that the whole splitting gitweb into
-> > modules series seems to alck direction, some underlying architecture
-> > design.  For example Gitweb::HTML, Gitweb::HTML::Link, Gitweb::HTML::String
-> > seems to me too detailed, too fine-grained modules.
-> 
->   I agree!
-> 
-> > It was not visible at first, because Gitweb::Config, Gitweb::Request and to
-> > a bit lesser extent Gitweb::Git fell out naturally.  But should there be
-> > for example Gitweb::Escape module, or should its functionality be a part of
-> > Gitweb::Util?  Those issues needs to be addressed.  Perhaps they were
-> > discussed with this GSoC project mentors (via IRC, private email, IM), but
-> > we don't know what is the intended architecture design of gitweb.
-> 
->   I would expect Gitweb::Escape functionality to live in Gitweb::HTML
-> (HTML escaping) and/or Gitweb::Request (URL escaping).
+We don't need an mbox when generating a file with just a single
+message. And tools tools such as "git am" and "git send-email" already
+handle a bare email rather than an mbox just fine. Users wanting to
+manually insert the output into an MUA are not likely to want an
+mbox-formatted file either.
 
-I agree... well, partially, depending if we allow Gitweb::Request to be
-only about request i.e. inbound links, or also with generating outbound
-links.  Thos two are tied together, e.g. with %cgi_param_mapping.
+Finally, git's current mbox formatting is not robust, (does not yet
+deal well with a commit message containing a line matching "^From ").
 
->From what Pavan says, it seems that the problem with splitting gitweb is
-interdependency of various commands, and overdepenency on global variables.
-That was caused by the fact that gitweb was (well, is currently) big large
-monolithic script, and there were no mechanism protecting against adding
-(inter)dependencies.
+For all of these reasons, it's better to just generate an email
+message rather than an mbox when generating a file with a single
+message.
 
-Perhaps instead of fine-splitting gitweb into tiny modules to avoid
-circular dependencies (module A needs module B because of variable a,
-module B needs module A because of variable b) we should fix overdependence
-on global variables by passing more as parameters - at least where it makes
-sense.
+Note that "format-patch --stdout" will still use the (less than
+totally robust) mbox format, even if there is only a single
+commit. This is because "git rebase" uses "format-patch --stdout" with
+"am --rebasing" which looks at the generated "From " line to find the
+commit identifier that is embedded there.
 
-> > Should we try for Model-Viewer-Controller pattern without backing MVC
-> > (micro)framework?  (One of design decisions for gitweb was have it working
-> > out of the box if Perl and git are installed, without requiring to install
-> > extra modules; but now we can install extra Perl modules e.g. from CPAN
-> > under lib/...).  How should we organize gitweb code into packages
-> > (modules)?
-> 
->   I thought we already discussed MVC and sort of agreed that it's an
-> overkill at this point. At least that is still my opinion on it; I'm not
-> opposed to MVC per se, but to me, this modularization is a good
-> intermediate step even if we go the MVC way later, and doing MVC properly
-> would mean much huger large-scale refactoring than just naming a module
-> Gitweb::View instead of Gitweb::HTML. Let's do it not at all, or
-> properly sometime later. I think it's well out-of-scope for GSoC.
+Signed-off-by: Carl Worth <cworth@cworth.org>
+---
 
-Well, let's not forget that the whole reason behind including splitting
-gitweb into project that is about adding write capabilities to gitweb,
-making a web interface equivalent to git-gui.  Splitting gitweb was meant
-to make it easier to add new functionality without having gitweb become too
-large, and maintenance nightmare.
+This is as recently discussed by myself and H. Peter Anvin on the
+list.
 
-So it would be enough to have Gitweb with core of gitweb, gitweb.perl
-top-level script, Gitweb::Write or something like that for new write
-functionality and Gitweb::Util containing things that are needed by Gitweb
-and by Gitweb::Write(r).
+Note that I originally claimed that git-send-email would need to be
+updated to support this mode, but I found that it actually already has
+the necessary code.
 
-> 
-> > Perhaps having gitweb.perl, Gitweb::Git, Gitweb::Config, Gitweb::Request,
-> > Gitweb::Util and Gitweb would be enough?
-> 
->   I'm not sure what would fall into Gitweb::Util. I think Gitweb::HTML
-> makes a lot of sense to have, but I don't see the advantage of finer
-> graining than that - I dislike the Gitweb::HTML::* submodules as well.
+Also, this patch doesn't add any new test cases only because the test
+suite seems to provide good coverange of "git format-patch" usage
+already, (generating and using both mbox and non-mbox output after
+this patch). Indeed the test suite showed me a problem I had with
+"git rebase" in an early version of this patch.
 
-Gitweb does its work in the following way: first it parses path_info,
-query parameters etc. and saves them in global variables.  This is in
-Gitweb::Request.  But to parse-out project name from pathinfo it needs
-$projectsroot from Gitweb::Config.  Then it runs appropriate git commands
-using subroutines from Gitweb::Cmd / Gitweb::Git, setting $git_dir first.
-Then it parses output of git commands (probably Gitweb::Git too).
-Finally it composes a response, usually HTML, but also feed (OPML, RSS,
-Atom), plain text, and other output (blob_plain, snapshot); probably
-Gitweb::Response, or Gitweb::Output, or Gitweb::View.
+ builtin/log.c |    4 +++-
+ log-tree.c    |    6 ++++--
+ revision.h    |    3 ++-
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-There are of course some problems.
-
-To properly extract project from path_info in Gitweb::Request one needs
-$projectroot from Gitweb::Config.  Also generated gitweb links,
-i.e. href() and esc_param() etc., are tied with parsing request URL, at
-least via %cgi_param_mapping.
-
-Gitweb::Config isn't that simple either.  There is git configuration, e.g
-$GIT, there is gitweb configuration, e.g. $projectroot, and there is
-per-project configuration or configuration override.
-
-Gitweb::Git / Gitweb::Cmd / Gitweb::Git::Cmd needs $GIT, but also
-$git_dir, which is set using $projectroot and $project from
-Gitweb::Request.  Should it include parsing output of git commands, and
-auxiliary commands dealing directly with files in git repository?
-
-Then there is dispatch and generating response.  It uses many utility
-functions, like chop_str, or die_error.  Then there aresubroutines
-responsible for actions / views.
-
-
-Fnally there is a question which parts of those the futture write support
-would need...
-
+diff --git a/builtin/log.c b/builtin/log.c
+index 976e16f..adbec9f 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1205,7 +1205,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		get_patch_ids(&rev, &ids, prefix);
+ 	}
+ 
+-	if (!use_stdout)
++	if (use_stdout)
++		rev.format_mbox = 1;
++	else
+ 		realstdout = xfdopen(xdup(1), "w");
+ 
+ 	if (prepare_revision_walk(&rev))
+diff --git a/log-tree.c b/log-tree.c
+index d3ae969..6aab273 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -217,8 +217,10 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 		subject = "Subject: ";
+ 	}
+ 
+-	printf("From %s Mon Sep 17 00:00:00 2001\n", name);
+-	graph_show_oneline(opt->graph);
++	if (opt->format_mbox) {
++		printf("From %s Mon Sep 17 00:00:00 2001\n", name);
++		graph_show_oneline(opt->graph);
++	}
+ 	if (opt->message_id) {
+ 		printf("Message-Id: <%s>\n", opt->message_id);
+ 		graph_show_oneline(opt->graph);
+diff --git a/revision.h b/revision.h
+index 568f1c9..10cc747 100644
+--- a/revision.h
++++ b/revision.h
+@@ -88,7 +88,8 @@ struct rev_info {
+ 			abbrev_commit:1,
+ 			use_terminator:1,
+ 			missing_newline:1,
+-			date_mode_explicit:1;
++			date_mode_explicit:1,
++			format_mbox:1;
+ 	unsigned int	disable_stdin:1;
+ 
+ 	enum date_mode date_mode;
 -- 
-Jakub Narebski
-Poland
+1.7.0.4
