@@ -1,76 +1,92 @@
-From: Miles Bader <miles@gnu.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: DWIM "git checkout frotz" to "git checkout -b frotz origin/frotz"
-Date: Tue, 8 Jun 2010 16:52:40 +0900
-Message-ID: <AANLkTiljpUDEYKar1ni-lvTMvGEKvM5o7cb95qn798Ok@mail.gmail.com>
-References: <20100605110930.GA10526@localhost> <vpqljas5e33.fsf@bauges.imag.fr> 
-	<20100606164642.GA10104@localhost> <buobpbnz6mh.fsf@dhlpc061.dev.necel.com> 
-	<20100607185439.GB17343@localhost> <AANLkTilccgKxO7YCTJYc5rTzhov5Tku2z8jSfWU_B4ui@mail.gmail.com> 
-	<20100608072958.GA24302@localhost>
+Date: Tue, 08 Jun 2010 10:07:49 +0200
+Message-ID: <4C0DFA55.8070800@drmicha.warpmail.net>
+References: <20100605110930.GA10526@localhost> <vpqljas5e33.fsf@bauges.imag.fr> <20100606164642.GA10104@localhost> <buobpbnz6mh.fsf@dhlpc061.dev.necel.com> <20100607185439.GB17343@localhost> <vpqzkz6fy9m.fsf@bauges.imag.fr> <20100607193226.GA19789@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org,
 	Peter Rabbitson <ribasushi@cpan.org>
 To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Jun 08 09:53:10 2010
+X-From: git-owner@vger.kernel.org Tue Jun 08 10:08:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OLtcS-0000SX-Q9
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 09:53:09 +0200
+	id 1OLtrG-0000bF-Ih
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 10:08:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752239Ab0FHHxE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 03:53:04 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:38304 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751533Ab0FHHxD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 03:53:03 -0400
-Received: by pvg16 with SMTP id 16so1770663pvg.19
-        for <git@vger.kernel.org>; Tue, 08 Jun 2010 00:53:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type;
-        bh=50cluLB2uakjWoliMKeDNRXYHplu+lwEj4y3Q7LPQpQ=;
-        b=LltwEPz/lVcTswK/4B4dtbjjWMp130u0x47lQxISkV2tmXUhPQzCGbSz3M7McN+CPk
-         46vtWIuiVbA/a5cQrQvDP5s8ROUF7QbIJq5FMX6kAfUfAapRjkZI7fb4x19Y628wQ2Qv
-         5g5EIpSTPNO0scVr31Y/JR8+xOd/k17ubPrac=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=YLCa+RjFLQHsrPGPnRFwEotcTaDTHqcQAOeoRbMhStPwXTmidzZxL0Om55aCQbwSDh
-         ug7MhWuMO/luppvy8ZbzwBaXBlheFxz+klNUxn9NlLF0HXL8l9RmLSNCvOnX5wopDNyp
-         VIHjgcanKSQ8yGEHaoTwlKXmuC7Yw7GR4ASuc=
-Received: by 10.143.27.16 with SMTP id e16mr11717658wfj.24.1275983580240; Tue, 
-	08 Jun 2010 00:53:00 -0700 (PDT)
-Received: by 10.142.144.10 with HTTP; Tue, 8 Jun 2010 00:52:40 -0700 (PDT)
-In-Reply-To: <20100608072958.GA24302@localhost>
-X-Google-Sender-Auth: kAYBoudb2wSslqFSceiov6ADgYw
+	id S1752065Ab0FHIIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 04:08:20 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51999 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751227Ab0FHIIS (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jun 2010 04:08:18 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B5E8EF86A1;
+	Tue,  8 Jun 2010 04:08:16 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 08 Jun 2010 04:08:16 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=CBsWcNLQwAMusR2jNJGyXZliplg=; b=onCPj24epZ7pnfJCzAEwiX2cLNet/lqgPK56CdYWUwcbqs77WFOrTeuWlLEsFhVU6Yqy7TFewPy/q4rBWV81iCfkI8jouqBpISaRyHRB06n4EeehRKBNR7IA9kPsuInh/hvCoD+UQPhfEOjG9QWWwfs5BsOrvLQOIgBYtw1G9F0=
+X-Sasl-enc: fX43ItplTk5Ajn410vkRUjxj0EO1cMCF1EMCzqPRl/NZ 1275984494
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 529BA4C1D5;
+	Tue,  8 Jun 2010 04:08:14 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <20100607193226.GA19789@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148651>
 
-On Tue, Jun 8, 2010 at 4:29 PM, Clemens Buchacher <drizzd@aon.at> wrote:
-> Eventually, if they are lucky, they will learn in #git that they
-> were supposed to "git merge <remote>/X."
+Clemens Buchacher venit, vidit, dixit 07.06.2010 21:32:
+> On Mon, Jun 07, 2010 at 09:17:25PM +0200, Matthieu Moy wrote:
+>> Clemens Buchacher <drizzd@aon.at> writes:
+>>
+>>> But this is supposedly a feature which helps users who type "git
+>>> checkout <branch>" by mistake, when they really wanted to do "git
+>>> checkout -t <remote>/<branch>".
+>>
+>> Not sure what's the argument here, but aren't the two commands
+>> equivalent? Do you prefer the second syntax "git checkout -t
+>> <remote>/<branch>"? It's already a DWIM for "git checkout -b <branch>
+>> -t <remote>/<branch>", and I find this one far more confusing:
+>>
+>> git checkout    <remote>/<branch> => detaches HEAD
+>> git checkout -t <remote>/<branch> => creates a local branch automatically
+> 
+> The intent with -t is clear. It is used only when you create a new
+> branch. Also, you specify the remote branch you're going to create
+> a new branch from.
+> 
+> "git checkout <branch>", on the other hand, will create a branch
+> based on a remote branch, even though you neither asked for a new
+> branch, nor did you specify any remote at all.
 
-They don't have to do that, they just have to do "git pull".  This
-concept -- that to get the latest changes, one pulls -- is something
-people learn very early.
+You're making a very important point here:
 
-So, in fact it seems quite natural -- you switch to a local branch
-with "git co branch", and then if git tells you it's not up-to-date,
-you "git pull".  All nice and smooth and simple and standard.  The
-DWIM simply makes the first time less clumsy, and while everybody
-benefits, beginners probably benefit a bit more.
+The existing DWIMery executes *different commands* depending on the
+circumstances (<branch> existing or not). "checkout" and "checkout
+-t/-b" really are different commands.
 
--Miles
+For me, DWIMery is OK in these cases:
 
--- 
-Do not taunt Happy Fun Ball.
+- completing refs (<name> may be refs/heads/<name> or refs/tags/<name> etc.)
+
+- Adding options without which the other options don't make sense
+(independent of the circumstances), such adding "-b" for "-t", or, even
+doing the DWIMery above since "--track" is requested explicitly.
+
+Changing the command (mode) is something fundamentally different.
+
+[In this specific case, it also keeps the user from learning what's
+going on, but that's a different issue.]
+
+But I'm afraid it's too late.
+
+Michael
