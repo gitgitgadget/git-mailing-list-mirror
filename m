@@ -1,113 +1,85 @@
-From: Carl Worth <cworth@cworth.org>
+From: "H. Peter Anvin" <hpa@zytor.com>
 Subject: Re: Make "git am" properly unescape lines matching ">>*From "
-Date: Tue, 08 Jun 2010 13:47:39 -0700
-Message-ID: <87d3w1jlp0.fsf@yoom.home.cworth.org>
+Date: Tue, 08 Jun 2010 13:50:08 -0700
+Message-ID: <4C0EAD00.8000706@zytor.com>
 References: <87hbldjo0s.fsf@yoom.home.cworth.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Junio C Hamano <junkio@cox.net>, "H. Peter Anvin" <hpa@zytor.com>
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 08 22:47:56 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Junio C Hamano <junkio@cox.net>
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Tue Jun 08 22:50:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OM5iG-00087r-18
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:47:56 +0200
+	id 1OM5kZ-0001AX-Md
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Jun 2010 22:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756405Ab0FHUrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jun 2010 16:47:51 -0400
-Received: from u15218177.onlinehome-server.com ([74.208.220.233]:43641 "EHLO
-	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756344Ab0FHUrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jun 2010 16:47:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 703204196F0;
-	Tue,  8 Jun 2010 13:47:50 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id SKFZ2ZTiiT3l; Tue,  8 Jun 2010 13:47:40 -0700 (PDT)
-Received: from yoom.home.cworth.org (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 14C4E431FC1;
-	Tue,  8 Jun 2010 13:47:40 -0700 (PDT)
-Received: by yoom.home.cworth.org (Postfix, from userid 1000)
-	id C079F568FB5; Tue,  8 Jun 2010 13:47:39 -0700 (PDT)
+	id S1755609Ab0FHUuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jun 2010 16:50:12 -0400
+Received: from terminus.zytor.com ([198.137.202.10]:57987 "EHLO mail.zytor.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753848Ab0FHUuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jun 2010 16:50:11 -0400
+Received: from anacreon.sc.intel.com (hpa@localhost [127.0.0.1])
+	(authenticated bits=0)
+	by mail.zytor.com (8.14.3/8.14.3) with ESMTP id o58Ko8oq031374
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 8 Jun 2010 13:50:08 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Thunderbird/3.0.4
 In-Reply-To: <87hbldjo0s.fsf@yoom.home.cworth.org>
-User-Agent: Notmuch/0.3.1-53-gd64d0cc (http://notmuchmail.org) Emacs/23.1.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148714>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, 08 Jun 2010 12:57:23 -0700, Carl Worth <cworth@cworth.org> wrote:
+On 06/08/2010 12:57 PM, Carl Worth wrote:
 > I'm adding support to notmuch[1] to more easily pipe a thread full of
+> patches to "git am". So I added support for notmuch to format a thread
+> (or any search) as an mbox.
+> 
+> When I did that, I was careful to escape lines from the bodies of email
+> messages that begin with zero or more '>' characters followed
+> immediately by "From " (From_ lines) by adding an initial '>'. [2]
+> 
 > But I noticed that "git am" wasn't removing any of these added '>'
 > characters, so I was getting corrupted commit messages.
+> 
+> I'll follow up this message with a patch that fixes that by making
+> git-mailsplit un-escape these lines. It's careful to do this only when
+> processing an actual mbox, using the existing detection of a bare email
+> message and not doing any un-escaping in that case.
+> 
+> I'll also follow up with a new test for both cases, (using "git am" with
+> both an mbox with escaped From_ lines and an email message without
+> escaped From_ lines).
+> 
 
-I've also noticed that format-patch is generating bogus mbox files
-without any escaping. (The only way it gets away with this is that
-mailsplit only treats "From " lines as separators if they end with
-something that looks quite a bit like the output of asctime.)
+The problem with that is that it is not universally applied.  For what
+I've seen, some mbox-based programs simply rely on there being a
+Content-Length: header and don't need From lines to be escaped at all
+(and don't do anything useful if they are), some do the leading > trick
+(usually not reversably at all).
 
-This does mean that without changing format-patch, the patched "git am"
-could corrupt a commit message. This could happen if the commit message
-originally contained a line matching "^From " which would previously be
-passed through directly but will now be un-escaped to "From ".
+As far as I can tell, the Content-Length: is the most reliably handled
+format and probably is what we should use.  This is the "mboxcl2" format
+in your list.[*]  Unfortunately "mboxcl2" and "mboxrd" cannot be
+distinguished from each other by inspection, which is a major defect of
+both formats.
 
-This does seem less likely than a message containing a line matching
-"^From " (which is the case that gets corrupted with an unpatched "git
-am") so one option would be to ignore this, and apply my patch. That's
-what I recommend for now.
+The statement that "the entire "mbox" family of mailbox formats is
+gradually becoming irrelevant, and of only historical interest" is also
+pretty silly -- mbox is still the preferred format for moving groups of
+email from MUA to MUA, even if it is no longer used for active live
+spool storage.  But, of course, you knew that already.
 
-Alternately, we could fix format-patch to add the correct, (and
-reversible), escaping that is now expected by git-am.
+	-hpa
 
-Any attempt to add escaping to format-patch should recognize that many
-users use the output of format-patch directly as content handed to their
-MUA. Such users will *not* want escaping, (they are effectively treating
-the format-patch output as a bare email message, not an mbox).
-
-So if someone were to attempt this, I'd suggest first changing
-format-patch to actually generate bare email messages when generating
-files containing only a single message. This is instead of the invalid
-mbox files it is generating now. This would be as simple as not emitting
-the initial "From " line.
-
-Then, when generating an actual mbox with multiple files, format-patch
-should do the correct escaping, (which is now expected by "git am"), and
-all of these cases of potential commit-message corruption should be
-eliminated.
-
-The other thing that would need to be fixed in this approach is to fix
-"git send-email" to do the right thing with a bare email message. From a
-quick glance at the code, it appears to be looking for an initial "From
-" line, even though it doesn't appear to handle an mbox with multiple
-messages. It looks for this line to distinguish an email message from
-some custom "send lots of email" format. It should be simple to instead
-distinguish a bare email message from the "send lots of email" format by
-a first line which looks like an email header.
-
-=2DCarl
-
-=2D-=20
-carl.d.worth@intel.com
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iD8DBQFMDqxr6JDdNq8qSWgRAn8vAJ9QehvLWIwlyAk3XpD6rzZn1fvSxACeKL0C
-PyQGnYBfDtKnzCfgMvfh7JQ=
-=AvHB
------END PGP SIGNATURE-----
---=-=-=--
+[*] There are apparently some MTA/MUAs which simply bypass the entire
+problem by base64-encoding any email that contains /^From /, just as if
+it contained NUL bytes.  It's a heavyweight, but thoroughly unambiguous
+way of dealing with the problem.
