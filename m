@@ -1,86 +1,62 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: Re: [PATCH] git-mergetool--lib.sh: fix mergetool.<tool>.* configurations
- ignored for known tools
-Date: Wed, 09 Jun 2010 20:24:43 +0100
-Message-ID: <4C0FEA7B.9030409@hashpling.org>
-References: <1275705112-8088-1-git-send-email-sylvain@abstraction.fr> <1275705112-8088-2-git-send-email-sylvain@abstraction.fr>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Misterious warning about file system boundaries
+Date: Wed, 09 Jun 2010 22:21:13 +0200
+Message-ID: <4C0FF7B9.8040007@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 09 21:35:40 2010
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 09 22:21:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMR3p-00045x-Dn
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 21:35:37 +0200
+	id 1OMRly-0003T8-3H
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 22:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932347Ab0FITff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 15:35:35 -0400
-Received: from relay.ptn-ipout02.plus.net ([212.159.7.36]:20763 "EHLO
-	relay.ptn-ipout02.plus.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932304Ab0FITfd (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 15:35:33 -0400
-X-Greylist: delayed 647 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jun 2010 15:35:33 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EAOKHD0xUXebj/2dsb2JhbACYHoYzcb8shRgE
-Received: from outmx01.plus.net ([84.93.230.227])
-  by relay.ptn-ipout02.plus.net with ESMTP; 09 Jun 2010 20:24:37 +0100
-Received: from hashpling.plus.com ([212.159.69.125])
-	 by outmx01.plus.net with esmtp (Exim) id 1OMQtB-0005c2-D2; Wed, 09 Jun 2010 20:24:37 +0100
-Received: from heisenberg2.hashpling.org ([192.168.76.29])
-	by hashpling.plus.com with esmtps (TLSv1:CAMELLIA256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <charles@hashpling.org>)
-	id 1OMQtB-0003f9-6V; Wed, 09 Jun 2010 20:24:37 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <1275705112-8088-2-git-send-email-sylvain@abstraction.fr>
+	id S1755354Ab0FIUVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 16:21:07 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:43619 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753064Ab0FIUVG (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 16:21:06 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 402B0F80DF;
+	Wed,  9 Jun 2010 16:21:04 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 09 Jun 2010 16:21:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:content-type:content-transfer-encoding; s=smtpout; bh=1qw5RN6gWFigWGqDYeG8jVQbpJg=; b=dShZ0ALZtMSxJTKo67EH63wONqUMhg+V29d+WTfFJ2fuOfsGTH1rfoL1ngWincibZxsIrJVB192i9ri3npzQqmw5Fkgwkwr4vMYHAusUvxRWg0InZS16ih1LjhC/InBkRVR634gftedE5NB/hFHNpBOCTIBPGb2hljgSDYl0urE=
+X-Sasl-enc: BGyOZATI5XuTXB29k9X1CdW9WGbwYMJcVCjbehHRzlVJ 1276114863
+Received: from localhost.localdomain (p54859B40.dip0.t-ipconnect.de [84.133.155.64])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 31C9249B029;
+	Wed,  9 Jun 2010 16:21:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148809>
 
-On 05/06/2010 03:31, Sylvain Rabot wrote:
-> At this time when you define merge.tool with a known tool,
-> such as meld, p4merge, diffuse ... etc, mergetool.<tool>.*
-> configurations are ignored and git mergetool will use its
-> own templates.
->
-> This patch adds a detection for mergetool.<tool>.cmd configuration
-> in the run_merge_tool function. If the configuration is set, it will
-> try to run the tool with mergetool.<tool>.path if its set. It also
-> consider the mergetool.<tool>.trustExitCode configuration.
->
-> Signed-off-by: Sylvain Rabot<sylvain@abstraction.fr>
-> ---
->   git-mergetool--lib.sh |   60 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 files changed, 60 insertions(+), 0 deletions(-)
->
+Heya,
 
-First, my apologies for only having had the time to skim this so far.
+now what is going on here? After upgrading to current next I get
 
-Can I just ask some basic questions about the purpose of this patch. Is 
-it the intention that if mergetool.<tool>.cmd is set then you want to 
-mergetool to behave 'as if' the merge tool wasn't a 'known' tool and 
-just performed the "*)" case ?
+warning: working tree spans across filesystems but
+GIT_DISCOVERY_ACROSS_FILESYSTEM is not set.
 
-If so, it seems like a lot of extra boiler-plate and error handling that 
-doesn't exist in the normal "*)" case. Should we have have this in the 
-"*)" case as well? If so, we should look to rework it so that we can 
-re-use the code rather than duplicating it.
+in several repos, such as my local git.git repo. That is certainly on a
+single file system only (ext4 over lvm over luks, all on one partition,
+Fedora 13). I also get this for another repo, but not for every repo. It
+goes away when I set the var and comes back when I don't set it, of course.
 
- From a user perspective, if they want to run a "known" tool but in a 
-way that is different from the default behaviour can't they just give it 
-a different name, e.g. merge.tool=my_kdiff3 , mergetool.my_kdiff3.cmd=... ?
+Although I haven't bisected this should be due to
+52b98a7 (write-index: check and warn when worktree crosses a filesystem
+boundary, 2010-04-04).
 
-Thanks,
+How does the code detect a file system boundary, and where could it go
+wrong?
 
-Charles.
-
--- 
-Almost dormant mergetool maintainer.
+Michael
