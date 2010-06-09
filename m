@@ -1,82 +1,94 @@
-From: Steven Michalske <smichalske@gmail.com>
-Subject: Re: [PATCH] Use strncpy to protect from buffer overruns.
-Date: Wed, 9 Jun 2010 13:42:31 -0700
-Message-ID: <1E40D9E3-5459-4D29-9D6D-A6528FF8407F@gmail.com>
-References: <1276078921-25429-1-git-send-email-smichalske@gmail.com> <AANLkTikID-cEqdDD8XEEYmClSYEkcxdAU-rjYA2LoRVe@mail.gmail.com> <34152ED6-ACCC-467B-9076-1A742612AC75@gmail.com> <AANLkTikQpJa9gzj1riKF79MflGAKv9IqJVXpICgHLXAG@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/ PATCH 4/5] t3030: update porcelain expected message
+Date: Wed, 09 Jun 2010 22:40:20 +0200
+Message-ID: <vpq1vcgym6j.fsf@bauges.imag.fr>
+References: <1276087446-25112-1-git-send-email-diane.gasselin@ensimag.imag.fr>
+	<1276087446-25112-2-git-send-email-diane.gasselin@ensimag.imag.fr>
+	<1276087446-25112-3-git-send-email-diane.gasselin@ensimag.imag.fr>
+	<1276087446-25112-4-git-send-email-diane.gasselin@ensimag.imag.fr>
+	<1276087446-25112-5-git-send-email-diane.gasselin@ensimag.imag.fr>
+	<1276087446-25112-6-git-send-email-diane.gasselin@ensimag.imag.fr>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 22:42:42 2010
+Cc: git@vger.kernel.org, Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>
+To: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Wed Jun 09 22:43:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMS6j-0005hb-0e
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 22:42:41 +0200
+	id 1OMS7X-00063B-JJ
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 22:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758104Ab0FIUmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 16:42:32 -0400
-Received: from mail-out3.apple.com ([17.254.13.22]:53301 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757899Ab0FIUmc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 16:42:32 -0400
-Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
-	by mail-out3.apple.com (Postfix) with ESMTP id 91E159714847;
-	Wed,  9 Jun 2010 13:42:31 -0700 (PDT)
-X-AuditID: 1180711d-b7b98ae000002f4b-54-4c0ffcb71ce9
-Received: from monopole.apple.com (monopole.apple.com [17.205.37.84])
-	(using TLS with cipher AES128-SHA (AES128-SHA/128 bits))
-	(Client did not present a certificate)
-	by relay13.apple.com (Apple SCV relay) with SMTP id 2B.E7.12107.7BCFF0C4; Wed,  9 Jun 2010 13:42:31 -0700 (PDT)
-In-Reply-To: <AANLkTikQpJa9gzj1riKF79MflGAKv9IqJVXpICgHLXAG@mail.gmail.com>
-X-Mailer: Apple Mail (2.1078)
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1758220Ab0FIUnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 16:43:22 -0400
+Received: from imag.imag.fr ([129.88.30.1]:36955 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757371Ab0FIUnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 16:43:21 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o59KeLNR020732
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 9 Jun 2010 22:40:21 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OMS4T-0002QQ-4y; Wed, 09 Jun 2010 22:40:21 +0200
+In-Reply-To: <1276087446-25112-6-git-send-email-diane.gasselin@ensimag.imag.fr> (Diane Gasselin's message of "Wed\,  9 Jun 2010 14\:44\:05 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 09 Jun 2010 22:40:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148812>
 
+Diane Gasselin <diane.gasselin@ensimag.imag.fr> writes:
 
-On Jun 9, 2010, at 12:31 PM, Alex Riesen wrote:
+> From: Diane <diane.gasselin@ensimag.imag.fr>
 
-> On Wed, Jun 9, 2010 at 20:25, Steven Michalske <smichalske@gmail.com> wrote:
->>> On Wed, Jun 9, 2010 at 12:22, Steven Michalske <smichalske@gmail.com> wrote:
->>>> is_git_directory() uses strcpy with pointer arithmitic, protect it from
->>>> overflowing.  Even though we currently protect higher up when we have the
->>>> environment variable path passed in, we should protect the calls here.
->>> 
->>> Why? The function is static.
->>> 
->> The code might be locally constrained.
->> 
->> I always assume that a bit of code can be overwritten from other portions of code.
->> 
->> A small vulnerability is discovered that lets an attacker remove the length check
->> or edit the pointer in the function call, but could not squeeze in the full shell code
->> snippet.  But the now edited function here lets you put in arbitrarily long code.
-> 
-> Eh?
-> 
-Basically the protection is not robust against malicious code.  It's armored with leather, not the modern full body armor.
+You did something strange with git format-patch or send-email. This
+From header should appear in the header of your email, but not in the
+body.
 
->>>> -       strcpy(path, suspect);
->>>> +       path[sizeof(path) - 1] = '\0';
->>>> +
->>>> +       strncpy(path, suspect, sizeof(path) - 1);
->>> 
->>> And we have strlcpy for such things.
->> 
->> It is not portable.
-> 
-> Git has its own copy of the function:
-> 
->  $ git ls-files *strlcpy.c
-> 
->  $
+> As porcelain messages have been changed, the expected porcelain message
+> tested in this test needs to be changed.
 
-Good to know, I could refactor with this.
+We usually try to have the test-suite pass for each commit (so that
+"git bisect" can be used easily among other reasons). So, you probably
+want to squash this patch with the one that actually changes the
+message. Also, I think it eases reviewing: the changes to the
+test-suite can be seen as a specification (particularly clear here: we
+know what the rest of the patch serie does reading this patch).
+
+Another trick is to set the tests as "test_expect_failure" before
+introducing the feature, and mark them as "test_expect_success" when
+appropriate. This way, you can add new tests before adding the
+feature, without introducing broken commits.
+
+> +cat> expected2 <<EOF
+> +error: Your local changes to the files:
+> +	a
+> +would be overwritten by merge.
+> +EOF
+
+I'd have phrased it like this:
+
+error: Your local changes to these files would be overwritten by merge:
+	a
+
+to avoid splitting the message in two parts. It's more consistant with
+the rest of Git (git status or git reset for example). Also, your
+version would become hard to read if the file list is long.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
