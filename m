@@ -1,106 +1,76 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: permissions
-Date: Wed, 9 Jun 2010 14:06:50 +0200
-Message-ID: <201006091406.50955.trast@student.ethz.ch>
-References: <4C0A19FE.1020802@wpursell.net> <AANLkTikGpbeP1ba0y0oUsWGQXsrL8Z-GKjybCB83W_FJ@mail.gmail.com> <4C0F6CF0.3020603@wpursell.net>
+From: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>
+Subject: [StGit] Emacs mode merge request
+Date: Wed, 9 Jun 2010 14:11:25 +0200
+Message-ID: <AANLkTiklRA-d8p3NhpvjZLua0zE7uK8RFrJTegCr-Jjd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>, <git@vger.kernel.org>
-To: William Pursell <bill.pursell@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 14:07:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?David_K=E5gedal?= <davidk@lysator.liu.se>
+To: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 14:11:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMK3u-0003AW-ID
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 14:07:14 +0200
+	id 1OMK85-0005qn-Cc
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 14:11:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757155Ab0FIMHJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 08:07:09 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:5849 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757009Ab0FIMHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 08:07:06 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 9 Jun
- 2010 14:07:04 +0200
-Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 9 Jun
- 2010 14:06:52 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <4C0F6CF0.3020603@wpursell.net>
+	id S1757128Ab0FIML2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 08:11:28 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:58874 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754383Ab0FIML1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 08:11:27 -0400
+Received: by bwz11 with SMTP id 11so1533871bwz.19
+        for <git@vger.kernel.org>; Wed, 09 Jun 2010 05:11:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=EJzPqj98NnM9neQtjBPoXOxRDuom3PDmTPH267tuHAI=;
+        b=kBcF0vlKGjZYizO/Qr7rzyC/i/aoJtD5SflHMPBBThIUXBZKRR6G0GCkMOCkR5PeP5
+         sfnLlAvOUzpM7AXlPsQ1G8ai829AWEafzTzfpYauWYWMnBpGFyfIz9kBN3z4Pcr0/111
+         8WN61lNuMhWXQWaYSXuNzaeAW/CtMk2/UOw90=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=SSNvyCl7b56GuMgN4EUlC3EK5Xvga+E8hr9RcHZsdP7wLIIRvLnoBSf2qkkmQKcpMO
+         OSFA6vGm5qa2il//HzrEgylM2J1dAPQCDeafKBvvsCJn2HzKMnfQpie6M/zLCFI/Kjtn
+         6NGF4KJgSlTx1Gh/22CY9y5amxRgVGFKRQR+M=
+Received: by 10.204.83.225 with SMTP id g33mr2017145bkl.37.1276085485317; Wed, 
+	09 Jun 2010 05:11:25 -0700 (PDT)
+Received: by 10.204.53.206 with HTTP; Wed, 9 Jun 2010 05:11:25 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148763>
 
-William Pursell wrote:
-> Alex Riesen wrote:
-> > On Wed, Jun 9, 2010 at 00:27, William Pursell <bill.pursell@gmail.com> wrote:
-> >> Junio C Hamano wrote:
-> >>> Alex Riesen <raa.lkml@gmail.com> writes:
-> >>>
-> >>>> The patch moves the function is_git_directory at the level of user
-> >>>> interface where it wasn't before: it now complains and die.
-> >>>> Not all callers of the function call it only to die if it fails.
-> >>> Thanks for shooting it down before I had to look at it ;-)
-> >> The point of the patch is that it now complains and dies.
-> > 
-> > At wrong point. Points, actually. There are many callers of the
-> > function you modified. You should have looked at them all.
-> 
-> I did look at all 4 calls, and it seemed to me
-> that localizing the change in one location is a better
-> design than adding logic to 4 different locations.
-> 
-> >> Perhaps I'm being obtuse, but can you describe a situation
-> >> in which this causes git to terminate inappropriately?
-> > 
-> > Maybe. BTW, can you? (if you try, I mean).
-> 
-> No, I can't.  As far as I can tell, the patch adds
-> exactly the functionality that I want it to add.  You
-> do make good points about its problems below, however,
-> and you are right that I did miss the point of
-> your criticism.  Thank you for clarifying.
+Catalin, can you please merge the following series from
+git://github.com/gustavh/stgit.git "proposed" branch.
+All the patches are small, incremental improvements and bug fixes to
+the Emacs mode.
 
-Maybe I'm missing something, but I think that also apart from any
-meta-criticism the patch is wrong.  From the use of
-setup_git_directory_gently() in cmd_apply() [for example; there are
-other commands that are supposed to work both in- and outside of
-repos], I conclude that the invocation of is_git_directory() must not
-die() because it is *okay* if the directory is, after all, not a git
-repo.
+199cec3 tutorial: Very minor typo fixes in the Emacs section
+939ff13 stgit.el: Add stgit-{git,stg}-program variables
+e23eb46 stgit.el: Rearrange customizations a bit
+5be0bca stgit.el: Add "Customize StGit" menu entry
+cde79c7 stgit.el: Improve how "t h" mode finds old commits
+160b5bf stgit.el: Make C-{up,down} move between groups of patches
+b8738ed stgit.el: Add a few links to some customization variables
+d528462 stgit.el: Repair ! for historical commits
+16e96c0 stgit.el: Honor stgit-find-copies-harder in stgit-diff-range
+65f3ffa stgit.el: Honor stgit-find-copies-harder when showing entire patches
+108e5c8 stgit.el: Fix showing diff in file that has been both copied
+and modified
 
-And I think the same goes for your new patch
+The branch is based on your "proposed" branch (53055a56).
 
-> @@ -407,6 +413,11 @@ const char *setup_git_directory_gently(int *nongit_ok)
->                 }
->                 if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT))
->                         break;
-> +               if (access(DEFAULT_GIT_DIR_ENVIRONMENT, X_OK)
-> +                                && errno != ENOENT )
-> +                       die_errno("Unable to access %s/%s",
-> +                                cwd, DEFAULT_GIT_DIR_ENVIRONMENT);
-> +
->                 if (is_git_directory(".")) {
->                         inside_git_dir = 1;
->                         if (!work_tree_env)
+Somewhat unrelated, whom should I talk to about getting the Emacs mode
+into the Debian package?
+I think the Emacs mode ought to go into the 'stgit' package rather
+than 'stgit-contrib', but some may disagree...
 
-[DEFAULT_GIT_DIR_ENVIRONMENT is ".git"]
-
-Unless I'm missing something, this effectively prevents git-apply and
-friends from working outside any repos if your BOFH sysadmin thinks it
-funny to place an unreadable .git somewhere on the way up to /.
-
-Or maybe we don't care about BOFH ideas?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks,
+ Gustav
