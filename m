@@ -1,227 +1,83 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCHv2] bash completion: Support "divergence from upstream"
- warnings in __git_ps1
-Date: Wed, 09 Jun 2010 11:17:26 +0200
-Message-ID: <4C0F5C26.5080108@drmicha.warpmail.net>
-References: <4C0AE640.3040503@pileofstuff.org> <201006062014.59386.trast@student.ethz.ch> <4C0C09BF.4070503@pileofstuff.org> <201006070942.34753.trast@student.ethz.ch> <4C0EB7F1.1030707@pileofstuff.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH/RFC] Fix for default pager
+Date: Wed, 09 Jun 2010 18:29:49 +0900
+Message-ID: <buo4ohcsgdu.fsf@dhlpc061.dev.necel.com>
+References: <1275955088-32750-1-git-send-email-soft.d4rio@gmail.com>
+	<1275955270-sup-2380@pinkfloyd.chass.utoronto.ca>
+	<AANLkTinydWk3GqGDww8FS7pmW16jAVazRkmT_GsRMIhy@mail.gmail.com>
+	<20100608053507.GB15156@coredump.intra.peff.net>
+	<AANLkTilvvpy4TBQF6g8boQL87FRB7kFDrVfYiHvOv6xu@mail.gmail.com>
+	<4C0E5103.7030501@viscovery.net>
+	<AANLkTilWg8hw5j20o-xGsVO-q_OeSmtKEKAO6O416qvH@mail.gmail.com>
+	<4C0E6810.3070301@viscovery.net>
+	<AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com>
+	<4C0E932B.3010702@viscovery.net>
+	<AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
+	<4C0EB741.9020905@op5.se>
+	<AANLkTinAO5empFix9W_rbtU3Vv4O73OsJBtA1stb66DS@mail.gmail.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Wed Jun 09 11:18:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Dario Rodriguez <soft.d4rio@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jeff King <peff@peff.net>,
+	Ben Walton <bwalton@artsci.utoronto.ca>,
+	git <git@vger.kernel.org>
+To: Tor Arntsen <tor@spacetec.no>
+X-From: git-owner@vger.kernel.org Wed Jun 09 11:31:11 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMHQT-0003kU-GV
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 11:18:21 +0200
+	id 1OMHcs-0003LI-Q7
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 11:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756583Ab0FIJSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 05:18:16 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:55014 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755513Ab0FIJSP (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 05:18:15 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 70A5BF849D;
-	Wed,  9 Jun 2010 05:17:54 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 09 Jun 2010 05:17:54 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=+AQCv3HYxbzP3P8ivI2aWrezKSc=; b=lanvFX/6lFCK6sopZeQAdW9Z4CHD3skDeHq22xFxddJsNtVDn0DB7X5PwolatjzkrR3uxKTya4xaYbFW1NFiqstEncfJAterSkjjmBg1BtL+Itc4BFm6oXno2AtOUGgzWZKftNmQt1O8SysE36ATFc3MbD/yBD5WW3PC/7evsas=
-X-Sasl-enc: 26zZ5NB3pJUOqlwT8wcVDjJISWItA825Bwe6gtRuA4Lb 1276075073
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5662E4E7B46;
-	Wed,  9 Jun 2010 05:17:53 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100604 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <4C0EB7F1.1030707@pileofstuff.org>
+	id S1757055Ab0FIJbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 05:31:04 -0400
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:47340 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756877Ab0FIJbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 05:31:03 -0400
+Received: from mailgate3.nec.co.jp ([10.7.69.192])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o599Tp0S000997;
+	Wed, 9 Jun 2010 18:29:51 +0900 (JST)
+Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
+	id o599Tp122385; Wed, 9 Jun 2010 18:29:51 +0900 (JST)
+Received: from relay51.aps.necel.com ([10.29.19.60]) by vgate01.nec.co.jp (8.11.7/3.7W-MAILSV-NEC) with ESMTP
+	id o599To418803; Wed, 9 Jun 2010 18:29:50 +0900 (JST)
+Received: from relay51.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay51.aps.necel.com with ESMTP; Wed, 9 Jun 2010 18:29:50 +0900
+Received: from dhlpc061 ([10.114.113.131] [10.114.113.131]) by relay51.aps.necel.com with ESMTP; Wed, 9 Jun 2010 18:29:50 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 6402652E1F3; Wed,  9 Jun 2010 18:29:50 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <AANLkTinAO5empFix9W_rbtU3Vv4O73OsJBtA1stb66DS@mail.gmail.com>
+	(Tor Arntsen's message of "Wed, 9 Jun 2010 11:08:49 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148757>
 
-[I haven't followed the previous discussion, just this RFC.]
+Tor Arntsen <tor@spacetec.no> writes:
+> AIX doesn't come with 'less', because it doesn't really need one.
+> 'more' on AIX can page backwards/forwards in piped data (unlike 'more'
+> on Linux etc.), thus negating the most common need for installing
+> 'less' elsewhere.
 
-Andrew Sayers venit, vidit, dixit 08.06.2010 23:36:
-> Add a notification in the command prompt specifying whether you're ahead of
-> (>), behind (<), diverged from (<>) or at (=) your upstream.  This is
-> especially helpful in small teams that (forget to) push to each other very
-> frequently.
-> 
-> Support git-svn upstream detection as a special case, as migraters from
-> centralised version control systems are especially likely to forget to push.
-> 
-> Support for other types of upstream than SVN should be easy to add if anyone is
-> so inclined.
-> 
-> Signed-off-by: Andrew Sayers <andrew-git@pileofstuff.org>
-> ---
-> 
-> This patch includes Thomas Rast's feedback - thanks Thomas for the education :)
-> 
-> This patch makes unashamed use of shell arrays and substring expansion that
-> would normally not be allowed.  As Jakub Narebski mentioned, this is probably ok
-> in a bash-specific script.
-> 
-> Unlike other prompt options, I've put the divergence characters on the left of the
-> branch name.  I'm really not sure about this, and I'd like to hear people's
-> opinions.
+Less has about a zillion features that more [traditionally] doesn't
+have, and even some of the more esoteric ones can be quite useful for
+git.  For instance you can determine in a great deal of detail exactly
+how/when/if it clears the screen/shows a prompt/waits for user input
+before exiting, etc.
 
-I'd say it would make sense to you use the same order as "branch -vv"
-and "status -s", i.e. after the branch name.
+-Miles
 
-> 
-> This patch produces output like this when I have unpushed commits:
-> 
-> [andrew@pc myrepo >master] # my master is ahead of upstream
-> 
-> Intuitively, I like having a ">" when I'm ahead, although it would be more
-> logical to have something like this:
-
-That is really illogical, please don't.
-
-> 
-> [andrew@pc myrepo <master] # upstream less-than master
-> 
-> Putting the symbol on the right makes this problem go away, but looks ridiculous
-> if you use a prompt like PS1='\W:$(__git_ps1 "(%s)")> '
-
-Patient: If I move my arm like this then it hurts.
-Doctor: Then don't do that ;)
-
-> 
-> myrepo:master>> # master greater-than upstream
-> myrepo:master<> # master less-than upstream
-> myrepo:master<>> # master and upstream have diverged
-> 
-> I'd rather not rely on colour prompts to clear this up - using colour as the
-> only way to convey important information to the user rarely ends well.
-> 
-> Adding a "u" to the symbol could also clear this up:
-> 
-> [andrew@pc myrepo u<master] # upstream less-than master
-> 
-> Using "u<", "u=", "u>" and "<>" would mean that the prompt always used either
-> two or zero characters, which would keep prompts lined up over time.  But it
-> would also eat horizontal space for an issue you'd stop seeing after a few
-> minutes.
-> 
-
-I think a simple space would help already, i.e.
-myrepo:master<> >
-
-An alternative would be to use something like
-myrepo:master+5-3
-
-The numbers should make this distinguishable from the "--cached +". Of
-course it eats up more space and is slightly confusing unless it is read
-master = upstream + 5 -3.
-OTOH it is very analogous to status -s and branch -vv.
-
-> Finally, my apologies to anyone that tried to apply my previous patch - to make
-> a long story short, it turns out I need this feature more than I realised :)
-> 
-
-;)
-
->  contrib/completion/git-completion.bash |   58 +++++++++++++++++++++++++++++++-
->  1 files changed, 57 insertions(+), 1 deletions(-)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 57245a8..1dc80fd 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -42,6 +42,14 @@
->  #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
->  #       untracked files, then a '%' will be shown next to the branch name.
->  #
-> +#       If you would like to see the difference bitween HEAD and its
-> +#       upstream, set GIT_PS1_SHOWUPSTREAM to a nonempty value.
-> +#       Unpushed commits (>), unmerged commits (<), both (<>) and
-> +#       neither (=) will be shown on the left of the branch name.  You
-> +#       can enable git-svn mode by setting GIT_PS1_SHOWUPSTREAM=svn
-> +#       and set the value per-repository with the bash.showUpstream
-> +#       variable.
-> +#
->  # To submit patches:
->  #
->  #    *) Read Documentation/SubmittingPatches
-> @@ -132,6 +140,7 @@ __git_ps1 ()
->  		local s
->  		local u
->  		local c
-> +		local p
->  
->  		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
->  			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
-> @@ -159,10 +168,57 @@ __git_ps1 ()
->  			      u="%"
->  			   fi
->  			fi
-> +
-> +			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
-> +
-> +				# Note: 'p' is used as a temporary throughout this block,
-> +				# before finally being assigned its correct value
-> +
-> +				if p="$(git config --get bash.showUpstream)"
-> +				then
-> +					GIT_PS1_SHOWUPSTREAM="$p"
-> +				fi
-> +
-> +				local upstream
-> +
-> +				if [ "${GIT_PS1_SHOWUPSTREAM-}" = "svn" ]; then
-> +
-> +					# git-svn upstream checking
-> +					p="$( git config --get svn-remote.svn.url )"
-> +					upstream=( $( git log --first-parent -1 \
-> +						--grep="^git-svn-id: $p" ) )
-> +					upstream=${upstream[ ${#upstream[@]} - 2 ]}
-> +					upstream=${upstream%@*}
-> +					upstream=${upstream#*$p/}
-> +
-> +				else # git upstream checking
-> +				  upstream="@{upstream}"
-> +				fi
-> +
-> +				if p="$( git rev-list \
-> +						--left-right "$upstream"...HEAD 2>/dev/null )"
-
-Here you have all the info to do a "grep \<|wc -l" etc. instead of the
-below if you go for the +5-3.
-
-> +				then
-> +					case "$p" in
-> +						\<*\>*|\>*\<* ) p="<>" ;;
-> +						*\<*          ) p="<"  ;;
-> +						*\>*          ) p=">"  ;;
-> +						""            ) p="="  ;;
-> +
-> +						# the following case shouldn't be possible
-> +						# if you see this, please report it as a bug
-> +						* ) p="?ERROR($p)?" ;;
-> +
-> +					esac
-> +				else
-> +					p=""
-> +				fi
-> +
-> +			fi
-> +
->  		fi
->  
->  		local f="$w$i$s$u"
-> -		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r"
-> +		printf "${1:- (%s)}" "$c$p${b##refs/heads/}${f:+ $f}$r"
->  	fi
->  }
->  
-
-Cheers,
-Michael
+-- 
+(\(\
+(^.^)
+(")")
+*This is the cute bunny virus, please copy this into your sig so it can spread.
