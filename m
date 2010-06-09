@@ -1,225 +1,327 @@
-From: Steven Michalske <smichalske@gmail.com>
-Subject: Re: RFC: Making submodules "track" branches
-Date: Wed, 9 Jun 2010 05:47:04 -0700
-Message-ID: <C0EA2469-DA5B-413E-9AB4-F79954DBE3AE@gmail.com>
-References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com> <201006082352.38136.johan@herland.net> <4C0F4185.2000207@web.de> <201006091022.18896.johan@herland.net>
-Mime-Version: 1.0 (Apple Message framework v1068)
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed	delsp=yes
+From: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+Subject: [RFC/ PATCH 2/5] unpack_trees: group errors by type
+Date: Wed,  9 Jun 2010 14:44:03 +0200
+Message-ID: <1276087446-25112-4-git-send-email-diane.gasselin@ensimag.imag.fr>
+References: <1276087446-25112-1-git-send-email-diane.gasselin@ensimag.imag.fr>
+ <1276087446-25112-2-git-send-email-diane.gasselin@ensimag.imag.fr>
+ <1276087446-25112-3-git-send-email-diane.gasselin@ensimag.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jun 09 14:47:17 2010
+Cc: Diane <diane.gasselin@ensimag.imag.fr>,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
+	<clement.poulain@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 09 14:50:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMKgd-0003e8-Om
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 14:47:16 +0200
+	id 1OMKjr-00063a-T5
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 14:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757508Ab0FIMrL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 08:47:11 -0400
-Received: from mail-pz0-f176.google.com ([209.85.222.176]:33293 "EHLO
-	mail-pz0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752687Ab0FIMrJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 08:47:09 -0400
-Received: by pzk6 with SMTP id 6so2863719pzk.1
-        for <git@vger.kernel.org>; Wed, 09 Jun 2010 05:47:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=8aAwsAxVNsm/FH7gbhElopAQePZXQBzqTgBb3W29SRw=;
-        b=gn93qfQgS92sdax1t97o/cL6IpiKGpBY/gdGoGysKP7JkQsyunr7ZM/KfarNR5nPIH
-         SO7NEHKIchDo/qIffglOOgJVxjJFuLPOPVklskQsCakuUOZTJDVgsOXWfIWWcXfhpHCI
-         9Sactgae4T7DNHd8r+Za/MCWGLyNQfESn12NU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=coqV/zc6Rg4ZpD8yFY+vllsJTD0rbS4I2ohFlQ0ijsy6HT0XakrLZtx+quyxr7wVWk
-         LZ298RYIKUMPEZW7fT6gpZPMI1H3LMVbd16/dW0lVwA4p6iyX+kmlax2pUG8IJr9cDvz
-         JfO6hTwzW2ExXR1ovpHQd+AQywZTLf9LVhNnQ=
-Received: by 10.115.39.40 with SMTP id r40mr14184586waj.183.1276087627810;
-        Wed, 09 Jun 2010 05:47:07 -0700 (PDT)
-Received: from [192.168.1.105] (c-98-234-104-87.hsd1.ca.comcast.net [98.234.104.87])
-        by mx.google.com with ESMTPS id c22sm63942163wam.6.2010.06.09.05.47.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 09 Jun 2010 05:47:06 -0700 (PDT)
-In-Reply-To: <201006091022.18896.johan@herland.net>
-X-Mailer: Apple Mail (2.1068)
+	id S1757584Ab0FIMua convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 08:50:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60501 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757391Ab0FIMu3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 08:50:29 -0400
+X-Greylist: delayed 351 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jun 2010 08:50:29 EDT
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o59Cb4DL022369
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 9 Jun 2010 14:37:04 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o59Cin0N010553;
+	Wed, 9 Jun 2010 14:44:49 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o59Cinvl025388;
+	Wed, 9 Jun 2010 14:44:49 +0200
+Received: (from gasselid@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o59Cinom025387;
+	Wed, 9 Jun 2010 14:44:49 +0200
+X-Mailer: git-send-email 1.6.6.7.ga5fe3
+In-Reply-To: <1276087446-25112-3-git-send-email-diane.gasselin@ensimag.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 09 Jun 2010 14:37:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o59Cb4DL022369
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: diane.gasselin@ensimag.imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148766>
 
+=46rom: Diane <diane.gasselin@ensimag.imag.fr>
 
-On Jun 9, 2010, at 1:22 AM, Johan Herland wrote:
+When an error is encountered, it calls add_rejected_file() which either
+- directly displays the error message if in plumbing mode
+- or stores it so that it will be displayed at the end of display_error=
+_msgs(),
 
-> On Wednesday 09 June 2010, Jens Lehmann wrote:
->> Am 08.06.2010 23:52, schrieb Johan Herland:
->>> The good thing with =C6var's approach is that this is all configura=
-ble
->>> per branch (indeed, per commit[1]) by editing your .gitmodules file=
-=2E
->>
->> Yep, I think this is the sane way to do that.
->>
->>> Interesting. Will the object parsing machinery handle that without
->>> hiccups? What if an older Git version tries to checkout/update a
->>> submodule with a 0- hash?
->>
->> Maybe =C6var's idea of dropping such a submodule from the tree is =20
->> better.
->
-> Agreed. That will of course cause older Git versions to skip the =20
-> submodule
-> altogether, which is probably the safest failure mode.
->
->>> Me too, but I suspect that if you draw the "one big repo" approach =
+Storing the files by error type permits to have a list of files for
+which there is the same error instead of having a serie of almost
+identical errors.
+
+As each bind_overlap error combines a file and an old file, a list cann=
+ot be
+done, therefore, theses errors are not stored but directly displayed.
+
+Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
+Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
+---
+It appears that in verify_absent_sparse(), verify_absent_1() is called =
+with
+ERRORMSG(o, would_lose_orphaned) as the error message.
+Yet, in verify_absent_1(), this error message error_msg does not
+seem to be used and at the end of the function, a would_lose_untracked =
+error
+is treated (before displayed and now added). Is it normal?
+
+ unpack-trees.c |  128 ++++++++++++++++++++++++++++++++++++++++++++++++=
+++++----
+ unpack-trees.h |   12 +++++
+ 2 files changed, 132 insertions(+), 8 deletions(-)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index c29a9e0..1e2f48d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -45,6 +45,21 @@ static struct unpack_trees_error_msgs unpack_plumbin=
+g_errors =3D {
+ 	? ((o)->msgs.fld) \
+ 	: (unpack_plumbing_errors.fld) )
 =20
->>> to
->>> its logical conclusion, there will be some demand for recursive
->>> commits.
->>
->> You may be right here. But as submodules often have a detached =20
->> HEAD, this
->> might get interesting ;-)
->
-> Yes, trying to recursively commit across a submodule with detached =20
-> HEAD
-> should obviously fail (at least by default). But as long as a local =20
-> branch
-> is checked out in the submodule (which is not necessarily the same =20
-> as having
-> the submodule _track_ that branch), a recursive commit should be =20
-> relatively
-> straightforward.
->
->>> [1]: Say your submodule usually tracks a branch, but you're creatin=
-g
->>> some tag in the super-repo, and you want that tag to uniquely =20
->>> identify
->>> the submodule. You achieve this by making sure the tagged commit
->>> removes the relevant "branch =3D whatever" line from .gitmodules, a=
-nd
->>> records the appropriate submodule version in the super-repo tree.
->>> Then, you can revert the .gitmodules change on the next commit to
->>> resume tracking the submodule branch.
->>>
->>> Now, whenever you checkout the tag, you will always get the exact =20
->>> same
->>> version of the submodule, although the submodule otherwise tracks =20
->>> some
->>> branch.
->>
->> Won't work anymore when we would use 0{40} or drop it from the tree.
->> AFAICS always-tip and referencing a certain commit don't mix well.
->
-> AFAICS, it would still work as long as it exists in the tree for that
-> specific commit (but is missing/0{40} in other commits).
->
-> We're not mixing "always-tip" and "exact-commit" in the same commit. =
++/*
++ * Store error messages in an array, each case
++ * corresponding to a error message type
++ */
++typedef enum {
++	would_overwrite,
++	not_uptodate_file,
++	not_uptodate_dir,
++	would_lose_untracked,
++	would_lose_untracked_removed,
++	sparse_not_uptodate_file
++} unpack_trees_error;
++#define NB_UNPACK_TREES_ERROR 6
++struct rejected_files *unpack_rejects[NB_UNPACK_TREES_ERROR];
++
+ static void add_entry(struct unpack_trees_options *o, struct cache_ent=
+ry *ce,
+ 	unsigned int set, unsigned int clear)
+ {
+@@ -60,6 +75,88 @@ static void add_entry(struct unpack_trees_options *o=
+, struct cache_entry *ce,
+ }
 =20
-> We use
-> "always-tip" in regular commits, and then temporarily switch to =20
-> "exact-
-> commit" in the commits where a certain submodule version is required.
->
-When making a tag, could the notes system be used for marking what =20
-commit was exactly on the submodule, perhaps include the closest =20
-remote commits as well?
-
-
-Something like
-
-Submodule Status:
-	["foo"]
-		branch =3D subtopic:SHA
-
-This assumes that git notes are shared/cloned......
-
-
-Other thoughts.
-
-
-Things that should still work with tracking submodules.
-	- bisect   - Must be able to identify that a submodule change =20
-introduced the bug.
-	- archive  - Should it use the version from the commit, or the latest?
-	- rebase   - update all of the submodule commits?
-	- checkout - tip vs commit
-	- reset --hard - Good question... not sure.... probably depend on tip =
+ /*
++ * add error messages on file <file> and action <action>
++ * corresponding to the type <e> with the message <msg>
++ * indicating if it should be display in porcelain or not
++ */
++static int add_rejected_file(unpack_trees_error e,
++			     const char *file,
++			     const char *action,
++			     int porcelain,
++			     const char *msg)
++{
++	struct rejected_files_list *newentry;
++	/*
++	 * simply display the given error message if in plumbing mode
++	 */
++	if (!porcelain) {
++		error(msg,file,action);
++		return -1;
++	}
++	/*
++	 * if there is a porcelain error message defined,
++	 * the error is stored in order to be nicely displayed later
++	 */
++	if (e =3D=3D would_lose_untracked && !strcmp(action,"removed"))
++		e =3D would_lose_untracked_removed;
++
++	if (!unpack_rejects[e]) {
++		unpack_rejects[e] =3D malloc(sizeof(struct rejected_files));
++		unpack_rejects[e]->list =3D NULL;
++		unpack_rejects[e]->size =3D 0;
++	}
++	newentry =3D malloc(sizeof(struct rejected_files_list));
++	newentry->file =3D (char *)file;
++	newentry->next =3D unpack_rejects[e]->list;
++	unpack_rejects[e]->list =3D newentry;
++	unpack_rejects[e]->msg =3D msg;
++	unpack_rejects[e]->action =3D (char *)action;
++	unpack_rejects[e]->size +=3D strlen(file)+strlen("\n")+strlen("\t");
++	return -1;
++}
++
++/*
++ * free all the structures allocated for the error <e>
++ */
++static void free_rejected_files(unpack_trees_error e)
++{
++	while(unpack_rejects[e]->list) {
++		struct rejected_files_list *del =3D unpack_rejects[e]->list;
++		unpack_rejects[e]->list =3D unpack_rejects[e]->list->next;
++		free(del);
++	}
++	free(unpack_rejects[e]);
++}
++
++/*
++ * display all the error messages stored in a nice way
++ */
++static void display_error_msgs()
++{
++	int i;
++	int hasPorcelain =3D 0;
++	for (i=3D0; i<NB_UNPACK_TREES_ERROR; i++) {
++		if (unpack_rejects[i] && unpack_rejects[i]->list) {
++			hasPorcelain =3D 1;
++			struct rejected_files_list *f =3D unpack_rejects[i]->list;
++			char *action =3D unpack_rejects[i]->action;
++			char *file =3D malloc(unpack_rejects[i]->size+1);
++			*file =3D '\0';
++			while (f) {
++				strcat(file,"\t");
++				strcat(file,f->file);
++				strcat(file,"\n");
++				f =3D f->next;
++			}
++			error(unpack_rejects[i]->msg,file,action);
++			free_rejected_files(i);
++		}
++	}
++	if (hasPorcelain)
++		printf("Aborting\n");
++}
++
++/*
+  * Unlink the last component and schedule the leading directories for
+  * removal, such that empty directories get removed.
+  */
+@@ -819,6 +916,7 @@ done:
+ 	return ret;
 =20
-vs commit like checkout.
-	- More????
-
-
-I would rather the submodule entree in the tree be always updated to =20
-what is in the submodule on the commit, so that the history is always =20
-there.  Then actions updating the repository from remotes =20
-automatically pull the latest version.  I feel that the submodule if =20
-automatically be pulled, merged, etc, than the submodule should get a =20
-commit, with the message about this being an automatic update of the =20
-submodule.  Checking out is a different story.... checking out a =20
-branch tip of the super gets the latest tip from the submodule.  When =20
-you commit, the submodule gets it's auto commit, then a second commit =20
-for the code changes.  checking out a previous revision should =20
-probably put the sub module to the state it was in at that point in =20
-time.  Creating a branch and adding new content would update according =
+ return_failed:
++	display_error_msgs();
+ 	mark_all_ce_unused(o->src_index);
+ 	ret =3D unpack_failed(o, NULL);
+ 	goto done;
+@@ -828,7 +926,9 @@ return_failed:
 =20
-to the rules.  but show the change of the subproject as from the =20
-super's at the branch point, not the tip.
-
-This way older gits have a submodule to work with and newer gits will =20
-do the right thing.
-
-Example:
-
-s-y-y-z
-A-B-C-D
-\
-  \F-G
-s-z-z
-
-=46 is branched when the latest sub module is at z  but shows the chang=
-e =20
-from s not z because A the parent of F was created with the submodule =20
-at s
-
-Situational Example:
-
-I am developing away and as I progress in development I get a =20
-regression bug, so I run git bisect from the last stable release with =20
-out this bug, and it starts bisecting away.
-
-In the mode where we don't store the state of the project I can't =20
-bisect the changes against the subproject, where my bug might have =20
-been introduced from.
-
-So that issue should be probably handled in the git bisect code, that =20
-is "Make git bisect submodule aware"  in more verbose terms, when =20
-bisecting a super project the sub modules should undergo bisection as =20
-well.  This is a permutation that will expand rapidly, but some =20
-thoughts on how to dig into the bisection issues.
-This is another email ;-)
-
-
-Rebase:
-	With the auto commit of submodule scheme, a rebase would change the =20
-tracking branches to the latest of the tracked version. and auto merge =
+ static int reject_merge(struct cache_entry *ce, struct unpack_trees_op=
+tions *o)
+ {
+-	return error(ERRORMSG(o, would_overwrite), ce->name);
++	return add_rejected_file(would_overwrite, ce->name, NULL,
++				 (o && (o)->msgs.would_overwrite),
++				 ERRORMSG(o, would_overwrite));
+ }
 =20
-and record the previous submodule revision in the commit message of =20
-the submodule auto commit.
-
-Checkout with nonexistant submodule sha:
-	This is the case where the submodules ref was not pushed publicly, =20
-so, the contents are not available.  You get a nice warning and the =20
-tip of the submodules branch gets checked out for that submodule.
-
-Steve
+ static int same(struct cache_entry *a, struct cache_entry *b)
+@@ -850,7 +950,7 @@ static int same(struct cache_entry *a, struct cache=
+_entry *b)
+  */
+ static int verify_uptodate_1(struct cache_entry *ce,
+ 				   struct unpack_trees_options *o,
+-				   const char *error_msg)
++				   unpack_trees_error error)
+ {
+ 	struct stat st;
+=20
+@@ -874,8 +974,16 @@ static int verify_uptodate_1(struct cache_entry *c=
+e,
+ 	}
+ 	if (errno =3D=3D ENOENT)
+ 		return 0;
+-	return o->gently ? -1 :
+-		error(error_msg, ce->name);
++	if (error =3D=3D sparse_not_uptodate_file)
++		return o->gently ? -1 :
++			add_rejected_file(sparse_not_uptodate_file, ce->name, NULL,
++					  (o && (o)->msgs.sparse_not_uptodate_file),
++					  ERRORMSG(o, sparse_not_uptodate_file));
++	else
++		return o->gently ? -1 :
++			add_rejected_file(not_uptodate_file, ce->name, NULL,
++					  (o && (o)->msgs.not_uptodate_file),
++					  ERRORMSG(o, not_uptodate_file));
+ }
+=20
+ static int verify_uptodate(struct cache_entry *ce,
+@@ -883,13 +991,13 @@ static int verify_uptodate(struct cache_entry *ce=
+,
+ {
+ 	if (!o->skip_sparse_checkout && will_have_skip_worktree(ce, o))
+ 		return 0;
+-	return verify_uptodate_1(ce, o, ERRORMSG(o, not_uptodate_file));
++	return verify_uptodate_1(ce, o, not_uptodate_file);
+ }
+=20
+ static int verify_uptodate_sparse(struct cache_entry *ce,
+ 				  struct unpack_trees_options *o)
+ {
+-	return verify_uptodate_1(ce, o, ERRORMSG(o, sparse_not_uptodate_file)=
+);
++	return verify_uptodate_1(ce, o, sparse_not_uptodate_file);
+ }
+=20
+ static void invalidate_ce_path(struct cache_entry *ce, struct unpack_t=
+rees_options *o)
+@@ -976,7 +1084,9 @@ static int verify_clean_subdirectory(struct cache_=
+entry *ce, const char *action,
+ 	i =3D read_directory(&d, pathbuf, namelen+1, NULL);
+ 	if (i)
+ 		return o->gently ? -1 :
+-			error(ERRORMSG(o, not_uptodate_dir), ce->name);
++			add_rejected_file(not_uptodate_dir, ce->name, NULL,
++					  (o && (o)->msgs.not_uptodate_dir),
++					  ERRORMSG(o, not_uptodate_dir));
+ 	free(pathbuf);
+ 	return cnt;
+ }
+@@ -1058,7 +1168,9 @@ static int verify_absent_1(struct cache_entry *ce=
+, const char *action,
+ 		}
+=20
+ 		return o->gently ? -1 :
+-			error(ERRORMSG(o, would_lose_untracked), ce->name, action);
++			add_rejected_file(would_lose_untracked, ce->name, action,
++					  (o && (o)->msgs.would_lose_untracked),
++					  ERRORMSG(o, would_lose_untracked));
+ 	}
+ 	return 0;
+ }
+diff --git a/unpack-trees.h b/unpack-trees.h
+index ef70eab..49cc1ee 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -19,6 +19,18 @@ struct unpack_trees_error_msgs {
+ 	const char *would_lose_orphaned;
+ };
+=20
++struct rejected_files_list {
++	char *file;
++	struct rejected_files_list *next;
++};
++
++struct rejected_files {
++	char *action;
++	const char *msg;
++	size_t size;
++	struct rejected_files_list *list;
++};
++
+ struct unpack_trees_options {
+ 	unsigned int reset,
+ 		     merge,
+--=20
+1.6.6.7.ga5fe3
