@@ -1,203 +1,110 @@
-From: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>
-Subject: [PATCH v3 2/4] textconv: support for cat_file
-Date: Wed,  9 Jun 2010 19:02:07 +0200
-Message-ID: <1276102929-31712-3-git-send-email-clement.poulain@ensimag.imag.fr>
-References: <1276102929-31712-1-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276102929-31712-2-git-send-email-clement.poulain@ensimag.imag.fr>
+From: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+Subject: Re: [RFC/ PATCH 1/5] tree-walk: do not stop when an error is detected
+Date: Wed, 9 Jun 2010 19:18:19 +0200
+Message-ID: <AANLkTimSYHX1yXEGif6Mk1kadUy1QSHTQByiyuFsqe8r@mail.gmail.com>
+References: <1276087446-25112-1-git-send-email-diane.gasselin@ensimag.imag.fr> 
+	<1276087446-25112-2-git-send-email-diane.gasselin@ensimag.imag.fr> 
+	<1276087446-25112-3-git-send-email-diane.gasselin@ensimag.imag.fr> 
+	<7vaar4p2vo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 09 19:02:50 2010
+Cc: git@vger.kernel.org, Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?ISO-8859-1?Q?Cl=E9ment_Poulain?= 
+	<clement.poulain@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 19:18:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMOfv-0008KI-JU
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 19:02:47 +0200
+	id 1OMOvJ-0001qv-TR
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 19:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758035Ab0FIRCb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 13:02:31 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52531 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758027Ab0FIRC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 13:02:28 -0400
-Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o59GsYHj032512
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Wed, 9 Jun 2010 18:54:34 +0200
-Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
-	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o59H2H6I012750;
-	Wed, 9 Jun 2010 19:02:17 +0200
-Received: from ensibm.imag.fr (localhost [127.0.0.1])
-	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o59H2HqL031778;
-	Wed, 9 Jun 2010 19:02:17 +0200
-Received: (from poulainc@localhost)
-	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o59H2H5T031777;
-	Wed, 9 Jun 2010 19:02:17 +0200
-X-Mailer: git-send-email 1.6.6.7.ga5fe3
-In-Reply-To: <1276102929-31712-2-git-send-email-clement.poulain@ensimag.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 09 Jun 2010 18:54:34 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o59GsYHj032512
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
+	id S1753724Ab0FIRSg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 13:18:36 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:1800 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474Ab0FIRSf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 13:18:35 -0400
+Received: by fg-out-1718.google.com with SMTP id l26so1852315fgb.1
+        for <git@vger.kernel.org>; Wed, 09 Jun 2010 10:18:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=qZgExN0AWCQrj9gsgwBhUGDIas53HPYOW7aC8MieMJc=;
+        b=I8T5PBuY+wBY2oH2xABUm1mLHLGdjNpJwa1B/VwLkWuuamESRPql9Yjq3R22TEFFy6
+         /6LOaQS08vUsiXOH3J2NO/QG6yB8ex2OhQb5t+rTp5JJSOxeC3sCmA60dT6P4Vz7Llw8
+         MFww1pDvrZnrOlnPOEVZ+A7JPoe9pEcgTvk4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=AneHpx1K8dhSJ1GhIAlc72qyhADEv9pqbUDOJn93l3ZAXYonDq6HPW9J54DK4ICvrD
+         7bZtZmTB7BXodsS5VLn7SHbI1evjsVTX82OkysIgn8hRj8y6ifQb4R3BAOrul64qCEod
+         tC8T3DnkXhY1ybD03D8fI6Sx+6QhLfKTyJkqQ=
+Received: by 10.239.193.141 with SMTP id j13mr1222836hbi.69.1276103914102; 
+	Wed, 09 Jun 2010 10:18:34 -0700 (PDT)
+Received: by 10.239.172.204 with HTTP; Wed, 9 Jun 2010 10:18:19 -0700 (PDT)
+In-Reply-To: <7vaar4p2vo.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: XVb4y7plzET5OxmVHfKlEe-UfW4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148800>
 
-Make the textconv_object function public, and add --textconv option to =
-cat-file
-to perform conversion on blob objects. Using --textconv implies that we=
- are
-working on a blob.
-As files drivers need to be initialized, a new config is required in ad=
-dition
-to git_default_config. Therefore git_cat_file_config() is introduced
+Le 9 juin 2010 18:49, Junio C Hamano <gitster@pobox.com> a =E9crit :
+> Diane Gasselin <diane.gasselin@ensimag.imag.fr> writes:
+>
+>> When an error is detected, traverse_trees() is not stopped anymore.
+>> The whole tree is traversed so that all the merging errors can be de=
+tected.
+>
+> A small worry is if we have some codepath that uses this function lik=
+e
+> this:
+>
+> =A0 =A0if (traverse trees finishes successfully) {
+> =A0 =A0 =A0 =A0be happy, all is well;
+> =A0 =A0} else {
+> =A0 =A0 =A0 =A0attempt a different strategy to achieve
+> =A0 =A0 =A0 =A0what we wanted to with traverse trees, if
+> =A0 =A0 =A0 =A0it worked fine.
+> =A0 =A0}
+>
+> In such a case, spending extra cycles in traverse-trees only to colle=
+ct
+> more errors would actively degrade performance in the "alternative
+> implementation" codepath. =A0For "try 'quick but limited' version fir=
+st, and
+> if it doesn't work, try more elaborate version spending extra cycles"
+> pattern to work well, the 'quick but limited' version needs to fail
+> quickly without wasting extra cycles when it hits its limitation. =A0=
+In the
+> original code, we deliberately returned early upon seeing the first e=
+rror
+> exactly for this reason.
+>
+> I don't think of concrete examples offhand (fallbacks "merge -s resol=
+ve -s
+> recursive" or "am -3" use come close, perhaps), though, so I may be
+> worried needlessly in this case. =A0I honestly don't know offhand.
+>
+> With our attention focused only on UI issues, I however would agree t=
+hat
+> it makes a lot of sense to collect all errors and give them all to th=
+e
+> user, especially because the extra cycles (compared to the current co=
+de)
+> spent to do so is only in the error codepath.
+>
 
-Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
----
- builtin.h          |    2 ++
- builtin/blame.c    |    8 ++++----
- builtin/cat-file.c |   33 ++++++++++++++++++++++++++++++---
- 3 files changed, 36 insertions(+), 7 deletions(-)
-
-diff --git a/builtin.h b/builtin.h
-index 5c887ef..7902d4d 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -36,6 +36,8 @@ void finish_copy_notes_for_rewrite(struct notes_rewri=
-te_cfg *c);
-=20
- extern int check_pager_config(const char *cmd);
-=20
-+extern int textconv_object(const char *path, const unsigned char *sha1=
-, char **buf, size_t *buf_size);
-+
- extern int cmd_add(int argc, const char **argv, const char *prefix);
- extern int cmd_annotate(int argc, const char **argv, const char *prefi=
-x);
- extern int cmd_apply(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 62d040c..d477bbe 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -91,10 +91,10 @@ struct origin {
-  * if the textconv driver exists.
-  * Return 1 if the conversion succeeds, 0 otherwise.
-  */
--static int textconv_object(const char *path,
--			   const unsigned char *sha1,
--			   char **buf,
--			   size_t *buf_size)
-+int textconv_object(const char *path,
-+		    const unsigned char *sha1,
-+		    char **buf,
-+		    size_t *buf_size)
- {
- 	struct diff_filespec *df;
- 	struct userdiff_driver *textconv;
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index a933eaa..fc7ec61 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -9,6 +9,8 @@
- #include "tree.h"
- #include "builtin.h"
- #include "parse-options.h"
-+#include "diff.h"
-+#include "userdiff.h"
-=20
- #define BATCH 1
- #define BATCH_CHECK 2
-@@ -86,8 +88,9 @@ static int cat_one_file(int opt, const char *exp_type=
-, const char *obj_name)
- 	enum object_type type;
- 	void *buf;
- 	unsigned long size;
-+	struct object_context obj_context;
-=20
--	if (get_sha1(obj_name, sha1))
-+	if (get_sha1_with_context(obj_name, sha1, &obj_context))
- 		die("Not a valid object name %s", obj_name);
-=20
- 	buf =3D NULL;
-@@ -132,6 +135,17 @@ static int cat_one_file(int opt, const char *exp_t=
-ype, const char *obj_name)
-=20
- 		/* otherwise just spit out the data */
- 		break;
-+
-+	case 'c':
-+		if (!obj_context.path[0])
-+			die("git cat-file --textconv %s: <object> must be <sha1:path>",
-+			    obj_name);
-+
-+		if(!textconv_object(obj_context.path, sha1, (char **) &buf, (size_t =
-*) &size))
-+			die("git cat-file --textconv: unable to run textconv on %s",
-+			    obj_name);
-+		break;
-+
- 	case 0:
- 		buf =3D read_object_with_reference(sha1, exp_type, &size, NULL);
- 		break;
-@@ -201,11 +215,22 @@ static int batch_objects(int print_contents)
- }
-=20
- static const char * const cat_file_usage[] =3D {
--	"git cat-file (-t|-s|-e|-p|<type>) <object>",
-+	"git cat-file (-t|-s|-e|-p|<type>|--textconv) <object>",
- 	"git cat-file (--batch|--batch-check) < <list_of_objects>",
- 	NULL
- };
-=20
-+static int git_cat_file_config(const char *var, const char *value, voi=
-d *cb)
-+{
-+	switch (userdiff_config(var, value)) {
-+		case 0: break;
-+		case -1: return -1;
-+		default: return 0;
-+	}
-+
-+	return git_default_config(var, value, cb);
-+}
-+
- int cmd_cat_file(int argc, const char **argv, const char *prefix)
- {
- 	int opt =3D 0, batch =3D 0;
-@@ -218,6 +243,8 @@ int cmd_cat_file(int argc, const char **argv, const=
- char *prefix)
- 		OPT_SET_INT('e', NULL, &opt,
- 			    "exit with zero when there's no error", 'e'),
- 		OPT_SET_INT('p', NULL, &opt, "pretty-print object's content", 'p'),
-+		OPT_SET_INT(0, "textconv", &opt,
-+				"for blob objects, run textconv on object's content", 'c'),
- 		OPT_SET_INT(0, "batch", &batch,
- 			    "show info and content of objects fed from the standard input",
- 			    BATCH),
-@@ -227,7 +254,7 @@ int cmd_cat_file(int argc, const char **argv, const=
- char *prefix)
- 		OPT_END()
- 	};
-=20
--	git_config(git_default_config, NULL);
-+	git_config(git_cat_file_config, NULL);
-=20
- 	if (argc !=3D 3 && argc !=3D 2)
- 		usage_with_options(cat_file_usage, options);
---=20
-1.6.6.7.ga5fe3
+Seems pretty fair.
+Can I add in this case an option to git pull and git merge to specify
+that we do want to collect all the errors?
