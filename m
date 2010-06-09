@@ -1,70 +1,93 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/ PATCH 5/5] t7609: test merge and checkout error messages
-Date: Wed, 09 Jun 2010 23:31:02 +0200
-Message-ID: <vpqsk4vrizt.fsf@bauges.imag.fr>
-References: <1276087446-25112-1-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<1276087446-25112-2-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<1276087446-25112-3-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<1276087446-25112-4-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<1276087446-25112-5-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<1276087446-25112-6-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<1276087446-25112-7-git-send-email-diane.gasselin@ensimag.imag.fr>
-	<vpqtypcx7a9.fsf@bauges.imag.fr>
-	<AANLkTinw5gC9jCqhEeufwVnK0rZ-bJdx9sgpwEPoBEAw@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH next 2/2] Remove python 2.5'isms
+Date: Thu, 10 Jun 2010 00:40:54 +0200
+Message-ID: <201006100040.54375.johan@herland.net>
+References: <nduJYSHPH3U3cC4hTqPaVi-iLDqB7pemU3zevJMNRmyDsRKmtq_gVu-G9W-She7bPSFG9LafRk0@cipher.nrlssc.navy.mil>
+ <nduJYSHPH3U3cC4hTqPaVieVkcHeedXMjA92T_KB9XTSNMZ0NeKHomHE5LPZ65BzOnHb--wYKXY@cipher.nrlssc.navy.mil>
+ <AANLkTikmdsJwy06WuRwpLEKzZE45VZcvPDDxnW1OCb8K@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>
-To: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 09 23:31:15 2010
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, davvid@gmail.com,
+	Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Jun 10 00:50:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMSre-0005So-3u
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 23:31:10 +0200
+	id 1OMU61-0000xX-Rf
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 00:50:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755981Ab0FIVbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 17:31:05 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52200 "EHLO rominette.imag.fr"
+	id S1756970Ab0FIWt6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 18:49:58 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:37150 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754736Ab0FIVbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 17:31:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o59LNGp7019775
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 9 Jun 2010 23:23:16 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OMSrW-0002z9-Dl; Wed, 09 Jun 2010 23:31:02 +0200
-In-Reply-To: <AANLkTinw5gC9jCqhEeufwVnK0rZ-bJdx9sgpwEPoBEAw@mail.gmail.com> (Diane Gasselin's message of "Wed\, 9 Jun 2010 23\:10\:33 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 09 Jun 2010 23:23:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o59LNGp7019775
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1756316Ab0FIWt6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 18:49:58 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L3R001E3R06DX10@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 10 Jun 2010 00:40:54 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id D4C531EA56F5_C101876B	for <git@vger.kernel.org>; Wed,
+ 09 Jun 2010 22:40:54 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id A9D1C1EA3FEF_C101876F	for <git@vger.kernel.org>; Wed,
+ 09 Jun 2010 22:40:54 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L3R003G9R064Y30@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 10 Jun 2010 00:40:54 +0200 (MEST)
+User-Agent: KMail/1.13.3 (Linux/2.6.33-ARCH; KDE/4.4.4; x86_64; ; )
+In-reply-to: <AANLkTikmdsJwy06WuRwpLEKzZE45VZcvPDDxnW1OCb8K@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148824>
 
-Diane Gasselin <diane.gasselin@ensimag.imag.fr> writes:
+On Wednesday 09 June 2010, Sverre Rabbelier wrote:
+> On Wed, Jun 9, 2010 at 23:24, Brandon Casey <casey@nrlssc.navy.mil> wrote:
+> > The following python 2.5 features were worked around:
+>
+> Thanks for fixing this, although it makes me sad to see the code
+> uglify the way it has :P. I guess that's the pain of backwards
+> compatibility.
 
-> It seems a good idea, I will introduce that in my next version.
-> Should the message directly advice that files should not be exchanged
-> outside of Git and propose a solution for resolving the situation?
+I agree with Sverre's painful acceptance, but I believe something must be 
+done with the s/hashlib/sha/ changes.
 
-I don't think the tool should try to guess the origin of the problem,
-but give a solution (like "please move or remove the files before you
-can merge").
+On my Python v2.6.5. I get the following:
+
+>>> import sha
+__main__:1: DeprecationWarning: the sha module is deprecated; use the 
+hashlib module instead
+
+This is added to the output of every python program that imports sha. I 
+believe we should really try to use the hashlib module when available, and 
+only fall back to sha when necessary. Please use something like this 
+instead:
+
+  # hashlib is only available in python >= 2.5 
+  try: 
+      import hashlib 
+      _digest = hashlib.sha1 
+  except ImportError: 
+      import sha
+      _digest = sha.sha 
+
+so that we don't get the hideous DeprecationWarning.
+
+
+...Johan
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Johan Herland, <johan@herland.net>
+www.herland.net
