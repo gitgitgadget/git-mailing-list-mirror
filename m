@@ -1,94 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/4] sha1_name: add get_sha1_with_context()
-Date: Wed, 9 Jun 2010 02:13:37 -0400
-Message-ID: <20100609061337.GA14007@coredump.intra.peff.net>
-References: <1276004958-13540-1-git-send-email-clement.poulain@ensimag.imag.fr>
- <1276004958-13540-2-git-send-email-clement.poulain@ensimag.imag.fr>
- <vpqiq5t5rvd.fsf@bauges.imag.fr>
- <AANLkTinI_ghLE5U3tQ0JFmvuU8DySLFtdl03sv0uW-Ab@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/2] Add optional parameters to the diff option "--ignore-submodules"
+Date: Wed, 09 Jun 2010 08:23:17 +0200
+Message-ID: <4C0F3355.7050202@web.de>
+References: <4C0E7037.8080403@web.de> <201006090011.14995.johan@herland.net> <4C0EC201.9060309@web.de> <201006090149.22027.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: =?utf-8?Q?Cl=C3=A9ment?= Poulain <clement.poulain@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 09 08:13:54 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Jun 09 08:23:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMEXw-0003VM-Mt
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 08:13:53 +0200
+	id 1OMEhB-0000H2-Rk
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 08:23:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752971Ab0FIGNq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 02:13:46 -0400
-Received: from peff.net ([208.65.91.99]:35772 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752626Ab0FIGNp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 02:13:45 -0400
-Received: (qmail 17691 invoked by uid 107); 9 Jun 2010 06:13:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Wed, 09 Jun 2010 02:13:54 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Jun 2010 02:13:37 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTinI_ghLE5U3tQ0JFmvuU8DySLFtdl03sv0uW-Ab@mail.gmail.com>
+	id S1753596Ab0FIGXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 02:23:20 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:34022 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753458Ab0FIGXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 02:23:19 -0400
+Received: from smtp06.web.de  ( [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 4507B15E05FA0;
+	Wed,  9 Jun 2010 08:23:18 +0200 (CEST)
+Received: from [80.128.93.210] (helo=[192.168.178.26])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1OMEh4-0001VT-00; Wed, 09 Jun 2010 08:23:18 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <201006090149.22027.johan@herland.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/fhtaJx4e/PlyYyqFtmWJTqjclCDTx4bBcu0id
+	Vp42eu9NfsJ43FhH2SNmV7s9pNt7pxRNP/8VcgZwio0JNu4xGk
+	Gytz2zTMFdgAIIlDIuMQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148744>
 
-On Wed, Jun 09, 2010 at 12:30:31AM +0200, Cl=C3=A9ment Poulain wrote:
+Am 09.06.2010 01:49, schrieb Johan Herland:
+> On Wednesday 09 June 2010, Jens Lehmann wrote:
+>> There are currently (since 1.7.0) three reasons a submodule is considered
+>> dirty:
+>>
+>> 1) It contains untracked content
+>> 2) It contains modified tracked content
+>> 3) It contains newer commits than those committed in the superproject
+> 
+> I guess 3) really means that the submodule's HEAD points to a _different_ 
+> (not necessarily _newer_) commit than what's referenced in the superproject.
 
-> Le 8 juin 2010 19:57, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> a =C3=
-=A9crit :
-> > This patch produces uncompilable code for me:
-> >
-> > cc1: warnings being treated as errors
-> > In file included from builtin.h:6,
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 from fast-i=
-mport.c:147:
-> > cache.h: In function =E2=80=98get_sha1_with_context=E2=80=99:
-> > cache.h:748: error: implicit declaration of function =E2=80=98get_s=
-ha1_with_context_1=E2=80=99
-> >
-> > Forgot to add get_sha1_with_context_1 to cache.h?
->=20
-> Uh, we compiled it almost ten times on both our pc and ensibm (our
-> school server), whithout any problems. Seems that we need to check ou=
-r
-> compilation configurations.
+Sure, please replace my inaccurate description with yours ;-)
 
-Note the "warnings being treated as errors". Matthieu is compiling with
--Werror (and presumably -Wall). We strive to be warning-free in git, an=
-d
-I think many of the developers compile with "-Wall -Werror".
 
-> Right. But the aim was to skip one function call (see the call-stack =
-below)
-> _with_mode =3D> _with_mode_1 =3D> _with_context_1
-> whereas:
->  _with_context =3D> _with_context_1
+>> "all" would ignore 1), 2) & 3)
+>> "dirty" would ignore 1) & 2)
+>> "untracked" would ignore 1)
+> 
+> ...and just to complete my understanding of this, 3) requires only checking 
+> the submodule's current HEAD, while 1) and 2) require traversing its work 
+> tree (i.e. the equivalent of a 'git status'), hence the potential 
+> expensiveness.
 
-Perhaps that was your goal, but my goal when I suggested it was to give
-us a cleaner codebase. We don't want a proliferation of get_sha1_with_*
-functions. Introducing _with_context instead of _with_tree or _with_pat=
-h
-was meant not to make things worse. But collapsing _with_mode into
-_with_context actively makes things better.
+Thats correct.
 
-> >> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 orc->path[sizeof(orc->path)] =3D '\0';
-> >
-> > Same here.
->=20
-> That's true. Stupid error, we copied this line without checking it.
 
-Oops, that's my fault for introducing the bug in the first place (I had
-originally had an snprintf and changed it to strncpy at the last
-minute). :)
+> Also, I guess 2) includes both staged and unstaged modifications to tracked 
+> content?
 
--Peff
+Yes (as it doesn't make a difference to the superproject if modifications
+inside the submodule are staged or not there is no distinction made between
+those two).
+
+
+> Thanks for your help. All the ideas in your cover letter seem good to me.
+
+Thank you for your comments, I'll start hacking to show some more patches.
