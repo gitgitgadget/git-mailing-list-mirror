@@ -1,128 +1,75 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: RFC: Making submodules "track" branches
-Date: Wed, 09 Jun 2010 10:22:18 +0200
-Message-ID: <201006091022.18896.johan@herland.net>
-References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com>
- <201006082352.38136.johan@herland.net> <4C0F4185.2000207@web.de>
+From: John Tapsell <johnflux@gmail.com>
+Subject: Re: [RFC/PATCHv2] bash completion: Support "divergence from upstream" 
+	warnings in __git_ps1
+Date: Wed, 9 Jun 2010 17:45:15 +0900
+Message-ID: <AANLkTiltzOHvsVkqnKLV-fy-T8KyGQ8vg6pPm4xPZpJ-@mail.gmail.com>
+References: <4C0AE640.3040503@pileofstuff.org>
+	<201006062014.59386.trast@student.ethz.ch>
+	<4C0C09BF.4070503@pileofstuff.org>
+	<201006070942.34753.trast@student.ethz.ch>
+	<4C0EB7F1.1030707@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 09 10:26:30 2010
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Wed Jun 09 10:45:24 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMGcH-0004z0-MK
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 10:26:30 +0200
+	id 1OMGua-00089l-5V
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 10:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756714Ab0FII0Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 04:26:24 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:48032 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755576Ab0FII0W convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 04:26:22 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L3Q001M1N9FM160@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 09 Jun 2010 10:22:27 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 5DBA51EA54BE_C0F4F41B	for <git@vger.kernel.org>; Wed,
- 09 Jun 2010 08:22:25 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 52D641EA3342_C0F4F3BF	for <git@vger.kernel.org>; Wed,
- 09 Jun 2010 08:22:19 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L3Q001NFN97BA30@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 09 Jun 2010 10:22:19 +0200 (MEST)
-User-Agent: KMail/1.13.3 (Linux/2.6.33-ARCH; KDE/4.4.4; x86_64; ; )
-In-reply-to: <4C0F4185.2000207@web.de>
+	id S1757025Ab0FIIpR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 04:45:17 -0400
+Received: from mail-pz0-f176.google.com ([209.85.222.176]:59120 "EHLO
+	mail-pz0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756907Ab0FIIpQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 04:45:16 -0400
+Received: by pzk6 with SMTP id 6so2791659pzk.1
+        for <git@vger.kernel.org>; Wed, 09 Jun 2010 01:45:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XJIVJ0zafqgZiZXiQlKIGfMG0+BAvKOwHANPbGpheng=;
+        b=e0fOcU+9j41yk6Igt0j/2ktKgCF2HLRLuVFqvyXs/4OzG1WLeVpJH24Q0EdKeUYxT/
+         eGGRe6qTuc6utZQBQNf0/OZOmhKqCZnhytQbI93KS2SKTZLMhcpRVjGyIlWvNM2ECQ7V
+         v/06cy30cRjqA5RZVJVbcuSj52r6HHU6LQz98=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=h7Nk0G0nGnDcKpQSZ45YIwO/aBrrgJD2yk8b5fxKrotTZtnHjPy12orYaLrPwGkuml
+         05xEtGH2LTi8dw/fZF+D00RFniqtACPo3j8f4+BxiTLR8zq9y71neG4ZKs5aTYocCMl/
+         1M0VCO1FvYEnSPZZ+8hRayVaqg5g5OjbhDrkk=
+Received: by 10.115.149.4 with SMTP id b4mr5898528wao.143.1276073115718; Wed, 
+	09 Jun 2010 01:45:15 -0700 (PDT)
+Received: by 10.114.26.17 with HTTP; Wed, 9 Jun 2010 01:45:15 -0700 (PDT)
+In-Reply-To: <4C0EB7F1.1030707@pileofstuff.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148754>
 
-On Wednesday 09 June 2010, Jens Lehmann wrote:
-> Am 08.06.2010 23:52, schrieb Johan Herland:
-> > The good thing with =C3=86var's approach is that this is all config=
-urable
-> > per branch (indeed, per commit[1]) by editing your .gitmodules file=
-=2E
->=20
-> Yep, I think this is the sane way to do that.
->=20
-> > Interesting. Will the object parsing machinery handle that without
-> > hiccups? What if an older Git version tries to checkout/update a
-> > submodule with a 0- hash?
->=20
-> Maybe =C3=86var's idea of dropping such a submodule from the tree is =
-better.
+On 9 June 2010 06:36, Andrew Sayers <andrew-git@pileofstuff.org> wrote:
+> Add a notification in the command prompt specifying whether you're ah=
+ead of
+> (>), behind (<), diverged from (<>) or at (=3D) your upstream. =C2=A0=
+This is
+> especially helpful in small teams that (forget to) push to each other=
+ very
+> frequently.
 
-Agreed. That will of course cause older Git versions to skip the submod=
-ule=20
-altogether, which is probably the safest failure mode.
+I hate to get all feature-bloat on you...
 
-> > Me too, but I suspect that if you draw the "one big repo" approach =
-to
-> > its logical conclusion, there will be some demand for recursive
-> > commits.
->=20
-> You may be right here. But as submodules often have a detached HEAD, =
-this
-> might get interesting ;-)
+But could it state the number of commits as well please? :) :)
 
-Yes, trying to recursively commit across a submodule with detached HEAD=
-=20
-should obviously fail (at least by default). But as long as a local bra=
-nch=20
-is checked out in the submodule (which is not necessarily the same as h=
-aving=20
-the submodule _track_ that branch), a recursive commit should be relati=
-vely=20
-straightforward.
-
-> > [1]: Say your submodule usually tracks a branch, but you're creatin=
-g
-> > some tag in the super-repo, and you want that tag to uniquely ident=
-ify
-> > the submodule. You achieve this by making sure the tagged commit
-> > removes the relevant "branch =3D whatever" line from .gitmodules, a=
-nd
-> > records the appropriate submodule version in the super-repo tree.
-> > Then, you can revert the .gitmodules change on the next commit to
-> > resume tracking the submodule branch.
-> >=20
-> > Now, whenever you checkout the tag, you will always get the exact s=
-ame
-> > version of the submodule, although the submodule otherwise tracks s=
-ome
-> > branch.
->=20
-> Won't work anymore when we would use 0{40} or drop it from the tree.
-> AFAICS always-tip and referencing a certain commit don't mix well.
-
-AFAICS, it would still work as long as it exists in the tree for that=20
-specific commit (but is missing/0{40} in other commits).
-
-We're not mixing "always-tip" and "exact-commit" in the same commit. We=
- use=20
-"always-tip" in regular commits, and then temporarily switch to "exact-
-commit" in the commits where a certain submodule version is required.
-
-
-=2E..Johan
-
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+John
