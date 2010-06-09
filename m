@@ -1,115 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/ PATCH 4/5] t3030: update porcelain expected message
-Date: Wed, 09 Jun 2010 09:51:21 -0700
-Message-ID: <7vvd9sno8m.fsf@alter.siamese.dyndns.org>
-References: <1276087446-25112-1-git-send-email-diane.gasselin@ensimag.imag.fr>
- <1276087446-25112-2-git-send-email-diane.gasselin@ensimag.imag.fr>
- <1276087446-25112-3-git-send-email-diane.gasselin@ensimag.imag.fr>
- <1276087446-25112-4-git-send-email-diane.gasselin@ensimag.imag.fr>
- <1276087446-25112-5-git-send-email-diane.gasselin@ensimag.imag.fr>
- <1276087446-25112-6-git-send-email-diane.gasselin@ensimag.imag.fr>
+From: Carl Worth <cworth@cworth.org>
+Subject: Re: [PATCH] format-patch: Properly escape From_ lines when creating an mbox.
+Date: Wed, 09 Jun 2010 09:56:26 -0700
+Message-ID: <877hm8i1qd.fsf@yoom.home.cworth.org>
+References: <1276045305-20743-1-git-send-email-cworth@cworth.org> <7vljaorhjq.fsf@alter.siamese.dyndns.org> <87eiggiy8g.fsf@yoom.home.cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>
-To: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Wed Jun 09 18:51:39 2010
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+Cc: git <git@vger.kernel.org>, "H. Peter Anvin" <hpa@zytor.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 18:56:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMOV8-0001ep-QI
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 18:51:39 +0200
+	id 1OMOaB-0004fj-A4
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 18:56:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757989Ab0FIQvd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 12:51:33 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55077 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242Ab0FIQvc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 12:51:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 838CEBA7C4;
-	Wed,  9 Jun 2010 12:51:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=KywM+5BLrGM3PpblKh3drQs+c
-	F8=; b=FjXnH9V1F1a8j2tysItC7/rFIA/AvnagWTz4dsaP7iGo10GsT3e36oWgz
-	TH2CGo//7/Ysw8s7H0lG0Xd8PC9H8unLZPPNMuH++N7yVvYs6mQgxNoMu14WNvx8
-	zwehBmwI4AZJaf+efeNIOajeuUXT8wyNUSMVvzO55/UMzHPSYo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=i4LBdedQiiE79uQ6CmS
-	1q06QhonkICOm6SO2vOhffkk+X6liJ8NQxnise1IvVEf5lsBDmYclNC/CEspz9nl
-	f8sdkK9HndCLPygP71onjw0oav1zQxAJdOskjVpltsXB2iRdcWQzgJbm2AQvWSyO
-	Y4OH5O+7Zriq4UFe1SIOrFTs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3BD14BA7C0;
-	Wed,  9 Jun 2010 12:51:28 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3A555BA7AF; Wed,  9 Jun
- 2010 12:51:23 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3F5DD8EE-73E7-11DF-9E06-6730EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932346Ab0FIQ4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jun 2010 12:56:45 -0400
+Received: from u15218177.onlinehome-server.com ([74.208.220.233]:54604 "EHLO
+	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932251Ab0FIQ4p (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 12:56:45 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by olra.theworths.org (Postfix) with ESMTP id 6D55E4196F2;
+	Wed,  9 Jun 2010 09:56:44 -0700 (PDT)
+X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
+Received: from olra.theworths.org ([127.0.0.1])
+	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id kkVJZFi++hw6; Wed,  9 Jun 2010 09:56:32 -0700 (PDT)
+Received: from yoom.home.cworth.org (localhost [127.0.0.1])
+	by olra.theworths.org (Postfix) with ESMTP id A84294196F0;
+	Wed,  9 Jun 2010 09:56:32 -0700 (PDT)
+Received: by yoom.home.cworth.org (Postfix, from userid 1000)
+	id 4FC9B568E33; Wed,  9 Jun 2010 09:56:32 -0700 (PDT)
+In-Reply-To: <87eiggiy8g.fsf@yoom.home.cworth.org>
+User-Agent: Notmuch/0.3.1-61-ge870437 (http://notmuchmail.org) Emacs/23.1.1 (i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148794>
 
-Diane Gasselin <diane.gasselin@ensimag.imag.fr> writes:
+--=-=-=
+Content-Transfer-Encoding: quoted-printable
 
-> From: Diane <diane.gasselin@ensimag.imag.fr>
->
-> As porcelain messages have been changed, the expected porcelain messa=
-ge
-> tested in this test needs to be changed.
->
-> Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-> Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-> Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-> ---
->  t/t3030-merge-recursive.sh |    8 +++++++-
->  1 files changed, 7 insertions(+), 1 deletions(-)
->
-> diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-> index 9929f82..9ac5df8 100755
-> --- a/t/t3030-merge-recursive.sh
-> +++ b/t/t3030-merge-recursive.sh
-> @@ -268,6 +268,11 @@ test_expect_success 'merge-recursive result' '
->  	test_cmp expected actual
-> =20
->  '
-> +cat> expected2 <<EOF
+On Tue, 08 Jun 2010 22:14:23 -0700, Carl Worth <cworth@cworth.org> wrote:
+> On Tue, 08 Jun 2010 20:50:01 -0700, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> > Carl Worth <cworth@cworth.org> writes:
+> > Especially because your implementation quotes lines that begin with "Fr=
+om "
+> > unconditionally (even when the tail end of the line would never be a
+> > valid-looking timestamp).  Such an output will confuse existing mailspl=
+it,
+> > but the worst part of the story is that somebody who is applying a seri=
+es
+> > of patches will _not_ notice the breakage.  The payload of the second a=
+nd
+> > subsequent messages will likely be concatenated as if it were part of t=
+he
+> > first message, ignoring cruft between patches, but the resulting tree
+> > would likely to be the same as what the sending end intended.
+...
+> Could you describe in more detail how the implementation could lead to a
+> case like that? I'm not seeing it myself. But if you can show me, I'll
+> be happy to attempt a fix.
 
-Style:
+Oh, perhaps I understand what you were getting at here.
 
- (1) redirection ">" and "<" stick to the target file and have a SP on =
-the
-     other end.
+If a commit is created (by whatever means) with a commit message that
+has a line of the form:
 
- (2) if you are not actively $substituting inside here document,
-     quote EOF to assure readers that nothing funny is going on.
+	"From ... <timestamp>"
 
-i.e.
+then with the existing code, there will be a failure if someone does a
+format-patch and a git-am of that commit. And that might raise attention
+that perhaps something went wrong.
 
-	cat >expected2 <<\EOF
-        ... your HERE document here ...
-	EOF
+But with my patch series, that commit will transfer through the
+format-patch and git-am just fine.
 
-The same comment applies to [PATCH 5/5].  Also when you want to create =
-an
-empty file, don't use "touch F"; say ">F" instead.
+I would contend that preserving this commit is the right (and "robust")
+thing to do. For example, looking at the log recent of git.git master I
+see 5 commits that have a "From ... <timestamp>" line in the commit
+message.=20
 
-> -	grep "Your local changes to .* would be overwritten by merge." out
-> +	grep -A 2 "Your local changes to" out > tmp &&
+	34122b57eca747022336f5a3dc1aa80377d1ce56
+	48027a918d89bad6735897a2c3da77c0451a038c
+        19a8721ef8f82153fee93c62bd050659cf718d6d
+	3dc1383290f9db3371a13ae8009ce4fcd5ffc93a
+	1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2
 
-I think "grep -A $n" is a GNUism, not even in POSIX.  Avoid it.
+They all look to me like mistakes, some worse than others. But now that
+they are part of the history of the project, it would be better and more
+robust of git to actually be able to replay these successfully.
 
-Perhaps
+Git has various tools for rewriting history, which are useful for
+various reasons. But these tools will get tripped up on a commit like
+one of the above. For example, taking the most recent commit from above,
+"git rebase" is unable to replay it successfully:
 
-	sed -n "/^Your local changes to/,\$p" out >tmp &&
+	$ git checkout -b tmp 34122b57eca747022336f5a3dc1aa80377d1ce56
+	Switched to a new branch 'tmp'
+	$ git rebase --onto HEAD~2 HEAD~1
+	First, rewinding head to replay your work on top of it...
+	Patch is empty.  Was it split wrong?
+
+After my patch series this rebase works:
+
+	$ git checkout -b tmp 34122b57eca747022336f5a3dc1aa80377d1ce56
+	Switched to a new branch 'tmp'
+	0:~/src/git:(tmp)$ git rebase --onto HEAD~2 HEAD~1
+	First, rewinding head to replay your work on top of it...
+	Applying: gitweb: Always use three argument form of open
+
+That's git being demonstrably more robust. And an operation like that
+would make a good test for git's test suite.
+
+Now, it's likely git could also use some help to avoid whatever mistakes
+caused these commits to be created in the first place, but that's an
+orthogonal issue.
+
+Also, there is one commit that is more particularly broken than any of
+the others. Even my patch series is not sufficient to successfully
+replay the following commit:
+
+	1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2
+
+That's because in addition to the From_ line in the commit message, this
+commit also has an entire additional patch within the commit
+message. And git's "patch as email" format has an additional quoting
+problem with the "---" delimiter to separate the commit message from the
+patch. And again, that's orthogonal from the mbox quoting I'm currently
+trying to solve.
+
+=2DCarl
+
+=2D-=20
+carl.d.worth@intel.com
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iD8DBQFMD8e66JDdNq8qSWgRApUmAKClESfSUXj8mUsOurVxPq2g181krACeKvPs
+8b+rignris9aGygZ3ksGvlk=
+=xorm
+-----END PGP SIGNATURE-----
+--=-=-=--
