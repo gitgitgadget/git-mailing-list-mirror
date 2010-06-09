@@ -1,93 +1,101 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: RFC: Making submodules "track" branches
-Date: Wed, 09 Jun 2010 09:15:53 +0200
-Message-ID: <4C0F3FA9.7000800@web.de>
-References: <AANLkTilBQPHgkCLJ7ppNo5TwC9Bdmqo-OMRpaDFwbQPd@mail.gmail.com> <201006080912.31448.johan@herland.net> <4C0E6A8A.70608@web.de> <7vbpblruj8.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: permissions
+Date: Wed, 9 Jun 2010 09:20:27 +0200
+Message-ID: <AANLkTikGpbeP1ba0y0oUsWGQXsrL8Z-GKjybCB83W_FJ@mail.gmail.com>
+References: <4C0A19FE.1020802@wpursell.net>
+	<m27hmdn704.fsf@igel.home>
+	<4C0A9615.4090307@wpursell.net>
+	<AANLkTileRHwUuJpvKJbivRiM9Prn9wJ0zH6abExBgcq0@mail.gmail.com>
+	<4C0B6C32.1090700@wpursell.net>
+	<7vvd9wvswy.fsf@alter.siamese.dyndns.org>
+	<4C0E1AB1.2030702@wpursell.net>
+	<AANLkTimAmSxq8dC-4bnpLsvN3JabQeTO6pDTh9ds7D0D@mail.gmail.com>
+	<7vtypds09x.fsf@alter.siamese.dyndns.org>
+	<4C0EC3D0.6060509@wpursell.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= =?ISO-8859-1?Q?_Bjarmason?= 
-	<avarab@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 09:17:26 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: William Pursell <bill.pursell@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 09:20:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMFXL-0005ZR-5V
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 09:17:19 +0200
+	id 1OMFae-0007aj-Lc
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 09:20:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753369Ab0FIHRN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 03:17:13 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:42083 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706Ab0FIHRN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 03:17:13 -0400
-Received: from smtp02.web.de  ( [172.20.0.184])
-	by fmmailgate02.web.de (Postfix) with ESMTP id E0F361654A591;
-	Wed,  9 Jun 2010 09:15:53 +0200 (CEST)
-Received: from [80.128.93.210] (helo=[192.168.178.26])
-	by smtp02.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OMFVx-0006ul-00; Wed, 09 Jun 2010 09:15:53 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <7vbpblruj8.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/guIpgNokUDFrUwwNmxdg9y0nX+kp5aQDpFAF3
-	sLpAgCkfybtAtTqcTZ4Te8wQWXFdGQzXCWkWHBhc7Vgkcnrz6Q
-	I8Vr6qIkzyQ52SrSDyiw==
+	id S1755473Ab0FIHUa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 03:20:30 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:49975 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755440Ab0FIHU2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jun 2010 03:20:28 -0400
+Received: by gye5 with SMTP id 5so3812573gye.19
+        for <git@vger.kernel.org>; Wed, 09 Jun 2010 00:20:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2QX0NvRpuDz+kUmAgRUOwyLD9mi/+V+dZe6sKyzdmnE=;
+        b=eo+OxGMoDgI0V2SqPeIoKE3KqsAAYqEvrV9qroFZrTKA9yd+5B2Qx3cLfktHj+waRz
+         +XRw0+2lyPfBamXw8Jlc44EDoggxKkb+ECGkacNiGLMALtL90kXcC3UkS8MgvE2gx9sh
+         YbI3kK9jrRqhvlrP+gkyj3jXsY4htstwyU2jI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=CJnlaZRAV9k8clJCiUJlhD+P4+tpUh+QBvDPYcvzIUodxyqLoBlsSc52wNk0IDVr0G
+         Lr+TtYgxcDN7O5FGNEIZi9A9vz1Wf5TN369Ea3m9lo0IjGUj6Bkj18/zpB/8VxQe88M/
+         VIHij2xjGnlB5iWKaT7D6D11lb7YxAM9M+b0s=
+Received: by 10.100.244.32 with SMTP id r32mr18621339anh.28.1276068027263; 
+	Wed, 09 Jun 2010 00:20:27 -0700 (PDT)
+Received: by 10.100.229.5 with HTTP; Wed, 9 Jun 2010 00:20:27 -0700 (PDT)
+In-Reply-To: <4C0EC3D0.6060509@wpursell.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148748>
 
-Am 09.06.2010 01:09, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->=20
->> Don't record a commit in the first place, following a branch is not =
-bound
->> to a special commit, so pretending to do that might do more harm tha=
-n good.
->> Just putting the 0-hash there might be the solution.
->=20
-> Ugh.  Even though I understand that in some scenarios you would want =
-to
-> say "I don't care what commit is used for this submodule---just use t=
-he
-> tip of the branch 'fred'", I don't think you want to use 0{40} in the
-> superproject.  I think it would be Ok to add such a note to .gitmodul=
-es in
-> the superproject, but I also think we should still record which _exac=
-t_
-> commit was used to test and validate such a commit in the superprojec=
-t
-> when it was made.
+On Wed, Jun 9, 2010 at 00:27, William Pursell <bill.pursell@gmail.com> =
+wrote:
+> Junio C Hamano wrote:
+>> Alex Riesen <raa.lkml@gmail.com> writes:
+>>
+>>> On Tue, Jun 8, 2010 at 12:25, William Pursell <bill.pursell@gmail.c=
+om> wrote:
+>>>> Here's a patch. =C2=A0This doesn't address the issue of a damaged
+>>>> repository, but just catches access errors and permissions.
+>>> The change looks fishy.
+>>>
+>>> The patch moves the function is_git_directory at the level of user
+>>> interface where it wasn't before: it now complains and die.
+>>> Not all callers of the function call it only to die if it fails.
+>>
+>> Thanks for shooting it down before I had to look at it ;-)
+>
+> The point of the patch is that it now complains and dies.
 
-I think we are in violent agreement here. But I as far as understood th=
-e
-always-tip mode (and I might be wrong here as I never used something li=
-ke
-SVN Externals) it is intended to not be able to tell which exact versio=
-n
-of the submodules branch was used. Otherwise you could just update the
-branch in the submodule and commit that in the superproject, which is w=
-hat
-people do not seem to want (please correct me if I am wrong).
+At wrong point. Points, actually. There are many callers of the
+function you modified. You should have looked at them all.
 
-Under this assumption it seems to me that it doesn't make sense to reco=
-rd
-anything but 0{40}, as this tells people "this submodule was somewhere =
-at
-the tip of <branch>, but we can't say where exactly"). Or maybe don't a=
-dd
-the submodule to the tree at all, like =C6var proposed. Same outcome, m=
-aybe
-even easier to do.
+> Perhaps I'm being obtuse, but can you describe a situation
+> in which this causes git to terminate inappropriately?
 
-But I always have the feeling there is something I don't get when peopl=
-e
-talk about the always-tip mode, so maybe the potential users of such a
-feature should speak up now.
+Maybe. BTW, can you? (if you try, I mean). But your questions
+misses the point of my complaint about your patch:
+
+The patch makes the function you modified act not as one
+can guess from its other uses. Imagine someone replaced
+open(2) implementation to kill your program everytime you
+tried to open /etc/passwd. How'd you like that?
+
+That alone is reason enough to dislike the change and put
+you personally into a list of persons to be careful with (as
+you don't seem to care about what happens with the code
+after you changed it).
