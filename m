@@ -1,108 +1,114 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: RE: Git sideband hook output
-Date: Wed, 09 Jun 2010 09:44:13 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1006090934320.30664@xanadu.home>
-References: <AANLkTinLWDFTn7bhcF3Vk-q9aw4lJC2vFj95M9bxLbBT@mail.gmail.com>
- <20100608214632.GN14847@spearce.org>
- <A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
+Date: Wed, 9 Jun 2010 16:03:28 +0200
+Message-ID: <20100609140327.GA19828@pvv.org>
+References: <7vfx16oxmz.fsf@alter.siamese.dyndns.org> <Pine.GSO.4.63.1006031543340.22466@shipon.roxen.com> <20100604005603.GA25806@progeny.tock> <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock> <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com> <20100607085947.GA3924@pvv.org> <Pine.GSO.4.63.1006071726170.22466@shipon.roxen.com> <20100607195013.GA27362@pvv.org> <Pine.GSO.4.63.1006081731550.22466@shipon.roxen.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Scott Chacon <schacon@gmail.com>,
-	git list <git@vger.kernel.org>
-To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 15:44:25 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Henrik =?iso-8859-1?Q?Grubbstr=F6m?= <grubba@roxen.com>
+X-From: git-owner@vger.kernel.org Wed Jun 09 16:03:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMLZs-0000QH-8w
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 15:44:20 +0200
+	id 1OMLsZ-0005Ox-3G
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 16:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757767Ab0FINoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 09:44:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:17428 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752813Ab0FINoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 09:44:14 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L3R00KEZ25P1PG0@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 09 Jun 2010 09:44:13 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756654Ab0FIODd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 10:03:33 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:42552 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752993Ab0FIODd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 10:03:33 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1OMLsO-0008Dp-1i; Wed, 09 Jun 2010 16:03:28 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.GSO.4.63.1006081731550.22466@shipon.roxen.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148779>
 
-On Wed, 9 Jun 2010, Peter Kjellerstedt wrote:
+On Tue, Jun 08, 2010 at 05:52:37PM +0200, Henrik Grubbstr=F6m wrote:
 
-> > -----Original Message-----
-> > From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> > Behalf Of Shawn O. Pearce
-> > Sent: den 8 juni 2010 23:47
-> > To: Scott Chacon
-> > Cc: git list
-> > Subject: Re: Git sideband hook output
-> > 
-> > Scott Chacon <schacon@gmail.com> wrote:
-> > > Prior to 6d525d where Shawn made the receive-pack process send hook
-> > > output over side band #2, how did the hook output get sent to the
-> > > client?
-> > 
-> > It was sent over stderr, which was proxied down to the client by
-> > the SSH daemon.
-> > 
-> > > On older clients (before this commit) and on older servers,
-> > > the hook output just shows up without the 'remote:' prefix.
-> > 
-> > Because its echoed to the tty by the SSH client, without Git ever
-> > seeing it.
-> > 
-> > > After
-> > > this commit I get the 'remote:' prefix,
-> 
-> This explains the messy output from hooks I have seen since 
-> updating to 1.7.1...
-> 
-> > Now its being parsed out of the stream by the git client, using
-> > the same code that displays the progress messages during clone/fetch.
-> > 
-> > > which is kind of annoying.
-> > 
-> > Depends on your perspective.  Its nice to know that the messages
-> > came from the server, rather than from your client.  :-)
-> 
-> And it is very annoying that the output format has suddenly changed
-> so that the output from hooks that rely on the previous no-prefix
-> format no longer fit on an 80 char wide terminal where they used to
-> fit just fine.
+> [...]
+> True, there's no problem before the attribute change, but there is fo=
+r=20
+> commits between the attribute change and when the repository got =20
+> normalized (which can be a while with the current git).
 
-Fix your hook output then.
+As you say, the current git makes it easy to commit something where
+the attributes and the contents do not match. I think this needs to be
+fixed, and that your proposed patch in relaxed mode makes the problem
+_worse_, since it will then take even longer before these commits are
+fixed. But see below.
 
-> > > Is
-> > > there a way to suppress this to get the old output format?
-> > 
-> > No.  Other than to have the hook not output anything at all.
-> > 
-> > --
-> > Shawn.
-> 
-> Here is +1 for giving us back the no-prefix output. I would like
-> to suggest adding a configuration option to allow users to enable 
-> the "remote: " prefix if they want it.
+>
+> Re: configuration option naming:
+>
+>   I've settled for core.normalizationPolicy, with the values
+>   'strict' (default) for the behaviour requested by you and Jonathan,
+>   and 'relaxed' for my initial behaviour.
 
-Would be much more logical to fix the hook output, and keep hook 
-developers honnest by not confusing the user with output that isn't 
-local stuff.
+The name might be a bit vague, maybe there are other things that could
+be normalized? Maybe adding the word "index" is an improvement -
+e.g. core.indexNormalizationPolicy or just core.indexNormalization.=20
 
--1
+>
+> Teaser:
+> [...]
+>   $ git status
+>   # On branch master
+>   nothing to commit (working directory clean)
+>   $ cat >.gitattributes
+>   * ident
+>   $ git status
+> [...]
+>   #       modified:   expanded-keywords
+> [...]
+>
+>   $ git config core.normalizationPolicy relaxed
+>   $ git status
+>   # On branch master
+> [No longer modified]
 
+THIS behaviour is what I find scary. In this case, "ident" is clearly
+a newly added attribute, and git should not hide this from you. If you
+add a mode where git will hide this permanently, chances are the
+repositories will never be fixed.
 
-Nicolas
+The ident attribute may be a bit special since in your case it is only
+supposed to change if some other contents in the file change as well,
+but please also think how this will work with the text/eol
+attributes. Setting the text attribute and then having to CHANGE a
+file before getting it normalized is not good.
+
+Still, I think your original problem description of cloning something
+and ending up with a dirty tree is indeed an annoying problem.  So
+what about having the relaxed mode behave as follows:
+
+If both of these are true:
+ - the current attributes for a file are the same as it is registered a=
+s
+   in the index with your new patch
+ - a checkout of the file would result in identical contents to what is=
+=20
+   currently in the working directory
+Then behave as if the file is not modified.
+
+Or, in other words: If attributes are unchanged, a file is unmodified
+not only if it would result in the same contents after being added,
+but also if it would result in the current working directory
+contents after being checked out again.
+
+This should work for both text and ident on clone at least.
+
+- Finn Arne
