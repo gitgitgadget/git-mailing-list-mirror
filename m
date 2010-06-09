@@ -1,155 +1,91 @@
-From: Carl Worth <cworth@cworth.org>
-Subject: Re: [PATCH] format-patch: Properly escape From_ lines when creating an mbox.
-Date: Wed, 09 Jun 2010 09:56:26 -0700
-Message-ID: <877hm8i1qd.fsf@yoom.home.cworth.org>
-References: <1276045305-20743-1-git-send-email-cworth@cworth.org> <7vljaorhjq.fsf@alter.siamese.dyndns.org> <87eiggiy8g.fsf@yoom.home.cworth.org>
+From: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
+	<clement.poulain@ensimag.imag.fr>
+Subject: [PATCH v3 0/4] git-gui blame: use textconv
+Date: Wed,  9 Jun 2010 19:02:05 +0200
+Message-ID: <1276102929-31712-1-git-send-email-clement.poulain@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: git <git@vger.kernel.org>, "H. Peter Anvin" <hpa@zytor.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 09 18:56:55 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
+	<clement.poulain@ensimag.imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 09 19:02:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMOaB-0004fj-A4
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 18:56:51 +0200
+	id 1OMOfa-000862-Vx
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Jun 2010 19:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932346Ab0FIQ4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jun 2010 12:56:45 -0400
-Received: from u15218177.onlinehome-server.com ([74.208.220.233]:54604 "EHLO
-	olra.theworths.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932251Ab0FIQ4p (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jun 2010 12:56:45 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id 6D55E4196F2;
-	Wed,  9 Jun 2010 09:56:44 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at olra.theworths.org
-Received: from olra.theworths.org ([127.0.0.1])
-	by localhost (olra.theworths.org [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id kkVJZFi++hw6; Wed,  9 Jun 2010 09:56:32 -0700 (PDT)
-Received: from yoom.home.cworth.org (localhost [127.0.0.1])
-	by olra.theworths.org (Postfix) with ESMTP id A84294196F0;
-	Wed,  9 Jun 2010 09:56:32 -0700 (PDT)
-Received: by yoom.home.cworth.org (Postfix, from userid 1000)
-	id 4FC9B568E33; Wed,  9 Jun 2010 09:56:32 -0700 (PDT)
-In-Reply-To: <87eiggiy8g.fsf@yoom.home.cworth.org>
-User-Agent: Notmuch/0.3.1-61-ge870437 (http://notmuchmail.org) Emacs/23.1.1 (i486-pc-linux-gnu)
+	id S1758009Ab0FIRCU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jun 2010 13:02:20 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52531 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753355Ab0FIRCT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jun 2010 13:02:19 -0400
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o59GsWBD032502
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 9 Jun 2010 18:54:32 +0200
+Received: from ensibm.imag.fr (ensibm.imag.fr [195.221.228.8])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o59H2Fnd012743;
+	Wed, 9 Jun 2010 19:02:15 +0200
+Received: from ensibm.imag.fr (localhost [127.0.0.1])
+	by ensibm.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens.pm) with ESMTP id o59H2Fs7031762;
+	Wed, 9 Jun 2010 19:02:15 +0200
+Received: (from poulainc@localhost)
+	by ensibm.imag.fr (8.13.8/8.13.8/Submit) id o59H2FJf031761;
+	Wed, 9 Jun 2010 19:02:15 +0200
+X-Mailer: git-send-email 1.6.6.7.ga5fe3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 09 Jun 2010 18:54:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o59GsWBD032502
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148795>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
+This patch adds support of textconv to git-gui blame.
 
-On Tue, 08 Jun 2010 22:14:23 -0700, Carl Worth <cworth@cworth.org> wrote:
-> On Tue, 08 Jun 2010 20:50:01 -0700, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> > Carl Worth <cworth@cworth.org> writes:
-> > Especially because your implementation quotes lines that begin with "Fr=
-om "
-> > unconditionally (even when the tail end of the line would never be a
-> > valid-looking timestamp).  Such an output will confuse existing mailspl=
-it,
-> > but the worst part of the story is that somebody who is applying a seri=
-es
-> > of patches will _not_ notice the breakage.  The payload of the second a=
-nd
-> > subsequent messages will likely be concatenated as if it were part of t=
-he
-> > first message, ignoring cruft between patches, but the resulting tree
-> > would likely to be the same as what the sending end intended.
-...
-> Could you describe in more detail how the implementation could lead to a
-> case like that? I'm not seeing it myself. But if you can show me, I'll
-> be happy to attempt a fix.
+It is based on our previous work which adds textconv support to blame:
+http://mid.gmane.org/1275921713-3277-1-git-send-email-axel.bonnet@ensim=
+ag.imag.fr
+It also uses a git-gui patch done by Clemens Buchacher which adds textc=
+onv
+support to git-gui diff: http://mid.gmane.org/20100415193944.GA5848@loc=
+alhost.
 
-Oh, perhaps I understand what you were getting at here.
+git-gui blame is based on cat-file to get the content of the file in di=
+fferent
+revisions, so the patch adds textconv support to cat-file.
+The first part of this patch adds get_sha1_with_context() in order to k=
+now=20
+the pathname of the concerned blob, as textconv needs it to work.
 
-If a commit is created (by whatever means) with a commit message that
-has a line of the form:
+This third version corrects one bug and some compilation warnings
 
-	"From ... <timestamp>"
+Cl=C3=A9ment Poulain (4):
+  sha1_name: add get_sha1_with_context()
+  textconv: support for cat_file
+  git gui: use textconv filter for diff and blame
+  t/t8007: test textconv support for cat-file
 
-then with the existing code, there will be a failure if someone does a
-format-patch and a git-am of that commit. And that might raise attention
-that perhaps something went wrong.
-
-But with my patch series, that commit will transfer through the
-format-patch and git-am just fine.
-
-I would contend that preserving this commit is the right (and "robust")
-thing to do. For example, looking at the log recent of git.git master I
-see 5 commits that have a "From ... <timestamp>" line in the commit
-message.=20
-
-	34122b57eca747022336f5a3dc1aa80377d1ce56
-	48027a918d89bad6735897a2c3da77c0451a038c
-        19a8721ef8f82153fee93c62bd050659cf718d6d
-	3dc1383290f9db3371a13ae8009ce4fcd5ffc93a
-	1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2
-
-They all look to me like mistakes, some worse than others. But now that
-they are part of the history of the project, it would be better and more
-robust of git to actually be able to replay these successfully.
-
-Git has various tools for rewriting history, which are useful for
-various reasons. But these tools will get tripped up on a commit like
-one of the above. For example, taking the most recent commit from above,
-"git rebase" is unable to replay it successfully:
-
-	$ git checkout -b tmp 34122b57eca747022336f5a3dc1aa80377d1ce56
-	Switched to a new branch 'tmp'
-	$ git rebase --onto HEAD~2 HEAD~1
-	First, rewinding head to replay your work on top of it...
-	Patch is empty.  Was it split wrong?
-
-After my patch series this rebase works:
-
-	$ git checkout -b tmp 34122b57eca747022336f5a3dc1aa80377d1ce56
-	Switched to a new branch 'tmp'
-	0:~/src/git:(tmp)$ git rebase --onto HEAD~2 HEAD~1
-	First, rewinding head to replay your work on top of it...
-	Applying: gitweb: Always use three argument form of open
-
-That's git being demonstrably more robust. And an operation like that
-would make a good test for git's test suite.
-
-Now, it's likely git could also use some help to avoid whatever mistakes
-caused these commits to be created in the first place, but that's an
-orthogonal issue.
-
-Also, there is one commit that is more particularly broken than any of
-the others. Even my patch series is not sufficient to successfully
-replay the following commit:
-
-	1dfcfbce2d643b7c7b56dc828f36ced9de2bf9f2
-
-That's because in addition to the From_ line in the commit message, this
-commit also has an entire additional patch within the commit
-message. And git's "patch as email" format has an additional quoting
-problem with the "---" delimiter to separate the commit message from the
-patch. And again, that's orthogonal from the mbox quoting I'm currently
-trying to solve.
-
-=2DCarl
-
-=2D-=20
-carl.d.worth@intel.com
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iD8DBQFMD8e66JDdNq8qSWgRApUmAKClESfSUXj8mUsOurVxPq2g181krACeKvPs
-8b+rignris9aGygZ3ksGvlk=
-=xorm
------END PGP SIGNATURE-----
---=-=-=--
+ builtin.h                    |    2 +
+ builtin/blame.c              |    8 ++--
+ builtin/cat-file.c           |   33 ++++++++++++++++++--
+ cache.h                      |   11 ++++++
+ git-gui/git-gui.sh           |   28 ++++++++++++++++-
+ git-gui/lib/blame.tcl        |   21 +++++++++++-
+ git-gui/lib/diff.tcl         |    5 ++-
+ git-gui/lib/option.tcl       |    1 +
+ sha1_name.c                  |   31 +++++++++++++++---
+ t/t8007-cat-file-textconv.sh |   70 ++++++++++++++++++++++++++++++++++=
+++++++++
+ 10 files changed, 194 insertions(+), 16 deletions(-)
+ create mode 100755 t/t8007-cat-file-textconv.sh
