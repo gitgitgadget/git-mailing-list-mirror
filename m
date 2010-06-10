@@ -1,123 +1,153 @@
-From: Mikko Rantalainen <mikko.rantalainen@peda.net>
-Subject: Re: Porcelain support for daggy-fixes?
-Date: Fri, 11 Jun 2010 14:25:09 +0300
-Message-ID: <4C121D15.7030004@peda.net>
-References: <4C10EEBE.5030400@peda.net> <AANLkTikbe_0GlSkXxiSeIQl0x0tfTYmoI5RuyJPzZioM@mail.gmail.com>
+From: Ian Molton <ian.molton@collabora.co.uk>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Thu, 10 Jun 2010 19:12:36 +0000 (UTC)
+Message-ID: <loom.20100610T204637-685@post.gmane.org>
+References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig7408BFB2F96370B79301C8D2"
-Cc: git@vger.kernel.org
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Fri Jun 11 13:33:31 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 11 13:55:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON2UM-00048d-L3
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 13:33:30 +0200
+	id 1ON2pT-0005VT-KW
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 13:55:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759450Ab0FKLdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 07:33:25 -0400
-Received: from posti7.jyu.fi ([130.234.4.44]:45013 "EHLO posti7.jyu.fi"
+	id S1756126Ab0FKLzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 07:55:12 -0400
+Received: from lo.gmane.org ([80.91.229.12]:46705 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757635Ab0FKLdY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 07:33:24 -0400
-X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Jun 2010 07:33:24 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by posti7.jyu.fi (8.13.8/8.13.8) with ESMTP id o5BBPIlK012424;
-	Fri, 11 Jun 2010 14:25:18 +0300
-X-Virus-Scanned: amavisd-new at cc.jyu.fi
-Received: from posti7.jyu.fi ([127.0.0.1])
-	by localhost (posti7.jyu.fi [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LK2tBj2aIASt; Fri, 11 Jun 2010 14:25:15 +0300 (EEST)
-Received: from [130.234.78.125] (semyol-329-b.ktl.jyu.fi [130.234.78.125])
-	(authenticated bits=0)
-	by posti7.jyu.fi (8.13.8/8.13.8) with ESMTP id o5BBPCpA012419
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Jun 2010 14:25:13 +0300
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <AANLkTikbe_0GlSkXxiSeIQl0x0tfTYmoI5RuyJPzZioM@mail.gmail.com>
-X-Enigmail-Version: 0.96.0
+	id S1754858Ab0FKLzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 07:55:11 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1ON2pE-0005Pj-31
+	for git@vger.kernel.org; Fri, 11 Jun 2010 13:55:04 +0200
+Received: from 94-192-117-31.zone6.bethere.co.uk ([94.192.117.31])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 13:55:04 +0200
+Received: from ian.molton by 94-192-117-31.zone6.bethere.co.uk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 13:55:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+connect(): No such file or directory
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 94.192.117.31 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100501 Iceweasel/3.5.9 (like Firefox/3.5.9))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148938>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig7408BFB2F96370B79301C8D2
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Dmitry Kakurin <dmitry.kakurin <at> gmail.com> writes:
 
-Pascal Obry wrote:
-> I would probably create a topic/fix branch:
->=20
-> 1) figure out the proper parent for the bug fix
-> 2) create the fix branch and move to it
->     $ git co -b fix-feature-whatever parent
-> 3) implement the fix
-> 4) commit the fix
-> 5) checkout HEAD
-> 6) merge with the commit from step 4
->=20
-> And also merge on release branch if needed.
+> 
+> [ snip ]
+> 
+> When I first looked at Git source code two things struck me as odd:
+> 1. Pure C as opposed to C++. No idea why. Please don't talk about 
+> portability, it's BS.
 
-OK. I agree with this. The only problem is step 1 above (plus the other
-repeated steps if this is done every time you find a bug).
+Word to the wise... you effectively just told one of *the* best known
+programmers of all time that they are talking BS... nice one. Hope you've got
+some flameproof undies. Whats that? no? ah well...
 
-I'm still wondering if it would be possible to figure the correct parent
-automatically. How about the following:
+I smell a troll, but since everyone else has had a go...
 
-Given: minimal patch to fix a bug committed to tip of the master.
-Target: find proper parent for daggy-fix for the given bugfix (and then
-later rewrite history to put the fix as daggy-fix and merge with the mast=
-er)
+Heres some comments picked out from the thread, in no particular order...
 
-Idea:
+> > You have a very strange way of not meaning to start a C vs. C++ war.
 
-Compare the list of removed lines from latest commit (the bugfix) with
-the output of the same lines from git blame --cc (immediately before the
-bugfix). Proper parent for the bug fix is the commit that is newest for
-any removed line from the parent of the bugfix in the tip of the master
-(HEAD^).
+> I honestly didn't. I didn't even think it's possible. In the
+> environment of mainstream commercial software development the last war
+> on this subj was over 8-10 years ago.
 
-Does it sound sensible to assume that the proper parent for the bug fix
-is the newest commit that has modified any line that is removed or
-replaced by the bug fix?
+Really? I dont know what planet you're from, but this 'war' has been raging for
+decades, and will probably continue until one side or the other gets round to
+using tactical nukes.
 
+And besides, this *isn't* the commercial (closed) software world - we've moved
+on. We no longer depend on closed companies handing out features like orphans in
+the Victorian times...
 
-Why do I even think about this? I believe that daggy-fix style would be
-beneficial for many software projects but for small fixes it requires
-many little steps to implement and extra work to figure out the correct
-parent. Small bugs are often easy to fix at the tip of the master so the
-fixes usually end up there. It would be awesome if git were smart enough
-to move the fix to the correct location (daggy-fix)  and do automatic
-merge, once told that the last commit was really a bugfix. If this ends
-up working well enough, then it should be a flag for commit (--bugfix)
-which does the commit to proper parent and then does another merge
-commit with the current branch. Then the other branches (or forks) could
-merge the fix more easily (daggy-fixes should merge without conflicts if
-done correctly).
+>>> [bitfields in D]
 
---=20
-Mikko
+>>   Really, I feel this is a big lack, for a language that aims at
+>> simplicity, conciseness _and_ correctness.
+>>
+>>   OK, maybe I'm biased, I work with networks protocols all day long, so
+>> I often need bitfields, but still, a lot of people deal with network
+>> protocols, it's not a niche.
+>
+> And strictly speaking, C bitfields are completely useless for that
+> purpose since the compiler is free to use whatever method he wants for
+> allocating bit fields.  So if you want to write a portable program,
+> you are back to making the masks yourself.
 
+Sadly. Thats always been one of the things I found annoying in C. There are
+times when you want access to the types the hardware itself uses, and there are
+times when you want to know your int is 32 bits long, and there isnt really a
+standardised way of doing that. Of course, its worked around in practice, but it
+all seems so unnecessary.
 
+> in the *real world* rewriting Git in assembly would be like  
+> painting a house using a single horse hair instead of a paint brush  
+> or roller. Your SHA-1 example is a perfect example of where you  
+> benefit from doing a tiny embellished detail using the single hair  
+> (assembly) and leave all the rest in C.
 
---------------enig7408BFB2F96370B79301C8D2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+The above comment is pure epic win :-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
+On another note, some people talked about code reuse...
 
-iEYEARECAAYFAkwSHRUACgkQFNzRB1YxaOtumwCeNTdjd7uXyE6HcY+MHtTZPFaT
-hZ8AnRy0yqmmGYYgwFjZSoNnrPzxHOZA
-=u3MC
------END PGP SIGNATURE-----
+IMHO Sourcecode reuse is something of a myth in any language. Sure, some small
+algorithms get reused, but thats really not a language dependent characteristic.
+As soon as you build something much bigger than an algorithm, it starts to need
+an interface, and at that point you may as well turn it into a library. Thats
+where the REAL code reuse happens. And as it happens at runtime, its good for
+users - bugfixes help everyone.
 
---------------enig7408BFB2F96370B79301C8D2--
+On to language choice...
+
+I have NEVER understood why people seem to think theres some kind of hierarchy
+in either ease of coding or speed. You see it all the time, people think that:
+
+assembler is faster than c is faster than c++ is faster than perl etc.
+
+WHY? I've seen some truely braindamaged assembler that could be outperformed by
+BASIC on a BBC micro. I've seen 'handcrafted' C and C++ that looked like it was
+written during a skydive whilst on crack.
+
+languages are *tools*. Pick the most appropriate. Use two. Embrace the power of
+and...
+
+Linux make good use of C and assembler, both compiled/assembled seperately and
+inline. Some stuff like accessing weird registers with oddball opcodes is
+actually impossible under C. But (say) write a filesystem in assembler? no
+thanks! (not that it hasn't been done, but for the love of god, why?)
+
+So, anyway, why do these kind of threads never go away? because opinions are
+like arseholes. Everyones got one. As you grow older, you learn stuff. You
+hopefully dont repeat the mistakes of ones youth. (theres at least one
+ill-conceived C string library out there which I'm embarrased to admit is my
+fault (hopefully it'll never leave the company I was at when I wrote it...).
+These threads are where the n00bs meet the pros. Usually, the n00bs just need to
+suck it up and admit it when they've been dumb. Its a very rare day when
+something truely radical comes along, and its even rarer when its born of total
+inexperience.
+
+Nothing to see here...
+
+All the best,
+
+-Ian
+
+PS. ironically, in order to post this, gmane required me to enter a word. That
+word was "restraint". Gotta love karma.
