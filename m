@@ -1,90 +1,78 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] git-am: Ignore whitespace before patches
-Date: Thu, 10 Jun 2010 17:03:57 +0000
-Message-ID: <AANLkTikgWsumvqwicvOW8keGgvrgak8D6HXCGQ3wqHG6@mail.gmail.com>
-References: <1273944188-9472-1-git-send-email-avarab@gmail.com>
-	<7vd3vyn84j.fsf@alter.siamese.dyndns.org>
+From: Brian Downing <bdowning@lavos.net>
+Subject: Re: Serious performance regression in diff between 1.6.6 and 1.7.0
+Date: Thu, 10 Jun 2010 12:08:04 -0500
+Message-ID: <20100610170804.GB2635@glaurung.lavos.net>
+References: <20100610001005.GA2635@glaurung.lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 10 19:04:12 2010
+X-From: git-owner@vger.kernel.org Thu Jun 10 19:08:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMlAp-0001L8-B1
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 19:04:11 +0200
+	id 1OMlEk-0003On-U6
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 19:08:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759382Ab0FJREB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jun 2010 13:04:01 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47871 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117Ab0FJREA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jun 2010 13:04:00 -0400
-Received: by iwn37 with SMTP id 37so138859iwn.19
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 10:03:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sjkHjmKpBe4FcKi4HRcj/rQP7e9oIOBVEYOz8fDVFiw=;
-        b=IlrA6LGnJ9RYHF6J0tNPW303eSjGiXTSpbw10NulRqZ0a848bJj6xWlrdmM5MpEuJ1
-         pkoT/QeSz9URsBTKm0pBEtWeL+WcSTSvBCh9oY8Jhu+mZNGWE9RgI9BVISZVqBs3C2XJ
-         hEkCmn9suCcmwOHE4jy4XjbnSilmjs48OlPs0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PY1202JOP/oFRY7JIt0kJ8CegBKxh/XoZArJuH5Z9IKhLZNLrB+5az1C5uRWX+X45g
-         IrgxELdRF7pjWQzQQxL0FEGQSn8VUMR0wGTCG6qrXyfQ9ScF3SQk7Or6bKgcO2OT8kvT
-         Ms5KNqzQAYcJs14PI39Jw6GYyJxJYTEHYQbcc=
-Received: by 10.231.196.221 with SMTP id eh29mr395512ibb.180.1276189437775; 
-	Thu, 10 Jun 2010 10:03:57 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Thu, 10 Jun 2010 10:03:57 -0700 (PDT)
-In-Reply-To: <7vd3vyn84j.fsf@alter.siamese.dyndns.org>
+	id S1759611Ab0FJRIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 13:08:09 -0400
+Received: from glaurung.lavos.net ([69.162.133.92]:56089 "EHLO
+	glaurung.lavos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759546Ab0FJRII (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 13:08:08 -0400
+Received: by glaurung.lavos.net (Postfix, from userid 1000)
+	id AEC1E7417D; Thu, 10 Jun 2010 12:08:04 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <20100610001005.GA2635@glaurung.lavos.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148893>
 
-On Thu, Jun 10, 2010 at 16:51, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
->> Change git-am to ignore whitespace (as defined by sh's read) at the
->> beginning of patches.
->>
->> Empty lines are wont to creep in at the beginning of patches, here's
->> an example from a raw Gmail attachment:
->>
->> =C2=A0 =C2=A0 20 20 20 20 20 20 20 20 =C2=A020 20 20 20 20 20 20 20 =
-=C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
->> =C2=A0 =C2=A0 20 20 20 20 20 20 20 20 =C2=A020 20 20 20 20 20 20 0a =
-=C2=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .|
->> =C2=A0 =C2=A0 52 65 74 75 72 6e 2d 50 =C2=A061 74 68 3a 20 3c 61 76 =
-=C2=A0|Return-Path: <av|
->>
->> Whitespace is also likely to appear if the user copy/pastes the patc=
-h
->> around, e.g. via a pastebin, or any any number of other cases. This
->> harms nothing and makes git-am's detection more fault tolerant.
->
-> Actually cut-and-paste is often a major source of whitespace breakage
-> (including tabs silently being expanded), and I personally think a pa=
-tch
-> like this to encourage the practice is going in a wrong direction.
+On Wed, Jun 09, 2010 at 07:10:05PM -0500, Brian Downing wrote:
+> I've stumbled across a pretty serious performance regression in "git
+> diff" for a large (187456 files checked out on HEAD) repository of mine.
 
-It doesn't encourage that copy/paste. It's just tangentally mentioned
-in the commit message since it's a plausable use case.
+[...]
 
-What it does is enable the GMail -> download -> git-am workflow. GMail
-(and doubtless countless other) E-Mail providers introduce whitespace
-at the beginning of raw E-Mail messages, while otherwise leaving them
-intact.
+> It is more than 10x worse for my case here:
+> 
+> before 730f72840cc50c523fe4cdd796ea2d2fc4571a28:
+> 0.30user 0.50system 0:00.81elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+> 
+> 730f72840cc50c523fe4cdd796ea2d2fc4571a28:
+> 5.58user 0.40system 0:05.98elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
+
+Here's a little more profiling information (from the bad case).  I ran this a
+couple of times to see what oprofile said.  Sorry about the lack of non-Git
+symbols:
+
+CPU: Core 2, speed 2668 MHz (estimated)
+Counted CPU_CLK_UNHALTED events (Clock cycles when not halted) with a unit mask of 0x00 (Unhalted core cycles) count 100000
+samples  %        image name               app name                 symbol name
+499255   62.8497  git-diff                 git-diff                 df_name_compare
+110561   13.9182  git-diff                 git-diff                 do_compare_entry
+54508     6.8619  no-vmlinux               git-diff                 (no symbols)
+33741     4.2476  no-vmlinux               no-vmlinux               (no symbols)
+23724     2.9865  git-diff                 git-diff                 ce_in_traverse_path
+11767     1.4813  libcrypto.so.0.9.8       git-diff                 (no symbols)
+10511     1.3232  git-diff                 git-diff                 find_cache_pos
+
+I also ran this through callgrind to see how often the above were called:
+
+        Calls  Symbol
+  -----------  -------------------
+      197,958  unpack_callback
+      208,460  find_cache_pos
+   37,308,336  ce_in_traverse_path
+  156,950,469  do_compare_entry
+  156,950,469  df_name_compare
+
+Hope this helps.
+
+-bcd
