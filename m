@@ -1,83 +1,172 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH v4 0/5] Patches to avoid reporting conversion changes.
-Date: Thu, 10 Jun 2010 21:55:55 +0200
-Message-ID: <20100610195555.GA20759@pvv.org>
-References: <20100604005603.GA25806@progeny.tock> <Pine.GSO.4.63.1006041212200.27465@shipon.roxen.com> <20100604194201.GB21492@progeny.tock> <Pine.GSO.4.63.1006061143000.27465@shipon.roxen.com> <20100607085947.GA3924@pvv.org> <Pine.GSO.4.63.1006071726170.22466@shipon.roxen.com> <20100607195013.GA27362@pvv.org> <Pine.GSO.4.63.1006081731550.22466@shipon.roxen.com> <20100609140327.GA19828@pvv.org> <Pine.GSO.4.63.1006091943100.22466@shipon.roxen.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Henrik =?iso-8859-1?Q?Grubbstr=F6m?= <grubba@roxen.com>
-X-From: git-owner@vger.kernel.org Thu Jun 10 21:56:11 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: [RFC] ll-merge: Normalize files before merging
+Date: Thu, 10 Jun 2010 22:48:14 +0200
+Message-ID: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 10 22:48:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMnrG-0006u2-Cv
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 21:56:10 +0200
+	id 1OMoft-0007Uo-GB
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 22:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759649Ab0FJT4E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jun 2010 15:56:04 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:41636 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759403Ab0FJT4B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 15:56:01 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1OMnr1-0006TC-8F; Thu, 10 Jun 2010 21:55:55 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.GSO.4.63.1006091943100.22466@shipon.roxen.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1758111Ab0FJUsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 16:48:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45349 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756434Ab0FJUsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 16:48:20 -0400
+Received: by bwz7 with SMTP id 7so86971bwz.19
+        for <git@vger.kernel.org>; Thu, 10 Jun 2010 13:48:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=9ZaKeEFbzxdy6gmcL+FAT3MqFm2nYSNk9/urc2e3dA0=;
+        b=lqSh7MH1dbZy/XL6cIVR42hX46MA4X5SSzDsQNgeBY9FnhweE946w6a2SDiG6eriDK
+         n+x+gGAtZlX0F59NuM8XKzzXotMPQx9SKv3ms5qLvu09ANhdkrZWmgm0tXAIMuLerJvB
+         jspIFt0CuT/u94Qesl6gUgzZOUFaQBqAnAK/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=hddknbLbPMxohq2y8QqNc+iMkEJM4zzCUXNoRb4VdrQNPbcV7Pd3sbmnM3C/1zlW/K
+         J+/5leI8HNjNgh/LVO7YRXojF3vkQilu5OyZkSmVY2hG0j3wiL/01q2TyMKQOuZDbeI4
+         9e/rufcckhcS7ha73ydtBB8BIwEweoyAspf3Q=
+Received: by 10.204.163.133 with SMTP id a5mr562345bky.17.1276202898657;
+        Thu, 10 Jun 2010 13:48:18 -0700 (PDT)
+Received: from localhost.localdomain (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id v14sm1595126bkz.2.2010.06.10.13.48.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 10 Jun 2010 13:48:18 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.5.g0ed10.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148916>
 
-On Wed, Jun 09, 2010 at 08:04:34PM +0200, Henrik Grubbstr=F6m wrote:
+Currently, merging across changes in line ending normalization is
+painful since all lines containing CRLF will conflict uselessly.
 
-> Ok, so the expanded-keywords file in the example should show up as =20
-> modified in relaxed mode as well, but be cleaned if the modified =20
-> attributes file is added to the index? Or only after being committed?
+Fix ll-merge so that the "base", "theirs" and "ours" files are passed
+through convert_to_git() before a three-way merge.  This prevents
+differences that can be normalized away from blocking an automatic
+merge.
+---
+I have a repository that has been normalized using "* text=auto" and
+need to merge un-normalized changes (ie, branches based on commits from
+before the normalization) into it.  Unfortunately, this doesn't work:
+every line containing a CRLF causes a conflict.  Fortunately, there is
+an easy fix in the merge code.
 
-Not before being committed, since you would otherwise have to add all
-other files before adding .gitattributes, but I am not sure even that
-is sufficient reason to claim the files are unmodified (see case 3 belo=
-w).
+This patch has already been useful to me, but I'm not sure it is the
+best possible solution to the problem (especially in terms of
+efficiency), hence the RFC.
 
-I think we agree on the following:
-
-If there is a discrepancy between .gitattributes and the contents in
-the repository, the following should be true:
-
-git checkout -f (or git reset --hard)
-git status -> ALWAYS report modified files in strict mode
-sleep 1
-touch *
-git status -> NEVER report modified files in relaxed mode
+Note that clean and ident filters will also be run, which might be a
+good thing.  Also, the tests require my crlf/text series from pu.
+-- 
+Eyvind
 
 
-The case I think you are asking about above is the following in
-"relaxed" mode:
 
-echo "something that causes a discrepancy" >> .gitattributes
-git status -> MODIFIED (1)
-git add .gitattributes
-git status -> MODIFIED (2)
-git commit -m "bad commit"
-git status -> ???????  (3)    <<-- Do you want this to be CLEAN?
-git reset --hard (or git checkout -f)
-sleep 1
-touch *
-git status -> CLEAN    (4)
+ ll-merge.c                 |   12 +++++++++
+ t/t6038-merge-text-auto.sh |   54 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6038-merge-text-auto.sh
 
-1 and 4 should be uncontroversial and 2 I think is necessary because
-you should be able to git add in several steps. Whether 3 should be
-clean or modified I'm not so sure about, I think that it would make it
-more likely to get the repo normalized properly if it was still seen
-as modified there.
-
-- Finn Arne
+diff --git a/ll-merge.c b/ll-merge.c
+index f9b3d85..63835af 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -321,6 +321,15 @@ static int git_path_check_merge(const char *path, struct git_attr_check check[2]
+ 	return git_checkattr(path, 2, check);
+ }
+ 
++static void normalize_file(mmfile_t *mm, const char *path) {
++	struct strbuf strbuf = STRBUF_INIT;
++	if (convert_to_git(path, mm->ptr, mm->size, &strbuf, 0)) {
++		free(mm->ptr);
++		mm->size = strbuf.len;
++		mm->ptr = strbuf_detach(&strbuf, NULL);
++	}
++}
++
+ int ll_merge(mmbuffer_t *result_buf,
+ 	     const char *path,
+ 	     mmfile_t *ancestor, const char *ancestor_label,
+@@ -334,6 +343,9 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	const struct ll_merge_driver *driver;
+ 	int virtual_ancestor = flag & 01;
+ 
++	normalize_file(ancestor, path);
++	normalize_file(ours, path);
++	normalize_file(theirs, path);
+ 	if (!git_path_check_merge(path, check)) {
+ 		ll_driver_name = check[0].value;
+ 		if (check[1].value) {
+diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
+new file mode 100755
+index 0000000..6af2c41
+--- /dev/null
++++ b/t/t6038-merge-text-auto.sh
+@@ -0,0 +1,54 @@
++#!/bin/sh
++
++test_description='CRLF merge conflict across text=auto change'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++	git config core.autocrlf false &&
++	echo first line | append_cr >file &&
++	git add file &&
++	git commit -m "Initial" &&
++	git tag initial &&
++	git branch side &&
++	echo "* text=auto" >.gitattributes &&
++	git add .gitattributes &&
++	echo same line | append_cr >>file &&
++	git add file &&
++	git commit -m "add line from a" &&
++	git tag a &&
++	git rm .gitattributes &&
++	rm file &&
++	git checkout file &&
++	git commit -m "remove .gitattributes" &&
++	git tag c &&
++	git checkout side &&
++	echo same line | append_cr >>file &&
++	git commit -m "add line from b" file &&
++	git tag b &&
++	git checkout master
++'
++
++test_expect_success 'Check merging after setting text=auto' '
++	git reset --hard a &&
++	git merge b &&
++	cat file | remove_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++test_expect_success 'Check merging addition of text=auto' '
++	git reset --hard b &&
++	git merge a &&
++	cat file | remove_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++# Not sure if this deserves to be fixed
++test_expect_failure 'Check merging removal of text=auto' '
++	git reset --hard b &&
++	git merge c &&
++	cat file | remove_cr >file.temp &&
++	test_cmp file file.temp
++'
++
++test_done
+-- 
+1.7.1.5.g0ed10.dirty
