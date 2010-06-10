@@ -1,69 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] read_cache: cast types from stat to ce_cache
-Date: Thu, 10 Jun 2010 08:54:54 -0700
-Message-ID: <7vmxv2nar5.fsf@alter.siamese.dyndns.org>
-References: <a06cc84698f174d914350d6fd6e6b4739d22aa45.1276161176.git.git@drmicha.warpmail.net>
+From: David Ripton <dripton@ripton.net>
+Subject: Re: [PATCH next 2/2 v2] Remove python 2.5'isms
+Date: Thu, 10 Jun 2010 08:41:14 -0700
+Message-ID: <20100610154114.GC31213@vidar.dreamhost.com>
+References: <201006100040.54375.johan@herland.net> <5ep6Hc9Nl3QLKwV46xET5ZLhqo2uNlnUL1-nNsG9p2IWyX-odykArvT4ontRdeBUA9ouCPQGFwQ@cipher.nrlssc.navy.mil> <4C10B02F.9050107@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, johan@herland.net,
+	git@vger.kernel.org, srabbelier@gmail.com, davvid@gmail.com,
+	Brandon Casey <drafnel@gmail.com>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jun 10 17:55:16 2010
+X-From: git-owner@vger.kernel.org Thu Jun 10 18:04:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMk63-00076k-3a
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 17:55:11 +0200
+	id 1OMkEn-0003jp-KT
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 18:04:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759446Ab0FJPzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 11:55:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65335 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863Ab0FJPzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 11:55:04 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EDFEFBA0C4;
-	Thu, 10 Jun 2010 11:55:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=UIvEpAvKtvCz8gBCbYe67AYi2pM=; b=vQlEqXpq35vMvzQO9M4SllF
-	mgUNfqy9vaumWb91Nzg+tcFBJIkAxrrTOSQsX+d//E3adhPcSBYOBjqeI2Nz0oQ7
-	k5TP2p4f5aomSu82omQ/ACqYRgucFPsIqV+gg7mnvYszFaAQQh9bRBOG2GjDvbtC
-	faVL0k8D7Lo2bQywumuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=L10mHgPkFIZWHgAJyeaJY1UFk40flA46/tnOuTuk+Y/Kpc7i/
-	55qf3vso71zJCfuiiwqe3EmAJFBVN/ER9ohnPFpKyFAOX20jhuBUSSb8TvguSu5M
-	F4xULdoh5XW+Ek+hqyawB2S2TvLI8Jp83C0HHEZOfSd6/kJH4aPNeZPB38=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 46B60BA0C3;
-	Thu, 10 Jun 2010 11:54:59 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93D3ABA0C2; Thu, 10 Jun
- 2010 11:54:56 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 85CCC9EA-74A8-11DF-B638-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753745Ab0FJQEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 12:04:08 -0400
+Received: from judo.dreamhost.com ([66.33.216.100]:46591 "EHLO
+	judo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863Ab0FJQEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 12:04:07 -0400
+X-Greylist: delayed 1328 seconds by postgrey-1.27 at vger.kernel.org; Thu, 10 Jun 2010 12:04:07 EDT
+Received: from crusty.g.dreamhost.com (crusty.g.dreamhost.com [67.205.8.12])
+	by judo.dreamhost.com (Postfix) with ESMTP id 0015B45436E
+	for <git@vger.kernel.org>; Thu, 10 Jun 2010 08:41:57 -0700 (PDT)
+Received: from vidar.dreamhost.com (vidar.dreamhost.com [208.113.223.211])
+	by crusty.g.dreamhost.com (Postfix) with ESMTP id C47EB11DD38;
+	Thu, 10 Jun 2010 08:41:14 -0700 (PDT)
+Received: by vidar.dreamhost.com (Postfix, from userid 59956)
+	id 5EC51984D5; Thu, 10 Jun 2010 08:41:14 -0700 (PDT)
+Mail-Followup-To: Michael J Gruber <git@drmicha.warpmail.net>,
+	Brandon Casey <casey@nrlssc.navy.mil>, johan@herland.net,
+	git@vger.kernel.org, srabbelier@gmail.com, davvid@gmail.com,
+	Brandon Casey <drafnel@gmail.com>
+Content-Disposition: inline
+In-Reply-To: <4C10B02F.9050107@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148886>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 2010.06.10 11:28:15 +0200, Michael J Gruber wrote:
+> Doesn't P2.4 have
+> 
+> 	from hashlib import sha1 as _digest
+> 
+> etc.? I haven't checked for "as".
 
-> -	ce->ce_dev = st->st_dev;
-> -	ce->ce_ino = st->st_ino;
-> -	ce->ce_uid = st->st_uid;
-> -	ce->ce_gid = st->st_gid;
-> -	ce->ce_size = st->st_size;
-> +	ce->ce_dev = (unsigned int)st->st_dev;
-> +	ce->ce_ino = (unsigned int)st->st_ino;
-> +	ce->ce_uid = (unsigned int)st->st_uid;
-> +	ce->ce_gid = (unsigned int)st->st_gid;
-> +	ce->ce_size = (unsigned int)st->st_size;
+Hashlib was new in Python 2.5.  See the note at the top of:
+http://docs.python.org/library/hashlib.html
 
-I haven't had my morning coffee yet, but wouldn't the conversion be
-automatic by assignment anyway?
+You may have hashlib in your Python 2.4, but if so it's a third-party
+module, not part of the standard library.  You shouldn't rely on
+everyone having it, when it's so easy to fallback to the sha module.
+
+"import foo as bar" was added in Python 2.0.  "as" became a reserved
+word in Python 2.6.
+
+-- 
+David Ripton    dripton@ripton.net
