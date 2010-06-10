@@ -1,72 +1,84 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Misterious warning about file system boundaries [It's a bug, not 
-	a mystery.]
-Date: Thu, 10 Jun 2010 10:52:40 +0000
-Message-ID: <AANLkTikle0gxLvKkhr-APkt_6QCB0hVu7bIGm0sRcjVK@mail.gmail.com>
-References: <4C0FF7B9.8040007@drmicha.warpmail.net>
-	<4C109C4F.1030809@op5.se>
-	<4C10AAC4.90405@drmicha.warpmail.net>
-	<AANLkTimwhDGNTMiOaW8_AGGd4PvFtyILEikePdC4zGDo@mail.gmail.com>
-	<4C10C02E.50502@drmicha.warpmail.net>
+From: "Rory Hunter" <Rory.Hunter@datacash.com>
+Subject: fast-import doesn't recognise commits it generated?
+Date: Thu, 10 Jun 2010 11:55:51 +0100
+Message-ID: <A78DB34D00374344A0AB65B6523C05DC05969A63@marsden.win.datacash.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: kusmabite@gmail.com, Erik Faye-Lund <kusmabite@googlemail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jun 10 12:52:51 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 10 12:56:05 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMfNS-0004rF-L1
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 12:52:50 +0200
+	id 1OMfQZ-0006AU-Gq
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 12:56:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758759Ab0FJKwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 06:52:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62137 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752822Ab0FJKwn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 06:52:43 -0400
-Received: by iwn37 with SMTP id 37so6893401iwn.19
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 03:52:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=HlPZLOV8yAidQPU32K7Dw0FnfyT1tZGd5OYLDkaTxEM=;
-        b=w5UcSr5wrUP+RE5XZqxAWbmQn9pjMsFxkXrCbgzmljoexz2AP7+ruXZ/Dcu16RWMXk
-         0lowvDxl6OjkJ/KoHI+xLp4BaPQF/gDXLjXX5USS85pNnl0BbJbklFywtOgcKnyXNoH0
-         1AagjOoeT90elMnWTfQb45GNKDiVgykBe6c4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Tpi5xyajeb+w2M0rBokT1VLG1Y3uQFooCw7lhBNXyyTMoqf1flsWErYQ97PlDUM5Iw
-         pusIkW++Rl8f670OcuxalqPRCUFIhOUV2ecQYQ2G5oQUPlUHJYIodKgJwyNsB7gnTv5b
-         d4jZGWmADl8Ibg6idb8plK1eRS8aTiIeqovMc=
-Received: by 10.231.194.223 with SMTP id dz31mr4087706ibb.87.1276167160955; 
-	Thu, 10 Jun 2010 03:52:40 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Thu, 10 Jun 2010 03:52:40 -0700 (PDT)
-In-Reply-To: <4C10C02E.50502@drmicha.warpmail.net>
+	id S1758799Ab0FJKzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 06:55:54 -0400
+Received: from mail123.messagelabs.com ([85.158.136.3]:24330 "HELO
+	mail123.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1758785Ab0FJKzx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jun 2010 06:55:53 -0400
+X-VirusChecked: Checked
+X-Env-Sender: Rory.Hunter@datacash.com
+X-Msg-Ref: server-7.tower-123.messagelabs.com!1276167352!2259636!1
+X-StarScan-Version: 6.2.4; banners=-,-,-
+X-Originating-IP: [82.118.92.11]
+Received: (qmail 11432 invoked from network); 10 Jun 2010 10:55:52 -0000
+Received: from unknown (HELO smtp.datacash.com) (82.118.92.11)
+  by server-7.tower-123.messagelabs.com with SMTP; 10 Jun 2010 10:55:52 -0000
+Received: from marsden.win.datacash.com ([172.30.30.225]) by smtp.datacash.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 10 Jun 2010 11:55:53 +0100
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: fast-import doesn't recognise commits it generated?
+Thread-Index: AcsIi2SlzfETru6RSYWPRSh6pwyH+Q==
+X-OriginalArrivalTime: 10 Jun 2010 10:55:53.0050 (UTC) FILETIME=[7EC4E3A0:01CB088B]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148854>
 
-On Thu, Jun 10, 2010 at 10:36, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> I guess we need --I-really-mean-it-refresh.
->
-> In fact, not even after recompiling with USE_STDEV=y that
-> --really-refresh helps which stomps me.But what do I know.
+Hi,
 
-The real problem here is the assumption in 52b98a7 that stat's st_dev
-will stay the same for a given device, clearly that's not the case on
-Linux if you reboot your machine.
+I'm trying to convert a PRCS repository into git using a custom
+fast-import frontend. It's a very large repository, and I can't convert
+it fast enough to stop users from committing to it while I convert it
+(it takes 4+ days, PRCS is old and not that quick, and I've got over
+7000 commits to migrate. I've been converting from a backup).
 
-Is there some way of working around that?
+I've found that if I do an export up to a certain point, then attempt to
+resume the export using the marks file generated by fast-import, it
+complains saying (for example);
+
+error: unable to find 185643da420354e861743f3056614f4dc78c0246
+fatal: object not found: 185643da420354e861743f3056614f4dc78c0246
+
+I tried this with version 1.5.6.5-3 (+lenny2~bpo40+1, on Debian Lenny),
+and the offending hash and mark were in the marks file, quite a way
+earlier than the point from which I attempted to resume the export.
+
+I installed 1.7.1 from source and tried again and hit the same problem,
+although this time it seems to have trampled the marks file in the
+process - I had 47 entries instead of 10x that number before trying to
+resume.
+
+The only other information in the crash report is, "active_branches = 0
+cur, 5 max". Not much to go on.
+
+I'm wondering if there are conditions where fast-import will somehow
+ignore a revision, or squash it into another revision, such that it
+accepts and processes the command stream that I've generated but doesn't
+generate a commit, despite it outputting a hash to the marks file?
+
+Thanks and regards,
+
+-- 
+Rory Hunter
