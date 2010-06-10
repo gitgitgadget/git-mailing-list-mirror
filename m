@@ -1,49 +1,70 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Re: [RFH] specifying rebase options when branch.&lt;name&gt;.rebase = true
-Date: Thu, 10 Jun 2010 21:52:21 +0000 (UTC)
-Message-ID: <loom.20100610T235100-317@post.gmane.org>
-References: <AANLkTimbBZVWk2EzXIngSV6Kblap1k8mPbfEa8OOGxUh@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] send-email: Ask for in-reply message ID even if from and to is already known
+Date: Fri, 11 Jun 2010 00:28:58 +0200
+Message-ID: <vpqpqzyzfmd.fsf@bauges.imag.fr>
+References: <vpqtypmn4bm.fsf@bauges.imag.fr>
+	<1275415730-15360-1-git-send-email-alexander.stein@informatik.tu-chemnitz.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 10 23:52:40 2010
+Cc: git@vger.kernel.org
+To: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+X-From: git-owner@vger.kernel.org Fri Jun 11 00:29:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMpfw-0002lP-4d
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 23:52:36 +0200
+	id 1OMqFP-0001ra-6x
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 00:29:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759807Ab0FJVwb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 17:52:31 -0400
-Received: from lo.gmane.org ([80.91.229.12]:53249 "EHLO lo.gmane.org"
+	id S1759857Ab0FJW3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 18:29:10 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53704 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757784Ab0FJVwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 17:52:30 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OMpfp-0002gb-EM
-	for git@vger.kernel.org; Thu, 10 Jun 2010 23:52:29 +0200
-Received: from mail.nextest.com ([12.96.234.114])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 23:52:29 +0200
-Received: from raible by mail.nextest.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 23:52:29 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.55 Safari/533.4)
+	id S1759849Ab0FJW3I (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 18:29:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o5AML9WZ009066
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 11 Jun 2010 00:21:09 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OMqF8-0000ii-Gq; Fri, 11 Jun 2010 00:28:58 +0200
+In-Reply-To: <1275415730-15360-1-git-send-email-alexander.stein@informatik.tu-chemnitz.de> (Alexander Stein's message of "Tue\,  1 Jun 2010 20\:08\:50 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 11 Jun 2010 00:21:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o5AML9WZ009066
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1276813269.97372@A0x5KgTZ4pLS2lYlxSMgOg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148919>
 
-s/not seen a was/not seen a way/
+Alexander Stein <alexander.stein@informatik.tu-chemnitz.de> writes:
+
+> This patch removes the prompting variable so git send-email always asks
+> for a in-reply message ID (unless specified on command line) even when
+> sendemail.from and sendemail.to is set in ~/.gitconfig or .git/config
+
+Does this mean there's no way to run send-email non-interactively
+without a reply-to?
+
+I do want to get the prompt even though I want to set the sender field
+in my ~/.gitconfig, but I wouldn't want the prompt to appear in the
+cron job I run every nights to send me new patches in some repo for
+example (a change in git-send-email already broke it in the past,
+that's a rather anoying failure).
+
+You probably want an option to enable/disable prompting. I'm not sure
+whether it should be opt-in or opt-out.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
