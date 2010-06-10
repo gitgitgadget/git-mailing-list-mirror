@@ -1,179 +1,147 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH next v2] log_ref_setup: don't return stack-allocated array
-Date: Thu, 10 Jun 2010 14:54:03 +0200
-Message-ID: <47daf53b6b2cc25cc013c5f2183e309a671dc9d3.1276174233.git.trast@student.ethz.ch>
-References: <e888313d5a782585f4a5e7ee8914302953c187e2.1276173576.git.trast@student.ethz.ch>
+From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+Subject: RE: Git sideband hook output
+Date: Thu, 10 Jun 2010 14:56:37 +0200
+Message-ID: <A612847CFE53224C91B23E3A5B48BAC744839BF6AE@xmail3.se.axis.com>
+References: <AANLkTinLWDFTn7bhcF3Vk-q9aw4lJC2vFj95M9bxLbBT@mail.gmail.com>
+ <20100608214632.GN14847@spearce.org>
+ <A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com>
+ <alpine.LFD.2.00.1006090934320.30664@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Erick Mattos <erick.mattos@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 10 14:54:30 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Jun 10 14:56:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMhHC-0003Uk-98
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 14:54:30 +0200
+	id 1OMhJS-0004gu-JD
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 14:56:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758884Ab0FJMyY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jun 2010 08:54:24 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:17373 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753601Ab0FJMyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 08:54:23 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 10 Jun
- 2010 14:54:23 +0200
-Received: from localhost.localdomain (129.132.153.233) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 10 Jun
- 2010 14:54:03 +0200
-X-Mailer: git-send-email 1.7.1.553.ga798e
-In-Reply-To: <e888313d5a782585f4a5e7ee8914302953c187e2.1276173576.git.trast@student.ethz.ch>
+	id S1758892Ab0FJM4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 08:56:45 -0400
+Received: from krynn.se.axis.com ([193.13.178.10]:35435 "EHLO
+	krynn.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753601Ab0FJM4o convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jun 2010 08:56:44 -0400
+Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
+	by krynn.se.axis.com (8.14.3/8.14.3/Debian-5) with ESMTP id o5ACuc9G000511;
+	Thu, 10 Jun 2010 14:56:38 +0200
+Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
+ ([10.0.5.75]) with mapi; Thu, 10 Jun 2010 14:56:38 +0200
+Thread-Topic: Git sideband hook output
+Thread-Index: AcsH2gJBmuoKTa5GTc6YTOwI+lKiqwAuzEpg
+In-Reply-To: <alpine.LFD.2.00.1006090934320.30664@xanadu.home>
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, sv-SE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148865>
 
-859c301 (refs: split log_ref_write logic into log_ref_setup,
-2010-05-21) refactors the stack allocation of the log_file array into
-the new log_ref_setup() function, but passes it back to the caller.
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Nicolas Pitre
+> Sent: den 9 juni 2010 15:44
+> To: Peter Kjellerstedt
+> Cc: Shawn O. Pearce; Scott Chacon; git list
+> Subject: RE: Git sideband hook output
+> 
+> On Wed, 9 Jun 2010, Peter Kjellerstedt wrote:
+> 
+> > > -----Original Message-----
+> > > From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org]
+> > > On Behalf Of Shawn O. Pearce
+> > > Sent: den 8 juni 2010 23:47
+> > > To: Scott Chacon
+> > > Cc: git list
+> > > Subject: Re: Git sideband hook output
+> > >
+> > > Scott Chacon <schacon@gmail.com> wrote:
+> > > > Prior to 6d525d where Shawn made the receive-pack process send
+> > > > hook output over side band #2, how did the hook output get 
+> > > > sent to the client?
+> > >
+> > > It was sent over stderr, which was proxied down to the client by
+> > > the SSH daemon.
+> > >
+> > > > On older clients (before this commit) and on older servers,
+> > > > the hook output just shows up without the 'remote:' prefix.
+> > >
+> > > Because its echoed to the tty by the SSH client, without Git ever
+> > > seeing it.
+> > >
+> > > > After
+> > > > this commit I get the 'remote:' prefix,
+> >
+> > This explains the messy output from hooks I have seen since
+> > updating to 1.7.1...
+> >
+> > > Now its being parsed out of the stream by the git client, using
+> > > the same code that displays the progress messages during
+> > > clone/fetch.
+> > >
+> > > > which is kind of annoying.
+> > >
+> > > Depends on your perspective.  Its nice to know that the messages
+> > > came from the server, rather than from your client.  :-)
+> >
+> > And it is very annoying that the output format has suddenly changed
+> > so that the output from hooks that rely on the previous no-prefix
+> > format no longer fit on an 80 char wide terminal where they used to
+> > fit just fine.
+> 
+> Fix your hook output then.
 
-Since the original intent seems to have been to split the work between
-log_ref_setup and log_ref_write, make it the caller's responsibility
-to allocate the buffer.
+I can do that for our hooks, but all may not have that option.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
----
+> > > > Is
+> > > > there a way to suppress this to get the old output format?
+> > >
+> > > No.  Other than to have the hook not output anything at all.
+> > >
+> > > --
+> > > Shawn.
+> >
+> > Here is +1 for giving us back the no-prefix output. I would like
+> > to suggest adding a configuration option to allow users to enable
+> > the "remote: " prefix if they want it.
+> 
+> Would be much more logical to fix the hook output, and keep hook
+> developers honnest by not confusing the user with output that isn't
+> local stuff.
 
-Sorry for the first one, that was completely botched and didn't even
-compile.
+Why should the user care whether the output is generated locally 
+or remotely? Shouldn't you prefix local hook output then as well
+to separate it from the output of the git commands themselves 
+(and no, I am not suggesting this is added)?
 
-This one does, and as an added bonus also passes some tests.
+> -1
+> 
+> 
+> Nicolas
 
- builtin/checkout.c |    4 ++--
- refs.c             |   26 ++++++++++++--------------
- refs.h             |    2 +-
- 3 files changed, 15 insertions(+), 17 deletions(-)
+As I see it this change has taken away a little bit of freedom.
+Previously I (as a hook writer) could choose to add a prefix like 
+"remote:" to my hook if I wanted to, to make it more obvious that the
+output came from the remote server, _or_ I could choose not to and 
+have a standardized output that looked the same regardless of whether
+it was a local hook or a remote one that complained about the 
+formatting of a commit message. Now I no longer have that option.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5107eda..1994be9 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -496,12 +496,12 @@ static void update_refs_for_switch(struct checkou=
-t_opts *opts,
- 		if (opts->new_orphan_branch) {
- 			if (opts->new_branch_log && !log_all_ref_updates) {
- 				int temp;
--				char *log_file;
-+				char log_file[PATH_MAX];
- 				char *ref_name =3D mkpath("refs/heads/%s", opts->new_orphan_branch=
-);
-=20
- 				temp =3D log_all_ref_updates;
- 				log_all_ref_updates =3D 1;
--				if (log_ref_setup(ref_name, &log_file)) {
-+				if (log_ref_setup(ref_name, log_file, sizeof(log_file))) {
- 					fprintf(stderr, "Can not do reflog for '%s'\n",
- 					    opts->new_orphan_branch);
- 					log_all_ref_updates =3D temp;
-diff --git a/refs.c b/refs.c
-index 3436649..6f486ae 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1262,43 +1262,41 @@ static int copy_msg(char *buf, const char *msg)
- 	return cp - buf;
- }
-=20
--int log_ref_setup(const char *ref_name, char **log_file)
-+int log_ref_setup(const char *ref_name, char *logfile, int bufsize)
- {
- 	int logfd, oflags =3D O_APPEND | O_WRONLY;
--	char logfile[PATH_MAX];
-=20
--	git_snpath(logfile, sizeof(logfile), "logs/%s", ref_name);
--	*log_file =3D logfile;
-+	git_snpath(logfile, bufsize, "logs/%s", ref_name);
- 	if (log_all_ref_updates &&
- 	    (!prefixcmp(ref_name, "refs/heads/") ||
- 	     !prefixcmp(ref_name, "refs/remotes/") ||
- 	     !prefixcmp(ref_name, "refs/notes/") ||
- 	     !strcmp(ref_name, "HEAD"))) {
--		if (safe_create_leading_directories(*log_file) < 0)
-+		if (safe_create_leading_directories(logfile) < 0)
- 			return error("unable to create directory for %s",
--				     *log_file);
-+				     logfile);
- 		oflags |=3D O_CREAT;
- 	}
-=20
--	logfd =3D open(*log_file, oflags, 0666);
-+	logfd =3D open(logfile, oflags, 0666);
- 	if (logfd < 0) {
- 		if (!(oflags & O_CREAT) && errno =3D=3D ENOENT)
- 			return 0;
-=20
- 		if ((oflags & O_CREAT) && errno =3D=3D EISDIR) {
--			if (remove_empty_directories(*log_file)) {
-+			if (remove_empty_directories(logfile)) {
- 				return error("There are still logs under '%s'",
--					     *log_file);
-+					     logfile);
- 			}
--			logfd =3D open(*log_file, oflags, 0666);
-+			logfd =3D open(logfile, oflags, 0666);
- 		}
-=20
- 		if (logfd < 0)
- 			return error("Unable to append to %s: %s",
--				     *log_file, strerror(errno));
-+				     logfile, strerror(errno));
- 	}
-=20
--	adjust_shared_perm(*log_file);
-+	adjust_shared_perm(logfile);
- 	close(logfd);
- 	return 0;
- }
-@@ -1309,14 +1307,14 @@ static int log_ref_write(const char *ref_name, =
-const unsigned char *old_sha1,
- 	int logfd, result, written, oflags =3D O_APPEND | O_WRONLY;
- 	unsigned maxlen, len;
- 	int msglen;
--	char *log_file;
-+	char log_file[PATH_MAX];
- 	char *logrec;
- 	const char *committer;
-=20
- 	if (log_all_ref_updates < 0)
- 		log_all_ref_updates =3D !is_bare_repository();
-=20
--	result =3D log_ref_setup(ref_name, &log_file);
-+	result =3D log_ref_setup(ref_name, log_file, sizeof(log_file));
- 	if (result)
- 		return result;
-=20
-diff --git a/refs.h b/refs.h
-index 594c9d9..762ce50 100644
---- a/refs.h
-+++ b/refs.h
-@@ -69,7 +69,7 @@ extern void unlock_ref(struct ref_lock *lock);
- extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *=
-sha1, const char *msg);
-=20
- /** Setup reflog before using. **/
--int log_ref_setup(const char *ref_name, char **log_file);
-+int log_ref_setup(const char *ref_name, char *logfile, int bufsize);
-=20
- /** Reads log for the value of ref during at_time. **/
- extern int read_ref_at(const char *ref, unsigned long at_time, int cnt=
-, unsigned char *sha1, char **msg, unsigned long *cutoff_time, int *cut=
-off_tz, int *cutoff_cnt);
---=20
-1.7.1.553.ga798e
+And what if my hook output is localized? Now there is an English
+"remote:" in front of every line... Or even worse, what if the
+"remote:" string is localized in a future version of git, then I 
+have no way of knowing how wide it is and cannot take measures to 
+format my hook output so that it will look right.
+
+//Peter
