@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/6] Add library for string-specific memory pool
-Date: Thu, 10 Jun 2010 15:09:46 +0200
-Message-ID: <1276175389-6185-4-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 4/6] Add stream helper library
+Date: Thu, 10 Jun 2010 15:09:47 +0200
+Message-ID: <1276175389-6185-5-git-send-email-artagnon@gmail.com>
 References: <1276175389-6185-1-git-send-email-artagnon@gmail.com>
 Cc: David Michael Barr <david.barr@cordelta.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -9,72 +9,72 @@ Cc: David Michael Barr <david.barr@cordelta.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Junio C Hamano <gitster@pobox.com>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 10 15:09:29 2010
+X-From: git-owner@vger.kernel.org Thu Jun 10 15:09:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMhVg-0002fq-L4
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 15:09:28 +0200
+	id 1OMhVh-0002fq-Q3
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 15:09:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753412Ab0FJNJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 09:09:07 -0400
-Received: from mail-ew0-f223.google.com ([209.85.219.223]:61012 "EHLO
-	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752895Ab0FJNJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 09:09:04 -0400
-Received: by mail-ew0-f223.google.com with SMTP id 23so80476ewy.1
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 06:09:03 -0700 (PDT)
+	id S1753864Ab0FJNJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 09:09:14 -0400
+Received: from ey-out-2122.google.com ([74.125.78.27]:8411 "EHLO
+	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753051Ab0FJNJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 09:09:10 -0400
+Received: by ey-out-2122.google.com with SMTP id 25so20471eya.19
+        for <git@vger.kernel.org>; Thu, 10 Jun 2010 06:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=d+ykVxM1TKFISxX8wQsiIBUgn/bo2ZvT9CGhNs7hY2E=;
-        b=YRjVGtMMT66EBVKAHb4apa4AWAXBSctPYpapc44Lb7T637RRGLTu/3M0jwmQKCoBkE
-         3NFEDEErB/GsrVK8octqWN1qeeqpBdZp+YSY53oazcW2/FkV4O0uw3gO5NqwrmHdKvIS
-         HFv3vbPhM9pp8bo9xi3tW2Oa3N79Q5825b9+4=
+        bh=LFl5NWqVduGDeV8+mFsb81cFTRATJYyQjV3oIi/ZQyc=;
+        b=R3rKbFjtmxnnWLA/7bVLAkjPpSb9Fz/GE7inm7AoGJisyLHcYsGmNKLjjIO9zs1zIi
+         A5VouKfXMivYtMO7Lkwv1P8DkqBp90o/OjujRnpxEeRVxodFp4b1CEMgsTYONJ7+P5iY
+         gBxxhh5CtLGwNPlMqOpTE7LnFJSkC2XwjkY7Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=bYr2fUv86BhgZZAERJbu23wj1cZ1Tz+C55sjL4FoOtSUZOvAGXuFr9aNlykpgq2wDT
-         4x/eNsbzBXl8Ln2BzWSCZvMQRvMO4yyFOMGf53ETRZCUJqT+cSj0YSsb+yzeYecwfjEQ
-         cTM7+thrf4Z6F1hChPgajMnEKkJVBBQrilfhk=
-Received: by 10.213.29.65 with SMTP id p1mr2331866ebc.43.1276175343267;
-        Thu, 10 Jun 2010 06:09:03 -0700 (PDT)
+        b=RYSyprLDBN9T9DiBdt+gK/CBQ9s6kF3hPB9Gs3oKZ9rj756/2aflzgELkBelf5Mn6t
+         iXzpaqxacpYWKLlKrmk+noOYBgnAYvwUsaTTy7aDZ7N9+q6Dl4B88sEPBtEpyU+CX8gF
+         B2VGXkFC3TGWlLjvDuUsPwEXNIqtBmm5s7RYM=
+Received: by 10.213.114.13 with SMTP id c13mr2296640ebq.97.1276175346324;
+        Thu, 10 Jun 2010 06:09:06 -0700 (PDT)
 Received: from localhost (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id 16sm4771316ewy.3.2010.06.10.06.09.01
+        by mx.google.com with ESMTPS id 14sm4816755ewy.10.2010.06.10.06.09.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Jun 2010 06:09:02 -0700 (PDT)
+        Thu, 10 Jun 2010 06:09:05 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1276175389-6185-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148870>
 
 From: David Barr <david.barr@cordelta.com>
 
-This library uses the macros in the obj_pool.h and trp.h to create a
-memory pool for strings and expose an API for handling them.
+This library provides facilities to read streams into buffers. It
+maintains a couple of static buffers and provides an API to use them.
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- vcs-svn/string_pool.c |  116 +++++++++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/string_pool.h |   15 ++++++
- 2 files changed, 131 insertions(+), 0 deletions(-)
- create mode 100644 vcs-svn/string_pool.c
- create mode 100644 vcs-svn/string_pool.h
+ vcs-svn/line_buffer.c |  134 +++++++++++++++++++++++++++++++++++++++++++++++++
+ vcs-svn/line_buffer.h |   14 +++++
+ 2 files changed, 148 insertions(+), 0 deletions(-)
+ create mode 100644 vcs-svn/line_buffer.c
+ create mode 100644 vcs-svn/line_buffer.h
 
-diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
+diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
 new file mode 100644
-index 0000000..523a6cc
+index 0000000..8ff1fb6
 --- /dev/null
-+++ b/vcs-svn/string_pool.c
-@@ -0,0 +1,116 @@
++++ b/vcs-svn/line_buffer.c
+@@ -0,0 +1,134 @@
 +/*
 + * Licensed under a two-clause BSD-style license.
 + * See LICENSE for details.
@@ -82,134 +82,151 @@ index 0000000..523a6cc
 +
 +#include "git-compat-util.h"
 +
-+#include "trp.h"
++#include "line_buffer.h"
 +#include "obj_pool.h"
-+#include "string_pool.h"
 +
-+typedef struct node_s node_t;
-+static struct trp_root tree = { ~0 };
++#define LINE_BUFFER_LEN 10000
++#define COPY_BUFFER_LEN 4096
 +
-+struct node_s {
-+	uint32_t offset;
-+	struct trp_node children;
-+};
++/* Create memory pool for char sequence of known length */
++obj_pool_gen(blob, char, 4096);
 +
-+/* Create two memory pools: one for node_t, and another for strings */
-+obj_pool_gen(node, node_t, 4096);
-+obj_pool_gen(string, char, 4096);
++static char line_buffer[LINE_BUFFER_LEN];
++static char byte_buffer[COPY_BUFFER_LEN];
++static uint32_t line_buffer_len = 0;
++static uint32_t line_len = 0;
++static FILE *infile;
 +
-+static char *node_value(node_t *node)
++int buffer_init(char *filename)
 +{
-+	return node ? string_pointer(node->offset) : NULL;
++	infile = fopen(filename, "r");
++	if(!infile)
++		return 1;
++	return 0;
 +}
 +
-+static int node_cmp(node_t *a, node_t *b)
++int buffer_deinit()
 +{
-+	return strcmp(node_value(a), node_value(b));
++	fclose(infile);
++	return 0;
 +}
 +
-+/* Build a Treap from the node_s structure (a trp_node w/ offset) */
-+trp_gen(static, tree_, node_t, children, node, node_cmp);
-+
-+char *pool_fetch(uint32_t entry)
++char *buffer_read_line(void)
 +{
-+	return node_value(node_pointer(entry));
-+}
++	char *end;
++	uint32_t n_read;
 +
-+uint32_t pool_intern(char *key)
-+{
-+	/* Canonicalize key */
-+	node_t *match = NULL;
-+	uint32_t key_len;
-+	if (key == NULL)
-+		return ~0;
-+	key_len = strlen(key) + 1;
-+	node_t *node = node_pointer(node_alloc(1));
-+	node->offset = string_alloc(key_len);
-+	strcpy(node_value(node), key);
-+	match = tree_search(&tree, node);
-+	if (!match) {
-+		tree_insert(&tree, node);
++	if (line_len) {
++		memmove(line_buffer, &line_buffer[line_len],
++			line_buffer_len - line_len);
++		line_buffer_len -= line_len;
++		line_len = 0;
++	}
++
++	end = memchr(line_buffer, '\n', line_buffer_len);
++	while (line_buffer_len < LINE_BUFFER_LEN - 1 &&
++	       !feof(infile) && ferror(infile) && NULL == end) {
++		n_read = fread(&line_buffer[line_buffer_len], 1,
++			       LINE_BUFFER_LEN - 1 - line_buffer_len,
++			       infile);
++		end = memchr(&line_buffer[line_buffer_len], '\n', n_read);
++		line_buffer_len += n_read;
++	}
++
++	if (ferror(infile))
++		return NULL;
++
++	if (end != NULL) {
++		line_len = end - line_buffer;
++		line_buffer[line_len++] = '\0';
 +	} else {
-+		node_free(1);
-+		string_free(key_len);
-+		node = match;
++		line_len = line_buffer_len;
++		line_buffer[line_buffer_len] = '\0';
 +	}
-+	return node_offset(node);
++
++	if (line_len == 0)
++		return NULL;
++
++	return line_buffer;
 +}
 +
-+uint32_t pool_tok_r(char *str, const char *delim, char **saveptr)
++char *buffer_read_string(uint32_t len)
 +{
-+	char *token = strtok_r(str, delim, saveptr);
-+	return token ? pool_intern(token) : ~0;
-+}
-+
-+void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream)
-+{
-+	uint32_t i;
-+	for (i = 0; i < len && ~seq[i]; i++) {
-+		fputs(pool_fetch(seq[i]), stream);
-+		if (i < len - 1 && ~seq[i + 1])
-+			fputc(delim, stream);
++	char *s;
++	blob_free(blob_pool.size);
++	s = blob_pointer(blob_alloc(len + 1));
++	uint32_t offset = 0;
++	if (line_buffer_len > line_len) {
++		offset = line_buffer_len - line_len;
++		if (offset > len)
++			offset = len;
++		memcpy(s, &line_buffer[line_len], offset);
++		line_len += offset;
 +	}
++	if (offset < len)
++		offset += fread(&s[offset], 1, len - offset, infile);
++	s[offset] = '\0';
++	return s;
 +}
 +
-+uint32_t pool_tok_seq(uint32_t max, uint32_t *seq, char *delim, char *str)
++void buffer_copy_bytes(uint32_t len)
 +{
-+	char *context = NULL;
-+	uint32_t length = 0, token = str ? pool_tok_r(str, delim, &context) : ~0;
-+	while (length < max) {
-+		seq[length++] = token;
-+		if (token == ~0)
-+			break;
-+		token = pool_tok_r(NULL, delim, &context);
++	uint32_t in;
++	if (line_buffer_len > line_len) {
++		in = line_buffer_len - line_len;
++		if (in > len)
++			in = len;
++		fwrite(&line_buffer[line_len], 1, in, stdout);
++		len -= in;
++		line_len += in;
 +	}
-+	seq[length ? length - 1 : 0] = ~0;
-+	return length;
-+}
-+
-+void pool_init(void)
-+{
-+	uint32_t node;
-+	uint32_t string = 0;
-+	string_init();
-+	while (string < string_pool.size) {
-+		node = node_alloc(1);
-+		node_pointer(node)->offset = string;
-+		tree_insert(&tree, node_pointer(node));
-+		string += strlen(string_pointer(string)) + 1;
++	while (len > 0 && !feof(infile)) {
++		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
++		in = fread(byte_buffer, 1, in, infile);
++		len -= in;
++		fwrite(byte_buffer, 1, in, stdout);
 +	}
 +}
 +
-+void pool_commit(void)
++void buffer_skip_bytes(uint32_t len)
 +{
-+	string_commit();
++	uint32_t in;
++	if (line_buffer_len > line_len) {
++		in = line_buffer_len - line_len;
++		if (in > len)
++			in = len;
++		line_len += in;
++		len -= in;
++	}
++	while (len > 0 && !feof(infile) && !ferror(infile)) {
++		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
++		in = fread(byte_buffer, 1, in, infile);
++		len -= in;
++	}
 +}
 +
-+void pool_reset(void)
++void buffer_reset(void)
 +{
-+	node_reset();
-+	string_reset();
++	blob_reset();
 +}
-diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
+diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
 new file mode 100644
-index 0000000..a69d165
+index 0000000..a6c42d7
 --- /dev/null
-+++ b/vcs-svn/string_pool.h
-@@ -0,1 +1,15 @@
-+#ifndef STRING_POOL_H_
-+#define STRING_POOL_H_
++++ b/vcs-svn/line_buffer.h
+@@ -0,1 +1,14 @@
++#ifndef LINE_BUFFER_H_
++#define LINE_BUFFER_H_
 +
 +#include "git-compat-util.h"
 +
-+uint32_t pool_intern(char *key);
-+char *pool_fetch(uint32_t entry);
-+uint32_t pool_tok_r(char *str, const char *delim, char **saveptr);
-+void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream);
-+uint32_t pool_tok_seq(uint32_t max, uint32_t *seq, char *delim, char *str);
-+void pool_init(void);
-+void pool_commit(void);
-+void pool_reset(void);
++int buffer_init(char *filename);
++int buffer_deinit(void);
++char *buffer_read_line(void);
++char *buffer_read_string(uint32_t len);
++void buffer_copy_bytes(uint32_t len);
++void buffer_skip_bytes(uint32_t len);
++void buffer_reset(void);
 +
 +#endif
 -- 
