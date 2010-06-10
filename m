@@ -1,155 +1,80 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: [ANNOUNCE] TortoiseGit 1.5.2.0 Release
-Date: Thu, 10 Jun 2010 15:50:41 +0800
-Message-ID: <AANLkTil2_uLrj7oxVy_8eESkx5r_NYLC3CkVQHUoovkS@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Misterious warning about file system boundaries
+Date: Thu, 10 Jun 2010 10:03:27 +0200
+Message-ID: <4C109C4F.1030809@op5.se>
+References: <4C0FF7B9.8040007@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: tortoisegit-dev <tortoisegit-dev@googlegroups.com>,
-	tortoisegit-users@googlegroups.com, Git List <git@vger.kernel.org>,
-	tortoisegit-announce@googlegroups.com, tortoisegit@googlegroups.com
-X-From: git-owner@vger.kernel.org Thu Jun 10 09:50:56 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jun 10 10:04:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMcXJ-0002Rg-AF
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 09:50:49 +0200
+	id 1OMckF-0001I9-1S
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 10:04:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755464Ab0FJHuo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jun 2010 03:50:44 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:47055 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751985Ab0FJHun convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jun 2010 03:50:43 -0400
-Received: by vws17 with SMTP id 17so3495349vws.19
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 00:50:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=A5YFR7ghCOMTNWWEyHA7CFPsjnihyxcga1Z9YH/QemY=;
-        b=FNyeqo0Uo660BQTiTgoqvbQxqM2ASgW1ChvuWm4StRBUHVPQsKxzQUZSVUV8VnZGUR
-         WoH2GhkRs6aQRRciAwC5SgBzlPClyKrIR7crbHBQ8QCL9ncr1M8VmqNNtaaTdp0PikTW
-         +wFvGnQubuywsJjLYR7g7bN1PkcnLG31b1MpA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=Z7o39OlkqRNd8pOt71ggy2kebEvoPU2Z3cu86Nt/meJ6UCrGmlj8xX4PVTtyUelN4l
-         c4O7Lh6VGci/zAvBst8LuxOJv9GAiCizEChYrGWwEZLNhmVx9YZADkr5TEJvVNYjJmex
-         YGRXXCEasJaUbmExg8cfxSxA1bZK11EYPTA0E=
-Received: by 10.224.23.142 with SMTP id r14mr2994921qab.366.1276156241416; 
-	Thu, 10 Jun 2010 00:50:41 -0700 (PDT)
-Received: by 10.220.200.204 with HTTP; Thu, 10 Jun 2010 00:50:41 -0700 (PDT)
+	id S1755610Ab0FJIDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 04:03:35 -0400
+Received: from na3sys009aog102.obsmtp.com ([74.125.149.69]:49282 "HELO
+	na3sys009aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752064Ab0FJIDb (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Jun 2010 04:03:31 -0400
+Received: from source ([74.125.78.149]) by na3sys009aob102.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTBCcUeU5cPVT8SteqxqRtlM+D4zpUodW@postini.com; Thu, 10 Jun 2010 01:03:30 PDT
+Received: by ey-out-1920.google.com with SMTP id 5so1911eyb.16
+        for <git@vger.kernel.org>; Thu, 10 Jun 2010 01:03:28 -0700 (PDT)
+Received: by 10.213.21.138 with SMTP id j10mr1821409ebb.50.1276157008227;
+        Thu, 10 Jun 2010 01:03:28 -0700 (PDT)
+Received: from clix.int.op5.se (90-227-176-162-no128.tbcn.telia.com [90.227.176.162])
+        by mx.google.com with ESMTPS id 13sm4593467ewy.1.2010.06.10.01.03.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 10 Jun 2010 01:03:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
+In-Reply-To: <4C0FF7B9.8040007@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148840>
 
-Download:
+On 06/09/2010 10:21 PM, Michael J Gruber wrote:
+> Heya,
+> 
+> now what is going on here? After upgrading to current next I get
+> 
+> warning: working tree spans across filesystems but
+> GIT_DISCOVERY_ACROSS_FILESYSTEM is not set.
+> 
+> in several repos, such as my local git.git repo. That is certainly on a
+> single file system only (ext4 over lvm over luks, all on one partition,
+> Fedora 13). I also get this for another repo, but not for every repo. It
+> goes away when I set the var and comes back when I don't set it, of course.
+> 
+> Although I haven't bisected this should be due to
+> 52b98a7 (write-index: check and warn when worktree crosses a filesystem
+> boundary, 2010-04-04).
+> 
+> How does the code detect a file system boundary, and where could it go
+> wrong?
+> 
 
-http://code.google.com/p/tortoisegit/downloads/detail?name=3DTortoiseGi=
-t-1.5.2.0-32bit.msi
-http://code.google.com/p/tortoisegit/downloads/detail?name=3DTortoiseGi=
-t-1.5.2.0-64bit.msi
+According to the patch, it checks if the device id recorded from stat(2)
+is the same for all files and, if not, warns about it.
 
-=3D Release 1.5.2.0 =3D
-=3D=3D Bug Fix =3D=3D
- * Fixed issue #454: Fix "check Now" can't work at setting dialog
- * Fixed issue #457: Git copy versioned item(s) here adds all unversion=
-ed files
- * put pull, push and fetch to external manual.
- * Fixed issue #460: =93Show changes as unified diff=94 compares files =
-in
-reverse order.
- * Fix history combobox show twice item
+It seems that your interpretation of "one partition" differs from that
+reported by the kernel. Why that is so, I have no idea.
 
-=3D Release 1.5.1.0 =3D
-=3D=3D Features =3D=3D
- * TortoiseMerege
-   Tip show "new file" "delete file" "rename file" status at tortoiseme=
-rge
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
- * TortoiseGitBlame
-   Add encode support for blame
-
- * Sync Dialog
-   issue #392: refresh branch info when press "F5"
-   Improve user experience when input remote branch and url
-
- * Log Dialog
-   issue #371: Log offer per-file "revert ..." of working dir changes
-   Add AntiAlias at show log
-   Fix version tree graphic line break at Win 7
-   issue #427: Implement enter operation to open a file in the 'Show Lo=
-g' window
-
- * issue #355: Implement Show log like history in the Changed Files
-window after a git pull operation
-
- * ProgressDlg Post Cmd support menubutton
-
- * Update the translations.txt for translators
-
- * issue #421: Implement ctrl+a standard 'Select all' facility
-
- * Change FormatPatch dialog default output directory is project root
-
- * issue #431: Implement commit button in the git add dialog
-
-
-=3D=3D Bug Fix =3D=3D
- * *Fixed issue #401: TGitCache.exe keeps open pack-xxx.idx on git repo=
-*
- * *Fix issue review patch fail when there are new FilePatchesDlg.cpp*
- * *Fix all file show "+" icon after run git gc*
- * *Fixed issue #449: Files not in the Commit dialog are committed if i=
-n index*
- * *Fixed issue #450: Log Messages file list wrong when choose
-children dir firstly.*
- * Fixed issue #387: "Automatically check for newer versions every
-week" remains disabled
- * Show correct file when Add new file at tortoisemerge
- * Fixed issue #381: About screen of TortoiseMerge shows invalid build
-information
- * Fixed issue #382: TGitBlame encoding problem
- * Fixed issue #400: CrLf options are missing in the help file
- * Fixed issue #397: Settings/Set Extended menu/Help button doesn't wor=
-k
- * Fixed issue #396: Fix 'Copy paths to clipboard' option
- * Fixed issue #398: Settings/Revision Graph/Help button doesn't work
- * Fixed Issue 392:  Implement refresh button in sync dialog
- * Fixed Issue #395:  [BUG] Infomation error when "Switch the compariso=
-n"
- * Fixed issue #385: Bug In properties->Git dialog
- * Clear HOME at gitdll dll after load git config
- * Fixed issue #403: Diff Show changes, but commit not
- * Fix Issue #404:	GetOpenFileName does not work in Cygwin
- * Fixed issue #411: Fix the refresh button operation in 'Check for
-modifications' when only file time change.
- * Fixed issue #406: Putty key can't save when clone
- * Fix Issue #419:	wrong error message for empty commit
- * Fixed issue #418: Misleading button title in Sync dialog leads to
-loss of uncommitted changes
- * Fixed issue #402: Revert Renamed File Fail
- * Fixed issue #429: When applying patches, tortoise doesn't remember
-last file location
- * Fixed issue #428: Blame of an old version
- * Fixed issue #410: Change some menu item name to make it clear
- * Fixed issue #440: Don't enable 'Apply' button until the data are ok
-in Settings/Git/Remote
- * Fixed issue #439: Fix the Help action in the TortoiseGitBlame window
- * Fixed issue #438: Slow load Switch/Checkout dialog
- * Fixed issue #221: After resolving all merge conflicts, it's not
-obvious the project needs a commit
- * Fixed issue #437: Blame should be available when there are local cha=
-nges
- * Fixed issue #444: Crash rebase  dialog when press ESC and move split=
- bar
- * Fixed issue #445: Resolve conflict does not delete temporary files
- * Fixed issue #446: TortoiseMerge crash when "Edit Conflicts"
- * Fixed issue #405: Merge commit message when there is a conflict
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
