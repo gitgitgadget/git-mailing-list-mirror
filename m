@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/6] Add cpp macro implementation of treaps
-Date: Thu, 10 Jun 2010 15:09:45 +0200
-Message-ID: <1276175389-6185-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 3/6] Add library for string-specific memory pool
+Date: Thu, 10 Jun 2010 15:09:46 +0200
+Message-ID: <1276175389-6185-4-git-send-email-artagnon@gmail.com>
 References: <1276175389-6185-1-git-send-email-artagnon@gmail.com>
 Cc: David Michael Barr <david.barr@cordelta.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -16,343 +16,201 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMhVg-0002fq-0d
+	id 1OMhVg-0002fq-L4
 	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 15:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753038Ab0FJNJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 09:09:04 -0400
+	id S1753412Ab0FJNJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 09:09:07 -0400
 Received: from mail-ew0-f223.google.com ([209.85.219.223]:61012 "EHLO
 	mail-ew0-f223.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750937Ab0FJNJB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 09:09:01 -0400
+	with ESMTP id S1752895Ab0FJNJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 09:09:04 -0400
 Received: by mail-ew0-f223.google.com with SMTP id 23so80476ewy.1
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 06:09:00 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 10 Jun 2010 06:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=/1BI+bF/vFkoDTVtd3xDfZHgGBDThMCoVBJ6FVSMscc=;
-        b=jk0U6lDH/nvzmdAovj3mMmvfsvnt8TT71AUsBhd26Q8qZISYZYhZBtr9MlLVPSeVJN
-         69mRdvOxcRrUsdrD5U7mxunXyAoPl0ajoaozvsk3gzIQ1wN37U27hZ4TcbBZYklac33g
-         lWEMehTSFwHDqjP/WIch8e9/tS+KF3BYdqE98=
+        bh=d+ykVxM1TKFISxX8wQsiIBUgn/bo2ZvT9CGhNs7hY2E=;
+        b=YRjVGtMMT66EBVKAHb4apa4AWAXBSctPYpapc44Lb7T637RRGLTu/3M0jwmQKCoBkE
+         3NFEDEErB/GsrVK8octqWN1qeeqpBdZp+YSY53oazcW2/FkV4O0uw3gO5NqwrmHdKvIS
+         HFv3vbPhM9pp8bo9xi3tW2Oa3N79Q5825b9+4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=p0IfsZ1WGtUY9yDR7BG7X+urTJQTiX5vMYhqvlOCxn2wYiRvZjcyKAFYwaffu0JsW4
-         wYPyZMdlJlHc+z1q0G1A7b/n1hxccpsCVp9dpBYtIDTc5xOCfo2mvGGR+mwFgw89kKb3
-         3hILoD15l2Oa5th+NWwrkrmzhZYEZNjJXG0ho=
-Received: by 10.213.112.144 with SMTP id w16mr150485ebp.1.1276175340134;
-        Thu, 10 Jun 2010 06:09:00 -0700 (PDT)
+        b=bYr2fUv86BhgZZAERJbu23wj1cZ1Tz+C55sjL4FoOtSUZOvAGXuFr9aNlykpgq2wDT
+         4x/eNsbzBXl8Ln2BzWSCZvMQRvMO4yyFOMGf53ETRZCUJqT+cSj0YSsb+yzeYecwfjEQ
+         cTM7+thrf4Z6F1hChPgajMnEKkJVBBQrilfhk=
+Received: by 10.213.29.65 with SMTP id p1mr2331866ebc.43.1276175343267;
+        Thu, 10 Jun 2010 06:09:03 -0700 (PDT)
 Received: from localhost (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id 16sm4781455ewy.11.2010.06.10.06.08.57
+        by mx.google.com with ESMTPS id 16sm4771316ewy.3.2010.06.10.06.09.01
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 10 Jun 2010 06:08:59 -0700 (PDT)
+        Thu, 10 Jun 2010 06:09:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1276175389-6185-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148869>
 
-From: Jason Evans <jasone@canonware.com>
+From: David Barr <david.barr@cordelta.com>
 
-The implementation exposes an API to generate type-specific treap
-implmentation and various functions to operate on it. It uses
-obj_pool.h to store memory nodes in a treap.
-
-Treaps provide a memory-efficient binary search tree structure.
-Insertion/deletion/search are about as about as fast in the average
-case as red-black trees and the chances of worst-case behavior are
-vanishingly small, thanks to (pseudo-)randomness.  That is a small
-price to pay, given that treaps are much simpler to implement.
-
-[db: Altered to reference nodes by offset from a common base pointer]
-[db: Bob Jenkins' hashing implementation dropped for Knuth's]
-[db: Methods unnecessary for search and insert dropped]
+This library uses the macros in the obj_pool.h and trp.h to create a
+memory pool for strings and expose an API for handling them.
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- vcs-svn/trp.h   |  201 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/trp.txt |   61 +++++++++++++++++
- 2 files changed, 262 insertions(+), 0 deletions(-)
- create mode 100644 vcs-svn/trp.h
- create mode 100644 vcs-svn/trp.txt
+ vcs-svn/string_pool.c |  116 +++++++++++++++++++++++++++++++++++++++++++++++++
+ vcs-svn/string_pool.h |   15 ++++++
+ 2 files changed, 131 insertions(+), 0 deletions(-)
+ create mode 100644 vcs-svn/string_pool.c
+ create mode 100644 vcs-svn/string_pool.h
 
-diff --git a/vcs-svn/trp.h b/vcs-svn/trp.h
+diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
 new file mode 100644
-index 0000000..50fde39
+index 0000000..523a6cc
 --- /dev/null
-+++ b/vcs-svn/trp.h
-@@ -0,0 +1,201 @@
++++ b/vcs-svn/string_pool.c
+@@ -0,0 +1,116 @@
 +/*
-+ * cpp macro implementation of treaps.
-+ *
-+ * Usage:
-+ *   #include <stdint.h>
-+ *   #include <trp.h>
-+ *   trp_gen(...)
-+ *
 + * Licensed under a two-clause BSD-style license.
 + * See LICENSE for details.
 + */
 +
-+#ifndef TRP_H_
-+#define TRP_H_
++#include "git-compat-util.h"
 +
-+/* Node structure. */
-+struct trp_node {
-+	uint32_t trpn_left;
-+	uint32_t trpn_right;
++#include "trp.h"
++#include "obj_pool.h"
++#include "string_pool.h"
++
++typedef struct node_s node_t;
++static struct trp_root tree = { ~0 };
++
++struct node_s {
++	uint32_t offset;
++	struct trp_node children;
 +};
 +
-+/* Root structure. */
-+struct trp_root {
-+	uint32_t trp_root;
-+};
++/* Create two memory pools: one for node_t, and another for strings */
++obj_pool_gen(node, node_t, 4096);
++obj_pool_gen(string, char, 4096);
 +
-+/* Pointer/Offset conversion */
-+#define trpn_pointer(a_base, a_offset) (a_base##_pointer(a_offset))
-+#define trpn_offset(a_base, a_pointer) (a_base##_offset(a_pointer))
-+#define trpn_modify(a_base, a_offset) \
-+	do { \
-+		if ((a_offset) < a_base##_pool.committed) { \
-+			uint32_t old_offset = (a_offset);\
-+			(a_offset) = a_base##_alloc(1); \
-+			*trpn_pointer(a_base, a_offset) = \
-+				*trpn_pointer(a_base, old_offset); \
-+		} \
-+	} while (0);
++static char *node_value(node_t *node)
++{
++	return node ? string_pointer(node->offset) : NULL;
++}
 +
-+/* Left accessors. */
-+#define trp_left_get(a_base, a_field, a_node) \
-+	(trpn_pointer(a_base, a_node)->a_field.trpn_left)
-+#define trp_left_set(a_base, a_field, a_node, a_left) \
-+	do { trpn_modify(a_base, a_node); \
-+	trp_left_get(a_base, a_field, a_node) = (a_left); } while(0)
++static int node_cmp(node_t *a, node_t *b)
++{
++	return strcmp(node_value(a), node_value(b));
++}
 +
-+/* Right accessors. */
-+#define trp_right_get(a_base, a_field, a_node) \
-+	(trpn_pointer(a_base, a_node)->a_field.trpn_right)
-+#define trp_right_set(a_base, a_field, a_node, a_right) \
-+	do { trpn_modify(a_base, a_node); \
-+	trp_right_get(a_base, a_field, a_node) = (a_right); } while(0)
++/* Build a Treap from the node_s structure (a trp_node w/ offset) */
++trp_gen(static, tree_, node_t, children, node, node_cmp);
 +
-+/* Priority accessors. */
-+#define KNUTH_GOLDEN_RATIO_32BIT 2654435761u
-+#define trp_prio_get(a_node) \
-+	(KNUTH_GOLDEN_RATIO_32BIT*(a_node))
++char *pool_fetch(uint32_t entry)
++{
++	return node_value(node_pointer(entry));
++}
 +
-+/* Node initializer. */
-+#define trp_node_new(a_base, a_field, a_node) \
-+	trp_left_set(a_base, a_field, (a_node), ~0); \
-+	trp_right_set(a_base, a_field, (a_node), ~0)
++uint32_t pool_intern(char *key)
++{
++	/* Canonicalize key */
++	node_t *match = NULL;
++	uint32_t key_len;
++	if (key == NULL)
++		return ~0;
++	key_len = strlen(key) + 1;
++	node_t *node = node_pointer(node_alloc(1));
++	node->offset = string_alloc(key_len);
++	strcpy(node_value(node), key);
++	match = tree_search(&tree, node);
++	if (!match) {
++		tree_insert(&tree, node);
++	} else {
++		node_free(1);
++		string_free(key_len);
++		node = match;
++	}
++	return node_offset(node);
++}
 +
-+/* Internal utility macros. */
-+#define trpn_first(a_base, a_field, a_root, r_node) \
-+	do { \
-+		(r_node) = (a_root); \
-+		if ((r_node) == ~0) \
-+			return NULL; \
-+		while (~trp_left_get(a_base, a_field, (r_node))) \
-+			(r_node) = trp_left_get(a_base, a_field, (r_node)); \
-+	} while (0)
++uint32_t pool_tok_r(char *str, const char *delim, char **saveptr)
++{
++	char *token = strtok_r(str, delim, saveptr);
++	return token ? pool_intern(token) : ~0;
++}
 +
-+#define trpn_rotate_left(a_base, a_field, a_node, r_node) \
-+	do { (r_node) = trp_right_get(a_base, a_field, (a_node)); \
-+	trp_right_set(a_base, a_field, (a_node), \
-+		trp_left_get(a_base, a_field, (r_node))); \
-+	trp_left_set(a_base, a_field, (r_node), (a_node)); } while(0)
++void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream)
++{
++	uint32_t i;
++	for (i = 0; i < len && ~seq[i]; i++) {
++		fputs(pool_fetch(seq[i]), stream);
++		if (i < len - 1 && ~seq[i + 1])
++			fputc(delim, stream);
++	}
++}
 +
-+#define trpn_rotate_right(a_base, a_field, a_node, r_node) \
-+	do { (r_node) = trp_left_get(a_base, a_field, (a_node)); \
-+	trp_left_set(a_base, a_field, (a_node), \
-+		trp_right_get(a_base, a_field, (r_node))); \
-+	trp_right_set(a_base, a_field, (r_node), (a_node)); } while(0)
++uint32_t pool_tok_seq(uint32_t max, uint32_t *seq, char *delim, char *str)
++{
++	char *context = NULL;
++	uint32_t length = 0, token = str ? pool_tok_r(str, delim, &context) : ~0;
++	while (length < max) {
++		seq[length++] = token;
++		if (token == ~0)
++			break;
++		token = pool_tok_r(NULL, delim, &context);
++	}
++	seq[length ? length - 1 : 0] = ~0;
++	return length;
++}
 +
-+#define trp_gen(a_attr, a_pre, a_type, a_field, a_base, a_cmp) \
-+a_attr a_type *a_pre##first(struct trp_root *treap) \
-+{ \
-+	uint32_t ret; \
-+	trpn_first(a_base, a_field, treap->trp_root, ret); \
-+	return trpn_pointer(a_base, ret); \
-+} \
-+a_attr a_type *a_pre##next(struct trp_root *treap, a_type *node) { \
-+	uint32_t ret; \
-+	uint32_t offset = trpn_offset(a_base, node); \
-+	if (~trp_right_get(a_base, a_field, offset)) { \
-+		trpn_first(a_base, a_field, \
-+			trp_right_get(a_base, a_field, offset), ret); \
-+	} else { \
-+		uint32_t tnode = treap->trp_root; \
-+		ret = ~0; \
-+		while (1) { \
-+			int cmp = (a_cmp)(trpn_pointer(a_base, offset), \
-+				trpn_pointer(a_base, tnode)); \
-+			if (cmp < 0) { \
-+				ret = tnode; \
-+				tnode = trp_left_get(a_base, a_field, tnode); \
-+			} else if (cmp > 0) { \
-+				tnode = trp_right_get(a_base, a_field, tnode); \
-+			} else { \
-+				break; \
-+			} \
-+		} \
-+	} \
-+	return trpn_pointer(a_base, ret); \
-+} \
-+a_attr a_type *a_pre##search(struct trp_root *treap, a_type *key) \
-+{ \
-+	int cmp; \
-+	uint32_t ret = treap->trp_root; \
-+	while (~ret && (cmp = (a_cmp)(key, trpn_pointer(a_base,ret)))) \
-+		if (cmp < 0) \
-+			ret = trp_left_get(a_base, a_field, ret); \
-+		else \
-+			ret = trp_right_get(a_base, a_field, ret); \
-+	return trpn_pointer(a_base, ret); \
-+} \
-+a_attr uint32_t a_pre##insert_recurse(uint32_t cur_node, uint32_t ins_node) \
-+{ \
-+	if (cur_node == ~0) \
-+		return (ins_node); \
-+	else { \
-+		uint32_t ret; \
-+		int cmp = (a_cmp)(trpn_pointer(a_base, ins_node), \
-+					trpn_pointer(a_base, cur_node)); \
-+		if (cmp < 0) { \
-+			uint32_t left = a_pre##insert_recurse( \
-+				trp_left_get(a_base, a_field, cur_node), ins_node); \
-+			trp_left_set(a_base, a_field, cur_node, left); \
-+			if (trp_prio_get(left) < trp_prio_get(cur_node)) \
-+				trpn_rotate_right(a_base, a_field, cur_node, ret); \
-+			else \
-+				ret = cur_node; \
-+		} else { \
-+			uint32_t right = a_pre##insert_recurse( \
-+				trp_right_get(a_base, a_field, cur_node), ins_node); \
-+			trp_right_set(a_base, a_field, cur_node, right); \
-+			if (trp_prio_get(right) < trp_prio_get(cur_node)) \
-+				trpn_rotate_left(a_base, a_field, cur_node, ret); \
-+			else \
-+				ret = cur_node; \
-+		} \
-+		return (ret); \
-+	} \
-+} \
-+a_attr void a_pre##insert(struct trp_root *treap, a_type *node) \
-+{ \
-+	uint32_t offset = trpn_offset(a_base, node); \
-+	trp_node_new(a_base, a_field, offset); \
-+	treap->trp_root = a_pre##insert_recurse( treap->trp_root, offset); \
-+} \
-+a_attr uint32_t a_pre##remove_recurse(uint32_t cur_node, uint32_t rem_node) \
-+{ \
-+	int cmp = a_cmp(trpn_pointer(a_base, rem_node), \
-+			trpn_pointer(a_base, cur_node)); \
-+	if (cmp == 0) { \
-+		uint32_t ret; \
-+		uint32_t left = trp_left_get(a_base, a_field, cur_node); \
-+		uint32_t right = trp_right_get(a_base, a_field, cur_node); \
-+		if (left == ~0) { \
-+			if (right == ~0) \
-+				return (~0); \
-+		} else if (right == ~0 || trp_prio_get(left) < trp_prio_get(right)) { \
-+			trpn_rotate_right(a_base, a_field, cur_node, ret); \
-+			right = a_pre##remove_recurse(cur_node, rem_node); \
-+			trp_right_set(a_base, a_field, ret, right); \
-+			return (ret); \
-+		} \
-+		trpn_rotate_left(a_base, a_field, cur_node, ret); \
-+		left = a_pre##remove_recurse(cur_node, rem_node); \
-+		trp_left_set(a_base, a_field, ret, left); \
-+		return (ret); \
-+	} else if (cmp < 0) { \
-+		uint32_t left = a_pre##remove_recurse( \
-+			trp_left_get(a_base, a_field, cur_node), rem_node); \
-+		trp_left_set(a_base, a_field, cur_node, left); \
-+		return (cur_node); \
-+	} else { \
-+		uint32_t right = a_pre##remove_recurse( \
-+			trp_right_get(a_base, a_field, cur_node), rem_node); \
-+		trp_right_set(a_base, a_field, cur_node, right); \
-+		return (cur_node); \
-+	} \
-+} \
-+a_attr void a_pre##remove(struct trp_root *treap, a_type *node) \
-+{ \
-+	treap->trp_root = a_pre##remove_recurse(treap->trp_root, \
-+		trpn_offset(a_base, node)); \
-+} \
++void pool_init(void)
++{
++	uint32_t node;
++	uint32_t string = 0;
++	string_init();
++	while (string < string_pool.size) {
++		node = node_alloc(1);
++		node_pointer(node)->offset = string;
++		tree_insert(&tree, node_pointer(node));
++		string += strlen(string_pointer(string)) + 1;
++	}
++}
++
++void pool_commit(void)
++{
++	string_commit();
++}
++
++void pool_reset(void)
++{
++	node_reset();
++	string_reset();
++}
+diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
+new file mode 100644
+index 0000000..a69d165
+--- /dev/null
++++ b/vcs-svn/string_pool.h
+@@ -0,1 +1,15 @@
++#ifndef STRING_POOL_H_
++#define STRING_POOL_H_
++
++#include "git-compat-util.h"
++
++uint32_t pool_intern(char *key);
++char *pool_fetch(uint32_t entry);
++uint32_t pool_tok_r(char *str, const char *delim, char **saveptr);
++void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream);
++uint32_t pool_tok_seq(uint32_t max, uint32_t *seq, char *delim, char *str);
++void pool_init(void);
++void pool_commit(void);
++void pool_reset(void);
 +
 +#endif
-diff --git a/vcs-svn/trp.txt b/vcs-svn/trp.txt
-new file mode 100644
-index 0000000..b7e2d18
---- /dev/null
-+++ b/vcs-svn/trp.txt
-@@ -0,0 +1,61 @@
-+TODO: Update this documentation to match the changes to trp.h
-+
-+The trp_gen() macro generates a type-specific treap implementation,
-+based on the above cpp macros.
-+
-+Arguments:
-+
-+  a_attr     : Function attribute for generated functions (ex: static).
-+  a_pre      : Prefix for generated functions (ex: treap_).
-+  a_t_type   : Type for treap data structure (ex: treap_t).
-+  a_type     : Type for treap node data structure (ex: treap_node_t).
-+  a_field    : Name of treap node linkage (ex: treap_link).
-+  a_base     : Expression for the base pointer from which nodes are offset.
-+  a_cmp      : Node comparison function name, with the following prototype:
-+                 int (a_cmp *)(a_type *a_node, a_type *a_other);
-+                                       ^^^^^^
-+                                    or a_key
-+               Interpretation of comparision function return values:
-+                 -1 : a_node <  a_other
-+                  0 : a_node == a_other
-+                  1 : a_node >  a_other
-+               In all cases, the a_node or a_key macro argument is the first
-+               argument to the comparison function, which makes it possible
-+               to write comparison functions that treat the first argument
-+               specially.
-+
-+Assuming the following setup:
-+
-+  typedef struct ex_node_s ex_node_t;
-+  struct ex_node_s {
-+      trp_node(ex_node_t) ex_link;
-+  };
-+  typedef trp(ex_node_t) ex_t;
-+  static ex_node_t ex_base[MAX_NODES];
-+  trp_gen(static, ex_, ex_t, ex_node_t, ex_link, ex_base, ex_cmp)
-+
-+The following API is generated:
-+
-+  static void
-+  ex_new(ex_t *treap);
-+      Description: Initialize a treap structure.
-+      Args:
-+        treap: Pointer to an uninitialized treap object.
-+
-+  static ex_node_t *
-+  ex_psearch(ex_t *treap, ex_node_t *key);
-+      Description: Search for node that matches key.  If no match is found,
-+                   return what would be key's successor/predecessor, were
-+                   key in treap.
-+      Args:
-+        treap: Pointer to a initialized treap object.
-+        key  : Search key.
-+      Ret: Node in treap that matches key, or if no match, hypothetical
-+           node's successor/predecessor (NULL if no successor/predecessor).
-+
-+  static void
-+  ex_insert(ex_t *treap, ex_node_t *node);
-+      Description: Insert node into treap.
-+      Args:
-+        treap: Pointer to a initialized treap object.
-+        node : Node to be inserted into treap.
 -- 
 1.7.1
