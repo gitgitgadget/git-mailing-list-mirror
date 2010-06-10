@@ -1,78 +1,101 @@
-From: Brian Downing <bdowning@lavos.net>
-Subject: Re: Serious performance regression in diff between 1.6.6 and 1.7.0
-Date: Thu, 10 Jun 2010 12:08:04 -0500
-Message-ID: <20100610170804.GB2635@glaurung.lavos.net>
-References: <20100610001005.GA2635@glaurung.lavos.net>
+From: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+Subject: Re: [PATCH] send-email: Ask for in-reply message ID even if from and to is already known
+Date: Thu, 10 Jun 2010 19:08:19 +0200
+Message-ID: <201006101908.19578.alexander.stein@informatik.tu-chemnitz.de>
+References: <vpqtypmn4bm.fsf@bauges.imag.fr> <1275415730-15360-1-git-send-email-alexander.stein@informatik.tu-chemnitz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 10 19:08:17 2010
+Content-Type: Text/Plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 10 19:08:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMlEk-0003On-U6
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 19:08:15 +0200
+	id 1OMlEx-0003Sp-EI
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 19:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759611Ab0FJRIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 13:08:09 -0400
-Received: from glaurung.lavos.net ([69.162.133.92]:56089 "EHLO
-	glaurung.lavos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759546Ab0FJRII (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 13:08:08 -0400
-Received: by glaurung.lavos.net (Postfix, from userid 1000)
-	id AEC1E7417D; Thu, 10 Jun 2010 12:08:04 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <20100610001005.GA2635@glaurung.lavos.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1759624Ab0FJRIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 13:08:13 -0400
+Received: from jack.hrz.tu-chemnitz.de ([134.109.132.46]:39030 "EHLO
+	jack.hrz.tu-chemnitz.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759617Ab0FJRIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 13:08:11 -0400
+Received: from 77-64-189-43.dynamic.primacom.net ([77.64.189.43] helo=kongar.localnet)
+	by jack.hrz.tu-chemnitz.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <alexander.stein@informatik.tu-chemnitz.de>)
+	id 1OMlEf-0008Tm-Iy
+	for git@vger.kernel.org; Thu, 10 Jun 2010 19:08:10 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.32-gentoo-r7; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <1275415730-15360-1-git-send-email-alexander.stein@informatik.tu-chemnitz.de>
+X-Spam-Score: -0.9 (/)
+X-Spam-Report: --- Start der SpamAssassin 3.3.0 Textanalyse (-0.9 Punkte)
+	Fragen an/questions to:  Postmaster TU Chemnitz <postmaster@tu-chemnitz.de>
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	*  0.1 TVD_RCVD_IP TVD_RCVD_IP
+	--- Ende der SpamAssassin Textanalyse
+X-Scan-Signature: a738edaf3509d0110fd97304edb9db99
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148894>
 
-On Wed, Jun 09, 2010 at 07:10:05PM -0500, Brian Downing wrote:
-> I've stumbled across a pretty serious performance regression in "git
-> diff" for a large (187456 files checked out on HEAD) repository of mine.
+Did get this patch overlooked?
 
-[...]
-
-> It is more than 10x worse for my case here:
+Am Dienstag 01 Juni 2010, 20:08:50 schrieb Alexander Stein:
+> This patch removes the prompting variable so git send-email always asks
+> for a in-reply message ID (unless specified on command line) even when
+> sendemail.from and sendemail.to is set in ~/.gitconfig or .git/config
 > 
-> before 730f72840cc50c523fe4cdd796ea2d2fc4571a28:
-> 0.30user 0.50system 0:00.81elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
+> Signed-off-by: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+> ---
+>  git-send-email.perl |    7 ++-----
+>  1 files changed, 2 insertions(+), 5 deletions(-)
 > 
-> 730f72840cc50c523fe4cdd796ea2d2fc4571a28:
-> 5.58user 0.40system 0:05.98elapsed 100%CPU (0avgtext+0avgdata 0maxresident)k
-
-Here's a little more profiling information (from the bad case).  I ran this a
-couple of times to see what oprofile said.  Sorry about the lack of non-Git
-symbols:
-
-CPU: Core 2, speed 2668 MHz (estimated)
-Counted CPU_CLK_UNHALTED events (Clock cycles when not halted) with a unit mask of 0x00 (Unhalted core cycles) count 100000
-samples  %        image name               app name                 symbol name
-499255   62.8497  git-diff                 git-diff                 df_name_compare
-110561   13.9182  git-diff                 git-diff                 do_compare_entry
-54508     6.8619  no-vmlinux               git-diff                 (no symbols)
-33741     4.2476  no-vmlinux               no-vmlinux               (no symbols)
-23724     2.9865  git-diff                 git-diff                 ce_in_traverse_path
-11767     1.4813  libcrypto.so.0.9.8       git-diff                 (no symbols)
-10511     1.3232  git-diff                 git-diff                 find_cache_pos
-
-I also ran this through callgrind to see how often the above were called:
-
-        Calls  Symbol
-  -----------  -------------------
-      197,958  unpack_callback
-      208,460  find_cache_pos
-   37,308,336  ce_in_traverse_path
-  156,950,469  do_compare_entry
-  156,950,469  df_name_compare
-
-Hope this helps.
-
--bcd
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 111c981..4487472 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -136,7 +136,7 @@ my $auth;
+>  sub unique_email_list(@);
+>  sub cleanup_compose_files();
+> 
+> -# Variables we fill in automatically, or via prompting:
+> +# Variables we fill in automatically:
+>  my (@to,$no_to,@cc,$no_cc,@initial_cc,@bcclist,$no_bcc,@xh,
+>  	$initial_reply_to,$initial_subject,@files,
+>  	$author,$sender,$smtp_authpass,$annotate,$compose,$time);
+> @@ -669,19 +669,16 @@ sub ask {
+>  	return undef;
+>  }
+> 
+> -my $prompting = 0;
+>  if (!defined $sender) {
+>  	$sender = $repoauthor || $repocommitter || '';
+>  	$sender = ask("Who should the emails appear to be from? [$sender] ",
+>  	              default => $sender);
+>  	print "Emails will be sent from: ", $sender, "\n";
+> -	$prompting++;
+>  }
+> 
+>  if (!@to) {
+>  	my $to = ask("Who should the emails be sent to? ");
+>  	push @to, parse_address_line($to) if defined $to; # sanitized/validated
+> later -	$prompting++;
+>  }
+> 
+>  sub expand_aliases {
+> @@ -703,7 +700,7 @@ sub expand_one_alias {
+>  @initial_cc = expand_aliases(@initial_cc);
+>  @bcclist = expand_aliases(@bcclist);
+> 
+> -if ($thread && !defined $initial_reply_to && $prompting) {
+> +if ($thread && !defined $initial_reply_to) {
+>  	$initial_reply_to = ask(
+>  		"Message-ID to be used as In-Reply-To for the first email? ");
+>  }
