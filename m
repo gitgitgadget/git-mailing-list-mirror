@@ -1,76 +1,61 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH next] test-lib: set $DIFF to diff if it is unset
-Date: Thu, 10 Jun 2010 12:23:36 -0500
-Message-ID: <I5rdmhJblm27JnzIPi7xP5KmntXzA3-wGL-IGXejOPAurGsMke2J3g@cipher.nrlssc.navy.mil>
-References: <06ffbe0ca6aac061336f6f595e89f75c09ab88ac.1276162629.git.trast@student.ethz.ch>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: Leaving large binaries out of the packfile
+Date: Thu, 10 Jun 2010 11:04:57 -0700
+Message-ID: <20100610180457.GO14847@spearce.org>
+References: <4C108556.8040102@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Thu Jun 10 19:41:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Thu Jun 10 20:05:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMlkm-0002US-Kr
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 19:41:20 +0200
+	id 1OMm7p-0006Uk-4F
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Jun 2010 20:05:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759214Ab0FJRlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jun 2010 13:41:13 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:40565 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752240Ab0FJRlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jun 2010 13:41:13 -0400
-Received: by mail.nrlssc.navy.mil id o5AHNbSY025407; Thu, 10 Jun 2010 12:23:37 -0500
-In-Reply-To: <06ffbe0ca6aac061336f6f595e89f75c09ab88ac.1276162629.git.trast@student.ethz.ch>
-X-OriginalArrivalTime: 10 Jun 2010 17:23:37.0370 (UTC) FILETIME=[A96267A0:01CB08C1]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1759518Ab0FJSFC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 14:05:02 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:61063 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757871Ab0FJSFB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 14:05:01 -0400
+Received: by pwi1 with SMTP id 1so34256pwi.19
+        for <git@vger.kernel.org>; Thu, 10 Jun 2010 11:05:00 -0700 (PDT)
+Received: by 10.141.88.6 with SMTP id q6mr368969rvl.218.1276193099988;
+        Thu, 10 Jun 2010 11:04:59 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id k17sm248235rvh.17.2010.06.10.11.04.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 10 Jun 2010 11:04:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4C108556.8040102@workspacewhiz.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148898>
 
-On 06/10/2010 04:39 AM, Thomas Rast wrote:
-> Since 7b3bdbb (fixup: do not unconditionally disable "diff -u",
-> 2010-05-31), test-lib.sh depends on having $DIFF set in the
-> environment for the construction of $GIT_TEST_CMP.  While this works
-> when called from the main Makefile, it fails if the tests are called
-> on their own and the user does not have $DIFF set.
-> 
-> Set it to 'diff' if it is unset, like the Makefile does.
-> 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
-> 
-> I have an uneasy feeling that I must be missing something, seeing as
-> this went unnoticed for 10 days...
-> 
->  t/test-lib.sh |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index b23a61d..4d89049 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -78,6 +78,7 @@ export EDITOR
->  
->  if test -z "$GIT_TEST_CMP"
->  then
-> +	DIFF=${DIFF:-diff}
->  	if test -n "$GIT_TEST_CMP_USE_COPIED_CONTEXT"
->  	then
->  		GIT_TEST_CMP="$DIFF -c"
+Joshua Jensen <jjensen@workspacewhiz.com> wrote:
+> Sometimes, 'git gc' runs out of memory.  I have to discover which file  
+> is causing the problem, so I can add it to .gitattributes with a  
+> '-delta' flag.  Mostly, though, the repacking takes forever, and I dread  
+> running the operation.
 
-I think what should be done instead, is to move this section
-down below the line where GIT-BUILD-OPTIONS is sourced.  That
-way, the value of $DIFF can be gotten from that file.
+If you have the list of big objects, you can put them into their
+own pack file manually.  Feed their SHA-1 names on stdin to git
+pack-objects, and save the resulting pack under .git/objects/pack.
 
-I guess GIT_TEST_CMP and GIT_TEST_CMP_USE_COPIED_CONTEXT
-should be written into GIT-BUILD-OPTIONS too.
+Assuming the pack was called pack-DEADC0FFEE.pack, create a file
+called pack-DEADC0FFEE.keep in the same directory.  This will stop
+Git from trying to repack the contents of that pack file.
 
--brandon
+Now run `git gc` to remove those huge objects from the pack file
+that contains all of the other stuff.
+
+-- 
+Shawn.
