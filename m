@@ -1,70 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC] ll-merge: Normalize files before merging
-Date: Fri, 11 Jun 2010 07:49:41 +0200
-Message-ID: <4C11CE75.7080706@viscovery.net>
-References: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: [PATCH] diff: bugfix: binary file permission regression
+Date: Fri, 11 Jun 2010 15:06:02 +0800
+Message-ID: <AANLkTimwmkMnaqMY44SeHz1L8hE2Lp324PXPY4eqvTGb@mail.gmail.com>
+References: <1276194685-28098-1-git-send-email-ayiehere@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 11 07:49:50 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Jun 11 09:06:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMx7l-0003KK-TR
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 07:49:50 +0200
+	id 1OMyJg-0001zB-5Y
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 09:06:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257Ab0FKFto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 01:49:44 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:26451 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751819Ab0FKFto (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 01:49:44 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OMx7d-0002lv-LJ; Fri, 11 Jun 2010 07:49:41 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 603631660F;
-	Fri, 11 Jun 2010 07:49:41 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1755134Ab0FKHGG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 03:06:06 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:33300 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628Ab0FKHGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 03:06:04 -0400
+Received: by gwj15 with SMTP id 15so506285gwj.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 00:06:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type;
+        bh=/TbdcjgZh6+3Y8pdZa2NWl92Gy3dng25PBAaeylu930=;
+        b=Df82zlLsHcxRRxZgkfs+0XPaIgPm9u9DIhO4Nk38v/N2QbjNXWMIik1uB4KXPdUPFx
+         UXJi4zkOi+bmVnBYqyUzi7gjByE5FEZwXkgVQ+E9DEKCJl7oaRp8iQybUHUtj4xpWiGi
+         utaXYlkVgIyH/PGbtFZoIVBS+F0uwKEL3qZAA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=rL4RrehtnPaGaXEKQcK9ZsYSswmX3M4CWQtuNTunAknBJCcD5/w27eyK9D7Y4EPLvX
+         7iCxM3Kz6PlMkrUcfiib7LyStIy+SrPL3u5owC0Dd1ArX8QgHx3RNnUOyNAFGO2MB2kZ
+         WyCwxzFva4AKdMnBsYR8YiwHOxT9fFTxtzodg=
+Received: by 10.90.204.19 with SMTP id b19mr2001889agg.139.1276239962627; Fri, 
+	11 Jun 2010 00:06:02 -0700 (PDT)
+Received: by 10.90.114.16 with HTTP; Fri, 11 Jun 2010 00:06:02 -0700 (PDT)
+In-Reply-To: <1276194685-28098-1-git-send-email-ayiehere@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148926>
 
-Am 6/10/2010 22:48, schrieb Eyvind Bernhardsen:
-> Currently, merging across changes in line ending normalization is
-> painful since all lines containing CRLF will conflict uselessly.
-> 
-> Fix ll-merge so that the "base", "theirs" and "ours" files are passed
-> through convert_to_git() before a three-way merge.  This prevents
-> differences that can be normalized away from blocking an automatic
-> merge.
+On Fri, Jun 11, 2010 at 2:31 AM, Nazri Ramliy <ayiehere@gmail.com> wrote:
+>              (!textconv_two && diff_filespec_is_binary(two)) )) {
+>                if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
+>                        die("unable to read files to diff");
+> +               fprintf(o->file, "%s", header.buf);
+> +               strbuf_reset(&header);
 
-I think you are going overboard here. Normalization should only happen
-only for data that moves from the worktree to the database. But during a
-merge, at most one part can come from the worktree, methinks; you are
-normalizing all three of them, though.
+ Since the fill_mmfile()s could result in a die maybe it's
+ better if the header is printed before the read attempt?:
 
-> This patch has already been useful to me, but I'm not sure it is the
-> best possible solution to the problem (especially in terms of
-> efficiency), hence the RFC.
-> 
-> Note that clean and ident filters will also be run, which might be a
-> good thing.  Also, the tests require my crlf/text series from pu.
-> --
-> Eyvind
+              (!textconv_two && diff_filespec_is_binary(two)) )) {
++               fprintf(o->file, "%s", header.buf);
++               strbuf_reset(&header);
+                if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
+                        die("unable to read files to diff");
 
-Please do not put a dash-dash-blank line before the patch; Thunderbird
-takes it as the beginning of the signature and truncates the message in
-the reply.
+I did this on my work tree and ran 'make' in the test directory and no errors
+were reported.
 
--- Hannes
+nazri.
