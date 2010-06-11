@@ -1,62 +1,77 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2] Group the default git help message by topic
-Date: Fri, 11 Jun 2010 22:28:24 +0000
-Message-ID: <AANLkTinec7_D-WHRfetVRVvmG0EGoW4ZTdiTvoGMgJvQ@mail.gmail.com>
-References: <AANLkTiloErvcWS1hW80cIV9SiWu_7CBdNSx_iAppcGOd@mail.gmail.com>
-	<422F3619-25EC-4509-8EE3-78B6C765AB2A@wincent.com>
-	<4C12B20F.3080709@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/3] textconv: support for blame
+Date: Fri, 11 Jun 2010 16:52:19 -0700
+Message-ID: <7viq5pgma4.fsf@alter.siamese.dyndns.org>
+References: <1275921713-3277-1-git-send-email-axel.bonnet@ensimag.imag.fr>
+ <1275924218-20154-1-git-send-email-axel.bonnet@ensimag.imag.fr>
+ <1275924218-20154-2-git-send-email-axel.bonnet@ensimag.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Scott Chacon <schacon@gmail.com>,
-	git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Sat Jun 12 00:28:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 12 01:52:42 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONCiF-0003mv-MN
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 00:28:32 +0200
+	id 1ONE1g-00065O-20
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 01:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932698Ab0FKW20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 18:28:26 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34915 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307Ab0FKW2Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 18:28:25 -0400
-Received: by iwn9 with SMTP id 9so859628iwn.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 15:28:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=uOOZ3IC07ZQ12Tary1+pG10T3nFQQNdWtUWa/k6+j3I=;
-        b=X+l4Ojd5Ln/sxiMfYCOmaCwffV8gYdUZhIT4aFF49mqTJDE4Mg2sWClwxkN64TbZM6
-         n3jfMA04RpXL8uCUzj5vBbYcg9F0H8BFCKH28c3jY3EFYA8PSIutG2Cw2KSU/U127mTQ
-         oN1PYbfX5PvcQqjUWkAmI9E/5KeqIQSrSQ/fM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=QoVIW0300dYQ30jC3sChd4/TvXdbm+AXGVx5UAz3FABAag+62U/vuE1XTyBdPH2fmq
-         Nd18cICiRDltJ6ielUweGNBOyMqFytKMla3YC0T20ZaBak8F/SWNHc8vXIgdMqilKR+4
-         rXSrY4qi4erUlSOov1qFbXxLeascvVZsiCi4s=
-Received: by 10.231.180.166 with SMTP id bu38mr2512836ibb.193.1276295305015; 
-	Fri, 11 Jun 2010 15:28:25 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Fri, 11 Jun 2010 15:28:24 -0700 (PDT)
-In-Reply-To: <4C12B20F.3080709@gmail.com>
+	id S1757577Ab0FKXwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 19:52:34 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53246 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756879Ab0FKXwd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 19:52:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 65532BB287;
+	Fri, 11 Jun 2010 19:52:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=LoqYaXGFMDGELFtB9jEZvTa2D30=; b=xHD259qY0wXTfnUAdGe1tew
+	295vseD3HflOaTwK114dGXkwescyqNI+LFC5ArUFYAh/xA8Aa7E71qK4p7Flneuf
+	cZV9B4Go0SLAXDJvq3JtkjA6MoVvcr/GMgnaXVIKYtTnJ4N4T/edHP/EvjMcqNxs
+	kHv4urCPOCGOD8NjrTkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=RACW3PsXzh/FzZ38HSBIASTcKcUlJIW8g+W/ZlufPbnAkRMxF
+	EfVkFguVvIM8AmUD6hTekPzF+hpsb9BXKG0z56O1yDQJ3sOwoYL0KEOoAw1HKcFr
+	PrCbUdVhkNEs6ZrD7woDieU7i+tvM3PXt9XMf6Vq1ukANnhLBK8Tc8debw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 238B0BB282;
+	Fri, 11 Jun 2010 19:52:26 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46C40BB281; Fri, 11 Jun
+ 2010 19:52:21 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6312C83E-75B4-11DF-A65E-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148976>
 
-On Fri, Jun 11, 2010 at 22:00, A Large Angry SCM <gitzilla@gmail.com> wrote:
-> Can a command be listed twice? Some of these commands _really_ belong in
-> more than one category.
+Axel Bonnet <axel.bonnet@ensimag.imag.fr> writes:
 
-Of course it can. But what specific commands do you mean?
+> +	switch (userdiff_config(var, value)) {
+> +		case 0: break;
+> +		case -1: return -1;
+> +		default: return 0;
+> +	}
+
+Style:
+
+	switch (userdiff_config(var, value)) {
+	case 0:
+		break;
+	case -1:
+        	return -1;
+	default:
+        	return 0;
+	}
