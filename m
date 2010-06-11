@@ -1,75 +1,152 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [RFC] ll-merge: Normalize files before merging
-Date: Fri, 11 Jun 2010 22:56:08 +0200
-Message-ID: <FD073505-FFF4-40D7-B841-0EC1B902E32E@gmail.com>
-References: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com> <4C11CE75.7080706@viscovery.net> <4C11E717.4070508@gmail.com> <4C11EB0D.20208@viscovery.net> <7vd3vxicaw.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 11 22:56:25 2010
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Question about tracking multiple Subversion repository from
+	the same git repository with git-svn
+Date: Fri, 11 Jun 2010 21:28:08 +0000
+Message-ID: <20100611212808.GB7262@dcvr.yhbt.net>
+References: <AANLkTimMOPXecB0lZM3v2MaZgbhJWwtxOUIGgkxr_PGF@mail.gmail.com> <20100610190417.GA15731@dcvr.yhbt.net> <AANLkTim_wx9lQ_IClmajo5etFKay0xPCTz1UrKilGWln@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Daniele Segato <daniele.bilug@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 23:28:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONBH6-0001UL-BJ
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 22:56:24 +0200
+	id 1ONBmB-0005Tc-Pm
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 23:28:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757889Ab0FKU4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 16:56:13 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:50610 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752248Ab0FKU4M convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 16:56:12 -0400
-Received: by wyb40 with SMTP id 40so1176655wyb.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 13:56:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=Fz3jF4TXwcB1lbYplIETc59+LqTgpVerIfHc3PuEl4Q=;
-        b=QJG8QA4DzEqnQRWABtP0Sc2RDy+fsxufcSSQJvpLM1NlyB0aMyLVyrAxcAyttdyqGR
-         SKO0eHVpJj2drxXMCG4KtCBjs8T0N5eVvNlbkacSm0mKve4OIs5D98WAJMmzJuBxPAdf
-         7M+FeQTtIEsO2AelXBAw8imkWbp7aMfGTLK80=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=dBu4/9qEAVJZ1YHP/5idMUUHYjJo2yTPyDarj65hyHvNtcmu6N7xwqShGWgjv9omN4
-         qVCzNQouYqjgTRYw4pWbDXKfKcegpqtoZxNk/0owHeBmLgTT3AJ8bQR1hxKT4BWodc6M
-         eCYV0egtFZ1MDUkC5yhtlqFm9ijIaeTeoVmnE=
-Received: by 10.227.146.3 with SMTP id f3mr2423054wbv.211.1276289770095;
-        Fri, 11 Jun 2010 13:56:10 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id b17sm12090431wbd.7.2010.06.11.13.56.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 11 Jun 2010 13:56:09 -0700 (PDT)
-In-Reply-To: <7vd3vxicaw.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1078)
+	id S932364Ab0FKV2L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 17:28:11 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55748 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932281Ab0FKV2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 17:28:09 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64C711F513;
+	Fri, 11 Jun 2010 21:28:08 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <AANLkTim_wx9lQ_IClmajo5etFKay0xPCTz1UrKilGWln@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148971>
 
-On 11. juni 2010, at 21.44, Junio C Hamano wrote:
+Daniele Segato <daniele.bilug@gmail.com> wrote:
+> On Thu, Jun 10, 2010 at 9:04 PM, Eric Wong <normalperson@yhbt.net> wr=
+ote:
+> >> 1. Is there a way to tell git that abc/trunk is a branch of svn/ta=
+gs/1.2.3 ?
+> >
+> > You need to use grafts.
+>=20
+> this one?
+> https://git.wiki.kernel.org/index.php/GraftPoint
+>=20
+> seems what I need..
 
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> I know what your point is. It is still inappropriate to call
->> normalize_file() on data that comes from the repository. It is not the
->> task of a merge procedure to blindly normalize data.
-> 
-> It is not "blindly", but "running normalization one _extra time_, as the
-> repository data is supposed to be canonical already", which is utterly
-> wrong.
+Yes
 
-I agree that double normalization is evil, but the repository data isn't necessarily canonical if the configuration has changed since the data was added.
+> in this case, I had a question:
+>=20
+> since if I use this feature my commit will have different SHA-1. I
+> used to write the commit SHA-1 in some of the svn tags. If I do this
+> they will no longer be valid.
+> I think with git SVN the "best" way to identify a commit is using the
+> "Tree" object SHA-1, it should be the same for every revision that
+> contains the same content...
+> so..
+> 1b. Can I extract the tree sha-1 from a commit?
 
-How do you feel about Finn Arne's idea of first convert_to_work_tree()-ing the data, then convert_to_git()ing it back?  That gets rid of the double normalization at the cost of some performance and memory usage (especially with CRLF output enabled).  I'm going to do some benchmarks to go along with my next stab at this.
+Yes, "git cat-file commit $commit" will show you the tree.
 
-- Eyvind
+> 1c. Is there a way to get every commit pointing to to a tree?
+>=20
+> Ideally I would do something like
+>=20
+> git contain-tree <sha-1-of-the-tree>
+> [list of commit's here]
+>=20
+> does this make any sense to you?
+
+Sort of, yes...
+
+Back in ancient times, there used to be a "git svn graft-branches"
+command which could automate what you're doing.  It was removed in
+commit d05d72e07e49869fe988d4d99e6ac60711570db5 because it was largely
+unused.
+
+Perhaps you can resurrect it as a standalone command.  I imagine it
+could be used for other import utilities, too.
+
+> >> 2. can I rename svn-remote "svn" to something like "main" without =
+side effect?
+> >
+> > You should be able to (and use GIT_SVN_ID=3Dmain in the env),
+> > though I haven't used these features in a while.
+>=20
+> Renamed, thanks.
+> do you know if I can set a GIT_SVN_ID (default) per-repository instea=
+d
+> of using the environment
+> variable?
+
+Err, actually, --svn-remote=3Dmain is probably preferred, these days.
+GIT_SVN_ID is --id=3Dfoo.  Sorry for the confusion.
+
+> (since I use git-new-workdir it would be best if I can use a default
+> per workdir)
+>=20
+> >> 3. after 2) can I also rename all the names of the remote branches=
+ to
+> >> main/* instead of svn/* ?
+> >
+> > It should be possible... =A0you need to edit $GIT_DIR/svn/.metadata=
+, too.
+>=20
+> thanks, did it.
+>=20
+> >> 7. if the merge --squash cause a lot of conflicts is there a way t=
+o
+> >> split the conflict resolution across different persons?
+> >
+> > I'm not sure what you mean... multiple people working on the same
+> > working tree? =A0On a shared screen session? =A0I don't see why not=
+=2E
+>=20
+>=20
+> no,
+> what I had in mind was a "migration team" to work on the migration of
+> the customization
+> to a product to the new version of the main product.
+>=20
+> What I have in mind here is some kind of "selective merge".
+> For example...
+>=20
+> I merge a group of commits, someone else, on another computer with
+> git-svn or subversion merge another part and so on..
+>=20
+> like...
+>=20
+> git merge --squash -- path/to/something
+> or something like
+>=20
+> git merge --squash --interactive
+>=20
+> this could give you a way to choose different paths you want to "merg=
+e".
+>=20
+> I know this is not very like a merge but I hope I gave you the idea o=
+f
+> what I meant.
+
+I'll wait for others to answer that.  I rarely encounter conflict-heavy
+merges, partly because my workflows are setup to avoid them.
+
+--=20
+Eric Wong
