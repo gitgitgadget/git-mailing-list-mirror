@@ -1,87 +1,90 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git sideband hook output
-Date: Fri, 11 Jun 2010 15:18:14 +0000
-Message-ID: <AANLkTikONJoDiyxmcmdG8zZkTCLbqXlXhrASae7rAreN@mail.gmail.com>
-References: <AANLkTinLWDFTn7bhcF3Vk-q9aw4lJC2vFj95M9bxLbBT@mail.gmail.com>
-	<20100608214632.GN14847@spearce.org>
-	<A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com>
-	<alpine.LFD.2.00.1006090934320.30664@xanadu.home>
-	<A612847CFE53224C91B23E3A5B48BAC744839BF6AE@xmail3.se.axis.com>
-	<20100610183019.GR14847@spearce.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: Leaving large binaries out of the packfile
+Date: Fri, 11 Jun 2010 17:29:50 +0200
+Message-ID: <4C12566E.6020607@gnu.org>
+References: <4C108556.8040102@workspacewhiz.com> <20100610180457.GO14847@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Scott Chacon <schacon@gmail.com>,
-	git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 11 17:18:22 2010
+X-From: git-owner@vger.kernel.org Fri Jun 11 17:30:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON5zx-0000tX-TC
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 17:18:22 +0200
+	id 1ON6BO-0008TG-Bk
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 17:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699Ab0FKPSR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 11:18:17 -0400
-Received: from mail-yw0-f204.google.com ([209.85.211.204]:58117 "EHLO
-	mail-yw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752737Ab0FKPSP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 11:18:15 -0400
-Received: by mail-yw0-f204.google.com with SMTP id 42so1204456ywh.15
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 08:18:15 -0700 (PDT)
+	id S1756376Ab0FKP35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 11:29:57 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:53368 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756343Ab0FKP3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 11:29:55 -0400
+Received: by wyb40 with SMTP id 40so873340wyb.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 08:29:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dpfCpSREy2HpjzaotpwNPqy7e/Z2wXJm5L2i6828Twk=;
-        b=pmRI5nBHTSLbkWwKZVYy90LcGqHrYzY8JbGX3sG8rOrfiSNQYGLHEteS5NodXOtZ+6
-         /s4wqivlvMgqKjADnRXqMe2Kw3j3KwXIQw9mzuLQBMIr6mTe9i9ZTojJwjSOst9/0xLd
-         rCCgcjBJlpprI0EnPn5yxtOCmWkZ8T1OmH088=
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=gepc0SkZwJnTeQhAWJapPxm4W8am20HstnQQI5YM+oo=;
+        b=rEN0K3eoWYSUGqyNLVeYPVWaz3B3m2sT31Xgypo5Y1e+OCWdZXJebmIPYj4Vnuqitz
+         CTmHZIQwurbiatirfQfI0LRvt9ieBUMwD5Ya3Q+p0UdoMCC8r2CWe30dBoucLUs7hOGM
+         HCRRFUIOdqaEeCIGCVZMAtg3O0vEoLpdLtsRw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gX67q3vDxDMXv4o/e+0OwyII6EEGx9AgdpkaYZqPwos5n5vHDYWmrx2vWWvM7X6wjq
-         7BLylsx6L3pvN2imx8TaVaGBAxYyqZ2gAmz1AHw9IM/jCj6IUzRjrRGqdd84+CjLZcKy
-         yqPeB/kXAmczljB11nm3lbY8pNf/QYEyCmMCo=
-Received: by 10.91.145.13 with SMTP id x13mr254151agn.16.1276269494902; Fri, 
-	11 Jun 2010 08:18:14 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Fri, 11 Jun 2010 08:18:14 -0700 (PDT)
-In-Reply-To: <20100610183019.GR14847@spearce.org>
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=LOmAvsDNgARaccFytyhAwIWOmuNDqko1l/Tn+SLUU7bONjrUjHhO5520ujXcQQNIYs
+         6y+MFp+HHWFh+lTCal8Bdpj1rDOC+DCN7hIINY/4l5pOayuDP8Qmnakx9Yef/6u/e0Gr
+         dhLFa/lXHpERtQ3IRwMbWGfStzgpaX+1HzCGU=
+Received: by 10.227.138.148 with SMTP id a20mr2068177wbu.91.1276270193635;
+        Fri, 11 Jun 2010 08:29:53 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
+        by mx.google.com with ESMTPS id b17sm10032642wbd.1.2010.06.11.08.29.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Jun 2010 08:29:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
+In-Reply-To: <20100610180457.GO14847@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148955>
 
-On Thu, Jun 10, 2010 at 18:30, Shawn O. Pearce <spearce@spearce.org> wr=
-ote:
-> Peter Kjellerstedt <peter.kjellerstedt@axis.com> wrote:
->> And what if my hook output is localized? Now there is an English
->> "remote:" in front of every line... Or even worse, what if the
->> "remote:" string is localized in a future version of git, then I
->> have no way of knowing how wide it is and cannot take measures to
->> format my hook output so that it will look right.
+On 06/10/2010 08:04 PM, Shawn O. Pearce wrote:
+> Joshua Jensen<jjensen@workspacewhiz.com>  wrote:
+>> Sometimes, 'git gc' runs out of memory.  I have to discover which file
+>> is causing the problem, so I can add it to .gitattributes with a
+>> '-delta' flag.  Mostly, though, the repacking takes forever, and I dread
+>> running the operation.
 >
-> Don't localize "remote:"? =C2=A0Or pick a shorter translation?
+> If you have the list of big objects, you can put them into their
+> own pack file manually.  Feed their SHA-1 names on stdin to git
+> pack-objects, and save the resulting pack under .git/objects/pack.
+
+Do you know any simpler way than
+
+git log --pretty=format:%H | while read x; do
+   git ls-tree $x -- ChangeLog | awk '{print $3}'
+done | sort -u
+
+to do this?  I thought it would be nice to add --sha1-only to 
+git-ls-tree, but maybe I'm missing some other trick.
+
+> Assuming the pack was called pack-DEADC0FFEE.pack, create a file
+> called pack-DEADC0FFEE.keep in the same directory.  This will stop
+> Git from trying to repack the contents of that pack file.
 >
-> If its really a problem, maybe "remote: " prefix should turn into
-> something shorter and language agnostic, like "<< ". =C2=A0But thus f=
-ar
-> we hadn't had to worry about it, since we didn't have translation
-> support in Git... =C2=A0(though yes, I see that is changing now).
+> Now run `git gc` to remove those huge objects from the pack file
+> that contains all of the other stuff.
 
-Is there any reason for why the "remote:" output needs to be echoed
-verbatim to the user instead of being passed through some filter.
+That obviously wouldn't help if these large binaries are updated often, 
+however.
 
-If not, then it could be treated as part of a protocol, parsed, and
-localized however the user wants.
-
-">" isn't as language-agnostic as you might think, in a RTL language
-the arrow ends up facing the wrong way.
+Paolo
