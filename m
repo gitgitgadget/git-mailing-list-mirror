@@ -1,82 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/README: document --root option
-Date: Fri, 11 Jun 2010 13:48:26 -0700
-Message-ID: <7vpqzxgusl.fsf@alter.siamese.dyndns.org>
-References: <c5efa5c15498fe562af98b9b16165127bc1690c2.1276193888.git.trast@student.ethz.ch> <20100610214807.GA24555@coredump.intra.peff.net>
-Mime-Version: 1.0
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: [RFC] ll-merge: Normalize files before merging
+Date: Fri, 11 Jun 2010 22:56:08 +0200
+Message-ID: <FD073505-FFF4-40D7-B841-0EC1B902E32E@gmail.com>
+References: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com> <4C11CE75.7080706@viscovery.net> <4C11E717.4070508@gmail.com> <4C11EB0D.20208@viscovery.net> <7vd3vxicaw.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1078)
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 11 22:48:49 2010
+Content-Transfer-Encoding: 8BIT
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 22:56:25 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONB9k-0006l7-3u
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 22:48:48 +0200
+	id 1ONBH6-0001UL-BJ
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 22:56:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932671Ab0FKUsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 16:48:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55441 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932628Ab0FKUsg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 16:48:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4C73BB9CE;
-	Fri, 11 Jun 2010 16:48:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fOMO9K/uZuyqkGduK+W6Ft9aN4w=; b=LJJgKm
-	jzxVVCaHNwK0ES9drCl6Av1TtRuZoTaI5PT/VcZb9ANwXKjlwHLiBc1XcHHLFMpZ
-	HI2go7tsnQXcSDjvFLdtT3VK6dy0roOiGa56PxFvTl6lqNpRqwg+PeYzGn1w0dwE
-	+03qno8lkum/K+99PBvym7DRcuMM6qbzjbCgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EKAnoXY8eccH03sPxg9Z+5lx2DY//J+r
-	vFGvgCdTgRs+5SkWlLISlcCMAi/4ctjhR44fHrot+p7Ipyavvhz3e46RLl4F90ot
-	UAEqCTz7+/d+WAM85B84Us3hZgxm07+NsLNXQekUS0KVZFpROJFk6UQxFqjWYTPX
-	pKqrxf3IeZk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7FABCBB9CA;
-	Fri, 11 Jun 2010 16:48:31 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B84DDBB9C9; Fri, 11 Jun
- 2010 16:48:27 -0400 (EDT)
-In-Reply-To: <20100610214807.GA24555@coredump.intra.peff.net> (Jeff King's
- message of "Thu\, 10 Jun 2010 17\:48\:07 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B1ED4F70-759A-11DF-91CE-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757889Ab0FKU4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 16:56:13 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50610 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752248Ab0FKU4M convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 16:56:12 -0400
+Received: by wyb40 with SMTP id 40so1176655wyb.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 13:56:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=Fz3jF4TXwcB1lbYplIETc59+LqTgpVerIfHc3PuEl4Q=;
+        b=QJG8QA4DzEqnQRWABtP0Sc2RDy+fsxufcSSQJvpLM1NlyB0aMyLVyrAxcAyttdyqGR
+         SKO0eHVpJj2drxXMCG4KtCBjs8T0N5eVvNlbkacSm0mKve4OIs5D98WAJMmzJuBxPAdf
+         7M+FeQTtIEsO2AelXBAw8imkWbp7aMfGTLK80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=dBu4/9qEAVJZ1YHP/5idMUUHYjJo2yTPyDarj65hyHvNtcmu6N7xwqShGWgjv9omN4
+         qVCzNQouYqjgTRYw4pWbDXKfKcegpqtoZxNk/0owHeBmLgTT3AJ8bQR1hxKT4BWodc6M
+         eCYV0egtFZ1MDUkC5yhtlqFm9ijIaeTeoVmnE=
+Received: by 10.227.146.3 with SMTP id f3mr2423054wbv.211.1276289770095;
+        Fri, 11 Jun 2010 13:56:10 -0700 (PDT)
+Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id b17sm12090431wbd.7.2010.06.11.13.56.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Jun 2010 13:56:09 -0700 (PDT)
+In-Reply-To: <7vd3vxicaw.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148970>
 
-Jeff King <peff@peff.net> writes:
+On 11. juni 2010, at 21.44, Junio C Hamano wrote:
 
-> On Thu, Jun 10, 2010 at 08:24:46PM +0200, Thomas Rast wrote:
->
->> We've had this option since f423ef5 (tests: allow user to specify
->> trash directory location, 2009-08-09).  Make it easier to look up :-)
->
-> Acked-by: Jeff King <peff@peff.net>
->
->> +--root=<directory>::
->> +	Use <directory> as a trash directory to store all temporary
->> +	data during testing, instead of the t/ directory itself.
->> +	Using this option with a RAM-based filesystem (such as tmpfs)
->> +	can massively speed up the test suite.
->
-> Minor nit: <directory> is not the trash directory, but rather the root
-> of all trash directories. I think anybody with half a clue will
-> understand what it means, though.
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> I know what your point is. It is still inappropriate to call
+>> normalize_file() on data that comes from the repository. It is not the
+>> task of a merge procedure to blindly normalize data.
+> 
+> It is not "blindly", but "running normalization one _extra time_, as the
+> repository data is supposed to be canonical already", which is utterly
+> wrong.
 
-Then...
+I agree that double normalization is evil, but the repository data isn't necessarily canonical if the configuration has changed since the data was added.
 
-	Create "trash" directories used to store all temporary data during
-	testing under <directory>, instead of the t/ directory.
+How do you feel about Finn Arne's idea of first convert_to_work_tree()-ing the data, then convert_to_git()ing it back?  That gets rid of the double normalization at the cost of some performance and memory usage (especially with CRLF output enabled).  I'm going to do some benchmarks to go along with my next stab at this.
 
-perhaps?
+- Eyvind
