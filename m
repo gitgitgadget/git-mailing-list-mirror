@@ -1,76 +1,67 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [RFC] ll-merge: Normalize files before merging
-Date: Fri, 11 Jun 2010 10:47:44 +0200
-Message-ID: <4C11F830.3050404@gmail.com>
-References: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com> <4C11CE75.7080706@viscovery.net> <4C11E717.4070508@gmail.com> <4C11EB0D.20208@viscovery.net> <20100611083641.GB31109@pvv.org>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: [PATCH] diff: bugfix: binary file permission regression
+Date: Fri, 11 Jun 2010 17:45:30 +0800
+Message-ID: <AANLkTikTyEjheFwI0x3svV8SWMkhksE6q2aspI2rww-l@mail.gmail.com>
+References: <1276194685-28098-1-git-send-email-ayiehere@gmail.com>
+	<AANLkTimwmkMnaqMY44SeHz1L8hE2Lp324PXPY4eqvTGb@mail.gmail.com>
+	<AANLkTikWNaEY5aErPF7OkBMleN_hiFRholfdFXLF1cJO@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Fri Jun 11 10:47:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 11:45:44 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMzu7-0002bR-0O
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 10:47:55 +0200
+	id 1ON0nx-0006hl-Sg
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 11:45:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759480Ab0FKIru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 04:47:50 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41926 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754912Ab0FKIrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 04:47:49 -0400
-Received: by wyb40 with SMTP id 40so562727wyb.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 01:47:45 -0700 (PDT)
+	id S1755975Ab0FKJpc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 05:45:32 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:63450 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754637Ab0FKJpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 05:45:32 -0400
+Received: by gwj15 with SMTP id 15so545589gwj.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 02:45:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=+zEhzBvSs9/yOU8Q9+Hothuek6Zl7aBQqARDhD0hezk=;
-        b=AvbkvPV1WkO26E1lg7kb5WzChLf88ZrkY/Q9i8cAnQFE5oqWZyZYZ2RLV4l4E1qQ/L
-         quuV4hbntBmMPlq+AP9MT0I9sGI2etMvdP/cO+LmRdmqLIDTyaCMyie3GeG1Q17ZhUAt
-         kmUIDFYKACdbDD4h9sB5gx949tyXa/3NIwz9o=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Uf3K/cjRJQi70/zwwFTKClgW8TgKwh8oPcTaIK6D7Pc=;
+        b=ChV8ZSf/l26zBet10DSDcCN6Yft3ShITfc0hK6rFjTbAzRT1iMT3PZADnA859+6HGm
+         iD0EscHAXbW1liKVfufewmuPSNvgSujejfQ9JTSPq+vUMvgwBPyrKt0gB1EeDQx5YjtT
+         oxn48jpVJiHd9gJ4JuS7xjduyY/rCcS5N4V2g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=KT+dVIiRLQz2WTgxLqeFWAjoTrqDBwruo0kufweLylGCfn8lyTyNPGj2g4ycbWAeGR
-         qmhaE+k88YBrkY8I0OHwMcUA1Fznk5smKOVErN3/ivYSPVSOEzph9haB12X5x2abQ5Bn
-         RyNvq1kvG0QLjQG6k+0UeX6t7Bn2qobG6ywqU=
-Received: by 10.227.142.78 with SMTP id p14mr1502626wbu.77.1276246065291;
-        Fri, 11 Jun 2010 01:47:45 -0700 (PDT)
-Received: from [192.168.2.12] ([62.113.137.5])
-        by mx.google.com with ESMTPS id n31sm7519775wba.3.2010.06.11.01.47.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 11 Jun 2010 01:47:45 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.1.9) Gecko/20100515 Icedove/3.0.4
-In-Reply-To: <20100611083641.GB31109@pvv.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=MewDqSB4052nPQPVP1EOiWzKCg976pUl53RxQzyUZYA4DIXwZejHAaUxoMr3dMmXkj
+         H9tLx02PYGgIv2Hu6CguG6FmYBHffvNdFWRMpjB1oKbiUWQtidEVZjy/ihgPi1/S0+XB
+         XFSeyNvofO3YoawothQOLLJpevGyT5Q0VUMHQ=
+Received: by 10.90.204.19 with SMTP id b19mr2128008agg.139.1276249530906; Fri, 
+	11 Jun 2010 02:45:30 -0700 (PDT)
+Received: by 10.90.114.16 with HTTP; Fri, 11 Jun 2010 02:45:30 -0700 (PDT)
+In-Reply-To: <AANLkTikWNaEY5aErPF7OkBMleN_hiFRholfdFXLF1cJO@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148933>
 
-On 11. juni 2010 10:36, Finn Arne Gangstad wrote:
-
-> It would probably be more correct to do
+On Fri, Jun 11, 2010 at 3:24 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Please have a look at this thread:
 >
-> conert_to_git(convert_to_work_tree(x)) for the parts taken from base
-> and theirs, in theory I guess that this can be true:
+> http://thread.gmane.org/gmane.comp.version-control.git/147732/
 >
-> convert_to_git(x) != convert_to_git(convert_to_work_tree(x))
+> The patch resulting from the thread is currently in next and pu.
 
-Interesting idea, might be a bit slow perhaps?  I'll do some 
-benchmarketing.  Incidentally, it has to convert_to_work_tree() "ours" 
-as well, since the merge code doesn't read anything from the worktree.
+Thank you for the heads-up.
 
-I think convert_to_git(convert_to_work_tree(x)) is actually less likely 
-to cause trouble than convert_to_git(convert_to_git(x)), which is what 
-blind normalization would end up doing for at least one side of the merge.
+nazri.
 
-- Eyvind
+Note to self: google <bad commit sha1> before bugging list.
