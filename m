@@ -1,90 +1,70 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: Leaving large binaries out of the packfile
-Date: Fri, 11 Jun 2010 17:29:50 +0200
-Message-ID: <4C12566E.6020607@gnu.org>
-References: <4C108556.8040102@workspacewhiz.com> <20100610180457.GO14847@spearce.org>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [GSoC 2010] The 3 week
+Date: Fri, 11 Jun 2010 23:39:04 +0800
+Message-ID: <AANLkTikyyM5smnYNHZYYLQY0Tj23EMmYQsRUR4qpjNRU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Jun 11 17:30:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jun 11 17:39:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON6BO-0008TG-Bk
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 17:30:10 +0200
+	id 1ON6KB-0006Fa-QK
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 17:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756376Ab0FKP35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 11:29:57 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:53368 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756343Ab0FKP3z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 11:29:55 -0400
-Received: by wyb40 with SMTP id 40so873340wyb.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 08:29:54 -0700 (PDT)
+	id S1756654Ab0FKPjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 11:39:10 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49272 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755981Ab0FKPjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 11:39:08 -0400
+Received: by pwi1 with SMTP id 1so565807pwi.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 08:39:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=gepc0SkZwJnTeQhAWJapPxm4W8am20HstnQQI5YM+oo=;
-        b=rEN0K3eoWYSUGqyNLVeYPVWaz3B3m2sT31Xgypo5Y1e+OCWdZXJebmIPYj4Vnuqitz
-         CTmHZIQwurbiatirfQfI0LRvt9ieBUMwD5Ya3Q+p0UdoMCC8r2CWe30dBoucLUs7hOGM
-         HCRRFUIOdqaEeCIGCVZMAtg3O0vEoLpdLtsRw=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=hIc2TlRVYXLgJWSawe6nLD5L6t1mYk7voEznQr5hQvc=;
+        b=poC83I2zMJLe0eyiujExjDLuUiD8kUO+vEPPOIPf6i9+A/sGG1OHGr6J6kOwyFett5
+         GOyxTnMD3emJv67JOiyd8YJHF8LX58M9JVgE1l/bvIZOSO2YgOwinmMptdWghGWpcKcP
+         IOVSZkRK2H4T5Y+PTb+XdMhNQysjCjlKiXC2U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=LOmAvsDNgARaccFytyhAwIWOmuNDqko1l/Tn+SLUU7bONjrUjHhO5520ujXcQQNIYs
-         6y+MFp+HHWFh+lTCal8Bdpj1rDOC+DCN7hIINY/4l5pOayuDP8Qmnakx9Yef/6u/e0Gr
-         dhLFa/lXHpERtQ3IRwMbWGfStzgpaX+1HzCGU=
-Received: by 10.227.138.148 with SMTP id a20mr2068177wbu.91.1276270193635;
-        Fri, 11 Jun 2010 08:29:53 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
-        by mx.google.com with ESMTPS id b17sm10032642wbd.1.2010.06.11.08.29.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 11 Jun 2010 08:29:52 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
-In-Reply-To: <20100610180457.GO14847@spearce.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=C5YCLaNhhXeWJO2og/K/P7+Yu9rK4+sQ12VxeoYeO+/aH/TNo46fR7/Wan6mChBHB6
+         lWoDgrhFO6O+P0nKjah1hMLNyqysHzpJR9mGTz0Sf1mENBuyYNafg1U1zDn/cRDC60Dq
+         9fL+98HZx/QhKA5OOROic8fLduWS7mbAik6tg=
+Received: by 10.229.233.17 with SMTP id jw17mr1141132qcb.219.1276270745031; 
+	Fri, 11 Jun 2010 08:39:05 -0700 (PDT)
+Received: by 10.229.98.70 with HTTP; Fri, 11 Jun 2010 08:39:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148956>
 
-On 06/10/2010 08:04 PM, Shawn O. Pearce wrote:
-> Joshua Jensen<jjensen@workspacewhiz.com>  wrote:
->> Sometimes, 'git gc' runs out of memory.  I have to discover which file
->> is causing the problem, so I can add it to .gitattributes with a
->> '-delta' flag.  Mostly, though, the repacking takes forever, and I dread
->> running the operation.
->
-> If you have the list of big objects, you can put them into their
-> own pack file manually.  Feed their SHA-1 names on stdin to git
-> pack-objects, and save the resulting pack under .git/objects/pack.
+Hi all,
 
-Do you know any simpler way than
+    I try to put off the update post from Monday to Friday, because I
+want to complete a draft version of the line level history browser
+before post, but I should admit I failed. :) Although fail, we are
+very near to success. Anyway, in the past week, I have spend all my
+time on line range assignment and line diff printing. And now, the
+line ranges assignment works well for unchanged part and some of
+changed part, for printing stuff, the header output is done, the true
+line diff code are in heavy debugging. I think it will cost 1 or 2
+days to complete the draft version if everything goes well.
 
-git log --pretty=format:%H | while read x; do
-   git ls-tree $x -- ChangeLog | awk '{print $3}'
-done | sort -u
+   For the coming week, I will complete the draft version and try to
+add parent rewrite code into line level to make it works well with
+--graph.
 
-to do this?  I thought it would be nice to add --sha1-only to 
-git-ls-tree, but maybe I'm missing some other trick.
-
-> Assuming the pack was called pack-DEADC0FFEE.pack, create a file
-> called pack-DEADC0FFEE.keep in the same directory.  This will stop
-> Git from trying to repack the contents of that pack file.
->
-> Now run `git gc` to remove those huge objects from the pack file
-> that contains all of the other stuff.
-
-That obviously wouldn't help if these large binaries are updated often, 
-however.
-
-Paolo
+-- 
+Regards!
+Bo
+----------------------------
+My blog: http://blog.morebits.org
+Why Git: http://www.whygitisbetterthanx.com/
