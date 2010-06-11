@@ -1,104 +1,66 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH next v2] log_ref_setup: don't return stack-allocated array
-Date: Fri, 11 Jun 2010 15:54:41 -0300
-Message-ID: <AANLkTikhgl2b_66POXPf1nJSlhwkY5PV1Qce3cA9yXOx@mail.gmail.com>
-References: <e888313d5a782585f4a5e7ee8914302953c187e2.1276173576.git.trast@student.ethz.ch> 
-	<47daf53b6b2cc25cc013c5f2183e309a671dc9d3.1276174233.git.trast@student.ethz.ch> 
-	<AANLkTillDOCNQrpaEiFsFdq6HpU_LlwWI2ELIrEcrWHc@mail.gmail.com> 
-	<201006101929.11034.trast@student.ethz.ch> <AANLkTimEwV_bJkd_2csJB0L6T9Lq6F0hpllUO2pJTL8m@mail.gmail.com> 
-	<20100611051236.GA3947@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] send-email: Ask for in-reply message ID even if from and
+ to is already known
+Date: Fri, 11 Jun 2010 12:06:53 -0700
+Message-ID: <7vtyp9ie2a.fsf@alter.siamese.dyndns.org>
+References: <vpqtypmn4bm.fsf@bauges.imag.fr>
+ <1275415730-15360-1-git-send-email-alexander.stein@informatik.tu-chemnitz.de>
+ <201006101908.19578.alexander.stein@informatik.tu-chemnitz.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 11 20:55:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+X-From: git-owner@vger.kernel.org Fri Jun 11 21:07:21 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON9O0-0004b4-QA
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 20:55:25 +0200
+	id 1ON9ZX-00020b-4R
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 21:07:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756185Ab0FKSzG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 14:55:06 -0400
-Received: from mail-yw0-f204.google.com ([209.85.211.204]:37748 "EHLO
-	mail-yw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752290Ab0FKSzD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 14:55:03 -0400
-Received: by ywh42 with SMTP id 42so1524605ywh.15
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 11:55:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SlMfSZ6Nc+fF2PE87ZfdyMBSNskjLIoDG9o/0KN6kZU=;
-        b=hL/LQCjHkaJkNnNDgKJ1SzuzQTielvvIMFMaFuDO05xixjvtrqEuFiEKd9NDLMcRLO
-         odTwdUSggpL+vQPUzSTo6oERngjBcMPFQ4WTpYhI504KXAHPuPCMqenGQzql8CvIJb7u
-         wDmUFdLwi2gYhK/WQmGQT+4aNPv0zr4igqpZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=iQ7luYoYZ1vpmmNhvj2Cn0FfTJAEyFRZLYUJOjCQphlbMU6pO9wW2rVKj0UThymc96
-         n/gZr899RKj5oBRgkugVuYTHOSbkSOacd95EcOd0jHwk+SG62spRSyiWEddna7Q2DkZs
-         BfnU5mLwNKAaKgt18nNscL04pd4iAlyhNbQcM=
-Received: by 10.150.171.5 with SMTP id t5mr3528005ybe.441.1276282502071; Fri, 
-	11 Jun 2010 11:55:02 -0700 (PDT)
-Received: by 10.151.15.7 with HTTP; Fri, 11 Jun 2010 11:54:41 -0700 (PDT)
-In-Reply-To: <20100611051236.GA3947@coredump.intra.peff.net>
+	id S1756825Ab0FKTHB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 15:07:01 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38034 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756458Ab0FKTHA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 15:07:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 610B4BBAA1;
+	Fri, 11 Jun 2010 15:06:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PYjK6xv9nNXu8WucCXfEkA/Zkjc=; b=NNkpUJ
+	0eMEZgCOdgrf6fUFcu8wytvX4+rv6o1tzECV3U9zU81zew2VDxVY7JfWMwacSMQK
+	IM4Mh+5EBqB3Rwne8/rsDpdhuaA85xxuSp/jWTJrCy3pq9y6NYF+YwQdHBVCD9oR
+	/lpTeHxJozHOAw8HKuW+vViHlgqe8CkAj54ck=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SVONiwg3Q9WwoBT/Apt7LmpHIxZa85LW
+	rfFNlb5jpsgdUHT+K0Wr8j38PZh03PjJedeHp/kjswVUA6FLZGcbCO74zV80nbQz
+	MWnMqPP6ujv/RzZVUQjEJvaemxzoikdzpMqg7LUT+lM/Ses0pwUOwlVoXbnlcA9+
+	UtqabuanrCU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3968DBBA9F;
+	Fri, 11 Jun 2010 15:06:57 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 98AF7BBA9C; Fri, 11 Jun
+ 2010 15:06:54 -0400 (EDT)
+In-Reply-To: <201006101908.19578.alexander.stein@informatik.tu-chemnitz.de>
+ (Alexander Stein's message of "Thu\, 10 Jun 2010 19\:08\:19 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 81725358-758C-11DF-8AE2-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148965>
 
-Hi,
+Alexander Stein <alexander.stein@informatik.tu-chemnitz.de> writes:
 
-2010/6/11 Jeff King <peff@peff.net>:
-> No, Thomas is right. This invokes undefined behavior. We point the
-> passed-in log_file pointer to the front of a character array with
-> automatic duration. After log_ref_setup returns, we must never
-> dereference that pointer again, but we do. So we need this patch or
-> something like it.
+> Did get this patch overlooked?
 
-You and Thomas are right on this subject.  I don't know when and how I
-could see a malloc() in git_(v)snpath().  My fault.
-
->> Then git_snpath() creates a char array in the heap with the right
->> content and changes the stack pointer logfile to it. =C2=A0Then when=
- we do
->
-> No, it doesn't. git_snpath writes into the buffer you provide it, jus=
-t
-> like snprintf (hence the name).
-
-The source of my failure.
-
-> We have some false positives in git, but you don't see them because
-> t/valgrind/default.supp suppresses them. For example:
->
-> =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/106335/f=
-ocus=3D107302
->
-> If you are using a binary package of valgrind, it probably ships with
-> some system-specific suppressions, too. Right now valgrind on Debian
-> unstable is next to useless because glibc has been upgraded to 2.11, =
-but
-> the suppressions haven't been updated. So you get false positives all
-> over the place because of clever architecture-specific optimizations
-> (e.g., I am seeing a lot of __strlen_sse2 problems, which are probabl=
-y
-> just the function over-reading its input data because processing big
-> chunks is faster).
->
-> -Peff
-
-Thanks for the extended explanation about valgrind.
-
-Regards to all
+Did you run the existing test suite unattended and make sure everything
+still passes?
