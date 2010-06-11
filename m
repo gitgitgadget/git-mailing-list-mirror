@@ -1,75 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 00/18] Portability patches for git-1.7.1
-Date: Thu, 10 Jun 2010 21:30:30 -0700
-Message-ID: <7vhblakx7d.fsf@alter.siamese.dyndns.org>
-References: <20100514093131.249094000@mlists.thewrittenword.com>
- <20100607154511.GA9718@thor.il.thewrittenword.com>
- <7vy6eqvhrq.fsf@alter.siamese.dyndns.org>
- <AANLkTilFx4FRa_7L2nSPNcM3RVOAKfPrhTE1tGDMKl7f@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH next v2] log_ref_setup: don't return stack-allocated
+ array
+Date: Fri, 11 Jun 2010 01:12:36 -0400
+Message-ID: <20100611051236.GA3947@coredump.intra.peff.net>
+References: <e888313d5a782585f4a5e7ee8914302953c187e2.1276173576.git.trast@student.ethz.ch>
+ <47daf53b6b2cc25cc013c5f2183e309a671dc9d3.1276174233.git.trast@student.ethz.ch>
+ <AANLkTillDOCNQrpaEiFsFdq6HpU_LlwWI2ELIrEcrWHc@mail.gmail.com>
+ <201006101929.11034.trast@student.ethz.ch>
+ <AANLkTimEwV_bJkd_2csJB0L6T9Lq6F0hpllUO2pJTL8m@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Gary V. Vaughan" <git@mlists.thewrittenword.com>,
-	git@vger.kernel.org
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Fri Jun 11 06:30:45 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Erick Mattos <erick.mattos@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 07:12:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMvtF-0005pY-27
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 06:30:45 +0200
+	id 1OMwXw-0001ol-OJ
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 07:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751965Ab0FKEak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 00:30:40 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59152 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751796Ab0FKEaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 00:30:39 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E36F6BBA8E;
-	Fri, 11 Jun 2010 00:30:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5Snt0zTjQukXMvwVH4Xo5y00jcs=; b=D9WAEl
-	p++zF4g7JxviCMtaqpDdpZIMKqIaABUZrvsOH2yJnElafNmmo06nUiCz/2LEdYXr
-	yKm6lvaErgRtOXQvMFejtIhAEt8o5My1CiLx4/VW6fD8yRKdad4AjMNSHr6hRX7H
-	9eDnwD1Lr1kbbwv4+xOTPdbxrWJWsHfbU0qM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I5i8e5bUDw/V9HwTwfVYgIeXdAr+oYan
-	HNFBLAoUMWfTuqSqzPe8A26t9VdcZdtDg9fJUhXIRP/hr+JsNaBtQOfVsEGIFWOt
-	/0ExcCp53XKr60emVHDJMmYw97bKXDLbT64AXZn+o0epoN8g3wA/fqysr5ghLux+
-	swnRW0Ny5vc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB843BBA8D;
-	Fri, 11 Jun 2010 00:30:35 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB59CBBA89; Fri, 11 Jun
- 2010 00:30:31 -0400 (EDT)
-In-Reply-To: <AANLkTilFx4FRa_7L2nSPNcM3RVOAKfPrhTE1tGDMKl7f@mail.gmail.com>
- (Tor Arntsen's message of "Wed\, 9 Jun 2010 11\:37\:18 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 146925EA-7512-11DF-BC1D-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753834Ab0FKFMn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 01:12:43 -0400
+Received: from peff.net ([208.65.91.99]:37092 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753278Ab0FKFMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 01:12:42 -0400
+Received: (qmail 2385 invoked by uid 107); 11 Jun 2010 05:12:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Fri, 11 Jun 2010 01:12:52 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jun 2010 01:12:36 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTimEwV_bJkd_2csJB0L6T9Lq6F0hpllUO2pJTL8m@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148924>
 
-Tor Arntsen <tor@spacetec.no> writes:
+On Thu, Jun 10, 2010 at 08:09:36PM -0300, Erick Mattos wrote:
 
-> Talking about 'next' and this patch set, I have a patch that goes on
-> top of Gary's patch to the Makefile, to make Tru64 compile also
-> without ./configure (i.e. just 'make'). Should I post it here as a
-> diff to 'next', or is it better to wait until the cooking patches are
-> in mainline and take it from there? (My patch may still need some
-> discussion and tweaking w.r.t. what's enabled/disabled by default).
+> 2010/6/10 Thomas Rast <trast@student.ethz.ch>:
+> > What the - side of the hunk above does is returning a local (stack
+> > allocated) variable, in the form of a pointer to logfile. =C2=A0Onc=
+e those
+> > go out of scope, you have zero guarantees on what happens with them=
+=2E
+>=20
+> Not really.
+>=20
+> What the actual log_ref_setup() does when is instantiated is to creat=
+e
+> a pointer in the stack, called log_file, to a pointer to a char array=
+=2E
+>  This pointer receives the address of a char array of the calling
+> function because that is why passing by reference is made to.  See
+> that the calling functions is using the "&" when making the call (If =
+I
+> was using C++ I would pass by reference the array itself but in C I
+> can only pass pointer variables by reference that is why the pointer
+> to a pointer).
 
-It sounds like that your change would depend on Gary's patch (rather, if
-it is done independently, it could cause unnecessary conflicts).  As the
-gv/portable topic is now fully part of 'next', I think the easiest would
-be to base your topic directly on top of it, iow, on top of 09ce4bb
-(build: propagate $DIFF to scripts, 2010-06-05).
+No, Thomas is right. This invokes undefined behavior. We point the
+passed-in log_file pointer to the front of a character array with
+automatic duration. After log_ref_setup returns, we must never
+dereference that pointer again, but we do. So we need this patch or
+something like it.
+
+In practice, it worked because allocating on the stack is really just
+about bumping the stack pointer, so that memory sits there until anothe=
+r
+function call needs it for stack variables. After returning from
+log_ref_setup, we don't actually make any other function calls before
+calling open(log_file), so the buffer was still there, untouched. There
+is a later use of log_file which is probably bogus, but was likely neve=
+r
+triggered because it is in an unlikely error conditional.
+
+> Then git_snpath() creates a char array in the heap with the right
+> content and changes the stack pointer logfile to it.  Then when we do
+
+No, it doesn't. git_snpath writes into the buffer you provide it, just
+like snprintf (hence the name).
+
+> > Admittedly my experience is somewhat limited since I don't do C cod=
+ing
+> > outside of git and some teaching. =C2=A0But so far I have not had a=
+ single
+> > false alarm with valgrind (when compiled without optimizations;
+> > otherwise the compiler may do some magic).
+
+We have some false positives in git, but you don't see them because
+t/valgrind/default.supp suppresses them. For example:
+
+  http://thread.gmane.org/gmane.comp.version-control.git/106335/focus=3D=
+107302
+
+If you are using a binary package of valgrind, it probably ships with
+some system-specific suppressions, too. Right now valgrind on Debian
+unstable is next to useless because glibc has been upgraded to 2.11, bu=
+t
+the suppressions haven't been updated. So you get false positives all
+over the place because of clever architecture-specific optimizations
+(e.g., I am seeing a lot of __strlen_sse2 problems, which are probably
+just the function over-reading its input data because processing big
+chunks is faster).
+
+-Peff
