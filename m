@@ -1,80 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] ll-merge: Normalize files before merging
-Date: Fri, 11 Jun 2010 12:44:55 -0700
-Message-ID: <7vd3vxicaw.fsf@alter.siamese.dyndns.org>
-References: <1276202894-11805-1-git-send-email-eyvind.bernhardsen@gmail.com>
- <4C11CE75.7080706@viscovery.net> <4C11E717.4070508@gmail.com>
- <4C11EB0D.20208@viscovery.net>
+From: Alexander Stein <alexander.stein@informatik.tu-chemnitz.de>
+Subject: Re: [PATCH] send-email: Ask for in-reply message ID even if from and to is already known
+Date: Fri, 11 Jun 2010 22:11:59 +0200
+Message-ID: <201006112211.59425.alexander.stein@informatik.tu-chemnitz.de>
+References: <vpqtypmn4bm.fsf@bauges.imag.fr> <201006101908.19578.alexander.stein@informatik.tu-chemnitz.de> <7vtyp9ie2a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 11 21:45:15 2010
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 22:12:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONAAD-00034k-6B
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 21:45:13 +0200
+	id 1ONAaJ-00072W-88
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 22:12:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760507Ab0FKTpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 15:45:07 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37644 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760490Ab0FKTpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 15:45:05 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CEB3FBB01D;
-	Fri, 11 Jun 2010 15:45:04 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YaZDZs9PkR3e/bIlAEkB0+UevD0=; b=TDHjSV
-	er1MfsGKE1oUBmZEovsDDhYOpJdA6WF1tF79eP8O2Uv7X4qogLsM9zrsKbMFkZr7
-	L0UWnGnSPQsVZuo1U5RKvuJ3bK+6AFiI8UE/mJuE6888VPxK/+bbHJAwRFTWqoel
-	sGDgwFcv6oCitMUij4FKCa/oR1o6j9f+roKtM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PKcxfjfTKrhQFvkzdF5nhppxnFiHuCeE
-	/Q3bKZ2GuJ48dYdG5iSjmYJ4Hwkh+TcdvvMZZ0lFNYChAXEIntQz1jUIHLQm4Zcq
-	KC/1T1aHbEUfiBMWCZpMxYAMhyFUC/6d99g5NBXohTAWoFy9Xdg+R8NQnUYsWghK
-	++xl8J4aUVs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 98C65BB019;
-	Fri, 11 Jun 2010 15:45:01 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B71F2BB014; Fri, 11 Jun
- 2010 15:44:57 -0400 (EDT)
-In-Reply-To: <4C11EB0D.20208@viscovery.net> (Johannes Sixt's message of
- "Fri\, 11 Jun 2010 09\:51\:41 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D30D2F94-7591-11DF-A278-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756918Ab0FKUMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 16:12:05 -0400
+Received: from jack.hrz.tu-chemnitz.de ([134.109.132.46]:56177 "EHLO
+	jack.hrz.tu-chemnitz.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756316Ab0FKUME (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 16:12:04 -0400
+Received: from 77-64-189-43.dynamic.primacom.net ([77.64.189.43] helo=kongar.localnet)
+	by jack.hrz.tu-chemnitz.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <alexander.stein@informatik.tu-chemnitz.de>)
+	id 1ONAa7-0000yP-VT; Fri, 11 Jun 2010 22:12:00 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.32-gentoo-r7; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <7vtyp9ie2a.fsf@alter.siamese.dyndns.org>
+X-Spam-Score: -0.9 (/)
+X-Spam-Report: --- Start der SpamAssassin 3.3.0 Textanalyse (-0.9 Punkte)
+	Fragen an/questions to:  Postmaster TU Chemnitz <postmaster@tu-chemnitz.de>
+	* -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+	*  0.1 TVD_RCVD_IP TVD_RCVD_IP
+	--- Ende der SpamAssassin Textanalyse
+X-Scan-Signature: e3a4f6e1275be1643272008be9fceab0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148968>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Am Freitag 11 Juni 2010, 21:06:53 schrieb Junio C Hamano:
+> Did you run the existing test suite unattended and make sure everything
+> still passes?
 
-> Am 6/11/2010 9:34, schrieb Eyvind Bernhardsen:
->> On 11. juni 2010 07:49, Johannes Sixt wrote:
->>> I think you are going overboard here. Normalization should only happen
->>> only for data that moves from the worktree to the database. But during a
->>> merge, at most one part can come from the worktree, methinks; you are
->>> normalizing all three of them, though.
->> 
->> Well, that's sort of the point.  All three are normalized to (hopefully)
->> minimize the differences between them, increasing the chance of a
->> successful merge.
->
-> I know what your point is. It is still inappropriate to call
-> normalize_file() on data that comes from the repository. It is not the
-> task of a merge procedure to blindly normalize data.
+During test suite run I noticed this patch doesn't allow to run the suite 
+unattended. This may only work with some config option as Matthieu already 
+pointed out.
+I will rethink about this problem and repost a new patch
 
-It is not "blindly", but "running normalization one _extra time_, as the
-repository data is supposed to be canonical already", which is utterly
-wrong.
+Alexander
