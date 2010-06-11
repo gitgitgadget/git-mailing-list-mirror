@@ -1,50 +1,49 @@
 From: Sylvain Rabot <sylvain@abstraction.fr>
 Subject: Re: [PATCH] git-mergetool--lib.sh: fix mergetool.<tool>.* 
 	configurations ignored for known tools
-Date: Fri, 11 Jun 2010 11:54:27 +0200
-Message-ID: <AANLkTikK0t_-H5zgzUToiTlyWCFGCJ63wok-t7wX09OW@mail.gmail.com>
+Date: Fri, 11 Jun 2010 12:06:57 +0200
+Message-ID: <AANLkTim3UWlP7N2ucI3ncN2jzc4lSEyiJcQhYNElQVXl@mail.gmail.com>
 References: <1275705112-8088-1-git-send-email-sylvain@abstraction.fr>
 	<1275705112-8088-2-git-send-email-sylvain@abstraction.fr>
-	<20100608083445.GC14366@gmail.com>
+	<4C0FEA7B.9030409@hashpling.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 11 12:01:57 2010
+Cc: gitster@pobox.com, git@vger.kernel.org, davvid@gmail.com
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Fri Jun 11 12:07:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON13l-0005MF-6w
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 12:01:57 +0200
+	id 1ON18p-00078J-GP
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 12:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760080Ab0FKKBw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 06:01:52 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58839 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760013Ab0FKKBv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 06:01:51 -0400
-Received: by wyb40 with SMTP id 40so608691wyb.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 03:01:49 -0700 (PDT)
-Received: by 10.216.163.204 with SMTP id a54mr802558wel.2.1276250067283; Fri, 
-	11 Jun 2010 02:54:27 -0700 (PDT)
-Received: by 10.216.229.12 with HTTP; Fri, 11 Jun 2010 02:54:27 -0700 (PDT)
+	id S1760082Ab0FKKHA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 06:07:00 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:58221 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755903Ab0FKKG7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 06:06:59 -0400
+Received: by wwb18 with SMTP id 18so590262wwb.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 03:06:58 -0700 (PDT)
+Received: by 10.227.138.148 with SMTP id a20mr1584760wbu.91.1276250817862; 
+	Fri, 11 Jun 2010 03:06:57 -0700 (PDT)
+Received: by 10.216.229.12 with HTTP; Fri, 11 Jun 2010 03:06:57 -0700 (PDT)
 X-Originating-IP: [80.13.22.90]
-In-Reply-To: <20100608083445.GC14366@gmail.com>
+In-Reply-To: <4C0FEA7B.9030409@hashpling.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148935>
 
-On Tue, Jun 8, 2010 at 10:34, David Aguilar <davvid@gmail.com> wrote:
->
-> Hi, sorry for the delay in responding to this email.
->
-> On Sat, Jun 05, 2010 at 04:31:52AM +0200, Sylvain Rabot wrote:
+On Wed, Jun 9, 2010 at 21:24, Charles Bailey <charles@hashpling.org> wr=
+ote:
+> On 05/06/2010 03:31, Sylvain Rabot wrote:
+>>
 >> At this time when you define merge.tool with a known tool,
 >> such as meld, p4merge, diffuse ... etc, mergetool.<tool>.*
 >> configurations are ignored and git mergetool will use its
@@ -55,159 +54,63 @@ On Tue, Jun 8, 2010 at 10:34, David Aguilar <davvid@gmail.com> wrote:
 >> try to run the tool with mergetool.<tool>.path if its set. It also
 >> consider the mergetool.<tool>.trustExitCode configuration.
 >>
->> Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+>> Signed-off-by: Sylvain Rabot<sylvain@abstraction.fr>
 >> ---
->> =A0git-mergetool--lib.sh | =A0 60 ++++++++++++++++++++++++++++++++++=
-+++++++++++++++
+>> =A0git-mergetool--lib.sh | =A0 60
+>> +++++++++++++++++++++++++++++++++++++++++++++++++
 >> =A01 files changed, 60 insertions(+), 0 deletions(-)
 >>
->> diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
->> index 51dd0d6..2a58d88 100644
->> --- a/git-mergetool--lib.sh
->> +++ b/git-mergetool--lib.sh
->> @@ -84,9 +84,69 @@ get_merge_tool_cmd () {
->>
->> =A0run_merge_tool () {
->> =A0 =A0 =A0 merge_tool_path=3D"$(get_merge_tool_path "$1")" || exit
->> + =A0 =A0 merge_tool_cmd=3D"$(get_merge_tool_cmd "$1")"
->> + =A0 =A0 merge_tool_cmd_base=3D"$(echo $merge_tool_cmd | cut -f1 -d=
- " ")"
->> =A0 =A0 =A0 base_present=3D"$2"
->> =A0 =A0 =A0 status=3D0
->>
->> + =A0 =A0 # if mergetool.<tool>.cmd is set we execute it, not a temp=
-late
->> + =A0 =A0 if test -n "$merge_tool_cmd"; then
->> + =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.path is empty
->> + =A0 =A0 =A0 =A0 =A0 =A0 if test -z "$merge_tool_path"; then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.cmd not=
- found
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ! $(which "$merge_tool_=
-cmd_base" > /dev/null 2>&1); then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo >&2 "=
-Configuration mergetool.$1.cmd \"$merge_tool_cmd_base\" not found"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 merge_cmd=3D=
-"$merge_tool_path/$merge_tool_cmd"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
->> + =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.path is a path
 >
-> Files and Directories are both paths...
->
->> + =A0 =A0 =A0 =A0 =A0 =A0 elif test -d "$merge_tool_path"; then
->
-> But...
->
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.cmd not=
- found
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if !test -f "$merge_tool_p=
-ath/$merge_tool_cmd_base"; then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo >&2 "=
-Configuration mergetool.$1.cmd \"$(echo "$merge_tool_path/$merge_tool_c=
-md_base" | sed 's#//\+#/#')\" not found"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.cmd not=
- executable
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 elif !test -x "$merge_tool=
-_path/$merge_tool_cmd_base"; then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo >&2 "=
-Configuration mergetool.$1.cmd \"$(echo "$merge_tool_path/$merge_tool_c=
-md_base" | sed 's#//\+#/#')\" is not executable"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # tool ok
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 merge_cmd=3D=
-"$merge_tool_path/$merge_tool_cmd"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
->
-> I don't think we ever signed up to support this configuration.
-> mergetool.<tool>.path has always (from my naive reading of the
-> documentation) been the absolute path to <tool>.
+> First, my apologies for only having had the time to skim this so far.
 
-I did not see it that way but it seems cleaner.
-So mergetool.<tool>.path would be the absolute path to the tool and
-mergetool.<tool>.cmd would be only the args to call the tool with.
+No worries ;)
 
 >
-> I don't think it should have a dual-role where it can be either
-> the tool's parent directory or the path to the tool itself.
-> I would prefer to keep it as simple as possible, if we can.
->
->
->> + =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.path is the same as mer=
-getool.<tool>.cmd
->> + =A0 =A0 =A0 =A0 =A0 =A0 elif test "$merge_tool_path" =3D "$merge_t=
-ool_cmd_base"; then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.cmd not=
- found
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ! $(which "$merge_tool_=
-cmd_base" > /dev/null 2>&1); then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo >&2 "=
-Configuration mergetool.$1.cmd \"$merge_tool_cmd_base\" not found"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 else
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 merge_cmd=3D=
-"$merge_tool_cmd"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
->> + =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.path is the tool itself
->> + =A0 =A0 =A0 =A0 =A0 =A0 elif $(which "$merge_tool_path" > /dev/nul=
-l 2>&1); then
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 merge_cmd=3D"$merge_tool_p=
-ath $merge_tool_cmd"
->> + =A0 =A0 =A0 =A0 =A0 =A0 # mergetool.<tool>.path invalid
->> + =A0 =A0 =A0 =A0 =A0 =A0 else
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo >&2 "Configuration me=
-rgetool.$1.path \"$merge_tool_path\" is not valid path"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 exit 1
->> + =A0 =A0 =A0 =A0 =A0 =A0 fi
->> +
->> + =A0 =A0 =A0 =A0 =A0 =A0 # trust exit code
->> + =A0 =A0 =A0 =A0 =A0 =A0 trust_exit_code=3D"$(git config --bool mer=
-getool."$1".trustExitCode || echo false)"
->> +
->> + =A0 =A0 =A0 =A0 =A0 =A0 if test "$trust_exit_code" =3D "false"; th=
-en
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 touch "$BACKUP"
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (eval "$merge_cmd")
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 check_unchanged
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return $status
->> + =A0 =A0 =A0 =A0 =A0 =A0 else
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (eval "$merge_cmd")
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 status=3D$?
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return $status
->> + =A0 =A0 =A0 =A0 =A0 =A0 fi
->> + =A0 =A0 fi
->
-> This section is getting pretty nested.
-> Should we break the handling for configs-that-override-builtins
-> into a separate function?
+> Can I just ask some basic questions about the purpose of this patch. =
+Is it
+> the intention that if mergetool.<tool>.cmd is set then you want to me=
+rgetool
+> to behave 'as if' the merge tool wasn't a 'known' tool and just perfo=
+rmed
+> the "*)" case ?
 
-I think the whole patch can be simplified if we assume path can only
-be the absolute path to the tool.
+yes
 
 >
->> +
->> =A0 =A0 =A0 case "$1" in
->> =A0 =A0 =A0 kdiff3)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if merge_mode; then
->> --
->> 1.7.1
->
-> One last thing -- I tried to fetch from the repo you
-> mentioned elsewhere in this thread but it was offline.
+> If so, it seems like a lot of extra boiler-plate and error handling t=
+hat
+> doesn't exist in the normal "*)" case. Should we have have this in th=
+e "*)"
+> case as well? If so, we should look to rework it so that we can re-us=
+e the
+> code rather than duplicating it.
 
-My bad, new box, new setup, forgot to authorize git daemon port to ipta=
-bles.
+I did not modify the "*)" being afraid to break it all, but that would
+be the right thing to do.
 
 >
-> Cheers,
+> From a user perspective, if they want to run a "known" tool but in a =
+way
+> that is different from the default behaviour can't they just give it =
+a
+> different name, e.g. merge.tool=3Dmy_kdiff3 , mergetool.my_kdiff3.cmd=
+=3D... ?
+
+That's the workaround, yes, but, if you are the user and you are not
+aware of this bahavior, you will do exactly like a did, i.e., lose
+your time to torture your git configuration because it is not working
+the way you was expecting it would.
+
+>
+> Thanks,
 
 Thanks for your time.
 
 >
+> Charles.
+>
 > --
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0David
+> Almost dormant mergetool maintainer.
 >
 
 
