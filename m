@@ -1,141 +1,123 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC/PATCH] gitweb: Prepare for splitting gitweb
-Date: Fri, 11 Jun 2010 12:25:59 +0200
-Message-ID: <1276251959-7948-1-git-send-email-jnareb@gmail.com>
-Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 11 12:26:23 2010
+From: Mikko Rantalainen <mikko.rantalainen@peda.net>
+Subject: Re: Porcelain support for daggy-fixes?
+Date: Fri, 11 Jun 2010 14:25:09 +0300
+Message-ID: <4C121D15.7030004@peda.net>
+References: <4C10EEBE.5030400@peda.net> <AANLkTikbe_0GlSkXxiSeIQl0x0tfTYmoI5RuyJPzZioM@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig7408BFB2F96370B79301C8D2"
+Cc: git@vger.kernel.org
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Fri Jun 11 13:33:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON1RN-00077l-If
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 12:26:21 +0200
+	id 1ON2UM-00048d-L3
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 13:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755907Ab0FKK0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 06:26:12 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:46832 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332Ab0FKK0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 06:26:11 -0400
-Received: by fxm8 with SMTP id 8so534163fxm.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 03:26:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=RXxzeTyg36uQYFhpVe6eQAADGmIDxgZb2/ijHuU38qM=;
-        b=lcQLzw1wMB9nJNjaNU4Co0UsSMpo6SZbcu1Y8J70DAVxuiF22H1Rnsks3q/80JqjOa
-         pObKAH0kJs3IsBHDyN8o154CvNMpRiDRSUaXGLwiN2aL60sxabYZiGJ/sWFiq12YDYyv
-         etKCQ+1s9/+6iMQBOrceRHQllKmx6H5Q025hw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=PovzG5b5XyjI59UrufcZ0gtYDkVJ6qTbb986047PDvmCTLbLza8U2I2JZELoz32s4L
-         Lodrt2EYpXVfP0RmH+tkHMuJf7/fdZPQiOZdrz3cD8BLlZpuLzLcjC4uQcZ2fcP5aleV
-         bcWtczZ9aCP/+nLy3lmnKKaF+pQSE+klbplVQ=
-Received: by 10.103.122.19 with SMTP id z19mr438439mum.49.1276251969194;
-        Fri, 11 Jun 2010 03:26:09 -0700 (PDT)
-Received: from localhost.localdomain (abuz71.neoplus.adsl.tpnet.pl [83.8.197.71])
-        by mx.google.com with ESMTPS id 25sm1410146mul.24.2010.06.11.03.26.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 11 Jun 2010 03:26:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.1
+	id S1759450Ab0FKLdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 07:33:25 -0400
+Received: from posti7.jyu.fi ([130.234.4.44]:45013 "EHLO posti7.jyu.fi"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757635Ab0FKLdY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 07:33:24 -0400
+X-Greylist: delayed 483 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Jun 2010 07:33:24 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by posti7.jyu.fi (8.13.8/8.13.8) with ESMTP id o5BBPIlK012424;
+	Fri, 11 Jun 2010 14:25:18 +0300
+X-Virus-Scanned: amavisd-new at cc.jyu.fi
+Received: from posti7.jyu.fi ([127.0.0.1])
+	by localhost (posti7.jyu.fi [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id LK2tBj2aIASt; Fri, 11 Jun 2010 14:25:15 +0300 (EEST)
+Received: from [130.234.78.125] (semyol-329-b.ktl.jyu.fi [130.234.78.125])
+	(authenticated bits=0)
+	by posti7.jyu.fi (8.13.8/8.13.8) with ESMTP id o5BBPCpA012419
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 11 Jun 2010 14:25:13 +0300
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <AANLkTikbe_0GlSkXxiSeIQl0x0tfTYmoI5RuyJPzZioM@mail.gmail.com>
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148937>
 
-Prepare gitweb for having been split into modules that are to be
-installed alongside gitweb in 'lib/' subdirectory, by adding
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig7408BFB2F96370B79301C8D2
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-  use lib __DIR__.'/lib';
+Pascal Obry wrote:
+> I would probably create a topic/fix branch:
+>=20
+> 1) figure out the proper parent for the bug fix
+> 2) create the fix branch and move to it
+>     $ git co -b fix-feature-whatever parent
+> 3) implement the fix
+> 4) commit the fix
+> 5) checkout HEAD
+> 6) merge with the commit from step 4
+>=20
+> And also merge on release branch if needed.
 
-to gitweb.perl (to main gitweb script), and preparing for putting
-modules (relative path) in $(GITWEB_MODULES) in gitweb/Makefile.
+OK. I agree with this. The only problem is step 1 above (plus the other
+repeated steps if this is done every time you find a bug).
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch is based on commit c0cb4ed (git-instaweb: Configure it to
-work with new gitweb structure, 2010-05-28), which is top commit of
-'ps/gitweb-soc' branch merged into next on 2010-06-03 (as commit
-5db4adf).
+I'm still wondering if it would be possible to figure the correct parent
+automatically. How about the following:
 
-It is an RFC patch adding infrastructure for splitting gitweb, or
-adding new functionality to gitweb via gitweb modules, without adding
-any gitweb module.
+Given: minimal patch to fix a bug committed to tip of the master.
+Target: find proper parent for daggy-fix for the given bugfix (and then
+later rewrite history to put the fix as daggy-fix and merge with the mast=
+er)
 
-It is an RFC because:
-1. I'm not sure if having such separate preparatory patch is good
-   idea.  It would allow me to move gitweb output caching to proper
-   modules, without waiting for gitweb splitting part of GSoC 2010
-   project to stabilize.
+Idea:
 
-2. I don't know if what I have written in gitweb/Makefile is portable
-   enough.  In particular it uses $(sort WORDLIST), which is not used
-   otherwise in git Makefiles.
+Compare the list of removed lines from latest commit (the bugfix) with
+the output of the same lines from git blame --cc (immediately before the
+bugfix). Proper parent for the bug fix is the commit that is newest for
+any removed line from the parent of the bugfix in the tip of the master
+(HEAD^).
 
-3. Should there be information added to gitweb/INSTALL that one can
-   put Perl modules in 'lib/' subdirectory?  This is why 'use lib ...'
-   is moved earlier compared to original patch by Pavan..
+Does it sound sensible to assume that the proper parent for the bug fix
+is the newest commit that has modified any line that is removed or
+replaced by the bug fix?
 
- gitweb/Makefile    |    3 +++
- gitweb/gitweb.perl |    9 +++++++++
- 2 files changed, 12 insertions(+), 0 deletions(-)
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index d2584fe..4694959 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -55,6 +55,7 @@ PERL_PATH  ?= /usr/bin/perl
- bindir_SQ = $(subst ','\'',$(bindir))#'
- gitwebdir_SQ = $(subst ','\'',$(gitwebdir))#'
- gitwebstaticdir_SQ = $(subst ','\'',$(gitwebdir)/static)#'
-+gitweblibdir_SQ = $(subst ','\'',$(gitwebdir)/lib)#'
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))#'
- PERL_PATH_SQ  = $(subst ','\'',$(PERL_PATH))#'
- DESTDIR_SQ    = $(subst ','\'',$(DESTDIR))#'
-@@ -150,6 +151,8 @@ install: all
- 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
- 	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
-+	$(foreach dir,$(sort $(dir $(GITWEB_MODULES))),test -d '$(DESTDIR_SQ)$(gitwebdir_SQ)/$dir' || $(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)/$dir')
-+	$(foreach mod,$(GITWEB_MODULES),$(INSTALL) -m 644 $mod '$(DESTDIR_SQ)$(gitwebdir_SQ)/$mod')
- 
- ### Cleaning rules
- 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 934aacb..023698f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -9,6 +9,14 @@
- 
- use strict;
- use warnings;
-+
-+use File::Spec;
-+# __DIR__ is taken from Dir::Self __DIR__ fragment
-+sub __DIR__ () {
-+	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1]);
-+}
-+use lib __DIR__ . '/lib';
-+
- use CGI qw(:standard :escapeHTML -nosticky);
- use CGI::Util qw(unescape);
- use CGI::Carp qw(fatalsToBrowser set_message);
-@@ -16,6 +24,7 @@ use Encode;
- use Fcntl ':mode';
- use File::Find qw();
- use File::Basename qw(basename);
-+
- binmode STDOUT, ':utf8';
- 
- our $t0;
--- 
-1.7.0.1
+Why do I even think about this? I believe that daggy-fix style would be
+beneficial for many software projects but for small fixes it requires
+many little steps to implement and extra work to figure out the correct
+parent. Small bugs are often easy to fix at the tip of the master so the
+fixes usually end up there. It would be awesome if git were smart enough
+to move the fix to the correct location (daggy-fix)  and do automatic
+merge, once told that the last commit was really a bugfix. If this ends
+up working well enough, then it should be a flag for commit (--bugfix)
+which does the commit to proper parent and then does another merge
+commit with the current branch. Then the other branches (or forks) could
+merge the fix more easily (daggy-fixes should merge without conflicts if
+done correctly).
+
+--=20
+Mikko
+
+
+
+--------------enig7408BFB2F96370B79301C8D2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkwSHRUACgkQFNzRB1YxaOtumwCeNTdjd7uXyE6HcY+MHtTZPFaT
+hZ8AnRy0yqmmGYYgwFjZSoNnrPzxHOZA
+=u3MC
+-----END PGP SIGNATURE-----
+
+--------------enig7408BFB2F96370B79301C8D2--
