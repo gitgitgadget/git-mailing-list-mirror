@@ -1,152 +1,85 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Question about tracking multiple Subversion repository from
-	the same git repository with git-svn
-Date: Fri, 11 Jun 2010 21:28:08 +0000
-Message-ID: <20100611212808.GB7262@dcvr.yhbt.net>
-References: <AANLkTimMOPXecB0lZM3v2MaZgbhJWwtxOUIGgkxr_PGF@mail.gmail.com> <20100610190417.GA15731@dcvr.yhbt.net> <AANLkTim_wx9lQ_IClmajo5etFKay0xPCTz1UrKilGWln@mail.gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: Git sideband hook output
+Date: Fri, 11 Jun 2010 17:54:42 -0400
+Message-ID: <4C12B0A2.4020205@gmail.com>
+References: <AANLkTinLWDFTn7bhcF3Vk-q9aw4lJC2vFj95M9bxLbBT@mail.gmail.com> <20100608214632.GN14847@spearce.org> <A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com> <alpine.LFD.2.00.1006090934320.30664@xanadu.home> <A612847CFE53224C91B23E3A5B48BAC744839BF6AE@xmail3.se.axis.com> <20100610183019.GR14847@spearce.org> <AANLkTikQQh4sUA7h2k1jvQ7aMgYyq7WFetJvJZvqpVxt@mail.gmail.com> <AANLkTikYBB1DsGRRsu4pSNr1j8fFXD-99c4lRAaBqd3M@mail.gmail.com> <3B9F4351-4608-455E-B433-A5337A946F8A@wincent.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Daniele Segato <daniele.bilug@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 11 23:28:32 2010
+Cc: PJ Hyett <pjhyett@gmail.com>, Scott Chacon <schacon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	git list <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 23:55:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONBmB-0005Tc-Pm
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 23:28:32 +0200
+	id 1ONCBo-0007PV-4a
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 23:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932364Ab0FKV2L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 17:28:11 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:55748 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932281Ab0FKV2J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 17:28:09 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64C711F513;
-	Fri, 11 Jun 2010 21:28:08 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim_wx9lQ_IClmajo5etFKay0xPCTz1UrKilGWln@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755233Ab0FKVyz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 17:54:55 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:62839 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752485Ab0FKVyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 17:54:54 -0400
+Received: by gwj15 with SMTP id 15so1132144gwj.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 14:54:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Xr16QvpAfXKUo62wPptQFXo9yLp85NXVsKYjUa/cw0Y=;
+        b=s0TISx5r5e6Jxvz3+4YU0yHN35D320pOWE3VwbvuzymWGi58VrGE55eUBl1COtuD1J
+         sKVnFK6iJHJlY2hHj2EcBPRNMfyQZpAGQQM4cATDzDQ9etO9wO+EvJy2SdDBiiZvjpjw
+         rxU92ty2pbURctwQRwuNOGZVm5aig8zetxSJo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=sqPT77m+f/lUtL2+sV+d/8PJyPZ1NNvN4EIwS1JDkItKivjc1HnzpXuCEp6DYv93p0
+         M1vu4RxR4uqzKzggeNZ7qdPMQVA+7092hAaP2y3V6AG/5ZEtZSbpEy9tgNyZTKXye5Iy
+         oa+RXFPHT64w7VtcP0QFZqcwrMYlkIrIZfhdo=
+Received: by 10.151.95.31 with SMTP id x31mr4496889ybl.2.1276293292954;
+        Fri, 11 Jun 2010 14:54:52 -0700 (PDT)
+Received: from [10.0.0.6] (c-24-129-111-166.hsd1.fl.comcast.net [24.129.111.166])
+        by mx.google.com with ESMTPS id j3sm12980514ybe.43.2010.06.11.14.54.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Jun 2010 14:54:51 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <3B9F4351-4608-455E-B433-A5337A946F8A@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148972>
 
-Daniele Segato <daniele.bilug@gmail.com> wrote:
-> On Thu, Jun 10, 2010 at 9:04 PM, Eric Wong <normalperson@yhbt.net> wr=
-ote:
-> >> 1. Is there a way to tell git that abc/trunk is a branch of svn/ta=
-gs/1.2.3 ?
-> >
-> > You need to use grafts.
+Wincent Colaiuta wrote:
+> El 11/06/2010, a las 16:34, PJ Hyett escribi=F3:
 >=20
-> this one?
-> https://git.wiki.kernel.org/index.php/GraftPoint
+>> Hi,
+>>
+>>> On Thu, Jun 10, 2010 at 8:30 PM, Shawn O. Pearce <spearce@spearce.o=
+rg> wrote:
+>>>> If its really a problem, maybe "remote: " prefix should turn into
+>>>> something shorter and language agnostic, like "<< ".  But thus far
+>>>> we hadn't had to worry about it, since we didn't have translation
+>>>> support in Git...  (though yes, I see that is changing now).
+>>>>
+>> I'm also in favor of making the default '>>' instead of 'remote:' if
+>> nothing isn't an option.
 >=20
-> seems what I need..
+> Funny, as '>>' is basically meaningless. At least 'remote:' has seman=
+tic value (ie. it indicates _where_ something is coming from).
 
-Yes
-
-> in this case, I had a question:
->=20
-> since if I use this feature my commit will have different SHA-1. I
-> used to write the commit SHA-1 in some of the svn tags. If I do this
-> they will no longer be valid.
-> I think with git SVN the "best" way to identify a commit is using the
-> "Tree" object SHA-1, it should be the same for every revision that
-> contains the same content...
-> so..
-> 1b. Can I extract the tree sha-1 from a commit?
-
-Yes, "git cat-file commit $commit" will show you the tree.
-
-> 1c. Is there a way to get every commit pointing to to a tree?
->=20
-> Ideally I would do something like
->=20
-> git contain-tree <sha-1-of-the-tree>
-> [list of commit's here]
->=20
-> does this make any sense to you?
-
-Sort of, yes...
-
-Back in ancient times, there used to be a "git svn graft-branches"
-command which could automate what you're doing.  It was removed in
-commit d05d72e07e49869fe988d4d99e6ac60711570db5 because it was largely
-unused.
-
-Perhaps you can resurrect it as a standalone command.  I imagine it
-could be used for other import utilities, too.
-
-> >> 2. can I rename svn-remote "svn" to something like "main" without =
-side effect?
-> >
-> > You should be able to (and use GIT_SVN_ID=3Dmain in the env),
-> > though I haven't used these features in a while.
->=20
-> Renamed, thanks.
-> do you know if I can set a GIT_SVN_ID (default) per-repository instea=
-d
-> of using the environment
-> variable?
-
-Err, actually, --svn-remote=3Dmain is probably preferred, these days.
-GIT_SVN_ID is --id=3Dfoo.  Sorry for the confusion.
-
-> (since I use git-new-workdir it would be best if I can use a default
-> per workdir)
->=20
-> >> 3. after 2) can I also rename all the names of the remote branches=
- to
-> >> main/* instead of svn/* ?
-> >
-> > It should be possible... =A0you need to edit $GIT_DIR/svn/.metadata=
-, too.
->=20
-> thanks, did it.
->=20
-> >> 7. if the merge --squash cause a lot of conflicts is there a way t=
-o
-> >> split the conflict resolution across different persons?
-> >
-> > I'm not sure what you mean... multiple people working on the same
-> > working tree? =A0On a shared screen session? =A0I don't see why not=
-=2E
->=20
->=20
-> no,
-> what I had in mind was a "migration team" to work on the migration of
-> the customization
-> to a product to the new version of the main product.
->=20
-> What I have in mind here is some kind of "selective merge".
-> For example...
->=20
-> I merge a group of commits, someone else, on another computer with
-> git-svn or subversion merge another part and so on..
->=20
-> like...
->=20
-> git merge --squash -- path/to/something
-> or something like
->=20
-> git merge --squash --interactive
->=20
-> this could give you a way to choose different paths you want to "merg=
-e".
->=20
-> I know this is not very like a merge but I hope I gave you the idea o=
-f
-> what I meant.
-
-I'll wait for others to answer that.  I rarely encounter conflict-heavy
-merges, partly because my workflows are setup to avoid them.
-
---=20
-Eric Wong
+Seconded.
