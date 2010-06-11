@@ -1,67 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] read_cache: cast types from stat to ce_cache
-Date: Fri, 11 Jun 2010 15:32:04 +0200
-Message-ID: <4C123AD4.6070606@drmicha.warpmail.net>
-References: <a06cc84698f174d914350d6fd6e6b4739d22aa45.1276161176.git.git@drmicha.warpmail.net> <7vmxv2nar5.fsf@alter.siamese.dyndns.org>
+From: Dario Rodriguez <soft.d4rio@gmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Fri, 11 Jun 2010 10:33:58 -0300
+Message-ID: <AANLkTikvBg1IEauZIzZP4XINqUjrb3F3ill5vP9zqIpR@mail.gmail.com>
+References: <46DDC500.5000606@etek.chalmers.se>
+	<1189004090.20311.12.camel@hinata.boston.redhat.com>
+	<vpq642pkoln.fsf@bauges.imag.fr>
+	<4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>
+	<loom.20100610T204637-685@post.gmane.org>
+	<m3mxv1pxli.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 11 15:32:31 2010
+Cc: Ian Molton <ian.molton@collabora.co.uk>, git@vger.kernel.org,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 15:34:12 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON4LX-0008Tb-3W
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 15:32:31 +0200
+	id 1ON4N6-0000hH-Ro
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 15:34:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760303Ab0FKNc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 09:32:27 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:45260 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756353Ab0FKNcZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 09:32:25 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id CDD2BF8CC0;
-	Fri, 11 Jun 2010 09:31:55 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 11 Jun 2010 09:31:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=txgzCfZRHil4/3BAilVkllgIb9o=; b=kGHVjf7G8/ok1VV/cHoDvALSQ6UXCreYdOsGa5tH2yc1pIgjD1BTfSItF6BtaL9rd1Ba0uhhWt73csi2t3Q0ekl3N98PqOVWIIzGA8A7uqrTreid3vDXmShUkc5vq4N5Q70ZZTwQLBE5vcxgPNvTcWfwL3TQe15pQ+QSyfmg2Jc=
-X-Sasl-enc: PdBrdlnk1Yfpm4FkHQUC6tTZffONmNRznDX6HUFWV3Fi 1276263113
-Received: from localhost.localdomain (p5485A0CC.dip0.t-ipconnect.de [84.133.160.204])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 91A054DCFD8;
-	Fri, 11 Jun 2010 09:31:53 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100610 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <7vmxv2nar5.fsf@alter.siamese.dyndns.org>
+	id S1760295Ab0FKNeB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 09:34:01 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47067 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760244Ab0FKNeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 09:34:00 -0400
+Received: by bwz7 with SMTP id 7so326342bwz.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 06:33:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=iqa9/cv4+UClL2pAy2/2AZJhYK3p1NurIL9CelDatxY=;
+        b=bp7aPnLuCGWWjfQNQr88dxzJ68Pbq94/2riH3ndwEZhLNiBXoaYYylyn7gopDLvIEl
+         dxb4eiulFNNGiYhSQuT0Zzn/z6GIbIxhdk7lqeGMBDDuLwgIC0RlvIdhHILK8pW2Z0Qy
+         4KMpAfe7987jKK2bJOhB0nVu0j0j/YGkOljqM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=N+tiDNNDSZYsORHzdxpKV0e8v1D7eID9dpj/ECaqNEqa4Llc5BPu57sMjNGzCCA1lA
+         VbdnhTxUNI4rC0I2KazOP5aDlBvh9Td8ALwmoUw9pYSCTf05kBJ6tOzN02pqFtijsdFW
+         5QLo2HR8Y5/uArSR66cZVUpqAV2DIhOgV8XRY=
+Received: by 10.204.81.223 with SMTP id y31mr1289670bkk.87.1276263238505; Fri, 
+	11 Jun 2010 06:33:58 -0700 (PDT)
+Received: by 10.204.82.142 with HTTP; Fri, 11 Jun 2010 06:33:58 -0700 (PDT)
+In-Reply-To: <m3mxv1pxli.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148947>
 
-Junio C Hamano venit, vidit, dixit 10.06.2010 17:54:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> -	ce->ce_dev = st->st_dev;
->> -	ce->ce_ino = st->st_ino;
->> -	ce->ce_uid = st->st_uid;
->> -	ce->ce_gid = st->st_gid;
->> -	ce->ce_size = st->st_size;
->> +	ce->ce_dev = (unsigned int)st->st_dev;
->> +	ce->ce_ino = (unsigned int)st->st_ino;
->> +	ce->ce_uid = (unsigned int)st->st_uid;
->> +	ce->ce_gid = (unsigned int)st->st_gid;
->> +	ce->ce_size = (unsigned int)st->st_size;
-> 
-> I haven't had my morning coffee yet, but wouldn't the conversion be
-> automatic by assignment anyway?
+On Fri, Jun 11, 2010 at 9:23 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Also, I don't know when Dmitri written his post, but git uses its own
+> string manipulation mini-library, named strbuf, at least since end of 2007
+> (Documentation/technical/api-strbuf.txt was added as stub on 2007-11-24).
 
-Well, we do cast from dev_t etc. to unsigned int in all other places in
-read_cache.c.
+An interesting point, Dmitri written this post on September 2007...
+why the flamewar continuation? just curiosity...
 
-In any case, enjoy your coffee :)
+Now, as a resume of flames and concepts, the 'better' things in the
+string library (also the first excuse for C++ apologists, as a
+repetitive piece of youknowwhat) are pure algorithms and data
+structures, easy to code in C. The goal isn't in the OO design or
+abstraction itself, or in the language...
 
-Michael
+Personally, I use C++ almost every day at work and I found it stupid.
+I love pure C.
+
+Cheers,
+Dario (argentina)
