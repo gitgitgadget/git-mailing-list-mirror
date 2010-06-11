@@ -1,139 +1,126 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: [PATCH v2] Group the default git help message by topic
-Date: Fri, 11 Jun 2010 09:03:44 -0700
-Message-ID: <AANLkTiloErvcWS1hW80cIV9SiWu_7CBdNSx_iAppcGOd@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH next] test-lib: set $DIFF to diff if it is unset
+Date: Fri, 11 Jun 2010 09:15:48 -0700
+Message-ID: <7vhbl9k0jv.fsf@alter.siamese.dyndns.org>
+References: <06ffbe0ca6aac061336f6f595e89f75c09ab88ac.1276162629.git.trast@student.ethz.ch> <I5rdmhJblm27JnzIPi7xP5KmntXzA3-wGL-IGXejOPAurGsMke2J3g@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 11 18:03:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Jun 11 18:16:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON6hz-0002gM-OI
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 18:03:52 +0200
+	id 1ON6tr-0000x9-15
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 18:16:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754563Ab0FKQDr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 12:03:47 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43140 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753187Ab0FKQDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 12:03:46 -0400
-Received: by fxm8 with SMTP id 8so805164fxm.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 09:03:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=qDurD7NiImm/QnMD0dmjEqHUC4a+c2cNuDosUikkF4w=;
-        b=Vf5KlCcQQJ9BA4Ol9sKC7u1TThMe8NlJqLvUq+c5LwsNaupFdpkw4sVj274rOQPlum
-         WpUZRx9gglwbhI+nHYKPJAKt+cctLbI/FUNw7oagci37jnugCZeGEkrZIpf2ChU2XFAN
-         vh1im1pTEg86EYOQXRGlsDgazKD4b3gekjndk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=t2gkYwr4SBEZ/ZNGbtnvbkje3v/csCtUscGFBhE0PMfTLXM4M9gu4r08WYQSxM9g4S
-         xxTiEhRhgmBKDMVQOnC1klV4NVJcgtCsSMEgrEZ91Bp49whFsnbqCJA2qPSikzSlmHuz
-         E/nlFD6PBrzkX/iiZSF0TmTovmRjTziPF/G4g=
-Received: by 10.216.172.80 with SMTP id s58mr101853wel.60.1276272224656; Fri, 
-	11 Jun 2010 09:03:44 -0700 (PDT)
-Received: by 10.216.23.71 with HTTP; Fri, 11 Jun 2010 09:03:44 -0700 (PDT)
+	id S1753283Ab0FKQQA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 12:16:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33278 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752596Ab0FKQP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 12:15:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A2A0FBB164;
+	Fri, 11 Jun 2010 12:15:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ES6IjbjY61q6crDGG2MTz829xXE=; b=YvyTto
+	m8PyI1/G+jQAQCEwby7rjPGXyOZRd8xQXsydtIWwmtHphGgjJ+Y3xz6s+e8ybI/z
+	dpfnnM/HXlxZEZlhSEfN6EgONp2anqoJ7/MN9PIwD6msrY/VOkNivvPR9rnmzGe+
+	hcqCZ1fiaD02fK6xwWg6kgU/02STAbXNflf88=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=O80dsqJEPdFW2KJU6rTWZvuavQsEfAAl
+	DET2xcyr/FKCqRoyqafn7Ee76bP1PtOTma6ypYDW4lZHkrfLnZ6eZpsj1gurQsxL
+	985Q0Noz2iDqm2c5BCG1OB0pDu0MQ7H5CDc8WLB1pYo1lExATfWvUtJCmMuZYp7z
+	GmldfDfrRro=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 65E9FBB163;
+	Fri, 11 Jun 2010 12:15:54 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F8EDBB15D; Fri, 11 Jun
+ 2010 12:15:50 -0400 (EDT)
+In-Reply-To: <I5rdmhJblm27JnzIPi7xP5KmntXzA3-wGL-IGXejOPAurGsMke2J3g@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu\, 10 Jun 2010 12\:23\:36 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9C546CA0-7574-11DF-BB8A-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148958>
 
-It's difficult to process 21 commands (which is what is output
-by default for git when no command is given).  They have been
-re-grouped into 4 groups of 5-6 commands each, which is clearer
-and easier for new users to process.  More advanced commands
-such as bisect and rebase have also been removed as this should
-be output for beginners.
+Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
 
-Signed-off-by: Scott Chacon <schacon@gmail.com>
----
+> I think what should be done instead, is to move this section
+> down below the line where GIT-BUILD-OPTIONS is sourced.  That
+> way, the value of $DIFF can be gotten from that file.
+>
+> I guess GIT_TEST_CMP and GIT_TEST_CMP_USE_COPIED_CONTEXT
+> should be written into GIT-BUILD-OPTIONS too.
 
-Here is the second version of this patch.  Instead of hard-coding
-all the descriptions, I'm just pulling them from the common-cmds.h
-file.
+I like that.  Something like this?
 
- builtin/help.c |   54 ++++++++++++++++++++++++++++++++++++++++++------------
- 1 files changed, 42 insertions(+), 12 deletions(-)
+ Makefile      |    6 ++++++
+ t/test-lib.sh |   20 ++++++++++----------
+ 2 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/help.c b/builtin/help.c
-index 3182a2b..2975b3d 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -269,23 +269,53 @@ static int git_help_config(const char *var,
-const char *value, void *cb)
- 	return git_default_config(var, value, cb);
- }
-
--static struct cmdnames main_cmds, other_cmds;
+diff --git a/Makefile b/Makefile
+index 0367e8a..6b3b59b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1944,6 +1944,12 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_CURL=\''$(subst ','\'',$(subst ','\'',$(NO_CURL)))'\' >>$@
+ 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
+ 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
++ifdef GIT_TEST_CMP
++	@echo GIT_TEST_CMP=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_CMP)))'\' >>$@
++endif
++ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
++	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@
++endif
+ 
+ ### Detect Tck/Tk interpreter path changes
+ ifndef NO_TCLTK
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a290011..eafe146 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -64,16 +64,6 @@ export GIT_AUTHOR_EMAIL GIT_AUTHOR_NAME
+ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export EDITOR
+ 
+-if test -z "$GIT_TEST_CMP"
+-then
+-	if test -n "$GIT_TEST_CMP_USE_COPIED_CONTEXT"
+-	then
+-		GIT_TEST_CMP="$DIFF -c"
+-	else
+-		GIT_TEST_CMP="$DIFF -u"
+-	fi
+-fi
 -
--void list_common_cmds_help(void)
-+void print_command(const char *s)
- {
--	int i, longest = 0;
-+	int i = 0;
-+	int longest = 10;
-
- 	for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
--		if (longest < strlen(common_cmds[i].name))
--			longest = strlen(common_cmds[i].name);
-+		if (!strcmp(s, common_cmds[i].name)) {
-+			printf("   %s   ", common_cmds[i].name);
-+			mput_char(' ', longest - strlen(common_cmds[i].name));
-+			puts(common_cmds[i].help);
-+		}
- 	}
-+}
-
--	puts("The most commonly used git commands are:");
--	for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
--		printf("   %s   ", common_cmds[i].name);
--		mput_char(' ', longest - strlen(common_cmds[i].name));
--		puts(common_cmds[i].help);
--	}
-+static struct cmdnames main_cmds, other_cmds;
+ # Protect ourselves from common misconfiguration to export
+ # CDPATH into the environment
+ unset CDPATH
+@@ -691,6 +681,16 @@ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_CONFIG_NOGLOB
+ 
+ . ../GIT-BUILD-OPTIONS
+ 
++if test -z "$GIT_TEST_CMP"
++then
++	if test -n "$GIT_TEST_CMP_USE_COPIED_CONTEXT"
++	then
++		GIT_TEST_CMP="$DIFF -c"
++	else
++		GIT_TEST_CMP="$DIFF -u"
++	fi
++fi
 +
-+void list_common_cmds_help(void)
-+{
-+	puts("The most commonly used git commands are:\n");
-+
-+	puts("Basic Commands:");
-+	print_command("init");
-+	print_command("clone");
-+	print_command("add");
-+	print_command("status");
-+	print_command("commit");
-+	puts("");
-+
-+	puts("Branch Commands:");
-+	print_command("branch");
-+	print_command("checkout");
-+	print_command("merge");
-+	print_command("tag");
-+	puts("");
-+
-+	puts("History Commands:");
-+	print_command("log");
-+	print_command("diff");
-+	print_command("reset");
-+	print_command("show");
-+	puts("");
-+
-+	puts("Remote Commands:");
-+	print_command("remote");
-+	print_command("fetch");
-+	print_command("pull");
-+	print_command("push");
- }
-
- static int is_git_command(const char *s)
--- 
-1.7.0.1
+ GITPERLLIB=$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
+ export GITPERLLIB
+ test -d ../templates/blt || {
