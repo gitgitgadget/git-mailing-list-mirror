@@ -1,95 +1,69 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: [PATCH next] fast-import: revert die_nicely() to vsnprintf
-Date: Fri, 11 Jun 2010 15:18:10 +0200
-Message-ID: <AANLkTikIQeY1ZieEkev_zjDSVI9W1NpfhiyTNCaToeys@mail.gmail.com>
-References: <29df1a625a82bd2d3fcee92068b3a15f56435c66.1276199549.git.trast@student.ethz.ch>
-Reply-To: kusmabite@gmail.com
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH next 2/2 v2] Remove python 2.5'isms
+Date: Fri, 11 Jun 2010 15:28:48 +0200
+Message-ID: <4C123A10.6050103@drmicha.warpmail.net>
+References: <201006100040.54375.johan@herland.net> <5ep6Hc9Nl3QLKwV46xET5ZLhqo2uNlnUL1-nNsG9p2IWyX-odykArvT4ontRdeBUA9ouCPQGFwQ@cipher.nrlssc.navy.mil> <4C10B02F.9050107@drmicha.warpmail.net> <20100610154114.GC31213@vidar.dreamhost.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jun 11 15:23:35 2010
+Content-Transfer-Encoding: 7bit
+To: Brandon Casey <casey@nrlssc.navy.mil>, johan@herland.net,
+	git@vger.kernel.org, srabbelier@gmail.com, davvid@gmail.com,
+	Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 15:28:47 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON4Ct-0004gp-29
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 15:23:35 +0200
+	id 1ON4Hv-0006vT-0o
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 15:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755322Ab0FKNSQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 09:18:16 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46537 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756176Ab0FKNSP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 09:18:15 -0400
-Received: by wyb40 with SMTP id 40so735852wyb.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 06:18:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=X3ZJgbbcvsUDrmKPy3Qq5iqR9A8bcIbs9TkfVtgW0Rs=;
-        b=Gm9B04+2sPVM+tVglIV6dvE2To06PHCBCURtDSufGor/VQk8PnMlFbocBDbsMp4GPP
-         0/upDnVU5LfPfBhWI674/IFnfxyF/lxN31TtpeCR5pTd0U3K0JjjJIA9CyCsF7mSYR6W
-         q4O6W6Gd1UdAKnPfB5zaqhYqRjqrHZCV69DVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=aqKqsssKChKrx3noQgohXidQPRQIl19ii5viE1wZZbMHsxM1OuPPh2mc0JLa41sxAB
-         AKrt1xaa6wOQKA1gR15BbWPZfM/F9MN0D4w8VdpuUJoxqxrYhWHH1W0pvcFvte5Efgy2
-         e/r/s6ZPYD3UdApbVAZ1JNAEEfhioL667QNL0=
-Received: by 10.216.90.211 with SMTP id e61mr1257420wef.1.1276262290646; Fri, 
-	11 Jun 2010 06:18:10 -0700 (PDT)
-Received: by 10.216.53.132 with HTTP; Fri, 11 Jun 2010 06:18:10 -0700 (PDT)
-In-Reply-To: <29df1a625a82bd2d3fcee92068b3a15f56435c66.1276199549.git.trast@student.ethz.ch>
+	id S1760288Ab0FKN2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 09:28:41 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60368 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756272Ab0FKN2k (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 09:28:40 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 213B1F840F;
+	Fri, 11 Jun 2010 09:28:39 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 11 Jun 2010 09:28:39 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=fN0o/jPmMYNlcXXxiVuy03bf4qs=; b=YiR+qW82/JoKnU33FVXDAGnLwj0uoW39BJ/B6KyHE+7PXbLwNVY61hLeXbBVccO0vCWLsyOZ+2H217G2m5ejMlv6Ie0IHcPvO1lrstzyI4nen0F23xaeWk9xvosBXBQbFr5wKPlwOyfSOaDdBXFp77klmQ11sQDBffbNJpAyyCY=
+X-Sasl-enc: uQQdaqubZx7HezlBF3ig++ON8r9MGRwnD9oM6//M/WZ2 1276262918
+Received: from localhost.localdomain (p5485A0CC.dip0.t-ipconnect.de [84.133.160.204])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A17174AD440;
+	Fri, 11 Jun 2010 09:28:37 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100610 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <20100610154114.GC31213@vidar.dreamhost.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148945>
 
-On Thu, Jun 10, 2010 at 9:55 PM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> ebaa79f (Make report() from usage.c public as vreportf() and use it.,
-> 2010-03-06) changed fast-import's die_nicely() to use vreportf().
->
-> This requires some more care though. =A0First it forgot that we also
-> need to reformat the message for the crash report. =A0Second, vreport=
-f()
-> uses vsnprintf(), which does not call va_end(). =A0This leaves the
-> va_list passed to it in an undefined state. =A0Therefore we need to m=
-ake
-> a copy of this va_list so that we can reuse it.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->
-> Another valgrind catch. =A0I think that'll be the last one for today.
-> Thanks for your attention.
->
->
-> =A0fast-import.c | =A0 =A04 +++-
-> =A01 files changed, 3 insertions(+), 1 deletions(-)
->
-> diff --git a/fast-import.c b/fast-import.c
-> index c0728c2..1fa5de4 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -483,12 +483,14 @@ static void dump_marks(void);
-> =A0static NORETURN void die_nicely(const char *err, va_list params)
-> =A0{
-> =A0 =A0 =A0 =A0static int zombie;
-> + =A0 =A0 =A0 va_list saved_params;
-> + =A0 =A0 =A0 va_copy(saved_params, params);
+David Ripton venit, vidit, dixit 10.06.2010 17:41:
+> On 2010.06.10 11:28:15 +0200, Michael J Gruber wrote:
+>> Doesn't P2.4 have
+>>
+>> 	from hashlib import sha1 as _digest
+>>
+>> etc.? I haven't checked for "as".
+> 
+> Hashlib was new in Python 2.5.  See the note at the top of:
+> http://docs.python.org/library/hashlib.html
+> 
+> You may have hashlib in your Python 2.4, but if so it's a third-party
+> module, not part of the standard library.  You shouldn't rely on
+> everyone having it, when it's so easy to fallback to the sha module.
 
-Ugh. We don't use the va_copy for portability reasons; it's C99, and
-impossible to implement in a portable way on non-C99 systems.
+Well sure, that's why we need the try/except's.
+> 
+> "import foo as bar" was added in Python 2.0.  "as" became a reserved
+> word in Python 2.6.
 
---=20
-Erik "kusma" Faye-Lund
+Thanks!. Then we can use the clean version as suggested above (inside
+try/except).
+
+Michael
