@@ -1,125 +1,91 @@
-From: PJ Hyett <pjhyett@gmail.com>
-Subject: Re: Git sideband hook output
-Date: Fri, 11 Jun 2010 07:34:07 -0700
-Message-ID: <AANLkTikYBB1DsGRRsu4pSNr1j8fFXD-99c4lRAaBqd3M@mail.gmail.com>
-References: <AANLkTinLWDFTn7bhcF3Vk-q9aw4lJC2vFj95M9bxLbBT@mail.gmail.com>
-	<20100608214632.GN14847@spearce.org>
-	<A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com>
-	<alpine.LFD.2.00.1006090934320.30664@xanadu.home>
-	<A612847CFE53224C91B23E3A5B48BAC744839BF6AE@xmail3.se.axis.com>
-	<20100610183019.GR14847@spearce.org>
-	<AANLkTikQQh4sUA7h2k1jvQ7aMgYyq7WFetJvJZvqpVxt@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] read_cache: cast types from stat to ce_cache
+Date: Fri, 11 Jun 2010 16:59:00 +0200
+Message-ID: <4C124F34.7050904@drmicha.warpmail.net>
+References: <a06cc84698f174d914350d6fd6e6b4739d22aa45.1276161176.git.git@drmicha.warpmail.net>	<7vmxv2nar5.fsf@alter.siamese.dyndns.org>	<4C123AD4.6070606@drmicha.warpmail.net> <AANLkTimC9RAD0OGArk3JAIAnDHNskJRgX1nBlcrhc7vX@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 11 16:34:17 2010
+Content-Transfer-Encoding: 7bit
+Cc: Erik Faye-Lund <kusmabite@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jun 11 16:59:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ON5JJ-00075Q-DA
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 16:34:17 +0200
+	id 1ON5hU-0003TY-Sd
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 16:59:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760299Ab0FKOeK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 10:34:10 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:51603 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760191Ab0FKOeI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 10:34:08 -0400
-Received: by pwi1 with SMTP id 1so500125pwi.19
-        for <git@vger.kernel.org>; Fri, 11 Jun 2010 07:34:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=U1x9cBtMCcn1TxyDAkyB/fWeRJLVROchfNQtSP0+1I8=;
-        b=JzJN/uP3jSTcLbmYm3xCetcWec07lGYMGw2lkl+zMfO1OLmOBrC9SPZNlZ3ssZNMkf
-         nYq/5RmCIUtgl88nolLck9I2HS3qGMiFv7eM2B1aC3uqvm8/z4DTyOQOhsdw/AbK02lp
-         u1pa072SzKzdFKNVrx69IPBAfyfTcACi0bw1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bKTc23670sCT30VvO7sNHe4dyLsLrjehLPFYL5lVGK+RDZIH6Y8dw8F3WX156ht1OO
-         RC4J3GMdBJAfIKiZ6EEHnS1O6ZC98Nh9fp++8/3AK/SOpi15vpq4P/TRk1uTzOKlsOlB
-         UtEPzr0aVb5LYXAL2tdIIOG9lp4sb6Jo2v/Ek=
-Received: by 10.142.247.24 with SMTP id u24mr1385130wfh.313.1276266847721; 
-	Fri, 11 Jun 2010 07:34:07 -0700 (PDT)
-Received: by 10.142.136.18 with HTTP; Fri, 11 Jun 2010 07:34:07 -0700 (PDT)
-In-Reply-To: <AANLkTikQQh4sUA7h2k1jvQ7aMgYyq7WFetJvJZvqpVxt@mail.gmail.com>
+	id S1751744Ab0FKO7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 10:59:09 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52761 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750781Ab0FKO7G (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jun 2010 10:59:06 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 06950F8C78;
+	Fri, 11 Jun 2010 10:58:56 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 11 Jun 2010 10:58:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=ArtkZwskkKjmZwBkQ6HmCXPkwqI=; b=rnOY3etZtMX48Cy0RyIzFlFdiERAveDHNIE+me6kS3pzQBYinE4FEcEvDzL6PrQEiww1aKycnJo9eiS45KYVD9DFDUx3BmH5sqQwAA+9Tsl11a8R1+Cxv29mHLACEZnFsr59HSz2DME4YNTQ9NoMaI6MbAaSDKyrkqPrSSO1P88=
+X-Sasl-enc: MxpM3oM5lVw6MovfUq3MTYkCztJaWDW4Dd+bX2gZdPki 1276268330
+Received: from localhost.localdomain (p5485A0CC.dip0.t-ipconnect.de [84.133.160.204])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B1B2E4AC3BC;
+	Fri, 11 Jun 2010 10:58:49 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100610 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <AANLkTimC9RAD0OGArk3JAIAnDHNskJRgX1nBlcrhc7vX@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148950>
 
-Hi,
-
-> On Thu, Jun 10, 2010 at 8:30 PM, Shawn O. Pearce <spearce@spearce.org=
-> wrote:
+Erik Faye-Lund venit, vidit, dixit 11.06.2010 16:15:
+> On Fri, Jun 11, 2010 at 3:32 PM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Junio C Hamano venit, vidit, dixit 10.06.2010 17:54:
+>>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>>
+>>>> -    ce->ce_dev = st->st_dev;
+>>>> -    ce->ce_ino = st->st_ino;
+>>>> -    ce->ce_uid = st->st_uid;
+>>>> -    ce->ce_gid = st->st_gid;
+>>>> -    ce->ce_size = st->st_size;
+>>>> +    ce->ce_dev = (unsigned int)st->st_dev;
+>>>> +    ce->ce_ino = (unsigned int)st->st_ino;
+>>>> +    ce->ce_uid = (unsigned int)st->st_uid;
+>>>> +    ce->ce_gid = (unsigned int)st->st_gid;
+>>>> +    ce->ce_size = (unsigned int)st->st_size;
+>>>
+>>> I haven't had my morning coffee yet, but wouldn't the conversion be
+>>> automatic by assignment anyway?
 >>
->> If its really a problem, maybe "remote: " prefix should turn into
->> something shorter and language agnostic, like "<< ". =A0But thus far
->> we hadn't had to worry about it, since we didn't have translation
->> support in Git... =A0(though yes, I see that is changing now).
+>> Well, we do cast from dev_t etc. to unsigned int in all other places in
+>> read_cache.c.
 >>
+> 
+> The only cases where we cast anything to unsigned in on assignment in
+> read-cache.h is where we assign the second-part of the ce_ctime and
+> ce_mtime members:
+> 	ce->ce_ctime.sec = (unsigned int)st->st_ctime;
+> 	ce->ce_mtime.sec = (unsigned int)st->st_mtime;
+> 
+> These are indeed superfluous (as yours are) as far as I can tell.
+> There's also some casts on comparison, and I think they also are
+> superfluous. The current casts originate from commits fba2f38a,
+> 5bcf109c, e1afca4f and 7a51ed66.
+> 
+> They don't do any harm though, so I don't think it makes much sense to
+> remove them.
+> 
 
-I'm also in favor of making the default '>>' instead of 'remote:' if
-nothing isn't an option.
+OK, then we can leave them resp. leave them out until a compiler complains.
 
-Using Heroku as an example, this is what their current hook output look=
-s like:
+I just stumbled upon this "inconsistency" when hunting down that fs
+boundary warning.
 
-$ git push origin master
-Counting objects: 9, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (5/5), done.
-Writing objects: 100% (5/5), 684 bytes, done.
-Total 5 (delta 2), reused 0 (delta 0)
-
------> Heroku receiving push
------> Sinatra app detected
-       Compiled slug size is 3.9MB
------> Launching....... done
-       http://fi-quote.heroku.com deployed to Heroku
-
-To git@heroku.com:fi-quote.git
-   0bb7fa2..2755742  master -> master
-
-
-Now, if you compare that to what it would look like if they were
-running a more recent version of git, the verboseness of remote: is
-quite apparent:
-
-
-$ git push origin master
-Counting objects: 9, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (5/5), done.
-Writing objects: 100% (5/5), 684 bytes, done.
-Total 5 (delta 2), reused 0 (delta 0)
-remote:
-remote: -----> Heroku receiving push
-remote: -----> Sinatra app detected
-remote:       Compiled slug size is 3.9MB
-remote: -----> Launching....... done
-remote:       http://fi-quote.heroku.com deployed to Heroku
-remote:
-To git@heroku.com:fi-quote.git
-   0bb7fa2..2755742  master -> master
-
-In a perfect world, I think it should be up to the user to determine
-the amount of information they receive (using a verbose switch
-perhaps), but short of that, at least toning down what is output would
-be much appreciated.
-
-Cheers,
-PJ
+Michael
