@@ -1,142 +1,170 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH next v2] log_ref_setup: don't return stack-allocated array
-Date: Thu, 10 Jun 2010 20:09:36 -0300
-Message-ID: <AANLkTimEwV_bJkd_2csJB0L6T9Lq6F0hpllUO2pJTL8m@mail.gmail.com>
-References: <e888313d5a782585f4a5e7ee8914302953c187e2.1276173576.git.trast@student.ethz.ch> 
-	<47daf53b6b2cc25cc013c5f2183e309a671dc9d3.1276174233.git.trast@student.ethz.ch> 
-	<AANLkTillDOCNQrpaEiFsFdq6HpU_LlwWI2ELIrEcrWHc@mail.gmail.com> 
-	<201006101929.11034.trast@student.ethz.ch>
+From: Brian Downing <bdowning@lavos.net>
+Subject: [PATCH] unpack-trees: Make index lookahead less pessimal
+Date: Thu, 10 Jun 2010 21:59:07 -0500
+Message-ID: <20100611025907.GG2635@glaurung.lavos.net>
+References: <20100610001005.GA2635@glaurung.lavos.net> <20100610170804.GB2635@glaurung.lavos.net> <20100610181421.GC2635@glaurung.lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jun 11 01:10:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 11 04:59:19 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OMqsv-0002Ml-HA
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 01:10:05 +0200
+	id 1OMuSj-00009w-Ri
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Jun 2010 04:59:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754374Ab0FJXJ7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jun 2010 19:09:59 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:52442 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753351Ab0FJXJ6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jun 2010 19:09:58 -0400
-Received: by gye5 with SMTP id 5so353845gye.19
-        for <git@vger.kernel.org>; Thu, 10 Jun 2010 16:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wMY+Q9yBdrJkNuUDAQYHtF6wgEOEqF6J9WX7CnCpy8s=;
-        b=pvTU8h3qAezBw9bivqkiGPI12rQK7AUX1RklPKChtTwWCJh6HYSdZMMpLKgUqh01GB
-         Eq/mr0hRWzq6srmOkD4rsW8L8/7Xig2Yccr+7RkUN4TNivvMAqKzJqWfBDhcxDXIUUgT
-         ISBIdqVbh/M2PMgJHTvVsZijMvXvcvni/7ZnI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=oR1dOeGXAhqTacgzIzn4Tkc00AXZXFPzXs+ZKqP1XbDLZ96yNknTSCEaBUupoptcNU
-         ajUsApj6VLYIVj1xE90j4FGef9Odp+JWIgcDZaoLhR/XC6XKCIik7UdNe2kDZMPFKXnY
-         0D3oFMqx1wHdLL2raPOgInHMbGSEduo4cZ8FY=
-Received: by 10.150.118.3 with SMTP id q3mr2294901ybc.211.1276211397522; Thu, 
-	10 Jun 2010 16:09:57 -0700 (PDT)
-Received: by 10.151.15.7 with HTTP; Thu, 10 Jun 2010 16:09:36 -0700 (PDT)
-In-Reply-To: <201006101929.11034.trast@student.ethz.ch>
+	id S1760077Ab0FKC7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jun 2010 22:59:12 -0400
+Received: from glaurung.lavos.net ([69.162.133.92]:53446 "EHLO
+	glaurung.lavos.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752128Ab0FKC7K (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jun 2010 22:59:10 -0400
+Received: by glaurung.lavos.net (Postfix, from userid 1000)
+	id 9FB937417D; Thu, 10 Jun 2010 21:59:07 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <20100610181421.GC2635@glaurung.lavos.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148921>
 
-Hi,
+When traversing trees with an index, the current index pointer
+(o->cache_base) occasionally has to be temporarily advanced forwards to
+match the traversal order of the tree, which is not the same as the sort
+order of the index.  The existing algorithm that did this (introduced in
+730f72840cc50c523fe4cdd796ea2d2fc4571a28) would get "stuck" when the
+cache_base was popped and then repeatedly check the same index entries
+over and over.  This represents a serious performance regression for
+large repositories compared to the old "broken" traversal order.
 
-We are becoming a little theoretical here so people please be
-condescending to us if the chat gets a little boring.  ;-)
+This commit makes a simple change to mitigate this.  Whenever
+find_cache_pos sees that the current pos is also the cache_base, and it
+has already been unpacked, it advances the cache_base as well as the
+current pos.  This prevents the above "sticking" behavior without
+dramatically changing the algorithm.
 
-2010/6/10 Thomas Rast <trast@student.ethz.ch>:
-> What the - side of the hunk above does is returning a local (stack
-> allocated) variable, in the form of a pointer to logfile. =C2=A0Once =
-those
-> go out of scope, you have zero guarantees on what happens with them.
+In addition, this commit moves the unpacked check above the
+ce_in_traverse_path() check.  The simple bitmask check is cheaper, and
+in the case described above will be firing quite a bit to advance the
+cache_base after a tree pop.
 
-Not really.
+This yields considerable performance improvements for large trees.
+The following are the number of function calls for "git diff HEAD" on
+the Linux kernel tree, with 33,307 files:
 
-What the actual log_ref_setup() does when is instantiated is to create
-a pointer in the stack, called log_file, to a pointer to a char array.
- This pointer receives the address of a char array of the calling
-function because that is why passing by reference is made to.  See
-that the calling functions is using the "&" when making the call (If I
-was using C++ I would pass by reference the array itself but in C I
-can only pass pointer variables by reference that is why the pointer
-to a pointer).
+   Symbol               Calls Before   Calls After
+   -------------------  ------------   -----------
+   unpack_callback            35,332        35,332
+   find_cache_pos             37,357        37,357
+   ce_in_traverse_path     4,979,473        37,357
+   do_compare_entry        6,828,181       251,925
+   df_name_compare         6,828,181       251,925
 
-Then git_snpath() creates a char array in the heap with the right
-content and changes the stack pointer logfile to it.  Then when we do
-*log_file =3D logfile what is happening is that the content of the
-pointer in the stack, log_file, which its content is the calling
-function char array pointer, is being set to the address of the buffer
-created in the heap by git_snpath().  After it, what you have is just
-the natural cleanup of the stack variables of the called function but
-the calling variable keeps the address of the char array in the heap
-created by git_snpath().
+And on a repository of 187,456 files:
 
-> Try the following snippet, it should cause a similar problem:
->
-> =C2=A0#include <stdio.h>
->
-> =C2=A0int* f()
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int i;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0i =3D 42;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return &i;
-> =C2=A0}
->
-> =C2=A0int main()
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int *p =3D f();
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (1) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0char buf[1024]=
-;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0memset(buf, 0,=
- sizeof(buf));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0printf("I got: %d\n", *p);
-> =C2=A0}
->
-> Only in this case the issue is so obvious that the compiler will warn
-> (at least mine does).
+   Symbol               Calls Before   Calls After
+   -------------------  ------------   -----------
+   unpack_callback           197,958       197,958
+   find_cache_pos            208,460       208,460
+   ce_in_traverse_path    37,308,336       208,460
+   do_compare_entry      156,950,469     2,690,626
+   df_name_compare       156,950,469     2,690,626
 
-That is another thing.
+On the latter repository, user time for "git diff HEAD" was reduced from
+5.58 to 0.42 seconds.  This is compared to 0.30 seconds before the
+traversal order fix was implemented.
 
->> I haven't ever seen this happening so I think you have found some
->> particularity of valgrind which could route a patch to it.
->
-> Admittedly my experience is somewhat limited since I don't do C codin=
-g
-> outside of git and some teaching. =C2=A0But so far I have not had a s=
-ingle
-> false alarm with valgrind (when compiled without optimizations;
-> otherwise the compiler may do some magic).
+Signed-off-by: Brian Downing <bdowning@lavos.net>
+---
+    So, yeah.  I admit frobbing cache_bottom from inside find_cache_pos
+    feels a little ugly, but it does minimize changes to the algorithm,
+    and the performance results speak for themselves.
 
-I don't think I am good enough too.  I have always things to learn.
-And I hopefully will be always learning new things!  I am addicted to
-it.  :-S
+    As far as I can tell, there's no way this modified algorithm can
+    return different results from the original.  (Obviously all the
+    working tests still pass.)  Both reordered cases simply called
+    continue, so the order wouldn't matter unless ce_in_traverse_path
+    has side effects, and the "continue" for the unpacked test is just
+    a bit more permanent now.  Still, I'd appreciate it if somebody who
+    knows what they are doing with this code could confirm this.
 
-Everybody is here to help each other and NOBODY does not commit
-mistakes so your help is very welcome but don't deposit all your
-beliefs in any piece of software because all of them could contain
-mistakes too, even if the best ever existent programmers had made them
-in whole.
+    I'd like to see this on maint if possible, since I have repo that's
+    pretty unpleasant to use with the current release.
 
-Programming is teaching a limited dumb equipment to be clever.  So it
-is in itself a contradiction.
+    -bcd
 
-Best regards
+ unpack-trees.c |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/unpack-trees.c b/unpack-trees.c
+index c29a9e0..94b8ecd 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -520,9 +520,17 @@ static int find_cache_pos(struct traverse_info *info,
+ 		const char *ce_name, *ce_slash;
+ 		int cmp, ce_len;
+ 
+-		if (!ce_in_traverse_path(ce, info))
++		if (ce->ce_flags & CE_UNPACKED) {
++			/*
++			 * cache_bottom entry is already unpacked, so
++			 * we can never match it; don't check it
++			 * again.
++			 */
++			if (pos == o->cache_bottom)
++				++o->cache_bottom;
+ 			continue;
+-		if (ce->ce_flags & CE_UNPACKED)
++		}
++		if (!ce_in_traverse_path(ce, info))
+ 			continue;
+ 		ce_name = ce->name + pfxlen;
+ 		ce_slash = strchr(ce_name, '/');
+-- 
+1.7.1
+
+On Thu, Jun 10, 2010 at 01:14:21PM -0500, Brian Downing wrote:
+> On Thu, Jun 10, 2010 at 12:08:04PM -0500, Brian Downing wrote:
+> > I also ran this through callgrind to see how often the above were called:
+> 
+> (187,456 files)
+> 
+> >         Calls  Symbol
+> >   -----------  -------------------
+> >       197,958  unpack_callback
+> >       208,460  find_cache_pos
+> >    37,308,336  ce_in_traverse_path
+> >   156,950,469  do_compare_entry
+> >   156,950,469  df_name_compare
+> 
+> Here is an identical run (git-diff HEAD) from the Linux kernel tree
+> (33,307 files):
+> 
+>         Calls  Symbol
+>    -----------  -------------------
+>         35,332  unpack_callback
+>         37,357  find_cache_pos
+>      4,979,473  ce_in_traverse_path
+>      6,828,181  do_compare_entry
+>      6,828,181  df_name_compare
+> 
+> That makes it look sort of exponential (perhaps around files^1.5),
+> though from what I can understand of the find_cache_pos code in
+> unpack-trees it would depend on the exact shape of the repository.  It
+> does seem to linear-search over whole directory trees of the index
+> repeatedly, though, which would support the exponential theory.
+> 
+> Unfortunately I don't really understand what the code is trying to do.
+> Is it not the case that trees and the index are always stored sorted in
+> the same order?  The examples given in the commit messages that
+> introduced this fix would imply not, but I'm not sure how that could
+> come about.
+> 
+> -bcd
+> 
