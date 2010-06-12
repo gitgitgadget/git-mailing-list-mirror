@@ -1,100 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: ask about and declare 8bit mails
-Date: Sat, 12 Jun 2010 09:28:19 -0700
-Message-ID: <7vljakfc64.fsf@alter.siamese.dyndns.org>
-References: <201006121211.12870.trast@student.ethz.ch>
- <cebe57bb68b5e8ea445e560bbe6305c915ce8a1c.1276354971.git.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v3 0/4] Teach 'git grep' about
+ --open-files-in-pager=[<pager>]
+Date: Sat, 12 Jun 2010 11:29:45 -0500
+Message-ID: <20100612162945.GB1406@burratino>
+References: <20100605005116.GA8774@progeny.tock>
+ <alpine.DEB.1.00.1006051810300.1732@bonsai2>
+ <20100612075542.GB2918@burratino>
+ <alpine.DEB.1.00.1006121139290.2689@bonsai2>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jun 12 18:28:38 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 12 18:30:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONTZU-0003zh-5N
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 18:28:36 +0200
+	id 1ONTao-0004X8-Bi
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 18:29:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750888Ab0FLQ2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 12:28:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46628 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750739Ab0FLQ2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 12:28:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D559BBF1E;
-	Sat, 12 Jun 2010 12:28:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5fjaJL+O8Qv2K2WzcGc9KhqHw4k=; b=XNv07o
-	A6JOEmrvd8j7BvCw7QMk0rjYh78upQfMM+pvJDB8mXO8bX674xKSObnRcXbZrK5q
-	Y8QhkQDWmbwTwsx4+Nd7uL0hnpExijcTUHViOanVykrTpu1CpR6fFuO8vNtarOvU
-	FKuK+LhZ/8+UZodW2Xn9qBVwkPa6qFHhmRKaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aY2+z9CJRwu2ad3pO8sCrrJS8F2WlnxD
-	AlE7cWR4iqnhG6U/P5YUJBIeuCtnAdCY3EyNUdhymnoqvfWZtwn0yjI3U7yK6BxM
-	erXW/H2GOndpdVHXK4LFqH9jY0EEEz5DMtD5D91euU4VstdG8LKmqoNglWxIv/NP
-	Wu5oCCP1gdo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4928FBBF1B;
-	Sat, 12 Jun 2010 12:28:25 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 992A4BBF19; Sat, 12 Jun
- 2010 12:28:21 -0400 (EDT)
-In-Reply-To: <cebe57bb68b5e8ea445e560bbe6305c915ce8a1c.1276354971.git.trast@student.ethz.ch> (Thomas Rast's message of "Sat\, 12 Jun 2010 17\:06\:20 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 864E603E-763F-11DF-89BC-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751835Ab0FLQ3x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jun 2010 12:29:53 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45656 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751539Ab0FLQ3x (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 12:29:53 -0400
+Received: by iwn9 with SMTP id 9so1588974iwn.19
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 09:29:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=q7iM6HnW6zUDFtAptPbJfwE6M3khe0hBQ+czyhvS+ZQ=;
+        b=Jgte4tTyYXfR+eIp5EJCgPnGbYx7+9brOFc0t1tlrwimZWCfBYCCRWZYUIl47BZCQu
+         oJyIonHVvsmup1V6YxGQoSOWjvlgJLNtUigVhCi4yUSkqlGZtMg/HAabZNTQIyjeopu6
+         HPr0/BSgyDvJ5jlYjo4wEj3ZZUHe7T7LfYaX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=PBqgySBk+6oY46nQJkxLxuhPPzdlQIhsx8tIYnA7VDdYD+IQWF4PLRzBTNN5P87HC9
+         udePMcAwxtQ1lRElh/gzwrl16un5+8vcDS6R09KhoIilPKBD34EDSeGYJU0m1tKzqc5w
+         n0/00qKYVlOZFLNYM0Ml4HPaZ66RJfo1MQ+uU=
+Received: by 10.231.150.15 with SMTP id w15mr3651835ibv.115.1276360191810;
+        Sat, 12 Jun 2010 09:29:51 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id t28sm11114699ibg.0.2010.06.12.09.29.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jun 2010 09:29:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.00.1006121139290.2689@bonsai2>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149015>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Johannes Schindelin wrote:
 
-> git-send-email passes on an 8bit mail as-is even if it does not
-> declare a content-type.  Because the user can edit email between
-> format-patch and send-email, such invalid mails are unfortunately not
-> very hard to come by.
->
-> Make git-send-email stop and ask about the encoding to use if it
-> encounters any such mail.  Also provide a configuration setting to
-> permanently configure an encoding.
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->
-> This takes care of what I ran into earlier today.  However, there's
-> another problem: format-patch doesn't even mark the patch 8bit if its
-> patch contents (not log message) are non-ASCII.  I'm really not sure
-> what to do there.
+> Nope, the patch is still there, even after a rebase.
 
-A project won't have uniform file encoding anyway, so even if we were to
-do something clever about this, it has to be per-patch.  Perhaps
+Ah, I see.  Looks like a good patch (d00d655, Unify code paths of threa=
+ded
+greps, 2010-02-07) though in principle a separate topic, since grep -O
+already sets use_threads =3D 0.  I think it is good to base grep-O on i=
+t
+because it allows cleaner code.
 
- (0) use the attributes mechanism to allow projects to mark paths with
-     encoding.  E.g.
+Here=E2=80=99s a rebased version.
 
-	# everything in UTF-8 unless otherwise specified...
-        * encoding=UTF-8
-        Documentation/zh_CN/* encoding=big5
+Johannes Schindelin (3):
+  Unify code paths of threaded greps
+  grep: Add the option '--open-files-in-pager'
+  grep -O: allow optional argument specifying the pager (or editor)
 
- (1) for each patch, find the paths involved, and if their encodings are
-     the same, perhaps promote that as the encoding used for the entire
-     message;
+Jonathan Nieder (1):
+  grep: refactor grep_objects loop into its own function
 
- (2) otherwise, if there is an 8-bit encoding involved in the paths,
-     perhaps mark the entire message as 8-bit (binary???).
-
-I have this suspicion that (2) is very rare (you cannot transmit such a
-patch as a plain text message reliably afaict, so it is not done in
-practice), and we would probably need to make a separate patchfile for
-groups of paths in each encoding and attach them as MIME multiparts (ugh).
-
-Just thinkning aloud, before morning caffeine sinks in, so please take
-this with a grain of salt...
+ Documentation/git-grep.txt         |    8 ++
+ builtin/grep.c                     |  121 ++++++++++++++++++++++------
+ git.c                              |    2 +-
+ t/lib-pager.sh                     |   15 ++++
+ t/t7006-pager.sh                   |   16 +---
+ t/{t7002-grep.sh =3D> t7810-grep.sh} |    0
+ t/t7811-grep-open.sh               |  157 ++++++++++++++++++++++++++++=
+++++++++
+ 7 files changed, 280 insertions(+), 39 deletions(-)
+ create mode 100644 t/lib-pager.sh
+ rename t/{t7002-grep.sh =3D> t7810-grep.sh} (100%)
+ create mode 100755 t/t7811-grep-open.sh
