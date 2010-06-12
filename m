@@ -1,143 +1,76 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Bugreport: Git responds with stderr instead of stdout
-Date: Sat, 12 Jun 2010 16:52:34 +0000
-Message-ID: <AANLkTingtgeWuTrocesTIhTPsVz4dfU8CbwZF1TEl6AI@mail.gmail.com>
-References: <20100425130607.2c92740f@pennie-farthing>
-	<v2m8c9a061004251110paf7ba4e5r1997bc6262afcb1d@mail.gmail.com>
-	<y2g51dd1af81004251124zc4da759dka2ceebe1d9735fd7@mail.gmail.com>
-	<20100425192207.GA14736@coredump.intra.peff.net>
-	<m2h51dd1af81004251232ue621ca42r7168429f45d20461@mail.gmail.com>
-	<20100425193258.GA16171@coredump.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] commit: use value of GIT_REFLOG_ACTION env variable as
+ reflog message
+Date: Sat, 12 Jun 2010 12:12:53 -0500
+Message-ID: <20100612171253.GA6078@burratino>
+References: <20100612160513.4104.89491.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jacob Helwig <jacob.helwig@gmail.com>,
-	Jack Desert <jackdesert556@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 12 18:52:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Jun 12 19:13:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONTwm-0004z3-T4
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 18:52:41 +0200
+	id 1ONUGf-0004av-Ii
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 19:13:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027Ab0FLQwg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jun 2010 12:52:36 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:55854 "EHLO
+	id S1751628Ab0FLRNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 13:13:07 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46669 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751539Ab0FLQwf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jun 2010 12:52:35 -0400
-Received: by iwn9 with SMTP id 9so1605626iwn.19
-        for <git@vger.kernel.org>; Sat, 12 Jun 2010 09:52:34 -0700 (PDT)
+	with ESMTP id S1750874Ab0FLRNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 13:13:04 -0400
+Received: by iwn9 with SMTP id 9so1620578iwn.19
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 10:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=J+bLENNtPB6xzliWTxiuPEAnh/TfgeSutWHXqgZn4ok=;
-        b=HJPDikxHv3urRHmqD4TJOrxIgon4Uk76avMvCxrrVcCeEt5OiBSDFzC2YyCnkLwfVy
-         pWQMP/7JXaYHycDRAIiDCcaOKvwHZmt6dkAGlzr/UFP3wyOv8G0gk8tjArbLZNW6VCUM
-         oVY4LsGQMq1L5nxhgzwO1GmsV32IXUDHbZlxg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=QwMQ/DJZAR2GWciLx7VC0h5wo4404Gqbr1Dzm88rM9I=;
+        b=Vje3HMPG/vmZjAC1r6dDs+lNqyikS8z6jguZhsvDZBgfs2TBbQ7JshF010gqL8vfxI
+         Np4Vkam4KO7BprxXUVIOYrdMsDZcQRsxJM6MYOx8qu4ZmTF1w8cHb/YoXTlMhx4gVKgT
+         fhEo2xgz4KSginX2ig2S4YsA6WLPAoeMwza4E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=abouHuFVgD8e5PN22oJpHdVTU6GE4eXUJ4r8VWPLMGxcAAGz2+OgkKcCJjfJY/2VoG
-         9kxBFFpdEZ8qMOwiG7mgS1XdF8walE7G1/hcsZCFKyLkcHIWEVAxgJkK+20sEFCz2cUA
-         ZWAFDndQcl/HAArFySD/1faMM/uGA1m+buc9U=
-Received: by 10.231.124.41 with SMTP id s41mr3453406ibr.165.1276361554706; 
-	Sat, 12 Jun 2010 09:52:34 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Sat, 12 Jun 2010 09:52:34 -0700 (PDT)
-In-Reply-To: <20100425193258.GA16171@coredump.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=qBUPrVlr2VqrbxwMjq3hPitPj9Ku1W/53nP+t+xf05ozRCizrApK3+9PsI6SHnqr51
+         du7vX3iYRypSvUhAkuJ+OD72MpP5wgmD2R0d8qIuWsBkgKUt36A+yVl+QarhAWOj0v2Z
+         x7d9oyOAE4H1CSI2QFn0DEXnBda8/SwJooWzc=
+Received: by 10.231.124.17 with SMTP id s17mr3597576ibr.181.1276362783015;
+        Sat, 12 Jun 2010 10:13:03 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id b3sm11234645ibf.19.2010.06.12.10.13.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jun 2010 10:13:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100612160513.4104.89491.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149023>
 
-On Sun, Apr 25, 2010 at 19:32, Jeff King <peff@peff.net> wrote:
-> On Sun, Apr 25, 2010 at 07:32:00PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->
->> >> I've had some issues scripting `git fetch` because on error it'll
->> >> print to stdout and not stderr.
->> >
->> > Errors should go to stderr, so I imagine patches would be welcome.=
- Which
->> > messages went to stdout?
->>
->> I can't recall exactly now. Looking at fetch.c I can't see anything
->> obvious, I'll report anything if I spot it in the future.
->
-> Thanks. As I mentioned, we've been fixing little things like this as
-> time goes on, so it may well have been fixed already.
+Christian Couder wrote:
 
-Actually here's an example with Git 1.7.1:
+> The environment variable GIT_REFLOG_ACTION was used by git-commit.sh,
+> but when it was converted to a builtin
+> (f5bbc3225c4b073a7ff3218164a0c820299bc9c6, Port git commit to C,
+> Nov 8 2007) this was lost.
 
-    # time /etc/github-backup/github-backup
-    remote: Counting objects: 76, done.
-    remote: Compressing objects: 100% (43/43), done.
-    remote: Total 47 (delta 26), reused 18 (delta 4)
-    Unpacking objects: 100% (47/47), done.
-    From github.com:avar/linode-etc
-       75a27cf..09d5ff7  master     -> origin/master
-    From github.com:avar/svn-dump-fast-export
-     * [new branch]      gh-pages   -> origin/gh-pages
-     * [new branch]      git-merge  -> origin/git-merge
-     * [new branch]      master     -> origin/master
-     * [new branch]      rollout    -> origin/rollout
+Ack --- this is just a bug, I think.  The patch makes sense.
 
-The script I'm running is github-backup
-(http://github.com/avar/github-backup) which just outputs `git fetch`
-output as-is.
-
-Looking at the source the problematic code is in builtin/fetch.c's
-update_local_ref. That function takes a char *display which it writes
-to things that are both errors and just status messages:
-
-Error:
-
-		sprintf(display, "! %-*s %-*s -> %s  (can't fetch in current branch)"=
-,
-			TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
-			pretty_ref);
-
-Just a status message (in my case):
-
-		else {
-			msg =3D "storing head";
-			what =3D "[new branch]";
-		}
-
-		r =3D s_update_ref(msg, ref, 0);
-		sprintf(display, "%c %-*s %-*s -> %s%s", r ? '!' : '*',
-			TRANSPORT_SUMMARY_WIDTH, what, REFCOL_WIDTH, remote, pretty_ref,
-			r ? "  (unable to update local ref)" : "");
-
-That function is then called as:
-
-		if (ref) {
-			rc |=3D update_local_ref(ref, what, note);
-			free(ref);
-		} else
-			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
-				TRANSPORT_SUMMARY_WIDTH, *kind ? kind : "branch",
-				 REFCOL_WIDTH, *what ? what : "HEAD");
-		if (*note) {
-			if (verbosity >=3D 0 && !shown_url) {
-				fprintf(stderr, "From %.*s\n",
-						url_len, url);
-				shown_url =3D 1;
-			}
-			if (verbosity >=3D 0)
-				fprintf(stderr, " %s\n", note);
-		}
-
-Shouldn't that fprintf() be called as:
-
-    fprintf((rc ? stderr : stdout), ...)
-
-?
+Thanks,
+Jonathan
