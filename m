@@ -1,143 +1,122 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Misterious warning about file system boundaries [It's a bug,
- not a mystery.]
-Date: Sat, 12 Jun 2010 00:24:10 -0400
-Message-ID: <20100612042410.GA20535@coredump.intra.peff.net>
-References: <4C0FF7B9.8040007@drmicha.warpmail.net>
- <4C109C4F.1030809@op5.se>
- <4C10AAC4.90405@drmicha.warpmail.net>
- <AANLkTimwhDGNTMiOaW8_AGGd4PvFtyILEikePdC4zGDo@mail.gmail.com>
- <4C10C02E.50502@drmicha.warpmail.net>
- <AANLkTikle0gxLvKkhr-APkt_6QCB0hVu7bIGm0sRcjVK@mail.gmail.com>
- <20100610110258.GA17290@coredump.intra.peff.net>
- <7v39wvndl0.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	kusmabite@gmail.com, Erik Faye-Lund <kusmabite@googlemail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 12 06:25:29 2010
+From: Bobby Powers <bobbypowers@gmail.com>
+Subject: [PATCH] cherry-pick: Add an option to prepend a string to the commit message
+Date: Fri, 11 Jun 2010 22:07:17 -0700
+Message-ID: <1276319237-12010-1-git-send-email-bobbypowers@gmail.com>
+Cc: Bobby Powers <bobbypowers@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Sat Jun 12 07:07:45 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONIHf-0004GQ-M3
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 06:25:28 +0200
+	id 1ONIwX-0006cV-SR
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 07:07:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413Ab0FLEYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 00:24:14 -0400
-Received: from peff.net ([208.65.91.99]:38194 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751047Ab0FLEYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 00:24:13 -0400
-Received: (qmail 17714 invoked by uid 107); 12 Jun 2010 04:24:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 12 Jun 2010 00:24:25 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jun 2010 00:24:10 -0400
-Content-Disposition: inline
-In-Reply-To: <7v39wvndl0.fsf@alter.siamese.dyndns.org>
+	id S1752636Ab0FLFHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 01:07:37 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:52301 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751569Ab0FLFHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 01:07:36 -0400
+Received: by pxi8 with SMTP id 8so1157098pxi.19
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 22:07:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=Kr3rp6/SXgNZVDQSjt+Uhb7Ndg0wY4IA/caWC0MX4wc=;
+        b=BwVRYQOgXp4/6P+MOJPrjvQLTIEBp8m1iOptvOBb4qMDqiO7z/rj/J9TYKiO5iCt+P
+         clNgikqsGHqzUuzQInGSSn1v/MkkPn7bHwsYyXDuUH71jCJVZK9WzdUCjkS2GsKWcuHq
+         rR9Q6cjZmK0nbJ2V4CBexGZpzOm5AB8FWYB0U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=pzc75OkGWJLgXJyGkE8+tSsmQUJ3lUBpXeF3ee9wynDzOyxjFowSuMy9IGoCR1CDNb
+         K0XPRhml70yvaIqOLvNlTQt2qP6wmsuWcabDIomEBFjg7DsNpPcHk6n2+d+2iLA93P0R
+         zZL2n01g6uNl5rx+XQsOv+vgD6xd06j73zliE=
+Received: by 10.141.3.1 with SMTP id f1mr2178376rvi.148.1276319255739;
+        Fri, 11 Jun 2010 22:07:35 -0700 (PDT)
+Received: from localhost.localdomain (c-98-210-195-105.hsd1.ca.comcast.net [98.210.195.105])
+        by mx.google.com with ESMTPS id t1sm2040228rvl.21.2010.06.11.22.07.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Jun 2010 22:07:35 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.251.g92a7.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148987>
 
-On Thu, Jun 10, 2010 at 07:53:47AM -0700, Junio C Hamano wrote:
+This can be useful situations where you have a batch of commits to
+cherry-pick and need to prefix each new commit message with similar
+information (such as the subversion revision, when used in conjunction
+with git-svn).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Since the early-warning suggestion is generating false positives, and I
-> > don't think there is a portable and reliable way around it, dropping it
-> > makes sense to me.
-> 
-> Makes sense.  Let's make it so (I won't have time to do that myself until
-> late this evening, though).
-> 
-> Thanks.
-
-Here it is with a nice commit message (though since it is only in next,
-I guess you can just merge the early part and both 52b98a and my revert
-will be dropped). It's on top of ld/discovery-limit-to-fs, of course.
-
-Note that it would be possible to do a warning in some instances. We
-just can't trust the on-disk index ce_dev information, so if you
-actually refreshed two cross-filesystem entries we could detect that.
-That is such a minority case that I doubt it is worth caring about,
-though.
-
--- >8 --
-Subject: [PATCH] Revert "write-index: check and warn when worktree crosses a filesystem boundary"
-
-This reverts commit 52b98a7d2f12b5d0dd076221d40f8fa93598e11a.
-
-The goal of that commit was to warn users early when their
-worktree crossed filesystem boundaries. It worked by
-comparing the st_dev stat information in the index, and
-warning when we had more than one device.
-
-However, the stat information may come from multiple runs,
-and the st_dev field is not necessarily stable. In
-particular, st_dev will change on Linux across reboots.
-Index entries from the previous reboot will appear to come
-from a different device, triggering a false positive.
-
-Since this message is really only an early warning for
-people who will be bit by the new
-GIT_DISCOVERY_ACROSS_FILESYSTEM behavior, and because they
-will get an actual error later on (when we can't find their
-cross-filesystem .git directory), we can just scrap the
-early warning.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Bobby Powers <bobbypowers@gmail.com>
 ---
- read-cache.c |   14 --------------
- 1 files changed, 0 insertions(+), 14 deletions(-)
+ Documentation/git-cherry-pick.txt |    7 +++++++
+ builtin/revert.c                  |    8 +++++++-
+ 2 files changed, 14 insertions(+), 1 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index e381ea5..f1f789b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1550,8 +1550,6 @@ int write_index(struct index_state *istate, int newfd)
- 	struct cache_entry **cache = istate->cache;
- 	int entries = istate->cache_nr;
- 	struct stat st;
--	int first_valid_ent = -1;
--	int more_than_one_dev;
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index d71607a..2526e13 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -62,6 +62,13 @@ OPTIONS
+ 	option is used, your index does not have to match the
+ 	HEAD commit.  The cherry-pick is done against the
+ 	beginning state of your index.
++
++--prepend::
++	Specify a string to prepend to the commit message.  This
++	can be useful situations where you have a batch of commits
++	to cherry-pick and need to prefix each new commit message
++	with similar information (such as the subversion revision,
++	when used in conjunction with git-svn).
+ +
+ This is useful when cherry-picking more than one commits'
+ effect to your index in a row.
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 7976b5a..45091ac 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -44,6 +44,7 @@ static int allow_rerere_auto;
  
- 	for (i = removed = extended = 0; i < entries; i++) {
- 		if (cache[i]->ce_flags & CE_REMOVE)
-@@ -1574,7 +1572,6 @@ int write_index(struct index_state *istate, int newfd)
- 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
- 		return -1;
+ static const char *me;
+ static const char *strategy;
++static const char *prepend;
  
--	more_than_one_dev = 0;
- 	for (i = 0; i < entries; i++) {
- 		struct cache_entry *ce = cache[i];
- 		if (ce->ce_flags & CE_REMOVE)
-@@ -1583,19 +1580,8 @@ int write_index(struct index_state *istate, int newfd)
- 			ce_smudge_racily_clean_entry(ce);
- 		if (ce_write_entry(&c, newfd, ce) < 0)
- 			return -1;
--		if (ce_uptodate(ce)) {
--			if (first_valid_ent < 0)
--				first_valid_ent = i;
--			else if (ce->ce_dev != cache[first_valid_ent]->ce_dev)
--				more_than_one_dev = 1;
--		}
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -64,7 +65,7 @@ static void parse_args(int argc, const char **argv)
+ 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
+ 		OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+ 		OPT_STRING(0, "strategy", &strategy, "strategy", "merge strategy"),
+-		OPT_END(),
++		OPT_STRING(0, "prepend", &prepend, "message", "string to prepend to the commit message"),
+ 		OPT_END(),
+ 		OPT_END(),
+ 	};
+@@ -392,6 +393,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 			die("cherry-pick --ff cannot be used with -x");
+ 		if (edit)
+ 			die("cherry-pick --ff cannot be used with --edit");
++		if (prepend)
++			die("cherry-pick --ff cannot be used with --prepend");
  	}
  
--	if (more_than_one_dev &&
--	    !git_env_bool("GIT_DISCOVERY_ACROSS_FILESYSTEM", 0))
--		warning("working tree spans across filesystems but "
--			"GIT_DISCOVERY_ACROSS_FILESYSTEM is not set.");
--
- 	/* Write extension data here */
- 	if (istate->cache_tree) {
- 		struct strbuf sb = STRBUF_INIT;
+ 	if (read_cache() < 0)
+@@ -482,6 +485,9 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 		next = commit;
+ 		next_label = msg.label;
+ 		set_author_ident_env(msg.message);
++		if (prepend) {
++			strbuf_addstr(&msgbuf, prepend);
++		}
+ 		add_message_to_msg(&msgbuf, msg.message);
+ 		if (no_replay) {
+ 			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
 -- 
-1.7.1.516.gd5539.dirty
+1.7.1.251.g92a7.dirty
