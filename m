@@ -1,55 +1,74 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH] t/README: document --root option
-Date: Sat, 12 Jun 2010 09:58:08 +0200
-Message-ID: <201006120958.08607.trast@student.ethz.ch>
-References: <c5efa5c15498fe562af98b9b16165127bc1690c2.1276193888.git.trast@student.ethz.ch> <7vpqzxgusl.fsf@alter.siamese.dyndns.org> <20100612013019.GA27604@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] cherry-pick: Add an option to prepend a string to the
+ commit message
+Date: Sat, 12 Jun 2010 04:19:25 -0400
+Message-ID: <20100612081925.GA19525@coredump.intra.peff.net>
+References: <1276319237-12010-1-git-send-email-bobbypowers@gmail.com>
+ <20100612055831.GA2426@burratino>
+ <20100612062812.GA12685@coredump.intra.peff.net>
+ <4C132C7E.5090606@gmail.com>
+ <20100612071850.GA2765@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 12 10:00:45 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Bobby Powers <bobbypowers@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 12 10:19:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONLdz-0008LR-HR
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 10:00:43 +0200
+	id 1ONLwI-0006P5-9B
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 10:19:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752987Ab0FLH6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 03:58:13 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:7812 "EHLO gwse.ethz.ch"
+	id S1753172Ab0FLITd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 04:19:33 -0400
+Received: from peff.net ([208.65.91.99]:43486 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752275Ab0FLH6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 03:58:13 -0400
-Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 12 Jun
- 2010 09:58:09 +0200
-Received: from thomas.localnet (129.132.208.223) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 12 Jun
- 2010 09:58:10 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <20100612013019.GA27604@coredump.intra.peff.net>
+	id S1753139Ab0FLIT3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 04:19:29 -0400
+Received: (qmail 20168 invoked by uid 107); 12 Jun 2010 08:19:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 12 Jun 2010 04:19:41 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jun 2010 04:19:25 -0400
+Content-Disposition: inline
+In-Reply-To: <20100612071850.GA2765@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148997>
 
-Jeff King wrote:
-> On Fri, Jun 11, 2010 at 01:48:26PM -0700, Junio C Hamano wrote:
-> > 
-> > Then...
-> > 
-> > 	Create "trash" directories used to store all temporary data during
-> > 	testing under <directory>, instead of the t/ directory.
+On Sat, Jun 12, 2010 at 02:18:50AM -0500, Jonathan Nieder wrote:
+
+> Subject: Documentation: explain use of cherry-pick -n in scripts
 > 
-> Yeah, that is much better, IMHO.
+> Add an example to indicate how to munge a commit while cherry-picking it.
+> 
+> The formatting is ugly because I do not know how to ask asciidoc to
+> use a multiline heading in a definition list.
 
-I see you already picked that up.  Thanks!
+I don't think there is a way to do what you want. Even an explicit " +"
+at the end of line, which is supposed to cause a line-break, doesn't
+seem to work.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+However, I wonder if all of the examples should actually be in "----"
+listing blocks. That would generally render them in a monospaced
+typewriter font (though in the manpage, it doesn't matter much), and
+your multiline addition would be rendered properly, too.
+
+> +------------
+> +git checkout maint &&
+> +git cherry-pick -n bugfix &&
+> +git add new_file.txt &&
+> +git show -s bugfix --format='%s%n%n%b%n%nAlso add a new file.' |
+> +git commit -F -
+> +------------
+
+You can use the much shorter "%B" instead of "%s%n%n%b" these days, and
+as a bonus, it will use the right number of newlines for a subject-only
+commit.
+
+-Peff
