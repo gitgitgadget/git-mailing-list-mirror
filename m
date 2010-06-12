@@ -1,76 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] commit: use value of GIT_REFLOG_ACTION env variable as
- reflog message
-Date: Sat, 12 Jun 2010 12:12:53 -0500
-Message-ID: <20100612171253.GA6078@burratino>
-References: <20100612160513.4104.89491.chriscool@tuxfamily.org>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 4/4] grep -O: allow optional argument specifying the pager
+ (or editor)
+Date: Sat, 12 Jun 2010 19:16:17 +0200
+Message-ID: <4C13C0E1.3070707@gnu.org>
+References: <20100605005116.GA8774@progeny.tock> <alpine.DEB.1.00.1006051810300.1732@bonsai2> <20100612075542.GB2918@burratino> <alpine.DEB.1.00.1006121139290.2689@bonsai2> <20100612162945.GB1406@burratino> <20100612163946.GD5657@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Jun 12 19:13:14 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 12 19:16:31 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONUGf-0004av-Ii
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 19:13:13 +0200
+	id 1ONUJo-0005lm-Qo
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 19:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628Ab0FLRNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 13:13:07 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46669 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874Ab0FLRNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 13:13:04 -0400
-Received: by iwn9 with SMTP id 9so1620578iwn.19
-        for <git@vger.kernel.org>; Sat, 12 Jun 2010 10:13:03 -0700 (PDT)
+	id S1751882Ab0FLRQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 13:16:23 -0400
+Received: from fg-out-1718.google.com ([72.14.220.155]:6366 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750888Ab0FLRQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 13:16:23 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so676156fga.1
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 10:16:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=QwMQ/DJZAR2GWciLx7VC0h5wo4404Gqbr1Dzm88rM9I=;
-        b=Vje3HMPG/vmZjAC1r6dDs+lNqyikS8z6jguZhsvDZBgfs2TBbQ7JshF010gqL8vfxI
-         Np4Vkam4KO7BprxXUVIOYrdMsDZcQRsxJM6MYOx8qu4ZmTF1w8cHb/YoXTlMhx4gVKgT
-         fhEo2xgz4KSginX2ig2S4YsA6WLPAoeMwza4E=
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=8MqFxjrwDYwMdaV6DDbfUhDp2Bbz+n0uGAw6Lc5MWtQ=;
+        b=XimBK2ILj49CjrXTqJrlvO85lz30rqPBOoC0tpbrQWHLoPKhVzfcVC96iW/2CJzH+u
+         rrJt9C1mMC1hBQS0brC/YL7Nzd0qLRnOSNCSiu3hQAWEc+jEEuSJM1JaJVY2n6u2bdv0
+         DVqfKjRLy4CYoeTIkBIJhmvjYKQ5zJ3wls8Ss=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=qBUPrVlr2VqrbxwMjq3hPitPj9Ku1W/53nP+t+xf05ozRCizrApK3+9PsI6SHnqr51
-         du7vX3iYRypSvUhAkuJ+OD72MpP5wgmD2R0d8qIuWsBkgKUt36A+yVl+QarhAWOj0v2Z
-         x7d9oyOAE4H1CSI2QFn0DEXnBda8/SwJooWzc=
-Received: by 10.231.124.17 with SMTP id s17mr3597576ibr.181.1276362783015;
-        Sat, 12 Jun 2010 10:13:03 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id b3sm11234645ibf.19.2010.06.12.10.13.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 12 Jun 2010 10:13:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100612160513.4104.89491.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=ZB3m/Kt2cnh56yPQaIgqHIvMxv5KkJfjMEWo8IyJuficlVyYswfuga+SZpjMPTT4Km
+         MMt5bh3riFInBsQqq1k7sSj+vwbmlo3NoSKj6Rah3By28QYAxoMNvfkeNN6S9zbU6fEB
+         8DpgGsFX8NaP7P5e3UMGGspnycabla/weVpFc=
+Received: by 10.87.66.15 with SMTP id t15mr5776511fgk.37.1276362980655;
+        Sat, 12 Jun 2010 10:16:20 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (s209p8.home.99maxprogres.cz [85.93.118.17])
+        by mx.google.com with ESMTPS id 1sm4314464fkt.11.2010.06.12.10.16.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jun 2010 10:16:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
+In-Reply-To: <20100612163946.GD5657@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149024>
 
-Christian Couder wrote:
+On 06/12/2010 06:39 PM, Jonathan Nieder wrote:
+> From: Johannes Schindelin<johannes.schindelin@gmx.de>
+>
+> Suppose you want to edit all files that contain a specific search term.
+> Of course, you can do something totally trivial such as
+>
+> 	git grep -z -e<term>  | xargs -0r vi +/<term>
+>
+> but maybe you are happy that the same will be achieved by
+>
+> 	git grep -Ovi<term>
+>
+> now.
 
-> The environment variable GIT_REFLOG_ACTION was used by git-commit.sh,
-> but when it was converted to a builtin
-> (f5bbc3225c4b073a7ff3218164a0c820299bc9c6, Port git commit to C,
-> Nov 8 2007) this was lost.
+Ah, I had missed that the argument was optional.  I think that optional 
+arguments are slightly frowned upon for POSIX utilities, because they're 
+a bit different.  In fact, I think the only one is -i in sed (and BSD 
+sed instead makes it mandatory...).  Personally I have no problem with 
+making -O in GNU grep optional too, I'll see what the other maintainers say.
 
-Ack --- this is just a bug, I think.  The patch makes sense.
+Acked-by: Paolo Bonzini <bonzini@gnu.org>
 
-Thanks,
-Jonathan
+Paolo
