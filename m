@@ -1,86 +1,77 @@
-From: Bernd Schubert <bernd.schubert@fastmail.fm>
-Subject: need help with "stg clone"
-Date: Sat, 12 Jun 2010 20:37:21 +0200
-Message-ID: <201006122037.21656.bernd.schubert@fastmail.fm>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH v2] Group the default git help message by topic
+Date: Sat, 12 Jun 2010 14:44:20 -0400
+Message-ID: <4C13D584.1000604@gmail.com>
+References: <AANLkTiloErvcWS1hW80cIV9SiWu_7CBdNSx_iAppcGOd@mail.gmail.com>	<422F3619-25EC-4509-8EE3-78B6C765AB2A@wincent.com>	<4C12B20F.3080709@gmail.com> <AANLkTinec7_D-WHRfetVRVvmG0EGoW4ZTdiTvoGMgJvQ@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 12 20:37:55 2010
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Scott Chacon <schacon@gmail.com>,
+	git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 12 20:44:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONVad-0003Ag-2Q
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 20:37:55 +0200
+	id 1ONVh2-0005Uo-61
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 20:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826Ab0FLShZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 14:37:25 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48671 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751610Ab0FLShY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jun 2010 14:37:24 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EC202F48B9
-	for <git@vger.kernel.org>; Sat, 12 Jun 2010 14:37:23 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Sat, 12 Jun 2010 14:37:23 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:mime-version:content-type:content-transfer-encoding:message-id; s=smtpout; bh=NCpEDQAaZRuM7/QENqLBNrvgDcA=; b=nN3yibTlUt2+krg5MEsqzn0faO0jCVlL97r1PNYXnKgZ1McxCAzUpjYyX44FGpuwVhb/FMCgEu26YsuD5/ncxFeMUlveFDgwDOFNQ50mWVz6s6V5vdLbmVSu23h5Uf1zhobvoW2hRu1u7fHfPRZibqNByFk/4kO4hQGL6ME3XBo=
-X-Sasl-enc: SSBX2F4PyIfQ/eOIVqVn3l2ccu5HCrEAxLLCNoYh6EVc 1276367843
-Received: from bathl.localnet (stgt-4d038cfa.pool.mediaWays.net [77.3.140.250])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8A5BE4B2149
-	for <git@vger.kernel.org>; Sat, 12 Jun 2010 14:37:23 -0400 (EDT)
-User-Agent: KMail/1.12.4 (Linux/2.6.31-22-generic; KDE/4.3.5; x86_64; ; )
+	id S1752041Ab0FLSoZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jun 2010 14:44:25 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:53169 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751759Ab0FLSoY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 14:44:24 -0400
+Received: by gye5 with SMTP id 5so1608138gye.19
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 11:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=4qvg4+Cpz3biEOmG+PgwqDC+h5VRHJArrR2XQmMjLfs=;
+        b=xMFaomW3WGAimDopVuIYQ8OXjjxvnuiiUr2pC3l6H0kty8XcflQ1Wq1j7Y0bF8X/Oo
+         onnRKm0rk8WYpfJb9CQn1Xrt5yS/YDQTJxB8Gd4h2dl32jlOEPdkFwbGrFB7t9hbZT0w
+         qQeDWmp2E8CtGDfP+T66BUKucmrreTZVdS0NY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=MgAB4MFbuGBAvZes/lmlW98hjC9fgH2YPtyZz/Mnux+dnCu53fM2CZJs+fLQZHvp+Q
+         PJQUKXwKT2+7lnlp375h+vGR7tJF5kw3uLSp1i8wK9j6ohj1Ci7N5yoPnz5yg8DPZMmJ
+         29Vt4LbrhMM8JRyaGujQrERrq07wgP9S4MZPU=
+Received: by 10.151.127.35 with SMTP id e35mr3008273ybn.168.1276368263474;
+        Sat, 12 Jun 2010 11:44:23 -0700 (PDT)
+Received: from [10.0.0.6] (c-24-129-111-166.hsd1.fl.comcast.net [24.129.111.166])
+        by mx.google.com with ESMTPS id q8sm19334768ybk.31.2010.06.12.11.44.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jun 2010 11:44:22 -0700 (PDT)
+User-Agent: Thunderbird 1.5.0.10 (X11/20060911)
+In-Reply-To: <AANLkTinec7_D-WHRfetVRVvmG0EGoW4ZTdiTvoGMgJvQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149028>
 
-Hello all, 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Fri, Jun 11, 2010 at 22:00, A Large Angry SCM <gitzilla@gmail.com>=
+ wrote:
+>> Can a command be listed twice? Some of these commands _really_ belon=
+g in
+>> more than one category.
+>=20
+> Of course it can. But what specific commands do you mean?
+>=20
 
-I just try to switch from hg and hg-mq to git and now "stg clone" does not 
-work as expected and I also don't find the answer anywhere.
-
-If I clone with "stg clone dir other-dir", I expect and need that in 
-"other-dir" still all patches can be pushed and popped from the branch. But 
-that does not work
-
-bernd@bathl lustre-1.8.3-ddn>stg applied
-improve_autogen.patch
-bug21581.patch
-lustre-ddn-version.patch
-disable_lru_resize.patch
-bug22729_size_t.patch
-
-
-# So a number of patches are applied to the Lustre branch. Now lets clone 
-that:
-
-cd ..
-stg clone lustre-1.8.3-ddn/ ../lustre-1.8.3-ddn1-build
-cd ../lustre-1.8.3-ddn1-build
-
-
-# And now stg does not work anymore in that directory
-bernd@bathl lustre-1.8.3-ddn1-build>stg series
-bernd@bathl lustre-1.8.3-ddn1-build>
-
-# Aaarg where are my patches?
-git log
-...
-
-(shows all patches applied)
-
-
-So either I'm doing something wrong, or stacked git will not suitable for my 
-needs.
-
-Any ideas or help would be greatly appreciated.
-
-
-Thanks,
-Bernd
+Start with git-checkout since it's a basic command and a branching comm=
+and.
