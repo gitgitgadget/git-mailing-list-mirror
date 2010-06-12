@@ -1,74 +1,77 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] cherry-pick: Add an option to prepend a string to the
- commit message
-Date: Sat, 12 Jun 2010 04:19:25 -0400
-Message-ID: <20100612081925.GA19525@coredump.intra.peff.net>
-References: <1276319237-12010-1-git-send-email-bobbypowers@gmail.com>
- <20100612055831.GA2426@burratino>
- <20100612062812.GA12685@coredump.intra.peff.net>
- <4C132C7E.5090606@gmail.com>
- <20100612071850.GA2765@burratino>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] Teach 'git grep' about
+ --open-files-in-pager=[<pager>]
+Date: Sat, 12 Jun 2010 11:46:38 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1006121139290.2689@bonsai2>
+References: <20100605005116.GA8774@progeny.tock> <alpine.DEB.1.00.1006051810300.1732@bonsai2> <20100612075542.GB2918@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Bobby Powers <bobbypowers@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-71040509-1276336000=:2689"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 12 10:19:41 2010
+X-From: git-owner@vger.kernel.org Sat Jun 12 11:46:50 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONLwI-0006P5-9B
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 10:19:38 +0200
+	id 1ONNIf-0000E6-L4
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 11:46:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753172Ab0FLITd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 04:19:33 -0400
-Received: from peff.net ([208.65.91.99]:43486 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753139Ab0FLIT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 04:19:29 -0400
-Received: (qmail 20168 invoked by uid 107); 12 Jun 2010 08:19:41 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Sat, 12 Jun 2010 04:19:41 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jun 2010 04:19:25 -0400
-Content-Disposition: inline
-In-Reply-To: <20100612071850.GA2765@burratino>
+	id S1753504Ab0FLJqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 05:46:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57585 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753478Ab0FLJqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 05:46:42 -0400
+Received: (qmail invoked by alias); 12 Jun 2010 09:46:40 -0000
+Received: from pD9EB0BD4.dip0.t-ipconnect.de (EHLO noname) [217.235.11.212]
+  by mail.gmx.net (mp005) with SMTP; 12 Jun 2010 11:46:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19ztlVeXwVzXhD0Oqmr8rzEIb3YFrZI2fbo5zbR61
+	G+ja886ZDwQU2z
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <20100612075542.GB2918@burratino>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148998>
 
-On Sat, Jun 12, 2010 at 02:18:50AM -0500, Jonathan Nieder wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Subject: Documentation: explain use of cherry-pick -n in scripts
+--8323329-71040509-1276336000=:2689
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Sat, 12 Jun 2010, Jonathan Nieder wrote:
+
+> Johannes Schindelin wrote:
+> > On Fri, 4 Jun 2010, Jonathan Nieder wrote:
 > 
-> Add an example to indicate how to munge a commit while cherry-picking it.
+> >> Johannes Schindelin (2):
+> >>   grep: Add the option '--open-files-in-pager'
+> >>   grep -O: allow optional argument specifying the pager (or editor)
+> >
+> > Last time I tried, it also needed the patch "Unify code paths of threaded 
+> > greps". Don't know if that one made it in already.
 > 
-> The formatting is ugly because I do not know how to ask asciidoc to
-> use a multiline heading in a definition list.
+> Thanks for the pointer, but I can’t seem to find any such patch.  Maybe
+> it was squashed into Fredrik’s patch (5b594f4)?
 
-I don't think there is a way to do what you want. Even an explicit " +"
-at the end of line, which is supposed to cause a line-break, doesn't
-seem to work.
+Nope, the patch is still there, even after a rebase.
 
-However, I wonder if all of the examples should actually be in "----"
-listing blocks. That would generally render them in a monospaced
-typewriter font (though in the manpage, it doesn't matter much), and
-your multiline addition would be rendered properly, too.
+In any case, the stuff is available in 4msysgit.git, and working (I was 
+sick and tired of maintaining two different forks, and it was costing me 
+too much time and work anyway, so I made 4msysgit.git's devel my main 
+branch).
 
-> +------------
-> +git checkout maint &&
-> +git cherry-pick -n bugfix &&
-> +git add new_file.txt &&
-> +git show -s bugfix --format='%s%n%n%b%n%nAlso add a new file.' |
-> +git commit -F -
-> +------------
+Thanks,
+Johannes
 
-You can use the much shorter "%B" instead of "%s%n%n%b" these days, and
-as a bonus, it will use the right number of newlines for a subject-only
-commit.
-
--Peff
+--8323329-71040509-1276336000=:2689--
