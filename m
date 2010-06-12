@@ -1,87 +1,97 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2 0/2] Teach 'git grep' about --open-files-in-pager=[<pager>]
-Date: Sat, 12 Jun 2010 13:38:54 +0200
-Message-ID: <4C1371CE.8010309@gnu.org>
-References: <20100605005116.GA8774@progeny.tock>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [WIP PATCH 0/3] implement merge strategy for submodule
+	links
+Date: Sat, 12 Jun 2010 14:06:20 +0200
+Message-ID: <20100612120620.GA13910@book.hvoigt.net>
+References: <cover.1276059473.git.hvoigt@hvoigt.net> <201006121212.50545.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 12 13:39:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Sat Jun 12 14:14:30 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONP3Q-0001jz-Ia
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 13:39:12 +0200
+	id 1ONPba-0000JN-6G
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 14:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628Ab0FLLi6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jun 2010 07:38:58 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:9715 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956Ab0FLLi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 07:38:58 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so608375fga.1
-        for <git@vger.kernel.org>; Sat, 12 Jun 2010 04:38:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=U+M+7aNDHyOtjZa68fYlYM+zyWYrQVzUH79NPVN7aNA=;
-        b=WLxsYAzwjk8i0UamQlgXMy8qishOh9yzkNZMbJfYUwCuvX8drq7dX+Dqn2BdEc8n+c
-         fDrn03LtIdK+jNzOAloEs9ZNd9C6+3xNSa5cHjJBD4vNG5H5OQTmf18c+0F5OnUbUjal
-         3PjPiPAAgUHgBfZwP46MUf9luUkwQVHVnjYzY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=d50ngsUyZisr85ZBBE/3MW40MCAiec+Z5V25Ab1WD1FU0Z34VwB7I3q24mpoCvaahI
-         qhxg198mUsumMq1yLPc7JeiP9sh+2fmw05M7xrLanYqnrnpyeYusFHPVS1rNukzI5pU0
-         Jef/4jIyeVZujG1IyycyfGvoq39V27KxmlGrk=
-Received: by 10.87.72.2 with SMTP id z2mr5268444fgk.29.1276342736569;
-        Sat, 12 Jun 2010 04:38:56 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (s209p8.home.99maxprogres.cz [85.93.118.17])
-        by mx.google.com with ESMTPS id 31sm3755971fkt.49.2010.06.12.04.38.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 12 Jun 2010 04:38:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
-In-Reply-To: <20100605005116.GA8774@progeny.tock>
+	id S1752922Ab0FLMGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 08:06:24 -0400
+Received: from darksea.de ([83.133.111.250]:53265 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752586Ab0FLMGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 08:06:23 -0400
+Received: (qmail 10057 invoked from network); 12 Jun 2010 14:06:21 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 12 Jun 2010 14:06:21 +0200
+Content-Disposition: inline
+In-Reply-To: <201006121212.50545.johan@herland.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149005>
 
-On 06/05/2010 02:51 AM, Jonathan Nieder wrote:
-> This series teaches =E2=80=98git grep=E2=80=99 to accept
->
-> 	git grep -Ovi some_function_name
->
-> to find all the call sites for some_function_name so they can be
-> adjusted.  Dscho=E2=80=99s cover letter[1] explains it better.
->
-> And in fact, Dscho did all the work here; this iteration just rebases=
- it
-> on master and adds some tests.
->
-> Happy hacking,
-> Jonathan
->
-> Johannes Schindelin (2):
->    grep: Add the option '--open-files-in-pager'
+Hi,
 
-Just a nit, why not just "--open-files-in"?  It is not necessarily a=20
-pager, as you cover letter shows.  Of course the shorter version works,=
-=20
-but I'm asking because I would like to add this option to GNU grep and =
-I=20
-would definitely prefer to avoid the "pager" reference.
+On Sat, Jun 12, 2010 at 12:12:50PM +0200, Johan Herland wrote:
+> On Friday 11 June 2010, Heiko Voigt wrote:
+> > The following patch series is a work in progress. The idea is whenever
+> > you need to merge two SHA1's of a submodule we search for a ref in the
+> > submodule which already contains both. If one such ref exists the
+> > resulting SHA1 is the one pointed at by that ref.
+> 
+> I appreciate the effort to improve submodule handling, but I'm not sure I 
+> like this approach. Even though you try to apply it as conservatively as 
+> possible, it still smells a little like trying to make Git too clever for 
+> its own good.
+> 
+> E.g. say we have the following commit history in the submodule:
+> 
+>   A---B---C---D  <-- master
+> 
+> Now, say that your merge conflict comes from one branch updating the 
+> submodule from B to C, while the other branch reverts the submodule from B 
+> to A. In your proposed scheme, Git would auto-resolve the conflict to D.
 
-Paolo
+You are right. I did forget to mention this in my topic letter: Both
+changes need to point forward. This exact case is also tested in the
+testcases and results in a merge conflict which needs to be resolved by
+hand.
+
+> This whole idea is somewhat similar to branch-tracking submodules (recently 
+> discussed in another thread), except that it only applies on _merge_ in the 
+> superproject, and you don't get to choose _which_ branch it's tracking. 
+> That's _way_ too arbitrary for my tastes.
+
+The difference to branch-tracking submodules is, if I understand it
+correctly, that with a merge you get an explicit SHA1 which is recorded.
+Whereras with branch-tracking you never know on which revision on the
+tracked branch the submodule was.
+
+Thats why I only want to search through stable branches further down. I
+mean stable in the git sense that they never get rewound and of course
+should contain the most stable part of development. To ease the
+configuration we would default to master which we could assume as
+stable. But if we want to be on the safe side we could also say that
+automatic submodule merging only works when the user has configured some
+stable branches.
+
+> > Future Plans:
+> > 
+> >   * Only search stable branches. E.g. by default only master and
+> >     */master. The stable branch list will be configurable.
+> 
+> What is this "stable" branch of which you speak? "Stable" is a very relative 
+> concept, depending on which repo you're working in, and which branch you're 
+> working on. In any case, master is often not the most stable branch in a 
+> given repo. In git.git for example, maint is more stable than master. Also, 
+> I have many repos where master should not be considered "stable" at all...
+
+See above.
+
+cheers Heiko
