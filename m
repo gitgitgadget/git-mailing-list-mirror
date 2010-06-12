@@ -1,82 +1,140 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: [PATCH 2/5] Not all vendor diffs support GNUisms (resend)
-Date: Sat, 12 Jun 2010 09:24:02 -0700
-Message-ID: <AANLkTin6rVO9n0NmTjCrxjDR9NL7ITal913MpGaCGjEV@mail.gmail.com>
-References: <20100311163039.GB7877@thor.il.thewrittenword.com>
-	<4B994324.9060400@lsrfire.ath.cx>
-	<20100315050943.GA22128@thor.il.thewrittenword.com>
-	<4BD45874.9010700@lsrfire.ath.cx>
-	<20100425152130.GA27695@thor.il.thewrittenword.com>
-	<4BD46BCA.3010308@lsrfire.ath.cx>
-	<20100426165010.GB28004@thor.il.thewrittenword.com>
-	<4BD5E2BC.3000106@lsrfire.ath.cx>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [ANNOUNCE] tig-0.16
+Date: Sat, 12 Jun 2010 12:24:05 -0400
+Message-ID: <AANLkTim3y6FiKlbI2sKv0hujAfyfkrMuZp-1MpktMdRp@mail.gmail.com>
+References: <5036131121414306558@unknownmsgid>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Gary V. Vaughan" <git@mlists.thewrittenword.com>,
-	git@vger.kernel.org
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Jun 12 18:24:12 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 12 18:24:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONTVE-0002Kq-Ey
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 18:24:12 +0200
+	id 1ONTVZ-0002SV-6h
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 18:24:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751633Ab0FLQYH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jun 2010 12:24:07 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46584 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751496Ab0FLQYD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Jun 2010 12:24:03 -0400
-Received: by wyb40 with SMTP id 40so2096068wyb.19
-        for <git@vger.kernel.org>; Sat, 12 Jun 2010 09:24:02 -0700 (PDT)
+	id S1751833Ab0FLQY3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 12:24:29 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49978 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751743Ab0FLQY2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 12:24:28 -0400
+Received: by iwn9 with SMTP id 9so1584935iwn.19
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 09:24:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=a1cC6izH+D4h6PoMHf4AG7A6+aaI0r21OCOqGZX4Nfg=;
-        b=T/a1bwnInGX08jYoEYgwMsLzPKZ6wVYv77i/7NIfcqu6NzdLGnSq6pRIURHFFQsSEO
-         ScUHv7i1UUSVb1Bl8L2XcCNVR94Zb4F+7Wr7LTl82crbkhi5FDYGZ08+TCYRZJfcG5vz
-         icPwWHY4Hu8VEs5veWLpJl4eMaM45dSagHMSw=
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        bh=jFljBHEQusjADK1R7v6t7S2KTgEdHWDlGg82qhs5lQY=;
+        b=R0fjovN4Jsoe27qu1x+7w86CsjOY5/7PjjrxTC88xZsAvEgMIFwFTn9xXTP9OfZGof
+         jYY1DPbNB2+QFSvwSkRIsBX3/RQgIirBwG6TPzTRlxrGqHVfMET7xkd6dd6++KZI4xi6
+         t8CGxhJ/RgtA22Gooqjh09k8iVUn8I/kPxPpI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ukqcfcgws6feLCfaX1coBUOAb+4tM9B6Oz8NNOsCGmKiN68ZwnQ0K+u8kOn1IJBquF
-         TrtG9pFE2+JdAZRYoUlgdrmOE/xng+J9juuG03X/mrc+qfoIPPhgJDgTS13LyMkUX/v6
-         Bc4hkbnbkZrVpHJEq2+w8EGGep7v0ZzbS7tTI=
-Received: by 10.216.85.147 with SMTP id u19mr517053wee.109.1276359842632; Sat, 
-	12 Jun 2010 09:24:02 -0700 (PDT)
-Received: by 10.216.23.71 with HTTP; Sat, 12 Jun 2010 09:24:02 -0700 (PDT)
-In-Reply-To: <4BD5E2BC.3000106@lsrfire.ath.cx>
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        b=jk2lhpNfYrUBPP0/jNJcyFpTo/BuNZ+ZhYTjjnd5WS7NS4vmm6q+3zn8XpiTse6DJQ
+         /52iHCHjXnrglZisFB0TINZ58nggEcL+f8/coiiKwdOZAZTDQQ0/f2Xvcr/jS5qy//3r
+         Y0pXwiZ+HfMyeteOnM0J8ZpmXXVg3UTPGCu28=
+Received: by 10.231.158.131 with SMTP id f3mr3632166ibx.54.1276359865675; Sat, 
+	12 Jun 2010 09:24:25 -0700 (PDT)
+Received: by 10.231.206.145 with HTTP; Sat, 12 Jun 2010 09:24:05 -0700 (PDT)
+In-Reply-To: <5036131121414306558@unknownmsgid>
+X-Google-Sender-Auth: goepvfHu8xumePcfP3khm82YOh8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149013>
 
-Hey,
+Salut,
 
-On Mon, Apr 26, 2010 at 12:00 PM, Ren=C3=A9 Scharfe
-<rene.scharfe@lsrfire.ath.cx> wrote:
->>
->> http://git-scm.com/download still shows 1.7.0.6 as the latest releas=
-e,
->> or is 1.7.1 not considered stable?
->
-> I guess the release is just too fresh and Scott hasn't come around to
-> updating the website, yet. =C2=A01.7.1 is the current stable version.
->
+A new version of tig is available. Thanks to everyone who provided
+patches and input.
 
-I realize this is a rather old thread, but I didn't see it before.  I
-don't actually maintain the version by hand - it is updated
-automatically when Junio cuts the maint branch.  It took him a bit
-longer to cut the maint branch after 1.7.1 was released, so the site
-wasn't updated until then.  FYI.
+In the pipe-line are changes to finally rewrite the graph visualisation
+(currently being rebased in wip/graph) and retire the log view.
 
-Scott
+What is tig?
+------------
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various git
+commands.
+
+ - Homepage:	http://jonas.nitro.dk/tig/
+ - Manual:	http://jonas.nitro.dk/tig/manual.html
+ - Tarballs:	http://jonas.nitro.dk/tig/releases/
+ - Git URL:	git://repo.or.cz/tig.git
+ - Gitweb:	http://repo.or.cz/w/tig.git
+
+Release notes
+-------------
+Incompatibilities:
+
+ - Encode everything internally as UTF-8. This can affect performance,
+   but should in general improve handling of character lengths etc.
+   Also, to properly handle UTF-8 environments use ncurses with wide
+   character support.
+ - The use of TIG_{MAIN,DIFF,LOG,TREE,BLOB}_CMD environment variables
+   has been deprecated. To allow configuration of the diff view,
+   TIG_DIFF_OPTS can be used.
+
+Improvements:
+
+ - Plug several memory leaks.
+ - Command line arguments are split into diff, revision, and file
+   arguments and made available as %(diffargs), %(revargs), and
+   %(fileargs). Diff view will limit diffs using %(fileargs).
+ - Status view: update the file variable when a line is selected so
+   %(file) works as expected.
+ - Branch view: add %(branch) symbol providing access to the selected
+   branch.
+ - Branch view: add entry to browse all branches (uses git-log's --all
+   flag).
+ - Abbreviation of author names can now be configured and toggled.
+ - Mark detached heads with [HEAD].
+ - Add support for displaying dates in local time.
+
+Bug fixes:
+
+ - Status view: fix usage from sub directories, which was broken by the
+   changes made to support blame view from sub directories.
+ - Fix text expansion to not truncate long lines
+ - Fix parsing of boolean show-date values.
+ - Fix relative date.
+ - Fix unbind to behave as if the keybinding was never defined.
+ - Fix unbind to also cover built-in run requests.
+ - Fix parsing of unknown keymap names.
+ - Blame view: fix parent blame to detect renames. It uses "previous"
+   line info from the blame porcelain output added in git version 1.6.3.
+
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
+
+ INSTALL                     |   19 +-
+ Makefile                    |   13 +
+ NEWS                        |   42 +
+ TODO                        |    2 +
+ VERSION                     |    2 +-
+ contrib/announcement.sh     |    2 +-
+ contrib/aspell.dict         |   13 +-
+ contrib/release.sh          |    2 +-
+ contrib/tig-completion.bash |    2 +-
+ manual.txt                  |   81 +--
+ tig.1.txt                   |   29 +-
+ tig.c                       | 1724 +++++++++++++++++++----------------
+ tigrc.5.txt                 |   29 +-
+ 13 files changed, 1065 insertions(+), 895 deletions(-)
+
+     1	Ingmar Vanhassel
+     2	Jeff King
+    89	Jonas Fonseca
+     2	Simon Gerber
+     1	Simon Ruderich
+     1	jipey
