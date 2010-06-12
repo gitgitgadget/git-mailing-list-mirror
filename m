@@ -1,97 +1,229 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [WIP PATCH 0/3] implement merge strategy for submodule
-	links
-Date: Sat, 12 Jun 2010 14:06:20 +0200
-Message-ID: <20100612120620.GA13910@book.hvoigt.net>
-References: <cover.1276059473.git.hvoigt@hvoigt.net> <201006121212.50545.johan@herland.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH next] parseopt: wrap rev-parse --parseopt usage for eval consumption
+Date: Sat, 12 Jun 2010 14:57:39 +0200
+Message-ID: <49d2c5f5626b22c02d7528e76f9fbb36b7b96155.1276347347.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Jun 12 14:14:30 2010
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Giuseppe Scrivano <gscrivano@gnu.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 12 14:58:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONPba-0000JN-6G
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 14:14:30 +0200
+	id 1ONQHw-000494-Nb
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 14:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752922Ab0FLMGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 08:06:24 -0400
-Received: from darksea.de ([83.133.111.250]:53265 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752586Ab0FLMGX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 08:06:23 -0400
-Received: (qmail 10057 invoked from network); 12 Jun 2010 14:06:21 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 12 Jun 2010 14:06:21 +0200
-Content-Disposition: inline
-In-Reply-To: <201006121212.50545.johan@herland.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753833Ab0FLM6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 08:58:05 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:5535 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753726Ab0FLM6E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 08:58:04 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 12 Jun
+ 2010 14:58:00 +0200
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 12 Jun
+ 2010 14:57:39 +0200
+X-Mailer: git-send-email 1.7.1.556.gfe6ec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149006>
 
-Hi,
+9c7304e (print the usage string on stdout instead of stderr,
+2010-05-17) broke rev-parse --parseopt: when run with -h, the usage
+notice on stdout ended up in the shell eval.
 
-On Sat, Jun 12, 2010 at 12:12:50PM +0200, Johan Herland wrote:
-> On Friday 11 June 2010, Heiko Voigt wrote:
-> > The following patch series is a work in progress. The idea is whenever
-> > you need to merge two SHA1's of a submodule we search for a ref in the
-> > submodule which already contains both. If one such ref exists the
-> > resulting SHA1 is the one pointed at by that ref.
-> 
-> I appreciate the effort to improve submodule handling, but I'm not sure I 
-> like this approach. Even though you try to apply it as conservatively as 
-> possible, it still smells a little like trying to make Git too clever for 
-> its own good.
-> 
-> E.g. say we have the following commit history in the submodule:
-> 
->   A---B---C---D  <-- master
-> 
-> Now, say that your merge conflict comes from one branch updating the 
-> submodule from B to C, while the other branch reverts the submodule from B 
-> to A. In your proposed scheme, Git would auto-resolve the conflict to D.
+Wrap the usage in a cat <<\EOF ... EOF block when printing to stdout.
+I do not expect any usage lines to ever start with EOF so this
+shouldn't be an undue burden.
 
-You are right. I did forget to mention this in my topic letter: Both
-changes need to point forward. This exact case is also tested in the
-testcases and results in a merge conflict which needs to be resolved by
-hand.
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-> This whole idea is somewhat similar to branch-tracking submodules (recently 
-> discussed in another thread), except that it only applies on _merge_ in the 
-> superproject, and you don't get to choose _which_ branch it's tracking. 
-> That's _way_ too arbitrary for my tastes.
+Unfortunately the impact is about half that of 9c7304e.  Maybe there's
+a simpler solution that I'm missing.
 
-The difference to branch-tracking submodules is, if I understand it
-correctly, that with a merge you get an explicit SHA1 which is recorded.
-Whereras with branch-tracking you never know on which revision on the
-tracked branch the submodule was.
 
-Thats why I only want to search through stable branches further down. I
-mean stable in the git sense that they never get rewound and of course
-should contain the most stable part of development. To ease the
-configuration we would default to master which we could assume as
-stable. But if we want to be on the safe side we could also say that
-automatic submodule merging only works when the user has configured some
-stable branches.
+ builtin/rev-parse.c           |    3 ++-
+ parse-options.c               |   38 ++++++++++++++++++++++++--------------
+ parse-options.h               |    3 ++-
+ t/t1502-rev-parse-parseopt.sh |    4 +++-
+ 4 files changed, 31 insertions(+), 17 deletions(-)
 
-> > Future Plans:
-> > 
-> >   * Only search stable branches. E.g. by default only master and
-> >     */master. The stable branch list will be configurable.
-> 
-> What is this "stable" branch of which you speak? "Stable" is a very relative 
-> concept, depending on which repo you're working in, and which branch you're 
-> working on. In any case, master is often not the most stable branch in a 
-> given repo. In git.git for example, maint is more stable than master. Also, 
-> I have many repos where master should not be considered "stable" at all...
-
-See above.
-
-cheers Heiko
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 8fbf9d0..b676e29 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -408,7 +408,8 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
+ 	memset(opts + onb, 0, sizeof(opts[onb]));
+ 	argc = parse_options(argc, argv, prefix, opts, usage,
+ 			keep_dashdash ? PARSE_OPT_KEEP_DASHDASH : 0 |
+-			stop_at_non_option ? PARSE_OPT_STOP_AT_NON_OPTION : 0);
++			stop_at_non_option ? PARSE_OPT_STOP_AT_NON_OPTION : 0 |
++			PARSE_OPT_SHELL_EVAL);
+ 
+ 	strbuf_addf(&parsed, " --");
+ 	sq_quote_argv(&parsed, argv, 0);
+diff --git a/parse-options.c b/parse-options.c
+index c8aaf95..0fa79bc 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -4,7 +4,8 @@
+ #include "commit.h"
+ #include "color.h"
+ 
+-static int parse_options_usage(const char * const *usagestr,
++static int parse_options_usage(struct parse_opt_ctx_t *ctx,
++			       const char * const *usagestr,
+ 			       const struct option *opts, int err);
+ 
+ #define OPT_SHORT 1
+@@ -351,7 +352,8 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
+ 		die("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
+ }
+ 
+-static int usage_with_options_internal(const char * const *,
++static int usage_with_options_internal(struct parse_opt_ctx_t *,
++				       const char * const *,
+ 				       const struct option *, int, int);
+ 
+ int parse_options_step(struct parse_opt_ctx_t *ctx,
+@@ -380,10 +382,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		if (arg[1] != '-') {
+ 			ctx->opt = arg + 1;
+ 			if (internal_help && *ctx->opt == 'h')
+-				return parse_options_usage(usagestr, options, 0);
++				return parse_options_usage(ctx, usagestr, options, 0);
+ 			switch (parse_short_opt(ctx, options)) {
+ 			case -1:
+-				return parse_options_usage(usagestr, options, 1);
++				return parse_options_usage(ctx, usagestr, options, 1);
+ 			case -2:
+ 				goto unknown;
+ 			}
+@@ -391,10 +393,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 				check_typos(arg + 1, options);
+ 			while (ctx->opt) {
+ 				if (internal_help && *ctx->opt == 'h')
+-					return parse_options_usage(usagestr, options, 0);
++					return parse_options_usage(ctx, usagestr, options, 0);
+ 				switch (parse_short_opt(ctx, options)) {
+ 				case -1:
+-					return parse_options_usage(usagestr, options, 1);
++					return parse_options_usage(ctx, usagestr, options, 1);
+ 				case -2:
+ 					/* fake a short option thing to hide the fact that we may have
+ 					 * started to parse aggregated stuff
+@@ -418,12 +420,12 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		}
+ 
+ 		if (internal_help && !strcmp(arg + 2, "help-all"))
+-			return usage_with_options_internal(usagestr, options, 1, 0);
++			return usage_with_options_internal(ctx, usagestr, options, 1, 0);
+ 		if (internal_help && !strcmp(arg + 2, "help"))
+-			return parse_options_usage(usagestr, options, 0);
++			return parse_options_usage(ctx, usagestr, options, 0);
+ 		switch (parse_long_opt(ctx, arg + 2, options)) {
+ 		case -1:
+-			return parse_options_usage(usagestr, options, 1);
++			return parse_options_usage(ctx, usagestr, options, 1);
+ 		case -2:
+ 			goto unknown;
+ 		}
+@@ -485,14 +487,18 @@ static int usage_argh(const struct option *opts, FILE *outfile)
+ #define USAGE_OPTS_WIDTH 24
+ #define USAGE_GAP         2
+ 
+-static int usage_with_options_internal(const char * const *usagestr,
+-				const struct option *opts, int full, int err)
++static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
++				       const char * const *usagestr,
++				       const struct option *opts, int full, int err)
+ {
+ 	FILE *outfile = err ? stderr : stdout;
+ 
+ 	if (!usagestr)
+ 		return PARSE_OPT_HELP;
+ 
++	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
++		fprintf(outfile, "cat <<\\EOF\n");
++
+ 	fprintf(outfile, "usage: %s\n", *usagestr++);
+ 	while (*usagestr && **usagestr)
+ 		fprintf(outfile, "   or: %s\n", *usagestr++);
+@@ -548,13 +554,16 @@ static int usage_with_options_internal(const char * const *usagestr,
+ 	}
+ 	fputc('\n', outfile);
+ 
++	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
++		fputs("EOF\n", outfile);
++
+ 	return PARSE_OPT_HELP;
+ }
+ 
+ void usage_with_options(const char * const *usagestr,
+ 			const struct option *opts)
+ {
+-	usage_with_options_internal(usagestr, opts, 0, 1);
++	usage_with_options_internal(NULL, usagestr, opts, 0, 1);
+ 	exit(129);
+ }
+ 
+@@ -566,10 +575,11 @@ void usage_msg_opt(const char *msg,
+ 	usage_with_options(usagestr, options);
+ }
+ 
+-static int parse_options_usage(const char * const *usagestr,
++static int parse_options_usage(struct parse_opt_ctx_t *ctx,
++			       const char * const *usagestr,
+ 			       const struct option *opts, int err)
+ {
+-	return usage_with_options_internal(usagestr, opts, 0, err);
++	return usage_with_options_internal(ctx, usagestr, opts, 0, err);
+ }
+ 
+ 
+diff --git a/parse-options.h b/parse-options.h
+index 678b58d..7435cdb 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -36,7 +36,8 @@ enum parse_opt_option_flags {
+ 	PARSE_OPT_LASTARG_DEFAULT = 16,
+ 	PARSE_OPT_NODASH = 32,
+ 	PARSE_OPT_LITERAL_ARGHELP = 64,
+-	PARSE_OPT_NEGHELP = 128
++	PARSE_OPT_NEGHELP = 128,
++	PARSE_OPT_SHELL_EVAL = 256
+ };
+ 
+ struct option;
+diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
+index 660487d..4346795 100755
+--- a/t/t1502-rev-parse-parseopt.sh
++++ b/t/t1502-rev-parse-parseopt.sh
+@@ -3,7 +3,8 @@
+ test_description='test git rev-parse --parseopt'
+ . ./test-lib.sh
+ 
+-cat > expect <<EOF
++cat > expect <<\END_EXPECT
++cat <<\EOF
+ usage: some-command [options] <args>...
+ 
+     some-command does foo and bar!
+@@ -19,6 +20,7 @@ Extras
+     --extra1              line above used to cause a segfault but no longer does
+ 
+ EOF
++END_EXPECT
+ 
+ cat > optionspec << EOF
+ some-command [options] <args>...
+-- 
+1.7.1.556.gfe6ec
