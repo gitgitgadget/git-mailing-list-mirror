@@ -1,229 +1,150 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH next] parseopt: wrap rev-parse --parseopt usage for eval consumption
-Date: Sat, 12 Jun 2010 14:57:39 +0200
-Message-ID: <49d2c5f5626b22c02d7528e76f9fbb36b7b96155.1276347347.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, Giuseppe Scrivano <gscrivano@gnu.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 12 14:58:20 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v6 3/3] commit::print_summary(): don't use format_commit_message()
+Date: Sat, 12 Jun 2010 22:15:39 +0800
+Message-ID: <1276352139-2272-1-git-send-email-rctay89@gmail.com>
+References: <20100609130558.000013a3@unknown>, <1275639660-5344-1-git-send-email-rctay89@gmail.com>, <AANLkTimuTIugURlYxwbk7wGW2IM11YTy4P91YDguLQUb@mail.gmail.com>, <7v4ohlatwn.fsf@alter.siamese.dyndns.org>, <1274974492-4692-4-git-send-email-rctay89@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	Will Palmer <wmpalmer@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 12 16:16:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONQHw-000494-Nb
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 14:58:17 +0200
+	id 1ONRVP-0000Yk-Fq
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 16:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753833Ab0FLM6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 08:58:05 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:5535 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753726Ab0FLM6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 08:58:04 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 12 Jun
- 2010 14:58:00 +0200
-Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 12 Jun
- 2010 14:57:39 +0200
-X-Mailer: git-send-email 1.7.1.556.gfe6ec
+	id S1752720Ab0FLOQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jun 2010 10:16:07 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:49546 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752370Ab0FLOQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 10:16:03 -0400
+Received: by pvg16 with SMTP id 16so1478495pvg.19
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 07:16:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:references;
+        bh=MdZEN0NMIAL9WFoqnGMCY17/xHzHJHjIFghTUu3fDPs=;
+        b=gSOHvvxlpjDXYhNFhdB45fl2Ex4/tuCNxUQ2SoOSXPrOO1qmtsVwbO/vNbg8bPVsGP
+         Vb1iffIt0fjURoUuFfqrua9/Gn+eJZCeHfqyiekZoSVGZcV9mi4wwsXtIvUJ5tVK30ng
+         UvC15HLRF08MyrgwyqhbdEOMC4dzyEYOCDky4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:references;
+        b=nOptcXyejoQXzXTBRhJR8w3gkhJXQm+IZI1rlLv3YDh/0MD0d7TJQH75/gWWrYrfqb
+         ZgEXrvxj5mfRkYjWTDSXaSCIbNX5bQKV2aBvsnfaOUcpvzVtun0vnuDPbT2S7uPnkUJw
+         yixjsm0VlORH8rng8ljhe5AoEJQelzv1pDY54=
+Received: by 10.114.187.11 with SMTP id k11mr2611745waf.153.1276352161572;
+        Sat, 12 Jun 2010 07:16:01 -0700 (PDT)
+Received: from localhost.localdomain (cm54.zeta152.maxonline.com.sg [116.87.152.54])
+        by mx.google.com with ESMTPS id f11sm27776265wai.23.2010.06.12.07.15.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jun 2010 07:16:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.352.g12d15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149007>
 
-9c7304e (print the usage string on stdout instead of stderr,
-2010-05-17) broke rev-parse --parseopt: when run with -h, the usage
-notice on stdout ended up in the shell eval.
+This attempts to fix a regression in git-commit, where non-abbreviated
+SHA-1s were printed in the summary.
 
-Wrap the usage in a cat <<\EOF ... EOF block when printing to stdout.
-I do not expect any usage lines to ever start with EOF so this
-shouldn't be an undue burden.
+One possible fix would be to set ctx.abbrev to DEFAULT_ABBREV in the
+`if` block, where format_commit_message() is used.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Instead, we do away with the format_commit_message() codeblock
+altogether, replacing it with a re-run of log_tree_commit().
+
+We re-run log_tree_commit() with rev.always_show_header set, to force
+the invocation of show_log(). The effect of this flag can be seen from
+this excerpt from log-tree.c:560, the only area that
+rev.always_show_header is checked:
+
+	shown = log_tree_diff(opt, commit, &log);
+	if (!shown && opt->loginfo && opt->always_show_header) {
+		log.parent = NULL;
+		show_log(opt);
+		shown = 1;
+	}
+
+We also set rev.use_terminator, so that a newline is appended at the end
+of the log message. Note that callers in builtin/log.c that also set
+rev.always_show_header don't have to set rev.use_terminator, but still
+get a newline, because they are wrapped in a pager.
+
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
 
-Unfortunately the impact is about half that of 9c7304e.  Maybe there's
-a simpler solution that I'm missing.
+This is a reworked version of the third patch of the
+'tc/commit-abbrev-fix' series; there are no changes to the first and
+second patches.
 
+Changes from v5:
 
- builtin/rev-parse.c           |    3 ++-
- parse-options.c               |   38 ++++++++++++++++++++++++--------------
- parse-options.h               |    3 ++-
- t/t1502-rev-parse-parseopt.sh |    4 +++-
- 4 files changed, 31 insertions(+), 17 deletions(-)
+ - don't set rev.always_show_header immediately, so that when there is
+   no diff, log_tree_commit() returns false, as before the patch;
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 8fbf9d0..b676e29 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -408,7 +408,8 @@ static int cmd_parseopt(int argc, const char **argv, const char *prefix)
- 	memset(opts + onb, 0, sizeof(opts[onb]));
- 	argc = parse_options(argc, argv, prefix, opts, usage,
- 			keep_dashdash ? PARSE_OPT_KEEP_DASHDASH : 0 |
--			stop_at_non_option ? PARSE_OPT_STOP_AT_NON_OPTION : 0);
-+			stop_at_non_option ? PARSE_OPT_STOP_AT_NON_OPTION : 0 |
-+			PARSE_OPT_SHELL_EVAL);
- 
- 	strbuf_addf(&parsed, " --");
- 	sq_quote_argv(&parsed, argv, 0);
-diff --git a/parse-options.c b/parse-options.c
-index c8aaf95..0fa79bc 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -4,7 +4,8 @@
- #include "commit.h"
- #include "color.h"
- 
--static int parse_options_usage(const char * const *usagestr,
-+static int parse_options_usage(struct parse_opt_ctx_t *ctx,
-+			       const char * const *usagestr,
- 			       const struct option *opts, int err);
- 
- #define OPT_SHORT 1
-@@ -351,7 +352,8 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
- 		die("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
- }
- 
--static int usage_with_options_internal(const char * const *,
-+static int usage_with_options_internal(struct parse_opt_ctx_t *,
-+				       const char * const *,
- 				       const struct option *, int, int);
- 
- int parse_options_step(struct parse_opt_ctx_t *ctx,
-@@ -380,10 +382,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 		if (arg[1] != '-') {
- 			ctx->opt = arg + 1;
- 			if (internal_help && *ctx->opt == 'h')
--				return parse_options_usage(usagestr, options, 0);
-+				return parse_options_usage(ctx, usagestr, options, 0);
- 			switch (parse_short_opt(ctx, options)) {
- 			case -1:
--				return parse_options_usage(usagestr, options, 1);
-+				return parse_options_usage(ctx, usagestr, options, 1);
- 			case -2:
- 				goto unknown;
- 			}
-@@ -391,10 +393,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 				check_typos(arg + 1, options);
- 			while (ctx->opt) {
- 				if (internal_help && *ctx->opt == 'h')
--					return parse_options_usage(usagestr, options, 0);
-+					return parse_options_usage(ctx, usagestr, options, 0);
- 				switch (parse_short_opt(ctx, options)) {
- 				case -1:
--					return parse_options_usage(usagestr, options, 1);
-+					return parse_options_usage(ctx, usagestr, options, 1);
- 				case -2:
- 					/* fake a short option thing to hide the fact that we may have
- 					 * started to parse aggregated stuff
-@@ -418,12 +420,12 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 		}
- 
- 		if (internal_help && !strcmp(arg + 2, "help-all"))
--			return usage_with_options_internal(usagestr, options, 1, 0);
-+			return usage_with_options_internal(ctx, usagestr, options, 1, 0);
- 		if (internal_help && !strcmp(arg + 2, "help"))
--			return parse_options_usage(usagestr, options, 0);
-+			return parse_options_usage(ctx, usagestr, options, 0);
- 		switch (parse_long_opt(ctx, arg + 2, options)) {
- 		case -1:
--			return parse_options_usage(usagestr, options, 1);
-+			return parse_options_usage(ctx, usagestr, options, 1);
- 		case -2:
- 			goto unknown;
- 		}
-@@ -485,14 +487,18 @@ static int usage_argh(const struct option *opts, FILE *outfile)
- #define USAGE_OPTS_WIDTH 24
- #define USAGE_GAP         2
- 
--static int usage_with_options_internal(const char * const *usagestr,
--				const struct option *opts, int full, int err)
-+static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
-+				       const char * const *usagestr,
-+				       const struct option *opts, int full, int err)
- {
- 	FILE *outfile = err ? stderr : stdout;
- 
- 	if (!usagestr)
- 		return PARSE_OPT_HELP;
- 
-+	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
-+		fprintf(outfile, "cat <<\\EOF\n");
-+
- 	fprintf(outfile, "usage: %s\n", *usagestr++);
- 	while (*usagestr && **usagestr)
- 		fprintf(outfile, "   or: %s\n", *usagestr++);
-@@ -548,13 +554,16 @@ static int usage_with_options_internal(const char * const *usagestr,
+ - when log_tree_commit() returns false (ie. no diff), set
+   rev.always_show_header, and re-run log_tree_commit();
+
+ - add a missing newline to summary output by setting
+   rev.use_terminator.
+
+See the patch message for more details.
+
+In case you're wondering where's v5, it was sent in a private review:
+
+  http://github.com/gitster/git/commit/c69160d
+
+ builtin/commit.c  |   10 ++++------
+ t/t7502-commit.sh |    4 ++--
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a4e4966..aa92362 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1163,13 +1163,11 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 		initial_commit ? " (root-commit)" : "");
+
+ 	if (!log_tree_commit(&rev, commit)) {
+-		struct pretty_print_context ctx = {0};
+-		struct strbuf buf = STRBUF_INIT;
+-		ctx.date_mode = DATE_NORMAL;
+-		format_commit_message(commit, format.buf + 7, &buf, &ctx);
+-		printf("%s\n", buf.buf);
+-		strbuf_release(&buf);
++		rev.always_show_header = 1;
++		rev.use_terminator = 1;
++		log_tree_commit(&rev, commit);
  	}
- 	fputc('\n', outfile);
- 
-+	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
-+		fputs("EOF\n", outfile);
 +
- 	return PARSE_OPT_HELP;
+ 	strbuf_release(&format);
  }
- 
- void usage_with_options(const char * const *usagestr,
- 			const struct option *opts)
- {
--	usage_with_options_internal(usagestr, opts, 0, 1);
-+	usage_with_options_internal(NULL, usagestr, opts, 0, 1);
- 	exit(129);
- }
- 
-@@ -566,10 +575,11 @@ void usage_msg_opt(const char *msg,
- 	usage_with_options(usagestr, options);
- }
- 
--static int parse_options_usage(const char * const *usagestr,
-+static int parse_options_usage(struct parse_opt_ctx_t *ctx,
-+			       const char * const *usagestr,
- 			       const struct option *opts, int err)
- {
--	return usage_with_options_internal(usagestr, opts, 0, err);
-+	return usage_with_options_internal(ctx, usagestr, opts, 0, err);
- }
- 
- 
-diff --git a/parse-options.h b/parse-options.h
-index 678b58d..7435cdb 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -36,7 +36,8 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_LASTARG_DEFAULT = 16,
- 	PARSE_OPT_NODASH = 32,
- 	PARSE_OPT_LITERAL_ARGHELP = 64,
--	PARSE_OPT_NEGHELP = 128
-+	PARSE_OPT_NEGHELP = 128,
-+	PARSE_OPT_SHELL_EVAL = 256
- };
- 
- struct option;
-diff --git a/t/t1502-rev-parse-parseopt.sh b/t/t1502-rev-parse-parseopt.sh
-index 660487d..4346795 100755
---- a/t/t1502-rev-parse-parseopt.sh
-+++ b/t/t1502-rev-parse-parseopt.sh
-@@ -3,7 +3,8 @@
- test_description='test git rev-parse --parseopt'
- . ./test-lib.sh
- 
--cat > expect <<EOF
-+cat > expect <<\END_EXPECT
-+cat <<\EOF
- usage: some-command [options] <args>...
- 
-     some-command does foo and bar!
-@@ -19,6 +20,7 @@ Extras
-     --extra1              line above used to cause a segfault but no longer does
- 
- EOF
-+END_EXPECT
- 
- cat > optionspec << EOF
- some-command [options] <args>...
--- 
-1.7.1.556.gfe6ec
+
+diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
+index b10541d..08c0247 100755
+--- a/t/t7502-commit.sh
++++ b/t/t7502-commit.sh
+@@ -36,12 +36,12 @@ test_expect_success 'output summary format' '
+ 	check_summary_oneline "" "a change"
+ '
+
+-test_expect_failure 'output summary format for commit with an empty diff' '
++test_expect_success 'output summary format for commit with an empty diff' '
+
+ 	check_summary_oneline "" "empty" "--allow-empty"
+ '
+
+-test_expect_failure 'output summary format for merges' '
++test_expect_success 'output summary format for merges' '
+
+ 	git checkout -b recursive-base &&
+ 	test_commit base file1 &&
+--
+1.7.1.189.g07419
