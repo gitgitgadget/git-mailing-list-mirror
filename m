@@ -1,83 +1,94 @@
-From: Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH 4/4] grep -O: allow optional argument specifying the pager
- (or editor)
-Date: Sat, 12 Jun 2010 19:16:17 +0200
-Message-ID: <4C13C0E1.3070707@gnu.org>
-References: <20100605005116.GA8774@progeny.tock> <alpine.DEB.1.00.1006051810300.1732@bonsai2> <20100612075542.GB2918@burratino> <alpine.DEB.1.00.1006121139290.2689@bonsai2> <20100612162945.GB1406@burratino> <20100612163946.GD5657@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC v7 1/2] Add infrastructure for translating Git with
+ gettext
+Date: Sat, 12 Jun 2010 12:26:05 -0500
+Message-ID: <20100612172605.GA6132@burratino>
+References: <1275704035-6552-1-git-send-email-avarab@gmail.com>
+ <1275704035-6552-2-git-send-email-avarab@gmail.com>
+ <20100605025702.GA2019@progeny.tock>
+ <AANLkTil541q0RtZsEmnLOtUNxfltvcFCGxpxR-myhyDl@mail.gmail.com>
+ <20100605033626.GA2252@progeny.tock>
+ <AANLkTimHZdT3vfuUyG1cnanE3WLrhDGqqw5JyYfza6wD@mail.gmail.com>
+ <20100605192717.GB5273@progeny.tock>
+ <AANLkTimeaQeCoGREwwaOdaW6c9WTUNZF9oLfNZy7DVo3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 12 19:16:31 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 12 19:26:27 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONUJo-0005lm-Qo
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 19:16:29 +0200
+	id 1ONUTN-0000w6-N7
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 19:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882Ab0FLRQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jun 2010 13:16:23 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:6366 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750888Ab0FLRQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jun 2010 13:16:23 -0400
-Received: by fg-out-1718.google.com with SMTP id d23so676156fga.1
-        for <git@vger.kernel.org>; Sat, 12 Jun 2010 10:16:21 -0700 (PDT)
+	id S1751852Ab0FLR0P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Jun 2010 13:26:15 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64213 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751061Ab0FLR0O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jun 2010 13:26:14 -0400
+Received: by iwn9 with SMTP id 9so1629721iwn.19
+        for <git@vger.kernel.org>; Sat, 12 Jun 2010 10:26:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=8MqFxjrwDYwMdaV6DDbfUhDp2Bbz+n0uGAw6Lc5MWtQ=;
-        b=XimBK2ILj49CjrXTqJrlvO85lz30rqPBOoC0tpbrQWHLoPKhVzfcVC96iW/2CJzH+u
-         rrJt9C1mMC1hBQS0brC/YL7Nzd0qLRnOSNCSiu3hQAWEc+jEEuSJM1JaJVY2n6u2bdv0
-         DVqfKjRLy4CYoeTIkBIJhmvjYKQ5zJ3wls8Ss=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=C+6Hg1p2hay2Py89cM5bJZ+GOYMsiD6s139/Hs+HJSw=;
+        b=IJcr62jOepIMmN16sTh/9E5ULIL2zfL6tLyfKROt4hmZfi4JIDeRGwt63vhsQznx3p
+         uXmBExkIw1z3KMvKINYWD+WKUxkWoLlHXrrawjseWBMSWhEgPyLOv1mvjoPFxpQKGfil
+         QWX3PkhLEHufl6MUm91E+eXMB3sxxTPtagbQE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=ZB3m/Kt2cnh56yPQaIgqHIvMxv5KkJfjMEWo8IyJuficlVyYswfuga+SZpjMPTT4Km
-         MMt5bh3riFInBsQqq1k7sSj+vwbmlo3NoSKj6Rah3By28QYAxoMNvfkeNN6S9zbU6fEB
-         8DpgGsFX8NaP7P5e3UMGGspnycabla/weVpFc=
-Received: by 10.87.66.15 with SMTP id t15mr5776511fgk.37.1276362980655;
-        Sat, 12 Jun 2010 10:16:20 -0700 (PDT)
-Received: from yakj.usersys.redhat.com (s209p8.home.99maxprogres.cz [85.93.118.17])
-        by mx.google.com with ESMTPS id 1sm4314464fkt.11.2010.06.12.10.16.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 12 Jun 2010 10:16:19 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-3.fc13 Lightning/1.0b2pre Thunderbird/3.0.4
-In-Reply-To: <20100612163946.GD5657@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=UWvjkI2RVimnMIt8wA/6Tmx49h6tqNpp97c+WtKAINjmvjSl+Jq/m2y4z16rFr28ct
+         M5dPJseKDLf/CoT/xGfa6JdFQH9KoiJovvSCDZaYcfoLcZQgzbflE7ZpK+kroWLYmslU
+         QazH3oPUNU592xvwVspN+riTxG30TBJSJ4BBc=
+Received: by 10.231.168.135 with SMTP id u7mr3683757iby.125.1276363573278;
+        Sat, 12 Jun 2010 10:26:13 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id b3sm11293528ibf.13.2010.06.12.10.26.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 12 Jun 2010 10:26:12 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimeaQeCoGREwwaOdaW6c9WTUNZF9oLfNZy7DVo3@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149025>
 
-On 06/12/2010 06:39 PM, Jonathan Nieder wrote:
-> From: Johannes Schindelin<johannes.schindelin@gmx.de>
->
-> Suppose you want to edit all files that contain a specific search term.
-> Of course, you can do something totally trivial such as
->
-> 	git grep -z -e<term>  | xargs -0r vi +/<term>
->
-> but maybe you are happy that the same will be achieved by
->
-> 	git grep -Ovi<term>
->
-> now.
+Hi =C6var,
 
-Ah, I had missed that the argument was optional.  I think that optional 
-arguments are slightly frowned upon for POSIX utilities, because they're 
-a bit different.  In fact, I think the only one is -i in sed (and BSD 
-sed instead makes it mandatory...).  Personally I have no problem with 
-making -O in GNU grep optional too, I'll see what the other maintainers say.
+Sorry for the long delay in replying.
 
-Acked-by: Paolo Bonzini <bonzini@gnu.org>
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-Paolo
+> I didn't see a reason not to enable it by default.
+
+I only meant that if it is very useful but the kinks not ironed out,
+releasing with the feature disabled by default is a way to cope.
+An even better way is to get experience with the feature in next or
+pu until it is ready to be shipped enabled by default, so you can
+forget I said anything. :)
+
+> But since the semantics of Git will be the same unless users
+> explicitly request translations (by setting the LC_* variables in
+> their OS)=20
+
+Sometimes I am on machines with LANG set to fr_FR.UTF-8.  If plumbing
+is going to be giving _all_ its other messages in English, I would
+rather it give the system call errors in English, too.  But this is
+not a strong preference, and it is possible we would want to let all
+messages to stderr be translated, making this moot.
+
+Thanks for the explanations.
+Jonathan
