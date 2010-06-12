@@ -1,173 +1,146 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCH 2/2] bash completion: Support "divergence from
-	upstream" warnings in __git_ps1
-Date: Sat, 12 Jun 2010 02:00:02 +0200
-Message-ID: <20100612000002.GA30196@neumann>
-References: <cover.1276169807.git.trast@student.ethz.ch>
-	<a798e1b7f5ce3872a794829555c7295e588e2c61.1276169807.git.trast@student.ethz.ch>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH 1/4] gitweb: Move subroutines to Gitweb::Config module
+Date: Sat, 12 Jun 2010 03:01:34 +0200
+Message-ID: <201006120301.37931.jnareb@gmail.com>
+References: <1275943844-24991-1-git-send-email-pavan.sss1991@gmail.com> <201006081446.22587.jnareb@gmail.com> <AANLkTimq-46ghYT6TqXn1AB0NQIobcDaufsSJ5AEFE5z@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	John Tapsell <johnflux@gmail.com>,
-	Steven Michalske <smichalske@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Thomas Rast <trast@student.ethz.ch>,
-	Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Sat Jun 12 02:00:22 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 12 03:02:00 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONE92-0000Av-1a
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 02:00:16 +0200
+	id 1ONF6k-00021X-EE
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 03:01:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760709Ab0FLAAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 20:00:09 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:58683 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760679Ab0FLAAI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 20:00:08 -0400
-Received: from [127.0.1.1] (p5B130766.dip0.t-ipconnect.de [91.19.7.102])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MYcHS-1Oiemn2drG-00VlVZ; Sat, 12 Jun 2010 02:00:04 +0200
+	id S1752225Ab0FLBBn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jun 2010 21:01:43 -0400
+Received: from fg-out-1718.google.com ([72.14.220.152]:51150 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751593Ab0FLBBm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 21:01:42 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so493370fga.1
+        for <git@vger.kernel.org>; Fri, 11 Jun 2010 18:01:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=zagb7SQW2i3ADD2y1dqoRsYz3cMWBuzHTFNDBukVc6s=;
+        b=MSIgWs+ABRmY17+KdmB1Mjf7xq8wIUDpIzI883ioGJGflEi3IDWPwwPcQj813Ba3Ua
+         PSULnlSrkmAQJmxm6/9QNapCdLGaz4aXgR6Pln9kMFWaAlweskWvb+TLJFzFO6cHBft9
+         oz3O4h+weSn/XGO6urLbNj7bhINNmYEnARH6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=LmlDMDBgqcET1lYNdE59TeOglZE3u3NI+JJIDVIxKtDv553nUniKQ1iGtksDt+3Ze2
+         qIvcTAorq8LilksvyYuxvA1IFRn8aQpd5EyKYmZbR6+HIM5msb1MGblmlrI/5lWP6RNi
+         RoIh0V8JtH3Ep+Z7HToitZkmi21KT9LIX6V34=
+Received: by 10.87.67.25 with SMTP id u25mr4528791fgk.32.1276304498767;
+        Fri, 11 Jun 2010 18:01:38 -0700 (PDT)
+Received: from [192.168.1.15] (abrz228.neoplus.adsl.tpnet.pl [83.8.119.228])
+        by mx.google.com with ESMTPS id l12sm2634988fgb.7.2010.06.11.18.01.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 11 Jun 2010 18:01:37 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTimq-46ghYT6TqXn1AB0NQIobcDaufsSJ5AEFE5z@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <a798e1b7f5ce3872a794829555c7295e588e2c61.1276169807.git.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Provags-ID: V01U2FsdGVkX1/EfBltEKt08NQyi8LEUTpB0OXZ+PnDWlx3Wet
- OzZHcVfAruvLjB9b165O0TEFPf+HrUseMFriyGMkGdQLvgCSdB
- SKcUEMf8+GmyGfHOXDuOg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148980>
 
-Hi,
+On Tue, 8 June 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
+> I haven't contributed to Gitweb, nor do I have to deal with it. But
+> I've followed this series and reviewed most of the Perl code in
+> Git. Take these with a grain of salt.
+>=20
+> It would be very useful for the future of our Perl code if we had a
+> dual-life system in Git. I.e. a cpan/ directory where we could drop
+> CPAN modules that should be shipped with Git.
 
-On Thu, Jun 10, 2010 at 01:47:24PM +0200, Thomas Rast wrote:
-> From: Andrew Sayers <andrew-git@pileofstuff.org>
+The standard name for such directory is 'inc/', I think.
 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index de5e6c1..49253a1 100755
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -42,6 +42,14 @@
->  #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
->  #       untracked files, then a '%' will be shown next to the branch name.
->  #
-> +#       If you would like to see the difference bitween HEAD and its
-> +#       upstream, set GIT_PS1_SHOWUPSTREAM to a nonempty value.  The
-> +#       difference will be shown as, e.g., "u+7-5" meaning that you
-> +#       are 7 commits ahead of and 5 commits behind the upstream.  You
-> +#       can enable git-svn mode by setting GIT_PS1_SHOWUPSTREAM=svn
-> +#       and set the value per-repository with the bash.showUpstream
-> +#       variable.
+There is for example 'inc::latest' module (unfortunately in core only
+since latest Perl, i.e. version 5.12), which uses modules bundled in
+'inc/' if they are newer than installed ones.  It is in Module-Build
+distribution.
 
-I find the last sentence of this description ambiguous.  What value
-should bash.showUpstream be set to?  Do I really need to set both
-GIT_PS1_SHOWUPSTREAM and bash.showUpstream?  What if
-GIT_PS1_SHOWUPSTREAM=foo and bash.showUpstream=svn?
+BTW. it's a pity that PAR (Perl Archiving Toolkit, par.perl.org)
+is not in core...
 
-Furthermore, I think it would be good to provide means to disable this
-feature for some repositories while keeping it enabled for others.  In
-the current version I could either disable or enable it globally.
-Perhaps we could disable it when bash.showUpstream is set to an empty
-value.
+>=20
+> We already do this in a less sophisticated way for Error.pm, is there
+> any reason not to expand it to install more CPAN modules if they
+> aren't present on the system? That'd allow us to use them, but still
+> only depend on vanilla Perl.
 
-> +#
->  # To submit patches:
->  #
->  #    *) Read Documentation/SubmittingPatches
-> @@ -132,6 +140,7 @@ __git_ps1 ()
->  		local s
->  		local u
->  		local c
-> +		local p
->  
->  		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
->  			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
-> @@ -159,10 +168,56 @@ __git_ps1 ()
->  			      u="%"
->  			   fi
->  			fi
-> +
-> +			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
-> +
-> +				# Note: 'p' is used as a temporary throughout this block,
-> +				# before finally being assigned its correct value
-> +
+Sidenote about Error.pm: from what I understand modern consensus is
+that Error.pm was a failed approach, and currently recommended way to
+use exceptions in Perl is via block form of eval, e.g. Try::Tiny or
+TryCatch (this requires Moose and PPI), and not Error.
 
-Back in the old days when I was just learning programming, I got my
-ass kicked when I dared to reuse the same variable for different
-purposes.  C'mon, just how much shorter it is to create one more
-variable than this two lines long comment?! ;)  It could even be
-squashed together with the "local upstream" line.
+The Error documentation nowadays includes the following instructions:
 
-> +				if p="$(git config --get bash.showUpstream)"
-> +				then
-> +					GIT_PS1_SHOWUPSTREAM="$p"
-> +				fi
-> +
-> +				local upstream
-> +
-> +				if [ "${GIT_PS1_SHOWUPSTREAM-}" = "svn" ]; then
+  WARNING
 
-No need to use default value here, because GIT_PS1_SHOWUPSTREAM has
-already been set above.
+  Using the "Error" module is no longer recommended due to the
+  black-magical nature of its syntactic sugar, which often tends to
+  break. Its maintainers have stopped actively writing code that uses
+  it, and discourage people from doing so. See the "SEE ALSO" section
+  below for better recommendations.
 
-> +
-> +					# git-svn upstream checking
-> +					p="$( git config --get svn-remote.svn.url )"
-> +					upstream=( $( git log --first-parent -1 \
-> +						--grep="^git-svn-id: $p" ) )
-> +					upstream=${upstream[ ${#upstream[@]} - 2 ]}
-> +					upstream=${upstream%@*}
-> +					upstream=${upstream#*$p/}
-> +
+  [...]
 
-Unnecessary empty lines before and after this block of code.
+  SEE ALSO
 
-> +				else # git upstream checking
-> +					upstream="@{upstream}"
-> +				fi
-> +
-> +				p=$(git rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)
-> +				debug_p="$p"
+  See Exception::Class for a different module providing Object-Oriented
+  exception handling, along with a convenient syntax for declaring
+  hierarchies for them. It doesn't provide Error's syntactic sugar of
+  'try { ... }, catch { ... }', etc. which may be a good thing or a bad
+  thing based on what you want. (Because Error's syntactic sugar tends
+  to break.)
 
-The leftover debugging mentioned by Michael.
+  Error::Exception aims to combine Error and Exception::Class "with
+  correct stringification".
 
-> +				case "$p" in
-> +				"0	0"|"") # empty means no --count support or no upstream
-> +					p=
-> +					;;
-> +				"0	"*)
-> +					p="+${p#0	}"
-> +					;;
-> +				*"	0")
-> +					p="-${p%	0}"
-> +					;;
-> +				*)
-> +					p="+${p#*	}-${p%	*}"
-> +					;;
-> +				esac
-> +
-> +			fi
-> +
->  		fi
+  TryCatch and Try::Tiny are similar in concept to Error.pm only
+  providing a syntax that hopefully breaks less.
 
-Unnecessary empty lines before both fi.
+>=20
+> Then we could just use e.g. Config::General (~3k lines of code)
+> instead of writing our own config system. There are probably lots of
+> wheels that we're inventing (and are going to invent) that have been
+> done better elsewhere, with more testing.
 
->  
->  		local f="$w$i$s$u"
-> -		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r"
-> +		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r${p:+ u$p}"
->  	fi
->  }
->  
-> -- 
-> 1.7.1.553.ge4d5c.dirty
-> 
-> 
+The problem with _optional_ Config::General config is that people
+would have incompatibile gitweb config files, some using Config::Genera=
+l
+syntax, some current configuration in Perl.
+=20
+> Unlike Python or Java, Perl's policy is for core modules is to only
+> include those required to better bootstrap the CPAN toolchain. So if
+> we continue sticking to core Perl our code is only going to drift
+> further away from Perl best practices.
+
+Right.
+
+Still, we don't want to require having half of CPAN in 'inc/' to
+install gitweb.  Perhaps "no non-core dependencies" is too strict,
+and should be replaced by "minimal non-core depencencies".
+
+--=20
+Jakub Narebski
+Poland
