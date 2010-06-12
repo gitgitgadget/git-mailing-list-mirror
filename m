@@ -1,77 +1,173 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git sideband hook output
-Date: Fri, 11 Jun 2010 16:52:46 -0700
-Message-ID: <7v631pgm9d.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinLWDFTn7bhcF3Vk-q9aw4lJC2vFj95M9bxLbBT@mail.gmail.com>
- <20100608214632.GN14847@spearce.org>
- <A612847CFE53224C91B23E3A5B48BAC744839BF3DD@xmail3.se.axis.com>
- <alpine.LFD.2.00.1006090934320.30664@xanadu.home>
- <A612847CFE53224C91B23E3A5B48BAC744839BF6AE@xmail3.se.axis.com>
- <20100610183019.GR14847@spearce.org>
- <AANLkTikQQh4sUA7h2k1jvQ7aMgYyq7WFetJvJZvqpVxt@mail.gmail.com>
- <AANLkTikYBB1DsGRRsu4pSNr1j8fFXD-99c4lRAaBqd3M@mail.gmail.com>
- <3B9F4351-4608-455E-B433-A5337A946F8A@wincent.com>
- <AANLkTimPI-A_4H-vYtHIyfbSLERDo0vu-kbB3Qu3ZT06@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH 2/2] bash completion: Support "divergence from
+	upstream" warnings in __git_ps1
+Date: Sat, 12 Jun 2010 02:00:02 +0200
+Message-ID: <20100612000002.GA30196@neumann>
+References: <cover.1276169807.git.trast@student.ethz.ch>
+	<a798e1b7f5ce3872a794829555c7295e588e2c61.1276169807.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>, PJ Hyett <pjhyett@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	git list <git@vger.kernel.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Sat Jun 12 01:53:13 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	John Tapsell <johnflux@gmail.com>,
+	Steven Michalske <smichalske@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Thomas Rast <trast@student.ethz.ch>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Sat Jun 12 02:00:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONE2D-0006Hp-C1
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 01:53:13 +0200
+	id 1ONE92-0000Av-1a
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Jun 2010 02:00:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760250Ab0FKXxI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jun 2010 19:53:08 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53907 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760229Ab0FKXxG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jun 2010 19:53:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5337BB2A8;
-	Fri, 11 Jun 2010 19:53:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=7FuI3EszgLXqxOfA/xLR+H3HmpM=; b=AxH+Aflm8QEYrfboo+Kp0/N
-	1xFEZujKZ0WT7XY0W3bl3fTZRpqcTI9egeCwkglZCWgJEb6P8u14OEZCqGiinb/5
-	JU9UemodpQ42C52UQR2QEbdoLzJg3fn714Yna3cRdDOV5puLrFhSYZu5EcZHmXK9
-	CKBQ8JHJfAlergc9BXeM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=micLjIUbjD72wwNu98C5+5nc2cob8WGtWe231rDBELZNMbR2T
-	7WML7RpLLOrnX4DfXX3EQTTzhihDCz1Ce0Lpz1c41/W5CZ+E+MjlvCNekyPfCNux
-	dt38OL2vQyhmwuii6Y4UYvYmQg64k3DHB1GtC/M28dLdK+zZ7WQl+dtqyw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9E0ABB29F;
-	Fri, 11 Jun 2010 19:52:56 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67463BB293; Fri, 11 Jun
- 2010 19:52:47 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 755C7A62-75B4-11DF-A65E-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1760709Ab0FLAAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jun 2010 20:00:09 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:58683 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760679Ab0FLAAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jun 2010 20:00:08 -0400
+Received: from [127.0.1.1] (p5B130766.dip0.t-ipconnect.de [91.19.7.102])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MYcHS-1Oiemn2drG-00VlVZ; Sat, 12 Jun 2010 02:00:04 +0200
+Content-Disposition: inline
+In-Reply-To: <a798e1b7f5ce3872a794829555c7295e588e2c61.1276169807.git.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V01U2FsdGVkX1/EfBltEKt08NQyi8LEUTpB0OXZ+PnDWlx3Wet
+ OzZHcVfAruvLjB9b165O0TEFPf+HrUseMFriyGMkGdQLvgCSdB
+ SKcUEMf8+GmyGfHOXDuOg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/148979>
 
-Erik Faye-Lund <kusmabite@googlemail.com> writes:
+Hi,
 
->> Funny, as '>>' is basically meaningless. At least 'remote:' has semantic value (ie. it indicates _where_ something is coming from).
->
-> How about '> ', which often means "quote" (e.g in e-mails)? Would that
-> be appropriate?
 
-Not much better, IMNSHO.  Where do people get the idea that line-noises
-are more descriptive than "remote:"?
+On Thu, Jun 10, 2010 at 01:47:24PM +0200, Thomas Rast wrote:
+> From: Andrew Sayers <andrew-git@pileofstuff.org>
+
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index de5e6c1..49253a1 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -42,6 +42,14 @@
+>  #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
+>  #       untracked files, then a '%' will be shown next to the branch name.
+>  #
+> +#       If you would like to see the difference bitween HEAD and its
+> +#       upstream, set GIT_PS1_SHOWUPSTREAM to a nonempty value.  The
+> +#       difference will be shown as, e.g., "u+7-5" meaning that you
+> +#       are 7 commits ahead of and 5 commits behind the upstream.  You
+> +#       can enable git-svn mode by setting GIT_PS1_SHOWUPSTREAM=svn
+> +#       and set the value per-repository with the bash.showUpstream
+> +#       variable.
+
+I find the last sentence of this description ambiguous.  What value
+should bash.showUpstream be set to?  Do I really need to set both
+GIT_PS1_SHOWUPSTREAM and bash.showUpstream?  What if
+GIT_PS1_SHOWUPSTREAM=foo and bash.showUpstream=svn?
+
+Furthermore, I think it would be good to provide means to disable this
+feature for some repositories while keeping it enabled for others.  In
+the current version I could either disable or enable it globally.
+Perhaps we could disable it when bash.showUpstream is set to an empty
+value.
+
+> +#
+>  # To submit patches:
+>  #
+>  #    *) Read Documentation/SubmittingPatches
+> @@ -132,6 +140,7 @@ __git_ps1 ()
+>  		local s
+>  		local u
+>  		local c
+> +		local p
+>  
+>  		if [ "true" = "$(git rev-parse --is-inside-git-dir 2>/dev/null)" ]; then
+>  			if [ "true" = "$(git rev-parse --is-bare-repository 2>/dev/null)" ]; then
+> @@ -159,10 +168,56 @@ __git_ps1 ()
+>  			      u="%"
+>  			   fi
+>  			fi
+> +
+> +			if [ -n "${GIT_PS1_SHOWUPSTREAM-}" ]; then
+> +
+> +				# Note: 'p' is used as a temporary throughout this block,
+> +				# before finally being assigned its correct value
+> +
+
+Back in the old days when I was just learning programming, I got my
+ass kicked when I dared to reuse the same variable for different
+purposes.  C'mon, just how much shorter it is to create one more
+variable than this two lines long comment?! ;)  It could even be
+squashed together with the "local upstream" line.
+
+> +				if p="$(git config --get bash.showUpstream)"
+> +				then
+> +					GIT_PS1_SHOWUPSTREAM="$p"
+> +				fi
+> +
+> +				local upstream
+> +
+> +				if [ "${GIT_PS1_SHOWUPSTREAM-}" = "svn" ]; then
+
+No need to use default value here, because GIT_PS1_SHOWUPSTREAM has
+already been set above.
+
+> +
+> +					# git-svn upstream checking
+> +					p="$( git config --get svn-remote.svn.url )"
+> +					upstream=( $( git log --first-parent -1 \
+> +						--grep="^git-svn-id: $p" ) )
+> +					upstream=${upstream[ ${#upstream[@]} - 2 ]}
+> +					upstream=${upstream%@*}
+> +					upstream=${upstream#*$p/}
+> +
+
+Unnecessary empty lines before and after this block of code.
+
+> +				else # git upstream checking
+> +					upstream="@{upstream}"
+> +				fi
+> +
+> +				p=$(git rev-list --count --left-right "$upstream"...HEAD 2>/dev/null)
+> +				debug_p="$p"
+
+The leftover debugging mentioned by Michael.
+
+> +				case "$p" in
+> +				"0	0"|"") # empty means no --count support or no upstream
+> +					p=
+> +					;;
+> +				"0	"*)
+> +					p="+${p#0	}"
+> +					;;
+> +				*"	0")
+> +					p="-${p%	0}"
+> +					;;
+> +				*)
+> +					p="+${p#*	}-${p%	*}"
+> +					;;
+> +				esac
+> +
+> +			fi
+> +
+>  		fi
+
+Unnecessary empty lines before both fi.
+
+>  
+>  		local f="$w$i$s$u"
+> -		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r"
+> +		printf "${1:- (%s)}" "$c${b##refs/heads/}${f:+ $f}$r${p:+ u$p}"
+>  	fi
+>  }
+>  
+> -- 
+> 1.7.1.553.ge4d5c.dirty
+> 
+> 
