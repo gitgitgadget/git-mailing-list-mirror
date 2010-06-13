@@ -1,78 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: github:FI
-Date: Sun, 13 Jun 2010 07:44:53 -0700 (PDT)
-Message-ID: <m3aaqzouv0.fsf@localhost.localdomain>
-References: <AANLkTin838fW6L0W1P__seKnIZi58QtdQzgmUFFQTJC2@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] send-email: ask about and declare 8bit mails
+Date: Sun, 13 Jun 2010 17:09:55 +0200
+Message-ID: <201006131709.55335.trast@student.ethz.ch>
+References: <201006121211.12870.trast@student.ethz.ch> <cebe57bb68b5e8ea445e560bbe6305c915ce8a1c.1276354971.git.trast@student.ethz.ch> <7vljakfc64.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 13 16:45:57 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Michael Witten <mfwitten@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 13 17:10:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONoRg-0001UK-6z
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Jun 2010 16:45:56 +0200
+	id 1ONop3-0003hj-Eg
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Jun 2010 17:10:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944Ab0FMOo4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jun 2010 10:44:56 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43229 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753759Ab0FMOo4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jun 2010 10:44:56 -0400
-Received: by fxm8 with SMTP id 8so1959945fxm.19
-        for <git@vger.kernel.org>; Sun, 13 Jun 2010 07:44:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=GCn74CiKcMWG/IPV4kBrfVnn09tmDWejOPGnCSr0Fzg=;
-        b=uXZskKXpj19xUXCxXKuiRq+QLhTFyUiJ0FUox7bggFUUPGgXPGU6JXxhX9jiJLqylE
-         W52jVBFuRz/q2SZvBcgPsg7JqeJvG+PHM2098sP/noF3xExqODvatO9+mIlwnrAgH6eA
-         gIQJWgL5EfARweH1skPrIby4BuBl+w3BYWjtI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=avxSzTmrISLPjvy0J51zRZlKUHQrvp2SHhN71Vcqbf3TR0RY2LK9VPL7wKqf2QQ9ge
-         sEEhCCeeiUF8En4hwmGsyGbX/wLjI02pdpwDTcv/MzyYFd+0ux8NTtoQ9U4Bq0HLuXEC
-         mDar5byzkmEQz+k1d7Eqf/xGCtQV/uH76eLBU=
-Received: by 10.223.20.216 with SMTP id g24mr4233478fab.63.1276440294382;
-        Sun, 13 Jun 2010 07:44:54 -0700 (PDT)
-Received: from localhost.localdomain (abve213.neoplus.adsl.tpnet.pl [83.8.202.213])
-        by mx.google.com with ESMTPS id n6sm1330724fam.31.2010.06.13.07.44.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Jun 2010 07:44:53 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o5DEiPZH032607;
-	Sun, 13 Jun 2010 16:44:35 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o5DEiJdE032603;
-	Sun, 13 Jun 2010 16:44:19 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTin838fW6L0W1P__seKnIZi58QtdQzgmUFFQTJC2@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753972Ab0FMPJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jun 2010 11:09:59 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:17820 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752261Ab0FMPJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jun 2010 11:09:58 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 13 Jun
+ 2010 17:09:56 +0200
+Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 13 Jun
+ 2010 17:09:55 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <7vljakfc64.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149050>
 
-Mahesh Vaidya <forvaidya@gmail.com> writes:
+Junio C Hamano wrote:
+>  (2) otherwise, if there is an 8-bit encoding involved in the paths,
+>      perhaps mark the entire message as 8-bit (binary???).
+> 
+> I have this suspicion that (2) is very rare (you cannot transmit such a
+> patch as a plain text message reliably afaict, so it is not done in
+> practice), and we would probably need to make a separate patchfile for
+> groups of paths in each encoding and attach them as MIME multiparts (ugh).
 
-> I am exploring git hosting options and web interfaces. I have
-> implemented my own system based on gitweb, git, gitosis and gitstat.
-> I'm exploring github:FI
+So IIUC this would be the main/first obstacle?  Seeing as we seem to
+do fine here but you both say 8bit is not reliable.  (According to
+Wikipedia[*] all the big names support it though...)
 
-If you are looking at OSS equivalents to GitHub, you should take a
-look at Gitorious (in Ruby), InDefero (in PHP) and Girocco (in Perl +
-shell, powers repo.or.cz).
+Perhaps Quoted-Printable would work with minimal effort?  We could
+leave it to send-email to do all the quoting, mailsplit or am all the
+unquoting and we retain (mostly) the readability of the original
+patches.
+
+That still doesn't solve the problem that we might send (invalid utf8)
+binary data declared as utf8.  I suppose to work around that, a more
+elaborate approach like
+
+>  (0) use the attributes mechanism to allow projects to mark paths with
+>      encoding.  E.g.
+> 
+> 	# everything in UTF-8 unless otherwise specified...
+>         * encoding=UTF-8
+>         Documentation/zh_CN/* encoding=big5
+> 
+>  (1) for each patch, find the paths involved, and if their encodings are
+>      the same, perhaps promote that as the encoding used for the entire
+>      message;
+
+is needed.
+
+
+[*] http://en.wikipedia.org/wiki/8BITMIME#8BITMIME
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thomas Rast
+trast@{inf,student}.ethz.ch
