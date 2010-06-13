@@ -1,103 +1,175 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Return or exit after done serving request
-Date: Sun, 13 Jun 2010 12:09:32 +0200
-Message-ID: <20100613100800.28221.77529.stgit@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 13 12:10:09 2010
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: [PATCH 3/2] fix race in win32 pthread_cond_signal causing spurious wakeups
+Date: Sun, 13 Jun 2010 12:16:52 +0200
+Message-ID: <1276424212-13634-1-git-send-email-bonzini@gnu.org>
+References: <1275917892-16437-1-git-send-email-bonzini@gnu.org>
+Cc: j.sixt@viscovery.net
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 13 12:17:04 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONk8l-00060x-Fy
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Jun 2010 12:10:07 +0200
+	id 1ONkFS-0008P6-CQ
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Jun 2010 12:17:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272Ab0FMKJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jun 2010 06:09:59 -0400
-Received: from fg-out-1718.google.com ([72.14.220.159]:26394 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531Ab0FMKJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jun 2010 06:09:58 -0400
-Received: by fg-out-1718.google.com with SMTP id l26so799263fgb.1
-        for <git@vger.kernel.org>; Sun, 13 Jun 2010 03:09:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:subject:to:cc
-         :date:message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=zJIoYNN7Yob5dRRxNEo5rbhN/njlS9fiS0XnFqHlnfs=;
-        b=mZT7shx0b1XIC7K3ikjdAh6aW4TaG+x3SRa9FroJmapLP4DstXiEMIHUAazeAtHcgO
-         6E3C1uJC1vSg0rSfPeSY9r7nY961uTu5fkHWIpQK4xAX3dTMClU/IImRNsRMRvpb/Mtk
-         Ue2YS/VkNQ2kZHIQIQlEazQwI5sYnPFfZEuxQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=O9ya6uvFOM+lrYgjTEjBMO2rL0U8UqJ3dHN7sHit036oAaZrFr1Ilp3di/ye1DAki6
-         pKNGo03cA/PcjaQyk/fxIOHbGqPb3wrpsjb49Rl7uAoGTK7voquw6rcLud7+V22R6Tuj
-         gNJOHCaNvLcr9kjrRwt0fXY4ajIYAn8zavBi0=
-Received: by 10.87.63.21 with SMTP id q21mr6840703fgk.52.1276423796846;
-        Sun, 13 Jun 2010 03:09:56 -0700 (PDT)
-Received: from localhost.localdomain (abve213.neoplus.adsl.tpnet.pl [83.8.202.213])
-        by mx.google.com with ESMTPS id d6sm7069441fga.28.2010.06.13.03.09.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 13 Jun 2010 03:09:56 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o5DA9XwB028274;
-	Sun, 13 Jun 2010 12:09:38 +0200
-User-Agent: StGIT/0.14.3
+	id S1753356Ab0FMKQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jun 2010 06:16:57 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:60805 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753290Ab0FMKQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jun 2010 06:16:56 -0400
+Received: from bonzini by fencepost.gnu.org with local (Exim 4.69)
+	(envelope-from <bonzini@gnu.org>)
+	id 1ONkFL-00046I-AR; Sun, 13 Jun 2010 06:16:55 -0400
+X-Mailer: git-send-email 1.7.0.1
+In-Reply-To: <1275917892-16437-1-git-send-email-bonzini@gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149041>
 
-Check if there is a caller in top frame of gitweb, and either 'return'
-if gitweb code is wrapped in subroutine, or 'exit' if it is not.
+This patch fixes a bug in the win32 condvar implementation.  The bug
+existed originally in pthread_cond_signal before my other recent patches;
+however, my patches extended the bug to pthread_cond_broadcast because
+they made it behave exactly like pthread_cond_signal when there is only
+one waiter.
 
-This should avoid
+The bug causes spurious wakeups in pthread_cond_wait.  These are explicitly
+allowed by POSIX, but it's better to prevent them in the first place.
+It occurs if pthread_cond_signal is called two times with only one waiter,
+and the waiter is not scheduled between the two calls.  In this case, the
+second call will find cond->num_waiters == 1 and ReleaseSemaphore will
+make the semaphore's count positive, thus causing a spurious wakeup on
+the next pthread_cond_wait.
 
-  gitweb.cgi: Subroutine git_SOMETHING redefined at gitweb.cgi line NNN
+The solution is to decrease cond->waiters in pthread_cond_signal.  This
+maintains the invariant that _before_ the external mutex is unlocked
+cond->num_waiters matches the waiters count of the semaphore.  This
+invariant holds for all three functions.
 
-warnings in error_log when running gitweb with mod_perl (using
-ModPerl::Registry handler)
+Broadcasting does not have the problem and uses the same algorithm as
+before.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Paolo Bonzini <bonzini@gnu.org>
 ---
-I have noticed bunch of
+        I numbered this patch 3/2 because it's on top of the other two,
+        but it can be backported to master pretty easily.
 
-  [Sun Jun 13 11:58:02 2010] gitweb.cgi: Subroutine git_opml redefined
-  at /var/www/perl/gitweb/gitweb.cgi line 6808.
+ compat/win32/pthread.c |   68 ++++++++++++++++++++++++------------------------
+ 1 files changed, 34 insertions(+), 34 deletions(-)
 
-warnings in /var/log/httpd/error_log, after running gitweb from mod_perl.
-This fixes it.
-
- gitweb/gitweb.perl |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e108bbc..02f366d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -987,7 +987,16 @@ if ($action !~ m/^(?:opml|project_list|project_index)$/ &&
- 	die_error(400, "Project needed");
- }
- $actions{$action}->();
-+
- DONE_GITWEB:
-+if (defined caller) {
-+	# wrapped in a subroutine processing requests,
-+	# e.g. mod_perl with ModPerl::Registry, or PSGI with Plack::App::WrapCGI
-+	return;
-+} else {
-+	# pure CGI script, serving single request
-+	exit;
-+}
- 1;
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index d46a51c..9aaac89 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -103,32 +103,27 @@ int pthread_cond_wait(pthread_cond_t *cond, CRITICAL_SECTION *mutex)
+ 	WaitForSingleObject(cond->sema, INFINITE);
  
- ## ======================================================================
+ 	/*
+-	 * Decrease waiters count.  The mutex is not taken, so we have to
+-	 * do this atomically.
+-	 */
+-	num_waiters = InterlockedDecrement(&cond->waiters);
+-
+-	/* If we are the last waiter, then we must
+-	 * notify the broadcasting thread that it can continue.
+-	 * But if we continued due to cond_signal, we do not have to do that
+-	 * because the signaling thread knows that only one waiter continued.
++	 * If the condvar was broadcast, then waiters cooperate to notify
++	 * the broadcasting thread that they have woken, so that it can
++	 * continue.  For cond_signal we do not have to do that because the
++	 * signaling thread knows that only one waiter continued.  Also,
++	 * cond_signal will decrement num_waiters itself, to ensure it is
++	 * always a faithful reproduction of the semaphore's state.
+ 	 */
+-	if (num_waiters == 0 && cond->was_broadcast) {
++	if (cond->was_broadcast) {
+ 		/*
+-		 * cond_broadcast was issued while mutex was held. This means
+-		 * that all other waiters have continued, but are contending
+-		 * for the mutex at the end of this function because the
+-		 * broadcasting thread did not leave cond_broadcast, yet.
+-		 * (This is so that it can be sure that each waiter has
+-		 * consumed exactly one slice of the semaphor.)
+-		 * The last waiter must tell the broadcasting thread that it
+-		 * can go on.
+-		 */
+-		SetEvent(cond->continue_broadcast);
+-		/*
+-		 * Now we go on to contend with all other waiters for
+-		 * the mutex. Auf in den Kampf!
++		 * Decrease waiters count.  The mutex is not taken, so we have
++		 * to do this atomically.
++		 *
++		 * cond_broadcast was issued while mutex was held, so all
++		 * waiters contend for the mutex at the end of this function
++		 * until the broadcasting thread relinquishes it.  To ensure
++		 * each waiter consumes exactly one slice of the semaphore,
++		 * the broadcasting thread stops until it is told by the last
++		 * waiter that it can go on.
+ 		 */
++		if (InterlockedDecrement(&cond->waiters) == 0)
++			SetEvent(cond->continue_broadcast);
+ 	}
+ 	/* lock external mutex again */
+ 	EnterCriticalSection(mutex);
+@@ -150,14 +144,15 @@ int pthread_cond_signal(pthread_cond_t *cond)
+ 	 * so we are safe about that.
+ 	 *
+ 	 * Waiting threads decrement it outside the external lock, but
+-	 * only if another thread is executing pthread_cond_signal or
+-	 * pthread_cond_broadcast---which means it also cannot be
+-	 * decremented concurrently with this particular access.
++	 * only if another thread is executing pthread_cond_broadcast.
++	 * So, it also cannot be decremented concurrently with this
++	 * particular access.
+ 	 */
+-	if (cond->waiters > 0)
++	if (cond->waiters > 0) {
++		cond->waiters--;
+ 		return ReleaseSemaphore(cond->sema, 1, NULL) ?
+ 			0 : err_win_to_posix(GetLastError());
+-	else
++	} else
+ 		return 0;
+ }
+ 
+@@ -174,7 +169,15 @@ int pthread_cond_broadcast(pthread_cond_t *cond)
+ 	 */
+ 	if (cond->waiters > 0) {
+ 		BOOLEAN result;
+-		cond->was_broadcast = cond->waiters > 1;
++		/*
++		 * As an optimization, when there was exactly one waiter
++		 * broadcast is the same as signal, so we use the asynchronous
++		 * algorithm that signal uses.
++		 */
++		if (cond->waiters == 1)
++			cond->waiters = 0;
++		else
++			cond->was_broadcast = 1;
+ 
+ 		/* wake up all waiters */
+ 		result = ReleaseSemaphore(cond->sema, cond->waiters, NULL);
+@@ -183,14 +186,11 @@ int pthread_cond_broadcast(pthread_cond_t *cond)
+ 
+ 		/*
+ 		 * At this point all waiters continue. Each one takes its
+-		 * slice of the semaphor. Now it's our turn to wait: Since
++		 * slice of the semaphore. Now it's our turn to wait: Since
+ 		 * the external mutex is held, no thread can leave cond_wait,
+ 		 * yet. For this reason, we can be sure that no thread gets
+ 		 * a chance to eat *more* than one slice. OTOH, it means
+ 		 * that the last waiter must send us a wake-up.
+-		 *
+-		 * As an optimization, when there was exactly one waiter
+-		 * broadcast is the same as signal and we can skip this step.
+ 		 */
+ 		if (cond->was_broadcast) {
+ 			WaitForSingleObject(cond->continue_broadcast, INFINITE);
+-- 
+1.7.0.1
