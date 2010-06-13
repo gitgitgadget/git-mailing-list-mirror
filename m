@@ -1,77 +1,69 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: github:FI
-Date: Sun, 13 Jun 2010 15:14:48 +0000
-Message-ID: <AANLkTil5hze7Sx80G1byy-gJx934RpeLiB0cv_oep3zL@mail.gmail.com>
-References: <AANLkTin838fW6L0W1P__seKnIZi58QtdQzgmUFFQTJC2@mail.gmail.com>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Github:FI Related Note: Corporate Support for git?
+Date: Sun, 13 Jun 2010 11:56:20 -0400
+Message-ID: <AANLkTim2C2V2vAQDlda_2to7yjCFj00jAW0TsNH6NvdJ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 13 17:14:56 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 13 17:56:49 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONotj-0005qo-6M
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Jun 2010 17:14:55 +0200
+	id 1ONpYG-0005A3-JW
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Jun 2010 17:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764Ab0FMPOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jun 2010 11:14:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47287 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322Ab0FMPOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jun 2010 11:14:49 -0400
-Received: by iwn9 with SMTP id 9so2329361iwn.19
-        for <git@vger.kernel.org>; Sun, 13 Jun 2010 08:14:49 -0700 (PDT)
+	id S1754182Ab0FMP4m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jun 2010 11:56:42 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:56432 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754126Ab0FMP4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jun 2010 11:56:41 -0400
+Received: by gwj15 with SMTP id 15so1935978gwj.19
+        for <git@vger.kernel.org>; Sun, 13 Jun 2010 08:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=9Z15pnxg1EMvFuboR/v5apO8CWEJbvnCO/BTa9sS4NI=;
-        b=NfMrO0FsU0l6PYExd+onBTn/a0oBYx0NSgGu1nbvPvCChzktLp1exjSmdvnYDi22vD
-         Z4tCzZmrql4lFrWpmVjpLmS1jh7cG4diGX+df8/aZ89Zb60EK97Pkw1GbmzQYlyzrWEQ
-         WjfTn9tyQxASsVTBp5vZ5LdzRRgJZA8a2BuvA=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=a5RQ/Jm0udUcN/MHq/hmAre7pVZaaOSfXr1zNILY5+k=;
+        b=CHPsciyWOBxM/KJnxdR0oh+VzSKUNd/hXLKgxTF6ITqxObys+rXbrxWAWzi/QvwtQJ
+         pSkE5+vpNFcu3QgDXZuXX/AkVKfOZ+A2UfbQP1ZX4COCo7eaXipcO0w+KeZiJlCOYLb1
+         eTgqew06rxjRF+7JWULxEWp5L1v63GM52odn4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=iWJDdwqSRqrHbYo6zzVYzmUuEj7ZQKZI7Mg2zz94VPoEISJz3pzw26cQEZawpoMmOk
-         /0J/EhXR40vcc4yE4VXAp5QGNcRScsn8fcJYWFW/I77aRzpsEc22egJk1T8zz1dXmT9s
-         wCYmI25HZkVUVHW0lCmNzsD/qcqDbNtpP6utM=
-Received: by 10.231.59.199 with SMTP id m7mr4800714ibh.30.1276442088657; Sun, 
-	13 Jun 2010 08:14:48 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Sun, 13 Jun 2010 08:14:48 -0700 (PDT)
-In-Reply-To: <AANLkTin838fW6L0W1P__seKnIZi58QtdQzgmUFFQTJC2@mail.gmail.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=kSOUHJH9wd7zGvmNWy8+lTS0Z/sLmv+WzkDo9FQMTPIpJvgutyD8WkVgSlw5H/NEka
+         3xXgnczDqC1FTJWIJtLuY3ag2z+B1ghCJAwWX+5cKOLUD+axuHVniwpQ+7ZchGP0Q4ZM
+         sFP7/I4+gtTS/PYD/4PC5Smq15pQF/pV/oQg0=
+Received: by 10.101.132.15 with SMTP id j15mr3685987ann.124.1276444600081; 
+	Sun, 13 Jun 2010 08:56:40 -0700 (PDT)
+Received: by 10.101.66.12 with HTTP; Sun, 13 Jun 2010 08:56:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149052>
 
-On Sun, Jun 13, 2010 at 14:28, Mahesh Vaidya <forvaidya@gmail.com> wrote:
-> I am exploring git hosting options and web interfaces. I have
-> implemented my own system based on gitweb, git, gitosis and gitstat.
-> I'm exploring github:FI
->
-> If anyone knows is it worth the price. we have@100 users; so we are
-> looking at $1000 * 100
+I also looked at Github:FI recently because my employer basically said
+that OSS is fine at our company, so long as we can find corporate
+support for it so that we always have someone else to point at if
+something goes wrong.
 
-I use GitHub but I've never tried github:fi, and I'm not the target
-audience.
+Quick googling load me to some not-so-promising sites that looked sort
+of cookie cutter and Github:FI, which looked awesome, but as many
+people noted in the previous thread, was surprisingly expensive,
+especially considering that Fog Creek offers hosted and installed
+support for hg at a substantially lower price.
 
-I've heard from some people that have reviewed it from their corporate
-deployments, and the typical process seems to be 1) Oh an internal
-GitHub would be nice 2) It costs WHAT!.
+Anyone know of any big git supporters in the world?
 
-Here's some issues that were noted when pobox was looking at it, I
-think they eventually went with some gitweb + fork support kind of
-thing:
+-- 
 
-    http://gist.github.com/309320
+In Christ,
 
-GitHub has a really nice UI, but a startup cost of a $100k for a 100
-man company seems like a lot to fork out for that, when you can get
-away with using e.g. gitorious or a gitweb setup with some
-customization.
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
