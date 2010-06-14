@@ -1,85 +1,91 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/6] Another attempt to get the SVN exporter merged
-Date: Mon, 14 Jun 2010 16:41:16 +0200
-Message-ID: <AANLkTim2qNNrInovraveWGcgr61FnrRzQXjuW_AsmiLc@mail.gmail.com>
-References: <1276175389-6185-1-git-send-email-artagnon@gmail.com> 
-	<20100612062613.GA2549@burratino>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/6] Add memory pool library
+Date: Mon, 14 Jun 2010 16:44:15 +0200
+Message-ID: <4C16403F.4040400@op5.se>
+References: <1276175389-6185-1-git-send-email-artagnon@gmail.com> 	<1276175389-6185-2-git-send-email-artagnon@gmail.com> <20100612064250.GB2549@burratino> <AANLkTimtya1Ph5YjlFVAVpE2p4XOHvuaFAmsS4C0J5LH@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
 	David Michael Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 14 16:41:46 2010
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 14 16:44:56 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOArB-0001IQ-Hh
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 16:41:45 +0200
+	id 1OOAuF-00038e-FB
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 16:44:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753429Ab0FNOli convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 10:41:38 -0400
-Received: from mail-yw0-f204.google.com ([209.85.211.204]:33941 "EHLO
-	mail-yw0-f204.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752496Ab0FNOlh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 10:41:37 -0400
-Received: by ywh42 with SMTP id 42so3453079ywh.15
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 07:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QhDdPHHRxOkrw25iQy+Un9H/wfF9+8zBTLOrW1ahmiE=;
-        b=L9z7LHKXy0KDKEJZ57lgxW4xtFU0fbZNMjgw4j9oynyhHNlrpj206rNyW7uEsJpbyt
-         /EufGnR31Z0TAOklR6mBalWAUF8J2IdUOS2Gz6lfKNyfunD39VbRE0QtbsLVKC6RZneV
-         /xcRbwRTSEO1r5CirCMAyfr+hF0Mtv0OT7aCQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=eA5smoR7QNh9kNGzKDnuMYCRJ6dUmNjgHL1F9IRuOpm0DciWwI8KNXnQx6Ao59xqcQ
-         yVZjSEVmnFLvDT26dvT5xQuHHEUp3z8xD8VLDuzMNJqe+trUfx467KgIYG2aAv3L/w/k
-         8xUg6BnyTq+7e+872mnYtmmczT0H0qr7+WwQg=
-Received: by 10.224.27.150 with SMTP id i22mr2149981qac.183.1276526496835; 
-	Mon, 14 Jun 2010 07:41:36 -0700 (PDT)
-Received: by 10.229.182.85 with HTTP; Mon, 14 Jun 2010 07:41:16 -0700 (PDT)
-In-Reply-To: <20100612062613.GA2549@burratino>
+	id S1755122Ab0FNOoW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 10:44:22 -0400
+Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:37028 "HELO
+	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755071Ab0FNOoV (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 10:44:21 -0400
+Received: from source ([209.85.214.47]) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTBZAQyngKzwpTCXyCBZRq2FDGdtyNyyh@postini.com; Mon, 14 Jun 2010 07:44:21 PDT
+Received: by bwz14 with SMTP id 14so2457426bwz.34
+        for <git@vger.kernel.org>; Mon, 14 Jun 2010 07:44:18 -0700 (PDT)
+Received: by 10.204.81.201 with SMTP id y9mr4355281bkk.144.1276526658551;
+        Mon, 14 Jun 2010 07:44:18 -0700 (PDT)
+Received: from clix.int.op5.se ([212.112.174.166])
+        by mx.google.com with ESMTPS id v2sm19785785bkz.19.2010.06.14.07.44.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 14 Jun 2010 07:44:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
+In-Reply-To: <AANLkTimtya1Ph5YjlFVAVpE2p4XOHvuaFAmsS4C0J5LH@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149096>
 
-Hi Jonathan,
+On 06/14/2010 04:25 PM, Ramkumar Ramachandra wrote:
+> Hi Jonathan,
+>=20
+> Jonathan Nieder wrote:
+>>   #ifdef __GNUC__
+>>   #define MAYBE_UNUSED __attribute__((__unused__))
+>>   #else
+>>   #define MAYBE_UNUSED
+>>   #endif
+>=20
+> You'd suggested this earlier, but I was looking more for something
+> that we could use to mark some specific functions as unused instead o=
+f
+> marking everything as unused in the generation macro. Anyway, I have =
+a
+> patch ready, and svn-fe compiles fine with -Wall -Werror.
+>=20
+>> Could that work here?
+>>
+>> The =E2=80=9Cunused=E2=80=9D attribute was added in gcc 2.7.
+>=20
+> Junio? Is this a good solution, or should we think of something else?
+> What about other compilers?
+>=20
 
-Jonathan Nieder wrote:
-> First of all, thanks for your work on this and sorry to take so long
-> to respond[1].
+__attribute__((stuff)) is gcc-specific. It's usually macro'd away with
+#ifndef __GNUC__
+#define __attribute__(x)
+#endif
+which is why it requires double parantheses. gcc warns for but doesn't
+fail on unknown attributes, so it should be safe to use this with
+gcc older than 2.7 as well. Or you make it conditional to __GNUC__
+being >=3D 2 and __GNUC_MINOR__ being >=3D 7.
 
-Ah that's alright. I'm glad you're up and running again :)
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-> I planned to write a series adding svn-fe to contrib/ and then the
-> computer died. =C2=A0If someone else doesn=E2=80=99t do it first, hop=
-efully I can
-> try again this weekend.
-
-=C3=86var has also been asking about this. I have a branch ready to rol=
-l
-out from- I think I can do it today.
-
-> Sad but perhaps necessary. =C2=A0I guess this also opens the possibil=
-ity of
-> later making the save operation atomic with the fsync() + rename()
-> trick.
-
-Yeah, mmap looked a lot more elegant.
-
--- Ram
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
