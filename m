@@ -1,56 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix strcat() on uninitialized memory
-Date: Mon, 14 Jun 2010 19:05:26 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1006141856030.2689@bonsai2>
-References: <alpine.DEB.1.00.1006141032250.2689@bonsai2> <AANLkTimSFwn1yykyEOTRdHHBYTFUEhxqj2AinjRv9ECC@mail.gmail.com>
+From: =?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>
+Subject: Re: [PATCH v3 0/4] git-gui blame: use textconv
+Date: Mon, 14 Jun 2010 19:18:36 +0200
+Organization: Ensimag
+Message-ID: <c80899f148cbfc9446554c6c706fdbfb@ensimag.fr>
+References: <1276102929-31712-1-git-send-email-clement.poulain@ensimag.imag.fr>
+Reply-To: clement.poulain@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 14 19:06:09 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: <gitster@pobox.com>, <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jun 14 19:19:36 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOD6v-0006AH-2R
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 19:06:09 +0200
+	id 1OODJs-00041Q-O9
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 19:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756279Ab0FNRGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jun 2010 13:06:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49894 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755952Ab0FNRGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jun 2010 13:06:01 -0400
-Received: (qmail invoked by alias); 14 Jun 2010 17:05:48 -0000
-Received: from ASt-Lambert-153-1-65-129.w83-204.abo.wanadoo.fr (EHLO bonsai2.local) [83.204.196.129]
-  by mail.gmx.net (mp057) with SMTP; 14 Jun 2010 19:05:48 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18e9OdLO1kedFHPpbVPH0tM1ouMDO593XJq0vslYW
-	2sOE4pz/dOW2Fm
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <AANLkTimSFwn1yykyEOTRdHHBYTFUEhxqj2AinjRv9ECC@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756434Ab0FNRT0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 13:19:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:39661 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750831Ab0FNRT0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 13:19:26 -0400
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o5EHAaxf018303
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 14 Jun 2010 19:10:36 +0200
+Received: from ensicom.imag.fr (web-ensimag [195.221.228.24])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o5EHIb5K014546;
+	Mon, 14 Jun 2010 19:18:37 +0200
+Received: from webmail.ensimag.fr (localhost [127.0.0.1])
+	by ensicom.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id o5EHIakj027394;
+	Mon, 14 Jun 2010 19:18:36 +0200
+In-Reply-To: <1276102929-31712-1-git-send-email-clement.poulain@ensimag.imag.fr>
+X-Sender: clement.poulain@ensimag.imag.fr
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 14 Jun 2010 19:10:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o5EHAaxf018303
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
+MailScanner-NULL-Check: 1277140236.8896@tKkX4MLjhT+NqmN6LgAxLA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149130>
 
 Hi,
 
-On Mon, 14 Jun 2010, Jay Soffian wrote:
+I've seen this series is now on pu. I have 2 questions concerning the
+fourth patch (ca23df5e, Cl=C3=A9ment Poulain, 2010-06-09 19:02:08) tagg=
+ed with
+[DONTMERGE] and annotated with [jc: shouldn't merge this to 'next' or
+higher but take it via Shawn].
 
-> Thanks, this was caught last week and patch posted by Thomas:
-> 
-> http://marc.info/?l=git&m=127619546001346&w=2
+=46irst, is the tag only for this patch, or for the whole series?=20
+Then, do we have something more to do?
 
-Great. So it was caught. Why was it not even in 'next', so I wasted my 
-time finding the bug?
-
-Anyway, it is in 4msysgit.git's 'devel' branch. So its fixed now.
-
-Frustrated,
-Dscho
+Regards
