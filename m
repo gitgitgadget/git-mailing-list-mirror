@@ -1,182 +1,141 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] revert: add --stdin option to read commits from stdin
-Date: Mon, 14 Jun 2010 05:22:50 +0200
-Message-ID: <20100614032251.20121.83253.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 14 05:33:43 2010
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH/RFC] git-svn: strip off leading slashes on --trunk
+	argument
+Date: Mon, 14 Jun 2010 04:57:35 +0000
+Message-ID: <20100614045735.GA22999@dcvr.yhbt.net>
+References: <20090915113634.GC22524@ra.ncl.ac.uk> <20100613112743.GA21855@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jon Dowland <jmtd@debian.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 14 06:58:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OO0Qg-0004Gb-1H
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 05:33:42 +0200
+	id 1OO1kz-0007Pk-AL
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 06:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755387Ab0FNDdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jun 2010 23:33:37 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:35168 "EHLO smtp3-g21.free.fr"
+	id S1751100Ab0FNE5h convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 00:57:37 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:55612 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753863Ab0FNDdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jun 2010 23:33:36 -0400
-Received: from style.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 32BA2818047;
-	Mon, 14 Jun 2010 05:33:28 +0200 (CEST)
-X-git-sha1: 588077f6f3842ad03ab7276cdb40ef03953b49bd 
-X-Mailer: git-mail-commits v0.5.2
+	id S1750819Ab0FNE5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 00:57:36 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDBD01F516;
+	Mon, 14 Jun 2010 04:57:35 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20100613112743.GA21855@burratino>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149067>
 
-This can be useful to do something like:
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> The following command
+>=20
+>  git svn clone \
+> 	-r9500:10006 \
+> 	svn://svn.debian.org/svn/pkg-games/packages \
+> 	--trunk=3D/trunk/freedoom \
+> 	--branches=3D/branches/freedoom \
+> 	--tags=3D/tags/freedoom \
+> 	freedoom.git.2009091
+>=20
+> produces strange results:
+>=20
+> With v1.6.3.3 (and perhaps earlier versions), this would fetch up to
+> and including r9978 (the last revision of the no_iwad_alternatives
+> branch before it was deleted), check it out, and prematurely declare
+> success, leaving out some commits to the trunk (r9984, r9985, r10006)
+> from after the branch was merged.
+>=20
+> With v1.6.5-rc0~74 (svn: allow branches outside of refs/remotes,
+> 2009-08-11) and later, this fetches up to and including r9978 and the=
+n
+> attempts a post-fetch checkout and fails.
+>=20
+>  r9978 =3D 25f0920175c395f0f22f54ae7a2318147f745274
+>  (refs/remotes/no_iwad_alternatives)
+>  fatal: refs/remotes/trunk: not a valid SHA1
+>  update-ref refs/heads/master refs/remotes/trunk: command returned er=
+ror: 128
+>=20
+> Checking .git/config reveals
+>=20
+>  fetch =3D packages//trunk/freedoom:refs/remotes/trunk
+>=20
+> And with both 1.6.3.3 and 1.7.1, using --trunk=3Dtrunk/freedom withou=
+t
+> the leading slash (/) works fine.
+>=20
+> Moral: git-svn needs to scrub an initial / from $_trunk and related
+> arguments it receives.  Make it so.
+>=20
+> Reported-by: Jon Dowland <jmtd@debian.org>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-git rev-list --reverse master -- README | git cherry-pick -n --stdin
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-without using xargs.
+=2E..and pushed out to git://git.bogomips.org/git-svn along with
+one follow-up patch:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Eric Wong (1):
+      git svn: avoid unnecessary '/' in paths for SVN
+
+Jonathan Nieder (1):
+      git-svn: strip off leading slashes on --trunk argument
+
+> ---
+> Hi Eric,
+>=20
+> It=E2=80=99s not clear to me what=E2=80=99s going on here, but this s=
+eems to fix it.
+> Insights?
+
+The svn:// server is more picky about the "//" than http:// or file://.
+
+So we were skipping fetches from trunk completely, and never created
+a ref for it.  Since git-svn attempts to checkout a "master" ref based
+on trunk, it fails since trunk is a non-existent ref.
+
+=46rom b1a954a37cea7d5a0a123758f6c2ad9005d4481e Mon Sep 17 00:00:00 200=
+1
+=46rom: Eric Wong <normalperson@yhbt.net>
+Date: Mon, 14 Jun 2010 04:31:10 +0000
+Subject: [PATCH] git svn: avoid unnecessary '/' in paths for SVN
+
+svn:// servers are more picky regarding redundant slashes
+than file:// and http(s)://-backed respositories.  Since
+the last commit, we avoid putting unnecessary slashes in
+$GIT_CONFIG, but this doesn't help users who are already
+set up that way.
+
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
 ---
-	This applies on top of pu as it is related to my cherry-pick
-	many commits series.
+ git-svn.perl |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
- Documentation/git-cherry-pick.txt   |   14 +++++++++++++-
- Documentation/git-revert.txt        |    6 +++++-
- builtin/revert.c                    |    9 ++++++---
- t/t3508-cherry-pick-many-commits.sh |   10 ++++++++++
- 4 files changed, 34 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index bcb4c75..54e6833 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -7,7 +7,8 @@ git-cherry-pick - Apply the changes introduced by some existing commits
- 
- SYNOPSIS
- --------
--'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] <commit>...
-+'git cherry-pick' [--edit] [-n] [-m parent-number] [-s] [-x] [--ff] [--stdin]
-+		<commit>...
- 
- DESCRIPTION
- -----------
-@@ -79,6 +80,10 @@ effect to your index in a row.
- 	cherry-pick'ed commit, then a fast forward to this commit will
- 	be performed.
- 
-+--stdin::
-+	In addition to the '<commit>' listed on the command
-+	line, read them from the standard input.
-+
- EXAMPLES
- --------
- git cherry-pick master::
-@@ -113,6 +118,13 @@ git cherry-pick --ff ..next::
- 	are in next but not HEAD to the current branch, creating a new
- 	commit for each new change.
- 
-+git rev-list --reverse master -- README | git cherry-pick -n --stdin::
-+
-+	Apply the changes introduced by all commits on the master
-+	branch that touched README to the working tree and index,
-+	so the result can be inspected and made into a single new
-+	commit if suitable.
-+
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com>
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index dea4f53..84b4a68 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -7,7 +7,7 @@ git-revert - Revert some existing commits
- 
- SYNOPSIS
- --------
--'git revert' [--edit | --no-edit] [-n] [-m parent-number] [-s] <commit>...
-+'git revert' [--edit | --no-edit] [-n] [-m parent-number] [-s] [--stdin] <commit>...
- 
- DESCRIPTION
- -----------
-@@ -80,6 +80,10 @@ effect to your index in a row.
- --signoff::
- 	Add Signed-off-by line at the end of the commit message.
- 
-+--stdin::
-+	In addition to the '<commit>' listed on the command
-+	line, read them from the standard input.
-+
- EXAMPLES
- --------
- git revert HEAD~3::
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 853e9e4..2b3d5a5 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -41,7 +41,7 @@ static enum { REVERT, CHERRY_PICK } action;
- static struct commit *commit;
- static int commit_argc;
- static const char **commit_argv;
--static int allow_rerere_auto;
-+static int allow_rerere_auto, read_stdin;
- 
- static const char *me;
- static const char *strategy;
-@@ -63,6 +63,7 @@ static void parse_args(int argc, const char **argv)
- 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
- 		OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
- 		OPT_STRING(0, "strategy", &strategy, "strategy", "merge strategy"),
-+		OPT_BOOLEAN(0, "stdin", &read_stdin, "read commits from stdin"),
- 		OPT_END(),
- 		OPT_END(),
- 		OPT_END(),
-@@ -79,7 +80,7 @@ static void parse_args(int argc, const char **argv)
+diff --git a/git-svn.perl b/git-svn.perl
+index 80ab450..19d6848 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2055,6 +2055,9 @@ sub new {
+ 		         "\":$ref_id\$\" in config\n";
+ 		($self->{path}, undef) =3D split(/\s*:\s*/, $fetch);
  	}
- 
- 	commit_argc = parse_options(argc, argv, NULL, options, usage_str, 0);
--	if (commit_argc < 1)
-+	if (commit_argc < 1 && !read_stdin)
- 		usage_with_options(usage_str, options);
- 
- 	commit_argv = argv;
-@@ -527,10 +528,12 @@ static void prepare_revs(struct rev_info *revs)
- {
- 	int argc = 0;
- 	int i;
--	const char **argv = xmalloc((commit_argc + 4) * sizeof(*argv));
-+	const char **argv = xmalloc((commit_argc + 5) * sizeof(*argv));
- 
- 	argv[argc++] = NULL;
- 	argv[argc++] = "--no-walk";
-+	if (read_stdin)
-+		argv[argc++] = "--stdin";
- 	if (action != REVERT)
- 		argv[argc++] = "--reverse";
- 	for (i = 0; i < commit_argc; i++)
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index 3b87efe..27096f1 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -92,4 +92,14 @@ test_expect_failure 'cherry-pick -3 fourth works' '
- 	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
- '
- 
-+test_expect_success 'cherry-pick --stdin works' '
-+	git checkout master &&
-+	git reset --hard first &&
-+	test_tick &&
-+	git rev-list --reverse first..fourth | git cherry-pick --stdin &&
-+	git diff --quiet other &&
-+	git diff --quiet HEAD other &&
-+	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+'
-+
- test_done
--- 
-1.7.1.468.g77401.dirty
++	$self->{path} =3D~ s{/+}{/}g;
++	$self->{path} =3D~ s{\A/}{};
++	$self->{path} =3D~ s{/\z}{};
+ 	$self->{url} =3D command_oneline('config', '--get',
+ 	                               "svn-remote.$repo_id.url") or
+                   die "Failed to read \"svn-remote.$repo_id.url\" in c=
+onfig\n";
+--=20
+Eric Wong
