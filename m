@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCHv4 11/17] gitweb/lib - Adaptive cache expiration time
-Date: Mon, 14 Jun 2010 18:08:24 +0200
-Message-ID: <1276531710-22945-13-git-send-email-jnareb@gmail.com>
+Subject: [RFC PATCHv4 08/17] gitweb/lib - Alternate ways of capturing output
+Date: Mon, 14 Jun 2010 18:08:20 +0200
+Message-ID: <1276531710-22945-9-git-send-email-jnareb@gmail.com>
 References: <1276531710-22945-1-git-send-email-jnareb@gmail.com>
 Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
 	Petr Baudis <pasky@ucw.cz>,
@@ -10,297 +10,518 @@ Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 14 18:09:13 2010
+X-From: git-owner@vger.kernel.org Mon Jun 14 18:10:23 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOCDh-0001Wt-Sr
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:09:06 +0200
+	id 1OOCEx-0002Dq-GL
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755498Ab0FNQJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jun 2010 12:09:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38593 "EHLO
+	id S1755629Ab0FNQJv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jun 2010 12:09:51 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44776 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755243Ab0FNQI6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jun 2010 12:08:58 -0400
-Received: by fxm8 with SMTP id 8so2649905fxm.19
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 09:08:56 -0700 (PDT)
+	with ESMTP id S1755330Ab0FNQIu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 12:08:50 -0400
+Received: by mail-fx0-f46.google.com with SMTP id 8so2649600fxm.19
+        for <git@vger.kernel.org>; Mon, 14 Jun 2010 09:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=clLDHpebDwe4i24o0p0fDizEpdiri26zFnFKXG2MR4g=;
-        b=X4IJ53MUrcqzC8BNSAwyVZ7Bu8ZM5iBmbfjwFfF9yVBZEgfWMoORx6ygiXccC2K1ia
-         uJVcH99XIdHfWstMRnIcGRnk91wnU8MaPrfuUUuK7GlB2WhWa+qCmOepAqMQHWElwutm
-         0bmvbwh0USD7u6eR4AW1xtfYDlsrCwL7asysw=
+        bh=4rBftJaY/P7xZ3UqcSd8ydWtRDaPXEG9rAcL6EeR3MU=;
+        b=ClB1PLOTNMIJYQtVk6Zmg4NfUdgb38ezreG4ukw4dPapTjna/IKl51ydg3YCKKoImg
+         izeS9+dL+1Hyt6zVM+j92vxii5cAfJ6UcgVqX+VcE+UXYFtJxszkfHfLY1IHTwER8aCk
+         GQTYpSbGuak5if1YrvZg2BZWluaXKA6RY2ugo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=aN/k1F8qDlJ9QPfnkZ9O7DyUZeUQJR+YS3lq4wbOR7IM/LpVzOIcxrYnBOI4Q9fbQK
-         LbvFaw3QxXSklA5ctV9TwUq4jD3iHzSsv2rakfECCES/NS+ZeHLUpCnWOnbo3X0lRATF
-         S4ySLQ5PpjrX5DixafWOexW36H3kWe9d8l97A=
-Received: by 10.223.100.141 with SMTP id y13mr5702075fan.15.1276531736408;
-        Mon, 14 Jun 2010 09:08:56 -0700 (PDT)
+        b=N2lMbxPSYkSfrHvQ2TEfUciod363lIL7yWhJO/5b/JAfy5+lMVbxG4pAcsu2XEgMfs
+         vvMavBYIG7P2epULIANi6r1qD9YDFurwHMkSleikd+WS9gg7tMuoYDJNWbhd6Qdc0+lZ
+         bPiph/1ABtkffU4gA1qUpbbuezCmC4Cd1z/Bo=
+Received: by 10.223.29.156 with SMTP id q28mr5642164fac.77.1276531729777;
+        Mon, 14 Jun 2010 09:08:49 -0700 (PDT)
 Received: from localhost.localdomain (abuz111.neoplus.adsl.tpnet.pl [83.8.197.111])
-        by mx.google.com with ESMTPS id u12sm7476715fah.28.2010.06.14.09.08.55
+        by mx.google.com with ESMTPS id u12sm7476715fah.28.2010.06.14.09.08.47
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 14 Jun 2010 09:08:56 -0700 (PDT)
+        Mon, 14 Jun 2010 09:08:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.1
 In-Reply-To: <1276531710-22945-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149107>
 
-Add to GitwebCache::SimpleFileCache support for adaptive lifetime
-(cache expiration) control.  Cache lifetime can be increased or
-decreased by any factor, e.g. load average, through the definition
-of the 'check_load' callback.
+Besides GitwebCache::Capture::SelectFH, which uses select(FH) to
+redirect 'print LIST' and 'printf FORMAT, LIST' to in-memory file to
+capture output, add GitwebCache::Capture::TiedCapture which uses
+tie-ing filehandle to capture output, and GitwebCache::Capture::PerlIO
+which uses push_layer method from non-core PerlIO::Util module to
+capture output.
 
-Note that using ->set_expires_in, or unsetting 'check_load' via
-->set_check_load(undef) turns off adaptive caching.
+Add test (which canbe run standalone) for all those implementations,
+checking ':utf8' and ':raw' output, and benchmark comparing them
+(includes example benchmark tests).  Please note that the test for
+alternate implementations is not run from t/t9503-gitweb-caching.sh
+test.
 
-Make gitweb automatically adjust cache lifetime by load, using
-get_loadavg() function.  Define and describe default parameters for
-dynamic (adaptive) cache expiration time control.
-
-There are some very basic tests of dynamic expiration time in t9503,
-namely checking if dynamic expire time is within given upper and lower
-bounds.
-
-To be implemented (from original patch by J.H.):
-* optional locking interface, where only one process can update cache
-  (using flock)
-* server-side progress indicator when waiting for filling cache,
-  which in turn requires separating situations (like snapshots and
-  other non-HTML responses) where we should not show 'please wait'
-  message
-
-Inspired-by-code-by: John 'Warthog9' Hawley <warthog9@kernel.org>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- gitweb/gitweb.perl                        |   27 +++++++++-
- gitweb/lib/GitwebCache/SimpleFileCache.pm |   80 +++++++++++++++++++++++++++--
- t/t9503/test_cache_interface.pl           |   33 ++++++++++++
- 3 files changed, 133 insertions(+), 7 deletions(-)
+ gitweb/lib/GitwebCache/Capture/PerlIO.pm      |   79 ++++++++++
+ gitweb/lib/GitwebCache/Capture/TiedCapture.pm |  149 +++++++++++++++++++
+ t/t9503/benchmark_capture_implementations.pl  |  198 +++++++++++++++++++++++++
+ 3 files changed, 426 insertions(+), 0 deletions(-)
+ create mode 100644 gitweb/lib/GitwebCache/Capture/PerlIO.pm
+ create mode 100644 gitweb/lib/GitwebCache/Capture/TiedCapture.pm
+ create mode 100755 t/t9503/benchmark_capture_implementations.pl
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 6772f6e..5ae5757 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -261,13 +261,36 @@ our %cache_options = (
- 	# * File::Spec->catdir(File::Spec->tmpdir(), 'gitweb-cache'),
- 	# * '/var/cache/gitweb' (FHS compliant, requires being set up),
- 	'cache_root' => 'cache',
-+
- 	# The number of subdirectories deep to cache object item.  This should be
- 	# large enough that no cache directory has more than a few hundred
- 	# objects.  Each non-leaf directory contains up to 256 subdirectories
- 	# (00-ff).  Must be larger than 0.
- 	'cache_depth' => 1,
--	# The (global) expiration time for objects placed in the cache, in seconds.
--	'expires_in' => 20,
-+
-+	# The (global) minimum expiration time for objects placed in the cache,
-+	# in seconds.  If the dynamic adaptive cache exporation time is lower
-+	# than this number, we set cache timeout to this minimum.
-+	'expires_min' => 20,   # 20 seconds
-+
-+	# The (global) maximum expiration time for dynamic (adaptive) caching
-+	# algorithm, in seconds.  If the adaptive cache lifetime exceeds this
-+	# number, we set cache timeout to this maximum.
-+	# (If 'expires_min' >= 'expires_max', there is no adaptive cache timeout,
-+	# and 'expires_min' is used as expiration time for objects in cache.)
-+	'expires_max' => 1200, # 20 minutes
-+
-+	# Cache lifetime will be increased by applying this factor to the result
-+	# from 'check_load' callback (see below).
-+	'expires_factor' => 60, # expire time in seconds for 1.0 (100% CPU) load
-+
-+	# User supplied callback for deciding the cache policy, usually system
-+	# load.  Multiplied by 'expires_factor' gives adaptive expiration time,
-+	# in seconds, subject to the limits imposed by 'expires_min' and
-+	# 'expires_max' bounds.  Set to undef (or delete) to turn off dynamic
-+	# lifetime control.
-+	# (Compatibile with Cache::Adaptive.)
-+	'check_load' => \&get_loadavg,
- );
- 
- 
-diff --git a/gitweb/lib/GitwebCache/SimpleFileCache.pm b/gitweb/lib/GitwebCache/SimpleFileCache.pm
-index 7c90350..e3548dc 100644
---- a/gitweb/lib/GitwebCache/SimpleFileCache.pm
-+++ b/gitweb/lib/GitwebCache/SimpleFileCache.pm
-@@ -61,6 +61,22 @@ our $DEFAULT_NAMESPACE = '';
- #    'expires_in' (CHI compatibile) [seconds]
- #    The expiration time for objects place in the cache.
- #    Defaults to -1 (never expire) if not explicitly set.
-+#    Sets 'expires_min' to given value.
-+#  * 'expires_min' [seconds]
-+#    The minimum expiration time for objects in cache (e.g. with 0% CPU load).
-+#    Used as lower bound in adaptive cache lifetime / expiration.
-+#    Defaults to 20 seconds; 'expires_in' sets it also.
-+#  * 'expires_max' [seconds]
-+#    The maximum expiration time for objects in cache.
-+#    Used as upper bound in adaptive cache lifetime / expiration.
-+#    Defaults to 1200 seconds, if not set; 
-+#    defaults to 'expires_min' if 'expires_in' is used.
-+#  * 'check_load'
-+#    Subroutine (code) used for adaptive cache lifetime / expiration.
-+#    If unset, adaptive caching is turned off; defaults to unset.
-+#  * 'increase_factor' [seconds / 100% CPU load]
-+#    Factor multiplying 'check_load' result when calculating cache lietime.
-+#    Defaults to 60 seconds for 100% SPU load ('check_load' returning 1.0).
- sub new {
- 	my ($proto, $p_options_hash_ref) = @_;
- 
-@@ -68,7 +84,8 @@ sub new {
- 	my $self  = {};
- 	$self = bless($self, $class);
- 
--	my ($root, $depth, $ns, $expires_in);
-+	my ($root, $depth, $ns);
-+	my ($expires_min, $expires_max, $increase_factor, $check_load);
- 	if (defined $p_options_hash_ref) {
- 		$root  =
- 			$p_options_hash_ref->{'cache_root'} ||
-@@ -77,19 +94,31 @@ sub new {
- 			$p_options_hash_ref->{'cache_depth'} ||
- 			$p_options_hash_ref->{'depth'};
- 		$ns    = $p_options_hash_ref->{'namespace'};
--		$expires_in =
-+		$expires_min =
-+			$p_options_hash_ref->{'expires_min'} ||
- 			$p_options_hash_ref->{'default_expires_in'} ||
- 			$p_options_hash_ref->{'expires_in'};
-+		$expires_max =
-+			$p_options_hash_ref->{'expires_max'};
-+		$increase_factor = $p_options_hash_ref->{'expires_factor'};
-+		$check_load      = $p_options_hash_ref->{'check_load'};
- 	}
- 	$root  = $DEFAULT_CACHE_ROOT  unless defined($root);
- 	$depth = $DEFAULT_CACHE_DEPTH unless defined($depth);
- 	$ns    = $DEFAULT_NAMESPACE   unless defined($ns);
--	$expires_in = -1 unless defined($expires_in); # <0 means never
-+	$expires_min = -1 unless defined($expires_min);
-+	$expires_max = $expires_min
-+		if (!defined($expires_max) && exists $p_options_hash_ref->{'expires_in'});
-+	$expires_max = -1 unless (defined($expires_max));
-+	$increase_factor = 60 unless defined($increase_factor);
- 
- 	$self->set_root($root);
- 	$self->set_depth($depth);
- 	$self->set_namespace($ns);
--	$self->set_expires_in($expires_in);
-+	$self->set_expires_min($expires_min);
-+	$self->set_expires_max($expires_max);
-+	$self->set_increase_factor($increase_factor);
-+	$self->set_check_load($check_load);
- 
- 	return $self;
- }
-@@ -100,7 +129,7 @@ sub new {
- # http://perldesignpatterns.com/perldesignpatterns.html#AccessorPattern
- 
- # creates get_depth() and set_depth($depth) etc. methods
--foreach my $i (qw(depth root namespace expires_in)) {
-+foreach my $i (qw(depth root namespace expires_min expires_max increase_factor check_load)) {
- 	my $field = $i;
- 	no strict 'refs';
- 	*{"get_$field"} = sub {
-@@ -113,6 +142,47 @@ foreach my $i (qw(depth root namespace expires_in)) {
- 	};
- }
- 
-+# ......................................................................
-+# pseudo-accessors
-+
-+# returns adaptive lifetime of cache entry for given $key [seconds]
-+sub get_expires_in {
-+	my ($self) = @_;
-+
-+	# short-circuit
-+	if (!defined $self->{'check_load'} ||
-+	    $self->{'expires_max'} <= $self->{'expires_min'}) {
-+		return $self->{'expires_min'};
-+	}
-+
-+	my $expires_in =
-+		#$self->{'expires_min'} +
-+		$self->{'increase_factor'} * $self->check_load();
-+
-+	if ($expires_in < $self->{'expires_min'}) {
-+		return $self->{'expires_min'};
-+	} elsif ($expires_in > $self->{'expires_max'}) {
-+		return $self->{'expires_max'};
-+	}
-+
-+	return $expires_in;
-+}
-+
-+# sets expiration time to $duration, turns off adaptive cache lifetime
-+sub set_expires_in {
-+	my ($self, $duration) = @_;
-+
-+	$self->{'expires_min'} = $self->{'expires_max'} = $duration;
-+}
-+
-+# runs 'check_load' subroutine, for adaptive cache lifetime.
-+# Note: check in caller that 'check_load' exists.
-+sub check_load {
-+	my $self = shift;
-+	#return &{$self->{'check_load'}}();
-+	return $self->{'check_load'}->();
-+}
-+
- # ----------------------------------------------------------------------
- # utility functions and methods
- 
-diff --git a/t/t9503/test_cache_interface.pl b/t/t9503/test_cache_interface.pl
-index b1e9036..37c1f2b 100755
---- a/t/t9503/test_cache_interface.pl
-+++ b/t/t9503/test_cache_interface.pl
-@@ -97,4 +97,37 @@ subtest 'cache expiration' => sub {
- 	done_testing();
- };
- 
-+# Test assertions for adaptive cache expiration
+diff --git a/gitweb/lib/GitwebCache/Capture/PerlIO.pm b/gitweb/lib/GitwebCache/Capture/PerlIO.pm
+new file mode 100644
+index 0000000..199aeed
+--- /dev/null
++++ b/gitweb/lib/GitwebCache/Capture/PerlIO.pm
+@@ -0,0 +1,79 @@
++# gitweb - simple web interface to track changes in git repositories
 +#
-+my $load = 0.0;
-+sub load { return $load; }
-+my $expires_min = 10;
-+my $expires_max = 30;
-+$cache->set_expires_in(-1);
-+$cache->set_expires_min($expires_min);
-+$cache->set_expires_max($expires_max);
-+$cache->set_check_load(\&load);
-+subtest 'adaptive cache expiration' => sub {
-+	cmp_ok($cache->get_expires_min(), '==', $expires_min,
-+	       '"expires min" set correctly');
-+	cmp_ok($cache->get_expires_max(), '==', $expires_max,
-+	       '"expires max" set correctly');
++# (C) 2010, Jakub Narebski <jnareb@gmail.com>
++#
++# This program is licensed under the GPLv2
 +
-+	$load = 0.0;
-+	cmp_ok($cache->get_expires_in(), '>=', $expires_min,
-+	       '"expires in" bound from down for load=0');
-+	cmp_ok($cache->get_expires_in(), '<=', $expires_max,
-+	       '"expires in" bound from up   for load=0');
-+	
-+	$load = 1_000;
-+	cmp_ok($cache->get_expires_in(), '>=', $expires_min,
-+	       '"expires in" bound from down for heavy load');
-+	cmp_ok($cache->get_expires_in(), '<=', $expires_max,
-+	       '"expires in" bound from up   for heavy load');
++#
++# Output capturing using PerlIO layers
++#
 +
-+	done_testing();
-+};
++# This module requires PaerlIO::Util installed.
 +
-+$cache->set_expires_in(-1);
++package GitwebCache::Capture::PerlIO;
 +
- done_testing();
++use PerlIO::Util;
++
++use strict;
++use warnings;
++
++use base qw(GitwebCache::Capture);
++use GitwebCache::Capture qw(:all);
++
++use Exporter qw(import);
++our @EXPORT      = @GitwebCache::Capture::EXPORT;
++our @EXPORT_OK   = @GitwebCache::Capture::EXPORT_OK;
++our %EXPORT_TAGS = %GitwebCache::Capture::EXPORT_TAGS;
++
++# Constructor
++sub new {
++	my $proto = shift;
++
++	my $class = ref($proto) || $proto;
++	my $self  = {};
++	$self = bless($self, $class);
++
++	$self->{'data'} = '';
++
++	return $self;
++}
++
++# Start capturing data (STDOUT)
++# (printed using 'print <sth>' or 'printf <sth>')
++sub start {
++	my $self = shift;
++
++	$self->{'data'}    = '';
++	*STDOUT->push_layer('scalar' => \$self->{'data'});
++
++	# push ':utf8' on top, if it was on top
++	*STDOUT->push_layer(':utf8')
++		if ((*STDOUT->get_layers())[-2] eq 'utf8');
++}
++
++# Stop capturing data (required for die_error)
++sub stop {
++	my $self = shift;
++
++	# return if we didn't start capturing
++	my @layers = *STDOUT->get_layers();
++	return unless grep { $_ eq 'scalar' } @layers;
++
++	my $was_utf8 = $layers[-1] eq 'utf8';
++	# stop saving to scalar, i.e. remove topmost 'scalar' layer,
++	# but remember that 'utf8' layer might be on top of it
++	while ((my $layer = *STDOUT->pop_layer())) {
++		pop @layers;
++		last if $layer eq 'scalar';
++	}
++	# restore ':utf8' mode, if needed
++	if ($was_utf8 && $layers[-1] ne 'utf8') {
++		*STDOUT->push_layer('utf8');
++	}
++
++	return $self->{'data'};
++}
++
++1;
++__END__
++# end of package GitwebCache::Capture::PerlIO;
+diff --git a/gitweb/lib/GitwebCache/Capture/TiedCapture.pm b/gitweb/lib/GitwebCache/Capture/TiedCapture.pm
+new file mode 100644
+index 0000000..e7cc2e3
+--- /dev/null
++++ b/gitweb/lib/GitwebCache/Capture/TiedCapture.pm
+@@ -0,0 +1,149 @@
++# gitweb - simple web interface to track changes in git repositories
++#
++# (C) 2010, Jakub Narebski <jnareb@gmail.com>
++#
++# This program is licensed under the GPLv2
++
++#
++# Simple output capturing by tie-ing filehandle
++#
++
++package GitwebCache::Capture::TiedCapture;
++
++use PerlIO;
++
++use strict;
++use warnings;
++
++use base qw(GitwebCache::Capture);
++use GitwebCache::Capture qw(:all);
++
++use Exporter qw(import);
++our @EXPORT      = @GitwebCache::Capture::EXPORT;
++our @EXPORT_OK   = @GitwebCache::Capture::EXPORT_OK;
++our %EXPORT_TAGS = %GitwebCache::Capture::EXPORT_TAGS;
++
++# Constructor
++sub new {
++	my $proto = shift;
++
++	my $class = ref($proto) || $proto;
++	my $self  = {};
++	$self = bless($self, $class);
++
++	$self->{'data'} = '';
++	$self->{'tied'} = undef;
++
++	return $self;
++}
++
++# Start capturing data (STDOUT)
++# (printed using 'print <sth>' or 'printf <sth>')
++sub start {
++	my $self = shift;
++
++	# savie tie
++	$self->{'tied'} = tied *STDOUT;
++
++	$self->{'data'} = '';
++	tie *STDOUT, 'GitwebCache::TiedCapture', \$self->{'data'};
++
++	# re-binmode, so that tied class would pick it up
++	binmode STDOUT,
++		(PerlIO::get_layers(*STDOUT))[-1] eq 'utf8' ? ':utf8' : ':raw';
++}
++
++# Stop capturing data (required for die_error)
++sub stop {
++	my $self = shift;
++
++	# return if we didn't start capturing
++	return unless tied(*STDOUT)->isa('GitwebCache::TiedCapture');
++
++	# restore ties, if there were any
++	untie *STDOUT;
++	if ($self->{'tied'}) {
++		tie *STDOUT, 'Tie::Restore', $self->{'tied'};
++	}
++
++	return $self->{'data'};
++}
++
++1;
++
++########################################################################
++
++package GitwebCache::TiedCapture;
++
++our $VERSION = '0.001';
++$VERSION = eval $VERSION;
++
++use utf8; # not strictly necessary: utf8::* is in core
++use strict;
++use warnings;
++
++sub TIEHANDLE {
++	my ($proto, $dataref) = @_;
++	my $class = ref($proto) || $proto;
++	my $self = {};
++	$self = bless($self, $class);
++	$self->{'scalar'} = $dataref;
++	$self->{'binmode'} = ':utf8';
++	return $self;
++}
++
++sub append_str {
++	my ($self, $str) = @_;
++	utf8::encode($str) if ($self->{'binmode'} eq ':utf8');
++	${$self->{'scalar'}} .= $str;
++}
++
++sub WRITE {
++	my ($self, $buffer, $length, $offset) = @_;
++	$self->append_str(substr($buffer, $offset, $length));
++}
++
++sub PRINT {
++	my $self = shift;
++	$self->append_str(join('',@_));
++}
++
++sub PRINTF {
++	my $self = shift;
++	$self->append_str(sprintf(@_));
++}
++
++sub BINMODE {
++	my $self = shift;
++	$self->{'mode'} = shift || ':raw';
++}
++
++#sub UNTIE {
++#	local $^W = 0;
++#}
++
++1;
++
++########################################################################
++
++package Tie::Restore;
++# Written by Robby Walker ( webmaster@pointwriter.com )
++# for Point Writer ( http://www.pointwriter.com/ ).
++
++our $VERSION = '0.11';
++$VERSION = eval $VERSION;
++
++# $object = tied %hash;
++# tie %hash, 'Tie::Restore', $object;
++
++sub TIESCALAR { $_[1] }
++sub TIEARRAY  { $_[1] }
++sub TIEHASH   { $_[1] }
++sub TIEHANDLE { $_[1] }
++
++1;
++
++
++1;
++__END__
++# end of package GitwebCache::Capture::TiedCapture;
+diff --git a/t/t9503/benchmark_capture_implementations.pl b/t/t9503/benchmark_capture_implementations.pl
+new file mode 100755
+index 0000000..73806a3
+--- /dev/null
++++ b/t/t9503/benchmark_capture_implementations.pl
+@@ -0,0 +1,198 @@
++#!/usr/bin/perl
++use lib (split(/:/, $ENV{GITPERLLIB}));
++
++use warnings;
++use strict;
++
++use File::Spec;
++use File::Path;
++use Benchmark qw(:all);
++
++use PerlIO;
++
++# benchmark source version
++sub __DIR__ () {
++	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1]);
++}
++use lib __DIR__."/../../gitweb/lib";
++
++# ....................................................................
++
++# Load modules (without importing)
++#
++my @modules =
++	map { "GitwebCache::Capture::$_" }
++	qw(SelectFH TiedCapture);
++foreach my $mod (@modules) {
++	eval "require $mod";
++}
++if (eval { require PerlIO::Util; 1 }) {
++	require GitwebCache::Capture::PerlIO;
++	push @modules, 'GitwebCache::Capture::PerlIO';
++}
++
++# Set up capturing, for each module
++#
++my @captures = map { $_->new() } @modules;
++
++my $test_data = <<'EOF';
++Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
++eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
++minim veniam, quis nostrud exercitation ullamco laboris nisi ut
++aliquip ex ea commodo consequat. Duis aute irure dolor in
++reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
++pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
++culpa qui officia deserunt mollit anim id est laborum.
++
++Sed ut perspiciatis unde omnis iste natus error sit voluptatem
++accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae
++ab illo inventore veritatis et quasi architecto beatae vitae dicta
++sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
++aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos
++qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui
++dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
++quia non numquam eius modi tempora incidunt ut labore et dolore magnam
++aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum
++exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex
++ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in
++ea voluptate velit esse quam nihil molestiae consequatur, vel illum
++qui dolorem eum fugiat quo voluptas nulla pariatur?
++EOF
++
++my @captured_output;
++my $repeat = 100;
++sub capture_output {
++	my ($class, $mode) = @_;
++
++	$class->start();
++	binmode select(), $mode if defined($mode);
++	print $test_data for (1..$repeat);
++
++	return $class->stop();
++}
++
++my %codehash;
++for (my $i = 0; $i < @captures; $i++) {
++	my $capture = $captures[$i];
++	my $name = ref($capture);
++	$name =~ s/^.*:://;
++
++	$codehash{$name} = sub { $captured_output[$i] = capture_output($capture) };
++}
++
++# ....................................................................
++
++my $test_other_modules = 0;
++
++if ($test_other_modules) {
++
++	if (eval { require Capture::Tiny; 1; }) {
++		$codehash{'Capture::Tiny'} = sub {
++			my ($stdout, $stderr) = Capture::Tiny::capture(sub {
++				print $test_data for (1..$repeat);
++			});
++			print STDERR $stderr if defined($stderr);
++		};
++	}
++
++	if (eval { require IO::CaptureOutput; 1; }) {
++		$codehash{'IO::CaptureOutput'} = sub {
++			my ($stdout, $stderr);
++			IO::CaptureOutput::capture(sub {
++				print $test_data for (1..$repeat);
++			}, \$stdout, \$stderr);
++			print STDERR $stderr if defined($stderr);
++		};
++		# somehow it interferes with capturing in GitwebCache::Capture::PerlIO
++		delete $codehash{'PerlIO'};
++	}
++
++	if (eval { require IO::Capture::Stdout; 1; }) {
++		$codehash{'IO::Capture'} = sub {
++			my $capture = IO::Capture::Stdout->new();
++
++			$capture->start();
++			print $test_data for (1..$repeat);
++			$capture->stop();
++
++			my $captured_output = join('', $capture->read());
++		};
++	}
++} # end if ($test_other_modules)
++
++# ....................................................................
++
++print "Capturing $repeat x ".length($test_data).
++      " = ".($repeat * length($test_data))." characters\n";
++my $count = -10; # CPU seconds
++my $result = timethese($count, \%codehash);
++cmpthese($result);
++
++#if (exists $codehash{PerlIO}) {
++#	cmpthese(-10, {
++#		'PerlIO::get_layers'  => sub { PerlIO::get_layers(*STDOUT); },
++#		'PerlIO::Util method' => sub { *STDOUT->get_layers(); },
++#	});
++#}
++
++1;
++__END__
++## EXAMPLE OUTPUT ##
++#
++## 1 x $test_data, PerlIO using *STDOUT->get_layers();
++# Benchmark: running PerlIO, SelectFH, TiedCapture for at least 10 CPU seconds...
++#      PerlIO:  9 wallclock secs (10.38 usr +  0.13 sys = 10.51 CPU) @  9676.31/s (n=101698)
++#    SelectFH: 12 wallclock secs (10.51 usr +  0.02 sys = 10.53 CPU) @ 12294.21/s (n=129458)
++# TiedCapture: 10 wallclock secs (10.24 usr +  0.06 sys = 10.30 CPU) @  9489.22/s (n=97739)
++#                Rate TiedCapture      PerlIO    SelectFH
++# TiedCapture  9489/s          --         -2%        -23%
++# PerlIO       9676/s          2%          --        -21%
++# SelectFH    12294/s         30%         27%          --
++#
++## 10 x $test_data, PerlIO using *STDOUT->get_layers();
++# Benchmark: running PerlIO, SelectFH, TiedCapture for at least 10 CPU seconds...
++#      PerlIO:  9 wallclock secs (10.47 usr +  0.07 sys = 10.54 CPU) @ 7558.35/s (n=79665)
++#    SelectFH: 11 wallclock secs (10.36 usr +  0.04 sys = 10.40 CPU) @ 8970.87/s (n=93297)
++# TiedCapture: 11 wallclock secs (10.45 usr +  0.02 sys = 10.47 CPU) @ 2602.77/s (n=27251)
++#               Rate TiedCapture      PerlIO    SelectFH
++# TiedCapture 2603/s          --        -66%        -71%
++# PerlIO      7558/s        190%          --        -16%
++# SelectFH    8971/s        245%         19%          --
++#
++## 100 x $test_data, PerlIO using *STDOUT->get_layers();
++# Benchmark: running PerlIO, SelectFH, TiedCapture for at least 50 CPU seconds...
++#      PerlIO: 67 wallclock secs (35.28 usr + 17.82 sys = 53.10 CPU) @ 832.41/s (n=44201)
++#    SelectFH: 73 wallclock secs (33.83 usr + 18.63 sys = 52.46 CPU) @ 830.06/s (n=43545)
++# TiedCapture: 71 wallclock secs (50.93 usr +  0.41 sys = 51.34 CPU) @  95.31/s (n=4893)
++#               Rate TiedCapture    SelectFH      PerlIO
++# TiedCapture 95.3/s          --        -89%        -89%
++# SelectFH     830/s        771%          --         -0%
++# PerlIO       832/s        773%          0%          --
++#
++## 100 x $test_data, PerlIO using mix of *STDOUT->get_layers() and PerlIO::get_layers(*STDOUT);
++# Capturing 100 x 1314 = 131400 characters
++# Benchmark: timing 25000 iterations of PerlIO, SelectFH, TiedCapture...
++#      PerlIO:  30 wallclock secs  (19.05 usr + 10.29 sys =  29.34 CPU) @ 852.08/s (n=25000)
++#    SelectFH:  30 wallclock secs  (18.95 usr + 10.26 sys =  29.21 CPU) @ 855.87/s (n=25000)
++# TiedCapture: 307 wallclock secs (267.37 usr +  2.95 sys = 270.32 CPU) @  92.48/s (n=25000)
++#               Rate TiedCapture      PerlIO    SelectFH
++# TiedCapture 92.5/s          --        -89%        -89%
++# PerlIO       852/s        821%          --         -0%
++# SelectFH     856/s        825%          0%          --
++#
++## 100 x $test_data (IO::CaptureOutput interferes with GitwebCache::Capture::PerlIO)
++# Capturing 100 x 1314 = 131400 characters
++# Benchmark: running IO::CaptureOutput, SelectFH, TiedCapture for at least 10 CPU seconds...
++# IO::CaptureOutput: 12 wallclock secs ( 5.12 usr +  5.63 sys = 10.75 CPU) @ 126.60/s (n=1361)
++#          SelectFH: 12 wallclock secs ( 6.93 usr +  3.45 sys = 10.38 CPU) @ 808.29/s (n=8390)
++#       TiedCapture: 11 wallclock secs (10.11 usr +  0.01 sys = 10.12 CPU) @ 103.26/s (n=1045)
++#                    Rate       TiedCapture IO::CaptureOutput          SelectFH
++# TiedCapture       103/s                --              -18%              -87%
++# IO::CaptureOutput 127/s               23%                --              -84%
++# SelectFH          808/s              683%              538%                --
++#
++## PerlIO::get_layers   == PerlIO::get_layers(*STDOUT)
++## PerlIU::Util method  == *STDOUT->get_layers()
++#                        Rate PerlIO::Util method  PerlIO::get_layers
++# PerlIO::Util method 54405/s                  --                -38%
++# PerlIO::get_layers  87672/s                 61%                  --
 -- 
 1.7.0.1
