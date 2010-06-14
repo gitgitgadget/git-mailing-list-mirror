@@ -1,103 +1,84 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] Fix strcat() on uninitialized memory
-Date: Mon, 14 Jun 2010 12:34:58 -0400
-Message-ID: <AANLkTimSFwn1yykyEOTRdHHBYTFUEhxqj2AinjRv9ECC@mail.gmail.com>
-References: <alpine.DEB.1.00.1006141032250.2689@bonsai2>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Re: Git and svn as target
+Date: Mon, 14 Jun 2010 18:35:44 +0200
+Message-ID: <4C165A60.2010508@fechner.net>
+References: <4C107BEB.6020209@fechner.net> <20100610060525.GA2177@m62s10.vlinux.de> <AANLkTino5sVtNEFV5_nGi9NmlhBCc0-_4NhTZwKdDzho@mail.gmail.com>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 14 18:35:08 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 14 18:36:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOCct-00076W-4C
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:35:07 +0200
+	id 1OOCdr-0007mW-QQ
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755405Ab0FNQfA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 12:35:00 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:47278 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754645Ab0FNQe7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 12:34:59 -0400
-Received: by gwj15 with SMTP id 15so2557481gwj.19
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 09:34:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QpYgNfhUY5ZHyO7W8he1WT9ZSo0+5i+4n/e695CColE=;
-        b=RCaBnx3uHD9BhAQkQH/UXHJFotf5RmpWwj6X/AFWo/lmmot6KV2hSMiSFMGb63EPlB
-         NUYBkrtEPj+Cd4gMW1fzUdJny0pO3TpD8ouuD8Ve24Lcit5GYrB0Heq5LFd5uTSkYYJO
-         oL1FGAGh99aliF58rVPnwRb7q5L4g7xGQzABU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=McT3uFiGBT52dIKuhzRlExx8/X6iMlSuuwYGS0OFW7mP5kRyXDaNhQ1Sfy741oaR/D
-         5uMK9RgbjarhOJKLheRSBh8WM+NK3gup6oM8SElWnevy7zI2wDftbvCVf18v6h1TrAVt
-         +tt4SLohe0Dub08tmIyvdghjSQbUft9IIOv38=
-Received: by 10.150.113.12 with SMTP id l12mr6745424ybc.364.1276533298753; 
-	Mon, 14 Jun 2010 09:34:58 -0700 (PDT)
-Received: by 10.231.120.19 with HTTP; Mon, 14 Jun 2010 09:34:58 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1006141032250.2689@bonsai2>
+	id S1754645Ab0FNQgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jun 2010 12:36:00 -0400
+Received: from anny.lostinspace.de ([80.190.182.2]:31781 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753947Ab0FNQf7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 12:35:59 -0400
+Received: from server.idefix.lan (ppp-88-217-54-73.dynamic.mnet-online.de [88.217.54.73])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.3/8.14.3) with ESMTP id o5EGZqkC006868
+	for <git@vger.kernel.org>; Mon, 14 Jun 2010 18:35:56 +0200 (CEST)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (unknown [127.0.0.1])
+	by server.idefix.lan (Postfix) with ESMTP id 2261777B1
+	for <git@vger.kernel.org>; Mon, 14 Jun 2010 18:35:52 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at server.idefix.lan
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id qpJr4W9bSA7P for <git@vger.kernel.org>;
+	Mon, 14 Jun 2010 18:35:45 +0200 (CEST)
+Received: from idefix-mobil.idefix.lan (unknown [IPv6:2001:a60:f035:2:226:8ff:fee1:cb6f])
+	by server.idefix.lan (Postfix) with ESMTPA id 43C4277A2
+	for <git@vger.kernel.org>; Mon, 14 Jun 2010 18:35:45 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <AANLkTino5sVtNEFV5_nGi9NmlhBCc0-_4NhTZwKdDzho@mail.gmail.com>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.5 (anny.lostinspace.de [80.190.182.2]); Mon, 14 Jun 2010 18:35:56 +0200 (CEST)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149125>
 
-Thanks, this was caught last week and patch posted by Thomas:
+Hi,
 
-http://marc.info/?l=3Dgit&m=3D127619546001346&w=3D2
+Am 10.06.10 09:11, schrieb Avery Pennarun:
+> Right. I actually like it that way much more than I like rebasing
+> onto master, but that's a matter of opinion, of course.  Another
+> option would be to simply do "git svn dcommit" from the 'test' branch
+> rather than merging it into master first.  (This essentially asks
+> git-svn to do your rebasing for you, so it's roughly the same thing as
+> merge-rebase-dcommit.)
+>    
 
-j.
+thanks, I got it working with the following sequence:
+git svn fetch
+git svn rebase
+git branch test
+git checkout test
+several commit with commit messages
+git checkout master
+git svn fetch
+git svn rebase
+git rebase --interactive --preserve-merges test
+git svn dcommit
 
-On Mon, Jun 14, 2010 at 12:19 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Under certain circumstances, this bug would trigger a buffer overflow
-> error with libc, and fail test 5516.
->
-> Strbufs would have avoided the issue.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> =C2=A0builtin/receive-pack.c | =C2=A0 =C2=A04 ++--
-> =C2=A01 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index 05071c3..1644424 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -569,9 +569,9 @@ static void check_aliased_update(struct command *=
-cmd, struct string_list *list)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0dst_cmd->skip_update =3D 1;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0strcpy(cmd_oldh, find_unique_abbrev(cmd->o=
-ld_sha1, DEFAULT_ABBREV));
-> - =C2=A0 =C2=A0 =C2=A0 strcat(cmd_newh, find_unique_abbrev(cmd->new_s=
-ha1, DEFAULT_ABBREV));
-> + =C2=A0 =C2=A0 =C2=A0 strcpy(cmd_newh, find_unique_abbrev(cmd->new_s=
-ha1, DEFAULT_ABBREV));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0strcpy(dst_oldh, find_unique_abbrev(dst_cm=
-d->old_sha1, DEFAULT_ABBREV));
-> - =C2=A0 =C2=A0 =C2=A0 strcat(dst_newh, find_unique_abbrev(dst_cmd->n=
-ew_sha1, DEFAULT_ABBREV));
-> + =C2=A0 =C2=A0 =C2=A0 strcpy(dst_newh, find_unique_abbrev(dst_cmd->n=
-ew_sha1, DEFAULT_ABBREV));
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0rp_error("refusing inconsistent update bet=
-ween symref '%s' (%s..%s) and"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 " its target =
-'%s' (%s..%s)",
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cmd->ref_name=
-, cmd_oldh, cmd_newh,
-> --
-> 1.7.1.msysgit.0.2.g2fefc8
->
->
+Now I can see all local git commit as commits to the svn repository.
+
+Bye,
+Matthias
+
+-- 
+"Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to produce bigger and better idiots. So far, the universe is winning." -- Rich Cook
