@@ -1,74 +1,99 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 1/2] Add infrastructure for translating Git with gettext
-Date: Mon, 14 Jun 2010 23:56:46 +0200
-Message-ID: <201006142356.46780.trast@student.ethz.ch>
-References: <1275846453-3805-1-git-send-email-avarab@gmail.com> <1275846453-3805-2-git-send-email-avarab@gmail.com> <AANLkTikuSTKbPkTrRtw4fvNUxlh32uhTlbq0g-q35dng@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 1/3] Make test-lib.sh emit valid TAP format
+Date: Mon, 14 Jun 2010 15:01:55 -0700 (PDT)
+Message-ID: <m31vc9p93t.fsf@localhost.localdomain>
+References: <1276096943-32671-1-git-send-email-avarab@gmail.com>
+	<1276096943-32671-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff Epler <jepler@unpythonic.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 14 23:56:55 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 15 00:02:06 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOHeI-0005z8-7Y
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 23:56:54 +0200
+	id 1OOHjI-0007xm-71
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 00:02:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756840Ab0FNV4v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 17:56:51 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:16706 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756810Ab0FNV4t convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 17:56:49 -0400
-Received: from CAS01.d.ethz.ch (129.132.178.235) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 14 Jun
- 2010 23:56:47 +0200
-Received: from thomas.localnet (84.74.100.241) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 14 Jun
- 2010 23:56:47 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <AANLkTikuSTKbPkTrRtw4fvNUxlh32uhTlbq0g-q35dng@mail.gmail.com>
+	id S1756667Ab0FNWB6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 18:01:58 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:58259 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751244Ab0FNWB6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 18:01:58 -0400
+Received: by bwz7 with SMTP id 7so2355405bwz.19
+        for <git@vger.kernel.org>; Mon, 14 Jun 2010 15:01:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=zaPwvNUcePLk79HtBE5uM/+7vimKpMu/Qk3H3hfmdiU=;
+        b=O+FUDIsbH3wdKJnM3sTP9x3msIyfCY7l/5riHtnmCuzx2KtXOlQI7puoJUPOEz/0xH
+         Bwpag8IvNDj+fTPO/D6+6RWv4YBi/FgcyifJuuc/x3bENwgwwHiwjW4B4TCQ9nDKNVXd
+         gVeVEuhu3u2GQMcALY6yA3wVYw8YOhdBbdG7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=FXYqHBeq6djodsQnP9hgQHYqy3bZaIBIhx2g/4dk1eyNpE3gntFrhFnvCbEJGpmuau
+         U7Ko+gJR9hyW4i1TMwq1Lm2R65HEJrRs65SIr0nd7AyIddKwKdJmbLqQmqR8Aq4SDAdT
+         sJgd1zO2bJFajzLCvVlUH+Zsk2zioSoLoFDAg=
+Received: by 10.204.136.71 with SMTP id q7mr4725805bkt.156.1276552916693;
+        Mon, 14 Jun 2010 15:01:56 -0700 (PDT)
+Received: from localhost.localdomain (abuz111.neoplus.adsl.tpnet.pl [83.8.197.111])
+        by mx.google.com with ESMTPS id z17sm21312805bkx.0.2010.06.14.15.01.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 14 Jun 2010 15:01:55 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o5EM1Qkm028087;
+	Tue, 15 Jun 2010 00:01:36 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o5EM1B8k028080;
+	Tue, 15 Jun 2010 00:01:11 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1276096943-32671-2-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149140>
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
-> It turns out that this doesn't actually work, and I can't find a
-> workaround. In Bash and Solaris's /bin/sh this executes until "dies
-> here". The problem is that I can't use the subshell trick, since the
-> gettext.sh inclusion has to be done in the current shell (I checked,
-> tests will fail).
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
+
+> TAP, the Test Anything Protocol, is a simple text-based interface
+> between testing modules in a test harness. test-lib.sh's output was
+> already very close to being valid TAP. This change brings it all the
+> way there. Before:
 >=20
->     #!/bin/sh
->     (. does-not-exist.sh)
->     echo "A subshell made it! ret =3D $?"
->     . does-not-exist.sh
->   # dies here
->     echo "A real shell made it! ret =3D $?"
+>    $ ./t0005-signals.sh
+>    *   ok 1: sigchain works
+>    * passed all 1 test(s)
 >=20
-> Is there some clever shellscript trick that I'm missing, or will I
-> have to resort to modifying the file at `make' time for this to work
-> everywhere?
+> And after:
+>=20
+>    $ ./t0005-signals.sh
+>    ok 1 - sigchain works
+>    # passed all 1 test(s)
+>    1..1
 
-Works for me in bash (4.0.35), but fails the way you say in dash (if
-only I could figure out the option that tells me the version!).
+How failing test looks like before and after the change?
 
-This works however:
+How test_expect_failure, i.e. known breakage (TODO test) looks like
+(both in known broken, and in accidentally fixed version) before and
+after the change?
 
-  type does-not-exist.sh 2>/dev/null && . does-not-exist.sh
-
-I suspect it only works if the script is executable, as otherwise type
-would not find it (but . would).  But at least on my system, it is.
+How does '--verbose' and '--debug' output looks like before and after
+the change?
 
 --=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jakub Narebski
+Poland
+ShadeHawk on #git
