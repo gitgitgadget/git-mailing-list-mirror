@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCHv4 16/17] gitweb: Show appropriate "Generating..." page when regenerating cache
-Date: Mon, 14 Jun 2010 18:08:29 +0200
-Message-ID: <1276531710-22945-18-git-send-email-jnareb@gmail.com>
+Subject: [RFC PATCHv4 13/17] gitweb/lib - Use locking to avoid 'cache miss stampede' problem
+Date: Mon, 14 Jun 2010 18:08:26 +0200
+Message-ID: <1276531710-22945-15-git-send-email-jnareb@gmail.com>
 References: <1276531710-22945-1-git-send-email-jnareb@gmail.com>
 Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
 	Petr Baudis <pasky@ucw.cz>,
@@ -10,427 +10,454 @@ Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 14 18:10:44 2010
+X-From: git-owner@vger.kernel.org Mon Jun 14 18:10:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOCEu-0002Dq-Ud
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:10:21 +0200
+	id 1OOCEt-0002Dq-8Y
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755568Ab0FNQJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jun 2010 12:09:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33637 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755539Ab0FNQJH (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755541Ab0FNQJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 14 Jun 2010 12:09:07 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 8so2649923fxm.19
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 09:09:06 -0700 (PDT)
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55154 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755323Ab0FNQJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 12:09:00 -0400
+Received: by mail-fx0-f46.google.com with SMTP id 8so2649718fxm.19
+        for <git@vger.kernel.org>; Mon, 14 Jun 2010 09:08:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=AvzkVDBFo75JBl0TAmR01hbC/m1lPVCmeRsuKemCQAw=;
-        b=vhE/Ubswfzyge9nfSc2d0ztNYcuSV8zQcAf/Gl27MfjWlke82fCYhRjocbjqgVkhkj
-         Sfuy7jWjHqSk1lSTxj2LD5sm0R19JZbXrPqtaDLVGwQZM9akjoHUUu1p9yU8pxGLzLfo
-         G9Br6ydMgJD+hOliab2lFAi4uvHylve7cEn5g=
+        bh=bvzH9pa35kViQB0bJssVROnLoSLCq4+O7wPPr9hNM1Y=;
+        b=J/mUIBiGtJbu51UaX8r6IkMRQmkLf0DCfrrcumc+sLUGEBD+yS6dC2U9p+7ZhTn292
+         qYqvMYkkFZuRtwx/r02Ww9uK0cQvXbEP7pIncxlTpcm3vyzwolGOW0FIx4cLPfdqnC+E
+         IkDLPB1rfQTeyhqJxkDaLLNkGU3oDEitNed3k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=G5hlgSb95J3BY6b3tVaJQ8JW9vWz9TSvUXFmdygiaOoipMn9uZpwxbROyS7s+gujaJ
-         5Ke0i+nT1EJ6u6QW71NW6d4MkQpcyjIVVoagJ6dJPG+Is25KiNifQ19yLkwRhZTGrbc1
-         bnGdlgFuyxq8qjDqacvd1tBBph8y3bfCiFV7Q=
-Received: by 10.223.23.67 with SMTP id q3mr5654575fab.59.1276531745803;
-        Mon, 14 Jun 2010 09:09:05 -0700 (PDT)
+        b=Rvwcqkak+2IOqZ4pGIYBJq4JEb6FexSQ9XzL9U9Wem3xN+tHQFxkgPGLgBipUVFrzm
+         6g4l/EmGi1uHYP8MfWIcbJShTX5HO8eG0EAhosT4bslgOTQ4gQtwv51Z4M/9ALwHiH5H
+         BCNtznn+WWVbMtrZyIfFISD/k3AaMKarFo4TU=
+Received: by 10.223.144.79 with SMTP id y15mr5675711fau.22.1276531739495;
+        Mon, 14 Jun 2010 09:08:59 -0700 (PDT)
 Received: from localhost.localdomain (abuz111.neoplus.adsl.tpnet.pl [83.8.197.111])
-        by mx.google.com with ESMTPS id u12sm7476715fah.28.2010.06.14.09.09.03
+        by mx.google.com with ESMTPS id u12sm7476715fah.28.2010.06.14.09.08.58
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 14 Jun 2010 09:09:04 -0700 (PDT)
+        Mon, 14 Jun 2010 09:08:59 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.1
 In-Reply-To: <1276531710-22945-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149119>
 
-When there exist stale/expired (but not too stale) version of
-(re)generated page in cache, gitweb returns stale version (and updates
-cache in background, assuming 'background_cache' is set to true value).
-When there is no stale version suitable to serve the client, currently
-we have to wait for the data to be generated in full before showing it.
-Add to GitwebCache::FileCacheWithLocking, via 'generating_info' callback,
-the ability to show user some activity indicator / progress bar, to
-show that we are working on generating data.
+Create GitwebCache::FileCacheWithLocking module (class), derived from
+GitwebCache::SimpleFileCache, where the ->compute($key, $code) method
+use locking (via flock) to ensure that only one process would generate
+data to update/fill-in cache; the rest would wait for the cache to
+be (re)generated and would read data from cache.  If process that was
+to (re)generate data dies or exits, one of the readers would take its
+role.
 
-Gitweb itself uses "Generating..." page as activity indicator, which
-redirects (via <meta http-equiv="Refresh" ...>) to refreshed version
-of the page after the cache is filled (via trick of not closing page
-and therefore not closing connection till data is available in cache,
-checked by getting shared/readers lock on lockfile for cache entry).
-The git_generating_data_html() subroutine, which is used by gitweb
-to implement this feature, is highly configurable: you can choose
-frequency of writing some data so that connection won't get closed,
-and maximum time to wait for data in "Generating..." page (see comments
-in %generating_options hash definition).
-
-Currently git_generating_data_html() contains hardcoded "whitelist" of
-actions for which such HTML "Generating..." page makes sense.
+Currently this feature can not be disabled via %cache_options,
+although you can set $cache to 'GitwebCache::SimpleFileCache' instead.
+Future new features (like: serving stale data while cache is being
+regenerated, (re)generating cache in background, activity indicator)
+all depend on locking.
 
 
-This implements final feature from the original gitweb output caching
-patch by J.H.
+A test in t9503 shows that in the case where there are two clients
+trying to simultaneously access non-existent or stale cache entry,
+(and generating data takes (artifically) a bit of time), if they are
+using ->compute method the data is (re)generated once, as opposed to
+if those clients are just using ->get/->set methods.
+
+To be implemented (from original patch by J.H.):
+* background building, and showing stale cache
+* server-side progress indicator when waiting for filling cache,
+  which in turn requires separating situations (like snapshots and
+  other non-HTML responses) where we should not show 'please wait'
+  message
+
+Note that there is slight inefficiency, in that filename for lockfile
+depends on the filename for cache entry (it just adds '.lock' suffix),
+but is recalculated from $key for both paths.
 
 Inspired-by-code-by: John 'Warthog9' Hawley <warthog9@kernel.org>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- gitweb/gitweb.perl                             |  127 +++++++++++++++++++++++-
- gitweb/lib/GitwebCache/FileCacheWithLocking.pm |   52 +++++++++-
- t/t9503/test_cache_interface.pl                |   61 +++++++++++
- 3 files changed, 234 insertions(+), 6 deletions(-)
+ gitweb/Makefile                                |    1 +
+ gitweb/README                                  |    6 +-
+ gitweb/gitweb.perl                             |    4 +-
+ gitweb/lib/GitwebCache/CacheOutput.pm          |    2 +-
+ gitweb/lib/GitwebCache/FileCacheWithLocking.pm |   95 ++++++++++++++
+ t/t9503-gitweb-caching.sh                      |    2 +-
+ t/t9503/test_cache_interface.pl                |  157 +++++++++++++++++++++++-
+ 7 files changed, 260 insertions(+), 7 deletions(-)
+ create mode 100644 gitweb/lib/GitwebCache/FileCacheWithLocking.pm
 
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 025060b..c736648 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -114,6 +114,7 @@ GITWEB_FILES += static/git-logo.png static/git-favicon.png
+ # gitweb output caching
+ GITWEB_MODULES += lib/GitwebCache/CacheOutput.pm
+ GITWEB_MODULES += lib/GitwebCache/SimpleFileCache.pm
++GITWEB_MODULES += lib/GitwebCache/FileCacheWithLocking.pm
+ GITWEB_MODULES += lib/GitwebCache/Capture.pm
+ GITWEB_MODULES += lib/GitwebCache/Capture/SelectFH.pm
+ 
+diff --git a/gitweb/README b/gitweb/README
+index 9b3e5d7..7309e8e 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -342,8 +342,12 @@ cache config (see below), and ignore unrecognized options.  Such caching
+ engine should also implement (at least) ->get($key) and ->set($key, $data)
+ methods (Cache::Cache and CHI compatible interface).
+ 
++You can set $cache to 'GitwebCache::SimpleFileCache' if you don't want
++to use locking, but then some advanced features, like generating data in
++background, wouldn't work because they require locking.
++
+ If $cache is left unset (if it is left undefined), then gitweb would use
+-GitwebCache::SimpleFileCache as caching engine.  This engine is 'dumb' (but
++GitwebCache::FileCacheWithLocking as caching engine.  This engine is 'dumb' (but
+ fast) file based caching layer, currently without any support for cache size
+ limiting, or even removing expired / grossly expired entries.  It has
+ therefore the downside of requiring a huge amount of disk space if there are
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2ca1ad7..8d7540e 100755
+index 5ae5757..411eb0d 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -21,7 +21,7 @@ use CGI qw(:standard :escapeHTML -nosticky);
- use CGI::Util qw(unescape);
- use CGI::Carp qw(fatalsToBrowser set_message);
- use Encode;
--use Fcntl ':mode';
-+use Fcntl qw(:mode :flock);
- use File::Find qw();
- use File::Basename qw(basename);
+@@ -241,7 +241,7 @@ our $maxload = 300;
+ our $caching_enabled = 0;
+ # Set to _initialized_ instance of cache interface implementing (at least)
+ # get($key) and set($key, $data) methods (Cache::Cache and CHI interfaces).
+-# If unset, GitwebCache::SimpleFileCache would be used, which is 'dumb'
++# If unset, GitwebCache::FileCacheWithLocking would be used, which is 'dumb'
+ # (but fast) file based caching layer, currently without any support for
+ # cache size limiting.  It is therefore recommended that the cache directory
+ # be periodically completely deleted; this operation is safe to perform.
+@@ -1063,7 +1063,7 @@ if ($caching_enabled) {
+ 	# $cache might be initialized (instantiated) cache, i.e. cache object,
+ 	# or it might be name of class, or it might be undefined
+ 	unless (defined $cache && ref($cache)) {
+-		$cache ||= 'GitwebCache::SimpleFileCache';
++		$cache ||= 'GitwebCache::FileCacheWithLocking';
+ 		$cache = $cache->new({
+ 			%cache_options,
+ 			#'cache_root' => '/tmp/cache',
+diff --git a/gitweb/lib/GitwebCache/CacheOutput.pm b/gitweb/lib/GitwebCache/CacheOutput.pm
+index de4bd4d..a397a45 100644
+--- a/gitweb/lib/GitwebCache/CacheOutput.pm
++++ b/gitweb/lib/GitwebCache/CacheOutput.pm
+@@ -17,7 +17,7 @@ package GitwebCache::CacheOutput;
+ use strict;
+ use warnings;
  
-@@ -308,8 +308,32 @@ our %cache_options = (
- 	# In theory this will make gitweb seem more responsive at the price of
- 	# serving possibly stale data.
- 	'background_cache' => 1,
--);
+-use GitwebCache::SimpleFileCache;
++use GitwebCache::SimpleFileCache; # base class
+ use GitwebCache::Capture::SelectFH qw(:all);
  
-+	# Subroutine which would be called when gitweb has to wait for data to
-+	# be generated (it can't serve stale data because there isn't any,
-+	# or if it exists it is older than 'max_lifetime').  The default
-+	# is to use git_generating_data_html(), which creates "Generating..."
-+	# page, which would then redirect or redraw/rewrite the page when
-+	# data is ready.
-+	# Set it to `undef' to disable this feature.
-+	#
-+	# Such subroutine (if invoked from GitwebCache::SimpleFileCache)
-+	# is passed the following parameters: $cache instance, human-readable
-+	# $key to current page, and filehandle $lock_fh to lockfile.
-+	'generating_info' => \&git_generating_data_html,
-+);
-+# You define site-wide options for "Generating..." page (if enabled) here
-+# (which means that $cache_options{'generating_info'} is set to coderef);
-+# override them with $GITWEB_CONFIG as necessary.
-+our %generating_options = (
-+	# The time between generating new piece of output to prevent from
-+	# redirection before data is ready, i.e. time between printing each
-+	# dot in activity indicator / progress info, in seconds.
-+	'print_interval' => 2,
-+	# Maximum time "Generating..." page would be present, waiting for data,
-+	# before unconditional redirect, in seconds.
-+	'timeout' => $cache_options{'expires_min'},
-+);
- 
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
-@@ -3324,6 +3348,105 @@ sub get_page_title {
- 	return $title;
- }
- 
-+# creates "Generating..." page when caching enabled and not in cache
-+sub git_generating_data_html {
-+	my ($cache, $key, $lock_fh) = @_;
-+
-+	# whitelist of actions that should get "Generating..." page
-+	unless ($action =~ /(?:blame(?:|_incremental) | blobdiff | blob |
-+	                     commitdiff | commit | forks | heads | tags |
-+	                     log | shortlog | history | search |
-+	                     tag | tree | summary | project_list)/x) {
-+		return;
-+	}
-+	# blacklist of actions that should not have "Generating..." page
-+	#if ($action =~ /(?:atom | rss | opml |
-+	#                 blob_plain | blobdiff_plain | commitdiff_plain |
-+	#                 patch | patches |
-+	#                 blame_data | search_help | object | project_index |
-+	#                 snapshot/x) { # binary
-+	#	return;
-+	#}
-+
-+	# Stop capturing response, just in case (we should be not generating response)
-+	#
-+	capture_stop(); # or gitweb could use 'print $STDOUT' in place of 'print STDOUT'
-+
-+	my $title = "[Generating...] " . get_page_title();
-+	# TODO: the following line of code duplicates the one
-+	# in git_header_html, and it should probably be refactored.
-+	my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
-+
-+	# Use the trick that 'refresh' HTTP header equivalent (set via http-equiv)
-+	# with timeout of 0 seconds would redirect as soon as page is finished.
-+	# This "Generating..." redirect page should not be cached (externally).
-+	print STDOUT $cgi->header(-type => 'text/html', -charset => 'utf-8',
-+	                          -status=> '200 OK', -expires => 'now');
-+	print STDOUT <<"EOF";
-+<?xml version="1.0" encoding="utf-8"?>
-+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-+<!-- git web interface version $version -->
-+<!-- git core binaries version $git_version -->
-+<head>
-+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-+<meta http-equiv="refresh" content="0" />
-+<meta name="generator" content="gitweb/$version git/$git_version$mod_perl_version" />
-+<meta name="robots" content="noindex, nofollow" />
-+<title>$title</title>
-+</head>
-+<body>
-+EOF
-+
-+	local $| = 1; # autoflush
-+	print STDOUT 'Generating...';
-+
-+	my $total_time = 0;
-+	my $interval = $generating_options{'print_interval'} || 1;
-+	my $timeout  = $generating_options{'timeout'};
-+	my $alarm_handler = sub {
-+		local $! = 1;
-+		print STDOUT '.';
-+		$total_time += $interval;
-+		if ($total_time > $timeout) {
-+			die "timeout\n";
-+		}
-+	};
-+	eval {
-+		# check if we can use functions from Time::HiRes
-+		if (defined $t0) {
-+			local $SIG{ALRM} = $alarm_handler;
-+			Time::HiRes::alarm($interval, $interval);
-+		} else {
-+			local $SIG{ALRM} = sub {
-+				$alarm_handler->();
-+				alarm($interval);
-+			};
-+			alarm($interval);
-+		}
-+		my $lock_acquired;
-+		do {
-+			# loop is needed here because SIGALRM (from 'alarm')
-+			# can interrupt process of acquiring lock
-+			$lock_acquired = flock($lock_fh, LOCK_SH); # blocking readers lock
-+		} until ($lock_acquired);
-+		alarm 0;
-+	};
-+	# It doesn't really matter if we got lock, or timed-out
-+	# but we should re-throw unknown (unexpected) errors
-+	die $@ if ($@ and $@ !~ /timeout/);
-+
-+	print STDOUT <<"EOF";
-+
-+</body>
-+</html>
-+EOF
-+
-+	exit 0;
-+	#return;
-+}
-+
- sub git_header_html {
- 	my $status = shift || "200 OK";
- 	my $expires = shift;
+ use Exporter qw(import);
 diff --git a/gitweb/lib/GitwebCache/FileCacheWithLocking.pm b/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
-index bde1420..ad078e8 100644
---- a/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+new file mode 100644
+index 0000000..c91c0ee
+--- /dev/null
 +++ b/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
-@@ -74,24 +74,32 @@ use POSIX qw(setsid);
- #  * 'background_cache' (boolean)
- #    This enables/disables regenerating cache in background process.
- #    Defaults to true.
-+#  * 'generating_info'
-+#    Subroutine (code) called when process has to wait for cache entry
-+#    to be (re)generated (when there is no not-too-stale data to serve
-+#    instead), for other process (or bacground process).  It is passed
-+#    $cache instance, $key, and opened $lock_fh filehandle to lockfile.
-+#    Unset by default (which means no activity indicator).
- sub new {
- 	my ($proto, $p_options_hash_ref) = @_;
- 
- 	my $class = ref($proto) || $proto;
- 	my $self = $class->SUPER::new($p_options_hash_ref);
- 
--	my ($max_lifetime, $background_cache);
-+	my ($max_lifetime, $background_cache, $generating_info);
- 	if (defined $p_options_hash_ref) {
- 		$max_lifetime =
- 			$p_options_hash_ref->{'max_lifetime'} ||
- 			$p_options_hash_ref->{'max_cache_lifetime'};
- 		$background_cache = $p_options_hash_ref->{'background_cache'};
-+		$generating_info  = $p_options_hash_ref->{'generating_info'};
- 	}
- 	$max_lifetime = -1 unless defined($max_lifetime);
- 	$background_cache = 1 unless defined($background_cache);
- 
- 	$self->set_max_lifetime($max_lifetime);
- 	$self->set_background_cache($background_cache);
-+	$self->set_generating_info($generating_info);
- 
- 	return $self;
- }
-@@ -102,7 +110,7 @@ sub new {
- # http://perldesignpatterns.com/perldesignpatterns.html#AccessorPattern
- 
- # creates get_depth() and set_depth($depth) etc. methods
--foreach my $i (qw(max_lifetime background_cache)) {
-+foreach my $i (qw(max_lifetime background_cache generating_info)) {
- 	my $field = $i;
- 	no strict 'refs';
- 	*{"get_$field"} = sub {
-@@ -115,6 +123,17 @@ foreach my $i (qw(max_lifetime background_cache)) {
- 	};
- }
- 
-+# $cache->generating_info($key, $lock);
-+# runs 'generating_info' subroutine, for activity indicator,
-+# checking if it is defined first.
-+sub generating_info {
+@@ -0,0 +1,95 @@
++# gitweb - simple web interface to track changes in git repositories
++#
++# (C) 2006, John 'Warthog9' Hawley <warthog19@eaglescrag.net>
++# (C) 2010, Jakub Narebski <jnareb@gmail.com>
++#
++# This program is licensed under the GPLv2
++
++#
++# Gitweb caching engine, simple file-based cache, with locking
++#
++
++# Based on GitwebCache::SimpleFileCache, minimalistic cache that
++# stores data in the filesystem, without serialization.
++#
++# It uses file locks (flock) to have only one process generating data
++# and writing to cache, when using CHI interface ->compute() method.
++
++package GitwebCache::FileCacheWithLocking;
++use base qw(GitwebCache::SimpleFileCache);
++
++use strict;
++use warnings;
++
++use File::Path qw(mkpath);
++use Fcntl qw(:flock);
++
++# ......................................................................
++# constructor is inherited from GitwebCache::SimpleFileCache
++
++# ----------------------------------------------------------------------
++# utility functions and methods
++
++# Take an human readable key, and return path to be used for lockfile
++# Puts dirname of file path in second argument, if it is provided.
++sub get_lockname {
 +	my $self = shift;
 +
-+	if (defined $self->{'generating_info'}) {
-+		$self->{'generating_info'}->($self, @_);
-+	}
++	return $self->path_to_key(@_) . '.lock';
 +}
 +
++# ......................................................................
++# interface methods
++
++# $data = $cache->compute($key, $code);
++#
++# Combines the get and set operations in a single call.  Attempts to
++# get $key; if successful, returns the value.  Otherwise, calls $code
++# and uses the return value as the new value for $key, which is then
++# returned.
++#
++# Uses file locking to have only one process updating value for $key
++# to avoid 'cache miss stampede' (aka 'stampeding herd') problem.
++sub compute {
++	my ($self, $key, $code) = @_;
++
++	my $data = $self->get($key);
++	return $data if defined $data;
++
++	my $dir;
++	my $lockfile = $self->get_lockname($key, \$dir);
++
++	# ensure that directory leading to lockfile exists
++	if (!-d $dir) {
++		eval { mkpath($dir, 0, 0777); 1 }
++			or die "Couldn't mkpath '$dir' for lockfile: $!";
++	}
++
++	# this loop is to protect against situation where process that
++	# acquired exclusive lock (writer) dies or exits (die_error)
++	# before writing data to cache
++	my $lock_state; # needed for loop condition
++	do {
++		open my $lock_fh, '+>', $lockfile
++			or die "Could't open lockfile '$lockfile': $!";
++		$lock_state = flock($lock_fh, LOCK_EX | LOCK_NB);
++		if ($lock_state) {
++			# acquired writers lock
++			$data = $code->($self, $key);
++			$self->set($key, $data);
++		} else {
++			# get readers lock
++			flock($lock_fh, LOCK_SH);
++			$data = $self->fetch($key);
++		}
++		# closing lockfile releases lock
++		close $lock_fh
++			or die "Could't close lockfile '$lockfile': $!";
++	} until (defined $data || $lock_state);
++	# repeat until we have data, or we tried generating data oneself and failed
++	return $data;
++}
++
++1;
++__END__
++# end of package GitwebCache::FileCacheWithLocking
+diff --git a/t/t9503-gitweb-caching.sh b/t/t9503-gitweb-caching.sh
+index 0afcc0c..56f5aa0 100755
+--- a/t/t9503-gitweb-caching.sh
++++ b/t/t9503-gitweb-caching.sh
+@@ -26,7 +26,7 @@ fi
+ 
  # ----------------------------------------------------------------------
- # utility functions and methods
  
-@@ -173,7 +192,8 @@ sub compute {
+-test_external 'GitwebCache::SimpleFileCache Perl API (in gitweb/cache.pm)' \
++test_external 'GitwebCache::*FileCache* Perl API (in gitweb/cache.pm)' \
+ 	"$PERL_PATH" "$TEST_DIRECTORY"/t9503/test_cache_interface.pl
  
- 				# fork if there is stale data, for background process
- 				# to regenerate/refresh the cache (generate data)
--				$pid = fork() if (defined $stale_data);
-+				$pid = fork()
-+					if (defined $stale_data || $self->{'generating_info'});
- 			}
- 			if (!defined $pid || !$pid) {
- 				## didn't fork, or are in background process
-@@ -190,18 +210,42 @@ sub compute {
- 
- 				if (defined $pid) {
- 					## in background process; parent will serve stale data
-+					## or show activity indicator, and serve data
- 					close $lock_fh
- 						or die "Couldn't close lockfile '$lockfile' (background): $!";
- 					exit 0;
- 				}
-+
-+			} else {
-+				## forked, in parent process
-+
-+				# provide "generating page..." info if there is no stale data to serve
-+				# might exit, or force web browser to do redirection (refresh)
-+				if (!defined $stale_data) {
-+					# lock can get inherited across forks; unlock
-+					# flock($lock_fh, LOCK_UN); # <-- this doesn't work
-+					close $lock_fh
-+						or die "Couldn't close lockfile '$lockfile' for reopen: $!";
-+					open $lock_fh, '<', $lockfile
-+						or die "Couldn't reopen (for reading) lockfile '$lockfile': $!";
-+
-+					$self->generating_info($key, $lock_fh);
-+					# generating info may exit, so we can not get there
-+					# wait for and get data from background process
-+					flock($lock_fh, LOCK_SH);
-+					$data = $self->fetch($key);
-+				}
- 			}
--			
-+
- 		} else {
- 			# try to retrieve stale data
- 			$stale_data = $self->fetch($key)
- 				if $self->is_valid($key, $self->get_max_lifetime());
- 
- 			if (!defined $stale_data) {
-+				# there is no stale data to serve
-+				# provide "generating page..." info
-+				$self->generating_info($key, $lock_fh);
- 				# get readers lock if there is no stale data to serve
- 				flock($lock_fh, LOCK_SH);
- 				$data = $self->fetch($key);
+ test_external 'GitwebCache::Capture Perl API (in gitweb/cache.pm)' \
 diff --git a/t/t9503/test_cache_interface.pl b/t/t9503/test_cache_interface.pl
-index 667fb5e..a84faf9 100755
+index 37c1f2b..f4e2418 100755
 --- a/t/t9503/test_cache_interface.pl
 +++ b/t/t9503/test_cache_interface.pl
-@@ -345,4 +345,65 @@ SKIP: {
- }
+@@ -4,6 +4,7 @@ use lib (split(/:/, $ENV{GITPERLLIB}));
+ use warnings;
+ use strict;
+ 
++use IO::Handle;
+ use Test::More;
+ 
+ # test source version
+@@ -11,8 +12,9 @@ use lib "$ENV{TEST_DIRECTORY}/../gitweb/lib";
+ 
+ # Test creating a cache
+ #
+-BEGIN { use_ok('GitwebCache::SimpleFileCache'); }
+-my $cache = new_ok('GitwebCache::SimpleFileCache');
++BEGIN { use_ok('GitwebCache::FileCacheWithLocking'); }
++my $cache = new_ok('GitwebCache::FileCacheWithLocking');
++isa_ok($cache, 'GitwebCache::SimpleFileCache');
+ 
+ # Test that default values are defined
+ #
+@@ -130,4 +132,155 @@ subtest 'adaptive cache expiration' => sub {
+ 
  $cache->set_expires_in(-1);
  
-+# Test 'generating_info' feature
++# Test 'stampeding herd' / 'cache miss stampede' problem
++# (probably should be run only if GIT_TEST_LONG)
 +#
-+$cache->remove($key);
-+my $progress_info = "Generating...";
-+sub test_generating_info {
-+	local $| = 1;
-+	print "$progress_info";
++my $slow_time = 1; # how many seconds to sleep in mockup of slow generation
++sub get_value_slow {
++	$call_count++;
++	sleep $slow_time;
++	return $value;
 +}
-+$cache->set_generating_info(\&test_generating_info);
-+# Catch output printed by ->compute
-+# (only for 'print <sth>' and 'printf <sth>')
-+sub capture_compute {
-+	my $output = '';
 +
-+	open my $output_fh, '>', \$output;
-+	my $oldfh = select($output_fh);
++sub cache_get_set {
++	my ($cache, $key) = @_;
 +
-+	my $data = $cache->compute($key, \&get_value_slow);
-+
-+	select($oldfh);
-+	close $output_fh;
-+
-+	return ($output, $data);
-+}
-+sub run_capture_compute_forked {
-+	my $pid = shift;
-+
-+	my ($output, $data) = capture_compute();
-+	my ($child_output, $child_data);
-+
-+	if ($pid) {
-+		local $/ = "\0";
-+		chomp($child_output = <$kid_fh>);
-+		chomp($child_data   = <$kid_fh>);
-+
-+		waitpid $pid, 0;
-+		close $kid_fh;
-+	} else {
-+		local $| = 1;
-+		$output = '' unless defined $output;
-+		$data   = '' unless defined $data;
-+		print "$output\0$data\0";
-+		exit 0;
++	my $data = $cache->get($key);
++	if (!defined $data) {
++		$data = get_value_slow();
++		$cache->set($key, $data);
 +	}
 +
-+	return ($output, $data, $child_output, $child_data);
++	return $data;
 +}
++
++sub cache_compute {
++	my ($cache, $key) = @_;
++
++	my $data = $cache->compute($key, \&get_value_slow);
++	return $data;
++}
++
++sub run_child {
++	my ($writer, $data) = @_;
++
++	print $writer "$call_count\0";
++	print $writer "$data\0";
++	$writer->flush();
++
++	exit 0;
++}
++
++sub run_parent {
++	my ($reader, $data, $child) = @_;
++
++	local $/ = "\0";
++
++	my @lines = <$reader>;
++	chomp @lines;
++
++	waitpid $child, 0;
++	close $reader;
++
++	my ($child_count, $child_data) = @lines;
++	return ($child_count, $child_data);
++}
++
++sub count_total {
++	my ($kid_fh, $data, $pid) = @_;
++
++	if ($pid) {
++		my ($child_count, $child_data) =
++			run_parent($kid_fh, $data, $pid);
++		$call_count += $child_count;
++
++	} else {
++		run_child(\*STDOUT, $data);
++	}
++}
++
++my ($pid, $kid_fh);
++
++$call_count = 0;
++$cache->remove($key);
++$pid = open $kid_fh, '-|';
 +SKIP: {
-+	$pid = open $kid_fh, '-|';
-+	skip "cannot fork: $!", 4
++	skip "cannot fork: $!", 1
 +		unless defined $pid;
 +
-+	my ($output, $data, $child_output, $child_data) =
-+		run_capture_compute_forked($pid);
++	my $data = cache_get_set($cache, $key);
++	count_total($kid_fh, $data, $pid);
 +
-+	is($output,       $progress_info, 'progress info from parent');
-+	is($child_output, $progress_info, 'progress info from child');
-+	is($data,         $value,         'data info from parent');
-+	is($child_data,   $value,         'data info from child');
++	cmp_ok($call_count, '==', 2, 'parallel get/set: get_value_slow() called twice');
 +}
++
++$call_count = 0;
++$cache->remove($key);
++$pid = open $kid_fh, '-|';
++SKIP: {
++	skip "cannot fork: $!", 1
++		unless defined $pid;
++
++	my $data = cache_compute($cache, $key);
++	count_total($kid_fh, $data, $pid);
++
++	cmp_ok($call_count, '==', 1, 'parallel compute: get_value_slow() called once');
++}
++
++
++# Test that it doesn't hang if get_action exits/dies
++#
++sub get_value_die {
++	$call_count++;
++	die "get_value_die\n";
++}
++
++sub cache_compute_catch {
++	my ($cache, $key) = @_;
++
++	eval { $cache->compute($key, \&get_value_die); };
++	my $eval_error = $@;
++	return $eval_error;
++}
++
++sub catch_errors {
++	my ($kid_fh, $eval_error, $pid) = @_;
++
++	my $child_eval_error;
++	if ($pid) {
++		(undef, $child_eval_error) =
++			run_parent($kid_fh, $eval_error, $pid);
++
++	} else {
++		run_child(\*STDOUT, $eval_error);
++	}
++
++	return ($eval_error, $child_eval_error);
++}
++
++$call_count = 0;
++my $result = eval {
++	$pid = open $kid_fh, '-|';
++ SKIP: {
++		skip "cannot fork: $!", 2
++			unless defined $pid;
++
++		local $SIG{ALRM} = sub { die "alarm\n"; };
++		alarm 4*$slow_time;
++
++		my $eval_error = cache_compute_catch($cache, 'No Key');
++		my $child_eval_error;
++
++		($eval_error, $child_eval_error) =
++			catch_errors($kid_fh, $eval_error, $pid);
++
++		is($eval_error,       "get_value_die\n", 'get_value_die() died in parent');
++		is($child_eval_error, "get_value_die\n", 'get_value_die() died in child');
++
++		alarm 0;
++	}
++};
++ok(!$@, 'no alarm call (neither process hung)');
++diag($@) if $@;
 +
  done_testing();
 -- 
