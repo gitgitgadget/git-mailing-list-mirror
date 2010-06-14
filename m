@@ -1,84 +1,154 @@
-From: Matthias Fechner <idefix@fechner.net>
-Subject: Re: Git and svn as target
-Date: Mon, 14 Jun 2010 18:35:44 +0200
-Message-ID: <4C165A60.2010508@fechner.net>
-References: <4C107BEB.6020209@fechner.net> <20100610060525.GA2177@m62s10.vlinux.de> <AANLkTino5sVtNEFV5_nGi9NmlhBCc0-_4NhTZwKdDzho@mail.gmail.com>
-Reply-To: git@vger.kernel.org
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH v2] Group the default git help message by topic
+Date: Tue, 15 Jun 2010 00:49:35 +0800
+Message-ID: <AANLkTimNdZO8-lesiGmGm2DeHdhAKbTwzjct-U5P5LLJ@mail.gmail.com>
+References: <AANLkTiloErvcWS1hW80cIV9SiWu_7CBdNSx_iAppcGOd@mail.gmail.com>
+	<7vbpbeazy5.fsf@alter.siamese.dyndns.org>
+	<AANLkTimFUGkYeZaXA7BqX8ghsHX_gGYRK69ScHMXbw2l@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 14 18:36:10 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 14 18:49:46 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOCdr-0007mW-QQ
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:36:08 +0200
+	id 1OOCr0-0006Ka-QU
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 18:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754645Ab0FNQgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jun 2010 12:36:00 -0400
-Received: from anny.lostinspace.de ([80.190.182.2]:31781 "EHLO
-	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753947Ab0FNQf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jun 2010 12:35:59 -0400
-Received: from server.idefix.lan (ppp-88-217-54-73.dynamic.mnet-online.de [88.217.54.73])
-	(authenticated bits=0)
-	by anny.lostinspace.de (8.14.3/8.14.3) with ESMTP id o5EGZqkC006868
-	for <git@vger.kernel.org>; Mon, 14 Jun 2010 18:35:56 +0200 (CEST)
-	(envelope-from idefix@fechner.net)
-Received: from server.idefix.lan (unknown [127.0.0.1])
-	by server.idefix.lan (Postfix) with ESMTP id 2261777B1
-	for <git@vger.kernel.org>; Mon, 14 Jun 2010 18:35:52 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at server.idefix.lan
-Received: from server.idefix.lan ([127.0.0.1])
-	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qpJr4W9bSA7P for <git@vger.kernel.org>;
-	Mon, 14 Jun 2010 18:35:45 +0200 (CEST)
-Received: from idefix-mobil.idefix.lan (unknown [IPv6:2001:a60:f035:2:226:8ff:fee1:cb6f])
-	by server.idefix.lan (Postfix) with ESMTPA id 43C4277A2
-	for <git@vger.kernel.org>; Mon, 14 Jun 2010 18:35:45 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <AANLkTino5sVtNEFV5_nGi9NmlhBCc0-_4NhTZwKdDzho@mail.gmail.com>
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.5 (anny.lostinspace.de [80.190.182.2]); Mon, 14 Jun 2010 18:35:56 +0200 (CEST)
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
-	autolearn=ham version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on anny.lostinspace.de
+	id S1756188Ab0FNQth convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 12:49:37 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:41340 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752901Ab0FNQtg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 12:49:36 -0400
+Received: by yxl31 with SMTP id 31so1457588yxl.19
+        for <git@vger.kernel.org>; Mon, 14 Jun 2010 09:49:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=p9tvHO4oMu4vEab3q7g3K+3xxQ7mbULETnULH4EniTM=;
+        b=ke13whUhsE4PKxtHTbvgx59Pjc0l/GrEfZ8ooz9BBKc7YedPhUw+RQfKA2TFsMZvAS
+         XWUD9VO86BKBKlhA70XcxDO7YhNTeUVd5fn/AhrxWIKXQQvS9ZBlVW+nC0FbxEUuEO3X
+         Bq08jkhAO4uUmViMXZTyPwZymiLeYw1t76zf8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HX9EPihomEITCFzOm6em4lOOFMb3vBwUHxrj9uiqkdYNTpZTDLmvvMduILGn3qMqDJ
+         BTSQhgPTEAs2GoalKrFQ03SeQBkJO83bdnCp13TT/JoXhfybLEuzrebVqKH26VEX0CLc
+         QksZ0fYTuudvA3STES5DXvfePBIpD+yPCgGQ0=
+Received: by 10.150.165.1 with SMTP id n1mr6827169ybe.253.1276534175471; Mon, 
+	14 Jun 2010 09:49:35 -0700 (PDT)
+Received: by 10.231.31.141 with HTTP; Mon, 14 Jun 2010 09:49:35 -0700 (PDT)
+In-Reply-To: <AANLkTimFUGkYeZaXA7BqX8ghsHX_gGYRK69ScHMXbw2l@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149126>
 
 Hi,
 
-Am 10.06.10 09:11, schrieb Avery Pennarun:
-> Right. I actually like it that way much more than I like rebasing
-> onto master, but that's a matter of opinion, of course.  Another
-> option would be to simply do "git svn dcommit" from the 'test' branch
-> rather than merging it into master first.  (This essentially asks
-> git-svn to do your rebasing for you, so it's roughly the same thing as
-> merge-rebase-dcommit.)
->    
+On Mon, Jun 14, 2010 at 11:31 PM, Scott Chacon <schacon@gmail.com> wrot=
+e:
+> [snip]
+> On Sun, Jun 13, 2010 at 11:30 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+> [snip]
+> To disambiguate what we're talking about here, this is the output tha=
+t
+> is generated from this new patch:
+>
+> Some commonly used git commands per developer roles are:
+> =A0* Individual Developer (Standalone)
+> =A0 init =A0 =A0 =A0 =A0 =A0Create an empty git repository or reiniti=
+alize an existing one
+> =A0 show-branch =A0 Show branches and their commits
+> =A0 log =A0 =A0 =A0 =A0 =A0 Show commit logs
+> =A0 checkout =A0 =A0 =A0Checkout a branch or paths to the working tre=
+e
+> =A0 add =A0 =A0 =A0 =A0 =A0 Add file contents to the index
+> =A0 diff =A0 =A0 =A0 =A0 =A0Show changes between commits, commit and =
+working tree, etc
+> =A0 commit =A0 =A0 =A0 =A0Record changes to the repository
+> =A0 reset =A0 =A0 =A0 =A0 Reset current HEAD to the specified state
+> =A0 merge =A0 =A0 =A0 =A0 Join two or more development histories toge=
+ther
+> =A0 rebase =A0 =A0 =A0 =A0Forward-port local commits to the updated u=
+pstream head
+> =A0 tag =A0 =A0 =A0 =A0 =A0 Create, list, delete or verify a tag obje=
+ct signed with GPG
+> =A0* Individual Developer (Participant)
+> =A0 clone =A0 =A0 =A0 =A0 Clone a repository into a new directory
+> =A0 pull =A0 =A0 =A0 =A0 =A0Fetch from and merge with another reposit=
+ory or a local branch
+> =A0 push =A0 =A0 =A0 =A0 =A0Update remote refs along with associated =
+objects
+> =A0 format-patch =A0Prepare patches for e-mail submission
+> =A0* Integrator
+> =A0 am =A0 =A0 =A0 =A0 =A0 =A0Apply a series of patches from a mailbo=
+x
+> =A0 revert =A0 =A0 =A0 =A0Revert an existing commit
+> =A0* Repository Administration
+> =A0 daemon =A0 =A0 =A0 =A0A really simple server for git repositories
+> =A0 shell =A0 =A0 =A0 =A0 Restricted login shell for GIT-only SSH acc=
+ess
 
-thanks, I got it working with the following sequence:
-git svn fetch
-git svn rebase
-git branch test
-git checkout test
-several commit with commit messages
-git checkout master
-git svn fetch
-git svn rebase
-git rebase --interactive --preserve-merges test
-git svn dcommit
+On behalf of people too lazy to patch and compile, like myself - thanks=
+=2E
 
-Now I can see all local git commit as commits to the svn repository.
+> [snip]
+> As you mention next,
+> 'show-branches' is second in the list, which is an issue,
 
-Bye,
-Matthias
+Then perhaps we should do something about Documentation/everyday.txt.
 
--- 
-"Programming today is a race between software engineers striving to build bigger and better idiot-proof programs, and the universe trying to produce bigger and better idiots. So far, the universe is winning." -- Rich Cook
+> but there
+> are several more. =A0'am', 'revert', 'daemon', 'shell', 'rebase' - no=
+ne
+> of these are appropriate for someone running 'git' and trying to see
+> where to start. =A0If we put those aside, all we have is a big list o=
+f
+> commands again which adds almost no value to what we had before.
+
+They are placed under the titles 'Integrator' and 'Repository
+Administration', which, I think, is enough to serve as a 'warning!
+git-fu ahead' for users who wish to preserve their sanity.
+
+On 'big' - mercurial, which is associated with 'user-friendly', shows
+a list of 50 commands.
+
+>> If readers notice that there are some commands that are out of fashi=
+on
+>> (e.g. I don't think many people use show-branch anymore in the prese=
+nce of
+>> "log --oneline --graph" and friends) listed in the "git help" output=
+, that
+>> is a _good thing_. =A0It will give us an incentive to keep the Every=
+day
+>> document up to date, and with the effort spent for that, "git help" =
+will
+>> automatically be kept up to date as well for free ;-)
+>
+> That's a fine goal, but I feel like it shouldn't be an "everyday"
+> document that generates that output, it should be a "beginner"
+> document or a "how to start using Git" document that isn't really in
+> the Git source.
+
+I, for one, don't think "git help" is the place beginners go to when
+they first start off - I sure didn't.
+
+The goal of re-grouping and having a short list of commands is nice,
+and I see this as useful for people starting to use git, but not for
+people learning it.
+
+--=20
+Cheers,
+Ray Chuan
