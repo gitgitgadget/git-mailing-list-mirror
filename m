@@ -1,87 +1,77 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] textconv: support for blame
-Date: Mon, 14 Jun 2010 13:40:21 -0700
-Message-ID: <7vfx0p9wlm.fsf@alter.siamese.dyndns.org>
-References: <1275921713-3277-1-git-send-email-axel.bonnet@ensimag.imag.fr>
- <1275924218-20154-1-git-send-email-axel.bonnet@ensimag.imag.fr>
- <1275924218-20154-2-git-send-email-axel.bonnet@ensimag.imag.fr>
+Subject: Re: [PATCH] gitweb: Return or exit after done serving request
+Date: Mon, 14 Jun 2010 13:54:29 -0700
+Message-ID: <7v8w6h9vy2.fsf@alter.siamese.dyndns.org>
+References: <20100613100800.28221.77529.stgit@localhost.localdomain>
+ <7v1vcach4x.fsf@alter.siamese.dyndns.org>
+ <201006141029.00310.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 14 22:40:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 14 22:54:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOGSX-0003S9-E2
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 22:40:41 +0200
+	id 1OOGg6-0002OF-VA
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 22:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755537Ab0FNUkg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 16:40:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41515 "EHLO
+	id S1755885Ab0FNUyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jun 2010 16:54:38 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55189 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754347Ab0FNUkf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 16:40:35 -0400
+	with ESMTP id S1755741Ab0FNUyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 16:54:37 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 74A26BC959;
-	Mon, 14 Jun 2010 16:40:33 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 67BFFBCBFA;
+	Mon, 14 Jun 2010 16:54:35 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Ohb2QT5ALSRf
-	QAWmrpJCPq7JVdk=; b=qVY6QmB1vK7oHx28Kbah8cvhYBv9uq1ldtuaeVFAqSqf
-	Q4iqboCq79tgOF9V/zsrbVwSAJ/c2Mf/ekVfmkP2LxtCQ3+3da4wTRFcGXtQJBS3
-	Mu6VX2eLAdZ9vfjfWrR5yXmHlkudZeEF/qe0Fnc+Ewd0rWb3tJ93d6Q++JRhVUI=
+	:content-type; s=sasl; bh=zEbLUMiuaBLNEAvhbXxe7bixiuU=; b=hlIwU+
+	DLhp/cBY8VUbKYipaPWekEriKPYPkryHJ7dWupRm0cKRueR8h/+M/0MBKw/hl9an
+	WVfdfCr4CxoSyVuMzLPe42ICtbDpjvQYrtOZYmzGyPFMcaAS74zionaeGaOsmnOj
+	YTObp/W+24F8aAX72G+w7xj/y3edKOxjpO4so=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Y8s+LO
-	FWVWCjN+efybK171gx9KC/F4DIhwu0rmUuptiTY4yaf+kBdz0kE63hMS4/tcQ57t
-	DevfYDx/Go4hZYWnTKSYLAeGGNwbevUsCRIfGDfiunXl4jzkCAvlkDaIjvg2IHfC
-	FMZygbldfizOul/Dx3uhWsE+ID0rKn3wBCdWg=
+	:content-type; q=dns; s=sasl; b=b33CIrspuuOMo0xH8je9wGmeGD4m+4/W
+	uo0yEJc2jSPgPZTqYDj9nR1g0vXix9TxtfZOq90EgtZVNm87tazH6WKFoRNZvSPm
+	VPt6xq6QxO5tLCrraV3WQN0NhcKqyanXEu8OcNR9u1EKygC/+gDOu/rltsLmr0Ff
+	sTvCooQwYgw=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 156ADBC958;
-	Mon, 14 Jun 2010 16:40:29 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 426B1BCBF8;
+	Mon, 14 Jun 2010 16:54:33 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 29D4EBC957; Mon, 14 Jun
- 2010 16:40:24 -0400 (EDT)
-In-Reply-To: <1275924218-20154-2-git-send-email-axel.bonnet@ensimag.imag.fr>
- (Axel Bonnet's message of "Mon\,  7 Jun 2010 17\:23\:37 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 78FCCBCBF5; Mon, 14 Jun
+ 2010 16:54:30 -0400 (EDT)
+In-Reply-To: <201006141029.00310.jnareb@gmail.com> (Jakub Narebski's message
+ of "Mon\, 14 Jun 2010 10\:28\:58 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 119B244A-77F5-11DF-AEB3-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 08C3D1C6-77F7-11DF-B01C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149137>
 
-Axel Bonnet <axel.bonnet@ensimag.imag.fr> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> @@ -86,16 +87,49 @@ struct origin {
+> On Mon, 14 June 2010, Junio C Hamano wrote:
 > ...
-> +static void fill_origin_blob(struct diff_options *opt,
-> +			     struct origin *o, mmfile_t *file)
->  {
->  	if (!o->file.ptr) {
->  		enum object_type type;
->  		num_read_blob++;
-> -		file->ptr =3D read_sha1_file(o->blob_sha1, &type,
-> -					   (unsigned long *)(&(file->size)));
-> +
-> +		if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
-> +		    textconv_object(o->path, o->blob_sha1, &file->ptr,
-> +				    (size_t *) &file->size))
+>> Is the last "1;" still needed if we did this?
+>
+> Probably not, and probably we never need this.
+>> 
+>> I am guessing that this new codeblock will go inside "sub run" when
+>> merging with your c2394fe (gitweb: Put all per-connection code in run()
+>> subroutine, 2010-05-07) and Sam's a0446e7 (gitweb: Add support for
+>> FastCGI, using CGI::Fast, 2010-05-07).  If I am mistaken, please advise.
+>
+> No, the code is meant to be after last code to be run in gitweb, 
+> in *top level* scope, otherwise it would always return.
 
-This cast is not correct, as there is no guarantee that your size_t and
-typeof(mmfile_t.size) are compatible.  Depending on the gcc version, yo=
-u
-would get "dereferencing type-punned pointer will break strict-aliasing
-rules" error.
-
-The same issue exists in Cl=C3=A9ment's patch to builtin/cat-file.c.
+Ok, tentatively I fixed the mismerge of 'pu' from the last night and
+pushed it out.
