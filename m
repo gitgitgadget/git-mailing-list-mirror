@@ -1,71 +1,77 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] Fix strcat() on uninitialized memory
-Date: Mon, 14 Jun 2010 13:50:24 -0400
-Message-ID: <AANLkTiknleOJ8uZyUE1V1ar7eET_Ksb1hTJiPWkdx5po@mail.gmail.com>
-References: <alpine.DEB.1.00.1006141032250.2689@bonsai2>
-	<AANLkTimSFwn1yykyEOTRdHHBYTFUEhxqj2AinjRv9ECC@mail.gmail.com>
-	<alpine.DEB.1.00.1006141856030.2689@bonsai2>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] cherry-pick: Add an option to prepend a string to the
+ commit message
+Date: Mon, 14 Jun 2010 11:03:54 -0700
+Message-ID: <7vk4q1a3ud.fsf@alter.siamese.dyndns.org>
+References: <1276319237-12010-1-git-send-email-bobbypowers@gmail.com>
+ <20100612055831.GA2426@burratino>
+ <20100612062812.GA12685@coredump.intra.peff.net> <4C132C7E.5090606@gmail.com>
+ <20100612071850.GA2765@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jun 14 19:50:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Bobby Powers <bobbypowers@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 14 20:04:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OODnt-0002RN-0A
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 19:50:33 +0200
+	id 1OOE1B-0000KG-50
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 20:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756616Ab0FNRu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jun 2010 13:50:26 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:34962 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756174Ab0FNRuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jun 2010 13:50:25 -0400
-Received: by yxl31 with SMTP id 31so1494814yxl.19
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 10:50:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Xf7h0SA0Oj3XlgQh5NDEEtV9UVd70FX1WFdjKHM/Z9k=;
-        b=vth4B6gu4T7XViBDxMfQzzm4NWkSDzO3g+0LjZlGsB7ya/CrJQX7lxnK6afwEs3XpM
-         lJ+Q6innXY1CeFbPqVwOwWuRu52jQZ6ljDLTsYBm8iVrCjW52nvLBKvKj5OGpZC8aRFN
-         Tu8B53msdh1P0UfBV/ml3AurtDjlYmdA5F86U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=w3ucDSzJQO013tSOR6BFKTymSo8kv1l3K1Sw1V/vqAZF5Lu9oBMVxP8YXA5cRmV902
-         mrDuKfDGuvzwYua/pEpGOyCN/dJwYzPmw7hGg5QNnzamFrbUeW0zX5fVl02SPrSIuVN/
-         HDgtb+HVdQh11xvSfaBfZxk+Q8PUNatfQiMHA=
-Received: by 10.224.87.194 with SMTP id x2mr2471672qal.188.1276537824831; Mon, 
-	14 Jun 2010 10:50:24 -0700 (PDT)
-Received: by 10.231.120.19 with HTTP; Mon, 14 Jun 2010 10:50:24 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1006141856030.2689@bonsai2>
+	id S1756659Ab0FNSEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jun 2010 14:04:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36074 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756445Ab0FNSEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jun 2010 14:04:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 49955BC964;
+	Mon, 14 Jun 2010 14:04:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uGC/smbQc4T8BrSrg++aCF8WMkg=; b=Iy9e7O
+	8+KgWDZXDx+9sLpHsJkpyweBUvSlxx+7T+pJ2T6RMrAuFZS7SVY+/Lo+c90noYV7
+	garm74FSJEO7V8jX1S4CFgOnRNDDmZW8jFGMI4j7nCGFVaIyVTQwJVYwNNKYFE79
+	4dMx6qvyUFpAXxAnzAACz1ty5I2bLblq1hTjI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LqLdlLXnaqvfJYgEBsHRVp4MuqH7PciL
+	6Q3jYpYbVpD4L4ySZWHMDxylwg2hE2m7LIY6BfMciCVpaSPXZeuOY24ESmojcsKk
+	mLMmAQhzsUaa/8KkpNSNgoSYUOBciZuLnFAHwSH+tkWTH9Y1ijGWL1cqtx1r41I6
+	Uf/oL1bNoic=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E0647BC95F;
+	Mon, 14 Jun 2010 14:04:01 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0696FBC95B; Mon, 14 Jun
+ 2010 14:03:55 -0400 (EDT)
+In-Reply-To: <20100612071850.GA2765@burratino> (Jonathan Nieder's message of
+ "Sat\, 12 Jun 2010 02\:18\:50 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 366C836A-77DF-11DF-864F-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149134>
 
-On Mon, Jun 14, 2010 at 1:05 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Great. So it was caught. Why was it not even in 'next', so I wasted my
-> time finding the bug?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Junio recently switched jobs and is perhaps a bit behind.
+> +git checkout maint &&
+> +git cherry-pick -n bugfix &&
+> +git add new_file.txt &&
+> +git show -s bugfix --format='%s%n%n%b%n%nAlso add a new file.' |
+> +git commit -F -
 
-> Anyway, it is in 4msysgit.git's 'devel' branch. So its fixed now.
->
-> Frustrated,
+This is cute, I somehow doubt any sane person would prefer doing the above
+over running "git commit" and fixing it up with the editor for a single
+commit.
 
-Sorry for the original bug. I'm still not sure how I made such a
-boneheaded mistake. It looks like I might have stupidly copy/pasted
-the matching lines from builtin/fetch.c of "git grep
-find_unique_abbrev" output.
-
-j.
+It is completely a different matter if the above were in a loop that
+munges many commits, though.  But if that is the case, the example should
+probably illustrate that loop as well.
