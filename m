@@ -1,58 +1,68 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: "Git - SVN Crash Course" page copied to the wiki
-Date: Sun, 13 Jun 2010 23:24:43 +0100
-Message-ID: <4C155AAB.2030209@pileofstuff.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Petr Baudis <pasky@ucw.cz>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 14 00:24:56 2010
+From: "Philippe Bruhat (BooK)" <book@cpan.org>
+Subject: [PATCH] Git.pm: better error message
+Date: Mon, 14 Jun 2010 03:00:22 +0200
+Message-ID: <1276477222-21465-1-git-send-email-book@cpan.org>
+Cc: "Philippe Bruhat (BooK)" <book@cpan.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 14 03:35:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ONvbs-0000fi-9N
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 00:24:56 +0200
+	id 1ONyaf-0001xl-Kr
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 03:35:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753412Ab0FMWYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jun 2010 18:24:49 -0400
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:3989 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753219Ab0FMWYs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Jun 2010 18:24:48 -0400
-Received: from aamtaout02-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100613222446.JWWG3075.mtaout03-winn.ispmail.ntl.com@aamtaout02-winn.ispmail.ntl.com>;
-          Sun, 13 Jun 2010 23:24:46 +0100
-Received: from [192.168.1.5] (really [80.6.134.127])
-          by aamtaout02-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100613222446.SSCL1586.aamtaout02-winn.ispmail.ntl.com@[192.168.1.5]>;
-          Sun, 13 Jun 2010 23:24:46 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-X-Cloudmark-Analysis: v=1.1 cv=W3tOLUehizD4qj6VhtReFuw5MKb8d+XqjIxlDsIazEA= c=1 sm=0 a=Bwsbnmt4Y_IA:10 a=0qYQvVkOOIcA:10 a=8nJEP1OIZ-IA:10 a=-AnQz9JOAAAA:8 a=VwQbUJbxAAAA:8 a=MD7Up78t2YHArrhbndEA:9 a=2JmTT-F67ZVaP6JUKpsA:7 a=wCsb_WgfplN53R93E4wc2vDJkyAA:4 a=wPNLvfGTeEIA:10 a=XWlBVxrOUq4A:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1755180Ab0FNBfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jun 2010 21:35:48 -0400
+Received: from zlonk.bruhat.net ([91.121.102.217]:51492 "EHLO
+	ks354402.kimsufi.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755146Ab0FNBfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jun 2010 21:35:47 -0400
+X-Greylist: delayed 2087 seconds by postgrey-1.27 at vger.kernel.org; Sun, 13 Jun 2010 21:35:47 EDT
+Received: from localhost ([127.0.0.1] helo=swoosh)
+	by ks354402.kimsufi.com with esmtp (Exim 4.69)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1ONy2p-0004EI-AO; Mon, 14 Jun 2010 03:00:55 +0200
+Received: from book by swoosh with local (Exim 4.71)
+	(envelope-from <philippe.bruhat@free.fr>)
+	id 1ONy2o-0005ap-Iq; Mon, 14 Jun 2010 03:00:54 +0200
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149062>
 
-Petr Baudis has said he can no longer maintain the "Git - SVN Crash
-Course" page at http://git.or.cz/course/svn.html, and that he would
-prefer it go on the wiki.  I think this is a really useful resource, so
-I've done just that:
+-d doesn't set $! if the directory doesn't exist
 
-	https://git.wiki.kernel.org/index.php/GitSvnCrashCourse
+Signed-off-by: Philippe Bruhat (BooK) <book@cpan.org>
+---
+ perl/Git.pm |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I've already made some fairly substantial changes, and plan to add more
-as I have time over the next week.  In particular, I've tried to make it
-talk more about git-svn than it did, but please rename it if you feel
-the title still oversells the git-svn aspect.
-
-I plan to redirect links on the GitDocumentation page next weekend, so
-please let me know before then if you object.
-
-	- Andrew
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 1926dc9..2a3920b 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -172,7 +172,7 @@ sub repository {
+ 	}
+ 
+ 	if (defined $opts{Directory}) {
+-		-d $opts{Directory} or throw Error::Simple("Directory not found: $!");
++		-d $opts{Directory} or throw Error::Simple("Directory not found: $opts{Directory}");
+ 
+ 		my $search = Git->repository(WorkingCopy => $opts{Directory});
+ 		my $dir;
+@@ -545,7 +545,7 @@ sub wc_chdir {
+ 		or throw Error::Simple("bare repository");
+ 
+ 	-d $self->wc_path().'/'.$subdir
+-		or throw Error::Simple("subdir not found: $!");
++		or throw Error::Simple("subdir not found: $subdir");
+ 	# Of course we will not "hold" the subdirectory so anyone
+ 	# can delete it now and we will never know. But at least we tried.
+ 
+-- 
+1.7.0.4
