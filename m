@@ -1,91 +1,98 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/6] Add memory pool library
-Date: Mon, 14 Jun 2010 16:44:15 +0200
-Message-ID: <4C16403F.4040400@op5.se>
-References: <1276175389-6185-1-git-send-email-artagnon@gmail.com> 	<1276175389-6185-2-git-send-email-artagnon@gmail.com> <20100612064250.GB2549@burratino> <AANLkTimtya1Ph5YjlFVAVpE2p4XOHvuaFAmsS4C0J5LH@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: [PATCH 3/6] Add library for string-specific memory pool
+Date: Tue, 15 Jun 2010 00:45:42 +1000
+Message-ID: <7C3A5AC5-78A7-42EB-A5DF-EFFA761FF1A6@cordelta.com>
+References: <1276175389-6185-1-git-send-email-artagnon@gmail.com>  <1276175389-6185-4-git-send-email-artagnon@gmail.com> <7vk4q5ictl.fsf@alter.siamese.dyndns.org>  <AANLkTilr9Qa9RJ3TIaCTgGwgp75TDBZbqRENC41xRFlq@mail.gmail.com>  <7v631lbutb.fsf@alter.siamese.dyndns.org> <AANLkTimFRpckXjvzaefyOdokf-1f7YkrNAQ8dVr3jQgj@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Junio C Hamano <gitster@pobox.com>
+	Michael J Gruber <git@drmicha.warpmail.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 14 16:44:56 2010
+X-From: git-owner@vger.kernel.org Mon Jun 14 16:46:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOAuF-00038e-FB
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 16:44:55 +0200
+	id 1OOAvH-0003yB-RX
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Jun 2010 16:46:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755122Ab0FNOoW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 10:44:22 -0400
-Received: from na3sys009aog106.obsmtp.com ([74.125.149.77]:37028 "HELO
-	na3sys009aog106.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755071Ab0FNOoV (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 10:44:21 -0400
-Received: from source ([209.85.214.47]) by na3sys009aob106.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTBZAQyngKzwpTCXyCBZRq2FDGdtyNyyh@postini.com; Mon, 14 Jun 2010 07:44:21 PDT
-Received: by bwz14 with SMTP id 14so2457426bwz.34
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 07:44:18 -0700 (PDT)
-Received: by 10.204.81.201 with SMTP id y9mr4355281bkk.144.1276526658551;
-        Mon, 14 Jun 2010 07:44:18 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id v2sm19785785bkz.19.2010.06.14.07.44.16
+	id S1754373Ab0FNOpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jun 2010 10:45:54 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:53398 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753369Ab0FNOpx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 10:45:53 -0400
+Received: by pwi1 with SMTP id 1so2839228pwi.19
+        for <git@vger.kernel.org>; Mon, 14 Jun 2010 07:45:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=WHfwRmKCLkuwt9dFWzuLXT50agOYeCXEQQQkP0dM/co=;
+        b=JR2/qnL749T7HciDo9DX1/vO+HtOvu50wcyjh26xlVmSSvJroh1iZCwIzJomCJXKCZ
+         rQ/gUPKKchOmLDlUs9yMtgkUJaYQIXKEBWDnK2TlieGbmY2c4kMX3Q6TBeAt/jr2qX6c
+         /cIAr7kvSbYvpb1MwSoVVge4u2WrTMxknA+EY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=bWpK8sx6nQTeL4EDObpnVDZMLWIaN1XpMKJcNEHw2azszZrpz3xJsjaC8E2tSEWVdA
+         sHq/g/yt1nCJmVnKfwUcnRlwYyGjFEiNXao5AY89QQSbwAvsNwUIFbsQ0AiS2vGpyZRF
+         mSXvprjK2XWuND1xheMGuYwkMlI8fe+Ek6kMI=
+Received: by 10.141.187.20 with SMTP id o20mr4591536rvp.13.1276526752576;
+        Mon, 14 Jun 2010 07:45:52 -0700 (PDT)
+Received: from [192.168.1.2] ([122.109.106.179])
+        by mx.google.com with ESMTPS id b12sm4755207rvn.22.2010.06.14.07.45.49
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 14 Jun 2010 07:44:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
-In-Reply-To: <AANLkTimtya1Ph5YjlFVAVpE2p4XOHvuaFAmsS4C0J5LH@mail.gmail.com>
+        Mon, 14 Jun 2010 07:45:51 -0700 (PDT)
+In-Reply-To: <AANLkTimFRpckXjvzaefyOdokf-1f7YkrNAQ8dVr3jQgj@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149097>
 
-On 06/14/2010 04:25 PM, Ramkumar Ramachandra wrote:
-> Hi Jonathan,
->=20
-> Jonathan Nieder wrote:
->>   #ifdef __GNUC__
->>   #define MAYBE_UNUSED __attribute__((__unused__))
->>   #else
->>   #define MAYBE_UNUSED
->>   #endif
->=20
-> You'd suggested this earlier, but I was looking more for something
-> that we could use to mark some specific functions as unused instead o=
-f
-> marking everything as unused in the generation macro. Anyway, I have =
-a
-> patch ready, and svn-fe compiles fine with -Wall -Werror.
->=20
->> Could that work here?
->>
->> The =E2=80=9Cunused=E2=80=9D attribute was added in gcc 2.7.
->=20
-> Junio? Is this a good solution, or should we think of something else?
-> What about other compilers?
->=20
+Hi Ram,
 
-__attribute__((stuff)) is gcc-specific. It's usually macro'd away with
-#ifndef __GNUC__
-#define __attribute__(x)
-#endif
-which is why it requires double parantheses. gcc warns for but doesn't
-fail on unknown attributes, so it should be safe to use this with
-gcc older than 2.7 as well. Or you make it conditional to __GNUC__
-being >=3D 2 and __GNUC_MINOR__ being >=3D 7.
+>> Note that there isn't that much difference between being in 'pu' and being
+>> in the mailing list archive.  Depending on how further discussions go, the
+>> series can be replaced with an improvement or even can be dropped as a
+>> whole.
+> 
+> It's an indicator of progress, if not anything else. The project is
+> already pretty mature imho- after squashing in a few bugfixes, it
+> should be ready for `next`.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+I have a feeling that these patches will need a bit more love before they are
+ready for 'next'. The persistence component is the least mature of the lot.
+I'd really like some feedback on making the persistence robust and simple.
+Now that persistence is append-only, the file based representation no longer
+need be identical to the in-memory representation.
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+I've tried several times to simplify the buffer_read_line() method in line_buffer.h
+Every time I've ended up with slightly different behaviour.
+Someone well versed in I/O might be able to greatly simplify it.
+It may well be reduced to a simple wrapper around strbuf methods.
+
+I'm still toying in my head about how to simplify the data structure used to
+represent the trees. Conceptually, it is a multiway tree with the constraint that
+the labels of siblings share a common prefix at the parent. It is implemented as
+a ternary tree with left and right links to siblings in the multiway tree and a
+middle link to the 'root' child in the multiway tree, from which all children are
+reachable via left/right links.
+As the code stands, the middle link is indirected via a 'directory' node.
+I'd like to remove this redundancy and make the design of the structure clearer.
+
+There is scope for a massive rename of methods, arguments and variables so
+that the code is easier to read.
+
+--
+David Barr.
