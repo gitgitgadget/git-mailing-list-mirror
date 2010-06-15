@@ -1,57 +1,98 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Amending a merge commit doesn't update the rerere cache
+From: Nico -telmich- Schottelius <nico-linux-git@schottelius.org>
+Subject: Submodule handling broken when changing branches?
 Date: Tue, 15 Jun 2010 08:23:55 +0200
-Message-ID: <4C171C7B.3060904@viscovery.net>
-References: <AANLkTik50ayTQUnft4oD0Paqf-AuFWxGNdx_zZlHKFPg@mail.gmail.com>
+Message-ID: <20100615062355.GA3096@schottelius.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 15 08:24:05 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gBBFr7Ir9EOA20Yy"
+Cc: Steven Armstrong <steven.armstrong@inf.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 15 08:34:02 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOPZ6-0003OP-NE
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 08:24:05 +0200
+	id 1OOPif-00079R-PI
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 08:33:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752488Ab0FOGX7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 02:23:59 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:8800 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378Ab0FOGX6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 02:23:58 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OOPYy-0004XD-Ak; Tue, 15 Jun 2010 08:23:56 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 150BD1660F;
-	Tue, 15 Jun 2010 08:23:55 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <AANLkTik50ayTQUnft4oD0Paqf-AuFWxGNdx_zZlHKFPg@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1752592Ab0FOGdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jun 2010 02:33:52 -0400
+Received: from mx3.schottelius.org ([77.109.138.221]:41139 "EHLO
+	mx3.schottelius.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750855Ab0FOGdv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 02:33:51 -0400
+X-Greylist: delayed 540 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jun 2010 02:33:51 EDT
+Received: from kr.localdomain (mx3.schottelius.org [77.109.138.221])
+	by mx3.schottelius.org (Postfix) with ESMTP id 3F490197A041;
+	Tue, 15 Jun 2010 08:24:51 +0200 (CEST)
+Received: by kr.localdomain (Postfix, from userid 1000)
+	id 78DEC943CA; Tue, 15 Jun 2010 08:23:55 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: echo $message | gpg -e $sender  -s | netcat mailhost 25
+X-Netzseite: http://www.nico.schottelius.org/
+X-System-Info: kr (Linux 2.6.34-NS-08528-gb3f2f6c x86_64)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149162>
 
-Am 6/15/2010 1:04, schrieb Jay Soffian:
-> Subject says it all, but I'll elaborate.
-> 
-> During the course of testing a merge, I'll sometimes realize there was
-> a mistake and I'll amend the merge commit. Sadly this doesn't update
-> the rerere cache.
 
-There is
+--gBBFr7Ir9EOA20Yy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	git rerere forget that/conflicted/file
+Good morning devs,
 
-It definitely works as long as the conflict is still recorded in the
-index; I'm not sure if it works after you have staged the updated resolution.
+I'm wondering whether it is the intented behaviour that after
+adding a submodule one is unable to change branchen?
 
--- Hannes
+Steps to reproduce
+
+   ( mkdir sm && cd sm && touch a && git init && git add . && git commit -m=
+ "init" )
+
+   ( mkdir -p project/smdir && cd project && touch smdir/a  && git init && =
+git add . && git commit -m "init" && git branch second )=20
+
+  ( cd project && git rm smdir/a &&  git commit -m "remove file that will b=
+e replaced by sm")
+ =20
+  ( cd project && git submodule add ~/temp/git/sm smdir && git submodule up=
+date --init && git commit -m "add submodule" )
+
+  ( cd project && git checkout second )
+  error: Untracked working tree file 'smdir/a' would be overwritten by merg=
+e.
+
+It seems that the contents of a submodule are not cleanly moved away
+when switching branches, I also see that in other places where the directory
+is not known to the other branch, it will just stay.
+
+If that is intented, what would be the clean way to switch the branch?
+If so, shouldn't it be documented in the manpage?
+
+Nico
+
+--=20
+New PGP key: 7ED9 F7D3 6B10 81D7 0EC5  5C09 D7DC C8E4 3187 7DF0
+Please resign, if you signed 9885188C or 8D0E27A4.
+
+Currently moving *.schottelius.org to http://www.nico.schottelius.org/ ...
+
+--gBBFr7Ir9EOA20Yy
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAkwXHHsACgkQ19zI5DGHffAmGQCeI1pO+saXjq+KI9tn4avHHABz
+2SAAn04Jxzw5G/M4/Xqg/9A4/TVMkC7P
+=LXTV
+-----END PGP SIGNATURE-----
+
+--gBBFr7Ir9EOA20Yy--
