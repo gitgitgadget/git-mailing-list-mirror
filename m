@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v3 0/5] TAP support for Git
-Date: Tue, 15 Jun 2010 22:32:53 +0000
-Message-ID: <1276641178-32420-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH v3 1/5] Make test-lib.sh emit valid TAP format
+Date: Tue, 15 Jun 2010 22:32:54 +0000
+Message-ID: <1276641178-32420-2-git-send-email-avarab@gmail.com>
 References: <AANLkTimxE0mqmitRzlXjSAO6v7IOEg4guUnRlzJUyIF1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,142 +11,317 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 16 00:33:23 2010
+X-From: git-owner@vger.kernel.org Wed Jun 16 00:33:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOeh8-0005na-Lk
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 00:33:23 +0200
+	id 1OOehH-0005pw-Fx
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 00:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519Ab0FOWdQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 18:33:16 -0400
+	id S1754807Ab0FOWd3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 18:33:29 -0400
 Received: from mail-wy0-f174.google.com ([74.125.82.174]:49935 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753226Ab0FOWdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 18:33:15 -0400
-Received: by wyb40 with SMTP id 40so5237085wyb.19
-        for <git@vger.kernel.org>; Tue, 15 Jun 2010 15:33:13 -0700 (PDT)
+	with ESMTP id S1754688Ab0FOWd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 18:33:27 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 40so5237085wyb.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 15:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=EpqZBMQmh7bVzqt5DlQqG43txGTwzAzVxq52numvXjc=;
-        b=sM8p4/aJ44C6E+GfrxDmoWW0V9KzEU/kRSyvfx/BaBgKda7+BWqND0sJZEN57iuIkl
-         6NqPOZEnHcgX/f8eZyAilmpHHcAMRFBWkePZ0Q94s+3zK4LXM6ZaEWZAWi5VsbJju1kV
-         5nYpJR3iAbWK5ewGbKjBKO6ezjnstZr1zfzek=
+        bh=LDtMyw6XFGsQziRJqjFb2MDiP2b9T0G2q5gU6FHLONM=;
+        b=P779v3wyM95tGLvdB6fgRg0bzspeaGsgAIftc/QAVZBU2l09HzdFWDdf4MQaGpQW61
+         eMxxq6apuf477oCEnv3cdguRW+ALMEAgrvb+FU0a7rBIjnCgfJrs1T6FBqXnbLiokBJw
+         ZJdtSBabJnqov2/Rl4YfUQUSUE5RMWoQrbcos=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=QiyGaX3is5MgRqRv3nuiso30YKkVhFsjtl8PKXZxxys6P9P6+AEvxrVmVU0+OWBIN7
-         Xd9khZIzGwlGzcNzhpSx5gy4BRzpQROLSem2/3WbURtdB30rlJ2+6B4HjSgkYkeCQn68
-         x7uCmqH8JGIyWE7xCtejEK+N9Urw/DplkoV1Q=
-Received: by 10.227.127.131 with SMTP id g3mr7675806wbs.129.1276641193645;
-        Tue, 15 Jun 2010 15:33:13 -0700 (PDT)
+        b=jW3v3WbPa4C7A3AsTBcY1GesSSDwA7HMTUjcRX/0Zw5wW5iflWvIUJLB2z3ABCJysk
+         yPsVkA0WKbXXrUjUd1jCKrDF0IbBMORx7u1PrvJKa8P0iPDrR5uajMZtq544MOchKciv
+         YTu/fk5hlGKh7yasRAn5aK+3fgabU4thohS4k=
+Received: by 10.227.156.15 with SMTP id u15mr7920863wbw.143.1276641205603;
+        Tue, 15 Jun 2010 15:33:25 -0700 (PDT)
 Received: from localhost.localdomain ([188.105.94.3])
-        by mx.google.com with ESMTPS id u36sm49368610wbv.6.2010.06.15.15.33.11
+        by mx.google.com with ESMTPS id u36sm49368610wbv.6.2010.06.15.15.33.23
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jun 2010 15:33:12 -0700 (PDT)
+        Tue, 15 Jun 2010 15:33:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.251.g92a7
 In-Reply-To: <AANLkTimxE0mqmitRzlXjSAO6v7IOEg4guUnRlzJUyIF1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149234>
 
-Here's v3 of the TAP support for Git series, which replaces the one
-already in pu.
+TAP, the Test Anything Protocol, is a simple text-based interface
+between testing modules in a test harness. test-lib.sh's output was
+already very close to being valid TAP. This change brings it all the
+way there. Before:
 
-Changes since v2:
+   $ ./t0005-signals.sh
+   *   ok 1: sigchain works
+   * passed all 1 test(s)
 
-   * The tests now run cleanly under:
+And after:
 
-       prove -v ./t0005-signals.sh :: --verbose --debug
+   $ ./t0005-signals.sh
+   ok 1 - sigchain works
+   # passed all 1 test(s)
+   1..1
 
-     This required changing 'ok' to 'pass' in a few tests, and
-     emitting a newline before ok/not ok under HARNESS_ACTIVE=3D1 as I
-     suggested on-list.
+The advantage of using TAP is that any program that reads the format
+(a "test harness") can run the tests. The most popular of these is the
+prove(1) utility that comes with Perl. It can run tests in parallel,
+display colored output, format the output to console, file, HTML etc.,
+and much more. An example:
 
-   * The Perl tests now properly report failure if they fail via their
-     exit code, previously a failure from them wouldn't be propagated.
+   $ prove ./t0005-signals.sh
+   ./t0005-signals.sh .. ok
+   All tests successful.
+   Files=3D1, Tests=3D1,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.01=
+ cusr  0.02 csys =3D  0.06 CPU)
+   Result: PASS
 
-   * Extra docs in t/README hinting at prove's --state option, in
-     particular:
+prove(1) gives you human readable output without being too
+verbose. Running the test suite in parallel with `make test -j15`
+produces a flood of text. Running them with `prove -j 15 ./t[0-9]*.sh`
+makes it easy to follow what's going on.
 
-        # Repeat until no more failures
-        $ prove -j 15 --state=3Dfailed,save ./t[0-9]*.sh
+All this patch does is re-arrange the output a bit so that it conforms
+with the TAP spec, everything that the test suite did before continues
+to work. That includes aggregating results in t/test-results/, the
+--verbose, --debug and other options for tests, and the test color
+output.
 
-   * diff --check clean (wasn't before because I didn't want to change
-     existing lines, but they deserve to to be changed)
+TAP harnesses ignore everything that they don't know about, so running
+the tests with --verbose works:
 
-Changes since v2 in diff --stat format:
+    $ prove ./t0005-signals.sh :: --verbose --debug
+    ./t0005-signals.sh .. Terminated
+    ./t0005-signals.sh .. ok
+    All tests successful.
+    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.0=
+1 cusr  0.01 csys =3D  0.05 CPU)
+    Result: PASS
 
- t/README                         |   10 ++++++++--
- t/t1020-subdirectory.sh          |   12 ++++++------
- t/t2102-update-index-symlinks.sh |    2 +-
- t/t3700-add.sh                   |   12 ++++++------
- t/t9700-perl-git.sh              |    7 +++----
- t/t9700/test.pl                  |    2 ++
- t/test-lib.sh                    |    3 +++
- 7 files changed, 29 insertions(+), 19 deletions(-)
+Just supply the -v option to prove itself to get all the verbose
+output that it suppresses:
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (5):
-  Make test-lib.sh emit valid TAP format
-  Skip tests in a way that makes sense under TAP
-  We use TAP so the Perl test can run without scaffolding
-  TAP: Say "pass" rather than "ok" on an empty line
-  TAP: Make sure there's a newline before "ok" under harness
+    $ prove -v ./t0005-signals.sh :: --verbose --debug
+    ./t0005-signals.sh ..
+    Initialized empty Git repository in /home/avar/g/git/t/trash direct=
+ory.t0005-signals/.git/
+    expecting success:
+            test-sigchain >actual
+            case "$?" in
+            143) true ;; # POSIX w/ SIGTERM=3D15
+              3) true ;; # Windows
+              *) false ;;
+            esac &&
+            test_cmp expect actual
+    Terminated
+    ok 1 - sigchain works
+    # passed all 1 test(s)
+    1..1
+    ok
+    All tests successful.
+    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.0=
+1 cusr  0.01 csys =3D  0.04 CPU)
+    Result: PASS
 
- t/README                               |   55 +++++++++++++-----
- t/lib-git-svn.sh                       |    4 +-
- t/lib-httpd.sh                         |    3 +-
- t/t1020-subdirectory.sh                |   12 ++--
- t/t1304-default-acl.sh                 |    9 ++-
- t/t1509-root-worktree.sh               |    6 +-
- t/t2007-checkout-symlink.sh            |    2 +-
- t/t2102-update-index-symlinks.sh       |    2 +-
- t/t3300-funny-names.sh                 |    2 +-
- t/t3302-notes-index-expensive.sh       |    2 +-
- t/t3600-rm.sh                          |    2 +-
- t/t3700-add.sh                         |   12 ++--
- t/t3701-add-interactive.sh             |    4 +-
- t/t3902-quoted.sh                      |    2 +-
- t/t4004-diff-rename-symlink.sh         |    2 +-
- t/t4011-diff-symlink.sh                |    2 +-
- t/t4016-diff-quote.sh                  |    2 +-
- t/t4023-diff-rename-typechange.sh      |    2 +-
- t/t4114-apply-typechange.sh            |    2 +-
- t/t4115-apply-symlink.sh               |    2 +-
- t/t4122-apply-symlink-inside.sh        |    2 +-
- t/t5302-pack-index.sh                  |    2 +-
- t/t5503-tagfollow.sh                   |    2 +-
- t/t5522-pull-symlink.sh                |    2 +-
- t/t5540-http-push.sh                   |    2 +-
- t/t5541-http-push.sh                   |    2 +-
- t/t5550-http-fetch.sh                  |    2 +-
- t/t5551-http-fetch.sh                  |    2 +-
- t/t5561-http-backend.sh                |    2 +-
- t/t5705-clone-2gb.sh                   |    2 +-
- t/t6035-merge-dir-to-symlink.sh        |    2 +-
- t/t7004-tag.sh                         |    2 +-
- t/t7006-pager.sh                       |    2 +-
- t/t7800-difftool.sh                    |    2 +-
- t/t9001-send-email.sh                  |    4 +-
- t/t9100-git-svn-basic.sh               |    2 +-
- t/t9119-git-svn-info.sh                |    2 +-
- t/t9129-git-svn-i18n-commitencoding.sh |    2 +-
- t/t9143-git-svn-gc.sh                  |    2 +-
- t/t9200-git-cvsexportcommit.sh         |    4 +-
- t/t9400-git-cvsserver-server.sh        |    6 +-
- t/t9401-git-cvsserver-crlf.sh          |    6 +-
- t/t9600-cvsimport.sh                   |    2 +-
- t/t9700-perl-git.sh                    |   12 ++--
- t/t9700/test.pl                        |   11 ++++
- t/test-lib.sh                          |   95 +++++++-----------------=
---------
- 46 files changed, 143 insertions(+), 162 deletions(-)
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ t/README      |   55 +++++++++++++++++++++++++++++++++++++++----------=
+------
+ t/test-lib.sh |   30 ++++++++++++++++++------------
+ 2 files changed, 57 insertions(+), 28 deletions(-)
+
+diff --git a/t/README b/t/README
+index 0e4e8d8..aa4ed28 100644
+--- a/t/README
++++ b/t/README
+@@ -18,25 +18,48 @@ The easiest way to run tests is to say "make".  Thi=
+s runs all
+ the tests.
+=20
+     *** t0000-basic.sh ***
+-    *   ok 1: .git/objects should be empty after git-init in an empty =
+repo.
+-    *   ok 2: .git/objects should have 256 subdirectories.
+-    *   ok 3: git-update-index without --add should fail adding.
++    ok 1 - .git/objects should be empty after git init in an empty rep=
+o.
++    ok 2 - .git/objects should have 3 subdirectories.
++    ok 3 - success is reported like this
+     ...
+-    *   ok 23: no diff after checkout and git-update-index --refresh.
+-    * passed all 23 test(s)
+-    *** t0100-environment-names.sh ***
+-    *   ok 1: using old names should issue warnings.
+-    *   ok 2: using old names but having new names should not issue wa=
+rnings.
+-    ...
+-
+-Or you can run each test individually from command line, like
+-this:
+-
+-    $ sh ./t3001-ls-files-killed.sh
+-    *   ok 1: git-update-index --add to add various paths.
+-    *   ok 2: git-ls-files -k to show killed files.
+-    *   ok 3: validate git-ls-files -k output.
+-    * passed all 3 test(s)
++    ok 43 - very long name in the index handled sanely
++    # fixed 1 known breakage(s)
++    # still have 1 known breakage(s)
++    # passed all remaining 42 test(s)
++    1..43
++    *** t0001-init.sh ***
++    ok 1 - plain
++    ok 2 - plain with GIT_WORK_TREE
++    ok 3 - plain bare
++
++Since the tests all output TAP (see http://testanything.org) they can
++be run with any TAP harness. Here's an example of paralell testing
++powered by a recent version of prove(1):
++
++    $ prove --timer --jobs 15 ./t[0-9]*.sh
++    [19:17:33] ./t0005-signals.sh ................................... =
+ok       36 ms
++    [19:17:33] ./t0022-crlf-rename.sh ............................... =
+ok       69 ms
++    [19:17:33] ./t0024-crlf-archive.sh .............................. =
+ok      154 ms
++    [19:17:33] ./t0004-unwritable.sh ................................ =
+ok      289 ms
++    [19:17:33] ./t0002-gitfile.sh ................................... =
+ok      480 ms
++    =3D=3D=3D(     102;0  25/?  6/?  5/?  16/?  1/?  4/?  2/?  1/?  3/=
+?  1... )=3D=3D=3D
++
++prove and other harnesses come with a lot of useful options. The
++--state option in particular is very useful:
++
++    # Repeat until no more failures
++    $ prove -j 15 --state=3Dfailed,save ./t[0-9]*.sh
++
++You can also run each test individually from command line, like this:
++
++    $ sh ./t3010-ls-files-killed-modified.sh
++    ok 1 - git update-index --add to add various paths.
++    ok 2 - git ls-files -k to show killed files.
++    ok 3 - validate git ls-files -k output.
++    ok 4 - git ls-files -m to show modified files.
++    ok 5 - validate git ls-files -m output.
++    # passed all 5 test(s)
++    1..5
+=20
+ You can pass --verbose (or -v), --debug (or -d), and --immediate
+ (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 367f053..e97645c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -160,7 +160,7 @@ if test -n "$color"; then
+ 			*) test -n "$quiet" && return;;
+ 		esac
+ 		shift
+-		printf "* %s" "$*"
++		printf "%s" "$*"
+ 		tput sgr0
+ 		echo
+ 		)
+@@ -169,7 +169,7 @@ else
+ 	say_color() {
+ 		test -z "$1" && test -n "$quiet" && return
+ 		shift
+-		echo "* $*"
++		echo "$*"
+ 	}
+ fi
+=20
+@@ -339,25 +339,25 @@ test_have_prereq () {
+=20
+ test_ok_ () {
+ 	test_success=3D$(($test_success + 1))
+-	say_color "" "  ok $test_count: $@"
++	say_color "" "ok $test_count - $@"
+ }
+=20
+ test_failure_ () {
+ 	test_failure=3D$(($test_failure + 1))
+-	say_color error "FAIL $test_count: $1"
++	say_color error "not ok - $test_count $1"
+ 	shift
+-	echo "$@" | sed -e 's/^/	/'
++	echo "$@" | sed -e 's/^/#	/'
+ 	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
+ }
+=20
+ test_known_broken_ok_ () {
+ 	test_fixed=3D$(($test_fixed+1))
+-	say_color "" "  FIXED $test_count: $@"
++	say_color "" "ok $test_count - $@ # TODO known breakage"
+ }
+=20
+ test_known_broken_failure_ () {
+ 	test_broken=3D$(($test_broken+1))
+-	say_color skip "  still broken $test_count: $@"
++	say_color skip "not ok $test_count - $@ # TODO known breakage"
+ }
+=20
+ test_debug () {
+@@ -390,7 +390,7 @@ test_skip () {
+ 	case "$to_skip" in
+ 	t)
+ 		say_color skip >&3 "skipping test: $@"
+-		say_color skip "skip $test_count: $1"
++		say_color skip "ok $test_count: # skip $1"
+ 		: true
+ 		;;
+ 	*)
+@@ -620,18 +620,22 @@ test_done () {
+=20
+ 	if test "$test_fixed" !=3D 0
+ 	then
+-		say_color pass "fixed $test_fixed known breakage(s)"
++		say_color pass "# fixed $test_fixed known breakage(s)"
+ 	fi
+ 	if test "$test_broken" !=3D 0
+ 	then
+-		say_color error "still have $test_broken known breakage(s)"
++		say_color error "# still have $test_broken known breakage(s)"
+ 		msg=3D"remaining $(($test_count-$test_broken)) test(s)"
+ 	else
+ 		msg=3D"$test_count test(s)"
+ 	fi
+ 	case "$test_failure" in
+ 	0)
+-		say_color pass "passed all $msg"
++		# Maybe print SKIP message
++		[ -z "$skip_all" ] || skip_all=3D" # SKIP $skip_all"
++
++		say_color pass "# passed all $msg"
++		say "1..$test_count$skip_all"
+=20
+ 		test -d "$remove_trash" &&
+ 		cd "$(dirname "$remove_trash")" &&
+@@ -640,7 +644,9 @@ test_done () {
+ 		exit 0 ;;
+=20
+ 	*)
+-		say_color error "failed $test_failure among $msg"
++		say_color error "# failed $test_failure among $msg"
++		say "1..$test_count"
++
+ 		exit 1 ;;
+=20
+ 	esac
+--=20
+1.7.1.251.g92a7
