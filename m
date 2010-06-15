@@ -1,116 +1,85 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [WIP PATCH 0/3] implement merge strategy for submodule links
-Date: Tue, 15 Jun 2010 19:37:43 +0200
-Message-ID: <4C17BA67.4060500@web.de>
-References: <cover.1276059473.git.hvoigt@hvoigt.net> <201006131959.43356.johan@herland.net> <20100614170222.GB1389@book.hvoigt.net> <201006150159.42680.johan@herland.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] common_prefix: be more careful about pathspec bounds
+Date: Tue, 15 Jun 2010 20:04:01 +0200
+Message-ID: <201006152004.01507.trast@student.ethz.ch>
+References: <825550ec93610c2d3c7dae7550729d96fc6cebbc.1276194169.git.trast@student.ethz.ch> <7v8w6g8hfx.fsf@alter.siamese.dyndns.org> <7v4oh48elm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Jun 15 19:37:53 2010
+Cc: <git@vger.kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 15 20:04:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOa5B-00075q-Ii
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 19:37:53 +0200
+	id 1OOaUp-0001uA-5K
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 20:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758208Ab0FORhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 13:37:46 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:52018 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752419Ab0FORhp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 13:37:45 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate03.web.de (Postfix) with ESMTP id EFB3C15685314;
-	Tue, 15 Jun 2010 19:37:43 +0200 (CEST)
-Received: from [80.128.78.142] (helo=[192.168.178.26])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OOa51-0005nL-00; Tue, 15 Jun 2010 19:37:43 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <201006150159.42680.johan@herland.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19MftHWhUSqGrFinn1vJ4nsLHtA/ND55eJhPwBp
-	Wcwq62NMHQsZLvBOntfF5jzUfgND4UD/O2ZvRJzo6+bN2axJUb
-	RMFFJLaYwP6OCViQI0dA==
+	id S1754270Ab0FOSES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jun 2010 14:04:18 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:52861 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754014Ab0FOSER (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 14:04:17 -0400
+Received: from CAS00.d.ethz.ch (129.132.178.234) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 15 Jun
+ 2010 20:04:14 +0200
+Received: from thomas.localnet (129.132.153.233) by mail.ethz.ch
+ (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 15 Jun
+ 2010 20:04:01 +0200
+User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
+In-Reply-To: <7v4oh48elm.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149212>
 
-Am 15.06.2010 01:59, schrieb Johan Herland:
-> My point is that when Git tries to suggest merge resolutions, it should 
-> purposefully NOT add these to the index, so that the user HAS to acknowledge 
-> them. This is similar to the default behaviour of 'git rerere' which 
-> resolves your conflicts automatically, but does not touch the corresponding 
-> "unmerged" index entries, so that you manually have to 'git add' the result.
-
-I like that idea, as it avoids having unintended submodule commits added
-silently to the superprojects index by the merge.
-
-
->> Lets assume Alice creates a feature branch feature_a for her development
->> and needs to modify the submodule and creates a branch there as well. At
->> the same time Bob develops feature_b and also needs changes in the
->> submodule and so he creates a feature branch there as well.
->>
->> Assume we now have the following history in the submodule:
->>
->>   B---C---D         [feature_a]
->>  /         \
->> A---E---F---G---K   [master]
->>      \         /
->>       H---I---J     [feature_b]
->>
->> Now during the development of her branch Alice would link D in the
->> superproject as it is the tip of her branch. Bob would do the same and
->> link to J as his tip. Now Alice sends out her branch to the reviewers
->> and after everybody is happy with it the maintainer merges her branch
->> first. The superproject links to D.
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> No. The superproject would get a conflict between the A->D and A->F updates 
-> of the submodule. The correct resolution would be to go into the submodule, 
-> do the merge to produce G, and then record this as the correct merge 
-> resolution in the superproject.
-
-But as far as I understood this patch this merge has already been done
-inside the submodule (at least this is what the setup of the test case
-seems to do at a quick glance).
-
-
-> You want Git to do this automatically for you, whereas I think that Git 
-> should not be that "clever", because there are situations (as I've 
-> demonstrated previously in this thread) where the "cleverness" would do The 
-> Wrong Thing.
+> > Isn't it more intuitive to structure the loop by saying 'Ok, if "path" up
+> > to the currently proposed "prefix" is too long to match, let's shorten it
+> > by one path component and try again'?
 > 
->> Now Bob does the same and the
->> maintainer wants to merge his branch and gets a merge conflict because D
->> and J do not have a parent/children relationship.
-> 
-> Well, s/D/G/, but your point still stands. And the correct resolution is, of 
-> course, to merge G and J to produce K, and then record K in the superproject 
-> as the correct merge resolution.
-> 
-> Again, the question is whether Git should do these submodule merges 
-> automatically, or not.
+> Another way of saying this, which probably needs less number of scans,
+> would be to shorten prefix to what is known to match --- use of memcmp()
+> discards this information.
+[...]
+> 	while ((next = *++pathspec) != NULL) {
+> 		int len, last_matching_slash = -1;
+> 		for (len = 0; len < prefix && next[len] == path[len]; len++)
+> 			if (next[len] == '/')
+> 				last_matching_slash = len;
+> 		if (len == prefix)
+> 			continue;
+> 		if (last_matching_slash < 0)
+> 			return 0;
+> 		prefix = last_matching_slash + 1;
+> 	}
+> 	return prefix;
+> }
 
-Hm, maybe I am missing something here, but isn't the question whether Git
-should /use/ these submodule merges already done by a human being instead
-of /doing them itself/? So isn't it just about making Git so clever it
-proposes a merge already present in the submodule for recording in the
-superproject when merging there?
+I really didn't like the two-interleaved-loops version in your last
+mail, but this one is way more readable than even the original.
 
+(Why did you wrap the for loop? It's only 76 chars.)
 
-> Feel free to post the patches, if you can spend the time making them. So 
-> far, there's been no other feedback in this thread, so maybe I'm alone in my 
-> worries...
+Maybe you could add a comment like
 
-I fully understand your worries concerning automagic merges inside a
-submodule. But I really would like to see Git assisting me when merging
-submodule commits in the superproject that have already been merged in
-the submodule repo. And for me the first commit containing the others
-is the one I would like to see then.
+> 	slash = strrchr(path, '/');
+> 	if (!slash)
+> 		return 0;
+	/* The first 'prefix' characters of 'path' always include the
+	   trailing slash of the prefix directory */
+> 	prefix = slash - path + 1;
+
+to clean up any doubts about the correctness of the matching.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
