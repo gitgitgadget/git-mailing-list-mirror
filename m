@@ -1,9 +1,10 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/5 v2] merge-recursive: porcelain messages for checkout
-Date: Tue, 15 Jun 2010 14:36:12 +0200
-Message-ID: <vpqr5k8zd4z.fsf@bauges.imag.fr>
+Subject: Re: [PATCH 2/5 v2] unpack_trees: group errors by type
+Date: Tue, 15 Jun 2010 14:58:50 +0200
+Message-ID: <vpqljagzc39.fsf@bauges.imag.fr>
 References: <1276604576-28092-1-git-send-email-diane.gasselin@ensimag.imag.fr>
 	<1276604576-28092-2-git-send-email-diane.gasselin@ensimag.imag.fr>
+	<1276604576-28092-3-git-send-email-diane.gasselin@ensimag.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org,
@@ -11,74 +12,125 @@ Cc: git@vger.kernel.org,
 	<clement.poulain@ensimag.imag.fr>,
 	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
 To: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 15 14:36:33 2010
+X-From: git-owner@vger.kernel.org Tue Jun 15 14:59:09 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOVNS-0004Ac-Vp
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 14:36:27 +0200
+	id 1OOVjP-00077f-Sl
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 14:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab0FOMgP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 08:36:15 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35638 "EHLO shiva.imag.fr"
+	id S1752741Ab0FOM67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jun 2010 08:58:59 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35109 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750961Ab0FOMgO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 08:36:14 -0400
+	id S1751633Ab0FOM66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 08:58:58 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o5FCSCic008447
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o5FColtN030553
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 15 Jun 2010 14:28:12 +0200
+	Tue, 15 Jun 2010 14:50:47 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtp (Exim 4.69)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OOVNE-0002ye-V2; Tue, 15 Jun 2010 14:36:12 +0200
-In-Reply-To: <1276604576-28092-2-git-send-email-diane.gasselin@ensimag.imag.fr> (Diane Gasselin's message of "Tue\, 15 Jun 2010 14\:22\:52 +0200")
+	id 1OOVj8-0003P1-Tc; Tue, 15 Jun 2010 14:58:50 +0200
+In-Reply-To: <1276604576-28092-3-git-send-email-diane.gasselin@ensimag.imag.fr> (Diane Gasselin's message of "Tue\, 15 Jun 2010 14\:22\:53 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 15 Jun 2010 14:28:12 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 15 Jun 2010 14:50:50 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o5FCSCic008447
+X-MailScanner-ID: o5FColtN030553
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1277209692.64912@Fp4fXthuGeNbgCRQ7ybPHQ
+MailScanner-NULL-Check: 1277211053.31522@HoUahmcg3HQiRwyCd/lZow
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149180>
 
 Diane Gasselin <diane.gasselin@ensimag.imag.fr> writes:
 
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -372,6 +372,7 @@ static int merge_working_tree(struct checkout_opts *opts,
->  		topts.src_index = &the_index;
->  		topts.dst_index = &the_index;
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -60,6 +60,92 @@ static void add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
+>  }
 >  
-> +		topts.msgs = get_porcelain_error_msgs("checkout");
->  		topts.msgs.not_uptodate_file = "You have local changes to '%s'; cannot switch branches.";
+>  /*
+> + * add error messages on path <path> and action <action>
+> + * corresponding to the type <e> with the message <msg>
+> + * indicating if it should be display in porcelain or not
+> + */
+> +static int add_rejected_path(struct unpack_trees_options *o,
+> +			     enum unpack_trees_error e,
+> +			     const char *path,
+> +			     const char *action,
+> +			     int porcelain,
+> +			     const char *msg)
+> +{
+> +	struct rejected_paths_list *newentry;
+> +	struct rejected_paths **rp;
+> +	/*
+> +	 * simply display the given error message if in plumbing mode
+> +	 */
+> +	if (!porcelain)
+> +		o->show_all_errors = 0;
+> +	if (!o->show_all_errors)
+> +		return error(msg, path, action);
 
-It's nice to get accurate messages for all cases, but then why do you
-keep the special-case for not_uptodate_file? If there's a good reason
-for it, a comment in the code would be welcome.
+I don't fully understand what you're doing with show_all_errors and
+porcelain here. From the caller, "porcelain" is true iff the
+corresponding error message has been set in o. But if you can infer
+whether you're in porcelain from the error messages, why do you need
+show_all_errors in addition?
 
-> +	/* would_overwrite */
-> +	msgs.would_overwrite = malloc(sizeof(char) * 72);
-> +	sprintf((char *)msgs.would_overwrite,
-> +		"Your local changes to '%%s' would be overwritten by %s.  Aborting.",
-> +		cmd);
+>  static int reject_merge(struct cache_entry *ce, struct unpack_trees_options *o)
+>  {
+> -	return error(ERRORMSG(o, would_overwrite), ce->name);
+> +	return add_rejected_path(o, would_overwrite, ce->name, NULL,
+> +				 (o && (o)->msgs.would_overwrite),
 
-This yields:
+Parenthesis around (o) are distracting and useless. I guess you
+copy-pasted from a macro (for which parentheses should definitely be
+used in case the macro is called on an arbitrary expression).
 
-  Your local changes to 'foo' would be overwritten by checkout.  Aborting.
+> @@ -874,8 +964,16 @@ static int verify_uptodate_1(struct cache_entry *ce,
+>  	}
+>  	if (errno == ENOENT)
+>  		return 0;
+> -	return o->gently ? -1 :
+> -		error(error_msg, ce->name);
+> +	if (error == sparse_not_uptodate_file)
+> +		return o->gently ? -1 :
+> +			add_rejected_path(o, sparse_not_uptodate_file, ce->name, NULL,
+> +					  (o && (o)->msgs.sparse_not_uptodate_file),
+> +					  ERRORMSG(o, sparse_not_uptodate_file));
+> +	else
+> +		return o->gently ? -1 :
+> +			add_rejected_path(o, not_uptodate_file, ce->name, NULL,
+> +					  (o && (o)->msgs.not_uptodate_file),
+> +					  ERRORMSG(o, not_uptodate_file));
+>  }
 
-I tend to prefer Junio's wording:
+Isn't that a complex way of saying
 
-  You have local changes to 'foo'; cannot switch branches.
+	int porcelain;
+	if (error == sparse_not_uptodate_file)
+		porcelain = o && o->msgs.sparse_not_uptodate_file;
+	else
+		porcelain = o && o->msgs.not_uptodate_file;
+	return o->gently ? -1 :
+			add_rejected_path(o, error, ce->name, NULL,
+					  porcelain, ERRORMSG(o, error));
 
---
+?
+
+Also, I'm not sure I understand why you're attaching the error message
+string to each rejected_paths entry. Wouldn't it be more sensible to
+use o->msg in display_error_msgs() instead?
+
+-- 
 Matthieu Moy
 http://www-verimag.imag.fr/~moy/
