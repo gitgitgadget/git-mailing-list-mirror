@@ -1,91 +1,154 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/3] Make the Git tests emit TAP format
-Date: Tue, 15 Jun 2010 03:10:45 +0000
-Message-ID: <AANLkTimWDB4bULi6BwzwCF-euScTqyU-WILIuqocDJLQ@mail.gmail.com>
-References: <1276096943-32671-1-git-send-email-avarab@gmail.com>
-	<m3631lp9oe.fsf@localhost.localdomain>
-	<AANLkTinHrf_ZuuoMXlL8BFqm3UhRYxrV4t2Nmp5QNjrE@mail.gmail.com>
-	<AANLkTinsD3WVpldxSS2K1Gk05D87nQv_rA3D-BjlBXGD@mail.gmail.com>
-	<7v1vc99em7.fsf@alter.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] revert: add --stdin option to read commits from stdin
+Date: Tue, 15 Jun 2010 05:28:05 +0200
+Message-ID: <201006150528.05265.chriscool@tuxfamily.org>
+References: <20100614032251.20121.83253.chriscool@tuxfamily.org> <20100614052027.GA1509@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 15 05:11:02 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 15 05:36:43 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOMYE-0000AP-4z
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 05:10:58 +0200
+	id 1OOMx8-0006Wr-KL
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 05:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756359Ab0FODKr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 23:10:47 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62322 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755821Ab0FODKq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 23:10:46 -0400
-Received: by iwn9 with SMTP id 9so4048716iwn.19
-        for <git@vger.kernel.org>; Mon, 14 Jun 2010 20:10:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Z/W9Gn4AYnzAM0lM72ezeRjIfh4GxSlz1NZvvg/8C+A=;
-        b=Bss5q8KpwfNhyszYZy3SM0HhhB7tzQv2zo4ahYwT/nVF9SADKflJLoghc/ALHzoBom
-         iymuhC3v0YVk5Xz3LKrYn0xM12H40oKXAwKZRfkMQqiS9WBIJ0uVsE3sATXK/kKHBjBW
-         1y6lG+yl+IBqUa1wQEtWO4TBkNQZfg1NUeMw0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GZhQ9uce/qU8r4dJHcvRImgA4TbK8PwstxRCN5piKkNLiJFBQ1rSZNIfmGMq+alg6B
-         Hc1mjlaSuDfvqsiTy7/s9N02hYWMqrNHgWNlI+R3y9XOKbR37GIBrKY8Hu+HjK9oCK1W
-         oldDd7LFMRZpKwfw9tx3nR4I0ZuDaiuQIC7kQ=
-Received: by 10.231.188.156 with SMTP id da28mr7373813ibb.196.1276571445860; 
-	Mon, 14 Jun 2010 20:10:45 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Mon, 14 Jun 2010 20:10:45 -0700 (PDT)
-In-Reply-To: <7v1vc99em7.fsf@alter.siamese.dyndns.org>
+	id S1752362Ab0FODge convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jun 2010 23:36:34 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:39270 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751201Ab0FODgd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jun 2010 23:36:33 -0400
+Received: from style.localnet (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 0E90F81801E;
+	Tue, 15 Jun 2010 05:36:24 +0200 (CEST)
+User-Agent: KMail/1.12.2 (Linux/2.6.31-20-generic; KDE/4.3.2; x86_64; ; )
+In-Reply-To: <20100614052027.GA1509@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149154>
 
-On Tue, Jun 15, 2010 at 03:08, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Mon, Jun 14, 2010 at 22:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n <avarab@gmail.com> wrote:
->>> On Mon, Jun 14, 2010 at 21:49, Jakub Narebski <jnareb@gmail.com> wr=
-ote:
->>> I'll re-submit a version of the patch with a better commit message
->>> which addresses all of the below.
->>
->> Since the series just made it into pu is that still wanted or needed=
-?
->
-> It very much is. =C2=A0There isn't that much difference between being=
- in 'pu'
-> and being in the mailing list archive. =C2=A0Queuing in 'pu' is just =
-to help me
-> not to forget about the series, nothing more. =C2=A0Depending on how =
-further
-> discussions go, the series can be replaced with an improvement or eve=
-n can
-> be dropped as a whole as unusable.
->
-> In this case, the explanation in the commit messages and/or documenta=
-tion
-> are found to be lacking, and you already know what the improved versi=
-on
-> should look like, so I think it makes sense to replace the series wit=
-h a
-> new version (v3?)
+On Monday 14 June 2010 07:20:27 Jonathan Nieder wrote:
+> Christian Couder wrote:
+> > --- a/t/t3508-cherry-pick-many-commits.sh
+> > +++ b/t/t3508-cherry-pick-many-commits.sh
+> > @@ -92,4 +92,14 @@ test_expect_failure 'cherry-pick -3 fourth works=
+' '
+> >  	test "$(git rev-parse --verify HEAD)" !=3D "$(git rev-parse --ver=
+ify
+> > fourth)" '
+> >
+> > +test_expect_success 'cherry-pick --stdin works' '
+> > +	git checkout master &&
+> > +	git reset --hard first &&
+>=20
+> [...]
+>=20
+> This test fails for me as written, since the previous test leaves som=
+e
+> files in an unmerged state.  Patch 1 below works around that.
 
-Thanks for the explanation. I'll submit an better version of it soon.
+Ok.
+
+> > --- a/builtin/revert.c
+> > +++ b/builtin/revert.c
+> > @@ -79,7 +80,7 @@ static void parse_args(int argc, const char **arg=
+v)
+> >  	}
+> >
+> >  	commit_argc =3D parse_options(argc, argv, NULL, options, usage_st=
+r, 0);
+>=20
+> [...]
+>=20
+> > @@ -527,10 +528,12 @@ static void prepare_revs(struct rev_info *rev=
+s)
+> >  {
+> >  	int argc =3D 0;
+> >  	int i;
+> > -	const char **argv =3D xmalloc((commit_argc + 4) * sizeof(*argv));
+> > +	const char **argv =3D xmalloc((commit_argc + 5) * sizeof(*argv));
+> >
+> >  	argv[argc++] =3D NULL;
+> >  	argv[argc++] =3D "--no-walk";
+> > +	if (read_stdin)
+> > +		argv[argc++] =3D "--stdin";
+>=20
+> Ah, I see the problem now.  But it would be even nicer to allow arbit=
+rary
+> rev-list options, so a person could =E2=80=98git cherry-pick --revers=
+e a..b=E2=80=99,
+> for example.
+
+Yeah, I agree that is nicer.
+
+> In other words, how about something like patch 2 below?
+>=20
+> Patch 3 is a small cleanup, as a bonus.
+>=20
+> Christian Couder (1):
+>   revert: accept arbitrary rev-list options
+>=20
+> Jonathan Nieder (2):
+>   t3508 (cherry-pick): futureproof against unmerged files
+>   revert: do not rebuild argv on heap
+
+I get "indent with spaces" errors when I apply patches 2/3 and 3/3:
+
+$ git am ../messages/\[PATCH\ 2_3\]\ revert_\ accept\ arbitrary\ rev-li=
+st\=20
+options.mbox
+Applying: revert: accept arbitrary rev-list options                    =
+                                                 =20
+/home/christian/work/git/.git/rebase-apply/patch:35: indent with spaces=
+=2E                                                =20
+                                    PARSE_OPT_KEEP_UNKNOWN); =20
+
+$ git am ../messages/\[PATCH\ 3_3\]\ revert_\ do\ not\ rebuild\ argv\ o=
+n\=20
+heap.mbox
+Applying: revert: do not rebuild argv on heap                          =
+                                             =20
+/home/christian/work/git/.git/rebase-apply/patch:33: indent with spaces=
+=2E                                            =20
+                                    PARSE_OPT_KEEP_ARGV0 |             =
+                                             =20
+warning: 1 line adds whitespace errors.
+
+But otherwise it all looks very good to me.
+
+Even something like "git cherry-pick -3 fourth" is now working after pa=
+tch=20
+2/3, so all test cases now pass. This is because "--no-walk" does not a=
+lways=20
+take over "-3" it looks like it depends on the order of the arguments.
+
+=46or example I get:
+
+$ git rev-list --no-walk -3 --reverse fourth
+453a04748224b3f212580d1195b452334d346e75
+e85abe28a2b8ef771f760575b325f4c41f9c815f
+94d3184b3f0dcfebb393faf5a122dc429d775538
+
+but:
+
+$ git rev-list -3 --no-walk --reverse fourth
+94d3184b3f0dcfebb393faf5a122dc429d775538
+
+I will post an updated v2 series without the whitespace errors and with=
+ a few=20
+documentation and test updates in patch 2/3.
+
+Thanks,
+Christian.
