@@ -1,75 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: No working tree repository
-Date: Tue, 15 Jun 2010 22:58:20 +0200
-Message-ID: <vpq7hm0dndf.fsf@bauges.imag.fr>
-References: <4C17BEB7.90403@cfl.rr.com> <vpqy6egi2va.fsf@bauges.imag.fr>
-	<4C17C77C.9000002@cfl.rr.com>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: [GSoC update] Splitting gitweb & developing write functionalities
+Date: Wed, 16 Jun 2010 02:43:57 +0530
+Message-ID: <AANLkTimJqFzuWI7EMnUuH9ap69KgL_op_yndWSfyg8hX@mail.gmail.com>
+References: <AANLkTikapZa0N7xroxhdlmm7LUvlNp-7GZy7XeG-zprC@mail.gmail.com>
+	<20100615201720.GI3109@machine.or.cz>
+	<AANLkTinfJOOT8NJ942bB_Sil4sGNthpk9hxvA60Y_iGB@mail.gmail.com>
+	<20100615205755.GJ3109@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Phillip Susi <psusi@cfl.rr.com>
-X-From: git-owner@vger.kernel.org Tue Jun 15 22:58:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Petr Baudis <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Tue Jun 15 23:14:10 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOdDP-00006y-0N
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 22:58:35 +0200
+	id 1OOdST-0006lc-AE
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 23:14:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932462Ab0FOU6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 16:58:30 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:34687 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758453Ab0FOU63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 16:58:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o5FKoJuK007567
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 15 Jun 2010 22:50:19 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OOdDB-0002Hi-0C; Tue, 15 Jun 2010 22:58:21 +0200
-In-Reply-To: <4C17C77C.9000002@cfl.rr.com> (Phillip Susi's message of "Tue\, 15 Jun 2010 14\:33\:32 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 15 Jun 2010 22:50:19 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o5FKoJuK007567
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1277239822.72945@YtNhRCmRFMKzjFqL0Z+sHw
+	id S932490Ab0FOVOB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 17:14:01 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59108 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932467Ab0FOVOA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jun 2010 17:14:00 -0400
+Received: by gye5 with SMTP id 5so3583587gye.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 14:13:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=p7aL2AFr8XPAXXbPyJGBszniKm7JCvNVwkTvWIDaQ/4=;
+        b=KSYSyRRg+Csux3ZaVXuvtDWR80yjrInJ0OskZCgw4+o9Yn/x7wOvwAIG5wgT41/LTI
+         j5c4VateLQ7h3sOGsbQhvv/k/XWGk95JUJK9lFaDRr8D1JDktl6ahV2LhJQBQ6PLJmRd
+         cT07BaDzQOgcua/EcKrSGtVbgc6cZyj6/O7nU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kFI+bekAhG2IwokrmWmnwaEnFGtBFfyQl7JYBLFzQq//PSSNG68S4+wFdERk2rmXrO
+         v7iR0uq3HBF5cdY6h8xqIhBrCGSjiJ6tDd7Ykxc1n33ieaNFE74LSqNI7z6hyhfy7YaN
+         tqKNstqEn3cdUyM/vmwg0IF1SBEJjQHCPy/sY=
+Received: by 10.101.4.11 with SMTP id g11mr6612017ani.150.1276636438163; Tue, 
+	15 Jun 2010 14:13:58 -0700 (PDT)
+Received: by 10.100.126.20 with HTTP; Tue, 15 Jun 2010 14:13:57 -0700 (PDT)
+In-Reply-To: <20100615205755.GJ3109@machine.or.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149226>
 
-Phillip Susi <psusi@cfl.rr.com> writes:
-
-> On 6/15/2010 2:10 PM, Matthieu Moy wrote:
->> This is called a "bare" repository. Now, you have the keyword to
->> RTFM ;-).
+On Wed, Jun 16, 2010 at 2:27 AM, Petr Baudis <pasky@suse.cz> wrote:
+> =A0Hi!
 >
-> Ahh, that's the magic word I was groping for.
+> On Wed, Jun 16, 2010 at 02:03:50AM +0530, Pavan Kumar Sunkara wrote:
+>> >> gitweb: Create Gitweb::View module [Work in Progress]
+>> >
+>> > (Is this the Gitweb::HTML module? Why have you renamed it?)
+>> Yeah I thought it would be better if I have this named as View rathe=
+r
+>> than HTML :)
 >
-> It seems that --bare on clone will prevent the checkout of the local
-> working tree.  If I decide I do want the sources today I can just check
-> them out, but what is the proper way to do the reverse?  I was thinking
-> something like somehow empty the index file then do a git-reset or
-> git-checkout-index to clean up the working tree to match the empty
-> index, but I can't figure out how to empty the index.
+> =A0I'm just a bit surprised since I have thought we have agreed that
+> Gitweb::View is much more misleading name for what Gitweb::HTML actua=
+lly
+> is, hinting at a MVC structure that simply is not there at any level.
+> You are welcome to differ in opinion but then I would expect you to
+> continue that discussion. :-)
+>
 
-rm -fr *  # use at your own risk
-rm -f .git/index
+Yes but after a long thought, I decided that the name to be changed to
+View because this module contains all the subroutines regarding the
+gitweb viewing functions.
 
-Then, you can get back a tree with "git checkout" or "git checkout
-HEAD -- .". The advantage of this solution over the empty-branch
-solution is that although you destroyed your index, HEAD is still
-there so "git log" and friends will show you where you are.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks,
+Pavan.
