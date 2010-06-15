@@ -1,121 +1,71 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH v2 0/3] Make the Git tests emit TAP format
-Date: Tue, 15 Jun 2010 18:42:59 +0200
-Message-ID: <4C17AD93.1020402@op5.se>
-References: <1276096943-32671-1-git-send-email-avarab@gmail.com>	<m3631lp9oe.fsf@localhost.localdomain>	<AANLkTinHrf_ZuuoMXlL8BFqm3UhRYxrV4t2Nmp5QNjrE@mail.gmail.com> <AANLkTimxE0mqmitRzlXjSAO6v7IOEg4guUnRlzJUyIF1@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] rerere.txt: Document forget subcommand
+Date: Tue, 15 Jun 2010 12:45:19 -0400
+Message-ID: <AANLkTinfDixTH_l_1quVg68oz4E0AeuuyyOAVrJ2liVz@mail.gmail.com>
+References: <AANLkTik50ayTQUnft4oD0Paqf-AuFWxGNdx_zZlHKFPg@mail.gmail.com>
+	<ebd2b2b5bb3352c6204f181416a7a521f8c6abf7.1276582759.git.git@drmicha.warpmail.net>
+	<7vr5k86ylg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 15 18:43:14 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 15 18:45:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOZEH-0005Kh-IT
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 18:43:13 +0200
+	id 1OOZGT-0006TA-IC
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 18:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757834Ab0FOQnI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 12:43:08 -0400
-Received: from na3sys009aog111.obsmtp.com ([74.125.149.205]:53380 "HELO
-	na3sys009aog111.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1757808Ab0FOQnH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jun 2010 12:43:07 -0400
-Received: from source ([209.85.214.43]) by na3sys009aob111.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTBetlqjT1xLS6jmYpIwMwjRQRhJe5oVc@postini.com; Tue, 15 Jun 2010 09:43:06 PDT
-Received: by bwz19 with SMTP id 19so3014922bwz.16
-        for <git@vger.kernel.org>; Tue, 15 Jun 2010 09:43:02 -0700 (PDT)
-Received: by 10.204.175.8 with SMTP id v8mr5608910bkz.196.1276620182033;
-        Tue, 15 Jun 2010 09:43:02 -0700 (PDT)
-Received: from clix.int.op5.se ([212.112.174.166])
-        by mx.google.com with ESMTPS id v3sm25161022bkz.10.2010.06.15.09.43.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jun 2010 09:43:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4 ThunderGit/0.1a
-In-Reply-To: <AANLkTimxE0mqmitRzlXjSAO6v7IOEg4guUnRlzJUyIF1@mail.gmail.com>
+	id S932113Ab0FOQpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jun 2010 12:45:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:60525 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643Ab0FOQpU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 12:45:20 -0400
+Received: by iwn9 with SMTP id 9so4705057iwn.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 09:45:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Ff/HAnufRiwxcdtnze9bhuFScVVJGEUhTlRinJjE5gE=;
+        b=BFwmzt6uQeVbh5YEgutv2kJ2ustgE0Ra6Ruk8BgjeR31AgaZoYeo9LA5cmo2LSwDRX
+         H93aEoxKzHEdHotDXeRBUdTSU2pck87lGymYUrmFEX2JuNiVJCEuJHYTYWs1V8mD2uAL
+         uOfBiUk1EUZIDqXNJgIX2GIDdYvsKVnKXHNEs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=iToMztyctIfcFk7z2On75AVWo7Kh32Jark8HVNXiJ5/LSt3ZaUX+EZDzYDXkmz9dRM
+         AyyYnOwlr34QTn8WZk/I5GMY2n/I3tsDbwgQfndXOHKjfjx/COuPMvGISHwUaUvlkbKn
+         cU1etkWG7GiLJ3FVtQo+KZ5E2/zeJJfOBaBLE=
+Received: by 10.231.59.9 with SMTP id j9mr8480715ibh.31.1276620319784; Tue, 15 
+	Jun 2010 09:45:19 -0700 (PDT)
+Received: by 10.231.120.19 with HTTP; Tue, 15 Jun 2010 09:45:19 -0700 (PDT)
+In-Reply-To: <7vr5k86ylg.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149206>
 
-On 06/15/2010 05:17 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
-> On Mon, Jun 14, 2010 at 22:10, =C6var Arnfj=F6r=F0 Bjarmason<avarab@g=
-mail.com>  wrote:
->> On Mon, Jun 14, 2010 at 21:49, Jakub Narebski<jnareb@gmail.com>  wro=
-te:
->>> =C6var Arnfj=F6r=F0 Bjarmason<avarab@gmail.com>  writes:
->>>
->>>> All this series does is slightly adjust the raw text output of our
->>>> tests so that it conforms. to the TAP standard, i.e. instead of th=
-is:
->>>>
->>>>     $ ./t0005-signals.sh
->>>>     *   ok 1: sigchain works
->>>>     * passed all 1 test(s)
->>>>
->>>> We get this:
->>>>
->>>>     $ ./t0005-signals.sh
->>>>     ok 1 - sigchain works
->>>>     # passed all 1 test(s)
->>>>     1..1
->>>>
->>>> Changing the output format like this gives us the ability to run t=
-he
->>>> Git tests with any TAP tool (like prove(1)) at no extra cost. Ever=
-y
->>>> other existing way of running the tests continues to work, it's ju=
-st
->>>> easier for machines to read the output now.
->>
->> I'll re-submit a version of the patch with a better commit message
->> which addresses all of the below.
->>
->>> This doesn't tell us if the result of running test suite with
->>> '--verbose' and/or with '--debug' changes, and if changes how?  Is =
-it
->>> compatibile with TAP format so that TAP parsers understand it?
->>
->> It just changes in that the lines that previously said e.g. "*   ok =
-1:
->> sigchain works" now say "ok 1 - sigchain works".
->>
->> TAP parsers still understand it, since ignoring unknown garbage is
->> part of the TAP standard.
->=20
-> Actually it doesn't work for all the tests. The following crops up on
-> prove -j 10 ./t[0-9]*.sh :: --verbose:
->=20
->      ./t1007-hash-object.sh                             (Wstat: 0
-> Tests: 19 Failed: 0)
->        Parse errors: Tests out of sequence.  Found (12) but expected =
-(11)
->                      Tests out of sequence.  Found (13) but expected =
-(12)
->                      Tests out of sequence.  Found (14) but expected =
-(13)
->                      Tests out of sequence.  Found (15) but expected =
-(14)
->                      Tests out of sequence.  Found (16) but expected =
-(15)
+On Tue, Jun 15, 2010 at 12:37 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +'forget' <pathspec>::
+>> +
+>> +This resets the conflict resolutions which rerere has recorded for <pathspec>.
+>> +
+>
+> This description is not _incorrect_ per-se, but it does not convey one
+> important aspect of the subcommand; unlike "clear" and "gc", "forget" only
+> works in the context of the _current_ conflict resolution, just like
+> "diff" and "status".
+>
+> Perhaps s/for <pathspec>/for the current conflict in <pathspec>/ would be
+> a sufficient improvement?
 
+Also, pathspec is optional.
 
-Why are you using a plan at all? I absolutely detest using planned tap
-series, and last I heard was that the majority of TAP-fanatics actually
-agreed that using a plan to run tests was an extraordinarily lousy idea=
-,
-since it makes it harder to add tests properly.
-
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+j.
