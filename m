@@ -1,82 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rerere.txt: Document forget subcommand
-Date: Tue, 15 Jun 2010 09:37:47 -0700
-Message-ID: <7vr5k86ylg.fsf@alter.siamese.dyndns.org>
-References: <AANLkTik50ayTQUnft4oD0Paqf-AuFWxGNdx_zZlHKFPg@mail.gmail.com>
- <ebd2b2b5bb3352c6204f181416a7a521f8c6abf7.1276582759.git.git@drmicha.warpmail.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] mailinfo: parse From header more strictly when run from 
+	rebase
+Date: Tue, 15 Jun 2010 12:41:58 -0400
+Message-ID: <AANLkTina5G9P-OkGAoia0DeJhPygRaoaiI7tXDRHgjtF@mail.gmail.com>
+References: <1275885945-29241-1-git-send-email-jaysoffian@gmail.com>
+	<7vzkyw6zo2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jun 15 18:38:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 15 18:42:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOZ9H-0002hl-IB
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 18:38:03 +0200
+	id 1OOZDD-0004iF-40
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 18:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756955Ab0FOQh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 12:37:58 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37803 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753990Ab0FOQh6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 12:37:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 92D04BA7C8;
-	Tue, 15 Jun 2010 12:37:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E4TCy3WmiR/uKa7FruhgtqtuOL0=; b=DFlAAN
-	LG409FFlhhbCYJRhSKq2Rie+MR6U49/xAnWHMaVIn2o2uyDJjxVnApBlo5ZZNg47
-	DiuasoxgtOzB6gA1Bqlr3qO044syzzqd0z/aMl/kCOGPWgBXoHlPum4biFjk/lN4
-	JRVcS38Yck6WJ2yYDLNC8b0bV+MXfSJWGRBm0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s83YEHT7s6skodkP6xZybUTA62ZQ7Gvy
-	VrOydESagB11K68eO1+tPAEZeM0i0FNYTqIT3jcQCeW8QsVob45VMk93w2Hag6gx
-	Nu/tSegiRpiMYMcpivCxj1Iw61ebqzIrWW3PkG1xkNoj3QZHpqZvhjeXxYKEgAbW
-	Or0iavcZ7UE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 56397BA7C3;
-	Tue, 15 Jun 2010 12:37:53 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8BDF5BA7BB; Tue, 15 Jun
- 2010 12:37:49 -0400 (EDT)
-In-Reply-To: <ebd2b2b5bb3352c6204f181416a7a521f8c6abf7.1276582759.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue\, 15 Jun 2010 08\:21\:06 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 58217AD4-789C-11DF-B84B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757779Ab0FOQmA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 12:42:00 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47566 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757659Ab0FOQl7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jun 2010 12:41:59 -0400
+Received: by iwn9 with SMTP id 9so4702091iwn.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 09:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3qbj4DCBS8z682G8WX6QGTUb56RHR4Oe4mWv1gsERsI=;
+        b=Nc72zg5ur0fhHXqHkXOf0mcn5jHYDhLjS/KFa/IvUFwuzQhJp2B3ifsSWd3N0yWeCk
+         3qJxNQeC1PheU7XwbPNFNCmQM8+yLmU7ukt4rMPw3yeSe9D+lKkv3mlmcJPW7ZxNgZDU
+         tiBGkuqyt1p9na2QVKV4ZNGHaLHs9VTFiyh4E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=GqZ0jMd6NKNIl7JOX4Xx9fuy0A9KqI2nlfywWduYIju2RakoDHVCgTyDDY3VPFqpFd
+         lZV63qg2oSOvjlKsrdJVV0rx0T/utFFCXHhTHm55tYgiXacbxtnJHPQ+v285guHiwoBn
+         WJOD6MktLG8Uf8l3Uuppa/uB2566k+/MIW8a0=
+Received: by 10.42.7.130 with SMTP id e2mr2607326ice.3.1276620119047; Tue, 15 
+	Jun 2010 09:41:59 -0700 (PDT)
+Received: by 10.231.120.19 with HTTP; Tue, 15 Jun 2010 09:41:58 -0700 (PDT)
+In-Reply-To: <7vzkyw6zo2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149203>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Tue, Jun 15, 2010 at 12:14 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Jay Soffian <jaysoffian@gmail.com> writes:
+>
+>> Given an email address of the form:
+>>
+>> =C2=A0author@example.com <author@example.com@11B4E7C6-762E-4CF5-B2EB=
+-3F7BD596981D>
+>>
+>> results in "author@example.com" being used as both the name and the
+>> address. This is due to an assumption in handle_from() that the
+>> first '@' denotes the address portion. The remainder of the string
+>> is then assumed to be the name, which is rejected by
+>> get_sane_name(), resulting in address being used for the name as
+>> well.
+>
+> Sorry, but it is unclear from your message what problem you are tryin=
+g to
+> solve, what your desired outcome is, and why you think that outcome i=
+s
+> desired. =C2=A0The bracketed one shown above does _not_ look like a v=
+alid email
+> address, so using
+>
+> =C2=A0 =C2=A0name =3D "author@example.com"
+> =C2=A0 =C2=A0email =3D "author@example.com@11B4..."
+>
+> does not sound like a good thing to do to begin with.
 
-> dea4562 (rerere forget path: forget recorded resolution, 2009-12-25)
-> introduced the forget subcommand for rerere.
-> ...
-> diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-> index acc220a..a7370d3 100644
-> --- a/Documentation/git-rerere.txt
-> +++ b/Documentation/git-rerere.txt
-> @@ -40,6 +40,10 @@ This resets the metadata used by rerere if a merge resolution is to be
->  aborted.  Calling 'git am [--skip|--abort]' or 'git rebase [--skip|--abort]'
->  will automatically invoke this command.
->  
-> +'forget' <pathspec>::
-> +
-> +This resets the conflict resolutions which rerere has recorded for <pathspec>.
-> +
+You left out this part of my commit message:
 
-This description is not _incorrect_ per-se, but it does not convey one
-important aspect of the subcommand; unlike "clear" and "gc", "forget" only
-works in the context of the _current_ conflict resolution, just like
-"diff" and "status".
+"In practice, I've only encountered this issue when rebasing commits
+that were generated by git svn."
 
-Perhaps s/for <pathspec>/for the current conflict in <pathspec>/ would be
-a sufficient improvement?
+Which is exactly what I was doing. I'm rebasing commits from this repo:
+
+http://src.chromium.org/cgi-bin/gitweb.cgi?p=3Dchromium.git
+
+The rebase operation is munging the address and transforming an author =
+of
+
+  user@chromium.org <user@chromium.org@0039d316-1c4b-4281-b951-d872f208=
+7c98>
+
+into
+
+  user@chromium.org <user@chromium.org>
+
+Regardless of whether the address is valid or not, rebase shouldn't mun=
+ge it.
+
+j.
