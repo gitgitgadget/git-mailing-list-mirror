@@ -1,108 +1,89 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH/RFC] Fix for default pager
-Date: Tue, 15 Jun 2010 11:11:35 -0500
-Message-ID: <gJV0lM_e77LzoiHR7moWdAApSZ7yI38lZ-w8kZwc97unWqtBc94nfg@cipher.nrlssc.navy.mil>
-References: <4C0E5103.7030501@viscovery.net> <AANLkTilWg8hw5j20o-xGsVO-q_OeSmtKEKAO6O416qvH@mail.gmail.com> <4C0E6810.3070301@viscovery.net> <AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com> <4C0E932B.3010702@viscovery.net> <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com> <4C0EB741.9020905@op5.se> <AANLkTinAO5empFix9W_rbtU3Vv4O73OsJBtA1stb66DS@mail.gmail.com> <20100610082916.GA5559@coredump.intra.peff.net> <AANLkTinLt3p0q-q5oDFk5CWzdhqQ2lwkWuvpdPzKZvYe@mail.gmail.com> <20100610085952.GA8269@coredump.intra.peff.net>
+From: Joshua Shrader <jshrader83@gmail.com>
+Subject: Fixing branches from a (really messed up) subversion repository
+Date: Tue, 15 Jun 2010 12:26:16 -0400
+Message-ID: <AANLkTinmU3tOkv9usjGogHn5cXm07FMde8ryDKuWNKD_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Tor Arntsen <tor@spacetec.no>, Brandon Casey <drafnel@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Dario Rodriguez <soft.d4rio@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	git <git@vger.kernel.org>, gary@thewrittenword.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 15 18:18:02 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 15 18:26:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOYps-0008Oe-Bz
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 18:18:00 +0200
+	id 1OOYy3-0004nB-Sg
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 18:26:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610Ab0FOQRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 12:17:55 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:45680 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752808Ab0FOQRy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 12:17:54 -0400
-Received: by mail.nrlssc.navy.mil id o5FGBZnv026511; Tue, 15 Jun 2010 11:11:36 -0500
-In-Reply-To: <20100610085952.GA8269@coredump.intra.peff.net>
-X-OriginalArrivalTime: 15 Jun 2010 16:11:34.0851 (UTC) FILETIME=[6D071930:01CB0CA5]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1757183Ab0FOQ0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jun 2010 12:26:21 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:56534 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756970Ab0FOQ0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 12:26:17 -0400
+Received: by mail-vw0-f46.google.com with SMTP id 13so1447979vws.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 09:26:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=Stfb9PVeX4OBGl2Vgu6wfdVSOoud5t0D26iQGXSvSNE=;
+        b=Vtup2Ujk3j8N+oROQ8KOmZAaeOGKCnJigzDW1eQZqYMPUsK2mAzEt+K/aWT8wFmZ1f
+         wH347FZ6MBRq8Fy+Jb8diQsXY9dRNeBLdj2zWrR6UqKoqJxasyM8U65i2hJGZ4TE/GdA
+         X8H8yHlSGVQLAZlb2Ii5h7abxKxDCL6JlQJT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=Ns29g1N91uubt0/sAcJgJhYtj5aqC0Q76Ftqx2/gtXry+TvXip2ytAg/phmzpB8OqK
+         HtQAIKhMA/ZtFe/dz5yfM2pYl9PbeeIDsQZfWEHhjw07lpiNZi2MmMIMXUxhYLCeDaAj
+         bxGQ2xWkWOrE+d2U1mA7Y+knv2DsZCC7ciMZ0=
+Received: by 10.220.123.33 with SMTP id n33mr3872020vcr.64.1276619177214; Tue, 
+	15 Jun 2010 09:26:17 -0700 (PDT)
+Received: by 10.220.106.167 with HTTP; Tue, 15 Jun 2010 09:26:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149199>
 
-On 06/10/2010 03:59 AM, Jeff King wrote:
-> On Thu, Jun 10, 2010 at 10:48:31AM +0200, Tor Arntsen wrote:
-> 
->> That looks good to me.
-> 
-> OK, here it is with a commit message. Other systems might want the same,
-> I guess (Solaris, IRIX?). I'm cc'ing Brandon, who might have some input.
+I've finally convinced my project to switch to Git...  However, when
+my project first began, the people responsible for branching/tagging
+were fairly unfamiliar with standard procedures.  As such, the
+beginnings of our repository look a little something like this:
 
-Yes, I currently set DEFAULT_PAGER to 'more' in my config.mak file
-on both of these platforms.  The 'more' on IRIX is decent (it can go
-backwards), but the 'more' on Solaris sucks.  I've seen 'less' on some
-newer versions of Solaris.  Is it a standard component yet?
+.
+`----project
+     |
+     `branch1
+     |          |
+     |          `----project
+     |                        `src
+     `branch2
+     |          |
+     |          `----project
+     |                        `src
+     `src
 
-So, I think it's appropriate to set DEFAULT_PAGER on IRIX.  There can't
-be many users anyway.  It's probably appropriate to set it on Solaris
-too, if 'less' is not a commonly installed component on modern systems.
-I wonder how surprised existing git users will be, for those on Solaris
-platforms that have 'less' installed, when Solaris's crappy 'more'
-becomes their pager.
+That is, the branches were essentially inside the trunk.  In order to
+check out the "mainline" of development, you also got all of the
+branches.  After a few branches, they realized that this was a
+problem, and someone found out about the trunk/branches/tags paradigm.
+ Our branches were svn mv'd to separate directories under "branches",
+and all was well.  Now everything looked like a sane version control
+repository.
 
-Actually, there is a 'more' in /usr/xpg4/bin that is much better, but
-it is not being used when DEFAULT_PAGER is set to 'more'.  Junio
-created the SANE_TOOL_PATH hack to add this additional path to the
-search path, but it is only implemented in git-sh-setup, so it only
-has effect for git scripts.  Maybe it should be added to setup_path().
+Now, we want to import this into Git.  I tried git svn import
+--stdlayout..., but this just stalled.  I'm assuming because the first
+version didn't have a trunk/branches/tags structure.  So, I had to
+import it leaving off the --stdlayout option.  Is there any way to
+manually fix this in Git?  After the import is complete, my master
+branch will have a trunk, branches, and tags directory in it.  Can I
+create real branches out of the directories under the branches
+directory and then remove them from master?
 
-But, I also think it would be nice if git fell back to the 'cat'
-behavior when it fails to spawn the pager, because the following error
-is not very informative:
+Any help is greatly appreciated.  I've been hoping for a while that
+we'd switch to Git, and I don't want this to hang us up.
 
-   casey@<a_solaris_box> # git log
-   sh: less: not found
-   Broken Pipe
+Thanks,
 
--brandon
-
-
-> Note that this is completely untested by me, as all of my AIX boxen have
-> gone away in the past few months (yay!).
-> 
-> -- >8 --
-> Subject: [PATCH] Makefile: default pager on AIX to "more"
-> 
-> AIX doesn't ship with "less" by default, and their "more" is
-> more featureful than average, so the latter is a more
-> sensible choice.  People who really want less can set the
-> compile-time option themselves, or users can set $PAGER.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  Makefile |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Makefile b/Makefile
-> index 34b7dd5..6ad0aca 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -930,6 +930,7 @@ ifeq ($(uname_S),NetBSD)
->  	HAVE_PATHS_H = YesPlease
->  endif
->  ifeq ($(uname_S),AIX)
-> +	DEFAULT_PAGER = more
->  	NO_STRCASESTR=YesPlease
->  	NO_MEMMEM = YesPlease
->  	NO_MKDTEMP = YesPlease
+Josh
