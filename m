@@ -1,66 +1,79 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: No working tree repository
-Date: Tue, 15 Jun 2010 21:39:14 +0200
-Message-ID: <m2ocfcw0f1.fsf@igel.home>
-References: <4C17BEB7.90403@cfl.rr.com> <vpqy6egi2va.fsf@bauges.imag.fr>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: [GSoC update] Splitting gitweb & developing write functionalities
+Date: Wed, 16 Jun 2010 01:33:30 +0530
+Message-ID: <AANLkTikapZa0N7xroxhdlmm7LUvlNp-7GZy7XeG-zprC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Phillip Susi <psusi@cfl.rr.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jun 15 21:39:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 15 22:03:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OObyj-0007FM-R8
-	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 21:39:22 +0200
+	id 1OOcMD-0001Rw-Ps
+	for gcvg-git-2@lo.gmane.org; Tue, 15 Jun 2010 22:03:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754736Ab0FOTjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 15:39:17 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:45648 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754073Ab0FOTjQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 15:39:16 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 16B421C1598C;
-	Tue, 15 Jun 2010 21:39:14 +0200 (CEST)
-Received: from igel.home (ppp-88-217-126-207.dynamic.mnet-online.de [88.217.126.207])
-	by mail.mnet-online.de (Postfix) with ESMTP id E69B91C00141;
-	Tue, 15 Jun 2010 21:39:14 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id BFFA4CA297; Tue, 15 Jun 2010 21:39:14 +0200 (CEST)
-X-Yow: ALFRED JARRY!  Say something about th' DEATH of DISCO!!
-In-Reply-To: <vpqy6egi2va.fsf@bauges.imag.fr> (Matthieu Moy's message of "Tue,
-	15 Jun 2010 20:10:01 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1754474Ab0FOUDc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jun 2010 16:03:32 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46434 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751916Ab0FOUDb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 16:03:31 -0400
+Received: by gye5 with SMTP id 5so3515455gye.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 13:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=roCxPI6+rEq+xWnfv9f3BQ2TUKbAsr4tTKq8aJ+eZiE=;
+        b=coqFls3psrWLdeKcXeTLS1Ne7wpHvPw8HKczxg+gJz99tjis03mfWcBpl1xX8XFohG
+         NdSB8obmg5UO5Tsaxv0pbxqYXJg8b0fphd/7eeahF3vLfzwXASnEs3RexdVnh3nFZdbS
+         MmjcDc2e2lilIGLb40mD5QwDhB7+obKDl/0Bk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=o4JrvM0e9RnqDPpO6AdhPW4wczw5GCiWECofEi5vnUV1GIMJBn4vnoo+pJdFbIeTgt
+         D5frfX3Dbzp+8z1c3loK908QeRxRvF/t0JJw9VR6X4bMclbupCX0r2gNn/wj94tOVar+
+         sKd+QGUmA7N7t3eYU53lhLtgzyjGEqOdilZ14=
+Received: by 10.101.5.40 with SMTP id h40mr6602102ani.133.1276632210925; Tue, 
+	15 Jun 2010 13:03:30 -0700 (PDT)
+Received: by 10.100.126.20 with HTTP; Tue, 15 Jun 2010 13:03:30 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149220>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi,
 
-> You can do something like
->
-> mv linux-repo linux-tree
-> cd linux-tree
-> mv .git ../linux-repo
-> cd ../linux-repo
-> git config core.bare true
+I know it's been late to send a GSOC update but here is mine for the
+first few weeks of GSOC coding period.
 
-Or shorter:
+Patch list:
 
-$ git clone --bare linux-repo
+gitweb: Use @diff_opts while using format-patch [master]
 
-(which creates linux-repo.git and uses hardlinks, so it won't waste
-space)
+gitweb: Move static files into seperate subdirectory [next]
+gitweb: Set default destination directory for installing gitweb [next]
+git-instaweb: Put httpd logs in a "$httpd_only" subdirectory [next]
+git-instaweb: Configure it to work with new gitweb structure [next]
+git-web--browse: Add support for google chrome and chromium [next]
+Makefile: Use $(sharedir)/gitweb for target 'install-gitweb' [next]
+git-instaweb: Add option to reuse previous config file [next]
 
-Andreas.
+git-instaweb: Add support for --reuse-config using gitconfig [waiting
+for Junio] http://kerneltrap.org/mailarchive/git/2010/6/3/31711
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+gitweb: Create Gitweb::Git module [Work in Progress]
+gitweb: Create Gitweb::Config module [Work in Progress]
+gitweb: Create Gitweb::Request module [Work in Progress]
+gitweb: Create Gitweb::Escape module [Work in Progress]
+gitweb: Create Gitweb::View module [Work in Progress]
+gitweb: Create Gitweb::Util module [Work in Progress]
+gitweb: Create Gitweb::RepoConfig module [Work in Progress]
+gitweb: Create Gitweb::Format module [Work in Progress]
+gitweb: Create Gitweb::Parse module [Work in Progress]
