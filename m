@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v3 1/5] Make test-lib.sh emit valid TAP format
-Date: Tue, 15 Jun 2010 22:32:54 +0000
-Message-ID: <1276641178-32420-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH v3 4/5] TAP: Say "pass" rather than "ok" on an empty line
+Date: Tue, 15 Jun 2010 22:32:57 +0000
+Message-ID: <1276641178-32420-5-git-send-email-avarab@gmail.com>
 References: <AANLkTimxE0mqmitRzlXjSAO6v7IOEg4guUnRlzJUyIF1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,317 +11,186 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 16 00:33:32 2010
+X-From: git-owner@vger.kernel.org Wed Jun 16 00:34:32 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOehH-0005pw-Fx
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 00:33:31 +0200
+	id 1OOeiD-0006Bf-CN
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 00:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754807Ab0FOWd3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 18:33:29 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:49935 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754688Ab0FOWd1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 18:33:27 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 40so5237085wyb.19
-        for <git@vger.kernel.org>; Tue, 15 Jun 2010 15:33:27 -0700 (PDT)
+	id S1755955Ab0FOWeV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jun 2010 18:34:21 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:60370 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755297Ab0FOWeU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jun 2010 18:34:20 -0400
+Received: by mail-ww0-f46.google.com with SMTP id 18so5216483wwb.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 15:34:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=LDtMyw6XFGsQziRJqjFb2MDiP2b9T0G2q5gU6FHLONM=;
-        b=P779v3wyM95tGLvdB6fgRg0bzspeaGsgAIftc/QAVZBU2l09HzdFWDdf4MQaGpQW61
-         eMxxq6apuf477oCEnv3cdguRW+ALMEAgrvb+FU0a7rBIjnCgfJrs1T6FBqXnbLiokBJw
-         ZJdtSBabJnqov2/Rl4YfUQUSUE5RMWoQrbcos=
+        bh=JUNbfJpjAu7i+xZspyNcmc+J4Feh37LUNZgZbrZcxgs=;
+        b=AaOlBjTc9Rlimt8xTZBspgM5Cf3feHsqtMKBJyeuzMfvjeyVwjGpMpLMW2bsKpuy2e
+         zs3C1bZyMeYx6j9ejRNQcOCrQVYjAI0+4WCMvMm3SEIxlYoFRkfPMcGu1gl40hz8PP5K
+         VOLY8jl0J66EYO+fumQSAe6/ri9K//hdt/CaA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=jW3v3WbPa4C7A3AsTBcY1GesSSDwA7HMTUjcRX/0Zw5wW5iflWvIUJLB2z3ABCJysk
-         yPsVkA0WKbXXrUjUd1jCKrDF0IbBMORx7u1PrvJKa8P0iPDrR5uajMZtq544MOchKciv
-         YTu/fk5hlGKh7yasRAn5aK+3fgabU4thohS4k=
-Received: by 10.227.156.15 with SMTP id u15mr7920863wbw.143.1276641205603;
-        Tue, 15 Jun 2010 15:33:25 -0700 (PDT)
+        b=N+7d/kMHK6SSE/1lh3JOnEP8CEn0fKLTuFw0he+KyS+jbDeVR880R3V5DFGQ72ts90
+         JeAWBIU/unFykfiBwdZvpMbc85HN/f1gMXQ2vWpa1f6g+dxCQQxLOZdXfsaCbNddDgqu
+         HSJuoS7MSw2/kJxAHKGVTzOAMqCAr0GwwuAXE=
+Received: by 10.227.127.68 with SMTP id f4mr7870898wbs.44.1276641259511;
+        Tue, 15 Jun 2010 15:34:19 -0700 (PDT)
 Received: from localhost.localdomain ([188.105.94.3])
-        by mx.google.com with ESMTPS id u36sm49368610wbv.6.2010.06.15.15.33.23
+        by mx.google.com with ESMTPS id u36sm49368610wbv.6.2010.06.15.15.34.17
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jun 2010 15:33:24 -0700 (PDT)
+        Tue, 15 Jun 2010 15:34:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.251.g92a7
 In-Reply-To: <AANLkTimxE0mqmitRzlXjSAO6v7IOEg4guUnRlzJUyIF1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149235>
 
-TAP, the Test Anything Protocol, is a simple text-based interface
-between testing modules in a test harness. test-lib.sh's output was
-already very close to being valid TAP. This change brings it all the
-way there. Before:
-
-   $ ./t0005-signals.sh
-   *   ok 1: sigchain works
-   * passed all 1 test(s)
-
-And after:
-
-   $ ./t0005-signals.sh
-   ok 1 - sigchain works
-   # passed all 1 test(s)
-   1..1
-
-The advantage of using TAP is that any program that reads the format
-(a "test harness") can run the tests. The most popular of these is the
-prove(1) utility that comes with Perl. It can run tests in parallel,
-display colored output, format the output to console, file, HTML etc.,
-and much more. An example:
-
-   $ prove ./t0005-signals.sh
-   ./t0005-signals.sh .. ok
-   All tests successful.
-   Files=3D1, Tests=3D1,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.01=
- cusr  0.02 csys =3D  0.06 CPU)
-   Result: PASS
-
-prove(1) gives you human readable output without being too
-verbose. Running the test suite in parallel with `make test -j15`
-produces a flood of text. Running them with `prove -j 15 ./t[0-9]*.sh`
-makes it easy to follow what's going on.
-
-All this patch does is re-arrange the output a bit so that it conforms
-with the TAP spec, everything that the test suite did before continues
-to work. That includes aggregating results in t/test-results/, the
---verbose, --debug and other options for tests, and the test color
-output.
-
-TAP harnesses ignore everything that they don't know about, so running
-the tests with --verbose works:
-
-    $ prove ./t0005-signals.sh :: --verbose --debug
-    ./t0005-signals.sh .. Terminated
-    ./t0005-signals.sh .. ok
-    All tests successful.
-    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.0=
-1 cusr  0.01 csys =3D  0.05 CPU)
-    Result: PASS
-
-Just supply the -v option to prove itself to get all the verbose
-output that it suppresses:
-
-    $ prove -v ./t0005-signals.sh :: --verbose --debug
-    ./t0005-signals.sh ..
-    Initialized empty Git repository in /home/avar/g/git/t/trash direct=
-ory.t0005-signals/.git/
-    expecting success:
-            test-sigchain >actual
-            case "$?" in
-            143) true ;; # POSIX w/ SIGTERM=3D15
-              3) true ;; # Windows
-              *) false ;;
-            esac &&
-            test_cmp expect actual
-    Terminated
-    ok 1 - sigchain works
-    # passed all 1 test(s)
-    1..1
-    ok
-    All tests successful.
-    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.0=
-1 cusr  0.01 csys =3D  0.04 CPU)
-    Result: PASS
+Lines that begin with "ok" confuse the TAP harness because it can't
+distinguish them from a test counter. Work around the issue by saying
+"pass" instead, which isn't a reserved TAP word.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- t/README      |   55 +++++++++++++++++++++++++++++++++++++++----------=
-------
- t/test-lib.sh |   30 ++++++++++++++++++------------
- 2 files changed, 57 insertions(+), 28 deletions(-)
+ t/t1020-subdirectory.sh          |   12 ++++++------
+ t/t2102-update-index-symlinks.sh |    2 +-
+ t/t3700-add.sh                   |   12 ++++++------
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/t/README b/t/README
-index 0e4e8d8..aa4ed28 100644
---- a/t/README
-+++ b/t/README
-@@ -18,25 +18,48 @@ The easiest way to run tests is to say "make".  Thi=
-s runs all
- the tests.
-=20
-     *** t0000-basic.sh ***
--    *   ok 1: .git/objects should be empty after git-init in an empty =
-repo.
--    *   ok 2: .git/objects should have 256 subdirectories.
--    *   ok 3: git-update-index without --add should fail adding.
-+    ok 1 - .git/objects should be empty after git init in an empty rep=
-o.
-+    ok 2 - .git/objects should have 3 subdirectories.
-+    ok 3 - success is reported like this
-     ...
--    *   ok 23: no diff after checkout and git-update-index --refresh.
--    * passed all 23 test(s)
--    *** t0100-environment-names.sh ***
--    *   ok 1: using old names should issue warnings.
--    *   ok 2: using old names but having new names should not issue wa=
-rnings.
--    ...
--
--Or you can run each test individually from command line, like
--this:
--
--    $ sh ./t3001-ls-files-killed.sh
--    *   ok 1: git-update-index --add to add various paths.
--    *   ok 2: git-ls-files -k to show killed files.
--    *   ok 3: validate git-ls-files -k output.
--    * passed all 3 test(s)
-+    ok 43 - very long name in the index handled sanely
-+    # fixed 1 known breakage(s)
-+    # still have 1 known breakage(s)
-+    # passed all remaining 42 test(s)
-+    1..43
-+    *** t0001-init.sh ***
-+    ok 1 - plain
-+    ok 2 - plain with GIT_WORK_TREE
-+    ok 3 - plain bare
-+
-+Since the tests all output TAP (see http://testanything.org) they can
-+be run with any TAP harness. Here's an example of paralell testing
-+powered by a recent version of prove(1):
-+
-+    $ prove --timer --jobs 15 ./t[0-9]*.sh
-+    [19:17:33] ./t0005-signals.sh ................................... =
-ok       36 ms
-+    [19:17:33] ./t0022-crlf-rename.sh ............................... =
-ok       69 ms
-+    [19:17:33] ./t0024-crlf-archive.sh .............................. =
-ok      154 ms
-+    [19:17:33] ./t0004-unwritable.sh ................................ =
-ok      289 ms
-+    [19:17:33] ./t0002-gitfile.sh ................................... =
-ok      480 ms
-+    =3D=3D=3D(     102;0  25/?  6/?  5/?  16/?  1/?  4/?  2/?  1/?  3/=
-?  1... )=3D=3D=3D
-+
-+prove and other harnesses come with a lot of useful options. The
-+--state option in particular is very useful:
-+
-+    # Repeat until no more failures
-+    $ prove -j 15 --state=3Dfailed,save ./t[0-9]*.sh
-+
-+You can also run each test individually from command line, like this:
-+
-+    $ sh ./t3010-ls-files-killed-modified.sh
-+    ok 1 - git update-index --add to add various paths.
-+    ok 2 - git ls-files -k to show killed files.
-+    ok 3 - validate git ls-files -k output.
-+    ok 4 - git ls-files -m to show modified files.
-+    ok 5 - validate git ls-files -m output.
-+    # passed all 5 test(s)
-+    1..5
-=20
- You can pass --verbose (or -v), --debug (or -d), and --immediate
- (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 367f053..e97645c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -160,7 +160,7 @@ if test -n "$color"; then
- 			*) test -n "$quiet" && return;;
- 		esac
- 		shift
--		printf "* %s" "$*"
-+		printf "%s" "$*"
- 		tput sgr0
- 		echo
- 		)
-@@ -169,7 +169,7 @@ else
- 	say_color() {
- 		test -z "$1" && test -n "$quiet" && return
- 		shift
--		echo "* $*"
-+		echo "$*"
- 	}
- fi
-=20
-@@ -339,25 +339,25 @@ test_have_prereq () {
-=20
- test_ok_ () {
- 	test_success=3D$(($test_success + 1))
--	say_color "" "  ok $test_count: $@"
-+	say_color "" "ok $test_count - $@"
- }
-=20
- test_failure_ () {
- 	test_failure=3D$(($test_failure + 1))
--	say_color error "FAIL $test_count: $1"
-+	say_color error "not ok - $test_count $1"
- 	shift
--	echo "$@" | sed -e 's/^/	/'
-+	echo "$@" | sed -e 's/^/#	/'
- 	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
- }
-=20
- test_known_broken_ok_ () {
- 	test_fixed=3D$(($test_fixed+1))
--	say_color "" "  FIXED $test_count: $@"
-+	say_color "" "ok $test_count - $@ # TODO known breakage"
- }
-=20
- test_known_broken_failure_ () {
- 	test_broken=3D$(($test_broken+1))
--	say_color skip "  still broken $test_count: $@"
-+	say_color skip "not ok $test_count - $@ # TODO known breakage"
- }
-=20
- test_debug () {
-@@ -390,7 +390,7 @@ test_skip () {
- 	case "$to_skip" in
- 	t)
- 		say_color skip >&3 "skipping test: $@"
--		say_color skip "skip $test_count: $1"
-+		say_color skip "ok $test_count: # skip $1"
- 		: true
- 		;;
- 	*)
-@@ -620,18 +620,22 @@ test_done () {
-=20
- 	if test "$test_fixed" !=3D 0
- 	then
--		say_color pass "fixed $test_fixed known breakage(s)"
-+		say_color pass "# fixed $test_fixed known breakage(s)"
- 	fi
- 	if test "$test_broken" !=3D 0
- 	then
--		say_color error "still have $test_broken known breakage(s)"
-+		say_color error "# still have $test_broken known breakage(s)"
- 		msg=3D"remaining $(($test_count-$test_broken)) test(s)"
- 	else
- 		msg=3D"$test_count test(s)"
- 	fi
- 	case "$test_failure" in
- 	0)
--		say_color pass "passed all $msg"
-+		# Maybe print SKIP message
-+		[ -z "$skip_all" ] || skip_all=3D" # SKIP $skip_all"
-+
-+		say_color pass "# passed all $msg"
-+		say "1..$test_count$skip_all"
-=20
- 		test -d "$remove_trash" &&
- 		cd "$(dirname "$remove_trash")" &&
-@@ -640,7 +644,9 @@ test_done () {
- 		exit 0 ;;
-=20
- 	*)
--		say_color error "failed $test_failure among $msg"
-+		say_color error "# failed $test_failure among $msg"
-+		say "1..$test_count"
-+
- 		exit 1 ;;
-=20
+diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+index 210e594..5687499 100755
+--- a/t/t1020-subdirectory.sh
++++ b/t/t1020-subdirectory.sh
+@@ -24,18 +24,18 @@ test_expect_success 'update-index and ls-files' '
+ 	cd "$HERE" &&
+ 	git update-index --add one &&
+ 	case "`git ls-files`" in
+-	one) echo ok one ;;
++	one) echo pass one ;;
+ 	*) echo bad one; exit 1 ;;
+ 	esac &&
+ 	cd dir &&
+ 	git update-index --add two &&
+ 	case "`git ls-files`" in
+-	two) echo ok two ;;
++	two) echo pass two ;;
+ 	*) echo bad two; exit 1 ;;
+ 	esac &&
+ 	cd .. &&
+ 	case "`git ls-files`" in
+-	dir/two"$LF"one) echo ok both ;;
++	dir/two"$LF"one) echo pass both ;;
+ 	*) echo bad; exit 1 ;;
  	esac
+ '
+@@ -58,17 +58,17 @@ test_expect_success 'diff-files' '
+ 	echo a >>one &&
+ 	echo d >>dir/two &&
+ 	case "`git diff-files --name-only`" in
+-	dir/two"$LF"one) echo ok top ;;
++	dir/two"$LF"one) echo pass top ;;
+ 	*) echo bad top; exit 1 ;;
+ 	esac &&
+ 	# diff should not omit leading paths
+ 	cd dir &&
+ 	case "`git diff-files --name-only`" in
+-	dir/two"$LF"one) echo ok subdir ;;
++	dir/two"$LF"one) echo pass subdir ;;
+ 	*) echo bad subdir; exit 1 ;;
+ 	esac &&
+ 	case "`git diff-files --name-only .`" in
+-	dir/two) echo ok subdir limited ;;
++	dir/two) echo pass subdir limited ;;
+ 	*) echo bad subdir limited; exit 1 ;;
+ 	esac
+ '
+diff --git a/t/t2102-update-index-symlinks.sh b/t/t2102-update-index-sy=
+mlinks.sh
+index 1ed44ee..4d0d0a3 100755
+--- a/t/t2102-update-index-symlinks.sh
++++ b/t/t2102-update-index-symlinks.sh
+@@ -24,7 +24,7 @@ git update-index symlink'
+ test_expect_success \
+ 'the index entry must still be a symbolic link' '
+ case "`git ls-files --stage --cached symlink`" in
+-120000" "*symlink) echo ok;;
++120000" "*symlink) echo pass;;
+ *) echo fail; git ls-files --stage --cached symlink; (exit 1);;
+ esac'
+=20
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 525c9a8..6f031af 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -26,7 +26,7 @@ test_expect_success \
+ 	 chmod 755 xfoo1 &&
+ 	 git add xfoo1 &&
+ 	 case "`git ls-files --stage xfoo1`" in
+-	 100644" "*xfoo1) echo ok;;
++	 100644" "*xfoo1) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo1; (exit 1);;
+ 	 esac'
+=20
+@@ -35,7 +35,7 @@ test_expect_success SYMLINKS 'git add: filemode=3D0 s=
+hould not get confused by sym
+ 	ln -s foo xfoo1 &&
+ 	git add xfoo1 &&
+ 	case "`git ls-files --stage xfoo1`" in
+-	120000" "*xfoo1) echo ok;;
++	120000" "*xfoo1) echo pass;;
+ 	*) echo fail; git ls-files --stage xfoo1; (exit 1);;
+ 	esac
+ '
+@@ -47,7 +47,7 @@ test_expect_success \
+ 	 chmod 755 xfoo2 &&
+ 	 git update-index --add xfoo2 &&
+ 	 case "`git ls-files --stage xfoo2`" in
+-	 100644" "*xfoo2) echo ok;;
++	 100644" "*xfoo2) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo2; (exit 1);;
+ 	 esac'
+=20
+@@ -56,7 +56,7 @@ test_expect_success SYMLINKS 'git add: filemode=3D0 s=
+hould not get confused by sym
+ 	ln -s foo xfoo2 &&
+ 	git update-index --add xfoo2 &&
+ 	case "`git ls-files --stage xfoo2`" in
+-	120000" "*xfoo2) echo ok;;
++	120000" "*xfoo2) echo pass;;
+ 	*) echo fail; git ls-files --stage xfoo2; (exit 1);;
+ 	esac
+ '
+@@ -67,7 +67,7 @@ test_expect_success SYMLINKS \
+ 	 ln -s xfoo2 xfoo3 &&
+ 	 git update-index --add xfoo3 &&
+ 	 case "`git ls-files --stage xfoo3`" in
+-	 120000" "*xfoo3) echo ok;;
++	 120000" "*xfoo3) echo pass;;
+ 	 *) echo fail; git ls-files --stage xfoo3; (exit 1);;
+ 	 esac'
+=20
+@@ -172,7 +172,7 @@ test_expect_success 'git add --refresh' '
+ 	test -z "`git diff-index HEAD -- foo`" &&
+ 	git read-tree HEAD &&
+ 	case "`git diff-index HEAD -- foo`" in
+-	:100644" "*"M	foo") echo ok;;
++	:100644" "*"M	foo") echo pass;;
+ 	*) echo fail; (exit 1);;
+ 	esac &&
+ 	git add --refresh -- foo &&
 --=20
 1.7.1.251.g92a7
