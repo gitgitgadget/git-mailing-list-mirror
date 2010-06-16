@@ -1,129 +1,69 @@
-From: Gavin Kistner <gkistner@nvidia.com>
-Subject: unpacker error on push
-Date: Wed, 16 Jun 2010 08:46:25 -0700
-Message-ID: <0B32FF97-4B20-4B9A-BA45-08EF9485F3A1@nvidia.com>
+From: Aneurin Price <aneurin.price@gmail.com>
+Subject: Re: How to prevent changes to repository by root
+Date: Wed, 16 Jun 2010 17:09:52 +0100
+Message-ID: <AANLkTikPNH1ueb5m8JpiB2hU4afd3hv-4qYqSO3QPujl@mail.gmail.com>
+References: <AANLkTikLixhYITdJKMFb3Hw2hZvaas1DtiV3x9ThCTZz@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=Windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 16 17:46:33 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 16 18:10:07 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOuoz-0006Ez-Aj
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 17:46:33 +0200
+	id 1OOvBm-00019M-7y
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 18:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754203Ab0FPPq2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jun 2010 11:46:28 -0400
-Received: from hqemgate03.nvidia.com ([216.228.121.140]:13918 "EHLO
-	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752438Ab0FPPq1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jun 2010 11:46:27 -0400
-Received: from hqnvupgp02.nvidia.com (Not Verified[172.17.98.15]) by hqemgate03.nvidia.com
-	id <B4c18f26a0001>; Wed, 16 Jun 2010 08:48:58 -0700
-Received: from hqemhub01.nvidia.com ([172.17.108.22])
-  by hqnvupgp02.nvidia.com (PGP Universal service);
-  Wed, 16 Jun 2010 08:46:27 -0700
-X-PGP-Universal: processed;
-	by hqnvupgp02.nvidia.com on Wed, 16 Jun 2010 08:46:27 -0700
-Received: from HQMAIL03.nvidia.com ([172.17.200.12]) by hqemhub01.nvidia.com
- ([172.17.98.26]) with mapi; Wed, 16 Jun 2010 08:46:27 -0700
-Thread-Topic: unpacker error on push
-Thread-Index: AcsNaxRfytuFjeiCQ8Ot6R+19M/DGA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1759217Ab0FPQJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jun 2010 12:09:55 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:48992 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754987Ab0FPQJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 12:09:54 -0400
+Received: by wwb18 with SMTP id 18so5821313wwb.19
+        for <git@vger.kernel.org>; Wed, 16 Jun 2010 09:09:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=gYdFc1MY45dDe0ulxbrV5h3nFSNGXh5RHeTwvbxLO2k=;
+        b=pWX5xCdCKGONl6i64TEG3R8VYElI7GqVqYSAj65uVXvnGzWsVqQl9Gfks+kZG+HYPd
+         m2ZUoh9BNtc1O1/ZLyrUXZRDhe4cla1TvjGTrJtj45zkCUes/bCMH/Lx+clyV+ZRWKL1
+         //91hEIcSLOuJYJevob60m3+J6UDXSFRLi5/Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=FwmkhhxGzn2njD+BgvpmN5aLI4t/sdqNVMBVzo6gWO/U9e1bmkEp8Kh9Doc7CvF6js
+         jQJmT0WpZYXJMeLrxfWj1hk8bXNPK9jdjvBsZ9RgZkZR9sPO2aWWgDARiRsJqC+Xp7FY
+         ICdcRdPE81d8iX90Xsd0kNjZKpOR8zvFYjcsg=
+Received: by 10.216.153.140 with SMTP id f12mr896978wek.72.1276704592934; Wed, 
+	16 Jun 2010 09:09:52 -0700 (PDT)
+Received: by 10.216.45.135 with HTTP; Wed, 16 Jun 2010 09:09:52 -0700 (PDT)
+In-Reply-To: <AANLkTikLixhYITdJKMFb3Hw2hZvaas1DtiV3x9ThCTZz@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149264>
 
-(my apologies if you receive this twice; I sent it once before I was au=
-thenticated on the mailing list)
+On Mon, Jun 14, 2010 at 04:12, Nazri Ramliy <ayiehere@gmail.com> wrote:
+> I have a git repository owned by a non-privileged user account on a
+> machine that is logged into (via ssh) by multiple users. These multiple users,
+> all of them (not at at the same time) do "git pull" on this repository.
+>
+> Everything is fine as long as they don't do the "git pull" as root.
+>
 
-Local: OS X 10.6.3, git 1.7.1
-Remote: Ubuntu Lucid, git 1.7.0.4
+Is there ever any requirement for them to run git as root?
 
-How can I fix whatever is broken so that I can push again, and=97more i=
-mportantly=97get the important changes I made last night over to the re=
-mote, by hook or by crook?
+How are they becoming root? If they are using sudo you could forbid
+running git as root. If they are using su or logging in directly maybe
+you can get away with some trivial thing like putting 'alias
+git=/bin/false' in /root/.bashrc - or some wrapper which does
+something helpful rather than silently fail :-).
 
--_-_-_-_-_-_-_-_-_-_
-On the local machine
--_-_-_-_-_-_-_-_-_-_
-
-Slim2:bugbot3 phrogz$ git push
-Counting objects: 70, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (31/31), done.
-Writing objects: 100% (40/40), 26.91 KiB, done.
-Total 40 (delta 11), reused 37 (delta 8)
-error: unpack failed: unpack-objects abnormal exit
-To git://10.20.16.110/bugbot3.git
-! [remote rejected] planning -> planning (n/a (unpacker error))
-error: failed to push some refs to 'git://10.20.16.110/bugbot3.git'
-
-
-Slim2:bugbot3 phrogz$ cat .git/config=20
-[core]
-	repositoryformatversion =3D 0
-	filemode =3D true
-	bare =3D false
-	logallrefupdates =3D true
-	ignorecase =3D true
-[remote "origin"]
-	url =3D git://10.20.16.110/bugbot3.git
-	fetch =3D +refs/heads/*:refs/remotes/origin/*
-[branch "master"]
-	remote =3D origin
-	merge =3D refs/heads/master
-
-
-Slim2:bugbot3 phrogz$ git status
-# On branch planning
-nothing to commit (working directory clean)
-
-
-Slim2:bugbot3 phrogz$ git pull origin planning
-=46rom git://10.20.16.110/bugbot3
-* branch            planning   -> FETCH_HEAD
-Already up-to-date.
-
-
-Slim2:bugbot3 phrogz$ git fsck --full
-(no output)
-
-
--_-_-_-_-_-_-_-_-_-_
-On the remote
--_-_-_-_-_-_-_-_-_-_
-phrogz@gitbox:/pub/scm/bugbot3$ git config -l
-user.name=3DGavin Kistner
-user.email=3D!@phrogz.net
-core.repositoryformatversion=3D0
-core.filemode=3Dfalse
-core.bare=3Dfalse
-core.logallrefupdates=3Dtrue
-core.ignorecase=3Dtrue
-
-
-phrogz@gitbox:/pub/scm/bugbot3$ git fsck --full
-(no output)
-
------------------------------------------------------------------------=
-------------
-This email message is for the sole use of the intended recipient(s) and=
- may contain
-confidential information.  Any unauthorized review, use, disclosure or =
-distribution
-is prohibited.  If you are not the intended recipient, please contact t=
-he sender by
-reply email and destroy all copies of the original message.
------------------------------------------------------------------------=
-------------
+Nye
