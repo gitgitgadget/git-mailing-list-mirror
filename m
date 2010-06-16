@@ -1,80 +1,90 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH/RFC] Fix for default pager
-Date: Wed, 16 Jun 2010 09:34:52 +0800
-Message-ID: <AANLkTinb7eRrRRYxxRd3BbNfBwRYAVFTNJ7z8oklNvIs@mail.gmail.com>
-References: <4C0E5103.7030501@viscovery.net>
-	<AANLkTilWg8hw5j20o-xGsVO-q_OeSmtKEKAO6O416qvH@mail.gmail.com>
-	<4C0E6810.3070301@viscovery.net>
-	<AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com>
-	<4C0E932B.3010702@viscovery.net>
-	<AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
-	<4C0EB741.9020905@op5.se>
-	<AANLkTinAO5empFix9W_rbtU3Vv4O73OsJBtA1stb66DS@mail.gmail.com>
-	<20100610082916.GA5559@coredump.intra.peff.net>
-	<AANLkTinLt3p0q-q5oDFk5CWzdhqQ2lwkWuvpdPzKZvYe@mail.gmail.com>
-	<20100610085952.GA8269@coredump.intra.peff.net>
-	<gJV0lM_e77LzoiHR7moWdAApSZ7yI38lZ-w8kZwc97unWqtBc94nfg@cipher.nrlssc.navy.mil>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/2] format-patch: Add a signature option (--signature)
+Date: Tue, 15 Jun 2010 21:31:42 -0700
+Message-ID: <4C1853AE.4010104@gmail.com>
+References: <1276578039-25023-1-git-send-email-bebarino@gmail.com> <7viq5k6xbj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Tor Arntsen <tor@spacetec.no>,
-	Brandon Casey <drafnel@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Dario Rodriguez <soft.d4rio@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	git <git@vger.kernel.org>, gary@thewrittenword.com
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jun 16 03:41:38 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 16 06:34:34 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOhdI-0002zi-FH
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 03:41:36 +0200
+	id 1OOkKf-0007gq-Nu
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 06:34:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754722Ab0FPBlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jun 2010 21:41:31 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:36223 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754707Ab0FPBla (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jun 2010 21:41:30 -0400
-Received: by gwj15 with SMTP id 15so3726658gwj.19
-        for <git@vger.kernel.org>; Tue, 15 Jun 2010 18:41:29 -0700 (PDT)
+	id S1751188Ab0FPEbq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jun 2010 00:31:46 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37166 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750812Ab0FPEbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 00:31:46 -0400
+Received: by vws13 with SMTP id 13so2168886vws.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 21:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=M2RgEriafKQrANukeHXwSopfE3CyeMOtfgSLVtACMG4=;
-        b=I39M5feUxG7hfcbBoW2lYXj0PPPmcipp+ywCEgY/KyEYKfqrVaW/Ts5U0x3mQjtb9e
-         TI8DiLm3WdE0wVYWgEdUKIORB3GdCphQL9PdaR+bRn60sQRDLXuJVlWm3TatjjuWTXwy
-         wfyg50KRp7w62AQb2s33MPgR5XjOBgNSRCtBo=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=7G4dIGBhR7O8yCB+/op3TTyMPmVafN1JO2ZR6ek9k10=;
+        b=qWvGt6SeVFvcmpjHoZ+o7VwoDFsc49ksS7sScVfWidRyUPW3b91HvmSk8d41K9Trxw
+         3Tmhf+TqEm0S5NRxd1i0ndKHKcALqPmgprOIqiwBiwdyj99oCR2U/Ady/JJ1y/jH6PnW
+         jEjpXqUbUbl6CApIUc5Ysbbe9sklxEajrdnYQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=HlsF2jm4BHlyCpzYkflNtsnexfxLUINwkpTYL3vdRXekNcf6xZI0PD6AyZrLy3Kjxe
-         EodTJa6UqUOwVnqq1monaU1Ha8ERzYKguLY7kQDEXL997buEpnR809UW3vNZuCIabI6L
-         vflGw6TJhHeXVGRAPJHzwSuw+BV42Ol56SfIA=
-Received: by 10.91.63.40 with SMTP id q40mr6304201agk.92.1276652092818; Tue, 
-	15 Jun 2010 18:34:52 -0700 (PDT)
-Received: by 10.90.29.10 with HTTP; Tue, 15 Jun 2010 18:34:52 -0700 (PDT)
-In-Reply-To: <gJV0lM_e77LzoiHR7moWdAApSZ7yI38lZ-w8kZwc97unWqtBc94nfg@cipher.nrlssc.navy.mil>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=uKOqUCKMRMSlAo3sUAjA4WWISXolXohskEppozaULlEFvpyPcFSiyG5tF6sIBJO4z/
+         009OucRaq0P4dyYE02AeD2QcMp3HnQRnNP9JT3W53w8RPPpB3LzPnDdz6CK0jAgj1tpS
+         5L3lknYlz6Zwergu7i7wgaZdm6n9IHh0oS+No=
+Received: by 10.220.125.7 with SMTP id w7mr4413379vcr.201.1276662705123;
+        Tue, 15 Jun 2010 21:31:45 -0700 (PDT)
+Received: from [192.168.1.5] ([24.152.169.138])
+        by mx.google.com with ESMTPS id i40sm6893648vcr.8.2010.06.15.21.31.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 15 Jun 2010 21:31:43 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <7viq5k6xbj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149245>
 
-On Wed, Jun 16, 2010 at 12:11 AM, Brandon Casey
-<brandon.casey.ctr@nrlssc.navy.mil> wrote:
-> But, I also think it would be nice if git fell back to the 'cat'
-> behavior when it fails to spawn the pager, because the following error
-> is not very informative:
+On 06/15/2010 10:05 AM, Junio C Hamano wrote:
+> Stephen Boyd <bebarino@gmail.com> write
+>> @@ -180,6 +180,12 @@ will want to ensure that threading is disabled for `git send-email`.
+>>  	containing the shortlog and the overall diffstat.  You can
+>>  	fill in a description in the file before sending it out.
+>>  
+>> +--signature=<signature>::
+>> +	Add a signature to each patch and, if --cover-letter is specified,
+>> +	the cover letter. Per RFC 3676 the signature is separated from the
+>> +	body by '-- '.
+>
+> Wouldn't "Add a signature to each message produced" be easier to understand?
+> Also perhaps s/body by '-- '/& a line with '-- ' on it/?
+>
+> Don't we want either an extra header to this entry ("--no-signature::")
+> and advertise it as a way to disable signature generation?
 
-Falling back to 'cat' is nice except when you are on a remote machine
-with very bad latency.
+Both sound good.
 
-nazri
+>
+>  (3) there is no way to say "no signature, ever" in the configuration.
+>
+> Perhaps we would want to do this instead?
+>
+>         static void print_signature(void)
+>         {
+>                 if (signature && *signature)
+>                         printf("-- \n%s\n\n", signature);
+>         }
+
+Sounds good too. It's not entirely obvious that format.signature=""
+means no signature ever, but that's where documentation steps in I guess.
