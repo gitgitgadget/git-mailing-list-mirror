@@ -1,39 +1,38 @@
 From: Gavin Kistner <gkistner@nvidia.com>
 Subject: unpacker error on push
-Date: Wed, 16 Jun 2010 08:36:51 -0700
-Message-ID: <C52ABCE5-15AF-4988-9496-DFA6D6331A59@nvidia.com>
+Date: Wed, 16 Jun 2010 08:46:25 -0700
+Message-ID: <0B32FF97-4B20-4B9A-BA45-08EF9485F3A1@nvidia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=Windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 16 17:43:17 2010
+X-From: git-owner@vger.kernel.org Wed Jun 16 17:46:33 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOuli-0004gF-8Y
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 17:43:10 +0200
+	id 1OOuoz-0006Ez-Aj
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 17:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932240Ab0FPPnG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jun 2010 11:43:06 -0400
-Received: from hqemgate03.nvidia.com ([216.228.121.140]:13468 "EHLO
+	id S1754203Ab0FPPq2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jun 2010 11:46:28 -0400
+Received: from hqemgate03.nvidia.com ([216.228.121.140]:13918 "EHLO
 	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932136Ab0FPPnF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jun 2010 11:43:05 -0400
-X-Greylist: delayed 303 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jun 2010 11:43:05 EDT
-Received: from hqnvupgp03.nvidia.com (Not Verified[172.17.102.18]) by hqemgate03.nvidia.com
-	id <B4c18f02c0001>; Wed, 16 Jun 2010 08:39:24 -0700
-Received: from hqemhub02.nvidia.com ([172.17.108.22])
-  by hqnvupgp03.nvidia.com (PGP Universal service);
-  Wed, 16 Jun 2010 08:36:53 -0700
+	with ESMTP id S1752438Ab0FPPq1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 16 Jun 2010 11:46:27 -0400
+Received: from hqnvupgp02.nvidia.com (Not Verified[172.17.98.15]) by hqemgate03.nvidia.com
+	id <B4c18f26a0001>; Wed, 16 Jun 2010 08:48:58 -0700
+Received: from hqemhub01.nvidia.com ([172.17.108.22])
+  by hqnvupgp02.nvidia.com (PGP Universal service);
+  Wed, 16 Jun 2010 08:46:27 -0700
 X-PGP-Universal: processed;
-	by hqnvupgp03.nvidia.com on Wed, 16 Jun 2010 08:36:53 -0700
-Received: from HQMAIL03.nvidia.com ([172.17.200.12]) by hqemhub02.nvidia.com
- ([172.17.98.27]) with mapi; Wed, 16 Jun 2010 08:36:53 -0700
+	by hqnvupgp02.nvidia.com on Wed, 16 Jun 2010 08:46:27 -0700
+Received: from HQMAIL03.nvidia.com ([172.17.200.12]) by hqemhub01.nvidia.com
+ ([172.17.98.26]) with mapi; Wed, 16 Jun 2010 08:46:27 -0700
 Thread-Topic: unpacker error on push
-Thread-Index: AcsNab5n0fshBypjRjaVUSaZLXLQ3w==
+Thread-Index: AcsNaxRfytuFjeiCQ8Ot6R+19M/DGA==
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -43,7 +42,10 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149263>
+
+(my apologies if you receive this twice; I sent it once before I was au=
+thenticated on the mailing list)
 
 Local: OS X 10.6.3, git 1.7.1
 Remote: Ubuntu Lucid, git 1.7.0.4
@@ -64,7 +66,7 @@ Writing objects: 100% (40/40), 26.91 KiB, done.
 Total 40 (delta 11), reused 37 (delta 8)
 error: unpack failed: unpack-objects abnormal exit
 To git://10.20.16.110/bugbot3.git
- ! [remote rejected] planning -> planning (n/a (unpacker error))
+! [remote rejected] planning -> planning (n/a (unpacker error))
 error: failed to push some refs to 'git://10.20.16.110/bugbot3.git'
 
 
@@ -90,7 +92,7 @@ nothing to commit (working directory clean)
 
 Slim2:bugbot3 phrogz$ git pull origin planning
 =46rom git://10.20.16.110/bugbot3
- * branch            planning   -> FETCH_HEAD
+* branch            planning   -> FETCH_HEAD
 Already up-to-date.
 
 
