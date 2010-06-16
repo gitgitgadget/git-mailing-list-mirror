@@ -1,82 +1,55 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] Fix for default pager
-Date: Wed, 16 Jun 2010 02:28:15 -0400
-Message-ID: <20100616062814.GA13481@sigill.intra.peff.net>
-References: <4C0E6810.3070301@viscovery.net>
- <AANLkTinZSuXJEXzpvEavYNLSyqUlx8qzWlrbtIH6q6fx@mail.gmail.com>
- <4C0E932B.3010702@viscovery.net>
- <AANLkTinB_SBilMOfgnHtDrQS-NBOLF4yY5NaP7ZvN9rK@mail.gmail.com>
- <4C0EB741.9020905@op5.se>
- <AANLkTinAO5empFix9W_rbtU3Vv4O73OsJBtA1stb66DS@mail.gmail.com>
- <20100610082916.GA5559@coredump.intra.peff.net>
- <AANLkTinLt3p0q-q5oDFk5CWzdhqQ2lwkWuvpdPzKZvYe@mail.gmail.com>
- <20100610085952.GA8269@coredump.intra.peff.net>
- <gJV0lM_e77LzoiHR7moWdAApSZ7yI38lZ-w8kZwc97unWqtBc94nfg@cipher.nrlssc.navy.mil>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] am: gather GIT_AUTHOR_* from original commit when
+ rebasing
+Date: Wed, 16 Jun 2010 08:30:53 +0200
+Message-ID: <4C186F9D.1060608@viscovery.net>
+References: <1276641564-2074-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Tor Arntsen <tor@spacetec.no>, Brandon Casey <drafnel@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Dario Rodriguez <soft.d4rio@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Ben Walton <bwalton@artsci.utoronto.ca>,
-	git <git@vger.kernel.org>, gary@thewrittenword.com
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jun 16 08:28:27 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junio@kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 16 08:31:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOm6q-0001Nq-0T
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 08:28:24 +0200
+	id 1OOm9S-0002J9-4u
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 08:31:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758621Ab0FPG2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jun 2010 02:28:21 -0400
-Received: from peff.net ([208.65.91.99]:54024 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755791Ab0FPG2S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jun 2010 02:28:18 -0400
-Received: (qmail 904 invoked by uid 107); 16 Jun 2010 06:29:04 -0000
-Received: from adsl-99-133-187-56.dsl.bltnin.sbcglobal.net (HELO sigill.intra.peff.net) (99.133.187.56)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 16 Jun 2010 02:29:04 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 16 Jun 2010 02:28:15 -0400
-Content-Disposition: inline
-In-Reply-To: <gJV0lM_e77LzoiHR7moWdAApSZ7yI38lZ-w8kZwc97unWqtBc94nfg@cipher.nrlssc.navy.mil>
+	id S1758750Ab0FPGa6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jun 2010 02:30:58 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:22686 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754739Ab0FPGa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 02:30:56 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OOm9F-0005eG-Tb; Wed, 16 Jun 2010 08:30:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A605B1660F;
+	Wed, 16 Jun 2010 08:30:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <1276641564-2074-1-git-send-email-jaysoffian@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149252>
 
-On Tue, Jun 15, 2010 at 11:11:35AM -0500, Brandon Casey wrote:
+Am 6/16/2010 0:39, schrieb Jay Soffian:
+> +	if test -f "$dotest/original-commit"
+> +	then
+> +		original_commit="$(cat "$dotest/original-commit")"
+> +		GIT_AUTHOR_NAME="$(GIT_PAGER='' git log --format=%an -1 "$original_commit")"
+> +		GIT_AUTHOR_EMAIL="$(GIT_PAGER='' git log --format=%ae -1 "$original_commit")"
+> +		GIT_AUTHOR_DATE="$(GIT_PAGER='' git log --format=%aD -1 "$original_commit")"
 
-> So, I think it's appropriate to set DEFAULT_PAGER on IRIX.  There can't
-> be many users anyway.  It's probably appropriate to set it on Solaris
-> too, if 'less' is not a commonly installed component on modern systems.
-> I wonder how surprised existing git users will be, for those on Solaris
-> platforms that have 'less' installed, when Solaris's crappy 'more'
-> becomes their pager.
+I think you can use the function get_author_ident_from_commit() for this.
+See git-sh-setup.
 
-I'm a little worried about that, too. On the other hand, wouldn't people
-who actually care about less have set PAGER already, to use it for
-things like "man"?
-
-> But, I also think it would be nice if git fell back to the 'cat'
-> behavior when it fails to spawn the pager, because the following error
-> is not very informative:
-> 
->    casey@<a_solaris_box> # git log
->    sh: less: not found
->    Broken Pipe
-
-The pager command is executed by the shell these days. Perhaps we should
-simply set DEFAULT_PAGER on these platforms to "less || more || cat",
-which seems to work from my simple tests. If that is too hack-ish (e.g.,
-we really care about "does less exist", not "did it fail"), we can do a
-more invasive patch (or even provide a "git-pager" shell script helper
-to do a more thorough job).
-
--Peff
+-- Hannes
