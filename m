@@ -1,62 +1,80 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: [PATCH 1/2] format-patch: Add a signature option (--signature)
-Date: Wed, 16 Jun 2010 09:13:09 -0400
-Message-ID: <DB1710D5-1699-45C2-8884-5D60C5240ED9@mit.edu>
-References: <1276578039-25023-1-git-send-email-bebarino@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1078)
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: Re: How to prevent changes to repository by root
+Date: Wed, 16 Jun 2010 17:09:51 +0200
+Message-ID: <20100616150951.GA13073@vidovic>
+References: <AANLkTikLixhYITdJKMFb3Hw2hZvaas1DtiV3x9ThCTZz@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 16 15:13:22 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 16 17:10:16 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOsQj-0004cx-8t
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 15:13:21 +0200
+	id 1OOuFm-0003LW-Qg
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 17:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604Ab0FPNNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jun 2010 09:13:15 -0400
-Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:56946 "EHLO
-	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752478Ab0FPNNO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jun 2010 09:13:14 -0400
-X-AuditID: 12074422-b7b3aae000000a51-75-4c18cde9c85c
-Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
-	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id B0.39.02641.9EDC81C4; Wed, 16 Jun 2010 09:13:13 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o5GDDC39022692;
-	Wed, 16 Jun 2010 09:13:12 -0400
-Received: from [10.0.42.106] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o5GDDAu8003736
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Wed, 16 Jun 2010 09:13:11 -0400 (EDT)
-In-Reply-To: <1276578039-25023-1-git-send-email-bebarino@gmail.com>
-X-Mailer: Apple Mail (2.1078)
-X-Brightmail-Tracker: AAAAAA==
+	id S1758909Ab0FPPKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jun 2010 11:10:03 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:34964 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758772Ab0FPPKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 11:10:00 -0400
+Received: by wyb40 with SMTP id 40so5785738wyb.19
+        for <git@vger.kernel.org>; Wed, 16 Jun 2010 08:09:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=cYDfQWZCwe4BoZHfsHM1hZYd7kXeC64eV0i5zDwR0h8=;
+        b=TBC9jQYtunyOSxpHmKCQ5q55g0cR/Tx65B0Bc2+zR45iMgtsmrij22PljCjAln41Tf
+         Q/+rC7fdz8vHkNI/uvnsQoHh1Zsc5SECJu2KKEkqflJ7GzSbXWXEVOVil+v8AixuTpjt
+         pBWc4aTIiNYADt6QTMGWjq4Ec1NloOG7HCuzs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZDz5pl8+2KaxnT526s6lPH3F4qdj/kqZd8j22/3HwDYAED1J4TGVq5NJf4E6zPRmQy
+         cdzkXgy6PmDhZgQC10LBKodeZS6V83L2etJvePD6g5OxVzrOtf4k3eWBQjQoNe3xfafb
+         MNbvGRzJcWokmmhrroCelgr9ME/oRwXN5zzV8=
+Received: by 10.227.143.206 with SMTP id w14mr8698834wbu.219.1276700998320;
+        Wed, 16 Jun 2010 08:09:58 -0700 (PDT)
+Received: from @ (88-121-122-184.rev.libertysurf.net [88.121.122.184])
+        by mx.google.com with ESMTPS id g66sm2324744wej.25.2010.06.16.08.09.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 16 Jun 2010 08:09:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikLixhYITdJKMFb3Hw2hZvaas1DtiV3x9ThCTZz@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149261>
 
+The 14/06/10, Nazri Ramliy wrote:
 
-On Jun 15, 2010, at 1:00 AM, Stephen Boyd wrote:
-
+> I have a git repository owned by a non-privileged user account on a
+> machine that is logged into (via ssh) by multiple users. These multiple users,
+> all of them (not at at the same time) do "git pull" on this repository.
 > 
-> This does modify the original behavior of format-patch a bit. First
-> off the version string is now placed in the cover letter by default.
+> Everything is fine as long as they don't do the "git pull" as root.
+> 
+> Murphy's law and all, someone is bound to do "git pull" as root on that repo
+> and that would sometime cause problem for the non-privileged user (who 'own')
+> the git repo to do subsequent git operations on that repository.
+> 
+> My question is:
+> 
+> How do I limit any action on this repository to this non-privileged user only?
 
-I don't know how important people will feel this to be, but I've occasionally
-found it interesting to see how many people are using various different
-versions of git in a particular development community, and having the
-version in the signature is a useful gauge on that.  Putting it in the cover
-letter isn't really a complete substitute for this because many patches
-and short patch series go out without cover letters...
+Don't give root access to your users. This is the only sane thing to do
+in the unix world. ,-p
 
--- Ted
+-- 
+Nicolas Sebrecht
