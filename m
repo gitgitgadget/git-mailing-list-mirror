@@ -1,138 +1,268 @@
-From: Zhang Le <r0bertz@gentoo.org>
-Subject: [PATCH v3 2/2] add --recode-patch option to git-am
-Date: Wed, 16 Jun 2010 13:09:43 +0800
-Message-ID: <1276664983-5693-2-git-send-email-r0bertz@gentoo.org>
-References: <1276664983-5693-1-git-send-email-r0bertz@gentoo.org>
-Cc: Zhang Le <r0bertz@gentoo.org>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: [PATCHv2 1/2] format-patch: Add a signature option (--signature)
+Date: Tue, 15 Jun 2010 22:59:25 -0700
+Message-ID: <1276667966-18422-1-git-send-email-bebarino@gmail.com>
+References: <1276578039-25023-1-git-send-email-bebarino@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 16 07:10:38 2010
+X-From: git-owner@vger.kernel.org Wed Jun 16 07:59:39 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOkta-00013X-Dq
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 07:10:38 +0200
+	id 1OOlf0-000813-Q9
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 07:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207Ab0FPFK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jun 2010 01:10:29 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:49195 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751971Ab0FPFK1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jun 2010 01:10:27 -0400
-Received: by pxi8 with SMTP id 8so3710900pxi.19
-        for <git@vger.kernel.org>; Tue, 15 Jun 2010 22:10:26 -0700 (PDT)
+	id S1755657Ab0FPF7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jun 2010 01:59:31 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:64853 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755500Ab0FPF7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 01:59:30 -0400
+Received: by vws13 with SMTP id 13so2242668vws.19
+        for <git@vger.kernel.org>; Tue, 15 Jun 2010 22:59:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=L5+vx72oRE7fjBy+Ajeeo6nBTzUtALtZfBko4jsOvL4=;
-        b=v6hZW/GsA/28bMrHDlsL6wIrWqxBMVcRyDfJHl5n1nHkpHj/oZn9smY3pybpPsy2nk
-         IgHn7xMLDcY7VNgEjVs3VgqLwlmwWbC9qwlo6DEoZVldR7ZJCnYWJkD8xJN+jkFbo7fH
-         uE9H91JMkGDYg/MAM4B/DZjY9iycNPpiyB8RA=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=h6mzgM9A+jvvIt3Maj7HcfqXWpn2kMbl2Pt1pVsJdkI=;
+        b=VvTC1rSoCNw5jkO2K/taYk2zmlIJm62PAr9nFD3l6kU7q70m5JOez+25KYiWoMsvMH
+         9UrZHB35qRsKgpVsFDQRgPCDRmEkbVxpJ2B4SPsL04ymLOMKuGrDC1QZk1cPmJVo5Yb+
+         ci9ev3qHZuOmuaBkc9AdozT+yzudNIabAPpOc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=huKEGz3DMCAxmCNW/EQKVHXSfpDd5zIbbB/G/byL8tJD2+iZsxrt/hQES3fMrVaL/u
-         JB8Aeh8wiEtGe2x5xUcpmP/3jW6ImESKkeTQG/ft2vBb++Jbpt0+FbpGAhY5/hhV0qCN
-         vzQxO7mn7/n/zqn7y/UBkzMtIIHasq3dOKhO0=
-Received: by 10.141.90.11 with SMTP id s11mr6621354rvl.152.1276665026871;
-        Tue, 15 Jun 2010 22:10:26 -0700 (PDT)
-Received: from localhost ([119.122.48.97])
-        by mx.google.com with ESMTPS id b2sm4782566rvn.7.2010.06.15.22.10.25
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=d9VOubHQT2UphY6Gvwm4JCUa8m82J8vshYGJufTtPg19vfvO/gf81m9U9FUiui8ZfT
+         dkxQMs0HvpaEeyG6mRuIWllTMesxswuDe+8llJuSOqH881KSXlHej3hDbpBMQ37l13w1
+         oItm8xNvbDxzIgvvt8+QASGtEU3q8yCOqo54E=
+Received: by 10.220.126.197 with SMTP id d5mr4629032vcs.29.1276667969518;
+        Tue, 15 Jun 2010 22:59:29 -0700 (PDT)
+Received: from localhost ([24.152.169.138])
+        by mx.google.com with ESMTPS id w29sm6982889vcr.2.2010.06.15.22.59.28
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 15 Jun 2010 22:10:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1276664983-5693-1-git-send-email-r0bertz@gentoo.org>
+        Tue, 15 Jun 2010 22:59:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.257.g678728
+In-Reply-To: <1276578039-25023-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149248>
 
-The reason has been explained in the "add --recode-patch to git-mailinfo" patch
+By default, git uses the version string as the signature for all
+patches output by format-patch. Many employers (mine included)
+require the use of a signature on all outgoing mails. In a
+format-patch | send-email workflow there isn't an easy way to modify
+the signature without breaking the pipe and manually replacing the
+version string with the signature required. Instead of doing all that
+work, add an option (--signature) and a config variable
+(format.signature) to replace the default git version signature when
+formatting patches.
 
-Signed-off-by: Zhang Le <r0bertz@gentoo.org>
+This does modify the original behavior of format-patch a bit. First
+off the version string is now placed in the cover letter by default.
+Secondly, once the configuration variable format.signature is added
+to the .config file there is no way to revert back to the default
+git version signature. Instead, specifying the --no-signature option
+will remove the signature from the patches entirely.
+
+Signed-off-by: Stephen Boyd <bebarino@gmail.com>
 ---
- Documentation/git-am.txt |    4 ++++
- git-am.sh                |   13 +++++++++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 9e62f87..38c1442 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -73,6 +73,10 @@ default.   You can use `--no-utf8` to override this.
- 	Pass `-n` flag to 'git mailinfo' (see
- 	linkgit:git-mailinfo[1]).
+ Changes since v1:
+  - Logic to cover empty string case
+  - Documentation updates
+  - Tests for empty string behavior
+
+ Documentation/config.txt                           |    6 ++
+ Documentation/git-format-patch.txt                 |    7 +++
+ builtin/log.c                                      |   18 ++++++-
+ ...tch_--stdout_--cover-letter_-n_initial..master^ |    3 +
+ t/t4014-format-patch.sh                            |   52 ++++++++++++++++++++
+ 5 files changed, 83 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 95cf73c..be6e85d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -880,6 +880,12 @@ format.subjectprefix::
+ 	The default for format-patch is to output files with the '[PATCH]'
+ 	subject prefix. Use this variable to change that prefix.
  
-+--recode-patch::
-+	Pass `--recode-patch` flag to 'git mailinfo' (see
-+	linkgit:git-mailinfo[1]).
++format.signature::
++	The default for format-patch is to output a signature containing
++	the git version number. Use this variable to change that default.
++	Set this variable to the empty string ("") to suppress
++	signature generation.
 +
- -3::
- --3way::
- 	When the patch does not apply cleanly, fall back on
-diff --git a/git-am.sh b/git-am.sh
-index 87ffae2..49cf788 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -14,6 +14,7 @@ b,binary*       (historical option -- no-op)
- q,quiet         be quiet
- s,signoff       add a Signed-off-by line to the commit message
- u,utf8          recode into utf8 (default)
-+recode-patch    pass --recode-patch flag to git-mailinfo
- k,keep          pass -k flag to git-mailinfo
- keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
- no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
-@@ -294,7 +295,7 @@ split_patches () {
- prec=4
- dotest="$GIT_DIR/rebase-apply"
- sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
--resolvemsg= resume= scissors= no_inbody_headers=
-+resolvemsg= resume= scissors= no_inbody_headers= recode_patch=
- git_apply_opt=
- committer_date_is_author_date=
- ignore_date=
-@@ -320,6 +321,8 @@ do
- 		utf8=t ;; # this is now default
- 	--no-utf8)
- 		utf8= ;;
-+	--recode-patch)
-+		recode_patch=t ;;
- 	-k|--keep)
- 		keep=t ;;
- 	-c|--scissors)
-@@ -463,6 +466,7 @@ else
- 	echo "$threeway" >"$dotest/threeway"
- 	echo "$sign" >"$dotest/sign"
- 	echo "$utf8" >"$dotest/utf8"
-+	echo "$recode_patch" >"$dotest/recode_patch"
- 	echo "$keep" >"$dotest/keep"
- 	echo "$keepcr" >"$dotest/keepcr"
- 	echo "$scissors" >"$dotest/scissors"
-@@ -504,6 +508,10 @@ then
- else
- 	utf8=-n
- fi
-+if test "$(cat "$dotest/recode_patch")" = t
-+then
-+	recodepatch=--recode-patch
-+fi
- if test "$(cat "$dotest/keep")" = t
- then
- 	keep=-k
-@@ -580,7 +588,8 @@ do
- 	# by the user, or the user can tell us to do so by --resolved flag.
- 	case "$resume" in
- 	'')
--		git mailinfo $keep $no_inbody_headers $scissors $utf8 "$dotest/msg" "$dotest/patch" \
-+		git mailinfo $keep $no_inbody_headers $scissors $utf8 \
-+		$recodepatch "$dotest/msg" "$dotest/patch" \
- 			<"$dotest/$msgnum" >"$dotest/info" ||
- 			stop_here $this
+ format.suffix::
+ 	The default for format-patch is to output files with the suffix
+ 	`.patch`. Use this variable to change that suffix (make sure to
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 835fb71..c8c81e8 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -13,6 +13,7 @@ SYNOPSIS
+ 		   [--no-thread | --thread[=<style>]]
+ 		   [(--attach|--inline)[=<boundary>] | --no-attach]
+ 		   [-s | --signoff]
++		   [--signature=<signature> | --no-signature]
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
+@@ -180,6 +181,12 @@ will want to ensure that threading is disabled for `git send-email`.
+ 	containing the shortlog and the overall diffstat.  You can
+ 	fill in a description in the file before sending it out.
  
++--[no]-signature=<signature>::
++	Add a signature to each message produced. Per RFC 3676 the signature
++	is separated from the body by a line with '-- ' on it. If the
++	signature option is omitted the signature defaults to the git version
++	number.
++
+ --suffix=.<sfx>::
+ 	Instead of using `.patch` as the suffix for generated
+ 	filenames, use specified suffix.  A common alternative is
+diff --git a/builtin/log.c b/builtin/log.c
+index 976e16f..f068583 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -549,8 +549,9 @@ static void add_header(const char *value)
+ 
+ #define THREAD_SHALLOW 1
+ #define THREAD_DEEP 2
+-static int thread = 0;
+-static int do_signoff = 0;
++static int thread;
++static int do_signoff;
++static const char *signature = git_version_string;
+ 
+ static int git_format_config(const char *var, const char *value, void *cb)
+ {
+@@ -609,6 +610,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 		do_signoff = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.signature"))
++		return git_config_string(&signature, var, value);
+ 
+ 	return git_log_config(var, value, cb);
+ }
+@@ -703,6 +706,12 @@ static void gen_message_id(struct rev_info *info, char *base)
+ 	info->message_id = strbuf_detach(&buf, NULL);
+ }
+ 
++static void print_signature(void)
++{
++	if (signature && *signature)
++		printf("-- \n%s\n\n", signature);
++}
++
+ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 			      int numbered, int numbered_files,
+ 			      struct commit *origin,
+@@ -796,6 +805,7 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	diff_flush(&opts);
+ 
+ 	printf("\n");
++	print_signature();
+ }
+ 
+ static const char *clean_message_id(const char *msg_id)
+@@ -1035,6 +1045,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "thread", &thread, "style",
+ 			    "enable message threading, styles: shallow, deep",
+ 			    PARSE_OPT_OPTARG, thread_callback },
++		OPT_STRING(0, "signature", &signature, "signature",
++			    "add a signature"),
+ 		OPT_END()
+ 	};
+ 
+@@ -1313,7 +1325,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 				       mime_boundary_leader,
+ 				       rev.mime_boundary);
+ 			else
+-				printf("-- \n%s\n\n", git_version_string);
++				print_signature();
+ 		}
+ 		if (!use_stdout)
+ 			fclose(stdout);
+diff --git a/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^ b/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
+index 8dab4bf..1f0f9ad 100644
+--- a/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
++++ b/t/t4013/diff.format-patch_--stdout_--cover-letter_-n_initial..master^
+@@ -18,6 +18,9 @@ A U Thor (2):
+  create mode 100644 file1
+  delete mode 100644 file2
+ 
++-- 
++g-i-t--v-e-r-s-i-o-n
++
+ From 1bde4ae5f36c8d9abe3a0fce0c6aab3c4a12fe44 Mon Sep 17 00:00:00 2001
+ From: A U Thor <author@example.com>
+ Date: Mon, 26 Jun 2006 00:01:00 +0000
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index d21c37f..f87434b 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -613,4 +613,56 @@ test_expect_success 'format-patch --ignore-if-in-upstream HEAD' '
+ 	git format-patch --ignore-if-in-upstream HEAD
+ '
+ 
++test_expect_success 'format-patch --signature' '
++	git format-patch --stdout --signature="my sig" -1 >output &&
++	grep "my sig" output
++'
++
++test_expect_success 'format-patch with format.signature config' '
++	git config format.signature "config sig" &&
++	git format-patch --stdout -1 >output &&
++	grep "config sig" output
++'
++
++test_expect_success 'format-patch --signature overrides format.signature' '
++	git config format.signature "config sig" &&
++	git format-patch --stdout --signature="overrides" -1 >output &&
++	! grep "config sig" output &&
++	grep "overrides" output
++'
++
++test_expect_success 'format-patch --no-signature ignores format.signature' '
++	git config format.signature "config sig" &&
++	git format-patch --stdout --signature="my sig" --no-signature \
++		-1 >output &&
++	! grep "config sig" output &&
++	! grep "my sig" output &&
++	! grep "^-- \$" output
++'
++
++test_expect_success 'format-patch --signature --cover-letter' '
++	git config --unset-all format.signature &&
++	git format-patch --stdout --signature="my sig" --cover-letter \
++		-1 >output &&
++	grep "my sig" output &&
++	test 2 = $(grep "my sig" output | wc -l)
++'
++
++test_expect_success 'format.signature="" supresses signatures' '
++	git config format.signature "" &&
++	git format-patch --stdout -1 >output &&
++	! grep "^-- \$" output
++'
++
++test_expect_success 'format-patch --no-signature supresses signatures' '
++	git config --unset-all format.signature &&
++	git format-patch --stdout --no-signature -1 >output &&
++	! grep "^-- \$" output
++'
++
++test_expect_success 'format-patch --signature="" supresses signatures' '
++	git format-patch --signature="" -1 >output &&
++	! grep "^-- \$" output
++'
++
+ test_done
 -- 
-1.7.1
+1.7.1.257.g678728
