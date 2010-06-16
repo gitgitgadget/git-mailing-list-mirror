@@ -1,91 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] rerere.txt: Document forget subcommand
-Date: Wed, 16 Jun 2010 09:42:24 +0200
-Message-ID: <4C188060.5000903@drmicha.warpmail.net>
-References: <AANLkTik50ayTQUnft4oD0Paqf-AuFWxGNdx_zZlHKFPg@mail.gmail.com> <ebd2b2b5bb3352c6204f181416a7a521f8c6abf7.1276582759.git.git@drmicha.warpmail.net> <7vr5k86ylg.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 0/4] git-gui blame: use textconv
+Date: Wed, 16 Jun 2010 09:50:56 +0200
+Message-ID: <vpq39wnbelb.fsf@bauges.imag.fr>
+References: <1276102929-31712-1-git-send-email-clement.poulain@ensimag.imag.fr>
+	<c80899f148cbfc9446554c6c706fdbfb@ensimag.fr>
+	<7vr5k9a5f5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jay Soffian <jaysoffian@gmail.com>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: clement.poulain@ensimag.imag.fr, <spearce@spearce.org>,
+	<git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 16 09:43:16 2010
+X-From: git-owner@vger.kernel.org Wed Jun 16 09:51:50 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOnHF-0006V0-PS
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 09:43:14 +0200
+	id 1OOnPZ-00028v-TT
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 09:51:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753061Ab0FPHnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jun 2010 03:43:00 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55162 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752438Ab0FPHm7 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 16 Jun 2010 03:42:59 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id CAF5BF88F6;
-	Wed, 16 Jun 2010 03:42:58 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 16 Jun 2010 03:42:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=7VumK8Pk6S+vcRQm6ZGvEmaZ5RI=; b=WbXFVh0qY5dqN79quq02jp8AB0Jz1/Pb5zKBupTzHEs5xhWjqzf20d5jfH/spxvDf+nbkcPfyHSa2S+bblxCM0Hc2aB1in0Jfze3uG9C3ZrvH5mbBlYGPaAGmEsmLh66Q1H+lqvbjqlSL6b7/ZQlCiFAPzzBna6MeGGH3tcqih0=
-X-Sasl-enc: 7BKiPvTD1WR5dBFwtjfhNQslvq2a9KJRwZjvrrkIGuEK 1276674178
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 227EB4D6C90;
-	Wed, 16 Jun 2010 03:42:58 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100610 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <7vr5k86ylg.fsf@alter.siamese.dyndns.org>
+	id S1752982Ab0FPHvp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 16 Jun 2010 03:51:45 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:34925 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750911Ab0FPHvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 03:51:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o5G7gpO4032521
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 16 Jun 2010 09:42:51 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OOnOi-0007wR-RA; Wed, 16 Jun 2010 09:50:56 +0200
+In-Reply-To: <7vr5k9a5f5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 14 Jun 2010 10\:29\:50 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 16 Jun 2010 09:42:51 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o5G7gpO4032521
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1277278973.55215@0GXmcjAfq1kSXwtB6EwO4w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149257>
 
-Junio C Hamano venit, vidit, dixit 15.06.2010 18:37:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> dea4562 (rerere forget path: forget recorded resolution, 2009-12-25)
->> introduced the forget subcommand for rerere.
->> ...
->> diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
->> index acc220a..a7370d3 100644
->> --- a/Documentation/git-rerere.txt
->> +++ b/Documentation/git-rerere.txt
->> @@ -40,6 +40,10 @@ This resets the metadata used by rerere if a merge resolution is to be
->>  aborted.  Calling 'git am [--skip|--abort]' or 'git rebase [--skip|--abort]'
->>  will automatically invoke this command.
->>  
->> +'forget' <pathspec>::
->> +
->> +This resets the conflict resolutions which rerere has recorded for <pathspec>.
->> +
-> 
-> This description is not _incorrect_ per-se, but it does not convey one
-> important aspect of the subcommand; unlike "clear" and "gc", "forget" only
-> works in the context of the _current_ conflict resolution, just like
-> "diff" and "status".
+Junio C Hamano <gitster@pobox.com> writes:
 
-Does "current context" mean
+> (we might need to devise a transition strategy so
+> that people who want to use slightly newer git-gui with older git won=
+'t
+> get hurt).
 
-- any recorded resolutions for the hunks which are currently recorded as
-in in conflict
+I don't think these users would really get hurt: they could still use
+git gui blame on text files, and they would anyway not have obtained
+anything sensible from "git gui blame binary-file". In the very
+unlikely case where a user has a textconv filter activated for a file
+which can be viewed as text too, there's a checkbox to disable
+textconv provided by Cl=E9ment's patch.
 
-or
-
-- the resolution which has (just) been recorded for the current conflict?
-
-I'm completely agnostic of the underlying implementation of rerere (as
-demonstrated by my questions probably...).
-
-> Perhaps s/for <pathspec>/for the current conflict in <pathspec>/ would be
-> a sufficient improvement?
-
-I guess that would mean 2 above?
-
-In any case, rerere forget is not a solution for the original "amend
-merge commit and forget previous resolution" question, I guess (I just
-happened to note it's undocumented). One would have to redo the merge to
-get the conflict info into the index, right?
-
-Michael
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
