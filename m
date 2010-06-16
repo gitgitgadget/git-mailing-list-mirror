@@ -1,136 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] add --recode-patch option to git-mailinfo
-Date: Wed, 16 Jun 2010 12:27:39 -0700
-Message-ID: <7vhbl2eq1g.fsf@alter.siamese.dyndns.org>
-References: <1276664983-5693-1-git-send-email-r0bertz@gentoo.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: unpacker error on push
+Date: Wed, 16 Jun 2010 15:34:39 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1006161520480.13427@xanadu.home>
+References: <0B32FF97-4B20-4B9A-BA45-08EF9485F3A1@nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Zhang Le <r0bertz@gentoo.org>
-X-From: git-owner@vger.kernel.org Wed Jun 16 21:28:00 2010
+Content-Type: multipart/mixed; boundary="Boundary_(ID_QRyKMmZrHrf5eEmalfOmNA)"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Gavin Kistner <gkistner@nvidia.com>
+X-From: git-owner@vger.kernel.org Wed Jun 16 21:34:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OOyHH-0001vF-P4
-	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 21:28:00 +0200
+	id 1OOyNs-0005PS-Rd
+	for gcvg-git-2@lo.gmane.org; Wed, 16 Jun 2010 21:34:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759458Ab0FPT1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jun 2010 15:27:47 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46051 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756644Ab0FPT1q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jun 2010 15:27:46 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C940BCE74;
-	Wed, 16 Jun 2010 15:27:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jvPwtV0gxAFQJozEARmBvHfha2o=; b=EQ4iQy
-	hMeZNyvHo/0DBC66IIDl+qcQzJ/GGaEANfFnA4wfLzPWXwARyxB5l/zZpwzUZQuW
-	O6V4o4PPuRPDhMu8wfrI3yPt8A6UcchiaVxudDiGQX+ZJi0wCPdKjHi1mygj5a/0
-	ixy3KHo6Ekwqf+j93L2ttzSxECjZtk7jIKikI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rfiPR1geS/lRLlHnmd/IGPH/BgTgLeQa
-	ocYVzW0xKk8gqZJBOKe0TEQu609/R2Bsr02UKHZ2z2F7OYiwrysKDkzsZFQdp2hB
-	yOW684yhClIToKbjN8rY3eLrK+nj4r3oGhciqkiJJtGsGRJD6JupqH0vTWXbqLzZ
-	xtUMzUWW/OA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DA432BCE73;
-	Wed, 16 Jun 2010 15:27:43 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0DC0FBCE6D; Wed, 16 Jun
- 2010 15:27:40 -0400 (EDT)
-In-Reply-To: <1276664983-5693-1-git-send-email-r0bertz@gentoo.org> (Zhang
- Le's message of "Wed\, 16 Jun 2010 13\:09\:42 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3C93DE06-797D-11DF-8D75-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759483Ab0FPTel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jun 2010 15:34:41 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:47818 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759205Ab0FPTek (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jun 2010 15:34:40 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0L44002MZH1RPJD0@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 16 Jun 2010 15:34:39 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <0B32FF97-4B20-4B9A-BA45-08EF9485F3A1@nvidia.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149273>
 
-Zhang Le <r0bertz@gentoo.org> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
-> index 3ea5aad..24d5bd7 100644
-> --- a/Documentation/git-mailinfo.txt
-> +++ b/Documentation/git-mailinfo.txt
-> @@ -45,7 +45,7 @@ OPTIONS
->  	them.  This used to be optional but now it is the default.
->  +
->  Note that the patch is always used as-is without charset
-> -conversion, even with this flag.
-> +conversion, even with this flag.  Unless --recode-patch is used.
+--Boundary_(ID_QRyKMmZrHrf5eEmalfOmNA)
+Content-type: TEXT/PLAIN; charset=Windows-1252
+Content-transfer-encoding: 8BIT
 
-Somehow this doesn't rhyme well.  Perhaps
+On Wed, 16 Jun 2010, Gavin Kistner wrote:
 
-    Note that the patch is used as-with without charset conversion; use
-    `--recode-patch` for that.
+> (my apologies if you receive this twice; I sent it once before I was 
+> authenticated on the mailing list)
 
-would be better?
+This list doesn't require you to be subscribed for you to post messages.
 
-> @@ -54,6 +54,10 @@ conversion, even with this flag.
->  -n::
->  	Disable all charset re-coding of the metadata.
->  
-> +--recode-patch::
-> +	Similar to -u.  But what is re-coded is the patch instead of the
-> +	metainfo.  The default is off.
+> Local: OS X 10.6.3, git 1.7.1
+> Remote: Ubuntu Lucid, git 1.7.0.4
+> 
+> How can I fix whatever is broken so that I can push again, and—more 
+> importantly—get the important changes I made last night over to the 
+> remote, by hook or by crook?> -_-_-_-_-_-_-_-_-_-_ On the local 
+> machine -_-_-_-_-_-_-_-_-_-_
+> 
+> Slim2:bugbot3 phrogz$ git push
+> Counting objects: 70, done.
+> Delta compression using up to 2 threads.
+> Compressing objects: 100% (31/31), done.
+> Writing objects: 100% (40/40), 26.91 KiB, done.
+> Total 40 (delta 11), reused 37 (delta 8)
+> error: unpack failed: unpack-objects abnormal exit
+> To git://10.20.16.110/bugbot3.git
+> ! [remote rejected] planning -> planning (n/a (unpacker error))
+> error: failed to push some refs to 'git://10.20.16.110/bugbot3.git'
 
-Ditto.
+Could you try doing "git config receive.unpackLimit 1" on the _remote_ 
+machine in the receiving repository?
 
-	Convert the patch from the e-mail to UTF-8 (or the value of the
-	configuration variable `i18n.commitencoding`, if it is set).
+Note this is not a proper fix but rather an attempt to isolate the 
+issue.  Please make a backup of the entire repository both on the local 
+and the remote machine if you can, so the failure can be reproduced 
+again after restoring them to the current state in case this would "fix" 
+the issue.
 
-By the way, what happens when somebody runs the following command?
 
-	git mailinfo -n --recode-patch
+Nicolas
 
-Is it desirable?  If not, what _should_ happen instead?
-
-> diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-> index 4a9729b..bb87b32 100644
-> --- a/builtin/mailinfo.c
-> +++ b/builtin/mailinfo.c
-> @@ -12,6 +12,7 @@ static FILE *cmitmsg, *patchfile, *fin, *fout;
->  static int keep_subject;
->  static int keep_non_patch_brackets_in_subject;
->  static const char *metainfo_charset;
-> +static int recode_patch;
->  static struct strbuf line = STRBUF_INIT;
->  static struct strbuf name = STRBUF_INIT;
->  static struct strbuf email = STRBUF_INIT;
-> @@ -828,8 +829,10 @@ static int handle_commit_msg(struct strbuf *line)
->  	return 0;
->  }
->  
-> -static void handle_patch(const struct strbuf *line)
-> +static void handle_patch(struct strbuf *line)
->  {
-> +	if (recode_patch)
-> +		convert_to_utf8(line, charset.buf);
->  	fwrite(line->buf, 1, line->len, patchfile);
->  	patch_lines++;
->  }
-> @@ -1021,7 +1024,7 @@ static int git_mailinfo_config(const char *var, const char *value, void *unused)
->  }
->  
->  static const char mailinfo_usage[] =
-> -	"git mailinfo [-k|-b] [-u | --encoding=<encoding> | -n] [--scissors | --no-scissors] msg patch < mail >info";
-> +	"git mailinfo [-k|-b] [-u | --encoding=<encoding> | -n] [--recode-patch] [--scissors | --no-scissors] msg patch < mail >info";
->  
->  int cmd_mailinfo(int argc, const char **argv, const char *prefix)
->  {
-> @@ -1034,6 +1037,7 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
->  
->  	def_charset = (git_commit_encoding ? git_commit_encoding : "UTF-8");
->  	metainfo_charset = def_charset;
-> +	recode_patch = 0;
-
-Do you need this assignment?
+--Boundary_(ID_QRyKMmZrHrf5eEmalfOmNA)--
