@@ -1,67 +1,313 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [BUG] Using git-completion with automounted home directories causes bogus NFS mount requests
-Date: Thu, 17 Jun 2010 22:02:54 +0200
-Message-ID: <201006172202.54879.trast@student.ethz.ch>
-References: <B0356A858DE69744B8977A67332BFB2C1FE9CDAD@dc1.mv.cariden.com>
+Subject: =?UTF-8?q?=5BPATCH=20v2=5D=20send-email=3A=20ask=20about=20and=20declare=208bit=20mails?=
+Date: Thu, 17 Jun 2010 22:10:39 +0200
+Message-ID: <69cf223ed6222d611adb7e2f340a8a66728b48d2.1276805149.git.trast@student.ethz.ch>
+References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Cesar Crusius <cesar@cariden.com>
-X-From: git-owner@vger.kernel.org Thu Jun 17 22:03:09 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 22:11:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPLIo-0000kU-JG
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 22:03:06 +0200
+	id 1OPLQf-0004pl-LH
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 22:11:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933217Ab0FQUC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 16:02:58 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:39729 "EHLO gwse.ethz.ch"
+	id S933266Ab0FQULG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jun 2010 16:11:06 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:31057 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933204Ab0FQUC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 16:02:58 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 17 Jun
- 2010 22:02:55 +0200
-Received: from thomas.localnet (217.162.250.31) by mail.ethz.ch
+	id S1757495Ab0FQULE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 16:11:04 -0400
+Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 17 Jun
+ 2010 22:11:02 +0200
+Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
  (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 17 Jun
- 2010 22:02:55 +0200
-User-Agent: KMail/1.13.3 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.3; x86_64; ; )
-In-Reply-To: <B0356A858DE69744B8977A67332BFB2C1FE9CDAD@dc1.mv.cariden.com>
+ 2010 22:10:40 +0200
+X-Mailer: git-send-email 1.7.1.635.g9a994
+In-Reply-To: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149325>
 
-Cesar Crusius wrote:
-> Hi all,
-> 
-> I have tried this with various versions of .git-completion,
-> including the most recent one as of today, and whenever I have
-> __git_ps1 in my bash prompt, I get messages like this:
-> 
-> Jun 17 12:05:14 sunray automountd[471]: [ID 834250 daemon.error] Mount of <server>:/export/home/.git on /home/.git: No such file or directory
-[...]
-> This is probably a result of git/git-completion trying to access the
-> directories above, and automount trying to get them from the server
-> (we're in an NFS home environment, with wildcard automounts in
-> auto_home).
+git-send-email passes on an 8bit mail as-is even if it does not
+declare a content-type.  Because the user can edit email between
+format-patch and send-email, such invalid mails are unfortunately not
+very hard to come by.
 
-It's not a bug.  Git repositories have only one .git metadata
-directory at the root of the repo.  How could git possibly detect
-where the repository is, if not by scanning each directory up to the
-root for a .git entry?
+Make git-send-email stop and ask about the encoding to use if it
+encounters any such mail.  Also provide a configuration setting to
+permanently configure an encoding.
 
-For a workaround, set GIT_CEILING_DIRECTORIES (available since 1.6.0),
-see git(1).  The next released version will most likely default to not
-searching across mount points thanks to commit 8030e44 (Add support
-for GIT_ONE_FILESYSTEM, 2010-03-17).
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Junio C Hamano wrote:
+> > * tr/send-email-8bit (2010-06-12) 1 commit
+>=20
+> If I am not misreading the patch, it does not seem to stop the scanni=
+ng of
+> the "C-T-E:" header at the end of header; it should.
+
+You're right.  I fixed that in this version.
+
+
+[I'm leaving for holidays tomorrow, so if there are more problems with
+this patch (who knows) you'll have to hold it in pu for a while.]
+
+
+ Documentation/git-send-email.txt |    9 ++++
+ git-send-email.perl              |   60 +++++++++++++++++++++++++++++
+ t/t9001-send-email.sh            |   77 ++++++++++++++++++++++++++++++=
+++++++++
+ 3 files changed, 146 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-=
+email.txt
+index 3dfdc7c..e70d9bf 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -101,6 +101,15 @@ See the CONFIGURATION section for 'sendemail.multi=
+edit'.
+ +
+ The --to option must be repeated for each user you want on the to list=
+=2E
+=20
++--8bit-encoding=3D<encoding>::
++	When encountering a non-ASCII message or subject that does not
++	declare its encoding, add headers/quoting to indicate it is
++	encoded in <encoding>.  Default is the value of the
++	'sendemail.assume8bitEncoding'; if that is unspecified, this
++	will be prompted for if any non-ASCII files are encountered.
+++
++Note that no attempts whatsoever are made to validate the encoding.
++
+=20
+ Sending
+ ~~~~~~~
+diff --git a/git-send-email.perl b/git-send-email.perl
+index ce569a9..0db39b0 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -54,6 +54,7 @@ git send-email [options] <file | directory | rev-list=
+ options >
+     --in-reply-to           <str>  * Email "In-Reply-To:"
+     --annotate                     * Review each patch that will be se=
+nt in an editor.
+     --compose                      * Open an editor for introduction.
++    --8bit-encoding         <str>  * Encoding to assume 8bit mails if =
+undeclared
+=20
+   Sending:
+     --envelope-sender       <str>  * Email envelope sender.
+@@ -193,6 +194,7 @@ my ($smtp_server, $smtp_server_port, $smtp_authuser=
+, $smtp_encryption);
+ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+ my ($validate, $confirm);
+ my (@suppress_cc);
++my ($auto_8bit_encoding);
+=20
+ my ($debug_net_smtp) =3D 0;		# Net::SMTP, see send_message()
+=20
+@@ -223,6 +225,7 @@ my %config_settings =3D (
+     "multiedit" =3D> \$multiedit,
+     "confirm"   =3D> \$confirm,
+     "from" =3D> \$sender,
++    "assume8bitencoding" =3D> \$auto_8bit_encoding,
+ );
+=20
+ # Help users prepare for 1.7.0
+@@ -298,6 +301,7 @@ my $rc =3D GetOptions("sender|from=3Ds" =3D> \$send=
+er,
+ 		    "thread!" =3D> \$thread,
+ 		    "validate!" =3D> \$validate,
+ 		    "format-patch!" =3D> \$format_patch,
++		    "8bit-encoding=3Ds" =3D> \$auto_8bit_encoding,
+ 	 );
+=20
+ unless ($rc) {
+@@ -670,6 +674,35 @@ sub ask {
+ 	return undef;
+ }
+=20
++my %broken_encoding;
++
++sub file_declares_8bit_cte($) {
++	my $fn =3D shift;
++	open (my $fh, '<', $fn);
++	while (my $line =3D <$fh>) {
++		last if ($line =3D~ /^$/);
++		return 1 if ($line =3D~ /^Content-Transfer-Encoding: .*8bit.*$/);
++	}
++	close $fh;
++	return 0;
++}
++
++foreach my $f (@files) {
++	next unless (body_or_subject_has_nonascii($f)
++		     && !file_declares_8bit_cte($f));
++	$broken_encoding{$f} =3D 1;
++}
++
++if (!defined $auto_8bit_encoding && scalar %broken_encoding) {
++	print "The following files are 8bit, but do not declare " .
++		"a Content-Transfer-Encoding.\n";
++	foreach my $f (sort keys %broken_encoding) {
++		print "    $f\n";
++	}
++	$auto_8bit_encoding =3D ask("Which 8bit encoding should I declare [UT=
+=46-8]? ",
++				  default =3D> "UTF-8");
++}
++
+ my $prompting =3D 0;
+ if (!defined $sender) {
+ 	$sender =3D $repoauthor || $repocommitter || '';
+@@ -1225,6 +1258,18 @@ foreach my $t (@files) {
+ 			or die "(cc-cmd) failed to close pipe to '$cc_cmd'";
+ 	}
+=20
++	if ($broken_encoding{$t} && !$has_content_type) {
++		$has_content_type =3D 1;
++		push @xh, "MIME-Version: 1.0",
++			"Content-Type: text/plain; charset=3D$auto_8bit_encoding",
++			"Content-Transfer-Encoding: 8bit";
++		$body_encoding =3D $auto_8bit_encoding;
++	}
++
++	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
++		$subject =3D quote_rfc2047($subject, $auto_8bit_encoding);
++	}
++
+ 	if (defined $author and $author ne $sender) {
+ 		$message =3D "From: $author\n\n$message";
+ 		if (defined $author_encoding) {
+@@ -1237,6 +1282,7 @@ foreach my $t (@files) {
+ 				}
+ 			}
+ 			else {
++				$has_content_type =3D 1;
+ 				push @xh,
+ 				  'MIME-Version: 1.0',
+ 				  "Content-Type: text/plain; charset=3D$author_encoding",
+@@ -1314,3 +1360,17 @@ sub file_has_nonascii {
+ 	}
+ 	return 0;
+ }
++
++sub body_or_subject_has_nonascii {
++	my $fn =3D shift;
++	open(my $fh, '<', $fn)
++		or die "unable to open $fn: $!\n";
++	while (my $line =3D <$fh>) {
++		last if $line =3D~ /^$/;
++		return 1 if $line =3D~ /^Subject.*[^[:ascii:]]/;
++	}
++	while (my $line =3D <$fh>) {
++		return 1 if $line =3D~ /[^[:ascii:]]/;
++	}
++	return 0;
++}
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 640b3d2..0b8a591 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -918,4 +918,81 @@ test_expect_success '--no-bcc overrides sendemail.=
+bcc' '
+ 	! grep "RCPT TO:<other@ex.com>" stdout
+ '
+=20
++cat >email-using-8bit <<EOF
++From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
++Message-Id: <bogus-message-id@example.com>
++From: author@example.com
++Date: Sat, 12 Jun 2010 15:53:58 +0200
++Subject: subject goes here
++
++Dieser deutsche Text enth=C3=A4lt einen Umlaut!
++EOF
++
++cat >content-type-decl <<EOF
++MIME-Version: 1.0
++Content-Type: text/plain; charset=3DUTF-8
++Content-Transfer-Encoding: 8bit
++EOF
++
++test_expect_success 'asks about and fixes 8bit encodings' '
++	clean_fake_sendmail &&
++	echo |
++	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
+\
++			--smtp-server=3D"$(pwd)/fake.sendmail" \
++			email-using-8bit >stdout &&
++	grep "do not declare a Content-Transfer-Encoding" stdout &&
++	grep email-using-8bit stdout &&
++	grep "Which 8bit encoding" stdout &&
++	grep "Content\\|MIME" msgtxt1 >actual &&
++	test_cmp actual content-type-decl
++'
++
++test_expect_success 'sendemail.8bitEncoding works' '
++	clean_fake_sendmail &&
++	git config sendemail.assume8bitEncoding UTF-8 &&
++	echo bogus |
++	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
+\
++			--smtp-server=3D"$(pwd)/fake.sendmail" \
++			email-using-8bit >stdout &&
++	grep "Content\\|MIME" msgtxt1 >actual &&
++	test_cmp actual content-type-decl
++'
++
++test_expect_success '--8bit-encoding overrides sendemail.8bitEncoding'=
+ '
++	clean_fake_sendmail &&
++	git config sendemail.assume8bitEncoding "bogus too" &&
++	echo bogus |
++	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
+\
++			--smtp-server=3D"$(pwd)/fake.sendmail" \
++			--8bit-encoding=3DUTF-8 \
++			email-using-8bit >stdout &&
++	grep "Content\\|MIME" msgtxt1 >actual &&
++	test_cmp actual content-type-decl
++'
++
++cat >email-using-8bit <<EOF
++From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
++Message-Id: <bogus-message-id@example.com>
++From: author@example.com
++Date: Sat, 12 Jun 2010 15:53:58 +0200
++Subject: Dieser Betreff enth=C3=A4lt auch einen Umlaut!
++
++Nothing to see here.
++EOF
++
++cat >expected <<EOF
++Subject: =3D?UTF-8?q?Dieser=3D20Betreff=3D20enth=3DC3=3DA4lt=3D20auch=3D=
+20einen=3D20Umlaut!?=3D
++EOF
++
++test_expect_success '--8bit-encoding also treats subject' '
++	clean_fake_sendmail &&
++	echo bogus |
++	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
+\
++			--smtp-server=3D"$(pwd)/fake.sendmail" \
++			--8bit-encoding=3DUTF-8 \
++			email-using-8bit >stdout &&
++	grep "Subject" msgtxt1 >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+--=20
+1.7.1.635.g9a994
