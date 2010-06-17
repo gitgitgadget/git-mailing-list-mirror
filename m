@@ -1,60 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git pull (Your local changes to ... would be overwritten by 
- merge)
-Date: Thu, 17 Jun 2010 13:58:05 +0200
-Message-ID: <4C1A0DCD.2070906@drmicha.warpmail.net>
-References: <AANLkTinokUxiDdetcrsrlSExQ7hmhLS5szbTt9KzGKr_@mail.gmail.com> 	<AANLkTimeIWseETfYiMajIqesjJ_p55pRislnQQIaCrbG@mail.gmail.com> 	<4C19FBF8.6010709@drmicha.warpmail.net> <vpq4oh1zzfs.fsf@bauges.imag.fr> <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: moving a remote branch?
+Date: Thu, 17 Jun 2010 20:13:08 +0800
+Message-ID: <AANLkTikeLpvGA-RFBdMGblOnhNKJ6dUrpUZQlENMP51A@mail.gmail.com>
+References: <AANLkTikA5jGl1LiU2sNTN1NP_syTfPAeLF7sS6dBozyN@mail.gmail.com>
+	<AANLkTimTSU7Db7cMlC0ZxQ47IoBUr4Ee4G-GfgDoYLmK@mail.gmail.com>
+	<A612847CFE53224C91B23E3A5B48BAC74483CEEA82@xmail3.se.axis.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Daniel Blendea <bdaniel7@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 17 13:59:14 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Anderson <zelnaga@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 14:13:22 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPDkU-00048S-HM
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 13:59:10 +0200
+	id 1OPDyD-0001hF-OL
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 14:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756431Ab0FQL7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 07:59:04 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33321 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752164Ab0FQL7D (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 07:59:03 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9AE65F8C94;
-	Thu, 17 Jun 2010 07:58:40 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 17 Jun 2010 07:58:40 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=bHTh7UJXNdnij9F2s+yPwKamBtk=; b=ElBET+9E6h0Z1cSO9PPshbc/W03pivZDsjNj0SazU+bqVCs3INmljbny/RqrzQFrV1Yhjgl8OZKqaRiQ0OGW8dSp2nXM1jt0sUcHAct3kdDUY74PdhqInMQ9iupeQlOObZjv1fAYjXc6tCw2nTIDwtpL9k2Muz+X292xLZ3Vlqk=
-X-Sasl-enc: skUN5Xp+x+N1uBgFFkv3dXvSUMT9TPAEL+6y0PgNAwLr 1276775920
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E12E8A89F;
-	Thu, 17 Jun 2010 07:58:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100610 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com>
+	id S1755914Ab0FQMNQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jun 2010 08:13:16 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:61534 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121Ab0FQMNP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 08:13:15 -0400
+Received: by yxl31 with SMTP id 31so2185067yxl.19
+        for <git@vger.kernel.org>; Thu, 17 Jun 2010 05:13:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TZzsx6HR4m/Rrfvt+HZQJTyZaWXkVR+ZdaoVmDGqZrc=;
+        b=Nxk3kN6rlURZGGWx0oj3mEtdlMhdgvG6MglOrSKCQ/Krv9AEaEpwri0ZMMfhnYD4TE
+         IbwpvJtdGdGKD5FQ5n3o226UlZUYMs6RytxvfugarM61BfzxwYU9Xi76XzSQx3UeRRzh
+         mZxxOles21oMYwXspD1mz/dBj/kBiDVO/gbyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fp6ghJSFDEeZyRh+Q0A1+/twrlCGp0Y6jBJPy6qu7yD6eLGo7bt63FpsFMIc64Abkk
+         j4AaOKJIvIh2WuO6LuUSWMykMA+vQ9xFCN/H56TMC9Mx7Qunssc+QqYStf547XHEb6eg
+         rLxiQKl6CYrXamWZHQOADNeBUEv6EqDhaM8/Q=
+Received: by 10.91.164.27 with SMTP id r27mr7623929ago.77.1276776788774; Thu, 
+	17 Jun 2010 05:13:08 -0700 (PDT)
+Received: by 10.90.29.10 with HTTP; Thu, 17 Jun 2010 05:13:08 -0700 (PDT)
+In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74483CEEA82@xmail3.se.axis.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149302>
 
-Daniel Blendea venit, vidit, dixit 17.06.2010 13:18:
-> Windows 7, did not change anything related to crlf.
-> 
-> I solved the problem with
-> 
-> git fetch --all
-> git reset --hard origin/master
+On Thu, Jun 17, 2010 at 4:28 PM, Peter Kjellerstedt > Renaming a
+remote branch is a two step operation. First you push the
+> old branch into its new name, and then you remove the old branch. It
+> can be done with these commands:
+>
+> =A0 =A0 =A0 =A0git push origin origin/featurea:refs/heads/featureb
+> =A0 =A0 =A0 =A0git push origin :featurea
 
-I guess this shows that correct diagnostics is not a prerequisite for a
-successful therapy ;)
+I'd like to add (more confusion!:) with this clarification:
 
-(The diagnostics really indicate a work tree with local uncommitted
-modifications.)
+The two push operation above rename the branch on the remote side.
+It does not affect any of your local branches.
 
-Michael
+If you do "git branch -a" then you'd still see the
+"origin/zelnaga/featurea" branch.
+
+Doing a "git fetch origin" will get the newly renamed branch from the
+remote repo and create a local version of it on your local repo.
+
+At this point you can do "git branch -D origin/featurea".
+
+nazri
