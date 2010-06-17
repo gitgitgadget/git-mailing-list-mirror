@@ -1,143 +1,192 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [WIP PATCH 0/3] implement merge strategy for submodule links
-Date: Thu, 17 Jun 2010 23:13:00 +0200
-Message-ID: <4C1A8FDC.7010309@web.de>
-References: <cover.1276059473.git.hvoigt@hvoigt.net> <201006162332.56700.johan@herland.net> <7vy6eed3w0.fsf@alter.siamese.dyndns.org> <201006170239.01951.johan@herland.net>
+From: Andrew Sayers <andrew-git@pileofstuff.org>
+Subject: [PATCHv5 0/2] bash completion: Support "divergence from upstream"
+ messages in __git_ps1
+Date: Thu, 17 Jun 2010 22:31:46 +0100
+Message-ID: <4C1A9442.7080304@pileofstuff.org>
+References: <20100612000002.GA30196@neumann> <cover.1276336602.git.trast@student.ethz.ch> <4C13F32B.7060106@pileofstuff.org> <201006140942.43099.trast@student.ethz.ch> <4C17F5B3.4070907@pileofstuff.org> <7v7hlyg5nh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Jun 17 23:13:17 2010
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 23:32:03 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPMOg-0006ss-In
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 23:13:14 +0200
+	id 1OPMgo-0006EW-3w
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 23:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757100Ab0FQVNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 17:13:07 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:50050 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752803Ab0FQVNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 17:13:05 -0400
-Received: from smtp02.web.de  ( [172.20.0.184])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 282BA1571874E;
-	Thu, 17 Jun 2010 23:13:04 +0200 (CEST)
-Received: from [80.128.111.51] (helo=[192.168.178.26])
-	by smtp02.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OPMOV-0000UZ-00; Thu, 17 Jun 2010 23:13:04 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <201006170239.01951.johan@herland.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/L3t0tJn93LC5uUDKUGRO3dFKgz3hTXX/SH7Q4
-	vq6b/HtQqLqJGh7lRvJYgzrQzcv8kvkrRJy/RiEcVhBbgiATP0
-	Bxm/0x9CTana7QDLMMnw==
+	id S1759994Ab0FQVbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 17:31:52 -0400
+Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:65126 "EHLO
+	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752732Ab0FQVbv (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 17:31:51 -0400
+Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
+          by mtaout03-winn.ispmail.ntl.com
+          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
+          id <20100617213149.FDKR3075.mtaout03-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
+          Thu, 17 Jun 2010 22:31:49 +0100
+Received: from [192.168.1.5] (really [80.6.134.127])
+          by aamtaout03-winn.ispmail.ntl.com
+          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
+          id <20100617213149.NDTR1598.aamtaout03-winn.ispmail.ntl.com@[192.168.1.5]>;
+          Thu, 17 Jun 2010 22:31:49 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
+In-Reply-To: <7v7hlyg5nh.fsf@alter.siamese.dyndns.org>
+X-Cloudmark-Analysis: v=1.1 cv=ZtHxNT4mZm3rCuM0SmWmgWxeBwJsziC8EqOrwwVkrhA= c=1 sm=0 a=duM3rHejoagA:10 a=uEzv4HemXiYA:10 a=8nJEP1OIZ-IA:10 a=1tNjHJYGQUadGi1QIQkA:9 a=6gnTn3okqwYzaYZObg4A:7 a=eLFVj-_uBok1ddbnJaAIyHjAWH8A:4 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149328>
 
-Am 17.06.2010 02:39, schrieb Johan Herland:
-> But this is pure speculation, and as you say, I'd like to see what workflows 
-> Jens and Heiko are actually using.
+I agree with all the points I haven't specifically replied to.  The
+first patch makes the appropriate changes.  The second patch fixes
+largely unrelated "set -u" issues I stumbled over while running tests.
 
-Ok, here we go. And as I have difficulties thinking about that when looking
-at a single graph, I'll draw two: The upper for the superproject and the
-lower for the submodule.
+On 16/06/10 20:05, Junio C Hamano wrote:
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 57245a8..dabcdaa 100755
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -42,6 +42,23 @@
+>>  #       set GIT_PS1_SHOWUNTRACKEDFILES to a nonempty value. If there're
+>>  #       untracked files, then a '%' will be shown next to the branch name.
+>>  #
+>> +#       If you would like to see the difference between HEAD and its
+>> +#       upstream, set GIT_PS1_SHOWUPSTREAM to a nonempty value.  A "<"
+>> +#       indicates you are behind, ">" indicates you are ahead, and
+>> +#       "<>" indicates you have diverged.  You can further control
+>> +#       behaviour by setting GIT_PS1_SHOWUPSTREAM to a space-separated
+>> +#       list of values:
+>> +#           git           compare HEAD to @{upstream}
+>> +#           svn           compare HEAD to your SVN upstream
+>> +#           verbose       show number of commits ahead/behind (+/-) upstream
+>> +#           legacy        don't use the '--count' option available in recent
+>> +#                         versions of git-rev-list
+>> +#       By default, __git_ps1 will compare HEAD to your SVN upstream
+>> +#       if it can find one, or @{upstream} otherwise.
+> 
+> This feels somewhat weird.
+> 
+> I can sort-of read from the above that I can set the variable to a random
+> string, e.g. "garbage", if I only want a simple show-upstream feature
+> without frills (i.e. I don't want it to be verbose, I don't want it to
+> restrict the comparison only to "git" upstream nor "svn" upstream, and I
+> don't think I would ever use ancient git that lack "rev-list --count").
+> But the description does not assure me that the random string I happened
+> to choose (in this case "garbage") is a safe one.  Perhaps list (and
+> implement) "default" as a safe, otherwise-no-op value?
 
-Superproject:
-  -----2         [Alice's branch]
- /      \
-1--3-----4---5   [master]
-    \       /
-     ------6     [Bob's branch]
+I agree this would improve the documentation, but I've used "auto"
+instead of "default", to give a hint that that the code is being a bit
+automagical.  I don't see how adding code would help though -
+"GIT_PS1_SHOWUPSTREAM=auto" is already covered in the default case of an
+unrecognised string, and adding code to make "GIT_PS1_SHOWUPSTREAM=1" do
+nothing or print a warning would just confuse people that skip-read the
+documentation and set the value to see what happened.
 
-       ^   ^
-       |   |     [commits of the submodule committed in the superproject]
+> How much overhead are we shaving if you specify "git" (without "svn") or
+> "svn" (without "git") to the variable?  I suspect that the bulk of the
+> time is spent by reading from "git config" to look for svn-remote.*.url,
+> which you seem to unconditionally do even when "git" was asked for
+> anyway.
 
-Submodule:
-  ---B           [feature_a]
- /    \
-A--C---D---E     [master]
-    \     /
-     ----F       [feature_b]
+In my tests, a single invocation of git-config took an average of
+roughly 0.005s with a 30-line .git/config, and roughly 0.030s with a
+.git/config that contained about 17,600 extra nonsense lines (aaa = aaa,
+aab = aab, etc.).  In both cases, the extra test for svn-remote.*.url
+made no significant difference to the time taken, whereas a second
+invocation of `git config` (obviously) doubled the time taken.
 
-Alice hacks away on her feature branch and notices she has to make changes
-to a submodule. She creates the "feature_a" branch there with commit 'B'
-and asks the maintainer of the submodule to review and merge her change.
-Our policy is to never commit submodule commits that are not merged yet, as
-they could just vanish (e.g. by rebasing; imagine having git as a submodule
-and committing a SHA1 from the "pu" branch in the superproject ... a later
-bisect might get really frustrating). So the submodule maintainer merges 'B'
-into 'D' and tells Alice that. She commits 'D' for the submodule in her '2'
-commit and asks the maintainer of the superproject to review and merge that.
-The moment he merges that into '4', 'D' gets recorded in the master branch
-of the superproject for the submodule.
+Checking the SVN upstream with `git log --first-parent -1
+--grep="^git-svn-id: \(${svn_url_pattern:2}\)"` is actually quite a
+serious time issue, especially if you have made many commits since your
+upstream.  A test with 100 empty commits since the SVN upstream took
+roughly 0.012 seconds on average.  A test on git itself (>22,000
+commits) took roughly 0.29 seconds to determine there was no SVN upstream.
 
-Meanwhile Bob also needs a change in the submodule for his work in the
-superproject and adds commit 'F' on the "feature_b" branch there. He waits
-for the submodule maintainer to merge that into 'E' so he can do commit '6'.
+Speed (and user confidence in speed) isn't the main reason to allow the
+user to force "git" or "svn".  If someone had e.g. imported their old
+SVN history into a git project, or did clever git tricks on a branch
+they regularly merged into SVN, they would want to override the default
+behaviour.  This is probably quite rare now I think about it, and I've
+rejigged the documentation a bit to reflect that.
 
-But now the submodule commit 'D' in the superproject commit '4' has become
-an obstacle for him and the superprojects maintainer. Bob can't rebase or
-cherrypick beyond or up to '4' because he will get a merge conflict. If he
-asks to merge his branch into '5', the superprojects maintainer will get a
-merge conflict and tells to him to resolve that.
+> 
+>> +#       You can
+>> +#       override the value of GIT_PS1_SHOWUPSTREAM on a per-repository
+>> +#       basis by setting the bash.showUpstream config variable.
+> 
+> That's totally backwards from it should be, isn't it?
+> 
+> Usually configuration variables are used to give you the default, and
+> you use environment variables to override them.
+> 
 
-This situation would disappear when git merge would do fast-forwards for
-submodule commits. And I argue that this is The Right Thing, because just as
-commit '5' contains /all/ changes from both branches to the files it should
-also contain /all/ changes to the submodules files that happened during
-these branches. And that means merge should resolve the submodule to commit
-'E'.
+I basically agree with Thomas here.  Going down that route without
+parsing all the options in one big `--get-regexp` mess would take O(n)
+time, where n consists mostly of config options I don't care about.
 
-This is somehow similar to merging binary files. But for submodules Git has
-a chance to tell the combined version of both changes in the fast-forward
-case, whereas it can't know that for binary files. And yes, merge conflicts
-could happen for the same reasons they may happen to files: The changes in
-Bob's branch could break something in Alice's branch. But that applies for
-files just like it does for submodule commits, no?
+>> +				;;
+>> +			svn-remote.*.url)
+>> +				svn_remote[ $((${#svn_remote[@]} + 1)) ]="$value"
+>> +				svn_url_pattern+="\\|$value"
+>> +				upstream=svn # default upstream is SVN if available
+>> +				;;
+> 
+> I expected that (1) when on a branch that is a fork of a svn upstream, you
+> would use the svn magic; (2) otherwise when on a branch that is a fork of
+> a git upstream, you would use "@{upstream}".  That way, the users do not
+> even have to say "git" or "svn" in GIT_PS1_SHOWUPSTREAM at all, no?
+> 
+> But that does not seem to be what is happening here.  Your loop seems to
+> force "upstream=svn" if I have one branch that is a fork from svn
+> upstream, even if my current branch does not have anything to do with that
+> branch nor svn upstream.  Is that what was intended?
 
+I'm not sure I understand how you would detect if something is a fork of
+an SVN/git upstream.  It's certainly deliberate not to do a `git log` if
+it's avoidable, for the efficiency reasons I mentioned above.  But it
+seems like a good idea to use @{upstream} in the "auto" case if no SVN
+upstream was found, so I've changed the patch to do that.  Please let me
+know if there's some applicable magic I'm not aware of :)
 
-And the non-fast-forward case happens e.g. when Alice and Bob do not wait
-for the submodule maintainer to merge their changes:
+>> +		esac
+>> +	done < <(git config -z --get-regexp '^(svn-remote\..*\.url|bash\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')
+> 
+> If you "tr" to trash "\0" anyway, do you need to run "config -z"?
 
-Superproject:
-  ---2         [Alice's branch]
- /    \
-1--3---4---5   [master]
-    \     /
-     ----6     [Bob's branch]
+The `tr` is there to work around issues like this:
 
-     ^   ^
-     |   |       [commits of the submodule committed in the superproject]
+	git config bash.showUpstream $'svn\nlegacy'
+	git config bash.showUpstream | tr '\0\n' '\n '
 
-Submodule:
-  ---B           [feature_a]
- /    \
-A--C---D---E     [master]
-    \     /
-     ----F       [feature_b]
+The end result is a format that can be easily parsed with `read`.
+Without the -z, I'd have no way to tell the difference between the end
+of a config item and a literal newline.
 
-In this case submodule commit 'B' is recorded in '2' and thus '4', while
-commit 'F' will be recorded in '6'. So when '4' and '6' are merged, a valid
-guess for '5' would be to use submodule commit 'E', as it is the first one
-based on both 'B' and 'F'.
+Having said that, I have no strong opinion about which is the more
+appropriate thing to do here - slow down everyone's prompt to deal with
+an edge case, or break otherwise-valid behaviour because the solution is
+ugly.  The latest patch still has it in - let me know if you'd prefer it
+out.
 
-But in this case it is not so clear that 'E' is the right commit, as there
-might be other commits present in the paths 'B'->'E' and 'F'->'E'. So 'E'
-is just a probable solution for the merge, but not one I would like to see
-automatically merged. But it should be proposed to the person doing the
-merge as a probable resolution of the conflict, so that she can decide if
-that is the case.
+> 
+>> +	# parse configuration values
+>> +	for option in ${GIT_PS1_SHOWUPSTREAM}; do
+> 
+> Is this safe under "set -u"?  See 25a31f8 (bash-completion: Support
+> running when set -u is enabled, 2009-01-15).
 
+This is safe under "set -u", as this function is only called if
+$GIT_PS1_SHOWUPSTREAM is defined.  But testing showed several issues
+that make me suspect __git_ps1 never worked under "set -u".  My second
+patch fixes those issues.
 
-And no 'special' branch is used here. But I think this approach will solve
-a lot of the problems we - and maybe others - have with submodule merges
-without doing any harm to other workflows.
+	- Andrew
