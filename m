@@ -1,157 +1,189 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #02; Wed, 16)
-Date: Thu, 17 Jun 2010 09:24:21 -0700
-Message-ID: <7vocf939vu.fsf@alter.siamese.dyndns.org>
-References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
+From: William Hall <will@gnatter.net>
+Subject: Re: SVN migration
+Date: Thu, 17 Jun 2010 17:27:34 +0100
+Message-ID: <4C1A4CF6.9080300@gnatter.net>
+References: <4C1957EF.6070504@gnatter.net> <7B0F34CE-9C9F-4FC3-AD96-8B1B8DD4359B@gmail.com> <4C19FA07.9010603@gnatter.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	Brian Downing <bdowning@lavos.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	Ian Ward Comfort <icomfort@stanford.edu>,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Philippe Bruhat (BooK) <book@cpan.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Simo Melenius <simo.melenius@iki.fi>,
-	Stephen
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 17 18:25:26 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Steven Michalske <smichalske@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 18:27:52 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPHu9-0007g1-Rs
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 18:25:26 +0200
+	id 1OPHwQ-0000cP-4K
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 18:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932998Ab0FQQZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 12:25:19 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58582 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932992Ab0FQQZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 12:25:17 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D856BC304;
-	Thu, 17 Jun 2010 12:25:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nutj6EdF80VFHNGdZ6NzhmGGOLo=; b=UXadfJ
-	FRoPm/L60CCiXLKg8nfQxRVYcTIk4Vl7WVZxHI2E5uYvYj/xL8qkndhmh/kqX7J+
-	1Dpv5JVjqjyaB0sdVGdqYhAIZ8hfo/0apneZ0kSGy94z31dGh9Iexg9Nbq5+mq9P
-	N8F6xiPQPibw0F+fUjoc2MW1/URyO7zu4BKB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xh84uaaG3GIRrhI5Nc9mxb6GxD9Tw5di
-	3KsY8b8CTpsMBzdeyicS1cGbO7vzT5ovZ9C8KPnaWx/x7g1zCIIFhDrCWDBOppl5
-	VMJGeOYlPt057xT8TO8BB19IL1gmsYe0XDmietUPkEOj31NifWT1osmTeDqpmDL9
-	qMv3Csdxyqc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B600BC2FA;
-	Thu, 17 Jun 2010 12:24:50 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76A23BC2E6; Thu, 17 Jun
- 2010 12:24:23 -0400 (EDT)
-In-Reply-To: <7viq5ict4p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 16 Jun 2010 19\:03\:50 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DA5882FE-7A2C-11DF-A44B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932800Ab0FQQ1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 12:27:41 -0400
+Received: from mail.qualtersystems.com ([74.200.89.103]:48571 "EHLO
+	mail.qualtersystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932992Ab0FQQ1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 12:27:40 -0400
+Received: from localhost (mail [127.0.0.1])
+	by mail.qualtersystems.com (Postfix) with ESMTP id 05E7E39607F3;
+	Thu, 17 Jun 2010 17:27:40 +0100 (BST)
+X-Virus-Scanned: amavisd-new at qualtersystems.com
+Received: from mail.qualtersystems.com ([127.0.0.1])
+	by localhost (mail.qualtersystems.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id CgLPAAeyggLe; Thu, 17 Jun 2010 17:27:36 +0100 (BST)
+Received: from merton.mpc.local (mpc-1.sohonet.co.uk [193.203.82.226])
+	(Authenticated sender: will@mail.qualtersystems.com)
+	by mail.qualtersystems.com (Postfix) with ESMTP id D46463950761;
+	Thu, 17 Jun 2010 17:27:35 +0100 (BST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <4C19FA07.9010603@gnatter.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149319>
 
-Here are some comments and notes on various topics; this message discusses
-only transitions from 'pu' to 'next'.
+I'm going to answer my own post, I *think* I have something that works - 
+please check if I'm doing anything idiotic.
 
-> * bd/maint-unpack-trees-parawalk-fix (2010-06-10) 1 commit
->  - unpack-trees: Make index lookahead less pessimal
+Just to recap: trying to convince my company to move from svn to git, 
+and they have agreed to try one project using git as long as all commits 
+find their way to the svn repo as well.
 
-I really need to come up with time to check this one.
+So I have a standard bare git repo serving the developers, a git/svn 
+"bridge" repo that performs bi-directional updates to and from svn and 
+the bare git repo.
 
-> * ab/blame-textconv (2010-06-07) 3 commits
+Ok, here's what I've done
 
-Type punning in textconv_object() needs to be fixed.
+Create bridge
+-------------
+$ git svn init -s file:///path_to_svn /path_to_git_svn_bridge/
+$ cd /path_to_git_svn_bridge
+$ git svn fetch --authors-file=/tmp/authors.map
 
-> * cp/textconv-cat-file (2010-06-09) 4 commits
+Configure bare repo
+-------------------------------
+create bare repo that developers will use
+$ git init --shared=all --bare /path_to_git_repo.git
 
-Likewise.
+configure bridge
+----------------
+$ git remote add -f -m master origin /path_to_git_repo.git
+$ git push origin master
+$ git branch --set-upstream master origin/master
 
-> * ab/i18n (2010-06-15) 3 commits
->  . Add initial C, Shell and Perl gettext translations
->  . fixup! Add infrastructure
->  . Add infrastructure for translating Git with gettext
+this branch will be used to perform svn rebases and fetches
+$ git checkout -t -b svn svn/trunk
 
-I haven't got around to fix conflicts merging this with various other
-topics yet.
 
-> * ab/tap (2010-06-09) 4 commits
->  - We use TAP so the Perl test can run without scaffolding
->  - Skip tests in a way that makes sense under TAP
->  - Merge branch 'jc/t9129-any-utf8' into ab/tap
->  - Make test-lib.sh emit valid TAP format
->  (this branch uses jc/t9129-any-utf8.)
+Workflow
+--------
+Developer A clones from /path_to_git_repo.git, does some work, commits 
+and pushes back to origin
 
-I was not sure why TAP is worth the trouble, and I still am not sure.
+Now, in the bridge repo, fetch changes from origin (where developer A 
+pushed)
+$ git checkout master
+$ git pull
 
-> * jl/maint-diff-ignore-submodules (2010-06-08) 2 commits
->  - Add optional parameters to the diff option "--ignore-submodules"
->  - git diff: rename test that had a conflicting name
+Replay all changes manually, in order, onto svn branch
+$ git checkout svn
+$ git rev-list --reverse heads/master@{1}..heads/master | while read rev; do
+         git cherry-pick -n $rev
+   done
 
-Is everybody happy with the naming of --ignore-submodules=<when> and the
-semantics?
+Create one commit for all changes and synchronise with svn
+$ git commit -am "cherry pick merge"
+$ git svn rebase
+$ git svn dcommit
 
-> * tr/rev-list-count (2010-06-12) 2 commits
+Now merge in anything picked up from svn, plus the rebased final commit
+$ git checkout master
+$ git merge svn
 
-I am not convinced the upstream selection logic between git/svn is right
-in the tip one.  Clues?
+Send back to bare repo (at least the final merge commit)
+$ git push
 
-> * tr/send-email-8bit (2010-06-12) 1 commit
+It seems to handle changes and preserves linear history on both sides ok.
+Can anyone see anything obviously wrong with this approach?
 
-If I am not misreading the patch, it does not seem to stop the scanning of
-the "C-T-E:" header at the end of header; it should.
+thanks,
 
-> * pb/maint-perl-errmsg-no-dir (2010-06-14) 1 commit
+Will
 
-There was a comment on what the proposed commmit log message said
-regarding $!; perhaps an update is in order?
 
-> * zl/mailinfo-recode-patch (2010-06-14) 2 commits
 
-The interaction between "-n --recode" needs to be fixed; it probably is Ok
-to reuse "i18n.commitEncoding".  Opinions?
 
-> * jn/grep-open (2010-06-12) 4 commits
-> * jn/gitweb-return-or-exit-cleanup (2010-06-13) 1 commit
-> * jc/maint-simpler-common-prefix (2010-06-16) 1 commit
-> * mg/pretty-magic-space (2010-06-14) 1 commit
-> * sb/format-patch-signature (2010-06-15) 2 commits
-> * cc/cherry-pick-series (2010-06-02) 8 commits
 
-I will merge these to 'next' shortly.
 
-> * ic/maint-rebase-i-abort (2010-06-08) 1 commit
-> * jk/maint-advice-empty-amend (2010-06-06) 1 commit
-> * jn/document-rebase-i-p-limitation (2010-05-31) 1 commit
-> * rr/parse-date-refactor (2010-06-03) 1 commit
-> * sm/branch-broken-ref (2010-06-04) 2 commits
-> * cc/maint-commit-reflog-msg (2010-06-12) 1 commit
-> * lt/extended-sha1-match-commit-with-regexp (2010-04-23) 1 commit
-> * jc/rev-list-ancestry-path (2010-06-04) 5 commits
-> * eb/core-eol (2010-06-04) 4 commits
+William Hall wrote:
+ > Thanks Steven,
+ >
+ > The noMetadata option will prevent me from doing anything other than 
+a one-shot import, which is not what I want. I need to somehow devise a 
+workflow that allows me bidirectional push/pull between an svn repo and 
+a remote git repo.
+ >
+ >
+ >
+ > Steven Michalske wrote:
+ >> On Jun 16, 2010, at 4:02 PM, William Hall wrote:
+ >>
+ >>> The issue is the dcommit operation from the bridge. The rebase part 
+of this re-writes the commit messages to include the SVN commit-ids 
+which is nice, but screws up the push/pulls between the bridge and the 
+bare repo.
+ >>
+ >> Look into svn.noMetadata configuration option.  It will prevent you 
+from rebuilding the svn to git bridge if something seriously goes wrong, 
+but it prevents the messages from changing.
+ >>
+ >> svn-remote.<name>.noMetadata
+ >> This gets rid of the git-svn-id: lines at the end of every commit.
+ >> If you lose your .git/svn/git-svn/.rev_db file, git svn will not be 
+able to rebuild it and you won't be able to fetch again, either. This is 
+fine for one-shot imports.
+ >> The git svn log command will not work on repositories using this, 
+either. Using this conflicts with the useSvmProps option for (hopefully) 
+obvious reasons
+ > --
+ > To unsubscribe from this list: send the line "unsubscribe git" in
+ > the body of a message to majordomo@vger.kernel.org
+ > More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-I already merged these to 'next'.
+
+William Hall wrote:
+> Thanks Steven,
+> 
+> The noMetadata option will prevent me from doing anything other than a 
+> one-shot import, which is not what I want. I need to somehow devise a 
+> workflow that allows me bidirectional push/pull between an svn repo and 
+> a remote git repo.
+> 
+> 
+> 
+> Steven Michalske wrote:
+>> On Jun 16, 2010, at 4:02 PM, William Hall wrote:
+>>
+>>> The issue is the dcommit operation from the bridge. The rebase part 
+>>> of this re-writes the commit messages to include the SVN commit-ids 
+>>> which is nice, but screws up the push/pulls between the bridge and 
+>>> the bare repo.
+>>
+>> Look into svn.noMetadata configuration option.  It will prevent you 
+>> from rebuilding the svn to git bridge if something seriously goes 
+>> wrong, but it prevents the messages from changing.
+>>
+>> svn-remote.<name>.noMetadata
+>> This gets rid of the git-svn-id: lines at the end of every commit.
+>> If you lose your .git/svn/git-svn/.rev_db file, git svn will not be 
+>> able to rebuild it and you won't be able to fetch again, either. This 
+>> is fine for one-shot imports.
+>> The git svn log command will not work on repositories using this, 
+>> either. Using this conflicts with the useSvmProps option for 
+>> (hopefully) obvious reasons
+> -- 
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
