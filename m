@@ -1,66 +1,60 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #02; Wed, 16)
-Date: Thu, 17 Jun 2010 11:35:40 +0000
-Message-ID: <AANLkTikBRw6gMpfuCxWwYCx3QQin-v86p8AuliMf8B8F@mail.gmail.com>
-References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git pull (Your local changes to ... would be overwritten by 
+ merge)
+Date: Thu, 17 Jun 2010 13:58:05 +0200
+Message-ID: <4C1A0DCD.2070906@drmicha.warpmail.net>
+References: <AANLkTinokUxiDdetcrsrlSExQ7hmhLS5szbTt9KzGKr_@mail.gmail.com> 	<AANLkTimeIWseETfYiMajIqesjJ_p55pRislnQQIaCrbG@mail.gmail.com> 	<4C19FBF8.6010709@drmicha.warpmail.net> <vpq4oh1zzfs.fsf@bauges.imag.fr> <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 17 13:37:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Daniel Blendea <bdaniel7@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 13:59:14 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPDPE-0003Eu-5p
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 13:37:12 +0200
+	id 1OPDkU-00048S-HM
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 13:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab0FQLfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 07:35:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:39295 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751456Ab0FQLfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 07:35:42 -0400
-Received: by iwn9 with SMTP id 9so6681264iwn.19
-        for <git@vger.kernel.org>; Thu, 17 Jun 2010 04:35:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Fcgb+u6nNrFBVckCaeUPV6dMOJ+WXddz98FSYlP9Wig=;
-        b=aFHa2M8wIlsTUTEjWXxfHysCE3tHgo7G+tL/aKT6595ZE+DEsS81RjVPRmqI3o8EU1
-         nldSb6hVvMMPq/FeqLGJ08Ys22pD4+vZTurYnmIvYCtr0Qx/vx8bWmWYdvjoiDDGN4aC
-         aIk5epNpeU+1hRBGoDXfLRITAMQZklURM9NPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=VEjspWLB/YuB8r3vXhXgekOJLjYYEnouA6bkiSvfOe0P/iWtvSPfdX/4mtvgROKZ6G
-         D8rxaMoUrhh6tPmMRricDHBIlCvyk2knv0CQ3s+pdDQEvNVOqmoES72XFwIuvS4KFqjh
-         80DMpU5Rj90wgLSzlzsVPullcFI3ZHjLjQvDk=
-Received: by 10.42.1.69 with SMTP id 5mr3645520icf.42.1276774540366; Thu, 17 
-	Jun 2010 04:35:40 -0700 (PDT)
-Received: by 10.231.155.144 with HTTP; Thu, 17 Jun 2010 04:35:40 -0700 (PDT)
-In-Reply-To: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
+	id S1756431Ab0FQL7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 07:59:04 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33321 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752164Ab0FQL7D (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 07:59:03 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 9AE65F8C94;
+	Thu, 17 Jun 2010 07:58:40 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 17 Jun 2010 07:58:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=bHTh7UJXNdnij9F2s+yPwKamBtk=; b=ElBET+9E6h0Z1cSO9PPshbc/W03pivZDsjNj0SazU+bqVCs3INmljbny/RqrzQFrV1Yhjgl8OZKqaRiQ0OGW8dSp2nXM1jt0sUcHAct3kdDUY74PdhqInMQ9iupeQlOObZjv1fAYjXc6tCw2nTIDwtpL9k2Muz+X292xLZ3Vlqk=
+X-Sasl-enc: skUN5Xp+x+N1uBgFFkv3dXvSUMT9TPAEL+6y0PgNAwLr 1276775920
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E12E8A89F;
+	Thu, 17 Jun 2010 07:58:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100610 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149301>
 
-On Thu, Jun 17, 2010 at 02:03, Junio C Hamano <gitster@pobox.com> wrote:
+Daniel Blendea venit, vidit, dixit 17.06.2010 13:18:
+> Windows 7, did not change anything related to crlf.
+> 
+> I solved the problem with
+> 
+> git fetch --all
+> git reset --hard origin/master
 
-> [New Topics]
-> * ab/blame-textconv (2010-06-07) 3 commits
-> [...]
-> * ab/i18n (2010-06-15) 3 commits
-> [...]
-> * ab/tap (2010-06-09) 4 commits
+I guess this shows that correct diagnostics is not a prerequisite for a
+successful therapy ;)
 
-Confusing, can I maybe ae/ or aab/ so I don't have a namespace clash
-with Axel Bonnet?
+(The diagnostics really indicate a work tree with local uncommitted
+modifications.)
 
-Mainly so that my automagic mailbox search of "What's cooking in
-git.git" + ab/ works, ignore it if it's non-trivial.
+Michael
