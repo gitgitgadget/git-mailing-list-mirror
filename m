@@ -1,284 +1,157 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: [PATCH] Colorize commit decorations
-Date: Fri, 18 Jun 2010 00:15:44 +0800
-Message-ID: <1276791344-25550-1-git-send-email-ayiehere@gmail.com>
-Cc: Nazri Ramliy <ayiehere@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jun 17 18:16:51 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #02; Wed, 16)
+Date: Thu, 17 Jun 2010 09:24:21 -0700
+Message-ID: <7vocf939vu.fsf@alter.siamese.dyndns.org>
+References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	Brian Downing <bdowning@lavos.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	Ian Ward Comfort <icomfort@stanford.edu>,
+	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Johan Herland <johan@herland.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Philippe Bruhat (BooK) <book@cpan.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Simo Melenius <simo.melenius@iki.fi>,
+	Stephen
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 17 18:25:26 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPHlq-0002qn-1R
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 18:16:50 +0200
+	id 1OPHu9-0007g1-Rs
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 18:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932984Ab0FQQQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 12:16:44 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:53265 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932708Ab0FQQQm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 12:16:42 -0400
-Received: by pxi12 with SMTP id 12so45440pxi.19
-        for <git@vger.kernel.org>; Thu, 17 Jun 2010 09:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=drQlMtac+PWBdXU2b+5/UIXrIFhKAWlvKH/NI0B2Jcs=;
-        b=IopglCDIR77VdVq1jQy+0PZTewf1AF6UKlAKlC7uKnkpjb6qETI0aPAWPhb1IMMnp7
-         uEBDS+yJbKiGOBjUUego+LnkdLceC3Pn5PA1DfSKLpQpHQ0PtE7OpFwOm2gtmMwJs109
-         wVnTFpR7Qs104pXyUECD75iXngk/jJrPCzu/g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=GxR14c2QDldFUKP6St01pAy1VGXD5yfAG+dQG8ZM0x+15riyPzkmxYP5HXl6wJaJhx
-         EdXGCnIF4W0qFWebztYn5txpS8aihNT+FPjGrG38/4LZvLvt8z6c+7ZjHz822Nxq6yO/
-         eawxiRVJ55ZyIvqlVDZKjK8R4vKjeJ8fEPmuw=
-Received: by 10.140.58.15 with SMTP id g15mr8494615rva.96.1276791402446;
-        Thu, 17 Jun 2010 09:16:42 -0700 (PDT)
-Received: from localhost.localdomain ([115.132.104.117])
-        by mx.google.com with ESMTPS id q10sm8233610rvp.20.2010.06.17.09.16.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 17 Jun 2010 09:16:40 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.245.g7c42e.dirty
+	id S932998Ab0FQQZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 12:25:19 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58582 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932992Ab0FQQZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 12:25:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D856BC304;
+	Thu, 17 Jun 2010 12:25:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nutj6EdF80VFHNGdZ6NzhmGGOLo=; b=UXadfJ
+	FRoPm/L60CCiXLKg8nfQxRVYcTIk4Vl7WVZxHI2E5uYvYj/xL8qkndhmh/kqX7J+
+	1Dpv5JVjqjyaB0sdVGdqYhAIZ8hfo/0apneZ0kSGy94z31dGh9Iexg9Nbq5+mq9P
+	N8F6xiPQPibw0F+fUjoc2MW1/URyO7zu4BKB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Xh84uaaG3GIRrhI5Nc9mxb6GxD9Tw5di
+	3KsY8b8CTpsMBzdeyicS1cGbO7vzT5ovZ9C8KPnaWx/x7g1zCIIFhDrCWDBOppl5
+	VMJGeOYlPt057xT8TO8BB19IL1gmsYe0XDmietUPkEOj31NifWT1osmTeDqpmDL9
+	qMv3Csdxyqc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7B600BC2FA;
+	Thu, 17 Jun 2010 12:24:50 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 76A23BC2E6; Thu, 17 Jun
+ 2010 12:24:23 -0400 (EDT)
+In-Reply-To: <7viq5ict4p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 16 Jun 2010 19\:03\:50 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DA5882FE-7A2C-11DF-A44B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149318>
 
-Use different color for each type of refs (local, remote, tags, HEAD,
-and stash). This makes the decorations and their type stand out more
-and easier to distinguish in 'git log --decorate'.
+Here are some comments and notes on various topics; this message discusses
+only transitions from 'pu' to 'next'.
 
-Currently all the different types of decorations are shown in the same
-color as the commit id, which is not that easy to spot.
+> * bd/maint-unpack-trees-parawalk-fix (2010-06-10) 1 commit
+>  - unpack-trees: Make index lookahead less pessimal
 
-The color applied for each type of refs are customizable via
-color.log.decorate.<slot> config entry, as documented in
-Documentation/config.txt.
----
- Documentation/config.txt |    5 +++++
- builtin/log.c            |    2 ++
- commit.h                 |    1 +
- decorate.c               |   42 ++++++++++++++++++++++++++++++++++++++++++
- decorate.h               |   27 +++++++++++++++++++++++++++
- log-tree.c               |   39 +++++++++++++++++++++++++++++++--------
- 6 files changed, 108 insertions(+), 8 deletions(-)
+I really need to come up with time to check this one.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 95cf73c..afa4f5a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -725,6 +725,11 @@ color.interactive.<slot>::
- 	commands.  The values of these variables may be specified as
- 	in color.branch.<slot>.
- 
-+color.log.decorate.<slot>::
-+	Use customized color for 'git log --decorate' output.
-+	`<slot>` is one of `local`, `remote`, `tag`, `stash` or `head`
-+	for local refs, remote refs, tags, stash and HEAD, respectively.
-+
- color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
-diff --git a/builtin/log.c b/builtin/log.c
-index 976e16f..bbc5d02 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -296,6 +296,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 		default_show_root = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!prefixcmp(var, "color.log.decorate."))
-+		return parse_decorate_color_config(var, 19, value);
- 	return git_diff_ui_config(var, value, cb);
- }
- 
-diff --git a/commit.h b/commit.h
-index 6ef88dc..a49cfe3 100644
---- a/commit.h
-+++ b/commit.h
-@@ -28,6 +28,7 @@ extern const char *commit_type;
- extern struct decoration name_decoration;
- struct name_decoration {
- 	struct name_decoration *next;
-+	enum decoration_type type;
- 	char name[1];
- };
- 
-diff --git a/decorate.c b/decorate.c
-index 2f8a63e..cbef2b4 100644
---- a/decorate.c
-+++ b/decorate.c
-@@ -5,6 +5,48 @@
- #include "cache.h"
- #include "object.h"
- #include "decorate.h"
-+#include "color.h"
-+
-+static char decoration_colors[][COLOR_MAXLEN] = {
-+	GIT_COLOR_RESET,	/* DECORATION_NONE */
-+	GIT_COLOR_BOLD_GREEN,	/* DECORATION_REF_LOCAL */
-+	GIT_COLOR_BOLD_RED,	/* DECORATION_REF_REMOTE */
-+	GIT_COLOR_BOLD_YELLOW,	/* DECORATION_TAG */
-+	GIT_COLOR_BOLD_MAGENTA,	/* DECORATION_STASH */
-+	GIT_COLOR_BOLD_CYAN	/* DECORATION_HEAD */
-+};
-+
-+const char *decorate_get_color(int decorate_use_color, enum decoration_type ix)
-+{
-+	if (decorate_use_color) {
-+		return decoration_colors[ix];
-+	}
-+	return "";
-+}
-+
-+static int parse_decorate_color_slot(const char *slot) {
-+	if (!strcasecmp(slot, "local"))
-+		return COLOR_DECORATION_REF_LOCAL;
-+	if (!strcasecmp(slot, "remote"))
-+		return COLOR_DECORATION_REF_REMOTE;
-+	if (!strcasecmp(slot, "tag"))
-+		return COLOR_DECORATION_TAG;
-+	if (!strcasecmp(slot, "stash"))
-+		return COLOR_DECORATION_STASH;
-+	if (!strcasecmp(slot, "head"))
-+		return COLOR_DECORATION_HEAD;
-+	return -1;
-+}
-+
-+int parse_decorate_color_config(const char *var, const int ofs, const char *value) {
-+	int slot = parse_decorate_color_slot(var + ofs);
-+	if (slot < 0)
-+		return 0;
-+	if (!value)
-+		return config_error_nonbool(var);
-+	color_parse(value, var, decoration_colors[slot]);
-+	return 0;
-+}
- 
- static unsigned int hash_obj(const struct object *obj, unsigned int n)
- {
-diff --git a/decorate.h b/decorate.h
-index e732804..d593d32 100644
---- a/decorate.h
-+++ b/decorate.h
-@@ -12,6 +12,33 @@ struct decoration {
- 	struct object_decoration *hash;
- };
- 
-+enum decoration_type {
-+	DECORATION_NONE = 0,
-+	DECORATION_REF_LOCAL,
-+	DECORATION_REF_REMOTE,
-+	DECORATION_TAG,
-+	DECORATION_STASH,
-+	DECORATION_HEAD
-+};
-+
-+enum color_decoration {
-+	COLOR_DECORATION_RESET = 0,
-+	COLOR_DECORATION_REF_LOCAL,
-+	COLOR_DECORATION_REF_REMOTE,
-+	COLOR_DECORATION_TAG,
-+	COLOR_DECORATION_STASH,
-+	COLOR_DECORATION_HEAD
-+};
-+
-+const char *decorate_get_color(int diff_use_color, enum decoration_type ix);
-+
-+/*
-+ * log-tree.c uses DIFF_OPT_TST for determining whether to use color
-+ * for showing the commit sha1, use the same check for --decorate
-+ */
-+#define decorate_get_color_opt(o, ix) \
-+	decorate_get_color(DIFF_OPT_TST((o), COLOR_DIFF), ix)
-+
- extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
- extern void *lookup_decoration(struct decoration *n, const struct object *obj);
- 
-diff --git a/log-tree.c b/log-tree.c
-index d3ae969..95ebf1a 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -10,29 +10,41 @@
- 
- struct decoration name_decoration = { "object names" };
- 
--static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
-+static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
- {
--	int plen = strlen(prefix);
- 	int nlen = strlen(name);
--	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + plen + nlen);
--	memcpy(res->name, prefix, plen);
--	memcpy(res->name + plen, name, nlen + 1);
-+	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
-+	memcpy(res->name, name, nlen + 1);
-+	res->type = type;
- 	res->next = add_decoration(&name_decoration, obj, res);
- }
- 
- static int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
- {
- 	struct object *obj = parse_object(sha1);
-+	enum decoration_type type = DECORATION_NONE;
- 	if (!obj)
- 		return 0;
-+
-+	if (!prefixcmp(refname, "refs/heads"))
-+		type = DECORATION_REF_LOCAL;
-+	else if (!prefixcmp(refname, "refs/remotes"))
-+		type = DECORATION_REF_REMOTE;
-+	else if (!prefixcmp(refname, "refs/tags"))
-+		type = DECORATION_TAG;
-+	else if (!prefixcmp(refname, "refs/stash"))
-+		type = DECORATION_STASH;
-+	else if (!prefixcmp(refname, "HEAD"))
-+		type = DECORATION_HEAD;
-+
- 	if (!cb_data || *(int *)cb_data == DECORATE_SHORT_REFS)
- 		refname = prettify_refname(refname);
--	add_name_decoration("", refname, obj);
-+	add_name_decoration(type, refname, obj);
- 	while (obj->type == OBJ_TAG) {
- 		obj = ((struct tag *)obj)->tagged;
- 		if (!obj)
- 			break;
--		add_name_decoration("tag: ", refname, obj);
-+		add_name_decoration(DECORATION_TAG, refname, obj);
- 	}
- 	return 0;
- }
-@@ -60,6 +72,10 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
- {
- 	const char *prefix;
- 	struct name_decoration *decoration;
-+	const char *color_commit =
-+		diff_get_color_opt(&opt->diffopt, DIFF_COMMIT);
-+	const char *color_reset =
-+		decorate_get_color_opt(&opt->diffopt, DECORATION_NONE);
- 
- 	if (opt->show_source && commit->util)
- 		printf("\t%s", (char *) commit->util);
-@@ -70,7 +86,14 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
- 		return;
- 	prefix = " (";
- 	while (decoration) {
--		printf("%s%s", prefix, decoration->name);
-+		printf("%s", prefix);
-+		fputs(decorate_get_color_opt(&opt->diffopt, decoration->type),
-+		      stdout);
-+		if (decoration->type == DECORATION_TAG)
-+			fputs("tag: ", stdout);
-+		printf("%s", decoration->name);
-+		fputs(color_reset, stdout);
-+		fputs(color_commit, stdout);
- 		prefix = ", ";
- 		decoration = decoration->next;
- 	}
--- 
-1.7.1.245.g7c42e.dirty
+> * ab/blame-textconv (2010-06-07) 3 commits
+
+Type punning in textconv_object() needs to be fixed.
+
+> * cp/textconv-cat-file (2010-06-09) 4 commits
+
+Likewise.
+
+> * ab/i18n (2010-06-15) 3 commits
+>  . Add initial C, Shell and Perl gettext translations
+>  . fixup! Add infrastructure
+>  . Add infrastructure for translating Git with gettext
+
+I haven't got around to fix conflicts merging this with various other
+topics yet.
+
+> * ab/tap (2010-06-09) 4 commits
+>  - We use TAP so the Perl test can run without scaffolding
+>  - Skip tests in a way that makes sense under TAP
+>  - Merge branch 'jc/t9129-any-utf8' into ab/tap
+>  - Make test-lib.sh emit valid TAP format
+>  (this branch uses jc/t9129-any-utf8.)
+
+I was not sure why TAP is worth the trouble, and I still am not sure.
+
+> * jl/maint-diff-ignore-submodules (2010-06-08) 2 commits
+>  - Add optional parameters to the diff option "--ignore-submodules"
+>  - git diff: rename test that had a conflicting name
+
+Is everybody happy with the naming of --ignore-submodules=<when> and the
+semantics?
+
+> * tr/rev-list-count (2010-06-12) 2 commits
+
+I am not convinced the upstream selection logic between git/svn is right
+in the tip one.  Clues?
+
+> * tr/send-email-8bit (2010-06-12) 1 commit
+
+If I am not misreading the patch, it does not seem to stop the scanning of
+the "C-T-E:" header at the end of header; it should.
+
+> * pb/maint-perl-errmsg-no-dir (2010-06-14) 1 commit
+
+There was a comment on what the proposed commmit log message said
+regarding $!; perhaps an update is in order?
+
+> * zl/mailinfo-recode-patch (2010-06-14) 2 commits
+
+The interaction between "-n --recode" needs to be fixed; it probably is Ok
+to reuse "i18n.commitEncoding".  Opinions?
+
+> * jn/grep-open (2010-06-12) 4 commits
+> * jn/gitweb-return-or-exit-cleanup (2010-06-13) 1 commit
+> * jc/maint-simpler-common-prefix (2010-06-16) 1 commit
+> * mg/pretty-magic-space (2010-06-14) 1 commit
+> * sb/format-patch-signature (2010-06-15) 2 commits
+> * cc/cherry-pick-series (2010-06-02) 8 commits
+
+I will merge these to 'next' shortly.
+
+> * ic/maint-rebase-i-abort (2010-06-08) 1 commit
+> * jk/maint-advice-empty-amend (2010-06-06) 1 commit
+> * jn/document-rebase-i-p-limitation (2010-05-31) 1 commit
+> * rr/parse-date-refactor (2010-06-03) 1 commit
+> * sm/branch-broken-ref (2010-06-04) 2 commits
+> * cc/maint-commit-reflog-msg (2010-06-12) 1 commit
+> * lt/extended-sha1-match-commit-with-regexp (2010-04-23) 1 commit
+> * jc/rev-list-ancestry-path (2010-06-04) 5 commits
+> * eb/core-eol (2010-06-04) 4 commits
+
+I already merged these to 'next'.
