@@ -1,97 +1,65 @@
-From: Daniel Blendea <bdaniel7@gmail.com>
-Subject: Re: git pull (Your local changes to ... would be overwritten by 
-	merge)
-Date: Thu, 17 Jun 2010 13:20:31 +0300
-Message-ID: <AANLkTinQkCH5OhnoerCJs2x_2uChwaqVPApeezwcYy1o@mail.gmail.com>
-References: <AANLkTinokUxiDdetcrsrlSExQ7hmhLS5szbTt9KzGKr_@mail.gmail.com> 
-	<AANLkTimeIWseETfYiMajIqesjJ_p55pRislnQQIaCrbG@mail.gmail.com> 
-	<AANLkTimakxkEzFHSwezpXelLV171zGFEQULNEVpJlrah@mail.gmail.com>
+From: William Hall <will@gnatter.net>
+Subject: Re: SVN migration
+Date: Thu, 17 Jun 2010 11:33:43 +0100
+Message-ID: <4C19FA07.9010603@gnatter.net>
+References: <4C1957EF.6070504@gnatter.net> <7B0F34CE-9C9F-4FC3-AD96-8B1B8DD4359B@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Thu Jun 17 12:21:13 2010
+To: Steven Michalske <smichalske@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 12:33:59 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPCDg-0003E0-Uf
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 12:21:13 +0200
+	id 1OPCQ3-0000sN-Kj
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 12:33:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932429Ab0FQKVG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jun 2010 06:21:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62270 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755423Ab0FQKVD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 06:21:03 -0400
-Received: by iwn9 with SMTP id 9so6621567iwn.19
-        for <git@vger.kernel.org>; Thu, 17 Jun 2010 03:21:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=oXtMZ3mNw6zR4WaAE44efXS6Jlytem19VN7vbtrqjVQ=;
-        b=u1RIIHVYqkepiRZ1GRYIxPm1AtFhgLKOSRS6lJFDzJkw4eDS04vPWZwGQTsysr8dBl
-         vKRBJVOKX5YJdRTYSS8obbZN4/VyW2xrssWQ7zOF2aPF9mkxmxdSyL5dzoqvAGq+L/wk
-         UVAbpxN93oikjF3LmXmPGDzkEQfAcQZfDlT9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=navmRXFzVv9KY0XVci3g8+B+STaOMheiiJpR3YadSJJrLTnLyIn1UnX6npulLQR1/L
-         3aVCJNE2wrkYQi+Za9gksHXFNVZgHvfB+tWT1CFWePds7kUV0A8CNv/6fgdjdsg2h0IH
-         COvNz3ARp3UfeeoVZtAQdkqLp7VrblybecdrA=
-Received: by 10.42.7.210 with SMTP id f18mr3590376icf.9.1276770061382; Thu, 17 
-	Jun 2010 03:21:01 -0700 (PDT)
-Received: by 10.231.190.11 with HTTP; Thu, 17 Jun 2010 03:20:31 -0700 (PDT)
-In-Reply-To: <AANLkTimakxkEzFHSwezpXelLV171zGFEQULNEVpJlrah@mail.gmail.com>
+	id S1759749Ab0FQKdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 06:33:53 -0400
+Received: from mail.qualtersystems.com ([74.200.89.103]:52406 "EHLO
+	mail.qualtersystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759735Ab0FQKdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 06:33:52 -0400
+Received: from localhost (mail [127.0.0.1])
+	by mail.qualtersystems.com (Postfix) with ESMTP id 6169339607E7;
+	Thu, 17 Jun 2010 11:33:51 +0100 (BST)
+X-Virus-Scanned: amavisd-new at qualtersystems.com
+Received: from mail.qualtersystems.com ([127.0.0.1])
+	by localhost (mail.qualtersystems.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Z2OenMKwIqgP; Thu, 17 Jun 2010 11:33:46 +0100 (BST)
+Received: from merton.mpc.local (mpc-1.sohonet.co.uk [193.203.82.226])
+	(Authenticated sender: will@mail.qualtersystems.com)
+	by mail.qualtersystems.com (Postfix) with ESMTP id 6E98539507DB;
+	Thu, 17 Jun 2010 11:33:45 +0100 (BST)
+User-Agent: Thunderbird 2.0.0.12 (X11/20080213)
+In-Reply-To: <7B0F34CE-9C9F-4FC3-AD96-8B1B8DD4359B@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149296>
 
-I have no idea, I know git just barely to be able to update my copy
-once in a while, then build it to get the binaries.
-I didn't modified anything and the build script builds the binaries in
-a different location.
+Thanks Steven,
 
-The file which threw the first error was already in my copy and it was
-modified in the remote branch.
----
-Daniel
+The noMetadata option will prevent me from doing anything other than a 
+one-shot import, which is not what I want. I need to somehow devise a 
+workflow that allows me bidirectional push/pull between an svn repo and 
+a remote git repo.
 
 
 
-On Thu, Jun 17, 2010 at 12:46, Santi B=E9jar <santi@agolina.net> wrote:
-> On Thu, Jun 17, 2010 at 11:35 AM, Daniel Blendea <bdaniel7@gmail.com>=
- wrote:
->> Hello,
->>
->> A while ago I have cloned on my computer a git repo.
->> Since then, the developers have modified several files in the repo.
->> Now I want to update my copy with the latest changes.
->>
->> I do 'git pull' but I get 'Your local changes to .... would be
->> overwritten by merge.=A0 Aborting.'
->> I didn't modified any local file. I tried using 'git stash save' but=
- no luck.
->
-> Are they known to git? What is their status (git status)?
->
-> If they are not known to git, it seams that there are *new* files bot=
-h
-> in the remote branch and the working copy (new files in the working
-> copy are not saved with 'git stash save').
->
-> I would rename/mv the conflicting new files in the working copy,
-> perform the pull and maybe compare the new files from the branch with
-> the ones from the working copy.
->
-> HTH,
-> Santi
->
+Steven Michalske wrote:
+> On Jun 16, 2010, at 4:02 PM, William Hall wrote:
+> 
+>> The issue is the dcommit operation from the bridge. The rebase part of this re-writes the commit messages to include the SVN commit-ids which is nice, but screws up the push/pulls between the bridge and the bare repo.
+> 
+> Look into svn.noMetadata configuration option.  It will prevent you from rebuilding the svn to git bridge if something seriously goes wrong, but it prevents the messages from changing.
+> 
+> svn-remote.<name>.noMetadata
+> This gets rid of the git-svn-id: lines at the end of every commit.
+> If you lose your .git/svn/git-svn/.rev_db file, git svn will not be able to rebuild it and you won't be able to fetch again, either. This is fine for one-shot imports.
+> The git svn log command will not work on repositories using this, either. Using this conflicts with the useSvmProps option for (hopefully) obvious reasons
