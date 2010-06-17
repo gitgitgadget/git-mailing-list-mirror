@@ -1,100 +1,66 @@
-From: Daniel Blendea <bdaniel7@gmail.com>
-Subject: Re: git pull (Your local changes to ... would be overwritten by 
-	merge)
-Date: Thu, 17 Jun 2010 14:18:21 +0300
-Message-ID: <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com>
-References: <AANLkTinokUxiDdetcrsrlSExQ7hmhLS5szbTt9KzGKr_@mail.gmail.com> 
-	<AANLkTimeIWseETfYiMajIqesjJ_p55pRislnQQIaCrbG@mail.gmail.com> 
-	<4C19FBF8.6010709@drmicha.warpmail.net> <vpq4oh1zzfs.fsf@bauges.imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #02; Wed, 16)
+Date: Thu, 17 Jun 2010 11:35:40 +0000
+Message-ID: <AANLkTikBRw6gMpfuCxWwYCx3QQin-v86p8AuliMf8B8F@mail.gmail.com>
+References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jun 17 13:18:58 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 13:37:17 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPD7a-0003d7-0G
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 13:18:58 +0200
+	id 1OPDPE-0003Eu-5p
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 13:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759867Ab0FQLSw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jun 2010 07:18:52 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58853 "EHLO
+	id S1752220Ab0FQLfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 07:35:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39295 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759761Ab0FQLSw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 07:18:52 -0400
-Received: by iwn9 with SMTP id 9so6667985iwn.19
-        for <git@vger.kernel.org>; Thu, 17 Jun 2010 04:18:51 -0700 (PDT)
+	with ESMTP id S1751456Ab0FQLfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 07:35:42 -0400
+Received: by iwn9 with SMTP id 9so6681264iwn.19
+        for <git@vger.kernel.org>; Thu, 17 Jun 2010 04:35:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=icJcYPwbfZ8CVgCHVos18sNd1CuIGtkQh96xlLmKiPI=;
-        b=G/+4ssrJ2/Q2FawqVYKf9P4ekAkCmuZkC6dqPDvgJ80eFDc6B//e2kvxvM84uJ7l7H
-         7Ek5dNWUQscZelHNBxxOLKPTZXqjq9QS7zOIuihVuZotCM0F/Yjl26v5yPCmpSMs4zde
-         VQBFOOmfO7E1F67MVeMYQ1r77tM/VAFtD3ptQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Fcgb+u6nNrFBVckCaeUPV6dMOJ+WXddz98FSYlP9Wig=;
+        b=aFHa2M8wIlsTUTEjWXxfHysCE3tHgo7G+tL/aKT6595ZE+DEsS81RjVPRmqI3o8EU1
+         nldSb6hVvMMPq/FeqLGJ08Ys22pD4+vZTurYnmIvYCtr0Qx/vx8bWmWYdvjoiDDGN4aC
+         aIk5epNpeU+1hRBGoDXfLRITAMQZklURM9NPo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=BZLA7W4b/F9JLDpP0st8PP4wW2iGAhk+F6Ecnxc/NUXchYdwC5ZMNK2oLnGVHVgJ4G
-         QUJ556cD2mkJZuAaQHTiiiw0taOhmB/B8WeoXWGt6j6AKSKbA4VELo5Td6CFnaYF+FKg
-         /QBOo6QZVxNfeUr1S2loglWmMLr2wdLBrg3sw=
-Received: by 10.231.141.15 with SMTP id k15mr609269ibu.161.1276773531119; Thu, 
-	17 Jun 2010 04:18:51 -0700 (PDT)
-Received: by 10.231.190.11 with HTTP; Thu, 17 Jun 2010 04:18:21 -0700 (PDT)
-In-Reply-To: <vpq4oh1zzfs.fsf@bauges.imag.fr>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VEjspWLB/YuB8r3vXhXgekOJLjYYEnouA6bkiSvfOe0P/iWtvSPfdX/4mtvgROKZ6G
+         D8rxaMoUrhh6tPmMRricDHBIlCvyk2knv0CQ3s+pdDQEvNVOqmoES72XFwIuvS4KFqjh
+         80DMpU5Rj90wgLSzlzsVPullcFI3ZHjLjQvDk=
+Received: by 10.42.1.69 with SMTP id 5mr3645520icf.42.1276774540366; Thu, 17 
+	Jun 2010 04:35:40 -0700 (PDT)
+Received: by 10.231.155.144 with HTTP; Thu, 17 Jun 2010 04:35:40 -0700 (PDT)
+In-Reply-To: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149300>
 
-Windows 7, did not change anything related to crlf.
+On Thu, Jun 17, 2010 at 02:03, Junio C Hamano <gitster@pobox.com> wrote:
 
-I solved the problem with
+> [New Topics]
+> * ab/blame-textconv (2010-06-07) 3 commits
+> [...]
+> * ab/i18n (2010-06-15) 3 commits
+> [...]
+> * ab/tap (2010-06-09) 4 commits
 
-git fetch --all
-git reset --hard origin/master
+Confusing, can I maybe ae/ or aab/ so I don't have a namespace clash
+with Axel Bonnet?
 
----
-Daniel
-
-
-
-On Thu, Jun 17, 2010 at 14:11, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->
->> Daniel Blendea venit, vidit, dixit 17.06.2010 11:35:
->>> Hello,
->>>
->>> A while ago I have cloned on my computer a git repo.
->>> Since then, the developers have modified several files in the repo.
->>> Now I want to update my copy with the latest changes.
->>>
->>> I do 'git pull' but I get 'Your local changes to .... would be
->>> overwritten by merge. =A0Aborting.'
->>> I didn't modified any local file. I tried using 'git stash save' bu=
-t no luck.
->
-> Which OS? Do you have any crlf conversion enabled? Any filter set in
-> .gitattributes?
->
->> Most likely the remote side did a non-forward push and brought you i=
-n
->> that situation.
->
-> A non-fast forward push would force a non-fast forward pull,
-> possibly/probably with conflicts, but wouldn't trigger this message,
-> which is generated before the merge is actually started.
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
->
+Mainly so that my automagic mailbox search of "What's cooking in
+git.git" + ab/ works, ignore it if it's non-trivial.
