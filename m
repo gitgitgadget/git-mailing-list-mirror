@@ -1,75 +1,69 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH] Allow hashes in git rebase --interactive --autosquash.
-Date: Thu, 17 Jun 2010 09:17:47 -0400
-Message-ID: <AANLkTikJtNXg7Eac5CQkMBXt14tu8G7Kaxy-3t1wmhBF@mail.gmail.com>
-References: <20100617125746.E86B42FC00@perkele>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: moving a remote branch?
+Date: Thu, 17 Jun 2010 21:19:21 +0800
+Message-ID: <AANLkTileL-N2Q-90jcxKtQMkaPZob-slGevcorpBHXaj@mail.gmail.com>
+References: <AANLkTikA5jGl1LiU2sNTN1NP_syTfPAeLF7sS6dBozyN@mail.gmail.com>
+	<AANLkTimTSU7Db7cMlC0ZxQ47IoBUr4Ee4G-GfgDoYLmK@mail.gmail.com>
+	<A612847CFE53224C91B23E3A5B48BAC74483CEEA82@xmail3.se.axis.com>
+	<AANLkTikeLpvGA-RFBdMGblOnhNKJ6dUrpUZQlENMP51A@mail.gmail.com>
+	<A612847CFE53224C91B23E3A5B48BAC74483CEEB16@xmail3.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Thu Jun 17 15:17:57 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Thomas Anderson <zelnaga@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 15:19:28 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPEyj-0002FZ-BI
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 15:17:57 +0200
+	id 1OPF0C-0003GA-8A
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 15:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759978Ab0FQNRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 09:17:52 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64882 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759923Ab0FQNRu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 09:17:50 -0400
-Received: by iwn9 with SMTP id 9so6771708iwn.19
-        for <git@vger.kernel.org>; Thu, 17 Jun 2010 06:17:50 -0700 (PDT)
+	id S1759923Ab0FQNTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 09:19:23 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:32995 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753564Ab0FQNTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 09:19:22 -0400
+Received: by gwj15 with SMTP id 15so4852781gwj.19
+        for <git@vger.kernel.org>; Thu, 17 Jun 2010 06:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type;
-        bh=LvFDWyPi6ZWFmZz1DTBnRFyQ0We33qRKwof/OxBSQK0=;
-        b=MJ1F0We1jcWUVYskafgF5edls3CJFyfPj7ll8Voa+ByNsYujEtiPIjhJIdeZj76h5Y
-         6Dz+PLCsDkZm+KFg4gO+dXOnZ1XsjXTQlVWcNsRxj9KXEl4QtPQalDfzS7FyvjZ2MYe8
-         0KmGUjrWQHoSPcXusd76AnRDw8Rthnsbuno7M=
+        bh=HUeOxD/AqpNH0KqaZwssQSGfwP93CoMl+yv1sEXPX7E=;
+        b=idT5NgLEAAPEnJ4WSv4WZCh7hzhCr94GcRabS8WbuNhGCerzfu+gtXFvfmt+/voZgg
+         WtHn4tw94h9fmSzemA95dxKHVGaaSkH/JG4OXzbHdqycvz9oATVEbol5GN+c4FCZj/P0
+         cvd7OSjexsTtX4yH91KtKV9IeSdA2IJyhWC3I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=n2d+/+ndPbX81V55Fr79wfBCbvin1MpWgdFnhOAS6aw/aSVBLDU5C6Fljfva+sivyt
-         pG2gDDyZmztwweTqFvd+CJ8G55XbN3PS2/EBxrxuOhgTW3lMMrVTS8CvVaFlZgrv1FDR
-         vHnFQWfcGq/ROGK3mzMdQNtFEbqdSOT+RDajo=
-Received: by 10.42.0.68 with SMTP id 4mr3672815icb.93.1276780668805; Thu, 17 
-	Jun 2010 06:17:48 -0700 (PDT)
-Received: by 10.231.120.19 with HTTP; Thu, 17 Jun 2010 06:17:47 -0700 (PDT)
-In-Reply-To: <20100617125746.E86B42FC00@perkele>
+        b=I0SiDIgvZFZxaY94bkyQ3kQjquwyFMTLjc+Q7WkmltG6poQX4KBAOT8VbWcvHfFFSt
+         2GgCo4179Qit55KCH5QwmEqZ1jpZPBxMbXUE84ZLmSjpVbf3r7UoW04Mv4KAoDotqTA8
+         vQAeIdcPAOveEdvVZ9iwUR257/siM00ADjqQQ=
+Received: by 10.91.213.17 with SMTP id p17mr4832364agq.205.1276780761452; Thu, 
+	17 Jun 2010 06:19:21 -0700 (PDT)
+Received: by 10.90.29.10 with HTTP; Thu, 17 Jun 2010 06:19:21 -0700 (PDT)
+In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC74483CEEB16@xmail3.se.axis.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149306>
 
-On Thu, Jun 17, 2010 at 8:55 AM, Peter Krefting <peter@softwolves.pp.se> wrote:
-> In addition to matching the "fixup!" and "squash!" commits to the commit
-> message, also match the commit hash. This allows a commit message like
-> "fixup! e83c5163316f89bfbde7d9ab23ca2e25604af290" to be detected as a
-> fixup commit.
+On Thu, Jun 17, 2010 at 9:02 PM, Peter Kjellerstedt >
+> No, you will not (at least not with git 1.7.1 that I use).
 >
-> Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
-> ---
+> Neither do you need to do the two steps below as the two pushes
+> above are enough to also keep the status of the remote branches
+> in sync in the local repository..
 >
-> I actually misread the git-rebase manual page to think that this was how
-> "fixup!" and "squash!" was supposed to be used, and now I have so many
-> "fixup! <hash>" commits to rebase that I felt it worth it to implement
-> support for it... :-)
+> //Peter
 
-Heh. I have this alias for creating my fixup commits:
+Ah, you are right. Thanks for the lesson.
 
-$ git help fixup
-`git fixup' is aliased to `!f() { git commit -m "$(git show -s
---pretty='format:fixup! %s%n%nFixup for %h%n' "$@")"; }; f'
-
-:-)
-
-j.
+nazri.
