@@ -1,129 +1,284 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [GSoC 2010 Update] Please try the initial version of the line level 
-	history browser
-Date: Fri, 18 Jun 2010 00:05:10 +0800
-Message-ID: <AANLkTimRGZziLnffQXmzYnNhhE3dE_5Hsp1mxAEmBiIk@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 17 18:05:23 2010
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: [PATCH] Colorize commit decorations
+Date: Fri, 18 Jun 2010 00:15:44 +0800
+Message-ID: <1276791344-25550-1-git-send-email-ayiehere@gmail.com>
+Cc: Nazri Ramliy <ayiehere@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Jun 17 18:16:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPHai-00058d-FD
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 18:05:20 +0200
+	id 1OPHlq-0002qn-1R
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 18:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760273Ab0FQQFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jun 2010 12:05:13 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:65385 "EHLO
+	id S932984Ab0FQQQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 12:16:44 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:53265 "EHLO
 	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756311Ab0FQQFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 12:05:11 -0400
-Received: by pxi12 with SMTP id 12so40226pxi.19
-        for <git@vger.kernel.org>; Thu, 17 Jun 2010 09:05:11 -0700 (PDT)
+	with ESMTP id S932708Ab0FQQQm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 12:16:42 -0400
+Received: by pxi12 with SMTP id 12so45440pxi.19
+        for <git@vger.kernel.org>; Thu, 17 Jun 2010 09:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=13MHt598k/WVv4k6BWDQMTrrAQMA1fPITZYsyJTudFw=;
-        b=PHftw/oEKeUKZRHZMTAmFFjuGwg3PXdxx5CmAD6uOzc9y0ldy+o0Kx0WAYUAF8XNnZ
-         x4VV6z8P0l0WJZqN4gXVYNRvwE7Yk6oRf/l9qU3sQuJkuEVqjh+AKs0Tnov9OyUg9GHa
-         oEzB5Joddq7Bj6SQ3nS+bM1XT9A22M1LitfTI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=drQlMtac+PWBdXU2b+5/UIXrIFhKAWlvKH/NI0B2Jcs=;
+        b=IopglCDIR77VdVq1jQy+0PZTewf1AF6UKlAKlC7uKnkpjb6qETI0aPAWPhb1IMMnp7
+         uEBDS+yJbKiGOBjUUego+LnkdLceC3Pn5PA1DfSKLpQpHQ0PtE7OpFwOm2gtmMwJs109
+         wVnTFpR7Qs104pXyUECD75iXngk/jJrPCzu/g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=EbKVmyELObgvQQ0/KWUz5ri+XY5nI0G/qashGd6JW4yZ7DO8KVNMkTUcYuDn22sgKk
-         5H6fTNGrPoDPsTITnwwvSx2oBiWKYMaS9VCL66B6Ts9k0b2Lh2aOG+DfwW3RORhzGAa+
-         lngS7IRCOyCGxm4dD/1uNLDpRlZ9Ye7PG30Yo=
-Received: by 10.229.187.82 with SMTP id cv18mr4785526qcb.83.1276790710156; 
-	Thu, 17 Jun 2010 09:05:10 -0700 (PDT)
-Received: by 10.229.98.70 with HTTP; Thu, 17 Jun 2010 09:05:10 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=GxR14c2QDldFUKP6St01pAy1VGXD5yfAG+dQG8ZM0x+15riyPzkmxYP5HXl6wJaJhx
+         EdXGCnIF4W0qFWebztYn5txpS8aihNT+FPjGrG38/4LZvLvt8z6c+7ZjHz822Nxq6yO/
+         eawxiRVJ55ZyIvqlVDZKjK8R4vKjeJ8fEPmuw=
+Received: by 10.140.58.15 with SMTP id g15mr8494615rva.96.1276791402446;
+        Thu, 17 Jun 2010 09:16:42 -0700 (PDT)
+Received: from localhost.localdomain ([115.132.104.117])
+        by mx.google.com with ESMTPS id q10sm8233610rvp.20.2010.06.17.09.16.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 17 Jun 2010 09:16:40 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.245.g7c42e.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149317>
 
-Hi all,
+Use different color for each type of refs (local, remote, tags, HEAD,
+and stash). This makes the decorations and their type stand out more
+and easier to distinguish in 'git log --decorate'.
 
-    After 3 weeks of heavy development, I have finally made up a
-usable version of line level history browser. Thomas and I have try
-some use cases with it indeed generate useful output for us. :) So, I
-think it is a good chance to let all of the ones who is interested in
-this feature have a try with it, and please give me any advice if any.
+Currently all the different types of decorations are shown in the same
+color as the commit id, which is not that easy to spot.
 
-    Generally, the code is located at:
+The color applied for each type of refs are customizable via
+color.log.decorate.<slot> config entry, as documented in
+Documentation/config.txt.
+---
+ Documentation/config.txt |    5 +++++
+ builtin/log.c            |    2 ++
+ commit.h                 |    1 +
+ decorate.c               |   42 ++++++++++++++++++++++++++++++++++++++++++
+ decorate.h               |   27 +++++++++++++++++++++++++++
+ log-tree.c               |   39 +++++++++++++++++++++++++++++++--------
+ 6 files changed, 108 insertions(+), 8 deletions(-)
 
-ssh://repo.or.cz/srv/git/line.git   phrase2
-
-Yes, this is a tag on 'diff-range' branch, all development is on this
-branch and phrase1/phrase2 are tags used for 'public testing' version.
-:)
-
-For the feature itself, it supports a command line syntax:  git-log
-log [rev] -L <s>,<e> -L <s>,<e> <file1> -L <s>,<e> file2. And the
-multiple ranges case is not fully tested, but mostly works well.
-
-Here are some interesting cases we have run until now. Generally, the
-line level history will show users the complete change story of any
-line range.
-I usually use it for two purpose:
-1. Understand code. Many times, when I want to read/modify some lines
-of code, the first thing is to try to find out whether my changes has
-been considered by other ones. And viewing the whole history of just
-these lines( the function contain these lines) is necessary, so ./git
-log -L /try_to_find_renames/,/^}/ tree-diff.c and "git log -L '/int
-rev_compare_tree/,/^}/' revision.c" helps. :)
-2. Find out some code I have delete. :) yes, sometimes, after some
-commits, I find the 3 lines deleted the day before yerstoday may be
-better than current one. But I really forget what they exactly are
-except I know they have appeared in which function. So, run the line
-log to find it like. ./git log -L '/void map_lines/,/^}/' line.c to
-find it.
-
-And Thomas give some other interesting usecases.
-1. Use  "git log -L /common_prefix/,/^}/ dir.c" to replace a series
-'git blame; git show' to find what whether the function is buggy.
-2. Try 'git log be58e70^ -L /builtin_funcname_pattern/,/^}/ diff.c',
-the line level browser will report the 'nontrivial merges' touch the
-interesting lines.
-
-So, come on everybody, try it in your way, and tell me your advice,
-thanks a lot!
-
-
-Finally, below are the change summary:
- Makefile        |    2 +
- builtin/log.c   |  125 ++++++-
- diff.c          |    6 +-
- diff.h          |   22 +
- diffcore.h      |    3 +
- line.c          | 1210 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- line.h          |  120 ++++++
- parse-options.c |   24 +-
- parse-options.h |    5 +
- revision.c      |   16 +-
- revision.h      |   12 +-
- 11 files changed, 1534 insertions(+), 11 deletions(-)
-
-
-And finally, my future plans are:
-1. Fix some memory leaks of this verion.
-2. Collect advice of this version and improve it.
-3. Start to prepare this version to list and submit patches.
-
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 95cf73c..afa4f5a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -725,6 +725,11 @@ color.interactive.<slot>::
+ 	commands.  The values of these variables may be specified as
+ 	in color.branch.<slot>.
+ 
++color.log.decorate.<slot>::
++	Use customized color for 'git log --decorate' output.
++	`<slot>` is one of `local`, `remote`, `tag`, `stash` or `head`
++	for local refs, remote refs, tags, stash and HEAD, respectively.
++
+ color.pager::
+ 	A boolean to enable/disable colored output when the pager is in
+ 	use (default is true).
+diff --git a/builtin/log.c b/builtin/log.c
+index 976e16f..bbc5d02 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -296,6 +296,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
+ 		default_show_root = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!prefixcmp(var, "color.log.decorate."))
++		return parse_decorate_color_config(var, 19, value);
+ 	return git_diff_ui_config(var, value, cb);
+ }
+ 
+diff --git a/commit.h b/commit.h
+index 6ef88dc..a49cfe3 100644
+--- a/commit.h
++++ b/commit.h
+@@ -28,6 +28,7 @@ extern const char *commit_type;
+ extern struct decoration name_decoration;
+ struct name_decoration {
+ 	struct name_decoration *next;
++	enum decoration_type type;
+ 	char name[1];
+ };
+ 
+diff --git a/decorate.c b/decorate.c
+index 2f8a63e..cbef2b4 100644
+--- a/decorate.c
++++ b/decorate.c
+@@ -5,6 +5,48 @@
+ #include "cache.h"
+ #include "object.h"
+ #include "decorate.h"
++#include "color.h"
++
++static char decoration_colors[][COLOR_MAXLEN] = {
++	GIT_COLOR_RESET,	/* DECORATION_NONE */
++	GIT_COLOR_BOLD_GREEN,	/* DECORATION_REF_LOCAL */
++	GIT_COLOR_BOLD_RED,	/* DECORATION_REF_REMOTE */
++	GIT_COLOR_BOLD_YELLOW,	/* DECORATION_TAG */
++	GIT_COLOR_BOLD_MAGENTA,	/* DECORATION_STASH */
++	GIT_COLOR_BOLD_CYAN	/* DECORATION_HEAD */
++};
++
++const char *decorate_get_color(int decorate_use_color, enum decoration_type ix)
++{
++	if (decorate_use_color) {
++		return decoration_colors[ix];
++	}
++	return "";
++}
++
++static int parse_decorate_color_slot(const char *slot) {
++	if (!strcasecmp(slot, "local"))
++		return COLOR_DECORATION_REF_LOCAL;
++	if (!strcasecmp(slot, "remote"))
++		return COLOR_DECORATION_REF_REMOTE;
++	if (!strcasecmp(slot, "tag"))
++		return COLOR_DECORATION_TAG;
++	if (!strcasecmp(slot, "stash"))
++		return COLOR_DECORATION_STASH;
++	if (!strcasecmp(slot, "head"))
++		return COLOR_DECORATION_HEAD;
++	return -1;
++}
++
++int parse_decorate_color_config(const char *var, const int ofs, const char *value) {
++	int slot = parse_decorate_color_slot(var + ofs);
++	if (slot < 0)
++		return 0;
++	if (!value)
++		return config_error_nonbool(var);
++	color_parse(value, var, decoration_colors[slot]);
++	return 0;
++}
+ 
+ static unsigned int hash_obj(const struct object *obj, unsigned int n)
+ {
+diff --git a/decorate.h b/decorate.h
+index e732804..d593d32 100644
+--- a/decorate.h
++++ b/decorate.h
+@@ -12,6 +12,33 @@ struct decoration {
+ 	struct object_decoration *hash;
+ };
+ 
++enum decoration_type {
++	DECORATION_NONE = 0,
++	DECORATION_REF_LOCAL,
++	DECORATION_REF_REMOTE,
++	DECORATION_TAG,
++	DECORATION_STASH,
++	DECORATION_HEAD
++};
++
++enum color_decoration {
++	COLOR_DECORATION_RESET = 0,
++	COLOR_DECORATION_REF_LOCAL,
++	COLOR_DECORATION_REF_REMOTE,
++	COLOR_DECORATION_TAG,
++	COLOR_DECORATION_STASH,
++	COLOR_DECORATION_HEAD
++};
++
++const char *decorate_get_color(int diff_use_color, enum decoration_type ix);
++
++/*
++ * log-tree.c uses DIFF_OPT_TST for determining whether to use color
++ * for showing the commit sha1, use the same check for --decorate
++ */
++#define decorate_get_color_opt(o, ix) \
++	decorate_get_color(DIFF_OPT_TST((o), COLOR_DIFF), ix)
++
+ extern void *add_decoration(struct decoration *n, const struct object *obj, void *decoration);
+ extern void *lookup_decoration(struct decoration *n, const struct object *obj);
+ 
+diff --git a/log-tree.c b/log-tree.c
+index d3ae969..95ebf1a 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -10,29 +10,41 @@
+ 
+ struct decoration name_decoration = { "object names" };
+ 
+-static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
++static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
+ {
+-	int plen = strlen(prefix);
+ 	int nlen = strlen(name);
+-	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + plen + nlen);
+-	memcpy(res->name, prefix, plen);
+-	memcpy(res->name + plen, name, nlen + 1);
++	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
++	memcpy(res->name, name, nlen + 1);
++	res->type = type;
+ 	res->next = add_decoration(&name_decoration, obj, res);
+ }
+ 
+ static int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+ {
+ 	struct object *obj = parse_object(sha1);
++	enum decoration_type type = DECORATION_NONE;
+ 	if (!obj)
+ 		return 0;
++
++	if (!prefixcmp(refname, "refs/heads"))
++		type = DECORATION_REF_LOCAL;
++	else if (!prefixcmp(refname, "refs/remotes"))
++		type = DECORATION_REF_REMOTE;
++	else if (!prefixcmp(refname, "refs/tags"))
++		type = DECORATION_TAG;
++	else if (!prefixcmp(refname, "refs/stash"))
++		type = DECORATION_STASH;
++	else if (!prefixcmp(refname, "HEAD"))
++		type = DECORATION_HEAD;
++
+ 	if (!cb_data || *(int *)cb_data == DECORATE_SHORT_REFS)
+ 		refname = prettify_refname(refname);
+-	add_name_decoration("", refname, obj);
++	add_name_decoration(type, refname, obj);
+ 	while (obj->type == OBJ_TAG) {
+ 		obj = ((struct tag *)obj)->tagged;
+ 		if (!obj)
+ 			break;
+-		add_name_decoration("tag: ", refname, obj);
++		add_name_decoration(DECORATION_TAG, refname, obj);
+ 	}
+ 	return 0;
+ }
+@@ -60,6 +72,10 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
+ {
+ 	const char *prefix;
+ 	struct name_decoration *decoration;
++	const char *color_commit =
++		diff_get_color_opt(&opt->diffopt, DIFF_COMMIT);
++	const char *color_reset =
++		decorate_get_color_opt(&opt->diffopt, DECORATION_NONE);
+ 
+ 	if (opt->show_source && commit->util)
+ 		printf("\t%s", (char *) commit->util);
+@@ -70,7 +86,14 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
+ 		return;
+ 	prefix = " (";
+ 	while (decoration) {
+-		printf("%s%s", prefix, decoration->name);
++		printf("%s", prefix);
++		fputs(decorate_get_color_opt(&opt->diffopt, decoration->type),
++		      stdout);
++		if (decoration->type == DECORATION_TAG)
++			fputs("tag: ", stdout);
++		printf("%s", decoration->name);
++		fputs(color_reset, stdout);
++		fputs(color_commit, stdout);
+ 		prefix = ", ";
+ 		decoration = decoration->next;
+ 	}
 -- 
-Regards!
-Bo
-----------------------------
-My blog: http://blog.morebits.org
-Why Git: http://www.whygitisbetterthanx.com/
+1.7.1.245.g7c42e.dirty
