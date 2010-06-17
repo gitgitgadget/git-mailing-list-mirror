@@ -1,313 +1,167 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: =?UTF-8?q?=5BPATCH=20v2=5D=20send-email=3A=20ask=20about=20and=20declare=208bit=20mails?=
-Date: Thu, 17 Jun 2010 22:10:39 +0200
-Message-ID: <69cf223ed6222d611adb7e2f340a8a66728b48d2.1276805149.git.trast@student.ethz.ch>
-References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Colorize commit decorations
+Date: Thu, 17 Jun 2010 13:22:50 -0700
+Message-ID: <7vtyp11k9x.fsf@alter.siamese.dyndns.org>
+References: <1276791344-25550-1-git-send-email-ayiehere@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 17 22:11:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 17 22:23:08 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPLQf-0004pl-LH
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 22:11:14 +0200
+	id 1OPLcC-0001uJ-9M
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 22:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933266Ab0FQULG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jun 2010 16:11:06 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:31057 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757495Ab0FQULE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jun 2010 16:11:04 -0400
-Received: from CAS02.d.ethz.ch (129.132.178.236) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 17 Jun
- 2010 22:11:02 +0200
-Received: from localhost.localdomain (217.162.250.31) by mail.ethz.ch
- (129.132.178.227) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 17 Jun
- 2010 22:10:40 +0200
-X-Mailer: git-send-email 1.7.1.635.g9a994
-In-Reply-To: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
+	id S933294Ab0FQUXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 16:23:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51023 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933243Ab0FQUW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 16:22:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E533BBCB7A;
+	Thu, 17 Jun 2010 16:22:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=ZzPRYHvxeBnYwoxpQxkv3xX5Fqc=; b=h4oltxvxZ86ErCjW9LC1lgI
+	fEaYT83Xis2DhlvHiUMIERKH2D+G9VLeQgc9hx93pwy9hdV0SZ3K9p+mXDoM7L11
+	iWI4oiMx488rJGxt5B7/IWrX5i4RdGMI4MM9G/3Ujcd3MsaUgcVQxmzHZI0tA25p
+	8pxbgbKqHEDzatxjvG94=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=H46YOMCZu87sIH9Pb8l6tzhlWUJgahgvfAuX8SetgohaSgPX6
+	+W5+QL7tecrna01gnjHA83oMoJAVwYRd5hxz4G+5oOVwtnygYnhFtsbWRYy2mD0a
+	xkh50hNB60NLKaFkhDPR5VJCyg4ftBoeWGofjAX2Yv0HnJKv94RDK8q8qQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AC080BCB78;
+	Thu, 17 Jun 2010 16:22:55 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A41E3BCB74; Thu, 17 Jun
+ 2010 16:22:52 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1CFCD94A-7A4E-11DF-AF63-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149326>
 
-git-send-email passes on an 8bit mail as-is even if it does not
-declare a content-type.  Because the user can edit email between
-format-patch and send-email, such invalid mails are unfortunately not
-very hard to come by.
+Nazri Ramliy <ayiehere@gmail.com> writes:
 
-Make git-send-email stop and ask about the encoding to use if it
-encounters any such mail.  Also provide a configuration setting to
-permanently configure an encoding.
+> Use different color for each type of refs (local, remote, tags, HEAD,
+> and stash). This makes the decorations and their type stand out more
+> and easier to distinguish in 'git log --decorate'.
+>
+> Currently all the different types of decorations are shown in the same
+> color as the commit id, which is not that easy to spot.
+>
+> The color applied for each type of refs are customizable via
+> color.log.decorate.<slot> config entry, as documented in
+> Documentation/config.txt.
+> ---
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+Sign-off?
 
-Junio C Hamano wrote:
-> > * tr/send-email-8bit (2010-06-12) 1 commit
->=20
-> If I am not misreading the patch, it does not seem to stop the scanni=
-ng of
-> the "C-T-E:" header at the end of header; it should.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 95cf73c..afa4f5a 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -725,6 +725,11 @@ color.interactive.<slot>::
+>  	commands.  The values of these variables may be specified as
+>  	in color.branch.<slot>.
+>  
+> +color.log.decorate.<slot>::
+> +	Use customized color for 'git log --decorate' output.
+> +	`<slot>` is one of `local`, `remote`, `tag`, `stash` or `head`
+> +	for local refs, remote refs, tags, stash and HEAD, respectively.
 
-You're right.  I fixed that in this version.
+Configuration variable names are either 2-level or 3-level.  There are
+existing examples for <slot> (e.g. color.branch.<slot>).
 
+> diff --git a/decorate.c b/decorate.c
+> index 2f8a63e..cbef2b4 100644
+> --- a/decorate.c
+> +++ b/decorate.c
+> @@ -5,6 +5,48 @@
+>  #include "cache.h"
+>  #include "object.h"
+>  #include "decorate.h"
+> +#include "color.h"
+> ...
+> +int parse_decorate_color_config(const char *var, const int ofs, const char *value) {
+> +	int slot = parse_decorate_color_slot(var + ofs);
+> +	if (slot < 0)
+> +		return 0;
+> +	if (!value)
+> +		return config_error_nonbool(var);
+> +	color_parse(value, var, decoration_colors[slot]);
+> +	return 0;
+> +}
 
-[I'm leaving for holidays tomorrow, so if there are more problems with
-this patch (who knows) you'll have to hold it in pu for a while.]
+I don't think any of the above belongs to "decorate.c", which is the
+generic mechanism to annotate commits with arbitrary data.  The Porcelain
+feature "log --decorate" is just one user that happens to use refname as
+that "arbitrary data", and that is what you are coloring.  The code for
+that is in log-tree.c, I think.
 
+> diff --git a/decorate.h b/decorate.h
+> index e732804..d593d32 100644
 
- Documentation/git-send-email.txt |    9 ++++
- git-send-email.perl              |   60 +++++++++++++++++++++++++++++
- t/t9001-send-email.sh            |   77 ++++++++++++++++++++++++++++++=
-++++++++
- 3 files changed, 146 insertions(+), 0 deletions(-)
+So is any change to this file.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-=
-email.txt
-index 3dfdc7c..e70d9bf 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -101,6 +101,15 @@ See the CONFIGURATION section for 'sendemail.multi=
-edit'.
- +
- The --to option must be repeated for each user you want on the to list=
-=2E
-=20
-+--8bit-encoding=3D<encoding>::
-+	When encountering a non-ASCII message or subject that does not
-+	declare its encoding, add headers/quoting to indicate it is
-+	encoded in <encoding>.  Default is the value of the
-+	'sendemail.assume8bitEncoding'; if that is unspecified, this
-+	will be prompted for if any non-ASCII files are encountered.
-++
-+Note that no attempts whatsoever are made to validate the encoding.
-+
-=20
- Sending
- ~~~~~~~
-diff --git a/git-send-email.perl b/git-send-email.perl
-index ce569a9..0db39b0 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -54,6 +54,7 @@ git send-email [options] <file | directory | rev-list=
- options >
-     --in-reply-to           <str>  * Email "In-Reply-To:"
-     --annotate                     * Review each patch that will be se=
-nt in an editor.
-     --compose                      * Open an editor for introduction.
-+    --8bit-encoding         <str>  * Encoding to assume 8bit mails if =
-undeclared
-=20
-   Sending:
-     --envelope-sender       <str>  * Email envelope sender.
-@@ -193,6 +194,7 @@ my ($smtp_server, $smtp_server_port, $smtp_authuser=
-, $smtp_encryption);
- my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
- my ($validate, $confirm);
- my (@suppress_cc);
-+my ($auto_8bit_encoding);
-=20
- my ($debug_net_smtp) =3D 0;		# Net::SMTP, see send_message()
-=20
-@@ -223,6 +225,7 @@ my %config_settings =3D (
-     "multiedit" =3D> \$multiedit,
-     "confirm"   =3D> \$confirm,
-     "from" =3D> \$sender,
-+    "assume8bitencoding" =3D> \$auto_8bit_encoding,
- );
-=20
- # Help users prepare for 1.7.0
-@@ -298,6 +301,7 @@ my $rc =3D GetOptions("sender|from=3Ds" =3D> \$send=
-er,
- 		    "thread!" =3D> \$thread,
- 		    "validate!" =3D> \$validate,
- 		    "format-patch!" =3D> \$format_patch,
-+		    "8bit-encoding=3Ds" =3D> \$auto_8bit_encoding,
- 	 );
-=20
- unless ($rc) {
-@@ -670,6 +674,35 @@ sub ask {
- 	return undef;
- }
-=20
-+my %broken_encoding;
-+
-+sub file_declares_8bit_cte($) {
-+	my $fn =3D shift;
-+	open (my $fh, '<', $fn);
-+	while (my $line =3D <$fh>) {
-+		last if ($line =3D~ /^$/);
-+		return 1 if ($line =3D~ /^Content-Transfer-Encoding: .*8bit.*$/);
-+	}
-+	close $fh;
-+	return 0;
-+}
-+
-+foreach my $f (@files) {
-+	next unless (body_or_subject_has_nonascii($f)
-+		     && !file_declares_8bit_cte($f));
-+	$broken_encoding{$f} =3D 1;
-+}
-+
-+if (!defined $auto_8bit_encoding && scalar %broken_encoding) {
-+	print "The following files are 8bit, but do not declare " .
-+		"a Content-Transfer-Encoding.\n";
-+	foreach my $f (sort keys %broken_encoding) {
-+		print "    $f\n";
-+	}
-+	$auto_8bit_encoding =3D ask("Which 8bit encoding should I declare [UT=
-=46-8]? ",
-+				  default =3D> "UTF-8");
-+}
-+
- my $prompting =3D 0;
- if (!defined $sender) {
- 	$sender =3D $repoauthor || $repocommitter || '';
-@@ -1225,6 +1258,18 @@ foreach my $t (@files) {
- 			or die "(cc-cmd) failed to close pipe to '$cc_cmd'";
- 	}
-=20
-+	if ($broken_encoding{$t} && !$has_content_type) {
-+		$has_content_type =3D 1;
-+		push @xh, "MIME-Version: 1.0",
-+			"Content-Type: text/plain; charset=3D$auto_8bit_encoding",
-+			"Content-Transfer-Encoding: 8bit";
-+		$body_encoding =3D $auto_8bit_encoding;
-+	}
-+
-+	if ($broken_encoding{$t} && !is_rfc2047_quoted($subject)) {
-+		$subject =3D quote_rfc2047($subject, $auto_8bit_encoding);
-+	}
-+
- 	if (defined $author and $author ne $sender) {
- 		$message =3D "From: $author\n\n$message";
- 		if (defined $author_encoding) {
-@@ -1237,6 +1282,7 @@ foreach my $t (@files) {
- 				}
- 			}
- 			else {
-+				$has_content_type =3D 1;
- 				push @xh,
- 				  'MIME-Version: 1.0',
- 				  "Content-Type: text/plain; charset=3D$author_encoding",
-@@ -1314,3 +1360,17 @@ sub file_has_nonascii {
- 	}
- 	return 0;
- }
-+
-+sub body_or_subject_has_nonascii {
-+	my $fn =3D shift;
-+	open(my $fh, '<', $fn)
-+		or die "unable to open $fn: $!\n";
-+	while (my $line =3D <$fh>) {
-+		last if $line =3D~ /^$/;
-+		return 1 if $line =3D~ /^Subject.*[^[:ascii:]]/;
-+	}
-+	while (my $line =3D <$fh>) {
-+		return 1 if $line =3D~ /[^[:ascii:]]/;
-+	}
-+	return 0;
-+}
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 640b3d2..0b8a591 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -918,4 +918,81 @@ test_expect_success '--no-bcc overrides sendemail.=
-bcc' '
- 	! grep "RCPT TO:<other@ex.com>" stdout
- '
-=20
-+cat >email-using-8bit <<EOF
-+From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
-+Message-Id: <bogus-message-id@example.com>
-+From: author@example.com
-+Date: Sat, 12 Jun 2010 15:53:58 +0200
-+Subject: subject goes here
-+
-+Dieser deutsche Text enth=C3=A4lt einen Umlaut!
-+EOF
-+
-+cat >content-type-decl <<EOF
-+MIME-Version: 1.0
-+Content-Type: text/plain; charset=3DUTF-8
-+Content-Transfer-Encoding: 8bit
-+EOF
-+
-+test_expect_success 'asks about and fixes 8bit encodings' '
-+	clean_fake_sendmail &&
-+	echo |
-+	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
-\
-+			--smtp-server=3D"$(pwd)/fake.sendmail" \
-+			email-using-8bit >stdout &&
-+	grep "do not declare a Content-Transfer-Encoding" stdout &&
-+	grep email-using-8bit stdout &&
-+	grep "Which 8bit encoding" stdout &&
-+	grep "Content\\|MIME" msgtxt1 >actual &&
-+	test_cmp actual content-type-decl
-+'
-+
-+test_expect_success 'sendemail.8bitEncoding works' '
-+	clean_fake_sendmail &&
-+	git config sendemail.assume8bitEncoding UTF-8 &&
-+	echo bogus |
-+	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
-\
-+			--smtp-server=3D"$(pwd)/fake.sendmail" \
-+			email-using-8bit >stdout &&
-+	grep "Content\\|MIME" msgtxt1 >actual &&
-+	test_cmp actual content-type-decl
-+'
-+
-+test_expect_success '--8bit-encoding overrides sendemail.8bitEncoding'=
- '
-+	clean_fake_sendmail &&
-+	git config sendemail.assume8bitEncoding "bogus too" &&
-+	echo bogus |
-+	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
-\
-+			--smtp-server=3D"$(pwd)/fake.sendmail" \
-+			--8bit-encoding=3DUTF-8 \
-+			email-using-8bit >stdout &&
-+	grep "Content\\|MIME" msgtxt1 >actual &&
-+	test_cmp actual content-type-decl
-+'
-+
-+cat >email-using-8bit <<EOF
-+From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
-+Message-Id: <bogus-message-id@example.com>
-+From: author@example.com
-+Date: Sat, 12 Jun 2010 15:53:58 +0200
-+Subject: Dieser Betreff enth=C3=A4lt auch einen Umlaut!
-+
-+Nothing to see here.
-+EOF
-+
-+cat >expected <<EOF
-+Subject: =3D?UTF-8?q?Dieser=3D20Betreff=3D20enth=3DC3=3DA4lt=3D20auch=3D=
-20einen=3D20Umlaut!?=3D
-+EOF
-+
-+test_expect_success '--8bit-encoding also treats subject' '
-+	clean_fake_sendmail &&
-+	echo bogus |
-+	git send-email --from=3Dauthor@example.com --to=3Dnobody@example.com =
-\
-+			--smtp-server=3D"$(pwd)/fake.sendmail" \
-+			--8bit-encoding=3DUTF-8 \
-+			email-using-8bit >stdout &&
-+	grep "Subject" msgtxt1 >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
---=20
-1.7.1.635.g9a994
+> diff --git a/log-tree.c b/log-tree.c
+> index d3ae969..95ebf1a 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -10,29 +10,41 @@
+>  
+>  struct decoration name_decoration = { "object names" };
+>  
+> -static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
+> +static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
+>  {
+> -	int plen = strlen(prefix);
+>  	int nlen = strlen(name);
+> -	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + plen + nlen);
+> -	memcpy(res->name, prefix, plen);
+> -	memcpy(res->name + plen, name, nlen + 1);
+> +	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
+> +	memcpy(res->name, name, nlen + 1);
+> +	res->type = type;
+>  	res->next = add_decoration(&name_decoration, obj, res);
+>  }
+
+When color is not in use (e.g. output is not going to the terminal), you
+would lose "tag: " prefix, wouldn't you?
+
+Even when color _is_ in use, people may want to see familiar "tag: "
+prefix in the output---I personally do not think that is necessary,
+though.
+
+>  static int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+>  {
+>  	struct object *obj = parse_object(sha1);
+> +	enum decoration_type type = DECORATION_NONE;
+>  	if (!obj)
+>  		return 0;
+> +
+> +	if (!prefixcmp(refname, "refs/heads"))
+> +		type = DECORATION_REF_LOCAL;
+> +	else if (!prefixcmp(refname, "refs/remotes"))
+> +		type = DECORATION_REF_REMOTE;
+> +	else if (!prefixcmp(refname, "refs/tags"))
+> +		type = DECORATION_TAG;
+> +	else if (!prefixcmp(refname, "refs/stash"))
+> +		type = DECORATION_STASH;
+> +	else if (!prefixcmp(refname, "HEAD"))
+> +		type = DECORATION_HEAD;
+
+I suspect that users would expect DECORATION_HEAD to be used to highlight
+the object at the tip of the current branch, but I also suspect this code
+would not do so.
