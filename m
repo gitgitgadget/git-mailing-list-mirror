@@ -1,92 +1,75 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: moving a remote branch?
-Date: Thu, 17 Jun 2010 15:02:14 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC74483CEEB16@xmail3.se.axis.com>
-References: <AANLkTikA5jGl1LiU2sNTN1NP_syTfPAeLF7sS6dBozyN@mail.gmail.com>
-	<AANLkTimTSU7Db7cMlC0ZxQ47IoBUr4Ee4G-GfgDoYLmK@mail.gmail.com>
-	<A612847CFE53224C91B23E3A5B48BAC74483CEEA82@xmail3.se.axis.com>
- <AANLkTikeLpvGA-RFBdMGblOnhNKJ6dUrpUZQlENMP51A@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] Allow hashes in git rebase --interactive --autosquash.
+Date: Thu, 17 Jun 2010 09:17:47 -0400
+Message-ID: <AANLkTikJtNXg7Eac5CQkMBXt14tu8G7Kaxy-3t1wmhBF@mail.gmail.com>
+References: <20100617125746.E86B42FC00@perkele>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Anderson <zelnaga@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 17 15:02:29 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Jun 17 15:17:57 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPEjk-0002K1-0R
-	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 15:02:28 +0200
+	id 1OPEyj-0002FZ-BI
+	for gcvg-git-2@lo.gmane.org; Thu, 17 Jun 2010 15:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755160Ab0FQNCX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jun 2010 09:02:23 -0400
-Received: from miranda.se.axis.com ([193.13.178.8]:37394 "EHLO
-	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752716Ab0FQNCX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jun 2010 09:02:23 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o5HD2Gg8027908;
-	Thu, 17 Jun 2010 15:02:16 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Thu, 17 Jun 2010 15:02:16 +0200
-Thread-Topic: moving a remote branch?
-Thread-Index: AcsOFnrrlg+g13UBRh6UlKdFweZs7AABaybw
-In-Reply-To: <AANLkTikeLpvGA-RFBdMGblOnhNKJ6dUrpUZQlENMP51A@mail.gmail.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1759978Ab0FQNRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jun 2010 09:17:52 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64882 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759923Ab0FQNRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jun 2010 09:17:50 -0400
+Received: by iwn9 with SMTP id 9so6771708iwn.19
+        for <git@vger.kernel.org>; Thu, 17 Jun 2010 06:17:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=LvFDWyPi6ZWFmZz1DTBnRFyQ0We33qRKwof/OxBSQK0=;
+        b=MJ1F0We1jcWUVYskafgF5edls3CJFyfPj7ll8Voa+ByNsYujEtiPIjhJIdeZj76h5Y
+         6Dz+PLCsDkZm+KFg4gO+dXOnZ1XsjXTQlVWcNsRxj9KXEl4QtPQalDfzS7FyvjZ2MYe8
+         0KmGUjrWQHoSPcXusd76AnRDw8Rthnsbuno7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=n2d+/+ndPbX81V55Fr79wfBCbvin1MpWgdFnhOAS6aw/aSVBLDU5C6Fljfva+sivyt
+         pG2gDDyZmztwweTqFvd+CJ8G55XbN3PS2/EBxrxuOhgTW3lMMrVTS8CvVaFlZgrv1FDR
+         vHnFQWfcGq/ROGK3mzMdQNtFEbqdSOT+RDajo=
+Received: by 10.42.0.68 with SMTP id 4mr3672815icb.93.1276780668805; Thu, 17 
+	Jun 2010 06:17:48 -0700 (PDT)
+Received: by 10.231.120.19 with HTTP; Thu, 17 Jun 2010 06:17:47 -0700 (PDT)
+In-Reply-To: <20100617125746.E86B42FC00@perkele>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149305>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Nazri Ramliy
-> Sent: den 17 juni 2010 14:13
-> To: Peter Kjellerstedt
-> Cc: Thomas Anderson; git@vger.kernel.org
-> Subject: Re: moving a remote branch?
->=20
-> On Thu, Jun 17, 2010 at 4:28 PM, Peter Kjellerstedt=20
-> > Renaming a remote branch is a two step operation. First you push th=
-e
-> > old branch into its new name, and then you remove the old branch. I=
-t
-> > can be done with these commands:
-> >
-> > =A0 =A0 =A0 =A0git push origin origin/featurea:refs/heads/featureb
-> > =A0 =A0 =A0 =A0git push origin :featurea
->=20
-> I'd like to add (more confusion!:) with this clarification:
->=20
-> The two push operation above rename the branch on the remote side.
-> It does not affect any of your local branches.
+On Thu, Jun 17, 2010 at 8:55 AM, Peter Krefting <peter@softwolves.pp.se> wrote:
+> In addition to matching the "fixup!" and "squash!" commits to the commit
+> message, also match the commit hash. This allows a commit message like
+> "fixup! e83c5163316f89bfbde7d9ab23ca2e25604af290" to be detected as a
+> fixup commit.
+>
+> Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+> ---
+>
+> I actually misread the git-rebase manual page to think that this was how
+> "fixup!" and "squash!" was supposed to be used, and now I have so many
+> "fixup! <hash>" commits to rebase that I felt it worth it to implement
+> support for it... :-)
 
-No, it does not affect any local branches, but it _does_ effect=20
-the representation of the remote branches in the local repository.
+Heh. I have this alias for creating my fixup commits:
 
-> If you do "git branch -a" then you'd still see the
-> "origin/zelnaga/featurea" branch.
+$ git help fixup
+`git fixup' is aliased to `!f() { git commit -m "$(git show -s
+--pretty='format:fixup! %s%n%nFixup for %h%n' "$@")"; }; f'
 
-No, you will not (at least not with git 1.7.1 that I use).=20
+:-)
 
-Neither do you need to do the two steps below as the two pushes=20
-above are enough to also keep the status of the remote branches=20
-in sync in the local repository..
-
-> Doing a "git fetch origin" will get the newly renamed branch from the
-> remote repo and create a local version of it on your local repo.
->=20
-> At this point you can do "git branch -D origin/featurea".
->=20
-> nazri
-
-//Peter
+j.
