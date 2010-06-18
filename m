@@ -1,81 +1,55 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: git pull (Your local changes to ... would be overwritten by  merge)
-Date: Fri, 18 Jun 2010 09:44:27 +0200
-Message-ID: <BFBC3418-44C5-484D-8508-60813675409D@gmail.com>
-References: <AANLkTinokUxiDdetcrsrlSExQ7hmhLS5szbTt9KzGKr_@mail.gmail.com> <AANLkTimeIWseETfYiMajIqesjJ_p55pRislnQQIaCrbG@mail.gmail.com> <4C19FBF8.6010709@drmicha.warpmail.net> <vpq4oh1zzfs.fsf@bauges.imag.fr> <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com> <4C1A0DCD.2070906@drmicha.warpmail.net> <vpqbpb9ofby.fsf@bauges.imag.fr>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Daniel Blendea <bdaniel7@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jun 18 09:44:40 2010
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: rebasing a merge
+Date: Fri, 18 Jun 2010 10:10:58 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1006181010220.12445@ds9.cixit.se>
+References: <AANLkTilY_9j2sXlplhYB4FPAIAzuPBg2UyUTEk4DaaYF@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 18 11:11:18 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPWFi-0005Sz-Ua
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 09:44:39 +0200
+	id 1OPXbU-000312-1r
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 11:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755972Ab0FRHod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jun 2010 03:44:33 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:54004 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259Ab0FRHoc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jun 2010 03:44:32 -0400
-Received: by wwb18 with SMTP id 18so559766wwb.19
-        for <git@vger.kernel.org>; Fri, 18 Jun 2010 00:44:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=Je5021lU//N9dwaVUIVAv2kbxgkzyRUb41vHgMBtTUA=;
-        b=J0pB2D2TYGUREU5dLmT3ktE10a1PSyrfyGFpEkisHmNJdLjFaH1MbRgvdE8EtAZ3Au
-         +DtOJOAX+GPsA2p4IKxeLmkvZzZO87+ER5pf808cr61EOP4hxwZtPuitsPV2+wMxB9xx
-         g9NZFE5GwUeLTQ8TLcAe2kGaToheo6x9/ZNyo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=NNqV1F9JFbw/SR0V8oZA5x78iX/xWhqG7nid2FR7NUkZJc3D43lqO491nZ58htqlJv
-         aCQybzqOfCouPoDBENd6yDJfNR8rt7X+8aiMinC5XRXebU1QQZNlN+//RA/DajQ/i8QK
-         2abeUsIgIu3Efi/05PNxe6yTZBdD4qMiLgQUU=
-Received: by 10.227.151.77 with SMTP id b13mr656381wbw.13.1276847069898;
-        Fri, 18 Jun 2010 00:44:29 -0700 (PDT)
-Received: from [10.36.80.159] ([62.113.137.5])
-        by mx.google.com with ESMTPS id b17sm71030873wbd.13.2010.06.18.00.44.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 18 Jun 2010 00:44:29 -0700 (PDT)
-In-Reply-To: <vpqbpb9ofby.fsf@bauges.imag.fr>
-X-Mailer: Apple Mail (2.1081)
+	id S1758207Ab0FRJLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jun 2010 05:11:05 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:60365 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756281Ab0FRJLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jun 2010 05:11:03 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5) with ESMTP id o5I9AwVQ024242
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 18 Jun 2010 11:10:58 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o5I9Awop024238;
+	Fri, 18 Jun 2010 11:10:58 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTilY_9j2sXlplhYB4FPAIAzuPBg2UyUTEk4DaaYF@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 18 Jun 2010 11:10:58 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149338>
 
-On 17. juni 2010, at 17.21, Matthieu Moy wrote:
+Jay Soffian:
 
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> I guess this shows that correct diagnostics is not a prerequisite for a
->> successful therapy ;)
->> 
->> (The diagnostics really indicate a work tree with local uncommitted
->> modifications.)
-> 
-> I'd bet for this kind of issue:
-> 
-> http://kerneltrap.org/mailarchive/git/2010/3/9/25215/thread
-> From: Johannes Schindelin
-> Subject: core.autocrlf considered half-assed
-> 
-> Didn't follow the outcome in details, but some patches were proposed
-> to improve the situation.
+> Here's how I've been doing it, but I'll bet there's a less convoluted way:
 
-Finn Arne Gangstad's "safe autocrlf" patch (c480539, currently in next) solves the problem by disabling conversion for files that contain CRs in the repository.
+Do you have git-rerere enabled? I have found that to be a major timesaver 
+for cases like these.
+
 -- 
-Eyvind Bernhardsen
+\\// Peter - http://www.softwolves.pp.se/
