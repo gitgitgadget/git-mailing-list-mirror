@@ -1,125 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5 0/2] bash completion: Support "divergence from
- upstream" messages in __git_ps1
-Date: Fri, 18 Jun 2010 09:10:59 -0700
-Message-ID: <7vljacxqwc.fsf@alter.siamese.dyndns.org>
-References: <20100612000002.GA30196@neumann>
- <cover.1276336602.git.trast@student.ethz.ch>
- <4C13F32B.7060106@pileofstuff.org> <201006140942.43099.trast@student.ethz.ch>
- <4C17F5B3.4070907@pileofstuff.org> <7v7hlyg5nh.fsf@alter.siamese.dyndns.org>
- <4C1A9442.7080304@pileofstuff.org>
+Subject: Re: [RFC PATCH] Make :/ accept a regex rather than a fixed pattern
+Date: Fri, 18 Jun 2010 10:03:21 -0700
+Message-ID: <7vhbl0xoh2.fsf@alter.siamese.dyndns.org>
+References: <alpine.LFD.2.00.1005131457350.3711@i5.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Fri Jun 18 18:11:20 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Jun 18 19:03:38 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPeA3-0007UO-Jp
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 18:11:19 +0200
+	id 1OPeyf-0001OI-EF
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 19:03:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760972Ab0FRQLN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jun 2010 12:11:13 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49325 "EHLO
+	id S933739Ab0FRRDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jun 2010 13:03:31 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39597 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758580Ab0FRQLM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jun 2010 12:11:12 -0400
+	with ESMTP id S1761107Ab0FRRDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jun 2010 13:03:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 38D1CBD4B0;
-	Fri, 18 Jun 2010 12:11:10 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ACC33BDCA3;
+	Fri, 18 Jun 2010 13:03:28 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=V45dHTabY8bOxFdBlR2l0dWbkaU=; b=Eszv//
-	RfomSxfFKYD7x9e8AS1+5hdVwYcqTrY17WFFnTbkMVDMW8xnFtCvpRbvqGrgKG81
-	6rj4PPayu2LEtEfFaysOkvl0jY7uyguVNANCQYhB0cYvb6NWWrhhfUI5F7WKYVlU
-	VkZecjTzY/o8iJVG1SFMfTJfEhgCGKM9xCzSM=
+	:content-type; s=sasl; bh=3CEr3pWX8qOd1LoMSeCIkXVG6q4=; b=kNhsj8
+	2tIzxT8Um4/CfaT5jZx5CMRpJ8w7pFq3FRePNr1fx3e166b7tswvzteBVw0/csBd
+	4JRjQWWP/BvzF3VuU6e3BJ8iQcCNi8uStwNYqJE4v2Cc61MnGz5z31LnPKy/jl2I
+	290sqNDbikrcre2fyPbvWF28Tce0SgN1yCoiM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=stK6rQIULkeZ2PpQ2csBfoWFNpXQK4U5
-	UzWF/bTyj4FovTl8/L5DxsGvezqDHX5tdBeJMK0qfwVY5nd9xDz5jDW5gzEuvWLj
-	ZnbZUvpgp/5oN3oz2bGouhIGTBqI5919up+jo0iow8YMWberxX9DakO6RlFVcwfI
-	Zdv8nNBGxKo=
+	:content-type; q=dns; s=sasl; b=QIOl7ZxOPlN4VYMChHA/VLnSwr9sKpaq
+	c4G7+mA920hJsCcos/n/l1jIOfRqgkBbM20OhNw4L6kzVb3H0qizUdSa+5aIYDqc
+	i4SjNB5qzsV7/A4AceZbZZ/JuegQrnKpzwM1FPrpEZvQtaMzPHxjF3XEbltZge0G
+	Ig4++Rq4Pz0=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ECB54BD4AC;
-	Fri, 18 Jun 2010 12:11:05 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 77AE2BDCA1;
+	Fri, 18 Jun 2010 13:03:26 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFD83BD4A8; Fri, 18 Jun
- 2010 12:11:00 -0400 (EDT)
-In-Reply-To: <4C1A9442.7080304@pileofstuff.org> (Andrew Sayers's message of
- "Thu\, 17 Jun 2010 22\:31\:46 +0100")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F018BDCA0; Fri, 18 Jun
+ 2010 13:03:23 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.1005131457350.3711@i5.linux-foundation.org>
+ (Linus Torvalds's message of "Thu\, 13 May 2010 15\:08\:42 -0700 \(PDT\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 194BA6F4-7AF4-11DF-9A65-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 692F3DE6-7AFB-11DF-A87E-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149351>
 
-Andrew Sayers <andrew-git@pileofstuff.org> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
->>> +#       You can
->>> +#       override the value of GIT_PS1_SHOWUPSTREAM on a per-repository
->>> +#       basis by setting the bash.showUpstream config variable.
->> 
->> That's totally backwards from it should be, isn't it?
->> 
->> Usually configuration variables are used to give you the default, and
->> you use environment variables to override them.
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Date: Fri, 23 Apr 2010 08:20:20 -0700
+> Subject: [PATCH] Make :/ accept a regex rather than a fixed pattern
 >
-> I basically agree with Thomas here.
-
-Ok.
-
-> ...  If someone had e.g. imported their old
-> SVN history into a git project, or did clever git tricks on a branch
-> they regularly merged into SVN, they would want to override the default
-> behaviour.  This is probably quite rare now I think about it, and I've
-> rejigged the documentation a bit to reflect that.
-
-Yeah, I see.
-
-But doesn't all of the above suggest the decision should be per branch?
-It is not too implausible to have a branch that is actively interacting
-with SVN upstream and another branch whose upstream has migrated from SVN
-and now managed by git.  Say you and your pal are working with a project
-that is managed by SVN, and you use one of your branches to interact
-directly with SVN upstream.  Your pal has a branch forked from the same
-SVN upstream, and one of your other branches is building on top of her
-work.  When you are on the former branch, you would want to know how your
-work diverged from the SVN upstream; when you are on the latter branch,
-you would want to know how your work diverged from your pal's git branch
-that you are using as its upstream.  No?
-
-Which led me to this expectation:
-
->>> +			svn-remote.*.url)
->>> +				svn_remote[ $((${#svn_remote[@]} + 1)) ]="$value"
->>> +				svn_url_pattern+="\\|$value"
->>> +				upstream=svn # default upstream is SVN if available
->>> +				;;
->> 
->> I expected that (1) when on a branch that is a fork of a svn upstream, you
->> would use the svn magic; (2) otherwise when on a branch that is a fork of
->> a git upstream, you would use "@{upstream}".  That way, the users do not
->> even have to say "git" or "svn" in GIT_PS1_SHOWUPSTREAM at all, no?
-
-I wonder if looking for "git-svn-id:" in the past log is the best you can
-do to see if a branch is forked from a remote that is managed by git-svn;
-for one thing, that would not work for "noMetadata" setting.
-
->> If you "tr" to trash "\0" anyway, do you need to run "config -z"?
+> This also makes it trigger anywhere in the commit message, rather than
+> just at the beginning. Which tends to be a lot more useful.
 >
-> The `tr` is there to work around issues like this:
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> ---
 >
-> 	git config bash.showUpstream $'svn\nlegacy'
-> 	git config bash.showUpstream | tr '\0\n' '\n '
+> I'm re-sending, because after having this in my tree for several weeks 
+> now, I actually end up still using it. 
+>
+> I agree that it's still not a wonderful thing, and it's entirely possible 
+> that we should strive to use just HEAD in :/ commit finding rather than 
+> all refs we can find, but for at least the kernel, I don't care (since my 
+> tree tends to have just one main branch anyway, apart from some random 
+> testing stuff I keep around).
+>
+> But even if we want to limit it to HEAD, that would be a separate patch.
+>
+> I've personally used it for things like
+>
+> 	git show :/mqueue	# did I apply that 'mqueue' patch?
+> 	git show :/akpm		# what was the last patch I got from Andrew?
+>
+> and while in all cases I could admittedly have done exactly the same thing 
+> with something like "git log -p -1 --grep=mqueue" instead, I've used it as 
+> a nice shortcut.
 
-Is that even an issue?  Why should there be a LF in the value?  I thought
-you defined it as a string with space separated magic tokens...  Perhaps I
-am missing something?
+I already took this but I actually started hating it.  As I have
+merge.summary on,
+
+    git show ':/diff: add configuration option'
+
+almost never hits the commit I am looking for---instead it ends up finding
+a merge that merges it.
+
+I however suspect that I would hate it much less after retraining my
+fingers to anchor the pattern at the beginning of the line.  But not
+yet...
