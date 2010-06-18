@@ -1,56 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
 Subject: Re: [PATCH] Fix 'git clean' failure on NFS.
-Date: Fri, 18 Jun 2010 14:17:15 +0200
-Message-ID: <4C1B63CB.7080209@viscovery.net>
-References: <loom.20100618T122039-876@post.gmane.org> <1276859235-13534-1-git-send-email-edwintorok@gmail.com>
+Date: Fri, 18 Jun 2010 14:29:38 +0200
+Message-ID: <AANLkTimm1XMmDORpnezYHSNPrKFup2H5ODQLrgJivDwg@mail.gmail.com>
+References: <loom.20100618T122039-876@post.gmane.org>
+	<1276859235-13534-1-git-send-email-edwintorok@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?VMO2csO2ayBFZHdpbg==?= <edwintorok@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 18 14:17:28 2010
+Cc: git <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?T=F6r=F6k_Edwin?= <edwintorok@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 18 14:29:48 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPaVj-0000ia-QC
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 14:17:28 +0200
+	id 1OPahe-0006uA-9x
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 14:29:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761144Ab0FRMRU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jun 2010 08:17:20 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:52863 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761111Ab0FRMRT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jun 2010 08:17:19 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OPaVX-0007CW-Jp; Fri, 18 Jun 2010 14:17:15 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5B4B01660F;
-	Fri, 18 Jun 2010 14:17:15 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+	id S1761151Ab0FRM3l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jun 2010 08:29:41 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:37650 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758377Ab0FRM3k convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jun 2010 08:29:40 -0400
+Received: by wwb22 with SMTP id 22so101065wwb.19
+        for <git@vger.kernel.org>; Fri, 18 Jun 2010 05:29:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=0WaRRod3WoK30Gcaw78kDQ+xq6PSgh/quWDZP6eCCOs=;
+        b=chVdKJWsdR4+h24SOVb1IbqL2JNKkVBSIGVNC9y3iXahNCZ+gxA9npJPR8DLg2mCEd
+         rxEE8qgQzN1EEWnwyyCWuI+Uk2pMiVhWrLFYSvPinASez6abnKLv4E4ZX4dz6QNKOVDb
+         A/IgFkcbG5WJeZwz+g49NNsceQLzBRFPYPsy4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=t3Wl2zI0u9b7llQkK2Vcobckfmj3BMx+yTVqXFVkNWWy/EAd3L0PpQNSzVICthwvDE
+         AA1Qykhz2uSqDaA61U1J4d4AmydRKUutH97DrP8CgAs4AiUXolGiEIyJvjLoOL/n2G3q
+         UkrdVc71Lw5qCe0ny9gmmWdp7UyM3w6pscLx8=
+Received: by 10.216.90.18 with SMTP id d18mr124546wef.79.1276864178325; Fri, 
+	18 Jun 2010 05:29:38 -0700 (PDT)
+Received: by 10.216.53.132 with HTTP; Fri, 18 Jun 2010 05:29:38 -0700 (PDT)
 In-Reply-To: <1276859235-13534-1-git-send-email-edwintorok@gmail.com>
-X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149343>
 
-Am 6/18/2010 13:07, schrieb T=C3=B6r=C3=B6k Edwin:
->  		else if (S_ISDIR(st.st_mode)) {
-> -			if (!remove_dir_recursively(path, only_empty))
-> +			if (!remove_dir_recursively(path, only_empty)) {
-> +				did_rm =3D 1;
->  				continue; /* happy */
+2010/6/18 T=F6r=F6k Edwin <edwintorok@gmail.com>:
+> readdir() used to do a single pass, which is not always enough.
+> If you unlink some files/rmdir some subdirs then there might be some
+> files you haven't seen yet *before* the readdir cursor (files get rea=
+rranged
+> in the directory, etc.).
+>
+> The fix is to do an additional readdir() pass if we unlinked/rmdired =
+something.
+> This is easily accomplished by using rewinddir.
+>
 
-Is it possible that remove_dir_recursively exits with 0, but it actuall=
-y
-did not remove the directory? That would result in an endless loop: it
-would have to re-enter remove_dir_recursively on the next iteration,
-return 0 again (without removing the directory), next iteration, etc.
+Won't this break on Windows? mingw_readdir() doesn't seem to have a
+maching mingw_rewinddir() in compat/mingw.c/h....
 
--- Hannes
+--=20
+Erik "kusma" Faye-Lund
