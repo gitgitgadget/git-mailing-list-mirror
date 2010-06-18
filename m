@@ -1,100 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Make :/ accept a regex rather than a fixed pattern
-Date: Fri, 18 Jun 2010 10:03:21 -0700
-Message-ID: <7vhbl0xoh2.fsf@alter.siamese.dyndns.org>
-References: <alpine.LFD.2.00.1005131457350.3711@i5.linux-foundation.org>
+From: Gavin Kistner <gkistner@nvidia.com>
+Subject: Re: unpacker error on push
+Date: Fri, 18 Jun 2010 10:25:38 -0700
+Message-ID: <64131565-2407-4EBF-A6CB-7C286E1B20D4@nvidia.com>
+References: <0B32FF97-4B20-4B9A-BA45-08EF9485F3A1@nvidia.com>
+ <alpine.LFD.2.00.1006161520480.13427@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Jun 18 19:03:38 2010
+Content-Type: text/plain; charset=Windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Jun 18 19:25:51 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPeyf-0001OI-EF
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 19:03:37 +0200
+	id 1OPfK9-0003D4-WF
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 19:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933739Ab0FRRDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jun 2010 13:03:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39597 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761107Ab0FRRDa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jun 2010 13:03:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ACC33BDCA3;
-	Fri, 18 Jun 2010 13:03:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=3CEr3pWX8qOd1LoMSeCIkXVG6q4=; b=kNhsj8
-	2tIzxT8Um4/CfaT5jZx5CMRpJ8w7pFq3FRePNr1fx3e166b7tswvzteBVw0/csBd
-	4JRjQWWP/BvzF3VuU6e3BJ8iQcCNi8uStwNYqJE4v2Cc61MnGz5z31LnPKy/jl2I
-	290sqNDbikrcre2fyPbvWF28Tce0SgN1yCoiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QIOl7ZxOPlN4VYMChHA/VLnSwr9sKpaq
-	c4G7+mA920hJsCcos/n/l1jIOfRqgkBbM20OhNw4L6kzVb3H0qizUdSa+5aIYDqc
-	i4SjNB5qzsV7/A4AceZbZZ/JuegQrnKpzwM1FPrpEZvQtaMzPHxjF3XEbltZge0G
-	Ig4++Rq4Pz0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 77AE2BDCA1;
-	Fri, 18 Jun 2010 13:03:26 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F018BDCA0; Fri, 18 Jun
- 2010 13:03:23 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.1005131457350.3711@i5.linux-foundation.org>
- (Linus Torvalds's message of "Thu\, 13 May 2010 15\:08\:42 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 692F3DE6-7AFB-11DF-A87E-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933843Ab0FRRZn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jun 2010 13:25:43 -0400
+Received: from hqemgate03.nvidia.com ([216.228.121.140]:13309 "EHLO
+	hqemgate03.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933798Ab0FRRZm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jun 2010 13:25:42 -0400
+Received: from hqnvupgp03.nvidia.com (Not Verified[172.17.102.18]) by hqemgate03.nvidia.com
+	id <B4c1bacad0001>; Fri, 18 Jun 2010 10:28:13 -0700
+Received: from hqemhub01.nvidia.com ([172.17.108.22])
+  by hqnvupgp03.nvidia.com (PGP Universal service);
+  Fri, 18 Jun 2010 10:25:40 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp03.nvidia.com on Fri, 18 Jun 2010 10:25:40 -0700
+Received: from HQMAIL03.nvidia.com ([172.17.200.12]) by hqemhub01.nvidia.com
+ ([172.17.98.26]) with mapi; Fri, 18 Jun 2010 10:25:40 -0700
+Thread-Topic: unpacker error on push
+Thread-Index: AcsPC0Y1L9nU9x9iTzW/I50UwXoeNg==
+In-Reply-To: <alpine.LFD.2.00.1006161520480.13427@xanadu.home>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149352>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+On Jun 16, 2010, at 1:34 PM, Nicolas Pitre wrote:
+> On Wed, 16 Jun 2010, Gavin Kistner wrote:
+>> Local: OS X 10.6.3, git 1.7.1
+>> Remote: Ubuntu Lucid, git 1.7.0.4
+>>=20
+>> How can I fix whatever is broken so that I can push again, and=97mor=
+e=20
+>> importantly=97get the important changes I made last night over to th=
+e=20
+>> remote, by hook or by crook?> -_-_-_-_-_-_-_-_-_-_ On the local=20
+>> machine -_-_-_-_-_-_-_-_-_-_
+>>=20
+>> Slim2:bugbot3 phrogz$ git push
+>> Counting objects: 70, done.
+>> Delta compression using up to 2 threads.
+>> Compressing objects: 100% (31/31), done.
+>> Writing objects: 100% (40/40), 26.91 KiB, done.
+>> Total 40 (delta 11), reused 37 (delta 8)
+>> error: unpack failed: unpack-objects abnormal exit
+>> To git://10.20.16.110/bugbot3.git
+>> ! [remote rejected] planning -> planning (n/a (unpacker error))
+>> error: failed to push some refs to 'git://10.20.16.110/bugbot3.git'
+>=20
+> Could you try doing "git config receive.unpackLimit 1" on the _remote=
+_=20
+> machine in the receiving repository?
 
-> From: Linus Torvalds <torvalds@linux-foundation.org>
-> Date: Fri, 23 Apr 2010 08:20:20 -0700
-> Subject: [PATCH] Make :/ accept a regex rather than a fixed pattern
->
-> This also makes it trigger anywhere in the commit message, rather than
-> just at the beginning. Which tends to be a lot more useful.
->
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> ---
->
-> I'm re-sending, because after having this in my tree for several weeks 
-> now, I actually end up still using it. 
->
-> I agree that it's still not a wonderful thing, and it's entirely possible 
-> that we should strive to use just HEAD in :/ commit finding rather than 
-> all refs we can find, but for at least the kernel, I don't care (since my 
-> tree tends to have just one main branch anyway, apart from some random 
-> testing stuff I keep around).
->
-> But even if we want to limit it to HEAD, that would be a separate patch.
->
-> I've personally used it for things like
->
-> 	git show :/mqueue	# did I apply that 'mqueue' patch?
-> 	git show :/akpm		# what was the last patch I got from Andrew?
->
-> and while in all cases I could admittedly have done exactly the same thing 
-> with something like "git log -p -1 --grep=mqueue" instead, I've used it as 
-> a nice shortcut.
+I ran into this problem again. I backed up both repositories in full, r=
+an the command above in the remote repository, and it did not fix the p=
+roblem.
 
-I already took this but I actually started hating it.  As I have
-merge.summary on,
+I deleted my local copy and cloned using ssh instead if git://, copied =
+over the same changes and was able to push again. This looks to be my w=
+orkaround.
 
-    git show ':/diff: add configuration option'
-
-almost never hits the commit I am looking for---instead it ends up finding
-a merge that merges it.
-
-I however suspect that I would hate it much less after retraining my
-fingers to anchor the pattern at the beginning of the line.  But not
-yet...
+If anyone wants to dive deeper into this problem, please let me know an=
+d we can fight it using the snapshots I have.
+-----------------------------------------------------------------------=
+------------
+This email message is for the sole use of the intended recipient(s) and=
+ may contain
+confidential information.  Any unauthorized review, use, disclosure or =
+distribution
+is prohibited.  If you are not the intended recipient, please contact t=
+he sender by
+reply email and destroy all copies of the original message.
+-----------------------------------------------------------------------=
+------------
