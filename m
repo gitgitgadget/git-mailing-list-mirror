@@ -1,96 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: What's cooking in git.git (Jun 2010, #02; Wed, 16)
-Date: Fri, 18 Jun 2010 08:30:33 +0200
-Message-ID: <vpq8w6cc0om.fsf@bauges.imag.fr>
-References: <7viq5ict4p.fsf@alter.siamese.dyndns.org>
-	<7vocf939vu.fsf@alter.siamese.dyndns.org>
-	<0d059f457e2edc87093de2e0ea3c911a@ensimag.fr>
-	<7vmxut1b8v.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: clement.poulain@ensimag.imag.fr, <git@vger.kernel.org>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 18 08:31:07 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: git pull (Your local changes to ... would be overwritten by  merge)
+Date: Fri, 18 Jun 2010 09:44:27 +0200
+Message-ID: <BFBC3418-44C5-484D-8508-60813675409D@gmail.com>
+References: <AANLkTinokUxiDdetcrsrlSExQ7hmhLS5szbTt9KzGKr_@mail.gmail.com> <AANLkTimeIWseETfYiMajIqesjJ_p55pRislnQQIaCrbG@mail.gmail.com> <4C19FBF8.6010709@drmicha.warpmail.net> <vpq4oh1zzfs.fsf@bauges.imag.fr> <AANLkTinWS0zWhh0d-yrb7eWMEeQenoAF8tA6-l9BRP_q@mail.gmail.com> <4C1A0DCD.2070906@drmicha.warpmail.net> <vpqbpb9ofby.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Daniel Blendea <bdaniel7@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jun 18 09:44:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPV6Z-0002k9-Fd
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 08:31:07 +0200
+	id 1OPWFi-0005Sz-Ua
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 09:44:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754162Ab0FRGbA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jun 2010 02:31:00 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:53426 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753985Ab0FRGa7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jun 2010 02:30:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o5I6MPMn022452
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 18 Jun 2010 08:22:25 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OPV61-0004It-Qu; Fri, 18 Jun 2010 08:30:33 +0200
-In-Reply-To: <7vmxut1b8v.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 17 Jun 2010 16\:37\:52 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 18 Jun 2010 08:22:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o5I6MPMn022452
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1277446948.32249@LEVvdB9GPJvNjEvEoVsmbw
+	id S1755972Ab0FRHod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jun 2010 03:44:33 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:54004 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752259Ab0FRHoc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jun 2010 03:44:32 -0400
+Received: by wwb18 with SMTP id 18so559766wwb.19
+        for <git@vger.kernel.org>; Fri, 18 Jun 2010 00:44:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:references:in-reply-to
+         :mime-version:content-type:message-id:content-transfer-encoding:cc
+         :from:subject:date:to:x-mailer;
+        bh=Je5021lU//N9dwaVUIVAv2kbxgkzyRUb41vHgMBtTUA=;
+        b=J0pB2D2TYGUREU5dLmT3ktE10a1PSyrfyGFpEkisHmNJdLjFaH1MbRgvdE8EtAZ3Au
+         +DtOJOAX+GPsA2p4IKxeLmkvZzZO87+ER5pf808cr61EOP4hxwZtPuitsPV2+wMxB9xx
+         g9NZFE5GwUeLTQ8TLcAe2kGaToheo6x9/ZNyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=references:in-reply-to:mime-version:content-type:message-id
+         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
+        b=NNqV1F9JFbw/SR0V8oZA5x78iX/xWhqG7nid2FR7NUkZJc3D43lqO491nZ58htqlJv
+         aCQybzqOfCouPoDBENd6yDJfNR8rt7X+8aiMinC5XRXebU1QQZNlN+//RA/DajQ/i8QK
+         2abeUsIgIu3Efi/05PNxe6yTZBdD4qMiLgQUU=
+Received: by 10.227.151.77 with SMTP id b13mr656381wbw.13.1276847069898;
+        Fri, 18 Jun 2010 00:44:29 -0700 (PDT)
+Received: from [10.36.80.159] ([62.113.137.5])
+        by mx.google.com with ESMTPS id b17sm71030873wbd.13.2010.06.18.00.44.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jun 2010 00:44:29 -0700 (PDT)
+In-Reply-To: <vpqbpb9ofby.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149337>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 17. juni 2010, at 17.21, Matthieu Moy wrote:
 
-> Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr> writes:
->
->> A fix was proposed here:
->> http://mid.gmane.org/1276610328-28532-1-git-send-email-axel.bonnet@e=
-nsimag.imag.fr
->
-> This one changes textconv_object() to take a pointer to ulong*; a cal=
-ler
-> is changed to cast a long* down to that pointer (in
-> fill_origin_blob);
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> I guess this shows that correct diagnostics is not a prerequisite for a
+>> successful therapy ;)
+>> 
+>> (The diagnostics really indicate a work tree with local uncommitted
+>> modifications.)
+> 
+> I'd bet for this kind of issue:
+> 
+> http://kerneltrap.org/mailarchive/git/2010/3/9/25215/thread
+> From: Johannes Schindelin
+> Subject: core.autocrlf considered half-assed
+> 
+> Didn't follow the outcome in details, but some patches were proposed
+> to improve the situation.
 
-Isn't sign-casting safe? If not, then the existing call to
-read_sha1_file should be fixed too:
-
--file->ptr =3D read_sha1_file(o->blob_sha1, &type,
--   (unsigned long *)(&(file->size)));
-[...]
-+file->ptr =3D read_sha1_file(o->blob_sha1, &type,
-+   (unsigned long *)(&(file->size)));
-
-(it's been there for a while)
-
->     The only portable way in C to convert between types is by assignm=
-ent. So
->     you have to do:
->
->       unsigned long foo;
->       textconv_object(read_from, null_sha1, &buf.buf, &foo);
->       buf.len =3D foo;
-
-This is what the patch does a little later:
-
-+unsigned long buf_len;
-[...]
-+if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
-+    textconv_object(read_from, null_sha1, &buf.buf, &buf_len))
-+buf.len =3D buf_len;
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Finn Arne Gangstad's "safe autocrlf" patch (c480539, currently in next) solves the problem by disabling conversion for files that contain CRs in the repository.
+-- 
+Eyvind Bernhardsen
