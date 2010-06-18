@@ -1,118 +1,129 @@
-From: =?utf-8?b?VMO2csO2aw==?= Edwin <edwintorok@gmail.com>
-Subject: Re: [BUG] git clean not working on FreeBSD/NFS
-Date: Fri, 18 Jun 2010 11:03:05 +0000 (UTC)
-Message-ID: <loom.20100618T122039-876@post.gmane.org>
-References: <4C1A30A3.9080708@gmail.com> <loom.20100617T170956-287@post.gmane.org>
+From: =?UTF-8?q?T=C3=B6r=C3=B6k=20Edwin?= <edwintorok@gmail.com>
+Subject: [PATCH] Fix 'git clean' failure on NFS.
+Date: Fri, 18 Jun 2010 14:07:15 +0300
+Message-ID: <1276859235-13534-1-git-send-email-edwintorok@gmail.com>
+References: <loom.20100618T122039-876@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?T=C3=B6r=C3=B6k=20Edwin?= <edwintorok@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 18 13:05:15 2010
+X-From: git-owner@vger.kernel.org Fri Jun 18 13:07:40 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPZNq-0007wF-Hq
-	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 13:05:14 +0200
+	id 1OPZQA-0000rh-FE
+	for gcvg-git-2@lo.gmane.org; Fri, 18 Jun 2010 13:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760236Ab0FRLFH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jun 2010 07:05:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:40319 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758468Ab0FRLFG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jun 2010 07:05:06 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OPZNg-0007q6-In
-	for git@vger.kernel.org; Fri, 18 Jun 2010 13:05:04 +0200
-Received: from 79-114-67-113.rdsnet.ro ([79-114-67-113.rdsnet.ro])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jun 2010 13:05:04 +0200
-Received: from edwintorok by 79-114-67-113.rdsnet.ro with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 18 Jun 2010 13:05:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-connect(): No such file or directory
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 79.114.67.113 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.4) Gecko/20100505 Iceweasel/3.6.4 (like Firefox/3.6.4))
+	id S1760938Ab0FRLHd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jun 2010 07:07:33 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:41843 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758489Ab0FRLHc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jun 2010 07:07:32 -0400
+Received: by fxm10 with SMTP id 10so526452fxm.19
+        for <git@vger.kernel.org>; Fri, 18 Jun 2010 04:07:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=t6F1dogQOEd8vBWGH2ekxYwKqwLKgUFPp0/67AtWfPo=;
+        b=S8PJBBA8p7RJezYL+UB0JJr5w+nDo4c1v3wj2a46sNNnLjeld2cBxLDm7WcpPutQZ8
+         vMRtEyQOC+1oT89Dbp5DRnNM7RuYxlD4NLpcsKM+3prIOay+sp9Cei2CSKg+tpTzkGLQ
+         ytl9ckgBGwVtTHXjmo/zLudKOq4qayzrvfz8s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=bQ0BdCw5TakbJ9xT80bJTJmpyMUMHbKB4H+01YB+dv4O+FVFgBcjOdSiGcr8dys6Ro
+         V7bUkRiy35WVR0DJ5qr5+lwxhiZMVvehE+gH8VngKOfOmUB5IC9eASn2cOj9i4eII6Mr
+         W3MAbmaz8zUFBQkMMcSU+lCykBDTA1W1+gdRo=
+Received: by 10.223.143.20 with SMTP id s20mr720340fau.38.1276859250829;
+        Fri, 18 Jun 2010 04:07:30 -0700 (PDT)
+Received: from debian ([79.114.67.113])
+        by mx.google.com with ESMTPS id o19sm17119751fal.47.2010.06.18.04.07.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 18 Jun 2010 04:07:29 -0700 (PDT)
+Received: by debian (Postfix, from userid 1000)
+	id 9496039702; Fri, 18 Jun 2010 14:07:28 +0300 (EEST)
+X-Mailer: git-send-email 1.7.0
+In-Reply-To: <loom.20100618T122039-876@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149341>
 
-Henrik Grubbstr=C3=B6m <grubba <at> grubba.org> writes:
->=20
-> Sounds like the classic nfs problem with references to open deleted f=
-iles.
-> If you look closer at the failing directories, I bet that you'll find=
- files=20
-> with names like ".nfsDEAD".
+readdir() used to do a single pass, which is not always enough.
+If you unlink some files/rmdir some subdirs then there might be some
+files you haven't seen yet *before* the readdir cursor (files get rearr=
+anged
+in the directory, etc.).
 
-No, these are all the files that remain in libclamav/.deps (ls -al):
-edwin@gcc101:~/buildbot/gcc4.2/build$ ls -al libclamav/.deps/
-total 116
-drwxr-xr-x  2 edwin  edwin  8192 Jun 18 03:24 .
-drwx------  8 edwin  edwin  8192 Jun 18 03:24 ..
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-textnorm.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-tnef.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-unarj.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-uniq.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-unsp.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-untar.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-unzip.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-upack.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-upx.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-uuencode.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-vba_extract.=
-Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-version.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-wwunpack.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 libclamav_la-yc.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrar.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrar15.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrar20.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrar_iface.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrarcmd.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrarfilter.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrarhlp.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrarppm.Plo
--rw-r--r--  1 edwin  edwin     8 Jun 18 03:23 unrarvm.Plo
+The fix is to do an additional readdir() pass if we unlinked/rmdired so=
+mething.
+This is easily accomplished by using rewinddir.
 
-If I run 'git clean -x -f -d -- libclamav' a few more times they are
-eventually removed.
+Signed-off-by: T=C3=B6r=C3=B6k Edwin <edwintorok@gmail.com>
+---
+ dir.c |   16 ++++++++++++++--
+ 1 files changed, 14 insertions(+), 2 deletions(-)
 
-It is interesting that every time I repeat the config.status/git clean =
-steps
-I get the *same* files remaining in the directory.
-
-There were 127 files initially, these 23 always remain behind on 1st ru=
-n, a 2nd
-git clean removes them (but some other .deps directories need even more=
- reruns
-of git clean).
-
-I added a printf in remove_dir_recursively, and those files are not eve=
-n
-printed.
-
-Now I see the bug!
-You do a single readdir() pass, and unlink() files. That is wrong for 2=
- reasons:
- - new files may be added in the meantime and you have a race condition
- - unlinking a file can cause order of files to be rearranged, moved. B=
-ut your
-readdir() cursors stays where it was before, hence you will miss enumer=
-ating
-some files that are there.
-
-The fix is to rewinddir() if you unlinked anything (won't fix the race =
-condition
-but that can't be eliminated completely anyway).
-
-I'm sending a patch as reply to this mail.
+diff --git a/dir.c b/dir.c
+index 5615f33..7260907 100644
+--- a/dir.c
++++ b/dir.c
+@@ -999,6 +999,7 @@ int remove_dir_recursively(struct strbuf *path, int=
+ flag)
+ 	struct dirent *e;
+ 	int ret =3D 0, original_len =3D path->len, len;
+ 	int only_empty =3D (flag & REMOVE_DIR_EMPTY_ONLY);
++	int did_rm;
+ 	unsigned char submodule_head[20];
+=20
+ 	if ((flag & REMOVE_DIR_KEEP_NESTED_GIT) &&
+@@ -1013,6 +1014,8 @@ int remove_dir_recursively(struct strbuf *path, i=
+nt flag)
+ 		strbuf_addch(path, '/');
+=20
+ 	len =3D path->len;
++	do {
++	did_rm =3D 0;
+ 	while ((e =3D readdir(dir)) !=3D NULL) {
+ 		struct stat st;
+ 		if (is_dot_or_dotdot(e->d_name))
+@@ -1023,15 +1026,24 @@ int remove_dir_recursively(struct strbuf *path,=
+ int flag)
+ 		if (lstat(path->buf, &st))
+ 			; /* fall thru */
+ 		else if (S_ISDIR(st.st_mode)) {
+-			if (!remove_dir_recursively(path, only_empty))
++			if (!remove_dir_recursively(path, only_empty)) {
++				did_rm =3D 1;
+ 				continue; /* happy */
+-		} else if (!only_empty && !unlink(path->buf))
++			}
++		} else if (!only_empty && !unlink(path->buf)) {
++			did_rm =3D 1;
+ 			continue; /* happy, too */
++		}
+=20
+ 		/* path too long, stat fails, or non-directory still exists */
+ 		ret =3D -1;
+ 		break;
+ 	}
++	/* if we unlinked/rmdir-ed anything there might be files we haven't s=
+een
++	 * yet before the readdir() cursor, rewind and walk directory again
++	 * until we can't unlink any more. */
++	rewinddir(dir);
++	} while (did_rm && !ret);
+ 	closedir(dir);
+=20
+ 	strbuf_setlen(path, original_len);
+--=20
+1.7.0
