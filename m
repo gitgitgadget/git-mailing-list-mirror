@@ -1,136 +1,129 @@
 From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: [PATCH 2/4] log-tree.c: Use struct name_decoration's type for classifying decoration
-Date: Sat, 19 Jun 2010 09:37:34 +0800
-Message-ID: <1276911456-18466-2-git-send-email-ayiehere@gmail.com>
+Subject: [PATCH 3/4] log --decorate: Colorize commit decorations
+Date: Sat, 19 Jun 2010 09:37:35 +0800
+Message-ID: <1276911456-18466-3-git-send-email-ayiehere@gmail.com>
 References: <7vtyp11k9x.fsf@alter.siamese.dyndns.org>
 Cc: Nazri Ramliy <ayiehere@gmail.com>
 To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 19 03:38:03 2010
+X-From: git-owner@vger.kernel.org Sat Jun 19 03:38:41 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OPn0U-0005qs-GN
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Jun 2010 03:38:02 +0200
+	id 1OPn14-00062G-NK
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Jun 2010 03:38:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754556Ab0FSBh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jun 2010 21:37:56 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:49688 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754540Ab0FSBhz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jun 2010 21:37:55 -0400
-Received: by pwi1 with SMTP id 1so660303pwi.19
-        for <git@vger.kernel.org>; Fri, 18 Jun 2010 18:37:54 -0700 (PDT)
+	id S1754571Ab0FSBiB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jun 2010 21:38:01 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:65036 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754540Ab0FSBiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jun 2010 21:38:00 -0400
+Received: by pxi12 with SMTP id 12so653549pxi.19
+        for <git@vger.kernel.org>; Fri, 18 Jun 2010 18:37:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=MDe1pLyHVg2YePedDLx/P5nV02M1wAylgO3BssvU9Ug=;
-        b=v53hBVSoQtPO+uaLewNcYjO2rmEHAvg9XnPUeNJxUSIdJbvdwtGK8mHoYs2dW9qP1n
-         +HqUte3Yv00xZL72qS/HaTPn4lpGRYcB87arl2um1Xi93gyheL0UhA+6rNKGdd4lFalx
-         tLzfywON1LriD62sYirrAfxfMkURnEsBLE31w=
+        bh=eeMaklGK9SxdSESnDPZORta5v0WOr2G1BuqQBZJJp9c=;
+        b=b3tYeG5JTwirG7R+G5bhJSbp1QU4uQLNMbGvr7jWXHOTxciS6+IIzzDMWisdxFtDlT
+         TB8WA8X6JZzDCAY3VQV1RyohsaG7xUM4N0IQ60rgoR3emF5rqcivTLan3VhLn97uvTvT
+         b3o2S3Ji6pO4DmXPhoeh2nDGIS0ModglB2jpI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=r/03/Eb9QIGLMb3R3CUPMiER8KWcgpvsa/7QAe6Tlr4nPDHcypoSdf+mTAQORFkKQA
-         wAGH6g2DUMoRuLtc4Ak1Yn/ms7tdaDxmyBoScbH3jS8dGF8N235YvICpw2WTNhD2eMk8
-         y5s6dHvmTkp/AJtRGSRmsYX2nj/JVVRNur1iU=
-Received: by 10.141.53.8 with SMTP id f8mr1527927rvk.5.1276911474820;
-        Fri, 18 Jun 2010 18:37:54 -0700 (PDT)
+        b=jfO+V54s1ld6EjQ+KujteAAQdRsYG4irUt1TgCgsjjLzvhI1Z18WN86OYSX1g4f6mk
+         2nSefSlkrHJS0XK1wFs1GzstVR+VR37lp6B9jPjhiq2IfCOplWFKiEhBsX5qbjfrabbY
+         06nPQOlAFrHpgtPtW4y7n4OhOiGN7F5y8Qlik=
+Received: by 10.141.214.40 with SMTP id r40mr1527709rvq.11.1276911478840;
+        Fri, 18 Jun 2010 18:37:58 -0700 (PDT)
 Received: from localhost.localdomain ([115.132.104.117])
-        by mx.google.com with ESMTPS id s9sm3587164rvl.5.2010.06.18.18.37.48
+        by mx.google.com with ESMTPS id s9sm3587164rvl.5.2010.06.18.18.37.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 18 Jun 2010 18:37:53 -0700 (PDT)
+        Fri, 18 Jun 2010 18:37:58 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.245.g7c42e.dirty
 In-Reply-To: <7vtyp11k9x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149371>
 
-The "tag: " prefix is no longer prepended to the name of the decoration.
-It is now printed conditionally by show_decorations if the decoration
-type is DECORATION_REF_TAG.
+This makes the decorations stand out more and easier to distinguish
+and spot because they are colored differently depending on their type.
 
 Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
 ---
- log-tree.c |   40 ++++++++++++++++++++++++++++++++--------
- 1 files changed, 32 insertions(+), 8 deletions(-)
+ log-tree.c |   34 +++++++++++++++++++++++++++++++++-
+ 1 files changed, 33 insertions(+), 1 deletions(-)
 
 diff --git a/log-tree.c b/log-tree.c
-index d3ae969..2d804ee 100644
+index 2d804ee..25586cf 100644
 --- a/log-tree.c
 +++ b/log-tree.c
-@@ -10,29 +10,50 @@
+@@ -7,6 +7,7 @@
+ #include "reflog-walk.h"
+ #include "refs.h"
+ #include "string-list.h"
++#include "color.h"
  
  struct decoration name_decoration = { "object names" };
  
--static void add_name_decoration(const char *prefix, const char *name, struct object *obj)
-+enum decoration_type {
-+	DECORATION_NONE = 0,
-+	DECORATION_REF_LOCAL,
-+	DECORATION_REF_REMOTE,
-+	DECORATION_REF_TAG,
-+	DECORATION_REF_STASH,
-+	DECORATION_REF_HEAD,
+@@ -19,6 +20,29 @@ enum decoration_type {
+ 	DECORATION_REF_HEAD,
+ };
+ 
++static char decoration_colors[][COLOR_MAXLEN] = {
++	GIT_COLOR_RESET,
++	GIT_COLOR_BOLD_GREEN,	/* REF_LOCAL */
++	GIT_COLOR_BOLD_RED,	/* REF_REMOTE */
++	GIT_COLOR_BOLD_YELLOW,	/* REF_TAG */
++	GIT_COLOR_BOLD_MAGENTA,	/* REF_STASH */
++	GIT_COLOR_BOLD_CYAN,	/* REF_HEAD */
 +};
 +
-+static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
++static const char *decorate_get_color(int decorate_use_color, enum decoration_type ix)
++{
++	if (decorate_use_color)
++		return decoration_colors[ix];
++	return "";
++}
++
++/*
++ * log-tree.c uses DIFF_OPT_TST for determining whether to use color
++ * for showing the commit sha1, use the same check for --decorate
++ */
++#define decorate_get_color_opt(o, ix) \
++	decorate_get_color(DIFF_OPT_TST((o), COLOR_DIFF), ix)
++
+ static void add_name_decoration(enum decoration_type type, const char *name, struct object *obj)
  {
--	int plen = strlen(prefix);
  	int nlen = strlen(name);
--	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + plen + nlen);
--	memcpy(res->name, prefix, plen);
--	memcpy(res->name + plen, name, nlen + 1);
-+	struct name_decoration *res = xmalloc(sizeof(struct name_decoration) + nlen);
-+	memcpy(res->name, name, nlen + 1);
-+	res->type = type;
- 	res->next = add_decoration(&name_decoration, obj, res);
- }
- 
- static int add_ref_decoration(const char *refname, const unsigned char *sha1, int flags, void *cb_data)
+@@ -81,6 +105,10 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
  {
- 	struct object *obj = parse_object(sha1);
-+	enum decoration_type type = DECORATION_NONE;
- 	if (!obj)
- 		return 0;
-+
-+	if (!prefixcmp(refname, "refs/heads"))
-+		type = DECORATION_REF_LOCAL;
-+	else if (!prefixcmp(refname, "refs/remotes"))
-+		type = DECORATION_REF_REMOTE;
-+	else if (!prefixcmp(refname, "refs/tags"))
-+		type = DECORATION_REF_TAG;
-+	else if (!prefixcmp(refname, "refs/stash"))
-+		type = DECORATION_REF_STASH;
-+	else if (!prefixcmp(refname, "HEAD"))
-+		type = DECORATION_REF_HEAD;
-+
- 	if (!cb_data || *(int *)cb_data == DECORATE_SHORT_REFS)
- 		refname = prettify_refname(refname);
--	add_name_decoration("", refname, obj);
-+	add_name_decoration(type, refname, obj);
- 	while (obj->type == OBJ_TAG) {
- 		obj = ((struct tag *)obj)->tagged;
- 		if (!obj)
- 			break;
--		add_name_decoration("tag: ", refname, obj);
-+		add_name_decoration(DECORATION_REF_TAG, refname, obj);
- 	}
- 	return 0;
- }
-@@ -70,7 +91,10 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
- 		return;
+ 	const char *prefix;
+ 	struct name_decoration *decoration;
++	const char *color_commit =
++		diff_get_color_opt(&opt->diffopt, DIFF_COMMIT);
++	const char *color_reset =
++		decorate_get_color_opt(&opt->diffopt, DECORATION_NONE);
+ 
+ 	if (opt->show_source && commit->util)
+ 		printf("\t%s", (char *) commit->util);
+@@ -92,9 +120,13 @@ void show_decorations(struct rev_info *opt, struct commit *commit)
  	prefix = " (";
  	while (decoration) {
--		printf("%s%s", prefix, decoration->name);
-+		printf("%s", prefix);
-+		if (decoration->type == DECORATION_REF_TAG)
-+			printf("tag: ");
-+		printf("%s", decoration->name);
+ 		printf("%s", prefix);
++		fputs(decorate_get_color_opt(&opt->diffopt, decoration->type),
++		      stdout);
+ 		if (decoration->type == DECORATION_REF_TAG)
+-			printf("tag: ");
++			fputs("tag: ", stdout);
+ 		printf("%s", decoration->name);
++		fputs(color_reset, stdout);
++		fputs(color_commit, stdout);
  		prefix = ", ";
  		decoration = decoration->next;
  	}
