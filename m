@@ -1,62 +1,76 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [WIP PATCH 0/3] implement merge strategy for submodule	links
-Date: Sat, 19 Jun 2010 17:54:48 +0200
-Message-ID: <4C1CE848.5020602@web.de>
-References: <cover.1276059473.git.hvoigt@hvoigt.net> <201006170239.01951.johan@herland.net> <4C1A8FDC.7010309@web.de> <201006181140.16652.johan@herland.net> <4C1B7ABE.8080905@web.de> <20100619094301.GA2667@book.hvoigt.net>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 0/2] git-cvsserver: Minor fixes for oopsies
+Date: Sat, 19 Jun 2010 16:06:56 +0000
+Message-ID: <1276963618-14662-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sat Jun 19 17:55:02 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 19 18:07:20 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQ0Nm-00080Q-3F
-	for gcvg-git-2@lo.gmane.org; Sat, 19 Jun 2010 17:54:58 +0200
+	id 1OQ0Zk-0004ov-3s
+	for gcvg-git-2@lo.gmane.org; Sat, 19 Jun 2010 18:07:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756347Ab0FSPyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jun 2010 11:54:53 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:59552 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756249Ab0FSPyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jun 2010 11:54:52 -0400
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 7ABA316079A4A;
-	Sat, 19 Jun 2010 17:54:51 +0200 (CEST)
-Received: from [80.128.109.62] (helo=[192.168.178.26])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OQ0Nf-000730-00; Sat, 19 Jun 2010 17:54:51 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <20100619094301.GA2667@book.hvoigt.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+ufW1tT/lBxi/763q02iIGUjFMEiaWtcdpXOBZ
-	sCeAllRS8kBiEhWYe8W3wEnr8TprudBXhQb7mxQjULe/epcorL
-	Uhxr9/wNEs4FVREEWKIA==
+	id S1753589Ab0FSQHL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jun 2010 12:07:11 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52152 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752725Ab0FSQHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jun 2010 12:07:09 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 33so1291912wyb.19
+        for <git@vger.kernel.org>; Sat, 19 Jun 2010 09:07:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=sfRVOTtVI8uiJhn5to0O2Fc40kv0iBi28BuppHMUcuY=;
+        b=D9FFCQPHXRfbcmhVtv0J3/S6jRGK6Z/c9y7kX6nxGEamKjR6VX6x16hsAN1jcEZmyO
+         tD8wchsV3dXQuhwLcXqQN6clOaKhZN2e1kI7UOy46LcZU8pe4JAGc88K/ViIRjFrVC/B
+         Z8o6QIzOtKEJSJSEmuRLhijdtEOIeNZw/R+V0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=ev2C4iOc6axI+SOtAi4YYZT5/iEcGwJxzjlzfREpaSW+ZBvSv5qSrtvk/xfdtQ6jGm
+         S7fDPRC2j7YGKGxhNFTv2J4LDMrXnwPAIqYn1URhx3Zqor33ZJ7jCEFNQGFIV703Vvyq
+         3woa5xF3KZwHsktDeSOJXC3oeSrOJdtRXTg3s=
+Received: by 10.227.145.14 with SMTP id b14mr2472444wbv.93.1276963628400;
+        Sat, 19 Jun 2010 09:07:08 -0700 (PDT)
+Received: from localhost.localdomain ([188.105.94.3])
+        by mx.google.com with ESMTPS id y31sm7107452wby.16.2010.06.19.09.07.06
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 19 Jun 2010 09:07:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.251.g92a7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149383>
 
-Am 19.06.2010 11:43, schrieb Heiko Voigt:
-> On Fri, Jun 18, 2010 at 03:55:10PM +0200, Jens Lehmann wrote:
->> Nice summary. Heiko, would you please post a new patch implementing this
->> approach?
-> 
-> Yes sure. I agree with the proposed scheme.
+The original git-cvsserver pserver support had some oops code. There
+was a typo in a comment, and the error for invalid password formats
+wasn't correct.
 
-Thank you very much!
+As an aside, since the original implementation I've released the code
+on CPAN as the Crypt::CVS. That version also has a scramble() function
+and exhaustive tests.
 
+It would make a good experimental case for adding dual-life modules to
+Git due to its smallness and the inclusion of tests.
 
-> As Jens is working on the automatically checkout submodules extension I
-> will base the merge patch on your branch. Is the checkout_submodule()
-> function already stable enough to be used?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+  git-cvsserver: typo in a comment: bas -> has
+  git-cvsserver: fix error for invalid password formats
 
-Unfortunately not (the checkout itself is working fine, but the test if
-the checkout would overwrite local changes in the submodules is still
-missing, so be warned!).
+ git-cvsserver.perl |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
