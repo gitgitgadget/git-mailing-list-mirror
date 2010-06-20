@@ -1,88 +1,70 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 2/3] t2018-checkout-branch.sh: show that checkout -f -b doesn't DWIM
-Date: Mon, 21 Jun 2010 00:33:11 +0800
-Message-ID: <1277051592-4552-3-git-send-email-rctay89@gmail.com>
-References: <1277051592-4552-1-git-send-email-rctay89@gmail.com>
- <1277051592-4552-2-git-send-email-rctay89@gmail.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 20 18:33:55 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #03; Fri, 18)
+Date: Sun, 20 Jun 2010 10:30:41 -0700
+Message-ID: <7v7hltvcfy.fsf@alter.siamese.dyndns.org>
+References: <7v7hlvyi50.fsf@alter.siamese.dyndns.org>
+ <AANLkTinB4N6xXm7_Locp-xJyN8Nkew_7t16XhjVi_GlB@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jun 20 19:31:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQNSy-0006zp-2X
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Jun 2010 18:33:52 +0200
+	id 1OQOMD-0003yp-3e
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Jun 2010 19:30:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754205Ab0FTQdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jun 2010 12:33:35 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38256 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751018Ab0FTQdc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jun 2010 12:33:32 -0400
-Received: by pwj8 with SMTP id 8so11517pwj.19
-        for <git@vger.kernel.org>; Sun, 20 Jun 2010 09:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=qLF/RofqoJ78Z2AKF9xyTiX5qIva7mgkbZBTL7jSEGI=;
-        b=GTK6pPDsqqd5QKDsvQv4HeE4uS3l0rFNyJ67d+e7W0jIe4KoyWbqloo669xGSNGEG6
-         ZiF72ckInN0ujl1cbNmjn7c164CRTGrkKt5Zd9V1iq8EIXFzS/K+Ca1vqWiF5rbAPkjT
-         DYxVJom+af/TaPgCGXQ0nSRerYHh0+NYH6N0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=eRzs5uew9xFZctM6qEhtyZSTmvkVRehtxz0AN81CuzqCSToFi0V7zCE/dChySeTnqH
-         quuUbj8aXgM7D3svSCJbG8RK8R75dMBpNQ5cBh+vPQjMHhW5/8ODDfdLYZ1zSQkO13FQ
-         OZKnpQNprarjocDAYKnI2vhMySotkgSV0hj0A=
-Received: by 10.142.247.7 with SMTP id u7mr2600548wfh.95.1277051610855;
-        Sun, 20 Jun 2010 09:33:30 -0700 (PDT)
-Received: from localhost.localdomain (cm123.zeta152.maxonline.com.sg [116.87.152.123])
-        by mx.google.com with ESMTPS id n29sm9634993wae.16.2010.06.20.09.33.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 20 Jun 2010 09:33:30 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.513.g06a69
-In-Reply-To: <1277051592-4552-2-git-send-email-rctay89@gmail.com>
+	id S1755968Ab0FTRav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jun 2010 13:30:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60138 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755908Ab0FTRau (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jun 2010 13:30:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CAC6CBD1FD;
+	Sun, 20 Jun 2010 13:30:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qO6XJSYav6Kef+Rp5Iyuq00Q/Wc=; b=ZCmfpx
+	6hgG9p32d98JyjBqYFC8BZDGjlhw17jscZE5hXv2OPkpmurvaHYMjAjt68cx/qCw
+	6LTobBnArdu5UJqGHCOfC80y0WHasgucB+aMjarV/WU67NNCK1yewFblhS3Qqw0f
+	u1/7VjCPuHZWRpHQnW2BnPj50zDAumQ+5BNnk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QZCoDS85i97PXm88i2+IenZhET1Unwpy
+	67oVCwTXmG8l7kzORLPq/6tNrpFjO7OlunjsR9Or1rrPyk3wdWmcbJxpLWGZj9WV
+	5DKN19HSrxWVroxNbmWwraTS4EX0M/ev2RlUTjyjAVjoxbXwIFqO95VLCBJijdg6
+	RCqGeU0qFFo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9BECDBD1FC;
+	Sun, 20 Jun 2010 13:30:45 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F16ACBD1FA; Sun, 20 Jun
+ 2010 13:30:42 -0400 (EDT)
+In-Reply-To: <AANLkTinB4N6xXm7_Locp-xJyN8Nkew_7t16XhjVi_GlB@mail.gmail.com>
+ (Pavan Kumar Sunkara's message of "Sat\, 19 Jun 2010 23\:50\:01 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8F056BCA-7C91-11DF-92AF-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149400>
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
- t/t2018-checkout-branch.sh |   20 ++++++++++++++++++++
- 1 files changed, 20 insertions(+), 0 deletions(-)
+Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
 
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index 678a34f..e6c0f8c 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -63,4 +63,24 @@ test_expect_success 'checkout -b to an existing branch fails' '
- 	test_must_fail do_checkout branch2 $HEAD2
- '
- 
-+test_expect_failure 'checkout -f -b to an existing branch resets branch' '
-+	git checkout branch1 &&
-+
-+	do_checkout branch2 "" -f
-+'
-+
-+test_expect_failure 'checkout -f -b to an existing branch resets branch (explicit ref)' '
-+	git checkout branch1 &&
-+
-+	do_checkout branch2 $HEAD1 -f
-+'
-+
-+test_expect_failure 'checkout -f -b to an existing branch resets branch (dirty) ' '
-+	git checkout branch1 &&
-+
-+	setup_dirty &&
-+	do_checkout branch2 $HEAD1 -f &&
-+	test_must_fail test_dirty
-+'
-+
- test_done
--- 
-1.7.1.513.g4f18
+> Junio, I would like to remember you a patch which I think u missed.
+>
+> http://kerneltrap.org/mailarchive/git/2010/6/3/31711
+
+What's the message-id?  There doesn't seem to be an easy way to get it out
+of that web interface, so the above URL is no use for me, and I cannot see
+the message in the context without its message-id.
+
+Pointing at the site to casually refer to an old discussion is fine, but
+please never refer to that site to refer to an old patch if you want me to
+apply one.
