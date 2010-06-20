@@ -1,74 +1,65 @@
-From: Greg Hewgill <greg@hewgill.com>
-Subject: Proposal for git stash rename
-Date: Sun, 20 Jun 2010 09:31:42 +0000
-Message-ID: <20100620093142.GF24805@occam.hewgill.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Proposal for git stash rename
+Date: Sun, 20 Jun 2010 10:54:43 +0000
+Message-ID: <AANLkTimjEksHI4nlefqmNzdNiseVyMQcw312g2AHFQDZ@mail.gmail.com>
+References: <20100620093142.GF24805@occam.hewgill.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 20 11:49:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Greg Hewgill <greg@hewgill.com>
+X-From: git-owner@vger.kernel.org Sun Jun 20 12:54:55 2010
 connect(): No such file or directory
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQHA0-0005DD-CR
-	for gcvg-git-2@lo.gmane.org; Sun, 20 Jun 2010 11:49:52 +0200
+	id 1OQIAw-0003Rw-Fj
+	for gcvg-git-2@lo.gmane.org; Sun, 20 Jun 2010 12:54:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756464Ab0FTJtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 20 Jun 2010 05:49:43 -0400
-Received: from occam.hewgill.net ([69.41.174.196]:50499 "EHLO
-	occam.hewgill.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756429Ab0FTJtm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jun 2010 05:49:42 -0400
-X-Greylist: delayed 1078 seconds by postgrey-1.27 at vger.kernel.org; Sun, 20 Jun 2010 05:49:42 EDT
-Received: by occam.hewgill.net (Postfix, from userid 1001)
-	id 8924D22823; Sun, 20 Jun 2010 09:31:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=hewgill.com;
- i=@hewgill.com; q=dns/txt; s=greg; t=1277026303; h=Date : From : To :
- Subject : Message-ID : MIME-Version : Content-Type :
- Content-Disposition : X-PGP-Fingerprint : User-Agent;
- bh=I56wIyoCqlITe6cyXYTrjjrj9q3FI80Eh6oAimpyEsk=; b=oJ+ssxQEO5DiGNLdQU1QDgmLEeMXwTLByefZfsNIwmRSpSvFw2fpok29yPWR6TvdbD91zkQSG3i9YGKXbW0tP2dr8ZUF7y6sv8Emw2LpxfkQKfgEyZkOOAWxl1L2BI10O0OOHhiddxpM4iD43eqCqg4MpRI77YBpYFk69EWfpl4=
-Content-Disposition: inline
-X-PGP-Fingerprint: 862C 894D 4908 0240 FEEE  6D1F FA34 8460 74E0 2115
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1756794Ab0FTKyp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jun 2010 06:54:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40696 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756687Ab0FTKyo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 20 Jun 2010 06:54:44 -0400
+Received: by iwn9 with SMTP id 9so2482850iwn.19
+        for <git@vger.kernel.org>; Sun, 20 Jun 2010 03:54:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=suu+vjbFjxlr6okGFGmPT3BqiwbwuEPJ8we3gDX/AtE=;
+        b=FWl3ob6OS0hTzgZw4MlFeR3JEhpN30cYK++GVvun2l4ePdg+ZLsthaHSbFktSC71SG
+         /6zmzvv+b+O9efoCVRTAWeoTZ0IYJYZZwNYQAR+ezovar1OvBqXZFps2rEXrR6RISawZ
+         OCag7tWRXrb78IhklFTXgBcsoThFRsVgfhOuo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=F/OQCx0BHVIBP5T9CnV9VU1528QipNdT+1o6tS1yriY1eOGt7XUr2YkRVLv70tArIV
+         BmG+wTjgFiympwlarfQxXQkwOjaXBZ0Yq5CMyyB2biVvWDMX9qLMRSf/kXI8mEpyFTw3
+         /ID0/JEBqyPbJAzom28HzSL011bn0jzC5l2gM=
+Received: by 10.231.148.130 with SMTP id p2mr4051365ibv.11.1277031283506; Sun, 
+	20 Jun 2010 03:54:43 -0700 (PDT)
+Received: by 10.231.158.195 with HTTP; Sun, 20 Jun 2010 03:54:43 -0700 (PDT)
+In-Reply-To: <20100620093142.GF24805@occam.hewgill.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149393>
 
-I'd like to teach git-stash to rename stashes. Sometimes I'll create a
-stash and then later think of a better or more descriptive name for it.
-Or, I'll create a stash with "git stash -p" and forget to give it a
-useful name, and there's no easy way to undo and redo that without
-doing the interactive part again.
+On Sun, Jun 20, 2010 at 09:31, Greg Hewgill <greg@hewgill.com> wrote:
+> - Is this an appropriate approach to implementing this?
+> - Is there a better way to do it?
 
-I noticed that although the stash message is used as the commit
-description for the stash commit(s), it is the message in the reflog
-that is actually displayed on "git stash list". So to rename a stash,
-changing the message in the reflog is sufficient (this can be
-demonstrated with a text editor).
+No idea.
 
-My general idea is:
+> - I have a mostly working patch now, but it needs cleanup. What's the
+> =C2=A0next step?
 
-1. Implement a new "git reflog update" command that updates the message
-associated with a specific reflog entry. To do this, a new
-update_reflog_ent() function (in reflog.c) would change the message
-associated with the specific reflog entry to update. An update_reflog()
-function would use for_each_reflog_ent() with update_reflog_ent to
-actually do the change.
-
-2. A "git stash rename" command would then only need to call "git
-reflog update" with the appropriate ref and new message.
-
-Since this is my first time modifying the Git source, I thought I'd
-solicit some feedback on this idea.
-
-- Is this an appropriate approach to implementing this?
-- Is there a better way to do it?
-- I have a mostly working patch now, but it needs cleanup. What's the
-  next step?
-
-Greg Hewgill
-http://hewgill.com
+It's good to post a WIP PATCH even if it needs cleanup, just as a
+point for further discussion.
