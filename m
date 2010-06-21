@@ -1,83 +1,71 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 0/3] teach git-checkout -B WAS builtin/checkout: DWIM with 
-	-f -b
-Date: Tue, 22 Jun 2010 01:24:06 +0800
-Message-ID: <AANLkTikBFKdeuqQZOTRzxKE_6nR3bNDDsEtGIJVT0nhz@mail.gmail.com>
-References: <7vpqzlrmo4.fsf@alter.siamese.dyndns.org>
-	<1277140782-4064-1-git-send-email-rctay89@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Michel Lespinasse <walken@google.com>,
-	Erick Mattos <erick.mattos@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 21 19:24:15 2010
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 2/3] t/t7811-grep-open.sh: ensure fake "less" is made executable
+Date: Mon, 21 Jun 2010 12:37:14 -0500
+Message-ID: <__CrpvAIIX9lgHHkBLHB9a3UByh6vEB5nG8C7-bzzaY-zhXjKlkZfsB4GNmQRsIYGu10jf-0sjU@cipher.nrlssc.navy.mil>
+References: <__CrpvAIIX9lgHHkBLHB9fuuN7Rspzl7LFSDSwXwVCT6rYs_YOUHNMf7JZQbKaPHRl6AjsJ9dx8@cipher.nrlssc.navy.mil>
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
+	Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 21 19:38:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQkjG-0000zY-Ln
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 19:24:14 +0200
+	id 1OQkwv-0007kx-Dg
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 19:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758077Ab0FURYJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jun 2010 13:24:09 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:55159 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758063Ab0FURYI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jun 2010 13:24:08 -0400
-Received: by iwn36 with SMTP id 36so1088140iwn.19
-        for <git@vger.kernel.org>; Mon, 21 Jun 2010 10:24:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hAiSGQ7+zq+jiZdK0Qs9OUez5Kmr0AJTJU8CVBoZTe8=;
-        b=XlyFRScY4WYueXboOBMkpG6899WMFCNzbqYTB6sDJxq1oDNk9tHwsSwkLRF4DNUxay
-         DCTNe1BfevG30DdvyK2Q0pzmRTqA5Ge0JSVsD3zJy6XdQPAuQ+0cDjX+sr1AQuT1J1e8
-         qSTsc+McZ1GosMa4U+3ATuvvL44Iu0QeCKz0I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hgq9W0S6AOtkc3q3wFqOLRRNaCW2iG5SJkTpVLx2GcAtHOlD9XGw+aTMmKWK57bAqz
-         YSASBzQPBY5kP/CnkKWHJ61dgD1iwVKHNaLnBhTb52eBIm7buSM6/CDJpR/qZCjhFTdR
-         bMtNKbH4QXt6WyQRYJWg2DTZSnCk1b9u4P7v0=
-Received: by 10.231.183.19 with SMTP id ce19mr6023934ibb.35.1277141046810; 
-	Mon, 21 Jun 2010 10:24:06 -0700 (PDT)
-Received: by 10.231.17.193 with HTTP; Mon, 21 Jun 2010 10:24:06 -0700 (PDT)
-In-Reply-To: <1277140782-4064-1-git-send-email-rctay89@gmail.com>
+	id S932872Ab0FURiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 13:38:14 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60795 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932715Ab0FURiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 13:38:14 -0400
+Received: by mail.nrlssc.navy.mil id o5LHbdQU008620; Mon, 21 Jun 2010 12:37:39 -0500
+In-Reply-To: <__CrpvAIIX9lgHHkBLHB9fuuN7Rspzl7LFSDSwXwVCT6rYs_YOUHNMf7JZQbKaPHRl6AjsJ9dx8@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 21 Jun 2010 17:37:38.0910 (UTC) FILETIME=[718677E0:01CB1168]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149425>
 
-On Tue, Jun 22, 2010 at 1:19 AM, Tay Ray Chuan <rctay89@gmail.com> wrot=
-e:
-> Right now, the -f/--force in git-checkout doesn't carry over to -b
-> operations - ie. you can't do git checkout -b branch on an existing
-> branch.
->
-> This patch allows you to do this with the -B option, so that one can =
-do
->
-> =A0git checkout -B branch ref
->
-> which is equivalent to
->
-> =A0git branch -f branch ref && git checkout branch
+From: Brandon Casey <drafnel@gmail.com>
 
-oops - forgot to add this to the cover letter:
+The fake "less" script was not being made executable.  This can cause the
+tests that follow to fail.  This failure is not apparent on platforms which
+have DEFAULT_PAGER set to the string "less", since lib-pager.sh will have
+set the $less variable to "less" and the SIMPLEPAGER prerequisite will have
+been set, and so the "less" script will have already been created properly
+and made executable in test 2 'git grep -O'.  On platforms which set
+DEFAULT_PAGER to something like "more", no such script will have been
+previously created, and tests 7 and 8 will fail.
 
-Jeff, I've tried my best to check that the --track DWIM-ery still
-works; could you second this?
+So, add a call to chmod to make the fake "less" script executable.
 
-Erick, does this series change how --orphan should be used?
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ t/t7811-grep-open.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
---=20
-Cheers,
-Ray Chuan
+diff --git a/t/t7811-grep-open.sh b/t/t7811-grep-open.sh
+index 8db4fc8..2e5c701 100755
+--- a/t/t7811-grep-open.sh
++++ b/t/t7811-grep-open.sh
+@@ -84,10 +84,11 @@ test_expect_success 'git grep -O --no-index' '
+ '
+ 
+ test_expect_success 'setup: fake "less"' '
+-	cat >less <<-\EOF
++	cat >less <<-\EOF &&
+ 	#!/bin/sh
+ 	printf "%s\n" "$@" >actual
+ 	EOF
++	chmod +x less
+ '
+ 
+ test_expect_success 'git grep -O jumps to line in less' '
+-- 
+1.6.6.2
