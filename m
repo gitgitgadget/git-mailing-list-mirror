@@ -1,84 +1,63 @@
-From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: What's cooking in git.git (Jun 2010, #03; Fri, 18)
-Date: Mon, 21 Jun 2010 21:07:16 +0530
-Message-ID: <AANLkTiksOHr2m4HCPp8779VG95zexvYwgE86MsFzBJxF@mail.gmail.com>
+Date: Mon, 21 Jun 2010 18:35:11 +0200
+Message-ID: <vpqaaqo2vk0.fsf@bauges.imag.fr>
 References: <7v7hlvyi50.fsf@alter.siamese.dyndns.org>
 	<AANLkTinB4N6xXm7_Locp-xJyN8Nkew_7t16XhjVi_GlB@mail.gmail.com>
 	<7v7hltvcfy.fsf@alter.siamese.dyndns.org>
+	<AANLkTiksOHr2m4HCPp8779VG95zexvYwgE86MsFzBJxF@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 21 17:37:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 21 18:38:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQj3w-0003CH-Lp
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 17:37:28 +0200
+	id 1OQk1L-0005md-8r
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 18:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365Ab0FUPhX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jun 2010 11:37:23 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:50430 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243Ab0FUPhW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jun 2010 11:37:22 -0400
-Received: by gwaa12 with SMTP id a12so323728gwa.19
-        for <git@vger.kernel.org>; Mon, 21 Jun 2010 08:37:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=t0PKk3Quwx91kWZmUIf9Tt5uwh+yYyDWYz7/ODq07uA=;
-        b=be5G8+vfqAgu1hjkEwyFqs4nFaOENNdl/npQ+EIqyYELvc57MrOVxtFea3fYZMcvXF
-         sJkjsXhLzi8gpg9YWZ1Yi1hP3n85sTNs8BTF19mDfOJTQAfYDqADDBDCfYZqOwYQWKNH
-         W72ghAddQNy8v9P4pV/idaD97g8XKvX+D/A1A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Ga6jx9SwiKLuSulFAgJ0V5zAhkVA2SquNmmIf2mDtPQLWMsG8wunHAAGrrZaQVjXTy
-         tpBTdjweV8m/ff0EeLy48+30qJzkvCCssrd6xFhej8ZIcP1UH6ieOlhFFI+3EDBF1/mp
-         uINTXG1m9WG+S80JKKbO7YyS8P2kg/sKlHjCs=
-Received: by 10.101.10.7 with SMTP id n7mr3815397ani.94.1277134637606; Mon, 21 
-	Jun 2010 08:37:17 -0700 (PDT)
-Received: by 10.100.141.14 with HTTP; Mon, 21 Jun 2010 08:37:16 -0700 (PDT)
-In-Reply-To: <7v7hltvcfy.fsf@alter.siamese.dyndns.org>
+	id S932758Ab0FUQip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 12:38:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58070 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932713Ab0FUQio (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 12:38:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o5LGQqIO023125
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 21 Jun 2010 18:26:52 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OQjxn-0007i7-Sa; Mon, 21 Jun 2010 18:35:11 +0200
+In-Reply-To: <AANLkTiksOHr2m4HCPp8779VG95zexvYwgE86MsFzBJxF@mail.gmail.com> (Pavan Kumar Sunkara's message of "Mon\, 21 Jun 2010 21\:07\:16 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Jun 2010 18:26:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o5LGQqIO023125
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1277742414.66981@+iHGAkm/ISB9raPlMYqVNg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149419>
 
-On Sun, Jun 20, 2010 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
->
->> Junio, I would like to remember you a patch which I think u missed.
->>
->> http://kerneltrap.org/mailarchive/git/2010/6/3/31711
->
-> What's the message-id? =A0There doesn't seem to be an easy way to get=
- it out
-> of that web interface, so the above URL is no use for me, and I canno=
-t see
-> the message in the context without its message-id.
->
-> Pointing at the site to casually refer to an old discussion is fine, =
-but
-> please never refer to that site to refer to an old patch if you want =
-me to
-> apply one.
->
+Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
 
-Ok.
-I didn't know about this.
+> So, here is the message ID
+> 1275399845-13311-1-git-send-email-pavan.sss1991@gmail.com
 
-So, here is the message ID
-1275399845-13311-1-git-send-email-pavan.sss1991@gmail.com
+Once you have the message id, you can turn it back into a URL to
+combine the best of both worlds ;-).
 
-Thanks,
-Pavan.
+http://mid.gmane.org/1275399845-13311-1-git-send-email-pavan.sss1991@gmail.com
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
