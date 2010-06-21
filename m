@@ -1,850 +1,989 @@
 From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCH 11/11 GSoC] gitweb: Create Gitweb::Parse module
-Date: Tue, 22 Jun 2010 03:30:47 +0530
-Message-ID: <1277157648-6029-12-git-send-email-pavan.sss1991@gmail.com>
+Subject: [PATCH 07/11 GSoC] gitweb: Create Gitweb::RepoConfig module
+Date: Tue, 22 Jun 2010 03:30:43 +0530
+Message-ID: <1277157648-6029-8-git-send-email-pavan.sss1991@gmail.com>
 References: <1277157648-6029-1-git-send-email-pavan.sss1991@gmail.com>
 Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
 	pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Tue Jun 22 00:04:48 2010
+X-From: git-owner@vger.kernel.org Tue Jun 22 00:09:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQp6f-0000xG-UG
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 00:04:42 +0200
+	id 1OQpAt-0004Lq-W8
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 00:09:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755354Ab0FUWE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jun 2010 18:04:26 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:36311 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753576Ab0FUWEY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jun 2010 18:04:24 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 8so529457pwj.19
-        for <git@vger.kernel.org>; Mon, 21 Jun 2010 15:04:24 -0700 (PDT)
+	id S1751042Ab0FUWI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 18:08:58 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:47832 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750736Ab0FUWI4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 18:08:56 -0400
+Received: by pxi12 with SMTP id 12so1588856pxi.19
+        for <git@vger.kernel.org>; Mon, 21 Jun 2010 15:08:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=rlnQrq3nDqrAz7C750ieqrpqgPSD9YNZ17lrC+oJ71A=;
-        b=G8+eg56jg1ZqGi/wqYFBSJhfjwPEyS0ARhVEnaf63cGQ0xQ868KRvFQaTQJNW0+h+g
-         DwPdftERjUKGc3JqA9z5B9ZLWg9PoCOVGGZsD5BMTZXOWtIxmM+dfxwTM3VgkBGgKIfC
-         NOOz8a2mziKUaC+EzL5WuN7PXBydL3X8OCQyg=
+        bh=Z93gNjgLXPj/WMpj8Jpj637UfiW7aFYMF+QrLWd2GeM=;
+        b=j10otn06LwETga6gSPQaoLF66kF8Cw7j+D36HMvwzqmAmDV5TdUByPfnCq7JHYXgj7
+         984kYFsGMEZ4A8IXSFgNQq9fH/CTdskcri8lfkf5awvGteRGUjs7FM3z9Oxyt3q+uHV5
+         YDkYkKt2LiUongmPdH8vfNxmYeUhk+5aWG9nA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=LVluwFBdIQ07X6SNrn/5dlP2iOzNagV2210UT9EXjW3EV+69imjztpfFCJX4rs7KZE
-         pWt1SAbQhMwDixOOFE5mtKRqpVciU6/T77n5JKWTrS2yP0owywoGANPaxj7KTOY59DvL
-         89szSLoxzUvMm8rO7GHgUpa5DXnX5btu40LDo=
-Received: by 10.142.55.18 with SMTP id d18mr4168265wfa.170.1277157863856;
-        Mon, 21 Jun 2010 15:04:23 -0700 (PDT)
+        b=p4JbvzsPKKKuuUbyc2zChXgm7uZlXEQpvX5z3XWpMp1UZHKr6OVXZrwYNHETFIWOiJ
+         pnrD4UuPdh7w5S4+reTQF6a7OThl4roDVPBAN6wn6WbR7o6HC8GrdxAzH6d47HrQHwww
+         FbEeQRsmr7L9uvTRyP1VvjmN7K+Fo00tSV01U=
+Received: by 10.142.152.12 with SMTP id z12mr4183984wfd.71.1277157771363;
+        Mon, 21 Jun 2010 15:02:51 -0700 (PDT)
 Received: from localhost.localdomain ([202.63.112.132])
-        by mx.google.com with ESMTPS id y27sm525703wfi.17.2010.06.21.15.04.20
+        by mx.google.com with ESMTPS id y27sm525703wfi.17.2010.06.21.15.02.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 21 Jun 2010 15:04:23 -0700 (PDT)
+        Mon, 21 Jun 2010 15:02:50 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.454.g6bbe9.dirty
 In-Reply-To: <1277157648-6029-1-git-send-email-pavan.sss1991@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149454>
 
-Create Gitweb::Parse module in 'gitweb/lib/Gitweb/Parse.pm'
-to store the subroutines which related to parsing functions
-required for gitweb.
+Create a Gitweb::RepoConfig module in 'gitweb/lib/Gitweb/RepoConfig.pm'
+to store and handle all the configuration and subroutines
+related to a single repository regarding the gitweb.perl script.
 
-This module depends on Git.pm, Escape.pm, View.pm and Util.pm.
+This module depend on several other modules like Git.pm,
+Config.pm, Request.pm and Escape.pm.
+
+It also include subroutines regarding project_list and
+it's handling.
 
 Subroutines moved:
-	parse_date
-	parse_tag
-	parse_commit_text
-	parse_commit
-	parse_commits
-	parse_difftree_raw_line
-	parsed_difftree_line
-	parse_ls_tree_line
-	parse_from_to_diffinfo
+	check_head_link
+	check_export_ok
+	hash_set_multi
+	git_parse_project_config
+	config_to_bool
+	config_to_int
+	config_to_multi
+	git_get_project_config
+	git_get_project_description
+	git_get_project_ctags
+	git_populate_project_tagcloud
+	git_show_project_tagcloud
+	git_get_project_url_list
+	git_get_projects_list
+	git_get_project_list_from_file
+	git_get_project_owner
+	get_file_owner
+	project_in_list
 
-Update 'gitweb/Makefile' to install Gitweb::Parse alongside gitweb.
+Update gitweb/Makefile to install Gitweb::RepoConfig module
+alongside gitweb
 
 Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 ---
- gitweb/Makefile            |    1 +
- gitweb/gitweb.perl         |  356 +-----------------------------------------
- gitweb/lib/Gitweb/Parse.pm |  378 ++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 380 insertions(+), 355 deletions(-)
- create mode 100644 gitweb/lib/Gitweb/Parse.pm
+ gitweb/Makefile                 |    1 +
+ gitweb/gitweb.perl              |  400 +------------------------------------
+ gitweb/lib/Gitweb/RepoConfig.pm |  424 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 426 insertions(+), 399 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/RepoConfig.pm
 
 diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 1ef0b7a..6eadc37 100644
+index c77188d..3ae6745 100644
 --- a/gitweb/Makefile
 +++ b/gitweb/Makefile
-@@ -120,6 +120,7 @@ GITWEB_MODULES += lib/Gitweb/RepoConfig.pm
- GITWEB_MODULES += lib/Gitweb/View.pm
- GITWEB_MODULES += lib/Gitweb/Util.pm
- GITWEB_MODULES += lib/Gitweb/Format.pm
-+GITWEB_MODULES += lib/Gitweb/Parse.pm
+@@ -116,6 +116,7 @@ GITWEB_MODULES += lib/Gitweb/Git.pm
+ GITWEB_MODULES += lib/Gitweb/Config.pm
+ GITWEB_MODULES += lib/Gitweb/Request.pm
+ GITWEB_MODULES += lib/Gitweb/Escape.pm
++GITWEB_MODULES += lib/Gitweb/RepoConfig.pm
  
  GITWEB_REPLACE = \
  	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e5f3cc6..70b7e43 100755
+index 87281d0..87f52d2 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -33,6 +33,7 @@ use Gitweb::RepoConfig;
- use Gitweb::View;
- use Gitweb::Util;
- use Gitweb::Format;
-+use Gitweb::Parse;
+@@ -18,7 +18,6 @@ sub __DIR__ () {
+ use lib __DIR__ . '/lib';
+ 
+ use CGI qw(:standard :escapeHTML -nosticky);
+-use CGI::Util qw(unescape);
+ use CGI::Carp qw(fatalsToBrowser set_message);
+ use Fcntl ':mode';
+ use File::Find qw();
+@@ -30,6 +29,7 @@ use Gitweb::Git;
+ use Gitweb::Config;
+ use Gitweb::Request;
+ use Gitweb::Escape;
++use Gitweb::RepoConfig;
  
  BEGIN {
  	CGI->compile() if $ENV{'MOD_PERL'};
-@@ -576,361 +577,6 @@ sub validate_project {
+@@ -110,23 +110,6 @@ sub feature_avatar {
+ 	return @val ? @val : @_;
+ }
+ 
+-# checking HEAD file with -e is fragile if the repository was
+-# initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
+-# and then pruned.
+-sub check_head_link {
+-	my ($dir) = @_;
+-	my $headfile = "$dir/HEAD";
+-	return ((-e $headfile) ||
+-		(-l $headfile && readlink($headfile) =~ /^refs\/heads\//));
+-}
+-
+-sub check_export_ok {
+-	my ($dir) = @_;
+-	return (check_head_link($dir) &&
+-		(!$export_ok || -e "$dir/$export_ok") &&
+-		(!$export_auth_hook || $export_auth_hook->($dir)));
+-}
+-
+ # Get loadavg of system, to compare against $maxload.
+ # Currently it requires '/proc/loadavg' present to get loadavg;
+ # if it is not present it returns 0, which means no load checking.
+@@ -712,12 +695,6 @@ sub validate_project {
  	}
  }
  
--## ----------------------------------------------------------------------
--## parse to hash functions
--
--sub parse_date {
--	my $epoch = shift;
--	my $tz = shift || "-0000";
--
--	my %date;
--	my @months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
--	my @days = ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
--	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) = gmtime($epoch);
--	$date{'hour'} = $hour;
--	$date{'minute'} = $min;
--	$date{'mday'} = $mday;
--	$date{'day'} = $days[$wday];
--	$date{'month'} = $months[$mon];
--	$date{'rfc2822'}   = sprintf "%s, %d %s %4d %02d:%02d:%02d +0000",
--	                     $days[$wday], $mday, $months[$mon], 1900+$year, $hour ,$min, $sec;
--	$date{'mday-time'} = sprintf "%d %s %02d:%02d",
--	                     $mday, $months[$mon], $hour ,$min;
--	$date{'iso-8601'}  = sprintf "%04d-%02d-%02dT%02d:%02d:%02dZ",
--	                     1900+$year, 1+$mon, $mday, $hour ,$min, $sec;
--
--	$tz =~ m/^([+\-][0-9][0-9])([0-9][0-9])$/;
--	my $local = $epoch + ((int $1 + ($2/60)) * 3600);
--	($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) = gmtime($local);
--	$date{'hour_local'} = $hour;
--	$date{'minute_local'} = $min;
--	$date{'tz_local'} = $tz;
--	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
--	                          1900+$year, $mon+1, $mday,
--	                          $hour, $min, $sec, $tz);
--	return %date;
+-sub project_in_list {
+-	my $project = shift;
+-	my @list = git_get_projects_list();
+-	return @list && scalar(grep { $_->{'path'} eq $project } @list);
 -}
 -
--sub parse_tag {
--	my $tag_id = shift;
--	my %tag;
--	my @comment;
--
--	open my $fd, "-|", git_cmd(), "cat-file", "tag", $tag_id or return;
--	$tag{'id'} = $tag_id;
--	while (my $line = <$fd>) {
--		chomp $line;
--		if ($line =~ m/^object ([0-9a-fA-F]{40})$/) {
--			$tag{'object'} = $1;
--		} elsif ($line =~ m/^type (.+)$/) {
--			$tag{'type'} = $1;
--		} elsif ($line =~ m/^tag (.+)$/) {
--			$tag{'name'} = $1;
--		} elsif ($line =~ m/^tagger (.*) ([0-9]+) (.*)$/) {
--			$tag{'author'} = $1;
--			$tag{'author_epoch'} = $2;
--			$tag{'author_tz'} = $3;
--			if ($tag{'author'} =~ m/^([^<]+) <([^>]*)>/) {
--				$tag{'author_name'}  = $1;
--				$tag{'author_email'} = $2;
--			} else {
--				$tag{'author_name'} = $tag{'author'};
--			}
--		} elsif ($line =~ m/--BEGIN/) {
--			push @comment, $line;
--			last;
--		} elsif ($line eq "") {
--			last;
--		}
--	}
--	push @comment, <$fd>;
--	$tag{'comment'} = \@comment;
--	close $fd or return;
--	if (!defined $tag{'name'}) {
--		return
--	};
--	return %tag
--}
--
--sub parse_commit_text {
--	my ($commit_text, $withparents) = @_;
--	my @commit_lines = split '\n', $commit_text;
--	my %co;
--
--	pop @commit_lines; # Remove '\0'
--
--	if (! @commit_lines) {
--		return;
--	}
--
--	my $header = shift @commit_lines;
--	if ($header !~ m/^[0-9a-fA-F]{40}/) {
--		return;
--	}
--	($co{'id'}, my @parents) = split ' ', $header;
--	while (my $line = shift @commit_lines) {
--		last if $line eq "\n";
--		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
--			$co{'tree'} = $1;
--		} elsif ((!defined $withparents) && ($line =~ m/^parent ([0-9a-fA-F]{40})$/)) {
--			push @parents, $1;
--		} elsif ($line =~ m/^author (.*) ([0-9]+) (.*)$/) {
--			$co{'author'} = to_utf8($1);
--			$co{'author_epoch'} = $2;
--			$co{'author_tz'} = $3;
--			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
--				$co{'author_name'}  = $1;
--				$co{'author_email'} = $2;
--			} else {
--				$co{'author_name'} = $co{'author'};
--			}
--		} elsif ($line =~ m/^committer (.*) ([0-9]+) (.*)$/) {
--			$co{'committer'} = to_utf8($1);
--			$co{'committer_epoch'} = $2;
--			$co{'committer_tz'} = $3;
--			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
--				$co{'committer_name'}  = $1;
--				$co{'committer_email'} = $2;
--			} else {
--				$co{'committer_name'} = $co{'committer'};
--			}
--		}
--	}
--	if (!defined $co{'tree'}) {
--		return;
--	};
--	$co{'parents'} = \@parents;
--	$co{'parent'} = $parents[0];
--
--	foreach my $title (@commit_lines) {
--		$title =~ s/^    //;
--		if ($title ne "") {
--			$co{'title'} = chop_str($title, 80, 5);
--			# remove leading stuff of merges to make the interesting part visible
--			if (length($title) > 50) {
--				$title =~ s/^Automatic //;
--				$title =~ s/^merge (of|with) /Merge ... /i;
--				if (length($title) > 50) {
--					$title =~ s/(http|rsync):\/\///;
--				}
--				if (length($title) > 50) {
--					$title =~ s/(master|www|rsync)\.//;
--				}
--				if (length($title) > 50) {
--					$title =~ s/kernel.org:?//;
--				}
--				if (length($title) > 50) {
--					$title =~ s/\/pub\/scm//;
--				}
--			}
--			$co{'title_short'} = chop_str($title, 50, 5);
--			last;
--		}
--	}
--	if (! defined $co{'title'} || $co{'title'} eq "") {
--		$co{'title'} = $co{'title_short'} = '(no commit message)';
--	}
--	# remove added spaces
--	foreach my $line (@commit_lines) {
--		$line =~ s/^    //;
--	}
--	$co{'comment'} = \@commit_lines;
--
--	my $age = time - $co{'committer_epoch'};
--	$co{'age'} = $age;
--	$co{'age_string'} = age_string($age);
--	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) = gmtime($co{'committer_epoch'});
--	if ($age > 60*60*24*7*2) {
--		$co{'age_string_date'} = sprintf "%4i-%02u-%02i", 1900 + $year, $mon+1, $mday;
--		$co{'age_string_age'} = $co{'age_string'};
--	} else {
--		$co{'age_string_date'} = $co{'age_string'};
--		$co{'age_string_age'} = sprintf "%4i-%02u-%02i", 1900 + $year, $mon+1, $mday;
--	}
--	return %co;
--}
--
--sub parse_commit {
--	my ($commit_id) = @_;
--	my %co;
--
--	local $/ = "\0";
--
--	open my $fd, "-|", git_cmd(), "rev-list",
--		"--parents",
--		"--header",
--		"--max-count=1",
--		$commit_id,
--		"--",
--		or die_error(500, "Open git-rev-list failed");
--	%co = parse_commit_text(<$fd>, 1);
--	close $fd;
--
--	return %co;
--}
--
--sub parse_commits {
--	my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
--	my @cos;
--
--	$maxcount ||= 1;
--	$skip ||= 0;
--
--	local $/ = "\0";
--
--	open my $fd, "-|", git_cmd(), "rev-list",
--		"--header",
--		@args,
--		("--max-count=" . $maxcount),
--		("--skip=" . $skip),
--		@extra_options,
--		$commit_id,
--		"--",
--		($filename ? ($filename) : ())
--		or die_error(500, "Open git-rev-list failed");
--	while (my $line = <$fd>) {
--		my %co = parse_commit_text($line);
--		push @cos, \%co;
--	}
--	close $fd;
--
--	return wantarray ? @cos : \@cos;
--}
--
--# parse line of git-diff-tree "raw" output
--sub parse_difftree_raw_line {
--	my $line = shift;
--	my %res;
--
--	# ':100644 100644 03b218260e99b78c6df0ed378e59ed9205ccc96d 3b93d5e7cc7f7dd4ebed13a5cc1a4ad976fc94d8 M	ls-files.c'
--	# ':100644 100644 7f9281985086971d3877aca27704f2aaf9c448ce bc190ebc71bbd923f2b728e505408f5e54bd073a M	rev-tree.c'
--	if ($line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)([0-9]{0,3})\t(.*)$/) {
--		$res{'from_mode'} = $1;
--		$res{'to_mode'} = $2;
--		$res{'from_id'} = $3;
--		$res{'to_id'} = $4;
--		$res{'status'} = $5;
--		$res{'similarity'} = $6;
--		if ($res{'status'} eq 'R' || $res{'status'} eq 'C') { # renamed or copied
--			($res{'from_file'}, $res{'to_file'}) = map { unquote($_) } split("\t", $7);
--		} else {
--			$res{'from_file'} = $res{'to_file'} = $res{'file'} = unquote($7);
--		}
--	}
--	# '::100755 100755 100755 60e79ca1b01bc8b057abe17ddab484699a7f5fdb 94067cc5f73388f33722d52ae02f44692bc07490 94067cc5f73388f33722d52ae02f44692bc07490 MR	git-gui/git-gui.sh'
--	# combined diff (for merge commit)
--	elsif ($line =~ s/^(::+)((?:[0-7]{6} )+)((?:[0-9a-fA-F]{40} )+)([a-zA-Z]+)\t(.*)$//) {
--		$res{'nparents'}  = length($1);
--		$res{'from_mode'} = [ split(' ', $2) ];
--		$res{'to_mode'} = pop @{$res{'from_mode'}};
--		$res{'from_id'} = [ split(' ', $3) ];
--		$res{'to_id'} = pop @{$res{'from_id'}};
--		$res{'status'} = [ split('', $4) ];
--		$res{'to_file'} = unquote($5);
--	}
--	# 'c512b523472485aef4fff9e57b229d9d243c967f'
--	elsif ($line =~ m/^([0-9a-fA-F]{40})$/) {
--		$res{'commit'} = $1;
--	}
--
--	return wantarray ? %res : \%res;
--}
--
--# wrapper: return parsed line of git-diff-tree "raw" output
--# (the argument might be raw line, or parsed info)
--sub parsed_difftree_line {
--	my $line_or_ref = shift;
--
--	if (ref($line_or_ref) eq "HASH") {
--		# pre-parsed (or generated by hand)
--		return $line_or_ref;
--	} else {
--		return parse_difftree_raw_line($line_or_ref);
--	}
--}
--
--# parse line of git-ls-tree output
--sub parse_ls_tree_line {
--	my $line = shift;
--	my %opts = @_;
--	my %res;
--
--	if ($opts{'-l'}) {
--		#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa   16717	panic.c'
--		$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40}) +(-|[0-9]+)\t(.+)$/s;
--
--		$res{'mode'} = $1;
--		$res{'type'} = $2;
--		$res{'hash'} = $3;
--		$res{'size'} = $4;
--		if ($opts{'-z'}) {
--			$res{'name'} = $5;
--		} else {
--			$res{'name'} = unquote($5);
--		}
--	} else {
--		#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
--		$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t(.+)$/s;
--
--		$res{'mode'} = $1;
--		$res{'type'} = $2;
--		$res{'hash'} = $3;
--		if ($opts{'-z'}) {
--			$res{'name'} = $4;
--		} else {
--			$res{'name'} = unquote($4);
--		}
--	}
--
--	return wantarray ? %res : \%res;
--}
--
--# generates _two_ hashes, references to which are passed as 2 and 3 argument
--sub parse_from_to_diffinfo {
--	my ($diffinfo, $from, $to, @parents) = @_;
--
--	if ($diffinfo->{'nparents'}) {
--		# combined diff
--		$from->{'file'} = [];
--		$from->{'href'} = [];
--		fill_from_file_info($diffinfo, @parents)
--			unless exists $diffinfo->{'from_file'};
--		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
--			$from->{'file'}[$i] =
--				defined $diffinfo->{'from_file'}[$i] ?
--				        $diffinfo->{'from_file'}[$i] :
--				        $diffinfo->{'to_file'};
--			if ($diffinfo->{'status'}[$i] ne "A") { # not new (added) file
--				$from->{'href'}[$i] = href(action=>"blob",
--				                           hash_base=>$parents[$i],
--				                           hash=>$diffinfo->{'from_id'}[$i],
--				                           file_name=>$from->{'file'}[$i]);
--			} else {
--				$from->{'href'}[$i] = undef;
--			}
--		}
--	} else {
--		# ordinary (not combined) diff
--		$from->{'file'} = $diffinfo->{'from_file'};
--		if ($diffinfo->{'status'} ne "A") { # not new (added) file
--			$from->{'href'} = href(action=>"blob", hash_base=>$hash_parent,
--			                       hash=>$diffinfo->{'from_id'},
--			                       file_name=>$from->{'file'});
--		} else {
--			delete $from->{'href'};
--		}
--	}
--
--	$to->{'file'} = $diffinfo->{'to_file'};
--	if (!is_deleted($diffinfo)) { # file exists in result
--		$to->{'href'} = href(action=>"blob", hash_base=>$hash,
--		                     hash=>$diffinfo->{'to_id'},
--		                     file_name=>$to->{'file'});
--	} else {
--		delete $to->{'href'};
--	}
--}
--
- ## ......................................................................
- ## functions printing or outputting HTML: div
+ ## ----------------------------------------------------------------------
+ ## HTML aware string manipulation
  
-diff --git a/gitweb/lib/Gitweb/Parse.pm b/gitweb/lib/Gitweb/Parse.pm
+@@ -1526,129 +1503,6 @@ sub git_get_type {
+ 	return $type;
+ }
+ 
+-# repository configuration
+-our $config_file = '';
+-our %config;
+-
+-# store multiple values for single key as anonymous array reference
+-# single values stored directly in the hash, not as [ <value> ]
+-sub hash_set_multi {
+-	my ($hash, $key, $value) = @_;
+-
+-	if (!exists $hash->{$key}) {
+-		$hash->{$key} = $value;
+-	} elsif (!ref $hash->{$key}) {
+-		$hash->{$key} = [ $hash->{$key}, $value ];
+-	} else {
+-		push @{$hash->{$key}}, $value;
+-	}
+-}
+-
+-# return hash of git project configuration
+-# optionally limited to some section, e.g. 'gitweb'
+-sub git_parse_project_config {
+-	my $section_regexp = shift;
+-	my %config;
+-
+-	local $/ = "\0";
+-
+-	open my $fh, "-|", git_cmd(), "config", '-z', '-l',
+-		or return;
+-
+-	while (my $keyval = <$fh>) {
+-		chomp $keyval;
+-		my ($key, $value) = split(/\n/, $keyval, 2);
+-
+-		hash_set_multi(\%config, $key, $value)
+-			if (!defined $section_regexp || $key =~ /^(?:$section_regexp)\./o);
+-	}
+-	close $fh;
+-
+-	return %config;
+-}
+-
+-# convert config value to boolean: 'true' or 'false'
+-# no value, number > 0, 'true' and 'yes' values are true
+-# rest of values are treated as false (never as error)
+-sub config_to_bool {
+-	my $val = shift;
+-
+-	return 1 if !defined $val;             # section.key
+-
+-	# strip leading and trailing whitespace
+-	$val =~ s/^\s+//;
+-	$val =~ s/\s+$//;
+-
+-	return (($val =~ /^\d+$/ && $val) ||   # section.key = 1
+-	        ($val =~ /^(?:true|yes)$/i));  # section.key = true
+-}
+-
+-# convert config value to simple decimal number
+-# an optional value suffix of 'k', 'm', or 'g' will cause the value
+-# to be multiplied by 1024, 1048576, or 1073741824
+-sub config_to_int {
+-	my $val = shift;
+-
+-	# strip leading and trailing whitespace
+-	$val =~ s/^\s+//;
+-	$val =~ s/\s+$//;
+-
+-	if (my ($num, $unit) = ($val =~ /^([0-9]*)([kmg])$/i)) {
+-		$unit = lc($unit);
+-		# unknown unit is treated as 1
+-		return $num * ($unit eq 'g' ? 1073741824 :
+-		               $unit eq 'm' ?    1048576 :
+-		               $unit eq 'k' ?       1024 : 1);
+-	}
+-	return $val;
+-}
+-
+-# convert config value to array reference, if needed
+-sub config_to_multi {
+-	my $val = shift;
+-
+-	return ref($val) ? $val : (defined($val) ? [ $val ] : []);
+-}
+-
+-sub git_get_project_config {
+-	my ($key, $type) = @_;
+-
+-	return unless defined $git_dir;
+-
+-	# key sanity check
+-	return unless ($key);
+-	$key =~ s/^gitweb\.//;
+-	return if ($key =~ m/\W/);
+-
+-	# type sanity check
+-	if (defined $type) {
+-		$type =~ s/^--//;
+-		$type = undef
+-			unless ($type eq 'bool' || $type eq 'int');
+-	}
+-
+-	# get config
+-	if (!defined $config_file ||
+-	    $config_file ne "$git_dir/config") {
+-		%config = git_parse_project_config('gitweb');
+-		$config_file = "$git_dir/config";
+-	}
+-
+-	# check if config variable (key) exists
+-	return unless exists $config{"gitweb.$key"};
+-
+-	# ensure given type
+-	if (!defined $type) {
+-		return $config{"gitweb.$key"};
+-	} elsif ($type eq 'bool') {
+-		# backward compatibility: 'git config --bool' returns true/false
+-		return config_to_bool($config{"gitweb.$key"}) ? 'true' : 'false';
+-	} elsif ($type eq 'int') {
+-		return config_to_int($config{"gitweb.$key"});
+-	}
+-	return $config{"gitweb.$key"};
+-}
+-
+ # get hash of given path at given ref
+ sub git_get_hash_by_path {
+ 	my $base = shift;
+@@ -1703,245 +1557,6 @@ sub git_get_path_by_hash {
+ ## ......................................................................
+ ## git utility functions, directly accessing git repository
+ 
+-sub git_get_project_description {
+-	my $path = shift;
+-
+-	$git_dir = "$projectroot/$path";
+-	open my $fd, '<', "$git_dir/description"
+-		or return git_get_project_config('description');
+-	my $descr = <$fd>;
+-	close $fd;
+-	if (defined $descr) {
+-		chomp $descr;
+-	}
+-	return $descr;
+-}
+-
+-sub git_get_project_ctags {
+-	my $path = shift;
+-	my $ctags = {};
+-
+-	$git_dir = "$projectroot/$path";
+-	opendir my $dh, "$git_dir/ctags"
+-		or return $ctags;
+-	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
+-		open my $ct, '<', $_ or next;
+-		my $val = <$ct>;
+-		chomp $val;
+-		close $ct;
+-		my $ctag = $_; $ctag =~ s#.*/##;
+-		$ctags->{$ctag} = $val;
+-	}
+-	closedir $dh;
+-	$ctags;
+-}
+-
+-sub git_populate_project_tagcloud {
+-	my $ctags = shift;
+-
+-	# First, merge different-cased tags; tags vote on casing
+-	my %ctags_lc;
+-	foreach (keys %$ctags) {
+-		$ctags_lc{lc $_}->{count} += $ctags->{$_};
+-		if (not $ctags_lc{lc $_}->{topcount}
+-		    or $ctags_lc{lc $_}->{topcount} < $ctags->{$_}) {
+-			$ctags_lc{lc $_}->{topcount} = $ctags->{$_};
+-			$ctags_lc{lc $_}->{topname} = $_;
+-		}
+-	}
+-
+-	my $cloud;
+-	if (eval { require HTML::TagCloud; 1; }) {
+-		$cloud = HTML::TagCloud->new;
+-		foreach (sort keys %ctags_lc) {
+-			# Pad the title with spaces so that the cloud looks
+-			# less crammed.
+-			my $title = $ctags_lc{$_}->{topname};
+-			$title =~ s/ /&nbsp;/g;
+-			$title =~ s/^/&nbsp;/g;
+-			$title =~ s/$/&nbsp;/g;
+-			$cloud->add($title, $home_link."?by_tag=".$_, $ctags_lc{$_}->{count});
+-		}
+-	} else {
+-		$cloud = \%ctags_lc;
+-	}
+-	$cloud;
+-}
+-
+-sub git_show_project_tagcloud {
+-	my ($cloud, $count) = @_;
+-	print STDERR ref($cloud)."..\n";
+-	if (ref $cloud eq 'HTML::TagCloud') {
+-		return $cloud->html_and_css($count);
+-	} else {
+-		my @tags = sort { $cloud->{$a}->{count} <=> $cloud->{$b}->{count} } keys %$cloud;
+-		return '<p align="center">' . join (', ', map {
+-			"<a href=\"$home_link?by_tag=$_\">$cloud->{$_}->{topname}</a>"
+-		} splice(@tags, 0, $count)) . '</p>';
+-	}
+-}
+-
+-sub git_get_project_url_list {
+-	my $path = shift;
+-
+-	$git_dir = "$projectroot/$path";
+-	open my $fd, '<', "$git_dir/cloneurl"
+-		or return wantarray ?
+-		@{ config_to_multi(git_get_project_config('url')) } :
+-		   config_to_multi(git_get_project_config('url'));
+-	my @git_project_url_list = map { chomp; $_ } <$fd>;
+-	close $fd;
+-
+-	return wantarray ? @git_project_url_list : \@git_project_url_list;
+-}
+-
+-sub git_get_projects_list {
+-	my ($filter) = @_;
+-	my @list;
+-
+-	$filter ||= '';
+-	$filter =~ s/\.git$//;
+-
+-	my $check_forks = gitweb_check_feature('forks');
+-
+-	if (-d $projects_list) {
+-		# search in directory
+-		my $dir = $projects_list . ($filter ? "/$filter" : '');
+-		# remove the trailing "/"
+-		$dir =~ s!/+$!!;
+-		my $pfxlen = length("$dir");
+-		my $pfxdepth = ($dir =~ tr!/!!);
+-
+-		File::Find::find({
+-			follow_fast => 1, # follow symbolic links
+-			follow_skip => 2, # ignore duplicates
+-			dangling_symlinks => 0, # ignore dangling symlinks, silently
+-			wanted => sub {
+-				# skip project-list toplevel, if we get it.
+-				return if (m!^[/.]$!);
+-				# only directories can be git repositories
+-				return unless (-d $_);
+-				# don't traverse too deep (Find is super slow on os x)
+-				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
+-					$File::Find::prune = 1;
+-					return;
+-				}
+-
+-				my $subdir = substr($File::Find::name, $pfxlen + 1);
+-				# we check related file in $projectroot
+-				my $path = ($filter ? "$filter/" : '') . $subdir;
+-				if (check_export_ok("$projectroot/$path")) {
+-					push @list, { path => $path };
+-					$File::Find::prune = 1;
+-				}
+-			},
+-		}, "$dir");
+-
+-	} elsif (-f $projects_list) {
+-		# read from file(url-encoded):
+-		# 'git%2Fgit.git Linus+Torvalds'
+-		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
+-		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
+-		my %paths;
+-		open my $fd, '<', $projects_list or return;
+-	PROJECT:
+-		while (my $line = <$fd>) {
+-			chomp $line;
+-			my ($path, $owner) = split ' ', $line;
+-			$path = unescape($path);
+-			$owner = unescape($owner);
+-			if (!defined $path) {
+-				next;
+-			}
+-			if ($filter ne '') {
+-				# looking for forks;
+-				my $pfx = substr($path, 0, length($filter));
+-				if ($pfx ne $filter) {
+-					next PROJECT;
+-				}
+-				my $sfx = substr($path, length($filter));
+-				if ($sfx !~ /^\/.*\.git$/) {
+-					next PROJECT;
+-				}
+-			} elsif ($check_forks) {
+-			PATH:
+-				foreach my $filter (keys %paths) {
+-					# looking for forks;
+-					my $pfx = substr($path, 0, length($filter));
+-					if ($pfx ne $filter) {
+-						next PATH;
+-					}
+-					my $sfx = substr($path, length($filter));
+-					if ($sfx !~ /^\/.*\.git$/) {
+-						next PATH;
+-					}
+-					# is a fork, don't include it in
+-					# the list
+-					next PROJECT;
+-				}
+-			}
+-			if (check_export_ok("$projectroot/$path")) {
+-				my $pr = {
+-					path => $path,
+-					owner => to_utf8($owner),
+-				};
+-				push @list, $pr;
+-				(my $forks_path = $path) =~ s/\.git$//;
+-				$paths{$forks_path}++;
+-			}
+-		}
+-		close $fd;
+-	}
+-	return @list;
+-}
+-
+-our $gitweb_project_owner = undef;
+-sub git_get_project_list_from_file {
+-
+-	return if (defined $gitweb_project_owner);
+-
+-	$gitweb_project_owner = {};
+-	# read from file (url-encoded):
+-	# 'git%2Fgit.git Linus+Torvalds'
+-	# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
+-	# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
+-	if (-f $projects_list) {
+-		open(my $fd, '<', $projects_list);
+-		while (my $line = <$fd>) {
+-			chomp $line;
+-			my ($pr, $ow) = split ' ', $line;
+-			$pr = unescape($pr);
+-			$ow = unescape($ow);
+-			$gitweb_project_owner->{$pr} = to_utf8($ow);
+-		}
+-		close $fd;
+-	}
+-}
+-
+-sub git_get_project_owner {
+-	my $project = shift;
+-	my $owner;
+-
+-	return undef unless $project;
+-	$git_dir = "$projectroot/$project";
+-
+-	if (!defined $gitweb_project_owner) {
+-		git_get_project_list_from_file();
+-	}
+-
+-	if (exists $gitweb_project_owner->{$project}) {
+-		$owner = $gitweb_project_owner->{$project};
+-	}
+-	if (!defined $owner){
+-		$owner = git_get_project_config('owner');
+-	}
+-	if (!defined $owner) {
+-		$owner = get_file_owner("$git_dir");
+-	}
+-
+-	return $owner;
+-}
+-
+ sub git_get_last_activity {
+ 	my ($path) = @_;
+ 	my $fd;
+@@ -2449,19 +2064,6 @@ sub git_get_tags_list {
+ ## ----------------------------------------------------------------------
+ ## filesystem-related functions
+ 
+-sub get_file_owner {
+-	my $path = shift;
+-
+-	my ($dev, $ino, $mode, $nlink, $st_uid, $st_gid, $rdev, $size) = stat($path);
+-	my ($name, $passwd, $uid, $gid, $quota, $comment, $gcos, $dir, $shell) = getpwuid($st_uid);
+-	if (!defined $gcos) {
+-		return undef;
+-	}
+-	my $owner = $gcos;
+-	$owner =~ s/[,;].*$//;
+-	return to_utf8($owner);
+-}
+-
+ # assume that file exists
+ sub insert_file {
+ 	my $filename = shift;
+diff --git a/gitweb/lib/Gitweb/RepoConfig.pm b/gitweb/lib/Gitweb/RepoConfig.pm
 new file mode 100644
-index 0000000..a765ea6
+index 0000000..fa7d909
 --- /dev/null
-+++ b/gitweb/lib/Gitweb/Parse.pm
-@@ -0,0 +1,378 @@
++++ b/gitweb/lib/Gitweb/RepoConfig.pm
+@@ -0,0 +1,424 @@
 +#!/usr/bin/perl
 +#
-+# Gitweb::Parse -- gitweb's parse_* subs package
++# Gitweb::RepoConfig -- gitweb's per-repository configuration subs package
 +#
 +# This program is licensed under the GPLv2
 +
-+package Gitweb::Parse;
++package Gitweb::RepoConfig;
 +
 +use strict;
 +use warnings;
 +use Exporter qw(import);
 +
-+our @EXPORT = qw(parse_date parse_tag parse_commit_text parse_commit
-+                 parse_commits parse_difftree_raw_line parsed_difftree_line
-+                 parse_ls_tree_line parse_from_to_diffinfo);
++our @EXPORT = qw($config_file %config $gitweb_project_owner git_get_project_url_list
++                 git_get_project_config git_get_project_description git_get_project_ctags
++                 git_populate_project_tagcloud git_show_project_tagcloud check_head_link
++                 check_export_ok git_get_projects_list git_get_project_list_from_file
++                 git_get_project_owner project_in_list);
 +
-+use Gitweb::Git qw(git_cmd);
-+use Gitweb::Request qw(@extra_options $hash $hash_parent);
-+use Gitweb::Escape qw(unquote to_utf8);
-+use Gitweb::View qw(href chop_str age_string die_error);
-+use Gitweb::Util qw(fill_from_file_info is_deleted);
++use CGI::Util qw(unescape);
++use Gitweb::Git qw(git_cmd $git_dir);
++use Gitweb::Config qw(gitweb_check_feature $projectroot $projects_list
++                      $project_maxdepth $export_ok $export_auth_hook);
++use Gitweb::Request qw($home_link);
++use Gitweb::Escape qw(to_utf8);
 +
-+## ----------------------------------------------------------------------
-+## parse to hash functions
++# repository configuration
++our $config_file = '';
++our %config;
 +
-+sub parse_date {
-+	my $epoch = shift;
-+	my $tz = shift || "-0000";
-+
-+	my %date;
-+	my @months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-+	my @days = ("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) = gmtime($epoch);
-+	$date{'hour'} = $hour;
-+	$date{'minute'} = $min;
-+	$date{'mday'} = $mday;
-+	$date{'day'} = $days[$wday];
-+	$date{'month'} = $months[$mon];
-+	$date{'rfc2822'}   = sprintf "%s, %d %s %4d %02d:%02d:%02d +0000",
-+	                     $days[$wday], $mday, $months[$mon], 1900+$year, $hour ,$min, $sec;
-+	$date{'mday-time'} = sprintf "%d %s %02d:%02d",
-+	                     $mday, $months[$mon], $hour ,$min;
-+	$date{'iso-8601'}  = sprintf "%04d-%02d-%02dT%02d:%02d:%02dZ",
-+	                     1900+$year, 1+$mon, $mday, $hour ,$min, $sec;
-+
-+	$tz =~ m/^([+\-][0-9][0-9])([0-9][0-9])$/;
-+	my $local = $epoch + ((int $1 + ($2/60)) * 3600);
-+	($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) = gmtime($local);
-+	$date{'hour_local'} = $hour;
-+	$date{'minute_local'} = $min;
-+	$date{'tz_local'} = $tz;
-+	$date{'iso-tz'} = sprintf("%04d-%02d-%02d %02d:%02d:%02d %s",
-+	                          1900+$year, $mon+1, $mday,
-+	                          $hour, $min, $sec, $tz);
-+	return %date;
++# checking HEAD file with -e is fragile if the repository was
++# initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
++# and then pruned.
++sub check_head_link {
++	my ($dir) = @_;
++	my $headfile = "$dir/HEAD";
++	return ((-e $headfile) ||
++		(-l $headfile && readlink($headfile) =~ /^refs\/heads\//));
 +}
 +
-+sub parse_tag {
-+	my $tag_id = shift;
-+	my %tag;
-+	my @comment;
-+
-+	open my $fd, "-|", git_cmd(), "cat-file", "tag", $tag_id or return;
-+	$tag{'id'} = $tag_id;
-+	while (my $line = <$fd>) {
-+		chomp $line;
-+		if ($line =~ m/^object ([0-9a-fA-F]{40})$/) {
-+			$tag{'object'} = $1;
-+		} elsif ($line =~ m/^type (.+)$/) {
-+			$tag{'type'} = $1;
-+		} elsif ($line =~ m/^tag (.+)$/) {
-+			$tag{'name'} = $1;
-+		} elsif ($line =~ m/^tagger (.*) ([0-9]+) (.*)$/) {
-+			$tag{'author'} = $1;
-+			$tag{'author_epoch'} = $2;
-+			$tag{'author_tz'} = $3;
-+			if ($tag{'author'} =~ m/^([^<]+) <([^>]*)>/) {
-+				$tag{'author_name'}  = $1;
-+				$tag{'author_email'} = $2;
-+			} else {
-+				$tag{'author_name'} = $tag{'author'};
-+			}
-+		} elsif ($line =~ m/--BEGIN/) {
-+			push @comment, $line;
-+			last;
-+		} elsif ($line eq "") {
-+			last;
-+		}
-+	}
-+	push @comment, <$fd>;
-+	$tag{'comment'} = \@comment;
-+	close $fd or return;
-+	if (!defined $tag{'name'}) {
-+		return
-+	};
-+	return %tag
++sub check_export_ok {
++	my ($dir) = @_;
++	return (check_head_link($dir) &&
++		(!$export_ok || -e "$dir/$export_ok") &&
++		(!$export_auth_hook || $export_auth_hook->($dir)));
 +}
 +
-+sub parse_commit_text {
-+	my ($commit_text, $withparents) = @_;
-+	my @commit_lines = split '\n', $commit_text;
-+	my %co;
++# store multiple values for single key as anonymous array reference
++# single values stored directly in the hash, not as [ <value> ]
++sub hash_set_multi {
++	my ($hash, $key, $value) = @_;
 +
-+	pop @commit_lines; # Remove '\0'
-+
-+	if (! @commit_lines) {
-+		return;
-+	}
-+
-+	my $header = shift @commit_lines;
-+	if ($header !~ m/^[0-9a-fA-F]{40}/) {
-+		return;
-+	}
-+	($co{'id'}, my @parents) = split ' ', $header;
-+	while (my $line = shift @commit_lines) {
-+		last if $line eq "\n";
-+		if ($line =~ m/^tree ([0-9a-fA-F]{40})$/) {
-+			$co{'tree'} = $1;
-+		} elsif ((!defined $withparents) && ($line =~ m/^parent ([0-9a-fA-F]{40})$/)) {
-+			push @parents, $1;
-+		} elsif ($line =~ m/^author (.*) ([0-9]+) (.*)$/) {
-+			$co{'author'} = to_utf8($1);
-+			$co{'author_epoch'} = $2;
-+			$co{'author_tz'} = $3;
-+			if ($co{'author'} =~ m/^([^<]+) <([^>]*)>/) {
-+				$co{'author_name'}  = $1;
-+				$co{'author_email'} = $2;
-+			} else {
-+				$co{'author_name'} = $co{'author'};
-+			}
-+		} elsif ($line =~ m/^committer (.*) ([0-9]+) (.*)$/) {
-+			$co{'committer'} = to_utf8($1);
-+			$co{'committer_epoch'} = $2;
-+			$co{'committer_tz'} = $3;
-+			if ($co{'committer'} =~ m/^([^<]+) <([^>]*)>/) {
-+				$co{'committer_name'}  = $1;
-+				$co{'committer_email'} = $2;
-+			} else {
-+				$co{'committer_name'} = $co{'committer'};
-+			}
-+		}
-+	}
-+	if (!defined $co{'tree'}) {
-+		return;
-+	};
-+	$co{'parents'} = \@parents;
-+	$co{'parent'} = $parents[0];
-+
-+	foreach my $title (@commit_lines) {
-+		$title =~ s/^    //;
-+		if ($title ne "") {
-+			$co{'title'} = chop_str($title, 80, 5);
-+			# remove leading stuff of merges to make the interesting part visible
-+			if (length($title) > 50) {
-+				$title =~ s/^Automatic //;
-+				$title =~ s/^merge (of|with) /Merge ... /i;
-+				if (length($title) > 50) {
-+					$title =~ s/(http|rsync):\/\///;
-+				}
-+				if (length($title) > 50) {
-+					$title =~ s/(master|www|rsync)\.//;
-+				}
-+				if (length($title) > 50) {
-+					$title =~ s/kernel.org:?//;
-+				}
-+				if (length($title) > 50) {
-+					$title =~ s/\/pub\/scm//;
-+				}
-+			}
-+			$co{'title_short'} = chop_str($title, 50, 5);
-+			last;
-+		}
-+	}
-+	if (! defined $co{'title'} || $co{'title'} eq "") {
-+		$co{'title'} = $co{'title_short'} = '(no commit message)';
-+	}
-+	# remove added spaces
-+	foreach my $line (@commit_lines) {
-+		$line =~ s/^    //;
-+	}
-+	$co{'comment'} = \@commit_lines;
-+
-+	my $age = time - $co{'committer_epoch'};
-+	$co{'age'} = $age;
-+	$co{'age_string'} = age_string($age);
-+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday) = gmtime($co{'committer_epoch'});
-+	if ($age > 60*60*24*7*2) {
-+		$co{'age_string_date'} = sprintf "%4i-%02u-%02i", 1900 + $year, $mon+1, $mday;
-+		$co{'age_string_age'} = $co{'age_string'};
++	if (!exists $hash->{$key}) {
++		$hash->{$key} = $value;
++	} elsif (!ref $hash->{$key}) {
++		$hash->{$key} = [ $hash->{$key}, $value ];
 +	} else {
-+		$co{'age_string_date'} = $co{'age_string'};
-+		$co{'age_string_age'} = sprintf "%4i-%02u-%02i", 1900 + $year, $mon+1, $mday;
++		push @{$hash->{$key}}, $value;
 +	}
-+	return %co;
 +}
 +
-+sub parse_commit {
-+	my ($commit_id) = @_;
-+	my %co;
++# return hash of git project configuration
++# optionally limited to some section, e.g. 'gitweb'
++sub git_parse_project_config {
++	my $section_regexp = shift;
++	my %config;
 +
 +	local $/ = "\0";
 +
-+	open my $fd, "-|", git_cmd(), "rev-list",
-+		"--parents",
-+		"--header",
-+		"--max-count=1",
-+		$commit_id,
-+		"--",
-+		or die_error(500, "Open git-rev-list failed");
-+	%co = parse_commit_text(<$fd>, 1);
++	open my $fh, "-|", git_cmd(), "config", '-z', '-l',
++		or return;
++
++	while (my $keyval = <$fh>) {
++		chomp $keyval;
++		my ($key, $value) = split(/\n/, $keyval, 2);
++
++		hash_set_multi(\%config, $key, $value)
++			if (!defined $section_regexp || $key =~ /^(?:$section_regexp)\./o);
++	}
++	close $fh;
++
++	return %config;
++}
++
++# convert config value to boolean: 'true' or 'false'
++# no value, number > 0, 'true' and 'yes' values are true
++# rest of values are treated as false (never as error)
++sub config_to_bool {
++	my $val = shift;
++
++	return 1 if !defined $val;             # section.key
++
++	# strip leading and trailing whitespace
++	$val =~ s/^\s+//;
++	$val =~ s/\s+$//;
++
++	return (($val =~ /^\d+$/ && $val) ||   # section.key = 1
++	        ($val =~ /^(?:true|yes)$/i));  # section.key = true
++}
++
++# convert config value to simple decimal number
++# an optional value suffix of 'k', 'm', or 'g' will cause the value
++# to be multiplied by 1024, 1048576, or 1073741824
++sub config_to_int {
++	my $val = shift;
++
++	# strip leading and trailing whitespace
++	$val =~ s/^\s+//;
++	$val =~ s/\s+$//;
++
++	if (my ($num, $unit) = ($val =~ /^([0-9]*)([kmg])$/i)) {
++		$unit = lc($unit);
++		# unknown unit is treated as 1
++		return $num * ($unit eq 'g' ? 1073741824 :
++		               $unit eq 'm' ?    1048576 :
++		               $unit eq 'k' ?       1024 : 1);
++	}
++	return $val;
++}
++
++# convert config value to array reference, if needed
++sub config_to_multi {
++	my $val = shift;
++
++	return ref($val) ? $val : (defined($val) ? [ $val ] : []);
++}
++
++sub git_get_project_config {
++	my ($key, $type) = @_;
++
++	return unless defined $git_dir;
++
++	# key sanity check
++	return unless ($key);
++	$key =~ s/^gitweb\.//;
++	return if ($key =~ m/\W/);
++
++	# type sanity check
++	if (defined $type) {
++		$type =~ s/^--//;
++		$type = undef
++			unless ($type eq 'bool' || $type eq 'int');
++	}
++
++	# get config
++	if (!defined $config_file ||
++	    $config_file ne "$git_dir/config") {
++		%config = git_parse_project_config('gitweb');
++		$config_file = "$git_dir/config";
++	}
++
++	# check if config variable (key) exists
++	return unless exists $config{"gitweb.$key"};
++
++	# ensure given type
++	if (!defined $type) {
++		return $config{"gitweb.$key"};
++	} elsif ($type eq 'bool') {
++		# backward compatibility: 'git config --bool' returns true/false
++		return config_to_bool($config{"gitweb.$key"}) ? 'true' : 'false';
++	} elsif ($type eq 'int') {
++		return config_to_int($config{"gitweb.$key"});
++	}
++	return $config{"gitweb.$key"};
++}
++
++sub git_get_project_description {
++	my $path = shift;
++
++	$git_dir = "$projectroot/$path";
++	open my $fd, '<', "$git_dir/description"
++		or return git_get_project_config('description');
++	my $descr = <$fd>;
++	close $fd;
++	if (defined $descr) {
++		chomp $descr;
++	}
++	return $descr;
++}
++
++sub git_get_project_ctags {
++	my $path = shift;
++	my $ctags = {};
++
++	$git_dir = "$projectroot/$path";
++	opendir my $dh, "$git_dir/ctags"
++		or return $ctags;
++	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
++		open my $ct, '<', $_ or next;
++		my $val = <$ct>;
++		chomp $val;
++		close $ct;
++		my $ctag = $_; $ctag =~ s#.*/##;
++		$ctags->{$ctag} = $val;
++	}
++	closedir $dh;
++	$ctags;
++}
++
++sub git_populate_project_tagcloud {
++	my $ctags = shift;
++
++	# First, merge different-cased tags; tags vote on casing
++	my %ctags_lc;
++	foreach (keys %$ctags) {
++		$ctags_lc{lc $_}->{count} += $ctags->{$_};
++		if (not $ctags_lc{lc $_}->{topcount}
++		    or $ctags_lc{lc $_}->{topcount} < $ctags->{$_}) {
++			$ctags_lc{lc $_}->{topcount} = $ctags->{$_};
++			$ctags_lc{lc $_}->{topname} = $_;
++		}
++	}
++
++	my $cloud;
++	if (eval { require HTML::TagCloud; 1; }) {
++		$cloud = HTML::TagCloud->new;
++		foreach (sort keys %ctags_lc) {
++			# Pad the title with spaces so that the cloud looks
++			# less crammed.
++			my $title = $ctags_lc{$_}->{topname};
++			$title =~ s/ /&nbsp;/g;
++			$title =~ s/^/&nbsp;/g;
++			$title =~ s/$/&nbsp;/g;
++			$cloud->add($title, $home_link."?by_tag=".$_, $ctags_lc{$_}->{count});
++		}
++	} else {
++		$cloud = \%ctags_lc;
++	}
++	$cloud;
++}
++
++sub git_show_project_tagcloud {
++	my ($cloud, $count) = @_;
++	print STDERR ref($cloud)."..\n";
++	if (ref $cloud eq 'HTML::TagCloud') {
++		return $cloud->html_and_css($count);
++	} else {
++		my @tags = sort { $cloud->{$a}->{count} <=> $cloud->{$b}->{count} } keys %$cloud;
++		return '<p align="center">' . join (', ', map {
++			"<a href=\"$home_link?by_tag=$_\">$cloud->{$_}->{topname}</a>"
++		} splice(@tags, 0, $count)) . '</p>';
++	}
++}
++
++sub git_get_project_url_list {
++	my $path = shift;
++
++	$git_dir = "$projectroot/$path";
++	open my $fd, '<', "$git_dir/cloneurl"
++		or return wantarray ?
++		@{ config_to_multi(git_get_project_config('url')) } :
++		   config_to_multi(git_get_project_config('url'));
++	my @git_project_url_list = map { chomp; $_ } <$fd>;
 +	close $fd;
 +
-+	return %co;
++	return wantarray ? @git_project_url_list : \@git_project_url_list;
 +}
 +
-+sub parse_commits {
-+	my ($commit_id, $maxcount, $skip, $filename, @args) = @_;
-+	my @cos;
++sub git_get_projects_list {
++	my ($filter) = @_;
++	my @list;
 +
-+	$maxcount ||= 1;
-+	$skip ||= 0;
++	$filter ||= '';
++	$filter =~ s/\.git$//;
 +
-+	local $/ = "\0";
++	my $check_forks = gitweb_check_feature('forks');
 +
-+	open my $fd, "-|", git_cmd(), "rev-list",
-+		"--header",
-+		@args,
-+		("--max-count=" . $maxcount),
-+		("--skip=" . $skip),
-+		@extra_options,
-+		$commit_id,
-+		"--",
-+		($filename ? ($filename) : ())
-+		or die_error(500, "Open git-rev-list failed");
-+	while (my $line = <$fd>) {
-+		my %co = parse_commit_text($line);
-+		push @cos, \%co;
-+	}
-+	close $fd;
++	if (-d $projects_list) {
++		# search in directory
++		my $dir = $projects_list . ($filter ? "/$filter" : '');
++		# remove the trailing "/"
++		$dir =~ s!/+$!!;
++		my $pfxlen = length("$dir");
++		my $pfxdepth = ($dir =~ tr!/!!);
 +
-+	return wantarray ? @cos : \@cos;
-+}
++		File::Find::find({
++			follow_fast => 1, # follow symbolic links
++			follow_skip => 2, # ignore duplicates
++			dangling_symlinks => 0, # ignore dangling symlinks, silently
++			wanted => sub {
++				# skip project-list toplevel, if we get it.
++				return if (m!^[/.]$!);
++				# only directories can be git repositories
++				return unless (-d $_);
++				# don't traverse too deep (Find is super slow on os x)
++				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
++					$File::Find::prune = 1;
++					return;
++				}
 +
-+# parse line of git-diff-tree "raw" output
-+sub parse_difftree_raw_line {
-+	my $line = shift;
-+	my %res;
++				my $subdir = substr($File::Find::name, $pfxlen + 1);
++				# we check related file in $projectroot
++				my $path = ($filter ? "$filter/" : '') . $subdir;
++				if (check_export_ok("$projectroot/$path")) {
++					push @list, { path => $path };
++					$File::Find::prune = 1;
++				}
++			},
++		}, "$dir");
 +
-+	# ':100644 100644 03b218260e99b78c6df0ed378e59ed9205ccc96d 3b93d5e7cc7f7dd4ebed13a5cc1a4ad976fc94d8 M	ls-files.c'
-+	# ':100644 100644 7f9281985086971d3877aca27704f2aaf9c448ce bc190ebc71bbd923f2b728e505408f5e54bd073a M	rev-tree.c'
-+	if ($line =~ m/^:([0-7]{6}) ([0-7]{6}) ([0-9a-fA-F]{40}) ([0-9a-fA-F]{40}) (.)([0-9]{0,3})\t(.*)$/) {
-+		$res{'from_mode'} = $1;
-+		$res{'to_mode'} = $2;
-+		$res{'from_id'} = $3;
-+		$res{'to_id'} = $4;
-+		$res{'status'} = $5;
-+		$res{'similarity'} = $6;
-+		if ($res{'status'} eq 'R' || $res{'status'} eq 'C') { # renamed or copied
-+			($res{'from_file'}, $res{'to_file'}) = map { unquote($_) } split("\t", $7);
-+		} else {
-+			$res{'from_file'} = $res{'to_file'} = $res{'file'} = unquote($7);
-+		}
-+	}
-+	# '::100755 100755 100755 60e79ca1b01bc8b057abe17ddab484699a7f5fdb 94067cc5f73388f33722d52ae02f44692bc07490 94067cc5f73388f33722d52ae02f44692bc07490 MR	git-gui/git-gui.sh'
-+	# combined diff (for merge commit)
-+	elsif ($line =~ s/^(::+)((?:[0-7]{6} )+)((?:[0-9a-fA-F]{40} )+)([a-zA-Z]+)\t(.*)$//) {
-+		$res{'nparents'}  = length($1);
-+		$res{'from_mode'} = [ split(' ', $2) ];
-+		$res{'to_mode'} = pop @{$res{'from_mode'}};
-+		$res{'from_id'} = [ split(' ', $3) ];
-+		$res{'to_id'} = pop @{$res{'from_id'}};
-+		$res{'status'} = [ split('', $4) ];
-+		$res{'to_file'} = unquote($5);
-+	}
-+	# 'c512b523472485aef4fff9e57b229d9d243c967f'
-+	elsif ($line =~ m/^([0-9a-fA-F]{40})$/) {
-+		$res{'commit'} = $1;
-+	}
-+
-+	return wantarray ? %res : \%res;
-+}
-+
-+# wrapper: return parsed line of git-diff-tree "raw" output
-+# (the argument might be raw line, or parsed info)
-+sub parsed_difftree_line {
-+	my $line_or_ref = shift;
-+
-+	if (ref($line_or_ref) eq "HASH") {
-+		# pre-parsed (or generated by hand)
-+		return $line_or_ref;
-+	} else {
-+		return parse_difftree_raw_line($line_or_ref);
-+	}
-+}
-+
-+# parse line of git-ls-tree output
-+sub parse_ls_tree_line {
-+	my $line = shift;
-+	my %opts = @_;
-+	my %res;
-+
-+	if ($opts{'-l'}) {
-+		#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa   16717	panic.c'
-+		$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40}) +(-|[0-9]+)\t(.+)$/s;
-+
-+		$res{'mode'} = $1;
-+		$res{'type'} = $2;
-+		$res{'hash'} = $3;
-+		$res{'size'} = $4;
-+		if ($opts{'-z'}) {
-+			$res{'name'} = $5;
-+		} else {
-+			$res{'name'} = unquote($5);
-+		}
-+	} else {
-+		#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
-+		$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t(.+)$/s;
-+
-+		$res{'mode'} = $1;
-+		$res{'type'} = $2;
-+		$res{'hash'} = $3;
-+		if ($opts{'-z'}) {
-+			$res{'name'} = $4;
-+		} else {
-+			$res{'name'} = unquote($4);
-+		}
-+	}
-+
-+	return wantarray ? %res : \%res;
-+}
-+
-+# generates _two_ hashes, references to which are passed as 2 and 3 argument
-+sub parse_from_to_diffinfo {
-+	my ($diffinfo, $from, $to, @parents) = @_;
-+
-+	if ($diffinfo->{'nparents'}) {
-+		# combined diff
-+		$from->{'file'} = [];
-+		$from->{'href'} = [];
-+		fill_from_file_info($diffinfo, @parents)
-+			unless exists $diffinfo->{'from_file'};
-+		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
-+			$from->{'file'}[$i] =
-+				defined $diffinfo->{'from_file'}[$i] ?
-+				        $diffinfo->{'from_file'}[$i] :
-+				        $diffinfo->{'to_file'};
-+			if ($diffinfo->{'status'}[$i] ne "A") { # not new (added) file
-+				$from->{'href'}[$i] = href(action=>"blob",
-+				                           hash_base=>$parents[$i],
-+				                           hash=>$diffinfo->{'from_id'}[$i],
-+				                           file_name=>$from->{'file'}[$i]);
-+			} else {
-+				$from->{'href'}[$i] = undef;
++	} elsif (-f $projects_list) {
++		# read from file(url-encoded):
++		# 'git%2Fgit.git Linus+Torvalds'
++		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
++		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
++		my %paths;
++		open my $fd, '<', $projects_list or return;
++	PROJECT:
++		while (my $line = <$fd>) {
++			chomp $line;
++			my ($path, $owner) = split ' ', $line;
++			$path = unescape($path);
++			$owner = unescape($owner);
++			if (!defined $path) {
++				next;
++			}
++			if ($filter ne '') {
++				# looking for forks;
++				my $pfx = substr($path, 0, length($filter));
++				if ($pfx ne $filter) {
++					next PROJECT;
++				}
++				my $sfx = substr($path, length($filter));
++				if ($sfx !~ /^\/.*\.git$/) {
++					next PROJECT;
++				}
++			} elsif ($check_forks) {
++			PATH:
++				foreach my $filter (keys %paths) {
++					# looking for forks;
++					my $pfx = substr($path, 0, length($filter));
++					if ($pfx ne $filter) {
++						next PATH;
++					}
++					my $sfx = substr($path, length($filter));
++					if ($sfx !~ /^\/.*\.git$/) {
++						next PATH;
++					}
++					# is a fork, don't include it in
++					# the list
++					next PROJECT;
++				}
++			}
++			if (check_export_ok("$projectroot/$path")) {
++				my $pr = {
++					path => $path,
++					owner => to_utf8($owner),
++				};
++				push @list, $pr;
++				(my $forks_path = $path) =~ s/\.git$//;
++				$paths{$forks_path}++;
 +			}
 +		}
-+	} else {
-+		# ordinary (not combined) diff
-+		$from->{'file'} = $diffinfo->{'from_file'};
-+		if ($diffinfo->{'status'} ne "A") { # not new (added) file
-+			$from->{'href'} = href(action=>"blob", hash_base=>$hash_parent,
-+			                       hash=>$diffinfo->{'from_id'},
-+			                       file_name=>$from->{'file'});
-+		} else {
-+			delete $from->{'href'};
++		close $fd;
++	}
++	return @list;
++}
++
++our $gitweb_project_owner = undef;
++sub git_get_project_list_from_file {
++
++	return if (defined $gitweb_project_owner);
++
++	$gitweb_project_owner = {};
++	# read from file (url-encoded):
++	# 'git%2Fgit.git Linus+Torvalds'
++	# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
++	# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
++	if (-f $projects_list) {
++		open(my $fd, '<', $projects_list);
++		while (my $line = <$fd>) {
++			chomp $line;
++			my ($pr, $ow) = split ' ', $line;
++			$pr = unescape($pr);
++			$ow = unescape($ow);
++			$gitweb_project_owner->{$pr} = to_utf8($ow);
 +		}
++		close $fd;
++	}
++}
++
++sub git_get_project_owner {
++	my $project = shift;
++	my $owner;
++
++	return undef unless $project;
++	$git_dir = "$projectroot/$project";
++
++	if (!defined $gitweb_project_owner) {
++		git_get_project_list_from_file();
 +	}
 +
-+	$to->{'file'} = $diffinfo->{'to_file'};
-+	if (!is_deleted($diffinfo)) { # file exists in result
-+		$to->{'href'} = href(action=>"blob", hash_base=>$hash,
-+		                     hash=>$diffinfo->{'to_id'},
-+		                     file_name=>$to->{'file'});
-+	} else {
-+		delete $to->{'href'};
++	if (exists $gitweb_project_owner->{$project}) {
++		$owner = $gitweb_project_owner->{$project};
 +	}
++	if (!defined $owner){
++		$owner = git_get_project_config('owner');
++	}
++	if (!defined $owner) {
++		$owner = get_file_owner("$git_dir");
++	}
++
++	return $owner;
++}
++
++sub get_file_owner {
++	my $path = shift;
++
++	my ($dev, $ino, $mode, $nlink, $st_uid, $st_gid, $rdev, $size) = stat($path);
++	my ($name, $passwd, $uid, $gid, $quota, $comment, $gcos, $dir, $shell) = getpwuid($st_uid);
++	if (!defined $gcos) {
++		return undef;
++	}
++	my $owner = $gcos;
++	$owner =~ s/[,;].*$//;
++	return to_utf8($owner);
++}
++
++sub project_in_list {
++	my $project = shift;
++	my @list = git_get_projects_list();
++	return @list && scalar(grep { $_->{'path'} eq $project } @list);
 +}
 +
 +1;
