@@ -1,7 +1,7 @@
 From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCH 09/11 GSoC] gitweb: Create Gitweb::Util module
-Date: Tue, 22 Jun 2010 03:30:45 +0530
-Message-ID: <1277157648-6029-10-git-send-email-pavan.sss1991@gmail.com>
+Subject: [PATCH 10/11 GSoC] gitweb: Create Gitweb::Format module
+Date: Tue, 22 Jun 2010 03:30:46 +0530
+Message-ID: <1277157648-6029-11-git-send-email-pavan.sss1991@gmail.com>
 References: <1277157648-6029-1-git-send-email-pavan.sss1991@gmail.com>
 Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
@@ -12,267 +12,614 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQp6M-0000ac-3p
+	id 1OQp6N-0000ac-9c
 	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 00:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754717Ab0FUWEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jun 2010 18:04:16 -0400
+	id S1755548Ab0FUWEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 18:04:20 -0400
 Received: from mail-pw0-f46.google.com ([209.85.160.46]:36311 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024Ab0FUWEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jun 2010 18:04:14 -0400
-Received: by pwj8 with SMTP id 8so529457pwj.19
-        for <git@vger.kernel.org>; Mon, 21 Jun 2010 15:04:13 -0700 (PDT)
+	with ESMTP id S1755065Ab0FUWET (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 18:04:19 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 8so529457pwj.19
+        for <git@vger.kernel.org>; Mon, 21 Jun 2010 15:04:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=kiBSwzQ9kRkDc5QSAXHbKwXefwlpwnWJXuvgn9V++bU=;
-        b=ZcDhGIrhAx/QwM6x8J4aiAG9QibEJZKl/7y0n0H6/rL2bT+rFzbeHROb1HX/ZGOrCx
-         MMewfA99B9VdsxE7SA3LliEDxF3qWb4ZlmBQFaHoBNf6R9GjbzqAsxM0JtZq5pJvAMw7
-         x19YSguAi+16p+JNWYuyPvW4s53qI4WGpNTV0=
+        bh=fD0VV75Qw7q7wRmKApgKGdsDVU5SA2GgjlnSuZfzN4g=;
+        b=GEJeylInS2RZTPoPuLuUXaM+nDwH3co1R+z141A3rq8a01J08cAGLVRcZmY7yRenZy
+         h3792D7Ag3idGyNhNFLIyXDug+FVpDJDkfMV5Bzp00grPNcJNQtqXHf190XJtM6nWxWO
+         Lf22E3gaSVQ707lyStGBm1p8jPbCAhVdQekuU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VdI0R3qnyt/bcfOTVlDP7LHWbqk+/OSCz+gbYkeA2J0XBhagBseTrjRsfjyJL4yzm2
-         vIenfpEzs2Ep7792vwgn6BTfPvp59DtNGuM6t+u2mjKysQeq2tE57jjil8evonIu9j23
-         S/zoTZ3IeScrnZsORPauJrdJGBYVypfl5vQNI=
-Received: by 10.142.7.11 with SMTP id 11mr4049291wfg.136.1277157852131;
-        Mon, 21 Jun 2010 15:04:12 -0700 (PDT)
+        b=X2djwaTFBbcJcES6OgBTf3tm7Bbv8/ScWkfJvCcvAilI4XZdEUv5q9DfB0NTl4yG/q
+         kPPHdXnpgwzst1oSUb71gLzrdszhQnsv/2i3Nq+IhUgJfL7VGejG4hBXCNSbVLACxGkb
+         WNmsXL6NOEMMq29kLv8mxolwqeOyJnCjvIUqo=
+Received: by 10.142.67.30 with SMTP id p30mr4030149wfa.154.1277157858835;
+        Mon, 21 Jun 2010 15:04:18 -0700 (PDT)
 Received: from localhost.localdomain ([202.63.112.132])
-        by mx.google.com with ESMTPS id y27sm525703wfi.17.2010.06.21.15.04.08
+        by mx.google.com with ESMTPS id y27sm525703wfi.17.2010.06.21.15.04.14
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 21 Jun 2010 15:04:11 -0700 (PDT)
+        Mon, 21 Jun 2010 15:04:17 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.454.g6bbe9.dirty
 In-Reply-To: <1277157648-6029-1-git-send-email-pavan.sss1991@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149452>
 
-Create Gitweb::Util module in 'gitweb/lib/Gitweb/Util.pm'
-to store the git utility subroutines related to gitweb.
+Create Gitweb::Format module in 'gitweb/lib/Gitweb/Format.pm'
+to store the subroutines related to formatting of HTML
+fragments required for gitweb.
 
-This module include subroutines in various categories
-such as git utility subs invoking git commands, git
-utility subs accessing git repository, mimetype related
-subs and HTML output utility subs.
+This module depends on Config.pm, View.pm, Escape.pm,
+Util.pm and Request.pm. It mainly contain functions returning
+short HTML fragments or transforming HTML fragments. Also
+include subroutines regarding avatar formatting.
 
 Subroutines moved:
-	git_get_head_hash
-	git_get_full_hash
-	git_get_short_hash
-	git_get_hash
-	git_get_type
-	git_get_hash_by_path
-	git_get_path_by_hash
-	git_get_last_activity
-	git_get_references
-	git_get_rev_name_tags
-	git_get_heads_list
-	git_get_tags_list
-	mimetype_guess_file
-	mimetype_guess
-	blob_mimetype
-	blob_contenttype
-	guess_file_syntax
-	run_highlighter
-	fill_from_file_info
-	is_deleted
-	is_patch_split
+	format_log_line_html
+	format_ref_marker
+	format_subject_html
+	picon_url
+	gravatar_url
+	git_get_avatar
+	format_search_author
+	format_author_html
+	format_git_diff_header_line
+	format_extended_diff_header_line
+	format_diff_from_to_header
+	format_diff_cc_simplified
+	format_diff_line
+	format_snapshot_links
 
-Update 'gitweb/Makefile' to install Gitweb::Util alongside gitweb.
+Update 'gitweb/Makefile' to install Gitweb::Format alongside gitweb.
 
 Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 ---
- gitweb/Makefile           |    1 +
- gitweb/gitweb.perl        |  420 +------------------------------------------
- gitweb/lib/Gitweb/Util.pm |  447 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 449 insertions(+), 419 deletions(-)
- create mode 100644 gitweb/lib/Gitweb/Util.pm
+ gitweb/Makefile             |    1 +
+ gitweb/gitweb.perl          |  512 +----------------------------------------
+ gitweb/lib/Gitweb/Format.pm |  537 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 539 insertions(+), 511 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/Format.pm
 
 diff --git a/gitweb/Makefile b/gitweb/Makefile
-index cd2555d..280ff6d 100644
+index 280ff6d..1ef0b7a 100644
 --- a/gitweb/Makefile
 +++ b/gitweb/Makefile
-@@ -118,6 +118,7 @@ GITWEB_MODULES += lib/Gitweb/Request.pm
- GITWEB_MODULES += lib/Gitweb/Escape.pm
+@@ -119,6 +119,7 @@ GITWEB_MODULES += lib/Gitweb/Escape.pm
  GITWEB_MODULES += lib/Gitweb/RepoConfig.pm
  GITWEB_MODULES += lib/Gitweb/View.pm
-+GITWEB_MODULES += lib/Gitweb/Util.pm
+ GITWEB_MODULES += lib/Gitweb/Util.pm
++GITWEB_MODULES += lib/Gitweb/Format.pm
  
  GITWEB_REPLACE = \
  	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 909dd81..a3de63e 100755
+index a3de63e..e5f3cc6 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -31,6 +31,7 @@ use Gitweb::Request;
- use Gitweb::Escape;
+@@ -32,6 +32,7 @@ use Gitweb::Escape;
  use Gitweb::RepoConfig;
  use Gitweb::View;
-+use Gitweb::Util;
+ use Gitweb::Util;
++use Gitweb::Format;
  
  BEGIN {
  	CGI->compile() if $ENV{'MOD_PERL'};
-@@ -1086,164 +1087,6 @@ sub format_snapshot_links {
+@@ -576,517 +577,6 @@ sub validate_project {
  }
  
  ## ----------------------------------------------------------------------
--## git utility subroutines, invoking git commands
+-## functions returning short HTML fragments, or transforming HTML fragments
+-## which don't belong to other sections
 -
--# get HEAD ref of given project as hash
--sub git_get_head_hash {
--	return git_get_full_hash(shift, 'HEAD');
+-# format line of commit message.
+-sub format_log_line_html {
+-	my $line = shift;
+-
+-	$line = esc_html($line, -nbsp=>1);
+-	$line =~ s{\b([0-9a-fA-F]{8,40})\b}{
+-		$cgi->a({-href => href(action=>"object", hash=>$1),
+-					-class => "text"}, $1);
+-	}eg;
+-
+-	return $line;
 -}
 -
--sub git_get_full_hash {
--	return git_get_hash(@_);
--}
+-# format marker of refs pointing to given object
 -
--sub git_get_short_hash {
--	return git_get_hash(@_, '--short=7');
--}
+-# the destination action is chosen based on object type and current context:
+-# - for annotated tags, we choose the tag view unless it's the current view
+-#   already, in which case we go to shortlog view
+-# - for other refs, we keep the current view if we're in history, shortlog or
+-#   log view, and select shortlog otherwise
+-sub format_ref_marker {
+-	my ($refs, $id) = @_;
+-	my $markers = '';
 -
--sub git_get_hash {
--	my ($project, $hash, @options) = @_;
--	my $o_git_dir = $git_dir;
--	my $retval = undef;
--	$git_dir = "$projectroot/$project";
--	if (open my $fd, '-|', git_cmd(), 'rev-parse',
--	    '--verify', '-q', @options, $hash) {
--		$retval = <$fd>;
--		chomp $retval if defined $retval;
--		close $fd;
--	}
--	if (defined $o_git_dir) {
--		$git_dir = $o_git_dir;
--	}
--	return $retval;
--}
+-	if (defined $refs->{$id}) {
+-		foreach my $ref (@{$refs->{$id}}) {
+-			# this code exploits the fact that non-lightweight tags are the
+-			# only indirect objects, and that they are the only objects for which
+-			# we want to use tag instead of shortlog as action
+-			my ($type, $name) = qw();
+-			my $indirect = ($ref =~ s/\^\{\}$//);
+-			# e.g. tags/v2.6.11 or heads/next
+-			if ($ref =~ m!^(.*?)s?/(.*)$!) {
+-				$type = $1;
+-				$name = $2;
+-			} else {
+-				$type = "ref";
+-				$name = $ref;
+-			}
 -
--# get type of given object
--sub git_get_type {
--	my $hash = shift;
+-			my $class = $type;
+-			$class .= " indirect" if $indirect;
 -
--	open my $fd, "-|", git_cmd(), "cat-file", '-t', $hash or return;
--	my $type = <$fd>;
--	close $fd or return;
--	chomp $type;
--	return $type;
--}
+-			my $dest_action = "shortlog";
 -
--# get hash of given path at given ref
--sub git_get_hash_by_path {
--	my $base = shift;
--	my $path = shift || return undef;
--	my $type = shift;
+-			if ($indirect) {
+-				$dest_action = "tag" unless $action eq "tag";
+-			} elsif ($action =~ /^(history|(short)?log)$/) {
+-				$dest_action = $action;
+-			}
 -
--	$path =~ s,/+$,,;
+-			my $dest = "";
+-			$dest .= "refs/" unless $ref =~ m!^refs/!;
+-			$dest .= $ref;
 -
--	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
--		or die_error(500, "Open git-ls-tree failed");
--	my $line = <$fd>;
--	close $fd or return undef;
+-			my $link = $cgi->a({
+-				-href => href(
+-					action=>$dest_action,
+-					hash=>$dest
+-				)}, $name);
 -
--	if (!defined $line) {
--		# there is no tree or hash given by $path at $base
--		return undef;
--	}
--
--	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
--	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/;
--	if (defined $type && $type ne $2) {
--		# type doesn't match
--		return undef;
--	}
--	return $3;
--}
--
--# get path of entry with given hash at given tree-ish (ref)
--# used to get 'from' filename for combined diff (merge commit) for renames
--sub git_get_path_by_hash {
--	my $base = shift || return;
--	my $hash = shift || return;
--
--	local $/ = "\0";
--
--	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z', $base
--		or return undef;
--	while (my $line = <$fd>) {
--		chomp $line;
--
--		#'040000 tree 595596a6a9117ddba9fe379b6b012b558bac8423	gitweb'
--		#'100644 blob e02e90f0429be0d2a69b76571101f20b8f75530f	gitweb/README'
--		if ($line =~ m/(?:[0-9]+) (?:.+) $hash\t(.+)$/) {
--			close $fd;
--			return $1;
+-			$markers .= " <span class=\"$class\" title=\"$ref\">" .
+-				$link . "</span>";
 -		}
 -	}
--	close $fd;
--	return undef;
--}
 -
--## ......................................................................
--## git utility functions, directly accessing git repository
--
--sub git_get_last_activity {
--	my ($path) = @_;
--	my $fd;
--
--	$git_dir = "$projectroot/$path";
--	open($fd, "-|", git_cmd(), 'for-each-ref',
--	     '--format=%(committer)',
--	     '--sort=-committerdate',
--	     '--count=1',
--	     'refs/heads') or return;
--	my $most_recent = <$fd>;
--	close $fd or return;
--	if (defined $most_recent &&
--	    $most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
--		my $timestamp = $1;
--		my $age = time - $timestamp;
--		return ($age, age_string($age));
+-	if ($markers) {
+-		return ' <span class="refs">'. $markers . '</span>';
+-	} else {
+-		return "";
 -	}
--	return (undef, undef);
 -}
 -
--sub git_get_references {
--	my $type = shift || "";
--	my %refs;
--	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
--	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
--	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
--		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
--		or return;
+-# format, perhaps shortened and with markers, title line
+-sub format_subject_html {
+-	my ($long, $short, $href, $extra) = @_;
+-	$extra = '' unless defined($extra);
 -
--	while (my $line = <$fd>) {
--		chomp $line;
--		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type.*)$!) {
--			if (defined $refs{$1}) {
--				push @{$refs{$1}}, $2;
+-	if (length($short) < length($long)) {
+-		$long =~ s/[[:cntrl:]]/?/g;
+-		return $cgi->a({-href => $href, -class => "list subject",
+-		                -title => to_utf8($long)},
+-		       esc_html($short)) . $extra;
+-	} else {
+-		return $cgi->a({-href => $href, -class => "list subject"},
+-		       esc_html($long)) . $extra;
+-	}
+-}
+-
+-# Rather than recomputing the url for an email multiple times, we cache it
+-# after the first hit. This gives a visible benefit in views where the avatar
+-# for the same email is used repeatedly (e.g. shortlog).
+-# The cache is shared by all avatar engines (currently gravatar only), which
+-# are free to use it as preferred. Since only one avatar engine is used for any
+-# given page, there's no risk for cache conflicts.
+-our %avatar_cache = ();
+-
+-# Compute the picon url for a given email, by using the picon search service over at
+-# http://www.cs.indiana.edu/picons/search.html
+-sub picon_url {
+-	my $email = lc shift;
+-	if (!$avatar_cache{$email}) {
+-		my ($user, $domain) = split('@', $email);
+-		$avatar_cache{$email} =
+-			"http://www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
+-			"$domain/$user/" .
+-			"users+domains+unknown/up/single";
+-	}
+-	return $avatar_cache{$email};
+-}
+-
+-# Compute the gravatar url for a given email, if it's not in the cache already.
+-# Gravatar stores only the part of the URL before the size, since that's the
+-# one computationally more expensive. This also allows reuse of the cache for
+-# different sizes (for this particular engine).
+-sub gravatar_url {
+-	my $email = lc shift;
+-	my $size = shift;
+-	$avatar_cache{$email} ||=
+-		"http://www.gravatar.com/avatar/" .
+-			Digest::MD5::md5_hex($email) . "?s=";
+-	return $avatar_cache{$email} . $size;
+-}
+-
+-# Insert an avatar for the given $email at the given $size if the feature
+-# is enabled.
+-sub git_get_avatar {
+-	my ($email, %opts) = @_;
+-	my $pre_white  = ($opts{-pad_before} ? "&nbsp;" : "");
+-	my $post_white = ($opts{-pad_after}  ? "&nbsp;" : "");
+-	$opts{-size} ||= 'default';
+-	my $size = $avatar_size{$opts{-size}} || $avatar_size{'default'};
+-	my $url = "";
+-	if ($git_avatar eq 'gravatar') {
+-		$url = gravatar_url($email, $size);
+-	} elsif ($git_avatar eq 'picon') {
+-		$url = picon_url($email);
+-	}
+-	# Other providers can be added by extending the if chain, defining $url
+-	# as needed. If no variant puts something in $url, we assume avatars
+-	# are completely disabled/unavailable.
+-	if ($url) {
+-		return $pre_white .
+-		       "<img width=\"$size\" " .
+-		            "class=\"avatar\" " .
+-		            "src=\"$url\" " .
+-			    "alt=\"\" " .
+-		       "/>" . $post_white;
+-	} else {
+-		return "";
+-	}
+-}
+-
+-sub format_search_author {
+-	my ($author, $searchtype, $displaytext) = @_;
+-	my $have_search = gitweb_check_feature('search');
+-
+-	if ($have_search) {
+-		my $performed = "";
+-		if ($searchtype eq 'author') {
+-			$performed = "authored";
+-		} elsif ($searchtype eq 'committer') {
+-			$performed = "committed";
+-		}
+-
+-		return $cgi->a({-href => href(action=>"search", hash=>$hash,
+-				searchtext=>$author,
+-				searchtype=>$searchtype), class=>"list",
+-				title=>"Search for commits $performed by $author"},
+-				$displaytext);
+-
+-	} else {
+-		return $displaytext;
+-	}
+-}
+-
+-# format the author name of the given commit with the given tag
+-# the author name is chopped and escaped according to the other
+-# optional parameters (see chop_str).
+-sub format_author_html {
+-	my $tag = shift;
+-	my $co = shift;
+-	my $author = chop_and_escape_str($co->{'author_name'}, @_);
+-	return "<$tag class=\"author\">" .
+-	       format_search_author($co->{'author_name'}, "author",
+-		       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
+-		       $author) .
+-	       "</$tag>";
+-}
+-
+-# format git diff header line, i.e. "diff --(git|combined|cc) ..."
+-sub format_git_diff_header_line {
+-	my $line = shift;
+-	my $diffinfo = shift;
+-	my ($from, $to) = @_;
+-
+-	if ($diffinfo->{'nparents'}) {
+-		# combined diff
+-		$line =~ s!^(diff (.*?) )"?.*$!$1!;
+-		if ($to->{'href'}) {
+-			$line .= $cgi->a({-href => $to->{'href'}, -class => "path"},
+-			                 esc_path($to->{'file'}));
+-		} else { # file was deleted (no href)
+-			$line .= esc_path($to->{'file'});
+-		}
+-	} else {
+-		# "ordinary" diff
+-		$line =~ s!^(diff (.*?) )"?a/.*$!$1!;
+-		if ($from->{'href'}) {
+-			$line .= $cgi->a({-href => $from->{'href'}, -class => "path"},
+-			                 'a/' . esc_path($from->{'file'}));
+-		} else { # file was added (no href)
+-			$line .= 'a/' . esc_path($from->{'file'});
+-		}
+-		$line .= ' ';
+-		if ($to->{'href'}) {
+-			$line .= $cgi->a({-href => $to->{'href'}, -class => "path"},
+-			                 'b/' . esc_path($to->{'file'}));
+-		} else { # file was deleted
+-			$line .= 'b/' . esc_path($to->{'file'});
+-		}
+-	}
+-
+-	return "<div class=\"diff header\">$line</div>\n";
+-}
+-
+-# format extended diff header line, before patch itself
+-sub format_extended_diff_header_line {
+-	my $line = shift;
+-	my $diffinfo = shift;
+-	my ($from, $to) = @_;
+-
+-	# match <path>
+-	if ($line =~ s!^((copy|rename) from ).*$!$1! && $from->{'href'}) {
+-		$line .= $cgi->a({-href=>$from->{'href'}, -class=>"path"},
+-		                       esc_path($from->{'file'}));
+-	}
+-	if ($line =~ s!^((copy|rename) to ).*$!$1! && $to->{'href'}) {
+-		$line .= $cgi->a({-href=>$to->{'href'}, -class=>"path"},
+-		                 esc_path($to->{'file'}));
+-	}
+-	# match single <mode>
+-	if ($line =~ m/\s(\d{6})$/) {
+-		$line .= '<span class="info"> (' .
+-		         file_type_long($1) .
+-		         ')</span>';
+-	}
+-	# match <hash>
+-	if ($line =~ m/^index [0-9a-fA-F]{40},[0-9a-fA-F]{40}/) {
+-		# can match only for combined diff
+-		$line = 'index ';
+-		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
+-			if ($from->{'href'}[$i]) {
+-				$line .= $cgi->a({-href=>$from->{'href'}[$i],
+-				                  -class=>"hash"},
+-				                 substr($diffinfo->{'from_id'}[$i],0,7));
 -			} else {
--				$refs{$1} = [ $2 ];
+-				$line .= '0' x 7;
+-			}
+-			# separator
+-			$line .= ',' if ($i < $diffinfo->{'nparents'} - 1);
+-		}
+-		$line .= '..';
+-		if ($to->{'href'}) {
+-			$line .= $cgi->a({-href=>$to->{'href'}, -class=>"hash"},
+-			                 substr($diffinfo->{'to_id'},0,7));
+-		} else {
+-			$line .= '0' x 7;
+-		}
+-
+-	} elsif ($line =~ m/^index [0-9a-fA-F]{40}..[0-9a-fA-F]{40}/) {
+-		# can match only for ordinary diff
+-		my ($from_link, $to_link);
+-		if ($from->{'href'}) {
+-			$from_link = $cgi->a({-href=>$from->{'href'}, -class=>"hash"},
+-			                     substr($diffinfo->{'from_id'},0,7));
+-		} else {
+-			$from_link = '0' x 7;
+-		}
+-		if ($to->{'href'}) {
+-			$to_link = $cgi->a({-href=>$to->{'href'}, -class=>"hash"},
+-			                   substr($diffinfo->{'to_id'},0,7));
+-		} else {
+-			$to_link = '0' x 7;
+-		}
+-		my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
+-		$line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
+-	}
+-
+-	return $line . "<br/>\n";
+-}
+-
+-# format from-file/to-file diff header
+-sub format_diff_from_to_header {
+-	my ($from_line, $to_line, $diffinfo, $from, $to, @parents) = @_;
+-	my $line;
+-	my $result = '';
+-
+-	$line = $from_line;
+-	#assert($line =~ m/^---/) if DEBUG;
+-	# no extra formatting for "^--- /dev/null"
+-	if (! $diffinfo->{'nparents'}) {
+-		# ordinary (single parent) diff
+-		if ($line =~ m!^--- "?a/!) {
+-			if ($from->{'href'}) {
+-				$line = '--- a/' .
+-				        $cgi->a({-href=>$from->{'href'}, -class=>"path"},
+-				                esc_path($from->{'file'}));
+-			} else {
+-				$line = '--- a/' .
+-				        esc_path($from->{'file'});
 -			}
 -		}
+-		$result .= qq!<div class="diff from_file">$line</div>\n!;
+-
+-	} else {
+-		# combined diff (merge commit)
+-		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
+-			if ($from->{'href'}[$i]) {
+-				$line = '--- ' .
+-				        $cgi->a({-href=>href(action=>"blobdiff",
+-				                             hash_parent=>$diffinfo->{'from_id'}[$i],
+-				                             hash_parent_base=>$parents[$i],
+-				                             file_parent=>$from->{'file'}[$i],
+-				                             hash=>$diffinfo->{'to_id'},
+-				                             hash_base=>$hash,
+-				                             file_name=>$to->{'file'}),
+-				                 -class=>"path",
+-				                 -title=>"diff" . ($i+1)},
+-				                $i+1) .
+-				        '/' .
+-				        $cgi->a({-href=>$from->{'href'}[$i], -class=>"path"},
+-				                esc_path($from->{'file'}[$i]));
+-			} else {
+-				$line = '--- /dev/null';
+-			}
+-			$result .= qq!<div class="diff from_file">$line</div>\n!;
+-		}
 -	}
--	close $fd or return;
--	return \%refs;
+-
+-	$line = $to_line;
+-	#assert($line =~ m/^\+\+\+/) if DEBUG;
+-	# no extra formatting for "^+++ /dev/null"
+-	if ($line =~ m!^\+\+\+ "?b/!) {
+-		if ($to->{'href'}) {
+-			$line = '+++ b/' .
+-			        $cgi->a({-href=>$to->{'href'}, -class=>"path"},
+-			                esc_path($to->{'file'}));
+-		} else {
+-			$line = '+++ b/' .
+-			        esc_path($to->{'file'});
+-		}
+-	}
+-	$result .= qq!<div class="diff to_file">$line</div>\n!;
+-
+-	return $result;
 -}
 -
--sub git_get_rev_name_tags {
--	my $hash = shift || return undef;
+-# create note for patch simplified by combined diff
+-sub format_diff_cc_simplified {
+-	my ($diffinfo, @parents) = @_;
+-	my $result = '';
 -
--	open my $fd, "-|", git_cmd(), "name-rev", "--tags", $hash
--		or return;
--	my $name_rev = <$fd>;
--	close $fd;
--
--	if ($name_rev =~ m|^$hash tags/(.*)$|) {
--		return $1;
+-	$result .= "<div class=\"diff header\">" .
+-	           "diff --cc ";
+-	if (!is_deleted($diffinfo)) {
+-		$result .= $cgi->a({-href => href(action=>"blob",
+-		                                  hash_base=>$hash,
+-		                                  hash=>$diffinfo->{'to_id'},
+-		                                  file_name=>$diffinfo->{'to_file'}),
+-		                    -class => "path"},
+-		                   esc_path($diffinfo->{'to_file'}));
 -	} else {
--		# catches also '$hash undefined' output
+-		$result .= esc_path($diffinfo->{'to_file'});
+-	}
+-	$result .= "</div>\n" . # class="diff header"
+-	           "<div class=\"diff nodifferences\">" .
+-	           "Simple merge" .
+-	           "</div>\n"; # class="diff nodifferences"
+-
+-	return $result;
+-}
+-
+-# format patch (diff) line (not to be used for diff headers)
+-sub format_diff_line {
+-	my $line = shift;
+-	my ($from, $to) = @_;
+-	my $diff_class = "";
+-
+-	chomp $line;
+-
+-	if ($from && $to && ref($from->{'href'}) eq "ARRAY") {
+-		# combined diff
+-		my $prefix = substr($line, 0, scalar @{$from->{'href'}});
+-		if ($line =~ m/^\@{3}/) {
+-			$diff_class = " chunk_header";
+-		} elsif ($line =~ m/^\\/) {
+-			$diff_class = " incomplete";
+-		} elsif ($prefix =~ tr/+/+/) {
+-			$diff_class = " add";
+-		} elsif ($prefix =~ tr/-/-/) {
+-			$diff_class = " rem";
+-		}
+-	} else {
+-		# assume ordinary diff
+-		my $char = substr($line, 0, 1);
+-		if ($char eq '+') {
+-			$diff_class = " add";
+-		} elsif ($char eq '-') {
+-			$diff_class = " rem";
+-		} elsif ($char eq '@') {
+-			$diff_class = " chunk_header";
+-		} elsif ($char eq "\\") {
+-			$diff_class = " incomplete";
+-		}
+-	}
+-	$line = untabify($line);
+-	if ($from && $to && $line =~ m/^\@{2} /) {
+-		my ($from_text, $from_start, $from_lines, $to_text, $to_start, $to_lines, $section) =
+-			$line =~ m/^\@{2} (-(\d+)(?:,(\d+))?) (\+(\d+)(?:,(\d+))?) \@{2}(.*)$/;
+-
+-		$from_lines = 0 unless defined $from_lines;
+-		$to_lines   = 0 unless defined $to_lines;
+-
+-		if ($from->{'href'}) {
+-			$from_text = $cgi->a({-href=>"$from->{'href'}#l$from_start",
+-			                     -class=>"list"}, $from_text);
+-		}
+-		if ($to->{'href'}) {
+-			$to_text   = $cgi->a({-href=>"$to->{'href'}#l$to_start",
+-			                     -class=>"list"}, $to_text);
+-		}
+-		$line = "<span class=\"chunk_info\">@@ $from_text $to_text @@</span>" .
+-		        "<span class=\"section\">" . esc_html($section, -nbsp=>1) . "</span>";
+-		return "<div class=\"diff$diff_class\">$line</div>\n";
+-	} elsif ($from && $to && $line =~ m/^\@{3}/) {
+-		my ($prefix, $ranges, $section) = $line =~ m/^(\@+) (.*?) \@+(.*)$/;
+-		my (@from_text, @from_start, @from_nlines, $to_text, $to_start, $to_nlines);
+-
+-		@from_text = split(' ', $ranges);
+-		for (my $i = 0; $i < @from_text; ++$i) {
+-			($from_start[$i], $from_nlines[$i]) =
+-				(split(',', substr($from_text[$i], 1)), 0);
+-		}
+-
+-		$to_text   = pop @from_text;
+-		$to_start  = pop @from_start;
+-		$to_nlines = pop @from_nlines;
+-
+-		$line = "<span class=\"chunk_info\">$prefix ";
+-		for (my $i = 0; $i < @from_text; ++$i) {
+-			if ($from->{'href'}[$i]) {
+-				$line .= $cgi->a({-href=>"$from->{'href'}[$i]#l$from_start[$i]",
+-				                  -class=>"list"}, $from_text[$i]);
+-			} else {
+-				$line .= $from_text[$i];
+-			}
+-			$line .= " ";
+-		}
+-		if ($to->{'href'}) {
+-			$line .= $cgi->a({-href=>"$to->{'href'}#l$to_start",
+-			                  -class=>"list"}, $to_text);
+-		} else {
+-			$line .= $to_text;
+-		}
+-		$line .= " $prefix</span>" .
+-		         "<span class=\"section\">" . esc_html($section, -nbsp=>1) . "</span>";
+-		return "<div class=\"diff$diff_class\">$line</div>\n";
+-	}
+-	return "<div class=\"diff$diff_class\">" . esc_html($line, -nbsp=>1) . "</div>\n";
+-}
+-
+-# Generates undef or something like "_snapshot_" or "snapshot (_tbz2_ _zip_)",
+-# linked.  Pass the hash of the tree/commit to snapshot.
+-sub format_snapshot_links {
+-	my ($hash) = @_;
+-	my $num_fmts = @snapshot_fmts;
+-	if ($num_fmts > 1) {
+-		# A parenthesized list of links bearing format names.
+-		# e.g. "snapshot (_tar.gz_ _zip_)"
+-		return "snapshot (" . join(' ', map
+-			$cgi->a({
+-				-href => href(
+-					action=>"snapshot",
+-					hash=>$hash,
+-					snapshot_format=>$_
+-				)
+-			}, $known_snapshot_formats{$_}{'display'})
+-		, @snapshot_fmts) . ")";
+-	} elsif ($num_fmts == 1) {
+-		# A single "snapshot" link whose tooltip bears the format name.
+-		# i.e. "_snapshot_"
+-		my ($fmt) = @snapshot_fmts;
+-		return
+-			$cgi->a({
+-				-href => href(
+-					action=>"snapshot",
+-					hash=>$hash,
+-					snapshot_format=>$fmt
+-				),
+-				-title => "in format: $known_snapshot_formats{$fmt}{'display'}"
+-			}, "snapshot");
+-	} else { # $num_fmts == 0
 -		return undef;
 -	}
 -}
@@ -281,731 +628,546 @@ index 909dd81..a3de63e 100755
  ## parse to hash functions
  
  sub parse_date {
-@@ -1599,231 +1442,6 @@ sub parse_from_to_diffinfo {
- }
- 
- ## ......................................................................
--## parse to array of hashes functions
--
--sub git_get_heads_list {
--	my $limit = shift;
--	my @headslist;
--
--	open my $fd, '-|', git_cmd(), 'for-each-ref',
--		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
--		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
--		'refs/heads'
--		or return;
--	while (my $line = <$fd>) {
--		my %ref_item;
--
--		chomp $line;
--		my ($refinfo, $committerinfo) = split(/\0/, $line);
--		my ($hash, $name, $title) = split(' ', $refinfo, 3);
--		my ($committer, $epoch, $tz) =
--			($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
--		$ref_item{'fullname'}  = $name;
--		$name =~ s!^refs/heads/!!;
--
--		$ref_item{'name'}  = $name;
--		$ref_item{'id'}    = $hash;
--		$ref_item{'title'} = $title || '(no commit message)';
--		$ref_item{'epoch'} = $epoch;
--		if ($epoch) {
--			$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
--		} else {
--			$ref_item{'age'} = "unknown";
--		}
--
--		push @headslist, \%ref_item;
--	}
--	close $fd;
--
--	return wantarray ? @headslist : \@headslist;
--}
--
--sub git_get_tags_list {
--	my $limit = shift;
--	my @tagslist;
--
--	open my $fd, '-|', git_cmd(), 'for-each-ref',
--		($limit ? '--count='.($limit+1) : ()), '--sort=-creatordate',
--		'--format=%(objectname) %(objecttype) %(refname) '.
--		'%(*objectname) %(*objecttype) %(subject)%00%(creator)',
--		'refs/tags'
--		or return;
--	while (my $line = <$fd>) {
--		my %ref_item;
--
--		chomp $line;
--		my ($refinfo, $creatorinfo) = split(/\0/, $line);
--		my ($id, $type, $name, $refid, $reftype, $title) = split(' ', $refinfo, 6);
--		my ($creator, $epoch, $tz) =
--			($creatorinfo =~ /^(.*) ([0-9]+) (.*)$/);
--		$ref_item{'fullname'} = $name;
--		$name =~ s!^refs/tags/!!;
--
--		$ref_item{'type'} = $type;
--		$ref_item{'id'} = $id;
--		$ref_item{'name'} = $name;
--		if ($type eq "tag") {
--			$ref_item{'subject'} = $title;
--			$ref_item{'reftype'} = $reftype;
--			$ref_item{'refid'}   = $refid;
--		} else {
--			$ref_item{'reftype'} = $type;
--			$ref_item{'refid'}   = $id;
--		}
--
--		if ($type eq "tag" || $type eq "commit") {
--			$ref_item{'epoch'} = $epoch;
--			if ($epoch) {
--				$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
--			} else {
--				$ref_item{'age'} = "unknown";
--			}
--		}
--
--		push @tagslist, \%ref_item;
--	}
--	close $fd;
--
--	return wantarray ? @tagslist : \@tagslist;
--}
--
--## ......................................................................
--## mimetype related functions
--
--sub mimetype_guess_file {
--	my $filename = shift;
--	my $mimemap = shift;
--	-r $mimemap or return undef;
--
--	my %mimemap;
--	open(my $mh, '<', $mimemap) or return undef;
--	while (<$mh>) {
--		next if m/^#/; # skip comments
--		my ($mimetype, $exts) = split(/\t+/);
--		if (defined $exts) {
--			my @exts = split(/\s+/, $exts);
--			foreach my $ext (@exts) {
--				$mimemap{$ext} = $mimetype;
--			}
--		}
--	}
--	close($mh);
--
--	$filename =~ /\.([^.]*)$/;
--	return $mimemap{$1};
--}
--
--sub mimetype_guess {
--	my $filename = shift;
--	my $mime;
--	$filename =~ /\./ or return undef;
--
--	if ($mimetypes_file) {
--		my $file = $mimetypes_file;
--		if ($file !~ m!^/!) { # if it is relative path
--			# it is relative to project
--			$file = "$projectroot/$project/$file";
--		}
--		$mime = mimetype_guess_file($filename, $file);
--	}
--	$mime ||= mimetype_guess_file($filename, '/etc/mime.types');
--	return $mime;
--}
--
--sub blob_mimetype {
--	my $fd = shift;
--	my $filename = shift;
--
--	if ($filename) {
--		my $mime = mimetype_guess($filename);
--		$mime and return $mime;
--	}
--
--	# just in case
--	return $default_blob_plain_mimetype unless $fd;
--
--	if (-T $fd) {
--		return 'text/plain';
--	} elsif (! $filename) {
--		return 'application/octet-stream';
--	} elsif ($filename =~ m/\.png$/i) {
--		return 'image/png';
--	} elsif ($filename =~ m/\.gif$/i) {
--		return 'image/gif';
--	} elsif ($filename =~ m/\.jpe?g$/i) {
--		return 'image/jpeg';
--	} else {
--		return 'application/octet-stream';
--	}
--}
--
--sub blob_contenttype {
--	my ($fd, $file_name, $type) = @_;
--
--	$type ||= blob_mimetype($fd, $file_name);
--	if ($type eq 'text/plain' && defined $default_text_plain_charset) {
--		$type .= "; charset=$default_text_plain_charset";
--	}
--
--	return $type;
--}
--
--# guess file syntax for syntax highlighting; return undef if no highlighting
--# the name of syntax can (in the future) depend on syntax highlighter used
--sub guess_file_syntax {
--	my ($highlight, $mimetype, $file_name) = @_;
--	return undef unless ($highlight && defined $file_name);
--
--	# configuration for 'highlight' (http://www.andre-simon.de/)
--	# match by basename
--	my %highlight_basename = (
--		#'Program' => 'py',
--		#'Library' => 'py',
--		'SConstruct' => 'py', # SCons equivalent of Makefile
--		'Makefile' => 'make',
--	);
--	# match by extension
--	my %highlight_ext = (
--		# main extensions, defining name of syntax;
--		# see files in /usr/share/highlight/langDefs/ directory
--		map { $_ => $_ }
--			qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl),
--		# alternate extensions, see /etc/highlight/filetypes.conf
--		'h' => 'c',
--		map { $_ => 'cpp' } qw(cxx c++ cc),
--		map { $_ => 'php' } qw(php3 php4),
--		map { $_ => 'pl'  } qw(perl pm), # perhaps also 'cgi'
--		'mak' => 'make',
--		map { $_ => 'xml' } qw(xhtml html htm),
--	);
--
--	my $basename = basename($file_name, '.in');
--	return $highlight_basename{$basename}
--		if exists $highlight_basename{$basename};
--
--	$basename =~ /\.([^.]*)$/;
--	my $ext = $1 or return undef;
--	return $highlight_ext{$ext}
--		if exists $highlight_ext{$ext};
--
--	return undef;
--}
--
--# run highlighter and return FD of its output,
--# or return original FD if no highlighting
--sub run_highlighter {
--	my ($fd, $highlight, $syntax) = @_;
--	return $fd unless ($highlight && defined $syntax);
--
--	close $fd
--		or die_error(404, "Reading blob failed");
--	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
--	          "highlight --xhtml --fragment --syntax $syntax |"
--		or die_error(500, "Couldn't open file or run syntax highlighter");
--	return $fd;
--}
--
--## ......................................................................
- ## functions printing or outputting HTML: div
- 
- # Outputs the author name and date in long form
-@@ -1922,42 +1540,6 @@ sub git_print_log {
- ## ......................................................................
- ## functions printing large fragments of HTML
- 
--# get pre-image filenames for merge (combined) diff
--sub fill_from_file_info {
--	my ($diff, @parents) = @_;
--
--	$diff->{'from_file'} = [ ];
--	$diff->{'from_file'}[$diff->{'nparents'} - 1] = undef;
--	for (my $i = 0; $i < $diff->{'nparents'}; $i++) {
--		if ($diff->{'status'}[$i] eq 'R' ||
--		    $diff->{'status'}[$i] eq 'C') {
--			$diff->{'from_file'}[$i] =
--				git_get_path_by_hash($parents[$i], $diff->{'from_id'}[$i]);
--		}
--	}
--
--	return $diff;
--}
--
--# is current raw difftree line of file deletion
--sub is_deleted {
--	my $diffinfo = shift;
--
--	return $diffinfo->{'to_id'} eq ('0' x 40);
--}
--
--# does patch correspond to [previous] difftree raw line
--# $diffinfo  - hashref of parsed raw diff format
--# $patchinfo - hashref of parsed patch diff format
--#              (the same keys as in $diffinfo)
--sub is_patch_split {
--	my ($diffinfo, $patchinfo) = @_;
--
--	return defined $diffinfo && defined $patchinfo
--		&& $diffinfo->{'to_file'} eq $patchinfo->{'to_file'};
--}
--
--
- sub git_difftree_body {
- 	my ($difftree, $hash, @parents) = @_;
- 	my ($parent) = $parents[0];
-diff --git a/gitweb/lib/Gitweb/Util.pm b/gitweb/lib/Gitweb/Util.pm
+diff --git a/gitweb/lib/Gitweb/Format.pm b/gitweb/lib/Gitweb/Format.pm
 new file mode 100644
-index 0000000..4d0f5d8
+index 0000000..dc535bd
 --- /dev/null
-+++ b/gitweb/lib/Gitweb/Util.pm
-@@ -0,0 +1,447 @@
++++ b/gitweb/lib/Gitweb/Format.pm
+@@ -0,0 +1,537 @@
 +#!/usr/bin/perl
 +#
-+# Gitweb::Util -- gitweb's utility function subs package
++# Gitweb::Format -- gitweb's format_* subs package
 +#
 +# This program is licensed under the GPLv2
 +
-+package Gitweb::Util;
++package Gitweb::Format;
 +
 +use strict;
 +use warnings;
 +use Exporter qw(import);
 +
-+our @EXPORT = qw(guess_file_syntax run_highlighter git_get_head_hash git_get_hash
-+                 git_get_full_hash git_get_short_hash git_get_type git_get_hash_by_path
-+                 git_get_path_by_hash git_get_last_activity git_get_references
-+                 git_get_rev_name_tags git_get_heads_list git_get_tags_list blob_mimetype
-+                 blob_contenttype fill_from_file_info is_deleted is_patch_split);
++our @EXPORT = qw(format_log_line_html format_ref_marker format_subject_html
++                 git_get_avatar format_search_author format_author_html
++                 format_git_diff_header_line format_extended_diff_header_line
++                 format_diff_from_to_header format_diff_cc_simplified
++                 format_diff_line format_snapshot_links);
 +
-+use File::Basename qw(basename);
-+use Gitweb::Git qw(git_cmd $git_dir quote_command);
-+use Gitweb::Config qw($projectroot $mimetypes_file $default_text_plain_charset
-+                      $default_blob_plain_mimetype);
-+use Gitweb::Request qw($project $hash);
-+use Gitweb::View qw(die_error age_string);
++use Gitweb::Config qw($git_avatar gitweb_check_feature @snapshot_fmts
++                      %known_snapshot_formats %avatar_size);
++use Gitweb::Request qw($cgi $action $hash);
++use Gitweb::Escape qw(to_utf8 esc_html esc_path untabify);
++use Gitweb::View qw(href chop_and_escape_str file_type_long);
++use Gitweb::Util qw(is_deleted);
 +
 +## ----------------------------------------------------------------------
-+## git utility subroutines, invoking git commands
++## functions returning short HTML fragments, or transforming HTML fragments
++## which don't belong to other sections
 +
-+# get HEAD ref of given project as hash
-+sub git_get_head_hash {
-+	return git_get_full_hash(shift, 'HEAD');
++# format line of commit message.
++sub format_log_line_html {
++	my $line = shift;
++
++	$line = esc_html($line, -nbsp=>1);
++	$line =~ s{\b([0-9a-fA-F]{8,40})\b}{
++		$cgi->a({-href => href(action=>"object", hash=>$1),
++					-class => "text"}, $1);
++	}eg;
++
++	return $line;
 +}
 +
-+sub git_get_full_hash {
-+	return git_get_hash(@_);
-+}
++# format marker of refs pointing to given object
 +
-+sub git_get_short_hash {
-+	return git_get_hash(@_, '--short=7');
-+}
++# the destination action is chosen based on object type and current context:
++# - for annotated tags, we choose the tag view unless it's the current view
++#   already, in which case we go to shortlog view
++# - for other refs, we keep the current view if we're in history, shortlog or
++#   log view, and select shortlog otherwise
++sub format_ref_marker {
++	my ($refs, $id) = @_;
++	my $markers = '';
 +
-+sub git_get_hash {
-+	my ($project, $hash, @options) = @_;
-+	my $o_git_dir = $git_dir;
-+	my $retval = undef;
-+	$git_dir = "$projectroot/$project";
-+	if (open my $fd, '-|', git_cmd(), 'rev-parse',
-+	    '--verify', '-q', @options, $hash) {
-+		$retval = <$fd>;
-+		chomp $retval if defined $retval;
-+		close $fd;
-+	}
-+	if (defined $o_git_dir) {
-+		$git_dir = $o_git_dir;
-+	}
-+	return $retval;
-+}
-+
-+# get type of given object
-+sub git_get_type {
-+	my $hash = shift;
-+
-+	open my $fd, "-|", git_cmd(), "cat-file", '-t', $hash or return;
-+	my $type = <$fd>;
-+	close $fd or return;
-+	chomp $type;
-+	return $type;
-+}
-+
-+# get hash of given path at given ref
-+sub git_get_hash_by_path {
-+	my $base = shift;
-+	my $path = shift || return undef;
-+	my $type = shift;
-+
-+	$path =~ s,/+$,,;
-+
-+	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
-+		or die_error(500, "Open git-ls-tree failed");
-+	my $line = <$fd>;
-+	close $fd or return undef;
-+
-+	if (!defined $line) {
-+		# there is no tree or hash given by $path at $base
-+		return undef;
-+	}
-+
-+	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
-+	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/;
-+	if (defined $type && $type ne $2) {
-+		# type doesn't match
-+		return undef;
-+	}
-+	return $3;
-+}
-+
-+# get path of entry with given hash at given tree-ish (ref)
-+# used to get 'from' filename for combined diff (merge commit) for renames
-+sub git_get_path_by_hash {
-+	my $base = shift || return;
-+	my $hash = shift || return;
-+
-+	local $/ = "\0";
-+
-+	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z', $base
-+		or return undef;
-+	while (my $line = <$fd>) {
-+		chomp $line;
-+
-+		#'040000 tree 595596a6a9117ddba9fe379b6b012b558bac8423	gitweb'
-+		#'100644 blob e02e90f0429be0d2a69b76571101f20b8f75530f	gitweb/README'
-+		if ($line =~ m/(?:[0-9]+) (?:.+) $hash\t(.+)$/) {
-+			close $fd;
-+			return $1;
-+		}
-+	}
-+	close $fd;
-+	return undef;
-+}
-+
-+## ......................................................................
-+## git utility functions, directly accessing git repository
-+
-+sub git_get_last_activity {
-+	my ($path) = @_;
-+	my $fd;
-+
-+	$git_dir = "$projectroot/$path";
-+	open($fd, "-|", git_cmd(), 'for-each-ref',
-+	     '--format=%(committer)',
-+	     '--sort=-committerdate',
-+	     '--count=1',
-+	     'refs/heads') or return;
-+	my $most_recent = <$fd>;
-+	close $fd or return;
-+	if (defined $most_recent &&
-+	    $most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
-+		my $timestamp = $1;
-+		my $age = time - $timestamp;
-+		return ($age, age_string($age));
-+	}
-+	return (undef, undef);
-+}
-+
-+sub git_get_references {
-+	my $type = shift || "";
-+	my %refs;
-+	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
-+	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
-+	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
-+		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
-+		or return;
-+
-+	while (my $line = <$fd>) {
-+		chomp $line;
-+		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type.*)$!) {
-+			if (defined $refs{$1}) {
-+				push @{$refs{$1}}, $2;
++	if (defined $refs->{$id}) {
++		foreach my $ref (@{$refs->{$id}}) {
++			# this code exploits the fact that non-lightweight tags are the
++			# only indirect objects, and that they are the only objects for which
++			# we want to use tag instead of shortlog as action
++			my ($type, $name) = qw();
++			my $indirect = ($ref =~ s/\^\{\}$//);
++			# e.g. tags/v2.6.11 or heads/next
++			if ($ref =~ m!^(.*?)s?/(.*)$!) {
++				$type = $1;
++				$name = $2;
 +			} else {
-+				$refs{$1} = [ $2 ];
++				$type = "ref";
++				$name = $ref;
 +			}
++
++			my $class = $type;
++			$class .= " indirect" if $indirect;
++
++			my $dest_action = "shortlog";
++
++			if ($indirect) {
++				$dest_action = "tag" unless $action eq "tag";
++			} elsif ($action =~ /^(history|(short)?log)$/) {
++				$dest_action = $action;
++			}
++
++			my $dest = "";
++			$dest .= "refs/" unless $ref =~ m!^refs/!;
++			$dest .= $ref;
++
++			my $link = $cgi->a({
++				-href => href(
++					action=>$dest_action,
++					hash=>$dest
++				)}, $name);
++
++			$markers .= " <span class=\"$class\" title=\"$ref\">" .
++				$link . "</span>";
 +		}
 +	}
-+	close $fd or return;
-+	return \%refs;
-+}
 +
-+sub git_get_rev_name_tags {
-+	my $hash = shift || return undef;
-+
-+	open my $fd, "-|", git_cmd(), "name-rev", "--tags", $hash
-+		or return;
-+	my $name_rev = <$fd>;
-+	close $fd;
-+
-+	if ($name_rev =~ m|^$hash tags/(.*)$|) {
-+		return $1;
++	if ($markers) {
++		return ' <span class="refs">'. $markers . '</span>';
 +	} else {
-+		# catches also '$hash undefined' output
-+		return undef;
++		return "";
 +	}
 +}
 +
-+## ......................................................................
-+## parse to array of hashes functions
++# format, perhaps shortened and with markers, title line
++sub format_subject_html {
++	my ($long, $short, $href, $extra) = @_;
++	$extra = '' unless defined($extra);
 +
-+sub git_get_heads_list {
-+	my $limit = shift;
-+	my @headslist;
-+
-+	open my $fd, '-|', git_cmd(), 'for-each-ref',
-+		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
-+		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
-+		'refs/heads'
-+		or return;
-+	while (my $line = <$fd>) {
-+		my %ref_item;
-+
-+		chomp $line;
-+		my ($refinfo, $committerinfo) = split(/\0/, $line);
-+		my ($hash, $name, $title) = split(' ', $refinfo, 3);
-+		my ($committer, $epoch, $tz) =
-+			($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
-+		$ref_item{'fullname'}  = $name;
-+		$name =~ s!^refs/heads/!!;
-+
-+		$ref_item{'name'}  = $name;
-+		$ref_item{'id'}    = $hash;
-+		$ref_item{'title'} = $title || '(no commit message)';
-+		$ref_item{'epoch'} = $epoch;
-+		if ($epoch) {
-+			$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
-+		} else {
-+			$ref_item{'age'} = "unknown";
-+		}
-+
-+		push @headslist, \%ref_item;
-+	}
-+	close $fd;
-+
-+	return wantarray ? @headslist : \@headslist;
-+}
-+
-+sub git_get_tags_list {
-+	my $limit = shift;
-+	my @tagslist;
-+
-+	open my $fd, '-|', git_cmd(), 'for-each-ref',
-+		($limit ? '--count='.($limit+1) : ()), '--sort=-creatordate',
-+		'--format=%(objectname) %(objecttype) %(refname) '.
-+		'%(*objectname) %(*objecttype) %(subject)%00%(creator)',
-+		'refs/tags'
-+		or return;
-+	while (my $line = <$fd>) {
-+		my %ref_item;
-+
-+		chomp $line;
-+		my ($refinfo, $creatorinfo) = split(/\0/, $line);
-+		my ($id, $type, $name, $refid, $reftype, $title) = split(' ', $refinfo, 6);
-+		my ($creator, $epoch, $tz) =
-+			($creatorinfo =~ /^(.*) ([0-9]+) (.*)$/);
-+		$ref_item{'fullname'} = $name;
-+		$name =~ s!^refs/tags/!!;
-+
-+		$ref_item{'type'} = $type;
-+		$ref_item{'id'} = $id;
-+		$ref_item{'name'} = $name;
-+		if ($type eq "tag") {
-+			$ref_item{'subject'} = $title;
-+			$ref_item{'reftype'} = $reftype;
-+			$ref_item{'refid'}   = $refid;
-+		} else {
-+			$ref_item{'reftype'} = $type;
-+			$ref_item{'refid'}   = $id;
-+		}
-+
-+		if ($type eq "tag" || $type eq "commit") {
-+			$ref_item{'epoch'} = $epoch;
-+			if ($epoch) {
-+				$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
-+			} else {
-+				$ref_item{'age'} = "unknown";
-+			}
-+		}
-+
-+		push @tagslist, \%ref_item;
-+	}
-+	close $fd;
-+
-+	return wantarray ? @tagslist : \@tagslist;
-+}
-+
-+## ......................................................................
-+## mimetype related functions
-+
-+sub mimetype_guess_file {
-+	my $filename = shift;
-+	my $mimemap = shift;
-+	-r $mimemap or return undef;
-+
-+	my %mimemap;
-+	open(my $mh, '<', $mimemap) or return undef;
-+	while (<$mh>) {
-+		next if m/^#/; # skip comments
-+		my ($mimetype, $exts) = split(/\t+/);
-+		if (defined $exts) {
-+			my @exts = split(/\s+/, $exts);
-+			foreach my $ext (@exts) {
-+				$mimemap{$ext} = $mimetype;
-+			}
-+		}
-+	}
-+	close($mh);
-+
-+	$filename =~ /\.([^.]*)$/;
-+	return $mimemap{$1};
-+}
-+
-+sub mimetype_guess {
-+	my $filename = shift;
-+	my $mime;
-+	$filename =~ /\./ or return undef;
-+
-+	if ($mimetypes_file) {
-+		my $file = $mimetypes_file;
-+		if ($file !~ m!^/!) { # if it is relative path
-+			# it is relative to project
-+			$file = "$projectroot/$project/$file";
-+		}
-+		$mime = mimetype_guess_file($filename, $file);
-+	}
-+	$mime ||= mimetype_guess_file($filename, '/etc/mime.types');
-+	return $mime;
-+}
-+
-+sub blob_mimetype {
-+	my $fd = shift;
-+	my $filename = shift;
-+
-+	if ($filename) {
-+		my $mime = mimetype_guess($filename);
-+		$mime and return $mime;
-+	}
-+
-+	# just in case
-+	return $default_blob_plain_mimetype unless $fd;
-+
-+	if (-T $fd) {
-+		return 'text/plain';
-+	} elsif (! $filename) {
-+		return 'application/octet-stream';
-+	} elsif ($filename =~ m/\.png$/i) {
-+		return 'image/png';
-+	} elsif ($filename =~ m/\.gif$/i) {
-+		return 'image/gif';
-+	} elsif ($filename =~ m/\.jpe?g$/i) {
-+		return 'image/jpeg';
++	if (length($short) < length($long)) {
++		$long =~ s/[[:cntrl:]]/?/g;
++		return $cgi->a({-href => $href, -class => "list subject",
++		                -title => to_utf8($long)},
++		       esc_html($short)) . $extra;
 +	} else {
-+		return 'application/octet-stream';
++		return $cgi->a({-href => $href, -class => "list subject"},
++		       esc_html($long)) . $extra;
 +	}
 +}
 +
-+sub blob_contenttype {
-+	my ($fd, $file_name, $type) = @_;
++# Rather than recomputing the url for an email multiple times, we cache it
++# after the first hit. This gives a visible benefit in views where the avatar
++# for the same email is used repeatedly (e.g. shortlog).
++# The cache is shared by all avatar engines (currently gravatar only), which
++# are free to use it as preferred. Since only one avatar engine is used for any
++# given page, there's no risk for cache conflicts.
++our %avatar_cache = ();
 +
-+	$type ||= blob_mimetype($fd, $file_name);
-+	if ($type eq 'text/plain' && defined $default_text_plain_charset) {
-+		$type .= "; charset=$default_text_plain_charset";
++# Compute the picon url for a given email, by using the picon search service over at
++# http://www.cs.indiana.edu/picons/search.html
++sub picon_url {
++	my $email = lc shift;
++	if (!$avatar_cache{$email}) {
++		my ($user, $domain) = split('@', $email);
++		$avatar_cache{$email} =
++			"http://www.cs.indiana.edu/cgi-pub/kinzler/piconsearch.cgi/" .
++			"$domain/$user/" .
++			"users+domains+unknown/up/single";
 +	}
-+
-+	return $type;
++	return $avatar_cache{$email};
 +}
 +
-+# guess file syntax for syntax highlighting; return undef if no highlighting
-+# the name of syntax can (in the future) depend on syntax highlighter used
-+sub guess_file_syntax {
-+	my ($highlight, $mimetype, $file_name) = @_;
-+	return undef unless ($highlight && defined $file_name);
-+
-+	# configuration for 'highlight' (http://www.andre-simon.de/)
-+	# match by basename
-+	my %highlight_basename = (
-+		#'Program' => 'py',
-+		#'Library' => 'py',
-+		'SConstruct' => 'py', # SCons equivalent of Makefile
-+		'Makefile' => 'make',
-+	);
-+	# match by extension
-+	my %highlight_ext = (
-+		# main extensions, defining name of syntax;
-+		# see files in /usr/share/highlight/langDefs/ directory
-+		map { $_ => $_ }
-+			qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl),
-+		# alternate extensions, see /etc/highlight/filetypes.conf
-+		'h' => 'c',
-+		map { $_ => 'cpp' } qw(cxx c++ cc),
-+		map { $_ => 'php' } qw(php3 php4),
-+		map { $_ => 'pl'  } qw(perl pm), # perhaps also 'cgi'
-+		'mak' => 'make',
-+		map { $_ => 'xml' } qw(xhtml html htm),
-+	);
-+
-+	my $basename = basename($file_name, '.in');
-+	return $highlight_basename{$basename}
-+		if exists $highlight_basename{$basename};
-+
-+	$basename =~ /\.([^.]*)$/;
-+	my $ext = $1 or return undef;
-+	return $highlight_ext{$ext}
-+		if exists $highlight_ext{$ext};
-+
-+	return undef;
++# Compute the gravatar url for a given email, if it's not in the cache already.
++# Gravatar stores only the part of the URL before the size, since that's the
++# one computationally more expensive. This also allows reuse of the cache for
++# different sizes (for this particular engine).
++sub gravatar_url {
++	my $email = lc shift;
++	my $size = shift;
++	$avatar_cache{$email} ||=
++		"http://www.gravatar.com/avatar/" .
++			Digest::MD5::md5_hex($email) . "?s=";
++	return $avatar_cache{$email} . $size;
 +}
 +
-+# run highlighter and return FD of its output,
-+# or return original FD if no highlighting
-+sub run_highlighter {
-+	my ($fd, $highlight, $syntax) = @_;
-+	return $fd unless ($highlight && defined $syntax);
-+
-+	close $fd
-+		or die_error(404, "Reading blob failed");
-+	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
-+	          "highlight --xhtml --fragment --syntax $syntax |"
-+		or die_error(500, "Couldn't open file or run syntax highlighter");
-+	return $fd;
++# Insert an avatar for the given $email at the given $size if the feature
++# is enabled.
++sub git_get_avatar {
++	my ($email, %opts) = @_;
++	my $pre_white  = ($opts{-pad_before} ? "&nbsp;" : "");
++	my $post_white = ($opts{-pad_after}  ? "&nbsp;" : "");
++	$opts{-size} ||= 'default';
++	my $size = $avatar_size{$opts{-size}} || $avatar_size{'default'};
++	my $url = "";
++	if ($git_avatar eq 'gravatar') {
++		$url = gravatar_url($email, $size);
++	} elsif ($git_avatar eq 'picon') {
++		$url = picon_url($email);
++	}
++	# Other providers can be added by extending the if chain, defining $url
++	# as needed. If no variant puts something in $url, we assume avatars
++	# are completely disabled/unavailable.
++	if ($url) {
++		return $pre_white .
++		       "<img width=\"$size\" " .
++		            "class=\"avatar\" " .
++		            "src=\"$url\" " .
++			    "alt=\"\" " .
++		       "/>" . $post_white;
++	} else {
++		return "";
++	}
 +}
 +
-+## ......................................................................
-+## functions printing large fragments of HTML
++sub format_search_author {
++	my ($author, $searchtype, $displaytext) = @_;
++	my $have_search = gitweb_check_feature('search');
 +
-+# get pre-image filenames for merge (combined) diff
-+sub fill_from_file_info {
-+	my ($diff, @parents) = @_;
-+
-+	$diff->{'from_file'} = [ ];
-+	$diff->{'from_file'}[$diff->{'nparents'} - 1] = undef;
-+	for (my $i = 0; $i < $diff->{'nparents'}; $i++) {
-+		if ($diff->{'status'}[$i] eq 'R' ||
-+		    $diff->{'status'}[$i] eq 'C') {
-+			$diff->{'from_file'}[$i] =
-+				git_get_path_by_hash($parents[$i], $diff->{'from_id'}[$i]);
++	if ($have_search) {
++		my $performed = "";
++		if ($searchtype eq 'author') {
++			$performed = "authored";
++		} elsif ($searchtype eq 'committer') {
++			$performed = "committed";
 +		}
-+	}
 +
-+	return $diff;
++		return $cgi->a({-href => href(action=>"search", hash=>$hash,
++				searchtext=>$author,
++				searchtype=>$searchtype), class=>"list",
++				title=>"Search for commits $performed by $author"},
++				$displaytext);
++
++	} else {
++		return $displaytext;
++	}
 +}
 +
-+# is current raw difftree line of file deletion
-+sub is_deleted {
++# format the author name of the given commit with the given tag
++# the author name is chopped and escaped according to the other
++# optional parameters (see chop_str).
++sub format_author_html {
++	my $tag = shift;
++	my $co = shift;
++	my $author = chop_and_escape_str($co->{'author_name'}, @_);
++	return "<$tag class=\"author\">" .
++	       format_search_author($co->{'author_name'}, "author",
++		       git_get_avatar($co->{'author_email'}, -pad_after => 1) .
++		       $author) .
++	       "</$tag>";
++}
++
++# format git diff header line, i.e. "diff --(git|combined|cc) ..."
++sub format_git_diff_header_line {
++	my $line = shift;
 +	my $diffinfo = shift;
++	my ($from, $to) = @_;
 +
-+	return $diffinfo->{'to_id'} eq ('0' x 40);
++	if ($diffinfo->{'nparents'}) {
++		# combined diff
++		$line =~ s!^(diff (.*?) )"?.*$!$1!;
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href => $to->{'href'}, -class => "path"},
++			                 esc_path($to->{'file'}));
++		} else { # file was deleted (no href)
++			$line .= esc_path($to->{'file'});
++		}
++	} else {
++		# "ordinary" diff
++		$line =~ s!^(diff (.*?) )"?a/.*$!$1!;
++		if ($from->{'href'}) {
++			$line .= $cgi->a({-href => $from->{'href'}, -class => "path"},
++			                 'a/' . esc_path($from->{'file'}));
++		} else { # file was added (no href)
++			$line .= 'a/' . esc_path($from->{'file'});
++		}
++		$line .= ' ';
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href => $to->{'href'}, -class => "path"},
++			                 'b/' . esc_path($to->{'file'}));
++		} else { # file was deleted
++			$line .= 'b/' . esc_path($to->{'file'});
++		}
++	}
++
++	return "<div class=\"diff header\">$line</div>\n";
 +}
 +
-+# does patch correspond to [previous] difftree raw line
-+# $diffinfo  - hashref of parsed raw diff format
-+# $patchinfo - hashref of parsed patch diff format
-+#              (the same keys as in $diffinfo)
-+sub is_patch_split {
-+	my ($diffinfo, $patchinfo) = @_;
++# format extended diff header line, before patch itself
++sub format_extended_diff_header_line {
++	my $line = shift;
++	my $diffinfo = shift;
++	my ($from, $to) = @_;
 +
-+	return defined $diffinfo && defined $patchinfo
-+		&& $diffinfo->{'to_file'} eq $patchinfo->{'to_file'};
++	# match <path>
++	if ($line =~ s!^((copy|rename) from ).*$!$1! && $from->{'href'}) {
++		$line .= $cgi->a({-href=>$from->{'href'}, -class=>"path"},
++		                       esc_path($from->{'file'}));
++	}
++	if ($line =~ s!^((copy|rename) to ).*$!$1! && $to->{'href'}) {
++		$line .= $cgi->a({-href=>$to->{'href'}, -class=>"path"},
++		                 esc_path($to->{'file'}));
++	}
++	# match single <mode>
++	if ($line =~ m/\s(\d{6})$/) {
++		$line .= '<span class="info"> (' .
++		         file_type_long($1) .
++		         ')</span>';
++	}
++	# match <hash>
++	if ($line =~ m/^index [0-9a-fA-F]{40},[0-9a-fA-F]{40}/) {
++		# can match only for combined diff
++		$line = 'index ';
++		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
++			if ($from->{'href'}[$i]) {
++				$line .= $cgi->a({-href=>$from->{'href'}[$i],
++				                  -class=>"hash"},
++				                 substr($diffinfo->{'from_id'}[$i],0,7));
++			} else {
++				$line .= '0' x 7;
++			}
++			# separator
++			$line .= ',' if ($i < $diffinfo->{'nparents'} - 1);
++		}
++		$line .= '..';
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href=>$to->{'href'}, -class=>"hash"},
++			                 substr($diffinfo->{'to_id'},0,7));
++		} else {
++			$line .= '0' x 7;
++		}
++
++	} elsif ($line =~ m/^index [0-9a-fA-F]{40}..[0-9a-fA-F]{40}/) {
++		# can match only for ordinary diff
++		my ($from_link, $to_link);
++		if ($from->{'href'}) {
++			$from_link = $cgi->a({-href=>$from->{'href'}, -class=>"hash"},
++			                     substr($diffinfo->{'from_id'},0,7));
++		} else {
++			$from_link = '0' x 7;
++		}
++		if ($to->{'href'}) {
++			$to_link = $cgi->a({-href=>$to->{'href'}, -class=>"hash"},
++			                   substr($diffinfo->{'to_id'},0,7));
++		} else {
++			$to_link = '0' x 7;
++		}
++		my ($from_id, $to_id) = ($diffinfo->{'from_id'}, $diffinfo->{'to_id'});
++		$line =~ s!$from_id\.\.$to_id!$from_link..$to_link!;
++	}
++
++	return $line . "<br/>\n";
++}
++
++# format from-file/to-file diff header
++sub format_diff_from_to_header {
++	my ($from_line, $to_line, $diffinfo, $from, $to, @parents) = @_;
++	my $line;
++	my $result = '';
++
++	$line = $from_line;
++	#assert($line =~ m/^---/) if DEBUG;
++	# no extra formatting for "^--- /dev/null"
++	if (! $diffinfo->{'nparents'}) {
++		# ordinary (single parent) diff
++		if ($line =~ m!^--- "?a/!) {
++			if ($from->{'href'}) {
++				$line = '--- a/' .
++				        $cgi->a({-href=>$from->{'href'}, -class=>"path"},
++				                esc_path($from->{'file'}));
++			} else {
++				$line = '--- a/' .
++				        esc_path($from->{'file'});
++			}
++		}
++		$result .= qq!<div class="diff from_file">$line</div>\n!;
++
++	} else {
++		# combined diff (merge commit)
++		for (my $i = 0; $i < $diffinfo->{'nparents'}; $i++) {
++			if ($from->{'href'}[$i]) {
++				$line = '--- ' .
++				        $cgi->a({-href=>href(action=>"blobdiff",
++				                             hash_parent=>$diffinfo->{'from_id'}[$i],
++				                             hash_parent_base=>$parents[$i],
++				                             file_parent=>$from->{'file'}[$i],
++				                             hash=>$diffinfo->{'to_id'},
++				                             hash_base=>$hash,
++				                             file_name=>$to->{'file'}),
++				                 -class=>"path",
++				                 -title=>"diff" . ($i+1)},
++				                $i+1) .
++				        '/' .
++				        $cgi->a({-href=>$from->{'href'}[$i], -class=>"path"},
++				                esc_path($from->{'file'}[$i]));
++			} else {
++				$line = '--- /dev/null';
++			}
++			$result .= qq!<div class="diff from_file">$line</div>\n!;
++		}
++	}
++
++	$line = $to_line;
++	#assert($line =~ m/^\+\+\+/) if DEBUG;
++	# no extra formatting for "^+++ /dev/null"
++	if ($line =~ m!^\+\+\+ "?b/!) {
++		if ($to->{'href'}) {
++			$line = '+++ b/' .
++			        $cgi->a({-href=>$to->{'href'}, -class=>"path"},
++			                esc_path($to->{'file'}));
++		} else {
++			$line = '+++ b/' .
++			        esc_path($to->{'file'});
++		}
++	}
++	$result .= qq!<div class="diff to_file">$line</div>\n!;
++
++	return $result;
++}
++
++# create note for patch simplified by combined diff
++sub format_diff_cc_simplified {
++	my ($diffinfo, @parents) = @_;
++	my $result = '';
++
++	$result .= "<div class=\"diff header\">" .
++	           "diff --cc ";
++	if (!is_deleted($diffinfo)) {
++		$result .= $cgi->a({-href => href(action=>"blob",
++		                                  hash_base=>$hash,
++		                                  hash=>$diffinfo->{'to_id'},
++		                                  file_name=>$diffinfo->{'to_file'}),
++		                    -class => "path"},
++		                   esc_path($diffinfo->{'to_file'}));
++	} else {
++		$result .= esc_path($diffinfo->{'to_file'});
++	}
++	$result .= "</div>\n" . # class="diff header"
++	           "<div class=\"diff nodifferences\">" .
++	           "Simple merge" .
++	           "</div>\n"; # class="diff nodifferences"
++
++	return $result;
++}
++
++# format patch (diff) line (not to be used for diff headers)
++sub format_diff_line {
++	my $line = shift;
++	my ($from, $to) = @_;
++	my $diff_class = "";
++
++	chomp $line;
++
++	if ($from && $to && ref($from->{'href'}) eq "ARRAY") {
++		# combined diff
++		my $prefix = substr($line, 0, scalar @{$from->{'href'}});
++		if ($line =~ m/^\@{3}/) {
++			$diff_class = " chunk_header";
++		} elsif ($line =~ m/^\\/) {
++			$diff_class = " incomplete";
++		} elsif ($prefix =~ tr/+/+/) {
++			$diff_class = " add";
++		} elsif ($prefix =~ tr/-/-/) {
++			$diff_class = " rem";
++		}
++	} else {
++		# assume ordinary diff
++		my $char = substr($line, 0, 1);
++		if ($char eq '+') {
++			$diff_class = " add";
++		} elsif ($char eq '-') {
++			$diff_class = " rem";
++		} elsif ($char eq '@') {
++			$diff_class = " chunk_header";
++		} elsif ($char eq "\\") {
++			$diff_class = " incomplete";
++		}
++	}
++	$line = untabify($line);
++	if ($from && $to && $line =~ m/^\@{2} /) {
++		my ($from_text, $from_start, $from_lines, $to_text, $to_start, $to_lines, $section) =
++			$line =~ m/^\@{2} (-(\d+)(?:,(\d+))?) (\+(\d+)(?:,(\d+))?) \@{2}(.*)$/;
++
++		$from_lines = 0 unless defined $from_lines;
++		$to_lines   = 0 unless defined $to_lines;
++
++		if ($from->{'href'}) {
++			$from_text = $cgi->a({-href=>"$from->{'href'}#l$from_start",
++			                     -class=>"list"}, $from_text);
++		}
++		if ($to->{'href'}) {
++			$to_text   = $cgi->a({-href=>"$to->{'href'}#l$to_start",
++			                     -class=>"list"}, $to_text);
++		}
++		$line = "<span class=\"chunk_info\">@@ $from_text $to_text @@</span>" .
++		        "<span class=\"section\">" . esc_html($section, -nbsp=>1) . "</span>";
++		return "<div class=\"diff$diff_class\">$line</div>\n";
++	} elsif ($from && $to && $line =~ m/^\@{3}/) {
++		my ($prefix, $ranges, $section) = $line =~ m/^(\@+) (.*?) \@+(.*)$/;
++		my (@from_text, @from_start, @from_nlines, $to_text, $to_start, $to_nlines);
++
++		@from_text = split(' ', $ranges);
++		for (my $i = 0; $i < @from_text; ++$i) {
++			($from_start[$i], $from_nlines[$i]) =
++				(split(',', substr($from_text[$i], 1)), 0);
++		}
++
++		$to_text   = pop @from_text;
++		$to_start  = pop @from_start;
++		$to_nlines = pop @from_nlines;
++
++		$line = "<span class=\"chunk_info\">$prefix ";
++		for (my $i = 0; $i < @from_text; ++$i) {
++			if ($from->{'href'}[$i]) {
++				$line .= $cgi->a({-href=>"$from->{'href'}[$i]#l$from_start[$i]",
++				                  -class=>"list"}, $from_text[$i]);
++			} else {
++				$line .= $from_text[$i];
++			}
++			$line .= " ";
++		}
++		if ($to->{'href'}) {
++			$line .= $cgi->a({-href=>"$to->{'href'}#l$to_start",
++			                  -class=>"list"}, $to_text);
++		} else {
++			$line .= $to_text;
++		}
++		$line .= " $prefix</span>" .
++		         "<span class=\"section\">" . esc_html($section, -nbsp=>1) . "</span>";
++		return "<div class=\"diff$diff_class\">$line</div>\n";
++	}
++	return "<div class=\"diff$diff_class\">" . esc_html($line, -nbsp=>1) . "</div>\n";
++}
++
++# Generates undef or something like "_snapshot_" or "snapshot (_tbz2_ _zip_)",
++# linked.  Pass the hash of the tree/commit to snapshot.
++sub format_snapshot_links {
++	my ($hash) = @_;
++	my $num_fmts = @snapshot_fmts;
++	if ($num_fmts > 1) {
++		# A parenthesized list of links bearing format names.
++		# e.g. "snapshot (_tar.gz_ _zip_)"
++		return "snapshot (" . join(' ', map
++			$cgi->a({
++				-href => href(
++					action=>"snapshot",
++					hash=>$hash,
++					snapshot_format=>$_
++				)
++			}, $known_snapshot_formats{$_}{'display'})
++		, @snapshot_fmts) . ")";
++	} elsif ($num_fmts == 1) {
++		# A single "snapshot" link whose tooltip bears the format name.
++		# i.e. "_snapshot_"
++		my ($fmt) = @snapshot_fmts;
++		return
++			$cgi->a({
++				-href => href(
++					action=>"snapshot",
++					hash=>$hash,
++					snapshot_format=>$fmt
++				),
++				-title => "in format: $known_snapshot_formats{$fmt}{'display'}"
++			}, "snapshot");
++	} else { # $num_fmts == 0
++		return undef;
++	}
 +}
 +
 +1;
