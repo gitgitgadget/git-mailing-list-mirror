@@ -1,169 +1,84 @@
-From: Johan Herland <johan@herland.net>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [WIP PATCH 0/3] implement merge strategy for submodule links
-Date: Mon, 21 Jun 2010 12:19:02 +0200
-Message-ID: <201006211219.02911.johan@herland.net>
+Date: Mon, 21 Jun 2010 08:22:40 -0700
+Message-ID: <7vlja8if5r.fsf@alter.siamese.dyndns.org>
 References: <cover.1276059473.git.hvoigt@hvoigt.net>
  <201006210106.07758.johan@herland.net>
  <7vk4pttfo3.fsf@alter.siamese.dyndns.org>
+ <201006211219.02911.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
 	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 21 12:19:16 2010
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 21 17:23:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQe5z-0006by-Ep
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 12:19:15 +0200
+	id 1OQipv-00031G-P8
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 17:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932148Ab0FUKTK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jun 2010 06:19:10 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:40804 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932068Ab0FUKTI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jun 2010 06:19:08 -0400
-Received: from get-mta-scan03.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L4D005KJ0NR6YC0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 21 Jun 2010 12:19:03 +0200 (MEST)
-Received: from get-mta-scan03.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 8BA531EEEFAF_C1F3C97B	for <git@vger.kernel.org>; Mon,
- 21 Jun 2010 10:19:03 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan03.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 3F61F1EECD79_C1F3C97F	for <git@vger.kernel.org>; Mon,
- 21 Jun 2010 10:19:03 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L4D00JK20NR4B20@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 21 Jun 2010 12:19:03 +0200 (MEST)
-User-Agent: KMail/1.13.3 (Linux/2.6.33-ARCH; KDE/4.4.4; x86_64; ; )
-In-reply-to: <7vk4pttfo3.fsf@alter.siamese.dyndns.org>
+	id S932778Ab0FUPWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 11:22:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43711 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932725Ab0FUPWx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 11:22:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 63013BDA80;
+	Mon, 21 Jun 2010 11:22:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hWqE6IAjXC+EsqqqXnYjcXv9/SM=; b=wR7apZ
+	w9UzVzS/y+8L6y0p7QJqoT/S+F0uBN0nAhZOn/F/XuPag0TMfNWOztbKpbUBZn+M
+	EUrxEO2TVGhJWebDE1ab5LAFmf1YD705ok9z3MXvNX3RS20tO5KLo19kt2+OhITH
+	vNR5Ge6zJRnAW4TCzLE1nvUAIynpCdZHl4nVU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PgLLo8h+wKGTKOP0vsb7pz7/AwOR6oui
+	YZWb7Za320rvrX8u9WxT9SpUDggA4SXQFZMwhCFx0pYis1rytuS5N5bHWRtTkn2n
+	fhF8yFbN81KtnLI2gJrMKgjrIDGTyTgCJzmRuedtaCBS484Sn0hvTsBGzwgyMRrN
+	jpI+JydNFes=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5BC6BDA7C;
+	Mon, 21 Jun 2010 11:22:47 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D15A8BDA7B; Mon, 21 Jun
+ 2010 11:22:42 -0400 (EDT)
+In-Reply-To: <201006211219.02911.johan@herland.net> (Johan Herland's message
+ of "Mon\, 21 Jun 2010 12\:19\:02 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D90546CA-7D48-11DF-ACC0-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149417>
 
-On Monday 21 June 2010, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> >> For an "automated" heuristics based on "find common descendants" t=
-o
-> >> make sense, the branches you are merging have to share the common
-> >> purpose, and you need to limit the common descendants you find to =
-the
-> >> ones that are compatible with the shared purpose.  The purpose of
-> >> 'maintenance track' may be to maintain the previous version withou=
-t
-> >> dragging newer and more exciting things that happened in the later
-> >> development.  In the above picture, G (that has nothing but B and =
-=46)
-> >> is the only commit that can be safely assumed that two commits in =
-the
-> >> superproject space that bind B and F respectively can use as the
-> >> submodule as their merge result.  E and I are contaminated with D =
-and
-> >> H whose purpose in the superproject space is unknown without furth=
-er
-> >> hint.
-> >=20
-> > Yes, from a 'maint'-perspective, using G in the superproject probab=
-ly
-> > makes more sense than using E or I. From a different superproject
-> > perspective, though, using E or I might make more sense.
->=20
-> Actually, what I was alluding to was that 'G' would be the _only_ com=
-mit
-> that may make sense (note that G may not necessarily make sense, but =
-the
-> point is that we can say that others do _not_ make sense as alternati=
-ves)
-> if we know that the context of making the superproject merge is that =
-it
-> is doing the 'maintenance track' merge.  Similarly, if we know that t=
-he
-> merge being done in the superproject is in the 'master' context, 'E'
-> would be the _only_ plausible candidate, similarly for 'I' in 'next'
-> context.
+Johan Herland <johan@herland.net> writes:
 
-Ah, so Git should automatically _eliminate_ other alternatives based on=
- the=20
-fact that they are not compatible with the purpose of the superproject=20
-merge. Still, that requires Git to know the purpose of the superproject=
-=20
-merge. Which it doesn't, AFAICS.
+> I still don't like this, as IMHO it's too subtle, and possibly conflicts 
+> with explicitly tracking submodule branches (which, to me, is a more 
+> important feature).
 
-> It is further plausible to imagine that the .gitmodules file tracked =
-in
-> the superproject's 'maint' branch can be used to express that 'maint'
-> branch of the submodule should be used.
+If you mean, by "explicitly tracking", to say "I don't care which commit
+from the submodule appears at this path, as long as it is at the tip of
+this branch", I still don't think it makes much sense, but what I outlined
+is not _incompatible_ with such a scheme.  In fact I think it would rather
+fit naturally as a sanity/safety measure.
 
-Ok, so you want to create some kind of relationship between the=20
-superproject's 'maint' branch and the submodule's 'maint' branch. At th=
-is=20
-point we're almost back to the (magic IMHO) "stable" branch setting tha=
-t=20
-Heiko alluded to in his initial patch series. Except, possibly, that in=
-stead=20
-of using the tip of that branch you'd use the first merge of B and F on=
- that=20
-branch.
+I presume that in your "explicitly tracked" world, if the user tries to
+commit at the superproject level with a submodule commit that is
+inconsistent with that "explicitly tracked" branch (e.g. the commit is not
+reachable from the tip of that branch), you would issue a warning of some
+sort, using that knowledge.  What I outlined uses the exact same knowledge
+of which branch in the submodule the superproject branch is tied to to
+reject irrelevant existing merges as resolution candidates.
 
-I still don't like this, as IMHO it's too subtle, and possibly conflict=
-s=20
-with explicitly tracking submodule branches (which, to me, is a more=20
-important feature).
-
-
-Or are you talking about outright tracking submodule branches (as propo=
-sed=20
-by =C6var in a different thread)? In that case, the issue changes compl=
-etely:
-
-If you're explicitly tracking the 'maint' branch in the submodule, then=
- IMHO=20
-Git should always propose the tip of the submodule's 'maint' branch as =
-the=20
-merge resolution in the superproject (possibly with a warning printed i=
-f=20
-that tip does not descend from both B and F).
-
-> If we revisit the Alice and Bob example with such an arrangement, if =
-they
-> were working on their branches so that their results would be include=
-d in
-> the 'maint' track of the superproject, there won't be a merge conflic=
-t in
-> the .gitmodules file at the superproject level when their branch tips=
- are
-> merged; we will know that the merged .gitmodules file will tell us th=
-at
-> we would want to follow 'maint' branch of the submodule.
->
-> Similarly if Alice were fixing a bug in 'maint' but Bob were advancin=
-g
-> features in 'master', then merging .gitmodules at the superproject le=
-vel
-> will fast-forward at the path level (i.e. Alice didn't touch, but Bob
-> changed, so we take Bob's change), instructing us to follow 'master'
-> branch from the submodule automatically.
-
-Ok, so these are similar to =C6var's proposal (and its subsequent discu=
-ssion)=20
-for explicitly tracking submodule branches. Still not sure if we're act=
-ually=20
-talking about the same thing, though.
-
-
-=2E..Johan
-
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+Of course, this ".gitmodule in superproject can tell you which branch of
+submodule it follows" is optional; the user needs to take responsibility
+of picking the right one among I, E and G, of course, if the information
+does not exist or is not available.
