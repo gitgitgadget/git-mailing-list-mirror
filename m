@@ -1,84 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP PATCH 0/3] implement merge strategy for submodule links
-Date: Mon, 21 Jun 2010 08:22:40 -0700
-Message-ID: <7vlja8if5r.fsf@alter.siamese.dyndns.org>
-References: <cover.1276059473.git.hvoigt@hvoigt.net>
- <201006210106.07758.johan@herland.net>
- <7vk4pttfo3.fsf@alter.siamese.dyndns.org>
- <201006211219.02911.johan@herland.net>
+From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #03; Fri, 18)
+Date: Mon, 21 Jun 2010 21:07:16 +0530
+Message-ID: <AANLkTiksOHr2m4HCPp8779VG95zexvYwgE86MsFzBJxF@mail.gmail.com>
+References: <7v7hlvyi50.fsf@alter.siamese.dyndns.org>
+	<AANLkTinB4N6xXm7_Locp-xJyN8Nkew_7t16XhjVi_GlB@mail.gmail.com>
+	<7v7hltvcfy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Jun 21 17:23:02 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 21 17:37:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQipv-00031G-P8
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 17:23:00 +0200
+	id 1OQj3w-0003CH-Lp
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 17:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932778Ab0FUPWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jun 2010 11:22:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43711 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932725Ab0FUPWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jun 2010 11:22:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 63013BDA80;
-	Mon, 21 Jun 2010 11:22:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hWqE6IAjXC+EsqqqXnYjcXv9/SM=; b=wR7apZ
-	w9UzVzS/y+8L6y0p7QJqoT/S+F0uBN0nAhZOn/F/XuPag0TMfNWOztbKpbUBZn+M
-	EUrxEO2TVGhJWebDE1ab5LAFmf1YD705ok9z3MXvNX3RS20tO5KLo19kt2+OhITH
-	vNR5Ge6zJRnAW4TCzLE1nvUAIynpCdZHl4nVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PgLLo8h+wKGTKOP0vsb7pz7/AwOR6oui
-	YZWb7Za320rvrX8u9WxT9SpUDggA4SXQFZMwhCFx0pYis1rytuS5N5bHWRtTkn2n
-	fhF8yFbN81KtnLI2gJrMKgjrIDGTyTgCJzmRuedtaCBS484Sn0hvTsBGzwgyMRrN
-	jpI+JydNFes=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5BC6BDA7C;
-	Mon, 21 Jun 2010 11:22:47 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D15A8BDA7B; Mon, 21 Jun
- 2010 11:22:42 -0400 (EDT)
-In-Reply-To: <201006211219.02911.johan@herland.net> (Johan Herland's message
- of "Mon\, 21 Jun 2010 12\:19\:02 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D90546CA-7D48-11DF-ACC0-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753365Ab0FUPhX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jun 2010 11:37:23 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:50430 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751243Ab0FUPhW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jun 2010 11:37:22 -0400
+Received: by gwaa12 with SMTP id a12so323728gwa.19
+        for <git@vger.kernel.org>; Mon, 21 Jun 2010 08:37:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=t0PKk3Quwx91kWZmUIf9Tt5uwh+yYyDWYz7/ODq07uA=;
+        b=be5G8+vfqAgu1hjkEwyFqs4nFaOENNdl/npQ+EIqyYELvc57MrOVxtFea3fYZMcvXF
+         sJkjsXhLzi8gpg9YWZ1Yi1hP3n85sTNs8BTF19mDfOJTQAfYDqADDBDCfYZqOwYQWKNH
+         W72ghAddQNy8v9P4pV/idaD97g8XKvX+D/A1A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ga6jx9SwiKLuSulFAgJ0V5zAhkVA2SquNmmIf2mDtPQLWMsG8wunHAAGrrZaQVjXTy
+         tpBTdjweV8m/ff0EeLy48+30qJzkvCCssrd6xFhej8ZIcP1UH6ieOlhFFI+3EDBF1/mp
+         uINTXG1m9WG+S80JKKbO7YyS8P2kg/sKlHjCs=
+Received: by 10.101.10.7 with SMTP id n7mr3815397ani.94.1277134637606; Mon, 21 
+	Jun 2010 08:37:17 -0700 (PDT)
+Received: by 10.100.141.14 with HTTP; Mon, 21 Jun 2010 08:37:16 -0700 (PDT)
+In-Reply-To: <7v7hltvcfy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149418>
 
-Johan Herland <johan@herland.net> writes:
+On Sun, Jun 20, 2010 at 11:00 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
+>
+>> Junio, I would like to remember you a patch which I think u missed.
+>>
+>> http://kerneltrap.org/mailarchive/git/2010/6/3/31711
+>
+> What's the message-id? =A0There doesn't seem to be an easy way to get=
+ it out
+> of that web interface, so the above URL is no use for me, and I canno=
+t see
+> the message in the context without its message-id.
+>
+> Pointing at the site to casually refer to an old discussion is fine, =
+but
+> please never refer to that site to refer to an old patch if you want =
+me to
+> apply one.
+>
 
-> I still don't like this, as IMHO it's too subtle, and possibly conflicts 
-> with explicitly tracking submodule branches (which, to me, is a more 
-> important feature).
+Ok.
+I didn't know about this.
 
-If you mean, by "explicitly tracking", to say "I don't care which commit
-from the submodule appears at this path, as long as it is at the tip of
-this branch", I still don't think it makes much sense, but what I outlined
-is not _incompatible_ with such a scheme.  In fact I think it would rather
-fit naturally as a sanity/safety measure.
+So, here is the message ID
+1275399845-13311-1-git-send-email-pavan.sss1991@gmail.com
 
-I presume that in your "explicitly tracked" world, if the user tries to
-commit at the superproject level with a submodule commit that is
-inconsistent with that "explicitly tracked" branch (e.g. the commit is not
-reachable from the tip of that branch), you would issue a warning of some
-sort, using that knowledge.  What I outlined uses the exact same knowledge
-of which branch in the submodule the superproject branch is tied to to
-reject irrelevant existing merges as resolution candidates.
-
-Of course, this ".gitmodule in superproject can tell you which branch of
-submodule it follows" is optional; the user needs to take responsibility
-of picking the right one among I, E and G, of course, if the information
-does not exist or is not available.
+Thanks,
+Pavan.
