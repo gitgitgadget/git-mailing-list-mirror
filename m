@@ -1,87 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: [PATCH] checkout: Better error message on invalid branch name
-Date: Mon, 21 Jun 2010 13:58:53 -0700
-Message-ID: <7vd3vkgl0y.fsf@alter.siamese.dyndns.org>
+Date: Mon, 21 Jun 2010 21:09:11 +0000
+Message-ID: <AANLkTino4Dz_nMSV_4HHKD3K185t7spE22d5chLdo960@mail.gmail.com>
 References: <1277146419-19507-1-git-send-email-avarab@gmail.com>
+	<7vd3vkgl0y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 21 22:59:28 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 21 23:09:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQo5V-00089c-Mw
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 22:59:26 +0200
+	id 1OQoF4-00072j-3u
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 23:09:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758589Ab0FUU7G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jun 2010 16:59:06 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48103 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758597Ab0FUU7C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jun 2010 16:59:02 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7DF01BD021;
-	Mon, 21 Jun 2010 16:59:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qwtGtoJnimwZ
-	HRN+B7RHzh0EEAA=; b=P+iKCb/ixG1EdIIZxKYilBhGBwbBJgJ+spzXQ+vWCs2G
-	hdBXzqVbP+qSzaCVMcgPWH5Zc6tWI9nNfleDz8u/LUiXNuZlyfZpRlC8zyijHKHI
-	vKHme/f3zfOSnaae5fd8mJxk/PM/g5ArBTPE7r1+JXd+qsotim6KUXAH0fpFS3w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=htU/fF
-	6JS5s4KuKfn+ooj9o4O2JO0IIgSQC5uIXB/mhkXSvPXBCWlGnCwEBg/4nCEO/JgD
-	gV5noAnvPmm9G4CCccVUJkPy3oPjD+otR+NBssUsL3Zti+IHKN09EH3LMFlPbjOB
-	O6gQ6pvkE9mLCfaPF4yDRwfLPZVtqrzqbZAuY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AEF0BD019;
-	Mon, 21 Jun 2010 16:58:58 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 921EBBD017; Mon, 21 Jun
- 2010 16:58:55 -0400 (EDT)
-In-Reply-To: <1277146419-19507-1-git-send-email-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon\, 21 Jun
- 2010 18\:53\:39 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CFA5C8C8-7D77-11DF-AAE2-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758457Ab0FUVJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 17:09:13 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:63621 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758362Ab0FUVJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 17:09:12 -0400
+Received: by gye5 with SMTP id 5so2516687gye.19
+        for <git@vger.kernel.org>; Mon, 21 Jun 2010 14:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=igOiR1oTyaofmhx5oaHSYDUw26oUJmHWGlrLcwZNSA0=;
+        b=VR0qYxbdD5dOm3p/QuGk/TVvn5/EKlYFLq2UbZATCCjsAIXmk/aJY773+N+l9ZNUGP
+         y5SEHrx4uC1f3T3ikrnyEPj57XUh0G/k2rxHBXbghn8RVpmWh4c/Qo5YcTv4acCHhWHS
+         +F7037McCsfF6slfu2u9FHXjHODUDcsv7TikE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=lBXa8azrgubbounpk72yCaGbzG4KPSZuWp0tGvcOZNVAG/nz2ZDgnZQrBydSO2TKWk
+         ieq/PNnGPDhdtaUCBennvjYwHJwSPNapI8CDp6lWSJOfKh9YNAQn/YJpQqJpvNDqmXyY
+         3okKn0ECxYvcOm3fdLdCzm7DEuqM+nk5paB8k=
+Received: by 10.150.13.9 with SMTP id 9mr4928024ybm.375.1277154551510; Mon, 21 
+	Jun 2010 14:09:11 -0700 (PDT)
+Received: by 10.231.158.195 with HTTP; Mon, 21 Jun 2010 14:09:11 -0700 (PDT)
+In-Reply-To: <7vd3vkgl0y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149439>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Mon, Jun 21, 2010 at 20:58, Junio C Hamano <gitster@pobox.com> wrote:
+> Cluttering the output without protecting it with "advice" does not look
+> like a "fix" nor improvement.
 
-> Change the error message for `git checkout -b "I LOVE YOU"' and other
-> invalid branch names to say what branch names are invalid, rather tha=
-n
-> just saying we don't like it.
->
-> Before:
->
->     $ git checkout -b "I LOVE YOU"
->     fatal: git checkout: we do not like 'I LOVE YOU' as a branch name=
-=2E
->
-> After:
->
->     $ git checkout -b "I LOVE YOU"
->     fatal: git checkout: The name "I LOVE YOU" is not a valid Git bra=
-nch name.
->     A branch name can not:
->         - Have a path component that begins with "."
->         - Have a double dot ".."
->         - Have an ASCII control character, "~", "^", ":" or SP, anywh=
-ere
->         - End with a "/"
->         - End with ".lock"
->         - Contain a "\" (backslash
+The short version of the message would also need to be fixed then, to
+do that properly would require bigger changes in the return code of
+bad_ref_char and the functions that call it. Then we could have e.g.:
 
-Cluttering the output without protecting it with "advice" does not look
-like a "fix" nor improvement.
+    $ git checkout -b "I LOVE YOU"
+    fatal: git checkout: Branch name cannot contain ' ';  marked by
+<-- HERE in 'I ' <-- HERE
+
+Similar to what you get from:
+
+    $ perl -e '/I LOVE [/'
+
+That would also make the long version unnecessary, and maybe improve
+some other error messages that deal with ref names.
