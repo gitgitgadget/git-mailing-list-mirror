@@ -1,134 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #03; Fri, 18)
-Date: Mon, 21 Jun 2010 12:16:44 -0700
-Message-ID: <7vk4psgpr7.fsf@alter.siamese.dyndns.org>
-References: <7v7hlvyi50.fsf@alter.siamese.dyndns.org>
- <AANLkTinB4N6xXm7_Locp-xJyN8Nkew_7t16XhjVi_GlB@mail.gmail.com>
- <7v7hltvcfy.fsf@alter.siamese.dyndns.org>
- <AANLkTiksOHr2m4HCPp8779VG95zexvYwgE86MsFzBJxF@mail.gmail.com>
- <7v631ci6ex.fsf@alter.siamese.dyndns.org>
- <AANLkTilINSK78ds1A3ZK1kdqlHf8S-lLrVboabsQLua_@mail.gmail.com>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: Upgradin git
+Date: Mon, 21 Jun 2010 16:22:09 -0400
+Message-ID: <20100621202209.GO12888@inocybe.localdomain>
+References: <1277145270235-5205581.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="Q935UqjMul3XuJv7"
 Cc: git@vger.kernel.org
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 21 21:17:02 2010
+To: jhapk <pradeep.kumar.jha@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 21 22:22:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQmUO-0003wy-M3
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 21:17:01 +0200
+	id 1OQnVd-00032p-Fd
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 22:22:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758123Ab0FUTQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jun 2010 15:16:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46399 "EHLO
+	id S1758051Ab0FUUWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 16:22:16 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39898 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752638Ab0FUTQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jun 2010 15:16:53 -0400
+	with ESMTP id S1753945Ab0FUUWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 16:22:15 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D6A5BD9CC;
-	Mon, 21 Jun 2010 15:16:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=srw25BI6hPIJ74UwJwJGofTNC+Y=; b=AYJQrj8S27iETWJBzRyciA+
-	9j3+/4/nkYTrQ3t1jzScwABle3ut49DGmMgorkH+PAQI+iq2SnhpgXNGFiYYQHV1
-	Pi00Lq2h1J7yQUShOFw0/WPMAAjqefO4eMtNYzkNmp+sZmBS5mi77BHCCRmeUBxI
-	sqGt2rhVWMy768xPcPAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=p9s3rw+h1rRmrP3sJRIhXTzh3SNS6QCtUokzY4euigWZtiw7y
-	IyCx7+iZzyOEIyMYAxponMkw6BZsoIVBFCQb6PvK/9jHPQtTFoFblZRJRUD7+zFH
-	mld6q2t+7yayrpgS1Di++Z6gLyVnJrzlTcW5/zGICBdsdgGSc6VLgFJ3r4=
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B7AA417A9;
+	Mon, 21 Jun 2010 16:22:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=o85ifzt5TAezZg83hP9yK8EbvYo=; b=a/enz/1
+	0MLvkzL0bbyB5hvA0KhOKe0rkwk+mYdVRtVZ9pXFKiX/gJLOzKIvzoEDz0DgdT6a
+	v9g+z4G5qSzIra0v7cUIWmG3UVM+m3oyRycOFqVs4d8u22kkFYg/9C+XUzG7XsZZ
+	apO1+5qNMIJWqoy+Svw/xw95uRjlzuvJroAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=jWyWlz5soC8t5ThybZ7R/JlvNUDdLDQ1Z
+	DTeErjFg7+MwmM7LippP1ilB5t32HTFd/OVD0isl1N4xMitgTUD1yi3REMS+QhEo
+	3qzELW196ncWj7atxk777rW2qPCNPDPTHNFjunSvsYdC+OIBSHUnsGh+Twfce0yh
+	QQUSRwemWI=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D8B56BD9CB;
-	Mon, 21 Jun 2010 15:16:48 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 040CFBD9CA; Mon, 21 Jun
- 2010 15:16:45 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8A3AD408-7D69-11DF-B056-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A296117A8;
+	Mon, 21 Jun 2010 16:22:12 -0400 (EDT)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AFBE17A5; Mon, 21 Jun
+ 2010 16:22:11 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1277145270235-5205581.post@n2.nabble.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: ACFC8B9A-7D72-11DF-9220-9056EE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149437>
 
-Pavan Kumar Sunkara <pavan.sss1991@gmail.com> writes:
 
-> The right one is given below.
-> http://mid.gmane.org/1275573356-21466-3-git-send-email-pavan.sss1991@gmail.com
+--Q935UqjMul3XuJv7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Oh, I do have three issues with that one.
+jhapk wrote:
+> I am using fedora and I don't have the root access. The git
+> installed on the system is 1.5.2.2 and I want to upgrade it to 1.7.1
 
-#1. Command line should be able to override configuration
+Ouch, you must be using a really ancient version of Fedora.  Fedora 11
+is the oldest release currently supported and it contains 1.6.2.5.
+1.7.1 is in updates-testing for both Fedora 12 and 13.
 
-You currently have:
+Perhaps it's also worth mentioning for the archives that the fedora
+packages are designed to cleanly build in mock=B9 for RHEL/CentOS >=3D 4 as
+well as previous Fedora releases.
 
- . By default without command line override nor configuration, old
-   behaviour of "refresh the gitweb.conf every time" stands;
+=B9 mock is fedora's main build tool, usable with little to no
+  configuration on RHEL/CentOS/Fedora systems.
 
- . You can tell it to keep the configuration with a command line option;
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Einstein argued that there must be simplified explanations of nature,
+because God is not capricious or arbitrary. No such faith comforts the
+software engineer.
+    -- Fred Brooks
 
- . If you are tired of having to give the command line option every time,
-   you can set a configuration variable instead.
 
-The first bullet is fine; it is called "backward compatibility."  The
-second one is also good.  "We allow a non-default behaviour in a rare case
-with a command line option" is a good change.
+--Q935UqjMul3XuJv7
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-But the third one makes the story quite different.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
 
-Adding a configuration needs to be done a lot more carefully.  If somebody
-has configured instaweb.overwrite to false, you must give him a way to
-override that from the command line.
+iQFDBAEBCAAtBQJMH8niJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzje3IH/1MJUWIsTdzXTUojn/k75JrM3eRypVVYXM0i
+0AUzCX9Ju9zUknYDBkfDhjYEcSgo5HFjdUIqOskzF0KAvqZQ+wUAPx/3BCQAA3u+
+VEfQs4SI6YQBg21Eab176jCmpn3wbwWVQFXJQzKMREFRESD3dWMPkqywUF9QDT4Q
+rlNwg8vdxIovSE/HGdidMslM5Xqk2PlnR+/ZypU2cHsvl6uGolfNzJlPJUWI6+ZI
+zUBje+7l9sBLfVhXDkwoSlv/5E4ie3E9nPXmWRbKqRm8U7YCZ/xH+yKI3GH1UlIt
+E5zzLAhiNcf10WNY3V3Tqm0NS/O/jnWQ/dGPOpmh6R7wT/Ymy40=
+=3e72
+-----END PGP SIGNATURE-----
 
-IOW, you must at least support "git instaweb --no-reuse-config" in [PATCH
-2/3].
-
-If you anticipate that some people may get tired of having to give that
-option all the time, it is possible that the choice of the original
-default behaviour was wrong, at least for some people.  We might even want
-to make "instaweb.overwrite" default to "false" in later versions.
-
-Having command line override of configured default becomes even more
-important for that transition to happen smoothly.  If a user has to use
-older and newer versions of git across that default flip, it would give
-him a reliable behaviour to say --[no-]reuse-config explicitly from the
-command line.
-
-#2. The subject of the patch should spell the name of the new variable on
-   it.  But this is an artifact of a larger design issue; see below.
-
-#3. Naming.
-
-If you are going to make an configuration variable, its name should be
-consistent with the command line option (I think Pasky said something
-similar).  Your command line is '--reuse-config' but your configuration is
-'(instaweb.)overwrite'.  Do you think these click with each other for
-people other than you?  Wouldn't it be much more consistent if the above
-were:
-
- . By default without command line override nor configuration, old
-   behaviour of "refresh the gitweb.conf every time" stands;
-
- . You can tell it to keep the configuration by --no-overwrite-config
-   option; to regenerate the config, say --overwrite-config (which is the
-   current default but we _might_ change the default in the future if "no
-   overwrite" is found to be more sensible by larger audience).
-
- . If you are tired of having to give --no-overwrite-config every time,
-   you can say "[instaweb] overwriteConfig = false".
-
-I know "overwrite-config" is a bit too long, and you would need to come up
-with a shorter name (perhaps "reconfig"???) but the point is that we
-should make it easy to guess the corresponding configuration variable name
-given the command line option and vice-versa.
-
-> It's not acked but it's not commented. So I am guessing nobody has
-> problem with it.
-
-That is not the right way to interpret lack of responses.  "Nobody is
-interested in that patch" is the default interpretation.
+--Q935UqjMul3XuJv7--
