@@ -1,103 +1,71 @@
-From: Michel Lespinasse <walken@google.com>
-Subject: Re: [PATCH 3/3] builtin/checkout: DWIM with -f -b
-Date: Sun, 20 Jun 2010 21:09:35 -0700
-Message-ID: <AANLkTikvTtmz_uai5SNO0Co8PWLgK7rIdl7cCqHosViY@mail.gmail.com>
-References: <1277051592-4552-1-git-send-email-rctay89@gmail.com>
-	<1277051592-4552-2-git-send-email-rctay89@gmail.com>
-	<1277051592-4552-3-git-send-email-rctay89@gmail.com>
-	<1277051592-4552-4-git-send-email-rctay89@gmail.com>
-	<7vvd9dtt54.fsf@alter.siamese.dyndns.org>
-	<20100620201137.GA8502@coredump.intra.peff.net>
-	<7vpqzltnp3.fsf@alter.siamese.dyndns.org>
-	<20100620211605.GA2559@sigill.intra.peff.net>
-	<AANLkTildfbJvt15cObc52LvOQRvasL4WYsJq3126bBGd@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2 v2] git-gui - provide commit base to the
+ hooks/pre-commit script
+Date: Sun, 20 Jun 2010 21:54:39 -0700
+Message-ID: <7vvd9drnn4.fsf@alter.siamese.dyndns.org>
+References: <1275965763-18940-1-git-send-email-mlevedahl@gmail.com>
+ <1275965763-18940-2-git-send-email-mlevedahl@gmail.com>
+ <4C1C3288.5000308@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 21 06:11:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, peff@peff.net, jsixt@viscovery.net,
+	spearce@spearce.org
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 21 06:55:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQYLu-0001ji-AP
-	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 06:11:18 +0200
+	id 1OQZ2J-0004jK-DQ
+	for gcvg-git-2@lo.gmane.org; Mon, 21 Jun 2010 06:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750843Ab0FUEJj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jun 2010 00:09:39 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:63344 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750767Ab0FUEJj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jun 2010 00:09:39 -0400
-Received: from wpaz37.hot.corp.google.com (wpaz37.hot.corp.google.com [172.24.198.101])
-	by smtp-out.google.com with ESMTP id o5L49bvd000944
-	for <git@vger.kernel.org>; Sun, 20 Jun 2010 21:09:37 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1277093377; bh=bXSWORvUz/gwvQK7Mo6uWoXNTH8=;
-	h=MIME-Version:In-Reply-To:References:Date:Message-ID:Subject:From:
-	 To:Cc:Content-Type:Content-Transfer-Encoding;
-	b=Tx7raJaeuMUBJbd2Fpq5zvDINnPoYjkA8uHe3F/LiaqhiZrcsW+7KTE6xKAUkyzmX
-	 0tZS0Z0+4n0Iw/mW8uguw==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=mime-version:in-reply-to:references:date:message-id:subject:from:to:
-	cc:content-type:content-transfer-encoding:x-system-of-record;
-	b=rjjTrlY3tKVeDQEDuiQCJ+RPHikWmpCNQG+/SJBuyul4XMaYPVK/KmTfLXxHPuDaT
-	2Rq1EYR7Hbo+JCtNBgwZA==
-Received: from qwj8 (qwj8.prod.google.com [10.241.195.72])
-	by wpaz37.hot.corp.google.com with ESMTP id o5L49Zbp001696
-	for <git@vger.kernel.org>; Sun, 20 Jun 2010 21:09:36 -0700
-Received: by qwj8 with SMTP id 8so67349qwj.19
-        for <git@vger.kernel.org>; Sun, 20 Jun 2010 21:09:35 -0700 (PDT)
-Received: by 10.224.26.207 with SMTP id f15mr2752477qac.315.1277093375716; 
-	Sun, 20 Jun 2010 21:09:35 -0700 (PDT)
-Received: by 10.229.78.11 with HTTP; Sun, 20 Jun 2010 21:09:35 -0700 (PDT)
-In-Reply-To: <AANLkTildfbJvt15cObc52LvOQRvasL4WYsJq3126bBGd@mail.gmail.com>
-X-System-Of-Record: true
+	id S1751525Ab0FUEyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jun 2010 00:54:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56991 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751256Ab0FUEyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jun 2010 00:54:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B4B04BD95A;
+	Mon, 21 Jun 2010 00:54:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kA+spqKPXedt9iwLopueJDKiv2M=; b=PUm860
+	mvJfWO8bS8PkxIpdIyYhk4Y/CYWioXEg56fTE+fObCzmGk0ruHsAepIXaV53MJOC
+	ltPXcTJC/1MtPtToKKLp6e0G9+h7VlmVrfnJc7qZP4puOSY7saUwqFkPtYK1AueU
+	lh7T81dNYPvE0VyKBQnoyxfYYnI+4b6yZcxd0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z69z9cpzVL/A0BiFvJ04FdDhm62Exlo+
+	idOGrjQY6gBW8KDrAKJD/l9O5wvRRaJi4j2hL5+b9j61DR1REw5ChGsRRWMIzwbT
+	iaVV3BBE5sYjCk/RceKPpwjJnXo4ZjNqE1xwnjK1i0F3Bawdp9I9lCuPGlVDUQxJ
+	P3+i+x6Hnns=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 62CAEBD958;
+	Mon, 21 Jun 2010 00:54:47 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7715EBD94F; Mon, 21 Jun
+ 2010 00:54:41 -0400 (EDT)
+In-Reply-To: <4C1C3288.5000308@gmail.com> (Mark Levedahl's message of "Fri\,
+ 18 Jun 2010 22\:59\:20 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1DD340FC-7CF1-11DF-B4A1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149413>
 
-On Sun, Jun 20, 2010 at 7:58 PM, Michel Lespinasse <walken@google.com> =
-wrote:
-> On Sun, Jun 20, 2010 at 2:16 PM, Jeff King <peff@peff.net> wrote:
->> I'm certainly sympathetic, but as I understand it, with this new pat=
-ch
->> you are doing the equivalent of:
->>
->> =A0git branch -f jch master
->> =A0git checkout -f jch
->>
->> which is different than what you wrote above. =A0For your workflow, =
-I
->> doubt it matters, but it is potentially destructive.
->
-> I am frequently trying to do this as well, so I would love the
-> checkout -f -b option.
->
-> However, I think that the desired behavior for checkout -f -b is that
-> it should be equivalent to:
-> git branch -f jch master
-> git checkout jch =A0 (without the -f here)
+Mark Levedahl <mlevedahl@gmail.com> writes:
 
-Rhaaa, that actually wouldn't work as the git checkout command would
-fail if there are changes in the index & working tree. What I want
-here is actually for git checkout -f -b jch to be equivalent to:
+> Given the discussion on the first series (starting with)
+> <1275759590-16342-1-git-send-email-mlevedahl@gmail.com>, and the absence
+> of objection to v2, I presume this sequence is ok?
 
-git branch -D jch  (ignore error if jch branch does not exist)
-git checkout -b jch
+I generally take absense of responses as absense of interest and/or
+support, not absense of objection.
 
-> rationale: git checkout -b normally preserves the index & the working
-> tree; adding the -f flag to a command that would otherwise succeed
-> should not change its behavior.
-
-At least the rationale still holds :)
-
---=20
-Michel "Walken" Lespinasse
-A program is never fully debugged until the last user dies.
+For this particular patch, I am mostly indifferent (i.e. no objection, but
+no strong support neither).
