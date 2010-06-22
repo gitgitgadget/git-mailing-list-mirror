@@ -1,110 +1,137 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH GSoC] gitweb: Add support for enabling 'write' feature
-Date: Tue, 22 Jun 2010 21:23:53 +0200
-Message-ID: <201006222123.54352.jnareb@gmail.com>
-References: <1277157648-6029-1-git-send-email-pavan.sss1991@gmail.com> <201006221312.57801.jnareb@gmail.com> <AANLkTimpF6CMF0yDmaxABR0BYOBE75sR5Zwtsb79fU4t@mail.gmail.com>
+From: Pascal Obry <pascal.obry@gmail.com>
+Subject: [PATCH v4] Do not decode url protocol.
+Date: Tue, 22 Jun 2010 22:16:57 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4C211A39.2080207@obry.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, pasky@ucw.cz
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 22 21:24:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jun 22 22:15:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OR952-0006LA-MC
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 21:24:21 +0200
+	id 1OR9sy-0003QZ-1Z
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 22:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754793Ab0FVTYG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jun 2010 15:24:06 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63408 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab0FVTYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jun 2010 15:24:03 -0400
-Received: by fxm10 with SMTP id 10so2654620fxm.19
-        for <git@vger.kernel.org>; Tue, 22 Jun 2010 12:24:01 -0700 (PDT)
+	id S1754793Ab0FVUPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jun 2010 16:15:51 -0400
+Received: from mail-ww0-f46.google.com ([74.125.82.46]:59957 "EHLO
+	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753784Ab0FVUPu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jun 2010 16:15:50 -0400
+Received: by wwc33 with SMTP id 33so439757wwc.19
+        for <git@vger.kernel.org>; Tue, 22 Jun 2010 13:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=YYibfewL3mcj7vv2PWh76qlJPu25RgpLGs5lVnjr32M=;
-        b=Va7G3pdkJWgfiCjlH32BczD6nO5OnW0gsVLCgXJEAQXIoyewxRd+YUuZ4U9ucHqfhS
-         Dom9/ZW7OJYOkZGznqvdAsb6uqxxyZFk6xpQ7cPiW6DdfsOXrSRCFVIkfvFdc/qaXN8j
-         Ij3Mw4XJKN+YmI0wXKbDoqU93MHu1P6AaCipM=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :organization:user-agent:mime-version:to:subject:x-enigmail-version
+         :content-type:content-transfer-encoding;
+        bh=E4LkadK9n4pIt7ijC5ciUujliDczzmG+c56LHQwFcRU=;
+        b=e/Oy7G/5nMHg1jo3YuW1i0lNlNnPYYjwDK7aPJm07rN1716vtDQF5fp+1Fh+Gzi2xB
+         ZzzANKDG7NMRvoz+JIJCmmsI8LEuqh9J1KCcQlo5Ml7sCBlet3GT2YfG2lzSghxqJigg
+         Y6o7JLn7/h+yKtuYGiHt/0BXUFRpF1x7jejk4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=urCDmLp+7Vsw9AFYeyf5wixOZjktUuidCSLA7V9rfpWjgtZ8/GRwzM+/a3DKE59Op9
-         LXlDaKOORZUWISGzvXQ8CDVZ6Pk4LxqCpiLABascmHuSdq2PN4Yn/65ozfMrMdnCANnK
-         G/hLq2/9gJN/0qQJiZzEG1R+5j3MjgXJq7UZc=
-Received: by 10.223.54.143 with SMTP id q15mr6671262fag.16.1277234640717;
-        Tue, 22 Jun 2010 12:24:00 -0700 (PDT)
-Received: from [192.168.1.15] (abvn56.neoplus.adsl.tpnet.pl [83.8.211.56])
-        by mx.google.com with ESMTPS id r9sm89084faq.3.2010.06.22.12.23.59
+        h=message-id:date:from:reply-to:organization:user-agent:mime-version
+         :to:subject:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=yDKP2eSFdBA8kKDAQtMvstNUWZtHRipsJ1XcCLeCTJnHCVG3Zt+ilezQSygH4d68wq
+         5wOh3kiCIUzdBki5XKcFj1pNJaAB7g9thTr3tFG5ckN08teM40GJXZ2vBoYjoxLFrT0N
+         TEl93/KpUHbzJrJo+mowMHOBWKE9veWtxSggY=
+Received: by 10.227.147.132 with SMTP id l4mr6747789wbv.155.1277237748804;
+        Tue, 22 Jun 2010 13:15:48 -0700 (PDT)
+Received: from [192.168.0.100] (AVelizy-154-1-11-160.w82-124.abo.wanadoo.fr [82.124.73.160])
+        by mx.google.com with ESMTPS id b17sm45628313wbd.1.2010.06.22.13.15.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 22 Jun 2010 12:23:59 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTimpF6CMF0yDmaxABR0BYOBE75sR5Zwtsb79fU4t@mail.gmail.com>
-Content-Disposition: inline
+        Tue, 22 Jun 2010 13:15:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149491>
 
-Dnia wtorek 22. czerwca 2010 20:35, Pavan Kumar Sunkara napisa=B3:
-> 2010/6/22 Jakub Narebski <jnareb@gmail.com>:
->> On Tue, 22 June 2010, Pavan Kumar Sunkara wrote:
->>
->>> Provide $feature{'write'} to enable the 'write'
->>> functionalities for gitweb. While outputting HTML
->>> it checks for gitweb_check_feature('write') and if
->>> it's enabled, proper links will appear along with
->>> the HTML divs.
->>>
->>> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 
->>> --- a/gitweb/lib/Gitweb/Config.pm
->>> +++ b/gitweb/lib/Gitweb/Config.pm
->>> @@ -203,6 +203,17 @@ our %feature =3D (
->>> =A0 =A0 =A0 # (an array) or gitweb_check_feature(<feature>) to chec=
-k if <feature>
->>> =A0 =A0 =A0 # is enabled
->>>
->>> + =A0 =A0 # Enable the 'write' functionalities for gitweb. While ou=
-tputting HTML
->>> + =A0 =A0 # it checks for gitweb_check_feature('write') and if it's=
- enabled,
->>> + =A0 =A0 # proper links will appear along with the HTML divs.
->>> +
->>> + =A0 =A0 # To enable system wide have in $GITWEB_CONFIG
->>> + =A0 =A0 # $feature{'write'}{'default'} =3D [1];
->>> + =A0 =A0 # Project specific override is not supported.
->>> + =A0 =A0 'write' =3D> {
->>> + =A0 =A0 =A0 =A0 =A0 =A0 'override' =3D> 0,
->>> + =A0 =A0 =A0 =A0 =A0 =A0 'default' =3D> [0]},
->>> +
->>> =A0 =A0 =A0 # Enable the 'blame' blob view, showing the last commit=
- that modified
->>> =A0 =A0 =A0 # each line in the file. This can be very CPU-intensive=
-=2E
->>
->> ...as there is nothing non-trivial in there.
->=20
-> But don't u think it would be like a small starting patch.
+When using the protocol git+ssh:// for example we do not want to
+decode the '+' as a space. The url decoding must take place only
+for the server name and parameters.
 
-There is staring small, and there is too small.
+This fixes a regression introduced in 9d2e942.
+---
+ url.c |   19 +++++++++++++++----
+ 1 files changed, 15 insertions(+), 4 deletions(-)
 
-You don't provide _any_ write functionality here, or even any authoriza=
-tion
-framework for write functionality, like checking if we are on localhost=
-=2E
+Ok, so this is the fourth version of this patch. Thanks again Matthieu
+for the review. I think this time I got the place for the message right :)
 
---=20
-Jakub Narebski
-Poland
+Anyway, I think this time we properly skip the protocol decoding when
+needed.
+
+diff --git a/url.c b/url.c
+index cd32b92..0eb7fb3 100644
+--- a/url.c
++++ b/url.c
+@@ -67,12 +67,23 @@ static int url_decode_char(const char *q)
+        return val;
+ }
+
+-static char *url_decode_internal(const char **query, const char *stop_at)
++static char *url_decode_internal(const char **query, const char *stop_at,
++               int with_protocol)
+ {
+        const char *q = *query;
++       const char *first_slash;
+        struct strbuf out;
+
+        strbuf_init(&out, 16);
++
++       /* Skip protocol if present. */
++       if (with_protocol) {
++         first_slash = strchr(*query, '/');
++
++         while (q < first_slash)
++               strbuf_addch(&out, *q++);
++       }
++
+        do {
+                unsigned char c = *q;
+
+@@ -104,15 +115,15 @@ static char *url_decode_internal(const char
+**query, const char *stop_at)
+
+ char *url_decode(const char *url)
+ {
+-       return url_decode_internal(&url, NULL);
++       return url_decode_internal(&url, NULL, 1);
+ }
+
+ char *url_decode_parameter_name(const char **query)
+ {
+-       return url_decode_internal(query, "&=");
++       return url_decode_internal(query, "&=", 0);
+ }
+
+ char *url_decode_parameter_value(const char **query)
+ {
+-       return url_decode_internal(query, "&");
++       return url_decode_internal(query, "&", 0);
+ }
+-- 
+1.7.1.426.gb436.dirty
+
+-- 
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
