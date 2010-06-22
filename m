@@ -1,82 +1,102 @@
-From: Mark Levedahl <mlevedahl@gmail.com>
-Subject: Re: [PATCH 2/2 v2] git-gui - provide commit base to the hooks/pre-commit
- script
-Date: Mon, 21 Jun 2010 21:07:57 -0400
-Message-ID: <4C200CED.7090402@gmail.com>
-References: <1275965763-18940-1-git-send-email-mlevedahl@gmail.com> <1275965763-18940-2-git-send-email-mlevedahl@gmail.com> <4C1C3288.5000308@gmail.com> <7vvd9drnn4.fsf@alter.siamese.dyndns.org> <20100621050012.GA13043@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [WIP PATCH 0/3] implement merge strategy for submodule links
+Date: Mon, 21 Jun 2010 21:04:31 -0700
+Message-ID: <7vmxung1bk.fsf@alter.siamese.dyndns.org>
+References: <cover.1276059473.git.hvoigt@hvoigt.net>
+ <201006211219.02911.johan@herland.net>
+ <7vlja8if5r.fsf@alter.siamese.dyndns.org>
+ <201006220035.31166.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	jsixt@viscovery.net, spearce@spearce.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 22 03:08:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Jun 22 06:04:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OQryD-0007ax-GE
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 03:08:09 +0200
+	id 1OQujD-0005l4-W0
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 06:04:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758734Ab0FVBID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jun 2010 21:08:03 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59581 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758708Ab0FVBIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jun 2010 21:08:00 -0400
-Received: by vws9 with SMTP id 9so206443vws.19
-        for <git@vger.kernel.org>; Mon, 21 Jun 2010 18:07:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=u0HNP1WzfbYNBoVAgrJQFTQS7x6wE3uu6xASbz80q6o=;
-        b=GFs6zMH4FPk33S+EIwHoilRQKeXkZpxp+dQ26X2Ix1iQnMlB2yxFJ+ggqxTioL+qzz
-         SmS49T1gqMb1I4CKtKtIbS5FToK5sfTLZb6wTQL0xL5CAVIDsAjPHavu21lIe7pvAYW4
-         EYHrtwJ+6Ty918rPYsc5nj2g6phZEohwXZ4bc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=sF6PFe+dUmDJtIoEZvNCQ7lstLNDZo6vWq9HuSR9MwFlPkWXwvMmRRFDLcGfsBReV4
-         JdZffXGbOe3EV8AVUcYHpNF14QVwu/lmgbUuPhIo+r+iiKZtg6fwYlJbY40StGEN+n8g
-         yLQnGu0woC76yv6LcoHakWPMby+RHkTlG+gmM=
-Received: by 10.220.62.206 with SMTP id y14mr2607933vch.241.1277168879375;
-        Mon, 21 Jun 2010 18:07:59 -0700 (PDT)
-Received: from mark-laptop.lan (pool-71-191-167-79.washdc.fios.verizon.net [71.191.167.79])
-        by mx.google.com with ESMTPS id n1sm15181580vcf.40.2010.06.21.18.07.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 21 Jun 2010 18:07:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4
-In-Reply-To: <20100621050012.GA13043@coredump.intra.peff.net>
+	id S1750876Ab0FVEEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jun 2010 00:04:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63477 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775Ab0FVEEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jun 2010 00:04:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 45AC7BE472;
+	Tue, 22 Jun 2010 00:04:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=SJiX8+7yWHd12oslGLUAKyhZDMc=; b=fKA/yl+/JSm4SFmSO7CWs5O
+	wFp/hBK74ajds7hnqWTb0Mt5YiJG2iN2m+PykOk8kEPtPJEnPQtqQ7FNunSR1N3G
+	uj0wXEzFdXlkfh/aOIWlPugqeFHTu9mx2E4FvIqWmeUGZup1ogV7MnrWrV/ezwjK
+	RrdmDoWK26Xf4VdTU6VA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=ugLVNawUEfTJAPLN0dh8+X8pryhnqILlELMExGszbMN/4fkDO
+	if9heIVLjBlL+MasJGQCjpMjtWOu9awSvg4viF/83T7I5+R8+IVqfjyzF2RV+5DU
+	J9gYphOD6TKDX/IN5oUaHEVXe0nYTUNK4Ma8GJQ2WnNQc4xfn2ZmYoUmrQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 033CCBE470;
+	Tue, 22 Jun 2010 00:04:37 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0E391BE46B; Tue, 22 Jun
+ 2010 00:04:32 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4680A2FC-7DB3-11DF-8141-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149463>
 
-On 06/21/2010 01:00 AM, Jeff King wrote:
-> On Sun, Jun 20, 2010 at 09:54:39PM -0700, Junio C Hamano wrote:
->
->    
->> I generally take absense of responses as absense of interest and/or
->> support, not absense of objection.
->>
->> For this particular patch, I am mostly indifferent (i.e. no objection, but
->> no strong support neither).
->>      
-> Ditto. I don't personally have a use, but all of my concerns were
-> answered.
->
-> -Peff
->    
-Well, I have a use else I wouldn't have written this :^).
+Johan Herland <johan@herland.net> writes:
 
-Absent this patch, the default commit hook is always computing a diff 
-against HEAD and that is wrong when amending a commit. Folks may not 
-care, but that is an error so this patch fixes an existing bug. I'll 
-leave it at that.
+> True, but as I've argued above, I'm not sure that adding another setting 
+> (aka. .merge_branch) for this special/limited kind of branch tracking is 
+> worth it.
 
-Mark
+I don't think .merge_branch is necessary nor even desired.  In fact, I
+think your use of .branch, especially in the variant that does not have
+any submodule entry in the superproject tree, of your version (B) does not
+have conceptual advantage.  You checkout the superproject first (which
+would be the natural thing to do, as you may get update to its .gitmodules
+there), and checkout the then-tip of the named branch of the submodule,
+you would immediately get a stale checkout when you then go fetch the
+updates to the submodule.
+
+And the worst part is that you wouldn't even _notice_ that your checkout
+is stale, as there is no record in the superproject which commit you were
+supposed to be using to be consistent with the version the committer of
+the superproject commit used to record it.
+
+I on the other hand think what you called "hybrid" makes sense (and I
+don't even think it is hybrid but rather is a natural way to do this).
+With the submodule.*.branch entry, you can:
+
+ - make sure that your checkout is consistent; if your submodule checks
+   out a different commit or branch from what the superproject records in
+   its tree or in its .gitmodules (e.g. you forgot to update the submodule
+   when you switched superproject branch), git can notice the situation
+   and can help you implement policy decisions;
+
+ - record a commit that is different from the tip of the submodule branch
+   when making a superproject commit; git can notice the situation and can
+   help you implement policy decisions (e.g. you could choose to reject
+   and tell the user to advance the submodule branch first before making
+   the commit in the superproject);
+
+ - use it as an advisory "existing merge commit selector", as discussed in
+   this thread.
+
+Thinking about what would happen in your (B) that doesn't record the exact
+commit, I think that it doesn't have any advantage over the "hybrid" one.
+The "hybrid" one can help you to make sure that what you commit in the
+superproject's .gitmodules and submodule's branch tip are kept consistent.
+When they are kept consistent, then switching branches in the superproject
+should always flip between the tips of branches, no?
