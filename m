@@ -1,79 +1,60 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4] Do not decode url protocol.
-Date: Tue, 22 Jun 2010 23:39:46 +0200
-Message-ID: <vpqmxumu4pp.fsf@bauges.imag.fr>
-References: <4C211A39.2080207@obry.net>
+From: Michel Lespinasse <walken@google.com>
+Subject: gitk --show-notes support in git.git repository
+Date: Tue, 22 Jun 2010 15:21:35 -0700
+Message-ID: <AANLkTilrNpJJgOmW06SdKATP1wkhX8uflcKQ_IXOKrIP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Tue Jun 22 23:40:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 23 00:21:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORBCJ-0005Lb-Rv
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 23:40:00 +0200
+	id 1ORBqi-00088f-D9
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 00:21:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099Ab0FVVjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jun 2010 17:39:53 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:39874 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750777Ab0FVVjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jun 2010 17:39:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o5MLVLev020642
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 22 Jun 2010 23:31:21 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1ORBC7-0004xd-AO; Tue, 22 Jun 2010 23:39:47 +0200
-In-Reply-To: <4C211A39.2080207@obry.net> (Pascal Obry's message of "Tue\, 22 Jun 2010 22\:16\:57 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 22 Jun 2010 23:31:21 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o5MLVLev020642
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1277847084.42474@vZeuwOysaR7unzd0HuVklQ
+	id S1752546Ab0FVWVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jun 2010 18:21:39 -0400
+Received: from smtp-out.google.com ([74.125.121.35]:43550 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752413Ab0FVWVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jun 2010 18:21:38 -0400
+Received: from hpaq5.eem.corp.google.com (hpaq5.eem.corp.google.com [172.25.149.5])
+	by smtp-out.google.com with ESMTP id o5MMLbid020046
+	for <git@vger.kernel.org>; Tue, 22 Jun 2010 15:21:37 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1277245297; bh=JWGz3MuxZ9Pv2N/K5tj7wQNdy90=;
+	h=MIME-Version:Date:Message-ID:Subject:From:To:Content-Type;
+	b=buMpipH0Rn7IfWCy3KL9a55QqOMsgwo6yi8KDF+hF5O6eg893T5HI0WuvURC9U2ju
+	 vEwwuQs1iSk5xA02XQ3fQ==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=mime-version:date:message-id:subject:from:to:content-type:x-system-of-record;
+	b=sutbhI4Yg1i9Qar6SkJlnILfh+BLABY4g5Lmj/4eulm1SD/gY5y25NojO4ZgV1EvT
+	OfY04NzSakVInuCW/BBgw==
+Received: from gyg10 (gyg10.prod.google.com [10.243.50.138])
+	by hpaq5.eem.corp.google.com with ESMTP id o5MMLZFA026958
+	for <git@vger.kernel.org>; Tue, 22 Jun 2010 15:21:36 -0700
+Received: by gyg10 with SMTP id 10so3469971gyg.20
+        for <git@vger.kernel.org>; Tue, 22 Jun 2010 15:21:35 -0700 (PDT)
+Received: by 10.229.237.144 with SMTP id ko16mr3604075qcb.68.1277245295366; 
+	Tue, 22 Jun 2010 15:21:35 -0700 (PDT)
+Received: by 10.229.78.11 with HTTP; Tue, 22 Jun 2010 15:21:35 -0700 (PDT)
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149495>
 
-Pascal Obry <pascal.obry@gmail.com> writes:
+Hi,
 
-> When using the protocol git+ssh:// for example we do not want to
-> decode the '+' as a space. The url decoding must take place only
-> for the server name and parameters.
->
-> This fixes a regression introduced in 9d2e942.
-> ---
->  url.c |   19 +++++++++++++++----
->  1 files changed, 15 insertions(+), 4 deletions(-)
->
-> Ok, so this is the fourth version of this patch. Thanks again Matthieu
-> for the review. I think this time I got the place for the message
-> right :)
-
-Hmm, what's so unclear in "between the --- (tripple) and the
-diffstat." ;-) ? (especially the "between" part)
-
-> +       /* Skip protocol if present. */
-> +       if (with_protocol) {
-> +         first_slash = strchr(*query, '/');
-> +
-> +         while (q < first_slash)
-> +               strbuf_addch(&out, *q++);
-> +       }
-
-Nothing personal, but you messed up indentation. Git indents with tabs
-(8 chars width), not 2 spaces.
+I notice that the gitk version in
+git://git.kernel.org/pub/scm/gitk/gitk.git now uses --show-notes by
+default, but this change has not been pulled into
+git://git.kernel.org/pub/scm/git/git.git yet. Is there any reason not
+to ? I am eager to see notes getting more widely supported.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michel "Walken" Lespinasse
+A program is never fully debugged until the last user dies.
