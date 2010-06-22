@@ -1,73 +1,82 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: git svn relocate [SCRIPT]
-Date: Tue, 22 Jun 2010 15:11:15 +0000
-Message-ID: <AANLkTil6VEPqJxp4wiE7f25zmrnZ9vS1M-f4tFuV4pMO@mail.gmail.com>
-References: <20100622114043.1419733jtkx6m0co@webmail.tu-harburg.de>
-	<m3r5jznr9z.fsf@localhost.localdomain>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3] Do not decode url protocol.
+Date: Tue, 22 Jun 2010 18:08:52 +0200
+Message-ID: <vpq39wf82y3.fsf@bauges.imag.fr>
+References: <AANLkTik2M4Wxa-C6iRf7ShlcrwXu1ALNXtKwbA-mO5ge@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Stimming <christian@cstimming.de>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 22 17:11:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Tue Jun 22 18:12:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OR58H-0006E1-UW
-	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 17:11:26 +0200
+	id 1OR65W-00074X-JF
+	for gcvg-git-2@lo.gmane.org; Tue, 22 Jun 2010 18:12:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758356Ab0FVPLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jun 2010 11:11:17 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:53591 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756450Ab0FVPLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jun 2010 11:11:16 -0400
-Received: by iwn38 with SMTP id 38so985964iwn.19
-        for <git@vger.kernel.org>; Tue, 22 Jun 2010 08:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=TrFBePAa2kfBa0PNT0pwAXerRHbBBijGIpDwKVrjFjU=;
-        b=Tlu6e06SY2uYI9JPHFn853+ZNmDZiEt5/xz+8BoqcfngKfI8RoWjiRacdhsCRILYU7
-         xyBGOIFRpieDOfFNi6kRe9vOy9//yaOFn1usf7DnpvRAkRmY7lRIAsItXUYvi1DY+31w
-         HthiYp7630N/kfz8XzhBr8eTggt33FTxqtbQk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=SfGFaOxGpayOhyyTMIg6V+m0GNf35ZoX0Tkb/mZAGJR8lTVCKKH69pc7gRfGqJ3wdf
-         3qVg6hlgO2gnlnyQoZcpB/HP1tcA4ZteHFVtkwctxeuSVBChua3vuI1tFPzwHyd/n9q1
-         hmMxH8g7rpWrUBm5jRbqPYS9Gohh47bZIPv2A=
-Received: by 10.231.176.72 with SMTP id bd8mr7861141ibb.0.1277219475856; Tue, 
-	22 Jun 2010 08:11:15 -0700 (PDT)
-Received: by 10.231.158.195 with HTTP; Tue, 22 Jun 2010 08:11:15 -0700 (PDT)
-In-Reply-To: <m3r5jznr9z.fsf@localhost.localdomain>
+	id S1752199Ab0FVQMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jun 2010 12:12:32 -0400
+Received: from imag.imag.fr ([129.88.30.1]:50806 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750944Ab0FVQMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jun 2010 12:12:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o5MG8qxP014877
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 22 Jun 2010 18:08:52 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OR61s-0001Uk-R2; Tue, 22 Jun 2010 18:08:52 +0200
+In-Reply-To: <AANLkTik2M4Wxa-C6iRf7ShlcrwXu1ALNXtKwbA-mO5ge@mail.gmail.com> (Pascal Obry's message of "Tue\, 22 Jun 2010 13\:58\:17 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 22 Jun 2010 18:08:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149483>
 
-On Tue, Jun 22, 2010 at 13:15, Jakub Narebski <jnareb@gmail.com> wrote:
-> If you can put this script somewhere (e.g. GitHub, or repo.or.cz), could you
-> please add information about it to InterfacesFriontendsAndTools page on Git
-> Wiki (http://git.wiki.kernel.org)?
+Pascal Obry <pascal@obry.net> writes:
+
+> -- 
+> 1.7.1.524.g6df2f
 >
-> Alternatively, perhaps you could send it as a patch adding it to somwehere
-> in the contrib/
+> Ok, given Matthieu comments here is another version of the patch which
+> should apply cleanly
+> and won't clobber log message with my comments!
 
-This is part of the "Reconstructing git-svn metadata after a git
-clone"[1] problem for which there's an open thread. You have to
-rewrite history using git-filter-branch to fix the branch references
-if you need to change the SVN URL.
+Thanks for making the life of our maintainer easier :-).
 
-It would be nice if you could specify that sed replacement in some
-git-svn config file if you needed to change e.g. someone's http://
-clone to a svn+ssh:// clone without rewriting the whole thing.
+Unfortunately, it's still not the right place for comments ;-). That's
+OK with Git AFAICT, but readers expect them between the --- (tripple)
+and the diffstat.
 
-Would that sort of thing be possible? Eric?
+Unless I missed something, this version doesn't address my earlier
+comment:
 
-http://kerneltrap.org/mailarchive/git/2010/5/8/30062
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
+> Pascal Obry <pascal@obry.net> writes:
+>
+>> @@ -70,9 +70,18 @@ static int url_decode_char(const char *q)
+>>  static char *url_decode_internal(const char **query, const char *stop_at)
+>>  {
+>
+> This function is called from multiple places :
+
+[...]
+
+> I don't think you want to avoid escaping until the first slash in
+> url_decode_parameter_name and url_decode_parameter_value. I think you
+> want to patch url_decode, not url_decode_internal.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
