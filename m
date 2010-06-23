@@ -1,94 +1,104 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 2/3] builtin/checkout: change -b from an OPTION_STRING to 
-	a OPTION_SET_INT
-Date: Thu, 24 Jun 2010 03:04:41 +0800
-Message-ID: <AANLkTikYgbVlyLlaba2G2CTFc0wFgylPRvhm-BX0igFz@mail.gmail.com>
+Subject: Re: [PATCH 3/3] builtin/checkout: learn -B
+Date: Thu, 24 Jun 2010 03:13:25 +0800
+Message-ID: <AANLkTinBBuxPKiflz1qMvbuNk8ACSN8IjVcAbefawony@mail.gmail.com>
 References: <7vpqzlrmo4.fsf@alter.siamese.dyndns.org>
 	<1277140782-4064-1-git-send-email-rctay89@gmail.com>
 	<1277140782-4064-2-git-send-email-rctay89@gmail.com>
 	<1277140782-4064-3-git-send-email-rctay89@gmail.com>
-	<AANLkTikyugBxwyCu0GY4dTLW6n_OQhIPNnPfd0_i6k0t@mail.gmail.com>
+	<1277140782-4064-4-git-send-email-rctay89@gmail.com>
+	<7vr5jxegvd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>, Clemens Buchacher <drizzd@aon.at>,
-	Michel Lespinasse <walken@google.com>
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 23 21:04:49 2010
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Michel Lespinasse <walken@google.com>,
+	Erick Mattos <erick.mattos@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 23 21:13:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORVFh-0003kl-52
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 21:04:49 +0200
+	id 1ORVOA-00009Y-Hg
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 21:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927Ab0FWTEn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jun 2010 15:04:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54793 "EHLO
+	id S1753328Ab0FWTN2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jun 2010 15:13:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:36851 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751794Ab0FWTEm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jun 2010 15:04:42 -0400
-Received: by iwn1 with SMTP id 1so38312iwn.19
-        for <git@vger.kernel.org>; Wed, 23 Jun 2010 12:04:42 -0700 (PDT)
+	with ESMTP id S1751458Ab0FWTN1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jun 2010 15:13:27 -0400
+Received: by iwn1 with SMTP id 1so45839iwn.19
+        for <git@vger.kernel.org>; Wed, 23 Jun 2010 12:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=J1Ij2xCRPdbC43Pr9wJhtEj2QLE0cmXWZWvMtsqMyT0=;
-        b=dNcpTUp/vv+GMp6z9lJs7iAI8VxyaPvQo5DdLWXRzRlDYYXT+sjm2T9YGOwyc+9d/T
-         jPXYDpt58K7E3ud9OIQPt1tWrDtyE4hKzA5OBIdBBbTtXvohNeudCTV+r5Mn6s/vrplf
-         sjuzeUliPt9Wz+Us/+yjfCSBFnxMjcvs+XNBE=
+        bh=TvOBHqDOCLayWJU/j+lIL1GPdPqJ//iqN6Yujpiddjs=;
+        b=CIG8BA7QsaZkjuzr4RZdH2dBNKhfkHDKyGJEGgyM1b3JMb/96vWzMoxQ3raRCCG8Hr
+         /767tYo6YyrHgl8avGSULb+k81x5LruRnd3/kMO7jv3EAYLPKno2BJ82fYkJoEyBYX8/
+         mIj0PmYljpxOH2d69HR1r9uVEgH0RXEtF9cdI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=bo4Kg1Z+fVIbjsAJ5fu1/Ft6Jd4eoIFV3QcMVJ33M/ps1k9bynWCyVI8KxDMjz+wt5
-         K3VJB0Fg6qhUlB2JiJ19Qtb4EdnMwbbJZKjF4Yh3yYDRik7lsA3XTCKj5F7K/8LE0K2y
-         Ezq3y9ZFwPr5i/0XFT9RBmsZgLXtEv0w2b1T8=
-Received: by 10.231.139.148 with SMTP id e20mr9488088ibu.164.1277319882098; 
-	Wed, 23 Jun 2010 12:04:42 -0700 (PDT)
-Received: by 10.231.17.193 with HTTP; Wed, 23 Jun 2010 12:04:41 -0700 (PDT)
-In-Reply-To: <AANLkTikyugBxwyCu0GY4dTLW6n_OQhIPNnPfd0_i6k0t@mail.gmail.com>
+        b=jWfHavUSn+l3PWMAIcjF/mIoKlinH0MlKCPLUcpqHb5Vn9SJD+w9qLp8GnFYvJOQpb
+         o4cDLhygIvSU3PkXmdNmtAVJlewQvOWhoEkVbtzABiecwH1XZE/P1FIRiWlthJ/zMOn0
+         3qyGeBkYbWxmdMbM8XUYI+mhk1Sv49Hqc4lqY=
+Received: by 10.231.169.9 with SMTP id w9mr9706191iby.58.1277320405799; Wed, 
+	23 Jun 2010 12:13:25 -0700 (PDT)
+Received: by 10.231.17.193 with HTTP; Wed, 23 Jun 2010 12:13:25 -0700 (PDT)
+In-Reply-To: <7vr5jxegvd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149531>
 
-Hi,
+On Thu, Jun 24, 2010 at 2:36 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Tay Ray Chuan <rctay89@gmail.com> writes:
+>
+>> diff --git a/Documentation/git-checkout.txt b/Documentation/git-chec=
+kout.txt
+>> index 261dd90..5849e13 100644
+>> --- a/Documentation/git-checkout.txt
+>> +++ b/Documentation/git-checkout.txt
+>> @@ -31,6 +31,13 @@ were called and then checked out; in this case yo=
+u can
+>> =A0use the `--track` or `--no-track` options, which will be passed t=
+o
+>> =A0'git branch'. =A0As a convenience, `--track` without `-b` implies=
+ branch
+>> =A0creation; see the description of `--track` below.
+>> ++
+>> +If `-B` is given, <branch> is created if it doesn't exist; otherwis=
+e, it
+>> +is reset. This is equivalent to
+>> ++
+>> +------------
+>> +$ git branch -f <branch> [<start point>] && git checkout <branch>
+>> +------------
+>
+> It is somewhat sad if these are truly equivalent. =A0In the above seq=
+uence,
+> "git checkout <branch>" could stop to prevent you from clobbering you=
+r
+> local changes, but at that point the branch has already been updated.
+>
+> I was hoping that the check (and stop) can be done first and then the
+> branch head is cloberred after you know you will succeed the checkout=
+=2E
 
-On Tue, Jun 22, 2010 at 7:04 AM, Erick Mattos <erick.mattos@gmail.com> =
-wrote:
-> Hi,
->
-> 2010/6/21 Tay Ray Chuan <rctay89@gmail.com>:
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index 1994be9..e794e1e 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -32,7 +32,8 @@ struct checkout_opts {
->> =A0 =A0 =A0 =A0int writeout_stage;
->> =A0 =A0 =A0 =A0int writeout_error;
->>
->> - =A0 =A0 =A0 const char *new_branch;
->> + =A0 =A0 =A0 int new_branch;
->> + =A0 =A0 =A0 const char *new_branch_name;
->
-> The change of name of the existent variable creates more hassle than
-> helps.
->
-> As you are adding a new option I suggest you to create a new
-> variable named new_branch_forced or whatever. =A0This way you avoid
-> making a lot of changes as you did and minimize the possibility of
-> adding new bugs by not catching all the problems affected by the
-> name change.
+hmm - would
 
-Erick, thanks for the suggestion - I've a new iteration that takes
-some of your points.
+  git checkout <branch> && git reset --keep <start point>
+
+make the cut?
 
 --=20
 Cheers,
