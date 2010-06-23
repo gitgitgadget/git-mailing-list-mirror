@@ -1,57 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Bruce Korb <bruce.korb@gmail.com>
 Subject: Re: Newbie question: how can I list added files?
-Date: Wed, 23 Jun 2010 10:43:16 -0700
-Message-ID: <7vzkylejbf.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinxOE5xcP_V-PvoZGlfsxtcCafoYKy_PuBZnQnQ@mail.gmail.com>
+Date: Wed, 23 Jun 2010 10:50:11 -0700
+Message-ID: <AANLkTikE2ylLXk5XxNGvcvol6R-puSTzPurdLcNMYaZJ@mail.gmail.com>
+References: <AANLkTinxOE5xcP_V-PvoZGlfsxtcCafoYKy_PuBZnQnQ@mail.gmail.com> 
+	<7vzkylejbf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: GIT List <git@vger.kernel.org>
-To: Bruce Korb <bruce.korb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 23 19:43:32 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 23 19:50:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORTz1-0001rQ-4z
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 19:43:31 +0200
+	id 1ORU5v-0005yq-AC
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 19:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441Ab0FWRn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jun 2010 13:43:26 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44223 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751057Ab0FWRnZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jun 2010 13:43:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4690CBE18D;
-	Wed, 23 Jun 2010 13:43:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YtpznPln6rPe4/GXjeXokYQZIl8=; b=Z/5eOM
-	5fGbF6soWcTXXrpJkd6ZYrq7dzYfWt4seMZ21FZoKrhdoVSzAGrO254SgmE5+FG+
-	ufCQGDVHhhD97mueZ+od6Ojtp3LQkiDoS3FhiaM63wnvSgP8rZDe20+BHbxHLfWN
-	vy+Kst0OgKmP7+rAkWao/utpbBfnsYaZMkJBQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V9HTj3wuQyhDiJ70XFZV/W0ZvcAvcWCS
-	SAYbdn0eeck/p5SfwrXAkOPmtfMwhZ9u6YHN9ccomGxY5Ti9gjJgX+2a79jliouA
-	AJkVzA5HBMnsVSA370hQIpV0teBU0RctvbAew3IVw3BMBjLwnMHq04srZVX0eCpM
-	lDDyiFfLJ5Y=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 21A92BE18B;
-	Wed, 23 Jun 2010 13:43:21 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52C94BE18A; Wed, 23 Jun
- 2010 13:43:18 -0400 (EDT)
-In-Reply-To: <AANLkTinxOE5xcP_V-PvoZGlfsxtcCafoYKy_PuBZnQnQ@mail.gmail.com>
- (Bruce Korb's message of "Wed\, 23 Jun 2010 10\:31\:07 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D0945920-7EEE-11DF-9172-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752112Ab0FWRue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jun 2010 13:50:34 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:55982 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751345Ab0FWRud (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jun 2010 13:50:33 -0400
+Received: by gxk28 with SMTP id 28so288004gxk.19
+        for <git@vger.kernel.org>; Wed, 23 Jun 2010 10:50:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=tw4cQH4TfucCzPcA9qq+aorTtBnNeEKRV/kFlJ3AfIo=;
+        b=TARsRQlRCiKGpGtwO7bLvcu4ZJ8EMxJsSQZ9PuMgMc19qV9VGFBz0m8j2i4dSx+8uK
+         SI8SzWuXC68P1YqEK+zuT6Cyr8iqKeVj2w/EllgaNmJZV5cImr7E0e1XJ/KshODKIPre
+         JQ3C4bCtTxMcr2rkuE2cHmQWhFn6Ebetawdbk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Cas4Qp1NxPe+WB40av5p/PuJO5R4mrabMs7NZERYLdvBbyQg+ZU8wtUQUOLUrq2VbG
+         UJPC2YIDYNUzST6DNySiZ8Wix8dYeqeOD56RVQBkNQBx0sTMw37Dc1w/iucl313GI7BC
+         SoF0mpKraqHyihzH37I6rcmw8uX/JFXRP4AEU=
+Received: by 10.101.50.19 with SMTP id c19mr6650043ank.266.1277315431110; Wed, 
+	23 Jun 2010 10:50:31 -0700 (PDT)
+Received: by 10.101.107.13 with HTTP; Wed, 23 Jun 2010 10:50:11 -0700 (PDT)
+In-Reply-To: <7vzkylejbf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149525>
 
-"git diff --name-only --diff-filter=A HEAD"?
+On Wed, Jun 23, 2010 at 10:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> "git diff --name-only --diff-filter=A HEAD"?
+
+Thank you, but "Nope."
+My added file doesn't show anything and not using the
+"--diff-filter" thing shows both added and not added files:
+
+$ git diff --name-only --diff-filter=A HEAD
+$ git-status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   sw/embedded/platform/strad/scripts/mk_relsrc.sh
+[...]
+$ git diff --name-only HEAD
+chip/chopin2/up/hdl/.sopc_builder/install.ptf
+chip/mozart/up_oam/hdl/.sopc_builder/install.ptf
+chip/mozart2/up/hdl/.sopc_builder/install.ptf
+chip/mozart2/up_ft/hdl/.sopc_builder/install.ptf
+sw/embedded/nios2/system/system.stf
+sw/embedded/platform/strad/scripts/mk_relsrc.sh
+sw/projects/nios2/modules/system/lib/system.stf
+$
