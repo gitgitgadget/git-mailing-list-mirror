@@ -1,99 +1,81 @@
-From: Martin Geisler <mg@lazybytes.net>
-Subject: Re: potential improvement to 'git log' with a range
-Date: Wed, 23 Jun 2010 21:19:17 +0200
-Message-ID: <877hlpimkq.fsf@hbox.dyndns.org>
-References: <w2j3abd05a91004091624mb2836ff4v118a1ae9ac5ca6e7@mail.gmail.com>
-	<m3tyrhfzg8.fsf@localhost.localdomain>
-	<87bpb1issa.fsf@hbox.dyndns.org> <201006232002.18921.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	mercurial list <mercurial-devel@selenic.com>,
-	git list <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Aghiles <aghilesk@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 23 21:19:33 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v2 0/3] teach git-checkout -B WAS builtin/checkout: DWIM with -f -b
+Date: Thu, 24 Jun 2010 03:28:57 +0800
+Message-ID: <1277321340-4000-1-git-send-email-rctay89@gmail.com>
+References: <1277140782-4064-1-git-send-email-rctay89@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Clemens Buchacher <drizzd@aon.at>,
+	Michel Lespinasse <walken@google.com>,
+	Erick Mattos <erick.mattos@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 23 21:29:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORVTw-0003ZZ-AX
-	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 21:19:32 +0200
+	id 1ORVdQ-0001aN-Uj
+	for gcvg-git-2@lo.gmane.org; Wed, 23 Jun 2010 21:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866Ab0FWTT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jun 2010 15:19:27 -0400
-Received: from fg-out-1718.google.com ([72.14.220.155]:8441 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751940Ab0FWTT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jun 2010 15:19:26 -0400
-Received: by fg-out-1718.google.com with SMTP id l26so459788fgb.1
-        for <git@vger.kernel.org>; Wed, 23 Jun 2010 12:19:25 -0700 (PDT)
-Received: by 10.86.124.35 with SMTP id w35mr9992063fgc.49.1277320764473;
-        Wed, 23 Jun 2010 12:19:24 -0700 (PDT)
-Received: from hbox.dyndns.org (77-58-145-114.dclient.hispeed.ch [77.58.145.114])
-        by mx.google.com with ESMTPS id 12sm12179627fgg.19.2010.06.23.12.19.23
+	id S1753467Ab0FWT3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jun 2010 15:29:16 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:40028 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753330Ab0FWT3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jun 2010 15:29:15 -0400
+Received: by pwj8 with SMTP id 8so1543963pwj.19
+        for <git@vger.kernel.org>; Wed, 23 Jun 2010 12:29:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=BrSAd5wsAp55UifVYYollpRnrnA10VmkaOI168SdWko=;
+        b=vTjiJBYB6PLBdMSMMqIgnDbU/pbpP9sYi/Ud+RkReFYc8ygO/yZKrsVeJtDbO9O1T7
+         YCHYb/fAL84N28hNxNaUC+hrK2auY5LFcy1G0m0dDBLZeChkb/a0zktL854sr0BP5wLj
+         OnK4W8blHMBxpJssQjWs4ZSDU3NcxBotMNtYs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Mvbcx4HIOJ3dYqbY7LrgKMbhwfKlPfO8M8/VEU0BPBp5hPCmuaTpA1c1Vzzo69v+d7
+         ifvcKORLmKEAI1yBM3jYSzdoyChWvkiA9LXfGDrLB7V8GEimqozuMQNoItyoa+Um7veN
+         sooAakL6EYvZW25VpET0Uwl6EQsjffM8ljhKY=
+Received: by 10.142.151.11 with SMTP id y11mr7806912wfd.77.1277321354820;
+        Wed, 23 Jun 2010 12:29:14 -0700 (PDT)
+Received: from localhost.localdomain (cm156.zeta152.maxonline.com.sg [116.87.152.156])
+        by mx.google.com with ESMTPS id p1sm570577rvq.0.2010.06.23.12.29.12
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 23 Jun 2010 12:19:23 -0700 (PDT)
-In-Reply-To: <201006232002.18921.jnareb@gmail.com> (Jakub Narebski's message
-	of "Wed, 23 Jun 2010 20:02:17 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+        Wed, 23 Jun 2010 12:29:14 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.513.g06a69
+In-Reply-To: <1277140782-4064-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149534>
 
---=-=-=
-Content-Transfer-Encoding: quoted-printable
+Right now, the -f/--force in git-checkout doesn't carry over to -b
+operations - ie. you can't do git checkout -b branch on an existing
+branch.
 
-Jakub Narebski <jnareb@gmail.com> writes:
+This patch allows you to do this with the -B option, so that one can do
 
-> On Wed, 23 Jun 2010, Martin Geisler wrote:
->
->> This is fixed with Mercurial 1.6: we now have a query language where
->> 'X..Y' (or 'X::Y') is understood as the set of changesets that are
->> both descendents of X and ancestors of Y.
->
-> Thanks. It looks like Mercurial's 'X::Y' is equivalent to Git's
-> '--ancestry-path X..Y' (the --ancestry-path option is a new feature).
+  git checkout -B branch ref
 
-Yeah, it is equivalent to --ancestry-path. I had no idea Git's range
-operator worked the way it does :-)
+which is equivalent to
 
-For mercurial-devel: 'X..Y' is a shorthand for '^X Y', which in turn
-means ancestors of Y, excluding ancestors of X (and excluding X).
+  git branch -f branch ref && git checkout branch
 
->>> [1]
->>> http://stackoverflow.com/questions/1598759/git-and-mercurial-compare-an=
-d-contrast/1599930#1599930
->
-> Fixed. Could you please take a look if it is correct, and if there are
-> errors, either correct it yourself, or ask me to do it (either via
-> comments for this question, or via email)? Thanks in advance.
+Changes from v1:
+ - reworked option handling
+ - don't replace <new_branch> with <branch> in documentation
 
-Yes, its correct now. But would you object if I or someone else took out
-all those personal opinions and rewrote it from a neutral point of view?
+Contents:
+[PATCH v2 1/3] add tests for checkout -b
+[PATCH v2 2/3] builtin/checkout: reword hint for -b
+[PATCH v2 3/3] builtin/checkout: learn -B
 
-> P.S. Isn't mercurial-devel subscribe only?
-
-No, not really -- you will be whitelisted the first time you post.
-
-=2D-=20
-Martin Geisler
-
-Mercurial links: http://mercurial.ch/
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkwiXjUACgkQ/GWFsD4LxSOQigCZAbDpRcY/9xtXbkmVRqZFxsFu
-fnUAnRFNYTYticHPWZSJiz3HON7O2Rfn
-=Md3s
------END PGP SIGNATURE-----
---=-=-=--
+ Documentation/git-checkout.txt |   21 +++++-
+ builtin/checkout.c             |   32 ++++++--
+ t/t2018-checkout-branch.sh     |  166 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 211 insertions(+), 8 deletions(-)
+ create mode 100755 t/t2018-checkout-branch.sh
