@@ -1,124 +1,104 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/9] Add treap implementation
-Date: Thu, 24 Jun 2010 14:22:34 -0500
-Message-ID: <20100624192234.GC1848@burratino>
-References: <20100624105004.GA12336@burratino>
- <20100624105706.GD12376@burratino>
- <AANLkTinYmKl4M10l3u5V7deleqSzr7iJDqf7X6ghtwRM@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 7/9] Add infrastructure to write revisions in fast-export 
+	format
+Date: Thu, 24 Jun 2010 21:29:29 +0200
+Message-ID: <AANLkTikyjq7HQY1hUTOGF_oBsGDj_jUI-GwDBRdacCzG@mail.gmail.com>
+References: <20100624105004.GA12336@burratino> <20100624110217.GG12376@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, David Michael Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Daniel Shahaf <d.s@daniel.shahaf.name>,
 	Eric Wong <normalperson@yhbt.net>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 24 21:22:52 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 24 21:29:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORs0h-0000Bq-Es
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 21:22:51 +0200
+	id 1ORs7Y-0003Os-FT
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 21:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754780Ab0FXTWp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 15:22:45 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36106 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751070Ab0FXTWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 15:22:44 -0400
-Received: by iwn41 with SMTP id 41so1142300iwn.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 12:22:44 -0700 (PDT)
+	id S1752494Ab0FXT3v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 15:29:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:40302 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751639Ab0FXT3u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jun 2010 15:29:50 -0400
+Received: by gwaa18 with SMTP id a18so969305gwa.19
+        for <git@vger.kernel.org>; Thu, 24 Jun 2010 12:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=iLOIXkjRW5C3pBrJ3K/q0TqenepLS7+uzq9foXMort4=;
-        b=ZDcF0HuajvrbopO+CbNLeRRjVH8ylH7QOOQLK3Oa73eZtdoJSujQupnK0exUoqJGmP
-         AxYpx/7yhZ1/IqitxLg9P/81sP0umJEtfHzb/pzDRDsfWMdFVF5N6JPLyXPVeR2jj6eO
-         sKslvqQ09RhykuWKcZpkfA7qtBxyz7gQ5HGr4=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dHbsFw3UHIQYxTr59nDr79e4wuQWte0zxOvColwLmg0=;
+        b=xq1bMF1wUZtmea+0Z7YiANBLkuAmy5/xTTNLNMKG//5yLHXgtqH3FuEyUcifu+vMxP
+         JNc7PxoIi6sTRtlgfYumXF43WIpjz/Cg41+U9UC/4zwcmBrimmt9HOh1aWXQOpJO9lV2
+         Mb1kL0hsN+c7ca3+Ck8WK/acb+2YjdrTr62QI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=PGxJtAtn3dLkk3jWd5a58bGPwPsNFLzcQcgpHwoI2FZX6nJld53nWoeHO3aUK4wxuA
-         2H9dP9OfKwN1L1aPg0/CrFXav+3BCRcyMmWZLPOibiYk3usfb9NBNJDBT62hwq+qPT9I
-         iybaA3mWcD0ahGR30hWql+hmfASQWFegFsA6Y=
-Received: by 10.231.124.5 with SMTP id s5mr11233688ibr.195.1277407364299;
-        Thu, 24 Jun 2010 12:22:44 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id r12sm36290612ibi.20.2010.06.24.12.22.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jun 2010 12:22:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinYmKl4M10l3u5V7deleqSzr7iJDqf7X6ghtwRM@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=eseNTeHDxofG+KkrSt3fX46TJqp6V8++mrv9psciA2fPPh6u/Gagmg3rHuFewoXkhU
+         cYMEi7BsfHqJ3F7DWuNbFuOSJw3hPpzoVE+zFlXLP0hZ47zaxkjZ2DKYa+Rrev4ECamM
+         DasHmGooJAjURYTbN2eRNlrteS/4LJrMLLVMM=
+Received: by 10.229.234.3 with SMTP id ka3mr5631903qcb.261.1277407789158; Thu, 
+	24 Jun 2010 12:29:49 -0700 (PDT)
+Received: by 10.229.45.71 with HTTP; Thu, 24 Jun 2010 12:29:29 -0700 (PDT)
+In-Reply-To: <20100624110217.GG12376@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149625>
 
-Ramkumar Ramachandra wrote:
+Hi again,
 
-> David is currently working on
-> a Java implementation of a immutable ternary treap and will
-> re-implement it as C macros. See the ternary-treap branch.
+Jonathan Nieder wrote:
+> repo_tree maintains the exporter's state and provides a facility to t=
+o
+> call fast_export, which writes objects to stdout suitable for
+> consumption by fast-import.
 
-I assume his blog post from a week or so ago[1] is relevant.
+These files will also change significantly in a few days- see the
+ternary_treap branch.
 
-The trie-based version should be interesting but less generic (which
-is fine, since we only have two users and both use string keys).
+> The exported functions roughly correspond to Subversion FS operations=
+=2E
 
->> =C2=A0$(VCSSVN_OBJS): \
->> - =C2=A0 =C2=A0 =C2=A0 vcs-svn/obj_pool.h
->> + =C2=A0 =C2=A0 =C2=A0 vcs-svn/obj_pool.h vcs-svn/trp.h
+This description is sufficient for the commit message.
+
+> =C2=A0. repo_add adds a file to the current commit.
 >
-> Interesting how you've shown this in every patch :)
+> =C2=A0. repo_modify adds a replacement for an existing file;
+> =C2=A0 it is implemented exactly the same way, but a check could be
+> =C2=A0 added later to distinguish the two cases.
+>
+> =C2=A0. repo_copy copies a blob from a previous revision to the curre=
+nt
+> =C2=A0 commit.
+>
+> =C2=A0. repo_replace modifies the content of a file from the current
+> =C2=A0 commit, if and only if it exists.
+>
+> =C2=A0. repo_delete removes a file or directory from the current comm=
+it.
+>
+> =C2=A0. repo_commit calls out to fast_export to write the current com=
+mit to
+> =C2=A0 the fast-import stream in stdout.
+>
+> =C2=A0. repo_diff is used by the fast_export module to write the chan=
+ges
+> =C2=A0 for a commit.
+>
+> =C2=A0. repo_reset erases the exporter's state, so valgrind can be ha=
+ppy.
 
-It would have been less messy to use
+This is like API documentation- should it go into the commit message?
+Maybe put this in a a dedicated repo_tree.txt like trp.h?
 
- $(VCSSVN_OBJS): \
-	vcs-svn/obj_pool.h \
-	vcs-svn/trp.h \
-	... \
-
-or
-
- $(VCSSVN_OBJS): vcs-svn/obj_pool.h
- $(VCSSVN_OBJS): vcs-svn/trp.h
- ...
-
-I just can=E2=80=99t bring myself to care much. :)
-
-> > +/*
-> > + * Fibonacci hash function.
-> > + * The multiplier is the nearest prime to (2^32 times (=E2=88=9A5 =
-- 1)/2).
-> > + * See Knuth =C2=A76.4: volume 3, 3rd ed, p518.
-> > + */
->=20
-> Um, is it alright to put non-ascii characters in a file containing
-> code?
-
-Yes, UTF-8 is sometimes used in comments for people=E2=80=99s names.  S=
-ee
-builtin/branch.c, for example.
-
-> The documentation is good, but I don't see it merged into the tree.
-> Perhaps send a patch to David?
-
-Yes.  I should send some other patches, too, to minimize the delta.
-
-> Also, you might want to include the
-> technical explanation for using treaps from the commit message here?
-
-Good idea, thanks!
-
-Jonathan
-
-[1] http://barrbrain.github.com/2010/06/19/relocatable-immutable-random=
-ised-ternary-search-tree-part-2.html
+-- Ram
