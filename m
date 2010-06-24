@@ -1,123 +1,95 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [GSoC update extra!] git-remote-svn: Week 8
-Date: Thu, 24 Jun 2010 13:07:52 -0500
-Message-ID: <20100624180752.GA1642@burratino>
-References: <1277386408-29943-1-git-send-email-artagnon@gmail.com>
- <20100624173956.GA1600@burratino>
+Subject: Re: [PATCH/RFC v2 0/9] Subversion dump parsing library
+Date: Thu, 24 Jun 2010 13:24:24 -0500
+Message-ID: <20100624182424.GA1798@burratino>
+References: <20100624105004.GA12336@burratino>
+ <AANLkTilGNaF05EW2IFUpjOx-lP8sDoCkSrsa1-vMZo6B@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
+Cc: git@vger.kernel.org, David Michael Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
 	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Junio C Hamano <gitster@pobox.com>,
 	Eric Wong <normalperson@yhbt.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 24 20:08:15 2010
+X-From: git-owner@vger.kernel.org Thu Jun 24 20:24:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORqqT-0007JM-RO
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 20:08:14 +0200
+	id 1ORr6P-0006Yc-WF
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 20:24:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632Ab0FXSII convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 14:08:08 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54327 "EHLO
+	id S1754327Ab0FXSYh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 14:24:37 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64598 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab0FXSIG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 14:08:06 -0400
-Received: by iwn41 with SMTP id 41so1084392iwn.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 11:08:04 -0700 (PDT)
+	with ESMTP id S1753547Ab0FXSYg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 14:24:36 -0400
+Received: by iwn41 with SMTP id 41so1097021iwn.19
+        for <git@vger.kernel.org>; Thu, 24 Jun 2010 11:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=faffwcUq0pJVJlE0teuK7jcyUgLJpDzDFYP627ShfMo=;
-        b=In4UTTnvkZRYXc/uD7XAZrkXPtZ+luo2jv93+jNqslGtK/Bh1ac6C8tLVO/myfkiT3
-         n0BjLwbXOt+zdGt5x4E9npAiwujLUBeR0XPoktJCo7SvdhVMm6CYHK50MuSxNdA4re/L
-         3TJFzgqCHzkDPKgqk0BBc//ZQ+kwKDt4oObUc=
+        bh=neBrhg5RB+DkrQUgCFCJBSg5U/grHlKjI1g2WP+6qgc=;
+        b=BB5xQPYY6g56G2f8ChGEZaaHNItksdGKNGDjmV3CBCPCoL4DXniffHvTAtdGhKUHxX
+         w7f/oawFq9Mas06iQMrqu4jVRKPQWznW4iqQ7Ho0jZWpiAUWkMNkQDxxH0Lxbst+6MIY
+         5qqMgLO21WOU2a6o8kZdorNBnkEZEW/4gIesg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=A/33LbobMURNkHXt8GRQUhAle/fQ35rbLq1YD3WAtf6p+W0r86+qqx/d+mJqIwa7WA
-         pvXufF3AlH44k73cWZzSAL2l6mz/xYxn8DmtlTyRYuHqWbzz6mDn1e8ILyFSzTGZE+Dm
-         FqUO5KzmU4vsfe/TKjfcS2peLS3+KwzAVtR+o=
-Received: by 10.231.36.9 with SMTP id r9mr10033567ibd.105.1277402884553;
-        Thu, 24 Jun 2010 11:08:04 -0700 (PDT)
+        b=h21va/+Kbx60+IqZqQRtcgws8FhDaI+CcrzfeppMaQWqaUz4XTJpTl3zS+PL+glPge
+         jT9/P1NrsJAPLHqHA1ASLqtWNBcONnGVmYMdn3UK4DOM6Vot9jhNbX4p0KwDeuP5+FLO
+         JuClt66ptK059x9AX/A16lJizUOYK6wDFRDig=
+Received: by 10.231.148.131 with SMTP id p3mr11707747ibv.18.1277403875882;
+        Thu, 24 Jun 2010 11:24:35 -0700 (PDT)
 Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id f1sm18764876ibg.21.2010.06.24.11.08.02
+        by mx.google.com with ESMTPS id b3sm18011209ibf.19.2010.06.24.11.24.34
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jun 2010 11:08:03 -0700 (PDT)
+        Thu, 24 Jun 2010 11:24:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100624173956.GA1600@burratino>
+In-Reply-To: <AANLkTilGNaF05EW2IFUpjOx-lP8sDoCkSrsa1-vMZo6B@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149616>
 
-Jonathan Nieder wrote:
+Ramkumar Ramachandra wrote:
 
-> Git has all the blobs and all the trees, so except for the mapping
-> between marks, subversion revs, and git revs, svn-fe does not need to
-> persist much data at all.
->=20
-> Of course, that requires that the fast-import stream is going directl=
-y
-> to git.
+> There's a lot of work happening in the exporter and the series will
+> probably need to be re-rolled again: I recommend the following.
+> 1. Review this series thoroughly, but don't actually merge it because
+> it's going to be re-rolled soon.
 
-One more thought.
+To be more specific: although svndump.c, fast_export.c, and
+repo_tree.c may need to be a bit slushy now while we figure out the
+incremental import story, the rest of the series is not likely to
+change much in broad strokes.  I get the impression that facilities
+like strbuf and string_list benefit greatly from early review, so in
+particular let me mention the facilities this series adds:
 
-If we are tracking the history of separate subversion branches separate=
-ly,
-then reading back trees includes an oddity:
+ . obj_pool, an array of fixed-size records that can be written to
+   disk.  This is just begging to be implemented with mmap; maybe
+   in the future the compat/mmap.c shim can be tweaked to support
+   faking it.
 
-Suppose someone tries to reimplement git-svn on top of svn-fe[1].
+ . treap, a multiset datastructure built on top of obj_pool.  I
+   suspect API cleanups would be welcome here: it=E2=80=99s a bit more
+   unwieldly than string_list at the moment.
 
- $ git svn --fe clone --stdlayout http://path/to/some/svn/root
+ . string_pool, a collection of interned strings built on top of
+   treap.
 
-Behind the scenes, git-svn processes the fast-import stream it is
-receiving and writes its _own_ fast-import stream with paths munged
-and commits split up into separate commits on each branch.  Good.
+ . line_buffer, a simple fread()/fgets() wrapper with a static buffer.
 
-Now the oddity: suppose that in the repository, svn-fe finds an
-
- svn copy branches@r11 branches-old
-
-operation.  In other words, it needs the tree for
-http://path/to/some/svn/root/branches@r11.  This does not correspond
-to a single git tree, since the content of each branch has been given
-its own commit.
-
-However, this does not seem to be fatal: one could just make
-=E2=80=98git svn --fe=E2=80=99 build a branch with the full history at =
-the same time
-as it builds the other branches.  Ugly, but I don=E2=80=99t see another=
- way
-around it without making svn-fe and =E2=80=98git svn --fe=E2=80=99 know=
- more about
-each other than I would like.
+I would find feedback on these (or patches :)) especially welcome.
 
 Jonathan
-
-[1] Eric, we are discussing the remote-svn series[2] and especially
-Ram, Sverre, and David=E2=80=99s recent comments[3].  Apologies for not
-keeping you in the loop sooner; your insights have always been
-helpful in the past.
-
-As for the idea of reimplementing git-svn on top of svn-fe: yes, the
-fast-import stream would need more information to support
---follow-parent, but that piece is not so hard to add AFAICT.  Of
-course, I am mentioning this not because it is important to keep the
-git-svn interface but because the --stdlayout feature is very useful
-and we may want to port it over some day.
-
-[2] http://thread.gmane.org/gmane.comp.version-control.git/149571
-[3] http://thread.gmane.org/gmane.comp.version-control.git/149594
