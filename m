@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 6/9] Add stream helper library
-Date: Thu, 24 Jun 2010 06:01:12 -0500
-Message-ID: <20100624110112.GF12376@burratino>
+Subject: [PATCH 7/9] Add infrastructure to write revisions in fast-export
+ format
+Date: Thu, 24 Jun 2010 06:02:17 -0500
+Message-ID: <20100624110217.GG12376@burratino>
 References: <20100624105004.GA12336@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -10,45 +11,45 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Daniel Shahaf <daniel@shahaf.name>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 24 13:01:32 2010
+X-From: git-owner@vger.kernel.org Thu Jun 24 13:02:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORkBU-0005vH-Ev
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 13:01:28 +0200
+	id 1ORkCY-0006LP-GT
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 13:02:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754847Ab0FXLBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jun 2010 07:01:23 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33992 "EHLO
+	id S1754867Ab0FXLC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jun 2010 07:02:29 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38877 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754780Ab0FXLBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 07:01:22 -0400
-Received: by iwn41 with SMTP id 41so737230iwn.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 04:01:21 -0700 (PDT)
+	with ESMTP id S1754585Ab0FXLC2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 07:02:28 -0400
+Received: by iwn41 with SMTP id 41so738063iwn.19
+        for <git@vger.kernel.org>; Thu, 24 Jun 2010 04:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=EGO8bJl8r+oypqvxkhQ644lNk2Z1TFPqyJK58BroNUI=;
-        b=RyAfTgP6ageR7EgVvf/qVsIizSAXDUHXozFXkQa6/D5LryK7QBf13oBLszKtALhWCR
-         je4igN6Zk0E3Q9OAUOBcXtMfwpJqUb1sv7g7SG4RRQTCvjGatRJwytbv45ARFoEQN9Bf
-         kmaTsqykzyz6QA06vX1mYtxh54LJf/xW1Ofww=
+        bh=81sCzmSDWhO2gzbAONWC9p932tM3ciExOJypYIp9mac=;
+        b=jY5q/+G6U1DCE51eqMsO5FUJfKkmKsA4IVNb+rL+NczmzH/cVJ+s6kTKAGdc5sNBkP
+         ZIPJjYkdgap7L7vOvNaRoGZ5V/WoIcivraAbgzft9uH3pZ1+/8iL98RW8yhwGYqr/Yjv
+         Rz66tb57+KcxpEeFzSlBkbWzY40vK0CJYxGtA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=CcNv6vOeSu7280xOKgpxFLYj3MbS5kPnYGVFNR/J/Qgx79A5l7NWj8PatvcC+ewXdM
-         UfOHTyiEdSHNVOdKi1fbvd/5UE7XFGgf/RYvatBviMwIYyQpw2yCkBCtBcTcuIgqpEj+
-         pfbJ1O1x2B9SvL2VHHvuW3pOGqCnBhMif8dSk=
-Received: by 10.231.150.15 with SMTP id w15mr10571406ibv.115.1277377281625;
-        Thu, 24 Jun 2010 04:01:21 -0700 (PDT)
+        b=D0ORTGIPz+EhoMDGJHYb5R/ubKQQXAo3kHqerTVyxsug0JaVuZGfXO0lsFcfDCHo8Z
+         ayMxjZAshkPX/dHTub+r4dP2c+dVrHqYvvBIdED3z+w4lr9YDGmX058iSxMjpHG0dDn7
+         kFktCYnNP7wran177GBTKye9BNZhfPFg8j7kk=
+Received: by 10.231.148.131 with SMTP id p3mr11202182ibv.18.1277377346678;
+        Thu, 24 Jun 2010 04:02:26 -0700 (PDT)
 Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id r12sm17458362ibi.2.2010.06.24.04.01.20
+        by mx.google.com with ESMTPS id d9sm16825754ibl.22.2010.06.24.04.02.25
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jun 2010 04:01:21 -0700 (PDT)
+        Thu, 24 Jun 2010 04:02:26 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100624105004.GA12336@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -56,58 +57,83 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149578>
 
 From: David Barr <david.barr@cordelta.com>
 
-This library provides thread-unsafe fgets()- and fread()-like
-functions where the caller does not have to supply a buffer.  It
-maintains a couple of static buffers and provides an API to use
-them.
+repo_tree maintains the exporter's state and provides a facility to to
+call fast_export, which writes objects to stdout suitable for
+consumption by fast-import.
 
-NEEDSWORK: what should buffer_copy_bytes do on error?
+The exported functions roughly correspond to Subversion FS operations.
+
+ . repo_add adds a file to the current commit.
+
+ . repo_modify adds a replacement for an existing file;
+   it is implemented exactly the same way, but a check could be
+   added later to distinguish the two cases.
+
+ . repo_copy copies a blob from a previous revision to the current
+   commit.
+
+ . repo_replace modifies the content of a file from the current
+   commit, if and only if it exists.
+
+ . repo_delete removes a file or directory from the current commit.
+
+ . repo_commit calls out to fast_export to write the current commit to
+   the fast-import stream in stdout.
+
+ . repo_diff is used by the fast_export module to write the changes
+   for a commit.
+
+ . repo_reset erases the exporter's state, so valgrind can be happy.
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile              |    5 ++-
- vcs-svn/line_buffer.c |   93 +++++++++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/line_buffer.h |   14 +++++++
- 3 files changed, 110 insertions(+), 2 deletions(-)
- create mode 100644 vcs-svn/line_buffer.c
- create mode 100644 vcs-svn/line_buffer.h
+ Makefile              |    5 +-
+ vcs-svn/fast_export.c |   75 +++++++++++
+ vcs-svn/fast_export.h |   14 ++
+ vcs-svn/repo_tree.c   |  335 +++++++++++++++++++++++++++++++++++++++++++++++++
+ vcs-svn/repo_tree.h   |   26 ++++
+ 5 files changed, 453 insertions(+), 2 deletions(-)
+ create mode 100644 vcs-svn/fast_export.c
+ create mode 100644 vcs-svn/fast_export.h
+ create mode 100644 vcs-svn/repo_tree.c
+ create mode 100644 vcs-svn/repo_tree.h
 
 diff --git a/Makefile b/Makefile
-index e11e588..8223d9b 100644
+index 8223d9b..7c66dcc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1740,7 +1740,7 @@ ifndef NO_CURL
+@@ -1740,7 +1740,8 @@ ifndef NO_CURL
  endif
  XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
  	xdiff/xmerge.o xdiff/xpatience.o
--VCSSVN_OBJS = vcs-svn/string_pool.o
-+VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o
+-VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o
++VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o \
++	vcs-svn/repo_tree.o vcs-svn/fast_export.o
  OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS) $(VCSSVN_OBJS)
  
  dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
-@@ -1864,7 +1864,8 @@ xdiff-interface.o $(XDIFF_OBJS): \
- 	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
+@@ -1865,7 +1866,7 @@ xdiff-interface.o $(XDIFF_OBJS): \
  
  $(VCSSVN_OBJS): \
--	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h
-+	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h \
-+	vcs-svn/line_buffer.h
+ 	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h \
+-	vcs-svn/line_buffer.h
++	vcs-svn/line_buffer.h vcs-svn/repo_tree.h vcs-svn/fast_export.h
  endif
  
  exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
-diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
 new file mode 100644
-index 0000000..0f83426
+index 0000000..7552803
 --- /dev/null
-+++ b/vcs-svn/line_buffer.c
-@@ -0,0 +1,93 @@
++++ b/vcs-svn/fast_export.c
+@@ -0,0 +1,75 @@
 +/*
 + * Licensed under a two-clause BSD-style license.
 + * See LICENSE for details.
@@ -115,110 +141,465 @@ index 0000000..0f83426
 +
 +#include "git-compat-util.h"
 +
++#include "fast_export.h"
 +#include "line_buffer.h"
-+#include "obj_pool.h"
++#include "repo_tree.h"
++#include "string_pool.h"
 +
-+#define LINE_BUFFER_LEN 10000
-+#define COPY_BUFFER_LEN 4096
++#define MAX_GITSVN_LINE_LEN 4096
 +
-+/* Create memory pool for char sequence of known length */
-+obj_pool_gen(blob, char, 4096);
++static uint32_t first_commit_done;
 +
-+static char line_buffer[LINE_BUFFER_LEN];
-+static char byte_buffer[COPY_BUFFER_LEN];
-+static FILE *infile;
-+
-+int buffer_init(const char *filename)
++void fast_export_delete(uint32_t depth, uint32_t *path)
 +{
-+	infile = filename ? fopen(filename, "r") : stdin;
-+	if (!infile)
-+		return -1;
-+	return 0;
++	putchar('D');
++	putchar(' ');
++	pool_print_seq(depth, path, '/', stdout);
++	putchar('\n');
 +}
 +
-+int buffer_deinit()
++void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
++                        uint32_t mark)
 +{
-+	fclose(infile);
-+	return 0;
++	/* Mode must be 100644, 100755, 120000, or 160000. */
++	printf("M %06o :%d ", mode, mark);
++	pool_print_seq(depth, path, '/', stdout);
++	putchar('\n');
 +}
 +
-+/* Read a line without trailing newline. */
-+char *buffer_read_line(void)
++static char gitsvnline[MAX_GITSVN_LINE_LEN];
++void fast_export_commit(uint32_t revision, uint32_t author, char *log,
++			uint32_t uuid, uint32_t url,
++			unsigned long timestamp)
 +{
-+	char *end;
-+	if (!fgets(line_buffer, sizeof(line_buffer), infile))
-+		/* Error or data exhausted. */
-+		return NULL;
-+	end = line_buffer + strlen(line_buffer);
-+	if (end[-1] == '\n')
-+		end[-1] = '\0';
-+	else if (feof(infile))
-+		; /* No newline at end of file.  That's fine. */
-+	else
-+		/*
-+		 * Line was too long.
-+		 * There is probably a saner way to deal with this,
-+		 * but for now let's return an error.
-+		 */
-+		return NULL;
-+	return line_buffer;
-+}
-+
-+char *buffer_read_string(uint32_t len)
-+{
-+	char *s;
-+	blob_free(blob_pool.size);
-+	s = blob_pointer(blob_alloc(len + 1));
-+	s[fread(s, 1, len, infile)] = '\0';
-+	return ferror(infile) ? NULL : s;
-+}
-+
-+void buffer_copy_bytes(uint32_t len)
-+{
-+	uint32_t in;
-+	while (len > 0 && !feof(infile)) {
-+		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
-+		in = fread(byte_buffer, 1, in, infile);
-+		len -= in;
-+		fwrite(byte_buffer, 1, in, stdout);
-+		if (ferror(infile) || ferror(stdout))
-+			/* NEEDSWORK: handle error. */
-+			break;
++	if (!log)
++		log = "";
++	if (~uuid && ~url) {
++		snprintf(gitsvnline, MAX_GITSVN_LINE_LEN, "\n\ngit-svn-id: %s@%d %s\n",
++				 pool_fetch(url), revision, pool_fetch(uuid));
++	} else {
++		*gitsvnline = '\0';
 +	}
-+}
-+
-+void buffer_skip_bytes(uint32_t len)
-+{
-+	uint32_t in;
-+	while (len > 0 && !feof(infile) && !ferror(infile)) {
-+		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
-+		in = fread(byte_buffer, 1, in, infile);
-+		len -= in;
++	printf("commit refs/heads/master\n");
++	printf("committer %s <%s@%s> %ld +0000\n",
++		   ~author ? pool_fetch(author) : "nobody",
++		   ~author ? pool_fetch(author) : "nobody",
++		   ~uuid ? pool_fetch(uuid) : "local", timestamp);
++	printf("data %zd\n%s%s\n",
++		   strlen(log) + strlen(gitsvnline), log, gitsvnline);
++	if (!first_commit_done) {
++		if (revision > 1)
++			printf("from refs/heads/master^0\n");
++		first_commit_done = 1;
 +	}
++	repo_diff(revision - 1, revision);
++	fputc('\n', stdout);
++
++	printf("progress Imported commit %d.\n\n", revision);
 +}
 +
-+void buffer_reset(void)
++void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len)
 +{
-+	blob_reset();
++	if (mode == REPO_MODE_LNK) {
++		/* svn symlink blobs start with "link " */
++		buffer_skip_bytes(5);
++		len -= 5;
++	}
++	printf("blob\nmark :%d\ndata %d\n", mark, len);
++	buffer_copy_bytes(len);
++	fputc('\n', stdout);
 +}
-diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
 new file mode 100644
-index 0000000..631d1df
+index 0000000..47e8f56
 --- /dev/null
-+++ b/vcs-svn/line_buffer.h
++++ b/vcs-svn/fast_export.h
 @@ -0,0 +1,14 @@
-+#ifndef LINE_BUFFER_H_
-+#define LINE_BUFFER_H_
++#ifndef FAST_EXPORT_H_
++#define FAST_EXPORT_H_
++
++#include <stdint.h>
++#include <time.h>
++
++void fast_export_delete(uint32_t depth, uint32_t *path);
++void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
++			uint32_t mark);
++void fast_export_commit(uint32_t revision, uint32_t author, char *log,
++			uint32_t uuid, uint32_t url, unsigned long timestamp);
++void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len);
++
++#endif
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+new file mode 100644
+index 0000000..59a7434
+--- /dev/null
++++ b/vcs-svn/repo_tree.c
+@@ -0,0 +1,335 @@
++/*
++ * Licensed under a two-clause BSD-style license.
++ * See LICENSE for details.
++ */
 +
 +#include "git-compat-util.h"
 +
-+int buffer_init(const char *filename);
-+int buffer_deinit(void);
-+char *buffer_read_line(void);
-+char *buffer_read_string(uint32_t len);
-+void buffer_copy_bytes(uint32_t len);
-+void buffer_skip_bytes(uint32_t len);
-+void buffer_reset(void);
++#include "string_pool.h"
++#include "repo_tree.h"
++#include "obj_pool.h"
++#include "fast_export.h"
++
++#include "trp.h"
++
++struct repo_dirent {
++	uint32_t name_offset;
++	struct trp_node children;
++	uint32_t mode;
++	uint32_t content_offset;
++};
++
++struct repo_dir {
++	struct trp_root entries;
++};
++
++struct repo_commit {
++	uint32_t root_dir_offset;
++};
++
++/* Memory pools for commit, dir and dirent */
++obj_pool_gen(commit, struct repo_commit, 4096);
++obj_pool_gen(dir, struct repo_dir, 4096);
++obj_pool_gen(dirent, struct repo_dirent, 4096);
++
++static uint32_t active_commit;
++static uint32_t mark;
++
++static int repo_dirent_name_cmp(const void *a, const void *b);
++
++/* Treap for directory entries */
++trp_gen(static, dirent_, struct repo_dirent, children, dirent, repo_dirent_name_cmp);
++
++uint32_t next_blob_mark(void)
++{
++	return mark++;
++}
++
++static struct repo_dir *repo_commit_root_dir(struct repo_commit *commit)
++{
++	return dir_pointer(commit->root_dir_offset);
++}
++
++static struct repo_dirent *repo_first_dirent(struct repo_dir *dir)
++{
++	return dirent_first(&dir->entries);
++}
++
++static int repo_dirent_name_cmp(const void *a, const void *b)
++{
++	const struct repo_dirent *dirent1 = a, *dirent2 = b;
++	uint32_t a_offset = dirent1->name_offset;
++	uint32_t b_offset = dirent2->name_offset;
++	return (a_offset > b_offset) - (a_offset < b_offset);
++}
++
++static int repo_dirent_is_dir(struct repo_dirent *dirent)
++{
++	return dirent != NULL && dirent->mode == REPO_MODE_DIR;
++}
++
++static struct repo_dir *repo_dir_from_dirent(struct repo_dirent *dirent)
++{
++	if (!repo_dirent_is_dir(dirent))
++		return NULL;
++	return dir_pointer(dirent->content_offset);
++}
++
++static struct repo_dir *repo_clone_dir(struct repo_dir *orig_dir)
++{
++	uint32_t orig_o, new_o;
++	orig_o = dir_offset(orig_dir);
++	if (orig_o >= dir_pool.committed)
++		return orig_dir;
++	new_o = dir_alloc(1);
++	orig_dir = dir_pointer(orig_o);
++	*dir_pointer(new_o) = *orig_dir;
++	return dir_pointer(new_o);
++}
++
++static struct repo_dirent *repo_read_dirent(uint32_t revision, uint32_t *path)
++{
++	uint32_t name = 0;
++	struct repo_dirent *key = dirent_pointer(dirent_alloc(1));
++	struct repo_dir *dir = NULL;
++	struct repo_dirent *dirent = NULL;
++	dir = repo_commit_root_dir(commit_pointer(revision));
++	while (~(name = *path++)) {
++		key->name_offset = name;
++		dirent = dirent_search(&dir->entries, key);
++		if (dirent == NULL || !repo_dirent_is_dir(dirent))
++			break;
++		dir = repo_dir_from_dirent(dirent);
++	}
++	dirent_free(1);
++	return dirent;
++}
++
++static void repo_write_dirent(uint32_t *path, uint32_t mode,
++                              uint32_t content_offset, uint32_t del)
++{
++	uint32_t name, revision, dir_o = ~0, parent_dir_o = ~0;
++	struct repo_dir *dir;
++	struct repo_dirent *key;
++	struct repo_dirent *dirent = NULL;
++	revision = active_commit;
++	dir = repo_commit_root_dir(commit_pointer(revision));
++	dir = repo_clone_dir(dir);
++	commit_pointer(revision)->root_dir_offset = dir_offset(dir);
++	while (~(name = *path++)) {
++		parent_dir_o = dir_offset(dir);
++
++		key = dirent_pointer(dirent_alloc(1));
++		key->name_offset = name;
++
++		dirent = dirent_search(&dir->entries, key);
++		if (dirent == NULL)
++			dirent = key;
++		else
++			dirent_free(1);
++
++		if (dirent == key) {
++			dirent->mode = REPO_MODE_DIR;
++			dirent->content_offset = 0;
++			dirent_insert(&dir->entries, dirent);
++		}
++
++		if (dirent_offset(dirent) < dirent_pool.committed) {
++			dir_o = repo_dirent_is_dir(dirent) ?
++					dirent->content_offset : ~0;
++			dirent_remove(&dir->entries, dirent);
++			dirent = dirent_pointer(dirent_alloc(1));
++			dirent->name_offset = name;
++			dirent->mode = REPO_MODE_DIR;
++			dirent->content_offset = dir_o;
++			dirent_insert(&dir->entries, dirent);
++		}
++
++		dir = repo_dir_from_dirent(dirent);
++		dir = repo_clone_dir(dir);
++		dirent->content_offset = dir_offset(dir);
++	}
++	if (dirent == NULL)
++		return;
++	dirent->mode = mode;
++	dirent->content_offset = content_offset;
++	if (del && ~parent_dir_o)
++		dirent_remove(&dir_pointer(parent_dir_o)->entries, dirent);
++}
++
++uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
++{
++	uint32_t mode = 0, content_offset = 0;
++	struct repo_dirent *src_dirent;
++	src_dirent = repo_read_dirent(revision, src);
++	if (src_dirent != NULL) {
++		mode = src_dirent->mode;
++		content_offset = src_dirent->content_offset;
++		repo_write_dirent(dst, mode, content_offset, 0);
++	}
++	return mode;
++}
++
++void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark)
++{
++	repo_write_dirent(path, mode, blob_mark, 0);
++}
++
++uint32_t repo_replace(uint32_t *path, uint32_t blob_mark)
++{
++	uint32_t mode = 0;
++	struct repo_dirent *src_dirent;
++	src_dirent = repo_read_dirent(active_commit, path);
++	if (src_dirent != NULL) {
++		mode = src_dirent->mode;
++		repo_write_dirent(path, mode, blob_mark, 0);
++	}
++	return mode;
++}
++
++void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark)
++{
++	struct repo_dirent *src_dirent;
++	src_dirent = repo_read_dirent(active_commit, path);
++	if (src_dirent != NULL && blob_mark == 0)
++		blob_mark = src_dirent->content_offset;
++	repo_write_dirent(path, mode, blob_mark, 0);
++}
++
++void repo_delete(uint32_t *path)
++{
++	repo_write_dirent(path, 0, 0, 1);
++}
++
++static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo_dir *dir);
++
++static void repo_git_add(uint32_t depth, uint32_t *path, struct repo_dirent *dirent)
++{
++	if (repo_dirent_is_dir(dirent))
++		repo_git_add_r(depth, path, repo_dir_from_dirent(dirent));
++	else
++		fast_export_modify(depth, path,
++		                   dirent->mode, dirent->content_offset);
++}
++
++static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo_dir *dir)
++{
++	struct repo_dirent *de = repo_first_dirent(dir);
++	while (de) {
++		path[depth] = de->name_offset;
++		repo_git_add(depth + 1, path, de);
++		de = dirent_next(&dir->entries, de);
++	}
++}
++
++static void repo_diff_r(uint32_t depth, uint32_t *path, struct repo_dir *dir1,
++                        struct repo_dir *dir2)
++{
++	struct repo_dirent *de1, *de2;
++	de1 = repo_first_dirent(dir1);
++	de2 = repo_first_dirent(dir2);
++
++	while (de1 && de2) {
++		if (de1->name_offset < de2->name_offset) {
++			path[depth] = de1->name_offset;
++			fast_export_delete(depth + 1, path);
++			de1 = dirent_next(&dir1->entries, de1);
++			continue;
++		}
++		if (de1->name_offset > de2->name_offset) {
++			path[depth] = de2->name_offset;
++			repo_git_add(depth + 1, path, de2);
++			de2 = dirent_next(&dir2->entries, de2);
++			continue;
++		}
++		path[depth] = de1->name_offset;
++
++		if (de1->mode == de2->mode &&
++		    de1->content_offset == de2->content_offset) {
++			; /* No change. */
++		} else if (repo_dirent_is_dir(de1) && repo_dirent_is_dir(de2)) {
++			repo_diff_r(depth + 1, path,
++				    repo_dir_from_dirent(de1),
++				    repo_dir_from_dirent(de2));
++		} else if (!repo_dirent_is_dir(de1) && !repo_dirent_is_dir(de2)) {
++			repo_git_add(depth + 1, path, de2);
++		} else {
++			fast_export_delete(depth + 1, path);
++			repo_git_add(depth + 1, path, de2);
++		}
++		de1 = dirent_next(&dir1->entries, de1);
++		de2 = dirent_next(&dir2->entries, de2);
++	}
++	while (de1) {
++		path[depth] = de1->name_offset;
++		fast_export_delete(depth + 1, path);
++		de1 = dirent_next(&dir1->entries, de1);
++	}
++	while (de2) {
++		path[depth] = de2->name_offset;
++		repo_git_add(depth + 1, path, de2);
++		de2 = dirent_next(&dir2->entries, de2);
++	}
++}
++
++static uint32_t path_stack[REPO_MAX_PATH_DEPTH];
++
++void repo_diff(uint32_t r1, uint32_t r2)
++{
++	repo_diff_r(0,
++	            path_stack,
++	            repo_commit_root_dir(commit_pointer(r1)),
++	            repo_commit_root_dir(commit_pointer(r2)));
++}
++
++void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
++                 uint32_t url, unsigned long timestamp)
++{
++	fast_export_commit(revision, author, log, uuid, url, timestamp);
++	pool_commit();
++	dirent_commit();
++	dir_commit();
++	commit_commit();
++	active_commit = commit_alloc(1);
++	commit_pointer(active_commit)->root_dir_offset =
++		commit_pointer(active_commit - 1)->root_dir_offset;
++}
++
++static void mark_init(void)
++{
++	uint32_t i;
++	mark = 0;
++	for (i = 0; i < dirent_pool.size; i++)
++		if (!repo_dirent_is_dir(dirent_pointer(i)) &&
++		    dirent_pointer(i)->content_offset > mark)
++			mark = dirent_pointer(i)->content_offset;
++	mark++;
++}
++
++void repo_init() {
++	pool_init();
++	commit_init();
++	dir_init();
++	dirent_init();
++	mark_init();
++	if (commit_pool.size == 0) {
++		/* Create empty tree for commit 0. */
++		commit_alloc(1);
++		commit_pointer(0)->root_dir_offset = dir_alloc(1);
++		dir_pointer(0)->entries.trp_root = ~0;
++		dir_commit();
++		commit_commit();
++	}
++	/* Preallocate next commit, ready for changes. */
++	active_commit = commit_alloc(1);
++	commit_pointer(active_commit)->root_dir_offset =
++		commit_pointer(active_commit - 1)->root_dir_offset;
++}
++
++void repo_reset(void)
++{
++	pool_reset();
++	commit_reset();
++	dir_reset();
++	dirent_reset();
++}
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+new file mode 100644
+index 0000000..92a7a7b
+--- /dev/null
++++ b/vcs-svn/repo_tree.h
+@@ -0,0 +1,26 @@
++#ifndef REPO_TREE_H_
++#define REPO_TREE_H_
++
++#include "git-compat-util.h"
++
++#define REPO_MODE_DIR 0040000
++#define REPO_MODE_BLB 0100644
++#define REPO_MODE_EXE 0100755
++#define REPO_MODE_LNK 0120000
++
++#define REPO_MAX_PATH_LEN 4096
++#define REPO_MAX_PATH_DEPTH 1000
++
++uint32_t next_blob_mark(void);
++uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst);
++void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
++uint32_t repo_replace(uint32_t *path, uint32_t blob_mark);
++void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark);
++void repo_delete(uint32_t *path);
++void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
++                 uint32_t url, long unsigned timestamp);
++void repo_diff(uint32_t r1, uint32_t r2);
++void repo_init(void);
++void repo_reset(void);
 +
 +#endif
 -- 
