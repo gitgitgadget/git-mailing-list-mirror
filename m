@@ -1,67 +1,153 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2] git-cat-file.txt: Document --textconv
-Date: Thu, 24 Jun 2010 13:10:07 -0700
-Message-ID: <7vk4pochuo.fsf@alter.siamese.dyndns.org>
-References: <4C2355EF.7030604@drmicha.warpmail.net>
- <735c21d857407c7f0cb18da13d556d3a77a358db.1277383590.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jun 24 22:10:29 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH v2] t4027,4041: Use test -s to test for an empty file
+Date: Thu, 24 Jun 2010 16:10:31 -0400
+Message-ID: <1277410231-12326-1-git-send-email-brian@gernhardtsoftware.com>
+References: <201006242134.54081.j6t@kdbg.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 24 22:10:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORskm-00035B-Aw
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 22:10:28 +0200
+	id 1ORslA-0003Fh-Op
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 22:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751519Ab0FXUKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jun 2010 16:10:24 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48902 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750799Ab0FXUKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 16:10:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 880A3BE9CA;
-	Thu, 24 Jun 2010 16:10:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xaS4EDY2kRJTzMCe7Oa7WiwiRZw=; b=uSZQjN
-	KehZmHTHY/IEV6GzYtYmtx70RjieWV1t5S0Lk375PJizm8nzF115U5TJF5rKPZbt
-	oWoGwOIpvmiHW0GHvX2ZlJwIaZXt7XOiixCFq5GDOYbMjWZVnbyQnztOpL9EzJNO
-	E6+yOYdEaEhSEwe4dOf9qwqAlkYK3uRgeaaqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lcKXokDthUvMLWWWH8Muy3nR2w6bHJ5G
-	Nvqahb66sURVJUlXbXnwrfbrADPMziI41Zd9FmB4VRwnWrg7BsNhRljtcg7T0k0b
-	fW+g5qYNBuxBj5Z4NU144SP0i1CplYysb0pfyH04Fs6T3T9G1dCbT5G1i967/6Fe
-	SQ+3tevrOJk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 295C5BE9C3;
-	Thu, 24 Jun 2010 16:10:16 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1C172BE9BF; Thu, 24 Jun
- 2010 16:10:08 -0400 (EDT)
-In-Reply-To: <735c21d857407c7f0cb18da13d556d3a77a358db.1277383590.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Thu\, 24 Jun 2010 14\:56\:55 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 81294E20-7FCC-11DF-9691-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752184Ab0FXUKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jun 2010 16:10:48 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:53526 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751665Ab0FXUKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 16:10:47 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 50F661FFC061; Thu, 24 Jun 2010 20:10:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	by silverinsanity.com (Postfix) with ESMTPA id 16FBD1FFC057;
+	Thu, 24 Jun 2010 20:10:27 +0000 (UTC)
+X-Mailer: git-send-email 1.7.1.756.gb48b1
+In-Reply-To: <201006242134.54081.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149633>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+The tests had used a mixture of 'echo -n' (which is non-portable) and
+either test_cmp or diff to check if a file is empty.  The much easier
+and portable method to check for an empty file is '! test -s'
 
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> v2 based on clarification by Matthieu Moy.
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+---
 
-Looks good; thanks.
+ Johannes Sixt wrote:
+ > Shouldn't you replace these by
+ >
+ >	! test -s actual2 &&
+
+ Yes, you're right.  I was just trying to get the tests to run and didn't really pay attention to what it was trying to do.
+
+ t/t4027-diff-submodule.sh        |   10 +++++-----
+ t/t4041-diff-submodule-option.sh |   14 +++++++-------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
+index 559b41e..8f016aa 100755
+--- a/t/t4027-diff-submodule.sh
++++ b/t/t4027-diff-submodule.sh
+@@ -105,13 +105,13 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)'
+ 	expect_from_to >expect.body $subprev $subprev-dirty &&
+ 	test_cmp expect.body actual.body &&
+ 	git diff --ignore-submodules HEAD >actual2 &&
+-	echo -n "" | test_cmp - actual2 &&
++	! test -s actual2 &&
+ 	git diff --ignore-submodules=untracked HEAD >actual3 &&
+ 	sed -e "1,/^@@/d" actual3 >actual3.body &&
+ 	expect_from_to >expect.body $subprev $subprev-dirty &&
+ 	test_cmp expect.body actual3.body &&
+ 	git diff --ignore-submodules=dirty HEAD >actual4 &&
+-	echo -n "" | test_cmp - actual4
++	! test -s actual4
+ '
+ test_done
+ test_expect_success 'git diff HEAD with dirty submodule (index, refs match)' '
+@@ -139,11 +139,11 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)'
+ 	expect_from_to >expect.body $subprev $subprev-dirty &&
+ 	test_cmp expect.body actual.body &&
+ 	git diff --ignore-submodules=all HEAD >actual2 &&
+-	echo -n "" | test_cmp - actual2 &&
++	! test -s actual2 &&
+ 	git diff --ignore-submodules=untracked HEAD >actual3 &&
+-	echo -n "" | test_cmp - actual3 &&
++	! test -s actual3 &&
+ 	git diff --ignore-submodules=dirty HEAD >actual4 &&
+-	echo -n "" | test_cmp - actual4
++	! test -s actual4
+ '
+ 
+ test_expect_success 'git diff (empty submodule dir)' '
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index f44b906..db9b64d 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -207,17 +207,17 @@ EOF
+ 
+ test_expect_success 'submodule contains untracked content (untracked ignored)' "
+ 	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'submodule contains untracked content (dirty ignored)' "
+ 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'submodule contains untracked content (all ignored)' "
+ 	git diff-index -p --ignore-submodules=all --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'submodule contains untracked and modifed content' "
+@@ -240,13 +240,13 @@ EOF
+ test_expect_success 'submodule contains untracked and modifed content (dirty ignored)' "
+ 	echo new > sm1/foo6 &&
+ 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'submodule contains untracked and modifed content (all ignored)' "
+ 	echo new > sm1/foo6 &&
+ 	git diff-index -p --ignore-submodules --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'submodule contains modifed content' "
+@@ -295,7 +295,7 @@ EOF
+ 
+ test_expect_success 'modified submodule contains untracked content (all ignored)' "
+ 	git diff-index -p --ignore-submodules=all --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'modified submodule contains untracked and modifed content' "
+@@ -331,7 +331,7 @@ EOF
+ test_expect_success 'modified submodule contains untracked and modifed content (all ignored)' "
+ 	echo modification >> sm1/foo6 &&
+ 	git diff-index -p --ignore-submodules --submodule=log HEAD >actual &&
+-	echo -n '' | diff actual -
++	! test -s actual -
+ "
+ 
+ test_expect_success 'modified submodule contains modifed content' "
+-- 
+1.7.1.756.gb48b1
