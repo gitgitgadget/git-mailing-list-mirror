@@ -1,87 +1,91 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #04; Wed, 23)
-Date: Thu, 24 Jun 2010 14:23:09 +0200
-Message-ID: <71BD27DC-9CA7-40E8-8253-ABF61083E53C@gmail.com>
-References: <7viq59e6zn.fsf@alter.siamese.dyndns.org> <20100624111757.GB3453@pvv.org> <4C2344C0.2010402@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Jun 24 14:23:25 2010
+From: Christian MICHON <christian.michon@gmail.com>
+Subject: Re: on pulling/cloning git notes
+Date: Thu, 24 Jun 2010 14:25:13 +0200
+Message-ID: <AANLkTilGS6t29J4NQMgseZY9WD1kAPCr9oFeQt1RaWjP@mail.gmail.com>
+References: <AANLkTilDMVU6b7SwHx0Bztu1rTCubiIPTuDDX6pJBcHx@mail.gmail.com>
+	<4C2329E5.8050904@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git list <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jun 24 14:25:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORlSi-00026T-99
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 14:23:20 +0200
+	id 1ORlUh-0003FC-05
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 14:25:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755184Ab0FXMXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jun 2010 08:23:14 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:63622 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753829Ab0FXMXN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 24 Jun 2010 08:23:13 -0400
-Received: by wyi11 with SMTP id 11so1611011wyi.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 05:23:12 -0700 (PDT)
+	id S1755304Ab0FXMZQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jun 2010 08:25:16 -0400
+Received: from fg-out-1718.google.com ([72.14.220.157]:3097 "EHLO
+	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755298Ab0FXMZP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 08:25:15 -0400
+Received: by fg-out-1718.google.com with SMTP id d23so2012931fga.1
+        for <git@vger.kernel.org>; Thu, 24 Jun 2010 05:25:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=zczWWum24c21Z7jwzGoY9tAZeEz5lBVVECcDkeM6dOY=;
-        b=i1EkVNdm6WtG9hZuk6cuKRDOS22Qhj/JG8PpkIuo3eqebUxCj4SRFO3VpI5FP2oDYE
-         /v+QkXBXoSx91emsgMCORc+4MthnUV/HanK3FOHMAUs9pLektF9Ku6Kgp8JtDPIFuEbe
-         U+HYk6HBJM9xUvneJcfTuFOMA6GCCG1mKO0dk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=3D++JhlQE6MEKoYbBc5HCloNoWjSl4UDt/dgnzfJyE0=;
+        b=DTdzO4Z9XB1g7cSR5K9hD2BqweZrNYbMoGD+sAtTOLmyG450U7l2p+WFLhyyJ98loC
+         QcqvyNMxlWINEZLHTK7TOYs3Gd1aQFQEIg4w+zHWgHZQ92tVhPn6JTw68mks1LHhA3QB
+         8zg98jaGaJY1ahKihzQlaspdT8fsH53F8twss=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=rmrHjMY77PwDAQCC3XWPILEGR86/vfT16k3sZ1K5MH/R7VEA99sFhaf3bDTJuH62Z9
-         HQVLrdxi2Wur5K5SOdM5jZ8kFukWPzlAyBTFPWznOn8RTdTtpmTx5VSsiipgkKEDfSga
-         UaLcbgbPJplrULvug/Zer+jStVx7YvfQmJIiI=
-Received: by 10.216.154.69 with SMTP id g47mr7201985wek.82.1277382191911;
-        Thu, 24 Jun 2010 05:23:11 -0700 (PDT)
-Received: from [10.36.80.159] ([62.113.137.5])
-        by mx.google.com with ESMTPS id h1sm812590wee.31.2010.06.24.05.23.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jun 2010 05:23:11 -0700 (PDT)
-In-Reply-To: <4C2344C0.2010402@viscovery.net>
-X-Mailer: Apple Mail (2.1081)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=W5DkyTB96wDNhKQPICmPDd3EwXi0rmEB1dio0VQpQHlZ1fq/IZQtFQULHAVQLpCWI2
+         Pp1hM4co+lpy/T2E5+pOvL4HknMGWJ88ZutL30D3+fq7/g9ob3zkeo7ZOM64chtXaZqv
+         uY23vD3Zf2REZSfmr9uYIu+QiS1zEs7eRvlEc=
+Received: by 10.103.184.13 with SMTP id l13mr3086890mup.87.1277382313351; Thu, 
+	24 Jun 2010 05:25:13 -0700 (PDT)
+Received: by 10.103.138.8 with HTTP; Thu, 24 Jun 2010 05:25:13 -0700 (PDT)
+In-Reply-To: <4C2329E5.8050904@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149587>
 
-On 24. juni 2010, at 13.42, Johannes Sixt wrote:
+On Thu, Jun 24, 2010 at 11:48 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> As you can see from the default "fetch" line above, "refs/heads" are
+> fetched by default (when cloning, fetching etc.), but nothing else
+> (well, besides some tags). You can set up an additional fetch refspec to
+> get the notes also.
 
-> Am 6/24/2010 13:17, schrieb Finn Arne Gangstad:
->> Assume you start out with a repo that has a lot of text files with
->> CRLF checked in (A).
->> 
->>  C----
->> /     \
->> A---B---D
->> 
->> B: Add "* text=auto" to .gitattributes and normalize all files to LF
->> only in repo
->> 
->> D: try to merge C
->> 
->> Without this patch you will get a ridiculous number of lf/crlf
->> conflicts when trying to merge C into D, since the repository contents
->> for C are "wrong" wrt the new .gitattributes file.
-> 
-> What should happen when you have C checked out (i.e., you do not yet have
-> the updated .gitattributes in your worktree nor index) and merge B?
-> Currently, you get the identical conflicts, but I suspect that the patch
-> does not help in this situation. IOW, it breaks the merge symmetry.
+I'm actually doing a fresh clone elsewhere, using 'git clone --mirror
+gitolite:daat'.
 
-I confess that I didn't expect this to work either, but it does: the merge completes without conflict.  This is even covered in the included test script ("Check merging addition of text=auto").
+I was expecting to grab everything from the remote refs, as in this
+case my .git/config will look like this:
+[remote "origin"]
+        fetch = +refs/*:refs/*
+        mirror = true
+        url = gitolite:daat
 
-I've cleaned the patch up a bit and added automatic delete/normalize conflict resolution.  Will submit a new version soon.
+> It's not done by default because it's up to you decide what to do with
+> the notes. Sometimes, you want them to end up in "refs/notes" so that
+> they are displayed by default. But maybe you want them in
+> "refs/notes/remotes/gitolites" e.g. and display them only on request
+> (--show-notes=remotes/gitolite), or merge them into your own notes.
+>
+
+So the * in .git/config was misleading me. Instead I changed the fetch
+to this after the original clone, then performed an incremental fetch
+and it worked.
+
+[remote "origin"]
+        fetch = +refs/heads/*:refs/notes/*
+        mirror = true
+        url = gitolite:daat
+
+Thanks for the hint, Michael!
+
 -- 
-Eyvind Bernhardsen
+Christian
+--
+http://detaolb.sourceforge.net/, a linux distribution for Qemu with Git inside !
