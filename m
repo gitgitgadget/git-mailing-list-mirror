@@ -1,153 +1,125 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH v2] t4027,4041: Use test -s to test for an empty file
-Date: Thu, 24 Jun 2010 16:10:31 -0400
-Message-ID: <1277410231-12326-1-git-send-email-brian@gernhardtsoftware.com>
-References: <201006242134.54081.j6t@kdbg.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 24 22:10:54 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 9/9] Add a sample user for the svndump library
+Date: Thu, 24 Jun 2010 22:17:09 +0200
+Message-ID: <AANLkTinnB_TRYa0nzJHHqbHuJk9a7tfk8mAhr95Sc98E@mail.gmail.com>
+References: <20100624105004.GA12336@burratino> <20100624110752.GI12376@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 24 22:17:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORslA-0003Fh-Op
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 22:10:53 +0200
+	id 1ORsrg-0005rD-4k
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 22:17:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184Ab0FXUKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jun 2010 16:10:48 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:53526 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751665Ab0FXUKr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 16:10:47 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 50F661FFC061; Thu, 24 Jun 2010 20:10:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
-	by silverinsanity.com (Postfix) with ESMTPA id 16FBD1FFC057;
-	Thu, 24 Jun 2010 20:10:27 +0000 (UTC)
-X-Mailer: git-send-email 1.7.1.756.gb48b1
-In-Reply-To: <201006242134.54081.j6t@kdbg.org>
+	id S1755285Ab0FXURc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 16:17:32 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:48785 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754971Ab0FXURa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jun 2010 16:17:30 -0400
+Received: by gye5 with SMTP id 5so4647085gye.19
+        for <git@vger.kernel.org>; Thu, 24 Jun 2010 13:17:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=X7ghtjOjvR9VC6PMiyaWwDtTNWOzeYk8uGAcMJWDO/k=;
+        b=RJ1ulZddKrjpLmlUxhd+ROHUKhsbmf9bLvUHDfuuo/dVlQp/PssfR6GoerpdQMkGnr
+         QVEhKJlx50qoFwvvdrWxXX00+YEc6fvrNi3BlUMHwXYxen9F+uv9zY/D8F/3e2DqYoq9
+         YVXGHpW0QYPtP2Y+NAO2ch4ZgnfOgWq3soXiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=fGu9ACKbDkEUA3IsGJqun0Ov53Syg/Y5E/FP8FVTzZfav15paZIWztPNlgR/NeTO8P
+         TVUvItTCCb8Y+xABoxw4RrRaKzb7WtlqzQA1aF9awLl8gPLlDyCJuQla6A2mDvNSlbDO
+         CDgXk2T+rIXPdF6fRYDo2Oov0iSQGoWfxRW1Y=
+Received: by 10.229.193.16 with SMTP id ds16mr5709019qcb.148.1277410649193; 
+	Thu, 24 Jun 2010 13:17:29 -0700 (PDT)
+Received: by 10.229.45.71 with HTTP; Thu, 24 Jun 2010 13:17:09 -0700 (PDT)
+In-Reply-To: <20100624110752.GI12376@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149634>
 
-The tests had used a mixture of 'echo -n' (which is non-portable) and
-either test_cmp or diff to check if a file is empty.  The much easier
-and portable method to check for an empty file is '! test -s'
+Hi Jonathan,
 
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
----
+Jonathan Nieder wrote:
+> NEEDSWORK: litters cwd with useless .bin files.
+> But I hope it is enough to show the idea.
 
- Johannes Sixt wrote:
- > Shouldn't you replace these by
- >
- >	! test -s actual2 &&
+How do you propose we solve this? Maybe using a generic
+$TEMP_DIRECTORY like /tmp in Unix and then getting rid of the files
+after the export is complete?
 
- Yes, you're right.  I was just trying to get the tests to run and didn't really pay attention to what it was trying to do.
+> +QUIET_SUBDIR0 =3D +$(MAKE) -C # space to separate -C and subdir
+> +QUIET_SUBDIR1 =3D
 
- t/t4027-diff-submodule.sh        |   10 +++++-----
- t/t4041-diff-submodule-option.sh |   14 +++++++-------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+> +ifneq ($(findstring $(MAKEFLAGS),s),s)
+> +ifndef V
+> + =C2=A0 =C2=A0 =C2=A0 QUIET_CC =C2=A0 =C2=A0 =C2=A0=3D @echo ' =C2=A0=
+ ' CC $@;
+> + =C2=A0 =C2=A0 =C2=A0 QUIET_LINK =C2=A0 =C2=A0=3D @echo ' =C2=A0 ' L=
+INK $@;
+> + =C2=A0 =C2=A0 =C2=A0 QUIET_SUBDIR0 =3D +@subdir=3D
+> + =C2=A0 =C2=A0 =C2=A0 QUIET_SUBDIR1 =3D ;$(NO_SUBDIR) echo ' =C2=A0 =
+' SUBDIR $$subdir; \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 $(MAKE) $(PRINT_DIR) -C $$subdir
+> +endif
+> +endif
 
-diff --git a/t/t4027-diff-submodule.sh b/t/t4027-diff-submodule.sh
-index 559b41e..8f016aa 100755
---- a/t/t4027-diff-submodule.sh
-+++ b/t/t4027-diff-submodule.sh
-@@ -105,13 +105,13 @@ test_expect_success 'git diff HEAD with dirty submodule (work tree, refs match)'
- 	expect_from_to >expect.body $subprev $subprev-dirty &&
- 	test_cmp expect.body actual.body &&
- 	git diff --ignore-submodules HEAD >actual2 &&
--	echo -n "" | test_cmp - actual2 &&
-+	! test -s actual2 &&
- 	git diff --ignore-submodules=untracked HEAD >actual3 &&
- 	sed -e "1,/^@@/d" actual3 >actual3.body &&
- 	expect_from_to >expect.body $subprev $subprev-dirty &&
- 	test_cmp expect.body actual3.body &&
- 	git diff --ignore-submodules=dirty HEAD >actual4 &&
--	echo -n "" | test_cmp - actual4
-+	! test -s actual4
- '
- test_done
- test_expect_success 'git diff HEAD with dirty submodule (index, refs match)' '
-@@ -139,11 +139,11 @@ test_expect_success 'git diff HEAD with dirty submodule (untracked, refs match)'
- 	expect_from_to >expect.body $subprev $subprev-dirty &&
- 	test_cmp expect.body actual.body &&
- 	git diff --ignore-submodules=all HEAD >actual2 &&
--	echo -n "" | test_cmp - actual2 &&
-+	! test -s actual2 &&
- 	git diff --ignore-submodules=untracked HEAD >actual3 &&
--	echo -n "" | test_cmp - actual3 &&
-+	! test -s actual3 &&
- 	git diff --ignore-submodules=dirty HEAD >actual4 &&
--	echo -n "" | test_cmp - actual4
-+	! test -s actual4
- '
- 
- test_expect_success 'git diff (empty submodule dir)' '
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index f44b906..db9b64d 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -207,17 +207,17 @@ EOF
- 
- test_expect_success 'submodule contains untracked content (untracked ignored)' "
- 	git diff-index -p --ignore-submodules=untracked --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'submodule contains untracked content (dirty ignored)' "
- 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'submodule contains untracked content (all ignored)' "
- 	git diff-index -p --ignore-submodules=all --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'submodule contains untracked and modifed content' "
-@@ -240,13 +240,13 @@ EOF
- test_expect_success 'submodule contains untracked and modifed content (dirty ignored)' "
- 	echo new > sm1/foo6 &&
- 	git diff-index -p --ignore-submodules=dirty --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'submodule contains untracked and modifed content (all ignored)' "
- 	echo new > sm1/foo6 &&
- 	git diff-index -p --ignore-submodules --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'submodule contains modifed content' "
-@@ -295,7 +295,7 @@ EOF
- 
- test_expect_success 'modified submodule contains untracked content (all ignored)' "
- 	git diff-index -p --ignore-submodules=all --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'modified submodule contains untracked and modifed content' "
-@@ -331,7 +331,7 @@ EOF
- test_expect_success 'modified submodule contains untracked and modifed content (all ignored)' "
- 	echo modification >> sm1/foo6 &&
- 	git diff-index -p --ignore-submodules --submodule=log HEAD >actual &&
--	echo -n '' | diff actual -
-+	! test -s actual -
- "
- 
- test_expect_success 'modified submodule contains modifed content' "
--- 
-1.7.1.756.gb48b1
+I saw this in the Git Makefile too, but I didn't understand the logic
+behind it. Could you explain it to me?
+Note: I couldn't understand most of the Makefile, so I just skipped it
+when I found similar declarations in the Git Makefile.
+
+> diff --git a/contrib/svn-fe/svn-fe.c b/contrib/svn-fe/svn-fe.c
+> new file mode 100644
+> index 0000000..d84dd4f
+> --- /dev/null
+> +++ b/contrib/svn-fe/svn-fe.c
+> @@ -0,0 +1,43 @@
+> +/*
+> + * Parse and rearrange a svnadmin dump.
+> + * Create the dump with:
+> + * svnadmin dump --incremental -r<startrev>:<endrev> <repository> >o=
+utfile
+> + *
+> + * Copyright (C) 2010 David Barr <david.barr@cordelta.com>.
+> + * All rights reserved.
+
+That's a huge license header applies just to the trivial five-line
+program, right? Is it necessary at all?
+
+> +#include <stdlib.h>
+> +#include "../../vcs-svn/svndump.h"
+
+Inelegant. Why not include ../../vcs-svn in the path you're searching
+for headers?
+
+> +svnadmin dump --incremental REPO | svn-fe [url] | git fast-import
+
+If the user doesn't have a clue about SVN, they won't know what REPO
+is here: Without knowing anything about svnadmin, I'd naively try it
+with a remote repository. Maybe include a note about having to mirror
+a complete repository locally using svnsync (or otherwise) first?
+
+> +Converts a textual representation of a Subversion repository into
+> +input suitable for git-fast-import(1) and similar importers.
+
+To be more specific, "Subversion dumpfile (version: 2)" from FILE(1).
+
+-- Ram
