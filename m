@@ -1,102 +1,64 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: [PATCH 4/4] Makefile: Don't pass $(ALL_CFLAGS) to the linker
-Date: Thu, 24 Jun 2010 11:30:09 -0400
-Message-ID: <AANLkTinmGOSwNzLBngXHOU-pxNTbHFJQyCLIHQWFW6Eo@mail.gmail.com>
-References: <4C226520.5080009@ramsay1.demon.co.uk>
+From: =?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>
+Subject: Re: What's cooking in git.git (Jun 2010, #04; Wed, 23)
+Date: Thu, 24 Jun 2010 17:41:14 +0200
+Organization: Ensimag
+Message-ID: <451c6e73ede877b1ae32a86396d47072@ensimag.fr>
+References: <7viq59e6zn.fsf@alter.siamese.dyndns.org> <4C23702F.8030707@viscovery.net>
+Reply-To: clement.poulain@ensimag.imag.fr
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016e6d7ee966ef0570489c8549a
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Thu Jun 24 17:30:29 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jun 24 17:45:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORoNn-0004DX-Uy
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 17:30:28 +0200
+	id 1ORocg-0004Wf-82
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 17:45:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755699Ab0FXPaO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jun 2010 11:30:14 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:58632 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755559Ab0FXPaN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 11:30:13 -0400
-Received: by wwi17 with SMTP id 17so323726wwi.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 08:30:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=y7vpFCh2LY0lwlX+sbtLiXdQlj0BUJFJullMSj1ZnK0=;
-        b=u7Uj3L4sANMuwGNakIrplWwTEWCBbCUKWMNON3Al5EKjIcB7DD09v8m8+TrqJnjhLD
-         maDO/YQ24pVzA59mvSCiO/24NNprVbn+YAjYm+iO5qNpmI/eujFC+LYH3eR37wSB4SR6
-         ugq32iNw61TDwHmecimByrjAfeiFxXI83Xmlc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=M69J6Gl4cpKZ1axVerOfsWKwmpoUvot9P6mv0LeTyUhoXC0AbhuHU4fg4knKx0ReJ3
-         vPHd8XtrJGWB3gr8aC4aBf/5jq3yDvT67CQEqzmYmq16myNAXPeBqWsRhEELZChQydcK
-         NS0oRiBePg5EugujBUOjgebaQrBeaXU/rHiQI=
-Received: by 10.216.90.2 with SMTP id d2mr7489539wef.24.1277393409852; Thu, 24 
-	Jun 2010 08:30:09 -0700 (PDT)
-Received: by 10.216.165.78 with HTTP; Thu, 24 Jun 2010 08:30:09 -0700 (PDT)
-In-Reply-To: <4C226520.5080009@ramsay1.demon.co.uk>
-X-Google-Sender-Auth: e7QwOBEWPlxCJV3gUl0CbWBDahQ
+	id S1755755Ab0FXPpp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jun 2010 11:45:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:43476 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754554Ab0FXPpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 11:45:44 -0400
+Received: from ensikerberos.imag.fr (ensimag.imag.fr [195.221.228.12])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o5OFWkC4022671
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 24 Jun 2010 17:32:46 +0200
+Received: from ensicom.imag.fr (web-ensimag [195.221.228.24])
+	by ensikerberos.imag.fr (8.13.8/8.13.8/ImagV2.1.r_ens) with ESMTP id o5OFfESW017810;
+	Thu, 24 Jun 2010 17:41:14 +0200
+Received: from webmail.ensimag.fr (localhost [127.0.0.1])
+	by ensicom.imag.fr (8.13.8/8.13.8/ImagV2.1.sb_ens) with ESMTP id o5OFfEVn022658;
+	Thu, 24 Jun 2010 17:41:14 +0200
+In-Reply-To: <4C23702F.8030707@viscovery.net>
+X-Sender: clement.poulain@ensimag.imag.fr
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 24 Jun 2010 17:32:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o5OFWkC4022671
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: clement.poulain@ensimag.imag.fr
+MailScanner-NULL-Check: 1277998370.71242@Fvl4t3i2sghRRQQoveLHEw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149600>
 
---0016e6d7ee966ef0570489c8549a
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+> Am 6/24/2010 0:09, schrieb Junio C Hamano:
+>> * cp/textconv-cat-file (2010-06-09) 4 commits
+>>  - [DONTMERGE] git gui: use textconv filter for diff and blame
+> 
+> This git-gui patch needs a fixup.
 
-On Wed, Jun 23, 2010 at 3:48 PM, Ramsay Jones wrote:
->
-> The msvc debug build (make MSVC=3D1 DEBUG=3D1) issues a warning
-> on every invocation of the linker:
->
-> =A0 =A0LINK : warning LNK4044: unrecognized option '/Zi'; ignored
->
-> In order to suppress the warning, we refrain from passing the
-> $(ALL_CFLAGS) macro to the linker.
+I wonder where do this come from.
+It's seems to be OK there:
+http://mid.gmane.org/1276102929-31712-4-git-send-email-clement.poulain@ensimag.imag.fr
+doesn't it ?
 
-Alternatively, we could leave the makefile alone and fix it up in
-compat/vcbuild/scripts/clink.pl
-
-(Apologies for the patch attached instead of inline; I'm not using a
-whitespace-clean email client at the moment.)
-
-Peter Harris
-
---0016e6d7ee966ef0570489c8549a
-Content-Type: application/octet-stream; name="msvc.patch"
-Content-Disposition: attachment; filename="msvc.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gatqz7kv1
-
-ZGlmZiAtLWdpdCBhL01ha2VmaWxlIGIvTWFrZWZpbGUKaW5kZXggNzEzNDUwOS4uZGNjZWU4ZSAx
-MDA2NDQKLS0tIGEvTWFrZWZpbGUKKysrIGIvTWFrZWZpbGUKQEAgLTEwNzIsNyArMTA3Miw4IEBA
-IGlmbmRlZiBERUJVRwogCUJBU0lDX0xERkxBR1MgKz0gLUxUQ0cKIAlBUiArPSAtTFRDRwogZWxz
-ZQogCUJBU0lDX0NGTEFHUyArPSAtWmkgLU1UZAorCUJBU0lDX0xERkxBR1MgPSAtREVCVUcgLU1B
-UAogZW5kaWYKIAlYID0gLmV4ZQogZW5kaWYKZGlmZiAtLWdpdCBhL2NvbXBhdC92Y2J1aWxkL3Nj
-cmlwdHMvY2xpbmsucGwgYi9jb21wYXQvdmNidWlsZC9zY3JpcHRzL2NsaW5rLnBsCmluZGV4IDQz
-NzQ3NzEuLmFlYzk5ODAgMTAwNjQ0Ci0tLSBhL2NvbXBhdC92Y2J1aWxkL3NjcmlwdHMvY2xpbmsu
-cGwKKysrIGIvY29tcGF0L3ZjYnVpbGQvc2NyaXB0cy9jbGluay5wbApAQCAtMTIsMTAgKzEyLDE0
-IEBACiB1c2Ugc3RyaWN0OwogbXkgQGFyZ3MgPSAoKTsKIG15IEBjZmxhZ3MgPSAoKTsKK215IEBs
-ZmxhZ3MgPSAoKTsKIG15ICRpc19saW5raW5nID0gMDsKK215ICVsaW5rZmxhZyA9ICggJy1ERUJV
-RycgPT4gMSwgJy1NQVAnID0+IDEgKTsKIHdoaWxlIChAQVJHVikgewogCW15ICRhcmcgPSBzaGlm
-dCBAQVJHVjsKLQlpZiAoIiRhcmciID1+IC9eLVtESU1HT10vKSB7CisJaWYgKCRsaW5rZmxhZ3sk
-YXJnfSkgeworCQlwdXNoKEBsZmxhZ3MsICRhcmcpOworCX0gZWxzaWYgKCIkYXJnIiA9fiAvXi1b
-RElNR09aXS8pIHsKIAkJcHVzaChAY2ZsYWdzLCAkYXJnKTsKIAl9IGVsc2lmICgiJGFyZyIgZXEg
-Ii1vIikgewogCQlteSAkZmlsZV9vdXQgPSBzaGlmdCBAQVJHVjsKQEAgLTQ0LDYgKzQ4LDcgQEAg
-d2hpbGUgKEBBUkdWKSB7CiB9CiBpZiAoJGlzX2xpbmtpbmcpIHsKIAl1bnNoaWZ0KEBhcmdzLCAi
-bGluay5leGUiKTsKKwlwdXNoKEBhcmdzLCBAbGZsYWdzKTsKIH0gZWxzZSB7CiAJdW5zaGlmdChA
-YXJncywgImNsLmV4ZSIpOwogCXB1c2goQGFyZ3MsIEBjZmxhZ3MpOwo=
---0016e6d7ee966ef0570489c8549a--
+Regards
