@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 1/5] test-lib: Adjust output to be valid TAP format
-Date: Thu, 24 Jun 2010 17:44:45 +0000
-Message-ID: <1277401489-27885-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 2/5] test-lib: Make the test_external_* functions TAP-aware
+Date: Thu, 24 Jun 2010 17:44:46 +0000
+Message-ID: <1277401489-27885-3-git-send-email-avarab@gmail.com>
 References: <1277401489-27885-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,316 +11,228 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 24 19:45:19 2010
+X-From: git-owner@vger.kernel.org Thu Jun 24 19:45:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORqUH-00053q-N3
-	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 19:45:18 +0200
+	id 1ORqUh-0005K1-Et
+	for gcvg-git-2@lo.gmane.org; Thu, 24 Jun 2010 19:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754238Ab0FXRpI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 13:45:08 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:49779 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754149Ab0FXRpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 13:45:04 -0400
-Received: by mail-ww0-f46.google.com with SMTP id 17so442610wwi.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 10:45:03 -0700 (PDT)
+	id S1755154Ab0FXRpi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 24 Jun 2010 13:45:38 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42245 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754578Ab0FXRph (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 13:45:37 -0400
+Received: by wyi11 with SMTP id 11so1893480wyi.19
+        for <git@vger.kernel.org>; Thu, 24 Jun 2010 10:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=LDtMyw6XFGsQziRJqjFb2MDiP2b9T0G2q5gU6FHLONM=;
-        b=JVqBphr4KdUFVPZj3kXxd/dX2xcMXcO+N6GDYXQvYfIHKeCErudjYgegoP+YINiLde
-         rGOuGPh5Gbv7IO1yjiS+F5Md5w7Z9J4K4e5z9S+6/YnEnv4nUkoFPRXxSFFSs4eZHCrb
-         787DDV+gTdvl4QfiY548JPk0TQZbS36O1Svbs=
+        bh=qNyIlcXYQvtGCrXpJV6PN/j+APgObLqcSKX9rcuZRBc=;
+        b=PWWB81aA/boKW7f5I/iF5nI54Mk462JPCZDpkInyt78nthcV5Y8RrUzt5Owv4r/m//
+         8H1NVUyiQzYlzHnSQDWTJZbBEtsJ9Y0wiemU0uqnxBO+TVwyWMife/ekU/b3J0Sf7IU0
+         yxwm80b4gF0T9ikfm6WxWlIG3Twk9rHk58HKE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=mvL0iPlZTAKtdNvB9RMSDu+wz2HRS3QA/L4wzVhmxhdaqVXGJY/TIc9D8xESve7x0D
-         MbkxxCvKJg5BX/MbOQJb7gZstIKdU1N/E8GJjazpz11EMRgDDoOVRZSZa9rYLx+caUNm
-         HUG1qO1KF4q721DluVoTdhDJq/9uGNXkAzKRA=
-Received: by 10.216.89.20 with SMTP id b20mr7646135wef.58.1277401502668;
-        Thu, 24 Jun 2010 10:45:02 -0700 (PDT)
+        b=sMgHwEq22rckSU15DJh95m2YWicefLupuFg33bAPEDCEwAQMkt+ZXI8Z6eHCWIg9/m
+         YlpEDRbzKNC+cX8XENrCw3JEfCtJ1HVZGE47KyaIvG51V8OsaLx7zsoUeQ3CBNnqlMlk
+         07O/0hHBfrQ/oXgQEvj3XQF09c9iQfz/tc4xE=
+Received: by 10.216.87.5 with SMTP id x5mr7659764wee.90.1277401535730;
+        Thu, 24 Jun 2010 10:45:35 -0700 (PDT)
 Received: from localhost.localdomain ([188.105.94.3])
-        by mx.google.com with ESMTPS id h1sm1043062wee.31.2010.06.24.10.45.00
+        by mx.google.com with ESMTPS id h1sm1043062wee.31.2010.06.24.10.45.34
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jun 2010 10:45:01 -0700 (PDT)
+        Thu, 24 Jun 2010 10:45:34 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.251.g92a7
 In-Reply-To: <1277401489-27885-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149610>
 
-TAP, the Test Anything Protocol, is a simple text-based interface
-between testing modules in a test harness. test-lib.sh's output was
-already very close to being valid TAP. This change brings it all the
-way there. Before:
+Before TAP we just ran the Perl test and assumed that it failed if
+nothing was printed on STDERR. Continue doing that, but introduce a
+`test_external_has_tap' variable which tests can set to indicate that
+they're outputting TAP.
 
-   $ ./t0005-signals.sh
-   *   ok 1: sigchain works
-   * passed all 1 test(s)
-
-And after:
-
-   $ ./t0005-signals.sh
-   ok 1 - sigchain works
-   # passed all 1 test(s)
-   1..1
-
-The advantage of using TAP is that any program that reads the format
-(a "test harness") can run the tests. The most popular of these is the
-prove(1) utility that comes with Perl. It can run tests in parallel,
-display colored output, format the output to console, file, HTML etc.,
-and much more. An example:
-
-   $ prove ./t0005-signals.sh
-   ./t0005-signals.sh .. ok
-   All tests successful.
-   Files=3D1, Tests=3D1,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.01=
- cusr  0.02 csys =3D  0.06 CPU)
-   Result: PASS
-
-prove(1) gives you human readable output without being too
-verbose. Running the test suite in parallel with `make test -j15`
-produces a flood of text. Running them with `prove -j 15 ./t[0-9]*.sh`
-makes it easy to follow what's going on.
-
-All this patch does is re-arrange the output a bit so that it conforms
-with the TAP spec, everything that the test suite did before continues
-to work. That includes aggregating results in t/test-results/, the
---verbose, --debug and other options for tests, and the test color
-output.
-
-TAP harnesses ignore everything that they don't know about, so running
-the tests with --verbose works:
-
-    $ prove ./t0005-signals.sh :: --verbose --debug
-    ./t0005-signals.sh .. Terminated
-    ./t0005-signals.sh .. ok
-    All tests successful.
-    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.01 sys +  0.0=
-1 cusr  0.01 csys =3D  0.05 CPU)
-    Result: PASS
-
-Just supply the -v option to prove itself to get all the verbose
-output that it suppresses:
-
-    $ prove -v ./t0005-signals.sh :: --verbose --debug
-    ./t0005-signals.sh ..
-    Initialized empty Git repository in /home/avar/g/git/t/trash direct=
-ory.t0005-signals/.git/
-    expecting success:
-            test-sigchain >actual
-            case "$?" in
-            143) true ;; # POSIX w/ SIGTERM=3D15
-              3) true ;; # Windows
-              *) false ;;
-            esac &&
-            test_cmp expect actual
-    Terminated
-    ok 1 - sigchain works
-    # passed all 1 test(s)
-    1..1
-    ok
-    All tests successful.
-    Files=3D1, Tests=3D1,  0 wallclock secs ( 0.02 usr  0.00 sys +  0.0=
-1 cusr  0.01 csys =3D  0.04 CPU)
-    Result: PASS
+If it's set we won't output a test plan, but trust the external test
+to do so. That way we can make external tests work with a TAP harness,
+but still maintain compatibility with test-lib's own way of tracking
+tests through the test-results directory.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- t/README      |   55 +++++++++++++++++++++++++++++++++++++++----------=
-------
- t/test-lib.sh |   30 ++++++++++++++++++------------
- 2 files changed, 57 insertions(+), 28 deletions(-)
+ t/t9700-perl-git.sh |    3 +++
+ t/t9700/test.pl     |   11 +++++++++++
+ t/test-lib.sh       |   51 +++++++++++++++++++++++++++++++++++++++----=
+--------
+ 3 files changed, 53 insertions(+), 12 deletions(-)
 
-diff --git a/t/README b/t/README
-index 0e4e8d8..aa4ed28 100644
---- a/t/README
-+++ b/t/README
-@@ -18,25 +18,48 @@ The easiest way to run tests is to say "make".  Thi=
-s runs all
- the tests.
+diff --git a/t/t9700-perl-git.sh b/t/t9700-perl-git.sh
+index 8686086..0b92726 100755
+--- a/t/t9700-perl-git.sh
++++ b/t/t9700-perl-git.sh
+@@ -46,6 +46,9 @@ test_expect_success \
+      git config --add test.int 2k
+      '
 =20
-     *** t0000-basic.sh ***
--    *   ok 1: .git/objects should be empty after git-init in an empty =
-repo.
--    *   ok 2: .git/objects should have 256 subdirectories.
--    *   ok 3: git-update-index without --add should fail adding.
-+    ok 1 - .git/objects should be empty after git init in an empty rep=
-o.
-+    ok 2 - .git/objects should have 3 subdirectories.
-+    ok 3 - success is reported like this
-     ...
--    *   ok 23: no diff after checkout and git-update-index --refresh.
--    * passed all 23 test(s)
--    *** t0100-environment-names.sh ***
--    *   ok 1: using old names should issue warnings.
--    *   ok 2: using old names but having new names should not issue wa=
-rnings.
--    ...
--
--Or you can run each test individually from command line, like
--this:
--
--    $ sh ./t3001-ls-files-killed.sh
--    *   ok 1: git-update-index --add to add various paths.
--    *   ok 2: git-ls-files -k to show killed files.
--    *   ok 3: validate git-ls-files -k output.
--    * passed all 3 test(s)
-+    ok 43 - very long name in the index handled sanely
-+    # fixed 1 known breakage(s)
-+    # still have 1 known breakage(s)
-+    # passed all remaining 42 test(s)
-+    1..43
-+    *** t0001-init.sh ***
-+    ok 1 - plain
-+    ok 2 - plain with GIT_WORK_TREE
-+    ok 3 - plain bare
++# The external test will outputs its own plan
++test_external_has_tap=3D1
 +
-+Since the tests all output TAP (see http://testanything.org) they can
-+be run with any TAP harness. Here's an example of paralell testing
-+powered by a recent version of prove(1):
-+
-+    $ prove --timer --jobs 15 ./t[0-9]*.sh
-+    [19:17:33] ./t0005-signals.sh ................................... =
-ok       36 ms
-+    [19:17:33] ./t0022-crlf-rename.sh ............................... =
-ok       69 ms
-+    [19:17:33] ./t0024-crlf-archive.sh .............................. =
-ok      154 ms
-+    [19:17:33] ./t0004-unwritable.sh ................................ =
-ok      289 ms
-+    [19:17:33] ./t0002-gitfile.sh ................................... =
-ok      480 ms
-+    =3D=3D=3D(     102;0  25/?  6/?  5/?  16/?  1/?  4/?  2/?  1/?  3/=
-?  1... )=3D=3D=3D
-+
-+prove and other harnesses come with a lot of useful options. The
-+--state option in particular is very useful:
-+
-+    # Repeat until no more failures
-+    $ prove -j 15 --state=3Dfailed,save ./t[0-9]*.sh
-+
-+You can also run each test individually from command line, like this:
-+
-+    $ sh ./t3010-ls-files-killed-modified.sh
-+    ok 1 - git update-index --add to add various paths.
-+    ok 2 - git ls-files -k to show killed files.
-+    ok 3 - validate git ls-files -k output.
-+    ok 4 - git ls-files -m to show modified files.
-+    ok 5 - validate git ls-files -m output.
-+    # passed all 5 test(s)
-+    1..5
+ test_external_without_stderr \
+     'Perl API' \
+     "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index 666722d..e5d4b03 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -7,6 +7,13 @@ use strict;
 =20
- You can pass --verbose (or -v), --debug (or -d), and --immediate
- (or -i) command line argument to the test, or by setting GIT_TEST_OPTS
+ use Test::More qw(no_plan);
+=20
++BEGIN {
++	# t9700-perl-git.sh kicks off our testing, so we have to go from
++	# there.
++	$Test::Builder::Test->{Curr_Test} =3D 1;
++	$Test::Builder::Test->{No_Ending} =3D 1;
++}
++
+ use Cwd;
+ use File::Basename;
+=20
+@@ -105,3 +112,7 @@ my $last_commit =3D $r2->command_oneline(qw(rev-par=
+se --verify HEAD));
+ like($last_commit, qr/^[0-9a-fA-F]{40}$/, 'rev-parse returned hash');
+ my $dir_commit =3D $r2->command_oneline('log', '-n1', '--pretty=3Dform=
+at:%H', '.');
+ isnt($last_commit, $dir_commit, 'log . does not show last commit');
++
++printf "1..%d\n", $Test::Builder::Test->{Curr_Test};
++
++exit($Test::Builder::Test->{Is_Passing} ? 0 : 1);
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 367f053..e97645c 100644
+index e97645c..7077210 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -160,7 +160,7 @@ if test -n "$color"; then
- 			*) test -n "$quiet" && return;;
- 		esac
- 		shift
--		printf "* %s" "$*"
-+		printf "%s" "$*"
- 		tput sgr0
- 		echo
- 		)
-@@ -169,7 +169,7 @@ else
- 	say_color() {
- 		test -z "$1" && test -n "$quiet" && return
- 		shift
--		echo "* $*"
-+		echo "$*"
- 	}
- fi
+@@ -206,6 +206,8 @@ test_fixed=3D0
+ test_broken=3D0
+ test_success=3D0
 =20
-@@ -339,25 +339,25 @@ test_have_prereq () {
-=20
- test_ok_ () {
- 	test_success=3D$(($test_success + 1))
--	say_color "" "  ok $test_count: $@"
-+	say_color "" "ok $test_count - $@"
- }
-=20
- test_failure_ () {
- 	test_failure=3D$(($test_failure + 1))
--	say_color error "FAIL $test_count: $1"
-+	say_color error "not ok - $test_count $1"
- 	shift
--	echo "$@" | sed -e 's/^/	/'
-+	echo "$@" | sed -e 's/^/#	/'
- 	test "$immediate" =3D "" || { GIT_EXIT_OK=3Dt; exit 1; }
- }
-=20
- test_known_broken_ok_ () {
- 	test_fixed=3D$(($test_fixed+1))
--	say_color "" "  FIXED $test_count: $@"
-+	say_color "" "ok $test_count - $@ # TODO known breakage"
- }
-=20
- test_known_broken_failure_ () {
- 	test_broken=3D$(($test_broken+1))
--	say_color skip "  still broken $test_count: $@"
-+	say_color skip "not ok $test_count - $@ # TODO known breakage"
- }
-=20
- test_debug () {
-@@ -390,7 +390,7 @@ test_skip () {
- 	case "$to_skip" in
- 	t)
- 		say_color skip >&3 "skipping test: $@"
--		say_color skip "skip $test_count: $1"
-+		say_color skip "ok $test_count: # skip $1"
- 		: true
- 		;;
- 	*)
-@@ -620,18 +620,22 @@ test_done () {
-=20
- 	if test "$test_fixed" !=3D 0
- 	then
--		say_color pass "fixed $test_fixed known breakage(s)"
-+		say_color pass "# fixed $test_fixed known breakage(s)"
- 	fi
- 	if test "$test_broken" !=3D 0
- 	then
--		say_color error "still have $test_broken known breakage(s)"
-+		say_color error "# still have $test_broken known breakage(s)"
- 		msg=3D"remaining $(($test_count-$test_broken)) test(s)"
- 	else
- 		msg=3D"$test_count test(s)"
- 	fi
- 	case "$test_failure" in
- 	0)
--		say_color pass "passed all $msg"
-+		# Maybe print SKIP message
-+		[ -z "$skip_all" ] || skip_all=3D" # SKIP $skip_all"
++test_external_has_tap=3D0
 +
-+		say_color pass "# passed all $msg"
-+		say "1..$test_count$skip_all"
+ die () {
+ 	code=3D$?
+ 	if test -n "$GIT_EXIT_OK"
+@@ -456,7 +458,7 @@ test_expect_code () {
+ # test_external runs external test scripts that provide continuous
+ # test output about their progress, and succeeds/fails on
+ # zero/non-zero exit code.  It outputs the test output on stdout even
+-# in non-verbose mode, and announces the external script with "* run
++# in non-verbose mode, and announces the external script with "# run
+ # <n>: ..." before running it.  When providing relative paths, keep in
+ # mind that all scripts run in "trash directory".
+ # Usage: test_external description command arguments...
+@@ -471,7 +473,7 @@ test_external () {
+ 	then
+ 		# Announce the script to reduce confusion about the
+ 		# test output that follows.
+-		say_color "" " run $test_count: $descr ($*)"
++		say_color "" "# run $test_count: $descr ($*)"
+ 		# Export TEST_DIRECTORY, TRASH_DIRECTORY and GIT_TEST_LONG
+ 		# to be able to use them in script
+ 		export TEST_DIRECTORY TRASH_DIRECTORY GIT_TEST_LONG
+@@ -481,9 +483,19 @@ test_external () {
+ 		"$@" 2>&4
+ 		if [ "$?" =3D 0 ]
+ 		then
+-			test_ok_ "$descr"
++			if test $test_external_has_tap -eq 0; then
++				test_ok_ "$descr"
++			else
++				say_color "" "# test_external test $descr was ok"
++				test_success=3D$(($test_success + 1))
++			fi
+ 		else
+-			test_failure_ "$descr" "$@"
++			if test $test_external_has_tap -eq 0; then
++				test_failure_ "$descr" "$@"
++			else
++				say_color error "# test_external test $descr failed: $@"
++				test_failure=3D$(($test_failure + 1))
++			fi
+ 		fi
+ 	fi
+ }
+@@ -499,19 +511,30 @@ test_external_without_stderr () {
+ 	[ -f "$stderr" ] || error "Internal error: $stderr disappeared."
+ 	descr=3D"no stderr: $1"
+ 	shift
+-	say >&3 "expecting no stderr from previous command"
++	say >&3 "# expecting no stderr from previous command"
+ 	if [ ! -s "$stderr" ]; then
+ 		rm "$stderr"
+-		test_ok_ "$descr"
++
++		if test $test_external_has_tap -eq 0; then
++			test_ok_ "$descr"
++		else
++			say_color "" "# test_external_without_stderr test $descr was ok"
++			test_success=3D$(($test_success + 1))
++		fi
+ 	else
+ 		if [ "$verbose" =3D t ]; then
+-			output=3D`echo; echo Stderr is:; cat "$stderr"`
++			output=3D`echo; echo "# Stderr is:"; cat "$stderr"`
+ 		else
+ 			output=3D
+ 		fi
+ 		# rm first in case test_failure exits.
+ 		rm "$stderr"
+-		test_failure_ "$descr" "$@" "$output"
++		if test $test_external_has_tap -eq 0; then
++			test_failure_ "$descr" "$@" "$output"
++		else
++			say_color error "# test_external_without_stderr test $descr failed:=
+ $@: $output"
++			test_failure=3D$(($test_failure + 1))
++		fi
+ 	fi
+ }
+=20
+@@ -634,8 +657,10 @@ test_done () {
+ 		# Maybe print SKIP message
+ 		[ -z "$skip_all" ] || skip_all=3D" # SKIP $skip_all"
+=20
+-		say_color pass "# passed all $msg"
+-		say "1..$test_count$skip_all"
++		if test $test_external_has_tap -eq 0; then
++			say_color pass "# passed all $msg"
++			say "1..$test_count$skip_all"
++		fi
 =20
  		test -d "$remove_trash" &&
  		cd "$(dirname "$remove_trash")" &&
-@@ -640,7 +644,9 @@ test_done () {
+@@ -644,8 +669,10 @@ test_done () {
  		exit 0 ;;
 =20
  	*)
--		say_color error "failed $test_failure among $msg"
-+		say_color error "# failed $test_failure among $msg"
-+		say "1..$test_count"
-+
+-		say_color error "# failed $test_failure among $msg"
+-		say "1..$test_count"
++		if test $test_external_has_tap -eq 0; then
++			say_color error "# failed $test_failure among $msg"
++			say "1..$test_count"
++		fi
+=20
  		exit 1 ;;
 =20
- 	esac
 --=20
 1.7.1.251.g92a7
