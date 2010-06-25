@@ -1,60 +1,58 @@
-From: Sabyasachi Ruj <ruj.sabya@gmail.com>
-Subject: Re: Confusion about content of conflicted file after : git remove/add
-Date: Fri, 25 Jun 2010 11:06:46 +0530
-Message-ID: <AANLkTinQu19HKUC2a_JkSyeZ_SynE11eNwgH9zEMiY8g@mail.gmail.com>
-References: <AANLkTimqrfeNEmlfHGxWTdLgS7tAMOA66N4nV8b5I8F6@mail.gmail.com> 
-	<20100624061029.GA11020@coredump.intra.peff.net> <AANLkTilo0b9aL3oxk0b8eNkBWygwA7xSclTy1MaK8qba@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v3 3/3] Don't expand CRLFs when normalizing text during
+ merge
+Date: Fri, 25 Jun 2010 07:45:28 +0200
+Message-ID: <4C244278.10407@viscovery.net>
+References: <cover.1277408598.git.eyvind.bernhardsen@gmail.com> <90f38b5f5c49f9b9f5427a026e51f867a1121982.1277408598.git.eyvind.bernhardsen@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 25 07:37:28 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 25 07:45:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OS1bU-0002IR-0F
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 07:37:28 +0200
+	id 1OS1jO-0004HH-T5
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 07:45:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942Ab0FYFhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jun 2010 01:37:08 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:44798 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750844Ab0FYFhH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jun 2010 01:37:07 -0400
-Received: by qyk38 with SMTP id 38so441027qyk.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 22:37:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=IutryG496yuVnrYt7lQKEuPXe/BBu6oVbnD++TV0e/Q=;
-        b=VbTTGwmwX0faOKB7pswoxcvwg8j+XEL1QNBnyi/5ZxKfru4BTwnar/5Qxq6ob7wNgF
-         dAEgvpPlc/1hn+Pk0DmqTyYzv7xMesWqA9IxELeeprgkM7g4//4rywNWHwyGIMtOqQkM
-         5oYZIAmCUTsimGXI3v7TbfciJugZs/Q0RiHAs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=qSDCTwmKEigpUOgQrE/kBzN94U1OH/HIBsVeaA/z/t8aN7QEe63J/QKcdYHidyzdwR
-         96/xNYKQTLd9dJ8jcsYlsnDwUo4eDJvVM8lbgouRuKf3YnSsFGpYbVEleIx6MPlOpfdP
-         6xQTGgApHgNSkbwT/xJu+DAHQ9CZEbonAhupU=
-Received: by 10.224.87.169 with SMTP id w41mr86736qal.292.1277444226184; Thu, 
-	24 Jun 2010 22:37:06 -0700 (PDT)
-Received: by 10.229.241.149 with HTTP; Thu, 24 Jun 2010 22:36:46 -0700 (PDT)
-In-Reply-To: <AANLkTilo0b9aL3oxk0b8eNkBWygwA7xSclTy1MaK8qba@mail.gmail.com>
+	id S1751068Ab0FYFpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jun 2010 01:45:34 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:26018 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817Ab0FYFpd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jun 2010 01:45:33 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OS1jE-0003ee-OF; Fri, 25 Jun 2010 07:45:28 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 587151660F;
+	Fri, 25 Jun 2010 07:45:28 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <90f38b5f5c49f9b9f5427a026e51f867a1121982.1277408598.git.eyvind.bernhardsen@gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149666>
 
->> So I think there may be a bug. I don't really see any code in
->> merge-recursive.c to handle conflicts on _both_ sides of a rename, but
->> obviously that is possible here.
+Am 6/24/2010 22:44, schrieb Eyvind Bernhardsen:
+> There's no need to expand CRLFs when convert_to_working_tree() is called
+> to normalize text for a merge since the text will be converted back
+> immediately.  Improves performance of merges with conflicting line
+> endings when core.eol=crlf or core.autocrlf=true.
 
-Then I guess having contents of both the files would be an expected
-behavior. Should I report a bug somewhere?
--
-Sabyasachi
+Pardon me, first you make a big deal about normalization for merges, only
+that you finally omit it? What am I missing?
+
+BTW, most of the new functions you introduced violate the style: they
+should have the opening brace on the next line.
+
+-- Hannes
