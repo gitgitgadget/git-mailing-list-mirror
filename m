@@ -1,80 +1,147 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [PATCH v3 3/3] Don't expand CRLFs when normalizing text during merge
-Date: Fri, 25 Jun 2010 10:58:54 +0200
-Message-ID: <EE9F4F92-06D5-4B31-BF6F-1163774C112B@gmail.com>
-References: <cover.1277408598.git.eyvind.bernhardsen@gmail.com> <90f38b5f5c49f9b9f5427a026e51f867a1121982.1277408598.git.eyvind.bernhardsen@gmail.com> <4C244278.10407@viscovery.net> <FB02F1B0-9FE7-4B7B-BA30-5A510F83BCE7@gmail.com> <4C246622.9090707@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 25 10:59:11 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-cat-file.txt: Document --textconv
+Date: Fri, 25 Jun 2010 11:04:10 +0200
+Message-ID: <4C24710A.7000506@drmicha.warpmail.net>
+References: <2251bbc1e40505dcb80103bf5daebea07dc0e9f7.1277374210.git.git@drmicha.warpmail.net> <vpqmxukir3e.fsf@bauges.imag.fr> <4C2355EF.7030604@drmicha.warpmail.net> <7vocf0chwa.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	=?ISO-8859-1?Q?Cl=E9ment_Poulain?= 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 25 11:05:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OS4kf-0006ai-C2
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 10:59:09 +0200
+	id 1OS4qK-0001FM-DV
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 11:05:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753371Ab0FYI7B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jun 2010 04:59:01 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:63725 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752113Ab0FYI7A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 04:59:00 -0400
-Received: by wwi17 with SMTP id 17so871496wwi.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 01:58:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=2ZXeIytZktNPAhdJ/LIzoezQtQ1qnuG3gkjUGyORWaM=;
-        b=jLeZ9eyVrHyhh3J4FJVRRACAh3FQ5gbGNS38Jxi1qLuQXhZY1oUpTpLoMcjPyYv4qz
-         u7ioigHDV1OTDENJhULWgGvaJuFmGcWRYPDv+/Ti5vV0JClqeaTlhyVeJ//7I8jhexbE
-         iRVPPVnlesXjKSV0hobFk8YRrjBodZ8teFIqk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=csNJwkkgr+G9w6NfmZCoJrKQQO6RKKrkKzRLl95wocO4KZVYKaTNO3NNEyR9i4Jhve
-         unxu0K19A4XNqW7MISIK3LT5+jDDXMvm1T/RLSxjfsa2QU6dCYH4iwnepxn+urAGsYuc
-         XWx8U+KSOvcKGSlHXLC1nZNdPPCW91ec2GlYQ=
-Received: by 10.227.128.129 with SMTP id k1mr295757wbs.32.1277456338004;
-        Fri, 25 Jun 2010 01:58:58 -0700 (PDT)
-Received: from [10.36.80.159] ([62.113.137.5])
-        by mx.google.com with ESMTPS id y31sm57997409wby.16.2010.06.25.01.58.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jun 2010 01:58:57 -0700 (PDT)
-In-Reply-To: <4C246622.9090707@viscovery.net>
-X-Mailer: Apple Mail (2.1081)
+	id S1752569Ab0FYJEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jun 2010 05:04:55 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35643 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751501Ab0FYJEx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 05:04:53 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1B25C105B8B;
+	Fri, 25 Jun 2010 05:04:53 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 25 Jun 2010 05:04:53 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=AKcpXEVWQz/p6IAMgd4yGnrsqBo=; b=mzjacsoEUNhnUhsK6MWuaXWS2mt+oDmVYrM7K2+HzhfmONFrVyF/++KtQL62YJlndbc6W7IAtQHCDxqOEFwTl0MjkeLFVuErjgqtm1K384akxIzo6X1JRQ0j/cYQtBq1HY561kDGrdF8IS3+1lHWL09y7rvCDWMswMOwMjA3gKU=
+X-Sasl-enc: G63Z2uMFS7WaDLaq30+enepKRlkVWjsFaqFFfHyj23uH 1277456692
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DBC284B2620;
+	Fri, 25 Jun 2010 05:04:51 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100625 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <7vocf0chwa.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149674>
 
-On 25. juni 2010, at 10.17, Johannes Sixt wrote:
-
-> Am 6/25/2010 9:58, schrieb Eyvind Bernhardsen:
->> Sorry, I didn't explain that very well.  I noticed that normalize_buffer()
->> does more work when core.eol=crlf than it does when core.eol=lf:
->> _to_working_tree() converts LF to CRLF, and then _to_git() reverses that
->> conversion.  This patch makes normalization act the same way when
->> core.eol=crlf as it does when core.eol=lf.
+Junio C Hamano venit, vidit, dixit 24.06.2010 22:09:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> Got it: I missed that you are omitting the conversion only on the "way
-> out" but not on the "way back".
+>> Wait a minute:
+>>
+>> git show HEAD:path >a
+>> git show :path >b
+>> diff a b
+>>
+>> Oh no! We've been having this all along. This is bad but probably
+>> unchangeable.
 > 
-> Looking more closely at your patch, I think that you should make this
-> optimization only if you can prove that the subsequent apply_filter() is a
-> no-op. Otherwise, you may break a smudge filter that expects CRLFs.
+> There is nothing "bad" about this, unless you forgot about the index.
 
-Such a smudge filter would break when core.eol=lf, but you're suggesting that someone might be using a picky smudge filter and has set core.eol=crlf to make sure it gets the line endings it expects?
+I'll object to the "unless"...
 
-That's a very good catch.  I'll add a test so that the optimization is only done if filter is NULL.
--- 
-Eyvind Bernhardsen
+> The comparision target of "git diff" defaults to the index, not HEAD, if
+> you want other precedents.
+
+...but agree here. Do we have a logic/principle which determines whether
+"empty ref" means HEAD or INDEX (which doesn't exist, of course)?
+
+> 
+> If you kept telling others that "everything defaults to HEAD", it is
+> indeed bad, but that can be fixed ;-).
+
+I'll promise to be more careful ;-)
+
+But I still think the situation is unfortunate:
+
+rm -Rf tt && mkdir tt && cd tt && git init
+echo a >f && git add f && git commit -m a
+echo b >f && git add f && git commit -m b
+echo c >f && git add f && echo d >f
+for c in "show --oneline f" "show --oneline :f" "diff f"; do
+  echo "#git $c"
+  git $c
+done
+
+produces
+
+#git show --oneline f
+3b977dc b
+diff --git a/f b/f
+index 7898192..6178079 100644
+--- a/f
++++ b/f
+@@ -1 +1 @@
+-a
++b
+#git show --oneline :f
+c
+#git diff f
+diff --git i/f w/f
+index f2ad6c7..4bcfe98 100644
+--- i/f
++++ w/f
+@@ -1 +1 @@
+-c
++d
+
+[I don't need "f" with "show" or "diff" nor "--oneline" with ":f", of
+course.]
+
+I know why it does that, but I think it's confusing that "show :f" does
+not show the version of f which is the endpoint of the comparison for
+the diff shown by "git show", which is the only parameter to show.
+
+diff is different in that it really has two parameters for the two
+points of comparison (which default to INDEX and WORKTREE), and by
+giving one you specify the startpoint.
+
+> 
+>> I was going with the usage line, but you are right: <a>:<b> makes more
+>> sense semantically and is clearer.
+>>>
+>>> What about this:
+>>>
+>>> --textconv:: 
+>>> 	Show the content as transformed by a textco+nv filter. In this
+>>> 	case, <object> has be of the form <treeish>:<path>, or :<path>
+>>> 	to run the filter on the file <path> stored in the index.
+>>
+>> I'll be more mathematically stubborn about "file", see v2;)
+> 
+> If you want to be mathematically stubborn, then I think you should prefer
+> <path> in a context like this, since <treeish>:<path> is the notation to
+> reach to a <blob> inside the treeish.  <file> is merely one of the two
+> possible manifestations of <blob> when it is accessed through the tree
+> that immediately contains it (other being <symlink>).
+> 
+> Most importantly, "cat-file blob <blob>" codepath has nothing to do with
+> that "should this <blob> materialize as a <file> or a <symlink>?" logic,
+> so saying <file> is doubly wrong in this context.
+
+Yes. Maybe my remark was ambiguous, but from my v2 you can see what I
+meant: not "on the file <path> stored in the index", but "content
+recorded in the index at <path>".
+
+Michael
