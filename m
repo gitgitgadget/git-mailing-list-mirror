@@ -1,82 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [GSoC 2010 Update] Please try the initial version of the line
- level history browser
-Date: Thu, 24 Jun 2010 20:45:50 -0500
-Message-ID: <20100625014550.GA5077@burratino>
-References: <AANLkTimRGZziLnffQXmzYnNhhE3dE_5Hsp1mxAEmBiIk@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 25 03:46:21 2010
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] Documentation: cherry-pick: fix asciidoc problem with --
+Date: Fri, 25 Jun 2010 04:16:23 +0200
+Message-ID: <20100625021625.12918.16047.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 25 04:19:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ORxzp-0006n1-12
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 03:46:21 +0200
+	id 1ORyVf-0006JM-CD
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 04:19:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753950Ab0FYBqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jun 2010 21:46:09 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:43974 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753576Ab0FYBqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jun 2010 21:46:08 -0400
-Received: by iwn41 with SMTP id 41so1455848iwn.19
-        for <git@vger.kernel.org>; Thu, 24 Jun 2010 18:46:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7GCYnojjr9g8po8iXdji/tNhn0nDhtQkwLyjorX3Cr0=;
-        b=D8+bs4ArzUaoBk04x49ae/ljgFMUf9b+zvbx1QV83DVPdIevAsXfvkhLuFbckAZUgD
-         TVcJqjb8rQDHUHJlVGsG9Uxdm2ygHJV4UTZxL0ABhqgL5jlaDsrtMvZ0XW7hXryiyyW7
-         5643tnJpn6wZdfhs1Fabcco0bSHVzvFBBfHK4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=qEUSpq5t6ykEwLvY8zftrWxvDEAE5ZR7ETFfSWPDRXVJwXHCe/NnchUFPPJgr+kmjA
-         4rVrQlGad+cZERwOcSh8VTkMxqQ4XYQyZVxmEzS1aksSF1blPdWRH7oe2J1kSCP/5Emi
-         a4qE4Y9WfE5zGOabbAN0qApWdw4g1mTC1JX8w=
-Received: by 10.231.32.129 with SMTP id c1mr11866520ibd.112.1277430364497;
-        Thu, 24 Jun 2010 18:46:04 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id u6sm44059826ibu.0.2010.06.24.18.46.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 24 Jun 2010 18:46:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimRGZziLnffQXmzYnNhhE3dE_5Hsp1mxAEmBiIk@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754346Ab0FYCTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jun 2010 22:19:09 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:50617 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752839Ab0FYCTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jun 2010 22:19:08 -0400
+Received: from style.boubyland (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id A172F81802D;
+	Fri, 25 Jun 2010 04:18:58 +0200 (CEST)
+X-git-sha1: cc1f7f230d7f92fba7e617260121f4bae872ed38 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149662>
 
-Hi Bo,
+Asciidoc interprets two dashes separated by spaces as a single big
+dash. So let's escape the first dash, so that "master \-- README"
+will properly appear as "master -- README".
 
-Bo Yang wrote:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
 
-> ssh://repo.or.cz/srv/git/line.git   phrase2
+	This patch should be squashed into patch 2/3 in the
+	cc/cherry-pick-stdin series.
 
-For those without ssh access, it seems the place to look is
+ Documentation/git-cherry-pick.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
- git://repo.or.cz/line.git diff-range
- http://repo.or.cz/r/line.git diff-range
-
-> And finally, my future plans are:
-> 1. Fix some memory leaks of this verion.
-> 2. Collect advice of this version and improve it.
-> 3. Start to prepare this version to list and submit patches.
-
-Looking forward to it!
-
-Thanks,
-Jonathan
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index f047739..ca485db 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -113,7 +113,7 @@ git cherry-pick --ff ..next::
+ 	are in next but not HEAD to the current branch, creating a new
+ 	commit for each new change.
+ 
+-git rev-list --reverse master -- README | git cherry-pick -n --stdin::
++git rev-list --reverse master \-- README | git cherry-pick -n --stdin::
+ 
+ 	Apply the changes introduced by all commits on the master
+ 	branch that touched README to the working tree and index,
+-- 
+1.7.1.642.gc3eb1
