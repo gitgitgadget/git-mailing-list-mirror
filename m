@@ -1,55 +1,158 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: git log --objects
-Date: Fri, 25 Jun 2010 12:06:18 +0200
-Message-ID: <AANLkTim_93FIAoz5_EPpRspCNUpMD30yk56enwcejglg@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2010, #04; Wed, 23)
+Date: Fri, 25 Jun 2010 10:30:56 +0000
+Message-ID: <AANLkTil8zpoBSOih2sVQV33_GxPao4why3EOGGvPxE-u@mail.gmail.com>
 References: <7viq59e6zn.fsf@alter.siamese.dyndns.org>
-	<4C23702F.8030707@viscovery.net>
-	<4C237AE7.8000003@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Jun 25 12:06:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 25 12:31:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OS5no-0002JI-Dg
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 12:06:28 +0200
+	id 1OS6Bg-0004x9-Le
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 12:31:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752563Ab0FYKGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jun 2010 06:06:22 -0400
-Received: from ey-out-2122.google.com ([74.125.78.27]:41764 "EHLO
-	ey-out-2122.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304Ab0FYKGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jun 2010 06:06:21 -0400
-Received: by ey-out-2122.google.com with SMTP id 25so55047eya.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 03:06:19 -0700 (PDT)
-Received: by 10.103.84.1 with SMTP id m1mr120641mul.26.1277460378877; Fri, 25 
-	Jun 2010 03:06:18 -0700 (PDT)
-Received: by 10.103.138.16 with HTTP; Fri, 25 Jun 2010 03:06:18 -0700 (PDT)
-In-Reply-To: <4C237AE7.8000003@ira.uka.de>
+	id S1754814Ab0FYKa7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jun 2010 06:30:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53858 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754306Ab0FYKa6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 06:30:58 -0400
+Received: by iwn41 with SMTP id 41so1849126iwn.19
+        for <git@vger.kernel.org>; Fri, 25 Jun 2010 03:30:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uVm8E0qmMELnNXGZLwI+S1gazNDszg65wvCWR2MYROI=;
+        b=LTqAFEQdUEYO5igIzGcqdGTuuoFdQhMUkm9IuXYcHp7xNqfaHjtcVEBnaNYZ9HAKPy
+         aW6wMjNNU3iqW8DcFVEkL4GfdG/pPG8yXSNx47ho4qMpGX2Mj/btOxtSO/wcZoOfThZ6
+         P63CppK4WSF7bRk1N6we8cAQNaYZqd2K/ECs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=supvzqYWmThYFjv9Zyc+ttvW5JuwYpBlP2prHvk12dNXCkMYdPfeFL8aRGrmVEeW47
+         KTpGxvUn7+YqHil0fqMhC/xYd1xk5tEuVOmlURGLyk9VxGYCizTe99qNx8AvgMsGMabW
+         2b3dDupJoS8fr9L6IyhzbBTAlkWeYpa0SJQWU=
+Received: by 10.231.196.151 with SMTP id eg23mr498065ibb.179.1277461856311; 
+	Fri, 25 Jun 2010 03:30:56 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Fri, 25 Jun 2010 03:30:56 -0700 (PDT)
+In-Reply-To: <7viq59e6zn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149677>
 
-On Thu, Jun 24, 2010 at 5:33 PM, Holger Hellmuth <hellmuth@ira.uka.de> wrote:
-> Shouldn't 'git log --objects' print out a list of all objects in the
-> file tree of the commits it lists?
+On Wed, Jun 23, 2010 at 22:09, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Here are the topics that have been cooking.
 
-In fact --objects prints all objects reachable from the given commits
-(or between commits if $commit1..$commit2)
+Here are topics that I've submitted that haven't made it into a
+"What's cooking" post, but which I consider ready for inclusion.
 
->
-> I tried git log with lots of other parameters, for example '-p' and
-> never saw any difference to the normal output and definitely no list of
-> hash ids.
+Since I'm not sure whether they've been rejected, ignored or just
+forgotten I'm listing them here. It'd be nice to get an update on
+their status so I can act appropriately on my end.
 
-I think --objects, --objects-edge, --unpacked are for "git rev-list".
-So they should not be listed in git-log man page.
+ * git-am: Ignore whitespace before patches
+   (<1273944188-9472-1-git-send-email-avarab@gmail.com>)
 
-HTH,
-Santi
+  Junio commented:
+
+    Actually cut-and-paste is often a major source of whitespace breaka=
+ge
+    (including tabs silently being expanded), and I personally think a =
+patch
+    like this to encourage the practice is going in a wrong direction.
+
+  my reply:
+
+    What it does is enable the GMail -> download -> git-am workflow. GM=
+ail
+    (and doubtless countless other) E-Mail providers introduce whitespa=
+ce
+    at the beginning of raw E-Mail messages, while otherwise leaving th=
+em
+    intact.
+
+  That patch just makes git-am smarter while harming nothing. Given
+  the fuzzy behavior of E-Mail programs I think it should be included,
+  and generally that patch detection should try harder before failing.
+
+
+ * Remove editor-specific droppings from .gitignore
+   (<1274061883-18043-1-git-send-email-avarab@gmail.com>).
+
+   Micro-cleanup that removes the (as far as I can see) only case
+   where .gitignore isn't ignoring something generated by the build
+   system. Context:
+
+      On Mon, May 17, 2010 at 01:35, Jonathan Nieder <jrnieder@gmail.co=
+m> wrote:
+      > Michael J Gruber wrote:
+      >
+      >> Does the git build process call format-patch? No! The .gitigno=
+re we
+      >> distribute is meant for things the build process creates
+      >
+      > Ah, true. I seem to remember a thread long ago about whether to
+      > include editor droppings in .gitignore, but I can=E2=80=99t fin=
+d it in
+      > the git or lkml archive.
+      >
+      > git=E2=80=99s .gitignore does not include .*.swp, \#*#, *~, ind=
+eed.
+
+      Thanks both of you, I stand corrected. Anyway, I guess this is a =
+bug
+      then. It's the only thing ignored by Git's various .gitignore fil=
+es
+      that isn't created by the build system.
+
+   The patch was acked by Michael J Gruber <git@drmicha.warpmail.net>.
+
+ * perl libs: perl -w + use warnings is redundant
+   (<1274460741-9674-1-git-send-email-avarab@gmail.com>).
+
+   A minor cleanup of our Perl code, uses lexical warnings instead of
+   global warnings in code that's known to require Perl 5.6.0 or
+   later. Doesn't change behavior but uses the recommended Perl form.
+
+ * sha1_file: Show the the type and path to corrupt objects
+   (<1276174021-9544-1-git-send-email-avarab@gmail.com>).
+
+   Make the error message for git-cat-file's (and other blog accessor
+   functions) more specific. From the commit message:
+
+      Change the error message that's displayed when we encounter corru=
+pt
+      objects to be more specific. We now print the type (loose or pack=
+ed)
+      of corrupted objects, along with the full path to the file in
+      question.
+
+      Before:
+
+         $ git cat-file blob 909ef997367880aaf2133bafa1f1a71aa28e09df
+         fatal: object 909ef997367880aaf2133bafa1f1a71aa28e09df is corr=
+upted
+
+      After:
+
+         $ git cat-file blob 909ef997367880aaf2133bafa1f1a71aa28e09df
+         fatal: loose object 909ef997367880aaf2133bafa1f1a71aa28e09df
+(stored in .git/objects/90/9ef997367880aaf2133bafa1f1a71aa28e09df) is
+corrupted
+
+      Knowing the path helps to quickly analyze what's wrong:
+
+         $ file .git/objects/90/9ef997367880aaf2133bafa1f1a71aa28e09df
+         .git/objects/90/9ef997367880aaf2133bafa1f1a71aa28e09df: empty
