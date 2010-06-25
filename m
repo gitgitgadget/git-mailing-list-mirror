@@ -1,71 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [WIP PATCH 1/7] Add skeleton RA svnclient
-Date: Fri, 25 Jun 2010 08:34:56 -0500
-Message-ID: <20100625133456.GA1495@burratino>
-References: <1277310140-16891-1-git-send-email-artagnon@gmail.com>
- <1277310140-16891-2-git-send-email-artagnon@gmail.com>
- <20100625001427.GA4683@burratino>
- <alpine.561.2.00.1006251156180.2064@daniel2.local>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: What's cooking in git.git (Jun 2010, #04; Wed, 23)
+Date: Fri, 25 Jun 2010 15:43:45 +0200
+Message-ID: <4C24B291.1040108@drmicha.warpmail.net>
+References: <7viq59e6zn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Daniel Shahaf <daniel@shahaf.name>
-X-From: git-owner@vger.kernel.org Fri Jun 25 15:35:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 25 15:44:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OS93s-0004U4-MK
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 15:35:17 +0200
+	id 1OS9Cr-0000fu-4D
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 15:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756174Ab0FYNfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jun 2010 09:35:10 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61361 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755863Ab0FYNfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jun 2010 09:35:09 -0400
-Received: by iwn41 with SMTP id 41so2003580iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 06:35:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=bOGeFWMFDcK5Yq0B5m6kk8ACdAYS7DVD2LhbKfcsuDw=;
-        b=mKWgRSuHn/KYpOxrCA2fj26h3b9sxb804agd49bBsq++Yf3n6+jjE/E/hdTCFlDTRT
-         fxT+ACIvxE1gvl5jCg3MedU9sWAiL19Vm2o7E0Kbv93g4IlxcS6U4kvdKhLWOhU2ZF4z
-         DCmfyuimy6Scc+ucHlf3vWspFsbVlb42gF0A0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UuAhnygiJ/WmVtE4h0GpZ+1bv9MIBBLMwWIdXbMi80BbisArs7RAsVNmqweWy39d7Y
-         EOmJs5scMUXd+NKJGz5MbG55u9hzR3yvTuBEqywp0BVlOrto2CQrYoE1N6L3DStWfwh8
-         3CHj7AZLvRkAN8bdI4L/96CN9Aj7wBZyGF3NQ=
-Received: by 10.231.152.71 with SMTP id f7mr729957ibw.128.1277472908217;
-        Fri, 25 Jun 2010 06:35:08 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v23sm708605ibp.9.2010.06.25.06.35.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jun 2010 06:35:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.561.2.00.1006251156180.2064@daniel2.local>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756069Ab0FYNo2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jun 2010 09:44:28 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:45257 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752433Ab0FYNo1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 09:44:27 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6ED211076FB;
+	Fri, 25 Jun 2010 09:44:27 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Fri, 25 Jun 2010 09:44:27 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=HD/8ZU+b8I5drFqtxgywQxb0+SI=; b=XSqTuULuaSCx7Ia9p3ReDWe1WnF3I3GS/LlWEw+PkW3zbPyVGtpF4PHLaYklZPnMJejeFs164zwRiBJk7hYB0v4u7z809y4yqArpn2s/tkd6s03RT1p37KchjUWO6T/AYzHtLLJsldik5RiYyRDiX+W8WJt+QxHEQWgeSe07hAs=
+X-Sasl-enc: slusnlgQJGg5rF8ntIzq+oR7oiGYcTmEqI/IXRFpcbJm 1277473467
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DD0965AB56;
+	Fri, 25 Jun 2010 09:44:26 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100625 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <7viq59e6zn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149684>
 
-Daniel Shahaf wrote:
+Junio C Hamano venit, vidit, dixit 24.06.2010 00:09:
+> 
+> * mg/rev-parse-lrbranches-locals (2010-05-14) 1 commit
+>  - revlist: Introduce --lrbranches and --locals revision specifiers
+>  (this branch uses mg/rev-parse-option-sifter-deprecation.)
+> 
+> I am reluctant to merge a patch that introduces an unpronounceable
+> option.
 
-> I don't understand.  It seems that the fields here appear in the same
-> order as in the definition of struct svn_delta_editor_t.
+While I could tell you how to pronounce it, I actually was about to
+suggest dropping this patch! I don't like the name lrbranches, we have
+two names (heads/branches) for local branch heads already, and couldn't
+come up with a better name, available name meaning "all branch heads".
 
-Embarrassingly, I was just confused.  Thanks for the answers!
+> 
+> * mg/rev-parse-option-sifter-deprecation (2010-05-14) 3 commits
+>  - t6018: make sure all tested symbolic names are different revs
+>  - t6018: add tests for rev-list's --branches and --tags
+>  - rev-parse: deprecate use as an option sifter
+>  (this branch is used by mg/rev-parse-lrbranches-locals.)
+> 
+> I don't think these patches help anything.  Opinions?
 
-Jonathan
+They helped the patch which is going to get dropped...
+
+Besides that: The two test patches improve the tests. t6018 gives the
+impression to test something which it doesn't (because some symbolic
+names point to the same rev, so it doesn't test whether rev-parse really
+resolves all of them), and was lacking coverage for --branches and
+--tags. So I think those two are independent improvements.
+
+About the "deprecation/discouragement notice" for rev-parse I don't
+know. rev-parse is not completely in sync with all rev-list options, and
+doesn't mean to be if I understood correctly. I know that now. As long
+as nobody cares, nobody cares...
+
+Cheers,
+Michael
