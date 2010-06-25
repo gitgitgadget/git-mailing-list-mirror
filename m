@@ -1,158 +1,245 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2010, #04; Wed, 23)
-Date: Fri, 25 Jun 2010 10:30:56 +0000
-Message-ID: <AANLkTil8zpoBSOih2sVQV33_GxPao4why3EOGGvPxE-u@mail.gmail.com>
-References: <7viq59e6zn.fsf@alter.siamese.dyndns.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [WIP PATCH 1/7] Add skeleton RA svnclient
+Date: Fri, 25 Jun 2010 13:07:17 +0200
+Message-ID: <AANLkTimirObq-HBrB4rQdAprN8mfd92rfFKSegJKwMsc@mail.gmail.com>
+References: <1277310140-16891-1-git-send-email-artagnon@gmail.com> 
+	<1277310140-16891-2-git-send-email-artagnon@gmail.com> <20100625001427.GA4683@burratino> 
+	<alpine.561.2.00.1006251156180.2064@daniel2.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 25 12:31:09 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 25 13:07:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OS6Bg-0004x9-Le
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 12:31:08 +0200
+	id 1OS6l8-0002i4-Ld
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 13:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814Ab0FYKa7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jun 2010 06:30:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:53858 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754306Ab0FYKa6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 06:30:58 -0400
-Received: by iwn41 with SMTP id 41so1849126iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 03:30:56 -0700 (PDT)
+	id S1754493Ab0FYLHk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jun 2010 07:07:40 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:45482 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813Ab0FYLHj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 07:07:39 -0400
+Received: by vws9 with SMTP id 9so3750923vws.19
+        for <git@vger.kernel.org>; Fri, 25 Jun 2010 04:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=uVm8E0qmMELnNXGZLwI+S1gazNDszg65wvCWR2MYROI=;
-        b=LTqAFEQdUEYO5igIzGcqdGTuuoFdQhMUkm9IuXYcHp7xNqfaHjtcVEBnaNYZ9HAKPy
-         aW6wMjNNU3iqW8DcFVEkL4GfdG/pPG8yXSNx47ho4qMpGX2Mj/btOxtSO/wcZoOfThZ6
-         P63CppK4WSF7bRk1N6we8cAQNaYZqd2K/ECs8=
+        bh=zz/6dx+n4MZoTCBFmRXdOv1Npcj4Jd0VIaqub/QzGAw=;
+        b=RqLi9yTd04IdyvuhliKvNgvJh1KASnK7aB4kmyn/0j157Ko4jQr5mH0mInKJm0oSoV
+         0XpF5GPu0XV+rA8OzWBP9mRqWYLnRDj4plJH/SgsEaQ6oHP0KI4Xl0bNITkNAFwQz94F
+         3scrkv/PnWmPM2PmOUecllEMhu4f/SByrN3T8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=supvzqYWmThYFjv9Zyc+ttvW5JuwYpBlP2prHvk12dNXCkMYdPfeFL8aRGrmVEeW47
-         KTpGxvUn7+YqHil0fqMhC/xYd1xk5tEuVOmlURGLyk9VxGYCizTe99qNx8AvgMsGMabW
-         2b3dDupJoS8fr9L6IyhzbBTAlkWeYpa0SJQWU=
-Received: by 10.231.196.151 with SMTP id eg23mr498065ibb.179.1277461856311; 
-	Fri, 25 Jun 2010 03:30:56 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Fri, 25 Jun 2010 03:30:56 -0700 (PDT)
-In-Reply-To: <7viq59e6zn.fsf@alter.siamese.dyndns.org>
+        b=PlS9uBV1nLWT6wuulUKf+16PjZ1eniuOUQ0CcrOjMzlOjIYrcyzX71uiT4fdlQ1mR0
+         BTcMDehuTesv4Fc4LS29+DYMbNGEqZSiYHXsZJzoe6geH3x8q0aHcVbpQUlIzNErSSCZ
+         8ogldM0IuLyzU+VmcV2bOwKcPkF5mQ+jmNDIs=
+Received: by 10.229.186.193 with SMTP id ct1mr298928qcb.295.1277464057604; 
+	Fri, 25 Jun 2010 04:07:37 -0700 (PDT)
+Received: by 10.229.45.71 with HTTP; Fri, 25 Jun 2010 04:07:17 -0700 (PDT)
+In-Reply-To: <alpine.561.2.00.1006251156180.2064@daniel2.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149678>
 
-On Wed, Jun 23, 2010 at 22:09, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Here are the topics that have been cooking.
+Hi Jonathan and Daniel,
 
-Here are topics that I've submitted that haven't made it into a
-"What's cooking" post, but which I consider ready for inclusion.
+Jonathan: First, thanks for bringing up these questions- they will
+definitely help future reviewers. I'll now sprinkle Daniel's replies
+with a few of my observations.
+Daniel: Thanks for responding to the questions- your insights as a
+core Subversion developer are most appreciated. I'll add a few notes
+to your answers now.
 
-Since I'm not sure whether they've been rejected, ignored or just
-forgotten I'm listing them here. It'd be nice to get an update on
-their status so I can act appropriately on my end.
+Daniel Shahaf wrote:
+> Jonathan Nieder wrote on Fri, 25 Jun 2010 at 03:14 -0000:
+>> For now, just some na=C3=AFve questions. =C2=A0Warning: I know nothi=
+ng about
+>> svn internals.
 
- * git-am: Ignore whitespace before patches
-   (<1273944188-9472-1-git-send-email-avarab@gmail.com>)
+That's alright. I highly encourage na=C3=AFve questions- I'm new to SVN
+myself. I also highly recommend reading the API documentation and
+going through the code for answers to "why is it like THIS" questions
+as I haven't manged to clean out the Subversion style yet. Hopefully,
+I'll have some good notes that I can attach with my next series to put
+in the trunk.
 
-  Junio commented:
+>> I assume this corresponds to the ra-svn branch of
+>> <http://github.com/artagnon/svn-dump-fast-export.git>. =C2=A0Has the
+>> relevant code changed much since you sent it?
 
-    Actually cut-and-paste is often a major source of whitespace breaka=
-ge
-    (including tabs silently being expanded), and I personally think a =
-patch
-    like this to encourage the practice is going in a wrong direction.
+Yes. I've managed to fix the deltified dump, and have now started
+working on a full text dump. Due to my low familiarity with the libsvn
+API, the cleanups are mixed with my code in the history; it needs a
+thorough line-by-line scrubbing.
 
-  my reply:
+>> What is a baton?
+>>
+>
+> The context object for a callback.
+>
+> You call:
+>
+> =C2=A0 =C2=A0some_function(your_callback_function, your_baton)
+>
+> which then calls:
+>
+> =C2=A0 =C2=A0your_callback_function(your_baton, other_arguments)
 
-    What it does is enable the GMail -> download -> git-am workflow. GM=
-ail
-    (and doubtless countless other) E-Mail providers introduce whitespa=
-ce
-    at the beginning of raw E-Mail messages, while otherwise leaving th=
-em
-    intact.
+In general, I've found that batons are void * objects in which you can
+stuff anything you like and pass around from function to function:
+I've abused them quite heavily in my code by stuffing all kinds of
+things into them: see fb->eb->* in my current code for an example of
+this.
 
-  That patch just makes git-am smarter while harming nothing. Given
-  the fuzzy behavior of E-Mail programs I think it should be included,
-  and generally that patch detection should try harder before failing.
+>> [...]
+>> > + =C2=A0void *wrapped_edit_baton;
+>> [...]
+>> > + =C2=A0void *edit_baton;
+>> > + =C2=A0void *wrapped_dir_baton;
+>> [...]
+>> > + =C2=A0void *edit_baton;
+>> > + =C2=A0void *wrapped_file_baton;
+>>
+>> Are these opaque types necessary?
+>>
+>
+> The convention in Subversion's code is to convert the void * to
+> a concrete_baton_t * only inside the callback. =C2=A0If you wish to d=
+eclare
+> these, e.g., as
+>
+> =C2=A0 =C2=A0debug_editor_baton_t *wrapped_baton;
+>
+> You can probably do that too.
 
+The function prototypes in libsvn contain void * parameters
+corresponding to batons, so I'd have to typecast explicitly to avoid
+any warnings. I think Jonathan's also referring to the absence of the
+"struct" keyword everywhere, as that is against Git policy.
+Unfortunately, everything is typedef'ed in libsvn, and we cannot do
+much about that.
 
- * Remove editor-specific droppings from .gitignore
-   (<1274061883-18043-1-git-send-email-avarab@gmail.com>).
+>> What does this do? =C2=A0Is SVN_ERR for debugging?
+>
+> That's how we implement exception throwing in C. =C2=A0SVN_ERR means =
+"if this
+> returned a non-NULL svn_error_t *, then return that error to our
+> caller".
+>
+> The other pattern does
+>
+> =C2=A0 =C2=A0svn_error_t *err =3D svn_stream_printf();
+>
+> and then inspects err and err->apr_err to decide whether to ignore th=
+e
+> error or return it (possibly wrapped).
 
-   Micro-cleanup that removes the (as far as I can see) only case
-   where .gitignore isn't ignoring something generated by the build
-   system. Context:
+>> Where does the output go?
+>>
+>
+> SVN_ERR does not print anything. =C2=A0It may return(), though.
 
-      On Mon, May 17, 2010 at 01:35, Jonathan Nieder <jrnieder@gmail.co=
-m> wrote:
-      > Michael J Gruber wrote:
-      >
-      >> Does the git build process call format-patch? No! The .gitigno=
-re we
-      >> distribute is meant for things the build process creates
-      >
-      > Ah, true. I seem to remember a thread long ago about whether to
-      > include editor droppings in .gitignore, but I can=E2=80=99t fin=
-d it in
-      > the git or lkml archive.
-      >
-      > git=E2=80=99s .gitignore does not include .*.swp, \#*#, *~, ind=
-eed.
+Embarrassingly enough, write_indent does exactly what it says it does:
+It writes some spaces (or indent) to eb->out, which you'll find is
+actually stderr in svn_delta__get_debug. In the cleanup, I should
+probably get rid of this. As far as the error handling is concerned,
+to be terse, SVN_ERR and SVN_INT_ERR are cpp macros. They are defined
+as follows in svn_error.h (with line numbers from the trunk file).
+Note however, that even with all this error handling, the most common
+type of error I get by far is the segfault: I'll make an effort to
+document the pitfalls.
 
-      Thanks both of you, I stand corrected. Anyway, I guess this is a =
-bug
-      then. It's the only thing ignored by Git's various .gitignore fil=
-es
-      that isn't created by the build system.
+00284 #define SVN_ERR(expr)                           \
+00285   do {                                          \
+00286     svn_error_t *svn_err__temp =3D (expr);        \
+00287     if (svn_err__temp)                          \
+00288       return svn_error_return(svn_err__temp);   \
+00289   } while (0)
 
-   The patch was acked by Michael J Gruber <git@drmicha.warpmail.net>.
+00336 #define SVN_INT_ERR(expr)                                        =
+\
+00337   do {                                                           =
+\
+00338     svn_error_t *svn_err__temp =3D (expr);                       =
+  \
+00339     if (svn_err__temp) {                                         =
+\
+00340       svn_handle_error2(svn_err__temp, stderr, FALSE, "svn: ");  =
+\
+00341       svn_error_clear(svn_err__temp);                            =
+\
+00342       return EXIT_FAILURE; }                                     =
+\
+00343   } while (0)
 
- * perl libs: perl -w + use warnings is redundant
-   (<1274460741-9674-1-git-send-email-avarab@gmail.com>).
+>> I take it these are callbacks? =C2=A0Is there overview documentation=
+ for
+>> them somewhere?
+>>
+>
+> svn_delta_editor_t in
+> http://svn.apache.org/repos/asf/subversion/trunk/subversion/include/s=
+vn_delta.h
 
-   A minor cleanup of our Perl code, uses lexical warnings instead of
-   global warnings in code that's known to require Perl 5.6.0 or
-   later. Doesn't change behavior but uses the recommended Perl form.
+Yes, they are callbacks that are fired automatically by the editor. In
+svn_delta.h, look at struct svn_delta_editor_t (and the corresponding
+doxygen-style comments).
 
- * sha1_file: Show the the type and path to corrupt objects
-   (<1276174021-9544-1-git-send-email-avarab@gmail.com>).
+>> I take it that the fields of svn_delta_editor_t do not have a
+>> well-defined order? =C2=A0Ugh.
 
-   Make the error message for git-cat-file's (and other blog accessor
-   functions) more specific. From the commit message:
+No, they don't. I've tried to stick to the order in the struct
+svn_delta_editor_t.
 
-      Change the error message that's displayed when we encounter corru=
-pt
-      objects to be more specific. We now print the type (loose or pack=
-ed)
-      of corrupted objects, along with the full path to the file in
-      question.
+>> In any case, I suspect this would be easier to read rearranged a lit=
+tle:
+>>
+>> =C2=A01. declarations for callbacks
+>> =C2=A02. get_debug_editor implementation
+>> =C2=A03. definitions of types not needed in get_debug_editor()
+>> =C2=A04. implementations of callbacks
+>>
+>> That way, a person reading straight through can figure out what=E2=80=
+=99s
+>> going on a little earlier.
 
-      Before:
+Agreed. I'm still struggling to clean up the Subversion-style code. We
+can probably discuss this at length on IRC?
 
-         $ git cat-file blob 909ef997367880aaf2133bafa1f1a71aa28e09df
-         fatal: object 909ef997367880aaf2133bafa1f1a71aa28e09df is corr=
-upted
+>> What is svn_cmdline_init?
+>
+> A Subversion API that does some necessary initializations (e.g., call=
+s
+> apr_initialize()). =C2=A0See subversion/include/svn_cmdline.h for doc=
+s
+> (and subversion/libsvn_subr/cmdline.c for the implementation).
 
-      After:
+These svn_cmdline functions are actually shortcuts- they do all the
+initializations required for a "typical" command line SVN client. It
+saves me the trouble of having to figure out what I missed
+initializing: I'll be using more of them in future; to eliminate the
+auth baton creation by hand, for example.
 
-         $ git cat-file blob 909ef997367880aaf2133bafa1f1a71aa28e09df
-         fatal: loose object 909ef997367880aaf2133bafa1f1a71aa28e09df
-(stored in .git/objects/90/9ef997367880aaf2133bafa1f1a71aa28e09df) is
-corrupted
+>> Is this code destined for inclusion in svn upstream, and if so, wher=
+e
+>> can one find the surrounding code this should fit in with?
 
-      Knowing the path helps to quickly analyze what's wrong:
+Yes, but with a lot of style transformations. In svnsync/main.c.
+Atleast that's the plan, as per the discussion on #svn-dev
 
-         $ file .git/objects/90/9ef997367880aaf2133bafa1f1a71aa28e09df
-         .git/objects/90/9ef997367880aaf2133bafa1f1a71aa28e09df: empty
+-- Ram
