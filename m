@@ -1,69 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: FR: Clone just the desired subdirectory
-Date: Fri, 25 Jun 2010 16:30:18 +0200
-Message-ID: <AANLkTiks9r5IpwPyCHxGEDqkiBB3rLiWK8zwLcxSB-9P@mail.gmail.com>
-References: <AANLkTilyvCWyWzqPGxtg9tkRM5SjXxbt50P5zImlxCHD@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Laszlo Papp <djszapi@archlinux.us>
-X-From: git-owner@vger.kernel.org Fri Jun 25 16:30:48 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] git-rev-parse.txt: Document ":path" specifier
+Date: Fri, 25 Jun 2010 16:32:16 +0200
+Message-ID: <633f42d1967049780d66cf72552b22ae17bbbead.1277476258.git.git@drmicha.warpmail.net>
+References: <7vvd98b1jh.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 25 16:33:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OS9va-0007Lb-1h
-	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 16:30:46 +0200
+	id 1OS9xo-00009V-Pj
+	for gcvg-git-2@lo.gmane.org; Fri, 25 Jun 2010 16:33:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756409Ab0FYOal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jun 2010 10:30:41 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34869 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752444Ab0FYOaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jun 2010 10:30:39 -0400
-Received: by iwn41 with SMTP id 41so2052430iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 07:30:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=mFDGC2WDlI8msBHW7drEdDor2lyD1gVKzKxOlKEdrEk=;
-        b=E6TByj5B5CD7btB+iEectz3QCXn0bB20mMtClMbm505WAE++Td1nSYjVTdo4/mzvOi
-         JQ7YnzRm0eiqkqswjH5mOjembQlvsMYolPDEbgKT/a5+8gV51tK/AMP227dNnfNxxmnw
-         VA5Ih2wmyazzUJi8nBe4rJ2XxUbaSBN7ZVblg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=uIgjslz19TE1IKR6MyShYv7M7BkiPEfgON8qvppgv+gB/MzmEKCN34eZTfCp8tsvxc
-         Rf137LaJG327PV7qa2So6iuT/f/06IFwD+tHFiyTtdV+wKldcHPpnNk3bapIMFfya/A4
-         kA/EdOhmRStIJPMB4o4TnnVZ7+heDLVfraaIs=
-Received: by 10.231.123.215 with SMTP id q23mr776514ibr.190.1277476238949; 
-	Fri, 25 Jun 2010 07:30:38 -0700 (PDT)
-Received: by 10.231.50.129 with HTTP; Fri, 25 Jun 2010 07:30:18 -0700 (PDT)
-In-Reply-To: <AANLkTilyvCWyWzqPGxtg9tkRM5SjXxbt50P5zImlxCHD@mail.gmail.com>
+	id S932098Ab0FYOdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jun 2010 10:33:00 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46277 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932087Ab0FYOc7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jun 2010 10:32:59 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 34455107A12;
+	Fri, 25 Jun 2010 10:32:59 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 25 Jun 2010 10:32:59 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=HjPNnUY3po5le929qqZU8gNCQw8=; b=o/baiPmwT2XAcx8WbgNq7RKOve+HgsF1SIT64KjzSJq0/L/tC93OKvpBqK5nCIAA583XN5S1SGx0ajsuSwNLfsIq0CwxDDyJJ9N3WiCQhM119VC2JQaXGTzKunI+kNQhW4VCi8EJD1+X+4e8yNmKTeXzqxDuQnmsPSnv5rnRjVw=
+X-Sasl-enc: WSUxqLQvgZZtMdyCFD5+vfUv8632AiTB5lM9u3dVBwzb 1277476378
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8D3DF4A57F3;
+	Fri, 25 Jun 2010 10:32:58 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1.621.g01d76
+In-Reply-To: <7vvd98b1jh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149687>
 
-Heya,
+The empty treeish in ":path" means "index". Document this.
 
-On Fri, Jun 25, 2010 at 16:24, Laszlo Papp <djszapi@archlinux.us> wrote:
-> My friend asked it from me, but I couldn't advise anything to him, but
-> this request does make sense by me. So he would like to download a
-> part of a git repository and he is not interested in the index and the
-> history, so it would be nice to have something like git archive
-> --remote or similar command which can do this operation.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-rev-parse.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-Basically what you want is the ability to say "give me the tree and
-corresponding blobs for directory foo in revision bar" (where bar is
-usually HEAD). This ties in with the work on spare/narrow
-checkouts/clones, which seems to have stagnated.
-
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 8db600f..f964de4 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -290,8 +290,9 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
+   followed by something else than '!' is reserved for now.
+ 
+ * A suffix ':' followed by a path; this names the blob or tree
+-  at the given path in the tree-ish object named by the part
+-  before the colon.
++  at the given path in the tree-ish object named by the ref
++  before the colon. An empty ref before ':' denotes the content
++  recorded in the index at the given path.
+ 
+ * A colon, optionally followed by a stage number (0 to 3) and a
+   colon, followed by a path; this names a blob object in the
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.7.1.621.g01d76
