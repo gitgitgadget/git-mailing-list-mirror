@@ -1,67 +1,87 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] string-list.h: Add STRING_LIST_INIT macro and make use of 
-	it.
-Date: Sun, 27 Jun 2010 00:53:07 +0200
-Message-ID: <AANLkTimWQwBdcVgZK5GGmIXOcpgLpgp28ywFi6MJVnyJ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] string-list.h: Add STRING_LIST_INIT macro and make use
+ of it.
+Date: Sat, 26 Jun 2010 18:04:25 -0500
+Message-ID: <20100626230425.GA2265@burratino>
 References: <ef57c1f7439b43564af4ec88ddf100a9a908b745.1277591559.git.tfransosi@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
 To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 27 00:53:41 2010
+X-From: git-owner@vger.kernel.org Sun Jun 27 01:04:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSeFo-0000rE-Ms
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 00:53:41 +0200
+	id 1OSeQb-00041v-MB
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 01:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381Ab0FZWx3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jun 2010 18:53:29 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54931 "EHLO
+	id S1754546Ab0FZXEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jun 2010 19:04:44 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52197 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751599Ab0FZWx2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Jun 2010 18:53:28 -0400
-Received: by iwn41 with SMTP id 41so3190914iwn.19
-        for <git@vger.kernel.org>; Sat, 26 Jun 2010 15:53:27 -0700 (PDT)
+	with ESMTP id S1754429Ab0FZXEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 19:04:43 -0400
+Received: by iwn41 with SMTP id 41so3195425iwn.19
+        for <git@vger.kernel.org>; Sat, 26 Jun 2010 16:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=v5jwiISIwPrph7rj6KwhwJnuVulX/GcXCgf5HFd1ODE=;
-        b=mV2FFHhKk7O4k+HoXCiQko57DZ7HXiCL0DBMgjzHHUUoYv75hF4zqa0XoOCOw7Kg1+
-         8ARCKbDfeTKNyBmqw2bSNPGvlKN1qQ0y0RvDd/nMzrk5/Hl4FiFjx2dem5qhBED4PQQ3
-         FO5zCFdoG4xAr43hOCbA+tWjfe18Wwx19U4xU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=+b01odW4i7nVc9At0rMBt8VWB0iZViwBXbimb/Y0Dmk=;
+        b=SV6RL/XFnGHDLHj8JcYent64JXwMIAWJPeVhgAovnFpxdaGx+lK2iT9brjByZZGHEe
+         qy8rllERLTkEIDJoweYoxUyRkGCRCTZhZS9B8sAstEdN1ZU362m9kwIdDAndm6gfs/vq
+         u8QZ3dQ8lGiveW1DmrS1KJs32/ZcmCEnoztnI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=s7dyw85ZMg3R5FGOvnAlpn30NkCkqaK4h2Lqww4/KqBeFwfIm62LUCN0sRmpJlYti8
-         TsrtxCnK/ubcApekr9Yu/U51XEIEv/E6Tlh0bo+Whh/X2yBP9qqOyhwBTXyx+NkP6G9r
-         su1YrjuNaPsDZBDjCkPRQ9iq4r/Wl7l3FwlgQ=
-Received: by 10.231.185.86 with SMTP id cn22mr2505789ibb.69.1277592807380; 
-	Sat, 26 Jun 2010 15:53:27 -0700 (PDT)
-Received: by 10.231.50.129 with HTTP; Sat, 26 Jun 2010 15:53:07 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tsPXeMUCqGuSXAjGjE66NecdmPKb+5UqF2u4xE0c4uEF4D36Xom5SqUYwwfZzjkuEN
+         4VNr5GpyU+ddI5ylQjHacYS4+uDZHLnjQmMftCN8ueRONQTa7tkhGwixsqGUfCmxY/IM
+         4gM3n6q2yPO4O6MlrkJdhSA7m/hh4IVz1STQM=
+Received: by 10.231.145.85 with SMTP id c21mr2773843ibv.104.1277593482940;
+        Sat, 26 Jun 2010 16:04:42 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g8sm931113ibb.11.2010.06.26.16.04.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 26 Jun 2010 16:04:40 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <ef57c1f7439b43564af4ec88ddf100a9a908b745.1277591559.git.tfransosi@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149781>
 
-Heya,
+Thiago Farina wrote:
 
-On Sun, Jun 27, 2010 at 00:34, Thiago Farina <tfransosi@gmail.com> wrot=
-e:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct object_array commits =3D { 0, 0, NU=
-LL };
+>  builtin/fast-export.c  |    2 +-
+>  builtin/fetch.c        |    8 ++++----
+>  builtin/receive-pack.c |    2 +-
+>  builtin/remote.c       |    4 ++--
+>  builtin/show-ref.c     |    2 +-
+>  remote.c               |    4 ++--
+>  string-list.h          |    2 ++
+>  7 files changed, 13 insertions(+), 11 deletions(-)
 
-Looks like object_array could use the same treatment?
+ $ git grep -e 'string_list.*=' origin/master | grep { | grep -v 1 |
+ > wc -l
+ 16
+ $ git grep -e 'string_list.*=' origin/master | grep { | grep -v 1 |
+ > cut -d: -f2 | uniq
+ builtin/fast-export.c
+ builtin/fetch.c
+ builtin/mv.c
+ builtin/receive-pack.c
+ builtin/remote.c
+ builtin/show-ref.c
+ merge-recursive.c
+ remote.c
+ transport-helper.c
 
---=20
-Cheers,
+Looks like you missed a few.  Still,
 
-Sverre Rabbelier
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
