@@ -1,60 +1,63 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 4/4] Makefile: Don't pass $(ALL_CFLAGS) to the linker
-Date: Fri, 25 Jun 2010 21:24:02 +0100
-Message-ID: <4C251062.8040507@ramsay1.demon.co.uk>
-References: <4C226520.5080009@ramsay1.demon.co.uk> <AANLkTinmGOSwNzLBngXHOU-pxNTbHFJQyCLIHQWFW6Eo@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: git-rebase --abort eats files
+Date: Sat, 26 Jun 2010 20:09:30 +0200
+Message-ID: <201006262009.30380.j6t@kdbg.org>
+References: <20100626125924.160F11F212@leonis4.robolove.meer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-15"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Peter Harris <git@peter.is-a-geek.org>
-X-From: git-owner@vger.kernel.org Sat Jun 26 20:02:47 2010
+Cc: git@vger.kernel.org
+To: Madhu <enometh@meer.net>
+X-From: git-owner@vger.kernel.org Sat Jun 26 20:12:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSZiI-0008UT-Nn
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 20:02:47 +0200
+	id 1OSZru-0003bB-0Y
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 20:12:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753833Ab0FZSC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jun 2010 14:02:28 -0400
-Received: from anchor-post-2.mail.demon.net ([195.173.77.133]:34167 "EHLO
-	anchor-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753809Ab0FZSCY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Jun 2010 14:02:24 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1OSZhu-0004W9-lm; Sat, 26 Jun 2010 18:02:23 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <AANLkTinmGOSwNzLBngXHOU-pxNTbHFJQyCLIHQWFW6Eo@mail.gmail.com>
+	id S1753669Ab0FZSJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jun 2010 14:09:38 -0400
+Received: from bsmtp4.bon.at ([195.3.86.186]:32471 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752365Ab0FZSJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 14:09:37 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 02F59CDF88;
+	Sat, 26 Jun 2010 20:09:30 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 73E9419F773;
+	Sat, 26 Jun 2010 20:09:30 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20100626125924.160F11F212@leonis4.robolove.meer.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149767>
 
-Peter Harris wrote:
-> On Wed, Jun 23, 2010 at 3:48 PM, Ramsay Jones wrote:
->> The msvc debug build (make MSVC=1 DEBUG=1) issues a warning
->> on every invocation of the linker:
->>
->>    LINK : warning LNK4044: unrecognized option '/Zi'; ignored
->>
->> In order to suppress the warning, we refrain from passing the
->> $(ALL_CFLAGS) macro to the linker.
-> 
-> Alternatively, we could leave the makefile alone and fix it up in
-> compat/vcbuild/scripts/clink.pl
+On Samstag, 26. Juni 2010, Madhu wrote:
+> Don't know if this has been resolved-by-debate here before, But adding
+> a file via git-add in the middle of an interactive rebase and aborting
+> the rebase deletes the hitherto untracked file.  It should not.
+>
+> Maybe something like this to fix it?
+>
+> +++ b/git-rebase--interactive.sh
+> @@ -749,6 +749,7 @@ first and then run 'git rebase --continue' again."
+>                         git symbolic-ref HEAD $HEADNAME
+>                         ;;
+>                 esac &&
+> +               git-reset &&
+>                 output git reset --hard $HEAD &&
+>                 rm -rf "$DOTEST"
+>                 exit
 
-Hmm, OK ... but it would be much easier if we didn't pass inappropriate
-options in the first place. :-P
+No, it can't be that simple. If rebase stopped due to a conflict on a commit 
+that added new files, then your version of rebase --abort will leave these 
+new files behind as untracked.
 
-Also, are you correctly filtering *all* possible inappropriate options?
-For example, the very next patch on my branch (not sent to list) adds
-a -W3 option ... ;-)
-
-ATB,
-Ramsay Jones
+-- Hannes
