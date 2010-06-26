@@ -1,54 +1,56 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 5/8] bundle: reuse setup_revisions result
-Date: Sat, 26 Jun 2010 01:22:12 -0500
-Message-ID: <20100626062212.GF15881@burratino>
+Subject: [PATCH 6/8] Fix bundle --stdin
+Date: Sat, 26 Jun 2010 01:28:11 -0500
+Message-ID: <20100626062811.GG15881@burratino>
 References: <20100119002641.GA31434@gnu.kitenet.net>
  <20100626061735.GA15881@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, 554682@bugs.debian.org,
 	Adam Brewster <adambrewster@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sat Jun 26 08:22:29 2010
+X-From: git-owner@vger.kernel.org Sat Jun 26 08:28:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSOmb-0007Zz-AR
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 08:22:29 +0200
+	id 1OSOsV-0000dK-5L
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 08:28:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076Ab0FZGWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jun 2010 02:22:25 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60728 "EHLO
+	id S1752084Ab0FZG20 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jun 2010 02:28:26 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57889 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691Ab0FZGWY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jun 2010 02:22:24 -0400
-Received: by iwn41 with SMTP id 41so2712135iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 23:22:24 -0700 (PDT)
+	with ESMTP id S1751691Ab0FZG2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 02:28:25 -0400
+Received: by iwn41 with SMTP id 41so2714716iwn.19
+        for <git@vger.kernel.org>; Fri, 25 Jun 2010 23:28:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=xm5EdQh32MzZgifn8FkUz50zmRQs+8G0mtTx/d4D0Cg=;
-        b=ERtuT4Cp9EN0ICb/zp2PFdLIdIXd6m1YNYWZxbl5VmTgNom8I2t+M71DBqhbOpjfL/
-         xBd4oUXcb6y8qPVT0Err6hMkGBNTWzxBBcz7fAFbqr3mFA3UFIfW95hRA7zpD8goURFn
-         2v2HqXsYgcNB+21Jm8A51dtvulOqW8m61mrHY=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=o/PSeIxmNbPQHF+CDH3/CbafIvqTBQcMuWRS1NRkTyA=;
+        b=YfdOZLOEzNc0sDSGAd0YCED2On/dAlV5EdDy1Vw4IVJPd76kQ1HTv+HSf5PWeqhWHt
+         t0XcA4MD9PrCKCvrui2JBbOmtNTF8MeZPebM69ePRHmRME0CeHa9ddiQFNai+yc6D7ZD
+         1aiA6K/iEUIMkEEdMtPDMGAtBlIP/P05RPc04=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=fMfSHbxPQkojDQm8tlKrP/UOWTLwCVGgTxEg5LOC6R963Ys59HMvphhAQl3pRDzgbv
-         7Ix9hob/Iidks799n3J2Khx4oQETzHkyW4TGT7/0n2zJKRuSPkHLLnS5zuNq/AR3QEIC
-         mpE4a32dmORMZnewNMBLAS85+pqaWvXgushmg=
-Received: by 10.231.14.201 with SMTP id h9mr1809790iba.118.1277533343874;
-        Fri, 25 Jun 2010 23:22:23 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=DvX78mzk5w9N8ijiY0b5PMiNJ4HQMMLOG8KaYrmnJh+4mCszLIzJh38SWBoRXi80NZ
+         NeJO2oCj3Sttyz47P+pz6vQhTC1oUsgzbwbrzz/QhnPWD1yDYU17EdVEv3h+tjv9Uh0/
+         y52IOK0dHsqElYPLWxwwgZOnimUbUvaSLGvEA=
+Received: by 10.231.124.40 with SMTP id s40mr1872681ibr.172.1277533702769;
+        Fri, 25 Jun 2010 23:28:22 -0700 (PDT)
 Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id g31sm2739801ibh.14.2010.06.25.23.22.23
+        by mx.google.com with ESMTPS id v23sm4327586ibp.15.2010.06.25.23.28.22
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jun 2010 23:22:23 -0700 (PDT)
+        Fri, 25 Jun 2010 23:28:22 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100626061735.GA15881@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -56,118 +58,65 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149734>
 
-Avoid reading stdin twice for bundle --stdin.
+To write a bundle=E2=80=99s table of contents, the name passed on the c=
+ommand
+line for each ref is needed.  Unfortunately, names passed through
+stdin are put in a temporary buffer and then freed; the random
+gibberish that tends to replace them does not look like a meaningful
+ref name to bundle_list_refs(), so no valid toc entries are found and
+=E2=80=98git bundle --stdin=E2=80=99 thinks it has been asked to create=
+ an empty
+bundle.
+
+So teach the revision walker to keep rev names after reading them from
+stdin.  This fixes =E2=80=98git bundle --stdin=E2=80=99 at the cost of =
+a memory leak.
 
 Reported-by: Joey Hess <joey@kitenet.net>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- bundle.c |   57 +++++++++++++++++++++++++++++++++++++--------------------
- 1 files changed, 37 insertions(+), 20 deletions(-)
+ revision.c        |    2 +-
+ t/t5704-bundle.sh |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index 8ba6479..311c554 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -193,7 +193,17 @@ static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
- 		(revs->min_age == -1 || revs->min_age > date);
- }
- 
--static void list_prerequisite(int bundle_fd, struct rev_info *revs,
-+static void object_array_copy(struct object_array *dest, const struct object_array *src)
-+{
-+	int i;
-+
-+	for (i = 0; i < src->nr; i++) {
-+		struct object_array_entry *e = src->objects + i;
-+		add_object_array_with_mode(e->item, e->name, dest, e->mode);
-+	}
-+}
-+
-+static void list_prerequisite(int bundle_fd, struct object_array *pending,
- 		struct commit *rev)
- {
- 	struct strbuf buf = STRBUF_INIT;
-@@ -216,45 +226,52 @@ static void list_prerequisite(int bundle_fd, struct rev_info *revs,
- 	write_or_die(bundle_fd, buf.buf, buf.len);
- 
- 	rev->object.flags |= UNINTERESTING;
--	add_pending_object(revs, &rev->object, buf.buf);
-+	add_object_array(&rev->object, buf.buf, pending);
- 	strbuf_release(&buf);
- }
- 
- static int list_prerequisites(int bundle_fd, struct rev_info *revs,
--		int argc, const char * const *argv)
-+		int argc, const char **argv)
- {
--	const char **argv_boundary = xmalloc((argc + 1) * sizeof(const char *));
--	struct rev_info boundary_revs;
- 	struct commit *rev;
-+	struct object_array pending_copy = { 0, 0, NULL };
- 
--	memcpy(argv_boundary, argv, (argc + 1) * sizeof(const char *));
-+	revs->simplify_history = 0;
-+	argc = setup_revisions(argc, argv, revs, NULL);
-+	if (argc > 1)
-+		return error("unrecognized argument: %s", argv[1]);
- 
--	init_revisions(&boundary_revs, NULL);
--	boundary_revs.boundary = 1;
--	if (setup_revisions(argc, argv_boundary, &boundary_revs, NULL) > 1)
--		return error("unrecognized argument: %s", argv_boundary[1]);
--	if (prepare_revision_walk(&boundary_revs))
-+	if (revs->reflog_info)
-+		return error("bundle does not support --walk-reflogs");
-+	if (revs->no_walk)
-+		return error("bundle does not support --no-walk");
-+	if (revs->simplify_history)
-+		return error("bundle and history simplification do not mix");
-+
-+	object_array_copy(&pending_copy, &revs->pending);
-+
-+	revs->boundary = 1;
-+	if (prepare_revision_walk(revs))
- 		return error("revision walk setup failed");
- 
- 	while ((rev = get_revision(revs))) {
- 		if (rev->object.flags & BOUNDARY)
--			list_prerequisite(bundle_fd, revs, rev);
-+			list_prerequisite(bundle_fd, &pending_copy, rev);
- 		else
- 			rev->object.flags |= SHOWN;
+diff --git a/revision.c b/revision.c
+index f4b8b38..cf86af3 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1022,7 +1022,7 @@ static void read_revisions_from_stdin(struct rev_=
+info *revs, const char ***prune
+ 			}
+ 			die("options not supported in --stdin mode");
+ 		}
+-		if (handle_revision_arg(sb.buf, revs, 0, 1))
++		if (handle_revision_arg(xstrdup(sb.buf), revs, 0, 1))
+ 			die("bad revision '%s'", sb.buf);
  	}
-+
-+	if (revs->pending.objects != NULL)
-+		return error("%u revisions pending after boundary walk",
-+						revs->pending.nr);
-+	revs->pending = pending_copy;
- 	return 0;
- }
- 
--static int bundle_list_refs(int bundle_fd,
--		int argc, const char **argv, struct rev_info *revs)
-+static int bundle_list_refs(int bundle_fd, struct rev_info *revs)
- {
- 	int i, ref_count = 0;
- 
--	argc = setup_revisions(argc, argv, revs, NULL);
--
--	if (argc > 1)
--		return error("unrecognized argument: %s'", argv[1]);
--
- 	object_array_remove_duplicates(&revs->pending);
- 
- 	for (i = 0; i < revs->pending.nr; i++) {
-@@ -367,7 +384,7 @@ int create_bundle(struct bundle_header *header, const char *path,
- 		return -1;
- 
- 	/* write references */
--	if (bundle_list_refs(bundle_fd, argc, argv, &revs))
-+	if (bundle_list_refs(bundle_fd, &revs))
- 		return -1;
- 
- 	/* end header */
--- 
+ 	if (seen_dashdash)
+diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+index ddc3dc5..cc463f3 100755
+--- a/t/t5704-bundle.sh
++++ b/t/t5704-bundle.sh
+@@ -30,7 +30,7 @@ test_expect_success 'tags can be excluded by rev-list=
+ options' '
+=20
+ '
+=20
+-test_expect_failure 'bundle --stdin' '
++test_expect_success 'bundle --stdin' '
+=20
+ 	echo master | git bundle create stdin-bundle.bdl --stdin &&
+ 	git ls-remote stdin-bundle.bdl >output &&
+@@ -38,7 +38,7 @@ test_expect_failure 'bundle --stdin' '
+=20
+ '
+=20
+-test_expect_failure 'bundle --stdin <rev-list options>' '
++test_expect_success 'bundle --stdin <rev-list options>' '
+=20
+ 	echo master | git bundle create hybrid-bundle.bdl --stdin tag &&
+ 	git ls-remote hybrid-bundle.bdl >output &&
+--=20
 1.7.1.198.g8d802
