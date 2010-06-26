@@ -1,82 +1,81 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git-gui and gitk-git as submodules (Re: [RFC PATCH 0/2] Teach
- 	"git status" the "--ignore-submodules" option)
-Date: Sat, 26 Jun 2010 13:45:02 +0200
-Message-ID: <4C25E83E.4080905@web.de>
-References: <4C24C34B.20403@web.de>	<7vlja3j7hu.fsf@alter.siamese.dyndns.org>	<20100625190147.GA17493@burratino> <AANLkTimqXhGw5fAAgZsoDAI9s6kaIzcka9mbFEW8j05v@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] fetch: don't output non-errors on stderr
+Date: Sat, 26 Jun 2010 12:14:59 +0000
+Message-ID: <AANLkTik6jbcOtyXJ5JJav1xnLEO6RSmYTHpsX6yYaB5_@mail.gmail.com>
+References: <AANLkTingtgeWuTrocesTIhTPsVz4dfU8CbwZF1TEl6AI@mail.gmail.com>
+	<1277418881-11286-1-git-send-email-avarab@gmail.com>
+	<7v1vbvkorf.fsf@alter.siamese.dyndns.org>
+	<AANLkTilToJ2ekKVgIeka5qx9_lasw6DKSy8bOhTrP4dC@mail.gmail.com>
+	<7v1vbukcu8.fsf@alter.siamese.dyndns.org>
+	<20100626061305.GB10290@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andy Parkins <andyparkins@gmail.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 26 13:45:37 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jun 26 14:15:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSTpC-0004l4-Un
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 13:45:31 +0200
+	id 1OSUHu-0006Qf-9S
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 14:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981Ab0FZLpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jun 2010 07:45:07 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:34824 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752400Ab0FZLpF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jun 2010 07:45:05 -0400
-Received: from smtp03.web.de  ( [172.20.0.65])
-	by fmmailgate02.web.de (Postfix) with ESMTP id D7D2116923CF6;
-	Sat, 26 Jun 2010 13:45:02 +0200 (CEST)
-Received: from [80.128.106.233] (helo=[192.168.178.26])
-	by smtp03.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OSTok-0007xR-00; Sat, 26 Jun 2010 13:45:02 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <AANLkTimqXhGw5fAAgZsoDAI9s6kaIzcka9mbFEW8j05v@mail.gmail.com>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/iGuGXCpJyo7j4hwwn9BH6gQsuh6WPjTlMVypA
-	zaeBLQLmGxZkdL8+ezwXwB5o0s2Nfn+smz+CP89siFs/FR7p1P
-	bCNGkfgxzh17rw1JDZRg==
+	id S1753698Ab0FZMPB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jun 2010 08:15:01 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:36179 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753358Ab0FZMPA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 26 Jun 2010 08:15:00 -0400
+Received: by iwn41 with SMTP id 41so2861329iwn.19
+        for <git@vger.kernel.org>; Sat, 26 Jun 2010 05:14:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gRgOuCq686YNKV9kgWOzJNhIMjT89zrA8pKaQArul7E=;
+        b=ISCQsvT4kfEEAnUI3HKIkmOsJHGOgcYNLtNngoiYh38rjVmWHMR6q7GZIRR8T1GwB2
+         31+oxv68tPhiFp/65V8nqewM1UzE8s25fBahj8bbWSADja31IgsjJABRUNgW9a+bpQ02
+         YbLQDaQARofpyEVaiwkQMA4DsT/c29My18Rbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=hYelVUIQO7w4ppLHDLvWX2f8Kvb6Qydduc8POqDkyxZ6Y4w9k4z4F9MluJNX9Vzi9I
+         51JnehYHKqTn0OpoFyiamtJAaKvZnXBNVOwKcYAALQ/zsiQ5zB/+AhZtuls3iEPkNaao
+         ebrKFxEp/7AnLcuW/L7MCtKidH6N16ytnOdNI=
+Received: by 10.231.82.74 with SMTP id a10mr2043633ibl.183.1277554499630; Sat, 
+	26 Jun 2010 05:14:59 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sat, 26 Jun 2010 05:14:59 -0700 (PDT)
+In-Reply-To: <20100626061305.GB10290@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149739>
 
-Am 26.06.2010 06:44, schrieb Tay Ray Chuan:
-> On Sat, Jun 26, 2010 at 3:01 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Given a patch to automatically resolve submodule-ejection/subtree-merge
->> conflicts, do you think a patch series to split off gitk and git-gui
->> as submodules could live in pu eventually?
-> 
-> +1
-> 
-> They do sound like they'd fit into the submodule paradigm. Further,
-> having git use it would be a good showcase of the submodule feature -
-> or bug. :)
+On Sat, Jun 26, 2010 at 06:13, Jeff King <peff@peff.net> wrote:
 
-Yes, I think having them as a submodule makes lots of sense. But
-submodules are not there yet. Unless I overlooked something, the
-following issues must be resolved before having these two as a
-submodule, otherwise people will complain (and rightfully so!):
+> Or even easier: is there a reason that "git fetch -q" would not do wh=
+at
+> you (=C3=86var) want?
 
-1) Switching branches, merging, rebasing and resetting in the
-   superproject must result in a checkout of the matching submodule
-   work tree (right now you always have to issue a "git submodule
-   update" afterwards to get the submodules in sync).
+That'd reduce the verbosity level, which'd skip some messages that I
+might want. E.g.:
 
-2) On "git clone" the submodules must be cloned and checked out too
-   (currently you have to do a "git submodule update --init" after
-   cloning the superproject).
+		if (verbosity >=3D 0) {
+			fprintf(stderr, " x %-*s %-*s -> %s\n",
+				TRANSPORT_SUMMARY_WIDTH, "[deleted]",
+				REFCOL_WIDTH, "(none)", prettify_refname(ref->name));
 
-3) Switching between commits in the superproject where a directory
-   is replaced by a submodule or vice versa doesn't work right now.
-   Submodules should handle this situation, otherwise the commit
-   putting gitk and git gui into submodules would become a barrier.
+Anyway, it looks like the only correct way to do this with Git in
+general is to:
 
-I am working on these issues, but that will take some time. But when
-they are solved, me too thinks that these two should become submodules.
+    1. Capture stderr and stdout
+    2. Check the exit code, and if it's non-zero print both
+
+But it sounds like we need some general discussion on what stdout and
+stderr should be used for in Git with regards to progress messages,
+errors and other similar things.
