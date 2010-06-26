@@ -1,75 +1,100 @@
-From: Madhu <enometh@meer.net>
-Subject: git-rebase --abort eats files
-Date: Sat, 26 Jun 2010 18:23:11 +0530 (IST)
-Message-ID: <20100626125924.160F11F212@leonis4.robolove.meer.net>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [PATCH 00/12] The first version of line level log browser
+Date: Sat, 26 Jun 2010 06:27:25 -0700
+Message-ID: <1277558857-23103-1-git-send-email-struggleyb.nku@gmail.com>
+Cc: gitster@pobox.com, Jens.Lehmann@web.de, trast@student.ethz.ch,
+	jrnieder@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 26 15:11:48 2010
+X-From: git-owner@vger.kernel.org Sat Jun 26 15:27:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSVAh-0001uG-Do
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 15:11:47 +0200
+	id 1OSVQH-0007cV-OT
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 15:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755302Ab0FZNLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jun 2010 09:11:38 -0400
-Received: from mail.meer.net ([64.13.141.3]:56862 "EHLO mail.meer.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752902Ab0FZNLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jun 2010 09:11:37 -0400
-X-Greylist: delayed 430 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Jun 2010 09:11:37 EDT
-Received: from mail2.meer.net (mail2.meer.net [64.13.141.16])
-	by mail.meer.net (8.13.3/8.13.3/meer) with ESMTP id o5QCxXPt044679
-	for <git@vger.kernel.org>; Sat, 26 Jun 2010 05:59:33 -0700 (PDT)
-	(envelope-from enometh@meer.net)
-Received: from leonis4.robolove.meer.net ([59.92.46.156])
-	(authenticated bits=0)
-	by mail2.meer.net (8.14.1/8.14.3) with ESMTP id o5QCxS3D045907
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Sat, 26 Jun 2010 05:59:32 -0700 (PDT)
-	(envelope-from enometh@meer.net)
-Received: by leonis4.robolove.meer.net (Postfix, from userid 500)
-	id 160F11F212; Sat, 26 Jun 2010 18:23:11 +0530 (IST)
-X-Attribution: Madhu
+	id S1753356Ab0FZN1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jun 2010 09:27:46 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:45678 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752779Ab0FZN1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 09:27:45 -0400
+Received: by pwj8 with SMTP id 8so2772894pwj.19
+        for <git@vger.kernel.org>; Sat, 26 Jun 2010 06:27:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=mQpRwbYVWRDLHXPUaWxT0B75aJHXKZwOZPN10zcEBRw=;
+        b=Rc37ahT1YmqyKGX8eeZjq1tDMmqQdrgxFpldqFcw9mixLf9SRPpLE6I7Eu3IzW2+bW
+         jxokD7Pi8ZvNjdchNrzGld7r5GiCNRyHmVPkRUbHC/ki/UZvhWZm+VRjj/HCiLRQB6z9
+         pu7DJejNMAVM5nOynjrJyz4I8shAiLqkLI6Kc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=RdGvU+rqOYnyM8YK/LZa2yaFOkHoj2pRInht8+6J9C4XcNDXvOd69Yw7aUimUGSjKn
+         nbO4+jrD2SaHE/7tgVKcJ9cXVMEzwAybbGbX9QH2OUnccVsCIcdTdNdB8+2cq0KsJbtW
+         OFSgEAa64vYt5MQig0QVnFPtWvSjBGWR+XpuE=
+Received: by 10.142.7.19 with SMTP id 19mr2465975wfg.268.1277558865052;
+        Sat, 26 Jun 2010 06:27:45 -0700 (PDT)
+Received: from localhost.localdomain ([222.30.37.37])
+        by mx.google.com with ESMTPS id b23sm1553667wfj.0.2010.06.26.06.27.40
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 26 Jun 2010 06:27:44 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.577.g36cf0.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149743>
 
-Don't know if this has been resolved-by-debate here before, But adding
-a file via git-add in the middle of an interactive rebase and aborting
-the rebase deletes the hitherto untracked file.  It should not. 
+In this version, we support multiple ranges from multiple files. Anybody interested at it can try it with something like:
+git log -L /assign_range_to_parent/,/^}/ line.c or
+git log -L diff-range /assign_range_to_parent/,/^}/ line.c to get a more detail history of how the lines evolved into such a state after fixing several bugs, or
+git log diff-range -L /assign_range_to_parent/,/^}/ -L /cleanup/,/^}/ line.c to see when cleanup() function come into sceen.
 
-rm -rfv /tmp/t1 ; mkdir -pv /tmp/t1
-cd /tmp/t1 && git-init-db
-cd /tmp/t1 && touch file1 file2 file3
-cd /tmp/t1 && git-add file1
-cd /tmp/t1 && git-commit -m "Explet1" file1
-cd /tmp/t1 && git-add file2
-cd /tmp/t1 && git-commit -m "Explet2" file2
-cd /tmp/t1 && git-rebase --abort
-cd /tmp/t1 && EDITOR="sed -i -e 's/^pick/edit/'" git rebase -i 'HEAD^'
-cd /tmp/t1 && git-add file3
-cd /tmp/t1 && git-status
-cd /tmp/t1 && git-rebase --abort
-test -e /tmp/t1/file3 || echo bwaaah
+We use a line number calculating method to find out the pre-image line range from the post-image line range. The algorithm is all in the map_lines function and I think the function is self-documenting. :)
 
-Maybe something like this to fix it?
+For merge commit, we pass the line range to all of its parents and let these ranges change along each branch and combine again later when we encounter the splitting commit. This is because, if we keep the range non-split, we can give more context to users and make the output more meaningful.  So I chagne the original idea that to split the ranges at a merge commit. :)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 436b7f5..2702536 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -749,6 +749,7 @@ first and then run 'git rebase --continue' again."
-                        git symbolic-ref HEAD $HEADNAME
-                        ;;
-                esac &&
-+               git-reset &&
-                output git reset --hard $HEAD &&
-                rm -rf "$DOTEST"
-                exit
+I have also test some run on the Linux kernel source code. The tool is a little slow in the kernel repository, but it always give the correct history. :)
 
---
-Madhu
+Feel free to post any criticism/advice to me!
+
+Bo Yang (12):
+  parse-options: stop when encounter a non-option
+  parse-options: add two helper functions
+  add the basic data structure for line level history
+  parse the -L options
+  export three functions from diff.c
+  add range clone functions
+  map/take range to parent
+  print the line log
+  map/print ranges along traversing the history topologically
+  add --always-print option
+  add two test cases
+  some document update
+
+ Documentation/git-log.txt          |   30 +
+ Makefile                           |    2 +
+ builtin/log.c                      |  130 ++++-
+ diff.c                             |    6 +-
+ diff.h                             |   18 +
+ diffcore.h                         |    3 +
+ line.c                             | 1244 ++++++++++++++++++++++++++++++++++++
+ line.h                             |  128 ++++
+ parse-options.c                    |   24 +-
+ parse-options.h                    |    7 +-
+ revision.c                         |   13 +-
+ revision.h                         |   13 +-
+ t/t4301-log-line-single-history.sh |  342 ++++++++++
+ t/t4302-log-line-merge-history.sh  |  118 ++++
+ 14 files changed, 2066 insertions(+), 12 deletions(-)
+ create mode 100644 line.c
+ create mode 100644 line.h
+ create mode 100755 t/t4301-log-line-single-history.sh
+ create mode 100755 t/t4302-log-line-merge-history.sh
+
+-- 
+1.7.1.577.g36cf0.dirty
