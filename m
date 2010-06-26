@@ -1,152 +1,191 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/4] t7006: test pager configuration for several git
- commands
-Date: Sat, 26 Jun 2010 14:28:36 -0500
-Message-ID: <20100626192836.GE20051@burratino>
-References: <20100626192203.GA19973@burratino>
- <20100626192450.GB20051@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: [PATCH] string-list.h: Add STRING_LIST_INIT macro and make use of it.
+Date: Sat, 26 Jun 2010 19:34:38 -0300
+Message-ID: <ef57c1f7439b43564af4ec88ddf100a9a908b745.1277591559.git.tfransosi@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 26 21:29:00 2010
+X-From: git-owner@vger.kernel.org Sun Jun 27 00:34:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSb3f-0001EL-PN
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 21:28:56 +0200
+	id 1OSdxe-0003Zv-I4
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 00:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845Ab0FZT2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jun 2010 15:28:51 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40416 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752287Ab0FZT2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jun 2010 15:28:50 -0400
-Received: by iwn41 with SMTP id 41so3108418iwn.19
-        for <git@vger.kernel.org>; Sat, 26 Jun 2010 12:28:50 -0700 (PDT)
+	id S1754236Ab0FZWeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jun 2010 18:34:50 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:42244 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753884Ab0FZWet (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 18:34:49 -0400
+Received: by gwaa18 with SMTP id a18so1651136gwa.19
+        for <git@vger.kernel.org>; Sat, 26 Jun 2010 15:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=t+IAmO1jzErmZqb5Jlbc64dx+ZSWHULaLjmawEGQK/Q=;
-        b=HmSnb8Sgks9FHMtYNPfo40PrYO7K7d4FJCPdGCaAXe8lNrDuByVsMhmr8YFHMQ1Qs4
-         r1d0oMM8bmrnkuRiSoHwpZfGcLq+JeFiPYRq/8mNWmaogDOu0s/bYP88EgqSB1oCfnTL
-         rkxOM0vkVFH5EcO58E782/yJDSAPb2SQqcaK0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=zQYw9haTCxhCu599S4EIKiNKWdHAMWLkzNcCoYM438I=;
+        b=HJvAFVeq6jlKBR+SHHWR+SHB1zyFGGw+bu0RL4KtjJfzFhANYKiC1iGKcLFq+SmiBL
+         blkDZysugIUfrg+k+5ffwFwktR+OXzlWR7Ok18Se1h001rFT9fWOPU79/ezwEAOKzEmc
+         vr5k2KkF5pDv27ZnWQbIbycOEoMpPwTnzVZEs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=w4d1fQwFAPg3QGrpCe7xV54tSs/1GZ0chQdTqvWKgf0mPo79ENL2zNe4OkVih2npiI
-         E6db+fZ0VTYdTYG/Zl3+Uv7mq594BuyTNr9FGoXtIbozsLctT1t95/FLfE0xiYjSDa57
-         HFBY0SEfgwMRbOzJFfjP2IRRDSMqWd52yJzy0=
-Received: by 10.231.125.158 with SMTP id y30mr2668190ibr.99.1277580530276;
-        Sat, 26 Jun 2010 12:28:50 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id r3sm1470458ibk.13.2010.06.26.12.28.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 26 Jun 2010 12:28:49 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100626192450.GB20051@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=from:to:subject:date:message-id:x-mailer;
+        b=YMnwzm0TUDU43xRjXRuX1KJGFYYPKEMUxeJH+jKcE4+3otQH7sJCXGnaZnG/pzEzOb
+         F9kFigeyflcujsN+CnLWqPd3+s8QI3aSAisbOL1XCxM4Jd2T3BFEEkIKKLIcami2HxMg
+         pZDlpwiw1S28xGjxditubQ4MwfNO2XDRQXgyY=
+Received: by 10.101.191.4 with SMTP id t4mr3561391anp.214.1277591687311;
+        Sat, 26 Jun 2010 15:34:47 -0700 (PDT)
+Received: from localhost ([189.60.232.11])
+        by mx.google.com with ESMTPS id n18sm27134585anl.2.2010.06.26.15.34.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 26 Jun 2010 15:34:46 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149779>
 
-Jonathan Nieder wrote:
+Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+---
+ builtin/fast-export.c  |    2 +-
+ builtin/fetch.c        |    8 ++++----
+ builtin/receive-pack.c |    2 +-
+ builtin/remote.c       |    4 ++--
+ builtin/show-ref.c     |    2 +-
+ remote.c               |    4 ++--
+ string-list.h          |    2 ++
+ 7 files changed, 13 insertions(+), 11 deletions(-)
 
-> Test choice of pager at several stages of repository setup.
-
-Here it is again, without whitespace changes. :)
-
- t/t7006-pager.sh |   40 ++++++++++++++++++++++++++++++++++++----
- 1 files changed, 36 insertions(+), 4 deletions(-)
-
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index b117ebb..4420f91 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -204,7 +204,9 @@ parse_args() {
- 	full_command="$full_command $1"
- }
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index c6dd71a..89945bc 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -566,7 +566,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+ 	struct object_array commits = { 0, 0, NULL };
+-	struct string_list extra_refs = { NULL, 0, 0, 0 };
++	struct string_list extra_refs = STRING_LIST_INIT;
+ 	struct commit *commit;
+ 	char *export_filename = NULL, *import_filename = NULL;
+ 	struct option options[] = {
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 5cb369c..a16fb43 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -572,8 +572,8 @@ static void find_non_local_tags(struct transport *transport,
+ 			struct ref **head,
+ 			struct ref ***tail)
+ {
+-	struct string_list existing_refs = { NULL, 0, 0, 0 };
+-	struct string_list remote_refs = { NULL, 0, 0, 0 };
++	struct string_list existing_refs = STRING_LIST_INIT;
++	struct string_list remote_refs = STRING_LIST_INIT;
+ 	struct tag_data data;
+ 	const struct ref *ref;
+ 	struct string_list_item *item = NULL;
+@@ -667,7 +667,7 @@ static int truncate_fetch_head(void)
+ static int do_fetch(struct transport *transport,
+ 		    struct refspec *refs, int ref_count)
+ {
+-	struct string_list existing_refs = { NULL, 0, 0, 0 };
++	struct string_list existing_refs = STRING_LIST_INIT;
+ 	struct string_list_item *peer_item = NULL;
+ 	struct ref *ref_map;
+ 	struct ref *rm;
+@@ -890,7 +890,7 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
+ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+-	struct string_list list = { NULL, 0, 0, 0 };
++	struct string_list list = STRING_LIST_INIT;
+ 	struct remote *remote;
+ 	int result = 0;
  
--parse_args expect_success 'git log'
-+test_default_pager() {
-+	parse_args "$@"
-+
- $test_expectation SIMPLEPAGER "$cmd - default pager is used by default" "
- 	unset PAGER GIT_PAGER;
- 	test_might_fail git config --unset core.pager &&
-@@ -223,8 +225,11 @@ $test_expectation SIMPLEPAGER "$cmd - default pager is used by default" "
- 	) &&
- 	test -e default_pager_used
- "
-+}
-+
-+test_PAGER_overrides() {
-+	parse_args "$@"
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 29bc8d5..c40a4ba 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -530,7 +530,7 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+ static void check_aliased_updates(struct command *commands)
+ {
+ 	struct command *cmd;
+-	struct string_list ref_list = { NULL, 0, 0, 0 };
++	struct string_list ref_list = STRING_LIST_INIT;
  
--parse_args expect_success 'git log'
- $test_expectation TTY "$cmd - PAGER overrides default pager" "
- 	unset GIT_PAGER;
- 	test_might_fail git config --unset core.pager &&
-@@ -236,8 +241,11 @@ $test_expectation TTY "$cmd - PAGER overrides default pager" "
- 	$full_command &&
- 	test -e PAGER_used
- "
-+}
-+
-+test_core_pager_overrides() {
-+	parse_args "$@"
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
+ 		struct string_list_item *item =
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 0a52667..9d41792 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -596,7 +596,7 @@ static int mv(int argc, const char **argv)
+ 	};
+ 	struct remote *oldremote, *newremote;
+ 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT, buf3 = STRBUF_INIT;
+-	struct string_list remote_branches = { NULL, 0, 0, 0 };
++	struct string_list remote_branches = STRING_LIST_INIT;
+ 	struct rename_info rename;
+ 	int i;
  
--parse_args expect_success 'git log'
- $test_expectation TTY "$cmd - core.pager overrides PAGER" "
- 	unset GIT_PAGER;
- 	rm -f core.pager_used ||
-@@ -249,8 +257,11 @@ $test_expectation TTY "$cmd - core.pager overrides PAGER" "
- 	$full_command &&
- 	test -e core.pager_used
- "
-+}
-+
-+test_GIT_PAGER_overrides() {
-+	parse_args "$@"
+@@ -1044,7 +1044,7 @@ static int show(int argc, const char **argv)
+ 		OPT_END()
+ 	};
+ 	struct ref_states states;
+-	struct string_list info_list = { NULL, 0, 0, 0 };
++	struct string_list info_list = STRING_LIST_INIT;
+ 	struct show_info info;
  
--parse_args expect_success 'git log'
- $test_expectation TTY "$cmd - GIT_PAGER overrides core.pager" "
- 	rm -f GIT_PAGER_used ||
- 	cleanup_fail &&
-@@ -261,5 +272,26 @@ $test_expectation TTY "$cmd - GIT_PAGER overrides core.pager" "
- 	$full_command &&
- 	test -e GIT_PAGER_used
- "
-+}
-+
-+test_default_pager        expect_success 'git log'
-+test_PAGER_overrides      expect_success 'git log'
-+test_core_pager_overrides expect_success 'git log'
-+test_GIT_PAGER_overrides  expect_success 'git log'
-+
-+test_default_pager        expect_success 'git -p log'
-+test_PAGER_overrides      expect_success 'git -p log'
-+test_core_pager_overrides expect_success 'git -p log'
-+test_GIT_PAGER_overrides  expect_success 'git -p log'
-+
-+test_default_pager        expect_success test_must_fail 'git -p'
-+test_PAGER_overrides      expect_success test_must_fail 'git -p'
-+test_core_pager_overrides expect_success test_must_fail 'git -p'
-+test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p'
-+
-+test_default_pager        expect_success test_must_fail 'git -p nonsense'
-+test_PAGER_overrides      expect_success test_must_fail 'git -p nonsense'
-+test_core_pager_overrides expect_success test_must_fail 'git -p nonsense'
-+test_GIT_PAGER_overrides  expect_success test_must_fail 'git -p nonsense'
+ 	argc = parse_options(argc, argv, NULL, options, builtin_remote_show_usage,
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 17ada88..25c280a 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -120,7 +120,7 @@ static int add_existing(const char *refname, const unsigned char *sha1, int flag
+  */
+ static int exclude_existing(const char *match)
+ {
+-	static struct string_list existing_refs = { NULL, 0, 0, 0 };
++	static struct string_list existing_refs = STRING_LIST_INIT;
+ 	char buf[1024];
+ 	int matchlen = match ? strlen(match) : 0;
  
- test_done
+diff --git a/remote.c b/remote.c
+index e51cd22..059d757 100644
+--- a/remote.c
++++ b/remote.c
+@@ -754,7 +754,7 @@ int for_each_remote(each_remote_fn fn, void *priv)
+ 
+ void ref_remove_duplicates(struct ref *ref_map)
+ {
+-	struct string_list refs = { NULL, 0, 0, 0 };
++	struct string_list refs = STRING_LIST_INIT;
+ 	struct string_list_item *item = NULL;
+ 	struct ref *prev = NULL, *next = NULL;
+ 	for (; ref_map; prev = ref_map, ref_map = next) {
+@@ -1704,7 +1704,7 @@ static int get_stale_heads_cb(const char *refname,
+ struct ref *get_stale_heads(struct remote *remote, struct ref *fetch_map)
+ {
+ 	struct ref *ref, *stale_refs = NULL;
+-	struct string_list ref_names = { NULL, 0, 0, 0 };
++	struct string_list ref_names = STRING_LIST_INIT;
+ 	struct stale_heads_info info;
+ 	info.remote = remote;
+ 	info.ref_names = &ref_names;
+diff --git a/string-list.h b/string-list.h
+index 63b69c8..037d058 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -12,6 +12,8 @@ struct string_list
+ 	unsigned int strdup_strings:1;
+ };
+ 
++#define STRING_LIST_INIT { NULL, 0, 0, 0 }
++
+ void print_string_list(const char *text, const struct string_list *p);
+ void string_list_clear(struct string_list *list, int free_util);
+ 
 -- 
-1.7.1.579.ge2549
+1.7.0.4
