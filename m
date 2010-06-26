@@ -1,96 +1,50 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 8/8] bundle_create: Do not exit when given no revs to bundle
-Date: Sat, 26 Jun 2010 01:31:58 -0500
-Message-ID: <20100626063158.GI15881@burratino>
-References: <20100119002641.GA31434@gnu.kitenet.net>
- <20100626061735.GA15881@burratino>
+From: William Hall <will@gnatter.net>
+Subject: Re: SVN migration
+Date: Sat, 26 Jun 2010 11:33:39 +0100
+Message-ID: <4C25D783.4070602@gnatter.net>
+References: <4C1957EF.6070504@gnatter.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, 554682@bugs.debian.org,
-	Adam Brewster <adambrewster@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sat Jun 26 08:32:19 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Joshua Shrader <jshrader83@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 26 12:33:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSOw3-0001gK-Jp
-	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 08:32:15 +0200
+	id 1OSShv-0005wQ-F0
+	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 12:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752140Ab0FZGcL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 26 Jun 2010 02:32:11 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47886 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751691Ab0FZGcK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jun 2010 02:32:10 -0400
-Received: by iwn41 with SMTP id 41so2716281iwn.19
-        for <git@vger.kernel.org>; Fri, 25 Jun 2010 23:32:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=tSao5lA9QFCA95hxK45ef4qSOrVU4BTy8j9nIo4Rgn0=;
-        b=XaeEkD0rGu0dGNI0xV1JgACawjFPtFMSCsAMGJ5tyQNnjMAf99NOrkceP7b/loPgnm
-         2dPG1i053sYGwDj/5NaNUDHoz20t4x48zoCrTDlcmmIZ0m+SvcliDMJR2AgfO3moX2EK
-         cBsW7WmoEPry3yj9YEf4ciLdZus3CRuIp3txo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=IGeBXz2iia3nKFauQRrabXVcdAW+HqjActw2UPIsYxb5NYn3QPMiX3jJN94wIIIPHJ
-         wzXOOnBA/oc3lrAIaFHsyMDUeIWBOTFGwec1ns6ycFHkt49P+9jHSex4OqBpSj3LyD5p
-         X/8K6+ZAl8zmE42XxxH1hmrnJuYhCmBPMgAyE=
-Received: by 10.231.176.74 with SMTP id bd10mr1863547ibb.38.1277533929986;
-        Fri, 25 Jun 2010 23:32:09 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v23sm4341093ibp.15.2010.06.25.23.32.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 25 Jun 2010 23:32:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100626061735.GA15881@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752845Ab0FZKdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jun 2010 06:33:49 -0400
+Received: from mail.qualtersystems.com ([74.200.89.103]:44916 "EHLO
+	mail.qualtersystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063Ab0FZKds (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 06:33:48 -0400
+Received: from localhost (mail [127.0.0.1])
+	by mail.qualtersystems.com (Postfix) with ESMTP id 7A0112B68BC6;
+	Sat, 26 Jun 2010 11:33:47 +0100 (BST)
+X-Virus-Scanned: amavisd-new at qualtersystems.com
+Received: from mail.qualtersystems.com ([127.0.0.1])
+	by localhost (mail.qualtersystems.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id T1MeG4qqWP0C; Sat, 26 Jun 2010 11:33:40 +0100 (BST)
+Received: from [192.168.1.84] (xambo.qualtersystems.com [82.152.227.154])
+	(Authenticated sender: will@mail.qualtersystems.com)
+	by mail.qualtersystems.com (Postfix) with ESMTP id 0AEB72B68BBF;
+	Sat, 26 Jun 2010 11:33:39 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Lightning/1.0b1 Thunderbird/3.0.4
+In-Reply-To: <4C1957EF.6070504@gnatter.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149737>
 
-Return an error instead to help with the libification effort.
+http://github.com/innerhippy/svnAndGit
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-That=E2=80=99s the end of the series.  Thanks for reading.
+I've created a new project on github called svnAndGit that attempts to 
+create a bi-directional workflow to enable git and SVN to live side-by-side.
 
-I was a bit torn about whether to present this as a request for
-comment or a patch series ready for application.  On one hand it fixes
-a bug; on the other hand, I have very little confidence that it works
-well in the presence of arbitrary rev-list options.  Thoughts and
-testing would be very welcome.
-
-Good night,
-Jonathan
-
- bundle.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/bundle.c b/bundle.c
-index 7aff369..7dd3f65 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -349,7 +349,7 @@ static int bundle_list_refs(int bundle_fd, struct r=
-ev_info *revs)
- 		free(ref);
- 	}
- 	if (!ref_count)
--		die("Refusing to create empty bundle.");
-+		return error("Refusing to create empty bundle.");
- 	return 0;
- }
-=20
---=20
-1.7.1.198.g8d802
+It's not perfect by any means, so all comments most welcome!
