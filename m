@@ -1,100 +1,104 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH 00/12] The first version of line level log browser
-Date: Sat, 26 Jun 2010 06:27:25 -0700
-Message-ID: <1277558857-23103-1-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH 01/12] parse-options: stop when encounter a non-option
+Date: Sat, 26 Jun 2010 06:27:26 -0700
+Message-ID: <1277558857-23103-2-git-send-email-struggleyb.nku@gmail.com>
+References: <1277558857-23103-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com, Jens.Lehmann@web.de, trast@student.ethz.ch,
 	jrnieder@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 26 15:27:54 2010
+X-From: git-owner@vger.kernel.org Sat Jun 26 15:27:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSVQH-0007cV-OT
+	id 1OSVQI-0007cV-GC
 	for gcvg-git-2@lo.gmane.org; Sat, 26 Jun 2010 15:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753356Ab0FZN1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jun 2010 09:27:46 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:45678 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752779Ab0FZN1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jun 2010 09:27:45 -0400
-Received: by pwj8 with SMTP id 8so2772894pwj.19
-        for <git@vger.kernel.org>; Sat, 26 Jun 2010 06:27:45 -0700 (PDT)
+	id S1755621Ab0FZN1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jun 2010 09:27:51 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:58519 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755433Ab0FZN1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jun 2010 09:27:50 -0400
+Received: by pvg2 with SMTP id 2so1277102pvg.19
+        for <git@vger.kernel.org>; Sat, 26 Jun 2010 06:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=mQpRwbYVWRDLHXPUaWxT0B75aJHXKZwOZPN10zcEBRw=;
-        b=Rc37ahT1YmqyKGX8eeZjq1tDMmqQdrgxFpldqFcw9mixLf9SRPpLE6I7Eu3IzW2+bW
-         jxokD7Pi8ZvNjdchNrzGld7r5GiCNRyHmVPkRUbHC/ki/UZvhWZm+VRjj/HCiLRQB6z9
-         pu7DJejNMAVM5nOynjrJyz4I8shAiLqkLI6Kc=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=EpSoNAAf+9xE9sb4GZAEQWOx3oHi/EkOjqVXUz/tT1g=;
+        b=vGi9w18pYvjTEllcRk+q2h1BGIdo/B8vc31WJVqm5awKdVRqfjOmfOHOKZ69fnHf+z
+         agl4ilTBIwAgNLaWVV6PX1fROeU5GCYprOWlPve/MDztLEb+JbGdr/DYQjThMujnPQl1
+         nuH8I9ZTp1ZiefJkXsaw4uIlcJpTqeBIeihRc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=RdGvU+rqOYnyM8YK/LZa2yaFOkHoj2pRInht8+6J9C4XcNDXvOd69Yw7aUimUGSjKn
-         nbO4+jrD2SaHE/7tgVKcJ9cXVMEzwAybbGbX9QH2OUnccVsCIcdTdNdB8+2cq0KsJbtW
-         OFSgEAa64vYt5MQig0QVnFPtWvSjBGWR+XpuE=
-Received: by 10.142.7.19 with SMTP id 19mr2465975wfg.268.1277558865052;
-        Sat, 26 Jun 2010 06:27:45 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Njhyah4w5eLwN27bjdElqLB32yZUySfvQZx9z02ToHJu+Cj69r+4paqDllNVLKgJ0X
+         sUvqEP0kIYG30NK/Vm8evkNia38eTSFXsJtIoFTyLMIiDjU0avXN2vGT0+6ZvqvplKSB
+         B/L2Ci7b4hcABisLetRWJht7chy1Sou/6Ubtc=
+Received: by 10.143.178.10 with SMTP id f10mr2101255wfp.104.1277558868252;
+        Sat, 26 Jun 2010 06:27:48 -0700 (PDT)
 Received: from localhost.localdomain ([222.30.37.37])
-        by mx.google.com with ESMTPS id b23sm1553667wfj.0.2010.06.26.06.27.40
+        by mx.google.com with ESMTPS id b23sm1553667wfj.0.2010.06.26.06.27.45
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 26 Jun 2010 06:27:44 -0700 (PDT)
+        Sat, 26 Jun 2010 06:27:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.577.g36cf0.dirty
+In-Reply-To: <1277558857-23103-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149744>
 
-In this version, we support multiple ranges from multiple files. Anybody interested at it can try it with something like:
-git log -L /assign_range_to_parent/,/^}/ line.c or
-git log -L diff-range /assign_range_to_parent/,/^}/ line.c to get a more detail history of how the lines evolved into such a state after fixing several bugs, or
-git log diff-range -L /assign_range_to_parent/,/^}/ -L /cleanup/,/^}/ line.c to see when cleanup() function come into sceen.
+Since we need to support the syntax like:
+-L n1,m1 path1 -L n2,m2 path2.
 
-We use a line number calculating method to find out the pre-image line range from the post-image line range. The algorithm is all in the map_lines function and I think the function is self-documenting. :)
+So, make the parse-options API not stop with a
+non-option, but report the status and go on parsing
+the following.
 
-For merge commit, we pass the line range to all of its parents and let these ranges change along each branch and combine again later when we encounter the splitting commit. This is because, if we keep the range non-split, we can give more context to users and make the output more meaningful.  So I chagne the original idea that to split the ranges at a merge commit. :)
+Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+---
+ parse-options.c |    3 ++-
+ parse-options.h |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-I have also test some run on the Linux kernel source code. The tool is a little slow in the kernel repository, but it always give the correct history. :)
-
-Feel free to post any criticism/advice to me!
-
-Bo Yang (12):
-  parse-options: stop when encounter a non-option
-  parse-options: add two helper functions
-  add the basic data structure for line level history
-  parse the -L options
-  export three functions from diff.c
-  add range clone functions
-  map/take range to parent
-  print the line log
-  map/print ranges along traversing the history topologically
-  add --always-print option
-  add two test cases
-  some document update
-
- Documentation/git-log.txt          |   30 +
- Makefile                           |    2 +
- builtin/log.c                      |  130 ++++-
- diff.c                             |    6 +-
- diff.h                             |   18 +
- diffcore.h                         |    3 +
- line.c                             | 1244 ++++++++++++++++++++++++++++++++++++
- line.h                             |  128 ++++
- parse-options.c                    |   24 +-
- parse-options.h                    |    7 +-
- revision.c                         |   13 +-
- revision.h                         |   13 +-
- t/t4301-log-line-single-history.sh |  342 ++++++++++
- t/t4302-log-line-merge-history.sh  |  118 ++++
- 14 files changed, 2066 insertions(+), 12 deletions(-)
- create mode 100644 line.c
- create mode 100644 line.h
- create mode 100755 t/t4301-log-line-single-history.sh
- create mode 100755 t/t4302-log-line-merge-history.sh
-
+diff --git a/parse-options.c b/parse-options.c
+index 0fa79bc..cbb49d3 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -374,7 +374,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			if (parse_nodash_opt(ctx, arg, options) == 0)
+ 				continue;
+ 			if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
+-				break;
++				return PARSE_OPT_NON_OPTION;
+ 			ctx->out[ctx->cpidx++] = ctx->argv[0];
+ 			continue;
+ 		}
+@@ -456,6 +456,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 	switch (parse_options_step(&ctx, options, usagestr)) {
+ 	case PARSE_OPT_HELP:
+ 		exit(129);
++	case PARSE_OPT_NON_OPTION:
+ 	case PARSE_OPT_DONE:
+ 		break;
+ 	default: /* PARSE_OPT_UNKNOWN */
+diff --git a/parse-options.h b/parse-options.h
+index 7435cdb..407697a 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -161,7 +161,8 @@ extern NORETURN void usage_msg_opt(const char *msg,
+ enum {
+ 	PARSE_OPT_HELP = -1,
+ 	PARSE_OPT_DONE,
+-	PARSE_OPT_UNKNOWN
++	PARSE_OPT_NON_OPTION,
++	PARSE_OPT_UNKNOWN,
+ };
+ 
+ /*
 -- 
 1.7.1.577.g36cf0.dirty
