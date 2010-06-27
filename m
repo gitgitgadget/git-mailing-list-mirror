@@ -1,70 +1,68 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv3] git-rev-parse.txt: Document ":path" specifier
-Date: Sun, 27 Jun 2010 15:15:22 +0200
-Message-ID: <6af64ac563a9a165bec7fddc779b31ae5bcb9997.1277644307.git.git@drmicha.warpmail.net>
-References: <7vpqzfj8zi.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 27 15:15:27 2010
+From: Robert Spanton <rspanton@zepler.net>
+Subject: [PATCH] Clarify that git-cherry-pick applies patches to HEAD
+Date: Sun, 27 Jun 2010 14:52:25 +0100
+Message-ID: <1277646745.13370.711.camel@zarniwoop.blob>
+Reply-To: rspanton@zepler.net
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Jun 27 15:52:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSrhm-0000cv-9N
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 15:15:26 +0200
+	id 1OSsHn-00049G-MY
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 15:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755150Ab0F0NPN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jun 2010 09:15:13 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33562 "EHLO
+	id S1755315Ab0F0Nwe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jun 2010 09:52:34 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55126 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754826Ab0F0NPM (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Jun 2010 09:15:12 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0B6031090B5;
-	Sun, 27 Jun 2010 09:15:11 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Sun, 27 Jun 2010 09:15:11 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=3gyZqxy9C8HBtlrhczn5XkyCRQ0=; b=nAfPbtDabeAAZBGohiB2DbfwiGHOhVwsPMQG4Ro8EwUjLvIsU/oCDrFJTdsjgWcFay+WkB+VHiWPwMlNc4AfPMNihwwKdnStaz4MsBM2DQcEVzNEeHMPvoIFR8auv5b5QoS+WHxdcUv8VPAuYCAezc1kgl8Ai6TEqCUKSbK7M9k=
-X-Sasl-enc: Ltf8HG9hnPsaC8lyLpUyhecQi4Pc67O1xnKbsGai7x9f 1277644510
-Received: from localhost (p54859121.dip0.t-ipconnect.de [84.133.145.33])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3D3C149B01;
-	Sun, 27 Jun 2010 09:15:10 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.621.g01d76
-In-Reply-To: <7vpqzfj8zi.fsf@alter.siamese.dyndns.org>
+	by vger.kernel.org with ESMTP id S1755233Ab0F0Nwe (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Jun 2010 09:52:34 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7B0E0FA9BC;
+	Sun, 27 Jun 2010 09:52:32 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Sun, 27 Jun 2010 09:52:32 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=subject:from:reply-to:to:content-type:date:message-id:mime-version:content-transfer-encoding; s=smtpout; bh=Z42aEm6EI0+8PdSQ+G0/EEo2l+M=; b=T/0s4VSb0CYLusW2SyjHKqYjFbiVI7/TTFKq4MBn2WmPzrmGx+rNWJZRsvLi58oX9JpctQwnLIirJ6ggm6oOA8n/W12GREBAeuf9h7Dbm/9+ko5Tdi4fA+mDO2Z5meTL9/bzkaPht+tktk5EkhDNJqz/hOmXATXUNt70WOnOhJc=
+X-Sasl-enc: E0n5/GqZfsSBZUXtzOc/ILbVnbArKHHoz3aRPPPvga6k 1277646752
+Received: from [192.168.0.11] (87-194-128-93.bethere.co.uk [87.194.128.93])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DBC764E042D;
+	Sun, 27 Jun 2010 09:52:31 -0400 (EDT)
+X-Mailer: Evolution 2.30.1.2 (2.30.1.2-8.fc13) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149793>
 
-The empty treeish in ":path" means "index". This is actually a special
-case of the ":stage:path" syntax where it is documented, but mentioning
-it also together with "treeish:path" is helpful, so do it.
+Change the description of cherry-pick to state that the given commits
+are applied to the current HEAD.  It was unclear exactly where
+cherry-pick ends up sticking the given commits.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Robert Spanton <rspanton@zepler.net>
 ---
-How about this? Short description at "rev:path" but still pointing
-to ":stage:path".
+ Documentation/git-cherry-pick.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
- Documentation/git-rev-parse.txt |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index 8db600f..d525e57 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -291,7 +291,9 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index bcb4c75..2d52445 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -13,8 +13,9 @@ DESCRIPTION
+ -----------
  
- * A suffix ':' followed by a path; this names the blob or tree
-   at the given path in the tree-ish object named by the part
--  before the colon.
-+  before the colon. ":path" (with an empty part before the colon)
-+  is a special case of the syntax described next: content
-+  recorded in the index at the given path.
+ Given one or more existing commits, apply the change each one
+-introduces, recording a new commit for each.  This requires your
+-working tree to be clean (no modifications from the HEAD commit).
++introduces to the current HEAD, recording a new commit for each.
++This requires your working tree to be clean (no modifications from
++the HEAD commit).
  
- * A colon, optionally followed by a stage number (0 to 3) and a
-   colon, followed by a path; this names a blob object in the
+ OPTIONS
+ -------
 -- 
-1.7.1.621.g01d76
+1.7.0.1
