@@ -1,70 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t9700: Use Test::More->builder, not
- $Test::Builder::Test
-Date: Sun, 27 Jun 2010 11:27:30 -0700
-Message-ID: <7vvd94fi0d.fsf@alter.siamese.dyndns.org>
-References: <1277554872-6402-1-git-send-email-avarab@gmail.com>
- <1277556161-8718-1-git-send-email-avarab@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Unexpected error: short SHA1 is ambiguous
+Date: Sun, 27 Jun 2010 21:02:56 +0200
+Message-ID: <m2lja0wb6n.fsf@igel.home>
+References: <AANLkTikSUBgySbxtKO1iB-GYFgxaL5lY0mfbb5f_xxMS@mail.gmail.com>
+	<alpine.LFD.2.00.1006262323310.24097@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 27 20:27:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Jun 27 21:03:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSwZy-0007OB-Gi
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 20:27:42 +0200
+	id 1OSx8G-0000jC-QR
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 21:03:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754592Ab0F0S1i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 27 Jun 2010 14:27:38 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33247 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753250Ab0F0S1h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 27 Jun 2010 14:27:37 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FE8ABF644;
-	Sun, 27 Jun 2010 14:27:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=o2sqIiWldV3L/cdEQ/8g9jC8f
-	8I=; b=xwAbbepBcdN0yaH0lV9WdGusita/u1i0lxc/0rzt0Qc3c0wq4QYjc9Jh0
-	BFMN7V3bsIVVR/yZsfINMXjtEaJBcQaNpdE3SDiwVWlFyAtbaYsJO6cD0MNV+BS1
-	4DwZPMj6tFlI/LwdhyQz/knMwxj+ExdXxQ3RpJv70x+lGhAhTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=om7GqIKwlNOzNM5v1OR
-	bpWpl0UP9n3SwEbNbanwLKNo5q+ADoh7JTSXeqEvHVdSses2ehZjQVePVmq5DDf9
-	lxhWcarGN1bnbm1+iAsVplmzSPJwpyROq41ZPyN8dYlZgnesENsj+NdawyMTlFhF
-	V8xCNRhSRTISnRET20hCGW3A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F202EBF642;
-	Sun, 27 Jun 2010 14:27:34 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5ECA8BF641; Sun, 27 Jun
- 2010 14:27:32 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A80D5820-8219-11DF-A48B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755193Ab0F0TC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jun 2010 15:02:59 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:52121 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754598Ab0F0TC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 27 Jun 2010 15:02:58 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 44EBD1C00208;
+	Sun, 27 Jun 2010 21:02:57 +0200 (CEST)
+Received: from igel.home (ppp-88-217-122-223.dynamic.mnet-online.de [88.217.122.223])
+	by mail.mnet-online.de (Postfix) with ESMTP id 0E6071C00134;
+	Sun, 27 Jun 2010 21:02:57 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id B2EF1CA297; Sun, 27 Jun 2010 21:02:56 +0200 (CEST)
+X-Yow: Just imagine you're entering a state-of-the-art CAR WASH!!
+In-Reply-To: <alpine.LFD.2.00.1006262323310.24097@xanadu.home> (Nicolas
+	Pitre's message of "Sat, 26 Jun 2010 23:35:24 -0400 (EDT)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149799>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Nicolas Pitre <nico@fluxnic.net> writes:
 
-> $Test::Builder::Test was only made into an `our' variable in 0.94
-> released in September 2009, older distros are more likely to have 0.9=
-2
-> or earlier. Use the singleton Test::More->builder constructor instead=
-=2E
+> On Sat, 26 Jun 2010, Jay Soffian wrote:
+>> 1. Since I restricted to commits with ^0, and there's only one such
+>> commit, shouldn't rev-list give me what I want? (rev-parse similarly
+>> fails).
+>
+> No, the ^0 is not restricting anything.  It merely says you want to walk 
+> through zero parents from the specified commit, but the commit 
+> specification is ambiguous (3 possibilities exist).
 
-Ah, that is what it was.  I was wondering what it was that showed 1..1 =
-and
-then 1..40.
+But ^0 can only be applied to a commit, and only one commit matches
+aabb.
 
-Thanks; will queue on top of ab/tap.
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
