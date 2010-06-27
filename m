@@ -1,60 +1,71 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: How does receive-pack and pre-receive hook works ?
-Date: Sun, 27 Jun 2010 00:00:51 -0700
-Message-ID: <AANLkTikrSABpX8rFLIYwwQaN3zfnzEuqr6ugbPEOzo76@mail.gmail.com>
-References: <AANLkTinYRF2m95MU2c817bK6mfehPt_OMBH45R6laNUe@mail.gmail.com>
+From: "Bernhard R. Link" <brlink@debian.org>
+Subject: Re: [PATCH 4/4] Makefile: Don't pass $(ALL_CFLAGS) to the linker
+Date: Sun, 27 Jun 2010 11:44:34 +0200
+Message-ID: <20100627094433.GA21771@pcpool00.mathematik.uni-freiburg.de>
+References: <4C226520.5080009@ramsay1.demon.co.uk> <20100623210820.GA24242@burratino> <4C264019.6030408@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 27 09:01:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sun Jun 27 12:26:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSlrk-0004am-7C
-	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 09:01:20 +0200
+	id 1OSp41-0003Yi-H3
+	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 12:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762Ab0F0HBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jun 2010 03:01:12 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:39069 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752698Ab0F0HBM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 27 Jun 2010 03:01:12 -0400
-Received: by iwn7 with SMTP id 7so126191iwn.19
-        for <git@vger.kernel.org>; Sun, 27 Jun 2010 00:01:11 -0700 (PDT)
-Received: by 10.231.13.199 with SMTP id d7mr2984715iba.167.1277622071242; Sun, 
-	27 Jun 2010 00:01:11 -0700 (PDT)
-Received: by 10.231.206.13 with HTTP; Sun, 27 Jun 2010 00:00:51 -0700 (PDT)
-In-Reply-To: <AANLkTinYRF2m95MU2c817bK6mfehPt_OMBH45R6laNUe@mail.gmail.com>
+	id S1754681Ab0F0K0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jun 2010 06:26:08 -0400
+Received: from pcpool00.mathematik.uni-freiburg.de ([132.230.30.150]:35623
+	"EHLO pcpool00.mathematik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753193Ab0F0K0F (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 27 Jun 2010 06:26:05 -0400
+X-Greylist: delayed 2487 seconds by postgrey-1.27 at vger.kernel.org; Sun, 27 Jun 2010 06:26:05 EDT
+Received: from pcpool09.mathematik.uni-freiburg.de ([132.230.30.159])
+	by pcpool00.mathematik.uni-freiburg.de with esmtpsa (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1OSoPi-0001Ft-5C; Sun, 27 Jun 2010 11:44:34 +0200
+Received: from brl by pcpool09.mathematik.uni-freiburg.de with local (Exim 4.69)
+	(envelope-from <brl@pcpool00.mathematik.uni-freiburg.de>)
+	id 1OSoPi-0005ik-30; Sun, 27 Jun 2010 11:44:34 +0200
+Content-Disposition: inline
+In-Reply-To: <4C264019.6030408@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149791>
 
-On Sat, Jun 26, 2010 at 7:24 PM, Mahesh Vaidya <forvaidya@gmail.com> wrote:
-> How does receive-pack and pre-receive hook works ?
+* Ramsay Jones <ramsay@ramsay1.demon.co.uk> [100626 20:02]:
+> Really? I thought that the general scheme was something like:
 >
-> I Would like know where does Git saves whatever I am pushing before
-> exit 0 of this hook; Specifically how does it understand about
-> 'd6d147f432869037a7ac8bdca3a2d5bc0cdc1e9f' which is not part of
-> destination depot / repo.
+>     - LDFLAGS is for options which only affects the operation of
+>       the linker (e.g. -L).
+>     - CPPFLAGS is for options which only affects the operation of
+>       the C pre-processor (e.g. -I, -D, -U)
+>     - CFLAGS is for options which only affects the operation of
+>       the compiler proper.
 
-The objects that were sent are actually added to the destination
-repository, by creating one or more loose objects in the objects/
-directory, or a single new pack file in the objects/pack/ directory if
-more than 100 objects were sent.  These objects are in the repository,
-but they aren't actually reachable from any ref, so they are subject
-to garbage collection during a future `git gc`.  Once the objects are
-safely stored, the hooks are invoked... which means the hooks can
-access the objects, as they are already part of the repository.
+I think the problem are options like -g or -m64 and the like which
+you also want to give to the linker on some systems, so it is quite
+common and I'd say recommended to have the compiling stage get
+CPPFLAGS and CFLAGS and the linking stage getting CFLAGS and LDFLAGS
+(and link using the compiler, otherwise you might miss libraries anyway).
+I do not know if automake started with this, or if it is older.
 
-If pre-receive or update exits with a non-zero status, the objects
-stay around, but the references aren't updated.  By not updating the
-references, the objects aren't reachable, and the objects will be
-automatically removed during a future `git gc`.
+> Also, the last time I was forced to use automake (yuck), I noticed that
+> it passed CPPFLAGS to the linker; I consider this to be a bug in
+> automake. :-P
 
--- 
-Shawn.
+Huh? Never heared of that bug, it must be more than 15 years ago. Are
+you sure it was not CFLAGS it passed to the linker?
+
+	Bernhard R. Link
+
+No need to CC me, I'm subscribed...
