@@ -1,7 +1,7 @@
 From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: [PATCH v4 3/3] Don't expand CRLFs when normalizing text during merge
-Date: Sun, 27 Jun 2010 21:43:07 +0200
-Message-ID: <1f8eb89768d01fbd0624b740c6698cf333b9d3a0.1277667177.git.eyvind.bernhardsen@gmail.com>
+Subject: [PATCH v4 2/3] Try normalizing files to avoid delete/modify conflicts when merging
+Date: Sun, 27 Jun 2010 21:43:06 +0200
+Message-ID: <0497dd2d68e65e9d2ec1d40f82231557ff95c04c.1277667177.git.eyvind.bernhardsen@gmail.com>
 References: <cover.1277667177.git.eyvind.bernhardsen@gmail.com>
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Finn Arne Gangstad <finnag@pvv.org>,
@@ -13,37 +13,37 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OSxlL-00061C-O8
+	id 1OSxlM-00061C-7A
 	for gcvg-git-2@lo.gmane.org; Sun, 27 Jun 2010 21:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755604Ab0F0TnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 27 Jun 2010 15:43:20 -0400
-Received: from mail-ww0-f46.google.com ([74.125.82.46]:42701 "EHLO
-	mail-ww0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755315Ab0F0TnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755625Ab0F0TnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 27 Jun 2010 15:43:22 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62959 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755364Ab0F0TnQ (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 27 Jun 2010 15:43:16 -0400
-Received: by mail-ww0-f46.google.com with SMTP id 17so2162397wwi.19
-        for <git@vger.kernel.org>; Sun, 27 Jun 2010 12:43:15 -0700 (PDT)
+Received: by wyb38 with SMTP id 38so1306862wyb.19
+        for <git@vger.kernel.org>; Sun, 27 Jun 2010 12:43:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
-        bh=TRgj8v/vO/CanJYYBj3JIOgLdXRFrLQQT9OJCwl1Kb8=;
-        b=IUNZHLucYS+tVyDK1GbvZileYZJG5J53F0JMKo6GYfGfNyop6+3jdug3pCUdMryfY1
-         U6dseX8JmLbVj+w/slCQBLmVEZrjseA052Aobp0qW0K9QxjR9+3EbcM6Wq39t7adJeiI
-         OhLHHAy8htQqZ64j1hl8KqHHEXm2UWJeXQGwA=
+        bh=CKgDeeduPYM6sMMQlF5A9rAdEW+cQK44yfl3Qbzbdr4=;
+        b=hbnegjAO6VrCoUymVgdKkejXP6DIJ0d8fAZV9+OAvEZizq6Nk9NACjvmpb6ho0hebg
+         E7d+08GviyxG6nYU9IHLAvX9ey9+OIj2wTrxkQkwg2fkC9dm37YbHgvf31hOdja++rxK
+         eFsAOTlSzbz8AY3n9UKF/rHkaVSYQiZt/iG2w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=I5A6MGP6g5h0Pm5tUnP/ltsa63nEi1DQj2oInEMBkKUe+Vu/QAACUHP5XUscmLLBRq
-         mVZDNuMVE/KIxIb1ZkRZbfqtqIL1itFOZcmDqqpmJ18becKGkBXa/Tgfan9vrSoQAmjV
-         dadvM6fkjJBoKwOpha4dmKAcvyb8sTjaX3JPs=
-Received: by 10.227.144.132 with SMTP id z4mr2955383wbu.70.1277667795744;
-        Sun, 27 Jun 2010 12:43:15 -0700 (PDT)
+        b=T3UP1WDU/2gpLFHNGh+yppunBXGR3Y7+fuEaGtvAllcggW4cRCgKHDHmezFgR+e6vI
+         CzeLzqFbFfRtc0hJGa6JHZDyXmYtfoezr5g0iPCDO5pbvnnjpQE1x3TtrnGRvb0uV0Ss
+         AseItH9QDqMCfVYCoCqgeYAaysElBWybvuM7M=
+Received: by 10.216.160.145 with SMTP id u17mr7350287wek.18.1277667794660;
+        Sun, 27 Jun 2010 12:43:14 -0700 (PDT)
 Received: from localhost.localdomain (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id y39sm4411401weq.3.2010.06.27.12.43.14
+        by mx.google.com with ESMTPS id y39sm4411401weq.3.2010.06.27.12.43.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 27 Jun 2010 12:43:15 -0700 (PDT)
+        Sun, 27 Jun 2010 12:43:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.575.g383de
 In-Reply-To: <cover.1277667177.git.eyvind.bernhardsen@gmail.com>
 In-Reply-To: <cover.1277667177.git.eyvind.bernhardsen@gmail.com>
@@ -52,68 +52,96 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149804>
 
-Disable CRLF expansion when convert_to_working_tree() is called from
-normalize_buffer().  This improves performance when merging branches
-with conflicting line endings when core.eol=crlf or core.autocrlf=true
-by making the normalization act as if core.eol=lf.
+If a file is modified due to normalization on one branch, and deleted on
+another, a merge of the two branches will result in a delete/modify
+conflict for that file even if it is otherwise unchanged.
+
+Try to avoid the conflict by normalizing and comparing the "base" file
+and the modified file when their sha1s differ.  If they compare equal,
+the file is considered unmodified and is deleted.
 
 Signed-off-by: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
 ---
- convert.c |   27 ++++++++++++++++++++-------
- 1 files changed, 20 insertions(+), 7 deletions(-)
+ merge-recursive.c          |   44 ++++++++++++++++++++++++++++++++++++++++++--
+ t/t6038-merge-text-auto.sh |    2 +-
+ 2 files changed, 43 insertions(+), 3 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index 0203be8..01de9a8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -741,7 +741,9 @@ int convert_to_git(const char *path, const char *src, size_t len,
- 	return ret | ident_to_git(path, src, len, dst, ident);
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 206c103..f4f09a2 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1056,6 +1056,44 @@ static unsigned char *stage_sha(const unsigned char *sha, unsigned mode)
+ 	return (is_null_sha1(sha) || mode == 0) ? NULL: (unsigned char *)sha;
  }
  
--int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst)
-+static int convert_to_working_tree_internal(const char *path, const char *src,
-+					    size_t len, struct strbuf *dst,
-+					    int normalizing)
- {
- 	struct git_attr_check check[5];
- 	enum action action = CRLF_GUESS;
-@@ -767,18 +769,29 @@ int convert_to_working_tree(const char *path, const char *src, size_t len, struc
- 		src = dst->buf;
- 		len = dst->len;
- 	}
--	action = determine_action(action, eol_attr);
--	ret |= crlf_to_worktree(path, src, len, dst, action);
--	if (ret) {
--		src = dst->buf;
--		len = dst->len;
-+	/*
-+	 * CRLF conversion can be skipped if normalizing, unless there
-+	 * is a smudge filter.  The filter might expect CRLFs.
-+	 */
-+	if (filter || !normalizing) {
-+		action = determine_action(action, eol_attr);
-+		ret |= crlf_to_worktree(path, src, len, dst, action);
-+		if (ret) {
-+			src = dst->buf;
-+			len = dst->len;
-+		}
- 	}
- 	return ret | apply_filter(path, src, len, dst, filter);
- }
- 
-+int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst)
++static int read_sha1_strbuf(const unsigned char *sha, const char *path,
++			    struct strbuf *dst)
 +{
-+	return convert_to_working_tree_internal(path, src, len, dst, 0);
++	void *buf;
++	enum object_type type;
++	unsigned long size;
++	buf = read_sha1_file(sha, &type, &size);
++	if (!buf)
++		return 0;
++	if (type != OBJ_BLOB) {
++		free(buf);
++		return 0;
++	}
++	strbuf_attach(dst, buf, size, size + 1);
++	return 1;
 +}
 +
- int renormalize_buffer(const char *path, const char *src, size_t len, struct strbuf *dst)
- {
--	int ret = convert_to_working_tree(path, src, len, dst);
-+	int ret = convert_to_working_tree_internal(path, src, len, dst, 1);
- 	if (ret) {
- 		src = dst->buf;
- 		len = dst->len;
++static int normalized_eq(const unsigned char *a_sha,
++			 const unsigned char *b_sha,
++			 const char *path)
++{
++	struct strbuf a = STRBUF_INIT;
++	struct strbuf b = STRBUF_INIT;
++	int ret = 0;
++	if (a_sha && b_sha &&
++	    read_sha1_strbuf(a_sha, path, &a) &&
++	    read_sha1_strbuf(b_sha, path, &b)) {
++		/* Both files must be normalized, so we can't use || */
++		if ((renormalize_buffer(path, a.buf, a.len, &a) |
++		     renormalize_buffer(path, b.buf, b.len, &b)) &&
++		    (a.len == b.len))
++			ret = memcmp(a.buf, b.buf, a.len) == 0;
++	}
++	strbuf_release(&a);
++	strbuf_release(&b);
++	return ret;
++}
++
+ /* Per entry merge function */
+ static int process_entry(struct merge_options *o,
+ 			 const char *path, struct stage_data *entry)
+@@ -1075,8 +1113,10 @@ static int process_entry(struct merge_options *o,
+ 	if (o_sha && (!a_sha || !b_sha)) {
+ 		/* Case A: Deleted in one */
+ 		if ((!a_sha && !b_sha) ||
+-		    (sha_eq(a_sha, o_sha) && !b_sha) ||
+-		    (!a_sha && sha_eq(b_sha, o_sha))) {
++		    (!b_sha && sha_eq(a_sha, o_sha) ||
++		     normalized_eq(a_sha, o_sha, path)) ||
++		    (!a_sha && sha_eq(b_sha, o_sha) ||
++		     normalized_eq(b_sha, o_sha, path))) {
+ 			/* Deleted in both or deleted in one and
+ 			 * unchanged in the other */
+ 			if (a_sha)
+diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
+index 44e6003..5e45256 100755
+--- a/t/t6038-merge-text-auto.sh
++++ b/t/t6038-merge-text-auto.sh
+@@ -45,7 +45,7 @@ test_expect_success 'Check merging addition of text=auto' '
+ 	test_cmp file file.temp
+ '
+ 
+-test_expect_failure 'Test delete/normalize conflict' '
++test_expect_success 'Test delete/normalize conflict' '
+ 	git checkout side &&
+ 	git reset --hard initial &&
+ 	git rm file &&
 -- 
 1.7.1.575.g383de
