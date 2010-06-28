@@ -1,110 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] git-rev-parse.txt: Add more examples for caret and colon
-Date: Mon, 28 Jun 2010 21:01:07 +0200
-Message-ID: <d67020fd6ee18ac22cedaf482faf2b98e1cce1a9.1277750432.git.git@drmicha.warpmail.net>
-References: <4C28790C.2050301@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 28 21:01:15 2010
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: notify alternative to auto gc?
+Date: Mon, 28 Jun 2010 12:02:35 -0700
+Message-ID: <AANLkTinGs3Nu-2hFcCSeEZBTT8OhfOG-iu4CNjdG62uS@mail.gmail.com>
+References: <EA7717AE-DA72-48D7-A27E-C958896FD158@gmail.com> 
+	<AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com> 
+	<loom.20100628T205729-213@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 21:03:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTJZy-0001KV-TB
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 21:01:15 +0200
+	id 1OTJbh-0002Vo-Ev
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 21:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795Ab0F1TBJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 15:01:09 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55450 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750808Ab0F1TBI (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 15:01:08 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C9D6F10912D;
-	Mon, 28 Jun 2010 15:01:03 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 28 Jun 2010 15:01:03 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=y++xsiJknaqe5keIDaN5JfWnPZI=; b=NdT2sooD054lXFpJuAYUiEjO3KcYIgNnSZOweqGqbVf4pYEH4MVfUKgjUCZhvG2f2D2iDiqyKzyAZQ9QUXba0966OJwpTL0XLHWb1tUmyagN9WLEmn8benhikayndV9wk+v8nzh3E+Nto3kVkMg0y34IidxpInteCmUztr5aoZI=
-X-Sasl-enc: BucARVzboz0yQahpYA6rq/eh7zHbP/FmfLYFGre7O+zj 1277751656
-Received: from localhost (p54859FEF.dip0.t-ipconnect.de [84.133.159.239])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9BC8A4EDF11;
-	Mon, 28 Jun 2010 15:00:56 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.621.g01d76
-In-Reply-To: <4C28790C.2050301@drmicha.warpmail.net>
+	id S1751758Ab0F1TC5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 15:02:57 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:56081 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750808Ab0F1TC4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 15:02:56 -0400
+Received: by gyd12 with SMTP id 12so1046178gyd.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 12:02:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=imNBB1SWPza2Wl/+MmnHIeA3RkM5ebjuH3KGlSxpu6A=;
+        b=wid+ru+mnvlSUtGtX/JVgFA1l1wDK5dnGOqGwwBzZRVWVau4jsGBz1vHO0ikWXeTRo
+         IYJwAy8L6TP3hht1MVG0OYZ7ummQu552aAWpigRj/G0qpRIv/gQlisBf8+E+e598M3yE
+         hrxlXmI6WwR8pRiDOl9ASr8MVJoQGfIMvzu3Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=XqqrOmzmiUfpY8OGjOBw0KAodSph8oFnRamMjP4FiSEOM2RTmprJ8WGM0ux2C1feBj
+         76SaxFIhglLAWzzD7PWNkrGqPQJ2TBQEKozXYOO1cHPICbWBSfTkOdLuWTCLY6N2H6Ny
+         i9lMzpZc/uvrp2t3Bszgsg0XXilOuq4w2Mu00=
+Received: by 10.229.185.141 with SMTP id co13mr2995401qcb.241.1277751775479; 
+	Mon, 28 Jun 2010 12:02:55 -0700 (PDT)
+Received: by 10.229.222.72 with HTTP; Mon, 28 Jun 2010 12:02:35 -0700 (PDT)
+In-Reply-To: <loom.20100628T205729-213@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149852>
 
-Several items in the caret, colon and friends section contain examples
-already. Make sure they all come with examples, and that examples come
-early so that they serve as a visual guide, as well.
+On Mon, Jun 28, 2010 at 11:58, Eric Raible <raible@gmail.com> wrote:
+> Chris Packham <judge.packham <at> gmail.com> writes:
+>
+>> So a hook like
+>>
+>> =C2=A0 #! /bin/sh
+>> =C2=A0 echo "repository needs git gc"
+>> =C2=A0 exit 1
+>>
+>> Should cause the auto gc to be skipped.
+>
+> Except wouldn't you also need a mechanism
+> to allow an explicit gc to actually proceed?
+>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-This is on top of the ":path" patch to git-rev-parse.txt.
-
-I chose not to rewrap the paragraphs so that the diff is clearer,
-especially with --color-words.
-
-v3 now has the quoting style consistent at least locally (and the caret
-spelled out), although the existing text changes style midway.
-
-This is about as far as I will go with a "minimal change" patch trying
-to alleviate the :something confusion. I really think the whole part
-needs an overhaul not only to make it consistent, so bikeshedding before
-that is pointless ;)
-
- Documentation/git-rev-parse.txt |   15 ++++++++-------
- 1 files changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index d525e57..833a2a2 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -256,7 +256,7 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
-   the branch the ref is set to build on top of.  Missing ref defaults
-   to the current branch.
- 
--* A suffix '{caret}' to a revision parameter means the first parent of
-+* A suffix '{caret}' to a revision parameter (e.g. 'HEAD{caret}') means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-   'rev{caret}'
-   is equivalent to 'rev{caret}1').  As a special rule,
-@@ -282,23 +282,24 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
-   and dereference the tag recursively until a non-tag object is
-   found.
- 
--* A colon, followed by a slash, followed by a text: this names
-+* A colon, followed by a slash, followed by a text (e.g. `:/fix nasty bug`): this names
-   a commit whose commit message starts with the specified text.
-   This name returns the youngest matching commit which is
-   reachable from any ref.  If the commit message starts with a
-   '!', you have to repeat that;  the special sequence ':/!',
-   followed by something else than '!' is reserved for now.
- 
--* A suffix ':' followed by a path; this names the blob or tree
-+* A suffix ':' followed by a path (e.g. `HEAD:README`); this names the blob or tree
-   at the given path in the tree-ish object named by the part
--  before the colon. ":path" (with an empty part before the colon)
-+  before the colon.
-+  ':path' (with an empty part before the colon, e.g. `:README`)
-   is a special case of the syntax described next: content
-   recorded in the index at the given path.
- 
- * A colon, optionally followed by a stage number (0 to 3) and a
--  colon, followed by a path; this names a blob object in the
--  index at the given path.  Missing stage number (and the colon
--  that follows it) names a stage 0 entry. During a merge, stage
-+  colon, followed by a path (e.g. `:0:README`); this names a blob object in the
-+  index at the given path. Missing stage number (and the colon
-+  that follows it, e.g. `:README`) names a stage 0 entry. During a merge, stage
-   1 is the common ancestor, stage 2 is the target branch's version
-   (typically the current branch), and stage 3 is the version from
-   the branch being merged.
--- 
-1.7.1.621.g01d76
+Only if you're explicitly calling "git gc --auto" instead of "git gc".
+ That hook should only run for "git gc --auto".
