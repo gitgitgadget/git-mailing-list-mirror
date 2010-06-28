@@ -1,75 +1,61 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH/RFC] Documentation/git-gc.txt: add reference to githooks
-Date: Mon, 28 Jun 2010 14:43:21 -0400
-Message-ID: <4C28ED49.90906@xiplink.com>
-References: <AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com> <1277744834-7546-1-git-send-email-judge.packham@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: git-gui and gitk-git as submodules
+Date: Mon, 28 Jun 2010 20:58:49 +0200
+Message-ID: <4C28F0E9.8080903@web.de>
+References: <4C24C34B.20403@web.de> <7vlja3j7hu.fsf@alter.siamese.dyndns.org> <20100625190147.GA17493@burratino> <AANLkTimqXhGw5fAAgZsoDAI9s6kaIzcka9mbFEW8j05v@mail.gmail.com> <4C25E83E.4080905@web.de> <20100626183154.GA13581@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: spearce@spearce.org, git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 28 20:43:38 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andy Parkins <andyparkins@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 20:59:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTJIo-0006eb-IY
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 20:43:30 +0200
+	id 1OTJXw-0008M4-Ir
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 20:59:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476Ab0F1SnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 14:43:25 -0400
-Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:45577 "EHLO
-	smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808Ab0F1SnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 14:43:24 -0400
-Received: from relay25.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay25.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 0D7461B400F;
-	Mon, 28 Jun 2010 14:43:22 -0400 (EDT)
-Received: by relay25.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D2CB41B401F;
-	Mon, 28 Jun 2010 14:43:21 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <1277744834-7546-1-git-send-email-judge.packham@gmail.com>
+	id S1753146Ab0F1S6x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 14:58:53 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:57966 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355Ab0F1S6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 14:58:52 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 8D00315890432;
+	Mon, 28 Jun 2010 20:58:50 +0200 (CEST)
+Received: from [80.128.76.242] (helo=[192.168.0.214])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1OTJXe-0005CT-00; Mon, 28 Jun 2010 20:58:50 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
+In-Reply-To: <20100626183154.GA13581@burratino>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX185Z10yIJRmH7XsXxf04ZCfRxUhJWLbeJtkaUna
+	7qIKOV2ciIR5h67cJRurpb0yaNdmZdXm7cjoWOwLob8RYROk94
+	PqQPgL31dyQDNCV/m+IA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149848>
 
-How about also adding a templates/hooks--pre-auto-gc.sample file?
+Am 26.06.2010 20:31, schrieb Jonathan Nieder:
+> For the latter, maybe it would make sense to introduce =E2=80=98git c=
+heckout
+> --recursive=E2=80=99 which runs =E2=80=98submodule update --init --re=
+cursive=E2=80=99 after
+> checkout.  IMHO, in git 2.0 this even ought to be made the default.
+> One could use --no-recursive to access the more flexible traditional
+> behavior.
 
-		M.
-
-
-On 10-06-28 01:07 PM, Chris Packham wrote:
-> This advertises the existence of the 'pre-auto-gc' hook and adds a cross
-> reference to where the hook is documented.
-> 
-> Signed-off-by: Chris Packham <judge.packham@gmail.com>
-> ---
-> I had to go fishing in the code to find out about the pre-auto-gc hook. From
-> reading the git-gc man page it wasn't obvious to me that there would be a hook
-> for 'git gc --auto'. The relevant config variables are mentioned so it seems
-> logical to mention the hooks also. The only precedent I found for this was in
-> the git-commit man page which has a section listing the hooks that are
-> available.
-> 
->  Documentation/git-gc.txt |    5 +++++
->  1 files changed, 5 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-> index a9e0882..a514c52 100644
-> --- a/Documentation/git-gc.txt
-> +++ b/Documentation/git-gc.txt
-> @@ -137,6 +137,11 @@ If you are expecting some objects to be collected and they aren't, check
->  all of those locations and decide whether it makes sense in your case to
->  remove those references.
->  
-> +HOOKS
-> +-----
-> +This command can run `pre-auto-gc` hook.  See linkgit:githooks[5] for more
-> +information.
-> +
->  SEE ALSO
->  --------
->  linkgit:git-prune[1]
+Yup, I am working on that (I did post a WIP patch some time ago where
+I added a '--ignore-submodules' option, but since then I changed my
+mind on the name and now too think that '--[no-]recursive' is a much
+better choice).
