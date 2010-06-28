@@ -1,135 +1,81 @@
-From: Shantanu Pavgi <pavgi@uab.edu>
-Subject: Re: git access using SSL certificates
-Date: Mon, 28 Jun 2010 15:23:30 -0500
-Message-ID: <16FCDB06-9C82-4CBF-BD25-A10BD3E829DE@uab.edu>
-References: <CB7586D8-2C18-4BE9-9B32-3D02AA5F37ED@uab.edu>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 28 22:23:39 2010
+From: Erez Zilber <erezzi.list@gmail.com>
+Subject: Re: git log and cherry-picks
+Date: Mon, 28 Jun 2010 23:25:07 +0300
+Message-ID: <AANLkTinSFdB28QpfcqAuVCFzho0P_H_MG6_i2ODKiWuD@mail.gmail.com>
+References: <AANLkTil6-rd5y9xcTVz4kJ4O2jL9ZdXYo1JrgYA3sM6N@mail.gmail.com>
+	<4C28F300.1060506@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Jun 28 22:25:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTKri-0003ji-Rj
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 22:23:39 +0200
+	id 1OTKtM-0004lM-DG
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 22:25:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754411Ab0F1UXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 16:23:32 -0400
-Received: from uabexht2.ad.uab.edu ([138.26.5.102]:31887 "EHLO
-	UABEXHT2.ad.uab.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752387Ab0F1UXc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 16:23:32 -0400
-Received: from [10.0.0.23] (138.26.125.8) by relay.ad.uab.edu (138.26.5.102)
- with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 28 Jun 2010 15:23:30
- -0500
-In-Reply-To: <CB7586D8-2C18-4BE9-9B32-3D02AA5F37ED@uab.edu>
-X-Mailer: Apple Mail (2.1078)
+	id S1754618Ab0F1UZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jun 2010 16:25:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:65486 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751479Ab0F1UZM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 16:25:12 -0400
+Received: by bwz1 with SMTP id 1so376848bwz.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 13:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=5g8i2TY/7PUwTRrJmVFqS9EP+gP+z62y0Tw5KQIAvzk=;
+        b=F0fdyntKIYb6Gy83Nu4OD58T2VXgryGf/DIzcM+7n2cS63oRNcSeL+hbxpzmD5lfPZ
+         D+VfAPrqyNYykEbeg2v3bSqJ0eb2xkcko5kV99vviW6rwSKEhww+8V4oW+FueBJCy/Y/
+         VY1yuJiVpxCJBKWkGXJawHzFkXFu4Ogi2KQwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=McK4NBlC3pLvA6G9cLpPFqJcqJNWd7IR6uuyZZF2Q5nBwl45hM9t/sN/9Vo0/92A95
+         EF0z73lvQoM4Z/DvGoQqQKV6RWxjiNY6zB+apyVvfi3yRljf/rLkZetGUYcogwM6bGGz
+         GGMDrxDI6Vq3/s+DCUXUmvTpYfRPx12isPz4U=
+Received: by 10.204.82.37 with SMTP id z37mr2842393bkk.110.1277756707316; Mon, 
+	28 Jun 2010 13:25:07 -0700 (PDT)
+Received: by 10.204.68.4 with HTTP; Mon, 28 Jun 2010 13:25:07 -0700 (PDT)
+In-Reply-To: <4C28F300.1060506@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149857>
 
+On Mon, Jun 28, 2010 at 10:07 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Erez Zilber venit, vidit, dixit 28.06.2010 18:02:
+>> Hi,
+>>
+>> I saw that I can run git log with '--cherry-pick'. With this, if I run
+>> "git log --cherry-pick branch_a..branch_b", it doesn't show
+>> differences that are caused by cherry picks.
+>>
+>> My question is: sometimes, cherry picking from branch_a to branch_b is
+>> not immediate, and I need to adapt the patch that was committed on
+>> branch_a to apply on branch_b. In other cases, git is able to apply
+>> the patch on branch_b automatically (e.g. if there's only a line
+>> offset). In such cases, will "git log --cherry-pick" ignore these
+>> cherry-picks like it ignores cherry-picks that were applied without
+>> any problem?
+>
+> With --cherry-pick, log omits those commits whose associated patch has
+> the same patch-id (see "git patch-id").
+>
+> Michael
+>
 
-Forgot to mention version info in my earlier email: 
-Server/Public repo: CentOS 5.4 with Git 1.7.1 installed from source 
-Client in earlier mail: Mac OS X 10.6 Git 1.6.5.2 
+Is there another way to get over this (a commit that was cherry-picked
+from branch_a to branch_b and had to be changed to be applied on
+branch_b)?
 
-On Mac  git-push: 
-{{{
-mercury:fifa2010 shantanu$ git push --verbose
-Pushing to https://condor-node2.lab.ac.uab.edu/git/fifa2010
-error: Cannot access URL https://condor-node2.lab.ac.uab.edu/git/fifa2010/, return code 52
-error: failed to push some refs to 'https://condor-node2.lab.ac.uab.edu/git/fifa2010'
-}}}
-
-On Debian with Git 1.5.6.5:
-git-push
-{{{
-atlab@debian:~/fifa2010$ git push
-error: Cannot access URL https://condor-node2.lab.ac.uab.edu/git/fifa2010/, return code 52
-error: failed to push some refs to 'https://condor-node2.lab.ac.uab.edu/git/fifa2010'
-}}}
-
-On Debian with Git 1.5.6.5: 
-git-pull 
-{{{
-atlab@debian:~/fifa2010$ git pull origin master
-error: GnuTLS recv error (-12): A TLS fatal alert has been received.
-fatal: Couldn't find remote ref master
-}}}
-
-It works on the same server system (CentOS 5.4 Git 1.7.1) using SSL certificates though.   
-
-Any help/suggestions?  
-
---
 Thanks,
-Shantanu. 
- 
-
-On Jun 28, 2010, at 9:54 AM, Shantanu Pavgi wrote:
-
-> 
-> Hi,
-> 
-> I have configured a bare Git repository over HTTPS and client needs to have a SSL certificate-key to access the repository. I am able to access this repository using Firefox by loading client certificate in the Firefox, but it is not working with git command line client. 
-> 
-> I tried setting http.sslCert and http.sslKey configuration options, but it is not working. Following were steps in accessing the repository. Am I missing something in my configuration? Any pointers on how to share git using SSL certificates would be really helpful. 
-> 
-> Thanks,
-> Shantanu. 
-> 
-> 
-> * Try git-clone using HTTPS without client certs 
-> {{{
-> mercury:tempgit-ssh2 shantanu$ git clone https://condor-node2.lab.ac.uab.edu/git/fifa2010 --verbose
-> Initialized empty Git repository in /Users/shantanu/tempgit-ssh2/fifa2010/.git/
-> error: Empty reply from server while accessing https://condor-node2.lab.ac.uab.edu/git/fifa2010/info/refs
-> 
-> fatal: HTTP request failed
-> }}}
-> 
-> * Try git-clone using ssh
-> {{{
-> mercury:tempgit-ssh2 shantanu$ git clone ssh://ssp@condor-node2.lab.ac.uab.edu/srv/gitpubrepos/fifa2010 --verbose
-> Initialized empty Git repository in /Users/shantanu/tempgit-ssh2/fifa2010/.git/
-> ssp@condor-node2.lab.ac.uab.edu's password: 
-> remote: Counting objects: 7, done.
-> remote: Compressing objects: 100% (4/4), done.
-> remote: Total 7 (delta 0), reused 0 (delta 0)
-> Receiving objects: 100% (7/7), done.
-> }}}
-> 
-> * Change git remote url 
-> {{{
-> mercury:fifa2010 shantanu$ git remote rm origin
-> mercury:fifa2010 shantanu$ git remote add origin https://condor-node2.lab.ac.uab.edu/git/fifa2010 
-> }}}
-> 
-> * Try git-pull with HTTPS without certs 
-> {{{
-> mercury:fifa2010 shantanu$ git pull
-> error: Empty reply from server while accessing https://condor-node2.lab.ac.uab.edu/git/fifa2010/info/refs
-> 
-> fatal: HTTP request failed
-> }}}
-> 
-> * Try git-pull using certificates 
-> {{{
-> mercury:fifa2010 shantanu$ git config http.sslCert ~/Desktop/certs/usercerts/bob-svn/ssp.crt 
-> mercury:fifa2010 shantanu$ git config http.sslKey ~/Desktop/certs/usercerts/bob-svn/ssp.key 
-> mercury:fifa2010 shantanu$ git pull
-> error: Empty reply from server while accessing https://condor-node2.lab.ac.uab.edu/git/fifa2010/info/refs
-> 
-> fatal: HTTP request failed
-> }}}
-> 
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Erez
