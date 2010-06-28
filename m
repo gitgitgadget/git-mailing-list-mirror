@@ -1,104 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] git-rev-parse.txt: Add more examples for caret and colon
-Date: Mon, 28 Jun 2010 10:18:09 +0200
-Message-ID: <97667b60355ab334a390985cae56a28f7a622eb3.1277712897.git.git@drmicha.warpmail.net>
-References: <7vocewff4b.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 28 10:19:08 2010
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] string-list.h: Add STRING_LIST_INIT macro and make use of 
+	it.
+Date: Mon, 28 Jun 2010 10:29:49 +0200
+Message-ID: <AANLkTim14fh1RRSoYFK5uIqi8OrkB2zHahInDpO80gws@mail.gmail.com>
+References: <c4c9797a4cbea89f1f0fb0501e6a03912b598b17.1277595284.git.tfransosi@gmail.com>
+	<de7ad1688930aa47515736885b7d8438118e7aa1.1277595923.git.tfransosi@gmail.com>
+	<7vbpawifwa.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, srabbelier@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 10:30:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OT9YU-00018C-9X
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 10:19:02 +0200
+	id 1OT9j5-0006BJ-3o
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 10:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755303Ab0F1ITA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 04:19:00 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47546 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755267Ab0F1IS6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 04:18:58 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 37A70109484;
-	Mon, 28 Jun 2010 04:18:57 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 28 Jun 2010 04:18:57 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=jUBuT5RE2xbkD/HRAuR8S56KMFo=; b=k4YrAczF1QwA0uC5awO6KTMl+vXOMTVO4fqZ54LikgkRITOJMkChl0RFW77eKqTfg3lZifcsrK05MLM+xV+Gx3EZgdqHlJzhqML0imtKBxF/EcSAlrG3mSDPoNl1zTlByElEXGyTPuIAmjNKa5wY80NsLKLc+Afi+tgmhal0Ln0=
-X-Sasl-enc: LDamXmZ1Y8yWxBD+f6jGFj9skmYaeGry/cbs6fDFSHWy 1277713133
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 31B9C68FC5;
-	Mon, 28 Jun 2010 04:18:53 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.621.g01d76
-In-Reply-To: <7vocewff4b.fsf@alter.siamese.dyndns.org>
+	id S1755348Ab0F1I3v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 04:29:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:52865 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755000Ab0F1I3u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 04:29:50 -0400
+Received: by gwaa18 with SMTP id a18so1887076gwa.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 01:29:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=C9IYCoBPsmktjG8JSaUQiLxpOR2UO6SXXASnDUhIXns=;
+        b=K8ft9XppNH7VieXzuMWP/F1fkzFZta8lTlGDg6noK40p6SCiiHRUbtPIMhz9l8mK9U
+         tH84+/AdwCm537HMm2UMo+r95ZgociFJdGELnD1wiLJ4Vh1By+tZpROqoZQ42i4vdMmx
+         2vONhj9wwwhxo2P9aug7vW56jZKWpcww9niuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VI+GrQLtqO3VTAA6786tRn5Xh62Z2/NIVVg1Nkg92s8ELj9JADvMdsNcKRnq08fSct
+         fAixLY1dKioAifOYhvA1ZilwslrYXQsW40FhUT+P2WzuHh3i+UMgZKTtTPvMlGRwK6wK
+         sQ5A2Te/2gwcPPsJNtxJ3g7q8r0ZR5Xyw4j1o=
+Received: by 10.100.46.1 with SMTP id t1mr5963363ant.23.1277713789510; Mon, 28 
+	Jun 2010 01:29:49 -0700 (PDT)
+Received: by 10.101.49.20 with HTTP; Mon, 28 Jun 2010 01:29:49 -0700 (PDT)
+In-Reply-To: <7vbpawifwa.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149821>
 
-Several items in the caret, colon and friends section contain examples
-already. Make sure they all come with examples, and that examples come
-early so that they serve as a visual guide, as well.
+On Sun, Jun 27, 2010 at 18:44, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> I think you need the attached on top to be more complete.
+>
+> But I wonder if this is worth it (not this "more complete", but your
+> patch). =C2=A0We convert 16 or so instances of initialization for "no=
+ strdup"
+> list, but there are about the same number of "strdup" instances still
+> spelled out:
+>
+> =C2=A0 =C2=A0$ git grep -e 'struct string_list [^ ]* =3D {.*'
+> =C2=A0 =C2=A0$ git grep -e 'struct string_list [^ ]* =3D {.*1'
+>
+> Wouldn't it be more sensible to use this instead?
+>
+> =C2=A0 =C2=A0#define STRING_LIST_INIT(pleasedup) { NULL, 0, 0, (pleas=
+edup) }
+>
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-This is on top of the ":path" patch to git-rev-parse.txt.
-
-I chose not to rewrap the paragraphs so that the diff is clearer,
-especially with --color-words.
-I don't know what the best patch workflow guideline is here. Maybe
-rewrapping a v2?
-
- Documentation/git-rev-parse.txt |   15 ++++++++-------
- 1 files changed, 8 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-index d525e57..da5cdf4 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -256,7 +256,7 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
-   the branch the ref is set to build on top of.  Missing ref defaults
-   to the current branch.
- 
--* A suffix '{caret}' to a revision parameter means the first parent of
-+* A suffix '{caret}' to a revision parameter (e.g. "HEAD^") means the first parent of
-   that commit object.  '{caret}<n>' means the <n>th parent (i.e.
-   'rev{caret}'
-   is equivalent to 'rev{caret}1').  As a special rule,
-@@ -282,23 +282,24 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
-   and dereference the tag recursively until a non-tag object is
-   found.
- 
--* A colon, followed by a slash, followed by a text: this names
-+* A colon, followed by a slash, followed by a text (e.g. ":/fix nasty bug"): this names
-   a commit whose commit message starts with the specified text.
-   This name returns the youngest matching commit which is
-   reachable from any ref.  If the commit message starts with a
-   '!', you have to repeat that;  the special sequence ':/!',
-   followed by something else than '!' is reserved for now.
- 
--* A suffix ':' followed by a path; this names the blob or tree
-+* A suffix ':' followed by a path (e.g. "HEAD:README"); this names the blob or tree
-   at the given path in the tree-ish object named by the part
--  before the colon. ":path" (with an empty part before the colon)
-+  before the colon.
-+  ":path" (with an empty part before the colon, e.g. ":README")
-   is a special case of the syntax described next: content
-   recorded in the index at the given path.
- 
- * A colon, optionally followed by a stage number (0 to 3) and a
--  colon, followed by a path; this names a blob object in the
--  index at the given path.  Missing stage number (and the colon
--  that follows it) names a stage 0 entry. During a merge, stage
-+  colon, followed by a path (e.g. ":0:README"); this names a blob object in the
-+  index at the given path. Missing stage number (and the colon
-+  that follows it, e.g. ":README") names a stage 0 entry. During a merge, stage
-   1 is the common ancestor, stage 2 is the target branch's version
-   (typically the current branch), and stage 3 is the version from
-   the branch being merged.
--- 
-1.7.1.621.g01d76
+This begs for using strdup(string-to-dup) in the macro argument, which
+will not compile with ancient compilers which don't allow code in an
+initializer.
