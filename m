@@ -1,85 +1,90 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: [PATCH/RFC] Documentation/git-gc.txt: add reference to githooks
-Date: Mon, 28 Jun 2010 10:07:14 -0700
-Message-ID: <1277744834-7546-1-git-send-email-judge.packham@gmail.com>
-References: <AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com>
-Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Mon Jun 28 19:09:54 2010
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: origin/branchname and tracking branch pointing to different 
+	commits?
+Date: Mon, 28 Jun 2010 13:43:22 -0400
+Message-ID: <AANLkTik7bleuzqnMWMJoWljQ5zD0YbwBsFjZT5IzkV0q@mail.gmail.com>
+References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
+	<201001071813.01187.trast@student.ethz.ch>
+	<76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
+	<76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
+	<7v7hrtzbau.fsf@alter.siamese.dyndns.org>
+	<AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
+	<20100608183007.GA31293@coredump.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 28 19:43:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTHqD-0007wI-TG
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 19:09:54 +0200
+	id 1OTIMm-0007VG-7B
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 19:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751771Ab0F1RJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 13:09:45 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:55923 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751313Ab0F1RJo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 13:09:44 -0400
-Received: by pvg2 with SMTP id 2so2045194pvg.19
-        for <git@vger.kernel.org>; Mon, 28 Jun 2010 10:09:44 -0700 (PDT)
+	id S1752345Ab0F1Rn1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 13:43:27 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:40290 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751491Ab0F1Rn0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 13:43:26 -0400
+Received: by gxk23 with SMTP id 23so206359gxk.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 10:43:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=AC2LlWzjGSMyEOA+yEXVBDVgGloIrD0dlVS4pBTdtw0=;
-        b=mB1pQ81uiYAQ4e6Ou7LBpfvV6Nla3oOCu9YOQ0FJ2ESwBOoaxAMVLQsHvVcEdncQrJ
-         e7TtJ9SjpMC+3sN0xiHnyeDH9HzwqFJgJ1/WpQb8VqqFviKKg8VLIHICTxLHfRSWciV9
-         Lu5kPXSk50+oepBtSkI9vO3nNGzOIrdMfPTj0=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jcvDAtTfgrEgRcJZ2zdFIdhECPbk56S5bRkFH6JawQ8=;
+        b=fcCX+vFJAfLrk9d37/tWj084ZVVgH3JhY0heQARdLrpKP3DQUP8JpKVgaBah2vh7gY
+         H25ZDuwE5iE2DNPGwNUHxWeZMunQ+E60Oj6BpywYksJhkl1zBjlgeI2oWNVmKPo9crq+
+         yJlcG/Z09m8FtzyFlqaa841forUoOkUcI04sY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YLqhDv6CaJYsjdmWMpFcld8+0JoeaxA/OMb2gO354lBTbgLjD2SgXj2fekoELTnlNf
-         4PrSjeiFYnWHsyNNlFpoACR4tiuuZHv16tOIvfmTSHdB67H8oQr19JGSWPotgh5zqJW8
-         Q0jNm/TUHQo/+RI3skqGFeZYq0D1EYt7dQ99c=
-Received: by 10.115.81.31 with SMTP id i31mr5734247wal.140.1277744983781;
-        Mon, 28 Jun 2010 10:09:43 -0700 (PDT)
-Received: from localhost.localdomain (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id s29sm38245729wak.14.2010.06.28.10.09.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 28 Jun 2010 10:09:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TwY3MpC+u1vupiHnEVdF57s4GTeJC1+YT2Ofi4ig7FWwBGPHFXvpkXi2WLRgS2HLmP
+         Cd3GfRBhbRRN93oL1XR8jOvLxwjSRnFJUcjWrvFcdydY5Arz91gPNYiBRsOmX8SCFE6g
+         UZZcS0h8AXUBdLvWztRojKXlXRUAG06oy5SHU=
+Received: by 10.229.250.146 with SMTP id mo18mr2860716qcb.239.1277747002710; 
+	Mon, 28 Jun 2010 10:43:22 -0700 (PDT)
+Received: by 10.229.190.21 with HTTP; Mon, 28 Jun 2010 10:43:22 -0700 (PDT)
+In-Reply-To: <20100608183007.GA31293@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149843>
 
-This advertises the existence of the 'pre-auto-gc' hook and adds a cross
-reference to where the hook is documented.
+On Tue, Jun 8, 2010 at 2:30 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Jun 08, 2010 at 12:27:14PM -0400, Eugene Sajine wrote:
+>
+>> I'm coming back to this topic as i see some confusion growing about
+>> such behavior. Every now and then users come across this problem and
+>> they expect pull to *really* behave as fetch and merge so it will
+>> cause the update of remote/branchname branch. And it is kind of
+>> difficult to justify why they have to do git fetch after pull...
+>>
+>> Can somebody, please, take a look?
+>
+> This was discussed a while back:
+>
+> =C2=A0http://thread.gmane.org/gmane.comp.version-control.git/127163
+>
+> and I even posted a patch, but never followed up (I think mostly just
+> due to being busy).. There is some concern about unexpected ref updat=
+es,
+> though.
+>
+> -Peff
+>
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
----
-I had to go fishing in the code to find out about the pre-auto-gc hook. From
-reading the git-gc man page it wasn't obvious to me that there would be a hook
-for 'git gc --auto'. The relevant config variables are mentioned so it seems
-logical to mention the hooks also. The only precedent I found for this was in
-the git-commit man page which has a section listing the hooks that are
-available.
+Jeff, Junio
 
- Documentation/git-gc.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+Could you, please, advise if there is any resolution on the patch?
 
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index a9e0882..a514c52 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -137,6 +137,11 @@ If you are expecting some objects to be collected and they aren't, check
- all of those locations and decide whether it makes sense in your case to
- remove those references.
- 
-+HOOKS
-+-----
-+This command can run `pre-auto-gc` hook.  See linkgit:githooks[5] for more
-+information.
-+
- SEE ALSO
- --------
- linkgit:git-prune[1]
--- 
-1.7.1
+Thanks a lot,
+Eugene
