@@ -1,88 +1,98 @@
-From: Shantanu Pavgi <pavgi@uab.edu>
-Subject: git access using SSL certificates
-Date: Mon, 28 Jun 2010 09:54:44 -0500
-Message-ID: <CB7586D8-2C18-4BE9-9B32-3D02AA5F37ED@uab.edu>
-Mime-Version: 1.0 (Apple Message framework v1078)
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 28 17:00:22 2010
+From: Jacob Helwig <jacob.helwig@gmail.com>
+Subject: Re: [PATCH] Add known breakage for 'git notes copy'
+Date: Mon, 28 Jun 2010 08:44:44 -0700
+Message-ID: <AANLkTilitBVovB0kzSmGGE0TIQB_u1M9nIESIRvkmigh@mail.gmail.com>
+References: <41768aafce7a581e8b601e70826ce77381458a23.1277708369.git.bert.wesarg@googlemail.com> 
+	<20100628085907.GA14014@coredump.intra.peff.net> <AANLkTimap7ziJ-NuAV6h7bGP3cX2cDY7rqEbgJ2unQSP@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Johan Herland <johan@herland.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 17:45:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTFoo-000210-Vz
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 17:00:19 +0200
+	id 1OTGWI-0003TQ-Ky
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 17:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753681Ab0F1PAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 11:00:12 -0400
-Received: from uabexht3.ad.uab.edu ([138.26.5.103]:57111 "EHLO
-	UABEXHT3.ad.uab.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751193Ab0F1PAL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 11:00:11 -0400
-X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jun 2010 11:00:11 EDT
-Received: from [10.0.0.23] (138.26.125.8) by relay.ad.uab.edu (138.26.5.103)
- with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 28 Jun 2010 09:54:45
- -0500
-X-Mailer: Apple Mail (2.1078)
+	id S1754491Ab0F1PpI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 11:45:08 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:57377 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753870Ab0F1PpG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 11:45:06 -0400
+Received: by gxk23 with SMTP id 23so146239gxk.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 08:45:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mWkTzqLQ/hjq2Lgrt/ItA2w45LzxrMpJ1yZ789iq1gE=;
+        b=KAKMcBvY7NVxlwT6tbBhrZAS2joue8Hnzm3xvOkJAePf2u4qFg7CUhVNGR1CyTIRrI
+         5A3C1GkZBL7L2Cx7pM9BujMk1Y/8d0mYtL8za2SopLN76B0feRMhYtmXZ5IDixIC66rl
+         i3QDBGSpTdi9CKIH5qncxRykQyhGqetxfbEPA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UiejZY3OoNow4I0M8015UKY8zVHT7iKtWD1PIjIVR6gLGmj2DTMsDHnBfqcwdA/o8Q
+         GV6ENH6+S0pUP+BZZ7+96cXTdHL4v6amU2TI014kijWHdrq+h2pouBKpINEcj/DlNUJ6
+         cfB8JrswzI+3GTi3NSN+Lv85Ett9cmEVQas4Y=
+Received: by 10.229.214.10 with SMTP id gy10mr2788218qcb.195.1277739904321; 
+	Mon, 28 Jun 2010 08:45:04 -0700 (PDT)
+Received: by 10.229.222.72 with HTTP; Mon, 28 Jun 2010 08:44:44 -0700 (PDT)
+In-Reply-To: <AANLkTimap7ziJ-NuAV6h7bGP3cX2cDY7rqEbgJ2unQSP@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149832>
 
+On Mon, Jun 28, 2010 at 02:12, Bert Wesarg <bert.wesarg@googlemail.com>=
+ wrote:
+> On Mon, Jun 28, 2010 at 10:59, Jeff King <peff@peff.net> wrote:
+>> On Mon, Jun 28, 2010 at 09:01:57AM +0200, Bert Wesarg wrote:
+>>
+>>> 'git notes copy' dumps core when no arguments are given.
+>>
+>> How about:
+>
+> Thanks.
+>
+> Tested-by: Bert Wesarg <Bert.Wesarg@googlemail.com>
+>
+> FWIW, here is the correct and updated test for this:
+>
+> -- >8 --
+> Subject: [PATCH] notes: add test for git-notes copy with too few argu=
+ments
+>
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> ---
+> =C2=A0t/t3301-notes.sh | =C2=A0 =C2=A05 +++++
+> =C2=A01 files changed, 5 insertions(+), 0 deletions(-)
+>
+> diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+> index 64f32ad..dcd962a 100755 t/t3301-notes.sh
+> --- a/t/t3301-notes.sh
+> +++ b/t/t3301-notes.sh
+> @@ -1044,4 +1044,9 @@ test_expect_success 'GIT_NOTES_REWRITE_REF
+> overrides config' '
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git log -1 > output &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_cmp expect output
+> =C2=A0'
+> +
+> +test_expect_success 'git notes copy does not segfaults with too few
+> arguments' '
+> + =C2=A0 =C2=A0 =C2=A0 test_must_fail git notes copy
+> +'
+> +
+> =C2=A0test_done
+>
 
-Hi,
-
-I have configured a bare Git repository over HTTPS and client needs to have a SSL certificate-key to access the repository. I am able to access this repository using Firefox by loading client certificate in the Firefox, but it is not working with git command line client. 
-
-I tried setting http.sslCert and http.sslKey configuration options, but it is not working. Following were steps in accessing the repository. Am I missing something in my configuration? Any pointers on how to share git using SSL certificates would be really helpful. 
-
-Thanks,
-Shantanu. 
-
-
-* Try git-clone using HTTPS without client certs 
-{{{
-mercury:tempgit-ssh2 shantanu$ git clone https://condor-node2.lab.ac.uab.edu/git/fifa2010 --verbose
-Initialized empty Git repository in /Users/shantanu/tempgit-ssh2/fifa2010/.git/
-error: Empty reply from server while accessing https://condor-node2.lab.ac.uab.edu/git/fifa2010/info/refs
-
-fatal: HTTP request failed
-}}}
-
-* Try git-clone using ssh
-{{{
-mercury:tempgit-ssh2 shantanu$ git clone ssh://ssp@condor-node2.lab.ac.uab.edu/srv/gitpubrepos/fifa2010 --verbose
-Initialized empty Git repository in /Users/shantanu/tempgit-ssh2/fifa2010/.git/
-ssp@condor-node2.lab.ac.uab.edu's password: 
-remote: Counting objects: 7, done.
-remote: Compressing objects: 100% (4/4), done.
-remote: Total 7 (delta 0), reused 0 (delta 0)
-Receiving objects: 100% (7/7), done.
-}}}
-
-* Change git remote url 
-{{{
-mercury:fifa2010 shantanu$ git remote rm origin
-mercury:fifa2010 shantanu$ git remote add origin https://condor-node2.lab.ac.uab.edu/git/fifa2010 
-}}}
-
-* Try git-pull with HTTPS without certs 
-{{{
-mercury:fifa2010 shantanu$ git pull
-error: Empty reply from server while accessing https://condor-node2.lab.ac.uab.edu/git/fifa2010/info/refs
-
-fatal: HTTP request failed
-}}}
-
-* Try git-pull using certificates 
-{{{
-mercury:fifa2010 shantanu$ git config http.sslCert ~/Desktop/certs/usercerts/bob-svn/ssp.crt 
-mercury:fifa2010 shantanu$ git config http.sslKey ~/Desktop/certs/usercerts/bob-svn/ssp.key 
-mercury:fifa2010 shantanu$ git pull
-error: Empty reply from server while accessing https://condor-node2.lab.ac.uab.edu/git/fifa2010/info/refs
-
-fatal: HTTP request failed
-}}}
+Minor nit: s/does not segfaults/does not segfault/
