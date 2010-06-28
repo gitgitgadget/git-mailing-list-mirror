@@ -1,139 +1,96 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: [PATCH] git-rev-parse.txt: Add more examples for caret and colon
-Date: Mon, 28 Jun 2010 12:03:43 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC74483CEF65C@xmail3.se.axis.com>
-References: <7vocewff4b.fsf@alter.siamese.dyndns.org>
- <97667b60355ab334a390985cae56a28f7a622eb3.1277712897.git.git@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/4] git --paginate: do not commit pager choice too
+ early
+Date: Mon, 28 Jun 2010 05:13:35 -0500
+Message-ID: <20100628101335.GA5007@burratino>
+References: <20100626192203.GA19973@burratino>
+ <20100628094033.GA18629@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jun 28 12:04:36 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 28 12:14:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTBCa-00050D-5i
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 12:04:32 +0200
+	id 1OTBLl-0000Po-22
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 12:14:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448Ab0F1KE0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 06:04:26 -0400
-Received: from miranda.se.axis.com ([193.13.178.8]:45744 "EHLO
-	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751199Ab0F1KE0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 06:04:26 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o5SA3sEN020115;
-	Mon, 28 Jun 2010 12:03:54 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Mon, 28 Jun 2010 12:03:53 +0200
-Thread-Topic: [PATCH] git-rev-parse.txt: Add more examples for caret and
- colon
-Thread-Index: AcsWmrbg44qHqxN5RTew0eE+kQry4wACZq1g
-In-Reply-To: <97667b60355ab334a390985cae56a28f7a622eb3.1277712897.git.git@drmicha.warpmail.net>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1751967Ab0F1KN6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 06:13:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40876 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751182Ab0F1KN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 06:13:57 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 39so36864iwn.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 03:13:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=00IjiWqY5FodMYZ8LXQjGLAfdy/XF9U/gtTnop3N9tM=;
+        b=Q9vUgJQI7zsJQ37vTDRn8T69w4l6Uz8KUUovpQ0gZb1Q3fqmtp/pDSns0Ht+TQLhue
+         RMPKaVTzviXuEarI+uXUkrrAkCIpAt3qXHhaHyaRsnKoBcMnGGml3giKOeCxjN9ljNd6
+         igjuE9Y2P8wep7SbB5OGUPMixKK2J3IR/0U+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=EUdb5u48C1yg05bw1DmsOCB+yJ8/4ctmgB/+nTiPLJp6Po13gIMNTBFtOVxnbNNi5n
+         JFT3W3qnePCFIeGr8YO7AVhiJ7M55OpTk3ymttY8aNmjAIe8wD5f9fjskrq+g0deonUA
+         7YA3JE7bMnqUjzvz07YAqs7NPeLXyRb++peq8=
+Received: by 10.231.39.196 with SMTP id h4mr1684399ibe.64.1277720036193;
+        Mon, 28 Jun 2010 03:13:56 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id r3sm9852655ibk.7.2010.06.28.03.13.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 28 Jun 2010 03:13:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100628094033.GA18629@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149827>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Michael J Gruber
-> Sent: den 28 juni 2010 10:18
-> To: git@vger.kernel.org
-> Cc: Junio C Hamano; Matthieu Moy
-> Subject: [PATCH] git-rev-parse.txt: Add more examples for caret and
-> colon
-> 
-> Several items in the caret, colon and friends section contain examples
-> already. Make sure they all come with examples, and that examples come
-> early so that they serve as a visual guide, as well.
-> 
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> This is on top of the ":path" patch to git-rev-parse.txt.
-> 
-> I chose not to rewrap the paragraphs so that the diff is clearer,
-> especially with --color-words.
-> I don't know what the best patch workflow guideline is here. Maybe
-> rewrapping a v2?
-> 
->  Documentation/git-rev-parse.txt |   15 ++++++++-------
->  1 files changed, 8 insertions(+), 7 deletions(-)
-> 
-> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-
-> parse.txt
-> index d525e57..da5cdf4 100644
-> --- a/Documentation/git-rev-parse.txt
-> +++ b/Documentation/git-rev-parse.txt
-> @@ -256,7 +256,7 @@ the `$GIT_DIR/refs` directory or from the
-> `$GIT_DIR/packed-refs` file.
->    the branch the ref is set to build on top of.  Missing ref defaults
->    to the current branch.
-> 
-> -* A suffix '{caret}' to a revision parameter means the first parent of
-> +* A suffix '{caret}' to a revision parameter (e.g. "HEAD^") means the first parent of
+Jeff King wrote:
 
-Shouldn't that be
+> But reading the message for patch 4/4, I can't help but wonder if the
+> right way forward is for the git wrapper to _always_ find the reposit=
+ory
+> as the very first thing.
+[...]
+> the worst case should be a little bit of
+> wasted effort.
 
-* A suffix '{caret}' to a revision parameter (e.g. `HEAD{caret}`) means the first parent of
+This is a very useful thought.  Git without the chdir() to toplevel
+would be pleasanter, I think.  (Yes, I realize you weren=E2=80=99t nece=
+ssarily
+suggesting suppressing a chdir_to_toplevel() in place of
+setup_git_repository() and friends.)
 
-for consistency?
+Regarding the repository search: automounters can cause pain if
+DISCOVERY_ACROSS_FILESYSTEM is set and GIT_CEILING_DIRECTORIES is not
+set appropriately.  An important script that does
 
->    that commit object.  '{caret}<n>' means the <n>th parent (i.e.
->    'rev{caret}'
->    is equivalent to 'rev{caret}1').  As a special rule,
-> @@ -282,23 +282,24 @@ the `$GIT_DIR/refs` directory or from the `$GIT_DIR/packed-refs` file.
->    and dereference the tag recursively until a non-tag object is
->    found.
-> 
-> -* A colon, followed by a slash, followed by a text: this names
-> +* A colon, followed by a slash, followed by a text (e.g. ":/fix nasty bug"): this names
+  tmpdir=3D$(mktemp -d)
+  cd "$tmpdir"
+  ...
 
-Most examples in this file seem to use `` rather than "".
+  git diff --no-index a b
+  ...
 
->    a commit whose commit message starts with the specified text.
->    This name returns the youngest matching commit which is
->    reachable from any ref.  If the commit message starts with a
->    '!', you have to repeat that;  the special sequence ':/!',
->    followed by something else than '!' is reserved for now.
-> 
-> -* A suffix ':' followed by a path; this names the blob or tree
-> +* A suffix ':' followed by a path (e.g. "HEAD:README"); this names the blob or tree
->    at the given path in the tree-ish object named by the part
-> -  before the colon. ":path" (with an empty part before the colon)
-> +  before the colon.
-> +  ":path" (with an empty part before the colon, e.g. ":README")
->    is a special case of the syntax described next: content
->    recorded in the index at the given path.
-> 
->  * A colon, optionally followed by a stage number (0 to 3) and a
-> -  colon, followed by a path; this names a blob object in the
-> -  index at the given path.  Missing stage number (and the colon
-> -  that follows it) names a stage 0 entry. During a merge, stage
-> +  colon, followed by a path (e.g. ":0:README"); this names a blob object in the
-> +  index at the given path. Missing stage number (and the colon
-> +  that follows it, e.g. ":README") names a stage 0 entry. During a merge, stage
->    1 is the common ancestor, stage 2 is the target branch's version
->    (typically the current branch), and stage 3 is the version from
->    the branch being merged.
-> --
-> 1.7.1.621.g01d76
+could hang indefinitely if some nut has created a named pipe at
+/tmp/.git.  I haven=E2=80=99t come up with any non far-fetched reason t=
+o mind
+the repository search, though.
 
-I tried to find a document describing documentation standards for 
-git (i.e., something similar to Documentation/CodingGuidelines),
-but could not find any such document. Did I just miss it, or does
-it not exist?
-
-//Peter
+Will think about this.
