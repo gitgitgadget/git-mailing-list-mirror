@@ -1,83 +1,75 @@
 From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: git-gui and gitk-git as submodules (Re: [RFC PATCH 0/2] Teach
- 	"git status" the "--ignore-submodules" option)
-Date: Mon, 28 Jun 2010 14:29:30 -0400
-Message-ID: <4C28EA0A.3080804@xiplink.com>
-References: <4C24C34B.20403@web.de>	<7vlja3j7hu.fsf@alter.siamese.dyndns.org>	<20100625190147.GA17493@burratino> <AANLkTimqXhGw5fAAgZsoDAI9s6kaIzcka9mbFEW8j05v@mail.gmail.com> <4C25E83E.4080905@web.de>
+Subject: Re: [PATCH/RFC] Documentation/git-gc.txt: add reference to githooks
+Date: Mon, 28 Jun 2010 14:43:21 -0400
+Message-ID: <4C28ED49.90906@xiplink.com>
+References: <AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com> <1277744834-7546-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andy Parkins <andyparkins@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 28 20:29:43 2010
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 20:43:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTJ5R-0006YF-Jy
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 20:29:41 +0200
+	id 1OTJIo-0006eb-IY
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 20:43:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263Ab0F1S3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 14:29:33 -0400
-Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:40065 "EHLO
+	id S1751476Ab0F1SnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jun 2010 14:43:25 -0400
+Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:45577 "EHLO
 	smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808Ab0F1S3c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 14:29:32 -0400
+	with ESMTP id S1750808Ab0F1SnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 14:43:24 -0400
 Received: from relay25.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay25.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id B0F741B400F;
-	Mon, 28 Jun 2010 14:29:31 -0400 (EDT)
-Received: by relay25.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 525CA1B4008;
-	Mon, 28 Jun 2010 14:29:31 -0400 (EDT)
+	by relay25.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 0D7461B400F;
+	Mon, 28 Jun 2010 14:43:22 -0400 (EDT)
+Received: by relay25.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id D2CB41B401F;
+	Mon, 28 Jun 2010 14:43:21 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100423 Thunderbird/3.0.4
-In-Reply-To: <4C25E83E.4080905@web.de>
+In-Reply-To: <1277744834-7546-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149847>
 
-On 10-06-26 07:45 AM, Jens Lehmann wrote:
-> 
-> Yes, I think having them as a submodule makes lots of sense. But
-> submodules are not there yet. Unless I overlooked something, the
-> following issues must be resolved before having these two as a
-> submodule, otherwise people will complain (and rightfully so!):
-
-I applaud all the current submodule work -- thanks a ton!
-
-I would like to ask submodule developers to please keep in mind scenarios
-where only a subset of the super-project's submodules are in use at one time.
- In particular, please avoid forcing any blanket updates to all submodules.
-I think the features being discussed would be much more useful if they only
-applied to submodules that are already initialized and updated by the user,
-and that any unintialized submodules should be left alone.
-
-> 1) Switching branches, merging, rebasing and resetting in the
->    superproject must result in a checkout of the matching submodule
->    work tree (right now you always have to issue a "git submodule
->    update" afterwards to get the submodules in sync).
-
-So, extending my request to this situation, I would say git should only
-update submodules that are already initialzied and updated.
-
-> 2) On "git clone" the submodules must be cloned and checked out too
->    (currently you have to do a "git submodule update --init" after
->    cloning the superproject).
-
-Making clone do this automatically would be a show-stopper for us.  The
-current '--recursive' option is fine (though we never use it).
-
-It would be interesting if the super-project could configure which submodules
-to automatically clone.
-
-(FYI, our build works along the lines of what Jonathan suggested: it
-instructs folks on how to obtain missing submodules.)
+How about also adding a templates/hooks--pre-auto-gc.sample file?
 
 		M.
+
+
+On 10-06-28 01:07 PM, Chris Packham wrote:
+> This advertises the existence of the 'pre-auto-gc' hook and adds a cross
+> reference to where the hook is documented.
+> 
+> Signed-off-by: Chris Packham <judge.packham@gmail.com>
+> ---
+> I had to go fishing in the code to find out about the pre-auto-gc hook. From
+> reading the git-gc man page it wasn't obvious to me that there would be a hook
+> for 'git gc --auto'. The relevant config variables are mentioned so it seems
+> logical to mention the hooks also. The only precedent I found for this was in
+> the git-commit man page which has a section listing the hooks that are
+> available.
+> 
+>  Documentation/git-gc.txt |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
+> 
+> diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+> index a9e0882..a514c52 100644
+> --- a/Documentation/git-gc.txt
+> +++ b/Documentation/git-gc.txt
+> @@ -137,6 +137,11 @@ If you are expecting some objects to be collected and they aren't, check
+>  all of those locations and decide whether it makes sense in your case to
+>  remove those references.
+>  
+> +HOOKS
+> +-----
+> +This command can run `pre-auto-gc` hook.  See linkgit:githooks[5] for more
+> +information.
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-prune[1]
