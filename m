@@ -1,61 +1,58 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: git-gui and gitk-git as submodules
-Date: Mon, 28 Jun 2010 20:58:49 +0200
-Message-ID: <4C28F0E9.8080903@web.de>
-References: <4C24C34B.20403@web.de> <7vlja3j7hu.fsf@alter.siamese.dyndns.org> <20100625190147.GA17493@burratino> <AANLkTimqXhGw5fAAgZsoDAI9s6kaIzcka9mbFEW8j05v@mail.gmail.com> <4C25E83E.4080905@web.de> <20100626183154.GA13581@burratino>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: notify alternative to auto gc?
+Date: Mon, 28 Jun 2010 18:58:59 +0000 (UTC)
+Message-ID: <loom.20100628T205729-213@post.gmane.org>
+References: <EA7717AE-DA72-48D7-A27E-C958896FD158@gmail.com> <AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johan Herland <johan@herland.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andy Parkins <andyparkins@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 28 20:59:11 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 28 20:59:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTJXw-0008M4-Ir
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 20:59:08 +0200
+	id 1OTJY8-0008S9-Sj
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 20:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753146Ab0F1S6x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 14:58:53 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:57966 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355Ab0F1S6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 14:58:52 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 8D00315890432;
-	Mon, 28 Jun 2010 20:58:50 +0200 (CEST)
-Received: from [80.128.76.242] (helo=[192.168.0.214])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #4)
-	id 1OTJXe-0005CT-00; Mon, 28 Jun 2010 20:58:50 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.9) Gecko/20100317 Thunderbird/3.0.4
-In-Reply-To: <20100626183154.GA13581@burratino>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX185Z10yIJRmH7XsXxf04ZCfRxUhJWLbeJtkaUna
-	7qIKOV2ciIR5h67cJRurpb0yaNdmZdXm7cjoWOwLob8RYROk94
-	PqQPgL31dyQDNCV/m+IA==
+	id S1753605Ab0F1S7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jun 2010 14:59:14 -0400
+Received: from lo.gmane.org ([80.91.229.12]:56830 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751546Ab0F1S7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 14:59:13 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OTJXw-0008M6-A4
+	for git@vger.kernel.org; Mon, 28 Jun 2010 20:59:08 +0200
+Received: from mail.nextest.com ([12.96.234.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 20:59:08 +0200
+Received: from raible by mail.nextest.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 20:59:08 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149849>
 
-Am 26.06.2010 20:31, schrieb Jonathan Nieder:
-> For the latter, maybe it would make sense to introduce =E2=80=98git c=
-heckout
-> --recursive=E2=80=99 which runs =E2=80=98submodule update --init --re=
-cursive=E2=80=99 after
-> checkout.  IMHO, in git 2.0 this even ought to be made the default.
-> One could use --no-recursive to access the more flexible traditional
-> behavior.
+Chris Packham <judge.packham <at> gmail.com> writes:
 
-Yup, I am working on that (I did post a WIP patch some time ago where
-I added a '--ignore-submodules' option, but since then I changed my
-mind on the name and now too think that '--[no-]recursive' is a much
-better choice).
+> So a hook like
+> 
+>   #! /bin/sh
+>   echo "repository needs git gc"
+>   exit 1
+> 
+> Should cause the auto gc to be skipped.
+
+Except wouldn't you also need a mechanism
+to allow an explicit gc to actually proceed?
