@@ -1,72 +1,62 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: notify alternative to auto gc?
-Date: Mon, 28 Jun 2010 12:02:35 -0700
-Message-ID: <AANLkTinGs3Nu-2hFcCSeEZBTT8OhfOG-iu4CNjdG62uS@mail.gmail.com>
-References: <EA7717AE-DA72-48D7-A27E-C958896FD158@gmail.com> 
-	<AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com> 
-	<loom.20100628T205729-213@post.gmane.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git log and cherry-picks
+Date: Mon, 28 Jun 2010 21:07:44 +0200
+Message-ID: <4C28F300.1060506@drmicha.warpmail.net>
+References: <AANLkTil6-rd5y9xcTVz4kJ4O2jL9ZdXYo1JrgYA3sM6N@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 28 21:03:01 2010
+To: Erez Zilber <erezzi.list@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 21:07:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTJbh-0002Vo-Ev
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 21:03:01 +0200
+	id 1OTJgJ-0005jD-E1
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 21:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751758Ab0F1TC5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 15:02:57 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:56081 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808Ab0F1TC4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 15:02:56 -0400
-Received: by gyd12 with SMTP id 12so1046178gyd.19
-        for <git@vger.kernel.org>; Mon, 28 Jun 2010 12:02:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=imNBB1SWPza2Wl/+MmnHIeA3RkM5ebjuH3KGlSxpu6A=;
-        b=wid+ru+mnvlSUtGtX/JVgFA1l1wDK5dnGOqGwwBzZRVWVau4jsGBz1vHO0ikWXeTRo
-         IYJwAy8L6TP3hht1MVG0OYZ7ummQu552aAWpigRj/G0qpRIv/gQlisBf8+E+e598M3yE
-         hrxlXmI6WwR8pRiDOl9ASr8MVJoQGfIMvzu3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=XqqrOmzmiUfpY8OGjOBw0KAodSph8oFnRamMjP4FiSEOM2RTmprJ8WGM0ux2C1feBj
-         76SaxFIhglLAWzzD7PWNkrGqPQJ2TBQEKozXYOO1cHPICbWBSfTkOdLuWTCLY6N2H6Ny
-         i9lMzpZc/uvrp2t3Bszgsg0XXilOuq4w2Mu00=
-Received: by 10.229.185.141 with SMTP id co13mr2995401qcb.241.1277751775479; 
-	Mon, 28 Jun 2010 12:02:55 -0700 (PDT)
-Received: by 10.229.222.72 with HTTP; Mon, 28 Jun 2010 12:02:35 -0700 (PDT)
-In-Reply-To: <loom.20100628T205729-213@post.gmane.org>
+	id S1753936Ab0F1THm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jun 2010 15:07:42 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:58193 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753299Ab0F1THm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 15:07:42 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7581E105733;
+	Mon, 28 Jun 2010 15:07:40 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 28 Jun 2010 15:07:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=b292xB+jowGShFxCvk+lUeQnucI=; b=nMkx1yTYGEsGaASU8Tsrj4ilmkIgJ0B7131+k1DioRvEc89ucU+CT6CHfUffe5HvApOLhIza9wEXEe3a2s2hVTujqHCFHfRwl0gxe1X3U09qlR4ET7q2Rh+yQ6U3Q88ozcbTSWGOnqwDZz/w7eKFEngkDmW/AEi98qdfmdzQ3/w=
+X-Sasl-enc: ao4yR6UbkG7W/R2qhb2SelGAmLyCyClwjW6Co5RVelDH 1277752052
+Received: from localhost.localdomain (p54859FEF.dip0.t-ipconnect.de [84.133.159.239])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 67B824EDF1E;
+	Mon, 28 Jun 2010 15:07:32 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100625 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <AANLkTil6-rd5y9xcTVz4kJ4O2jL9ZdXYo1JrgYA3sM6N@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149853>
 
-On Mon, Jun 28, 2010 at 11:58, Eric Raible <raible@gmail.com> wrote:
-> Chris Packham <judge.packham <at> gmail.com> writes:
->
->> So a hook like
->>
->> =C2=A0 #! /bin/sh
->> =C2=A0 echo "repository needs git gc"
->> =C2=A0 exit 1
->>
->> Should cause the auto gc to be skipped.
->
-> Except wouldn't you also need a mechanism
-> to allow an explicit gc to actually proceed?
->
+Erez Zilber venit, vidit, dixit 28.06.2010 18:02:
+> Hi,
+> 
+> I saw that I can run git log with '--cherry-pick'. With this, if I run
+> "git log --cherry-pick branch_a..branch_b", it doesn't show
+> differences that are caused by cherry picks.
+> 
+> My question is: sometimes, cherry picking from branch_a to branch_b is
+> not immediate, and I need to adapt the patch that was committed on
+> branch_a to apply on branch_b. In other cases, git is able to apply
+> the patch on branch_b automatically (e.g. if there's only a line
+> offset). In such cases, will "git log --cherry-pick" ignore these
+> cherry-picks like it ignores cherry-picks that were applied without
+> any problem?
 
-Only if you're explicitly calling "git gc --auto" instead of "git gc".
- That hook should only run for "git gc --auto".
+With --cherry-pick, log omits those commits whose associated patch has
+the same patch-id (see "git patch-id").
+
+Michael
