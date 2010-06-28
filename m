@@ -1,90 +1,74 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH] Add known breakage for 'git notes copy'
-Date: Mon, 28 Jun 2010 11:12:01 +0200
-Message-ID: <AANLkTimap7ziJ-NuAV6h7bGP3cX2cDY7rqEbgJ2unQSP@mail.gmail.com>
-References: <41768aafce7a581e8b601e70826ce77381458a23.1277708369.git.bert.wesarg@googlemail.com>
-	<20100628085907.GA14014@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] git --paginate: do not commit pager choice too
+ early
+Date: Mon, 28 Jun 2010 05:40:34 -0400
+Message-ID: <20100628094033.GA18629@coredump.intra.peff.net>
+References: <20100626192203.GA19973@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johan Herland <johan@herland.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 28 11:12:12 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 28 11:41:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTANv-0000Dx-Qn
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 11:12:12 +0200
+	id 1OTApo-00041k-Uy
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 11:41:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750803Ab0F1JMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 05:12:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:39045 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732Ab0F1JMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 05:12:03 -0400
-Received: by iwn7 with SMTP id 7so20259iwn.19
-        for <git@vger.kernel.org>; Mon, 28 Jun 2010 02:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=iP6vhsd1yWJ+lHjW4QZoMivTjkaD++Da9vFscMK7574=;
-        b=ROeIHz8MieJHXWb7Ezfe1xTqWSpIlOV3TJTca/YOwxZinIHPDJrOepk0D7rd0b2L8x
-         lneoev7EJZCBIxHr8NX4WlSiz2dA/Y8t0WrO1JY3idFBVCgu4m3azrI02jJhafNtjt6R
-         5OL8w9LCc8zJ+K5FJivk71TGRAkSb1//i5dPo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=XjnavvLE4hQ3JB1/d6mWU6cCpEODY4AhXI83bQvWGGwXI8FPCgaz4Od/13V8zWjj8u
-         1JCC/SioWlOOYjlH40V0D70oohxr8TwblfaSyKRpb3HFe3DsvpaXv853VKXfeFxRikEZ
-         rJzKDCHfJh+SxgjG2wPWpHMo/HDCII1qEkELs=
-Received: by 10.231.85.147 with SMTP id o19mr4747580ibl.82.1277716321856; Mon, 
-	28 Jun 2010 02:12:01 -0700 (PDT)
-Received: by 10.231.34.198 with HTTP; Mon, 28 Jun 2010 02:12:01 -0700 (PDT)
-In-Reply-To: <20100628085907.GA14014@coredump.intra.peff.net>
+	id S1751680Ab0F1Jkp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 05:40:45 -0400
+Received: from peff.net ([208.65.91.99]:34190 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751632Ab0F1Jko (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 05:40:44 -0400
+Received: (qmail 18381 invoked by uid 107); 28 Jun 2010 09:41:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) SMTP; Mon, 28 Jun 2010 05:41:35 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jun 2010 05:40:34 -0400
+Content-Disposition: inline
+In-Reply-To: <20100626192203.GA19973@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149825>
 
-On Mon, Jun 28, 2010 at 10:59, Jeff King <peff@peff.net> wrote:
-> On Mon, Jun 28, 2010 at 09:01:57AM +0200, Bert Wesarg wrote:
->
->> 'git notes copy' dumps core when no arguments are given.
->
-> How about:
+On Sat, Jun 26, 2010 at 02:22:03PM -0500, Jonathan Nieder wrote:
 
-Thanks.
+> Here=E2=80=99s a fix from the famous setup cleanup series[1].
+>=20
+> The problem it fixes is somewhat obscure: =E2=80=98git -p foo=E2=80=99=
+ is not paying
+> attention to the repository-local =E2=80=98[core] pager=E2=80=99 conf=
+iguration when
+> run from a subdirectory.  But it is a real bug, and the fix gives
+> an example of how to deal with repository setup and should be safe.
+>=20
+> Patch is against master.  There is a small semantic conflict with
+> jn/grep-open: SIMPLEPAGER should be changed to SIMPLEPAGERTTY in the
+> prerequisites for the test_default_pager function.  Please let me
+> know if I should push a merge commit to help resolve that.
 
-Tested-by: Bert Wesarg <Bert.Wesarg@googlemail.com>
+I just read through the patches, and it seems like a reasonable fix. So
+in that sense, ACK.
 
-FWIW, here is the correct and updated test for this:
+But reading the message for patch 4/4, I can't help but wonder if the
+right way forward is for the git wrapper to _always_ find the repositor=
+y
+as the very first thing. I.e., make finding the repository a
+non-destructive thing (especially don't end in a different directory),
+and just do it before we run any other code.
 
--- >8 --
-Subject: [PATCH] notes: add test for git-notes copy with too few arguments
+=46or a few commands like "init" or "clone", we would end up just
+ignoring this information, but the worst case should be a little bit of
+wasted effort.
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- t/t3301-notes.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+And then all these silly setup and timing issues could just go away, as
+we would know that GIT_DIR and GIT_WORK_TREE would be set properly.
 
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 64f32ad..dcd962a 100755 t/t3301-notes.sh
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -1044,4 +1044,9 @@ test_expect_success 'GIT_NOTES_REWRITE_REF
-overrides config' '
- 	git log -1 > output &&
- 	test_cmp expect output
- '
-+
-+test_expect_success 'git notes copy does not segfaults with too few
-arguments' '
-+	test_must_fail git notes copy
-+'
-+
- test_done
+-Peff
