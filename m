@@ -1,53 +1,74 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git-svn error: ambiguous argument
-Date: Mon, 28 Jun 2010 06:24:09 +0000
-Message-ID: <20100628062409.GA13203@dcvr.yhbt.net>
-References: <7A6370FC-843B-43FD-8064-4F44C9C66493@inuus.com> <AANLkTik_YK6_KbRIq4MsrU-LDn8apHQfm1_f7XHKKfX1@mail.gmail.com> <AANLkTil7WdGZTtmwwK0kYPkK6-y4W5HKKLNdtkoI0riM@mail.gmail.com> <AANLkTimE6Wo9HT0p5WMfTggJ059dhDg4fyPeax93VCLy@mail.gmail.com> <0D702391-E490-4942-AAB6-C8C887E671C5@inuus.com> <AANLkTikKdDI_NMzvsA7e_VoYo7Ie97e2pBkZe_0xPt9P@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Paul Lindner <lindner@inuus.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 28 08:24:16 2010
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] Add known breakage for 'git notes copy'
+Date: Mon, 28 Jun 2010 09:01:57 +0200
+Message-ID: <41768aafce7a581e8b601e70826ce77381458a23.1277708369.git.bert.wesarg@googlemail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Jun 28 09:02:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OT7lP-0008BB-Pz
-	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 08:24:16 +0200
+	id 1OT8MX-0004Bm-F5
+	for gcvg-git-2@lo.gmane.org; Mon, 28 Jun 2010 09:02:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753548Ab0F1GYL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 02:24:11 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:41145 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752641Ab0F1GYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 02:24:10 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F38111F4FC;
-	Mon, 28 Jun 2010 06:24:09 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikKdDI_NMzvsA7e_VoYo7Ie97e2pBkZe_0xPt9P@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754038Ab0F1HCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jun 2010 03:02:32 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58578 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753591Ab0F1HCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 03:02:31 -0400
+Received: by fxm14 with SMTP id 14so391530fxm.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 00:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=yId4OYr2KHpDhjV9KjPIvBN3/e0kucenAvSKmBKX3NY=;
+        b=sWkRL8OVZn3Pm/sMVAO/unjISR8zJAqCqi84Lb+wvVCaSkuxxeqkqxMqDRWU4Zn5oe
+         8j2Yo0IcDq2xK6jWWXi4VQMChGINCgpDDgguZUYjQEJuDSOQ6aozte0+mRtCkmlXcfOM
+         4jl0ch2OouugrLH/S88mcI524OFK4T23wIRGM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=hDcieqpnGEmtn14gGCaW8sHQc6lMMG8VaKOjx3j8/Xy/tABNd1Tg6HAADjrUgToo9E
+         duxvgRnBRQ1+4t0ThTBsb1593no+OVdb0h2VUfhLw/sjaisZB/A1Rjkb4cz/83mfOHol
+         1LaQwEpUVzfSdxMd61VACXK5mN6ppr4UQu7YY=
+Received: by 10.223.17.136 with SMTP id s8mr3409730faa.41.1277708525318;
+        Mon, 28 Jun 2010 00:02:05 -0700 (PDT)
+Received: from localhost ([92.116.110.254])
+        by mx.google.com with ESMTPS id e10sm44671603fak.14.2010.06.28.00.02.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 28 Jun 2010 00:02:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.1067.g5aeb7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149814>
 
-Bert Wesarg <bert.wesarg@googlemail.com> wrote:
-> On Tue, May 11, 2010 at 21:44, Paul Lindner <lindner@inuus.com> wrote=
-:
-> > This fixed it for my situation. =A0Thanks!
-> > On May 11, 2010, at 9:20 AM, Bert Wesarg wrote:
-> >> Can you try this patch, it worked on my site:
+'git notes copy' dumps core when no arguments are given.
 
-<snip>
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
+ t/t3301-notes.sh |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-> Eric, have you picked this up, or should I re-send it as a propper pa=
-tch?
-
-A proper patch + commit message would be easier, thanks Bert!
-
---=20
-Eric Wong
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 64f32ad..67b0cc2 100755 t/t3301-notes.sh
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1044,4 +1044,9 @@ test_expect_success 'GIT_NOTES_REWRITE_REF overrides config' '
+ 	git log -1 > output &&
+ 	test_cmp expect output
+ '
++
++test_expect_failure 'git notes copy segfaults' '
++	git notes copy
++'
++
+ test_done
+-- 
+1.7.1.1067.g5aeb7
