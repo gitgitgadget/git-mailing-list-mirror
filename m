@@ -1,181 +1,85 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: [PATCH] Add test for correct coloring of git log --decoration
-Date: Tue, 29 Jun 2010 15:47:08 +0800
-Message-ID: <1277797628-32466-1-git-send-email-ayiehere@gmail.com>
-References: <7vbpaucs2c.fsf@alter.siamese.dyndns.org>
-Cc: Nazri Ramliy <ayiehere@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 29 09:47:35 2010
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH 4/5] merge_recursive: Fix renames across paths below
+ D/F conflicts
+Date: Tue, 29 Jun 2010 09:54:42 +0200
+Message-ID: <20100629075442.GB31048@genesis.frugalware.org>
+References: <1277773936-12412-1-git-send-email-newren@gmail.com>
+ <1277773936-12412-5-git-send-email-newren@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="k8r0khnpBuGu0wUi"
+Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, gitster@pobox.com,
+	spearce@spearce.org
+To: newren@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jun 29 10:11:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTVXZ-0004I3-UC
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 09:47:34 +0200
+	id 1OTVuZ-000778-Pe
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 10:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753488Ab0F2Hr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jun 2010 03:47:28 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:40740 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753431Ab0F2Hr1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jun 2010 03:47:27 -0400
-Received: by pxi8 with SMTP id 8so2176006pxi.19
-        for <git@vger.kernel.org>; Tue, 29 Jun 2010 00:47:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=6qPJQN7vIrodH5Qa1ofFf2if8pjYd4svrjsUI/f1SFM=;
-        b=tTkv8ohLyU5PSWfnSFOOZgDKvY/LAPxPe31TtkSSvDi8J5kDIbA4/3dE0Wlqw3O+jE
-         PpSEK2hfEHhEq5XGZVNM9S6gP004hAruXei2PDveXsIJ3idzdAzT5NmIUS25ctt3EKah
-         pIrowpbtWVH07asLiOTpFrqFYrG8D7Qq7TvPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ki2rC83moTupwIo/y+HW2z8f5eLDUl6+z2iZ2EPwPyN4fYVBbhLnLxcwG3FKztXHsp
-         5/42mMAb6UrtR7XkRBgSOsr/iM+7QvUhtTu8smbMFRSpvoqTl8vppItmKBywtqqYUwQH
-         5F5PU13c8/r7pCTZLGaOVSsRiPOxMTJUdBmZo=
-Received: by 10.143.24.32 with SMTP id b32mr5664345wfj.219.1277797646444;
-        Tue, 29 Jun 2010 00:47:26 -0700 (PDT)
-Received: from localhost.localdomain ([115.134.69.17])
-        by mx.google.com with ESMTPS id w8sm2613607wfd.19.2010.06.29.00.47.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Jun 2010 00:47:24 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.363.gac4b1
-In-Reply-To: <7vbpaucs2c.fsf@alter.siamese.dyndns.org>
+	id S1753043Ab0F2ILB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 04:11:01 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:44404 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752428Ab0F2IK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 04:10:59 -0400
+X-Greylist: delayed 974 seconds by postgrey-1.27 at vger.kernel.org; Tue, 29 Jun 2010 04:10:59 EDT
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 125F458094;
+	Tue, 29 Jun 2010 09:54:43 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 6C7BC44659;
+	Tue, 29 Jun 2010 09:54:42 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 4CEC512D90F0; Tue, 29 Jun 2010 09:54:42 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1277773936-12412-5-git-send-email-newren@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149890>
 
-Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
----
-On Tue, Jun 29, 2010 at 1:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Let's not expand a single-line description needlessly into a multi-line
-> one.
 
-Fixed.
+--k8r0khnpBuGu0wUi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> +test_expect_success setup '
->> +  echo foo > foo.txt &&
->
-> Indent these with <TAB>, like:
->
->        echo foo >foo.txt &&
+On Mon, Jun 28, 2010 at 07:12:15PM -0600, newren@gmail.com wrote:
+> From: Elijah Newren <newren@gmail.com>
+>=20
+>=20
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+> I'm a little uneasy with this change, mainly because I don't fully
+> understand the rename processing logic (I was actually kind of surprised
+> when I made these changes and it worked).  Although I verified that
+> these changes (and my others in this patch series) introduce no new
+> breakages in the testsuite and even fix a known issue, I'm still not
+> quite sure I follow the logic well enough to feel fully confident in
+> this change.  I'm particularly worried I may have neglected some closely
+> related cases that I should have fixed but which may still be broken.
 
-Fixed.
+Same here, I touched merge-recursive, but not this part of it, so others
+will give you a better review, I'm sure. :)
 
-> I think "EDITOR=cat" is doubly wrong.
+Other than that, I like it, thanks!
 
-Fixed.
+--k8r0khnpBuGu0wUi
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> Do not chdir around inside test scripts without having that in a subshell,
-> as people typically write "cd .." at the very end of a && chain, which may
-> not be called when anything in between fails, throwing the later tests
-> into chaos.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-Fixed.
+iEYEARECAAYFAkwppsIACgkQe81tAgORUJaJngCeIDit4FvYidR9F07kEyRcRvbb
++moAn0XhMzAYanxSbz2WviX8MP0biGiI
+=jzXK
+-----END PGP SIGNATURE-----
 
-> In this case your excuse will be that you will run everything after this
-> point in that local-clone subdirectory, but still this is not a good style
-> we would want to keep around, risking to be copied by other people who do
-> not think carefully.
-[snip]
-> I think the set-up sequence for this test script should probably be
-> structured like this:
-[snip]
-> so that the main test is done inside the top-level directory (you wanted
-> the clone only because you wanted to have remote tracking branches, not
-> because you didn't want to touch the top-level directory).
-
-Thanks for taking the time to explain it well.
-
-I should have familiarized myself more with the utility functions in
-test-lib.sh (so that I would know about test_commit).
-
-I've updated the test to also test for the need to print 'reset' right before
-restoring the commit color.  This is done by setting the tag color to "reverse
-bold yellow".  Without the 'reset', the next decoration would be wrongly
-printed in reverse.
-
-nazri
-
- t/t4207-log-decoration-colors.sh |   65 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 65 insertions(+), 0 deletions(-)
- create mode 100755 t/t4207-log-decoration-colors.sh
-
-diff --git a/t/t4207-log-decoration-colors.sh b/t/t4207-log-decoration-colors.sh
-new file mode 100755
-index 0000000..5ea5865
---- /dev/null
-+++ b/t/t4207-log-decoration-colors.sh
-@@ -0,0 +1,65 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Nazri Ramliy
-+#
-+
-+test_description='Test for "git log --decorate" colors'
-+
-+. ./test-lib.sh
-+
-+get_color ()
-+{
-+	git config --get-color no.such.slot "$1"
-+}
-+
-+test_expect_success setup '
-+	git config diff.color.commit yellow &&
-+	git config color.decorate.branch green &&
-+	git config color.decorate.remoteBranch red &&
-+	git config color.decorate.tag "reverse bold yellow" &&
-+	git config color.decorate.stash magenta &&
-+	git config color.decorate.HEAD cyan &&
-+
-+	c_reset=$(get_color reset) &&
-+
-+	c_commit=$(get_color yellow) &&
-+	c_branch=$(get_color green) &&
-+	c_remoteBranch=$(get_color red) &&
-+	c_tag=$(get_color "reverse bold yellow") &&
-+	c_stash=$(get_color magenta) &&
-+	c_HEAD=$(get_color cyan) &&
-+
-+	test_commit A &&
-+	git clone . other &&
-+	(
-+		cd other &&
-+		test_commit A1
-+	) &&
-+
-+	git remote add -f other ./other &&
-+	test_commit B &&
-+	git tag v1.0 &&
-+	echo >>A.t &&
-+	git stash save Changes to A.t
-+'
-+
-+cat > expected << EOF
-+${c_commit}COMMIT_ID (${c_HEAD}HEAD${c_reset}${c_commit},\
-+ ${c_tag}tag: v1.0${c_reset}${c_commit},\
-+ ${c_tag}tag: B${c_reset}${c_commit},\
-+ ${c_branch}master${c_reset}${c_commit})${c_reset} B
-+${c_commit}COMMIT_ID (${c_tag}tag: A1${c_reset}${c_commit},\
-+ ${c_remoteBranch}other/master${c_reset}${c_commit})${c_reset} A1
-+${c_commit}COMMIT_ID (${c_stash}refs/stash${c_reset}${c_commit})${c_reset}\
-+ On master: Changes to A.t
-+${c_commit}COMMIT_ID (${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
-+EOF
-+
-+# We want log to show all, but the second parent to refs/stash is irrelevant
-+# to this test since it does not contain any decoration, hence --first-parent
-+test_expect_success 'Commit Decorations Colored Correctly' '
-+	git log --first-parent --abbrev=10 --all --decorate --oneline --color=always | sed "s/[0-9a-f]\{10,10\}/COMMIT_ID/" > out &&
-+	test_cmp expected out
-+'
-+
-+test_done
--- 
-1.7.1.245.g7c42e.dirty
+--k8r0khnpBuGu0wUi--
