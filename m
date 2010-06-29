@@ -1,87 +1,75 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH 4/5] merge_recursive: Fix renames across paths below
- D/F conflicts
-Date: Wed, 30 Jun 2010 00:33:19 +0200
-Message-ID: <20100629223319.GC31048@genesis.frugalware.org>
-References: <1277773936-12412-1-git-send-email-newren@gmail.com>
- <1277773936-12412-5-git-send-email-newren@gmail.com>
- <20100629075442.GB31048@genesis.frugalware.org>
- <AANLkTimFBlWiK76quLW1TiUfueGISsW7ZIHgFUcFg4j8@mail.gmail.com>
- <AANLkTil7CdCoP3wLVKX0MEiwp8KaKWFLvRtUWzt2a3Nh@mail.gmail.com>
- <AANLkTilggM9-vBabNvJiYMiQZyZtJMLhfWleYKvuJNMv@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: origin/branchname and tracking branch pointing to different
+ commits?
+Date: Tue, 29 Jun 2010 18:39:19 -0400
+Message-ID: <20100629223919.GB5668@sigill.intra.peff.net>
+References: <76c5b8581001070903i3810f63crd764d451f7454584@mail.gmail.com>
+ <201001071813.01187.trast@student.ethz.ch>
+ <76c5b8581001070925g21ac3136x2928f12dc43437e5@mail.gmail.com>
+ <76c5b8581001071550g31e9f5a3n15ebdb10a806ab2e@mail.gmail.com>
+ <7v7hrtzbau.fsf@alter.siamese.dyndns.org>
+ <AANLkTinLVd483-ki6tVb545PgpOFeOLYLR_GiKM5xAl7@mail.gmail.com>
+ <20100608183007.GA31293@coredump.intra.peff.net>
+ <AANLkTik7bleuzqnMWMJoWljQ5zD0YbwBsFjZT5IzkV0q@mail.gmail.com>
+ <7vocet8ws2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ULJ2Z7kCM1hyNsWd"
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Johannes.Schindelin@gmx.de, gitster@pobox.com, spearce@spearce.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 00:33:29 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Eugene Sajine <euguess@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 00:39:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTjMu-0001dG-Qq
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 00:33:29 +0200
+	id 1OTjSh-0004hv-Th
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 00:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756499Ab0F2WdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jun 2010 18:33:22 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:51881 "EHLO virgo.iok.hu"
+	id S1756455Ab0F2WjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 18:39:22 -0400
+Received: from peff.net ([208.65.91.99]:50677 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756258Ab0F2WdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jun 2010 18:33:22 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 435A6580A0;
-	Wed, 30 Jun 2010 00:33:20 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id CDEF344659;
-	Wed, 30 Jun 2010 00:33:19 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id C8C9812D90F0; Wed, 30 Jun 2010 00:33:19 +0200 (CEST)
+	id S1755699Ab0F2WjW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 18:39:22 -0400
+Received: (qmail 13244 invoked by uid 107); 29 Jun 2010 22:40:14 -0000
+Received: from adsl-70-239-95-45.dsl.bltnin.sbcglobal.net (HELO sigill.intra.peff.net) (70.239.95.45)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 29 Jun 2010 18:40:14 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jun 2010 18:39:19 -0400
 Content-Disposition: inline
-In-Reply-To: <AANLkTilggM9-vBabNvJiYMiQZyZtJMLhfWleYKvuJNMv@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vocet8ws2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149930>
 
+On Tue, Jun 29, 2010 at 12:27:09PM -0700, Junio C Hamano wrote:
 
---ULJ2Z7kCM1hyNsWd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I have a slight suspicion that such an "unexpected ref update" is not a
+> big issue anymore.  So in principle, I think it is fine to change the
+> behaviour of "git fetch $there $these_explicit_refs" to additionally
+> follow the configured remote tracking ref globbing patterns.
+> 
+> Because
+> 
+>  (1) the old patch was never tested in a production context (I don't think
+>      it even hit 'pu');
+> 
+>  (2) I offhand do not know how much the codebase changed in the area that
+>      would affect the assumptions the patch made back then; and
+> 
+>  (3) we will be in feature freeze for 1.7.2 anyway;
+> 
+> I would rather not be the one who is forward-porting the patch myself
+> if I can avoid it, however.
 
-On Tue, Jun 29, 2010 at 09:55:38AM -0600, Elijah Newren <newren@gmail.com> =
-wrote:
-> Well, as far as this particular if-block is concerned, blame suggests
-> that you and Miklos were responsible (I apologize if gmail screws up
-> and inserts line wrapping)::
->=20
-> $ git blame -C -C -L 1020,1038 merge-recursive.c
-> 9047ebbc (Miklos Vajna  2008-08-12 18:45:14 +0200 1020)
->                  if (mfi.clean &&
-> 9047ebbc (Miklos Vajna  2008-08-12 18:45:14 +0200 1021)
->                      sha_eq(mfi.sha, ren1->pair->two->sha1) &&
+I am probably the best person to take another look at it (though I would
+be fine if somebody else wants to volunteer).
 
-And if you have a look at what commit 9047ebbc does, that's really just
-about changing it to be part of libgit, so I could call it without
-fork() from builtin-merge.
+Right now I am in the process of switching day jobs and doing an
+inter-state move, so it will probably be a month before I have a lot of
+git time.
 
-To sum up, I sadly have to say I don't know too much about the
-merge-recursive internal sematics.
-
---ULJ2Z7kCM1hyNsWd
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkwqdK8ACgkQe81tAgORUJYLvwCeNA27lfANthy60ruWT2pvdN5H
-eLAAn1r48EkQECWpRlzy0ZCtlFAz/Wxp
-=IpmK
------END PGP SIGNATURE-----
-
---ULJ2Z7kCM1hyNsWd--
+-Peff
