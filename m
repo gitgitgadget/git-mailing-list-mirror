@@ -1,165 +1,98 @@
 From: newren@gmail.com
-Subject: [PATCH 1/5] Add additional testcases for D/F conflicts
-Date: Mon, 28 Jun 2010 19:12:12 -0600
-Message-ID: <1277773936-12412-2-git-send-email-newren@gmail.com>
+Subject: [PATCH 5/5] fast-import: Handle directories changing into symlinks
+Date: Mon, 28 Jun 2010 19:12:16 -0600
+Message-ID: <1277773936-12412-6-git-send-email-newren@gmail.com>
 References: <1277773936-12412-1-git-send-email-newren@gmail.com>
 Cc: Johannes.Schindelin@gmx.de, vmiklos@frugalware.org,
 	gitster@pobox.com, spearce@spearce.org,
 	Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 29 03:10:59 2010
+X-From: git-owner@vger.kernel.org Tue Jun 29 03:11:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTPLn-0006lJ-F8
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 03:10:59 +0200
+	id 1OTPM5-0006ry-9a
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 03:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550Ab0F2BKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 21:10:54 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:46078 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378Ab0F2BKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 21:10:51 -0400
-Received: by mail-px0-f174.google.com with SMTP id 8so2060482pxi.19
-        for <git@vger.kernel.org>; Mon, 28 Jun 2010 18:10:50 -0700 (PDT)
+	id S1751848Ab0F2BLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jun 2010 21:11:00 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:33767 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751031Ab0F2BK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jun 2010 21:10:59 -0400
+Received: by pwj8 with SMTP id 8so3576372pwj.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 18:10:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=jk0xyTvwivZEwJ/1qq5najq6PSrEJj+ORUk1w4bH1gY=;
-        b=nSp2kkF6ozLxV7c2yn6Af2NwpUuXBoedNpCZzumveK/qkCl1Q7T5sev2/80GQgk+mR
-         xnUiaqpKjJer9n5MIyz3lenc0Q7qRPjlUQMtX8txBm1BuOKBcqsNzhh0Z6YbhLAO9F34
-         OmS/aR9/6quNPnBegOrKR90Lc4AIQmaVyiabs=
+        bh=WzfKcnqVnvfeDvK7dtFB5Y1wwEqjR3jiSQXuHEJEK54=;
+        b=XYRrgL5y3N79kMc9PxG+1ARj2JuQW0Xw5cdoUeDBh1B2lCYxxeWPi7KLzJQX3Ps3dB
+         knx1teejjbU//tzJ/Z4aLjplTTK2wTDmcOsi56i6WxERKIIm1IYNvv42o/at367cnLLv
+         qM55oETCxkgJUqVu/AB/XUeBUpBSvk5mO1vkw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ZYL9skCeWlH6bbB8tDz/hfyJJqXmXapqNCzhrUIvJJVSVWUp66IQhYokNSjDGsN33g
-         vcdGvBn4vs1h8eJluQP63tfcqYCttjoMocU7i+CKgW5Uk4dXu3lxKVPZNDegFDz1UxSd
-         PzosJUOz0w7t+IYNpnyLdsMlmDBhMqRy3KDkY=
-Received: by 10.142.207.13 with SMTP id e13mr6955857wfg.21.1277773850639;
-        Mon, 28 Jun 2010 18:10:50 -0700 (PDT)
+        b=P60dQ335A1LV5lvIJdp0amfIBMOk8ujh4TnqK4F3by7RcwxlvspLJUxsO/UUoHbFe7
+         neD5Xs144lQRq3+YmFOy/fWsSyStYCUo7FamQwbGNt7Zxxp7vCwQHTJP7LUa1eTVAN1+
+         hgYeS65mUdTI4IBbRqfTzQQ9URYoUsf0Ru1JY=
+Received: by 10.142.195.14 with SMTP id s14mr7095163wff.49.1277773858874;
+        Mon, 28 Jun 2010 18:10:58 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-59-120.hsd1.nm.comcast.net [76.113.59.120])
-        by mx.google.com with ESMTPS id x34sm8105171wfi.4.2010.06.28.18.10.48
+        by mx.google.com with ESMTPS id x34sm8105171wfi.4.2010.06.28.18.10.57
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 28 Jun 2010 18:10:50 -0700 (PDT)
+        Mon, 28 Jun 2010 18:10:58 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc0.207.ga9fc
 In-Reply-To: <1277773936-12412-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149875>
 
 From: Elijah Newren <newren@gmail.com>
 
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6035-merge-dir-to-symlink.sh |   37 +++++++++++++++++++++++++++++++++++--
- t/t9350-fast-export.sh          |   24 ++++++++++++++++++++++++
- 2 files changed, 59 insertions(+), 2 deletions(-)
+This is a resend of an earlier patch.  Since the previous one wasn't
+reviewed and didn't make it to pu, I decided to resend it along with the
+merge-recursive directory/symlink conflict fixes as part of a patch series.
 
-diff --git a/t/t6035-merge-dir-to-symlink.sh b/t/t6035-merge-dir-to-symlink.sh
-index cd3190c..4f04f41 100755
---- a/t/t6035-merge-dir-to-symlink.sh
-+++ b/t/t6035-merge-dir-to-symlink.sh
-@@ -56,7 +56,7 @@ test_expect_success 'do not lose a/b-2/c/d in merge (resolve)' '
- 	test -f a/b-2/c/d
- '
- 
--test_expect_failure 'do not lose a/b-2/c/d in merge (recursive)' '
-+test_expect_failure 'Handle D/F conflict, do not lose a/b-2/c/d in merge (recursive)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	git merge -s recursive master &&
-@@ -64,6 +64,31 @@ test_expect_failure 'do not lose a/b-2/c/d in merge (recursive)' '
- 	test -f a/b-2/c/d
- '
- 
-+test_expect_failure 'Handle F/D conflict, do not lose a/b-2/c/d in merge (recursive)' '
-+	git reset --hard &&
-+	git checkout master &&
-+	git merge -s recursive baseline^0 &&
-+	test -h a/b &&
-+	test -f a/b-2/c/d
-+'
-+
-+test_expect_success 'do not lose untracked in merge (recursive)' '
-+	git reset --hard &&
-+	git checkout baseline^0 &&
-+	touch a/b/c/e &&
-+	test_must_fail git merge -s recursive master &&
-+	test -f a/b/c/e &&
-+	test -f a/b-2/c/d
-+'
-+
-+test_expect_success 'do not lose modifications in merge (recursive)' '
-+	git add --all &&
-+	git reset --hard &&
-+	git checkout baseline^0 &&
-+	echo more content >> a/b/c/d &&
-+	test_must_fail git merge -s recursive master
-+'
-+
- test_expect_success 'setup a merge where dir a/b-2 changed to symlink' '
- 	git reset --hard &&
- 	git checkout start^0 &&
-@@ -82,7 +107,7 @@ test_expect_success 'merge should not have conflicts (resolve)' '
- 	test -f a/b/c/d
- '
- 
--test_expect_failure 'merge should not have conflicts (recursive)' '
-+test_expect_failure 'merge should not have D/F conflicts (recursive)' '
- 	git reset --hard &&
- 	git checkout baseline^0 &&
- 	git merge -s recursive test2 &&
-@@ -90,4 +115,12 @@ test_expect_failure 'merge should not have conflicts (recursive)' '
- 	test -f a/b/c/d
- '
- 
-+test_expect_failure 'merge should not have F/D conflicts (recursive)' '
-+	git reset --hard &&
-+	git checkout -b foo test2 &&
-+	git merge -s recursive baseline^0 &&
-+	test -h a/b-2 &&
-+	test -f a/b/c/d
-+'
-+
- test_done
+ fast-import.c          |    5 +++++
+ t/t9350-fast-export.sh |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index 1e5d66e..9a2ecc8 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1528,6 +1528,11 @@ static int tree_content_remove(
+ 	for (i = 0; i < t->entry_count; i++) {
+ 		e = t->entries[i];
+ 		if (e->name->str_len == n && !strncmp(p, e->name->str_dat, n)) {
++			if (slash1 && S_ISLNK(e->versions[1].mode))
++				/* p was already removed by an earlier change
++				 * of a parent directory to a symlink.
++				 */
++				return 1;
+ 			if (!slash1 || !S_ISDIR(e->versions[1].mode))
+ 				goto del_entry;
+ 			if (!e->tree)
 diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index d43f37c..69179c6 100755
+index 69179c6..1ee1461 100755
 --- a/t/t9350-fast-export.sh
 +++ b/t/t9350-fast-export.sh
-@@ -376,4 +376,28 @@ test_expect_success 'tree_tag-obj'    'git fast-export tree_tag-obj'
+@@ -376,7 +376,7 @@ test_expect_success 'tree_tag-obj'    'git fast-export tree_tag-obj'
  test_expect_success 'tag-obj_tag'     'git fast-export tag-obj_tag'
  test_expect_success 'tag-obj_tag-obj' 'git fast-export tag-obj_tag-obj'
  
-+test_expect_failure 'directory becomes symlink'        '
-+	git init dirtosymlink &&
-+	git init result &&
-+	(
-+		cd dirtosymlink &&
-+		mkdir foo &&
-+		mkdir bar &&
-+		echo hello > foo/world &&
-+		echo hello > bar/world &&
-+		git add foo/world bar/world &&
-+		git commit -q -mone &&
-+		git rm -r foo &&
-+		ln -s bar foo &&
-+		git add foo &&
-+		git commit -q -mtwo
-+	) &&
-+	(
-+		cd dirtosymlink &&
-+		git fast-export master -- foo |
-+		(cd ../result && git fast-import --quiet)
-+	) &&
-+	(cd result && git show master:foo)
-+'
-+
- test_done
+-test_expect_failure 'directory becomes symlink'        '
++test_expect_success 'directory becomes symlink'        '
+ 	git init dirtosymlink &&
+ 	git init result &&
+ 	(
 -- 
 1.7.2.rc0.212.g0c601
