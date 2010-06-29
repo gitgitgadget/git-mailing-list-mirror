@@ -1,95 +1,74 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 4/5] merge_recursive: Fix renames across paths below D/F 
-	conflicts
-Date: Tue, 29 Jun 2010 06:52:07 -0600
-Message-ID: <AANLkTimFBlWiK76quLW1TiUfueGISsW7ZIHgFUcFg4j8@mail.gmail.com>
-References: <1277773936-12412-1-git-send-email-newren@gmail.com>
-	<1277773936-12412-5-git-send-email-newren@gmail.com>
-	<20100629075442.GB31048@genesis.frugalware.org>
+Subject: Re: [PATCH] fast-export: Add a --full-tree option
+Date: Tue, 29 Jun 2010 07:02:02 -0600
+Message-ID: <AANLkTinwiFgFBKu7JGaS9WEHGOhkW50iE4pmvXlA3y-W@mail.gmail.com>
+References: <1277774525-12530-1-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de, gitster@pobox.com,
-	spearce@spearce.org, raa.lkml@gmail.com
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Tue Jun 29 14:52:29 2010
+Cc: Johannes.Schindelin@gmx.de, Elijah Newren <newren@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 29 15:02:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTaIb-0001iv-CL
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 14:52:25 +0200
+	id 1OTaS7-0007cA-Aq
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 15:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754857Ab0F2MwN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jun 2010 08:52:13 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:54997 "EHLO
+	id S1755422Ab0F2NCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 09:02:05 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:36621 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754278Ab0F2MwI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jun 2010 08:52:08 -0400
-Received: by mail-vw0-f46.google.com with SMTP id 5so1405610vws.19
-        for <git@vger.kernel.org>; Tue, 29 Jun 2010 05:52:08 -0700 (PDT)
+	with ESMTP id S1755206Ab0F2NCD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 09:02:03 -0400
+Received: by vws5 with SMTP id 5so1416375vws.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 06:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kYfRJcw7ucrkLtLFocbWCN61zsFRwCUYcpR13tdjh9E=;
-        b=EHVTDS5Gjkf+5wa81GoLLTVjWugqWBA31ADz/ySANf0DorLJBuGKKhli3iM5XvV3pK
-         HOepniQRqx8AuCJtQcXo470ixVnhsBIBlSdWugFqx3IBk+T/Hg8gfw/AUq0NImZfPg0i
-         6TL14UR3xoY3DzxSF1qN6SPOkoswYLYrZisV0=
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=audO2PiaA1Lj+5eAgJXUhM4t5P4vO3zUhUDww5KDhhc=;
+        b=iQzp4iJEnA2I1VenXr16ni2wT75ew0PTww005DMWuvnLQrs2T7G1uN/uujZyAhZifL
+         0RNFsgOKE3+jQnOen4Y+n7xUbOmSStXKX4LVWG5Y3pP91rEbAmLlPat0t147VLyM+67s
+         0X+KG79IhYy3a4Xso0mv8VJujhp6lfisaVO3o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=yCTUTLjiaHPGAo42bDq0GBcYvoUdtLlua/TNrg9Q13Q1elWrqgHRCy62d8DMbKRwRw
-         wKGDFOLouyOdiw5CmiKRFDWVupb0hbV6wA3r4uBhpPkUDIx3u1b8vHdEg7qYPQuT2gji
-         FqYUGetA0egf26WfYw6vkYKbld2rCsgn9K1N4=
-Received: by 10.220.109.196 with SMTP id k4mr526404vcp.61.1277815927846; Tue, 
-	29 Jun 2010 05:52:07 -0700 (PDT)
-Received: by 10.220.83.138 with HTTP; Tue, 29 Jun 2010 05:52:07 -0700 (PDT)
-In-Reply-To: <20100629075442.GB31048@genesis.frugalware.org>
+         :cc:content-type;
+        b=Xu/HrT6A8ieo1ZhHKsDMVo197I6dDovtyyQPuE7e5FPHFMEzpfYogI3R/HCnNXfzQk
+         yFJYM/4RGktqwKOvwda9NqxxSc9qrpC6g7psKMtu3Ea1XEw+h7zL59i26ZNAhNAR6aV6
+         GcEiRyOHRXMgf4jsWyrFNIXSbxiuAHwZlkAoI=
+Received: by 10.220.63.4 with SMTP id z4mr3810622vch.245.1277816522266; Tue, 
+	29 Jun 2010 06:02:02 -0700 (PDT)
+Received: by 10.220.83.138 with HTTP; Tue, 29 Jun 2010 06:02:02 -0700 (PDT)
+In-Reply-To: <1277774525-12530-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149903>
 
-On Tue, Jun 29, 2010 at 1:54 AM, Miklos Vajna <vmiklos@frugalware.org> =
-wrote:
-> On Mon, Jun 28, 2010 at 07:12:15PM -0600, newren@gmail.com wrote:
->> I'm a little uneasy with this change, mainly because I don't fully
->> understand the rename processing logic (I was actually kind of surpr=
-ised
->> when I made these changes and it worked). =C2=A0Although I verified =
-that
->> these changes (and my others in this patch series) introduce no new
->> breakages in the testsuite and even fix a known issue, I'm still not
->> quite sure I follow the logic well enough to feel fully confident in
->> this change. =C2=A0I'm particularly worried I may have neglected som=
-e closely
->> related cases that I should have fixed but which may still be broken=
-=2E
+On Mon, Jun 28, 2010 at 7:22 PM,  <newren@gmail.com> wrote:
+> From: Elijah Newren <newren@gmail.com>
 >
-> Same here, I touched merge-recursive, but not this part of it, so oth=
-ers
-> will give you a better review, I'm sure. :)
+> This option makes fast-export issue a 'deleteall' directive and then the
+> full set of files that make up each commit, rather than just showing the
+> list of files that have changed since the (first) parent commit.
 >
-> Other than that, I like it, thanks!
+> This is useful in at least two cases:
 
-Oh, it looks like I was off by a couple lines when trying to read the
-authorship out of git blame -C -C.  You touched lines that were pretty
-close, but it looks like this if block was actually due to Alex.  So
-I'll add him to the cc.
+I just noticed looking searching through older list emails that
+Johannes has apparently left git development
+(http://kerneltrap.org/mailarchive/git/2010/4/27/29263), is that
+correct?  If so, that's a big loss for the community.  :-(
 
-Alex: I think the basic idea is just that the rename logic isn't aware
-that there may be higher stage entries in the index due to D/F
-conflicts; by checking for such cases and marking the entry as not
-processed, it allows process_entry() later to look at it and handle
-those higher stages.  But I'm not sure if that's the right way to
-handle it, or if just having process_renames() should take care of
-clearing out the higher stage entries, or if something else entirely
-should be done.
+I guess that also means I need to cc someone else to review this.
+According to shortlog --no-merges, I'm the top committer to
+fast-export, followed by Johannes (though his patches were bigger and
+included the initial write of the file), followed by a string of 2-3
+commit persons.  Hmmm....  Shawn: could you take a quick look?
 
 Thanks,
 Elijah
