@@ -1,65 +1,45 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: recovering orphaned commit
-Date: Tue, 29 Jun 2010 17:24:24 +0200
-Message-ID: <20100629152424.GE4724@debian>
+Date: Tue, 29 Jun 2010 08:17:16 -0700
+Message-ID: <20100629151716.GF2337@spearce.org>
 References: <AANLkTiks6yPfdTACQwZlqv8PPPEg3RYGMx1Q1PjT0nRu@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 29 17:29:49 2010
+X-From: git-owner@vger.kernel.org Tue Jun 29 17:41:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTckr-0005eJ-Eu
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 17:29:45 +0200
+	id 1OTcwK-0004bH-9e
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 17:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696Ab0F2P3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jun 2010 11:29:39 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:59552 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754207Ab0F2P3i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jun 2010 11:29:38 -0400
-Received: by wyb38 with SMTP id 38so2814602wyb.19
-        for <git@vger.kernel.org>; Tue, 29 Jun 2010 08:29:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=ksje5gVrQNiwIhg/9ldtnJsYVdFw6DzmOc7UExqHEuw=;
-        b=lN65ntkwtc66fpM4I6+7QhA2U87a6OHOWd86gHf/obOiNpMHE6GT4uJzszUG6JmaYj
-         gMTMzQuGN75NSJIkGJIS1tiGzDDDXhf8kNVPbNxkmiQQ3hclHoaTzKo5aOB7DsHBVPTe
-         1jxolILwpxzAnDXFm7vROSswlRYbfr+21SybA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=MgL+/Vg7fj5Q/vbECaz1zRm9N9eSzA/T9zSlvfwvzfL2ad9dhBywjx3rpwbA9NVl9l
-         tQiYHDT5YXw2PpZUaiOHwtnVZAHlFVqBpDqFVHH6LUcJ2O0TBT56wK+q4tnz1sKftZMU
-         XZDvsoUeGlj60HhLwF4Nm4eE3G3oljsb7/eDU=
-Received: by 10.227.142.200 with SMTP id r8mr5377239wbu.72.1277824964218;
-        Tue, 29 Jun 2010 08:22:44 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id s47sm1665301wec.13.2010.06.29.08.22.42
+	id S1756458Ab0F2Pla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 11:41:30 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:34174 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754696Ab0F2Pl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 11:41:29 -0400
+Received: by pvc7 with SMTP id 7so185833pvc.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 08:41:28 -0700 (PDT)
+Received: by 10.142.194.1 with SMTP id r1mr3121129wff.260.1277824689680;
+        Tue, 29 Jun 2010 08:18:09 -0700 (PDT)
+Received: from localhost ([172.18.104.34])
+        by mx.google.com with ESMTPS id g30sm1587934rvb.0.2010.06.29.08.17.17
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Jun 2010 08:22:43 -0700 (PDT)
-Mail-Followup-To: Mahesh Vaidya <forvaidya@gmail.com>, git@vger.kernel.org
+        Tue, 29 Jun 2010 08:17:18 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <AANLkTiks6yPfdTACQwZlqv8PPPEg3RYGMx1Q1PjT0nRu@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149909>
 
-Hi Mahesh,
-
-Mahesh Vaidya writes:
+Mahesh Vaidya <forvaidya@gmail.com> wrote:
 >  I have a situation like this; 2 commits.
 > 
 > Example -
@@ -70,6 +50,9 @@ Mahesh Vaidya writes:
 > To see file at C2 ; I have done git reset --hard C2; I could see the file.
 > Now want go to C1 ; Ho do I Determine C1  using git command ?
 
-Use git-reflog (1) perhaps?
+Use `git reflog show` or `git log -g` to view the reflog entries
+for HEAD.  It will show you the different states HEAD had, so you
+want to find the state before you reset to C2, that would be C1.
 
--- Ram
+-- 
+Shawn.
