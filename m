@@ -1,86 +1,84 @@
-From: Madhu <enometh@meer.net>
-Subject: Re: git-rebase --abort eats files
-Date: Tue, 29 Jun 2010 06:53:53 +0530 (IST)
-Message-ID: <20100629012412.7FDBD1F212@leonis4.robolove.meer.net>
-References: <20100626125924.160F11F212@leonis4.robolove.meer.net>
- <201006262009.30380.j6t@kdbg.org> <20100628090517.GA8091@debian>
-Reply-To: Madhu <enometh@meer.net>
-Cc: j6t@kdbg.org, git@vger.kernel.org
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 29 04:02:33 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] t/t9700/test.pl: don't access private object members, use 
+	public access methods
+Date: Tue, 29 Jun 2010 02:19:50 +0000
+Message-ID: <AANLkTik3L7VcjezVK_8PCKsSpNFaTfYNvsOAgckhv-6K@mail.gmail.com>
+References: <OYRSzEHOHSti8exa5KJzWIUEyJ8xb2sfcvm4pUcvYhBXldZMw8JzP6a6cRcRRIZjiOtW9kzmnVA@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Tue Jun 29 04:21:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTQ9g-00045M-Jz
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 04:02:32 +0200
+	id 1OTQRz-0001db-NU
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 04:21:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160Ab0F2CC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jun 2010 22:02:26 -0400
-Received: from vps.hungerhost.com ([216.38.53.176]:48409 "EHLO
-	vps.hungerhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752470Ab0F2CCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jun 2010 22:02:25 -0400
-X-Greylist: delayed 2273 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jun 2010 22:02:25 EDT
-Received: from [59.92.61.135] (helo=leonis4.robolove.meer.net ident=Diebold)
-	by vps.hungerhost.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <enometh@meer.net>)
-	id 1OTPYp-00043B-Pv; Mon, 28 Jun 2010 21:24:28 -0400
-Received: by leonis4.robolove.meer.net (Postfix, from userid 500)
-	id 7FDBD1F212; Tue, 29 Jun 2010 06:53:53 +0530 (IST)
-In-reply-to: <20100628090517.GA8091@debian> (message from Ramkumar Ramachandra
-	on Mon, 28 Jun 2010 11:05:17 +0200)
-X-Url: http://www.meer.net/~enometh/
-X-Attribution: Madhu
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps.hungerhost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - meer.net
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751915Ab0F2CTw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 22:19:52 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63242 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751286Ab0F2CTv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 22:19:51 -0400
+Received: by iwn7 with SMTP id 7so664539iwn.19
+        for <git@vger.kernel.org>; Mon, 28 Jun 2010 19:19:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lmpiXczyTkO5izi5URsS4MMTT7qvC/VZ0lAg6UxIgk4=;
+        b=G9ZgHoxr9RDNNKOV+T0DexOmPZn0i5TOAGxAJ3flyepZ7XrRGtzmNhpdzhxLp7ezin
+         a/X4acKgTlfOv4usgewhJd1NmE58zKUjo672UguVvnnQuVnAKEgSi/ioL+/WIpotKxyX
+         xzgiP7D0h4wE+kUb/S2jqyJpQkkbVNTWtf+RY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=syYNDvmb7K2aqZyGT0rw0XJNjfdQ5XVAcOhs3OHZgohrtvCBTMxS2F8jxTGc5h5j5E
+         SZi7Ug0D20T8HyHB4Ra5VQFSyHhhRqr/Z4ATjqw199mK3NXS3FlL1e6BxTkxzbYYv+AL
+         GpDBiyvugPEmnlYqtZ61VwufuCgaq6MfKFizs=
+Received: by 10.231.161.135 with SMTP id r7mr6473334ibx.47.1277777991040; Mon, 
+	28 Jun 2010 19:19:51 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Mon, 28 Jun 2010 19:19:50 -0700 (PDT)
+In-Reply-To: <OYRSzEHOHSti8exa5KJzWIUEyJ8xb2sfcvm4pUcvYhBXldZMw8JzP6a6cRcRRIZjiOtW9kzmnVA@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149882>
 
-  |Date: Mon, 28 Jun 2010 11:05:17 +0200
-  |From: Ramkumar Ramachandra <artagnon@gmail.com>
-  |Cc: Madhu <enometh@meer.net>, git@vger.kernel.org
-  |Content-Type: text/plain; charset=us-ascii
-  |Content-Disposition: inline
-  |
-  |> No, it can't be that simple. If rebase stopped due to a conflict
-  |> on a commit that added new files, then your version of rebase
-  |> --abort will leave these new files behind as untracked.
-  |
-  |Right. The interactive rebase has to be able to differentiate
-  |between files that you added to resolve a conflict and files that
-  |you added to retain at the end of the rebase -- and the interactive
-  |rebase has no information about this. Hence, this problem can't be
-  |fixed without explicitly finding out the intent of the user.
+On Mon, Jun 28, 2010 at 22:51, Brandon Casey <casey@nrlssc.navy.mil> wr=
+ote:
+> From: Brandon Casey <drafnel@gmail.com>
+>
+> This test is accessing private object members of the Test::More and
+> Test::Builder objects. =C2=A0Older versions of Test::More did not imp=
+lement
+> these variables using a hash.
+>
+> My system complains as follows:
+>
+> =C2=A0 Can't coerce array into hash at <snip>/t/t9700/test.pl line 13=
+=2E
+> =C2=A0 BEGIN failed--compilation aborted at <snip>/t/t9700/test.pl li=
+ne 15.
 
-Wrong.  Rebase has to be able to differentaiate between two cases
+Just for the record, what version of Test::More is that:
 
-1. when there is a conflict, and the user is prompted to fix it, and
- then continue with a git-add, git-commit, and git-rebase --continue
+    perl -MTest::More -le 'print $Test::More::VERSION'
 
-and 
+> There are public access methods available for retrieving and setting =
+these
+> variables, so let's use them instead.
+>
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 
-2. when the user is given a commit, which he is asked to git-commit
-  --amend, and then git-rebase --continue
+This looks good, sorry for the API mistake on my part.
 
-Rebase is already aware of when each situation occurs.
-
-  |In my opinion, you should simply stash your changes before aborting
-  |the rebase instead of adding files and figuring out some complex
-  |way of expressing intent.
-
-This does not make sense.
-
---
-Madhu
+Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
