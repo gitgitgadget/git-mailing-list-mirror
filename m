@@ -1,84 +1,67 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] t/t9700/test.pl: don't access private object members, use 
-	public access methods
-Date: Tue, 29 Jun 2010 02:19:50 +0000
-Message-ID: <AANLkTik3L7VcjezVK_8PCKsSpNFaTfYNvsOAgckhv-6K@mail.gmail.com>
-References: <OYRSzEHOHSti8exa5KJzWIUEyJ8xb2sfcvm4pUcvYhBXldZMw8JzP6a6cRcRRIZjiOtW9kzmnVA@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] git --paginate: do not commit pager choice too early
+Date: Mon, 28 Jun 2010 22:42:26 -0700
+Message-ID: <7vpqzacs3h.fsf@alter.siamese.dyndns.org>
+References: <20100626192203.GA19973@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Tue Jun 29 04:21:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 29 07:42:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTQRz-0001db-NU
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 04:21:28 +0200
+	id 1OTTas-0007m1-Nm
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 07:42:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751915Ab0F2CTw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jun 2010 22:19:52 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:63242 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286Ab0F2CTv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jun 2010 22:19:51 -0400
-Received: by iwn7 with SMTP id 7so664539iwn.19
-        for <git@vger.kernel.org>; Mon, 28 Jun 2010 19:19:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lmpiXczyTkO5izi5URsS4MMTT7qvC/VZ0lAg6UxIgk4=;
-        b=G9ZgHoxr9RDNNKOV+T0DexOmPZn0i5TOAGxAJ3flyepZ7XrRGtzmNhpdzhxLp7ezin
-         a/X4acKgTlfOv4usgewhJd1NmE58zKUjo672UguVvnnQuVnAKEgSi/ioL+/WIpotKxyX
-         xzgiP7D0h4wE+kUb/S2jqyJpQkkbVNTWtf+RY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=syYNDvmb7K2aqZyGT0rw0XJNjfdQ5XVAcOhs3OHZgohrtvCBTMxS2F8jxTGc5h5j5E
-         SZi7Ug0D20T8HyHB4Ra5VQFSyHhhRqr/Z4ATjqw199mK3NXS3FlL1e6BxTkxzbYYv+AL
-         GpDBiyvugPEmnlYqtZ61VwufuCgaq6MfKFizs=
-Received: by 10.231.161.135 with SMTP id r7mr6473334ibx.47.1277777991040; Mon, 
-	28 Jun 2010 19:19:51 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Mon, 28 Jun 2010 19:19:50 -0700 (PDT)
-In-Reply-To: <OYRSzEHOHSti8exa5KJzWIUEyJ8xb2sfcvm4pUcvYhBXldZMw8JzP6a6cRcRRIZjiOtW9kzmnVA@cipher.nrlssc.navy.mil>
+	id S1751456Ab0F2Fmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 01:42:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39989 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751252Ab0F2Fmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 01:42:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F275BFAC6;
+	Tue, 29 Jun 2010 01:42:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FOdVS1igVcFgh74WARQUHiS4s1s=; b=ehA1E3
+	fpm2PPY7dRVEpTcPDpVQEJ+T5tTnyrL/ab5rR5wa6iWzfcCeSJxmEK+zEBgWWhIH
+	radgFbLMbyvo7x7wrHNerJPI0ZWShLhT9nwXVQ80jv8r/TBpzglL34vLTFfEkxm+
+	UYpVWhU8Z7U09r/TbEqidjSDQsJg/6Hsr3feQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=StnWLznwjwUjyhDfp0zgYrvaDRt4emQW
+	cT+p9UXN0xrngWZwv3OPsdr+n68oMRxd4AtbD98YH4bt94wU3mE6DBrWK+XNKGUP
+	PnkBBscCf27KlyLnkVGJo4M/0dgk/49ojVL+CQAnM4MQje5UQwXz8J44QLpxs35D
+	QQAsyOeSbAg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F4165BFAC5;
+	Tue, 29 Jun 2010 01:42:32 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3114CBFAC4; Tue, 29 Jun
+ 2010 01:42:28 -0400 (EDT)
+In-Reply-To: <20100626192203.GA19973@burratino> (Jonathan Nieder's message of
+ "Sat\, 26 Jun 2010 14\:22\:03 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1D28B898-8341-11DF-A914-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149883>
 
-On Mon, Jun 28, 2010 at 22:51, Brandon Casey <casey@nrlssc.navy.mil> wr=
-ote:
-> From: Brandon Casey <drafnel@gmail.com>
->
-> This test is accessing private object members of the Test::More and
-> Test::Builder objects. =C2=A0Older versions of Test::More did not imp=
-lement
-> these variables using a hash.
->
-> My system complains as follows:
->
-> =C2=A0 Can't coerce array into hash at <snip>/t/t9700/test.pl line 13=
-=2E
-> =C2=A0 BEGIN failed--compilation aborted at <snip>/t/t9700/test.pl li=
-ne 15.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Just for the record, what version of Test::More is that:
+> Patch is against master.  There is a small semantic conflict with
+> jn/grep-open: SIMPLEPAGER should be changed to SIMPLEPAGERTTY in the
+> prerequisites for the test_default_pager function.  Please let me
+> know if I should push a merge commit to help resolve that.
 
-    perl -MTest::More -le 'print $Test::More::VERSION'
-
-> There are public access methods available for retrieving and setting =
-these
-> variables, so let's use them instead.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-
-This looks good, sorry for the API mistake on my part.
-
-Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Thanks for advance warning; please double check the merge result in 'pu'
+when I push it out...
