@@ -1,92 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] rerere: fix overeager gc
-Date: Tue, 29 Jun 2010 10:59:15 -0700
-Message-ID: <7vy6dx90uk.fsf@alter.siamese.dyndns.org>
-References: <1277811498-17288-1-git-send-email-szeder@ira.uka.de>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH/RFC] Documentation/git-gc.txt: add reference to githooks
+Date: Tue, 29 Jun 2010 11:16:41 -0700
+Message-ID: <4C2A3889.90407@gmail.com>
+References: <AANLkTikjbu_q6QToVUeNAAL0Fls9eQ5BZkzZ1-8L93zh@mail.gmail.com> <1277744834-7546-1-git-send-email-judge.packham@gmail.com> <7vfx05by9t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Jun 29 19:59:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: spearce@spearce.org, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 29 20:19:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTf5m-0002G2-Tn
-	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 19:59:31 +0200
+	id 1OTfOp-0004Tl-ML
+	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 20:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754528Ab0F2R7Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jun 2010 13:59:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64855 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab0F2R7Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jun 2010 13:59:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DAD0C0C9A;
-	Tue, 29 Jun 2010 13:59:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=cLm/CtfbnYfR
-	UiGNYNe3R5AVRwA=; b=uBq/Z1M0rrqDLj2LTKO98OpaYu1U0vCxGhQz0vL85GP5
-	Qcwcmz1Y5v5vPwbaVGdZBN3xitDNrtiU0cIZsFLkH/S6H0n+AvmIHbvC3ekpNZLa
-	a8F/yySyBZf+cGg2MshceQSvgyAITe65oE8FUs/dLTjz/iJxRqVD88l1dl1VfnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hCn5tB
-	JlbQRhdND0+mMbNRplvI/fIz1n3WjgXVJ0SpX4loE1NDe24zb0l1e3EU+Mus4saP
-	rZZRLzg0XRZbzLzwNbYCL1OqsRyXSZXQTo6ZWcn7UenXxlAlOZfgyvVjT7XqI7Wa
-	A0kQOr1hAb/PYRlvEiOflXJa3BL+bnxdFOBr8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 562ECC0C99;
-	Tue, 29 Jun 2010 13:59:20 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 94AF3C0C97; Tue, 29 Jun
- 2010 13:59:17 -0400 (EDT)
-In-Reply-To: <1277811498-17288-1-git-send-email-szeder@ira.uka.de> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?= message of "Tue\, 29 Jun 2010 13\:38\:18 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0AC6F054-83A8-11DF-82C6-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754547Ab0F2STE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 14:19:04 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:59555 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753202Ab0F2STB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 14:19:01 -0400
+Received: by pxi8 with SMTP id 8so2453519pxi.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 11:19:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=JmGyWhScuxzT1RHy/AcBzHG7wgG0upRa8Gb0j+wlb+U=;
+        b=TGGoqk+97DXwqpDlWuxfoauZDyb5BXpaiLYQeu//AfO8L/LRbSqQUrlMBI1J1z03n3
+         qvlg/XbT1X0AWivRrjBWlXVw345KttNNrc85e0Hzk3XaxkEvfS5W/ph4fxhUkO7Lfg2b
+         8RQB6qiopUbgzMxYdz7svLThEF1p/y8siyUcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=onftqvoEUvxdgmP9Zrj/7OQRou3VOCWgUREw04lSirwwQJh/Mto9cGEiri+zpIb1Yw
+         rrckyJsfHR7mAs3JeNCRJViEASiNECH/jRi/3krXRbnIra9509oRMZLGDkFiNctrn5FJ
+         kuOj3Qb7bx3dOxaq63R4IOQ98ZwHekwoYDi6s=
+Received: by 10.114.248.9 with SMTP id v9mr8032068wah.164.1277835539822;
+        Tue, 29 Jun 2010 11:18:59 -0700 (PDT)
+Received: from [10.4.9.128] (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id n32sm60078246wag.7.2010.06.29.11.18.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 29 Jun 2010 11:18:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.9) Gecko/20100317 SUSE/3.0.4-1.1.1 Thunderbird/3.0.4
+In-Reply-To: <7vfx05by9t.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149924>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+On 29/06/10 09:26, Junio C Hamano wrote:
+> Chris Packham <judge.packham@gmail.com> writes:
+>   
+>> +HOOKS
+>> +-----
+>> +This command can run `pre-auto-gc` hook.  See linkgit:githooks[5] for more
+>> +information.
+>>     
+> Hmm.  "git gc --auto" does, but "git gc" doesn't, and saying "can run"
+> only adds to the sense of incompleteness of the description here without
+> giving useful information to the reader (iow, the user will have to check
+> the referred-to page anyway).  We would need to either remove the first
+> sentence (leaving only "See ... for information") or clarify the first
+> sentence a bit better, I think.
+>   
+How about
 
-> ...  But I'm not sure I
-> can rely on that when gc'ing.
-
-Looking at the timestamp of "thisimage" would probaboly be more sensibl=
-e
-than "preimage" alone, _if_ "thisimage" still exists.  It is rewritten
-every time this particular conflict is observed; this is not necessaril=
-y
-when the recorded resolution is _used_, but it may be close enough in
-practice.
-
-You probably would want to rename the helper as "last_checked_at", thou=
-gh.
-
-After rerere does its work, however, "thisimage" does not have to stay
-around (the user can remove it, or we could enhance "gc" to do so).
-
-> +		if (has_rerere_resolution(e->d_name)) {
-> +			then =3D rerere_last_used_at(e->d_name);
-> +			if (!then)
-> +				continue;
-
-Here you already know that you have resolution (i.e. "postimage"), but
-your new function cannot stat a corresponding "thisimage", so you err
-on the safer side---but that means you may keep pre/post image pairs
-forever if somebody removes otherwise unused "thisimage" from a distant
-past.  Perhaps we should apply cutoff_noresolve to the entry here?
-
-One possibility is to look at the timestamp of the directory itself
-instead.  Then we can safely gc otherwise-unused "thisimage" file when
-rerere is not in use.  I wonder if directory m_time timestamps are usab=
-le
-for this purpose on non-POSIX platforms?
+The `git gc --auto` command will run the `pre-auto-gc` hook, if
+enabled.  See linkgit:githooks[5] for more information.
