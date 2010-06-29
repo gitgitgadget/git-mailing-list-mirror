@@ -1,83 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Update t3508 status
-Date: Tue, 29 Jun 2010 11:50:32 -0500
-Message-ID: <20100629165032.GA7699@burratino>
-References: <1277775091-13313-1-git-send-email-newren@gmail.com>
- <7v4oglbxn6.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] msvc: Fix some "expr evaluates to function" compiler
+ warnings
+Date: Tue, 29 Jun 2010 09:50:55 -0700
+Message-ID: <7vlj9xaikw.fsf@alter.siamese.dyndns.org>
+References: <4C226323.5080709@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: newren@gmail.com, git@vger.kernel.org, chriscool@tuxfamily.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jun 29 18:51:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Johan Herland <johan@herland.net>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Jun 29 18:51:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTe1i-0005Nl-Rh
+	id 1OTe1j-0005Nl-Bf
 	for gcvg-git-2@lo.gmane.org; Tue, 29 Jun 2010 18:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932165Ab0F2QvE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jun 2010 12:51:04 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49726 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755786Ab0F2QvB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jun 2010 12:51:01 -0400
-Received: by fxm14 with SMTP id 14so1553590fxm.19
-        for <git@vger.kernel.org>; Tue, 29 Jun 2010 09:50:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=E8UZrqpqIhPP+HvHUXiVOTl8cMIn/hTOzZYu5e1+vpA=;
-        b=OuZ/KSIaiffj3vijM66kGC58EIWPZe0ZzxGAYCxhfOIXqWVqtrTsq1Qi8iyiRR1srD
-         vzuLiVjs3Qb8KQeFwL0aILC498S141B/qHRUYK/nt8obSsltu+zOZrFCXBnc5eSK9pBA
-         B5wmiKwSf2lEQcat6BP+MJHg3Ua9JRE7nKTkI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=LsDhhVe3WyhLl7/OyjT946bwp1Dxrl0BbE88rQ7AbWl8Dfcs4Q4XHMDPofhK6lFYkH
-         atlzeJGv+eW+Z+0oPn2GS5co1ehJqCivcEjQi10kjJNmSM/0uqRHQxDJLf0CSzzABbZD
-         DMjHzYHgQ0vF8/p8Gj8aZFeX/onp0fECX1Th8=
-Received: by 10.223.103.202 with SMTP id l10mr5931236fao.33.1277830258354;
-        Tue, 29 Jun 2010 09:50:58 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id f15sm1097490faa.46.2010.06.29.09.50.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 29 Jun 2010 09:50:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v4oglbxn6.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932179Ab0F2QvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 12:51:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55917 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755849Ab0F2QvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 12:51:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F1F58C0268;
+	Tue, 29 Jun 2010 12:51:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=MLW/0SV/VYrKMjMtyJLL9056hpc=; b=lHurP1pMQNQGrwc56P4efi/
+	13w+Jh/+Tu8g+njmORR8HxP1Hi5zOYYdS/ivfx8SO2nCCyab7p96LbsNeU5Bux6k
+	F81VyKf6ZRBqUTDDLxvND3GDY2Ir2167UpCn1Td9ERSJRDalLAFv9PWRHDUEhbl+
+	fxeZU+gsUXBMUdjCv8tE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=BM/1efJWYl2unKvuP+53FvliNCnpaMzVHOuyxh8pPHI/iL66u
+	1w7CyJNZWosv/V3osus7n7n2uBXDskxewoeVYpiOs42zWyE2vibKXCecxISM43I8
+	+uzjYufJwFXEfL8q1XAZyqhXFstBOmZFmuRr0XkXHSETelw4h4wjDo8S8M=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F9CBC0264;
+	Tue, 29 Jun 2010 12:51:01 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5C5EC025F; Tue, 29 Jun
+ 2010 12:50:56 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7FC77FA4-839E-11DF-8A93-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149920>
 
-Junio C Hamano wrote:
-> newren@gmail.com writes:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
->> Test #8 of t3508-cherry-pick-many-commits.sh
-[...]
-> Curious.
->=20
-> This test is broken in the second parent of 3af0bba8b (i.e. the tip o=
-f
-> cc/cherry-pick-stdin), but in 3af0bba8b, i.e. the merge result, it do=
-es
-> seem to be fine.
->=20
-> What am I missing???
+> In particular, the following warning is issued while compiling
+> notes.c:
+>
+>     notes.c(927) : warning C4550: expression evaluates to a \
+> function which is missing an argument list
+>
+> along with identical warnings on lines 928, 1016 and 1017.
+>
+> In order to suppress the warning, we change the definition of
+> combine_notes_fn, so that the symbol type is an (explicit)
+> "pointer to function ...".  As a result, several other
+> declarations need some minor fix-up to take account of the
+> new typedef.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 
-The fix is in commit v1.7.2-rc0~6^2 (DWIM 'git show -5' to 'git show
---do-walk -5', 2010-06-01):
-
- disable --no-walk in this case so =E2=80=98git show=E2=80=99 and futur=
-e =E2=80=98git
- cherry-pick=E2=80=99 can behave as expected.
-
-Jonathan
+Looks sensible.  Thanks.
