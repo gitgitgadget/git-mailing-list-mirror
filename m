@@ -1,124 +1,90 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [GSoC update extra!] git-remote-svn: Week 8
-Date: Wed, 30 Jun 2010 14:45:53 +0200
-Message-ID: <20100630124553.GA30999@debian>
-References: <1277386408-29943-1-git-send-email-artagnon@gmail.com>
- <20100624173956.GA1600@burratino>
- <20100624180752.GA1642@burratino>
- <1277862665.23613.8.camel@wilber>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: Re: purpose of -r flag for git-svn fetch
+Date: Wed, 30 Jun 2010 09:32:14 -0400
+Message-ID: <AANLkTikSZgH42-G447IZ5j3s53ERW-H68iK9xRh9cGAG@mail.gmail.com>
+References: <AANLkTil_iADth0dvcar-nkqjRcmK4p1Sc3UcBmXJ9nQn@mail.gmail.com>
+	<1277887235.2498.31.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Eric Wong <normalperson@yhbt.net>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jun 30 14:44:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 15:32:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTweO-0006iw-N2
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 14:44:25 +0200
+	id 1OTxOr-0005CC-Ba
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 15:32:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751964Ab0F3MoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 08:44:18 -0400
-Received: from fg-out-1718.google.com ([72.14.220.158]:60763 "EHLO
-	fg-out-1718.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521Ab0F3MoR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 08:44:17 -0400
-Received: by fg-out-1718.google.com with SMTP id e21so254991fga.1
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 05:44:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=idXeMIaWUSi98zlBQaW6Xmgn3fCUCCjPbkSznQgDlSU=;
-        b=dh5ZFIWPU6n/zqNhUS6eRF6QqIhk0w4HDk3GZuLunf+7Kn/AURxXFrEwm7miOY+yVa
-         xGtNaGd9+lEoSH1G+dnDmfMtY6og5F+GwMFBbG5vNwoTggrLNkw77JFrGCnT4/JGY55/
-         ZBtwG4Q5welE8bEhE0sNB6XtpcQ6GSvKmKHbU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=mT0fL93b9xpAIXWnDFWcjYY2Uh0hiFb1s9MDnXWO6seIHdLFWv2U6bfwXQ4CzhSEOO
-         KziE268NeRpyVQk2yEi80FmG0mzN94y9E706EfIFJxCY2YIAj4jBQtrNuFiZOROViLRh
-         VVsE7xpjgOV/U/j4EAzOBtcHQrtG/UCvRtV28=
-Received: by 10.216.88.85 with SMTP id z63mr7059238wee.105.1277901855710;
-        Wed, 30 Jun 2010 05:44:15 -0700 (PDT)
-Received: from debian (adm12-98.itu.dk [130.226.133.98])
-        by mx.google.com with ESMTPS id l4sm8302708wej.8.2010.06.30.05.44.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 05:44:13 -0700 (PDT)
-Mail-Followup-To: Sam Vilain <sam@vilain.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Eric Wong <normalperson@yhbt.net>
-Content-Disposition: inline
-In-Reply-To: <1277862665.23613.8.camel@wilber>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755991Ab0F3NcR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jun 2010 09:32:17 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:43027 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752495Ab0F3NcP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jun 2010 09:32:15 -0400
+Received: by gyd12 with SMTP id 12so360252gyd.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 06:32:14 -0700 (PDT)
+Received: by 10.229.182.131 with SMTP id cc3mr5012639qcb.53.1277904734388; 
+	Wed, 30 Jun 2010 06:32:14 -0700 (PDT)
+Received: by 10.229.181.3 with HTTP; Wed, 30 Jun 2010 06:32:14 -0700 (PDT)
+In-Reply-To: <1277887235.2498.31.camel@wpalmer.simply-domain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149958>
 
-Hi Sam,
+Hmm, this makes sense, but why does the initial fetch then update my
+local branch and if I call subsequent fetches without the "-r" it will
+fetch new revisions and update my local branch.
 
-Sam Vilain writes:
-> On Thu, 2010-06-24 at 13:07 -0500, Jonathan Nieder wrote:
-> > operation.  In other words, it needs the tree for
-> > http://path/to/some/svn/root/branches@r11.  This does not correspond
-> > to a single git tree, since the content of each branch has been given
-> > its own commit.
-> 
-> I wrote at length about this near the beginning of the project;
-> essentially, figuring out whether particular paths are roots or not is
-> not defined, as SVN does not distinguish between them (a misfeature
-> cargo culted from Perforce).  It becomes a data mining problem, you have
-> this scattered data, and you have to find a history inside.
-
-Right. Implementing git-svn on top of git-remote-svn might not be a
-bad idea.
-
-> As I recommended before, it probably makes more sense to keep a "remote
-> tracking" branch which mirrors the *entire* repository, and sort out
-> efficient ways to convert SVN revision paths like the above into tree
-> IDs.
-> 
-> I consider it very important to separate the data import and tracking
-> stage from the data mining stage.
-
-We're following this approach. At the moment, we're just focusing on
-getting all the data directly from SVN into the Git store. Instead of
-building trees for each SVN revision, we've found a way to do it
-inside the Git object store: we're currently ironing out the details,
-and I'll post an update about this shortly.
-
-> Once the data mining stage is well solved, then it makes sense to look
-> at ways that a tracking branch which only tracks a part of the
-> Subversion repository can be achieved.  In the simple case, where no
-> repository re-organisation or cross-project renames have occurred it is
-> relatively simple.  But in general I think this is a harder problem,
-> which cannot always be solved without intervention - and so not
-> necessary to be solved in short-term milestones.  As you are
-> discovering, it is a can of worms which you avoid if you know you always
-> have the complete SVN repository available.
-
-Right. I'm not convinced that it necessarily requires user
-intervention though: can you systematically prove that enough
-information is not available without user intervention using an
-example? Or is it possible, but simply too difficult (and not worth
-the effort) to mine out the data?
-
--- Ram
+On Wed, Jun 30, 2010 at 4:40 AM, Will Palmer <wmpalmer@gmail.com> wrote=
+:
+> On Tue, 2010-06-29 at 22:29 -0400, Bradley Wagner wrote:
+>> I've tried doing git-svn fetch in batches because it takes too long =
+to
+>> do it all at once.
+>>
+>> =A0 =A0 git svn -r1:5000 fetch
+>> =A0 =A0 git svn -r5000:10000 fetch
+>> =A0 =A0 git svn -r10000:15000 fetch
+>>
+>> Strangely, after this is done if I look in the history with "git log=
+",
+>> I only see commits on master branch up through the 5000th revision o=
+f
+>> the SVN repository. Someone told me to then call git-svn rebase to f=
+ix
+>> it. What does "-r" actually do when invoked on consecutive calls to
+>> "git-svn fetch" and why does git-svn rebase appear to fix it?
+>
+> The keyword here is "fetch". "fetch" only retrieves data into the
+> remote-tracking branch (often called refs/remotes/git-svn), without
+> updating your local branches. "git svn rebase", on the other hand,
+> rebases your currently-checked-out branch to be based on the git-svn
+> remote ref. (note that "git svn rebase" does a "git svn fetch"
+> behind-the-scenes first, and is actually just "git svn fetch" followe=
+d
+> by a normal "git rebase")
+>
+> The concepts are the same as if you were using the regular git comman=
+ds
+> "fetch" and "rebase", so the man pages for those may offer some insig=
+ht.
+>
+>>
+>> I posted this question to Stackoverflow before realizing that this
+>> list is a better audience for it:
+>> http://stackoverflow.com/questions/3144683/master-branch-missing-rev=
+isions-after-sequential-git-svn-fetch-calls
+>>
+>> Thanks!
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
+>
+>
