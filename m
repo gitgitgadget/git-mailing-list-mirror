@@ -1,87 +1,115 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: How to Push a range of commits.
-Date: Wed, 30 Jun 2010 15:47:58 +0200
-Message-ID: <20100630134758.GC30999@debian>
-References: <AANLkTikOffJHjzd3iBOXm7Lt7uPzHGkR1kfWtxSd-F9S@mail.gmail.com>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: Re: [PATCH 02/12] parse-options: add two helper functions
+Date: Wed, 30 Jun 2010 22:35:47 +0800
+Message-ID: <AANLkTikKo3yr0eY9Lmv98TtFfTWjYG7HG6GPfwmoB6Aa@mail.gmail.com>
+References: <1277558857-23103-1-git-send-email-struggleyb.nku@gmail.com>
+	<1277558857-23103-3-git-send-email-struggleyb.nku@gmail.com>
+	<7vaaqggwsh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 15:46:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, trast@student.ethz.ch,
+	jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 16:37:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTxcP-0005Wb-T4
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 15:46:26 +0200
+	id 1OTyPl-0007DU-J9
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 16:37:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541Ab0F3NqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 09:46:20 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43922 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336Ab0F3NqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 09:46:19 -0400
-Received: by gwb15 with SMTP id 15so356375gwb.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 06:46:18 -0700 (PDT)
+	id S1756420Ab0F3OhP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jun 2010 10:37:15 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:44941 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754139Ab0F3OhN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jun 2010 10:37:13 -0400
+Received: by qwi4 with SMTP id 4so298407qwi.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 07:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=MGmI971WtyvG6kOeAxNrfqEENf5D6cGudMnf8GEohZ4=;
-        b=oLhiIX8GEZ6WAMydyqvIvByF/xV+ib2zq2qN9NiRznhpHusjKBdjlBqMJsVs/SwkWW
-         vj0JfRsJi0xza22LjaSxtcwP19D9FCH19M3gvDY4z+NYoHTJghEX9q1IMnCdZTelpsr6
-         8js+d7/biLiqjXlIOAK9VrnaH1jctFEIue9pg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KWM6kpIo77WlH4ix0IKOdlhNkqC9cDXv+Ixu+Gchbps=;
+        b=CC+SRSwubyLmzcXm5paKzuEWXmqY5pr5DRBx+eSTOARtucTg4P4tzuDBgQBp+AZaXQ
+         71a5knbtgjnRLI2yCbE8m2p/furW06lDp/XmGI0nqZWyXf5sNB1Oy+fEd/MWeegksuES
+         DKmnymx2CrIKEOBZfTg5N3UUJ4XdL3sInJy7E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=nfV/ahX1TRhp27Sui6MHN4H5sVDelXgVFJ3NxI/tumqGCL9uu5KRbM5nk5NKdorszv
-         ngwEereL/plOrhL5kpaNI93DHmC0YhrdP/fG4et1n8lqQc8qW118RZHGMMmj8MaIjHzj
-         9LHcRq7SkiGzmZ9Xg4G1gDnMjniKTm7qyfzDo=
-Received: by 10.213.22.201 with SMTP id o9mr435225ebb.89.1277905577529;
-        Wed, 30 Jun 2010 06:46:17 -0700 (PDT)
-Received: from debian (adm12-98.itu.dk [130.226.133.98])
-        by mx.google.com with ESMTPS id w19sm8819727weq.44.2010.06.30.06.46.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 06:46:15 -0700 (PDT)
-Mail-Followup-To: Mahesh Vaidya <forvaidya@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <AANLkTikOffJHjzd3iBOXm7Lt7uPzHGkR1kfWtxSd-F9S@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=dFHvhZq7oaz/PkAyApqmj3Vbmtsn/J8Jr3pK94JaQd29JS9QtdOTIchbusRRSs6pC9
+         sNXpghd4LLhBdJz7/XxNv0gw77ifZFKXRdbhUOpZtWlNGBnps6Ez5mvdts+YVbwzbqK9
+         pzunBJPD+APJHIERnnWrx0BwsNS6NbEy1xe8A=
+Received: by 10.224.28.139 with SMTP id m11mr4738929qac.130.1277908548029; 
+	Wed, 30 Jun 2010 07:35:48 -0700 (PDT)
+Received: by 10.229.79.148 with HTTP; Wed, 30 Jun 2010 07:35:47 -0700 (PDT)
+In-Reply-To: <7vaaqggwsh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149960>
 
-Hi Mahesh,
+Hi Junio,
 
-Mahesh Vaidya writes:
-> On branch 'foobar' I have a range of contiguous  commits  say C1...C9,
-> C1 being at HEAD / TOP.
-> 
-> If I push branch all 9 commits will make it to authoritative
-> repository.  Is there a way to push a single commit (as C9 or C10 new
-> commit) which is common change set between C1 .. C9
+On Mon, Jun 28, 2010 at 2:22 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> diff --git a/parse-options.c b/parse-options.c
+>> index cbb49d3..013dbdb 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -439,6 +439,27 @@ unknown:
+>> =A0 =A0 =A0 return PARSE_OPT_DONE;
+>> =A0}
+>>
+>> +const char *parse_options_current(struct parse_opt_ctx_t *ctx)
+>> +{
+>> + =A0 =A0 return ctx->argv[0];
+>> +}
+>> +
+>> +int parse_options_next(struct parse_opt_ctx_t *ctx, int retain)
+>> +{
+>> + =A0 =A0 if (ctx->argc <=3D 0)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 return -1;
+>> +
+>> + =A0 =A0 if (retain =3D=3D 1)
+>> + =A0 =A0 {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 ctx->out[ctx->cpidx++] =3D ctx->argv[0];
+>> + =A0 =A0 }
+>
+> Style. =A0Either drop the unnecessary curly pair, or open the curly a=
+t the
+> end of the line that has the closing parenthesis of "if" condition.
+>
+> These two functions makes sense. =A0You could then use parse-options-=
+step to
+> let the machinery mostly be driven by the usual table lookup, and whe=
+n
+> (and only when) the machinery says "I don't know what this is", you c=
+an
+> check "current" to see what it is (e.g. it may be "-L"), handle it
+> yourself, and if you need to do something different (e.g. eat the <pa=
+th>
+> that immedately follows "-L"), you can use "next" to skip it without =
+ever
+> showing that to the table based parseopt machinery.
+>
+> I however wonder why you would need two passes if you have these two =
+APIs
+> into parse-options machinery, though...
+>
 
-Do you want to squash all the commits into one commit and push that?
-If so, use the interactive rebase to squash them into one commit (in
-possibly another branch) and push that commit.
+Hmm, yes, I have rewrite the the parsing code as a one pass one. It is
+3 or 4 weeks since this parsing code written, so I can't remember
+clearly why it adopt this two pass way. :-)
 
-If you want to push just a few commits instead, create a new branch
-based on upstream, cherry-pick the commits you want into it and push
-it to the upstream branch. For example, if I have a branch `foo`
-tracking the upstream `origin/foo` and is ahead of the upstream by 10
-commits, but I only want to push commit `bar`:
-
-$ # In branch foo
-$ git checkout moo # New temporary branch
-$ git reset --hard origin/foo # Base it on upstream
-$ git cherry-pick bar
-$ git push origin +refs/heads/moo:refs/heads/foo
-$ # I think the "refs/heads" part can be omitted in the above command
-
--- Ram
+--=20
+Regards!
+Bo
+----------------------------
+My blog: http://blog.morebits.org
+Why Git: http://www.whygitisbetterthanx.com/
