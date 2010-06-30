@@ -1,67 +1,53 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: notify alternative to auto gc?
-Date: Wed, 30 Jun 2010 14:27:18 +1200
-Message-ID: <1277864838.23613.18.camel@wilber>
-References: <EA7717AE-DA72-48D7-A27E-C958896FD158@gmail.com>
-	 <AANLkTil8sHZrfvHetwzjhOsyprsqrf7-XRS3B8qKH7cs@mail.gmail.com>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: purpose of -r flag for git-svn fetch
+Date: Tue, 29 Jun 2010 22:29:28 -0400
+Message-ID: <AANLkTil_iADth0dvcar-nkqjRcmK4p1Sc3UcBmXJ9nQn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl Stenerud <kstenerud@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 04:29:42 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 30 04:29:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTn3U-0002Bj-78
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 04:29:40 +0200
+	id 1OTn3U-0002Bj-Oj
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 04:29:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932Ab0F3C1N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jun 2010 22:27:13 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:51068 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752363Ab0F3C1M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jun 2010 22:27:12 -0400
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 179E6FCD32; Wed, 30 Jun 2010 14:27:12 +1200 (NZST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,BAYES_00,
-	FH_DATE_PAST_20XX autolearn=no version=3.2.5
-Received: from [IPv6:::1] (longdrop.musashi.utsl.gen.nz [192.168.253.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 446B4FCD2D;
-	Wed, 30 Jun 2010 14:27:08 +1200 (NZST)
-In-Reply-To: <AANLkTil8sHZrfvHetwzjhOsyprsqrf7-XRS3B8qKH7cs@mail.gmail.com>
-X-Mailer: Evolution 2.28.3 
+	id S1753330Ab0F3C33 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jun 2010 22:29:29 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:56991 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752949Ab0F3C33 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jun 2010 22:29:29 -0400
+Received: by qwi4 with SMTP id 4so91121qwi.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 19:29:28 -0700 (PDT)
+Received: by 10.224.96.209 with SMTP id i17mr5311907qan.154.1277864968189; 
+	Tue, 29 Jun 2010 19:29:28 -0700 (PDT)
+Received: by 10.229.181.3 with HTTP; Tue, 29 Jun 2010 19:29:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149937>
 
-On Mon, 2010-06-28 at 16:26 +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on wrote:
-> On Mon, Jun 28, 2010 at 16:10, Karl Stenerud <kstenerud@gmail.com> wr=
-ote:
-> > The git help tells me I can disable it by setting gc.auto to 0, whi=
-le the mailing list archive tells me I also have to set gc.autopacklimi=
-t to 0.  This is fine, but if I do that, I won't know when the repo is =
-in need of cleanup.  Is there any option I can set to instruct it to si=
-mply TELL me when it's in need of gc?
->=20
-> Anything that tells you whether you need to gc would incur much of th=
-e
-> speed penalty that running gc itself does.
+I've tried doing git-svn fetch in batches because it takes too long to
+do it all at once.
 
-See builtin/gc.c:too_many_loose_objects
+=A0=A0 =A0git svn -r1:5000 fetch
+=A0=A0 =A0git svn -r5000:10000 fetch
+=A0=A0 =A0git svn -r10000:15000 fetch
 
-Checking that gc is required involves opening one directory (objects/17
-IIRC), reading all of the entries in it and counting them.  It really
-doesn't hurt.
+Strangely, after this is done if I look in the history with "git log",
+I only see commits on master branch up through the 5000th revision of
+the SVN repository. Someone told me to then call git-svn rebase to fix
+it. What does "-r" actually do when invoked on consecutive calls to
+"git-svn fetch" and why does git-svn rebase appear to fix it?
 
-Sam
+I posted this question to Stackoverflow before realizing that this
+list is a better audience for it:
+http://stackoverflow.com/questions/3144683/master-branch-missing-revisi=
+ons-after-sequential-git-svn-fetch-calls
+
+Thanks!
