@@ -1,86 +1,92 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [PATCH] Clarify text filter merge conflict reduction docs
-Date: Wed, 30 Jun 2010 10:20:14 +0200
-Message-ID: <4718B1FE-4525-41C2-A4D3-27E99C5A6973@gmail.com>
-References: <20100628080234.GA7134@pvv.org> <0cd82ad22a6f240ebcde0c2f3a437a805dae5668.1277753114.git.eyvind.bernhardsen@gmail.com> <7vk4phbyl5.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	"git\@vger.kernel.org List" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 10:20:30 2010
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: purpose of -r flag for git-svn fetch
+Date: Wed, 30 Jun 2010 09:40:35 +0100
+Message-ID: <1277887235.2498.31.camel@wpalmer.simply-domain>
+References: <AANLkTil_iADth0dvcar-nkqjRcmK4p1Sc3UcBmXJ9nQn@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Bradley Wagner <bradley.wagner@hannonhill.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 10:40:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTsWz-00041X-3n
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 10:20:29 +0200
+	id 1OTsqh-0007Ct-TC
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 10:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753452Ab0F3IUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 04:20:21 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55555 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752313Ab0F3IUT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jun 2010 04:20:19 -0400
-Received: by bwz1 with SMTP id 1so217262bwz.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 01:20:17 -0700 (PDT)
+	id S1752340Ab0F3Ikq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 04:40:46 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:63579 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751907Ab0F3Ikp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 04:40:45 -0400
+Received: by gwb15 with SMTP id 15so232087gwb.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 01:40:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=BpJXEUjVot+7mQQTof35FlI0QNXiaJe1Xlq1uecRBrM=;
-        b=v9ROEZ2sOomHcCLZyc3xCLS4h9iTiQr9AW8kVLzjUPzgKIWi16UwxOVWNRMuElWHXN
-         Y/SMiF244EHF8akQB6/ghW+hDkOT2t6Fsk8FqvDT0Hrpx5+zWxNGjgDEju6ZAkYSeV8B
-         T8I1QoI0AzpOK6FhyOHa39D6gc6r3sBE6jCpA=
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=027e5IYIVhpQc36hJT37KLebJiWWwTazzWqGzA/vA58=;
+        b=c4jahF0/w/j5J22oXrE4ZMNo+dQY/rTgUD7q05oTjMAhzX8Cxcw6e3XqgqICycxHC3
+         lFNNFcf3wfplumiBX9IiPr1B0wWttFjlm+AlPqjltQHKD2U+6rNAQn0aUwymUWXR1R0S
+         Nf1q9l6FrTUaoCm85Q84Gl9VrMHfD8zN3RCoc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=ST1JFUF2ipq67eYU6j14sOZh9s5WliUen6DtnM9oTpz8S6hmEY9HbuWssM2vVE0r2Z
-         9v8X4Lck0jIxSlhdbG9iXKed66V9moypjOoUw6ty8QgnYSm/YHJb2AtvkqvhGeBPLuS1
-         4a9Sab7sGD2Pak7MP8UgVIlTw+UezxsvthHTU=
-Received: by 10.204.115.132 with SMTP id i4mr536047bkq.129.1277886017722;
-        Wed, 30 Jun 2010 01:20:17 -0700 (PDT)
-Received: from [10.36.80.159] ([62.113.137.5])
-        by mx.google.com with ESMTPS id bk13sm6449812bkb.4.2010.06.30.01.20.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 01:20:17 -0700 (PDT)
-In-Reply-To: <7vk4phbyl5.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1081)
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=bhyPLv+chp+5QBr9wVftioyzLHZjoUJdBogfOpNzLMBoZOrvp1Svh3o129w2Sb3fxz
+         qP+Bi/e+aeJYCF0AAKxcTydtXKVU5bRIMmEeU4Wm87PXY7/6PnvUEqbi6TgbsqODZKXR
+         yRVNNYeZQ+t5KpwTMDDewnOzzRebD2IjJwE0k=
+Received: by 10.91.190.11 with SMTP id s11mr6425246agp.50.1277887244244;
+        Wed, 30 Jun 2010 01:40:44 -0700 (PDT)
+Received: from [192.168.2.64] ([193.164.118.24])
+        by mx.google.com with ESMTPS id q26sm698755ybk.2.2010.06.30.01.40.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 30 Jun 2010 01:40:41 -0700 (PDT)
+In-Reply-To: <AANLkTil_iADth0dvcar-nkqjRcmK4p1Sc3UcBmXJ9nQn@mail.gmail.com>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149953>
 
-On 29. juni 2010, at 18.19, Junio C Hamano wrote:
-
-> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
-
-[...]
-
->> +If you have added attributes to a file that cause...
->> +...To prevent these unnecessary merge conflicts,
+On Tue, 2010-06-29 at 22:29 -0400, Bradley Wagner wrote:
+> I've tried doing git-svn fetch in batches because it takes too long to
+> do it all at once.
 > 
-> This naturally calls for an optimization idea, doesn't it?
+>     git svn -r1:5000 fetch
+>     git svn -r5000:10000 fetch
+>     git svn -r10000:15000 fetch
 > 
-> I wonder if ll_merge should gain another flag bit to disable the calls to
-> normalize_file(), so that the whole thing can be skipped when the caller
-> somehow knows .gitattributes files that govern the path didn't change.
+> Strangely, after this is done if I look in the history with "git log",
+> I only see commits on master branch up through the 5000th revision of
+> the SVN repository. Someone told me to then call git-svn rebase to fix
+> it. What does "-r" actually do when invoked on consecutive calls to
+> "git-svn fetch" and why does git-svn rebase appear to fix it?
+
+The keyword here is "fetch". "fetch" only retrieves data into the
+remote-tracking branch (often called refs/remotes/git-svn), without
+updating your local branches. "git svn rebase", on the other hand,
+rebases your currently-checked-out branch to be based on the git-svn
+remote ref. (note that "git svn rebase" does a "git svn fetch"
+behind-the-scenes first, and is actually just "git svn fetch" followed
+by a normal "git rebase")
+
+The concepts are the same as if you were using the regular git commands
+"fetch" and "rebase", so the man pages for those may offer some insight.
+
 > 
-> That won't be a trivial optimization and my gut feeling is that it
-> shouldn't be part of this series.
-
-Are you thinking that we could check changes in .gitattributes during a merge and only turn on normalization for those files where relevant attributes have changed?  I like it, but I agree with your gut, especially since normalization has to be enabled manually.
-
-> I do however wonder if this should be initially introduced as an
-> experimental feature, guarded with a configuration option for brave souls
-> to try it out, and flip the feature on by default after we gain confidence
-> in it, both in performance and in correctness.
-
-My fix to add the configuration option to the delete/modify patch yesterday was pretty bad, sorry.  My only excuse is that I was in a hurry, I'll resend the series tonight with a better fix.
--- 
-Eyvind Bernhardsen
+> I posted this question to Stackoverflow before realizing that this
+> list is a better audience for it:
+> http://stackoverflow.com/questions/3144683/master-branch-missing-revisions-after-sequential-git-svn-fetch-calls
+> 
+> Thanks!
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
