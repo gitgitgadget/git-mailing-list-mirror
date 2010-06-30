@@ -1,153 +1,142 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v2 10/13] map/print ranges along traversing the history topologically
-Date: Wed, 30 Jun 2010 23:25:23 +0800
-Message-ID: <1277911526-12105-10-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v2 11/13] add --always-print option
+Date: Wed, 30 Jun 2010 23:25:24 +0800
+Message-ID: <1277911526-12105-11-git-send-email-struggleyb.nku@gmail.com>
 References: <1277911526-12105-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com, Jens.Lehmann@web.de, trast@student.ethz.ch
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 30 17:31:32 2010
+X-From: git-owner@vger.kernel.org Wed Jun 30 17:31:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTzG7-00026z-Mi
+	id 1OTzG8-00026z-85
 	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 17:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932137Ab0F3PbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 11:31:08 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:42258 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932074Ab0F3PbE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 11:31:04 -0400
-Received: by pxi8 with SMTP id 8so417258pxi.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 08:31:04 -0700 (PDT)
+	id S932139Ab0F3PbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 11:31:21 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:59471 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932074Ab0F3PbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 11:31:20 -0400
+Received: by pzk7 with SMTP id 7so138879pzk.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 08:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=GNhLGHHShKhW+yDz6z/AAT9KMnUQ7d8Chhgt8QI6FXI=;
-        b=VHvmdflFB/g37IErAzj8t0xGNOS2YZ3GFmfJEinJlKdvRz9cjrsgU+DExoL8qTjfFW
-         pk5nCzpQKD/NcGEJ+eKxwHPOhKjvH/+kp87FqPOSqvT+BPlg/pyP4H7A0IbcDCHODhyc
-         BTkQ1xzxH37I8IO0xZAhMj/d597L1T1+O4Z08=
+        bh=xv/bQSEBFZIaat2GK6uL420GPlza3EaL0tbb4Unuh9w=;
+        b=WXdzF35YZLjHV5BAWpBwd7wSr0vrDdx+7VXvnhCO8Ur8S+ErdMQ9izFtkhrHpZqkv6
+         sR5in/opN7Ct5l4gbeGC0MZsgAaW09wgqR3CKRI6UMOQKxgRtf22VjfV4495GR++t5m0
+         s5Jr2whoVTjFwMe+XDAz7CjKaaSHlKu1RysVM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=kMbyvmN5zSb7+C8w1x6zwstE/dthhjvUv2JckIw3CCPYLsDc00gTpMXCFptw5Kt6ZS
-         K/p2K11w7MKk7SbVVEItgF+BpzZMIf/YDaddAWyhoI9nhNAlJPjvd04JwSU0+ps0BWuB
-         GA5xC/5T4SC9tTYtCBceRS9ebNkI/ktEh3g6U=
-Received: by 10.114.186.40 with SMTP id j40mr9964499waf.93.1277911864123;
-        Wed, 30 Jun 2010 08:31:04 -0700 (PDT)
+        b=uXSnzCW3fOOoFka0MKxblL5H2/IhCF8SQ+Yu6DJ93iIHFZbp2D2l80VNafgDilDReR
+         rsZ6O5WfZo+Nxl9MRXR5JIk+L8IgL0AwJI1XvBPMPhC4V/n2QaGlPfdIBlTi53ywnrwj
+         YVcIkMcLNo2Pp2FKSo/9E4Fc++dfLnl82jtjg=
+Received: by 10.115.66.30 with SMTP id t30mr10020111wak.161.1277911880533;
+        Wed, 30 Jun 2010 08:31:20 -0700 (PDT)
 Received: from localhost.localdomain ([117.15.79.69])
-        by mx.google.com with ESMTPS id d38sm75050850wam.20.2010.06.30.08.30.47
+        by mx.google.com with ESMTPS id d38sm75050850wam.20.2010.06.30.08.31.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 08:31:03 -0700 (PDT)
+        Wed, 30 Jun 2010 08:31:19 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc0.27.g1c5fd
 In-Reply-To: <1277911526-12105-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149974>
 
-Since ranges may change in different branches, we should
-make sure we do not pass range to parent until all the
-ranges get 'combined' at the commit which is a split commit.
-So, topological traversing is necessary.
+Always print the interesting ranges even if the current
+commit does not change any line of it.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- builtin/log.c |    5 ++++-
- line.c        |   52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- line.h        |    2 ++
- 3 files changed, 58 insertions(+), 1 deletions(-)
+ builtin/log.c |    3 +++
+ line.c        |   11 +++++++++--
+ revision.h    |    3 ++-
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/log.c b/builtin/log.c
-index d0faf07..f14d54a 100644
+index f14d54a..a856f3c 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -612,7 +612,10 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
--	return cmd_log_walk(&rev);
-+	if (rev.line)
-+		return cmd_line_log_walk(&rev);
-+	else
-+		return cmd_log_walk(&rev);
- }
+@@ -85,6 +85,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ {
+ 	int i;
+ 	int decoration_given = 0;
++	static int always_print = 0;
+ 	struct userformat_want w;
+ 	const char *path = NULL, *pathspec = NULL;
+ 	static struct diff_line_range *range = NULL;
+@@ -92,6 +93,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	static struct line_opt_callback_data line_cb = {&range, &ctx, NULL};
+ 	static const struct option options[] = {
+ 		OPT_CALLBACK('L', NULL, &line_cb, "n,m", "Process only line range n,m, counting from 1", log_line_range_callback),
++		OPT_BOOLEAN(0, "always-print", &always_print, "Always print the interesting range even if the current commit does not change any line of it"),
+ 		OPT_END()
+ 	};
  
- /* format-patch */
-diff --git a/line.c b/line.c
-index 973eff5..faaa25a 100644
---- a/line.c
-+++ b/line.c
-@@ -1190,3 +1190,55 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+@@ -224,6 +226,7 @@ parse_done:
+ 	/* Test whether line level history is asked for */
+ 	if (range && range->nr > 0) {
+ 		setup_line(rev, range);
++		rev->always_print = always_print;
  	}
  }
  
-+int cmd_line_log_walk(struct rev_info *rev)
-+{
-+	struct commit *commit;
-+	struct commit_list *list = NULL;
-+	struct diff_line_range *r = NULL;
-+
-+	if (prepare_revision_walk(rev))
-+		die("revision walk prepare failed");
-+
-+	list = rev->commits;
-+	if (list) {
-+		list->item->object.flags |= RANGE_UPDATE;
-+		list = list->next;
-+	}
-+	/* Clear the flags */
-+	while (list) {
-+		list->item->object.flags &= 0x0;
-+		list = list->next;
-+	}
-+
-+	list = rev->commits;
-+	while (list) {
-+		commit = list->item;
-+
-+		if (commit->object.flags & RANGE_UPDATE) {
-+			assign_parents_range(rev, commit);
+diff --git a/line.c b/line.c
+index faaa25a..eb7375d 100644
+--- a/line.c
++++ b/line.c
+@@ -1074,6 +1074,13 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
+ 	 * no sensible rang->pair since there is no diff run.
+ 	 */
+ 	if (one == NULL) {
++		if (rev->always_print) {
++			chunk.two = two->data;
++			chunk.two_end = two->data + two->size;
++			chunk.ltwo = 1;
++			chunk.range = range;
++			diff_flush_chunks(&rev->diffopt, &chunk);
 +		}
-+
-+		if (commit->object.flags & NEED_PRINT) {
-+			line_log_flush(rev, commit);
-+		}
-+
-+		r = lookup_line_range(rev, commit);
-+		if (r) {
-+			cleanup(r);
-+			r = NULL;
-+			add_line_range(rev, commit, r);
-+		}
-+
-+		r = lookup_decoration(&rev->nontrivial_merge, &commit->object);
-+		if (r) {
-+			cleanup(r);
-+			r = NULL;
-+			add_decoration(&rev->nontrivial_merge, &commit->object, r);
-+		}
-+
-+		list = list->next;
-+	}
-+
-+	return 0;
-+}
-+
-diff --git a/line.h b/line.h
-index 885e985..b293894 100644
---- a/line.h
-+++ b/line.h
-@@ -128,4 +128,6 @@ extern struct diff_line_range *lookup_line_range(struct rev_info *revs, struct c
- const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
- 		void *data, long lines, long begin, long *ret);
+ 		return;
+ 	}
  
-+extern int cmd_line_log_walk(struct rev_info *rev);
-+
- #endif
+@@ -1184,7 +1191,7 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ 		return flush_nontrivial_merge(rev, nontrivial);
+ 
+ 	while (range) {
+-		if (range->diff)
++		if (range->diff || (range->nr && rev->always_print))
+ 			diff_flush_filepair(rev, range);
+ 		range = range->next;
+ 	}
+@@ -1218,7 +1225,7 @@ int cmd_line_log_walk(struct rev_info *rev)
+ 			assign_parents_range(rev, commit);
+ 		}
+ 
+-		if (commit->object.flags & NEED_PRINT) {
++		if (commit->object.flags & NEED_PRINT || rev->always_print) {
+ 			line_log_flush(rev, commit);
+ 		}
+ 
+diff --git a/revision.h b/revision.h
+index 32bde08..3d25fd0 100644
+--- a/revision.h
++++ b/revision.h
+@@ -71,7 +71,8 @@ struct rev_info {
+ 			bisect:1,
+ 			ancestry_path:1,
+ 			first_parent_only:1,
+-			line:1;
++			line:1,
++			always_print:1;
+ 
+ 	/* Diff flags */
+ 	unsigned int	diff:1,
 -- 
 1.7.0.2.273.gc2413.dirty
