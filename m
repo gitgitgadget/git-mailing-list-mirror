@@ -1,97 +1,86 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Dangers of reset --hard (Re: Implicit stashes)
-Date: Wed, 30 Jun 2010 09:19:32 +0100
-Message-ID: <1277885972.2498.25.camel@wpalmer.simply-domain>
-References: <AANLkTilTaQP6qARY1A495vm9HAvLVX_lqIQd1l3WIv7a@mail.gmail.com>
-	 <20100630051326.GA17497@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John Tapsell <johnflux@gmail.com>, Git List <git@vger.kernel.org>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 10:19:48 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: [PATCH] Clarify text filter merge conflict reduction docs
+Date: Wed, 30 Jun 2010 10:20:14 +0200
+Message-ID: <4718B1FE-4525-41C2-A4D3-27E99C5A6973@gmail.com>
+References: <20100628080234.GA7134@pvv.org> <0cd82ad22a6f240ebcde0c2f3a437a805dae5668.1277753114.git.eyvind.bernhardsen@gmail.com> <7vk4phbyl5.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Finn Arne Gangstad <finnag@pvv.org>,
+	"git\@vger.kernel.org List" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 10:20:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTsWJ-0003eQ-F3
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 10:19:47 +0200
+	id 1OTsWz-00041X-3n
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 10:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752334Ab0F3ITk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jun 2010 04:19:40 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:62758 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752313Ab0F3ITi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 04:19:38 -0400
-Received: by gxk23 with SMTP id 23so247343gxk.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 01:19:37 -0700 (PDT)
+	id S1753452Ab0F3IUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 04:20:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55555 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752313Ab0F3IUT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 30 Jun 2010 04:20:19 -0400
+Received: by bwz1 with SMTP id 1so217262bwz.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 01:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=E56fyhw5RMVZ60UTB/1mug3vAcly4p1uPAqrR5pQnP0=;
-        b=I+mtPh4Gzry134UZn3jcaZY52MN9Y9UuK3KszYynnEkBaCLalm7KbllrlXgRcUmNxc
-         7BITTm4J0CC+wRzrpXeNL94diI9jEOrthoAt6izUbFeZbnVXJ1JtycLaS7jURWM11muQ
-         o9H4lPaKxD2HHmxRDbbDMqCPL0IzIv6rBalYE=
+        h=domainkey-signature:received:received:references:in-reply-to
+         :mime-version:content-type:message-id:content-transfer-encoding:cc
+         :from:subject:date:to:x-mailer;
+        bh=BpJXEUjVot+7mQQTof35FlI0QNXiaJe1Xlq1uecRBrM=;
+        b=v9ROEZ2sOomHcCLZyc3xCLS4h9iTiQr9AW8kVLzjUPzgKIWi16UwxOVWNRMuElWHXN
+         Y/SMiF244EHF8akQB6/ghW+hDkOT2t6Fsk8FqvDT0Hrpx5+zWxNGjgDEju6ZAkYSeV8B
+         T8I1QoI0AzpOK6FhyOHa39D6gc6r3sBE6jCpA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=KSbCMU2dh3yreIbN5WyBvl7gfsvodPSYYN81mwcIRrfMxp8u8bjIVWYk+ag3WJ0Hnc
-         XG/eLPObxzI+rSfjkRXrKQwVnYBRoICS4cFSeCtfbHvUiGR6dyYyClySUAeTpYBmGi2P
-         mWBsLIClnw88f5YsgRsIFyHvVpwwdIesxmI04=
-Received: by 10.100.246.26 with SMTP id t26mr10211718anh.112.1277885977325;
-        Wed, 30 Jun 2010 01:19:37 -0700 (PDT)
-Received: from [192.168.2.64] ([193.164.118.24])
-        by mx.google.com with ESMTPS id m13sm684615ybn.9.2010.06.30.01.19.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 01:19:36 -0700 (PDT)
-In-Reply-To: <20100630051326.GA17497@burratino>
-X-Mailer: Evolution 2.28.3 
+        h=references:in-reply-to:mime-version:content-type:message-id
+         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
+        b=ST1JFUF2ipq67eYU6j14sOZh9s5WliUen6DtnM9oTpz8S6hmEY9HbuWssM2vVE0r2Z
+         9v8X4Lck0jIxSlhdbG9iXKed66V9moypjOoUw6ty8QgnYSm/YHJb2AtvkqvhGeBPLuS1
+         4a9Sab7sGD2Pak7MP8UgVIlTw+UezxsvthHTU=
+Received: by 10.204.115.132 with SMTP id i4mr536047bkq.129.1277886017722;
+        Wed, 30 Jun 2010 01:20:17 -0700 (PDT)
+Received: from [10.36.80.159] ([62.113.137.5])
+        by mx.google.com with ESMTPS id bk13sm6449812bkb.4.2010.06.30.01.20.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 30 Jun 2010 01:20:17 -0700 (PDT)
+In-Reply-To: <7vk4phbyl5.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149952>
 
-On Wed, 2010-06-30 at 00:13 -0500, Jonathan Nieder wrote:
-> John Tapsell wrote:
->=20
-> > $ git reset --hard
-> >
-> > I know this seems very explicit to delete changes, but I myself hav=
-e
-> > done this and accidentally lost changes.  For example, I write a un=
-it
-> > test and don't commit it in on purpose because I know that it
-> > currently fails and I want to test it against older versions.  I
-> > carefully git checkout older versions to find if the unit test fail=
-s,
-> > then in stupidity reset back to origin/master ..
->=20
-> Aside: I assume you already know about it, but still I cannot help bu=
-t
-> take the opportunity to advertise =E2=80=98git reset --keep=E2=80=99.=
-  I was added
-> fairly recently (1.7.1 rc0) and I find myself annoyed when on machine=
-s
-> without it because of almost exactly this use case.
+On 29. juni 2010, at 18.19, Junio C Hamano wrote:
 
-I tend to want "do a git reset --hard, but fail if anything would be
-lost". The use-case here is that when I reset --hard, I want a
-completely clean copy- but I don't want to accidentally lose anything.
+> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
 
-This can probably be achieved with something like:
-git diff-files --quiet &&
-  git diff-index --quiet HEAD &&
-  git diff-index --cached --quiet HEAD ||
-  git reset --hard "$@"
+[...]
 
-I've got a half-done patch sitting at home which adds -g, --gentle to
-"git reset", which is intended to do exactly that- but my git-fu is not
-very strong on the C end of things, so for the foreseeable future it
-will remain an idea without a working implementation.
+>> +If you have added attributes to a file that cause...
+>> +...To prevent these unnecessary merge conflicts,
+> 
+> This naturally calls for an optimization idea, doesn't it?
+> 
+> I wonder if ll_merge should gain another flag bit to disable the calls to
+> normalize_file(), so that the whole thing can be skipped when the caller
+> somehow knows .gitattributes files that govern the path didn't change.
+> 
+> That won't be a trivial optimization and my gut feeling is that it
+> shouldn't be part of this series.
+
+Are you thinking that we could check changes in .gitattributes during a merge and only turn on normalization for those files where relevant attributes have changed?  I like it, but I agree with your gut, especially since normalization has to be enabled manually.
+
+> I do however wonder if this should be initially introduced as an
+> experimental feature, guarded with a configuration option for brave souls
+> to try it out, and flip the feature on by default after we gain confidence
+> in it, both in performance and in correctness.
+
+My fix to add the configuration option to the delete/modify patch yesterday was pretty bad, sorry.  My only excuse is that I was in a hurry, I'll resend the series tonight with a better fix.
+-- 
+Eyvind Bernhardsen
