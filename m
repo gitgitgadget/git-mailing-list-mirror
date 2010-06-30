@@ -1,57 +1,80 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC PATCH] rerere: fix overeager gc
-Date: Wed, 30 Jun 2010 08:12:30 +0200
-Message-ID: <4C2AE04E.9090901@viscovery.net>
-References: <1277811498-17288-1-git-send-email-szeder@ira.uka.de> <7vy6dx90uk.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 4/5] merge_recursive: Fix renames across paths below D/F 
+	conflicts
+Date: Wed, 30 Jun 2010 08:53:19 +0200
+Message-ID: <AANLkTilJIh9V3kIhBnfm5Bunzbp7XdoYOOoVbku_u-8y@mail.gmail.com>
+References: <1277773936-12412-1-git-send-email-newren@gmail.com>
+	<1277773936-12412-5-git-send-email-newren@gmail.com>
+	<20100629075442.GB31048@genesis.frugalware.org>
+	<AANLkTimFBlWiK76quLW1TiUfueGISsW7ZIHgFUcFg4j8@mail.gmail.com>
+	<AANLkTil7CdCoP3wLVKX0MEiwp8KaKWFLvRtUWzt2a3Nh@mail.gmail.com>
+	<AANLkTilggM9-vBabNvJiYMiQZyZtJMLhfWleYKvuJNMv@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 08:12:46 2010
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org,
+	Johannes.Schindelin@gmx.de, gitster@pobox.com, spearce@spearce.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 08:53:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTqXM-0002q9-S9
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 08:12:45 +0200
+	id 1OTrAm-0003O8-1V
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 08:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751987Ab0F3GMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 02:12:39 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:39589 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751009Ab0F3GMj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 02:12:39 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OTqXB-0006v9-7I; Wed, 30 Jun 2010 08:12:33 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E5A7A1660F;
-	Wed, 30 Jun 2010 08:12:30 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
-In-Reply-To: <7vy6dx90uk.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1752463Ab0F3GxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 02:53:22 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:64868 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752240Ab0F3GxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 02:53:21 -0400
+Received: by ewy23 with SMTP id 23so101297ewy.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 23:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=ul0RHdoj2RPOuY5qAWciRTplhDyWToF6FlKmTmepDho=;
+        b=NXwTarNHVw7zXLlQtiep15QVdGGqX5eoAk367L/eJ2CkxoeD1dtoTrLJwFJeC9K1B9
+         UZnBeS4RgFz2r4x6csAxj5MvO9rPQlk8aoMUdcN3QPqd2zn6EFE6lZtbOfbMlO5qMzRa
+         xhRkYDW6dHjkdouNlwCsRq/iVHEq+tyJVcZsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=OKX7cnlazys5NAwMzBubfbfdVYAMXq/Bm/BheU9jnmoEdFxdZ1Y+Cj5/5tnzjx5cvz
+         wBI5QlVio6IFqSjLHRZl5TQRH5WhhCiUQbNfIURqfEj+mGUPqHRsafDWIaxNk/xwFKGg
+         bOHPysiGt5jqzwzPga1Ce340hGGwoJ4ylzx9g=
+Received: by 10.213.22.201 with SMTP id o9mr109064ebb.89.1277880799847; Tue, 
+	29 Jun 2010 23:53:19 -0700 (PDT)
+Received: by 10.213.105.148 with HTTP; Tue, 29 Jun 2010 23:53:19 -0700 (PDT)
+In-Reply-To: <AANLkTilggM9-vBabNvJiYMiQZyZtJMLhfWleYKvuJNMv@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149948>
 
-Am 6/29/2010 19:59, schrieb Junio C Hamano:
-> One possibility is to look at the timestamp of the directory itself
-> instead.  Then we can safely gc otherwise-unused "thisimage" file when
-> rerere is not in use.  I wonder if directory m_time timestamps are usable
-> for this purpose on non-POSIX platforms?
+On Tue, Jun 29, 2010 at 17:55, Elijah Newren <newren@gmail.com> wrote:
+> On Tue, Jun 29, 2010 at 7:36 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
+>> I cannot say much about your change... Are you sure about D/F conflict
+>> detection, though? You just test if target mode not 0.
+>
+> Well, as far as this particular if-block is concerned, blame suggests
+> that you and Miklos were responsible (I apologize if gmail screws up
+> and inserts line wrapping)::
 
-I don't think that will work at all: We only use fopen() to write
-thisimage, which only truncates the file, but doesn't modify mtime of the
-directory. Nor do we create any other (temporary) directory entries that
-would modify the mtime.
+Don't just look at the blame output, look at what the commits actually changed.
+It's either a reformatting or a trivial change.
 
-Would it be possible to update the timestamp of preimage every time it is
-used (e.g., in rerere.c:merge()), and check for that?
+> With D/F conflicts, the files would be loaded into higher stages in
+> the index (before it gets to process_renames()), which I detected via
+> a non-zero mode.
 
--- Hannes
+This just detects if there was any conflict. Not specifically D/F or F/D.
+
+> If there's a different way I should be checking for higher stage entries
+> that still need to be resolved, I'd be happy to use it.
+
+I'd expect a check for a file-to-directory (or back) mode change.
