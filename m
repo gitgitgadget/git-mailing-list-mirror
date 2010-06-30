@@ -1,291 +1,213 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v2 04/13] refactor parse_loc
-Date: Wed, 30 Jun 2010 23:25:17 +0800
-Message-ID: <1277911526-12105-4-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v2 05/13] parse the -L options
+Date: Wed, 30 Jun 2010 23:25:18 +0800
+Message-ID: <1277911526-12105-5-git-send-email-struggleyb.nku@gmail.com>
 References: <1277911526-12105-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com, Jens.Lehmann@web.de, trast@student.ethz.ch
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 30 17:29:06 2010
+X-From: git-owner@vger.kernel.org Wed Jun 30 17:29:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTzDk-0008N5-VT
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 17:29:05 +0200
+	id 1OTzE2-0000C4-0S
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 17:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756783Ab0F3P27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 11:28:59 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:36057 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996Ab0F3P26 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 11:28:58 -0400
-Received: by pwj8 with SMTP id 8so320007pwj.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 08:28:57 -0700 (PDT)
+	id S1756788Ab0F3P3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 11:29:17 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:41998 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753996Ab0F3P3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 11:29:16 -0400
+Received: by pzk7 with SMTP id 7so138520pzk.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 08:29:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=mOQOCoyFNFZW18epND2HonMl4tu+jmRgxvf95bC3DR4=;
-        b=dP6x6zM6KZbPtfV+HTbuI6qubtSLQLQaCwfxUJ/kp5ExJ5PqO6xgmsSkg3aRsIzWuP
-         S3TG4cyZrwRCKUCrdtR75K4zax3czFRrJ7v5KJL333AnEwcwlg36FkWpjPC8RLqvHwjd
-         bweaW4Vbdk3vn5gnOkgt0Aj56s9mauHtJGyHw=
+        bh=+4sJXaIPVYMmsA2CZIwq+tJ4VmzrvrneJEM0UZCXEz0=;
+        b=KyHedeRnZeApyG8x1tw30CpZ+peVBC5zE8CReZDr2v+LqjMhMMG96YUQnrNzxTIHX9
+         8rc3S2ka1nRx0MwYAIeoclkwM5ehjKQgCCGI7tzjqgGiky48qet/EdSSnC7XaYko+ObV
+         a/xwJ33Pb4GdgrGCJ6aKwruyZtIFtBhwOI96c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=p/L/BK3BL7YYZnKySkHiGOL+DmAdwrvtf73sA9tgjuKG1ekw4SGmdx2APeJBFLdEwo
-         OWQcuNajZzYdGV0j9b2dI+i74pV8136ilriyFUWvtQ86pW41ahPyCqkzHq1bWv8euaBA
-         cF0G76mo+u9+m/P45v+rBxThlDEHZ/H17ILSk=
-Received: by 10.114.186.29 with SMTP id j29mr9974120waf.99.1277911737457;
-        Wed, 30 Jun 2010 08:28:57 -0700 (PDT)
+        b=JEUtjTK35thFPmOJgiqyUPT99T+3T4jxOE+Yjg3isOoLPtGj605A0r0QXIIcGmPOO/
+         wHdFPdun3EJ61Ta18wqNl5QbpigxaE/1UCgkQWG+n5um2sP3FxDLxK4JGWDk+s3JjS3/
+         T/bR36byPo688FXazhf7vsyuDZYcAUJJGzSJo=
+Received: by 10.115.39.39 with SMTP id r39mr9978640waj.157.1277911755458;
+        Wed, 30 Jun 2010 08:29:15 -0700 (PDT)
 Received: from localhost.localdomain ([117.15.79.69])
-        by mx.google.com with ESMTPS id d38sm75050850wam.20.2010.06.30.08.28.41
+        by mx.google.com with ESMTPS id d38sm75050850wam.20.2010.06.30.08.28.59
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 08:28:55 -0700 (PDT)
+        Wed, 30 Jun 2010 08:29:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc0.27.g1c5fd
 In-Reply-To: <1277911526-12105-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149968>
 
-Both 'git blame -L' and 'git log -L' parse the same style
-of line number arguments, so put the 'parse_loc' function
-to line.c and export it.
-The caller of parse_loc should provide a callback function
-which is used to calculate the nth line start position.
-Other parts such as regexp search, line number parsing are
-abstracted and re-used.
+With the two new APIs of parse options added in the previous
+commit, we parse the multiple '-L n,m <file>' syntax.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- builtin/blame.c |   89 +++++-------------------------------------------------
- line.c          |   35 ++++++++++++---------
- line.h          |    5 +++
- 3 files changed, 34 insertions(+), 95 deletions(-)
+ builtin/log.c |  102 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 101 insertions(+), 1 deletions(-)
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 01e62fd..17b71cd 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -21,6 +21,7 @@
+diff --git a/builtin/log.c b/builtin/log.c
+index f068583..d0faf07 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -19,6 +19,7 @@
+ #include "remote.h"
+ #include "string-list.h"
  #include "parse-options.h"
- #include "utf8.h"
- #include "userdiff.h"
 +#include "line.h"
  
- static char blame_usage[] = "git blame [options] [rev-opts] [rev] [--] file";
+ /* Set a default date-time format for git log ("log.date" config variable) */
+ static const char *default_date_mode = NULL;
+@@ -27,11 +28,24 @@ static int default_show_root = 1;
+ static int decoration_style;
+ static const char *fmt_patch_subject_prefix = "PATCH";
+ static const char *fmt_pretty;
++static const char *dashdash = "--";
  
-@@ -541,11 +542,16 @@ static void dup_entry(struct blame_entry *dst, struct blame_entry *src)
- 	dst->score = 0;
- }
+-static const char * const builtin_log_usage =
++static char builtin_log_usage[] =
+ 	"git log [<options>] [<since>..<until>] [[--] <path>...]\n"
++	"git log [<options>] -L n,m <path>\n"
+ 	"   or: git show [options] <object>...";
  
--static const char *nth_line(struct scoreboard *sb, int lno)
-+static const char *nth_line(struct scoreboard *sb, long lno)
- {
- 	return sb->final_buf + sb->lineno[lno];
- }
- 
-+static const char *nth_line_cb(void *data, long lno)
-+{
-+	return nth_line((struct scoreboard *)data, lno);
-+}
-+
- /*
-  * It is known that lines between tlno to same came from parent, and e
-  * has an overlap with that range.  it also is known that parent's
-@@ -1907,83 +1913,6 @@ static const char *add_prefix(const char *prefix, const char *path)
- }
- 
- /*
-- * Parsing of (comma separated) one item in the -L option
-- */
--static const char *parse_loc(const char *spec,
--			     struct scoreboard *sb, long lno,
--			     long begin, long *ret)
--{
--	char *term;
--	const char *line;
--	long num;
--	int reg_error;
--	regex_t regexp;
--	regmatch_t match[1];
--
--	/* Allow "-L <something>,+20" to mean starting at <something>
--	 * for 20 lines, or "-L <something>,-5" for 5 lines ending at
--	 * <something>.
--	 */
--	if (1 < begin && (spec[0] == '+' || spec[0] == '-')) {
--		num = strtol(spec + 1, &term, 10);
--		if (term != spec + 1) {
--			if (spec[0] == '-')
--				num = 0 - num;
--			if (0 < num)
--				*ret = begin + num - 2;
--			else if (!num)
--				*ret = begin;
--			else
--				*ret = begin + num;
--			return term;
--		}
--		return spec;
--	}
--	num = strtol(spec, &term, 10);
--	if (term != spec) {
--		*ret = num;
--		return term;
--	}
--	if (spec[0] != '/')
--		return spec;
--
--	/* it could be a regexp of form /.../ */
--	for (term = (char *) spec + 1; *term && *term != '/'; term++) {
--		if (*term == '\\')
--			term++;
--	}
--	if (*term != '/')
--		return spec;
--
--	/* try [spec+1 .. term-1] as regexp */
--	*term = 0;
--	begin--; /* input is in human terms */
--	line = nth_line(sb, begin);
--
--	if (!(reg_error = regcomp(&regexp, spec + 1, REG_NEWLINE)) &&
--	    !(reg_error = regexec(&regexp, line, 1, match, 0))) {
--		const char *cp = line + match[0].rm_so;
--		const char *nline;
--
--		while (begin++ < lno) {
--			nline = nth_line(sb, begin);
--			if (line <= cp && cp < nline)
--				break;
--			line = nline;
--		}
--		*ret = begin;
--		regfree(&regexp);
--		*term++ = '/';
--		return term;
--	}
--	else {
--		char errbuf[1024];
--		regerror(reg_error, &regexp, errbuf, 1024);
--		die("-L parameter '%s': %s", spec + 1, errbuf);
--	}
--}
--
--/*
-  * Parsing of -L option
-  */
- static void prepare_blame_range(struct scoreboard *sb,
-@@ -1993,9 +1922,9 @@ static void prepare_blame_range(struct scoreboard *sb,
- {
- 	const char *term;
- 
--	term = parse_loc(bottomtop, sb, lno, 1, bottom);
-+	term = parse_loc(bottomtop, nth_line_cb, sb, lno, 1, bottom);
- 	if (*term == ',') {
--		term = parse_loc(term + 1, sb, lno, *bottom + 1, top);
-+		term = parse_loc(term + 1, nth_line_cb, sb, lno, *bottom + 1, top);
- 		if (*term)
- 			usage(blame_usage);
- 	}
-diff --git a/line.c b/line.c
-index ffa97ea..0855d29 100644
---- a/line.c
-+++ b/line.c
-@@ -94,22 +94,26 @@ static void fill_line_ends(struct diff_filespec *spec, long *lines,
- 	*line_ends = ends;
- }
- 
--static const char *nth_line(struct diff_filespec *spec, int line,
--		long lines, unsigned long *line_ends)
-+struct nth_line_cb {
-+	struct diff_filespec *spec;
-+	long lines;
-+	unsigned long *line_ends;
++static const char *log_opt_usage[] = {
++	builtin_log_usage,
++	NULL
 +};
 +
-+static const char *nth_line(void *data, long line)
++struct line_opt_callback_data {
++	struct diff_line_range **range;
++	struct parse_opt_ctx_t *ctx;
++	struct rev_info *rev;
++};
++
+ static int parse_decoration_style(const char *var, const char *value)
  {
--	assert(line < lines);
--	assert(spec && spec->data);
-+	struct nth_line_cb *d = data;
-+	assert(d && line < d->lines);
-+	assert(d->spec && d->spec->data);
+ 	switch (git_config_maybe_bool(var, value)) {
+@@ -49,12 +63,41 @@ static int parse_decoration_style(const char *var, const char *value)
+ 	return -1;
+ }
  
--	return (char *)spec->data + line_ends[line] + 1;
-+	return (char *)d->spec->data + d->line_ends[line] + 1;
++static int log_line_range_callback(const struct option *option, const char *arg, int unset)
++{
++	struct line_opt_callback_data *data = option->value;
++	struct diff_line_range *r = *data->range;
++	struct parse_opt_ctx_t *ctx = data->ctx;
++	if (!arg)
++		return -1;
++
++	if (r->nr == 0 && r->next == NULL) {
++		ctx->out[ctx->cpidx++] = dashdash;
++	}
++
++	diff_line_range_append(r, arg);
++	data->rev->line = 1;
++	return 0;
++}
++
+ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 			 struct rev_info *rev, struct setup_revision_opt *opt)
+ {
+ 	int i;
+ 	int decoration_given = 0;
+ 	struct userformat_want w;
++	const char *path = NULL, *pathspec = NULL;
++	static struct diff_line_range *range = NULL;
++	static struct parse_opt_ctx_t ctx;
++	static struct line_opt_callback_data line_cb = {&range, &ctx, NULL};
++	static const struct option options[] = {
++		OPT_CALLBACK('L', NULL, &line_cb, "n,m", "Process only line range n,m, counting from 1", log_line_range_callback),
++		OPT_END()
++	};
++
++	line_cb.rev = rev;
++	range = xmalloc(sizeof(*range));
++	DIFF_LINE_RANGE_INIT(range);
+ 
+ 	rev->abbrev = DEFAULT_ABBREV;
+ 	rev->commit_format = CMIT_FMT_DEFAULT;
+@@ -75,6 +118,58 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	 */
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage(builtin_log_usage);
++
++	parse_options_start(&ctx, argc, argv, prefix, PARSE_OPT_KEEP_DASHDASH |
++			PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_STOP_AT_NON_OPTION);
++	for (;;) {
++		switch (parse_options_step(&ctx, options, log_opt_usage)) {
++		case PARSE_OPT_HELP:
++			exit(129);
++		case PARSE_OPT_DONE:
++			goto parse_done;
++		case PARSE_OPT_NON_OPTION:
++			path = parse_options_current(&ctx);
++			pathspec = prefix_path(prefix, prefix ? strlen(prefix) : 0, path);
++			range->spec = alloc_filespec(pathspec);
++			free((void *)pathspec);
++			if (range->nr == 0) {
++				if(range->next) {
++					die("Path %s need a -L <range> option\n"
++					"If you want follow the history of the whole file "
++					"whether to using 'git log' without -L or using "
++					"'git log -L 1,$ <path>'", range->spec->path);
++				} else {
++					parse_options_next(&ctx, 1);
++					continue;
++				}
++			}
++			struct diff_line_range *r = xmalloc(sizeof(*r));
++			DIFF_LINE_RANGE_INIT(r);
++			r->next = range;
++			range = r;
++			parse_options_next(&ctx, 1);
++			continue;
++		case PARSE_OPT_UNKNOWN:
++			parse_options_next(&ctx, 1);
++			continue;
++		}
++
++		parse_revision_opt(rev, &ctx, options, log_opt_usage);
++	}
++parse_done:
++	argc = parse_options_end(&ctx);
++
++	/* die if '-L <range>' with no pathspec follow */
++	if (range->nr > 0 && range->spec == NULL) {
++		die("Each -L should follow a pathspec");
++	}
++	/* clear up the last range */
++	if (range->nr == 0) {
++		struct diff_line_range *r = range->next;
++		DIFF_LINE_RANGE_CLEAR(range);
++		range = r;
++	}
++
+ 	argc = setup_revisions(argc, argv, rev, opt);
+ 
+ 	memset(&w, 0, sizeof(w));
+@@ -125,6 +220,11 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		rev->show_decorations = 1;
+ 		load_ref_decorations(decoration_style);
+ 	}
++
++	/* Test whether line level history is asked for */
++	if (range && range->nr > 0) {
++		setup_line(rev, range);
++	}
  }
  
  /*
-- * copied from blame.c, indeed, we can even to use this to test
-- * whether line log works. :)
-+ * Parsing of (comma separated) one item in the -L option
-  */
--static const char *parse_loc(const char *spec, struct diff_filespec *file,
--			     long lines, unsigned long *line_ends,
--			     long begin, long *ret)
-+const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
-+		void *data, long lines, long begin, long *ret)
- {
- 	char *term;
- 	const char *line;
-@@ -156,7 +160,7 @@ static const char *parse_loc(const char *spec, struct diff_filespec *file,
- 	/* try [spec+1 .. term-1] as regexp */
- 	*term = 0;
- 	begin--; /* input is in human terms */
--	line = nth_line(file, begin, lines, line_ends);
-+	line = nth_line(data, begin);
- 
- 	if (!(reg_error = regcomp(&regexp, spec + 1, REG_NEWLINE)) &&
- 	    !(reg_error = regexec(&regexp, line, 1, match, 0))) {
-@@ -164,7 +168,7 @@ static const char *parse_loc(const char *spec, struct diff_filespec *file,
- 		const char *nline;
- 
- 		while (begin++ < lines) {
--			nline = nth_line(file, begin, lines, line_ends);
-+			nline = nth_line(data, begin);
- 			if (line <= cp && cp < nline)
- 				break;
- 			line = nline;
-@@ -185,11 +189,12 @@ static void parse_range(long lines, unsigned long *line_ends,
- 		struct range *r, struct diff_filespec *spec)
- {
- 	const char *term;
-+	struct nth_line_cb data = {spec, lines, line_ends};
- 
--	term = parse_loc(r->arg, spec, lines, line_ends, 1, &r->start);
-+	term = parse_loc(r->arg, nth_line, &data, lines, 1, &r->start);
- 	if (*term == ',') {
--		term = parse_loc(term + 1, spec, lines, line_ends,
--			r->start + 1, &r->end);
-+		term = parse_loc(term + 1, nth_line, &data, lines,
-+				r->start + 1, &r->end);
- 		if (*term) {
- 			die("-L parameter's argument should be <start>,<end>");
- 		}
-diff --git a/line.h b/line.h
-index a2f8545..0eb03bd 100644
---- a/line.h
-+++ b/line.h
-@@ -8,6 +8,8 @@ struct commit;
- struct diff_line_range;
- struct diff_options;
- 
-+typedef const char *(*nth_line_fn_t)(void *data, long lno);
-+
- struct print_range {
- 	int start, end;
- 	int pstart, pend;
-@@ -119,4 +121,7 @@ extern void add_line_range(struct rev_info *revs, struct commit *commit, struct
- 
- extern struct diff_line_range *lookup_line_range(struct rev_info *revs, struct commit *commit);
- 
-+const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
-+		void *data, long lines, long begin, long *ret);
-+
- #endif
 -- 
 1.7.0.2.273.gc2413.dirty
