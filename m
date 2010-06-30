@@ -1,75 +1,78 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Implicit stashes
-Date: Wed, 30 Jun 2010 12:05:50 +0900
-Message-ID: <AANLkTimOTBzN7lnniImy2eqoBh775X9NbzIwcetS1GHh@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Dangers of reset --hard (Re: Implicit stashes)
+Date: Wed, 30 Jun 2010 00:13:26 -0500
+Message-ID: <20100630051326.GA17497@burratino>
 References: <AANLkTilTaQP6qARY1A495vm9HAvLVX_lqIQd1l3WIv7a@mail.gmail.com>
-	<4C2AB260.8020108@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 30 05:07:26 2010
+Cc: Git List <git@vger.kernel.org>, Stephan Beyer <s-beyer@gmx.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 07:14:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTne1-00064U-Oc
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 05:07:26 +0200
+	id 1OTpcV-0003AU-9I
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 07:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753919Ab0F3DFv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jun 2010 23:05:51 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:53754 "EHLO
+	id S1751293Ab0F3FNx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jun 2010 01:13:53 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40471 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753629Ab0F3DFu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jun 2010 23:05:50 -0400
-Received: by iwn7 with SMTP id 7so384396iwn.19
-        for <git@vger.kernel.org>; Tue, 29 Jun 2010 20:05:50 -0700 (PDT)
+	with ESMTP id S1750773Ab0F3FNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 01:13:52 -0400
+Received: by iwn7 with SMTP id 7so474650iwn.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 22:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=5fcBNZV2w/nfWo0N4gSOv/50cOBKMPRN+7LZo7shlGw=;
-        b=YcWS/ZEEmn9Uui+7+UYIh8f9JJldbwX5r5AFoImU2HSdhkZxuO5qRrGJfUJZS+pIW9
-         nJ5GTDd2xdkQcQxtjbMTQ+WDNG2ajZJ7iRbnjllFen2ONGZ0GWrCPAC2pNRbEzI6v9Nh
-         eLTCGnPpvub0F6guDSiAy7U4XGjRKCo5K7h/M=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=9nGF1ixDGYaziNU6Jj1Ia/H1SkglJq24G8XZOQDSr84=;
+        b=CkQm3gZcH6BhcK2t6YFBnBMKoSBDz7m7XPGqOqzTy34d+iGg83p/8QikpGeNXtkD+Z
+         Xr3HEY7UjRj9bOszOKuKoyzYURcRv7439Rt460Pg0yhMtOYAO2nmnHJKr6fPPYFBA7wj
+         B5KYvkywrPN4LQaqRVr5DpfSBA+7vSzHHpHcs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=Z1j6gs1WZLp8IiEfYVWz2iWo4x9u0tlHKrITuMkR8KaKjH3tiUs36H0orvPIAH1ujL
-         6nfvxH03PPF5SBBNeZyx84YFmUYYIPXjSGbh3KIb2LB/Lj3+A+VAP1aLQUb1QQF3ZGwU
-         CdoE9hAbruHr+fHhoobOCleqEIgud3vwu3NGc=
-Received: by 10.231.47.71 with SMTP id m7mr7052825ibf.154.1277867150259; Tue, 
-	29 Jun 2010 20:05:50 -0700 (PDT)
-Received: by 10.231.182.146 with HTTP; Tue, 29 Jun 2010 20:05:50 -0700 (PDT)
-In-Reply-To: <4C2AB260.8020108@workspacewhiz.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Tlv6pLl7o4ARrto/b/7m7lGr3tpuOa1Eb2FT0fRG++g0hmRK8U0y1eWwgSoeD6IRzN
+         DdJSYj+bV775+rgVtfOHGBI3J0liVCzK80nOXQECFMZt4+bVyajd1qgcCDc0Z3NQn3Xo
+         IO+eAICzwXx6AiUkkeY9RScC/d99nZNa84+gs=
+Received: by 10.231.125.87 with SMTP id x23mr7780611ibr.88.1277874831996;
+        Tue, 29 Jun 2010 22:13:51 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g8sm18058263ibb.23.2010.06.29.22.13.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 29 Jun 2010 22:13:51 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTilTaQP6qARY1A495vm9HAvLVX_lqIQd1l3WIv7a@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149944>
 
-On 30 June 2010 11:56, Joshua Jensen <jjensen@workspacewhiz.com> wrote:
-> =C2=A0----- Original Message -----
-> From: John Tapsell
-> Date: 6/29/2010 8:48 PM
->>
->> =C2=A0 I was thinking that it would be nice if everything was undoab=
-le in
->> git. =C2=A0Currently there are some easily typed by irreversible com=
-mands
->> that I keep seeing people doing.
->> <snip>
-> See this thread: http://kerneltrap.org/mailarchive/git/2009/5/20/2915
+John Tapsell wrote:
 
-Doh.
+> $ git reset --hard
+>
+> I know this seems very explicit to delete changes, but I myself have
+> done this and accidentally lost changes.  For example, I write a unit
+> test and don't commit it in on purpose because I know that it
+> currently fails and I want to test it against older versions.  I
+> carefully git checkout older versions to find if the unit test fails,
+> then in stupidity reset back to origin/master ..
 
-It seems that everyone agreed in principle, but that the details are
-tricky and it needs someone to actually do it.
+Aside: I assume you already know about it, but still I cannot help but
+take the opportunity to advertise =E2=80=98git reset --keep=E2=80=99.  =
+I was added
+fairly recently (1.7.1 rc0) and I find myself annoyed when on machines
+without it because of almost exactly this use case.
 
-I can't do it myself, but I'll give $50 to someone to get this going
-and do this :)  (I know that is an insultingly low amount, sorry)
-
-John
+Stephan and Christian: thanks for writing it.
