@@ -1,62 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add test for correct coloring of git log --decoration
-Date: Wed, 30 Jun 2010 13:37:38 -0700
-Message-ID: <7voces45pp.fsf@alter.siamese.dyndns.org>
-References: <7vbpaucs2c.fsf@alter.siamese.dyndns.org>
- <1277797628-32466-1-git-send-email-ayiehere@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/8] bundle: give list_prerequisites() loop body its
+ own function
+Date: Wed, 30 Jun 2010 15:37:59 -0500
+Message-ID: <20100630203759.GD23400@burratino>
+References: <20100119002641.GA31434@gnu.kitenet.net>
+ <20100626061735.GA15881@burratino>
+ <20100626062047.GD15881@burratino>
+ <7vmxuc5rcv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 22:38:04 2010
+Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org,
+	554682@bugs.debian.org, Adam Brewster <adambrewster@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 30 22:38:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OU42g-0001x8-Rm
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 22:37:59 +0200
+	id 1OU43C-0002H8-Hr
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 22:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756950Ab0F3Uhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 16:37:45 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52854 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756689Ab0F3Uho (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 16:37:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 416A6C0864;
-	Wed, 30 Jun 2010 16:37:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=BuTv2Wuu3UUogDjR2ytsq/p6tBs=; b=oyf0luHEtNCWcQyeCAWX/ct
-	Gi0NiGPc7uupUrBB7U46x0cykk5cRQQkmAU5uhpxx0Ueg2IQpYevg45WMY3oF4g9
-	JntpdntsYkBKoIsBvrlDv07cXajRgS0gCzsjZ2VltZKWE5I8Gq3FJWW9oxj2G2ZT
-	yMwjyh2EDlqUrNXiR8Vo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=MHMZP4+HOp2rWxi7iNf60HFBhiMQQbc1sJZaUjX1GnCIQs4WS
-	h2x7nX6xsyo2bXMtn7J88ggVe6jB72M+ZAffORrfSb1sETcwRxeIe3P6jFGfhx6v
-	vY9ofjkrO2UR4gEOrnksnQTRY2ei3/JeNGrebR5ixBftrtSdR+LUiIoI7k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1EEA7C0861;
-	Wed, 30 Jun 2010 16:37:42 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7C516C085F; Wed, 30 Jun
- 2010 16:37:39 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 54B4D19C-8487-11DF-B539-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755740Ab0F3UiZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 16:38:25 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50544 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754796Ab0F3UiY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 16:38:24 -0400
+Received: by iwn7 with SMTP id 7so1233856iwn.19
+        for <git@vger.kernel.org>; Wed, 30 Jun 2010 13:38:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=oOLCGe7iY7OLXSy3jc+n1sBiWXMIYhhPQkSOVBVcbPg=;
+        b=xEekzfkmeaBLVPI3ePoDFwJm6LDvU+5xsJhXFWn3WKGLpMMr53ObBoAnsFAyvZ9wXP
+         4a+UI2aDfu9ayQOi3e8l9+yIGZjPqqnNSyCfOh3v9vEGLFjW8kUjX8Erxmx2bupyQyQi
+         VIXDPj+27MDeUa3gK/OC3wGOPtSC4EBluCoqY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Whzqs/M1p2yfO3UUcpmzN7P71nhjoOK3SNnQ5jVwZwcayO7dtQB+OVa8MgdiZpv+W5
+         eRUj2aV0y6troUItb4QyJuZlFrI+87o6ieIOxLQue35uuvbpDJ6nqogOS0SpKkVAgsuw
+         jvLnK9rAtnfahKXRzDfdlMJSms1GyDRJopLcQ=
+Received: by 10.231.11.3 with SMTP id r3mr9248404ibr.68.1277930303718;
+        Wed, 30 Jun 2010 13:38:23 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id 13sm699727ibo.18.2010.06.30.13.38.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 30 Jun 2010 13:38:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vmxuc5rcv.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149995>
 
-Nazri Ramliy <ayiehere@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> @@ -209,33 +236,11 @@ static int list_prerequisites(int bundle_fd, struct rev_info *revs,
+>>  	if (prepare_revision_walk(&boundary_revs))
+>>  		return error("revision walk setup failed");
+>>  
+>> -	while ((rev = get_revision(&boundary_revs))) {
+>> -		if (rev->object.flags & BOUNDARY) {
+>> -...
+>> -		} else {
+>> +	while ((rev = get_revision(revs))) {
+>> +		if (rev->object.flags & BOUNDARY)
+>> +			list_prerequisite(bundle_fd, revs, rev);
+>> +		else
+>>  			rev->object.flags |= SHOWN;
+>> -		}
+>
+> You used to walk boundary_revs but now you walk revs that is given by the
+> caller
 
-> I've updated the test to also test for the need to print 'reset' right before
-> restoring the commit color.  This is done by setting the tag color to "reverse
-> bold yellow".  Without the 'reset', the next decoration would be wrongly
-> printed in reverse.
-
-Thanks, will queue.
+Agh!  Typo.  Thanks for catching it.
