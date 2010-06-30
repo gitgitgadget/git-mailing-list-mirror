@@ -1,98 +1,76 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: [PATCH 3/3] git-instaweb: Don't assume Apache executable is named apache2
-Date: Tue, 29 Jun 2010 21:45:00 -0500
-Message-ID: <1277865900-25044-3-git-send-email-dpmcgee@gmail.com>
-References: <1277865900-25044-1-git-send-email-dpmcgee@gmail.com>
-Cc: Eric Wong <normalperson@yhbt.net>, Dan McGee <dpmcgee@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 30 04:45:36 2010
+From: John Tapsell <johnflux@gmail.com>
+Subject: Implicit stashes
+Date: Wed, 30 Jun 2010 11:48:38 +0900
+Message-ID: <AANLkTilTaQP6qARY1A495vm9HAvLVX_lqIQd1l3WIv7a@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 30 04:48:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OTnIt-0007N6-Iz
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 04:45:35 +0200
+	id 1OTnLx-0008U8-22
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 04:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576Ab0F3CpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jun 2010 22:45:21 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60666 "EHLO
+	id S1753629Ab0F3Csk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jun 2010 22:48:40 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44621 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752300Ab0F3CpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jun 2010 22:45:17 -0400
-Received: by mail-iw0-f174.google.com with SMTP id 7so365968iwn.19
-        for <git@vger.kernel.org>; Tue, 29 Jun 2010 19:45:17 -0700 (PDT)
+	with ESMTP id S1753404Ab0F3Csj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jun 2010 22:48:39 -0400
+Received: by iwn7 with SMTP id 7so369054iwn.19
+        for <git@vger.kernel.org>; Tue, 29 Jun 2010 19:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=gbZZavlZImDwr3WmfwOdkXl6XTkJmL7rSUYAapPzzq0=;
-        b=IPis9z6KXzP1820XZKFuYYyj5EYuws2QOfypDuJBUAXyiinVtEDCGvjmOnAR0f6WZ3
-         G9HcQ7GkpQ+wW0KFks9jPuy0wQuLkhvUygkc1HXojueIKA72P7YOuy1t/gXDsTxq9wdP
-         9GwYVfTCifBhpdMLexfA/Vk5qD3eansdO7a4g=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=OKP53Hu0BgofQftcJqOzw7SDoC1n2moRQbkFgCs+40w=;
+        b=kQDkUwcO9l622nWaKYieDkgM5BhF4wWMZl6lZ7HLseV4uBlBpIt9DxtMkAQH0w+bGK
+         PInEkjvfm2JDp4yq1SX024nX85qkG1e6520oE/0no8bxpPq56Nv94X4BW8BWUzDg23tr
+         OOkzTwg/yfYRqVKVctSEOlkOtSqa79Pz2g6y0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=WIM/ZOoTfXyuXTgEnVbFoLyAz2CXNwQJ/cnYq7q909DaoFQEGIp2lqEC2loNgaAXAg
-         9b/XtwA0mT3I+6zEtzMzwEqrfjvMNQt83o6uV3ePWwOmm7dLw3doi6NL7/C9lQ4YeLTD
-         ANJk5kRC8QOCnIPGHUYSL8Woyj5igaBDiajCU=
-Received: by 10.231.176.75 with SMTP id bd11mr8481311ibb.22.1277865917490;
-        Tue, 29 Jun 2010 19:45:17 -0700 (PDT)
-Received: from localhost (adsl-76-193-181-63.dsl.chcgil.sbcglobal.net [76.193.181.63])
-        by mx.google.com with ESMTPS id u6sm2298510ibu.0.2010.06.29.19.45.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 29 Jun 2010 19:45:16 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1277865900-25044-1-git-send-email-dpmcgee@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=HQ0hSgOTz6UFZkaqcWCv6+NeyIbAekVxjxHW2UiUBz3BU/qF8643vcKULSjXyanAzw
+         12ITRYdkZtqNtJ/6gi36FKxrOk7db2jpPT4/9fYJoVIc/UqFb9GIrwtP9s0zxvRR86N4
+         rz5vdGEidsJk+GvWzEvfEfFxkbAoJae7VCyAE=
+Received: by 10.231.37.77 with SMTP id w13mr5257788ibd.199.1277866119041; Tue, 
+	29 Jun 2010 19:48:39 -0700 (PDT)
+Received: by 10.231.182.146 with HTTP; Tue, 29 Jun 2010 19:48:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149941>
 
-On Arch Linux, we keep the original 'httpd' name for the exectuable and
-don't rename it or the path to the modules. Remove some of these assumptions
-and add the httpd name in where it may be required.
+Hi,
 
-Signed-off-by: Dan McGee <dpmcgee@gmail.com>
----
- git-instaweb.sh |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
+  I was thinking that it would be nice if everything was undoable in
+git.  Currently there are some easily typed by irreversible commands
+that I keep seeing people doing.
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 1d349b8..d0091f2 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -43,7 +43,8 @@ test -z "$port" && port=1234
- 
- resolve_full_httpd () {
- 	case "$httpd" in
--	*apache2*|*lighttpd*)
-+	*apache2*|*lighttpd*|*httpd*)
-+		# yes, *httpd* covers *lighttpd* above, but it is there for clarity
- 		# ensure that the apache2/lighttpd command ends with "-f"
- 		if ! echo "$httpd" | sane_grep -- '-f *$' >/dev/null 2>&1
- 		then
-@@ -300,7 +301,10 @@ EOF
- }
- 
- apache2_conf () {
--	test -z "$module_path" && module_path=/usr/lib/apache2/modules
-+	if test -z "$module_path"; then
-+		test -d "/usr/lib/httpd/modules" && module_path="/usr/lib/httpd/modules"
-+		test -d "/usr/lib/apache2/modules" && module_path="/usr/lib/apache2/modules"
-+	fi
- 	bind=
- 	test x"$local" = xtrue && bind='127.0.0.1:'
- 	echo 'text/css css' > "$fqgitdir/mime.types"
-@@ -563,7 +567,7 @@ case "$httpd" in
- *lighttpd*)
- 	lighttpd_conf
- 	;;
--*apache2*)
-+*apache2*|*httpd*)
- 	apache2_conf
- 	;;
- webrick)
--- 
-1.7.1
+For example:
+
+$ git checkout folder
+
+Now all changes that you just worked on are deleted, with no way of recovering.
+
+$ git reset --hard
+
+I know this seems very explicit to delete changes, but I myself have
+done this and accidentally lost changes.  For example, I write a unit
+test and don't commit it in on purpose because I know that it
+currently fails and I want to test it against older versions.  I
+carefully git checkout older versions to find if the unit test fails,
+then in stupidity reset back to origin/master ..
+
+
+  Anyway, I think a nice solution is to have a separate stash for
+implicit stashes.  Then irreversible commands would simply stash
+before making the changes.
+  It would also be nice to add a 'git undo' which just undoes whatever
+the last operation was - i.e  unstash or reset to an earlier HEAD@{1}
+
+John
