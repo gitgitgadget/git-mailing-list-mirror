@@ -1,97 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/8] bundle: use libified rev-list --boundary
-Date: Wed, 30 Jun 2010 15:34:51 -0500
-Message-ID: <20100630203451.GC23400@burratino>
-References: <20100119002641.GA31434@gnu.kitenet.net>
- <20100626061735.GA15881@burratino>
- <20100626062005.GC15881@burratino>
- <7vtyok5rpl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] teach ref iteration module about submodules
+Date: Wed, 30 Jun 2010 13:37:24 -0700
+Message-ID: <7vvd9045q3.fsf@alter.siamese.dyndns.org>
+References: <cover.1277923843.git.hvoigt@hvoigt.net>
+ <26d63936d5a71de6a8e8aa823a69ddda8b999e4b.1277923844.git.hvoigt@hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org,
-	554682@bugs.debian.org, Adam Brewster <adambrewster@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 22:35:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jens.lehmann@web.de, jherland@gmail.com
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Jun 30 22:38:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OU40D-0000I4-Hw
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 22:35:25 +0200
+	id 1OU42g-0001x8-AB
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 22:37:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755987Ab0F3UfU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 30 Jun 2010 16:35:20 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:64455 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755740Ab0F3UfS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jun 2010 16:35:18 -0400
-Received: by pxi14 with SMTP id 14so59681pxi.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 13:35:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=mJuf5kuz7ZdjYyJ0e6PHvFxLo/mXWHuBOPS5GmB7pSo=;
-        b=vUYZ/58PZe0lKhu0RMIValZNEWjJRFjqUvQBQN3C4oxjKrUrAvqBYOljWyxm0CzS6k
-         p3ZCcHv8lG/o7TCG41+u+viwpx/PX9pxWWgKRAfCtJa8u6yRv8eE/3v/T7L4Z0dBg0Tq
-         kjdeztXu/ZdK4Q87B78BI9FxjT8ndsB3Gn294=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QoN4FTQnqfDzAbceB+PPV0P6SSXsipl34hfbSJWdW2kTRAR5JvP8KnOJ/YhiLWVUaz
-         M6PRImfJda53oYKtWV9DLbhCBgcbDsRqMul5rENNa4lFINOaxkmEXo/hTNzAD8PBGGH5
-         52iUecL9TOThOTzVmUyrnjcU8vbqg0UaqqzWQ=
-Received: by 10.142.121.4 with SMTP id t4mr10894191wfc.286.1277930116280;
-        Wed, 30 Jun 2010 13:35:16 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id g31sm26842095ibh.14.2010.06.30.13.35.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 13:35:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vtyok5rpl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756015Ab0F3Uhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 16:37:38 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52699 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755850Ab0F3Uhg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 16:37:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 81A90C085C;
+	Wed, 30 Jun 2010 16:37:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=7bWbvuV6y2U8PNQOG7BNpX+RNvY=; b=nd3C8GcEHh9QKl1DYKa69K/
+	Kx8O6W/ZJkNj0m3juqPBIRaa8xTNdUiUNcKOS82R2/bx4WvkSsaI6jZR5heqFpuk
+	DVjmCyQKNDqpGEAjDvhK4pkaD5/EYxwe+FoCqmtk8IG1LfIFvlanDYsW1rWo+5pV
+	ZIJAtGduVRkS0it8LvSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=UbRHUoL1mK3LZqY+d57Ys2aoofQlZLBHZUtoqt+rj/GXkX/jF
+	zykjckIem0jnnIAUvPcKPyKk1d+Zgx+cxyp60bD8qoQXKe+TDXcxSHWb+0m4Pdqg
+	voh4VFQM5BhuI1+MOvGFr1ItbLjMSatxnXN9rGrATvaL0zQGTkwFKkeUzo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 39FA9C085A;
+	Wed, 30 Jun 2010 16:37:31 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2251BC0854; Wed, 30 Jun
+ 2010 16:37:25 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4E32F132-8487-11DF-8318-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149993>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
->> The revision walker produces structured output, which should be a
->> little easier to work with than the text from rev-list.
->
-> Hmm, doesn't it negatively affect later traversal you would need to d=
-o if
-> you smudged the flag bits by running revision traversal like this?
+> +char *git_path_submodule(const char *path, const char *fmt, ...)
+> +{
+> +...
+> +	strbuf_addch(&buf, '/');
+> +
+> +	strncpy(pathname, buf.buf, PATH_MAX);
+> +	if (pathname[PATH_MAX-1] != '\0')
+> +		return bad_path;
 
-I imagine so.  I fear this would be the first git command to use the
-revision walker twice, and I am not sure whether we can really make tha=
-t
-work.
+This may not be wrong per-se, but having strncpy() NUL-pad the remainder
+of the buffer only because you want to check overlong path by inspecting
+pathname[PATH_MAX-1] sounds somewhat stupid, no?  Your buf.len knows how
+long the path is already at this point, doesn't it?
 
-The revision walker uses object flags for the following purposes:
+> @@ -322,11 +352,12 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+>  	for_each_rawref(warn_if_dangling_symref, &data);
+>  }
+>  
+> -static struct ref_list *get_loose_refs(void)
+> +static struct ref_list *get_loose_refs(const char *submodule)
+>  {
+> -	if (!cached_refs.did_loose) {
+> -		cached_refs.loose = get_ref_dir("refs", NULL);
+> +	if (!cached_refs.did_loose || cached_refs.submodule != submodule) {
 
- - marking objects uninteresting/SYMMETRIC_LEFT.  Luckily for us, if
-   an object is uninteresting or SYMMETRIC_LEFT for the first
-   --boundary walk, it will be likewise for pack-objects, too.
+Do you really mean "!=" here?  I do not see anywhere that you are
+"intern"-ing (a la Lisp implementations) names of submodules to make
+address comparison work as a cheap equality check.
 
- - history simplification (TREESAME), --cherry-pick (SHOWN),
-   --merge (SYMMETRIC_LEFT).  There are already other reasons to
-   disallow these features for bundle.
+> +		cached_refs.loose = get_ref_dir(submodule, "refs", NULL);
 
- - add_parents_to_list (ADDED, SEEN).  This one is really worrisome;
-   should we walk through again to throw away the added parents?
-   Should there be a pass through all revisions to clear the ADDED
-   bit?
+What happened to the old ref_list that had the refs from the toplevel
+project (or the last submodule you visited) if your "did_loose" is true?
+Leakage?
 
-I=E2=80=99ll figure out a one-pass solution. :(
+>  		cached_refs.did_loose = 1;
+> +		cached_refs.submodule = submodule;
+>  	}
+>  	return cached_refs.loose;
+>  }
 
-Jonathan
+Once you grabbed loose refs for _any_ repository, you will have did_loose
+set, so the flag has now became pretty much useless.
+
+More importantly, I wonder if you would instead want to have cached_refs
+structure for each submodule separately, or at least not nuke the
+cached_refs structure for the top-level project, only because you wanted
+to peek into one submodule.  While your for_each_ref() is walking the refs
+of top-level project, its callback may stomp on the cached_refs by asking
+about submodule refs, and there is nothing in this code structure to help
+catching such a bug, is there?
