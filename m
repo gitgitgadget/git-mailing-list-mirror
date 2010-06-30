@@ -1,347 +1,76 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH 2/4] teach ref iteration module about submodules
-Date: Wed, 30 Jun 2010 21:23:49 +0200
-Message-ID: <26d63936d5a71de6a8e8aa823a69ddda8b999e4b.1277923844.git.hvoigt@hvoigt.net>
-References: <cover.1277923843.git.hvoigt@hvoigt.net>
+Subject: [PATCH 0/4] implement automatic submodule merge strategy when possible
+Date: Wed, 30 Jun 2010 21:23:47 +0200
+Message-ID: <cover.1277923843.git.hvoigt@hvoigt.net>
 Cc: git@vger.kernel.org, jens.lehmann@web.de, jherland@gmail.com
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jun 30 21:24:28 2010
+X-From: git-owner@vger.kernel.org Wed Jun 30 21:24:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OU2tW-0007Ks-3U
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 21:24:26 +0200
+	id 1OU2tA-00078n-CW
+	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 21:24:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756875Ab0F3TYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 15:24:10 -0400
-Received: from darksea.de ([83.133.111.250]:55013 "HELO darksea.de"
+	id S1756171Ab0F3TX4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 15:23:56 -0400
+Received: from darksea.de ([83.133.111.250]:55005 "HELO darksea.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754953Ab0F3TXy (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754995Ab0F3TXy (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 30 Jun 2010 15:23:54 -0400
-Received: (qmail 18726 invoked from network); 30 Jun 2010 21:23:52 +0200
+Received: (qmail 18714 invoked from network); 30 Jun 2010 21:23:52 +0200
 Received: from unknown (HELO localhost) (127.0.0.1)
   by localhost with SMTP; 30 Jun 2010 21:23:52 +0200
 X-Mailer: git-send-email 1.7.1.528.gb3958.dirty
-In-Reply-To: <cover.1277923843.git.hvoigt@hvoigt.net>
-In-Reply-To: <cover.1277923843.git.hvoigt@hvoigt.net>
-References: <cover.1277923843.git.hvoigt@hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149985>
 
-We will use this in a later patch to extend setup_revisions() to
-load revisions directly from a submodule.
+This series implements a semi-automatic submodule merge as was discussed
+in this thread:
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- cache.h |    3 ++
- path.c  |   38 ++++++++++++++++++++++++
- refs.c  |   99 +++++++++++++++++++++++++++++++++++++++++++++-----------------
- 3 files changed, 113 insertions(+), 27 deletions(-)
+http://thread.gmane.org/gmane.comp.version-control.git/148942
 
-diff --git a/cache.h b/cache.h
-index ff4a7c2..d9e1152 100644
---- a/cache.h
-+++ b/cache.h
-@@ -641,6 +641,9 @@ extern char *git_pathdup(const char *fmt, ...)
- /* Return a statically allocated filename matching the sha1 signature */
- extern char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
- extern char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
-+extern char *git_path_submodule(const char *path, const char *fmt, ...)
-+	__attribute__((format (printf, 2, 3)));
-+
- extern char *sha1_file_name(const unsigned char *sha1);
- extern char *sha1_pack_name(const unsigned char *sha1);
- extern char *sha1_pack_index_name(const unsigned char *sha1);
-diff --git a/path.c b/path.c
-index b4c8d91..fde959f 100644
---- a/path.c
-+++ b/path.c
-@@ -122,6 +122,44 @@ char *git_path(const char *fmt, ...)
- 	return cleanup_path(pathname);
- }
- 
-+char *git_path_submodule(const char *path, const char *fmt, ...)
-+{
-+	char *pathname = get_pathname();
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *git_dir;
-+	va_list args;
-+	unsigned len;
-+
-+	len = strlen(path);
-+	if (len > PATH_MAX-100)
-+		return bad_path;
-+
-+	strbuf_addstr(&buf, path);
-+	if (len && path[len-1] != '/')
-+		strbuf_addch(&buf, '/');
-+	strbuf_addstr(&buf, ".git");
-+
-+	git_dir = read_gitfile_gently(buf.buf);
-+	if (git_dir) {
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, git_dir);
-+	}
-+	strbuf_addch(&buf, '/');
-+
-+	strncpy(pathname, buf.buf, PATH_MAX);
-+	if (pathname[PATH_MAX-1] != '\0')
-+		return bad_path;
-+
-+	strbuf_release(&buf);
-+	len = strlen(pathname);
-+
-+	va_start(args, fmt);
-+	len += vsnprintf(pathname + len, PATH_MAX - len, fmt, args);
-+	va_end(args);
-+	if (len >= PATH_MAX)
-+		return bad_path;
-+	return cleanup_path(pathname);
-+}
- 
- /* git_mkstemp() - create tmp file honoring TMPDIR variable */
- int git_mkstemp(char *path, size_t len, const char *template)
-diff --git a/refs.c b/refs.c
-index 6f486ae..5a461d2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -157,6 +157,7 @@ static struct cached_refs {
- 	char did_packed;
- 	struct ref_list *loose;
- 	struct ref_list *packed;
-+	const char *submodule;
- } cached_refs;
- static struct ref_list *current_ref;
- 
-@@ -229,10 +230,17 @@ void clear_extra_refs(void)
- 	extra_refs = NULL;
- }
- 
--static struct ref_list *get_packed_refs(void)
-+static struct ref_list *get_packed_refs(const char *submodule)
- {
-+	const char *packed_refs_file;
-+
-+	if (submodule)
-+		packed_refs_file = git_path_submodule(submodule, "packed-refs");
-+	else
-+		packed_refs_file = git_path("packed-refs");
-+
- 	if (!cached_refs.did_packed) {
--		FILE *f = fopen(git_path("packed-refs"), "r");
-+		FILE *f = fopen(packed_refs_file, "r");
- 		cached_refs.packed = NULL;
- 		if (f) {
- 			read_packed_refs(f, &cached_refs);
-@@ -243,9 +251,19 @@ static struct ref_list *get_packed_refs(void)
- 	return cached_refs.packed;
- }
- 
--static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
-+static struct ref_list *get_ref_dir(const char *submodule, const char *base,
-+				    struct ref_list *list)
- {
--	DIR *dir = opendir(git_path("%s", base));
-+	DIR *dir;
-+	const char *path;
-+
-+	if (submodule)
-+		path = git_path_submodule(submodule, "%s", base);
-+	else
-+		path = git_path("%s", base);
-+
-+
-+	dir = opendir(path);
- 
- 	if (dir) {
- 		struct dirent *de;
-@@ -261,6 +279,7 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
- 			struct stat st;
- 			int flag;
- 			int namelen;
-+			const char *refdir;
- 
- 			if (de->d_name[0] == '.')
- 				continue;
-@@ -270,16 +289,27 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
- 			if (has_extension(de->d_name, ".lock"))
- 				continue;
- 			memcpy(ref + baselen, de->d_name, namelen+1);
--			if (stat(git_path("%s", ref), &st) < 0)
-+			refdir = submodule
-+				? git_path_submodule(submodule, "%s", ref)
-+				: git_path("%s", ref);
-+			if (stat(refdir, &st) < 0)
- 				continue;
- 			if (S_ISDIR(st.st_mode)) {
--				list = get_ref_dir(ref, list);
-+				list = get_ref_dir(submodule, ref, list);
- 				continue;
- 			}
--			if (!resolve_ref(ref, sha1, 1, &flag)) {
-+			if (submodule) {
- 				hashclr(sha1);
--				flag |= REF_BROKEN;
--			}
-+				flag = 0;
-+				if (resolve_gitlink_ref(submodule, ref, sha1) < 0) {
-+					hashclr(sha1);
-+					flag |= REF_BROKEN;
-+				}
-+			} else
-+				if (!resolve_ref(ref, sha1, 1, &flag)) {
-+					hashclr(sha1);
-+					flag |= REF_BROKEN;
-+				}
- 			list = add_ref(ref, sha1, flag, list, NULL);
- 		}
- 		free(ref);
-@@ -322,11 +352,12 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
- 	for_each_rawref(warn_if_dangling_symref, &data);
- }
- 
--static struct ref_list *get_loose_refs(void)
-+static struct ref_list *get_loose_refs(const char *submodule)
- {
--	if (!cached_refs.did_loose) {
--		cached_refs.loose = get_ref_dir("refs", NULL);
-+	if (!cached_refs.did_loose || cached_refs.submodule != submodule) {
-+		cached_refs.loose = get_ref_dir(submodule, "refs", NULL);
- 		cached_refs.did_loose = 1;
-+		cached_refs.submodule = submodule;
- 	}
- 	return cached_refs.loose;
- }
-@@ -459,7 +490,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
- 		git_snpath(path, sizeof(path), "%s", ref);
- 		/* Special case: non-existing file. */
- 		if (lstat(path, &st) < 0) {
--			struct ref_list *list = get_packed_refs();
-+			struct ref_list *list = get_packed_refs(NULL);
- 			while (list) {
- 				if (!strcmp(ref, list->name)) {
- 					hashcpy(sha1, list->sha1);
-@@ -588,7 +619,7 @@ int peel_ref(const char *ref, unsigned char *sha1)
- 		return -1;
- 
- 	if ((flag & REF_ISPACKED)) {
--		struct ref_list *list = get_packed_refs();
-+		struct ref_list *list = get_packed_refs(NULL);
- 
- 		while (list) {
- 			if (!strcmp(list->name, ref)) {
-@@ -615,12 +646,12 @@ fallback:
- 	return -1;
- }
- 
--static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
--			   int flags, void *cb_data)
-+static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
-+			   int trim, int flags, void *cb_data)
- {
- 	int retval = 0;
--	struct ref_list *packed = get_packed_refs();
--	struct ref_list *loose = get_loose_refs();
-+	struct ref_list *packed = get_packed_refs(submodule);
-+	struct ref_list *loose = get_loose_refs(submodule);
- 
- 	struct ref_list *extra;
- 
-@@ -657,24 +688,38 @@ end_each:
- 	return retval;
- }
- 
--int head_ref(each_ref_fn fn, void *cb_data)
-+
-+static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
- 	unsigned char sha1[20];
- 	int flag;
- 
-+	if (submodule) {
-+		if (resolve_gitlink_ref(submodule, "HEAD", sha1) == 0)
-+			return fn("HEAD", sha1, 0, cb_data);
-+
-+		return 0;
-+	}
-+
- 	if (resolve_ref("HEAD", sha1, 1, &flag))
- 		return fn("HEAD", sha1, flag, cb_data);
-+
- 	return 0;
- }
- 
-+int head_ref(each_ref_fn fn, void *cb_data)
-+{
-+	return do_head_ref(NULL, fn, cb_data);
-+}
-+
- int for_each_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/", fn, 0, 0, cb_data);
-+	return do_for_each_ref(NULL, "refs/", fn, 0, 0, cb_data);
- }
- 
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(prefix, fn, strlen(prefix), 0, cb_data);
-+	return do_for_each_ref(NULL, prefix, fn, strlen(prefix), 0, cb_data);
- }
- 
- int for_each_tag_ref(each_ref_fn fn, void *cb_data)
-@@ -694,7 +739,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
- 
- int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/replace/", fn, 13, 0, cb_data);
-+	return do_for_each_ref(NULL, "refs/replace/", fn, 13, 0, cb_data);
- }
- 
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
-@@ -734,7 +779,7 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
- 
- int for_each_rawref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/", fn, 0,
-+	return do_for_each_ref(NULL, "refs/", fn, 0,
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
-@@ -958,7 +1003,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(ref, NULL, get_packed_refs(), 0)) {
-+	     !is_refname_available(ref, NULL, get_packed_refs(NULL), 0)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
-@@ -1021,7 +1066,7 @@ static int repack_without_ref(const char *refname)
- 	int fd;
- 	int found = 0;
- 
--	packed_ref_list = get_packed_refs();
-+	packed_ref_list = get_packed_refs(NULL);
- 	for (list = packed_ref_list; list; list = list->next) {
- 		if (!strcmp(refname, list->name)) {
- 			found = 1;
-@@ -1110,10 +1155,10 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 	if (!symref)
- 		return error("refname %s not found", oldref);
- 
--	if (!is_refname_available(newref, oldref, get_packed_refs(), 0))
-+	if (!is_refname_available(newref, oldref, get_packed_refs(NULL), 0))
- 		return 1;
- 
--	if (!is_refname_available(newref, oldref, get_loose_refs(), 0))
-+	if (!is_refname_available(newref, oldref, get_loose_refs(NULL), 0))
- 		return 1;
- 
- 	lock = lock_ref_sha1_basic(renamed_ref, NULL, 0, NULL);
--- 
-1.7.1.528.gb3958.dirty
+In short:
+
+Suppose we merge two submodule hashes A and B. If either A->B or B->A is
+a fast-forward the automatic result is the one containing both.
+
+If there is not direct relation between A and B but we find a merge on
+any ref that contains both we suggest this as a possible resolution to
+the user. If there are more merges we output a list of them.
+
+The suggestion tells the user to use update-index because
+checkout_submodule() on which Jens is working is not finished yet. This
+is a temporary solution and we can automatically checkout a submodule
+later when this is implemented.
+
+Note: As I am not that familiar with the git codebase yet another pair
+of eyes would be really appreciated.
+
+The newest version of this series can always be found on
+
+git://github.com/hvoigt/git.git
+
+Branch: submodule_merge_v2
+
+Heiko Voigt (4):
+  add missing && to submodule-merge testcase
+  teach ref iteration module about submodules
+  extent setup_revisions() so it works with submodules
+  implement automatic fast forward merge for submodules
+
+ cache.h                    |    3 +
+ merge-recursive.c          |    9 ++-
+ path.c                     |   38 +++++++++++
+ refs.c                     |  130 +++++++++++++++++++++++++++++--------
+ refs.h                     |    8 ++
+ revision.c                 |   32 +++++----
+ revision.h                 |    1 +
+ submodule.c                |  154 ++++++++++++++++++++++++++++++++++++++++++++
+ submodule.h                |    2 +
+ t/t7405-submodule-merge.sh |  124 +++++++++++++++++++++++++++++++++--
+ 10 files changed, 450 insertions(+), 51 deletions(-)
