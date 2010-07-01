@@ -1,78 +1,127 @@
-From: Mahesh Vaidya <forvaidya@gmail.com>
-Subject: Re: git reflog delete / manpage confusion
-Date: Thu, 1 Jul 2010 16:28:46 +0530
-Message-ID: <AANLkTilaKwB1BYTNIJ49M0CZAJGrsPetQDOxZj_RHRv3@mail.gmail.com>
-References: <AANLkTik3bApuScgjXtr-VjhmY4NIuakoX_RZaYLqqpwL@mail.gmail.com>
-	<20100701101613.GA1961@sigill.intra.peff.net>
+From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+Subject: [PATCH 2/2] rerere: fix overeager gc
+Date: Thu,  1 Jul 2010 13:07:46 +0200
+Message-ID: <1277982466-29601-2-git-send-email-szeder@ira.uka.de>
+References: <4C2C69AF.4010303@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 01 12:58:54 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Jul 01 13:08:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUHTq-0006lx-0z
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 12:58:54 +0200
+	id 1OUHck-00045D-6x
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 13:08:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755005Ab0GAK6s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 06:58:48 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:34077 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754202Ab0GAK6r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 06:58:47 -0400
-Received: by gwb15 with SMTP id 15so918493gwb.19
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 03:58:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FZlsNVfQh3XUs7GlxgzioBlTysI2WfQoV6AoSInedQA=;
-        b=WYchxuN5PGBeddqcZW5FV6pcZvTDdaBDpxK+mJqlsaEJl/VIj2OIcfOrG0Nk1Tp8jC
-         DRJsh+l8TG+CeAAy8aLqhu/dVFMdBulNQ6KNBIGH8oCJZGd4XgCeFQQTkO0in1sKxjef
-         TV87Nt+us2Ol5XQbQ6JS4w4/p2K5H7N1AnbeE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HoHoXPaqnUX6ycN42VPCEgJ0CRb+/l7bouD8ylIFuN++cjRFOdRHSEn844HUjXmWFq
-         EyiYyKGdy9JHNdSCeARwgxgjaqFsceYi63bUmEhg8tVK+W4yQ1xPaXUa1SZfOf9SjfY+
-         YdNG8ebgLHYtf8/FcaqdXX6iymWx4/Ykm31yY=
-Received: by 10.91.34.8 with SMTP id m8mr8574231agj.152.1277981926803; Thu, 01 
-	Jul 2010 03:58:46 -0700 (PDT)
-Received: by 10.90.100.4 with HTTP; Thu, 1 Jul 2010 03:58:46 -0700 (PDT)
-In-Reply-To: <20100701101613.GA1961@sigill.intra.peff.net>
+	id S1755183Ab0GALIA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 07:08:00 -0400
+Received: from francis.fzi.de ([141.21.7.5]:21308 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754993Ab0GALH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 07:07:58 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 1 Jul 2010 13:07:55 +0200
+X-Mailer: git-send-email 1.7.2.rc0.54.g4d821
+In-Reply-To: <4C2C69AF.4010303@viscovery.net>
+X-OriginalArrivalTime: 01 Jul 2010 11:07:55.0799 (UTC) FILETIME=[A83C6270:01CB190D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150030>
 
-Hi I am confused again as it indeed removed HEAD{4}
+'rerere gc' prunes resolutions of conflicted merges that occurred long
+time ago, and when doing so it takes the creation time of the
+conflicted automerge results into account.  This can cause the loss of
+frequently used merge resolutions (e.g. long-living topic branches are
+merged into a regularly rebuilt integration branch (think of git's
+pu)) when they become old enough to exceed 'rerere gc's threshold.
 
- -2993260 HEAD@{4}: commit (initial)
+Prevent the loss of valuable merge resolutions by updating the
+timestamp of the conflicted automerge result each time when
+encountering the same merge conflict.
 
-> =A0mkdir repo && cd repo && git init
-> =A0for i in 1 2 3 4 5; do
-> =A0 =A0echo $i >file && git add file && git commit -m file
-> =A0done
-> =A0git reflog -g --oneline >old
-> =A0git reflog delete HEAD@{3}
-> =A0git reflog -g --oneline >new
-> =A0diff -u old new
->
-> I get:
->
-> =A0--- old 2010-07-01 05:54:48.000000000 -0400
-> =A0+++ new 2010-07-01 05:54:48.000000000 -0400
-> =A0@@ -1,5 +1,4 @@
-> =A0 01bb1c7 HEAD@{0}: commit: file
-> =A0 c8020a8 HEAD@{1}: commit: file
-> =A0 d82df6b HEAD@{2}: commit: file
-> =A0-364bcc0 HEAD@{3}: commit: file
-> =A0-2993260 HEAD@{4}: commit (initial): file
-> =A0+364bcc0 HEAD@{3}: commit (initial): file
+Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+---
+
+On Thu, Jul 01, 2010 at 12:10:55PM +0200, Johannes Sixt wrote:
+> rerere_last_used_at?
+
+> I think this should be outside of 'if (!ret)' condition because even =
+if
+> the merge fails, the resolution was *used*.
+
+Right on both points.
+
+
+ builtin/rerere.c  |    4 ++--
+ rerere.c          |    4 ++++
+ t/t4200-rerere.sh |    8 ++++++++
+ 3 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/rerere.c b/builtin/rerere.c
+index 980d542..03434a7 100644
+--- a/builtin/rerere.c
++++ b/builtin/rerere.c
+@@ -13,7 +13,7 @@ static const char git_rerere_usage[] =3D
+ static int cutoff_noresolve =3D 15;
+ static int cutoff_resolve =3D 60;
+=20
+-static time_t rerere_created_at(const char *name)
++static time_t rerere_last_used_at(const char *name)
+ {
+ 	struct stat st;
+ 	return stat(rerere_path(name, "preimage"), &st) ? (time_t) 0 : st.st_=
+mtime;
+@@ -53,7 +53,7 @@ static void garbage_collect(struct string_list *rr)
+ 	while ((e =3D readdir(dir))) {
+ 		if (is_dot_or_dotdot(e->d_name))
+ 			continue;
+-		then =3D rerere_created_at(e->d_name);
++		then =3D rerere_last_used_at(e->d_name);
+ 		if (!then)
+ 			continue;
+ 		cutoff =3D (has_rerere_resolution(e->d_name)
+diff --git a/rerere.c b/rerere.c
+index d03a696..0d8a167 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -389,6 +389,10 @@ static int merge(const char *name, const char *pat=
+h)
+ 				     strerror(errno));
+ 	}
+=20
++	if (utime(rerere_path(name, "preimage"), NULL) < 0)
++		warning("failed utime() on %s: %s",
++				rerere_path(name, "preimage"), strerror(errno));
++
+ out:
+ 	free(cur.ptr);
+ 	free(base.ptr);
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 70856d0..c01d930 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -144,6 +144,14 @@ test_expect_success 'rerere kicked in' "! grep ^=3D=
+=3D=3D=3D=3D=3D=3D$ a1"
+=20
+ test_expect_success 'rerere prefers first change' 'test_cmp a1 expect'
+=20
++test_expect_success 'rerere updates preimage timestamp' '
++	git reset --hard &&
++	oldmtime=3D$(test-chmtime -v -42 $rr/preimage |cut -f 1) &&
++	test_must_fail git pull . first &&
++	newmtime=3D$(test-chmtime -v +0 $rr/preimage |cut -f 1) &&
++	test $oldmtime -lt $newmtime
++'
++
+ rm $rr/postimage
+ echo "$sha1	a1" | perl -pe 'y/\012/\000/' > .git/MERGE_RR
+=20
+--=20
+1.7.2.rc0.54.g4d821
