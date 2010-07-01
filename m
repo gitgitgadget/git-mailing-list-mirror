@@ -1,121 +1,87 @@
-From: Andrew Pimlott <andrew@pimlott.net>
-Subject: git cherry not marking commits with equivalent upstream
-Date: Thu, 01 Jul 2010 12:38:45 -0700
-Message-ID: <1278012954-sup-3724@pimlott.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 01 22:08:45 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Print last time and committer a file was touched by for a whole repo
+Date: Thu, 01 Jul 2010 13:12:21 -0700 (PDT)
+Message-ID: <m3eifnner1.fsf@localhost.localdomain>
+References: <AANLkTikRElk07ZqK0TOM2WD31t-H5RVngvHNU9KM7e9D@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tim Visher <tim.visher@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 01 22:12:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUQ3t-0005zN-SW
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:08:42 +0200
+	id 1OUQ7c-0007zk-2W
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000Ab0GAUIc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 16:08:32 -0400
-Received: from pimlott.net ([72.249.23.100]:1912 "EHLO fugue.pimlott.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751797Ab0GAUIb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 16:08:31 -0400
-X-Greylist: delayed 1785 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2010 16:08:31 EDT
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=default; d=pimlott.net;
-	h=Received:Content-Type:Subject:From:To:Date:Message-Id:User-Agent:Content-Transfer-Encoding;
-	b=kYU1NRcoHstyZggnCI+xrfAEKYuiMXGw3NhCs3JwlpRuKnEgOMd8UNcC3YFEXUKh1Bja55eUYwOozpM9nwurEyUvshLwPJD6pdAuLQ2Fnyn3PI40v9srNwRGzsf1aDokbw016Ka/UGosm8JRnYXuKYikhQ+plddlELNbyQBTD7Q=;
-Received: from andrew by fugue.pimlott.net with local (Exim 4.69)
-	(envelope-from <andrew@pimlott.net>)
-	id 1OUPav-0001L4-5p
-	for git@vger.kernel.org; Thu, 01 Jul 2010 12:38:45 -0700
-User-Agent: Sup/git
+	id S1755759Ab0GAUMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 16:12:25 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35990 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753198Ab0GAUMX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 16:12:23 -0400
+Received: by fxm14 with SMTP id 14so1678133fxm.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 13:12:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=InIVQhe12735YQIdkp93YV64KtFw7YqzglLkT5o/124=;
+        b=j4TaEjjDfKZ1UT1tlRiJy/Y2Cu3Xmmuiz0LyxnbhLEayxsSNeRXf2TT2SM5atjWBas
+         4RIRAQpyqLGEYKKZ4Pe/fPtwp7Izx7tqyXVfTCBpd3OgA07GIh5YPt2QZwUo3b2z0ZLI
+         2+G9qQ9Jq1PwXfDcL/OmuPujx9y8cT/VKgObc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=OQc9hF3iPi3qRNAM0x4h3/eAO6CsY4pKFQZHuv8gg01cRXqNFdX0xBgarvZNr7jcMW
+         laL+BWriyfLNJsyBRiKCFpEFSGi2fkRYpGoauggl56pjby2Jf0xrhFv27INH1HcjrGYp
+         gvotommMxgVfGpODv3JnhOhYKq6l1Im+4CxwY=
+Received: by 10.223.123.145 with SMTP id p17mr12752far.22.1278015141971;
+        Thu, 01 Jul 2010 13:12:21 -0700 (PDT)
+Received: from localhost.localdomain (abwm116.neoplus.adsl.tpnet.pl [83.8.236.116])
+        by mx.google.com with ESMTPS id j23sm53967795faa.26.2010.07.01.13.12.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 13:12:21 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o61KC32u000834;
+	Thu, 1 Jul 2010 22:12:14 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o61KC3TR000831;
+	Thu, 1 Jul 2010 22:12:03 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTikRElk07ZqK0TOM2WD31t-H5RVngvHNU9KM7e9D@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150068>
 
-The documentation for git-cherry says it marks changes in the current
-checkout that have an "equivalent" change in the upstream branch.  It
-even says it's useful when feeding patches upstream by email instead of
-git, which is what I'm doing (with CVS instead of email).  But it
-doesn't seem to work for me.
+Tim Visher <tim.visher@gmail.com> writes:
 
-I'll simulate cloning an upstream repo, creating and commiting a patch,
-then sending it via email upstream to have it applied there, then
-pulling the upstream commit (the upstream repo is a, mine is b):
+> I need to get a listing of the entire contents of my current repo (as
+> in, I don't need deleted files or anything like that, just the current
+> snapshot) with the time the file was committed and who committed it.
+> 
+> Thoughts on how to do that?
 
-    ~% mkdir a && cd a
-    ~/a% git init
-    Initialized empty Git repository in /home/andrew/a/.git/
-    ~/a% touch a
-    ~/a% git add a
-    ~/a% git commit -m 1
-    [master (root-commit) be4fa74] 1
-     0 files changed, 0 insertions(+), 0 deletions(-)
-     create mode 100644 a
-    ~/a% git clone . ../b && cd ../b
-    Initialized empty Git repository in /home/andrew/b/.git/
-    ~/b% echo test > a
-    ~/b% git add a
-    ~/b% git commit -m 2
-    [master 551e90a] 2
-     1 files changed, 1 insertions(+), 0 deletions(-)
-    ~/b% cd ../a
-    ~/a% echo test > a
-    ~/a% git add a
-    ~/a% git commit -m 3
-    [master bb13e6c] 3
-     1 files changed, 1 insertions(+), 0 deletions(-)
-    ~/a% cd ../b
-    ~/b% git pull
-    remote: Counting objects: 5, done.
-    remote: Total 3 (delta 0), reused 0 (delta 0)
-    Unpacking objects: 100% (3/3), done.
-    From /home/andrew/a/.
-       be4fa74..bb13e6c  master     -> origin/master
-    Merge made by recursive.
-    ~/b% cat a
-    test
+There does not exist a single git command that would do what you want.
+You would need to use 'git log -1 --follow' for each file in current
+snapshot ('git ls-tree -r HEAD').  IIRC there is some example how to
+do that in GitFaq or GitTips on git wiki (http://git.wiki.kernel.org).
 
-Now, I think I have two equivalent commits in repo b, one of which came
-from repo a (upstream).  So I expect git-cherry to show the other commit
-with a '-' instead of a '+'.  But no:
+Perhaps in the future 'git blame <directory>' would provide such
+output, or its equivalent (tree blame).
 
-    ~/b% git log
-    commit 27158bb3e5f7cf80a43eb7364a735f16c43e447c
-    Merge: 551e90a bb13e6c
-    Author: Andrew Pimlott <andrew@pimlott.net>
-    Date:   Thu Jul 1 12:25:21 2010 -0700
 
-        Merge branch 'master' of /home/andrew/a/.
+By the way, what do you ned this for?  Git versions whole project at
+once, not individual files.  Is it some legacy from CVS?
 
-    commit bb13e6cea3a27a4450984b6d1d87f13d807d2d36
-    Author: Andrew Pimlott <andrew@pimlott.net>
-    Date:   Thu Jul 1 12:25:18 2010 -0700
-
-        3
-
-    commit 551e90ac390a2a27152661b9cbe73845d237e008
-    Author: Andrew Pimlott <andrew@pimlott.net>
-    Date:   Thu Jul 1 12:25:06 2010 -0700
-
-        2
-
-    commit be4fa741476176181947e96c5242003ffe4f4183
-    Author: Andrew Pimlott <andrew@pimlott.net>
-    Date:   Thu Jul 1 12:24:42 2010 -0700
-
-        1
-    ~/b% git show bb13e6cea3a27a4450984b6d1d87f13d807d2d36 | git patch-id
-    58105e2bbccf2799f480bf82bb76467ff0301c52 bb13e6cea3a27a4450984b6d1d87f13d807d2d36
-    ~/b% git show 551e90ac390a2a27152661b9cbe73845d237e008 | git patch-id
-    58105e2bbccf2799f480bf82bb76467ff0301c52 551e90ac390a2a27152661b9cbe73845d237e008
-    ~/b% git cherry
-    + 551e90ac390a2a27152661b9cbe73845d237e008
-
-Is my undestanding of how this should work wrong?  Is there any way to get
-the result I want?
-
-Andrew
-(Please Cc me on replies)
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
