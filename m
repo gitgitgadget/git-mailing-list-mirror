@@ -1,102 +1,78 @@
-From: Frank Terbeck <ft@bewatermyfriend.org>
-Subject: Re: Test 17 of `t9119-git-svn-info.sh' fails with svn 1.6.9
-Date: Thu, 01 Jul 2010 12:36:02 +0200
-Message-ID: <87lj9vebfx.fsf@ft.bewatermyfriend.org>
-References: <8739w3fupp.fsf@ft.bewatermyfriend.org>
-	<4C2C5D2F.90000@drmicha.warpmail.net>
-	<87y6dveekn.fsf@ft.bewatermyfriend.org>
-	<4C2C647F.7090909@drmicha.warpmail.net>
-	<87pqz7ec79.fsf@ft.bewatermyfriend.org>
-	<4C2C6D64.4060802@drmicha.warpmail.net>
+From: Mahesh Vaidya <forvaidya@gmail.com>
+Subject: Re: git reflog delete / manpage confusion
+Date: Thu, 1 Jul 2010 16:28:46 +0530
+Message-ID: <AANLkTilaKwB1BYTNIJ49M0CZAJGrsPetQDOxZj_RHRv3@mail.gmail.com>
+References: <AANLkTik3bApuScgjXtr-VjhmY4NIuakoX_RZaYLqqpwL@mail.gmail.com>
+	<20100701101613.GA1961@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Eric Wong <normalperson@yhbt.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Jul 01 12:36:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 01 12:58:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUH8b-0002xP-Va
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 12:36:58 +0200
+	id 1OUHTq-0006lx-0z
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 12:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232Ab0GAKgv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 06:36:51 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.31]:55994 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750851Ab0GAKgu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 06:36:50 -0400
-Received: from [212.117.84.72] (helo=bones.voodoo.lan)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <ft@bewatermyfriend.org>)
-	id 1OUH8O-0006Ur-5k; Thu, 01 Jul 2010 12:36:44 +0200
-Received: by bones.voodoo.lan (Postfix, from userid 1000)
-	id 1CB9317EED; Thu,  1 Jul 2010 12:36:02 +0200 (CEST)
-In-Reply-To: <4C2C6D64.4060802@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Thu, 01 Jul 2010 12:26:44 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Df-Sender: 430444
+	id S1755005Ab0GAK6s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 06:58:48 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:34077 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754202Ab0GAK6r convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 06:58:47 -0400
+Received: by gwb15 with SMTP id 15so918493gwb.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 03:58:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FZlsNVfQh3XUs7GlxgzioBlTysI2WfQoV6AoSInedQA=;
+        b=WYchxuN5PGBeddqcZW5FV6pcZvTDdaBDpxK+mJqlsaEJl/VIj2OIcfOrG0Nk1Tp8jC
+         DRJsh+l8TG+CeAAy8aLqhu/dVFMdBulNQ6KNBIGH8oCJZGd4XgCeFQQTkO0in1sKxjef
+         TV87Nt+us2Ol5XQbQ6JS4w4/p2K5H7N1AnbeE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HoHoXPaqnUX6ycN42VPCEgJ0CRb+/l7bouD8ylIFuN++cjRFOdRHSEn844HUjXmWFq
+         EyiYyKGdy9JHNdSCeARwgxgjaqFsceYi63bUmEhg8tVK+W4yQ1xPaXUa1SZfOf9SjfY+
+         YdNG8ebgLHYtf8/FcaqdXX6iymWx4/Ykm31yY=
+Received: by 10.91.34.8 with SMTP id m8mr8574231agj.152.1277981926803; Thu, 01 
+	Jul 2010 03:58:46 -0700 (PDT)
+Received: by 10.90.100.4 with HTTP; Thu, 1 Jul 2010 03:58:46 -0700 (PDT)
+In-Reply-To: <20100701101613.GA1961@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150029>
 
-Michael J Gruber wrote:
-> Frank Terbeck venit, vidit, dixit 01.07.2010 12:19:
->> Michael J Gruber wrote:
-[...]
->>> Do the following agree for you:
->>>
->>> git svn --version
->>> svn --version
->>>
->>> Do you have any private copies of svn/svn bindings in your path or perl
->>> path?
->> 
->> Okay, it wasn't really a private copy, but you're otherwise
->> spot-on. Here's what was wrong:
+Hi I am confused again as it indeed removed HEAD{4}
+
+ -2993260 HEAD@{4}: commit (initial)
+
+> =A0mkdir repo && cd repo && git init
+> =A0for i in 1 2 3 4 5; do
+> =A0 =A0echo $i >file && git add file && git commit -m file
+> =A0done
+> =A0git reflog -g --oneline >old
+> =A0git reflog delete HEAD@{3}
+> =A0git reflog -g --oneline >new
+> =A0diff -u old new
 >
-> Turns out you cc'ed the right persons :)
-
-Heh, seems so. :)
-
->> I didn't realise, `git-svn' was using Perl's subversion bindings. This
->> happens on my laptop which runs debian stable (lenny). I was upgrading
->> my subversion package to the one provided by backports.org (a service
->> that provides backports of newer versions of certain software packages
->> to debian stable). While that worked nicely, the subversion bindings for
->> Perl are provided by a package called `libsvn-perl' which was kept at
->> the version in stable, which is 1.5.1. Backports.org also provides an
->> upgrade for that package. Now both "svn --version" and "git svn
->> --version" report the same subversion version and the test passes again.
->> 
->> 
->> Maybe it would be good if git-svn or maybe just the test suite checked
->> whether subversion's and the Perl binding's version matched?
+> I get:
 >
-> Then you would not be able to use git-svn with your setup!
-
-Well, now it would. :)
-But I get your point.
-
-> Having svn and its bindings at different versions is perfectly fine for
-> git-svn: it uses and cares about the bindings only (and adjusts
-> according to the binding's version).
-
-Okay.
-
-> It's only the test suite which cares, because it tries to make sure that
-> "svn" and "git-svn" behave as similar as possible.
->
-> We should probably check in the test suite before triggering false
-> alarms, I'll look into that.
-
-Cool thanks.
-
-And thank you for the quick response and solution.
-
-Regards, Frank
+> =A0--- old 2010-07-01 05:54:48.000000000 -0400
+> =A0+++ new 2010-07-01 05:54:48.000000000 -0400
+> =A0@@ -1,5 +1,4 @@
+> =A0 01bb1c7 HEAD@{0}: commit: file
+> =A0 c8020a8 HEAD@{1}: commit: file
+> =A0 d82df6b HEAD@{2}: commit: file
+> =A0-364bcc0 HEAD@{3}: commit: file
+> =A0-2993260 HEAD@{4}: commit (initial): file
+> =A0+364bcc0 HEAD@{3}: commit (initial): file
