@@ -1,90 +1,80 @@
-From: Frank Terbeck <ft@bewatermyfriend.org>
-Subject: Test 17 of `t9119-git-svn-info.sh' fails with svn 1.6.9
-Date: Thu, 01 Jul 2010 10:54:26 +0200
-Message-ID: <8739w3fupp.fsf@ft.bewatermyfriend.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Eric Wong <normalperson@yhbt.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 01 11:05:14 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: [PATCH v5 0/4] Re-rolled merge normalization
+Date: Thu,  1 Jul 2010 11:09:48 +0200
+Message-ID: <cover.1277974452.git.eyvind.bernhardsen@gmail.com>
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 01 11:10:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUFhq-0004J6-7a
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 11:05:14 +0200
+	id 1OUFmg-0007Bl-V6
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 11:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754189Ab0GAJFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 05:05:07 -0400
-Received: from smtprelay02.ispgateway.de ([80.67.31.40]:58271 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753212Ab0GAJFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 05:05:05 -0400
-X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2010 05:05:05 EDT
-Received: from [212.117.84.72] (helo=bones.voodoo.lan)
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <ft@bewatermyfriend.org>)
-	id 1OUFYV-0003r3-GW; Thu, 01 Jul 2010 10:55:35 +0200
-Received: by bones.voodoo.lan (Postfix, from userid 1000)
-	id 6878B190AA; Thu,  1 Jul 2010 10:54:26 +0200 (CEST)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Df-Sender: 430444
+	id S1754496Ab0GAJKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 05:10:07 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51526 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754314Ab0GAJKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 05:10:05 -0400
+Received: by fxm14 with SMTP id 14so1009761fxm.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 02:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=KP8XqrT+iIVuAReSDn+OSfCaebSB7FoLdwtEF6hZ+ws=;
+        b=Z/CiywMYMVAaTj4S6r8/faLBBAxfyd0w6ZmIV+na4skjtZmyUdbpMwbWhUtFBXUfm1
+         h6Hg9hNRHenH5xz9CGD61lj2L+ZnAhdIt/YY2BQ/zWT4G0or/7tjYiPTdfMQeI+Yscru
+         6y7K51dKXiQN2aKrfEkX0lkP97CnIZIjVu2Ho=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=CQCMIOcTSnthVP3hXuIQP4AhhM1rTehz7CzJCGgTgLyMrHDtxxkKmmxisCciGx94xy
+         hc6k+Y1cfDyz0yknmkqFSIDbX8346JKzEKVzkUPw3VSxZsJkB0tt6DQM9zb6FNvxS46B
+         bORrLv11/CIc1z9dYFdbFFuSnuuCvnBc3T3dQ=
+Received: by 10.204.81.98 with SMTP id w34mr7236834bkk.29.1277975403190;
+        Thu, 01 Jul 2010 02:10:03 -0700 (PDT)
+Received: from localhost.localdomain ([62.113.137.5])
+        by mx.google.com with ESMTPS id bi18sm11444654bkb.21.2010.07.01.02.10.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 02:10:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.rc1.4.g09d06
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150013>
 
-Hello,
+Hi Junio,
 
-Running the test suite currently breaks for me at this point:
+I took the liberty of re-rolling my series with your improved d/m patch.
+I re-added some optimizations to your patch and renamed the config
+variable to something a little more typeable.
+-- 
+Eyvind
 
-[snip]
-*   ok 16: info --url added-file
-* FAIL 17: info added-directory
+Eyvind Bernhardsen (3):
+  Avoid conflicts when merging branches with mixed normalization
+  Try normalizing files to avoid delete/modify conflicts when merging
+  Don't expand CRLFs when normalizing text during merge
 
-                mkdir gitwc/added-directory svnwc/added-directory &&
-                ptouch gitwc/added-directory svnwc/added-directory &&
-                touch gitwc/added-directory/.placeholder &&
-                cd svnwc &&
-                        svn_cmd add added-directory > /dev/null &&
-                cd .. &&
-                cd gitwc &&
-                        git add added-directory &&
-                cd .. &&
-                (cd svnwc; svn info added-directory)            >
-                expected.info-added-directory &&
-                (cd gitwc; git svn info
-                added-directory)                >
-                actual.info-added-directory &&
-                test_cmp expected.info-added-directory
-                actual.info-added-directory
+Junio C Hamano (1):
+  Introduce "double conversion during merge" more gradually
 
-*   ok 18: info --url added-directory
-[...]
-* failed 1 among 38 test(s)
-make[2]: *** [t9119-git-svn-info.sh] Error 1
-[snap]
-
-I briefly searched the list archives via gmane but didn't find this
-reported yet. I've got no idea what's going on in that test, as I'm no
-expert in subversion matters at all. So I can't be of more help than
-saying "well, it breaks for me.". :)
-
-Anyway, my svn version is "svn, version 1.6.9 (r901367)". The test suite
-I ran is from yesterdays git master branch. If it matters, this is a
-Linux box running a debian 2.6.26-2-686 kernel; the file system in
-question is `ext3' being mounted `noatime'.
-
-Regards, Frank
-
-PS: I hope I Cced the right group of people.
+ Documentation/config.txt        |   10 ++++++
+ Documentation/gitattributes.txt |   34 ++++++++++++++++++++++
+ cache.h                         |    2 +
+ config.c                        |    5 +++
+ convert.c                       |   37 ++++++++++++++++++++----
+ environment.c                   |    1 +
+ ll-merge.c                      |   15 ++++++++++
+ merge-recursive.c               |   51 ++++++++++++++++++++++++++++++++-
+ t/t6038-merge-text-auto.sh      |   59 +++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 206 insertions(+), 8 deletions(-)
+ create mode 100755 t/t6038-merge-text-auto.sh
 
 -- 
-In protocol design, perfection has been reached not when there is
-nothing left to add, but when there is nothing left to take away.
-                                                  -- RFC 1925
+1.7.2.rc1.4.g09d06
