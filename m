@@ -1,64 +1,63 @@
-From: Finn Arne Gangstad <finnag@pvv.org>
-Subject: Re: [PATCH v5 2/4] Introduce "double conversion during merge" more
-	gradually
-Date: Thu, 1 Jul 2010 20:57:12 +0200
-Message-ID: <20100701185712.GA22421@pvv.org>
-References: <cover.1277974452.git.eyvind.bernhardsen@gmail.com> <3ae294ef30c3539da47d101bc39638e63721eb0e.1277974452.git.eyvind.bernhardsen@gmail.com> <4C2C6BC5.1030905@viscovery.net> <7v630z41ao.fsf@alter.siamese.dyndns.org> <D2F8C67C-F7AE-4523-870F-879B741C2591@gmail.com> <m3iq4znnfr.fsf@localhost.localdomain>
+From: Tim Visher <tim.visher@gmail.com>
+Subject: Print last time and committer a file was touched by for a whole repo
+Date: Thu, 1 Jul 2010 15:05:26 -0400
+Message-ID: <AANLkTikRElk07ZqK0TOM2WD31t-H5RVngvHNU9KM7e9D@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"git@vger.kernel.orgList" <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 01 20:57:35 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 01 21:05:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUOx2-0001Ss-RY
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 20:57:33 +0200
+	id 1OUP59-0005ol-Cp
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 21:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755326Ab0GAS5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 14:57:23 -0400
-Received: from decibel.pvv.ntnu.no ([129.241.210.179]:44553 "EHLO
-	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754612Ab0GAS5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 14:57:22 -0400
-Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
-	(envelope-from <finnag@pvv.ntnu.no>)
-	id 1OUOwi-0005qP-HU; Thu, 01 Jul 2010 20:57:12 +0200
-Content-Disposition: inline
-In-Reply-To: <m3iq4znnfr.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1753107Ab0GATFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 15:05:48 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:63855 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751031Ab0GATFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 15:05:47 -0400
+Received: by qwi4 with SMTP id 4so38804qwi.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 12:05:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=ANQaBXmJYVZUUBTtLoKgfPnLep8l/MvwTGrPS3cwJMk=;
+        b=J+Y4A7YIeL5vlOleMK5qmEJcdR77Dd+vzHlT2C5oECUBjhOxNYqjsANYrR8eX+GEAa
+         wKDdIAQMAPEks9mUJogMMJ3lt75d3ivxS9UhRxWDBu7luGBfaRplDrQpmEX4ZkJf9xOy
+         drmJaOW0Plcv/loJrDDbw6wKo9dExLjt9GUMY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=q55fSBMCIXJkRxj/enNlpm30lQNiEIiCKi3vU3IuqrHXoOqcyDOn4VhG2gvOH8ds/d
+         dyzz/nDHK0unMUsEbZIvNc1WidJZs3uzl618qOdOe41hgHzfj6rV+jp/q0f1h0/zjj0w
+         g4ZsSCJ4j6sR3F6dPaGJsPb5cX9JetXyZI9PM=
+Received: by 10.224.53.79 with SMTP id l15mr7982284qag.33.1278011146206; Thu, 
+	01 Jul 2010 12:05:46 -0700 (PDT)
+Received: by 10.224.6.134 with HTTP; Thu, 1 Jul 2010 12:05:26 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150063>
 
-On Thu, Jul 01, 2010 at 10:05:17AM -0700, Jakub Narebski wrote:
-> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
-> > On 1. juli 2010, at 18:25, Junio C Hamano <gitster@pobox.com> wrote:
-> > > Johannes Sixt <j.sixt@viscovery.net> writes:
-> > >> Am 7/1/2010 11:09, schrieb Eyvind Bernhardsen:
-> >>>
-> >>>> +core.mergePrefilter::
-> [...]
-> >> 
-> >> Somehow to me "prefilter" does not sound to convey what really is going on
-> >> here, though.
-> > 
-> > "Doubleconvert" doesn't really mean anything either though, and
-> > "convert" and "normalise" are too generic. I think the problem is
-> > that there's no existing name for what convert.c does.
-> > 
-> > I chose "filter" because of the filter property; the crlf and ident
-> > things can be regarded as built-in filters.  -- Eyvind
-> 
-> What about `merge.renormalize' ;-) ?
+Hi everyone,
 
-Best so far! Or what about "merge.canonicalize"? Sorry for bikeshedding :)
+I need to get a listing of the entire contents of my current repo (as
+in, I don't need deleted files or anything like that, just the current
+snapshot) with the time the file was committed and who committed it.
 
-- Finn Arne
+Thoughts on how to do that?
+
+-- 
+
+In Christ,
+
+Timmy V.
+
+http://burningones.com/
+http://five.sentenc.es/ - Spend less time on e-mail
