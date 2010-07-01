@@ -1,97 +1,73 @@
-From: Andrew Pimlott <andrew@pimlott.net>
-Subject: Re: [PATCH] Documentation: 'cherry' does not cope well with merges from upstream
-Date: Thu, 01 Jul 2010 14:33:18 -0700
-Message-ID: <1278019489-sup-4929@pimlott.net>
-References: <1278012954-sup-3724@pimlott.net> <20100701210919.GA4283@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation: 'cherry' does not cope well with merges
+ from upstream
+Date: Thu, 1 Jul 2010 16:35:12 -0500
+Message-ID: <20100701213512.GB4283@burratino>
+References: <1278012954-sup-3724@pimlott.net>
+ <20100701210919.GA4283@burratino>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>,
-	=?utf-8?q?Fr=C3=A9d=C3=A9ric_Bri=C3=A8re?= <fbriere@fbriere.net>,
+	=?iso-8859-1?B?RnLpZOlyaWMgQnJp6HJl?= <fbriere@fbriere.net>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Jeff King <peff@peff.net>,
-	=?utf-8?q?Bj=C3=B6rn_Steinbrink?= <b.steinbrink@gmx.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 01 23:33:38 2010
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Andrew Pimlott <andrew@pimlott.net>
+X-From: git-owner@vger.kernel.org Thu Jul 01 23:36:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OURO5-0002Kn-Gw
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 23:33:37 +0200
+	id 1OURQz-00044z-IJ
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 23:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933247Ab0GAVdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 17:33:24 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from pimlott.net ([72.249.23.100]:1348 "EHLO fugue.pimlott.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933123Ab0GAVdU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 17:33:20 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=default; d=pimlott.net;
-	h=Received:Content-Type:Cc:Subject:From:To:In-reply-to:References:Date:Message-Id:User-Agent:Content-Transfer-Encoding;
-	b=P8V+S5lVi93TIx0U89MPs9+vxaWOJW3QXX0erMfY0kuL3wqn2QQLpF6EdVY+zZM5J5jCT11+SBQ5trIrvVemhTAP/kGAYwUlZwEtaB0Aevc9KQpLpLEUeoWZRF6MGiBjwj4PvUF4NGmlijXYFtILM8hkPzh4gtJd7pmthX9oMRI=;
-Received: from andrew by fugue.pimlott.net with local (Exim 4.69)
-	(envelope-from <andrew@pimlott.net>)
-	id 1OURNm-0001jq-Q9; Thu, 01 Jul 2010 14:33:18 -0700
-In-reply-to: <20100701210919.GA4283@burratino>
-User-Agent: Sup/git
+	id S933130Ab0GAVgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 17:36:35 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61670 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933297Ab0GAVfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 17:35:40 -0400
+Received: by iwn7 with SMTP id 7so2470097iwn.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 14:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=9EZDu/So8izbi90NahavNJjQnktRAV5+OZm+v8DT3Wg=;
+        b=IfnCwVa/ZigQSei0o2BteledmT08/ZL2LMoJ05DebsxNmvZHXAbRJ2xklrT7iWdxMV
+         YKpfZvBvVtJXbnYjzBR8B5dcy6bu++br+9BplM/oAnH9VKlcIUy5SQYJNsIqatoVVpQD
+         2uBMaubYlyEKFMH8AXLtKNkqy3aLaq4b5xhqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=qIoihXyY53RVSaT48S/k9CMyQUaxsdfx6nGpkHklwBULN0T8toJY2IN47nGMzO8YE1
+         dcneRi6BfLvcNz3Brd1JZtJ43EPcaVta9HMVAOIQauWki+CI/ZXbwMxueXtYNdSY0wKx
+         8Tfr43ClvOEcABnZcdKryv4Cs3hdYE7Le/SD8=
+Received: by 10.42.1.17 with SMTP id 17mr22246ice.86.1278020138517;
+        Thu, 01 Jul 2010 14:35:38 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g31sm32370502ibh.8.2010.07.01.14.35.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 14:35:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100701210919.GA4283@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150088>
 
-Excerpts from Jonathan Nieder's message of Thu Jul 01 14:09:19 -0700 20=
-10:
-> Example:
->=20
->  o---o---F---X'---G---U [upstream]
->           \        \
->            X----Y---M---T [topic]
->=20
-> Suppose the author of the =E2=80=98topic=E2=80=99 branch starts from =
-upstream
-> commit F and makes a few changes.  One is applied upstream, and
-> additionally there is some other useful upstream change, so he
-> performs a merge to include the upstream updates into topic.
-> The expected output from =E2=80=98cherry=E2=80=99 is:
->=20
->  + T
->  + Y
->  - X
->=20
-> Consider the author of a different branch, also called =E2=80=98topic=
-=E2=80=99, but
-> this one starts from commit G.  Some infrastructure from an existing=20
-> branch is needed, so first she merges that.  Then she adds her own
-> commit.  The expected output from =E2=80=98cherry=E2=80=99 is:
->=20
->  + T
->  + Y
->  + X
->=20
-> since none of the new commits have been applied upstream since
-> the fork point.
->=20
-> =E2=80=98cherry=E2=80=99 cannot distinguish between these two cases
+Jonathan Nieder wrote:
 
-Thanks for the awesome explanation!  (I looked at the code but would no=
-t
-have pulled this understanding.)  I would still say the first output is
-the more reasonable: it's more likely (in my estimate) the wanted
-result, and in the case where it's not it's at least easily
-comprehended. =20
+>                                    it makes sense semantically
+> since even if a new patch patches an old patch from <upstream>,
 
-Anyway, the doc patch helps, and I would love git cherry --full.
+err, for 'patches' read 'matches'.  I was not trying to say
+something that complicated. :)
 
-Andrew
+Sorry for the noise.
+Jonathan
