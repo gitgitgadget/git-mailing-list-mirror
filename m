@@ -1,125 +1,295 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [PATCH] Clarify text filter merge conflict reduction docs
-Date: Wed, 30 Jun 2010 23:32:49 +0200
-Message-ID: <0CF2361E-D010-4042-B481-6918BE2A9341@gmail.com>
-References: <20100628080234.GA7134@pvv.org> <0cd82ad22a6f240ebcde0c2f3a437a805dae5668.1277753114.git.eyvind.bernhardsen@gmail.com> <7vk4phbyl5.fsf@alter.siamese.dyndns.org> <BE5ECD39-0A80-410B-87C9-5C86F082773C@gmail.com> <7v4ogk76sb.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.2.rc1
+Date: Wed, 30 Jun 2010 17:15:44 -0700
+Message-ID: <7vhbkk3vm7.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Finn Arne Gangstad <finnag@pvv.org>,
-	"git\@vger.kernel.org List" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 30 23:33:11 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Thu Jul 01 02:16:11 2010
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OU4u4-0003p4-5x
-	for gcvg-git-2@lo.gmane.org; Wed, 30 Jun 2010 23:33:08 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1OU7Rq-0007t9-Lo
+	for glk-linux-kernel-3@lo.gmane.org; Thu, 01 Jul 2010 02:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932296Ab0F3Vc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jun 2010 17:32:56 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40906 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932092Ab0F3Vcy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 30 Jun 2010 17:32:54 -0400
-Received: by wyf23 with SMTP id 23so629816wyf.19
-        for <git@vger.kernel.org>; Wed, 30 Jun 2010 14:32:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=RQy7Mt0zlbdjY0foQtWQxUtTUn2h+YWnFv4GZGxdNOU=;
-        b=AIYY4cyml6+o6dN3SEMJiXD4MhPUpdANzW7KNks+r8AnLnnKkCm8PSBbV7PM+0SCPA
-         O6QNi2W1evpgd9p5eDv9CuFzebPMlyudffWdhB6aA9zrhSDzisZf7MqgRgxm0Z++iS5n
-         I5SqJBLwYlfd1bj4PlmmzQuOAfyaeyWDR0XUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=PVIWTQgPStUb+ti5MzDi77jGQNp5TABHcbM62Q62JK40ubTf7pYPiu0uOimoiVlx66
-         81YbEtwUGTa7exUKaY0yvtDo6awwRaPxyKj0iSmOr265JDBznKoIlAeNXe8NNQxivEPY
-         MpXRmtmlxvMLlRDGazPrzrwzni11HLYEs3JmE=
-Received: by 10.216.46.19 with SMTP id q19mr186409web.66.1277933572365;
-        Wed, 30 Jun 2010 14:32:52 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id l4sm5057306wej.32.2010.06.30.14.32.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 30 Jun 2010 14:32:52 -0700 (PDT)
-In-Reply-To: <7v4ogk76sb.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1081)
-Sender: git-owner@vger.kernel.org
+	id S932342Ab0GAAQD (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 30 Jun 2010 20:16:03 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56662 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756148Ab0GAAP4 (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 30 Jun 2010 20:15:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B505C047E;
+	Wed, 30 Jun 2010 20:15:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=Ujmu
+	/OOkp5pzGytND+udZ7FypEg=; b=buQJpm+Kfu0wJnaKuJtp2oiV3HRpteTXmC0j
+	H7HVW3hW9HTeV/8WrzDtgtmhkCs9KOh1N2acdjMtJK/TwZurUCpj3UZOjh/DbGzi
+	bvagXSQjnUvZmG9iGKnPFjXaXZjvOxdtjHxJLa15jcQ444qPhKMIfF08AOTjYLBB
+	z0hzgu8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=roF
+	Cg/nAruSvYLJ5yzp4EoemMMvRgM7FzppjtW5FWkfN+fJ9GBA4stcY9ksfQEzCVAm
+	AS9lO07OcfJYsQ7RMR9BrA+YvCKsB/Ik92P4W4rLX6T+PYoAR0ttPZxXzxVNr//g
+	qlijhDIjkrBo5VQCMzUIUmQfYLkV1akv/yGAgyZA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DD1CAC047D;
+	Wed, 30 Jun 2010 20:15:49 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D86DC047C; Wed, 30 Jun
+ 2010 20:15:45 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CDA14B26-84A5-11DF-86BC-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/149999>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150001>
 
-Thanks for the detailed review and rewrite!  I unexpectedly had to spend the evening working on non-git related stuff, so I haven't even had time to send my promised re-roll.
+A release candidate Git 1.7.2.rc1 is available at the usual places
+for testing:
 
-On 30. juni 2010, at 19.46, Junio C Hamano wrote:
+  http://www.kernel.org/pub/software/scm/git/
 
-> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
-> 
->> Shouldn't the normalization in merge-recursive be conditional too?
-> 
-> True, but your patch to merge-recursive is broken, I think.  It should at
-> least look like the attached rewrite.
+  git-1.7.2.rc1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.2.rc1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.2.rc1.tar.{gz,bz2}		(preformatted docs)
 
-Your patch is better than mine, but in my defense I think you misdiagnosed the big problems.  The error path in normalized_eq returned 0 in case of problems, making the caller assume that the files differ and generate a merge conflict, and the return code from normalize_buffer was used correctly (see below).
+The RPM binary packages for a few architectures are found in:
 
-[...]
+  testing/git-*-1.7.2.rc1-1.fc11.$arch.rpm	(RPM)
 
-> If you had a test that made sure that the merge works for paths that do
-> not need double-conversion, you might have caught the last issue.  I
-> suspect that your new tests _only_ checked what happens to paths that
-> actually triggers these double conversion, without making sure that the
-> new code would not affect the cases where it shouldn't be involved, no?
+----------------------------------------------------------------
 
-The real tests I ran were a couple of huge merges, admittedly across a "text=auto" change, but most paths were not touched by either branch, so I would definitely have hit that issue.
+Git v1.7.2 Release Notes (draft)
+================================
 
-> It is a common trap to fall into not testing the negative case, when you
-> are working on your own shiny new toy.  Let's be more careful when writing
-> new tests.
+Updates since v1.7.1
+--------------------
 
-Yes, absolutely.  The tests are pretty threadbare for such a potentially dangerous change, so I'll cop to a "shiny new toy" charge.  I'll also cop to writing hard-to-read code, but I still think it worked :)
+ * core.eol configuration and eol attribute are the new way to control
+   the end of line conventions for files in the working tree;
+   core.autocrlf overrides it, keeping the traditional behaviour by
+   default.
 
-Even though I like your version better than mine, I have a few comments, only some of which are defensive:
+ * The whitespace rules used in "git apply --whitespace" and "git diff"
+   gained a new member in the family (tab-in-indent) to help projects with
+   policy to indent only with spaces.
 
-> +	if (!core_ll_merge_double_convert)
-> +		return sha_eq(o_sha, a_sha);
+ * When working from a subdirectory, by default, git does not look for its
+   metadirectory ".git" across filesystems, primarily to help people who
+   have invocations of git in their custom PS1 prompts, as being outside
+   of a git repository would look for ".git" all the way up to the root
+   directory, and NFS mounts are often slow.  DISCOVERY_ACROSS_FILESYSTEM
+   environment variable can be used to tell git not to stop at a
+   filesystem boundary.
 
-I would rather do this:
+ * Usage help messages generated by parse-options library (i.e. most
+   of the Porcelain commands) are sent to the standard output now.
 
-	if (sha_eq(o_sha, a_sha))
-		return 1;
-	if (!core_ll_merge_double_convert)
-		return 0;
+ * ':/<string>' notation to look for a commit now takes regular expression
+   and it is not anchored at the beginning of the commit log message
+   anymore (this is a backward incompatible change).
 
-If the sha1s are equal before normalization the files will be equal after normalization, so there's no sense in going through the rigmarole.
+ * "git" wrapper learned "-c name=value" option to override configuration
+   variable from the command line.
 
-Bikeshed colour, I know, but core_ll_merge_double_convert is unwieldy and also a bit inaccurate since it's not just for ll_merge.  How about core_merge_prefilter, with a corresponding change to the config setting?  (I had this change as part of my unsent re-roll).
+ * Improved portability for various platforms including older SunOS,
+   HP-UX 10/11, AIX, Tru64, etc. and platforms with Python 2.4.
 
-> +	ret = 0; /* assume changed for safety */
-> +	assert(o_sha && a_sha);
-> +	if (read_sha1_strbuf(o_sha, &o) || read_sha1_strbuf(a_sha, &a))
-> +		goto error_return;
-> +	renormalize_buffer(path, o.buf, o.len, &o);
-> +	renormalize_buffer(path, a.buf, o.len, &a);
-> +	ret = (o.len == a.len && !memcmp(o.buf, a.buf, o.len));
+ * The message from "git am -3" has been improved when conflict
+   resolution ended up making the patch a no-op.
 
-This was one of your points, but I deliberately skipped the memcmp here if _neither_ of the renormalize_buffers did any work (binary "|" instead of boolean "||" to ensure both sides are evaluated, but the comment was perhaps a little obscure).
+ * "git blame" applies the textconv filter to the contents it works
+   on, when available.
 
-If the files had been equal without any normalization the sha_eq() would have caught it, so we know the files are different without having to compare them.
+ * "git checkout --orphan newbranch" is similar to "-b newbranch" but
+   prepares to create a root commit that is not connected to any existing
+   commit.
 
-> +error_return:
-> +	strbuf_release(&o);
-> +	strbuf_release(&a);
-> +	return ret;
+ * "git cherry-pick" learned to pick a range of commits
+   (e.g. "cherry-pick A..B" and "cherry-pick --stdin"); this does not
+   have nicer sequencing control "rebase [-i]" has, though.
 
-I'm not a goto objector, just curious: what's the advantage of "goto error_return" here vs. having the renormalizing code inside the if and inverting the test?
+ * "git cvsserver" can be told to use pserver; its password file can be
+   stored outside the repository.
 
-Thanks again for taking the time to improve my patch.
--- 
-Eyvind
+ * The output from the textconv filter used by "git diff" can be cached to
+   speed up their reuse.
+
+ * "git diff --word-diff=<mode>" extends the existing "--color-words"
+   option, making it more useful in color-challenged environments.
+
+ * The regexp to detect function headers used by "git diff" for PHP has
+   been enhanced for visibility modifiers (public, protected, etc.) to
+   better support PHP5.
+
+ * "diff.noprefix" configuration variable can be used to implicitly
+   ask for "diff --no-prefix" behaviour.
+
+ * "git for-each-ref" learned "%(objectname:short)" that gives the object
+   name abbreviated.
+
+ * "git format-patch" learned --signature option and format.signature
+   configuration variable to customize the e-mail signature used in the
+   output.
+
+ * Various options to "git grep" (e.g. --count, --name-only) work better
+   with binary files.
+
+ * "git grep" learned "-Ovi" to open the files with hits in yoru editor.
+
+ * "git help -w" learned "chrome" and "chromium" browsers.
+
+ * "git log --decorate" shows commit decorations in various colours.
+
+ * "git log --follow <path>" follows across copies (it used to only follow
+   renames).  This may make the processing more expensive.
+
+ * "git log --pretty=format:<template>" specifier learned "% <something>"
+   magic that inserts a space only when %<something> expands to a
+   non-empty string; this is similar to "%+<something>" magic, but is
+   useful in a context to generate a single line output.
+
+ * "git notes prune" learned "-n" (dry-run) and "-v" options, similar to
+   what "git prune" has.
+
+ * "git patch-id" can be fed a mbox without getting confused by the
+   signature line in the format-patch output.
+
+ * "git remote" learned "set-branches" subcommand.
+
+ * "git revert" learned --strategy option to specify the merge strategy.
+
+ * "git rev-list A..B" learned --ancestry-path option to further limit
+   the result to the commits that are on the ancestry chain between A and
+   B (i.e. commits that are not descendants of A are excluded).
+
+ * "git show -5" is equivalent to "git show --do-walk 5"; this is similar
+   to the update to make "git show master..next" walk the history,
+   introduced in 1.6.4.
+
+ * "git status [-s] --ignored" can be used to list ignored paths.
+
+ * "git status -s -b" shows the current branch in the output.
+
+ * "git status" learned "--ignore-submodules" option.
+
+ * Various "gitweb" enhancements and clean-ups, including syntax
+   highlighting, "plackup" support for instaweb, .fcgi suffix to run
+   it as FastCGI script, etc.
+
+
+Fixes since v1.7.1
+------------------
+
+All of the fixes in v1.7.1.X maintenance series are included in this
+release, unless otherwise noted.
+
+ * We didn't URL decode "file:///path/to/repo" correctly when path/to/repo
+   had percent-encoded characters (638794c, 9d2e942).
+
+ * "git commit" did not honor GIT_REFLOG_ACTION environment variable, resulting
+   reflog messages for cherry-pick and revert actions to be recorded as "commit".
+
+ * "git clone/fetch/pull" issued an incorrect error message when a ref and
+   a symref that points to the ref were updated at the same time.  This
+   obviously would update them to the same value, and should not result in
+   an error condition (0e71bc3).
+
+ * "git clone" did not configure remote.origin.url correctly for bare
+   clones (df61c889).
+
+ * "git diff" inside a tree with many pathnames that have certain
+   characters has become very slow in 1.7.0 by mistake (will merge
+   e53e6b443 to 'maint').
+
+ * "git diff --graph" works better with "--color-words" and other options
+   (81fa024..4297c0a).
+
+ * "git diff" could show ambiguous abbreviation of blob object names on
+   its "index" line (3e5a188).
+
+ * "git rebase" did not faithfully reproduce a malformed author ident, that
+   is often seen in a repository converted from foreign SCMs (43c23251).
+
+ * "git reset --hard" started from a wrong directory and a working tree in
+   a nonstandard location is in use got confused (560fb6a1).
+
+----------------------------------------------------------------
+
+Changes since v1.7.2-rc0 are as follows:
+
+Andrew Sayers (2):
+      bash-completion: Fix __git_ps1 to work with "set -u"
+      bash completion: Support "divergence from upstream" messages in __git_ps1
+
+Brandon Casey (4):
+      t/lib-pager.sh: remove unnecessary '^' from 'expr' regular expression
+      t/t7811-grep-open.sh: ensure fake "less" is made executable
+      t/t7811-grep-open.sh: remove broken/redundant creation of fake "less" script
+      t/t9001: use egrep when regular expressions are involved
+
+Brian Gernhardt (1):
+      t4027,4041: Use test -s to test for an empty file
+
+Christian Couder (1):
+      revert: accept arbitrary rev-list options
+
+Jeff King (1):
+      notes: check number of parameters to "git notes copy"
+
+Jens Lehmann (4):
+      git diff: rename test that had a conflicting name
+      Add optional parameters to the diff option "--ignore-submodules"
+      git submodule: ignore dirty submodules for summary and status
+      Add the option "--ignore-submodules" to "git status"
+
+Johannes Schindelin (3):
+      Unify code paths of threaded greps
+      grep: Add the option '--open-files-in-pager'
+      grep -O: allow optional argument specifying the pager (or editor)
+
+Jonathan Nieder (3):
+      grep: refactor grep_objects loop into its own function
+      t3508 (cherry-pick): futureproof against unmerged files
+      revert: do not rebuild argv on heap
+
+Julian Phillips (6):
+      string_list: Fix argument order for print_string_list
+      string_list: Fix argument order for for_each_string_list
+      string_list: Fix argument order for string_list_insert
+      string_list: Fix argument order for string_list_insert_at_index
+      string_list: Fix argument order for string_list_lookup
+      string_list: Fix argument order for string_list_append
+
+Junio C Hamano (5):
+      url_decode: URL scheme ends with a colon and does not require a slash
+      Update draft release notes to 1.7.1.1
+      Git 1.7.1.1
+      git.spec.in: Add gitweb subpackage
+      Git 1.7.2-rc1
+
+Michael J Gruber (4):
+      t6018: add tests for rev-list's --branches and --tags
+      t6018: make sure all tested symbolic names are different revs
+      git-rev-parse.txt: Document ":path" specifier
+      git-rev-parse.txt: Add more examples for caret and colon
+
+Nazri Ramliy (5):
+      commit.h: add 'type' to struct name_decoration
+      log-tree.c: Use struct name_decoration's type for classifying decoration
+      log --decorate: Colorize commit decorations
+      Allow customizable commit decorations colors
+      Add test for correct coloring of git log --decoration
+
+Ramsay Allan Jones (2):
+      msvc: Select the "fast" definition of the {get,put}_be32() macros
+      notes: Initialise variable to appease gcc
+
+Thomas Rast (1):
+      rev-list: introduce --count option
