@@ -1,99 +1,90 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: [PATCH] RelNotes-1.7.2: cherry-pick and revert learned the same
- things
-Date: Thu, 1 Jul 2010 10:09:31 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC7448415281B@xmail3.se.axis.com>
-References: <20100701051028.2369.53975.chriscool@tuxfamily.org>
+From: Frank Terbeck <ft@bewatermyfriend.org>
+Subject: Test 17 of `t9119-git-svn-info.sh' fails with svn 1.6.9
+Date: Thu, 01 Jul 2010 10:54:26 +0200
+Message-ID: <8739w3fupp.fsf@ft.bewatermyfriend.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 01 10:10:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Eric Wong <normalperson@yhbt.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 01 11:05:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUErI-0004Ri-Le
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 10:10:56 +0200
+	id 1OUFhq-0004J6-7a
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 11:05:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752177Ab0GAIKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 04:10:46 -0400
-Received: from miranda.se.axis.com ([193.13.178.8]:41458 "EHLO
-	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751174Ab0GAIKn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 04:10:43 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o6189X41022420;
-	Thu, 1 Jul 2010 10:09:33 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Thu, 1 Jul 2010 10:09:33 +0200
-Thread-Topic: [PATCH] RelNotes-1.7.2: cherry-pick and revert learned the
- same things
-Thread-Index: AcsY2/dWp9Ro+yA5QeWFvSjQpfZf+gAGJJ5w
-In-Reply-To: <20100701051028.2369.53975.chriscool@tuxfamily.org>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1754189Ab0GAJFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 05:05:07 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.40]:58271 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753212Ab0GAJFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 05:05:05 -0400
+X-Greylist: delayed 315 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2010 05:05:05 EDT
+Received: from [212.117.84.72] (helo=bones.voodoo.lan)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <ft@bewatermyfriend.org>)
+	id 1OUFYV-0003r3-GW; Thu, 01 Jul 2010 10:55:35 +0200
+Received: by bones.voodoo.lan (Postfix, from userid 1000)
+	id 6878B190AA; Thu,  1 Jul 2010 10:54:26 +0200 (CEST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Df-Sender: 430444
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150012>
 
-> -----Original Message-----
-> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
-> Behalf Of Christian Couder
-> Sent: den 1 juli 2010 07:10
-> To: Junio C Hamano
-> Cc: git@vger.kernel.org
-> Subject: [PATCH] RelNotes-1.7.2: cherry-pick and revert learned the
-> same things
-> 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  Documentation/RelNotes-1.7.2.txt |   11 ++++++-----
->  1 files changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/RelNotes-1.7.2.txt b/Documentation/RelNotes-
-> 1.7.2.txt
-> index 8ed7406..53a71da 100644
-> --- a/Documentation/RelNotes-1.7.2.txt
-> +++ b/Documentation/RelNotes-1.7.2.txt
-> @@ -44,9 +44,12 @@ Updates since v1.7.1
->     prepares to create a root commit that is not connected to any
-> existing
->     commit.
-> 
-> - * "git cherry-pick" learned to pick a range of commits (e.g. "cherry-pick
-> -   A..B"); this does not have nicer sequencing control "rebase [-i]" has,
-> -   though.
-> + * "git cherry-pick" and "git revert" learned to pick a range of
-> +   commits (e.g. "cherry-pick A..B"); this does not have nicer
+Hello,
 
-Shouldn't that be "the nicer"?
+Running the test suite currently breaks for me at this point:
 
-> +   sequencing control "rebase [-i]" has, though.
-> +
-> + * "git cherry-pick" and "git revert" learned --strategy option to
-> +   specify the merge strategy.
-> 
->   * "git cvsserver" can be told to use pserver; its password file can be
->     stored outside the repository.
-> @@ -92,8 +95,6 @@ Updates since v1.7.1
-> 
->   * "git remote" learned "set-branches" subcommand.
-> 
-> - * "git revert" learned --strategy option to specify the merge strategy.
-> -
->   * "git rev-list A..B" learned --ancestry-path option to further limit
->     the result to the commits that are on the ancestry chain between A and
->     B (i.e. commits that are not descendants of A are excluded).
-> --
-> 1.7.2.rc0.223.g465131.dirty
+[snip]
+*   ok 16: info --url added-file
+* FAIL 17: info added-directory
 
-//Peter
+                mkdir gitwc/added-directory svnwc/added-directory &&
+                ptouch gitwc/added-directory svnwc/added-directory &&
+                touch gitwc/added-directory/.placeholder &&
+                cd svnwc &&
+                        svn_cmd add added-directory > /dev/null &&
+                cd .. &&
+                cd gitwc &&
+                        git add added-directory &&
+                cd .. &&
+                (cd svnwc; svn info added-directory)            >
+                expected.info-added-directory &&
+                (cd gitwc; git svn info
+                added-directory)                >
+                actual.info-added-directory &&
+                test_cmp expected.info-added-directory
+                actual.info-added-directory
+
+*   ok 18: info --url added-directory
+[...]
+* failed 1 among 38 test(s)
+make[2]: *** [t9119-git-svn-info.sh] Error 1
+[snap]
+
+I briefly searched the list archives via gmane but didn't find this
+reported yet. I've got no idea what's going on in that test, as I'm no
+expert in subversion matters at all. So I can't be of more help than
+saying "well, it breaks for me.". :)
+
+Anyway, my svn version is "svn, version 1.6.9 (r901367)". The test suite
+I ran is from yesterdays git master branch. If it matters, this is a
+Linux box running a debian 2.6.26-2-686 kernel; the file system in
+question is `ext3' being mounted `noatime'.
+
+Regards, Frank
+
+PS: I hope I Cced the right group of people.
+
+-- 
+In protocol design, perfection has been reached not when there is
+nothing left to add, but when there is nothing left to take away.
+                                                  -- RFC 1925
