@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v2 1/8] t/README: Tests are all +x, ./test, not sh ./test
-Date: Thu,  1 Jul 2010 20:17:51 +0000
-Message-ID: <1278015478-6920-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH v2 3/8] t/README: Typo: paralell -> parallel
+Date: Thu,  1 Jul 2010 20:17:53 +0000
+Message-ID: <1278015478-6920-4-git-send-email-avarab@gmail.com>
 References: <1278015478-6920-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,49 +17,46 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUQDV-0003KV-5E
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:18:37 +0200
+	id 1OUQDW-0003KV-4d
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754801Ab0GAUSa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 16:18:30 -0400
+	id S1755908Ab0GAUSe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 16:18:34 -0400
 Received: from mail-ew0-f46.google.com ([209.85.215.46]:43842 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754063Ab0GAUS3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 16:18:29 -0400
-Received: by ewy23 with SMTP id 23so884033ewy.19
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 13:18:27 -0700 (PDT)
+	with ESMTP id S1755539Ab0GAUSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 16:18:33 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 23so884033ewy.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 13:18:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=dCDzu5vI8ef56XLE6em+JRDb8SrWGgtphoAFlDK3AJk=;
-        b=lMBth0XqDaesBPgCzSFJhTESbdOvfe2b9zL7w/Addb3LezZTRsTR+3qJSdLfwmddSd
-         ykYBgAfnSZvPcQ8nIpxm9BoH8WIsrrqtMmWvevNzRJDxUZCzoi30QdkSlROVQw9l85Fu
-         6PiiAx2k2jkaI5MaSEhZmLyhS8YWyt3+r5wg4=
+        bh=N9dbb4KIO8PwiB28c0mpMqh996bHoYuEXXYF6q9JmKM=;
+        b=bYBEPHFBPvVELMj70SKqDvWCHrn5ZSVk3kbdZkP6cwocMLFnbfOPd+f30b0fThgmDe
+         4Os/8Uw2w3CMygk+yJjuAVp4XUkHB9Qx22016bxoJ/gp/Zz98K/jpAFnSATRFg5CRtFW
+         F+ASFoXNX+qEu25vIJMXamETfpTfKLsnd+bHI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=k2H31S//C5bCTE2W4aDfOE38Zvvbat56+jd+9aIep5baDck3/4maveP/CsFVh1jLL0
-         cpVDzp1XKbEq1eyBwVeuGb+bEkhPu7NaQwQfOOXBcAn/L4UloTAvLQz0S6C5rYC+yfBn
-         kHebrJk8yO0AjHTbpoEQ87H09MlmjIg3lS58Y=
-Received: by 10.213.13.18 with SMTP id z18mr724ebz.43.1278015506614;
-        Thu, 01 Jul 2010 13:18:26 -0700 (PDT)
+        b=tVW+ix2zrogE9PpMBJvlvWym+PjKeErMH8HdJRJMK9db4H9mGlQ998wWB+VjBPDCex
+         0vE/HZlKuBvuO1jIF4dXmGFeJePPHuKL/MRHx4SytC6rBjEgh+uLhBIcErXWUxSTiRa+
+         ZkauTwL46NwAbJJs3svvrLTJHNWMpIBmMs1Dc=
+Received: by 10.213.20.66 with SMTP id e2mr3038807ebb.83.1278015512198;
+        Thu, 01 Jul 2010 13:18:32 -0700 (PDT)
 Received: from localhost.localdomain ([188.105.94.3])
-        by mx.google.com with ESMTPS id v8sm261986eeh.14.2010.07.01.13.18.23
+        by mx.google.com with ESMTPS id v8sm261986eeh.14.2010.07.01.13.18.29
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 01 Jul 2010 13:18:24 -0700 (PDT)
+        Thu, 01 Jul 2010 13:18:30 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.251.g92a7
 In-Reply-To: <1278015478-6920-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150072>
-
-test-lib.sh runs tests with $SHELL_PATH or the #!/bin/sh shebang when
-run under prove. It's simpler to just show ./ as an example.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150073>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
@@ -68,18 +65,17 @@ Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
  1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/t/README b/t/README
-index aa4ed28..b378ab1 100644
+index 3cdd744..1d0fd18 100644
 --- a/t/README
 +++ b/t/README
-@@ -52,7 +52,7 @@ prove and other harnesses come with a lot of useful o=
-ptions. The
+@@ -33,7 +33,7 @@ the tests.
+     ok 3 - plain bare
 =20
- You can also run each test individually from command line, like this:
+ Since the tests all output TAP (see http://testanything.org) they can
+-be run with any TAP harness. Here's an example of paralell testing
++be run with any TAP harness. Here's an example of parallel testing
+ powered by a recent version of prove(1):
 =20
--    $ sh ./t3010-ls-files-killed-modified.sh
-+    $ ./t3010-ls-files-killed-modified.sh
-     ok 1 - git update-index --add to add various paths.
-     ok 2 - git ls-files -k to show killed files.
-     ok 3 - validate git ls-files -k output.
+     $ prove --timer --jobs 15 ./t[0-9]*.sh
 --=20
 1.7.1.251.g92a7
