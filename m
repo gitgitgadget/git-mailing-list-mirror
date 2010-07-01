@@ -1,124 +1,188 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 8/8] t/README: Document the dangers of printing "ok" /
- "not ok"
-Date: Thu, 01 Jul 2010 10:16:36 -0700
-Message-ID: <7vhbkj2kcr.fsf@alter.siamese.dyndns.org>
-References: <1277997004-29504-1-git-send-email-avarab@gmail.com>
- <1277997004-29504-9-git-send-email-avarab@gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Beg. Level: Send Radiant CMS w/extensions to Heroku
+Date: Thu, 1 Jul 2010 10:47:55 -0700
+Message-ID: <AANLkTimxEppGHi327xQA6ex8Q0-1EUPyWiOb104uOgkO@mail.gmail.com>
+References: <29042313.post@talk.nabble.com>
+	<4C2CBAD9.60701@gmail.com>
+	<AANLkTin9XwWymJuxKOeoc5z9mIVMY2mQXYv-xcihBe96@mail.gmail.com>
+	<4C2CD32A.80501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 01 19:17:20 2010
+Cc: GIT <git@vger.kernel.org>
+To: dsamay@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jul 01 19:48:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUNO1-0001tS-Nr
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 19:17:18 +0200
+	id 1OUNro-00030F-In
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 19:48:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183Ab0GARQr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 13:16:47 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34269 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752159Ab0GARQp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 13:16:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 33102C0F26;
-	Thu,  1 Jul 2010 13:16:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9OiqdwnUCCwE
-	78RgOm9T3JLgPIg=; b=q1h4Hh3WP020QUMiVEUcUfjHj2bHe10NiFpDWO2i5lnN
-	bZD+UxL25vI08kFJNPVCFkg3DYZh16q2cKQplT5Up8YFG+tjvSEdBGiUCSPtoY+7
-	+K8wuWy+2Ly9DESM5ZGg8BqDzLP+oaw05A8MmRrE/317TSiEGLKjuFIFKxcQchk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yAccTK
-	VcA/oVJiAXD4GvrW+BVgqqd9bH8upFUHJ3elybs2WFngly5tsAwMw1pcpKyt0TgK
-	CBafIcJJxVa6ejrGMH58NJd/RBX2oSDN7NhJ9CYsDE9sMzzKjxmRMW1BxCylsnA4
-	nU0nRIExWlzw4cfllqzF1rfXwowkxUT1mhzCg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EB6D0C0F24;
-	Thu,  1 Jul 2010 13:16:40 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14927C0F23; Thu,  1 Jul
- 2010 13:16:37 -0400 (EDT)
-In-Reply-To: <1277997004-29504-9-git-send-email-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu\,  1 Jul
- 2010 15\:10\:04 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A1B40C2-8534-11DF-8090-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753172Ab0GARr5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 13:47:57 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:46977 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752912Ab0GARr5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 13:47:57 -0400
+Received: by gyd12 with SMTP id 12so1202106gyd.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 10:47:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IunSKgQsskAYLLHFyAjz9cz3zM/LDxiD68l9vpPhHTk=;
+        b=bDEB0xEW0boS6t4do37h+WdULEjfCj+1W4zl7sLIDrI3tQv9vEFR5xkBZrCWQxZOTl
+         x8Kq5xME8IDWwugVhuJMemt5mS4xlMpGVmHuTK7SXQjCgaBT3tphYuvYBN4j6QifUUWN
+         Yaw7ks5fc/PsHyFk05vjUPFu/1yi2JnAjFJ74=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=TYXk+qi92OnsL2rGiY9LtdJyMnzCb3B6qAQ0abO1x8xaWDGQjxYUhIbjp4YdPz0Bl6
+         Al7tEXJUVy6Gnl+1ec6Qysero4w+uUL7MHq7R+hUPWxyJ3v0zd3wUXAsfLzMRhr9fLQV
+         uctx0cNU02GxHhlQaIceQd/PddrCg4sABArOM=
+Received: by 10.229.86.10 with SMTP id q10mr6474867qcl.36.1278006475540; Thu, 
+	01 Jul 2010 10:47:55 -0700 (PDT)
+Received: by 10.229.39.146 with HTTP; Thu, 1 Jul 2010 10:47:55 -0700 (PDT)
+In-Reply-To: <4C2CD32A.80501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150060>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Sorry if there are double ups. I obviously haven't configured
+Thunderbird not to sent HTML.Back to gmail web interface it is.
 
-> index 42a4c25..29f795e 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -50,6 +50,12 @@ prove and other harnesses come with a lot of usefu=
-l options. The
->      # Repeat until no more failures
->      $ prove -j 15 --state=3Dfailed,save ./t[0-9]*.sh
-> =20
-> +The TAP support is completely incidental. A TAP harness is just a
-> +program that interprets the "ok"/"not ok" (and some other strings) i=
-n
-> +a special way. The only limitation this imposes is that you shouldn'=
+On 01/07/10 09:21, Daniel Samay wrote:
+>
+> On Thu, Jul 1, 2010 at 10:57 AM, Chris Packham <judge.packham@gmail.c=
+om> wrote:
+>
+> On 30/06/10 23:15, Geirsman wrote:
+> > Hey,
+> >
+> > I made the page I wanted locally with Radiant CMS and several exten=
+sions.
+> > Then when I went to send it to Heroku I ran into a variety of error=
+s, first
+> > SSH, then I think I sent over the gems but not the extensions. And =
+in
+> > attempting to fix things I think I only made them worse.
+> >
+> > Right now at http://freezing-night-21.heroku.com I believe I need t=
+o send
+> > over my extensions because the repo size is 17.6megs and the slug s=
+ize is
+> > 7.6megs. Also the way I read the error message I get.
+> >
+> > I'm lost so I start at the end,
+> >
+> > $ git push heroku
+> >
+> >> Everything up-to-date
+> >>
+> > $ git commit -a
+> > U =C2=A0 =C2=A0 vendor/extensions/forms
+> > U =C2=A0 =C2=A0 vendor/extensions/forms_mail
+> > U =C2=A0 =C2=A0 vendor/extensions/mailer
+> > U =C2=A0 =C2=A0 vendor/extensions/multi_site
+> > U =C2=A0 =C2=A0 vendor/extensions/paperclipped
+> > U =C2=A0 =C2=A0 vendor/extensions/paperclipped_uploader
+> > U =C2=A0 =C2=A0 vendor/extensions/ray
+> > U =C2=A0 =C2=A0 vendor/extensions/rbac_base
+> > U =C2=A0 =C2=A0 vendor/extensions/rbac_page_edit
+> > U =C2=A0 =C2=A0 vendor/extensions/settings
+> > U =C2=A0 =C2=A0 vendor/plugins/attachment_fu
+> > fatal: 'commit' is not possible because you have unmerged files.
+> >
+> > I'm lost, I tried a variety of commands but nothing seems to work o=
+n these
+> > extensions. I had several RB files on this list before so I hit git=
+ add
+> > <file> and now they don't show up. Can't really do that extension d=
+irs
+> > though.
+> >
+> > Anyways, I don't care if I start from scratch and do it properly or=
+ if I'm
+> > just one step away from having the page that I want up and running.=
+ I'd just
+> > like it up. It's a very simple page and it's taken many more hours =
+to deploy
+> > than to create because the documentation tends to be mmm...technica=
+l. Any
+> > help would be greatly appreciated, I am trying to make a site for c=
+ommunity
+> > good!
+> >
+> This is just a complete guess but you probably have previous merge
+> conflict that needs resolving.
+>
+> The output of 'git status' should tell you something about files bein=
+g
+> 'unmerged' or having conflicts (sorry I can't remember the exact
+> wording). If you do have any conflicts open the files in a text edito=
+r
+> and search for the conflict markers '>>>>>>>' fix-up the files and
+> double check that everything looks OK. After that you need to tell gi=
 t
-> +echo "ok" or "not ok" by yourself at the beginning of a line, that'l=
-l
-> +confuse the TAP harness.
-> +
+> that the conflicts have been handled with 'git add <filename>' you
+> should then be able to commit.
 
-I think the above is not suitable for the target audience of the sectio=
-n
-("Running Tests"); they are not _writing_ tests.
+Hey thanks for the reply, it wasn't showing up on the old nabble
+because I was not subscribed. I am now, but I believe I'd have to
+repost.
 
-This information (or an enhanced version of it) should come between
-"Source 'test-lib.sh'" that talks about what the harness gives, and
-"Skipping tests".  Perhaps name that to "Test your stuff".  An example.=
-=2E.
+No problem. Just keep the list on the Cc someone who knows=C2=A0 more m=
+ight
+decide to help. You don't need to subscribe the git mailing list
+allows non-subscriber posts and the convention is to Cc all
+participants (as well as the list) so you won't miss out.
 
-    Test your stuff
-    ---------------
+I forgot to mention git status results
 
-    After sourcing test-lib.sh, you test the parts of the system using =
-the
-    test harness.  Your tests will be done in the <script> part of
-    test_expect_success helper function, and the exit status of the las=
-t
-    command in that <script> signals the success/failure of a test.
+$ git status
+> (my wording) 3 changes need to be commited (environment.rb, environme=
+nt.bak, and boot.rb)
+> the extensions mentioned in my first post need to be merged
+> roughly 500-1,000 lines of "deleted" xyz
 
-    You are not supposed to "exit" from the <script> part; the harness
-    will catch this as a programming error of the test.  Use test_done
-    instead, if you need to stop the tests early (see "Skipping tests"
-    below).
+I found the conflict markers in 3 files - environment.rb,
+environment.bak, and boot.rb and then I git added them. However now I
+am left with all the extension files/folders.
 
-    Inside <script> part, the standard output and standard error stream=
-s
-    are discarded, and the test harness only reports "ok" or "not ok" t=
-o
-    the end user running the tests.  Under --verbose, they are shown to
-    help debugging the tests.
+Hmm. Did you mean to delete those files? If so you can tell git that
+you meant to with 'git rm <files>' or you can get them back with 'git
+checkout <files>'.
 
-    The output from the test suite is designed to be TAP compliant (see
-    http://..... to learn more about TAP), to allow programs by other
-    people to parse our output.  This further places restriction on wha=
-t
-    your tests can say to the standard output and standard error.  The =
-TAP
-    readers expect a line that begins with either "ok" and "not ok" to
-    signal a test passed or failed (and our harness already produces su=
-ch
-    lines), so your script shouldn't emit such lines to their output.
+=46or your extensions it looks like they are "updated but unmerged" I'm
+not entirely sure what that means but once again 'git add'ing them
+should hopefully sort them out. Alternatively 'git checkout
+vendor/extensions/*' will get them back from the stored versions but
+if you have any uncommitted changes in them they will be lost.
 
-I suspect the last paragraph needs a bit more work.  For example, don't
-you have some restriction not to say things like "1..43"???
+You might want to let us know how you got to where you are from the
+start. It sounds like you may be tripping over some of the DVCS
+concepts that people who have used traditional VCSes run into.
+
+e.g. i did the following
+=C2=A0 git clone blah
+=C2=A0 <hack hack hack>
+=C2=A0 git pull
+=C2=A0 <more hacking>
+=C2=A0 git add
+=C2=A0 git commit
+=C2=A0 git push
+
+I ordered a Git book but it'll be a couple days before it gets here.
+
+Lost of free resources are available on the web. I'd recommend the git
+community book [1], git tutorial [2] and the full manual [3]
+
+[1] http://book.git-scm.com/
+[2] http://www.kernel.org/pub/software/scm/git/docs/gittutorial.html
+[3] http://www.kernel.org/pub/software/scm/git/docs/
