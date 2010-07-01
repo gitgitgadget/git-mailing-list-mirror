@@ -1,57 +1,110 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git reflog delete / manpage confusion
-Date: Thu, 01 Jul 2010 15:09:41 +0200
-Message-ID: <4C2C9395.1080900@drmicha.warpmail.net>
-References: <AANLkTik3bApuScgjXtr-VjhmY4NIuakoX_RZaYLqqpwL@mail.gmail.com>	<20100701101613.GA1961@sigill.intra.peff.net> <AANLkTilaKwB1BYTNIJ49M0CZAJGrsPetQDOxZj_RHRv3@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [GSoC update] git-remote-svn: Week 9
+Date: Thu, 1 Jul 2010 15:13:10 +0200
+Message-ID: <20100701131310.GA28607@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 01 15:10:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Sam Vilain <sam@vilain.net>, Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 01 15:37:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUJXI-0008Pj-Pb
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 15:10:37 +0200
+	id 1OUJxj-0000Z0-On
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 15:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753916Ab0GANKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 09:10:31 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55702 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751124Ab0GANKa (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 09:10:30 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3E89510B7E8;
-	Thu,  1 Jul 2010 09:10:30 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 01 Jul 2010 09:10:30 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=YIozBA7tb10XDz9LQfDMJcnb5so=; b=T4jF2J5ujpgyqqZkkxgQvD0yixHw6gB6/rDn53eswkQgBXaUYzT/8NUIyPCmQ+jdQHL8EZRd0ttdsOM6FZZDaVJ8mo+n1o7DzPRmodNwcklvmZWc90tiX766w11X2L8OBYNbY4dZ4PJXnyidnXZSHZCilb98ZgWBkSNgPxbsDDw=
-X-Sasl-enc: 2XG/QsC+Axbl8jPLYYemdkcqB/de85S5aZs6ySz+lfqN 1277989829
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 55A054E4967;
-	Thu,  1 Jul 2010 09:10:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100625 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <AANLkTilaKwB1BYTNIJ49M0CZAJGrsPetQDOxZj_RHRv3@mail.gmail.com>
+	id S1754312Ab0GANhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 09:37:50 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62607 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752677Ab0GANhs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 09:37:48 -0400
+Received: by fxm14 with SMTP id 14so1286668fxm.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 06:37:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mail-followup-to:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=5QLcg46HnWGQ+ub4LmXnrYtHpkLgTmrweeE9PU6HTEw=;
+        b=BANq6CBX5wDqo6Z9jLrdByyCpSl3Lrqlr7D8AuZumLzX4aAWphy0edmPJp/LDH5JuG
+         OQ6K5+bcZUmmAUHoad9DGsbDF8IlNCQOqKDiuVyvP+g+puSFXC8HPu7glGD6UswzS9Ep
+         g0Z7EpmLy7FF2/XN8ExjVOoj8UbWmZN/NsG5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
+         :content-type:content-disposition:user-agent;
+        b=SFyj+xk5ETPchTTaPDiWP5B91CChI+Ts2H1yQF3zoewmfkf2gl7TyHnyXLB7P4+j4S
+         jIGAyeh6PrdH8XG/UBEOT38zQ1ulQ+SEKwgFdO1CbfZILlEOzl6/GXciAKKHw3qtEOuU
+         uZVUYaIIDB6VDSsVy6uMQ0rORJBu77b1ZNSiQ=
+Received: by 10.223.99.212 with SMTP id v20mr9471839fan.44.1277989890049;
+        Thu, 01 Jul 2010 06:11:30 -0700 (PDT)
+Received: from debian (adm12-98.itu.dk [130.226.133.98])
+        by mx.google.com with ESMTPS id p21sm53087746fak.45.2010.07.01.06.11.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 06:11:28 -0700 (PDT)
+Mail-Followup-To: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>, Sam Vilain <sam@vilain.net>,
+	Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150035>
 
-Mahesh Vaidya venit, vidit, dixit 01.07.2010 12:58:
-> Hi I am confused again as it indeed removed HEAD{4}
-> 
->  -2993260 HEAD@{4}: commit (initial)
+Hi,
 
-It didn't, that's what Jeff explained and what the content of
-.git/logs/HEAD showed (which you chose to cut; also, please don't top-post).
+In terms of code, this week was unproductive. However, there was one
+very long and productive discussion about the design of svn-fe. We can
+now prove that the design of svn-fe is most efficient, and that any
+other dumpfile importer will do worse than svn-fe. I'll put this proof
+down in another email, and use this one for just a status update. We
+have also determined that some some extensions to git-fast-import will
+significantly reduce the complexity of svn-fe. Here are the current
+list of tasks along with their status:
 
-It really deleted the line for 364bcc0, but when showing the reflog git
-mistakenly shows 364bcc0 rather than 2993260 (for the new HEAD{@3}) in
-this case.
+1. The svnclient_ra. I have stopped working on a stopgap
+   implementation of svnclient_ra that dumps full text/ props; to do
+   this, it needs to interrupt a replay and open a new connection- it
+   seems that this is quite non-trivial to get right. I've decided to
+   complete the delta dump generator instead. Unfortunately, this
+   means that I won't have a complete chain to show a remote helper by
+   mid-term evaluations: just individual components.
+2. Ternary treap fork. This only changes the underlying data
+   structure- nothing else should change. David is close to completing
+   this.
+3. Make svn-fe support deltified dumps. This can only be done after we
+   have a Git object store backing. Deferred for the moment.
+4. git-fast-import only supports filecopy for trees from the parent
+   commit; make it support copies from all commits. Jonathan has
+   already sent an RFC patch on the list for this.
+5. Zero-tree fork. svn-fe currently maintains trees for all revisions;
+   Jonathan suggested that it can lazily fetch tree objects from the
+   Git store backing. This change will significantly reduce the
+   complexity of svn-fe.
+6. git-fast-import needs to be extended to print-marks. Sverre
+   suggested this, and Jonathan has sent an RFC patch on the
+   list. This is required for the Git object store to communicate back
+   commit hashes to the caller (svn-fe in this case).
 
-Michael
+In other news, we managed to get colabti.org to log the channel where
+we have most of our discussions: #git-devel on Freenode IRC. This
+information is probably helpful for other GSoC students and developers
+who are looking to collaborate on projects.
+
+-- Ram
