@@ -1,104 +1,107 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Frank Terbeck <ft@bewatermyfriend.org>
 Subject: Re: Test 17 of `t9119-git-svn-info.sh' fails with svn 1.6.9
-Date: Thu, 01 Jul 2010 11:17:35 +0200
-Message-ID: <4C2C5D2F.90000@drmicha.warpmail.net>
+Date: Thu, 01 Jul 2010 11:28:24 +0200
+Message-ID: <87y6dveekn.fsf@ft.bewatermyfriend.org>
 References: <8739w3fupp.fsf@ft.bewatermyfriend.org>
+	<4C2C5D2F.90000@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
 	Eric Wong <normalperson@yhbt.net>
-To: Frank Terbeck <ft@bewatermyfriend.org>
-X-From: git-owner@vger.kernel.org Thu Jul 01 11:19:24 2010
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Jul 01 11:29:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUFvW-0003kw-IY
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 11:19:22 +0200
+	id 1OUG56-0000Kd-Hm
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 11:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754813Ab0GAJS3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 05:18:29 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54864 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754782Ab0GAJS0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 05:18:26 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EF10410BD68;
-	Thu,  1 Jul 2010 05:18:24 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 01 Jul 2010 05:18:25 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=A7ZbyLbscnO3uQRZivZsGReibFE=; b=KlB0lZoTiwUCnCvQcuMaRqbWohGfT38EovlWAkAmLS+lm4JCFBn7ty5KRxRK25kajwXjhutC4nPvkd1Bh7uXy4+OFXXmCJWcQBunxeza+BDrO0xYpltxB/YW7Zm4gNYsYcbwyhoKGyA0+1XUB4UxronSGxYxmN6Rek2ZUmpJIyw=
-X-Sasl-enc: E//20C9Y9i+04/A2eBZqasDKybzmQLcuD8Llotxu94O8 1277975904
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D1F8F5B852;
-	Thu,  1 Jul 2010 05:18:23 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100625 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <8739w3fupp.fsf@ft.bewatermyfriend.org>
+	id S1754604Ab0GAJ3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 05:29:10 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.26]:35698 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751545Ab0GAJ3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 05:29:09 -0400
+Received: from [212.117.84.72] (helo=bones.voodoo.lan)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <ft@bewatermyfriend.org>)
+	id 1OUG4v-0004jh-6L; Thu, 01 Jul 2010 11:29:05 +0200
+Received: by bones.voodoo.lan (Postfix, from userid 1000)
+	id C2F9717EED; Thu,  1 Jul 2010 11:28:24 +0200 (CEST)
+In-Reply-To: <4C2C5D2F.90000@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Thu, 01 Jul 2010 11:17:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+X-Df-Sender: 430444
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150019>
 
-Frank Terbeck venit, vidit, dixit 01.07.2010 10:54:
-> Hello,
-> 
-> Running the test suite currently breaks for me at this point:
-> 
-> [snip]
-> *   ok 16: info --url added-file
-> * FAIL 17: info added-directory
-> 
->                 mkdir gitwc/added-directory svnwc/added-directory &&
->                 ptouch gitwc/added-directory svnwc/added-directory &&
->                 touch gitwc/added-directory/.placeholder &&
->                 cd svnwc &&
->                         svn_cmd add added-directory > /dev/null &&
->                 cd .. &&
->                 cd gitwc &&
->                         git add added-directory &&
->                 cd .. &&
->                 (cd svnwc; svn info added-directory)            >
->                 expected.info-added-directory &&
->                 (cd gitwc; git svn info
->                 added-directory)                >
->                 actual.info-added-directory &&
->                 test_cmp expected.info-added-directory
->                 actual.info-added-directory
-> 
-> *   ok 18: info --url added-directory
-> [...]
-> * failed 1 among 38 test(s)
-> make[2]: *** [t9119-git-svn-info.sh] Error 1
-> [snap]
-> 
-> I briefly searched the list archives via gmane but didn't find this
-> reported yet. I've got no idea what's going on in that test, as I'm no
-> expert in subversion matters at all. So I can't be of more help than
-> saying "well, it breaks for me.". :)
-> 
-> Anyway, my svn version is "svn, version 1.6.9 (r901367)". The test suite
-> I ran is from yesterdays git master branch. If it matters, this is a
-> Linux box running a debian 2.6.26-2-686 kernel; the file system in
-> question is `ext3' being mounted `noatime'.
+Michael J Gruber wrote:
+> Frank Terbeck venit, vidit, dixit 01.07.2010 10:54:
+>> [snip]
+>> *   ok 16: info --url added-file
+>> * FAIL 17: info added-directory
+[...]
+>> *   ok 18: info --url added-directory
+>> [...]
+>> * failed 1 among 38 test(s)
+>> make[2]: *** [t9119-git-svn-info.sh] Error 1
+>> [snap]
+[...]
+>> Anyway, my svn version is "svn, version 1.6.9 (r901367)". The test suite
+>> I ran is from yesterdays git master branch. If it matters, this is a
+>> Linux box running a debian 2.6.26-2-686 kernel; the file system in
+>> question is `ext3' being mounted `noatime'.
+>
+> It works for me with the exact same svn version on Fedora 13.
+>
+> Please run the test like that:
+> cd t
+> ./t9119-git-svn-info.sh -i
+>
+> This stop immediately after the failed test. Then, please tell us the
+> contents of the actual.. and expected... files in the trash... subdir.
 
-It works for me with the exact same svn version on Fedora 13.
+Okay.
 
-Please run the test like that:
-cd t
-./t9119-git-svn-info.sh -i
+expected.info-added-directory:
+[snip]
+Path: added-directory
+URL: file:///usr/src/sys/git/t/trash%20directory.t9119-git-svn-info/svnrepo/added-directory
+Repository Root: file:///usr/src/sys/git/t/trash%20directory.t9119-git-svn-info/svnrepo
+Repository UUID: 638d0b70-c7df-46bd-9c56-aff8052b4ab8
+Revision: 0
+Node Kind: directory
+Schedule: add
+[snap]
 
-This stop immediately after the failed test. Then, please tell us the
-contents of the actual.. and expected... files in the trash... subdir.
+actual.info-added-directory:
+[snip]
+Path: added-directory
+URL: file:///usr/src/sys/git/t/trash%20directory.t9119-git-svn-info/svnrepo/added-directory
+Repository Root: file:///usr/src/sys/git/t/trash%20directory.t9119-git-svn-info/svnrepo
+Revision: 0
+Node Kind: directory
+Schedule: add
+[snap]
 
+And a unified diff of the two:
+[snip]
+--- trash directory.t9119-git-svn-info/actual.info-added-directory 2010-07-01 11:22:16.000000000 +0200
++++ trash directory.t9119-git-svn-info/expected.info-added-directory 2010-07-01 11:22:16.000000000 +0200
+@@ -1,6 +1,7 @@
+ Path: added-directory
+ URL: file:///usr/src/sys/git/t/trash%20directory.t9119-git-svn-info/svnrepo/added-directory
+ Repository Root: file:///usr/src/sys/git/t/trash%20directory.t9119-git-svn-info/svnrepo
++Repository UUID: 638d0b70-c7df-46bd-9c56-aff8052b4ab8
+ Revision: 0
+ Node Kind: directory
+ Schedule: add
+[snap]
 
-Michael
-
-> 
-> Regards, Frank
-> 
-> PS: I hope I Cced the right group of people.
-
-Eric's the svn guy, the rest is just other helpful people ;)
+Regards, Frank
