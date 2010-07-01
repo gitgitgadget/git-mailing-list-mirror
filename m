@@ -1,69 +1,64 @@
-From: Eric Raible <raible@gmail.com>
-Subject: Poor status output during conflicted merge
-Date: Thu, 1 Jul 2010 18:16:29 +0000 (UTC)
-Message-ID: <loom.20100701T195742-266@post.gmane.org>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: [PATCH v5 2/4] Introduce "double conversion during merge" more
+	gradually
+Date: Thu, 1 Jul 2010 20:57:12 +0200
+Message-ID: <20100701185712.GA22421@pvv.org>
+References: <cover.1277974452.git.eyvind.bernhardsen@gmail.com> <3ae294ef30c3539da47d101bc39638e63721eb0e.1277974452.git.eyvind.bernhardsen@gmail.com> <4C2C6BC5.1030905@viscovery.net> <7v630z41ao.fsf@alter.siamese.dyndns.org> <D2F8C67C-F7AE-4523-870F-879B741C2591@gmail.com> <m3iq4znnfr.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 01 20:16:52 2010
+Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	"git@vger.kernel.orgList" <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 01 20:57:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUOJg-0002Ql-4R
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 20:16:52 +0200
+	id 1OUOx2-0001Ss-RY
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 20:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753392Ab0GASQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 14:16:44 -0400
-Received: from lo.gmane.org ([80.91.229.12]:50915 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752539Ab0GASQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 14:16:43 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OUOJT-0002IG-Bn
-	for git@vger.kernel.org; Thu, 01 Jul 2010 20:16:39 +0200
-Received: from mobile-166-187-086-018.mycingular.net ([mobile-166-187-086-018.mycingular.net])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 20:16:39 +0200
-Received: from raible by mobile-166-187-086-018.mycingular.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 20:16:39 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 166.187.86.18 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.70 Safari/533.4)
+	id S1755326Ab0GAS5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 14:57:23 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:44553 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754612Ab0GAS5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 14:57:22 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1OUOwi-0005qP-HU; Thu, 01 Jul 2010 20:57:12 +0200
+Content-Disposition: inline
+In-Reply-To: <m3iq4znnfr.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150062>
 
-Let's create a merge conflict and then partially resolve it:
+On Thu, Jul 01, 2010 at 10:05:17AM -0700, Jakub Narebski wrote:
+> Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com> writes:
+> > On 1. juli 2010, at 18:25, Junio C Hamano <gitster@pobox.com> wrote:
+> > > Johannes Sixt <j.sixt@viscovery.net> writes:
+> > >> Am 7/1/2010 11:09, schrieb Eyvind Bernhardsen:
+> >>>
+> >>>> +core.mergePrefilter::
+> [...]
+> >> 
+> >> Somehow to me "prefilter" does not sound to convey what really is going on
+> >> here, though.
+> > 
+> > "Doubleconvert" doesn't really mean anything either though, and
+> > "convert" and "normalise" are too generic. I think the problem is
+> > that there's no existing name for what convert.c does.
+> > 
+> > I chose "filter" because of the filter property; the crlf and ident
+> > things can be regarded as built-in filters.  -- Eyvind
+> 
+> What about `merge.renormalize' ;-) ?
 
-git init bad-status
-cd bad-status/
-echo 1 > file
-git add file
-git commit -a -m1
-echo 2 > file
-git commit -a -m2
-git checkout -b topic HEAD^
-echo 3 > file
-git commit -a -m3
-git merge master
-git checkout --ours file
-git add file
+Best so far! Or what about "merge.canonicalize"? Sorry for bikeshedding :)
 
-A 'git status' at this point gives the following output:
-
-# On branch topic
-nothing to commit (working directory clean)
-
-Which is wrong, since the merge still needs to be committed.
-
-- Eric
+- Finn Arne
