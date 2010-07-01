@@ -1,105 +1,180 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH v2 5/8] t/README: Document test_external*
-Date: Thu, 01 Jul 2010 13:52:26 -0700 (PDT)
-Message-ID: <m3630zncwx.fsf@localhost.localdomain>
-References: <1278015478-6920-1-git-send-email-avarab@gmail.com>
-	<1278015478-6920-6-git-send-email-avarab@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] Documentation: 'cherry' does not cope well with merges
+ from upstream
+Date: Thu, 1 Jul 2010 16:09:19 -0500
+Message-ID: <20100701210919.GA4283@burratino>
+References: <1278012954-sup-3724@pimlott.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 01 22:56:29 2010
+Cc: git <git@vger.kernel.org>,
+	=?iso-8859-1?B?RnLpZOlyaWMgQnJp6HJl?= <fbriere@fbriere.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Andrew Pimlott <andrew@pimlott.net>
+X-From: git-owner@vger.kernel.org Thu Jul 01 23:10:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUQo6-0006F6-Ey
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:56:26 +0200
+	id 1OUR25-0005Wf-Go
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 23:10:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932863Ab0GAUz7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 16:55:59 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:42161 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932870Ab0GAUw3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 16:52:29 -0400
-Received: by fxm14 with SMTP id 14so1714491fxm.19
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 13:52:27 -0700 (PDT)
+	id S932779Ab0GAVJw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 17:09:52 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33900 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933009Ab0GAVJu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 17:09:50 -0400
+Received: by iwn7 with SMTP id 7so2445686iwn.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 14:09:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=qkNWj2qUXypyxgq6GPwYkDfddDQAYhemlM4Es64GvU8=;
-        b=cj92rE6IXWZr/ss1HHhK32uEUlayRvm2eFeI29BFTqIIIhsT4u905epSUUbs4esDJA
-         1ZiIs3DylKL7dE+dZzCfwcqpEgCx4BfKJRQlkTFblNTgEboo4N0CX8py+AHMAyXlow2e
-         y4014wer1evaXukA4qyGQ+h7IjzQ20/X/51MM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=USRvEjdE/pDuJqkcci6aPhlqauHg9TBJ8z1EExG9DEI=;
+        b=pjlhBrelFaAQYR+m2xIB930BsL5IyUIU+qf9L6ypVoNeMgUZD9eiwnNYOqLOhKwP+l
+         P8LA3C2I7g7cV0eNSVlJtnM7Faeoz3g3DuRwwQ6mT3Mqjx0/iWuMVaAyAyI3AgHA2Jkq
+         jUJ/y/+6WfUb+skNr8bziMuk4xgjTNDrX0rhE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=D/jfIZKiGBxswWGb6SF6VHuEjBI2rtcrjLbuEXIU4cTEbMj3QUH41HHZG1Sg6U5UvW
-         9ilzVumnqEssYZBX/VQ/ZhVwGGWGMU1Tl/w/NwAWOPDku0lAcXjfdu+w/D88Q4R0u3Ez
-         l7KnXx9rnlAfqRt32yVEqP9/vOYUMBjhwsvp4=
-Received: by 10.223.122.141 with SMTP id l13mr61367far.25.1278017546634;
-        Thu, 01 Jul 2010 13:52:26 -0700 (PDT)
-Received: from localhost.localdomain (abwm116.neoplus.adsl.tpnet.pl [83.8.236.116])
-        by mx.google.com with ESMTPS id l26sm8292017fam.39.2010.07.01.13.52.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 01 Jul 2010 13:52:26 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o61Kq3cV001347;
-	Thu, 1 Jul 2010 22:52:14 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o61KpgZi001342;
-	Thu, 1 Jul 2010 22:51:42 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1278015478-6920-6-git-send-email-avarab@gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=mF9sv5Drzt9CpRfdE654vY2p/WpVZ+riDkS6Y5MGB2iOqYGn6H8mmafo9IlRAyrX9r
+         rdK+vtUdYjpUbjygdHjL1FnCutiUi9GbBh3j1cMCvZdgOZ14ggrVVAoU1XPOeG1/5z7p
+         8Q6yuPUJbdCX1soyut7HJftZcZD2hlwxOPmUM=
+Received: by 10.231.79.74 with SMTP id o10mr81105ibk.36.1278018588049;
+        Thu, 01 Jul 2010 14:09:48 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id h8sm23698588ibk.3.2010.07.01.14.09.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 14:09:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1278012954-sup-3724@pimlott.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150083>
 
-=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
+Although =E2=80=98git cherry=E2=80=99 is advertised simply to list comm=
+its from
+<topic> that have not been merged into <upstream>, internally it
+works by checking for patches in <upstream>..<topic> that do not
+match a patch in <topic>..<upstream>.  This is fast because there
+are not many patches to check, and it makes sense semantically
+since even if a new patch patches an old patch from <upstream>,
+it cannot be said to have been merged upstream unless it was
+applied there at some point after the <topic> and <upstream>
+branches diverged.
 
-> + - test_external [<prereq>] <message> <external> <script>
-> +
-> +   Execute a <script> with an <external> interpreter (like perl). Th=
-is
-> +   was added for tests like t9700-perl-git.sh which do most of their
-> +   work in an external test script.
-> +
-> +	test_external_without_stderr \
-> +	    'Perl API' \
-> +	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
+But.  If the <topic> branch later merges from <upstream>, it
+throws a spanner in the works and for such a history =E2=80=98git cherr=
+y=E2=80=99
+is not very useful at all.
 
-I think this example was to be about 'test_external'; currently it
-duplicates example for 'test_external_without_stderr'.
+Example:
 
-Perhaps:
+ o---o---F---X'---G---U [upstream]
+          \        \
+           X----Y---M---T [topic]
 
-  +     test_external \
-  +         'GitwebCache::*FileCache*' \
-  +         "$PERL_PATH" "$TEST_DIRECTORY"/t9503/test_cache_interface.p=
-l
+Suppose the author of the =E2=80=98topic=E2=80=99 branch starts from up=
+stream
+commit F and makes a few changes.  One is applied upstream, and
+additionally there is some other useful upstream change, so he
+performs a merge to include the upstream updates into topic.
+The expected output from =E2=80=98cherry=E2=80=99 is:
 
-> + - test_external_without_stderr [<prereq>] <message> <external> <scr=
-ipt>
-> +
-> +   Like test_external but fail if there's any output on stderr,
-> +   instead of checking the exit code.
-> +
-> +	test_external_without_stderr \
-> +	    'Perl API' \
-> +	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
+ + T
+ + Y
+ - X
 
+Consider the author of a different branch, also called =E2=80=98topic=E2=
+=80=99, but
+this one starts from commit G.  Some infrastructure from an existing=20
+branch is needed, so first she merges that.  Then she adds her own
+commit.  The expected output from =E2=80=98cherry=E2=80=99 is:
+
+ + T
+ + Y
+ + X
+
+since none of the new commits have been applied upstream since
+the fork point.
+
+=E2=80=98cherry=E2=80=99 cannot distinguish between these two cases, in=
+ part because
+it does not distinguish between parents in a merge commit.
+
+Add a BUGS section to explain the problem.
+
+Reported-by: Fr=C3=A9d=C3=A9ric Bri=C3=A8re <fbriere@fbriere.net>
+Reported-by: Andrew Pimlott <andrew@pimlott.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Hi Andrew,
+
+Andrew Pimlott wrote:
+
+> The documentation for git-cherry says it marks changes in the current
+> checkout that have an "equivalent" change in the upstream branch.  It
+> even says it's useful when feeding patches upstream by email instead =
+of
+> git, which is what I'm doing (with CVS instead of email).  But it
+> doesn't seem to work for me.
+[...]
+>     ~/a% git commit -m 3
+>     [master bb13e6c] 3
+>      1 files changed, 1 insertions(+), 0 deletions(-)
+>     ~/a% cd ../b
+>     ~/b% git pull
+[...]
+>     ~/b% git cherry
+>     + 551e90ac390a2a27152661b9cbe73845d237e008
+
+I have not carefully read your example, but maybe this patch might help
+explain it.  A correct solution for some cases might include a
+=E2=80=98git cherry --full=E2=80=99 option that scans the full upstream=
+ history for
+equivalents to patches.
+
+Thoughts?  Improvements?
+
+ Documentation/git-cherry.txt |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.tx=
+t
+index fed115a..83e3bdc 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -59,6 +59,21 @@ OPTIONS
+ <limit>::
+ 	Do not report commits up to (and including) limit.
+=20
++BUGS
++----
++'git cherry' does not cope well with merges from upstream on the
++working branch.  Any commits after the original fork point and
++before the latest merge from upstream will be reported as not found
++in <upstream>.
++
++                       ____*____*____*_____*__> <upstream>
++                      /                     \
++   original fork point                       \
++                      \__+__+__+__+__+__+__+__*_> <head>
++
++While these commits are part of upstream..head, their upstream
++counterparts are not in head..upstream.
++
+ SEE ALSO
+ --------
+ linkgit:git-patch-id[1]
 --=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.1.1
