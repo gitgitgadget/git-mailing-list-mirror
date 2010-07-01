@@ -1,116 +1,105 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: git cherry not marking commits with equivalent upstream
-Date: Thu, 1 Jul 2010 22:41:51 +0200
-Message-ID: <20100701204151.GA6354@atjola.homenet>
-References: <1278012954-sup-3724@pimlott.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH v2 5/8] t/README: Document test_external*
+Date: Thu, 01 Jul 2010 13:52:26 -0700 (PDT)
+Message-ID: <m3630zncwx.fsf@localhost.localdomain>
+References: <1278015478-6920-1-git-send-email-avarab@gmail.com>
+	<1278015478-6920-6-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Andrew Pimlott <andrew@pimlott.net>
-X-From: git-owner@vger.kernel.org Thu Jul 01 22:42:10 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 01 22:56:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUQaH-0007aK-R0
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:42:10 +0200
+	id 1OUQo6-0006F6-Ey
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 22:56:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758236Ab0GAUmA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 16:42:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51203 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757763Ab0GAUl7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 16:41:59 -0400
-Received: (qmail invoked by alias); 01 Jul 2010 20:41:57 -0000
-Received: from i59F55AB1.versanet.de (EHLO atjola.homenet) [89.245.90.177]
-  by mail.gmx.net (mp005) with SMTP; 01 Jul 2010 22:41:57 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/NlpQqON7N3iShSlK2WVbehF4rxrNhEJlkK+6ONT
-	pzDJf1Q5M5HKqq
-Content-Disposition: inline
-In-Reply-To: <1278012954-sup-3724@pimlott.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S932863Ab0GAUz7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 16:55:59 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42161 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932870Ab0GAUw3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 16:52:29 -0400
+Received: by fxm14 with SMTP id 14so1714491fxm.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 13:52:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=qkNWj2qUXypyxgq6GPwYkDfddDQAYhemlM4Es64GvU8=;
+        b=cj92rE6IXWZr/ss1HHhK32uEUlayRvm2eFeI29BFTqIIIhsT4u905epSUUbs4esDJA
+         1ZiIs3DylKL7dE+dZzCfwcqpEgCx4BfKJRQlkTFblNTgEboo4N0CX8py+AHMAyXlow2e
+         y4014wer1evaXukA4qyGQ+h7IjzQ20/X/51MM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=D/jfIZKiGBxswWGb6SF6VHuEjBI2rtcrjLbuEXIU4cTEbMj3QUH41HHZG1Sg6U5UvW
+         9ilzVumnqEssYZBX/VQ/ZhVwGGWGMU1Tl/w/NwAWOPDku0lAcXjfdu+w/D88Q4R0u3Ez
+         l7KnXx9rnlAfqRt32yVEqP9/vOYUMBjhwsvp4=
+Received: by 10.223.122.141 with SMTP id l13mr61367far.25.1278017546634;
+        Thu, 01 Jul 2010 13:52:26 -0700 (PDT)
+Received: from localhost.localdomain (abwm116.neoplus.adsl.tpnet.pl [83.8.236.116])
+        by mx.google.com with ESMTPS id l26sm8292017fam.39.2010.07.01.13.52.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 13:52:26 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o61Kq3cV001347;
+	Thu, 1 Jul 2010 22:52:14 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o61KpgZi001342;
+	Thu, 1 Jul 2010 22:51:42 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1278015478-6920-6-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150082>
 
-On 2010.07.01 12:38:45 -0700, Andrew Pimlott wrote:
-> The documentation for git-cherry says it marks changes in the current
-> checkout that have an "equivalent" change in the upstream branch.  It
-> even says it's useful when feeding patches upstream by email instead =
-of
-> git, which is what I'm doing (with CVS instead of email).  But it
-> doesn't seem to work for me.
->=20
-> I'll simulate cloning an upstream repo, creating and commiting a patc=
-h,
-> then sending it via email upstream to have it applied there, then
-> pulling the upstream commit (the upstream repo is a, mine is b):
->=20
->     ~% mkdir a && cd a
->     ~/a% git init
->     Initialized empty Git repository in /home/andrew/a/.git/
->     ~/a% touch a
->     ~/a% git add a
->     ~/a% git commit -m 1
->     [master (root-commit) be4fa74] 1
->      0 files changed, 0 insertions(+), 0 deletions(-)
->      create mode 100644 a
->     ~/a% git clone . ../b && cd ../b
->     Initialized empty Git repository in /home/andrew/b/.git/
->     ~/b% echo test > a
->     ~/b% git add a
->     ~/b% git commit -m 2
->     [master 551e90a] 2
->      1 files changed, 1 insertions(+), 0 deletions(-)
->     ~/b% cd ../a
->     ~/a% echo test > a
->     ~/a% git add a
->     ~/a% git commit -m 3
->     [master bb13e6c] 3
->      1 files changed, 1 insertions(+), 0 deletions(-)
->     ~/a% cd ../b
->     ~/b% git pull
->     remote: Counting objects: 5, done.
->     remote: Total 3 (delta 0), reused 0 (delta 0)
->     Unpacking objects: 100% (3/3), done.
->     From /home/andrew/a/.
->        be4fa74..bb13e6c  master     -> origin/master
->     Merge made by recursive.
->     ~/b% cat a
->     test
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
 
-pull =3D fetch + merge, so your history in "b" looks like this:
+> + - test_external [<prereq>] <message> <external> <script>
+> +
+> +   Execute a <script> with an <external> interpreter (like perl). Th=
+is
+> +   was added for tests like t9700-perl-git.sh which do most of their
+> +   work in an external test script.
+> +
+> +	test_external_without_stderr \
+> +	    'Perl API' \
+> +	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
 
-  2 (origin/master)
- / \
-1   M (master)
- \ /
-  3
+I think this example was to be about 'test_external'; currently it
+duplicates example for 'test_external_without_stderr'.
 
-So "2" is common to both branches and thus ignored by cherry. If you
-just fetch instead of merging, you get the result you expected:
+Perhaps:
 
-doener@atjola:b (master) $ git fetch=20
-remote: Counting objects: 5, done.
-remote: Total 3 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (3/3), done.
-=46rom /home/doener/y/a
-   4815708..dfbbb81  master     -> origin/master
+  +     test_external \
+  +         'GitwebCache::*FileCache*' \
+  +         "$PERL_PATH" "$TEST_DIRECTORY"/t9503/test_cache_interface.p=
+l
 
-doener@atjola:b (master) $ git cherry
-- 2544e5a7f5d6b545d9e24ba9dcac74861b0bf15c
+> + - test_external_without_stderr [<prereq>] <message> <external> <scr=
+ipt>
+> +
+> +   Like test_external but fail if there's any output on stderr,
+> +   instead of checking the exit code.
+> +
+> +	test_external_without_stderr \
+> +	    'Perl API' \
+> +	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
 
-But once I merge:
-doener@atjola:b (master) $ git merge origin/master
-Merge made by recursive.
-
-doener@atjola:b (master) $ git cherry
-+ 2544e5a7f5d6b545d9e24ba9dcac74861b0bf15c
-
-Bj=F6rn
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
