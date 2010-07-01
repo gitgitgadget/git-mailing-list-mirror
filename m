@@ -1,295 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.2.rc1
-Date: Wed, 30 Jun 2010 17:15:44 -0700
-Message-ID: <7vhbkk3vm7.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: "Theodore Ts'o" <tytso@mit.edu>
+Subject: Why is "git tag --contains" so slow?
+Date: Wed, 30 Jun 2010 20:54:15 -0400
+Message-ID: <E1OU82h-0001xY-3b@closure.thunk.org>
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Jul 01 02:16:11 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+X-From: git-owner@vger.kernel.org Thu Jul 01 02:55:09 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1OU7Rq-0007t9-Lo
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 01 Jul 2010 02:16:11 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OU83U-0007IW-BG
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 02:55:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932342Ab0GAAQD (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 30 Jun 2010 20:16:03 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56662 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756148Ab0GAAP4 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 30 Jun 2010 20:15:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B505C047E;
-	Wed, 30 Jun 2010 20:15:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=Ujmu
-	/OOkp5pzGytND+udZ7FypEg=; b=buQJpm+Kfu0wJnaKuJtp2oiV3HRpteTXmC0j
-	H7HVW3hW9HTeV/8WrzDtgtmhkCs9KOh1N2acdjMtJK/TwZurUCpj3UZOjh/DbGzi
-	bvagXSQjnUvZmG9iGKnPFjXaXZjvOxdtjHxJLa15jcQ444qPhKMIfF08AOTjYLBB
-	z0hzgu8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=roF
-	Cg/nAruSvYLJ5yzp4EoemMMvRgM7FzppjtW5FWkfN+fJ9GBA4stcY9ksfQEzCVAm
-	AS9lO07OcfJYsQ7RMR9BrA+YvCKsB/Ik92P4W4rLX6T+PYoAR0ttPZxXzxVNr//g
-	qlijhDIjkrBo5VQCMzUIUmQfYLkV1akv/yGAgyZA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DD1CAC047D;
-	Wed, 30 Jun 2010 20:15:49 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D86DC047C; Wed, 30 Jun
- 2010 20:15:45 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CDA14B26-84A5-11DF-86BC-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751045Ab0GAAyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jun 2010 20:54:17 -0400
+Received: from thunk.org ([69.25.196.29]:42561 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750808Ab0GAAyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jun 2010 20:54:17 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1OU82h-0007PU-Sw; Wed, 30 Jun 2010 20:54:15 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1OU82h-0001xY-3b; Wed, 30 Jun 2010 20:54:15 -0400
+Full-Name: Theodore Ts'o
+Phone: (781) 391-3464
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150001>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150002>
 
-A release candidate Git 1.7.2.rc1 is available at the usual places
-for testing:
 
-  http://www.kernel.org/pub/software/scm/git/
+I'm trying to write a script that can determine the first kernel release
+(i.e., a tag of that matchs v2.6.*) that contains a particular commit.
 
-  git-1.7.2.rc1.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.2.rc1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.2.rc1.tar.{gz,bz2}		(preformatted docs)
+I can do this using "git tag --contains <commit-id>", but it's quite
+slow.  It takes something like 8-9 seconds.  (8.5 seconds of user time,
+8.6 times of wall clock, to be precise).
 
-The RPM binary packages for a few architectures are found in:
+I can get the information much faster using "gitk -1 <commit-id>", which
+finishes painting the screen in under 2 seconds, but that throws up a
+GUI and then a human has to pull the information out using their eyes.
+(Yeah, or I could figure out where in the 11,631 lines of Tcl script the
+"preceeds" line is calculated, but I figured I'd ask here first.)
 
-  testing/git-*-1.7.2.rc1-1.fc11.$arch.rpm	(RPM)
+Is there a better way of calculating what I want from the command line
+using the built-in native git tools?  And if so, why is git tag
+--contains apparently 4 times slower than gitk at performing this task?
 
-----------------------------------------------------------------
+Thanks,
 
-Git v1.7.2 Release Notes (draft)
-================================
-
-Updates since v1.7.1
---------------------
-
- * core.eol configuration and eol attribute are the new way to control
-   the end of line conventions for files in the working tree;
-   core.autocrlf overrides it, keeping the traditional behaviour by
-   default.
-
- * The whitespace rules used in "git apply --whitespace" and "git diff"
-   gained a new member in the family (tab-in-indent) to help projects with
-   policy to indent only with spaces.
-
- * When working from a subdirectory, by default, git does not look for its
-   metadirectory ".git" across filesystems, primarily to help people who
-   have invocations of git in their custom PS1 prompts, as being outside
-   of a git repository would look for ".git" all the way up to the root
-   directory, and NFS mounts are often slow.  DISCOVERY_ACROSS_FILESYSTEM
-   environment variable can be used to tell git not to stop at a
-   filesystem boundary.
-
- * Usage help messages generated by parse-options library (i.e. most
-   of the Porcelain commands) are sent to the standard output now.
-
- * ':/<string>' notation to look for a commit now takes regular expression
-   and it is not anchored at the beginning of the commit log message
-   anymore (this is a backward incompatible change).
-
- * "git" wrapper learned "-c name=value" option to override configuration
-   variable from the command line.
-
- * Improved portability for various platforms including older SunOS,
-   HP-UX 10/11, AIX, Tru64, etc. and platforms with Python 2.4.
-
- * The message from "git am -3" has been improved when conflict
-   resolution ended up making the patch a no-op.
-
- * "git blame" applies the textconv filter to the contents it works
-   on, when available.
-
- * "git checkout --orphan newbranch" is similar to "-b newbranch" but
-   prepares to create a root commit that is not connected to any existing
-   commit.
-
- * "git cherry-pick" learned to pick a range of commits
-   (e.g. "cherry-pick A..B" and "cherry-pick --stdin"); this does not
-   have nicer sequencing control "rebase [-i]" has, though.
-
- * "git cvsserver" can be told to use pserver; its password file can be
-   stored outside the repository.
-
- * The output from the textconv filter used by "git diff" can be cached to
-   speed up their reuse.
-
- * "git diff --word-diff=<mode>" extends the existing "--color-words"
-   option, making it more useful in color-challenged environments.
-
- * The regexp to detect function headers used by "git diff" for PHP has
-   been enhanced for visibility modifiers (public, protected, etc.) to
-   better support PHP5.
-
- * "diff.noprefix" configuration variable can be used to implicitly
-   ask for "diff --no-prefix" behaviour.
-
- * "git for-each-ref" learned "%(objectname:short)" that gives the object
-   name abbreviated.
-
- * "git format-patch" learned --signature option and format.signature
-   configuration variable to customize the e-mail signature used in the
-   output.
-
- * Various options to "git grep" (e.g. --count, --name-only) work better
-   with binary files.
-
- * "git grep" learned "-Ovi" to open the files with hits in yoru editor.
-
- * "git help -w" learned "chrome" and "chromium" browsers.
-
- * "git log --decorate" shows commit decorations in various colours.
-
- * "git log --follow <path>" follows across copies (it used to only follow
-   renames).  This may make the processing more expensive.
-
- * "git log --pretty=format:<template>" specifier learned "% <something>"
-   magic that inserts a space only when %<something> expands to a
-   non-empty string; this is similar to "%+<something>" magic, but is
-   useful in a context to generate a single line output.
-
- * "git notes prune" learned "-n" (dry-run) and "-v" options, similar to
-   what "git prune" has.
-
- * "git patch-id" can be fed a mbox without getting confused by the
-   signature line in the format-patch output.
-
- * "git remote" learned "set-branches" subcommand.
-
- * "git revert" learned --strategy option to specify the merge strategy.
-
- * "git rev-list A..B" learned --ancestry-path option to further limit
-   the result to the commits that are on the ancestry chain between A and
-   B (i.e. commits that are not descendants of A are excluded).
-
- * "git show -5" is equivalent to "git show --do-walk 5"; this is similar
-   to the update to make "git show master..next" walk the history,
-   introduced in 1.6.4.
-
- * "git status [-s] --ignored" can be used to list ignored paths.
-
- * "git status -s -b" shows the current branch in the output.
-
- * "git status" learned "--ignore-submodules" option.
-
- * Various "gitweb" enhancements and clean-ups, including syntax
-   highlighting, "plackup" support for instaweb, .fcgi suffix to run
-   it as FastCGI script, etc.
-
-
-Fixes since v1.7.1
-------------------
-
-All of the fixes in v1.7.1.X maintenance series are included in this
-release, unless otherwise noted.
-
- * We didn't URL decode "file:///path/to/repo" correctly when path/to/repo
-   had percent-encoded characters (638794c, 9d2e942).
-
- * "git commit" did not honor GIT_REFLOG_ACTION environment variable, resulting
-   reflog messages for cherry-pick and revert actions to be recorded as "commit".
-
- * "git clone/fetch/pull" issued an incorrect error message when a ref and
-   a symref that points to the ref were updated at the same time.  This
-   obviously would update them to the same value, and should not result in
-   an error condition (0e71bc3).
-
- * "git clone" did not configure remote.origin.url correctly for bare
-   clones (df61c889).
-
- * "git diff" inside a tree with many pathnames that have certain
-   characters has become very slow in 1.7.0 by mistake (will merge
-   e53e6b443 to 'maint').
-
- * "git diff --graph" works better with "--color-words" and other options
-   (81fa024..4297c0a).
-
- * "git diff" could show ambiguous abbreviation of blob object names on
-   its "index" line (3e5a188).
-
- * "git rebase" did not faithfully reproduce a malformed author ident, that
-   is often seen in a repository converted from foreign SCMs (43c23251).
-
- * "git reset --hard" started from a wrong directory and a working tree in
-   a nonstandard location is in use got confused (560fb6a1).
-
-----------------------------------------------------------------
-
-Changes since v1.7.2-rc0 are as follows:
-
-Andrew Sayers (2):
-      bash-completion: Fix __git_ps1 to work with "set -u"
-      bash completion: Support "divergence from upstream" messages in __git_ps1
-
-Brandon Casey (4):
-      t/lib-pager.sh: remove unnecessary '^' from 'expr' regular expression
-      t/t7811-grep-open.sh: ensure fake "less" is made executable
-      t/t7811-grep-open.sh: remove broken/redundant creation of fake "less" script
-      t/t9001: use egrep when regular expressions are involved
-
-Brian Gernhardt (1):
-      t4027,4041: Use test -s to test for an empty file
-
-Christian Couder (1):
-      revert: accept arbitrary rev-list options
-
-Jeff King (1):
-      notes: check number of parameters to "git notes copy"
-
-Jens Lehmann (4):
-      git diff: rename test that had a conflicting name
-      Add optional parameters to the diff option "--ignore-submodules"
-      git submodule: ignore dirty submodules for summary and status
-      Add the option "--ignore-submodules" to "git status"
-
-Johannes Schindelin (3):
-      Unify code paths of threaded greps
-      grep: Add the option '--open-files-in-pager'
-      grep -O: allow optional argument specifying the pager (or editor)
-
-Jonathan Nieder (3):
-      grep: refactor grep_objects loop into its own function
-      t3508 (cherry-pick): futureproof against unmerged files
-      revert: do not rebuild argv on heap
-
-Julian Phillips (6):
-      string_list: Fix argument order for print_string_list
-      string_list: Fix argument order for for_each_string_list
-      string_list: Fix argument order for string_list_insert
-      string_list: Fix argument order for string_list_insert_at_index
-      string_list: Fix argument order for string_list_lookup
-      string_list: Fix argument order for string_list_append
-
-Junio C Hamano (5):
-      url_decode: URL scheme ends with a colon and does not require a slash
-      Update draft release notes to 1.7.1.1
-      Git 1.7.1.1
-      git.spec.in: Add gitweb subpackage
-      Git 1.7.2-rc1
-
-Michael J Gruber (4):
-      t6018: add tests for rev-list's --branches and --tags
-      t6018: make sure all tested symbolic names are different revs
-      git-rev-parse.txt: Document ":path" specifier
-      git-rev-parse.txt: Add more examples for caret and colon
-
-Nazri Ramliy (5):
-      commit.h: add 'type' to struct name_decoration
-      log-tree.c: Use struct name_decoration's type for classifying decoration
-      log --decorate: Colorize commit decorations
-      Allow customizable commit decorations colors
-      Add test for correct coloring of git log --decoration
-
-Ramsay Allan Jones (2):
-      msvc: Select the "fast" definition of the {get,put}_be32() macros
-      notes: Initialise variable to appease gcc
-
-Thomas Rast (1):
-      rev-list: introduce --count option
+						- Ted
