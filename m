@@ -1,103 +1,57 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH 1/2 fixed] mingw_utime(): handle NULL times parameter
-Date: Thu, 01 Jul 2010 14:16:24 +0200
-Message-ID: <4C2C8718.5080203@viscovery.net>
-References: <4C2C69AF.4010303@viscovery.net> <1277982466-29601-1-git-send-email-szeder@ira.uka.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git reflog delete / manpage confusion
+Date: Thu, 01 Jul 2010 15:09:41 +0200
+Message-ID: <4C2C9395.1080900@drmicha.warpmail.net>
+References: <AANLkTik3bApuScgjXtr-VjhmY4NIuakoX_RZaYLqqpwL@mail.gmail.com>	<20100701101613.GA1961@sigill.intra.peff.net> <AANLkTilaKwB1BYTNIJ49M0CZAJGrsPetQDOxZj_RHRv3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Thu Jul 01 14:16:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	git@vger.kernel.org
+To: Mahesh Vaidya <forvaidya@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 01 15:10:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUIh0-0002PY-PL
-	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 14:16:35 +0200
+	id 1OUJXI-0008Pj-Pb
+	for gcvg-git-2@lo.gmane.org; Thu, 01 Jul 2010 15:10:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754717Ab0GAMQa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 08:16:30 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:22242 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407Ab0GAMQ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 08:16:29 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OUIgq-0005Dq-TX; Thu, 01 Jul 2010 14:16:25 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A5F731660F;
-	Thu,  1 Jul 2010 14:16:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
-In-Reply-To: <1277982466-29601-1-git-send-email-szeder@ira.uka.de>
-X-Enigmail-Version: 1.0.1
-X-Spam-Score: -1.4 (-)
+	id S1753916Ab0GANKb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 09:10:31 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55702 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751124Ab0GANKa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 09:10:30 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3E89510B7E8;
+	Thu,  1 Jul 2010 09:10:30 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 01 Jul 2010 09:10:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=YIozBA7tb10XDz9LQfDMJcnb5so=; b=T4jF2J5ujpgyqqZkkxgQvD0yixHw6gB6/rDn53eswkQgBXaUYzT/8NUIyPCmQ+jdQHL8EZRd0ttdsOM6FZZDaVJ8mo+n1o7DzPRmodNwcklvmZWc90tiX766w11X2L8OBYNbY4dZ4PJXnyidnXZSHZCilb98ZgWBkSNgPxbsDDw=
+X-Sasl-enc: 2XG/QsC+Axbl8jPLYYemdkcqB/de85S5aZs6ySz+lfqN 1277989829
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 55A054E4967;
+	Thu,  1 Jul 2010 09:10:29 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.6pre) Gecko/20100625 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <AANLkTilaKwB1BYTNIJ49M0CZAJGrsPetQDOxZj_RHRv3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150034>
 
-=46rom: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Mahesh Vaidya venit, vidit, dixit 01.07.2010 12:58:
+> Hi I am confused again as it indeed removed HEAD{4}
+> 
+>  -2993260 HEAD@{4}: commit (initial)
 
-POSIX sayeth:
+It didn't, that's what Jeff explained and what the content of
+.git/logs/HEAD showed (which you chose to cut; also, please don't top-post).
 
-  "If times is a null pointer, the access and modification
-   times of the file shall be set to the current time."
+It really deleted the line for 364bcc0, but when showing the reflog git
+mistakenly shows 364bcc0 rather than 2993260 (for the new HEAD{@3}) in
+this case.
 
-Let's do so.
-
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- >> Mental note: update mingw_utime to accept NULL for the second
- >> parameter...
- >=20
- > Here it is, but I don't have mingw, so it's completely untested.
-
- Thanks. Here is a version that compiles; the interdiff is
-
- @@ -309,8 +309,7 @@
-                 time_t_to_filetime(times->actime, &aft);
-         } else {
-                 GetSystemTimeAsFileTime(&mft);
- -               aft->dwLowDateTime =3D mft->dwLowDateTime;
- -               aft->dwHighDateTime =3D mft->dwHighDateTime;
- +               aft =3D mft;
-         }
-         if (!SetFileTime((HANDLE)_get_osfhandle(fh), NULL, &aft, &mft)=
-) {
-                 errno =3D EINVAL;
-
- With this, the series passes the test suite on MinGW.
-
- -- Hannes
-
- compat/mingw.c |    9 +++++++--
- 1 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 0722a6d..b6f0a7f 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -304,8 +304,13 @@ int mingw_utime (const char *file_name, const stru=
-ct utimbuf *times)
- 		goto revert_attrs;
- 	}
-=20
--	time_t_to_filetime(times->modtime, &mft);
--	time_t_to_filetime(times->actime, &aft);
-+	if (times) {
-+		time_t_to_filetime(times->modtime, &mft);
-+		time_t_to_filetime(times->actime, &aft);
-+	} else {
-+		GetSystemTimeAsFileTime(&mft);
-+		aft =3D mft;
-+	}
- 	if (!SetFileTime((HANDLE)_get_osfhandle(fh), NULL, &aft, &mft)) {
- 		errno =3D EINVAL;
- 		rc =3D -1;
---=20
-1.7.2.rc1.1057.g1270
+Michael
