@@ -1,47 +1,71 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] Bugfix: grep: Do not colorize output when -O is set
-Date: Fri, 02 Jul 2010 18:19:17 +0200
-Message-ID: <4C2E1185.1040406@lsrfire.ath.cx>
-References: <1278064941-30689-1-git-send-email-ayiehere@gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: global hooks - once again
+Date: Fri, 2 Jul 2010 12:23:42 -0400
+Message-ID: <AANLkTikXJS5QCXMXgsOfkYn9cMBQV6o23tds5YG3A_OI@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, johannes.schindelin@gmx.de,
-	jrnieder@gmail.com
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 02 18:19:41 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 02 18:23:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUixm-0004Uv-OJ
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 18:19:39 +0200
+	id 1OUj1p-0006jk-LA
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 18:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758948Ab0GBQTd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 12:19:33 -0400
-Received: from india601.server4you.de ([85.25.151.105]:53974 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757187Ab0GBQTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 12:19:32 -0400
-Received: from [10.0.1.100] (p57B7E7AC.dip.t-dialin.net [87.183.231.172])
-	by india601.server4you.de (Postfix) with ESMTPSA id 89E072F80D6;
-	Fri,  2 Jul 2010 18:19:30 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.4) Gecko/20100608 Thunderbird/3.1
-In-Reply-To: <1278064941-30689-1-git-send-email-ayiehere@gmail.com>
+	id S1759179Ab0GBQXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jul 2010 12:23:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:51109 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758919Ab0GBQXo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 12:23:44 -0400
+Received: by gye5 with SMTP id 5so475896gye.19
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 09:23:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=b68jxK51JsPrlDQA6wm6mg+iw7kuHZx8jqOST9fVWp8=;
+        b=eQfjelYARzAgA/7mXKh/Lrbp3xvJ7RNY5Re0pmrwjxUyU0yN/Bt9nXdPyvJkHvZrei
+         4yp99c3Gt0r9lVMtQH29QKApCxdEXIaOZyImLJO+7tqT8bLZPA/6CwSIvnkrVHvowQBR
+         k1TtbdvkDstRodPtyxL/f5Zko9UsnXQ+aCn4g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=Nejz3Pgu+zDxHQWhT2qP5r1hKMNX6Ewbf2l1/we5IieHvfUfLrJeVedbP/SceiztDH
+         coxkpLOCRDAewPR/iCrRXoS3EcEseWdjD5bFGi0vd9jmgpcLAoMz2EJIflcEW5derXrY
+         Q9NVWwIPuU1APlkA52549bDekhQYrONc3/Bw4=
+Received: by 10.224.113.201 with SMTP id b9mr549431qaq.328.1278087822734; Fri, 
+	02 Jul 2010 09:23:42 -0700 (PDT)
+Received: by 10.229.212.209 with HTTP; Fri, 2 Jul 2010 09:23:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150141>
 
-Am 02.07.2010 12:02, schrieb Nazri Ramliy:
-> When color.ui is set to auto, "git grep -Ovi foo" breaks due to the
-> presence of color escape sequences.
+I have found a thread dated March 2008 about the subject, but there
+was no acceptable solution provided.
+Template directory doesn't seem to be interesting.
 
-Hmm, but with --open-files-in-pager without argument or -Oless colours
-may be handled correctly and desirable.  Turning colouring off with -O
-is probably the most sensible default, but is it possible to allow
-turning it back on explicitly (--color -O)?
+Is there a better way now?
 
-Ren=E9
+If there is no better way now Is it possible to create a git config
+property specifying where the global hooks folder is and then look for
+hooks there first and then in the repo or vice versa?
+
+For example, so i could say
+$ git config --global hooks.dir ~/git/hooks
+
+It could even attempt to create the specified folder and create
+necessary structure in it like below if necesary
+/pre-commit
+/post-commit
+/pre-rebase
+/post-rebase
+
+etc...
+
+Thanks,
+Eugene
