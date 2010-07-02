@@ -1,82 +1,56 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [WIP/PATCH] Teach fast-import to print the id of each imported
- commit
-Date: Fri, 2 Jul 2010 00:12:01 -0500
-Message-ID: <20100702051201.GC7209@burratino>
-References: <20100701031819.GA12524@burratino>
- <20100701054849.GA14972@burratino>
+From: Sabyasachi Ruj <ruj.sabya@gmail.com>
+Subject: Git checkout: difference in behavior and what is in the documentation
+Date: Fri, 2 Jul 2010 11:00:59 +0530
+Message-ID: <AANLkTil4LcA0F5FEeoKOnR7Ko_gEpMHD_HCi3FPTG55D@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 02 07:12:46 2010
+X-From: git-owner@vger.kernel.org Fri Jul 02 07:31:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUYYM-0004Ml-LI
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 07:12:42 +0200
+	id 1OUYqW-00012Q-9v
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 07:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752730Ab0GBFMa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 01:12:30 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:41731 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416Ab0GBFM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 01:12:29 -0400
-Received: by iwn7 with SMTP id 7so2840958iwn.19
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 22:12:28 -0700 (PDT)
+	id S1752868Ab0GBFbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jul 2010 01:31:21 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:52108 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752836Ab0GBFbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 01:31:20 -0400
+Received: by qyk35 with SMTP id 35so202737qyk.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 22:31:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=0Ovpfes7+JDy1V4kWihRKHbnbipOQRoDS7SHkhCcE78=;
-        b=ui5iKKkBrMLpHyhzTXm+qrVQ9ibzajBOu9W3UGB2AoJ4ytW+Fmzs/Smre6nnFZHZWV
-         NOpOuoC4jkD7IauxoSAGbzC7llVDMyu5Mk1lg3YGceLVATC1LLc+5e3sYpS99ArbKG3u
-         89l7ZqwqPmLULby6PVJPrt/fw/khRpyOvRGgQ=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=k8svrbClcLARze1Nn9RhHKiKX2Pcc0c+dMLby8GOMKE=;
+        b=bMyhGzM/ZL9jDpC9jVsWuwDkOALwRpKBhq6O0BMX3f0aDuHeMWNJv+ytTeK1syRVVj
+         7Jy5sBmD40+tk4tYJwAbmoEeU6pgCCFoV5GRmaQoVTGYzDGZHYzvDwJrluwfVNl0q3tv
+         sLcHY0xysUjtC0+n1XsIg9c1iC6Hj9QZ+wbLA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kKCBqlz8fzExMetEG2oFMsWm1xiZoSw+GLC6tWYGOak3ZcdXD9ieJX+Gg7DE1KeSOc
-         ZIaj7Cj/678Wq0TFS22XKbnLzfj+EJkSWIyPSkq4Ni8+kOhmY/Kc78zCc+7HWZc5LtuB
-         LPNmlaSzqxZUZ1WS7sar1WtBmje0n2HD2j5cg=
-Received: by 10.231.174.136 with SMTP id t8mr227223ibz.158.1278047547959;
-        Thu, 01 Jul 2010 22:12:27 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h8sm1222648ibk.15.2010.07.01.22.12.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 01 Jul 2010 22:12:27 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100701054849.GA14972@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=enwCw2J8eZhLPn/3Kv3zVE8lUvSQmTgxmqaSG/yxtzwUfsP5zix4Y3CjSh6i/LZDaD
+         kst0Jlr6MGE+ClOW9n9GUdcVDuLRsL48XO2SINPl+kM2bhe42kjNz1DF20cKHn4qmpHM
+         OfaK2U6aUCxqsjExXvZJt7t0yx314wcTe0Yn4=
+Received: by 10.224.63.220 with SMTP id c28mr63798qai.360.1278048679211; Thu, 
+	01 Jul 2010 22:31:19 -0700 (PDT)
+Received: by 10.229.241.149 with HTTP; Thu, 1 Jul 2010 22:30:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150108>
 
-Jonathan Nieder wrote:
+I've asked the question in detail in Stack Overflow:
 
-> Should fast-import accept lines of the form
->=20
->  M 100644 <commit id>:<path> <path>
->=20
-> and
->=20
->  M 040000 <commit id>:<path> <path>
->=20
-> to allow the caller to use commits before they are accessible
-> through the git object database?
+http://stackoverflow.com/questions/3163325/confusion-about-git-checkout
 
-A =E2=80=98cat=E2=80=99 command (suggested by David) would also be usef=
-ul, so the
-caller can read trees and blobs before they are accessible through
-the object db.  The svn importer would use this when applying
-(svndiff0-format) deltas to import changes to regular files.
+Even if there is no bug in the git behavior, I think the documentation
+should be more clear.
+
+-- 
+Sabyasachi
