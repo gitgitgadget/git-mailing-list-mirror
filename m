@@ -1,83 +1,161 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Poor status output during conflicted merge
-Date: Thu, 01 Jul 2010 17:00:12 -0700
-Message-ID: <7v1vbm3g8j.fsf@alter.siamese.dyndns.org>
-References: <loom.20100701T195742-266@post.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation: 'cherry' does not cope well with merges
+ from upstream
+Date: Thu, 1 Jul 2010 19:51:47 -0500
+Message-ID: <20100702005147.GA5962@burratino>
+References: <1278012954-sup-3724@pimlott.net>
+ <20100701210919.GA4283@burratino>
+ <7vbpaq3glt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 02 02:00:28 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andrew Pimlott <andrew@pimlott.net>, git <git@vger.kernel.org>,
+	=?iso-8859-1?B?RnLpZOlyaWMgQnJp6HJl?= <fbriere@fbriere.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jeff King <peff@peff.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 02 02:52:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUTgB-0004AY-Ih
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 02:00:27 +0200
+	id 1OUUUS-0001x4-1K
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 02:52:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754769Ab0GBAAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 20:00:21 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56341 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752988Ab0GBAAT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Jul 2010 20:00:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 30569C0F8E;
-	Thu,  1 Jul 2010 20:00:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6PmYZaa6dHSybx6Y7tSMLCny0Uw=; b=KhJduZ
-	25j/SdeHmp/DEaqT5NgUQH7BVv2W97aFmqAFscUtPAqMoCfJSw53rfK5QyGq9G5H
-	XHZCJsfbLaQBOBloedJl3zIbFiF2KHQGxCRuLNdsa0tUEv5oYT7XWZ677owmv8Ac
-	U+tEhBMmRvpuZd1v5P3Ef8UKlGAvtHf3n+uNU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MEHL0KAwxFgcrurh62ItWeUuoXiIEkVE
-	sqd7xlxWMYS+U5ACZB7xY0k4kMuhnxOhi9GaSe1po+g0Ih9R8qyyjnubC6EyPebm
-	E4Z5TKGya3AgBfIBxIUFj1+958oCIycqlhkDLShv1etgQAOuS1mUthGT/qqVphPg
-	aZJ+PJXDOyw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F007C0F8D;
-	Thu,  1 Jul 2010 20:00:17 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53FBFC0F8B; Thu,  1 Jul
- 2010 20:00:14 -0400 (EDT)
-In-Reply-To: <loom.20100701T195742-266@post.gmane.org> (Eric Raible's message
- of "Thu\, 1 Jul 2010 18\:16\:29 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CC068E8A-856C-11DF-9351-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753317Ab0GBAwS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Jul 2010 20:52:18 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57455 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745Ab0GBAwR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 20:52:17 -0400
+Received: by iwn7 with SMTP id 7so2633183iwn.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 17:52:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=QdYItn3kmBCv29reJfyTivB5pN7RMKev+qefMSabd8o=;
+        b=Cgh583fRVlYutzG5RzxbO5mBVbWHAB1C7cYcd1rAutkPi6UMufEJFQXdws4e+Au/fk
+         +XSGsojEr6J5DuNzvHJRfDHWuwbJP7GlLtZ+j3gFee+dY2O0XD8uP+qwp0TiVdv+EEyF
+         ztsYyxYlI10sf0AlRD2Hgmxyt3KaveEV1cqLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=ivFs8WooqA8YXCgIww9yN4kusUnkmOHAQshnPVs6O2SBfvBXmRkmebeLg3XKKAK9EO
+         yLaZe769U8OumKYSKocmWZEfi5kAb5Nhgy017NrC2ndXwf6C5e+wcx8Yc6aCEgZdUaI5
+         AYJrSpXadCGVkhh+lssuOR66Q4iqprUrflFJw=
+Received: by 10.231.146.129 with SMTP id h1mr273949ibv.180.1278031936074;
+        Thu, 01 Jul 2010 17:52:16 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id h8sm246453ibk.3.2010.07.01.17.52.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 01 Jul 2010 17:52:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vbpaq3glt.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150093>
 
-Eric Raible <raible@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> A 'git status' at this point gives the following output:
+>> Example:
+>>
+>>  o---o---F---X'---G---U [upstream]
+>>           \        \
+>>            X----Y---M---T [topic]
+[...]
+>> Consider the author of a different branch, also called =E2=80=98topi=
+c=E2=80=99, but
+>> this one starts from commit G.  Some infrastructure from an existing=
+=20
+>> branch is needed, so first she merges that.  Then she adds her own
+>> commit.
 >
-> # On branch topic
-> nothing to commit (working directory clean)
->
-> Which is wrong, since the merge still needs to be committed.
+> Sorry, but it is unclear to me what kind of history you have in mind =
+at
+> this point.  What "existing branch" are you talking about?  Presumabl=
+y it
+> is not the [topic] in an earlier example, nor it is [upstream] right?
+>=20
+> o---o---o---o----G-------.---U [upstream]
+>                   \       \=20
+>                    X---Y---M---T
+>=20
+> Something like this?
 
-It might be just a simple matter of ...
+Sorry for the lack of clarity.  The "existing branch" was the history
+ending at commit Y in the original picture.  The resulting topic would
+have the shape of the branch labelled [topic] in my diagram.
 
- wt-status.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+And except for the shapes being the same, this has nothing to do with
+the earlier example.
 
-diff --git a/wt-status.c b/wt-status.c
-index 2f9e33c..757536f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -674,6 +674,8 @@ void wt_status_print(struct wt_status *s)
- 			fprintf(s->fp, "# No changes\n");
- 		else if (s->nowarn)
- 			; /* nothing */
-+		else if (s->in_merge)
-+			printf("merge result will be the same as HEAD commit\n");
- 		else if (s->workdir_dirty)
- 			printf("no changes added to commit%s\n",
- 				advice_status_hints
+What I was trying to get at with the two examples is that in histories
+like the above, the concept of "fork point" is not well defined.
+Where did topic fork from upstream?  It could have been at G, or F, or
+any other merge-base of upstream and topic for that matter; the
+recorded history does not give enough information to say.
+
+The choice of fork point might look like it is only for optimization,
+but it affects the semantics, too.
+
+Example: reviving a reverted patch
+
+ ... o---F---P---R---G---o [upstream]
+                      \
+                       P' [alice]
+
+Upstream, a certain patch (P) was accepted, found to introduce horrible
+problems, and then reverted (R).  Patch submitter Alice still believes
+that is a good patch, though, so she creates a branch to start work on
+it, cherry-picking the change (P').  =E2=80=98git cherry=E2=80=99 corre=
+ctly reports
+P' as not merged upstream; that it has the same patch-id as commit P
+is simply irrelevant.
+
+ $ git cherry
+ + P'
+
+Alice might merge a branch with a fork point that does not have P as
+an ancestor:
+
+ ... o---o---P---R---G---o [upstream]
+                      \ /
+                       x
+                      / \
+                     o   P'
+                    /     \
+   ... o---o---o---F---o---M [alice]
+
+How can =E2=80=98git cherry=E2=80=99 tell that the fork point was G?  T=
+hat
+knowledge determines whether P' should be considered to be merged
+upstream or not:
+
+ * If the fork point was F, then the patch for P' has been applied
+   upstream since then (indirectly through the merge of G).
+
+ * If the fork point is G, then the patch for P' was upstream all
+   along, and P' has no upstream analog since then.
+
+In reality, =E2=80=98git cherry=E2=80=99 does not choose; instead of do=
+ing arithmetic
+based on fork points, it just says _no_ commit reachable from the tip
+of alice can be used as evidence that a patch from alice has been
+merged.
+
+Plenty of other heuristics are possible, but it is hard to find a
+more intuitive efficient one.  I suspect I would find it useful to be
+able to explicitly set a commit =E2=80=98prefork=E2=80=99 and examine a=
+ll commits
+prefork..upstream in the search for evidence that a patch has been
+merged.
