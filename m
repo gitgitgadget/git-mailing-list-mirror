@@ -1,65 +1,67 @@
-From: Eric Raible <raible@nextest.com>
-Subject: Re: Poor status output during conflicted merge
-Date: Thu, 1 Jul 2010 18:51:37 -0700
-Message-ID: <4C2D4629.1090600@nextest.com>
-References: <loom.20100701T195742-266@post.gmane.org> <7v1vbm3g8j.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [WIP/PATCH] Teach fast-import to print the id of each imported 
+	commit
+Date: Fri, 2 Jul 2010 05:16:55 +0200
+Message-ID: <AANLkTim2DnettF2gNTQVaJvrpzwrTP_-HWTp8l6R5TVc@mail.gmail.com>
+References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 02 03:58:07 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 02 05:17:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUVW2-0008Os-IE
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 03:58:06 +0200
+	id 1OUWkt-0001pE-DO
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 05:17:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755949Ab0GBB44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Jul 2010 21:56:56 -0400
-Received: from mail.nextest.com ([12.96.234.114]:12825 "EHLO
-	Exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755017Ab0GBB4z (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Jul 2010 21:56:55 -0400
-X-Greylist: delayed 302 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2010 21:56:55 EDT
-Received: from [131.101.151.222] (131.101.151.222) by
- Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
- id 8.2.254.0; Thu, 1 Jul 2010 18:51:50 -0700
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <7v1vbm3g8j.fsf@alter.siamese.dyndns.org>
+	id S1756101Ab0GBDRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Jul 2010 23:17:18 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:35532 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755921Ab0GBDRR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Jul 2010 23:17:17 -0400
+Received: by gwaa18 with SMTP id a18so41073gwa.19
+        for <git@vger.kernel.org>; Thu, 01 Jul 2010 20:17:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=+ET3zsbF9V+f616EaET9+VyeezFxwaPdeVxUMcojGp0=;
+        b=gfN5oyqYP61J64ZtL12l3N85kKElbH7QGwCJQHxItzhtWZLRa5zYiPqmhrww9s3guN
+         8pkTeZwcM5J5TKYzxeBQ+ecEdTN7uj5ApZIoIBvIG/aY4Q/uDE8X9TnSBjtff05R4nfy
+         6EqLVmsIFQ0xVORsOSX2c+PjrwQwyGtFfBe0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=GQ7zRiddpkkbIwfdMO/2/JF1KOYjf4ZtqL34/mSPaSANCtPHgx0bY+SHgmqjngnbSt
+         H3njYszDR5gtXE/ao8Ki1KDRaYNYOT5FhvRO7X8kaJQ+S+/mUBkpKewNv+Yl9PkRcmRQ
+         2CrfR46iCgcKbuU4XliLPbAmoRZRg9nf2Flmk=
+Received: by 10.101.147.19 with SMTP id z19mr48932ann.66.1278040636217; Thu, 
+	01 Jul 2010 20:17:16 -0700 (PDT)
+Received: by 10.150.184.8 with HTTP; Thu, 1 Jul 2010 20:16:55 -0700 (PDT)
+In-Reply-To: <20100701054849.GA14972@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150101>
 
-Junio C Hamano wrote:
-> 
-> It might be just a simple matter of ...
-> 
+Heya,
 
-I don't think it's that simple.  Consider the case of an integrator who
-initially picks the wrong branch.  Wouldn't it seem that:
-	git checkout --ours file
-	git add file
-	git status
+On Thu, Jul 1, 2010 at 07:48, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Unfortunately when each commit object is written, it is not yet
+> accessible to the caller.
 
-should result in the same output as:
-	git checkout --theirs file
-	git add file
-	git status
-	# oops
-	git checkout --ours file
-	git add file
-	git status
+This I don't understand, as soon as the object is written wouldn't it
+be available in .git/objects?
 
-I can accept an answer is "no".  After all, 'git add' says
-that you are happy.  But it makes me wonder whether the empty
-"if (s->in_merge)" clause in wt_status_print_cached_header()
-wouldn't be the right place to handle this case.
+-- 
+Cheers,
 
-Aside from that, wouldn't the message "merge result will be the
-same as HEAD commit" be incorrect if that there are other files
-which were already merged successfully?
+Sverre Rabbelier
