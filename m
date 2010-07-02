@@ -1,97 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: global hooks - once again
-Date: Fri, 02 Jul 2010 12:18:59 -0700
-Message-ID: <7v630x1yl8.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikXJS5QCXMXgsOfkYn9cMBQV6o23tds5YG3A_OI@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 02 21:19:33 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: [PATCH v6 0/3] Merge renormalization, config renamed
+Date: Fri,  2 Jul 2010 21:20:46 +0200
+Message-ID: <cover.1278093311.git.eyvind.bernhardsen@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 02 21:21:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUllq-0006D9-8r
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 21:19:30 +0200
+	id 1OUlnW-00079y-1f
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 21:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757269Ab0GBTTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jul 2010 15:19:14 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61071 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751220Ab0GBTTM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 15:19:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 69B6EC16BC;
-	Fri,  2 Jul 2010 15:19:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BPwaxcmfVgeF35jt2pqkxdEkmdU=; b=Qyjxrh
-	L5kqGXAyTq4sBSYmN3i0bjNYQ8M+o0CsF0Q2B9IK+tF5Y7prhpqhEpK8mu8LWD+J
-	ylClaWSdk+m1h2sw27L7VJMOFXEulnU9G8fr16j4ZF2U3PIWfW14YZk2SXpHDRXy
-	ljOUfA+34rtM+y4TMVefkdjEDtY/XP/EYWobQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PF8FDyRkvefEnD0ouphDU208VEb0mNWU
-	qGWri8WSyEtEIZ4pA7SPtZt6jC72aLxzcCW6nqFK0ZJvDr9wcHazmuZEp0VICK+R
-	Baj7IEusiDv6aVfabnGUKhfiV2U6EALGDcaoVVuAlTPl35I3SVqCTAyD0Megrg4T
-	sZ1sX69EURc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 466A4C16BB;
-	Fri,  2 Jul 2010 15:19:09 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 391DCC16BA; Fri,  2 Jul
- 2010 15:19:06 -0400 (EDT)
-In-Reply-To: <AANLkTikXJS5QCXMXgsOfkYn9cMBQV6o23tds5YG3A_OI@mail.gmail.com>
- (Eugene Sajine's message of "Fri\, 2 Jul 2010 12\:23\:42 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B0752094-860E-11DF-B38C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759718Ab0GBTVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jul 2010 15:21:05 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:38015 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757383Ab0GBTVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 15:21:03 -0400
+Received: by wyf23 with SMTP id 23so1280991wyf.19
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 12:21:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=ZffDcdIplFBlWCs/N7NTcpd0GZJSIWmSuAyFk4p9Xe0=;
+        b=Yk0Sk8Z3Uqql9W2XXdsChpJYLv+F/nkTx4R07AAmU4/GqitSie+EWJg9AyH2ubRO/X
+         czH5jWdpKpBzZKeyKIjdmb00E9IB3xndzyRNNXhW7oPrGVFSOorcwDtIE+mDygFQ0qYX
+         AJLct/ZyakcLtxScsSUV770KvyYguISeH7aQY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=DJe74x0HmS9J8ODaToDt9VxOekcTIarxAKbapCrqy93EKPZQ1OgYf7Kot5Zf/naDMy
+         CDQnLAmMsOsXBIrLHUDpoL4bY8KYUG21mKDDZhoDCvqHmBztCpShrmvKnpbPSgrEgIos
+         8V7/Xh8f0MGddGnTIP3kKN8C9pamKSeDXRi1c=
+Received: by 10.213.26.75 with SMTP id d11mr4326956ebc.27.1278098460517;
+        Fri, 02 Jul 2010 12:21:00 -0700 (PDT)
+Received: from localhost.localdomain (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id v8sm8093578eeh.14.2010.07.02.12.20.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 02 Jul 2010 12:20:59 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.575.g383de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150151>
 
-Eugene Sajine <euguess@gmail.com> writes:
+Here's a new version of the merge normalization series that renames the
+configuration variable.  Since "merge.renormalize" got the best
+response, I went with that.
 
-> For example, so i could say
-> $ git config --global hooks.dir ~/git/hooks
+Junio, I hope you don't mind that I squashed your patch to introduce the
+config variable into the first patch.  It seemed a bit out-of-place as a
+separate commit.
 
-I don't think "global" hooks are useful for people who work on more than
-one project, or people who interact in more than one ways to projects.
-Different projects typically have different needs out of the hooks
-(e.g. pre-commit policy), and different workflows typically call for
-different needs out of the hooks (e.g. I would want to be able to rebase
-in my private working repository but not in the repository I use for
-integration of other people's branches).
+- Eyvind
 
-So I am fairly negative on your particular example above.
+Eyvind Bernhardsen (3):
+  Avoid conflicts when merging branches with mixed normalization
+  Try normalizing files to avoid delete/modify conflicts when merging
+  Don't expand CRLFs when normalizing text during merge
 
-But it is understandable for one to use more than one repository for the
-same project and use them in the same way; in such a case, I agree that a
-way to ensure that these repositories use the same set of hooks (and
-non-hooks, e.g. commit templates, local ignore pattern files, etc.) is
-desirable.
+ Documentation/gitattributes.txt |   34 ++++++++++++++++++++
+ Documentation/merge-config.txt  |   10 ++++++
+ builtin/merge.c                 |    3 ++
+ cache.h                         |    2 +
+ convert.c                       |   37 +++++++++++++++++++----
+ environment.c                   |    1 +
+ ll-merge.c                      |   15 +++++++++
+ merge-recursive.c               |   51 +++++++++++++++++++++++++++++-
+ t/t6038-merge-text-auto.sh      |   64 +++++++++++++++++++++++++++++++++++++++
+ 9 files changed, 209 insertions(+), 8 deletions(-)
+ create mode 100755 t/t6038-merge-text-auto.sh
 
-So I would imagine that your example without "--global" would be a
-reasonable thing to do once per repository.
-
-Now, as long as the "do once per repository" action that you need to do is
-simple enough, it doesn't necessarily have to be "git config".  Perhaps
-
-    [alias]
-    set-hooks = !"sh -c 'rm -fr .git/hooks && ln -s $1 .git/hooks' -"
-
-could also be a simple single-command solution that is "do once per
-repository".
-
-Can't we do better and make this "do nunce per repository" instead?
-
-You first have to think how you are creating these more-than-one
-repositories you would want to make sure they use the same hooks.  For
-example, do you have a single "upstream" repository and everything is a
-clone of it?  If so, perhaps a way to tell "clone" via $HOME/.gitconfig
-that when cloning from a particular URL you would want to run a particular
-post-clone script might be a better way.
+-- 
+1.7.1.575.g383de
