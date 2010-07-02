@@ -1,122 +1,160 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation: 'cherry' does not cope well with merges
- from upstream
-Date: Fri, 2 Jul 2010 03:18:12 -0500
-Message-ID: <20100702081812.GA9219@burratino>
-References: <1278012954-sup-3724@pimlott.net>
- <20100701210919.GA4283@burratino>
- <4C2D995D.2020708@drmicha.warpmail.net>
+From: =?UTF-8?B?TMOhc3psw7Mgw4FTSElO?= <laszlo.ashin@neti.hu>
+Subject: [PATCH] git-cvsserver: pserver-auth-script
+Date: Fri, 2 Jul 2010 09:54:06 +0200
+Organization: NETI Kft.
+Message-ID: <20100702095406.7af15d20@ashinlaszlo.pta.neti.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andrew Pimlott <andrew@pimlott.net>, git <git@vger.kernel.org>,
-	=?iso-8859-1?B?RnLpZOlyaWMgQnJp6HJl?= <fbriere@fbriere.net>,
-	Jeff King <peff@peff.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Jul 02 10:18:53 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 02 10:19:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUbSW-00083K-QG
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 10:18:53 +0200
+	id 1OUbSu-0008DG-21
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 10:19:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756868Ab0GBISq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 04:18:46 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36035 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751584Ab0GBISn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 04:18:43 -0400
-Received: by iwn7 with SMTP id 7so2988000iwn.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 01:18:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=rjBJEBH1xt137A3ZdbzcG9Am3hlKaAa7q4r44M/akOM=;
-        b=dgFZRJlycLy8/H+zxTPWZR0/h+gsnqucZxkRgJZTW/rvCiPO2ECGAOrIt6/AC3368E
-         XWzWGfCF5nxtiFkwg1DDdEiOfrTQiBVTZNnpKDFCDWNhSWAdjNHdPVP/aHiDy3cujdhw
-         MG40L2K0LLNf3fHVju+lh+pAvpQCJHLJ/BQkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=WmxqqlV3PjFcfZ4PsgNmQMIXXnrgTf4gKGm9MrhgMhS0UE2LfQYsW/w37d6cXXQpLY
-         MTTEB9zjdrWoUHL4mTgosHX3ZKjDR1EI2IGd+LorpZnq6e4wG9HdPgantcO8SkRTL8xZ
-         rF2/2YjMp53/sWxFfck7Kv0dyJIXYvxhswxWM=
-Received: by 10.231.45.66 with SMTP id d2mr429678ibf.170.1278058722626;
-        Fri, 02 Jul 2010 01:18:42 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id g31sm1921515ibh.22.2010.07.02.01.18.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 02 Jul 2010 01:18:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4C2D995D.2020708@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755701Ab0GBITI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 04:19:08 -0400
+Received: from main.neti.hu ([195.228.2.1]:26007 "EHLO main.neti.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752202Ab0GBITG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Jul 2010 04:19:06 -0400
+X-Greylist: delayed 1446 seconds by postgrey-1.27 at vger.kernel.org; Fri, 02 Jul 2010 04:19:06 EDT
+Received: from ashinlaszlo.pta.neti.hu ([132.132.132.151])
+          by lotus.neti.hu (Lotus Domino Release 7.0.1)
+          with ESMTP id 2010070209544703-2697 ;
+          Fri, 2 Jul 2010 09:54:47 +0200 
+X-MIMETrack: Itemize by SMTP Server on lotus/NETI/HU(Release 7.0.1|January 17, 2006) at
+ 2010.07.02 09:54:47,
+	Serialize by Router on lotus/NETI/HU(Release 7.0.1|January 17, 2006) at
+ 2010.07.02 09:54:48,
+	Serialize complete at 2010.07.02 09:54:48
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150115>
 
-Michael J Gruber wrote:
-> Jonathan Nieder venit, vidit, dixit 01.07.2010 23:09:
+Hi,
 
->> Add a BUGS section to explain the problem.
->
-> This is not a bug. git cherry works exactly as described.
->=20
-> At worst, it is a misfeature.
+The following patch makes git-cvsserver capable of authenticating users=
+ through an external executable script using pserver method.
+The script can be specified in the gitcvs section of the config file:
+[gitcvs]
+	enabled =3D 1
+	authscript =3D /some/where/script.sh
 
-Unix man pages have a history of using BUGS sections to describe
-misfeatures and even unavoidable design constraints.
+The script, itself will get username and password on its standard input=
+, so it can look like something like this:
 
-One nice effect is to encourage people to think of programs as
-fixable.  But maybe it is bad PR. ;-)
+#!/bin/sh
+read username
+read password
 
-> git cherry would be more useful if you could specify a "limit" which =
-is
-> an ancestor of "fork-point", not only descendants.
->
->> Thoughts?  Improvements?
->
-> Allow general "limit" :)
+wbinfo -a "$username%$password"
 
-Hmm, I am not totally sure I understand.  Conceptually =E2=80=98git che=
-rry=E2=80=99
-currently does something like the following:
+--
+Only a return value of zero means a successful authentication.
 
- 1. List all commits limit..head and find their patch ids
-    (limit defaults to upstream if not specified)
+Please comment and keep me on cc.
 
- 2. List all commits head..upstream and find their patch ids
+--=20
+Regards,
+L=C3=A1szl=C3=B3 =C3=81shin
 
- 3. For each commit listed in step 1, check if it is in the
-    list from step 2 and print its commit id with a + or -
-    accordingly.
-
-Are you suggesting that the limit should replace head in
-step 2?  Or something else?
-
-> git-cherry(1) never speaks about upstream..head nor head..upstream. I=
-t
-> uses "fork-point", and a merge creates a new "fork-point", i.e.
-> merge-base.
-
-This explanation becomes problematic when there is more than one merge-=
-base:
-http://thread.gmane.org/gmane.comp.version-control.git/150067/focus=3D1=
-50093
-
-Thank you for the comments.  I considered using the <limit> argument
-to work around this but didn=E2=80=99t try the modification you suggest=
- above.
-I would be happy to find that it works (generalized for repos with
-a more shallow history to --full).
-
-Sleepily,
-Jonathan
+diff -ruN a/git-cvsserver b/git-cvsserver
+--- a/git-cvsserver	2010-07-01 15:31:18.000000000 +0200
++++ b/git-cvsserver	2010-07-01 15:35:41.000000000 +0200
+@@ -200,35 +200,54 @@
+         # Fall through to LOVE
+     } else {
+         # Trying to authenticate a user
+-        if (not exists $cfg->{gitcvs}->{authdb}) {
+-            print "E the repo config file needs a [gitcvs] section wit=
+h an 'authdb' parameter set to the filename of the authentication datab=
+ase\n";
+-            print "I HATE YOU\n";
+-            exit 1;
+-        }
+-
+-        my $authdb =3D $cfg->{gitcvs}->{authdb};
+-
+-        unless (-e $authdb) {
+-            print "E The authentication database specified in [gitcvs.=
+authdb] does not exist\n";
+-            print "I HATE YOU\n";
+-            exit 1;
+-        }
+-
+-        my $auth_ok;
+-        open my $passwd, "<", $authdb or die $!;
+-        while (<$passwd>) {
+-            if (m{^\Q$user\E:(.*)}) {
+-                if (crypt($user, descramble($password)) eq $1) {
+-                    $auth_ok =3D 1;
+-                }
+-            };
+-        }
+-        close $passwd;
++        if (exists $cfg->{gitcvs}->{authscript}) {
++            my $authscript =3D $cfg->{gitcvs}->{authscript};
++            unless (-x $authscript) {
++                print "E The authentication script specified in [gitcv=
+s.authscript] cannot be executed\n";
++                print "I HATE YOU\n";
++                exit 1;
++            }
++
++            open SCRIPTIN, '|' . $authscript or die $!;
++            print SCRIPTIN $user . "\n";
++            print SCRIPTIN descramble($password) . "\n";
++            close SCRIPTIN;
++            if ($? !=3D 0) {
++                print "E External script authentication failed.\n";
++                print "I HATE YOU\n";
++                exit 1;
++            }
++        } else {
++            if (not exists $cfg->{gitcvs}->{authdb}) {
++                print "E the repo config file needs a [gitcvs] section=
+ with an 'authdb' parameter set to the filename of the authentication d=
+atabase\n";
++                print "I HATE YOU\n";
++                exit 1;
++            }
++
++            my $authdb =3D $cfg->{gitcvs}->{authdb};
++
++            unless (-e $authdb) {
++                print "E The authentication database specified in [git=
+cvs.authdb] does not exist\n";
++                print "I HATE YOU\n";
++                exit 1;
++            }
++
++            my $auth_ok;
++            open my $passwd, "<", $authdb or die $!;
++            while (<$passwd>) {
++                if (m{^\Q$user\E:(.*)}) {
++                    if (crypt($user, descramble($password)) eq $1) {
++                        $auth_ok =3D 1;
++                    }
++                };
++            }
++            close $passwd;
+=20
+-        unless ($auth_ok) {
+-            print "I HATE YOU\n";
+-            exit 1;
+-        }
++            unless ($auth_ok) {
++                print "I HATE YOU\n";
++                exit 1;
++            }
++	}
+=20
+         # Fall through to LOVE
+     }
