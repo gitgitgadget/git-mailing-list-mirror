@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v4 6/7] t/README: Add a section about skipping tests
-Date: Fri,  2 Jul 2010 14:59:48 +0000
-Message-ID: <1278082789-19872-7-git-send-email-avarab@gmail.com>
+Subject: [PATCH v4 7/7] t/README: Document the do's and don'ts of tests
+Date: Fri,  2 Jul 2010 14:59:49 +0000
+Message-ID: <1278082789-19872-8-git-send-email-avarab@gmail.com>
 References: <1278082789-19872-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,76 +17,156 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUhk6-0004di-SC
+	id 1OUhk7-0004di-Dq
 	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 17:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758772Ab0GBPA7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 11:00:59 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:46104 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758761Ab0GBPAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 11:00:54 -0400
-Received: by ewy23 with SMTP id 23so1096024ewy.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 08:00:53 -0700 (PDT)
+	id S1758776Ab0GBPBA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 11:01:00 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:48646 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758763Ab0GBPAz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 11:00:55 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 24so467999wwb.1
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 08:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=5LvP18bLvWBIFkf3vmhROsU6IZ2PoKgTT86xxzR88OI=;
-        b=cq1UuFv+IyqDZlgmNLxolsV72w+wTG9cvxDB1cZV6/HK8sdSrapWfvSRKAR4M5AEiI
-         YX+PAZ2FSF7NNAXXDwGKAEDaoAMbQ1hC/AdJZPXvFn1eOyOxwyUwYQG5auu43/p63lSV
-         BfIcdQkncFM8TDZWq084+stMdmIKH1l+aV1wg=
+        bh=fCXKQJR2D95iGrIvMXb3Klo5sgFyNklq1AOV893uy8c=;
+        b=MbXXqa+Wk5cJ5+Wf6v00P1HcUD5CdDAromxRpYa7242g5zOhSWVzbRZ/5pA4skVupD
+         BO/6Eawl15T6YPr20kQJ1I3CZA1brQdaqCSAnicgZTq+J4NuLMEyVg4dhba8skFowh5U
+         dHeFj5ycuMBuYF3KAFnxFg72/SBf/zgi12Zrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=D7Q+9uRxO1ImsW0fvLCd4r87V1Pn+2LjfV1f+VnGPMQrmpUj3y+8B8gCORD85YluyH
-         ql6cJRkmhG9wGKRzhR/2FeYeuFO2lggWyMC3rHcxjeDxMI/F3PL8KrpICGEBOggeSdG1
-         1e0ixBwgqY7qcrtlYBi4OLsDIh4hLto2zH7iY=
-Received: by 10.213.28.134 with SMTP id m6mr826791ebc.6.1278082851908;
-        Fri, 02 Jul 2010 08:00:51 -0700 (PDT)
+        b=J5wrnwXh7o4QcSvnUvi87UARdnhgVElJej1Im4Mflk5VcSSvlJC9+vOA6RI+QkD0WX
+         RtrixuOIcKIDXxc3PcxVc5vGhtde5D6pTB/JbCsRp1SAMablVh/E4u/moyO1kVHwKJal
+         7appHpzEoxXARpt9f6kFdZgdc4Wzjfx/v1vVw=
+Received: by 10.213.8.143 with SMTP id h15mr783883ebh.35.1278082854311;
+        Fri, 02 Jul 2010 08:00:54 -0700 (PDT)
 Received: from localhost.localdomain ([188.105.94.3])
-        by mx.google.com with ESMTPS id a48sm6206858eei.19.2010.07.02.08.00.50
+        by mx.google.com with ESMTPS id a48sm6206858eei.19.2010.07.02.08.00.52
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 02 Jul 2010 08:00:51 -0700 (PDT)
+        Fri, 02 Jul 2010 08:00:53 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.251.g92a7
 In-Reply-To: <1278082789-19872-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150134>
+
+Add a "Do's, don'ts & things to keep in mind" subsection to the
+"Writing Tests" documentation. Much of this is based on Junio C
+Hamano's "Test your stuff" section in
+<7vhbkj2kcr.fsf@alter.siamese.dyndns.org>.
+
+I turned it into a list of do's and don'ts to make it easier to skim
+it, and integrated my note that a TAP harness will get confused if you
+print "ok" or "not ok" at the beginning of a line.
+
+Thad had to be fixed in 335f87871fe5aa6b3fd55b2b4e80f16fe9681483 when
+TAP support was introduced.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- t/README |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
+ t/README |   78 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 78 insertions(+), 0 deletions(-)
 
 diff --git a/t/README b/t/README
-index 04ad927..4079635 100644
+index 4079635..e481657 100644
 --- a/t/README
 +++ b/t/README
-@@ -231,6 +231,18 @@ This test harness library does the following thing=
+@@ -231,6 +231,84 @@ This test harness library does the following thing=
 s:
     consistently when command line arguments --verbose (or -v),
     --debug (or -d), and --immediate (or -i) is given.
 =20
-+Skipping tests
-+--------------
++Do's, don'ts & things to keep in mind
++-------------------------------------
 +
-+If you need to skip all the remaining tests you should set skip_all
-+and immediately call test_done. The string you give to skip_all will
-+be used as an explanation for why the test was skipped. for instance:
++Here's a few examples of things you probably should and shouldn't do
++when writing tests.
 +
-+	if ! test_have_prereq PERL
-+	then
-+	    skip_all=3D'skipping perl interface tests, perl not available'
-+	    test_done
-+	fi
++Do:
++
++ - Put as much code as possible inside test_expect_success and other
++   assertions.
++
++   Even code that isn't a test per se, but merely some setup code
++   should be inside a test assertion if at all possible. Test scripts
++   should only have trivial code outside of their assertions.
++
++ - Chain your test assertions
++
++   Write test code like this:
++
++	git merge foo &&
++	git push bar &&
++	test ...
++
++   Instead of:
++
++	git merge hla
++	git push gh
++	test ...
++
++   That way all of the commands in your tests will succeed or fail. If
++   you must ignore the return value of something (e.g. the return
++   value of export is unportable) it's best to indicate so explicitly
++   with a semicolon:
++
++	export HLAGH;
++	git merge hla &&
++	git push gh &&
++	test ...
++
++Don't:
++
++ - exit() within a <script> part.
++
++   The harness will catch this as a programming error of the test.
++   Use test_done instead if you need to stop the tests early (see
++   "Skipping tests" below).
++
++ - Break the TAP output
++
++   The raw output from your test might be interpreted by a TAP
++   harness. You usually don't have to worry about that. TAP harnesses
++   will ignore everything they don't know about, but don't step on
++   their toes in these areas:
++
++   - Don't print lines like "$x..$y" where $x and $y are integers.
++
++   - Don't print lines that begin with "ok" or "not ok".
++
++   A TAP harness expect a line that begins with either "ok" and "not
++   ok" to signal a test passed or failed (and our harness already
++   produces such lines), so your script shouldn't emit such lines to
++   their output.
++
++   You can glean some further possible issues from the TAP grammar
++   (see http://search.cpan.org/perldoc?TAP::Parser::Grammar#TAP_Gramma=
+r)
++   but the best indication is to just run the tests with prove(1),
++   it'll complain if anything is amiss.
++
++Keep in mind:
++
++ - That what you print to stderr and stdout is usually ignored
++
++   Inside <script> part, the standard output and standard error
++   streams are discarded, and the test harness only reports "ok" or
++   "not ok" to the end user running the tests. Under --verbose, they
++   are shown to help debugging the tests.
++
++
+ Skipping tests
+ --------------
 =20
- End with test_done
- ------------------
 --=20
 1.7.1.251.g92a7
