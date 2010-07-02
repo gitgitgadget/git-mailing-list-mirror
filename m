@@ -1,90 +1,62 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v4 5/7] t/README: Document test_expect_code
-Date: Fri,  2 Jul 2010 14:59:47 +0000
-Message-ID: <1278082789-19872-6-git-send-email-avarab@gmail.com>
-References: <1278082789-19872-1-git-send-email-avarab@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] git-cvsserver: pserver-auth-script
+Date: Fri, 2 Jul 2010 15:04:14 +0000
+Message-ID: <AANLkTin_Pd2_uJciKDzW8wLhCSFtvOOzdlwJ8eFmWc7q@mail.gmail.com>
+References: <20100702095406.7af15d20@ashinlaszlo.pta.neti.hu>
+	<AANLkTinGZsCLF8CFKgQJaB63Jh9anGfQK4ZSHFPl4R4N@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 02 17:01:27 2010
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?TMOhc3psw7Mgw4FTSElO?= <laszlo.ashin@neti.hu>
+X-From: git-owner@vger.kernel.org Fri Jul 02 17:04:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUhk6-0004di-BB
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 17:01:26 +0200
+	id 1OUhmy-0006Lg-OG
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 17:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758768Ab0GBPA5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 11:00:57 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:49039 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755851Ab0GBPAx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 11:00:53 -0400
-Received: by ewy23 with SMTP id 23so1096019ewy.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 08:00:50 -0700 (PDT)
+	id S1758031Ab0GBPET convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 11:04:19 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63211 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755703Ab0GBPES convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Jul 2010 11:04:18 -0400
+Received: by iwn7 with SMTP id 7so3340621iwn.19
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 08:04:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=VCAJ5MS5ToqoPAM62j3CdqUx3BkxHbS/5mc8zZxJAKc=;
-        b=PHc8ZvV62Bf63UWa/1XYTImvTn9I+Z9bwqJ4ruHC+IqRRXii7ptYL5iGaLdtWI0meo
-         F0sqeS4KNwKei866fBr0KXuCmO3KNq5MOExdJp2y96huB+SspARpQFsVHp/Ruro8q40Z
-         kEV6KwqX7ikRaHxjPKji6kARU9ZvPyUQYzMCQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zpEEIb6E1e55rvILmt1vR/W6tBa2k1IaYhQUucpjJXE=;
+        b=Sb3Q15vJYf37yxrNQYYO4hHj6yyx/Mk/NYqbBEdi/oNYzeok7A3YbF/izwWvXqwCg4
+         da/LN4aaCuI4YqdZw1I7YID2Feko8Akv9xnchYdOXd+ERN3W8HB5iyATWZiH0uPq5iOq
+         r6q3N+We++KtKQwZR7TW+pF4YjP6AYlDUoVdw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=U6ACVe2ABn0FoSOaqj1PhNqWyja4JCK634eMGfUSENmGD4IW7IM5T8pjl+7fNGeKnz
-         GgDq2A2SJuRBlqkQh0+nzdtO2FCw130y8pbo2IQDwRmUF3gCTKgBvIpuPtpQ8x6sAHz4
-         hxV7oGeQc3209A5R11XPfLrawf8N+7IMSozcA=
-Received: by 10.213.26.13 with SMTP id b13mr4099739ebc.71.1278082850075;
-        Fri, 02 Jul 2010 08:00:50 -0700 (PDT)
-Received: from localhost.localdomain ([188.105.94.3])
-        by mx.google.com with ESMTPS id a48sm6206858eei.19.2010.07.02.08.00.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 02 Jul 2010 08:00:49 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.251.g92a7
-In-Reply-To: <1278082789-19872-1-git-send-email-avarab@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kA5hLV3QV8r+3U3raz7rKpnc3YmLCwXFCtGXC1qD5LtMRPoXw7AvN56YcvRbqAVoxP
+         NggJk1m0E/K1WGDXoaZcFcFV0Q5Ynk8CqtY1zqGD4GByse5X/JS+x4u5GIi2r4KY0py7
+         Db9/hDFVkjRb0ziLykWt1MMfW3HezgWcsVBBI=
+Received: by 10.231.32.70 with SMTP id b6mr974644ibd.99.1278083054955; Fri, 02 
+	Jul 2010 08:04:14 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Fri, 2 Jul 2010 08:04:14 -0700 (PDT)
+In-Reply-To: <AANLkTinGZsCLF8CFKgQJaB63Jh9anGfQK4ZSHFPl4R4N@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150136>
 
-test_expect_code (which was introduced in d3bfdb75) never had any
-documentation.
+On Fri, Jul 2, 2010 at 14:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> Otherwise this looks good. Submit something that's against the *.perl
+> (and uses git format-patch / git send-email .. ) & has docs and I'll
+> ack it.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- t/README |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/t/README b/t/README
-index b40403d..04ad927 100644
---- a/t/README
-+++ b/t/README
-@@ -277,6 +277,13 @@ library for your script to use.
-    Like test_expect_success this function can optionally use a three
-    argument invocation with a prerequisite as the first argument.
-=20
-+ - test_expect_code [<prereq>] <code> <message> <script>
-+
-+   Analogous to test_expect_success, but pass the test if it exits
-+   with a given exit <code>
-+
-+ test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" =
-B master'
-+
-  - test_debug <script>
-=20
-    This takes a single argument, <script>, and evaluates it only
---=20
-1.7.1.251.g92a7
+Oh, and it also needs tests. See the existing authdb tests in
+t9400-git-cvsserver-server.sh.
