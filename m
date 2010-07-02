@@ -1,74 +1,89 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [WIP/PATCH] Teach fast-import to print the id of each imported 
-	commit
-Date: Fri, 2 Jul 2010 16:55:01 +0200
-Message-ID: <AANLkTintWyhcx9pURSqxs3e9BBkPx9KSPPYh4UOU7kv6@mail.gmail.com>
-References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino> 
-	<20100702051201.GC7209@burratino>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v4 0/7] Improvements for t/README
+Date: Fri,  2 Jul 2010 14:59:42 +0000
+Message-ID: <1278082789-19872-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 02 16:55:44 2010
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 02 17:00:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUheV-0001PG-B9
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 16:55:39 +0200
+	id 1OUhjL-00048m-By
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 17:00:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758067Ab0GBOz0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 10:55:26 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:41803 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755996Ab0GBOzW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jul 2010 10:55:22 -0400
-Received: by gye5 with SMTP id 5so423373gye.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 07:55:22 -0700 (PDT)
+	id S1757672Ab0GBPAe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 11:00:34 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57428 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755703Ab0GBPAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 11:00:33 -0400
+Received: by wyf23 with SMTP id 23so1196622wyf.19
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 08:00:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=gwO6JwkukDKYrDmer6ojITa507p1YrSBqEc/OLd65aU=;
-        b=sjB64kwR/zPSOhkeoJ3UqmqyC0Qcoq1oU9yhSPKCVWv7BXAgYqNpWQn1fcYHzEzMZm
-         j/99qi8Zu+FnoqS/5aNfVpGY0AJWRaAH1pXkjilclvlmuBVmVKsj4f/LjOJvxLEukQFq
-         83k39E8ll4Koxs6gakv/ShboG9aGDPNUYpSWU=
+        bh=vgy7bHIgt91SxsG4RzF/i/Ff+oeRQdiiaNVIo5l+BmA=;
+        b=mYeCD+nGj7DX8oZxjjTD3jGh760UM7+KAIVBcI7t//aLr2SD6JUIF/0C0XxggweEuZ
+         GPyUOCMlxryNSMnKLzl3TTIf7BJob/LWK5EhhweQpL2TwWZgOZ85nhGLoDijkhg6sw4S
+         +HebWJWeIPy3Y1cRIbYNjzc6hEO+0mYKIkpfk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=dW5v8tZdF/KlASI/u2UlzyJA46rgcufgD6nYTcKCFX4uSN6D1sZC0FnwYH+t0AvC2G
-         Bi8NDUAxTAr2eqByJ0BNyvuqOIbbU9gTcMBa8s9bPe4BVgp/cv0Gib0U15EscEEhIpFk
-         w2jGZlbsnp9hdLtJozfFNa32Mw6aj2ZegID9Y=
-Received: by 10.229.97.69 with SMTP id k5mr553369qcn.236.1278082521511; Fri, 
-	02 Jul 2010 07:55:21 -0700 (PDT)
-Received: by 10.150.184.8 with HTTP; Fri, 2 Jul 2010 07:55:01 -0700 (PDT)
-In-Reply-To: <20100702051201.GC7209@burratino>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=iYc2kkGZyj+W5qQoc7l9RoW0xsEK84N7y5xCanSMvyk89DY4mLFOzL3DN1tCWONsZQ
+         MAcuD+jMyUbWqs/I7b/HSzA99+t3CsNW+caL9jmebCOyqJ0AqYJ6FcMKumYPXKLO1t46
+         nYvDy/Uyg8QgQaSLQSrw69MbJTi7cG1ruqTVc=
+Received: by 10.213.34.205 with SMTP id m13mr3914146ebd.2.1278082831474;
+        Fri, 02 Jul 2010 08:00:31 -0700 (PDT)
+Received: from localhost.localdomain ([188.105.94.3])
+        by mx.google.com with ESMTPS id a48sm6206858eei.19.2010.07.02.08.00.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 02 Jul 2010 08:00:29 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.251.g92a7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150128>
 
-Heya,
+Since last time:
 
-On Fri, Jul 2, 2010 at 07:12, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> A =E2=80=98cat=E2=80=99 command (suggested by David) would also be us=
-eful, so the
-> caller can read trees and blobs before they are accessible through
-> the object db. =C2=A0The svn importer would use this when applying
-> (svndiff0-format) deltas to import changes to regular files.
+ * Dropped the s[sh ./][./] patch
+ * Typo fix: gleam -> glean
 
-How would the output be delimited? The same way fast-import expects
-its blob input?
+Here's the diff since v3:
+   =20
+    diff --git a/t/README b/t/README
+    index 4d0526d..e481657 100644
+    --- a/t/README
+    +++ b/t/README
+    @@ -55 +55 @@ You can also run each test individually from command =
+line, like this:
+    -    $ ./t3010-ls-files-killed-modified.sh
+    +    $ sh ./t3010-ls-files-killed-modified.sh
+    @@ -297 +297 @@ Don't:
+    -   You can gleam some further possible issues from the TAP grammar
+    +   You can glean some further possible issues from the TAP grammar
 
---=20
-Cheers,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (7):
+  t/README: The trash is in 't/trash directory.$name'
+  t/README: Typo: paralell -> parallel
+  t/README: Document the prereq functions, and 3-arg test_*
+  t/README: Document test_external*
+  t/README: Document test_expect_code
+  t/README: Add a section about skipping tests
+  t/README: Document the do's and don'ts of tests
 
-Sverre Rabbelier
+ t/README |  170 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
++++++---
+ 1 files changed, 163 insertions(+), 7 deletions(-)
