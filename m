@@ -1,56 +1,59 @@
-From: Sabyasachi Ruj <ruj.sabya@gmail.com>
-Subject: Git checkout: difference in behavior and what is in the documentation
-Date: Fri, 2 Jul 2010 11:00:59 +0530
-Message-ID: <AANLkTil4LcA0F5FEeoKOnR7Ko_gEpMHD_HCi3FPTG55D@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC PATCH] rerere: fix overeager gc
+Date: Fri, 02 Jul 2010 07:49:43 +0200
+Message-ID: <4C2D7DF7.8030408@viscovery.net>
+References: <1277811498-17288-1-git-send-email-szeder@ira.uka.de> <7vy6dx90uk.fsf@alter.siamese.dyndns.org> <4C2AE04E.9090901@viscovery.net> <7v1vbn417d.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 02 07:31:29 2010
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 02 07:49:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUYqW-00012Q-9v
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 07:31:28 +0200
+	id 1OUZ8P-0006YD-10
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 07:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752868Ab0GBFbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jul 2010 01:31:21 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:52108 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752836Ab0GBFbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 01:31:20 -0400
-Received: by qyk35 with SMTP id 35so202737qyk.19
-        for <git@vger.kernel.org>; Thu, 01 Jul 2010 22:31:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=k8svrbClcLARze1Nn9RhHKiKX2Pcc0c+dMLby8GOMKE=;
-        b=bMyhGzM/ZL9jDpC9jVsWuwDkOALwRpKBhq6O0BMX3f0aDuHeMWNJv+ytTeK1syRVVj
-         7Jy5sBmD40+tk4tYJwAbmoEeU6pgCCFoV5GRmaQoVTGYzDGZHYzvDwJrluwfVNl0q3tv
-         sLcHY0xysUjtC0+n1XsIg9c1iC6Hj9QZ+wbLA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=enwCw2J8eZhLPn/3Kv3zVE8lUvSQmTgxmqaSG/yxtzwUfsP5zix4Y3CjSh6i/LZDaD
-         kst0Jlr6MGE+ClOW9n9GUdcVDuLRsL48XO2SINPl+kM2bhe42kjNz1DF20cKHn4qmpHM
-         OfaK2U6aUCxqsjExXvZJt7t0yx314wcTe0Yn4=
-Received: by 10.224.63.220 with SMTP id c28mr63798qai.360.1278048679211; Thu, 
-	01 Jul 2010 22:31:19 -0700 (PDT)
-Received: by 10.229.241.149 with HTTP; Thu, 1 Jul 2010 22:30:59 -0700 (PDT)
+	id S1755260Ab0GBFtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jul 2010 01:49:51 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:27836 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755012Ab0GBFts (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 01:49:48 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OUZ8C-00040V-5b; Fri, 02 Jul 2010 07:49:44 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id BE9341660F;
+	Fri,  2 Jul 2010 07:49:43 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <7v1vbn417d.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150109>
 
-I've asked the question in detail in Stack Overflow:
+Am 7/1/2010 18:27, schrieb Junio C Hamano:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
+> 
+>> Would it be possible to update the timestamp of preimage every time it is
+>> used (e.g., in rerere.c:merge()), and check for that?
+> 
+> It would be _possible_, but we are _not_ modifying the file at that point,
+> so somehow that solution feels very wrong, no?
 
-http://stackoverflow.com/questions/3163325/confusion-about-git-checkout
+rr-cache is basically a static database. The fact that we have a file
+named 'thisimage' is just an abuse - to put a temporary file somewhere.
+Therefore, depending on lockfile infrastructure to change timestamps for
+us while manipulating 'thisimage' should feel no less wrong, don't you
+think so?
 
-Even if there is no bug in the git behavior, I think the documentation
-should be more clear.
-
--- 
-Sabyasachi
+-- Hannes
