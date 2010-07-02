@@ -1,141 +1,74 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] git-cvsserver: pserver-auth-script
-Date: Fri, 2 Jul 2010 14:39:40 +0000
-Message-ID: <AANLkTinGZsCLF8CFKgQJaB63Jh9anGfQK4ZSHFPl4R4N@mail.gmail.com>
-References: <20100702095406.7af15d20@ashinlaszlo.pta.neti.hu>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [WIP/PATCH] Teach fast-import to print the id of each imported 
+	commit
+Date: Fri, 2 Jul 2010 16:55:01 +0200
+Message-ID: <AANLkTintWyhcx9pURSqxs3e9BBkPx9KSPPYh4UOU7kv6@mail.gmail.com>
+References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino> 
+	<20100702051201.GC7209@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: =?UTF-8?B?TMOhc3psw7Mgw4FTSElO?= <laszlo.ashin@neti.hu>
-X-From: git-owner@vger.kernel.org Fri Jul 02 16:39:52 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 02 16:55:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUhPB-0001TA-RO
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 16:39:50 +0200
+	id 1OUheV-0001PG-B9
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 16:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757840Ab0GBOjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Jul 2010 10:39:45 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45186 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756434Ab0GBOjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 10:39:43 -0400
-Received: by iwn7 with SMTP id 7so3318039iwn.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 07:39:43 -0700 (PDT)
+	id S1758067Ab0GBOz0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 10:55:26 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:41803 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755996Ab0GBOzW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Jul 2010 10:55:22 -0400
+Received: by gye5 with SMTP id 5so423373gye.19
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 07:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=jFY9vZNmA64XfmwxQOal1fGHlHYcUItnW4RkGFiex1o=;
-        b=SGSQdvYLIreWVU/LRXDv+scNw50oc0Ydgsgjw9yAxbsCUmjChuRsc4rLvIoZ925/ce
-         qC6nxkQB6M6BM1DjXSpi52q+EP0SLzgNmmszG3vTT7YtpX5EYdhAqpBpeeIXLc5fQp7l
-         F/UaW2kgjO1fez6zqMNHf9OWG6VgM3E1UI7xI=
+        bh=gwO6JwkukDKYrDmer6ojITa507p1YrSBqEc/OLd65aU=;
+        b=sjB64kwR/zPSOhkeoJ3UqmqyC0Qcoq1oU9yhSPKCVWv7BXAgYqNpWQn1fcYHzEzMZm
+         j/99qi8Zu+FnoqS/5aNfVpGY0AJWRaAH1pXkjilclvlmuBVmVKsj4f/LjOJvxLEukQFq
+         83k39E8ll4Koxs6gakv/ShboG9aGDPNUYpSWU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=piZ7k9PXTmWi92TIe6oQT3MQwoR8lcg+hPVtOYvla2zEc+J+TG7oiFMLr3/UGD0XTL
-         ON9e7m3KgtRaAzqvYL6bDWRDWAly2hGwPbQpGfuhiCMAsW3MGxCNB/JtY5HgQo2B9FDd
-         rIP6TTOhMQkYbvt5X/1zh/huvmviTMKR7S4f4=
-Received: by 10.231.157.212 with SMTP id c20mr849587ibx.186.1278081580681; 
-	Fri, 02 Jul 2010 07:39:40 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Fri, 2 Jul 2010 07:39:40 -0700 (PDT)
-In-Reply-To: <20100702095406.7af15d20@ashinlaszlo.pta.neti.hu>
+        b=dW5v8tZdF/KlASI/u2UlzyJA46rgcufgD6nYTcKCFX4uSN6D1sZC0FnwYH+t0AvC2G
+         Bi8NDUAxTAr2eqByJ0BNyvuqOIbbU9gTcMBa8s9bPe4BVgp/cv0Gib0U15EscEEhIpFk
+         w2jGZlbsnp9hdLtJozfFNa32Mw6aj2ZegID9Y=
+Received: by 10.229.97.69 with SMTP id k5mr553369qcn.236.1278082521511; Fri, 
+	02 Jul 2010 07:55:21 -0700 (PDT)
+Received: by 10.150.184.8 with HTTP; Fri, 2 Jul 2010 07:55:01 -0700 (PDT)
+In-Reply-To: <20100702051201.GC7209@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150127>
 
-T24gRnJpLCBKdWwgMiwgMjAxMCBhdCAwNzo1NCwgTMOhc3psw7Mgw4FTSElOIDxsYXN6bG8uYXNo
-aW5AbmV0aS5odT4gd3JvdGU6CgpEaXNyZWdhcmQgdGhlIGxhc3QgRS1NYWlsLiBJIGJ1bXBlZCBp
-bnRvIHRoZSB3cm9uZyBidXR0b24gb24gbXkKa2V5Ym9hcmQuCgo+IFRoZSBmb2xsb3dpbmcgcGF0
-Y2ggbWFrZXMgZ2l0LWN2c3NlcnZlciBjYXBhYmxlIG9mIGF1dGhlbnRpY2F0aW5nIHVzZXJzIHRo
-cm91Z2ggYW4gZXh0ZXJuYWwgZXhlY3V0YWJsZSBzY3JpcHQgdXNpbmcgcHNlcnZlciBtZXRob2Qu
-Cj4gVGhlIHNjcmlwdCBjYW4gYmUgc3BlY2lmaWVkIGluIHRoZSBnaXRjdnMgc2VjdGlvbiBvZiB0
-aGUgY29uZmlnIGZpbGU6Cj4gW2dpdGN2c10KPiDCoCDCoCDCoCDCoGVuYWJsZWQgPSAxCj4gwqAg
-wqAgwqAgwqBhdXRoc2NyaXB0ID0gL3NvbWUvd2hlcmUvc2NyaXB0LnNoCj4KPiBUaGUgc2NyaXB0
-LCBpdHNlbGYgd2lsbCBnZXQgdXNlcm5hbWUgYW5kIHBhc3N3b3JkIG9uIGl0cyBzdGFuZGFyZCBp
-bnB1dCwgc28gaXQgY2FuIGxvb2sgbGlrZSBzb21ldGhpbmcgbGlrZSB0aGlzOgo+Cj4gIyEvYmlu
-L3NoCj4gcmVhZCB1c2VybmFtZQo+IHJlYWQgcGFzc3dvcmQKPgo+IHdiaW5mbyAtYSAiJHVzZXJu
-YW1lJSRwYXNzd29yZCIKPgo+IC0tCj4gT25seSBhIHJldHVybiB2YWx1ZSBvZiB6ZXJvIG1lYW5z
-IGEgc3VjY2Vzc2Z1bCBhdXRoZW50aWNhdGlvbi4KPgo+IFBsZWFzZSBjb21tZW50IGFuZCBrZWVw
-IG1lIG9uIGNjLgoKR29vZCB0byBzZWUgc29tZW9uZSB1c2UgdGhlIHBzZXJ2ZXIgYXV0aCBjb2Rl
-IEkgYWRkZWQsIGV2ZW4gdGhvdWdoIEknbQpub3QgZG9pbmcgc28uCgpUaGUgaWRlYSBsb29rcyBn
-b29kLCBwbGVhc2Ugc2VuZCBhbm90aGVyIHBhdGNoIHRoYXQgYWRkcyBkb2N1bWVudGF0aW9uCnRv
-IGdpdC1jdnNzZXJ2ZXIudHh0IHRvby4KCj4gZGlmZiAtcnVOIGEvZ2l0LWN2c3NlcnZlciBiL2dp
-dC1jdnNzZXJ2ZXIKPiAtLS0gYS9naXQtY3Zzc2VydmVyIMKgIMKgIDIwMTAtMDctMDEgMTU6MzE6
-MTguMDAwMDAwMDAwICswMjAwCj4gKysrIGIvZ2l0LWN2c3NlcnZlciDCoCDCoCAyMDEwLTA3LTAx
-IDE1OjM1OjQxLjAwMDAwMDAwMCArMDIwMAoKV2h5IGlzbid0IHRoaXMgYSBwYXRjaCBhZ2FpbnN0
-IGdpdC1jdnNzZXJ2ZXIucGVybD8gUHJlc3VtYWJseSB5b3UgbWFkZQppdCB3aXRob3V0IHVzaW5n
-IHRoZSBHaXQgdG9vbHMuIEl0IGRvZXNuJ3QgYXBwbHkgbGlrZSB0aGlzLgoKPiBAQCAtMjAwLDM1
-ICsyMDAsNTQgQEAKPiDCoCDCoCDCoCDCoCAjIEZhbGwgdGhyb3VnaCB0byBMT1ZFCj4gwqAgwqAg
-fSBlbHNlIHsKPiDCoCDCoCDCoCDCoCAjIFRyeWluZyB0byBhdXRoZW50aWNhdGUgYSB1c2VyCj4g
-LSDCoCDCoCDCoCDCoGlmIChub3QgZXhpc3RzICRjZmctPntnaXRjdnN9LT57YXV0aGRifSkgewo+
-IC0gwqAgwqAgwqAgwqAgwqAgwqBwcmludCAiRSB0aGUgcmVwbyBjb25maWcgZmlsZSBuZWVkcyBh
-IFtnaXRjdnNdIHNlY3Rpb24gd2l0aCBhbiAnYXV0aGRiJyBwYXJhbWV0ZXIgc2V0IHRvIHRoZSBm
-aWxlbmFtZSBvZiB0aGUgYXV0aGVudGljYXRpb24gZGF0YWJhc2VcbiI7Cj4gLSDCoCDCoCDCoCDC
-oCDCoCDCoHByaW50ICJJIEhBVEUgWU9VXG4iOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqBleGl0IDE7
-Cj4gLSDCoCDCoCDCoCDCoH0KPiAtCj4gLSDCoCDCoCDCoCDCoG15ICRhdXRoZGIgPSAkY2ZnLT57
-Z2l0Y3ZzfS0+e2F1dGhkYn07Cj4gLQo+IC0gwqAgwqAgwqAgwqB1bmxlc3MgKC1lICRhdXRoZGIp
-IHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgcHJpbnQgIkUgVGhlIGF1dGhlbnRpY2F0aW9uIGRhdGFi
-YXNlIHNwZWNpZmllZCBpbiBbZ2l0Y3ZzLmF1dGhkYl0gZG9lcyBub3QgZXhpc3RcbiI7Cj4gLSDC
-oCDCoCDCoCDCoCDCoCDCoHByaW50ICJJIEhBVEUgWU9VXG4iOwo+IC0gwqAgwqAgwqAgwqAgwqAg
-wqBleGl0IDE7Cj4gLSDCoCDCoCDCoCDCoH0KPiAtCj4gLSDCoCDCoCDCoCDCoG15ICRhdXRoX29r
-Owo+IC0gwqAgwqAgwqAgwqBvcGVuIG15ICRwYXNzd2QsICI8IiwgJGF1dGhkYiBvciBkaWUgJCE7
-Cj4gLSDCoCDCoCDCoCDCoHdoaWxlICg8JHBhc3N3ZD4pIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKg
-aWYgKG17XlxRJHVzZXJcRTooLiopfSkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiAo
-Y3J5cHQoJHVzZXIsIGRlc2NyYW1ibGUoJHBhc3N3b3JkKSkgZXEgJDEpIHsKPiAtIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgJGF1dGhfb2sgPSAxOwo+IC0gwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqB9Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoH07Cj4gLSDCoCDCoCDCoCDCoH0KPiAtIMKgIMKg
-IMKgIMKgY2xvc2UgJHBhc3N3ZDsKPiArIMKgIMKgIMKgIMKgaWYgKGV4aXN0cyAkY2ZnLT57Z2l0
-Y3ZzfS0+e2F1dGhzY3JpcHR9KSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoG15ICRhdXRoc2NyaXB0
-ID0gJGNmZy0+e2dpdGN2c30tPnthdXRoc2NyaXB0fTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgdW5s
-ZXNzICgteCAkYXV0aHNjcmlwdCkgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBwcmludCAi
-RSBUaGUgYXV0aGVudGljYXRpb24gc2NyaXB0IHNwZWNpZmllZCBpbiBbZ2l0Y3ZzLmF1dGhzY3Jp
-cHRdIGNhbm5vdCBiZSBleGVjdXRlZFxuIjsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcHJp
-bnQgIkkgSEFURSBZT1VcbiI7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGV4aXQgMTsKPiAr
-IMKgIMKgIMKgIMKgIMKgIMKgfQo+ICsKPiArIMKgIMKgIMKgIMKgIMKgIMKgb3BlbiBTQ1JJUFRJ
-TiwgJ3wnIC4gJGF1dGhzY3JpcHQgb3IgZGllICQhOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqBwcmlu
-dCBTQ1JJUFRJTiAkdXNlciAuICJcbiI7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoHByaW50IFNDUklQ
-VElOIGRlc2NyYW1ibGUoJHBhc3N3b3JkKSAuICJcbiI7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoGNs
-b3NlIFNDUklQVElOOwoKTml0OiBOaWNlIHVzZSBvZiB0aHJlZS1hcmcgb3BlbiwgYnV0IHlvdSBz
-aG91bGQgdXNlIGxleGljYWwKZmlsZWhhbmRsZXMgaW5zdGVhZC4gSS5lLjoKCiAgICBvcGVuIG15
-ICRzY3JpcHQsICd8JyAuICRhdXRoc2NyaXB0IG9yIGRpZSAkITsKICAgIC4uLgoKPiArIMKgIMKg
-IMKgIMKgIMKgIMKgaWYgKCQ/ICE9IDApIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcHJp
-bnQgIkUgRXh0ZXJuYWwgc2NyaXB0IGF1dGhlbnRpY2F0aW9uIGZhaWxlZC5cbiI7Cj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoHByaW50ICJJIEhBVEUgWU9VXG4iOwo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqBleGl0IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoH0KPiArIMKgIMKgIMKgIMKg
-fSBlbHNlIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgaWYgKG5vdCBleGlzdHMgJGNmZy0+e2dpdGN2
-c30tPnthdXRoZGJ9KSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHByaW50ICJFIHRoZSBy
-ZXBvIGNvbmZpZyBmaWxlIG5lZWRzIGEgW2dpdGN2c10gc2VjdGlvbiB3aXRoIGFuICdhdXRoZGIn
-IHBhcmFtZXRlciBzZXQgdG8gdGhlIGZpbGVuYW1lIG9mIHRoZSBhdXRoZW50aWNhdGlvbiBkYXRh
-YmFzZVxuIjsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcHJpbnQgIkkgSEFURSBZT1VcbiI7
-Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGV4aXQgMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKg
-fQo+ICsKPiArIMKgIMKgIMKgIMKgIMKgIMKgbXkgJGF1dGhkYiA9ICRjZmctPntnaXRjdnN9LT57
-YXV0aGRifTsKPiArCj4gKyDCoCDCoCDCoCDCoCDCoCDCoHVubGVzcyAoLWUgJGF1dGhkYikgewo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBwcmludCAiRSBUaGUgYXV0aGVudGljYXRpb24gZGF0
-YWJhc2Ugc3BlY2lmaWVkIGluIFtnaXRjdnMuYXV0aGRiXSBkb2VzIG5vdCBleGlzdFxuIjsKPiAr
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgcHJpbnQgIkkgSEFURSBZT1VcbiI7Cj4gKyDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoGV4aXQgMTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgfQo+ICsKPiArIMKg
-IMKgIMKgIMKgIMKgIMKgbXkgJGF1dGhfb2s7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoG9wZW4gbXkg
-JHBhc3N3ZCwgIjwiLCAkYXV0aGRiIG9yIGRpZSAkITsKPiArIMKgIMKgIMKgIMKgIMKgIMKgd2hp
-bGUgKDwkcGFzc3dkPikgewo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiAobXteXFEkdXNl
-clxFOiguKil9KSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGlmIChjcnlwdCgk
-dXNlciwgZGVzY3JhbWJsZSgkcGFzc3dvcmQpKSBlcSAkMSkgewo+ICsgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAkYXV0aF9vayA9IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoH0KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfTsKPiArIMKgIMKgIMKgIMKg
-IMKgIMKgfQo+ICsgwqAgwqAgwqAgwqAgwqAgwqBjbG9zZSAkcGFzc3dkOwo+Cj4gLSDCoCDCoCDC
-oCDCoHVubGVzcyAoJGF1dGhfb2spIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgcHJpbnQgIkkgSEFU
-RSBZT1VcbiI7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoGV4aXQgMTsKPiAtIMKgIMKgIMKgIMKgfQo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqB1bmxlc3MgKCRhdXRoX29rKSB7Cj4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoHByaW50ICJJIEhBVEUgWU9VXG4iOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqBleGl0IDE7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoH0KPiArIMKgIMKgIMKgIH0KPgo+IMKgIMKg
-IMKgIMKgICMgRmFsbCB0aHJvdWdoIHRvIExPVkUKPiDCoCDCoCB9CgpPdGhlcndpc2UgdGhpcyBs
-b29rcyBnb29kLiBTdWJtaXQgc29tZXRoaW5nIHRoYXQncyBhZ2FpbnN0IHRoZSAqLnBlcmwKKGFu
-ZCB1c2VzIGdpdCBmb3JtYXQtcGF0Y2ggLyBnaXQgc2VuZC1lbWFpbCAuLiApICYgaGFzIGRvY3Mg
-YW5kIEknbGwKYWNrIGl0Lgo=
+Heya,
+
+On Fri, Jul 2, 2010 at 07:12, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> A =E2=80=98cat=E2=80=99 command (suggested by David) would also be us=
+eful, so the
+> caller can read trees and blobs before they are accessible through
+> the object db. =C2=A0The svn importer would use this when applying
+> (svndiff0-format) deltas to import changes to regular files.
+
+How would the output be delimited? The same way fast-import expects
+its blob input?
+
+--=20
+Cheers,
+
+Sverre Rabbelier
