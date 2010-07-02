@@ -1,87 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: global hooks - once again
-Date: Fri, 2 Jul 2010 15:53:49 -0500
-Message-ID: <20100702205348.GA8134@burratino>
-References: <AANLkTikXJS5QCXMXgsOfkYn9cMBQV6o23tds5YG3A_OI@mail.gmail.com>
- <7v630x1yl8.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH 1/2] Add a string_list_foreach macro
+Date: Fri, 2 Jul 2010 22:54:17 +0200
+Message-ID: <20100702205417.GA4941@blimp.localdomain>
+References: <AANLkTilj7MiqiCmptDw0PLM5QqKZOOSZnSsxMlELS_5_@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eugene Sajine <euguess@gmail.com>, git@vger.kernel.org
+Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, srabbelier@gmail.com,
+	Jay Soffian <jaysoffian@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 02 22:54:30 2010
+X-From: git-owner@vger.kernel.org Fri Jul 02 22:54:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUnFk-0004W3-4Z
-	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 22:54:28 +0200
+	id 1OUnFw-0004as-9z
+	for gcvg-git-2@lo.gmane.org; Fri, 02 Jul 2010 22:54:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757030Ab0GBUyV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 16:54:21 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51657 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756401Ab0GBUyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Jul 2010 16:54:20 -0400
-Received: by iwn7 with SMTP id 7so3644593iwn.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 13:54:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=4OcDbX1HfQ5fmzIyPkDSqZQQceI5O0Ro08yFeBxJjY0=;
-        b=bvT1DZrjOnl7YLDORBF9JK8GVZAHHDwxJ0eVj7aszY6HpPwG7TBoFXE/ZkWz1QjRWT
-         4gJO4YuWyVivVlzimLn9fgEKdbcM1Av9vp+eEZlQMM9p5in0ZUpwwm0RMfAEnbq8MCUi
-         iGqjx64vpAzYBnw4EuEKSmmA3i13a02Hw8NAQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=n2VQrfdOomn3Q0uNFg+xxHGmUbpwhjuHeui/xV+IPwTVdYJTL2o5L5csKb/7iLKQ1F
-         cZ9VTacO/mxczjkaZFQOyWWdUaoOaiBn1+jDcV0NL808eIqmVeBvp/rjhc53Lo/H7byv
-         HDQ6/7+lURq+XI96n7iYfB0wpxbDJ0PDwNmEk=
-Received: by 10.231.161.68 with SMTP id q4mr1387429ibx.76.1278104059065;
-        Fri, 02 Jul 2010 13:54:19 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h8sm4656335ibk.21.2010.07.02.13.54.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 02 Jul 2010 13:54:18 -0700 (PDT)
+	id S1757451Ab0GBUy3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 16:54:29 -0400
+Received: from mout6.freenet.de ([195.4.92.96]:40876 "EHLO mout6.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756401Ab0GBUy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 16:54:29 -0400
+Received: from [195.4.92.20] (helo=10.mx.freenet.de)
+	by mout6.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.72 #3)
+	id 1OUnFe-0001uL-6H; Fri, 02 Jul 2010 22:54:22 +0200
+Received: from krlh-5f720059.pool.mediaways.net ([95.114.0.89]:55886 helo=tigra.home)
+	by 10.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 25) (Exim 4.72 #3)
+	id 1OUnFe-0005SP-1W; Fri, 02 Jul 2010 22:54:22 +0200
+Received: from blimp.localdomain (unknown [192.168.0.83])
+	by tigra.home (Postfix) with ESMTP id 57CF79FD14;
+	Fri,  2 Jul 2010 22:54:18 +0200 (CEST)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id CC02C36D28; Fri,  2 Jul 2010 22:54:17 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <7v630x1yl8.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <AANLkTilj7MiqiCmptDw0PLM5QqKZOOSZnSsxMlELS_5_@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150165>
 
-Junio C Hamano wrote:
+This is more lightweight than for_each_string_list function with
+callback function and a cookie argument.
 
-> Now, as long as the "do once per repository" action that you need to =
-do is
-> simple enough, it doesn't necessarily have to be "git config".  Perha=
-ps
->=20
->     [alias]
->     set-hooks =3D !"sh -c 'rm -fr .git/hooks && ln -s $1 .git/hooks' =
--"
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-It is not difficult to set up hook scripts when initializing a
-repository.  In fact git clone --template=3D and the =E2=80=9C[init]
-templatedir=E2=80=9D configuration work pretty well.  What is more diff=
-icult
-is to change the list of hook scripts later.
+Alex Riesen, Tue, Jun 29, 2010 10:35:15 +0200:
+> On Tue, Jun 29, 2010 at 10:33, Alex Riesen <raa.lkml@gmail.com> wrote=
+:
+> > BTW, now that I took a look at it... The iteration over string_list
+> > items looks a little overengineered. At least from the point of
+> > view of the existing users of the feature. Wouldn't a simple loop
+> > be just as simple to use (if not simplier) and faster (no uninlinea=
+ble
+> > function calls and argument preparation and passing needed)?
+> >
+> > #define string_list_foreach(item,list) \
+> > =A0 =A0 =A0 =A0for (item =3D (list)->items; item < (list)->items + =
+(list)->nr; ++item)
+> >
 
-If I symlink the entire hooks dir like you describe, I cannot override
-a couple of hooks per-repository without teaching the hook scripts to
-handle that themselves.  (something like:
+Rebased on current head (after Julian Philips patches).
 
-	hook=3D$(basename "$0")
-	! test -e "$GIT_DIR/local-hooks/$hook.disable" || exit 0
-	! test -e "$GIT_DIR/local-hooks/$hook" ||
-		exec "$GIT_DIR/local-hooks/$hook"
+ string-list.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-)  Maybe that is the simplest solution.
+diff --git a/string-list.h b/string-list.h
+index 680d600..acf0450 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -24,6 +24,8 @@ void string_list_clear_func(struct string_list *list,=
+ string_list_clear_func_t c
+ typedef int (*string_list_each_func_t)(struct string_list_item *, void=
+ *);
+ int for_each_string_list(struct string_list *list,
+ 			 string_list_each_func_t, void *cb_data);
++#define string_list_foreach(item,list) \
++	for (item =3D (list)->items; item < (list)->items + (list)->nr; ++ite=
+m)
+=20
+ /* Use these functions only on sorted lists: */
+ int string_list_has_string(const struct string_list *list, const char =
+*string);
+--=20
+1.7.1.304.g8446
