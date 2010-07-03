@@ -1,99 +1,131 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH] Bugfix: grep: Do not colorize output when -O is set
-Date: Sat, 3 Jul 2010 09:20:05 +0800
-Message-ID: <AANLkTilI0NZiDk3I850x28pr5I0sYRiPLW7HAST9sduU@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] grep -O: Do not pass color sequences as filenames to
+ pager
+Date: Fri, 2 Jul 2010 21:55:06 -0500
+Message-ID: <20100703025506.GB20980@burratino>
 References: <1278064941-30689-1-git-send-email-ayiehere@gmail.com>
-	<20100702192102.GA6585@burratino>
+ <20100702192102.GA6585@burratino>
+ <AANLkTilI0NZiDk3I850x28pr5I0sYRiPLW7HAST9sduU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Jul 03 03:20:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Nazri Ramliy <ayiehere@gmail.com>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 03 04:55:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUrPC-0007ax-Vi
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 03:20:31 +0200
+	id 1OUstV-00060H-6v
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 04:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754177Ab0GCBUI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Jul 2010 21:20:08 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41758 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754026Ab0GCBUH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Jul 2010 21:20:07 -0400
-Received: by wyf23 with SMTP id 23so1395302wyf.19
-        for <git@vger.kernel.org>; Fri, 02 Jul 2010 18:20:06 -0700 (PDT)
+	id S1754277Ab0GCCzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Jul 2010 22:55:38 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52844 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753062Ab0GCCzh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Jul 2010 22:55:37 -0400
+Received: by iwn7 with SMTP id 7so3858487iwn.19
+        for <git@vger.kernel.org>; Fri, 02 Jul 2010 19:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gHc9xEM6MnT04G4RDPuDzjN/gdLo60ozNC3FMVUrIxw=;
-        b=i7AcWB0wtlqKzqfja6fxDVOXDIuapnuO5BOufrU492OdXFQWtohHaKiDwhIkkdkjU0
-         touQ/WknRpD8SP5tSLXYcH6lXH0pRskM9pYG0FFdRy3q7rqLSdlZzwqaCNV/rshk/rh2
-         QO88zR/vWZIOPTTmRwROgpNsbkkJJlAvTLNTQ=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=A5Jz2TvsYfzaGNiXQ8PMxxRYIfD64HHv+1aWAk0TBdE=;
+        b=KDbcRKCAIQkQuBIWJwdkKlzFdbVgW946lx2b83p18Gy7162YoRfoefIusjYUW3bGeu
+         Vdkw/e2RXvD1vEPSn3fZBmYgXhZxxSmPSNZXut2zKQ9ukTzeyyYVdyBHDylh6Jo2CONU
+         vtdHi1N7W+Oiq8O7PJyK+3iRQzQ4fKP5mCZzU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=G9aAzHH+wFedpDx4cqvAW7lRD2op7IezS/7nFKGfwE3hKZHAgpsPJatM1zYY8QlmE6
-         Ytma97HwdopE1Haooy/gK+8r8lOcW5kjIkh3DYntUpRDJLA1Yqm5fHR6XlIGk+3WXIfG
-         jRXVmsJhyP457RDqFOxMzV6dA6CwvbqI2KYMs=
-Received: by 10.227.138.5 with SMTP id y5mr965127wbt.137.1278120005956; Fri, 
-	02 Jul 2010 18:20:05 -0700 (PDT)
-Received: by 10.216.162.213 with HTTP; Fri, 2 Jul 2010 18:20:05 -0700 (PDT)
-In-Reply-To: <20100702192102.GA6585@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=J+Q7CE6swPGloqAKAmnT8wTlXUqxH/M45PrjTi2iAM5MX8UHueb28k36zxTCuo4Rec
+         stDqSQXbJNhfMoxVJpj0Fqq9n+zZ7x/+QZxUGHLOTTa1MDlqcZT7EOdFHo9fA3Xp3XcI
+         utQ6m7dKXtfrzYmaETYYRs5bT5Jo5ONwEiDw0=
+Received: by 10.231.33.205 with SMTP id i13mr1747236ibd.179.1278125735746;
+        Fri, 02 Jul 2010 19:55:35 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id e8sm3619750ibb.14.2010.07.02.19.55.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 02 Jul 2010 19:55:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTilI0NZiDk3I850x28pr5I0sYRiPLW7HAST9sduU@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150176>
 
-On Sat, Jul 3, 2010 at 3:21 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Hi Nazri,
->
-> Nazri Ramliy wrote:
->
->> When color.ui is set to auto, "git grep -Ovi foo" breaks due to the
->> presence of color escape sequences.
->
-> I tried the following test without your patch, and it seemed to pass
-> without trouble. =A0What am I doing wrong?
+From: Nazri Ramliy <ayiehere@gmail.com>
 
-Sorry for not being more specific about the breakage. "color.ui" is not
-enough to trigger the breakage.
+With a .gitconfig like this:
 
-You'll have to set "color.grep.filename" too in order to break the two
-test cases.
+ [color]
+	ui = auto
+ [color "grep"]
+	filename = magenta
 
-Something like the following will do (I'm doing this in gmail so sorry
-for any tabs<->space conversion):
+if stdout is a terminal, the grep machinery will output the color
+sequence \e[36m before each filename in its output.
 
-test_expect_success 'copes with color.ui' '
- =A0 =A0 =A0 rm -f actual &&
- =A0 =A0 =A0 echo grep.h >expect &&
- =A0 =A0 =A0 git config color.ui always &&
-       git config color.grep.filename yellow &&
- =A0 =A0 =A0 test_when_finished "git config --unset color.ui" &&
-       test_when_finished "git config --unset color.grep.filename" &&
- =A0 =A0 =A0 git grep -O'\''printf "%s\n" >actual'\'' GREP_AND &&
- =A0 =A0 =A0 test_cmp expect actual
-'
+In the case of "git grep -O foo", output is argv for the pager.
+Disable color when calling the grep machinery in this case.
 
-test_expect_success 'copes with color.grep' '
- =A0 =A0 =A0 rm -f actual &&
- =A0 =A0 =A0 echo grep.h >expect &&
- =A0 =A0 =A0 git config color.grep always &&
-       git config color.grep.filename yellow &&
- =A0 =A0 =A0 test_when_finished "git config --unset color.grep" &&
-       test_when_finished "git config --unset color.grep.filename" &&
- =A0 =A0 =A0 git grep -O'\''printf "%s\n" >actual'\'' GREP_AND &&
- =A0 =A0 =A0 test_cmp expect actual
-'
+Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Nazri Ramliy wrote:
 
-nazri.
+> You'll have to set "color.grep.filename" too in order to break the two
+> test cases.
+
+Thanks.
+
+ builtin/grep.c       |    1 +
+ t/t7811-grep-open.sh |   15 +++++++++++++++
+ 2 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 232cd1c..597f76b 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1001,6 +1001,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (show_in_pager == default_pager)
+ 		show_in_pager = git_pager(1);
+ 	if (show_in_pager) {
++		opt.color = 0;
+ 		opt.name_only = 1;
+ 		opt.null_following_name = 1;
+ 		opt.output_priv = &path_list;
+diff --git a/t/t7811-grep-open.sh b/t/t7811-grep-open.sh
+index c110441..568a6f2 100755
+--- a/t/t7811-grep-open.sh
++++ b/t/t7811-grep-open.sh
+@@ -125,6 +125,21 @@ test_expect_success 'modified file' '
+ 	test_cmp empty out
+ '
+ 
++test_config() {
++	git config "$1" "$2" &&
++	test_when_finished "git config --unset $1"
++}
++
++test_expect_success 'copes with color settings' '
++	rm -f actual &&
++	echo grep.h >expect &&
++	test_config color.grep always &&
++	test_config color.grep.filename yellow &&
++	test_config color.grep.separator green &&
++	git grep -O'\''printf "%s\n" >actual'\'' GREP_AND &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'run from subdir' '
+ 	rm -f actual &&
+ 	echo grep.c >expect &&
+-- 
+1.7.1.1
