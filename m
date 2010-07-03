@@ -1,101 +1,111 @@
-From: David Bainbridge <david.bainbridge@gmail.com>
-Subject: Re: SVN migration
-Date: Sat, 3 Jul 2010 13:37:57 +0200
-Message-ID: <AANLkTimtGoNQe2-nA_Qn_qsZP2Iley9x6TU3Ht28Eg4t@mail.gmail.com>
-References: <4C1957EF.6070504@gnatter.net>
-	<4C25D783.4070602@gnatter.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH 1/2] Add a for_each_string_list_item macro
+Date: Sat, 3 Jul 2010 14:40:04 +0200
+Message-ID: <20100703124004.GA5511@blimp.localdomain>
+References: <AANLkTilj7MiqiCmptDw0PLM5QqKZOOSZnSsxMlELS_5_@mail.gmail.com> <20100702205417.GA4941@blimp.localdomain>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: William Hall <will@gnatter.net>
-X-From: git-owner@vger.kernel.org Sat Jul 03 13:38:12 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org,
+	jrnieder@gmail.com, srabbelier@gmail.com,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 03 14:40:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OV12v-0007xy-CH
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 13:38:09 +0200
+	id 1OV21C-0000C0-2U
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 14:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753661Ab0GCLiA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jul 2010 07:38:00 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:53152 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752376Ab0GCLh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jul 2010 07:37:59 -0400
-Received: by pxi14 with SMTP id 14so1143468pxi.19
-        for <git@vger.kernel.org>; Sat, 03 Jul 2010 04:37:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=7zWjXsnE4uIy7B9nJC97P0kQD/Ob/pozEX2F9y88/bg=;
-        b=X6yfGr0GAfYUzK8EiB9M5oJFh4GJItgr9N36GehoYWQAUbpgqxIbqhRRURpczV2Fe3
-         XJEyYTRfPf5Bdq0nCM9EhQrTuHGDMyr5XFBL1UMhqe9ABUGIM91vl4KcQkdr3ibZdZHV
-         K84Z7xd+aewDEuf/9HcrHIvWbrkcCGmS/ztig=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=jneJJuDBEIVHcawTMEw5Qjvj3U4/P3IIR65e63aiFmuHXuVaOI6B4Dw8r70G7c70vM
-         woBQgPzAYay3cP729tIJZjOPeWETnBxfdzzpM57lDG6mxZNKHuZP1AY1qK4B0XBTSFy8
-         uesUdE4GP6qv6fqdzOApRdyEuOT6n5H1NiUuw=
-Received: by 10.142.141.20 with SMTP id o20mr319689wfd.203.1278157077427; Sat, 
-	03 Jul 2010 04:37:57 -0700 (PDT)
-Received: by 10.142.70.11 with HTTP; Sat, 3 Jul 2010 04:37:57 -0700 (PDT)
-In-Reply-To: <4C25D783.4070602@gnatter.net>
+	id S1755277Ab0GCMkV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Jul 2010 08:40:21 -0400
+Received: from mout4.freenet.de ([195.4.92.94]:52549 "EHLO mout4.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755237Ab0GCMkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jul 2010 08:40:20 -0400
+Received: from [195.4.92.13] (helo=3.mx.freenet.de)
+	by mout4.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.72 #3)
+	id 1OV20z-0008IV-7Q; Sat, 03 Jul 2010 14:40:13 +0200
+Received: from krlh-5f7252d7.pool.mediaways.net ([95.114.82.215]:55089 helo=tigra.home)
+	by 3.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 25) (Exim 4.72 #3)
+	id 1OV20z-0003Me-0l; Sat, 03 Jul 2010 14:40:13 +0200
+Received: from blimp.localdomain (unknown [192.168.0.83])
+	by tigra.home (Postfix) with ESMTP id 99AA69FD2C;
+	Sat,  3 Jul 2010 14:40:09 +0200 (CEST)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id 3211136D28; Sat,  3 Jul 2010 14:40:05 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20100702205417.GA4941@blimp.localdomain>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150189>
 
-Hi William,
+This is more lightweight than a call to for_each_string_list function w=
+ith
+callback function and a cookie argument.
 
-I have been following this thread with interest so I thought that I
-would just throw in my thoughts!
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-While maintaining synchronization with Git is part of what is needed I
-suspect that this will not entirely convince the management of your
-company that Git is the way forward.
+Alex Riesen, Fri, Jul 02, 2010 22:54:17 +0200:
+> This is more lightweight than for_each_string_list function with
+> callback function and a cookie argument.
+>=20
+> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+> ---
+>=20
+> Alex Riesen, Tue, Jun 29, 2010 10:35:15 +0200:
+> > On Tue, Jun 29, 2010 at 10:33, Alex Riesen <raa.lkml@gmail.com> wro=
+te:
+> > > BTW, now that I took a look at it... The iteration over string_li=
+st
+> > > items looks a little overengineered. At least from the point of
+> > > view of the existing users of the feature. Wouldn't a simple loop
+> > > be just as simple to use (if not simplier) and faster (no uninlin=
+eable
+> > > function calls and argument preparation and passing needed)?
+> > >
+> > > #define string_list_foreach(item,list) \
+> > > =A0 =A0 =A0 =A0for (item =3D (list)->items; item < (list)->items =
++ (list)->nr; ++item)
+> > >
+>=20
+> Rebased on current head (after Julian Philips patches).
+>=20
 
-They probably see Svn as a safe repository ... The company's assets
-(intellectual property) are on a central server that is backed up, and
-the contents of that repository can be audited and so on. They may be
-thinking about things like SOX compliance too.
+Changed the macro name to make it look like the for_each* functions.
 
-So if you want them to accept Git as a replacement for svn then you
-need to understand and address these concerns. This means that you
-will have to have a conversation with them. To a large extent this a
-people thing ... technical solutions won't necessary convince them.
-They are running a company based on the knowledge and information they
-own - and they want to make sure that it doesn't get lost, stolen,
-corrupted, or whatever. And they are accountable to the shareholders
-for this.
+ string-list.h |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-Also, you say that they have been using Svn for donkey's years, so
-from a corporate perspective it probably does what they want and need.
-Otherwise THEY would have decided to change it.
-
-I am in a similar situation and while developers clearly want to use
-gIt, the motivation from a corporate perspective is less clear and can
-be perceived as introducing risk. So we are looking at the wya in
-which repositories are set up, the topology of git repository
-networks, use of Gitosis. Gitolite and Gitorious, and so on, to
-provide some security in the corporate environment.
-
-Every company will have a different view of this so there is no
-'right' answer. A lot depends on the type of product you produce and
-how long it will need to be supported. If you have products that need
-to be supported for 10 years or more then promoting a tool that is 5
-years old may also raise some eyebrows! You need to have the answers
-ready :-)
-
-Get it right and you will be seen as a hero who understands the
-business. Get it wrong and you will consigned to the religious nerd
-category who just wants to promote his favourite tool ... which I
-would hope is not the case :-)
-
-Good luck with this ... you are not alone!
-
-Dave Bainbridge
+diff --git a/string-list.h b/string-list.h
+index 680d600..a37cae5 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -20,10 +20,12 @@ void string_list_clear(struct string_list *list, in=
+t free_util);
+ typedef void (*string_list_clear_func_t)(void *p, const char *str);
+ void string_list_clear_func(struct string_list *list, string_list_clea=
+r_func_t clearfunc);
+=20
+-/* Use this function to iterate over each item */
++/* Use this function or the macro below to iterate over each item */
+ typedef int (*string_list_each_func_t)(struct string_list_item *, void=
+ *);
+ int for_each_string_list(struct string_list *list,
+ 			 string_list_each_func_t, void *cb_data);
++#define for_each_string_list_item(item,list) \
++	for (item =3D (list)->items; item < (list)->items + (list)->nr; ++ite=
+m)
+=20
+ /* Use these functions only on sorted lists: */
+ int string_list_has_string(const struct string_list *list, const char =
+*string);
+--=20
+1.7.1.304.g8446
