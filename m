@@ -1,89 +1,58 @@
-From: David <bouncingcats@gmail.com>
-Subject: *Non*-interactive squash a range ?
-Date: Sat, 3 Jul 2010 23:38:14 +1000
-Message-ID: <AANLkTimTx2dVlK9KKi1nZpOadwDcfyzhE8nffCyK1Sqm@mail.gmail.com>
+From: Mahesh Vaidya <forvaidya@gmail.com>
+Subject: how do I exclude a commit from set of commits to be pushed.
+Date: Sat, 3 Jul 2010 21:05:43 +0530
+Message-ID: <AANLkTiko8joz_a94QwHwdDwlsjXslu8LdWAnJuvShFFI@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 03 15:52:07 2010
+X-From: git-owner@vger.kernel.org Sat Jul 03 17:36:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OV38T-00075A-So
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 15:52:02 +0200
+	id 1OV4l4-0006XG-8G
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 17:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750855Ab0GCNiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jul 2010 09:38:16 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:63160 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750774Ab0GCNiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jul 2010 09:38:15 -0400
-Received: by vws5 with SMTP id 5so4704029vws.19
-        for <git@vger.kernel.org>; Sat, 03 Jul 2010 06:38:14 -0700 (PDT)
+	id S1752953Ab0GCPfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jul 2010 11:35:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39480 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752823Ab0GCPfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jul 2010 11:35:44 -0400
+Received: by gye5 with SMTP id 5so801532gye.19
+        for <git@vger.kernel.org>; Sat, 03 Jul 2010 08:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:date:message-id
          :subject:from:to:content-type;
-        bh=z0Jg61acLyi0CltgSY8mb5ucCLq1O//TstOHH8xEF/g=;
-        b=V8+lLqCGhkB+7gadM8qdG0b5/u7r46ElbhRgDoz9q5qxh0i7w3PJhFDQS6q9UmroGJ
-         QjPvDmNiruq7L6MXTjQp+hrBz/U777RiK3v0MrNxLnImVpCXLJ1ZDQXUgI8vX4hkhhCn
-         mY0j56UdqXwNWgFBkir5G8C2EUDx1YQyjUXtg=
+        bh=AH99fF5rL8KgBTQthJsZ/QcVsPSuMGstG7SGMarSdDE=;
+        b=eYm0jTiz3JmgYkY4UvB5AHTC68GQeSdxSuppE/ny2SF4sOds6WHrnpgiBmSUEYyKb7
+         wRXCdqGpqLbtkal6ye/d2ABXa8Zuily/15VTKrQ3npBQOXNoV1rA/lGHSos+6Nfc3xbY
+         hdaURWAumvBKy2UPQCAVvTKhTLTshhc858dlo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:date:message-id:subject:from:to:content-type;
-        b=N2UAyJgMdlfSqKuR0tBg0M1ZtO9/ThcKK4nUcfDbJtYNMLPnxUYkT7nA/EW1kZL8IL
-         hLDhyfk+/zuTCKgsPtRHgVX7UzeJk+Lr+X7Oa6fcF83QRFgUKBc3V6FwZcUisGTY9AZ4
-         LucXCqJg0Qh54W2mfz+v2cXJ0CAA3gkYkBSPo=
-Received: by 10.229.250.194 with SMTP id mp2mr202272qcb.27.1278164294352; Sat, 
-	03 Jul 2010 06:38:14 -0700 (PDT)
-Received: by 10.229.80.144 with HTTP; Sat, 3 Jul 2010 06:38:14 -0700 (PDT)
+        b=CNbPCrSGgb1BYS0IIBbkQtHwgLBQaAponx83c/I/ljl9UoBLWyQSW4/3sVxwSt1hTO
+         rn9GfOcjm7olOQMN3vLxqJ8AujVJj000hXvu4NycCr4W3hV2DXtQ1SZT5xVBeBpB5ESN
+         GbV5ugDef5L4VXMIdCOMTJYQbD8pI+t1MK6js=
+Received: by 10.90.71.17 with SMTP id t17mr831557aga.144.1278171343192; Sat, 
+	03 Jul 2010 08:35:43 -0700 (PDT)
+Received: by 10.90.100.4 with HTTP; Sat, 3 Jul 2010 08:35:43 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150192>
 
-Thanks for the awesome git. I have a basic question. I am subscribed
-to this list.
+In the series of commits C1..C8 how do I exclude a commit to be pushed.
 
-Having successfully used rebase -i to squash, I wonder about some
-method to *non*-interactively squash a sequence of intermediate
-commits. On a local experimental branch.
+use case -
+I have commits say C1..C8 to be pushed. Due to my pre-receive hook
+commit C4 is complying with commit standard. I have amended C4 to C5 ;
+still C4 shows up in commits to be pushed list.
 
-Lets say the starting point is this branch named "uglybranch" with HEAD=J
+git reflog delete --rewrite and git gc --prune did not help
 
-    E---F---G---H---I---J  <uglybranch>
-
-where commit G added a previously untracked file.
-
-My desired result is this:
-
-      ------------------K  <cleanbranch>
-     /
-    E---F---G---H---I---J  <uglybranch>
-
-where K and J are identical worktrees.
-
-I've used rebase -i as follows:
- $ git checkout uglybranch
- $ git checkout -b cleanbranch
- $ git rebase -i E
- # used interactive editor to squash all F..J onto E to produce K, on
-cleanbranch only, uglybranch is not changed.
-
-This gives exactly the result I want, in particular the file added at
-G is preserved, but the drawback is that the method is needlessly
-interactive. I want a foolproof non-interactive method that achieves
-the same result. Namely squashing *all* the commits in the range F..J
-
-I tried this which seems to work:
- $ git checkout uglybranch
- $ git checkout -b cleanbranch
- $ git reset --mixed E          # worktree same as uglybranch
- $ git add .                    # adds any untracked files
- $ git commit -a                # -a detects any removed files
-
-So I'm thinking of using that method in a script. Have I overlooked
-anything? Is there a better way?
+Thx/ Mahesh
+--
