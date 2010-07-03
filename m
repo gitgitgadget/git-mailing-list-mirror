@@ -1,55 +1,79 @@
-From: Daniel <friedan@muon.rutgers.edu>
-Subject: 'git commit --short' without touching index?
-Date: Sat, 3 Jul 2010 08:30:31 +0000 (UTC)
-Message-ID: <loom.20100703T102242-536@post.gmane.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [GSoC update extra!] git-remote-svn: Week 9
+Date: Sat, 3 Jul 2010 16:36:10 +0800
+Message-ID: <AANLkTintNXXpyS5LpG6K7ltg-t6Mz0IuYT7GxMkFkVwa@mail.gmail.com>
+References: <20100702215752.GD2306@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 03 10:35:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Daniel Shahaf <da
+X-From: git-owner@vger.kernel.org Sat Jul 03 10:36:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OUyBt-0006ny-BD
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 10:35:13 +0200
+	id 1OUyCw-0007Jf-JI
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 10:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754440Ab0GCIfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jul 2010 04:35:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:33359 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752000Ab0GCIfF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jul 2010 04:35:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OUyBj-0006hT-Vb
-	for git@vger.kernel.org; Sat, 03 Jul 2010 10:35:04 +0200
-Received: from 194-144-14-254.du.xdsl.is ([194.144.14.254])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Jul 2010 10:35:03 +0200
-Received: from friedan by 194-144-14-254.du.xdsl.is with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Jul 2010 10:35:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 194.144.14.254 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.4) Gecko/20100611 Firefox/3.6.4)
+	id S1754568Ab0GCIgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jul 2010 04:36:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53890 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754089Ab0GCIgL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jul 2010 04:36:11 -0400
+Received: by iwn7 with SMTP id 7so4000780iwn.19
+        for <git@vger.kernel.org>; Sat, 03 Jul 2010 01:36:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type;
+        bh=gwxLzI3HmOaLz8bY2GuDl4tIqQU1D8eYprnSRsvAQl4=;
+        b=Z8hA7PyXjuRCG9xFsWhzwKxO4awdVumhZc3dfWVjudPmlABJ+aksbauqWNlS+gkOLx
+         M5KS5yTEZDpaOuxOgA6JbXlF1PksAOAIy8Kt5z/rk7byTEHj1za49pd8zBUDKpAFc8Fs
+         uIWsITT+C206KdrJjBlZAL/xrCtrV73VbE2ZE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=eoic8MBmsyMAb8VlyUcEloDzuurdo7AsEmoFDFhkYDRsz31Rh7AAEgXVZsnPoV3ygo
+         U9hc6Vl45IE6OrQVhzzPofVXecDCFGSAV7MxUoxe0B5TgutQHKSdJPVnASII2eS/FEF2
+         T7Dg3TSHRCIqr565n8jPnL0TfnU5h9eCiZGPI=
+Received: by 10.231.161.68 with SMTP id q4mr118091ibx.78.1278146170127; Sat, 
+	03 Jul 2010 01:36:10 -0700 (PDT)
+Received: by 10.231.210.135 with HTTP; Sat, 3 Jul 2010 01:36:10 -0700 (PDT)
+In-Reply-To: <20100702215752.GD2306@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150182>
 
-'git commit --short' touches .git/index ('--short' implies '--dry-run').
+Hi,
 
-Is there any equivalent command that does not touch .git/index?
+On Sat, Jul 3, 2010 at 5:57 AM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> [snip]
+> The client runs successfully and
+> manages to dump 5000 revisions of the ASF repository:
+>
+> 11.34s user 3.50s system 21% cpu 1:07.69 total
+>
+> That's about 75 revisions per second, which isn't too bad I hope. This
+> is over the network, and my internet connection isn't all that fast.
 
-I'm using 'git commit --short' in a script to check if the repository needs
-attention.  At present, it touches .git/index, which causes unnecessary activity
-in another script running rsync.
+I wonder if you could mirror the test SVN repository locally with
+svnsync so that we can a) spare their bandwidth b) minimize the effect
+of network bottlenecks on stats - I'm sure you could get more
+impressive stats that way.
 
-thanks,
-Daniel
+Even better, having the SVN repo and the "exported" git repo on
+separate hard disks to minimize I/O as a bottleneck.
+
+(Great work, by the way.)
+
+-- 
+Cheers,
+Ray Chuan
