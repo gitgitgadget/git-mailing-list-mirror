@@ -1,62 +1,66 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC] Git User's Survey 2010
-Date: Sat, 3 Jul 2010 21:46:02 +0200
-Message-ID: <201007032146.05412.jnareb@gmail.com>
+Subject: [RFC] Git User's Survey 2010 (resend)
+Date: Sat, 3 Jul 2010 21:58:55 +0200
+Message-ID: <201007032158.57700.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 03 21:46:35 2010
+X-From: git-owner@vger.kernel.org Sat Jul 03 21:59:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OV8fU-0006sA-VL
-	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 21:46:29 +0200
+	id 1OV8ry-0002z6-8D
+	for gcvg-git-2@lo.gmane.org; Sat, 03 Jul 2010 21:59:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755474Ab0GCTqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Jul 2010 15:46:24 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64216 "EHLO
+	id S1751961Ab0GCT7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Jul 2010 15:59:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56417 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755242Ab0GCTqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Jul 2010 15:46:22 -0400
-Received: by fxm14 with SMTP id 14so2978125fxm.19
-        for <git@vger.kernel.org>; Sat, 03 Jul 2010 12:46:20 -0700 (PDT)
+	with ESMTP id S1750819Ab0GCT7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Jul 2010 15:59:15 -0400
+Received: by fxm14 with SMTP id 14so2980560fxm.19
+        for <git@vger.kernel.org>; Sat, 03 Jul 2010 12:59:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        bh=7c0fELcO5tmMRgTz2hpOq0A1iO4+AUzDN2mfqjjfi4g=;
-        b=wpIIltdXlffLS7ZatK4IUM4FH1egXPGRkN6FC7Sp88hZ2Wc7WORhOExYzkOwd4TY97
-         N1PGLAvcmqfl8Niehp87yoqkgOjAZ4GwiYEkZaPexWhMvBLXIoIpdO8CXYtrlIwsrIzR
-         JO9kixx2tGRYADpDFhN5kWNYPz6U5vMl5WlUA=
+        bh=jI9/QQh9j6ix3ETMrOZoVoXY9pNqY2Hc3ObgG+P7z+s=;
+        b=Wa1Nn55Zyq/+ywr+IW8oe7gx8c5+n2vVTG3Fc3351UXEMvEomffUgo5/eCzGXN+JRF
+         T4vzd9FOvXHeLeumCwqyxEbjYzi0od4bn5fsIheyNKdxCQXYPeAADEsQo3zDqoH511Eq
+         w78+nsj3co95w6PjQKLlVICKaNmG2HtWYIwHI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        b=LXepPbDUuuNM7DGWBCucb/ywAzedpSWv+MxriWgCv5zaUzwMpsbDOyegDM9Ih2sten
-         xirkseGbSB+clEKP0Bx0YqjNjyGMiSELKe71Ei8gQ8gZcmzT9WDu9fSyIFFu55AI3t9L
-         rwItrfpIG6bertswwhHpOinFoPnvSXc304WuQ=
-Received: by 10.86.80.6 with SMTP id d6mr523402fgb.76.1278186380234;
-        Sat, 03 Jul 2010 12:46:20 -0700 (PDT)
+        b=Kd/LPt4BrtVtFFTIYm0TWQBnc3YoaSwQ5u0sos3PBvBQDJTb86gsAe1/o3/dqUOnnV
+         4cAw1AhjnTxMiYKumJaVv5kwuMfcewOIcxVpf/xgFPryEW4LHtzDW8PwSSBlEKUPSCjK
+         /kUh47S9bwrxFRhnHtOiMbZ9YVoFJIqwcWMlg=
+Received: by 10.86.31.5 with SMTP id e5mr544424fge.28.1278187153588;
+        Sat, 03 Jul 2010 12:59:13 -0700 (PDT)
 Received: from [192.168.1.15] (abwj153.neoplus.adsl.tpnet.pl [83.8.233.153])
-        by mx.google.com with ESMTPS id 8sm4714869fau.4.2010.07.03.12.46.15
+        by mx.google.com with ESMTPS id 24sm3826298far.36.2010.07.03.12.59.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 03 Jul 2010 12:46:19 -0700 (PDT)
+        Sat, 03 Jul 2010 12:59:12 -0700 (PDT)
 User-Agent: KMail/1.9.3
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150199>
+
+I'm sorry for broken (badly wrapped) previous version...
+----
 
 I guess it is time for annual (so far) Git User's Survey.  Should
 there be one?  When should it start, and how long should it last?
-Earlier surveys:
+
+here is how it was for previous surveys:
  * 2009 was open from 15 July   to 15 September 2009 (for 2 months)
  * 2008 was open from 31 August to 14 October 2008 (for 1.5 months)
  * 2007 was open from 20 August to 10 September 2007 (for 20 days)
@@ -92,30 +96,21 @@ Should we for example include 'gender' as one of questions?  Perl Survey
 NOTES:
 ^^^^^^
 Perhaps a better solution would be a menu (drop-down list) of countries,
-using list of current countries.  It would be more work to create it, 
-but
+using list of current countries.  It would be more work to create it, but
 might reduce ambiguities and unparsable responses.
 
-What I'd like to have is to pre-fill / select default answer based on 
-GeoIP.
-Even better would be to be able to show current position on Google Map, 
-like
+What I'd like to have is to pre-fill / select default answer based on GeoIP.
+Even better would be to be able to show current position on Google Map, like
 contributors and users map on Ohloh... but that I think is simply not
-possible with Survs.com, the site to be used for this survey (and I 
-guess
+possible with Survs.com, the site to be used for this survey (and I guess
 neither with any other survey site).  One can dream.
 
-Pel Survey 2010 also included (from what I remember, and from provided 
-data
+Pel Survey 2010 also included (from what I remember, and from provided data
 and analysis of survey) also country of origin / country of birth, to
-measure mobility.  I wonder if it would make sense to have the same for 
-Git
-User's Survey 2010...  Note that it would be harder to come up with the 
-list
-of countries for such question, because the country might no longer 
-exists.
-Therefore the list (if present) should be based on all countries that 
-exist
+measure mobility.  I wonder if it would make sense to have the same for Git
+User's Survey 2010...  Note that it would be harder to come up with the list
+of countries for such question, because the country might no longer exists.
+Therefore the list (if present) should be based on all countries that exist
 or existed since 100 years ago (or so).
 
 
@@ -125,11 +120,9 @@ or existed since 100 years ago (or so).
 NOTES:
 ^^^^^^
 Instead of unconstrained free-form response it might be better to have
-single choice (or menu) of age ranges.  What do you think?  Of course 
-with
+single choice (or menu) of age ranges.  What do you think?  Of course with
 ranges there is question what ranges to use (how to quantize age); goo
-solution would be to chose ranges corresponding somewhat to the levels 
-of
+solution would be to chose ranges corresponding somewhat to the levels of
 education.
 
 
@@ -156,14 +149,10 @@ education.
 NOTES:
 ^^^^^^ 
 Those two questions, considered alone, doesn't tell us much.  If one use
-git, then usually one does not think it is too hard to use (unless 
-forced to
-use git by external circumstances, like project he/she works on using 
-git).
-On the other hand those two questions together give us some mesaure of 
-git
-learning curve, telling us if people consider git easy to use but hard 
-to
+git, then usually one does not think it is too hard to use (unless forced to
+use git by external circumstances, like project he/she works on using git).
+On the other hand those two questions together give us some mesaure of git
+learning curve, telling us if people consider git easy to use but hard to
 learn, or vice versa ;-)
 
 I think it might be also good to have to calculate correlations, e.g. if
@@ -194,8 +183,7 @@ The question is: should they stay, or should they go?
 
 NOTES:
 ^^^^^^
-A few of possible answers are new in this version of survey, namely 
-'pu',
+A few of possible answers are new in this version of survey, namely 'pu',
 msysGit, git-bigfiles, JGit, and of course 1.7.x.
 
 This question is here to stay.
@@ -212,10 +200,8 @@ This question is here to stay.
 
 NOTES:
 ^^^^^^
-This question tell us penetration of announcements of Git User's Survey 
-2010;
-did we get to all, or only to git gurus?  It is also useful for 
-correlating
+This question tell us penetration of announcements of Git User's Survey 2010;
+did we get to all, or only to git gurus?  It is also useful for correlating
 with other responses, for example to know which features are used by
 novices, and which by gurus.
 
@@ -239,8 +225,7 @@ This list is interspersed with comments about specific
 
 Notes:
 ^^^^^^
-Those two are about using git at work vs using git on your own free 
-time.
+Those two are about using git at work vs using git on your own free time.
 There are of course shades of gray, like using git for work project
 unofficially (e.g.using git-svn as "fat" client for company's Subversion
 repository), or employer allowing to work on non-work OSS project during
@@ -253,8 +238,7 @@ working hours.  But I'm not sure if they are worth adding.
 Notes:
 ^^^^^^
 Those three are about licensing: proprietary / free (open) / unlicensed.
-By 'OSS development' I mean here also free licenses for documentation 
-and
+By 'OSS development' I mean here also free licenses for documentation and
 documents, like GFDL or Creative Commons licenses.
 
  + code (programming)
@@ -285,8 +269,7 @@ I'm not sure about having 'personal data'...
 Notes:
 ^^^^^^
 This is about (ab)using git for other things than straighforward source
-control management.  List of possible answers specified here should 
-cover
+control management.  List of possible answers specified here should cover
 most commonly encountered usages: shdoul we add anything else here?
 
  + other (please specify)
@@ -367,8 +350,7 @@ differentiate between MS Windows/msysGit and MS Windows/Cygwin, or if
 we should just have one, single 'MS Windows' choice.
 
 
-=== 10. What do you use to edit contents under version control with Git? 
-===
+=== 10. What do you use to edit contents under version control with Git? ===
         What kind of editor, IDE or RAD you use working with Git?
 (multiple choice, with other)
 
@@ -468,8 +450,7 @@ list?
 
 
 === 13. Which git hosting site(s) do you use for your project(s)? ===
-        Please check only hosting sites where you publish/push to (with 
-git)
+        Please check only hosting sites where you publish/push to (with git)
 (multiple choice, with other)
 
  + [http://repo.or.cz repo.or.cz]
@@ -548,8 +529,7 @@ I think this question is here to stay.
                              git.example.com:/srv/scm/repo.git)
  + http                (e.g. http://git.example.com/repo.git)
  + rsync (DEPRECATED)  (e.g. rsync://git.example.com/repo.git)
- + filesystem          (e.g. /path/to/repo.git, 
-file:///path/to/repo.git)
+ + filesystem          (e.g. /path/to/repo.git, file:///path/to/repo.git)
  + via git-bundle
  + foreign SCM (e.g. git-svn)
 
@@ -634,8 +614,7 @@ HTTP - if it is possible, git:// protocol with push enabled)?
  + git-aware shell prompt
  + git aliases, shell aliases for git, or own git scripts
  + one-way interaction with other SCMs (from SCM to git)
- + two-way interaction with other SCMs (from SCM to git, from git to 
-SCM)
+ + two-way interaction with other SCMs (from SCM to git, from git to SCM)
  + git-cvsserver
  + git notes
 
@@ -651,8 +630,7 @@ So: what features should be included in this list?  What features
 should be removed from above list of answers?
 
 
-=== 17. Which of the following features would you like to see 
-implemented in git? ===
+=== 17. Which of the following features would you like to see implemented in git? ===
 (multiple choice)
 
  + better support for big files (large media)
@@ -754,8 +732,7 @@ answer 'none of the above' is new in this survey (as is 'in 2009',
 of course).
 
 
-=== 22. How do you compare the current version with the version from one 
-year ago? ===
+=== 22. How do you compare the current version with the version from one year ago? ===
 (single choice)
 
  * better
@@ -773,8 +750,7 @@ it doesn't bring any important information.
 
 == Documentation. Getting help. ==
 
-=== 23. How useful have you found the following forms of Git 
-documentation? ===
+=== 23. How useful have you found the following forms of Git documentation? ===
 (matrix)
 
   Columns: never used / not useful / somewhat / useful
@@ -786,8 +762,7 @@ documentation? ===
 Description:
 ~~~~~~~~~~~~
 * Git Wiki was to be found at http://git.wiki.kernel.org
-* on-line help includes, among others, Git Homepage 
-(http://git-scm.com),
+* on-line help includes, among others, Git Homepage (http://git-scm.com),
   "Git Community Book" (http://book.git-scm.com), "Pro Git" book
   (http://progit.org) and Git Reference site (http://gitref.org)
 * help distributed with git include manpages, manual, tutorials, HOWTO,
@@ -805,8 +780,7 @@ tutorials and guides, from on-line tips etc.?
  * Yes
  * No
 
-=== 25. If yes, did you get these problems resolved quickly and to your 
-liking? ===
+=== 25. If yes, did you get these problems resolved quickly and to your liking? ===
 (single choice)
 
  * Yes
