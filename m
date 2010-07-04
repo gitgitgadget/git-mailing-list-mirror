@@ -1,144 +1,67 @@
-From: William Hall <will@gnatter.net>
-Subject: Re: SVN migration
-Date: Sun, 04 Jul 2010 18:55:38 +0100
-Message-ID: <4C30CB1A.2030407@gnatter.net>
-References: <4C1957EF.6070504@gnatter.net>	<4C25D783.4070602@gnatter.net> <AANLkTimtGoNQe2-nA_Qn_qsZP2Iley9x6TU3Ht28Eg4t@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 2/2] Makefile: work around ksh's failure to handle missing
+ list argument to for loop
+Date: Sun, 04 Jul 2010 20:37:09 +0200
+Message-ID: <4C30D4D5.3020900@drmicha.warpmail.net>
+References: <80typu1ozt.fsf@tiny.isode.net> <8YdP-GcDDflOVZnykNVIGceOm01bqeg9PDvdgIfgqUnh29RKC-6Qi8_KBVoqLIt5iyt7g1TX5l96M5KyLrfOqg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Bainbridge <david.bainbridge@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 04 19:56:11 2010
+Cc: gitster@pobox.com, git@vger.kernel.org, PWalker752@aol.com,
+	newsletter@dirk.my1.cc, bruce.stephens@isode.com,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Sun Jul 04 20:37:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVTQC-00061J-2K
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Jul 2010 19:56:04 +0200
+	id 1OVU4E-0004Ot-78
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Jul 2010 20:37:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757088Ab0GDRzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jul 2010 13:55:50 -0400
-Received: from mail.qualtersystems.com ([74.200.89.103]:47997 "EHLO
-	mail.qualtersystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754528Ab0GDRzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Jul 2010 13:55:49 -0400
-Received: from localhost (mail [127.0.0.1])
-	by mail.qualtersystems.com (Postfix) with ESMTP id A61CF2B68C77;
-	Sun,  4 Jul 2010 18:55:48 +0100 (BST)
-X-Virus-Scanned: amavisd-new at qualtersystems.com
-Received: from mail.qualtersystems.com ([127.0.0.1])
-	by localhost (mail.qualtersystems.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KVTNsUMTVS07; Sun,  4 Jul 2010 18:55:41 +0100 (BST)
-Received: from [192.168.1.85] (xambo.qualtersystems.com [82.152.227.154])
-	(Authenticated sender: will@mail.qualtersystems.com)
-	by mail.qualtersystems.com (Postfix) with ESMTP id C32DA2B68BB9;
-	Sun,  4 Jul 2010 18:55:40 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Lightning/1.0b1 Thunderbird/3.0.4
-In-Reply-To: <AANLkTimtGoNQe2-nA_Qn_qsZP2Iley9x6TU3Ht28Eg4t@mail.gmail.com>
+	id S1757547Ab0GDShF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jul 2010 14:37:05 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:49998 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755630Ab0GDShD (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jul 2010 14:37:03 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id CEB2310EAE9;
+	Sun,  4 Jul 2010 14:37:01 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sun, 04 Jul 2010 14:37:02 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=9/k2+cIvIYhC9JxekzfMMPF0lVI=; b=OFLtp/xH+M5AjG2PUr1hQFLWwxIPzt8s5/2BBsYEdV8GnqsqHXbRlQDjFLProNcy9wZKN1b807wQQj1j9/b7YrWdYhOjVxCtrzrHVPNOnH/RbX+YmHHaIyo8wuX06jlruvDe36O6sTWb+JYkOh+i8qqOhmS+2lTHLlYtXFZIObQ=
+X-Sasl-enc: I/3XbUgkVoHt8mHXvXcVrnZPPqf0m0YZjjqI2pgxMKNi 1278268621
+Received: from localhost.localdomain (p54858DB6.dip0.t-ipconnect.de [84.133.141.182])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E5BEB4E5FB4;
+	Sun,  4 Jul 2010 14:36:59 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100702 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <8YdP-GcDDflOVZnykNVIGceOm01bqeg9PDvdgIfgqUnh29RKC-6Qi8_KBVoqLIt5iyt7g1TX5l96M5KyLrfOqg@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150227>
 
-Hi David,
-Thanks for your thoughts!
+Brandon Casey venit, vidit, dixit 02.07.2010 20:50:
+> From: Brandon Casey <drafnel@gmail.com>
+> 
+> ksh does not like it when the list argument is missing in a for loop.  This
+> can happen when NO_CURL is set which causes REMOTE_CURL_ALIASES to be unset.
+> In this case, the for loop in the Makefile expands to look like this:
+> 
+>    for p in ; do
+> 
+> and ksh complains like this:
+> 
+>    /bin/ksh: syntax error at line 15 : `;' unexpected
+> 
+> The existing attempt to work around this issue, introduced by 70b89f87,
+> tried to protect the for loop by first testing whether REMOTE_CURL_ALIASES
+> was empty, but it does not seem to work.  So adopt Bruce Stephens's
 
-I agree with your points. To an extent, management don't really care how 
-we implement SCM - as long as it's effective and secure they will trust 
-the "tech-wranglers" to do the right thing and not impede upon the 
-company's workflow. Fortunately the industry in which I work is VFX, so 
-"cutting edge" software is at the core of what we do. I am not imposing 
-Git because of my own personal preference, I honestly believe that SVN 
-is simply not the right tool for the job - which will increasingly 
-involve multi-site collaboration that spans departments as well as 
-timezones. The ability for two disparate teams of developers to 
-collaborate effectively without polluting the global codebase is essential.
+What does that mean? Either it works or it doesn't. I did work back
+then. Does it (i.e.: the test for emtyness) fail to work for certain shells?
 
-The limitations with SVN are becoming more and more apparent - 
-especially now that we have now embarked upon a fairly radical shake-up 
-of our existing software stack.
-
-I have explained all this with senior management, some who have heard of 
-Git (and its reputation) and they pretty much say "about time too".
-
-The hard part is that we have two tiers of developers - core software 
-techies (C++, python) and scripters (python, MEL - these are the people 
-who make VFX movies, for example, happen). The former will have no 
-problem with Git, the latter probably just don't care - they just want 
-to check stuff in and out.)
-
-What I need to do is create this hybrid system that enables the 
-scripters to pretty much carry on as usual, and to provide the necessary 
-tools to do SCM more effectively - ie without the overhead of a brittle 
-SVN environment. If all goes well, we'll take the plunge and make the 
-switch permanent.
-
-Yes, the technical sell for Git is the easy part, the cultural sell will 
-be harder. It's up to me to make the business case to the bean-counters 
-and make the technical transition painless. So far, so good.
-
-I've posted this before, the scripts I am using are available at -
-
-http://github.com/innerhippy/svnAndGit
-
-The more eyes on this the better...
-
-Cheers
-
-Will
-
-
-
-
-On 03/07/10 12:37, David Bainbridge wrote:
-> Hi William,
->
-> I have been following this thread with interest so I thought that I
-> would just throw in my thoughts!
->
-> While maintaining synchronization with Git is part of what is needed I
-> suspect that this will not entirely convince the management of your
-> company that Git is the way forward.
->
-> They probably see Svn as a safe repository ... The company's assets
-> (intellectual property) are on a central server that is backed up, and
-> the contents of that repository can be audited and so on. They may be
-> thinking about things like SOX compliance too.
->
-> So if you want them to accept Git as a replacement for svn then you
-> need to understand and address these concerns. This means that you
-> will have to have a conversation with them. To a large extent this a
-> people thing ... technical solutions won't necessary convince them.
-> They are running a company based on the knowledge and information they
-> own - and they want to make sure that it doesn't get lost, stolen,
-> corrupted, or whatever. And they are accountable to the shareholders
-> for this.
->
-> Also, you say that they have been using Svn for donkey's years, so
-> from a corporate perspective it probably does what they want and need.
-> Otherwise THEY would have decided to change it.
->
-> I am in a similar situation and while developers clearly want to use
-> gIt, the motivation from a corporate perspective is less clear and can
-> be perceived as introducing risk. So we are looking at the wya in
-> which repositories are set up, the topology of git repository
-> networks, use of Gitosis. Gitolite and Gitorious, and so on, to
-> provide some security in the corporate environment.
->
-> Every company will have a different view of this so there is no
-> 'right' answer. A lot depends on the type of product you produce and
-> how long it will need to be supported. If you have products that need
-> to be supported for 10 years or more then promoting a tool that is 5
-> years old may also raise some eyebrows! You need to have the answers
-> ready :-)
->
-> Get it right and you will be seen as a hero who understands the
-> business. Get it wrong and you will consigned to the religious nerd
-> category who just wants to promote his favourite tool ... which I
-> would hope is not the case :-)
->
-> Good luck with this ... you are not alone!
->
-> Dave Bainbridge
+Michael
