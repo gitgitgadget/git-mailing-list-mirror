@@ -1,154 +1,144 @@
-From: Nelson Elhage <nelhage@MIT.EDU>
-Subject: [PATCH] gitk: Let the ttk theme be controllable via preferences.
-Date: Sun,  4 Jul 2010 11:17:45 -0400
-Message-ID: <1278256665-29034-1-git-send-email-nelhage@mit.edu>
-Cc: git@vger.kernel.org, Nelson Elhage <nelhage@mit.edu>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Jul 04 17:19:12 2010
+From: William Hall <will@gnatter.net>
+Subject: Re: SVN migration
+Date: Sun, 04 Jul 2010 18:55:38 +0100
+Message-ID: <4C30CB1A.2030407@gnatter.net>
+References: <4C1957EF.6070504@gnatter.net>	<4C25D783.4070602@gnatter.net> <AANLkTimtGoNQe2-nA_Qn_qsZP2Iley9x6TU3Ht28Eg4t@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: David Bainbridge <david.bainbridge@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 04 19:56:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVQyN-0004bW-Ex
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Jul 2010 17:19:11 +0200
+	id 1OVTQC-00061J-2K
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Jul 2010 19:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757667Ab0GDPTF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Jul 2010 11:19:05 -0400
-Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:45822 "EHLO
-	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757538Ab0GDPTE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jul 2010 11:19:04 -0400
-X-AuditID: 1209190d-b7c19ae0000009ea-25-4c30a665b78e
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id AE.F6.02538.566A03C4; Sun,  4 Jul 2010 11:19:01 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o64FJ1mU027717;
-	Sun, 4 Jul 2010 11:19:01 -0400
-Received: from PHANATIQUE.MIT.EDU (c-71-192-160-118.hsd1.nh.comcast.net [71.192.160.118])
-	(authenticated bits=0)
-        (User authenticated as nelhage@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o64FIw1d014666
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sun, 4 Jul 2010 11:19:00 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.1
-X-Brightmail-Tracker: AAAAAhTzV1kU9CrQ
+	id S1757088Ab0GDRzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Jul 2010 13:55:50 -0400
+Received: from mail.qualtersystems.com ([74.200.89.103]:47997 "EHLO
+	mail.qualtersystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754528Ab0GDRzt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Jul 2010 13:55:49 -0400
+Received: from localhost (mail [127.0.0.1])
+	by mail.qualtersystems.com (Postfix) with ESMTP id A61CF2B68C77;
+	Sun,  4 Jul 2010 18:55:48 +0100 (BST)
+X-Virus-Scanned: amavisd-new at qualtersystems.com
+Received: from mail.qualtersystems.com ([127.0.0.1])
+	by localhost (mail.qualtersystems.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KVTNsUMTVS07; Sun,  4 Jul 2010 18:55:41 +0100 (BST)
+Received: from [192.168.1.85] (xambo.qualtersystems.com [82.152.227.154])
+	(Authenticated sender: will@mail.qualtersystems.com)
+	by mail.qualtersystems.com (Postfix) with ESMTP id C32DA2B68BB9;
+	Sun,  4 Jul 2010 18:55:40 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9) Gecko/20100423 Lightning/1.0b1 Thunderbird/3.0.4
+In-Reply-To: <AANLkTimtGoNQe2-nA_Qn_qsZP2Iley9x6TU3Ht28Eg4t@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150226>
 
-Signed-off-by: Nelson Elhage <nelhage@mit.edu>
----
- gitk-git/gitk |   32 +++++++++++++++++++++++++++-----
- 1 files changed, 27 insertions(+), 5 deletions(-)
+Hi David,
+Thanks for your thoughts!
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1b0e09a..8790cee 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2626,7 +2626,7 @@ proc savestuff {w} {
-     global cmitmode wrapcomment datetimeformat limitdiffs
-     global colors uicolor bgcolor fgcolor diffcolors diffcontext selectbgcolor
-     global autoselect extdifftool perfile_attrs markbgcolor use_ttk
--    global hideremotes want_ttk
-+    global hideremotes want_ttk ttk_theme
- 
-     if {$stuffsaved} return
-     if {![winfo viewable .]} return
-@@ -2653,6 +2653,7 @@ proc savestuff {w} {
- 	puts $f [list set limitdiffs $limitdiffs]
- 	puts $f [list set uicolor $uicolor]
- 	puts $f [list set want_ttk $want_ttk]
-+	puts $f [list set ttk_theme $ttk_theme]
- 	puts $f [list set bgcolor $bgcolor]
- 	puts $f [list set fgcolor $fgcolor]
- 	puts $f [list set colors $colors]
-@@ -10696,7 +10697,7 @@ proc doprefs {} {
-     global oldprefs prefstop showneartags showlocalchanges
-     global uicolor bgcolor fgcolor ctext diffcolors selectbgcolor markbgcolor
-     global tabstop limitdiffs autoselect extdifftool perfile_attrs
--    global hideremotes want_ttk have_ttk
-+    global hideremotes want_ttk have_ttk ttk_theme
- 
-     set top .gitkprefs
-     set prefstop $top
-@@ -10705,7 +10706,8 @@ proc doprefs {} {
- 	return
-     }
-     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
--		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
-+		   limitdiffs tabstop perfile_attrs hideremotes want_ttk \
-+		   ttk_theme} {
- 	set oldprefs($v) [set $v]
-     }
-     ttk_toplevel $top
-@@ -10764,6 +10766,17 @@ proc doprefs {} {
-     }
-     grid x $top.want_ttk $top.ttk_note -sticky w
- 
-+    if {$have_ttk} {
-+	ttk::combobox $top.ttk_theme -textvariable ttk_theme \
-+	    -values [ttk::style theme names]
-+	$top.ttk_theme state readonly
-+	if {!$use_ttk} {
-+	    $top.ttk_theme state disabled
-+	}
-+	${NS}::label $top.lttk_theme -text [mc "Theme"]
-+	grid x $top.lttk_theme $top.ttk_theme -sticky w
-+    }
-+
-     ${NS}::label $top.cdisp -text [mc "Colors: press to choose"]
-     grid $top.cdisp - -sticky w -pady 10
-     label $top.ui -padx 40 -relief sunk -background $uicolor
-@@ -10892,7 +10905,8 @@ proc prefscan {} {
-     global oldprefs prefstop
- 
-     foreach v {maxwidth maxgraphpct showneartags showlocalchanges \
--		   limitdiffs tabstop perfile_attrs hideremotes want_ttk} {
-+		   limitdiffs tabstop perfile_attrs hideremotes want_ttk \
-+		   ttk_theme} {
- 	global $v
- 	set $v $oldprefs($v)
-     }
-@@ -10906,7 +10920,7 @@ proc prefsok {} {
-     global oldprefs prefstop showneartags showlocalchanges
-     global fontpref mainfont textfont uifont
-     global limitdiffs treediffs perfile_attrs
--    global hideremotes
-+    global hideremotes use_ttk ttk_theme
- 
-     catch {destroy $prefstop}
-     unset prefstop
-@@ -10955,6 +10969,9 @@ proc prefsok {} {
-     if {$hideremotes != $oldprefs(hideremotes)} {
- 	rereadrefs
-     }
-+    if {$use_ttk && $ttk_theme != $oldprefs(ttk_theme)} {
-+	ttk::style theme use $ttk_theme
-+    }
- }
- 
- proc formatdate {d} {
-@@ -11369,6 +11386,7 @@ set datetimeformat "%Y-%m-%d %H:%M:%S"
- set autoselect 1
- set perfile_attrs 0
- set want_ttk 1
-+set ttk_theme "default"
- 
- if {[tk windowingsystem] eq "aqua"} {
-     set extdifftool "opendiff"
-@@ -11519,6 +11537,10 @@ if {![info exists have_ttk]} {
- set use_ttk [expr {$have_ttk && $want_ttk}]
- set NS [expr {$use_ttk ? "ttk" : ""}]
- 
-+if {$use_ttk} {
-+    ttk::style theme use $ttk_theme
-+}
-+
- set git_version [join [lrange [split [lindex [exec git version] end] .] 0 2] .]
- 
- set runq {}
--- 
-1.7.1.1
+I agree with your points. To an extent, management don't really care how 
+we implement SCM - as long as it's effective and secure they will trust 
+the "tech-wranglers" to do the right thing and not impede upon the 
+company's workflow. Fortunately the industry in which I work is VFX, so 
+"cutting edge" software is at the core of what we do. I am not imposing 
+Git because of my own personal preference, I honestly believe that SVN 
+is simply not the right tool for the job - which will increasingly 
+involve multi-site collaboration that spans departments as well as 
+timezones. The ability for two disparate teams of developers to 
+collaborate effectively without polluting the global codebase is essential.
+
+The limitations with SVN are becoming more and more apparent - 
+especially now that we have now embarked upon a fairly radical shake-up 
+of our existing software stack.
+
+I have explained all this with senior management, some who have heard of 
+Git (and its reputation) and they pretty much say "about time too".
+
+The hard part is that we have two tiers of developers - core software 
+techies (C++, python) and scripters (python, MEL - these are the people 
+who make VFX movies, for example, happen). The former will have no 
+problem with Git, the latter probably just don't care - they just want 
+to check stuff in and out.)
+
+What I need to do is create this hybrid system that enables the 
+scripters to pretty much carry on as usual, and to provide the necessary 
+tools to do SCM more effectively - ie without the overhead of a brittle 
+SVN environment. If all goes well, we'll take the plunge and make the 
+switch permanent.
+
+Yes, the technical sell for Git is the easy part, the cultural sell will 
+be harder. It's up to me to make the business case to the bean-counters 
+and make the technical transition painless. So far, so good.
+
+I've posted this before, the scripts I am using are available at -
+
+http://github.com/innerhippy/svnAndGit
+
+The more eyes on this the better...
+
+Cheers
+
+Will
+
+
+
+
+On 03/07/10 12:37, David Bainbridge wrote:
+> Hi William,
+>
+> I have been following this thread with interest so I thought that I
+> would just throw in my thoughts!
+>
+> While maintaining synchronization with Git is part of what is needed I
+> suspect that this will not entirely convince the management of your
+> company that Git is the way forward.
+>
+> They probably see Svn as a safe repository ... The company's assets
+> (intellectual property) are on a central server that is backed up, and
+> the contents of that repository can be audited and so on. They may be
+> thinking about things like SOX compliance too.
+>
+> So if you want them to accept Git as a replacement for svn then you
+> need to understand and address these concerns. This means that you
+> will have to have a conversation with them. To a large extent this a
+> people thing ... technical solutions won't necessary convince them.
+> They are running a company based on the knowledge and information they
+> own - and they want to make sure that it doesn't get lost, stolen,
+> corrupted, or whatever. And they are accountable to the shareholders
+> for this.
+>
+> Also, you say that they have been using Svn for donkey's years, so
+> from a corporate perspective it probably does what they want and need.
+> Otherwise THEY would have decided to change it.
+>
+> I am in a similar situation and while developers clearly want to use
+> gIt, the motivation from a corporate perspective is less clear and can
+> be perceived as introducing risk. So we are looking at the wya in
+> which repositories are set up, the topology of git repository
+> networks, use of Gitosis. Gitolite and Gitorious, and so on, to
+> provide some security in the corporate environment.
+>
+> Every company will have a different view of this so there is no
+> 'right' answer. A lot depends on the type of product you produce and
+> how long it will need to be supported. If you have products that need
+> to be supported for 10 years or more then promoting a tool that is 5
+> years old may also raise some eyebrows! You need to have the answers
+> ready :-)
+>
+> Get it right and you will be seen as a hero who understands the
+> business. Get it wrong and you will consigned to the religious nerd
+> category who just wants to promote his favourite tool ... which I
+> would hope is not the case :-)
+>
+> Good luck with this ... you are not alone!
+>
+> Dave Bainbridge
