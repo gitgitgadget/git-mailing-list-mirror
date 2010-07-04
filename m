@@ -1,380 +1,1043 @@
-From: =?ISO-8859-1?B?wXNoaW4gTOFzemzz?= <ashinlaszlo@gmail.com>
-Subject: Re: [PATCH 1/4] git-cvsserver: implement script based pserver 
-	authentication
-Date: Sun, 4 Jul 2010 10:51:10 +0200
-Message-ID: <AANLkTimVYRJOJ6MG1HDFnj56cLxWrP1gjmIi-dKOuE-7@mail.gmail.com>
-References: <1058578005711783867@unknownmsgid> <AANLkTikbPyZ-q8XgTBX1P9HQlFwUhiJSpiOgYG75mtiq@mail.gmail.com> 
-	<AANLkTil4C_oF972J5iRApUGXpwoFNqcYTgkzvorCseZZ@mail.gmail.com>
+From: David Bainbridge <david.bainbridge@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Sun, 4 Jul 2010 11:07:17 +0200
+Message-ID: <AANLkTimbpOEpi8QOqTOMav0whmLeHz3vQq_0KDnblRIK@mail.gmail.com>
+References: <201007032158.57700.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 04 10:51:43 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 04 11:07:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVKvO-0007uK-Pm
-	for gcvg-git-2@lo.gmane.org; Sun, 04 Jul 2010 10:51:43 +0200
+	id 1OVLAg-0004fX-Jk
+	for gcvg-git-2@lo.gmane.org; Sun, 04 Jul 2010 11:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756911Ab0GDIvf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jul 2010 04:51:35 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34794 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756758Ab0GDIvd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Jul 2010 04:51:33 -0400
-Received: by fxm14 with SMTP id 14so3090456fxm.19
-        for <git@vger.kernel.org>; Sun, 04 Jul 2010 01:51:32 -0700 (PDT)
+	id S1757184Ab0GDJHX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Jul 2010 05:07:23 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:53994 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757143Ab0GDJHS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Jul 2010 05:07:18 -0400
+Received: by pwi5 with SMTP id 5so1133296pwi.19
+        for <git@vger.kernel.org>; Sun, 04 Jul 2010 02:07:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=vm24JRWKb/xqTdoCWoifHweP/vXIsCZb+tLUsf4wp9g=;
-        b=jYC4x7glclGSwD8MBrRi/idMgqOSKiMlIlD+LrzlvrR29/v7pTwtQNLsmXQsRpR9K2
-         1tmrhO0yJfnx9VnSiSu1y8nhyGLBevA+j8yVO3roZcwoK1Ol+o/eHbms0JItlL090rWZ
-         Z3RRToVLzWGKaupQ/7C6a7HNuIY8puaM4x8Mo=
+        bh=mcw3DXMEoIrLMoXaypsAbZJB4CL8BF4+r58s8Rx3tc8=;
+        b=Ieuvviw4D67VV81hGF5p983Xpf4jsDh2on3ZYOuKYaj/rfHpWoU39rgQz9vtbz/p5y
+         hgyv3FZONP+0Wr+KuXfU85EigBgmEDpO48Nsxo8qDp1Hd/g0kUioshIDyJInJ9sSaOHQ
+         U9qoQ/wOyLe0WCl3wx4SA3H/JzIEfUClJdZ5I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Ua1v3O+IP0Wl2CUSppLwmZmUq4NJL4sNqptwcR+RpkIXn31jhoXj6NBZecY8AklQTv
-         ydPoXrTzAuZFb43oKoM6CMhMFWpGAOAEeexxOyaVbVkE6V18HhBKqNao1elo12c71L5r
-         lYqGnn3OKSA97EHV8Dv/iesTpqraqZ1l0GCLs=
-Received: by 10.103.192.15 with SMTP id u15mr102585mup.57.1278233490094; Sun, 
-	04 Jul 2010 01:51:30 -0700 (PDT)
-Received: by 10.103.225.9 with HTTP; Sun, 4 Jul 2010 01:51:10 -0700 (PDT)
-In-Reply-To: <AANLkTil4C_oF972J5iRApUGXpwoFNqcYTgkzvorCseZZ@mail.gmail.com>
+        b=hCCxs4NKajiOZJM5nQZcddSjT306jD3xZPjY+M1IZ5RO5zyLGilYzUzqDsERBqWynu
+         5ADzP94yLD5plmHyk3tzJ0ax559XEXIrIMPMY4zdXkhCLnXzLTCVatWD+LcsIxJUDJNr
+         fR1fRnZYmv6Sw75outGK6sVO3fmVUR/ozo7YE=
+Received: by 10.142.132.12 with SMTP id f12mr1571677wfd.224.1278234438082; 
+	Sun, 04 Jul 2010 02:07:18 -0700 (PDT)
+Received: by 10.142.70.11 with HTTP; Sun, 4 Jul 2010 02:07:17 -0700 (PDT)
+In-Reply-To: <201007032158.57700.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150220>
 
-Hi,
+Hi Jakub,
 
-On Sun, Jul 4, 2010 at 00:14, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gma=
-il.com> wrote:
-> On Sat, Jul 3, 2010 at 21:21, =C1shin L=E1szl=F3 <ashinlaszlo@gmail.c=
-om> wrote:
->> =A0Documentation/git-cvsserver.txt | =A0 46 ++++++++++++++++++++++++=
-+++++++++++---
->> =A0git-cvsserver.perl =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 28 ++++++++++=
-+++++++++++++
->> =A0t/t9400-git-cvsserver-server.sh | =A0 45 ++++++++++++++++++++++++=
-++++++++++++++
->> =A03 files changed, 115 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvs=
-server.txt
->> index 7004dd2..b3c3122 100644
->> --- a/Documentation/git-cvsserver.txt
->> +++ b/Documentation/git-cvsserver.txt
->> @@ -100,10 +100,48 @@ looks like
->> =A0------
->>
->> =A0Only anonymous access is provided by pserve by default. To commit=
- you
+=46irst, as someone working in a company that is adopting Git can I say
+that I found the results of previous surveys useful? So I think that
+these surveys should continue :-)
+
+I think that the reduction of free text fields is good ... I am
+concerned that if I point several hundred users at the this survey and
+encourage them to respond that you should not get swamped!
+
+The surveys are actually useful for making people more aware of what
+Git can do, and the other tools associated with Git, so this is
+something of bear in mind.
+
+Have you considered the question: 'How long have you been using Git?'.
+This combined the expertise level might yield some useful information,
+and could provide some weighting for the 'Getting started' questions
+too. There are some problems with the question in that it could be,
+say, 2 years intermittent use, or 2 years continuous use, and these
+are different, of course.
+
+The demographic information is useful if you want to understand
+whether Git is (for example) considered less usable in countries where
+English is not the native language. But then if you want to know the
+native language of the user rather than where they live then perhaps
+this should be asked? (I was born in the UK, but now live in Sweden
+=2E.. so I am perhaps more conscious of this!). Where you are born does
+not necessarily identify your native language either.
+
+Do you want to separate work usage and 'non-work' usage at all? The
+two experiences may be completely different. If I am working at home I
+can use what ever I want, and work how I want. This will probably not
+be the case in a corporate environment, so I would report one set of
+results for 'work' and another for 'non-work'. This could generate two
+survey returns for a single user. Is this intended?
+
+Just a couple of thoughts :-)
+
+David Bainbridge
+Sweden
+
+
+2010/7/3 Jakub Narebski <jnareb@gmail.com>:
+> I'm sorry for broken (badly wrapped) previous version...
+> ----
 >
-> I think it's always called "pserver" with an -r.
-
-Yes but it is not part of my changeset.
-
-
->> -will have to create pserver accounts, simply add a gitcvs.authdb
->> -setting in the config file of the repositories you want the cvsserv=
-er
->> -to allow writes to, for example:
->> +will have to specify an authentication option in the config file.
->> +Currently there are two options are available for authentication th=
-rough
->> +pserver in git-cvsserver: one through an authenticator script and a=
-n other
->> +through a textual authentication database. If both are specified in=
- the config
->> +file then the script based solution will be used.
+> I guess it is time for annual (so far) Git User's Survey. =A0Should
+> there be one? =A0When should it start, and how long should it last?
 >
-> If both are specified shouldn't we throw an error?
-
-Actually a check can be added to the code. OK, I will do that.
-
-
->> + =A0a. To use the authentication script based method, simply add a
->> + =A0 =A0 gitcvs.authscript setting in the config file of the reposi=
-tories you want
->> + =A0 =A0 the cvsserver to allow writes to, for example:
->> ++
->> +--
->> +------
->> +
->> + =A0 [gitcvs]
->> + =A0 =A0authscript =3D /usr/local/bin/cvsserver-auth.sh
->> +
->> +------
->> +The file specified here must be executable by the user the git-cvss=
-erver runs
->> +under the name of. This script has to read exactly two lines from i=
-ts standard
+> here is how it was for previous surveys:
+> =A0* 2009 was open from 15 July =A0 to 15 September 2009 (for 2 month=
+s)
+> =A0* 2008 was open from 31 August to 14 October 2008 (for 1.5 months)
+> =A0* 2007 was open from 20 August to 10 September 2007 (for 20 days)
+> =A0 =A0 =A0 =A0(officially: results are up until 28 September 2007)
+> =A0* 2006 was open from 23 July =A0 to 6-12 September 2006
+> =A0 (for a bit less than 2 months)
 >
-> "the name of" is redundant here.
+> With more that 3000 responses in 2008 and 2009 survey, analysing
+> free-form data was hard. =A0That is why in this proposal there is onl=
+y
+> single one free-form response (about missing features).
 >
->> +input as long as git-cvsserver passes the username and the password=
- on separate
->> +lines. After the script did its task by checking the username and p=
-assword
->> +given it has to return zero if the authentication was successful an=
-d return
->> +other value if it was not.
+> What questions (and with what proposed answers) shound there be in
+> this year survey? =A0Below there is the content of the proposed surve=
+y:
 >
-> Better as: "The script will receive two lines on standard input, the
-> first is the username and the second is the password. It should retur=
+>
+> =3D Git User's Survey 2010 (proposal) =3D
+>
+> =3D=3D About you =3D=3D
+>
+> NOTES:
+> ^^^^^^
+> This section gives us a bit of demographical information about survey
+> responders. =A0Is it useful? =A0Should we leave it in survey, or remo=
+ve it?
+>
+> Should we for example include 'gender' as one of questions? =A0Perl S=
+urvey
+> 2010 did.
+>
+>
+> =3D=3D=3D 01. What country do you live in? =3D=3D=3D
+> =A0 =A0 =A0 =A0(Country of residence)
+> (free-form single line)
+>
+> NOTES:
+> ^^^^^^
+> Perhaps a better solution would be a menu (drop-down list) of countri=
+es,
+> using list of current countries. =A0It would be more work to create i=
+t, but
+> might reduce ambiguities and unparsable responses.
+>
+> What I'd like to have is to pre-fill / select default answer based on=
+ GeoIP.
+> Even better would be to be able to show current position on Google Ma=
+p, like
+> contributors and users map on Ohloh... but that I think is simply not
+> possible with Survs.com, the site to be used for this survey (and I g=
+uess
+> neither with any other survey site). =A0One can dream.
+>
+> Pel Survey 2010 also included (from what I remember, and from provide=
+d data
+> and analysis of survey) also country of origin / country of birth, to
+> measure mobility. =A0I wonder if it would make sense to have the same=
+ for Git
+> User's Survey 2010... =A0Note that it would be harder to come up with=
+ the list
+> of countries for such question, because the country might no longer e=
+xists.
+> Therefore the list (if present) should be based on all countries that=
+ exist
+> or existed since 100 years ago (or so).
+>
+>
+> =3D=3D=3D 02. How old are you (in years)? =3D=3D=3D
+> (free-form single line)
+>
+> NOTES:
+> ^^^^^^
+> Instead of unconstrained free-form response it might be better to hav=
+e
+> single choice (or menu) of age ranges. =A0What do you think? =A0Of co=
+urse with
+> ranges there is question what ranges to use (how to quantize age); go=
+o
+> solution would be to chose ranges corresponding somewhat to the level=
+s of
+> education.
+>
+>
+> =3D=3D Getting started with Git =3D=3D
+>
+> =3D=3D=3D 03. Have you found Git easy to learn? =3D=3D=3D
+> (single choice)
+>
+> * Very easy
+> * Easy
+> * Reasonably easy
+> * Hard
+> * Very hard
+>
+> =3D=3D=3D 04. Have you found Git easy to use? =3D=3D=3D
+> (single choice)
+>
+> * Very easy
+> * Easy
+> * Reasonably easy
+> * Hard
+> * Very hard
+>
+> NOTES:
+> ^^^^^^
+> Those two questions, considered alone, doesn't tell us much. =A0If on=
+e use
+> git, then usually one does not think it is too hard to use (unless fo=
+rced to
+> use git by external circumstances, like project he/she works on using=
+ git).
+> On the other hand those two questions together give us some mesaure o=
+f git
+> learning curve, telling us if people consider git easy to use but har=
+d to
+> learn, or vice versa ;-)
+>
+> I think it might be also good to have to calculate correlations, e.g.=
+ if
+> people who find git hard to use make use of its advanced features.
+>
+> The question is: should they stay, or should they go?
+>
+>
+> =3D=3D=3D 05. Which Git version(s) are you using? =3D=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ pre 1.3
+> =A0+ 1.3.x
+> =A0+ 1.4.x
+> =A0+ 1.5.x
+> =A0+ 1.6.x
+> =A0+ 1.7.x
+>
+> =A0+ minor (maintenance) release 1.x.y.z
+> =A0+ 'master' branch of official git repository
+> =A0+ 'next' branch of official git repository
+> =A0+ 'pu' branch of official git repository
+> =A0+ version from msysGit / Git for Windows fork repository
+> =A0+ git-bigfiles fork
+> =A0+ JGit implementation (e.g. via Eclipse plugin, EGit)
+>
+> =A0+ other, please specify
+>
+> NOTES:
+> ^^^^^^
+> A few of possible answers are new in this version of survey, namely '=
+pu',
+> msysGit, git-bigfiles, JGit, and of course 1.7.x.
+>
+> This question is here to stay.
+>
+>
+> =3D=3D=3D 06. Rate your own proficiency with Git: =3D=3D=3D
+> (single choice)
+>
+> =A0* 1. novice
+> =A0* 2. casual, needs advice
+> =A0* 3. everyday use
+> =A0* 4. can offer advice
+> =A0* 5. know it very well
+>
+> NOTES:
+> ^^^^^^
+> This question tell us penetration of announcements of Git User's Surv=
+ey 2010;
+> did we get to all, or only to git gurus? =A0It is also useful for cor=
+relating
+> with other responses, for example to know which features are used by
+> novices, and which by gurus.
+>
+>
+> =3D=3D How you use Git =3D=3D
+>
+> =3D=3D=3D 07. I use Git for (check all that apply): =3D=3D=3D
+> (multiple choice, with other)
+>
+> Note that above choices are neither orthogonal nor exclusive. =A0One
+> might want to check multiple answers even for a single repository.
+>
+> NOTES:
+> ^^^^^^
+> Answers to this question probe different direction.
+> This list is interspersed with comments about specific
+> (sub)sections.
+>
+> =A0+ work projects
+> =A0+ unpaid projects
+>
+> Notes:
+> ^^^^^^
+> Those two are about using git at work vs using git on your own free t=
+ime.
+> There are of course shades of gray, like using git for work project
+> unofficially (e.g.using git-svn as "fat" client for company's Subvers=
+ion
+> repository), or employer allowing to work on non-work OSS project dur=
+ing
+> working hours. =A0But I'm not sure if they are worth adding.
+>
+> =A0+ proprietary projects
+> =A0+ OSS development (also public domain, and published & unlicensed)
+> =A0+ private (unpublished)
+>
+> Notes:
+> ^^^^^^
+> Those three are about licensing: proprietary / free (open) / unlicens=
+ed.
+> By 'OSS development' I mean here also free licenses for documentation=
+ and
+> documents, like GFDL or Creative Commons licenses.
+>
+> =A0+ code (programming)
+> =A0+ personal data
+> =A0+ documents (data)
+> =A0+ static website
+> =A0+ web app
+> =A0+ large (> 1MB) binary files
+> =A0+ often changing binary files
+>
+> Notes:
+> ^^^^^^
+> This is about what kind of data do you store in git. =A0I am a bit un=
+sure
+> whether it is worth separating 'web app'; it is 'code'.
+>
+> New in this edition of survey is 'large binary data' and 'often chang=
+ing
+> binary files'... but should 'large' cutoff be 1MB, or 10MB, or 50MB, =
+or
+> 100MB?
+>
+> I'm not sure about having 'personal data'...
+>
+> =A0+ sharing data or sync
+> =A0+ managing configuration files
+> =A0+ backup
+> =A0+ backend for wiki, blog, or other web app
+> =A0+ frontend to other SCM (e.g. git-svn)
+>
+> Notes:
+> ^^^^^^
+> This is about (ab)using git for other things than straighforward sour=
+ce
+> control management. =A0List of possible answers specified here should=
+ cover
+> most commonly encountered usages: shdoul we add anything else here?
+>
+> =A0+ other (please specify)
+>
+>
+> =3D=3D=3D 08. How do/did you obtain Git (install and/or upgrade)? =3D=
+=3D=3D
+> (multiple choice, with other)
+>
+> Note that this question is multiple choices question because one can
+> install Git in different ways on different machines or on different
+> operating systems.
+>
+> =A0+ binary package
+> =A0+ source package or script
+> =A0+ source tarball
+> =A0+ pull from (main) repository
+> =A0+ preinstalled / sysadmin job
+>
+> =A0+ other - please specify
+>
+> Description:
+> ~~~~~~~~~~~~
+> Explanation: "binary package" covers pre-compiled binary (e.g. =A0fro=
+m
+> rpm or deb binary packages); "source package" covers things like
+> deb-src and SRPMS / *.src.rpm; "source script" is meant to cover
+> installation in source-based distributions, like 'emerge' in Gentoo.
+>
+> Automatic update (apt, yum, etc.) in most cases means binary package
+> install; unless one uses source-based distribution like Gentoo, CRUX,
+> or SourceMage, where automatic update means using source package (or
+> source script).
+>
+> The option named "preinstalled / sysadmin job" means that either you
+> didn't need to install git because it was preinstalled (and you didn'=
+t
+> upgrade); or that you have to ask system administrator to have git
+> installed or upgraded.
+>
+> Note that this question is multiple choices question because one can
+> install Git in different ways on different machines or on different
+> operating systems.
+>
+> NOTES:
+> ^^^^^^
+> What I didn't take into account in above explanation is operating
+> systems with packaging systems different that the one used by various
+> Linux distributions.
+>
+> In short: if to have git installed you compile it, you use source
+> package or source tarball. =A0If the installation onvolves anything m=
+ore
+> than 'make install' (or manual copying), then it is most probably
+> source package or script.
+>
+> This for example means that "msysGit" installer is source package, an=
+d
+> "Git for Windows" is binary package, if I understand it correctly.
+>
+>
+> =3D=3D=3D 09. On which operating system(s) do you use Git? =3D=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ Linux (includes MeeGo and Moblin)
+> =A0+ MacOS X (Darwin)
+> =A0+ MS Windows/msysGit (MINGW)
+> =A0+ MS Windows/Cygwin
+> =A0+ FreeBSD, OpenBSD, NetBSD, etc.
+> =A0+ other Unix
+>
+> =A0+ iPhone OS
+> =A0+ Android
+> =A0+ WebOS
+>
+> =A0+ Other, please specify
+>
+> NOTES:
+> ^^^^^^
+> The iPhone OS, Androind and WebOS answers are new this year.
+> OpenSolaris died, so I removed it. =A0I wonder if it is worth it to
+> differentiate between MS Windows/msysGit and MS Windows/Cygwin, or if
+> we should just have one, single 'MS Windows' choice.
+>
+>
+> =3D=3D=3D 10. What do you use to edit contents under version control =
+with Git? =3D=3D=3D
+> =A0 =A0 =A0 =A0What kind of editor, IDE or RAD you use working with G=
+it?
+> (multiple choice, with other)
+>
+> =A0+ simple text editor
+> =A0+ programmers editor
+> =A0+ IDE or RAD
+> =A0+ WYSIWYG tool
+>
+> =A0+ other kind
+>
+> Description:
+> ~~~~~~~~~~~~
+> * "simple text editor" option includes editors such as pico, nano,
+> =A0joe, Notepad,
+>
+> * "programmets editor" option includes editors such as Emacs/XEmacs,
+> =A0Vim, TextMate, SciTE (syntax highlighting, autoindentation,
+> =A0integration with other programmers tools, etc.)
+>
+> * "IDE (Integrated Development Environment) and RAD (Rapid Applicatio=
 n
-> 0 if the user was successfully authenticated, and a non-zero value if
-> not".
-
-OK, a little bit I overcomplicated it :)
-
-
->> +
->> +Here is an example for an authentication script which checks the us=
-ers against
->> +active directory:
->> +------
->> +#!/bin/sh
->> +# /usr/local/bin/cvsserver-auth.sh
->>
->> +read username
->> +read password
->> +
->> +wbinfo -a "${username}%${password}"
+> =A0Development)" option includes tools such as Eclipse, NetBeans IDE,
+> =A0IntelliJ IDE, MS Visual Studio, KDevelop, Anjuta, Xcode,
+> =A0Code::Blocks but also tools such as Quanta+, BlueFish or Screem (f=
+or
+> =A0editing HTML, CSS, PHP etc.), and Kile or LEd for LaTeX.
 >
-> Do all POSIX shells implicitly exit with the return value of the last
-> statement they evaluate. I don't know.
-
-"The exit status of a sequential list *shall* be the exit status of
-the last command in the list."
-( After registration,
-http://www.opengroup.org/onlinepubs/000095399/utilities/xcu_chap02.html=
-#tag_02_08
-)
-Generally, all kind of list constructions use this principle according
-to this page.
-
-Terminology of "shall":
-"For an implementation that conforms to IEEE Std 1003.1-2001,
-describes a feature or behavior that is mandatory. *An application can
-rely on the existence of the feature or behavior*.
-
-=46or an application or user, describes a behavior that is mandatory."
-
-
->> +------
->> +--
->> +
->> + =A0b. To use the authentication database based method, simply add =
-a
->> + =A0 =A0 gitcvs.authdb setting in the config file of the repositori=
-es you want the
->> + =A0 =A0 cvsserver to allow writes to, for example:
->> ++
->> +--
->> =A0------
->>
->> =A0 =A0[gitcvs]
->> @@ -125,7 +163,7 @@ Alternatively you can produce the password with
->> perl's crypt() operator:
->> =A0-----
->> =A0 =A0perl -e 'my ($user, $pass) =3D @ARGV; printf "%s:%s\n", $user=
+> * "WYSIWYG tools" option includes word processors such as MS Office o=
+r
+> =A0OpenOffice.org, but also tools such as Adobe Acrobat (for PDF) or
+> =A0GIMP (for images), or WYSIWYG DTP tools such as QuarkXPress,
+> =A0PageMaker or Scribus, or WYSIWYG HTML editors such as FrontPage,
+> =A0Dreamweaver or KompoZer.
+>
+> NOTES:
+> ^^^^^^
+> Is this question useful, or should it be removed from survey?
+>
+>
+> =3D=3D=3D 11. What Git interfaces and frontends do you use? =3D=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ Cogito (DEPRECATED)
+> =A0+ Easy Git
+> =A0+ Pyrite
+> =A0+ I don't know, I only use (graphical) tools
+>
+> =A0+ pg aka Patchy Git (DEPRECATED)
+> =A0+ StGIT
+> =A0+ Guilt
+> =A0+ TopGit
+>
+> =A0+ other (please specify)
+>
+> NOTES:
+> ^^^^^^
+> This version is going back to split from 2008 survey, rather than
+> having everything put together like in 2009 one. =A0There are, of
+> course, problems with both choices.
+>
+> The problem with split part is that people can have troubls with
+> distinguising between interfaces, implementations, frontends and tool=
+s
+> (although "I don't know ..." =A0answer should, I think, help here). =A0=
+The
+> problem with having it everything together is that the list of
+> possible answers gets long and a bit unwieldy.
+>
+> BTW are there any implementations and frontends that should be added
+> to the list above?
+>
+>
+> =3D=3D=3D 12. What kind of Git tools do you use? =3D=3D=3D
+> (multiple choice, with other)
+>
+> If a tool is both history viewer, and commit tool, please choose the
+> option that corresponds to how do you use this tool.
+>
+> =A0+ editor/IDE VC integration (e.g. EGit, TextMate bundle, magit)
+> =A0+ filemanager / shell extension (e.g. git-cheetah, TortoiseGit)
+> =A0+ graphical history viewer/browser (e.g. gitk)
+> =A0+ graphical commit tool (e.g. git-gui)
+> =A0+ graphical diff and/or merge tool (e.g. Kompare, Meld)
+> =A0+ graphical blame or pickaxe tool
+> =A0+ git-instaweb, or self-hosted web interface
+> =A0+ tool to manage git repositories (e.g. Gitosis, Gitolite)
+>
+> =A0+ my own scripts (for daily use)
+> =A0+ my own scripts (for special tasks)
+>
+> NOTES:
+> ^^^^^^
+> As the number of tools increases (see InterfacesFrontendsAndTools pag=
+e
+> on git wiki), having them listed all there gets a bit unwieldy. =A0On
+> the other hand it was a good way to find new tools that were not yet
+> included on IFaT page. =A0What do you think: should it be about tools=
 ,
->> crypt($user, $pass)' $USER password
->> =A0-----
->> -
->> +--
->> =A0Then provide your password via the pserver method, for example:
->> =A0------
->> =A0 =A0cvs -d:pserver:someuser:somepassword <at> server/path/repo.gi=
-t co <HEAD_name>
->> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
->> index e9f3037..9664e86 100755
->> --- a/git-cvsserver.perl
->> +++ b/git-cvsserver.perl
->> @@ -197,6 +197,34 @@ if ($state->{method} eq 'pserver') {
->> =A0 =A0 =A0 =A0 }
->>
->> =A0 =A0 =A0 =A0 # Fall through to LOVE
->> + =A0 =A0} elsif (exists $cfg->{gitcvs}->{authscript}) {
->> + =A0 =A0 =A0 =A0my $authscript =3D $cfg->{gitcvs}->{authscript};
->> +
->> + =A0 =A0 =A0 =A0unless (-x $authscript) {
->> + =A0 =A0 =A0 =A0 =A0 =A0print "E The authentication script specifie=
-d in ";
->> + =A0 =A0 =A0 =A0 =A0 =A0print "[gitcvs.authscript] cannot be execut=
-ed\n";
+> or only about kind of tools used with git?
 >
-> I *think* you have to prefix anything that's not "I (HATE|LOVE) YOU"
-> with "E " if it's an error. I.e. this should probably be:
+> What do you think about this list? =A0IS there something that should =
+not
+> be here? =A0Or perhaps there is something that should be added to thi=
+s
+> list?
 >
-> =A0 =A0print "E The authentication script specified in";
-> =A0 =A0print "E [gitcvs.authscript] cannot be executed\n";
 >
-> But that's just my hazy memory. Maybe CVS clients will report the
-> error anyway.
-
-Please note that there is no "\n" after the first line. This is only a
-line break in the source code.
-Should I have used the following?
-
- =A0 =A0print "E The authentication script specified in" .
- =A0 =A0    "E [gitcvs.authscript] cannot be executed\n";
-
-
->> + =A0 =A0 =A0 =A0 =A0 =A0print "I HATE YOU\n";
->> + =A0 =A0 =A0 =A0 =A0 =A0exit 1;
->> + =A0 =A0 =A0 =A0}
->> +
->> + =A0 =A0 =A0 =A0open my $script_fd, '|-', "'$authscript'"
->> + =A0 =A0 =A0 =A0 =A0 =A0or die "Couldn't open authentication script=
- '$authscript': $!";
->> +
->> + =A0 =A0 =A0 =A0if (length($password) > 0) {
->> + =A0 =A0 =A0 =A0 =A0 =A0$password =3D descramble($password);
->> + =A0 =A0 =A0 =A0}
->> +
->> + =A0 =A0 =A0 =A0print $script_fd "$user\n";
->> + =A0 =A0 =A0 =A0print $script_fd "$password\n";
->> + =A0 =A0 =A0 =A0close $script_fd;
->> +
->> + =A0 =A0 =A0 =A0unless ($? =3D=3D 0) {
->> + =A0 =A0 =A0 =A0 =A0 =A0print "E External script authentication fai=
-led.\n";
->> + =A0 =A0 =A0 =A0 =A0 =A0print "I HATE YOU\n";
->> + =A0 =A0 =A0 =A0 =A0 =A0exit 1;
->> + =A0 =A0 =A0 =A0}
->> +
->> + =A0 =A0 =A0 =A0# Fall through to LOVE
->> =A0 =A0 } else {
->> =A0 =A0 =A0 =A0 # Trying to authenticate a user
->> =A0 =A0 =A0 =A0 if (not exists $cfg->{gitcvs}->{authdb}) {
->> diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver=
--server.sh
->> index 8639506..0743e9a 100755
->> --- a/t/t9400-git-cvsserver-server.sh
->> +++ b/t/t9400-git-cvsserver-server.sh
->> @@ -64,6 +64,16 @@ test_expect_success 'basic checkout' \
->> =A0# PSERVER AUTHENTICATION
->> =A0#------------------------
->>
->> +cat >"$SERVERDIR/authscript.sh" <<EOF
->> +#!/bin/sh
->> +read username
->> +read password
->> +
->> +test "x\$username" =3D xcvsuser -a "x\$password" =3D xcvspassword
+> =3D=3D=3D 13. Which git hosting site(s) do you use for your project(s=
+)? =3D=3D=3D
+> =A0 =A0 =A0 =A0Please check only hosting sites where you publish/push=
+ to (with git)
+> (multiple choice, with other)
 >
-> This is offtopic. But I've never figured out why you need to do
+> =A0+ [http://repo.or.cz repo.or.cz]
+> =A0+ [http://github.com GitHub]
+> =A0+ [http://gitorious.org Gitorious]
+> =A0+ [http://www.indefero.net InDefero]
 >
-> =A0 =A0test "x$foo" =3D "xbar"
+> Notes:
+> ^^^^^^
+> Those are generic git hosting sites, each of them showcasing their ow=
+n
+> tool, all except GitHub open source (it is Girocco for repo.or.cz; fo=
+r
+> the rest the tool is named the same as the git hosting site).
 >
-> As opposed to:
+> =A0+ [http://savannah.gnu.org Savannah]
+> =A0+ [http://sourceforge.net SourceForge]
 >
-> =A0 =A0test "$foo" =3D "bar"
+> Notes:
+> ^^^^^^
+> Generic software hosting sites, with git support. =A0Did I miss
+> something, should I include yet another site?
 >
-> In shellscript. Are there really some shells that get equality tests
-> where one term is "" wrong?
-
-Maybe this is too much. Maybe x was used only where " couldn't be:
-
-    test x$foo =3D xbar
-
-So, if $foo is empty we have to make sure that test gets something to
-both side of the equation mark. But if quotation marks can be used it
-is possibly unneeded:
-
-    test "$foo" =3D "bar"
-
-My solution is an overkill in this case. But which of the above ones
-is preferred then?
-I think I can answer my own question. If $foo contains spaces only the
-quotation mark based version will do what we want. I will remove the x
-characters.
-
-
->> +EOF
->> +
->> +chmod a+x "$SERVERDIR/authscript.sh"
->> +
->> =A0cat >request-anonymous =A0<<EOF
->> =A0BEGIN AUTH REQUEST
->> =A0$SERVERDIR
->> @@ -134,6 +144,41 @@ test_expect_success 'pserver authentication
->> failure (login/non-anonymous user)'
->> =A0 =A0fi &&
->> =A0 =A0sed -ne \$p log | grep "^I HATE YOU\$"'
->>
->> +GIT_DIR=3D"$SERVERDIR" git config --unset gitcvs.authdb || exit 1
->> +GIT_DIR=3D"$SERVERDIR" git config gitcvs.authscript
->> "$SERVERDIR/authscript.sh" || exit 1
->> +
->> +test_expect_success 'pserver authentication (authscript)' \
->> + =A0'cat request-anonymous | git-cvsserver pserver >log 2>&1 &&
->> + =A0 sed -ne \$p log | grep "^I LOVE YOU\$"'
->> +
->> +test_expect_success 'pserver authentication failure (authscript,
->> non-anonymous user)' \
->> + =A0'if cat request-git | git-cvsserver pserver >log 2>&1
->> + =A0 then
->> + =A0 =A0 =A0 false
->> + =A0 else
->> + =A0 =A0 =A0 true
->> + =A0 fi &&
+> =A0+ [http://www.assembla.com Assembla]
+> =A0+ [http://codebasehq.com Codebase]
+> =A0+ [http://unfuddle.com Unfuddle]
+> =A0- [http://codesion.com Codesion]
+> =A0- [http://gitfarm.appspot.com GitFarm]
+> =A0- [http://www.projectlocker.com ProjectLocker]
+> =A0- [http://thechaw.com The Chaw]
+> =A0- [http://unfuddle.com Unfuddle]
 >
-> This should probably be (untested):
+> Notes:
+> ^^^^^^
+> Those are commercial and/or less known git hosting sites. =A0I am not
+> sure which ones of those marked with '-' to include, and whether to
+> include other sites from GitHosting page on git wiki. =A0What do you
+> think?
 >
-> =A0 =A0test_must_fail cat request-git git-cvsserver pserver >log 2>&1=
- &&
-
-I copied this code from above so this was not my decision. These test
-cases are all can be find elsewhere in the code, the only difference
-is in their names and the fact that the script based authentication
-method is active while they are running.
-
-
->> + =A0 sed -ne \$p log | grep "^I HATE YOU\$"'
->> +
->> +test_expect_success 'pserver authentication success (authscript,
->> non-anonymous user with password)' \
->> + =A0'cat login-git-ok | git-cvsserver pserver >log 2>&1 &&
->> + =A0 sed -ne \$p log | grep "^I LOVE YOU\$"'
->> +
->> +test_expect_success 'pserver authentication (authscript, login)' \
->> + =A0'cat login-anonymous | git-cvsserver pserver >log 2>&1 &&
->> + =A0 sed -ne \$p log | grep "^I LOVE YOU\$"'
->> +
->> +test_expect_success 'pserver authentication failure (authscript,
->> login/non-anonymous user)' \
->> + =A0'if cat login-git | git-cvsserver pserver >log 2>&1
->> + =A0 then
->> + =A0 =A0 =A0 false
->> + =A0 else
->> + =A0 =A0 =A0 true
->> + =A0 fi &&
->> + =A0 sed -ne \$p log | grep "^I HATE YOU\$"'
->> +
->> +GIT_DIR=3D"$SERVERDIR" git config --unset gitcvs.authscript || exit=
- 1
->> +GIT_DIR=3D"$SERVERDIR" git config gitcvs.authdb "$SERVERDIR/auth.db=
-" || exit 1
->>
->> =A0# misuse pserver authentication for testing of req_Root
+> =A0+ [http://git.kernel.org kernel.org]
+> =A0+ [http://www.freedesktop.org/wiki/ freedesktop.org]
 >
-> Otherwise looking good.
+> Notes:
+> ^^^^^^
+> Those are 'git hosting site for related projects', but are special in
+> some sense. =A0Should I leave them there, or remove from this list?
 >
-
-I am not familiar the way that a patch goes in this project. Where can
-I find the repository my patches will be commited? When will this kind
-of changes go to mainline?
-
-Thanks,
-L=E1szl=F3 =C1SHIN
+> =A0+ [http://alioth.debian.org Alioth] (Debian)
+> =A0+ [http://hosted.fedoraproject.org Fedora Hosted]
+>
+> Notes:
+> ^^^^^^
+> Those are distribution-specific. =A0Are there any sites that I missed=
+?
+> Launchpad from Ubuntu does not count, as it is Bazaar hosting site,
+> not Git hosting site.
+>
+> =A0+ =A0git hosting site for related projects
+> =A0+ =A0generic site without git support
+> =A0+ =A0self hosted
+>
+> Notes:
+> ^^^^^^
+> Are ther other kinds / typse of sites one can host project using git
+> on? =A0What are they?
+>
+> =A0+ =A0Other (please specify)
+>
+> NOTES:
+> ^^^^^^
+> I think this question is here to stay.
+>
+>
+> =3D=3D=3D 14. How do you fetch/get changes from upstream repositories=
+? =3D=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ git protocol =A0 =A0 =A0 =A0(e.g. git://git.example.com/repo.git=
+)
+> =A0+ ssh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 (e.g. ssh+git://git.example.=
+com/repo.git,
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 git.example.c=
+om:/srv/scm/repo.git)
+> =A0+ http =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0(e.g. http://git.example.com=
+/repo.git)
+> =A0+ rsync (DEPRECATED) =A0(e.g. rsync://git.example.com/repo.git)
+> =A0+ filesystem =A0 =A0 =A0 =A0 =A0(e.g. /path/to/repo.git, file:///p=
+ath/to/repo.git)
+> =A0+ via git-bundle
+> =A0+ foreign SCM (e.g. git-svn)
+>
+> =A0+ Other, please specify
+>
+> Description:
+> ~~~~~~~~~~~~
+> This question asks about how do you get changes (updates) from
+> projects you follow into your local repository. It is not about how d=
+o
+> you get latest version of Git.
+>
+> Fetching (or rather cloning) via bundle could mean that project
+> publishes ready for download bundles to reduce traffic and load on
+> server (HTTP download [of bundle] can be resumed, git-clone currently
+> cannot; one can also distribute bundle using P2P).
+>
+> NOTES:
+> ^^^^^^
+> What is new are examples of URLs / URIs for each protocol.
+>
+> Did I miss anything? =A0Is this question interesting, and should it
+> stay, or should it be removed?
+>
+>
+> =3D=3D=3D 15. How do you publish/propagate your changes? =3D=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ push
+> =A0+ pull request (+ any form of announcement / notification)
+> =A0+ format-patch + email
+> =A0+ format-patch + other (e.g. reviewboard, issue tracker or forum)
+> =A0+ git bundle
+>
+> =A0+ git-svn (to Subversion repository)
+> =A0+ git-p4 (to Perforce repository)
+> =A0+ foreign SCM interface (other than mentioned above)
+>
+> =A0+ other - please specify
+>
+> Description:
+> ~~~~~~~~~~~~
+> Publishing via bundle could mean sending bundle via email, or posting
+> it on review board (or forum).
+>
+> Instead of git-format-patch there can be utilized other way of
+> generating patch (e.g. git-show, git-diff, 'patch' view from gitweb,
+> etc.)
+>
+> NOTES:
+> ^^^^^^
+> Should it stay, or should it be removed? =A0I guess it can be
+> interesting for git hosting sites... =A0Should we have separate answr=
+s
+> for different kinds of push (ssh, "dumb" HTTP(S) with WebDAV, "smart"
+> HTTP - if it is possible, git:// protocol with push enabled)?
+>
+>
+> =3D=3D=3D 16. Which of the following features do you use? =3D=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ "smart" HTTP protocol
+> =A0+ git bundle (off-line transport)
+> =A0+ eol conversion (crlf)
+> =A0+ gitattributes
+> =A0+ custom diff/merge driver
+> =A0+ submodules (subprojects)
+> =A0+ subtree merge (optionally git-subtree)
+> =A0+ partial (sparse) checkout, or assume-unchanged bit
+> =A0+ separate worktree / core.worktree
+> =A0+ multiple worktrees (git-new-worktree)
+> =A0+ alternates mechanism (sharing object database)
+> =A0+ stash (optionally "git stash --keep-index")
+> =A0+ shallow clone (e.g. "git clone --depth=3D<n>")
+> =A0+ detaching HEAD (e.g. "git checkout HEAD^0")
+> =A0+ interactive rebase (small scale history editing)
+> =A0+ interactive commit / per-hunk comitting / partial commit
+> =A0+ commit message templates
+> =A0+ git-filter-branch or equivalent (large history rewriting)
+> =A0+ bisect (optionally "git bisect run <script>")
+> =A0+ committing with dirty tree (keeping some changes uncommitted)
+> =A0+ non-default hooks (from contrib/hooks/ or other)
+> =A0+ shell completion of commands
+> =A0+ git-aware shell prompt
+> =A0+ git aliases, shell aliases for git, or own git scripts
+> =A0+ one-way interaction with other SCMs (from SCM to git)
+> =A0+ two-way interaction with other SCMs (from SCM to git, from git t=
+o SCM)
+> =A0+ git-cvsserver
+> =A0+ git notes
+>
+> =A0+ Other, please specify
+>
+> NOTES:
+> ^^^^^^
+> The problem is come up not with exhaustive list of features: there ar=
+e
+> too many of them to list. =A0The problem is coming up with list of
+> important and used enough often features.
+>
+> So: what features should be included in this list? =A0What features
+> should be removed from above list of answers?
+>
+>
+> =3D=3D=3D 17. Which of the following features would you like to see i=
+mplemented in git? =3D=3D=3D
+> (multiple choice)
+>
+> =A0+ better support for big files (large media)
+> =A0+ resumable clone/fetch (and other remote operations)
+> =A0+ GitTorrent Protocol, or git-mirror
+> =A0+ lazy clone / on-demand fetching of object
+> =A0+ support for tracking empty directories
+> =A0+ environmental variables in config,
+> =A0 and expanding ~ and ~user in paths in config
+> =A0+ better undo/abort/continue, and for more commands
+> =A0+ '-n' like option for each command, which describes what would ha=
+ppen
+> =A0+ side-by-side diffs and/or color-words diff in gitweb
+> =A0+ admin and/or write features in gitweb
+> =A0+ graphical history view in gitweb
+> =A0+ GUI for rebase in git-gui
+> =A0+ GUI for creating repository in git-gui
+> =A0+ filename encoding (in repository vs in filesystem)
+> =A0+ git push --create
+> =A0+ localization of command-line messages
+> =A0+ wholesame directory rename detection
+> =A0+ graphical merge tool integrated with git-gui
+> =A0+ union checkouts (some files from one branch, some from other)
+> =A0+ advisory locking / "this file is being edited"
+> =A0+ "commands issued" (or "command equivalents") in git-gui / gitk
+> =A0+ warn before/when rewriting published history
+> =A0+ built-in gitjour/bananajour support
+> =A0+ syntax highlighting in git-gui
+>
+> =A0+ other (describe below)
+>
+> NOTES:
+> ^^^^^^
+> This is new question, a multiple choice companion to a essay free-for=
+m
+> question below. =A0Included are a few example features (some from
+> partial analysis of "19. What features would you like implemented in
+> Git?" question in 2009 survey.
+>
+> What features should be mentioned besides those above? =A0What criter=
+ia
+> should we have for including features in this list?
+>
+> =3D=3D=3D 18. Describe what features would you like to have in Git, i=
+f it is
+> =A0 =A0 =A0 =A0not on the list above? =3D=3D=3D
+> (free form, essay length)
+>
+>
+> =3D=3D What you think of Git =3D=3D
+>
+> =3D=3D=3D 19. Overall, how happy are you with Git? =3D=3D=3D
+> (single choice)
+>
+> =A0* unhappy
+> =A0* not so happy
+> =A0* happy
+> =A0* very happy
+> =A0* completely ecstatic
+>
+> NOTES:
+> ^^^^^^
+> I'm not sure if this question is at all useful.
+>
+> There is also problem, that the current wording is considered biased
+> by some, but on the other hand changing wording of answers would make
+> it impossible to compare it to answers from previous surveys...
+>
+>
+> =3D=3D=3D 20. In your opinion, which areas in Git need improvement? =3D=
+=3D=3D
+> =A0 =A0 =A0 =A0Please state your preference.
+> (matrix)
+>
+> =A0 Columns: don't need / a little / some / much
+> =A0+ user-interface
+> =A0+ documentation
+> =A0+ performance
+> =A0+ more features
+> =A0+ tools (e.g. GUI)
+> =A0+ localization (translation)
+>
+> NOTES:
+> ^^^^^^
+> Are there any general areas that are missing from this list?
+> What are they?
+>
+>
+> =3D=3D Changes in Git (since year ago, or since you started using it)=
+ =3D=3D
+>
+> =3D=3D=3D 21. Did you participate in previous Git User's Surveys? =3D=
+=3D=3D
+> (multiple choice)
+>
+> =A0+ in 2006
+> =A0+ in 2007
+> =A0+ in 2008
+> =A0+ in 2009
+> =A0+ none of the above
+>
+> NOTES:
+> ^^^^^^
+> This might be quite useful comparing with previous surveys. =A0The
+> answer 'none of the above' is new in this survey (as is 'in 2009',
+> of course).
+>
+>
+> =3D=3D=3D 22. How do you compare the current version with the version=
+ from one year ago? =3D=3D=3D
+> (single choice)
+>
+> =A0* better
+> =A0* no changes
+> =A0* worse
+>
+> =A0* cannot say
+>
+> NOTES:
+> ^^^^^^
+> This question was mainly excuse for providing list of main changes
+> from the year ago. =A0I think that this question should be removed, a=
+s
+> it doesn't bring any important information.
+>
+>
+> =3D=3D Documentation. Getting help. =3D=3D
+>
+> =3D=3D=3D 23. How useful have you found the following forms of Git do=
+cumentation? =3D=3D=3D
+> (matrix)
+>
+> =A0Columns: never used / not useful / somewhat / useful
+> =A0+ Git Wiki
+> =A0+ on-line help
+> =A0+ help distributed with git
+>
+>
+> Description:
+> ~~~~~~~~~~~~
+> * Git Wiki was to be found at http://git.wiki.kernel.org
+> * on-line help includes, among others, Git Homepage (http://git-scm.c=
+om),
+> =A0"Git Community Book" (http://book.git-scm.com), "Pro Git" book
+> =A0(http://progit.org) and Git Reference site (http://gitref.org)
+> * help distributed with git include manpages, manual, tutorials, HOWT=
+O,
+> =A0release notes, technical documentation, contrib/examples/
+>
+> NOTES:
+> ^^^^^^
+> Should we split those answers further, e.g. separating on-line
+> tutorials and guides, from on-line tips etc.?
+>
+>
+> =3D=3D=3D 24. Have you tried to get help regarding Git from other peo=
+ple? =3D=3D=3D
+> (single choice)
+>
+> =A0* Yes
+> =A0* No
+>
+> =3D=3D=3D 25. If yes, did you get these problems resolved quickly and=
+ to your liking? =3D=3D=3D
+> (single choice)
+>
+> =A0* Yes
+> =A0* No
+> =A0* Somewhat
+>
+> NOTES:
+> ^^^^^^
+> Those two questions are not very useful. =A0I think that they should =
+be
+> removed from 2010 survey.
+>
+>
+> =3D=3D=3D 26. What channel(s) do you use to request help about git? =3D=
+=3D=3D
+> (multiple choice, with other)
+>
+> =A0+ git mailing list (git@vger.kernel.org)
+> =A0+ "Git for Human Beings" Google Group
+> =A0+ msysGit mailing list / Google Group
+> =A0+ IRC (#git)
+> =A0+ IRC (other git/SCM related, e.g. #github)
+> =A0+ request in blog post or on wiki
+> =A0+ asking git guru/colleague
+> =A0+ project mailing list, or IRC, or forum
+> =A0+ Twitter or other microblogging platform
+> =A0+ instant messaging (IM) like XMPP/Jabber
+> =A0+ StackOverflow or other StackExchange site
+>
+> =A0+ other (please specify)
+>
+> NOTES:
+> ^^^^^^
+> Are there any main channels of requesting help that I have missed in
+> the above list of answers? =A0What are they, and why do you think the=
+y
+> are important enought to warrant inclusion in above list?
+>
+>
+> =3D=3D=3D 27. Which communication channel(s) do you use? =3D=3D=3D
+> =A0 =A0 =A0 =A0Do you read the mailing list, or watch IRC channel?
+> (multiple choice)
+>
+> =A0+ git@vger.kernel.org (main)
+> =A0+ Git for Human Beings (Google Group)
+> =A0+ msysGit
+> =A0+ #git IRC channel
+> =A0+ #git-devel IRC channel
+> =A0+ #github or #gitorious IRC channel
+> =A0+ #revctrl IRC channel
+>
+> NOTES:
+> ^^^^^^
+> Are there any communication channels that I have missed? =A0For examp=
+le
+> is there a separate channel that JGit/EGit developers use?
+>
+>
+> =3D=3D About this survey. Open forum. =3D=3D
+>
+> =3D=3D=3D 28. How did you hear about this Git User's Survey? =3D=3D=3D
+> (single choice, with other)
+>
+> =A0* git mailing list
+> =A0* git-related mailing list (e.g. msysGit)
+> =A0* mailing list or forum of some project
+> =A0* #git IRC channel topic
+> =A0* announcement on IRC channel
+> =A0* git homepage
+> =A0* git wiki
+> =A0* git hosting site (or blog related to such site)
+> =A0* software-related web site
+> =A0* news or social news site (e.g. Digg, Reddit)
+> =A0* blog (or blog planet)
+> =A0* other kind of web site
+> =A0* Twitter or other microblogging platform
+>
+> =A0* other - please specify
+>
+> NOTES:
+> ^^^^^^
+> This list would of course be updated to reflect the list of (planned)
+> announcement channels.
+>
+> There of course will be announcement on Git Mailing List, and perhaps
+> also on msysGit list / Google Group, and on Git For Human Beings
+> Google Group (if it exists). =A0I'll announce it on #git, and ask op =
+to
+> put short announcement in channel description, and I can announce it
+> on other IRC channels. =A0I would add announcement to main page of Gi=
+t
+> Wiki, and as Git Homepage administrator to put announcement about Git
+> User's Survey.
+>
+> I usually tried to contact administrators of git hosting sites,
+> including git.kernel.org, repo.or.cz, GitHub, Gitorious, Assembla,
+> Codebase and Unfuddle, asking them to put announcement about
+> Git User's Survey either somewhere on the site, or in their blog
+> (if there is any). =A0What git hosting sites it is worth to ask?
+>
+> Sidenote: I am thinking about contacting different git hosting sites
+> _before_ staring survey, asking them (them =3D administrators) about
+> what questions would they like to see. =A0Do you think thet it is goo=
+d
+> idea?
+>
+> Should I try to post announcement on mailing list for projects that
+> use git? =A0There are entirely too many such projects nowadays, and s=
+uch
+> announcement can be considered spamming by some...
+>
+> I would like to have announcement of Git User's Survey 2010 at
+> LWN.net, but this would need to be send at least two weeks in advance=
+,
+> if I remember correctly. =A0Is it worth it? =A0What other news site s=
+hould
+> I (or you) send announcement to?
+>
+> If you can Digg / Reddit announcment on some site, please do. =A0I ca=
+n
+> announce Git User's Survey 2-1- at Twitter, Identi.ca and Plurk, but =
+I
+> don't have wide area of followers. =A0So please RT.
+>
+> Should we contact some bloggers (besides asking Junio to put
+> announcement on his blog) to post an anouncement? =A0Which bloggers
+> would respond positively (perhaps Linus...)?
+>
+> --
+> Jakub Narebski
+> Poland
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
