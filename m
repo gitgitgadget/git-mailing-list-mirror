@@ -1,200 +1,110 @@
-From: Gisle Aas <gisle@aas.no>
-Subject: Re: Make author and committer available to pre-commit hook
-Date: Mon, 5 Jul 2010 20:04:11 +0200
-Message-ID: <AANLkTinlGBt3nBa7Ge5ytjisTeDu3As4wCkF8M1iz5JV@mail.gmail.com>
-References: <AANLkTinpCDRf_Yhuj2-tdZwmvHk8yna1Xjdtbrmx35CB@mail.gmail.com>
-	<20100705114619.GA21146@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Makefile: work around ksh's failure to handle
+ missing list argument to for loop
+Date: Mon, 05 Jul 2010 11:18:16 -0700
+Message-ID: <7vy6dpyeqf.fsf@alter.siamese.dyndns.org>
+References: <80typu1ozt.fsf@tiny.isode.net>
+ <8YdP-GcDDflOVZnykNVIGceOm01bqeg9PDvdgIfgqUnh29RKC-6Qi8_KBVoqLIt5iyt7g1TX5l96M5KyLrfOqg@cipher.nrlssc.navy.mil> <4C30D4D5.3020900@drmicha.warpmail.net> <4C31796E.9050109@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016364d2c9b8b42fb048aa7c348
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 05 20:04:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Brandon Casey <casey@nrlssc.navy.mil>, gitster@pobox.com,
+	git@vger.kernel.org, PWalker752@aol.com, newsletter@dirk.my1.cc,
+	bruce.stephens@isode.com, Brandon Casey <drafnel@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jul 05 20:18:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVq1l-0005Ca-UP
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 20:04:22 +0200
+	id 1OVqFi-0002li-So
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 20:18:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756403Ab0GESEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 14:04:13 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57273 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755928Ab0GESEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 14:04:12 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 14so3940454fxm.19
-        for <git@vger.kernel.org>; Mon, 05 Jul 2010 11:04:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=cM8T/e99I6+ZO7m0K+rX0CzKqeHEtf8ajBDs3K2uc+I=;
-        b=Cf64Mbw/l9krLg3crm58JnftyVD2MvCzlxC5UKb4idEmnTU/eHbZwRHe7lJe+bVEoY
-         edrKeoy1ZRpYUL/HPVKzvsIlzClpTUR87f7cZPp6L9AFBdVp69lSQU5nURGVfphMErJL
-         pziUyexxplNUCXW0EfuYQw71/xrAsB/V5OqYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=Bax8gZpXV905DjXx480INhiW2u0YmvmCf35bdWj86dUT2hcZ4BCLTaruql7lRtpdEp
-         GI8Gfvx5MdJLVYrBI9EOcB+paOXvh+HhSl3vAWfWkgAv1WIWpa4ck3o3CufFixRzWQ53
-         j1WXa+ys78+fvJmSfOWVgVcVl3NsYGPRbIMqE=
-Received: by 10.239.140.9 with SMTP id v9mr234614hbv.153.1278353051696; Mon, 
-	05 Jul 2010 11:04:11 -0700 (PDT)
-Received: by 10.239.173.201 with HTTP; Mon, 5 Jul 2010 11:04:11 -0700 (PDT)
-In-Reply-To: <20100705114619.GA21146@sigill.intra.peff.net>
-X-Google-Sender-Auth: kifMInC1LGP-s6bG9RnspMVW3Gw
+	id S1754703Ab0GESSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 14:18:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47238 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043Ab0GESSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 14:18:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9560AC101D;
+	Mon,  5 Jul 2010 14:18:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+pwAO/hvVYlorbtgtunGD9wq+NI=; b=DdKQHd
+	wxizSJlJfV/HXfJDwIPpuA7Sf4KyHWDdLWuVpXTn0aYtyDbhY7X1SpKdj6OsWCBO
+	XMQ5ka3ltUzv/RwStlh+rcax68O13x7abeA/KXelOsHbTmIQZZf/oRFm95Juz6h1
+	VTQle+iCJIJx6KRow73z9rs2FQXD7Ryenjw2c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IAaIPoz6KqbMbS+QMmTYEfbP7euVqOAs
+	RnZ9ZamA0I6aN1DKX2aDx6cDI7naJWDKR70MIBA22adDegaMVq64DCvW3oNQj5b6
+	wGFzNSae3E0p3e26ud3GVQLwv8d2S+fR3AHPMgTgUVMrVPaxpju6BsPjN6xqpEiG
+	9qMYSFs1K3k=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 105AFC1014;
+	Mon,  5 Jul 2010 14:18:29 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7A3B2C100E; Mon,  5 Jul
+ 2010 14:18:18 -0400 (EDT)
+In-Reply-To: <4C31796E.9050109@viscovery.net> (Johannes Sixt's message of
+ "Mon\, 05 Jul 2010 08\:19\:26 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B5F04E04-8861-11DF-8D77-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150282>
 
---0016364d2c9b8b42fb048aa7c348
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-On Mon, Jul 5, 2010 at 13:46, Jeff King <peff@peff.net> wrote:
-> On Mon, Jul 05, 2010 at 01:30:46PM +0200, Gisle Aas wrote:
->
->> I would like to implement a pre-commit hook that validates the
->> --author set for the commit. =C2=A0Our use case is a shared repository o=
-f
->> configuration info where different persons all commit as root; but we
->> want to make sure they override the --author to something sensible.
->>
->> What would be the preferred mechanism to pass on this information? =C2=
-=A0It
->> could for instance be arguments to the hook script or via environment
->> variables.
->
-> It would make sense to me for it to be passed in through the environment
-> using GIT_{AUTHOR,COMMITTER}_{NAME,EMAIL}. You could even pass
-> GIT_AUTHOR_DATE to detect if somebody is using "git commit -c" to get
-> the date from a previous commit.
+> Before the test for emptyness can happen, the complete statement must be
+> parsed, but ksh finds a syntax error in the statement and, therefore,
+> cannot even begin to execute the statement. (ksh doesn't follow POSIX in
+> this regard, where this would not be a syntax error.)
 
-I agree that would be a more natural interface.  Attached is a patch
-that sets these environment variables before the hooks are invoked.
-The patch also updates the documentation and adds some tests.
+I had to stare at Brandon's patch that was essentially:
 
-Regards,
-Gisle
+-    for p in $(FOO); do echo $$p; done
++    foo=$(FOO); for p in $$foo; do echo $$p; done
 
---0016364d2c9b8b42fb048aa7c348
-Content-Type: application/octet-stream; 
-	name="0001-Set-ident-environment-variables-for-the-commit-hooks.patch"
-Content-Disposition: attachment; 
-	filename="0001-Set-ident-environment-variables-for-the-commit-hooks.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gb9m81bt0
+and the above two doesn't look like there should be any difference; your
+explanation makes quite a lot of sense but that's arcane.  I doubt I will
+be able to justify and explain the latter construction without consulting
+your message I am responsing to, if somebody asks "why do we assign $(FOO)
+to a shell variable and then iterate over it?" 6 months from now.
 
-RnJvbSBjMzUyY2ZkZGE3ZGJkM2Y5MTg1ZDRjMGIxYjQ0NzJjNjljZDY0Mzk5IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBHaXNsZSBBYXMgPGdpc2xlQGFhcy5ubz4KRGF0ZTogTW9uLCA1
-IEp1bCAyMDEwIDE3OjQ1OjMwICswMjAwClN1YmplY3Q6IFtQQVRDSF0gU2V0IGlkZW50IGVudmly
-b25tZW50IHZhcmlhYmxlcyBmb3IgdGhlIGNvbW1pdCBob29rcyB0byBvYnNlcnZlCgpUaGUgR0lU
-X3tBVVRIT1IsQ09NTUlUVEVSfV97TkFNRSxFTUFJTH0gZW52aXJvbm1lbnQgdmFyaWFibGVzIGFy
-ZSBzZXQgdG8KcmVmbGVjdCB0aGUgdmFsdWVzIGFib3V0IHRvIGJlIGNvbW1pdHRlZC4KLS0tCiBE
-b2N1bWVudGF0aW9uL2dpdGhvb2tzLnR4dCB8ICAgIDQgKystCiBidWlsdGluL2NvbW1pdC5jICAg
-ICAgICAgICB8ICAgIDkgKysrKy0tLQogY2FjaGUuaCAgICAgICAgICAgICAgICAgICAgfCAgICAy
-ICsKIGlkZW50LmMgICAgICAgICAgICAgICAgICAgIHwgICA0NiArKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKystLS0tLS0tLS0tLS0tCiB0L3Q3NTAzLXByZS1jb21taXQtaG9vay5zaCB8ICAg
-MjYgKysrKysrKysrKysrKysrKysrKysrKysrCiA1IGZpbGVzIGNoYW5nZWQsIDY4IGluc2VydGlv
-bnMoKyksIDE5IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0aG9v
-a3MudHh0IGIvRG9jdW1lbnRhdGlvbi9naXRob29rcy50eHQKaW5kZXggNzE4M2FhOS4uYTMzMGE2
-NyAxMDA2NDQKLS0tIGEvRG9jdW1lbnRhdGlvbi9naXRob29rcy50eHQKKysrIGIvRG9jdW1lbnRh
-dGlvbi9naXRob29rcy50eHQKQEAgLTg0LDcgKzg0LDkgQEAgc3VjaCBhIGxpbmUgaXMgZm91bmQu
-CiAKIEFsbCB0aGUgJ2dpdCBjb21taXQnIGhvb2tzIGFyZSBpbnZva2VkIHdpdGggdGhlIGVudmly
-b25tZW50CiB2YXJpYWJsZSBgR0lUX0VESVRPUj06YCBpZiB0aGUgY29tbWFuZCB3aWxsIG5vdCBi
-cmluZyB1cCBhbiBlZGl0b3IKLXRvIG1vZGlmeSB0aGUgY29tbWl0IG1lc3NhZ2UuCit0byBtb2Rp
-ZnkgdGhlIGNvbW1pdCBtZXNzYWdlLiAgVGhlICdHSVRfQVVUSE9SX05BTUUnLCAnR0lUX0FVVEhP
-Ul9FTUFJTCcsCisnR0lUX0NPTU1JVFRFUl9OQU1FJywgJ0dJVF9DT01NSVRURVJfRU1BSUwnIGVu
-dmlyb25tZW50IHZhcmlhYmxlcword2lsbCBhbHNvIGJlIHNldC4KIAogcHJlcGFyZS1jb21taXQt
-bXNnCiB+fn5+fn5+fn5+fn5+fn5+fn4KZGlmZiAtLWdpdCBhL2J1aWx0aW4vY29tbWl0LmMgYi9i
-dWlsdGluL2NvbW1pdC5jCmluZGV4IGMxMDFmMDAuLjA2ZTkzNDIgMTAwNjQ0Ci0tLSBhL2J1aWx0
-aW4vY29tbWl0LmMKKysrIGIvYnVpbHRpbi9jb21taXQuYwpAQCAtNTU3LDYgKzU1NywxMSBAQCBz
-dGF0aWMgaW50IHByZXBhcmVfdG9fY29tbWl0KGNvbnN0IGNoYXIgKmluZGV4X2ZpbGUsIGNvbnN0
-IGNoYXIgKnByZWZpeCwKIAljb25zdCBjaGFyICpob29rX2FyZzIgPSBOVUxMOwogCWludCBpZGVu
-dF9zaG93biA9IDA7CiAKKwlkZXRlcm1pbmVfYXV0aG9yX2luZm8oKTsKKwlnaXRfY29tbWl0dGVy
-X2luZm8oMCk7IC8qIFRoaXMgY2hlY2tzIGlmIGNvbW1pdHRlciBpZGVudCBpcyBleHBsaWNpdGx5
-IGdpdmVuICovCisJZ2l0X3NldGVudl9pZGVudChhdXRob3JfbmFtZSwgYXV0aG9yX2VtYWlsLAor
-CQkJIGdldGVudigiR0lUX0NPTU1JVFRFUl9OQU1FIiksIGdldGVudigiR0lUX0NPTU1JVFRFUl9F
-TUFJTCIpKTsKKwogCWlmICghbm9fdmVyaWZ5ICYmIHJ1bl9ob29rKGluZGV4X2ZpbGUsICJwcmUt
-Y29tbWl0IiwgTlVMTCkpCiAJCXJldHVybiAwOwogCkBAIC02MzIsMTAgKzYzNyw2IEBAIHN0YXRp
-YyBpbnQgcHJlcGFyZV90b19jb21taXQoY29uc3QgY2hhciAqaW5kZXhfZmlsZSwgY29uc3QgY2hh
-ciAqcHJlZml4LAogCiAJc3RyYnVmX3JlbGVhc2UoJnNiKTsKIAotCWRldGVybWluZV9hdXRob3Jf
-aW5mbygpOwotCi0JLyogVGhpcyBjaGVja3MgaWYgY29tbWl0dGVyIGlkZW50IGlzIGV4cGxpY2l0
-bHkgZ2l2ZW4gKi8KLQlnaXRfY29tbWl0dGVyX2luZm8oMCk7CiAJaWYgKHVzZV9lZGl0b3IgJiYg
-aW5jbHVkZV9zdGF0dXMpIHsKIAkJY2hhciAqYXV0aG9yX2lkZW50OwogCQljb25zdCBjaGFyICpj
-b21taXR0ZXJfaWRlbnQ7CmRpZmYgLS1naXQgYS9jYWNoZS5oIGIvY2FjaGUuaAppbmRleCBjOWZh
-M2RmLi4yZTcwZmY3IDEwMDY0NAotLS0gYS9jYWNoZS5oCisrKyBiL2NhY2hlLmgKQEAgLTgyMiw2
-ICs4MjIsOCBAQCBlbnVtIGRhdGVfbW9kZSBwYXJzZV9kYXRlX2Zvcm1hdChjb25zdCBjaGFyICpm
-b3JtYXQpOwogI2RlZmluZSBJREVOVF9OT19EQVRFCSAgICAgICA0CiBleHRlcm4gY29uc3QgY2hh
-ciAqZ2l0X2F1dGhvcl9pbmZvKGludCk7CiBleHRlcm4gY29uc3QgY2hhciAqZ2l0X2NvbW1pdHRl
-cl9pbmZvKGludCk7CitleHRlcm4gdm9pZCBnaXRfc2V0ZW52X2lkZW50KGNvbnN0IGNoYXIgKmF1
-dGhvcl9uYW1lLCBjb25zdCBjaGFyICphdXRob3JfZW1haWwsCisJCQkgICAgIGNvbnN0IGNoYXIg
-KmNvbW1pdHRlcl9uYW1lLCBjb25zdCBjaGFyICpjb21taXR0ZXJfZW1haWwpOwogZXh0ZXJuIGNv
-bnN0IGNoYXIgKmZtdF9pZGVudChjb25zdCBjaGFyICpuYW1lLCBjb25zdCBjaGFyICplbWFpbCwg
-Y29uc3QgY2hhciAqZGF0ZV9zdHIsIGludCk7CiBleHRlcm4gY29uc3QgY2hhciAqZm10X25hbWUo
-Y29uc3QgY2hhciAqbmFtZSwgY29uc3QgY2hhciAqZW1haWwpOwogZXh0ZXJuIGNvbnN0IGNoYXIg
-KmdpdF9lZGl0b3Iodm9pZCk7CmRpZmYgLS1naXQgYS9pZGVudC5jIGIvaWRlbnQuYwppbmRleCA5
-ZTI0Mzg4Li4xOTBlNGEwIDEwMDY0NAotLS0gYS9pZGVudC5jCisrKyBiL2lkZW50LmMKQEAgLTE4
-MiwzOSArMTgyLDQ1IEBAIHN0YXRpYyBjb25zdCBjaGFyICplbnZfaGludCA9CiAiT21pdCAtLWds
-b2JhbCB0byBzZXQgdGhlIGlkZW50aXR5IG9ubHkgaW4gdGhpcyByZXBvc2l0b3J5LlxuIgogIlxu
-IjsKIAotY29uc3QgY2hhciAqZm10X2lkZW50KGNvbnN0IGNoYXIgKm5hbWUsIGNvbnN0IGNoYXIg
-KmVtYWlsLAotCQkgICAgICBjb25zdCBjaGFyICpkYXRlX3N0ciwgaW50IGZsYWcpCitzdGF0aWMg
-dm9pZCBnZXRfaWRlbnQoY29uc3QgY2hhciAqKm5hbWUsIGNvbnN0IGNoYXIgKiplbWFpbCwgaW50
-IGZsYWcpCiB7Ci0Jc3RhdGljIGNoYXIgYnVmZmVyWzEwMDBdOwotCWNoYXIgZGF0ZVs1MF07Ci0J
-aW50IGk7CiAJaW50IGVycm9yX29uX25vX25hbWUgPSAoZmxhZyAmIElERU5UX0VSUk9SX09OX05P
-X05BTUUpOwogCWludCB3YXJuX29uX25vX25hbWUgPSAoZmxhZyAmIElERU5UX1dBUk5fT05fTk9f
-TkFNRSk7Ci0JaW50IG5hbWVfYWRkcl9vbmx5ID0gKGZsYWcgJiBJREVOVF9OT19EQVRFKTsKIAog
-CXNldHVwX2lkZW50KCk7Ci0JaWYgKCFuYW1lKQotCQluYW1lID0gZ2l0X2RlZmF1bHRfbmFtZTsK
-LQlpZiAoIWVtYWlsKQotCQllbWFpbCA9IGdpdF9kZWZhdWx0X2VtYWlsOworCWlmICghKm5hbWUp
-CisJCSpuYW1lID0gZ2l0X2RlZmF1bHRfbmFtZTsKKwlpZiAoISplbWFpbCkKKwkJKmVtYWlsID0g
-Z2l0X2RlZmF1bHRfZW1haWw7CiAKLQlpZiAoISpuYW1lKSB7CisJaWYgKCEqKm5hbWUpIHsKIAkJ
-c3RydWN0IHBhc3N3ZCAqcHc7CiAKIAkJaWYgKCh3YXJuX29uX25vX25hbWUgfHwgZXJyb3Jfb25f
-bm9fbmFtZSkgJiYKLQkJICAgIG5hbWUgPT0gZ2l0X2RlZmF1bHRfbmFtZSAmJiBlbnZfaGludCkg
-eworCQkgICAgKm5hbWUgPT0gZ2l0X2RlZmF1bHRfbmFtZSAmJiBlbnZfaGludCkgewogCQkJZnB1
-dHMoZW52X2hpbnQsIHN0ZGVycik7CiAJCQllbnZfaGludCA9IE5VTEw7IC8qIHdhcm4gb25seSBv
-bmNlICovCiAJCX0KIAkJaWYgKGVycm9yX29uX25vX25hbWUpCi0JCQlkaWUoImVtcHR5IGlkZW50
-ICVzIDwlcz4gbm90IGFsbG93ZWQiLCBuYW1lLCBlbWFpbCk7CisJCQlkaWUoImVtcHR5IGlkZW50
-ICVzIDwlcz4gbm90IGFsbG93ZWQiLCAqbmFtZSwgKmVtYWlsKTsKIAkJcHcgPSBnZXRwd3VpZChn
-ZXR1aWQoKSk7CiAJCWlmICghcHcpCiAJCQlkaWUoIllvdSBkb24ndCBleGlzdC4gR28gYXdheSEi
-KTsKIAkJc3RybGNweShnaXRfZGVmYXVsdF9uYW1lLCBwdy0+cHdfbmFtZSwKIAkJCXNpemVvZihn
-aXRfZGVmYXVsdF9uYW1lKSk7Ci0JCW5hbWUgPSBnaXRfZGVmYXVsdF9uYW1lOworCQkqbmFtZSA9
-IGdpdF9kZWZhdWx0X25hbWU7CiAJfQorfQorCitjb25zdCBjaGFyICpmbXRfaWRlbnQoY29uc3Qg
-Y2hhciAqbmFtZSwgY29uc3QgY2hhciAqZW1haWwsCisJCSAgICAgIGNvbnN0IGNoYXIgKmRhdGVf
-c3RyLCBpbnQgZmxhZykKK3sKKwlzdGF0aWMgY2hhciBidWZmZXJbMTAwMF07CisJY2hhciBkYXRl
-WzUwXTsKKwlpbnQgaTsKKwlpbnQgbmFtZV9hZGRyX29ubHkgPSAoZmxhZyAmIElERU5UX05PX0RB
-VEUpOworCisJZ2V0X2lkZW50KCZuYW1lLCAmZW1haWwsIGZsYWcpOwogCiAJc3RyY3B5KGRhdGUs
-IGdpdF9kZWZhdWx0X2RhdGUpOwogCWlmICghbmFtZV9hZGRyX29ubHkgJiYgZGF0ZV9zdHIpCkBA
-IC0yNDAsNiArMjQ2LDE4IEBAIGNvbnN0IGNoYXIgKmZtdF9uYW1lKGNvbnN0IGNoYXIgKm5hbWUs
-IGNvbnN0IGNoYXIgKmVtYWlsKQogCXJldHVybiBmbXRfaWRlbnQobmFtZSwgZW1haWwsIE5VTEws
-IElERU5UX0VSUk9SX09OX05PX05BTUUgfCBJREVOVF9OT19EQVRFKTsKIH0KIAordm9pZCBnaXRf
-c2V0ZW52X2lkZW50KGNvbnN0IGNoYXIgKmF1dGhvcl9uYW1lLCBjb25zdCBjaGFyICphdXRob3Jf
-ZW1haWwsCisJCSAgICAgIGNvbnN0IGNoYXIgKmNvbW1pdHRlcl9uYW1lLCBjb25zdCBjaGFyICpj
-b21taXR0ZXJfZW1haWwpCit7CisJZ2V0X2lkZW50KCZhdXRob3JfbmFtZSwgJmF1dGhvcl9lbWFp
-bCwgSURFTlRfRVJST1JfT05fTk9fTkFNRSk7CisJc2V0ZW52KCJHSVRfQVVUSE9SX05BTUUiLCBh
-dXRob3JfbmFtZSwgMSk7CisJc2V0ZW52KCJHSVRfQVVUSE9SX0VNQUlMIiwgYXV0aG9yX2VtYWls
-LCAxKTsKKworCWdldF9pZGVudCgmY29tbWl0dGVyX25hbWUsICZjb21taXR0ZXJfZW1haWwsIElE
-RU5UX0VSUk9SX09OX05PX05BTUUpOworCXNldGVudigiR0lUX0NPTU1JVFRFUl9OQU1FIiwgY29t
-bWl0dGVyX25hbWUsIDEpOworCXNldGVudigiR0lUX0NPTU1JVFRFUl9FTUFJTCIsIGNvbW1pdHRl
-cl9lbWFpbCwgMSk7Cit9CisKIGNvbnN0IGNoYXIgKmdpdF9hdXRob3JfaW5mbyhpbnQgZmxhZykK
-IHsKIAlyZXR1cm4gZm10X2lkZW50KGdldGVudigiR0lUX0FVVEhPUl9OQU1FIiksCmRpZmYgLS1n
-aXQgYS90L3Q3NTAzLXByZS1jb21taXQtaG9vay5zaCBiL3QvdDc1MDMtcHJlLWNvbW1pdC1ob29r
-LnNoCmluZGV4IDg1MjhmNjQuLjIxYWM1N2QgMTAwNzU1Ci0tLSBhL3QvdDc1MDMtcHJlLWNvbW1p
-dC1ob29rLnNoCisrKyBiL3QvdDc1MDMtcHJlLWNvbW1pdC1ob29rLnNoCkBAIC04NSw0ICs4NSwz
-MCBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzIFBPU0lYUEVSTSAnLS1uby12ZXJpZnkgd2l0aCBub24t
-ZXhlY3V0YWJsZSBob29rJyAnCiAKICcKIAorIyBhIGhvb2sgdGhhdCB0ZXN0IGF1dGhvcgorY2F0
-ID4gIiRIT09LIiA8PEVPVAorIyEvYmluL3NoCitjYXNlICJcJEdJVF9BVVRIT1JfTkFNRSIgaW4g
-U3VwZXJtYW4pIGV4aXQgMDs7IGVzYWMKK2VjaG8gIk9ubHkgcGF0Y2hlcyBmcm9tIFN1cGVybWFu
-IGlzIGFjY2VwdGVkIG5vdyIKK2V4aXQgMQorRU9UCitjYXQgIiRIT09LIgorY2htb2QgK3ggIiRI
-T09LIgorCit0ZXN0X2V4cGVjdF9zdWNjZXNzICd3aXRoIGZhaWxpbmcgaG9vaycgJworCisJZWNo
-byAiYW5vdGhlciIgPj4gZmlsZSAmJgorCWdpdCBhZGQgZmlsZSAmJgorCXRlc3RfbXVzdF9mYWls
-IGdpdCBjb21taXQgLW0gImFub3RoZXIiCisKKycKKwordGVzdF9leHBlY3Rfc3VjY2VzcyAnd2l0
-aCBub24tZmFpbGluZyBob29rJyAnCisKKwllY2hvICJhbm90aGVyIiA+PiBmaWxlICYmCisJZ2l0
-IGFkZCBmaWxlICYmCisJZ2l0IGNvbW1pdCAtbSAiYW5vdGhlciIgLS1hdXRob3IgIlN1cGVybWFu
-IDxyb290QGV4YW1wbGUuY29tPiIKKworJworCiB0ZXN0X2RvbmUKLS0gCjEuNi42LnJjMS4zMS5n
-MWE1NmIKCg==
---0016364d2c9b8b42fb048aa7c348--
+It might make sense to use $(foreach) instead of rolling our own loop in
+the shell to avoid glitches like this.
+
+ Makefile |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 9aca8a1..8bbb574 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2085,13 +2085,13 @@ endif
+ 		ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
+ 		cp "$$execdir/git$X" "$$execdir/$$p" || exit; \
+ 	  done; } && \
+-	{ test x"$(REMOTE_CURL_ALIASES)" = x || \
+-		{ for p in $(REMOTE_CURL_ALIASES); do \
+-		$(RM) "$$execdir/$$p" && \
+-		ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+-		ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+-		cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; \
+-	  done; } ; } && \
++	$(foreach p,$(REMOTE_CURL_ALIASES), \
++		{ \
++		$(RM) "$$execdir/$p" && \
++		ln "$$execdir/git-remote-http$X" "$$execdir/$p" 2>/dev/null || \
++		ln -s "git-remote-http$X" "$$execdir/$p" 2>/dev/null || \
++		cp "$$execdir/git-remote-http$X" "$$execdir/$p" || exit; \
++		} && ) : \
+ 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+ 
+ install-gitweb:
