@@ -1,114 +1,89 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: global hooks - once again
-Date: Mon, 5 Jul 2010 12:03:40 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC744940F6E57@xmail3.se.axis.com>
-References: <AANLkTikXJS5QCXMXgsOfkYn9cMBQV6o23tds5YG3A_OI@mail.gmail.com>
-	<7v630x1yl8.fsf@alter.siamese.dyndns.org>
- <AANLkTikMEDUI7d5Mzwm8r43zCYTqefyI06PHOMvT1iLz@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Eugene Sajine <euguess@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 05 12:04:01 2010
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
+Date: Mon, 5 Jul 2010 07:06:45 -0400
+Message-ID: <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
+References: <1278296639-25024-1-git-send-email-tytso@mit.edu> <20100705025900.GQ22659@josefsipek.net>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: jeffpc@josefsipek.net
+X-From: git-owner@vger.kernel.org Mon Jul 05 13:07:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OViWs-0003MP-FQ
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 12:03:58 +0200
+	id 1OVjVx-0004SH-Eh
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 13:07:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752238Ab0GEKDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 06:03:51 -0400
-Received: from krynn.se.axis.com ([193.13.178.10]:59188 "EHLO
-	krynn.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934Ab0GEKDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 06:03:50 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by krynn.se.axis.com (8.14.3/8.14.3/Debian-5) with ESMTP id o65A3h4U016243;
-	Mon, 5 Jul 2010 12:03:43 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Mon, 5 Jul 2010 12:03:43 +0200
-Thread-Topic: global hooks - once again
-Thread-Index: AcsaH41A+p6oHxWuR4Ob/uJtOCxtdQCA/8Mg
-In-Reply-To: <AANLkTikMEDUI7d5Mzwm8r43zCYTqefyI06PHOMvT1iLz@mail.gmail.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1752108Ab0GELGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 07:06:49 -0400
+Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:53551 "EHLO
+	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750733Ab0GELGs convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Jul 2010 07:06:48 -0400
+X-AuditID: 1209190d-b7c19ae0000009ea-e1-4c31bcc7a07c
+Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
+	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id 2A.8F.02538.7CCB13C4; Mon,  5 Jul 2010 07:06:47 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o65B6kj2031667;
+	Mon, 5 Jul 2010 07:06:46 -0400
+Received: from [10.0.42.106] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o65B6iCA023490
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 5 Jul 2010 07:06:45 -0400 (EDT)
+In-Reply-To: <20100705025900.GQ22659@josefsipek.net>
+X-Mailer: Apple Mail (2.1081)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150256>
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJu
-ZWwub3JnIFttYWlsdG86Z2l0LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9m
-IEV1Z2VuZSBTYWppbmUNCj4gU2VudDogZGVuIDIganVsaSAyMDEwIDIxOjQ4DQo+IFRvOiBKdW5p
-byBDIEhhbWFubw0KPiBDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KPiBTdWJqZWN0OiBSZTogZ2xv
-YmFsIGhvb2tzIC0gb25jZSBhZ2Fpbg0KPiANCj4gT24gRnJpLCBKdWwgMiwgMjAxMCBhdCAzOjE4
-IFBNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3RlckBwb2JveC5jb20+DQo+IHdyb3RlOg0KPiA+IEV1
-Z2VuZSBTYWppbmUgPGV1Z3Vlc3NAZ21haWwuY29tPiB3cml0ZXM6DQo+ID4NCj4gPj4gRm9yIGV4
-YW1wbGUsIHNvIGkgY291bGQgc2F5DQo+ID4+ICQgZ2l0IGNvbmZpZyAtLWdsb2JhbCBob29rcy5k
-aXIgfi9naXQvaG9va3MNCj4gPg0KPiA+IEkgZG9uJ3QgdGhpbmsgImdsb2JhbCIgaG9va3MgYXJl
-IHVzZWZ1bCBmb3IgcGVvcGxlIHdobyB3b3JrIG9uIA0KPiA+IG1vcmUgdGhhbiBvbmUgcHJvamVj
-dCwgb3IgcGVvcGxlIHdobyBpbnRlcmFjdCBpbiBtb3JlIHRoYW4gb25lIA0KPiA+IHdheXMgdG8g
-cHJvamVjdHMuDQo+ID4gRGlmZmVyZW50IHByb2plY3RzIHR5cGljYWxseSBoYXZlIGRpZmZlcmVu
-dCBuZWVkcyBvdXQgb2YgdGhlIGhvb2tzDQo+ID4gKGUuZy4gcHJlLWNvbW1pdCBwb2xpY3kpLCBh
-bmQgZGlmZmVyZW50IHdvcmtmbG93cyB0eXBpY2FsbHkgY2FsbCANCj4gPiBmb3IgZGlmZmVyZW50
-IG5lZWRzIG91dCBvZiB0aGUgaG9va3MgKGUuZy4gSSB3b3VsZCB3YW50IHRvIGJlIGFibGUgDQo+
-ID4gdG8gcmViYXNlIGluIG15IHByaXZhdGUgd29ya2luZyByZXBvc2l0b3J5IGJ1dCBub3QgaW4g
-dGhlIHJlcG9zaXRvcnkgDQo+ID4gSSB1c2UgZm9yIGludGVncmF0aW9uIG9mIG90aGVyIHBlb3Bs
-ZSdzIGJyYW5jaGVzKS4NCj4gPg0KPiA+IFNvIEkgYW0gZmFpcmx5IG5lZ2F0aXZlIG9uIHlvdXIg
-cGFydGljdWxhciBleGFtcGxlIGFib3ZlLg0KPiANCj4gV2VsbCwgeW91IGZvcmdvdCBhYm91dCBh
-bm90aGVyIGhhbGYgb2YgdXNlcnMgdGhhdCBhcmUgd29ya2luZyB3aXRoDQo+IG1hbnkgcHJvamVj
-dHMgYnV0IHVzaW5nIG9uZSBwb2xpY3kgZm9yIGV4YW1wbGUgaW4gb25lIGNvbXBhbnksIG9yIGlm
-DQo+IHRoZSBndXkgd29ya3Mgd2l0aCBzZXZlcmFsIHByb2plY3RzLCBidXQgd2FudHMgc29tZSBv
-ZiBoaXMgY3VzdG9tDQo+IGhvb2tzIHRvIGJlIGFwcGxpZWQgZm9yIGFsbCBoaXMgcmVwb3MvcHJv
-amVjdHMsIGZvciBleGFtcGxlIGlmIGhlIHdhbnQNCj4gc29tZSBnZW5lcmFsIGFjdGlvbnMgdG8g
-YmUgZXhlY3V0ZWQgYmVmb3JlIGNvbW1pdCwgbGlrZSBzcGVsbCBjaGVjayBvZg0KPiB0aGUgY29t
-bWl0IG1lc3NhZ2UuIElmIEkgaGF2ZSA0MCByZXBvcyAtLWdsb2JhbCBhcHByb2FjaCBpcyB0aGUg
-d2F5IHRvDQo+IGdvLg0KDQpXZWxsLCBJIGJlbG9uZyB0byB0aGlzIHNlY29uZGFyeSBjYXRlZ29y
-eSwgd29ya2luZyBmb3IgYSBjb21wYW55IA0Kd2hpY2ggaXMgYWJvdXQgdG8gc3dpdGNoIHRvIGdp
-dC4gT25jZSB0aGUgdHJhbnNpdGlvbiBpcyBjb21wbGV0ZWQsDQp3ZSB3aWxsIGhhdmUgbW9yZSB0
-aGFuIDgwMCBnaXQgcmVwb3NpdG9yaWVzLCBhbmQgdGhleSBzaG91bGQgYWxsIA0KaGF2ZSBhIGJh
-c2ljIHNldCBvZiBob29rcyAoZS5nLiwgY29tbWl0IG1lc3NhZ2UgdmFsaWRhdGlvbiwgDQpwZXJt
-aXNzaW9ucyBjaGVja2luZywgbWFpbCBzZW5kaW5nKS4gTWFraW5nIG91ciAxMDArIGRldmVsb3Bl
-cnMgDQptYW51YWxseSBzZXQgdXAgdGhlIGhvb2tzIGZvciBlYWNoIHJlcG9zaXRvcnkgdGhleSBj
-bG9uZSBpcyBub3QgYW4gDQpvcHRpb24uDQoNClNvIHdoYXQgSSBoYXZlIGRvbmUgaXMgc2V0dXAg
-YSB0ZW1wbGF0ZSBkaXJlY3Rvcnkgd2l0aCBob29rcyBiZWluZw0KYSBsaW5rIHRvIGEgcHJlLWlu
-c3RhbGxlZCBkaXJlY3RvcnksIHdoZXJlIGVhY2ggaG9vayBpcyBsaW5rZWQgdG8gYSANCnNpbmds
-ZSBzY3JpcHQuIFRoaXMgc2NyaXB0IHRoZW4gcmVhZHMgZnJvbSBhIGRpcmVjdG9yeSBjYWxsZWQg
-DQpob29rcy5kIHdoaWNoIGlzIGEgZHJvcCBkaXJlY3RvcnkgZm9yIGhvb2tzLiBFYWNoIGhvb2sg
-dGhlbiBoYXMgdGhlDQpmb3JtYXQgJzxob29rPi48b3JkZXI+LjxuYW1lPicgKGUuZy4sICdwb3N0
-LXJlY2VpdmUuMTAuc2VuZF9tYWlsJyksDQpzb21ld2hhdCBzaW1pbGFyIHRvIC9ldGMvcmNYLmQu
-IEl0IHdpbGwgYWxzbyBsb29rIGluIGEgLmdpdGhvb2tzLmQNCmRpcmVjdG9yeSBpbiB0aGUgd29y
-a2luZyBkaXJlY3RvcnkgKHRoaXMgY2FuIGJlIGRpc2FibGVkIHdpdGggYQ0KY29uZmlnIG9wdGlv
-bikuIFRoaXMgaXMgdXNlZCBieSByZXBvc2l0b3J5IG93bmVycyB3aG8gd2FudCB0byBhZGQNCmV4
-dHJhIGhvb2tzIGZvciB0aGVpciByZXBvc2l0b3JpZXMsIGUuZy4sIHRvIGFkZCBhdXRvbWF0aWMg
-Y29kZSANCmluZGVudGF0aW9uIGJlZm9yZSBjb21taXQsIG9yIHVuaXQgdGVzdGluZy4gSXQgaXMg
-YWxzbyBwb3NzaWJsZSANCnRvIHNwZWNpZnkgbW9yZSBob29rIGRpcmVjdG9yaWVzIHdpdGggYSBt
-dWx0aS12YWx1ZSBjb25maWcgb3B0aW9uLCANCndoaWNoIHRoZSB1c2VyIGNhbiB1c2UgaWYgaGUv
-c2hlIGxpa2VzIHRvIGFkZCBzb21lIHBlcnNvbmFsIGhvb2tzLg0KQWxsIGhvb2tzIGZvdW5kIGlu
-IGFsbCBkcm9wIGRpcmVjdG9yaWVzIGFyZSBzb3J0ZWQgYnkgb3JkZXIgYmVmb3JlIA0KYmVpbmcg
-ZXhlY3V0ZWQgc28gdGhhdCBpdCBpcyBwb3NzaWJsZSB0byBhZGQgbG9jYWwgaG9va3MgYmVmb3Jl
-IG9yDQphZnRlciB0aGUgZ2xvYmFsIG9uZXMuDQoNClRoaXMgd2F5IGl0IGlzIHBvc3NpYmxlIHRv
-IGhhdmUgc3lzdGVtIGxldmVsIGhvb2tzLCByZXBvc2l0b3J5DQpzcGVjaWZpYyBob29rcyBhbmQg
-dXNlciBzcGVjaWZpYyBob29rcyBhbGwgd29yayB0b2dldGhlci4gQW5kIGV2ZW4gDQp0aG91Z2gg
-SSBub3cgaGF2ZSBhIHN5c3RlbSB3aGljaCB3b3JrcyBmb3IgdXMsIGhhdmluZyBzb21ldGhpbmcg
-bGlrZQ0KdGhpcyBpbiB0aGUgZ2l0IGNvcmUgd291bGQgYmUgbW9yZSBlZmZpY2llbnQsIGFuZCBi
-ZW5lZml0IG1vcmUgdXNlcnMuDQoNCkhlcmUgaXMgd2hhdCBteSBzb2x1dGlvbiBleHBsYWluZWQg
-YWJvdmUgd291bGQgbG9vayBsaWtlIGlmIGl0IHdhcyANCmFkZGVkIHRvIHRoZSBnaXQgY29yZS4N
-Cg0KKiBUaGUgLmdpdC9ob29rcyBkaXJlY3RvcnkgaXMgcmVwbGFjZWQgYnkgLmdpdC9ob29rcy5k
-IChhbnkgaG9va3MNCiAgZm91bmQgaW4gLmdpdC9ob29rcyBjb3VsZCBiZSBhc3N1bWVkIHRvIGhh
-dmUgYW4gb3JkZXIgb2YgNTAgZm9yDQogIGJhY2t3YXJkcyBjb21wYXRpYmlsaXR5KS4NCiogSWYg
-Y29yZS5yZXBvc2l0b3J5SG9va3MgKGJldHRlciBuYW1lPykgaXMgdHJ1ZSAoZGVmYXVsdCB0byBm
-YWxzZSkgDQogIHRoZW4gLmdpdGhvb2tzLmQgaW4gdGhlIHdvcmtpbmcgZGlyZWN0b3J5IGlzIHNl
-YXJjaGVkIGZvciBob29rcy4NCiogSXQgaXMgcG9zc2libGUgdG8gc3BlY2lmeSBtb3JlIGhvb2sg
-ZGlyZWN0b3JpZXMgdXNpbmcgdGhlIA0KICBtdWx0aS12YWx1ZSBjb3JlLmhvb2tEaXJlY3Rvcnkg
-b3B0aW9uIChkaXJlY3RvcmllcyBhcmUgcmVsYXRpdmUgdG8gDQogIHRoZSAuZ2l0IGRpcmVjdG9y
-eTsgYWJzb2x1dGUgZGlyZWN0b3JpZXMgYXJlIG9mIGNvdXJzZSBhbHNvIGFsbG93ZWQpLg0KDQov
-L1BldGVyDQoNCg==
+
+On Jul 4, 2010, at 10:59 PM, jeffpc@josefsipek.net wrote:
+> 
+> Am I understanding this right?  You want the timestamps to be monotonically
+> increasing?  
+
+Yup, that's correct.  In more modern versions of git most (all?) of the places
+that depend on the committer time of the child commit to be greater than the
+committer time of its parents have been relaxed to accept up to a day's worth
+of clock skew, but in the interests of "be conservative in what you send",
+strictly increasing seemed like the best thing to do.
+
+> Is the +60 the most obvious choice?
+
+It's somewhat arbitrary.  I figured a minute increase between commits was
+more aesthetically pleasing than a second, 5 minutes, or an hour, which
+were some other deltas that previous versions of my patch used while I
+was experimenting.
+
+> 
+> Can I get an example of how git can get confused?
+
+This first one is explicitly my/guilt's fault (and it's when I learned that I
+was causing problems by how I was using guilt in the ext4 tree):
+
+http://kerneltrap.org/mailarchive/git/2010/4/22/28928/thread
+
+In this thread we see how the clock skew gets in the way of an optimization
+that speeds up "git tag --contains" by over two orders of magnitude, but it
+gets screwed over by extreme clock skew.  I suggested in that thread that 
+if git is going to depend on it, then maybe "git commit" should either warn
+or error out if the git committer timestamp goes backwards --- and that's when
+I decided maybe I should offer up a patch to guilt to fix this, either before or
+instead of fixing up "git commit" to throw a warning/error:
+
+http://www.spinics.net/lists/git/msg134307.html
+
+Other threads:
+
+http://kerneltrap.org/mailarchive/git/2010/4/8/27731/thread
+http://www.kerneltrap.com/mailarchive/git/2007/5/24/247375
+
+-- Ted
