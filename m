@@ -1,120 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git commit --short' without touching index?
-Date: Mon, 05 Jul 2010 14:28:16 -0700
-Message-ID: <7vk4p9wrdb.fsf@alter.siamese.dyndns.org>
-References: <loom.20100703T102242-536@post.gmane.org>
- <20100703091748.GA11714@sigill.intra.peff.net>
- <7veifhy9j0.fsf@alter.siamese.dyndns.org>
- <20100705205651.GA32728@sigill.intra.peff.net>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH 2/2] Makefile: work around ksh's failure to handle missing 
+	list argument to for loop
+Date: Mon, 5 Jul 2010 16:29:40 -0500
+Message-ID: <AANLkTin0h8DUWo3sfhRdA7NCCCPLKXfQzSDvWX7p1OPq@mail.gmail.com>
+References: <80typu1ozt.fsf@tiny.isode.net>
+	<8YdP-GcDDflOVZnykNVIGceOm01bqeg9PDvdgIfgqUnh29RKC-6Qi8_KBVoqLIt5iyt7g1TX5l96M5KyLrfOqg@cipher.nrlssc.navy.mil>
+	<4C30D4D5.3020900@drmicha.warpmail.net>
+	<4C31796E.9050109@viscovery.net>
+	<7vy6dpyeqf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel <friedan@muon.rutgers.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 05 23:28:34 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	PWalker752@aol.com, newsletter@dirk.my1.cc,
+	bruce.stephens@isode.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 05 23:29:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVtDO-0001Hf-FD
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 23:28:34 +0200
+	id 1OVtEY-0001kc-Fl
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 23:29:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754740Ab0GEV23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 17:28:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38830 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754524Ab0GEV22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 17:28:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 249A5C27EB;
-	Mon,  5 Jul 2010 17:28:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SQmt3ppK6kYE4hmW+T2JxPAklck=; b=Wky+Qc
-	BLDztOEaJ0qjTotDNNona0i8KKdyXfOKWJdfG+OU0E61on3zuSJjBZxIdIHSgKkm
-	4jh/9R/72jy05hRljx7s6ICvlZJfVEXdo6lpi7o0HndJtQx2F11k4nH1FY/xpJlk
-	fGZKVLblrLuNCjwAS5I5XtE5JyCo0vrVodyuk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=T13XM2pgP/GIE9KhT+seE+IYmArBWQvn
-	xJYDkpHH9/WSepuAAIxcuQlPFMMyvaFj437u0X1KLJwlTkIKCKBmZ4hdk207aA+R
-	bVwaSQzz05rg1Jtvlr1cC+OtL4GY37DsfH0ilOoOLrUz7/XtVdhwa1BZfpuWZKSY
-	UldmQlNjIwU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AE1D7C27EA;
-	Mon,  5 Jul 2010 17:28:23 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 62DE8C27E6; Mon,  5 Jul
- 2010 17:28:18 -0400 (EDT)
-In-Reply-To: <20100705205651.GA32728@sigill.intra.peff.net> (Jeff King's
- message of "Mon\, 5 Jul 2010 16\:56\:52 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3DB2E06C-887C-11DF-950C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755645Ab0GEV3m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Jul 2010 17:29:42 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37097 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754550Ab0GEV3l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Jul 2010 17:29:41 -0400
+Received: by vws5 with SMTP id 5so6563679vws.19
+        for <git@vger.kernel.org>; Mon, 05 Jul 2010 14:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ItDzC9CnAjRvBApVSCD/tRXwV6VFRbo7nqX+c/DBa4s=;
+        b=SfwaslNW7q2nknE0g+MzSkHo1bZKGxQwpQOALTJt8K5Dy9SScSpsUizKO6rJremFqo
+         klFhjIx7XTEzXhzTbUMt9iPwveNgcGbSbQmr2KrXNGNOrs+P/kcviwJFZITGpZ/xx5B2
+         DupBpTNhzVp9AqTUThONYYqHKMNlYtQ80QnQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AkqrTFKsHNMKTRCtJcXI2Po6tnsP4+LIQwnd4j1fzbd5x8x7lzsawK34rGJD7rC6bu
+         IyDIUhiSqbNg9DewYrYczzUx2XLsExlQrJ1e3Y3Hky2bgA24U4RzBVL/HkAkS+REj1LK
+         t5gYv1yl79AN3AcyH4XaZZrXXnIhrnIfkgs2g=
+Received: by 10.229.219.143 with SMTP id hu15mr1992970qcb.129.1278365380329; 
+	Mon, 05 Jul 2010 14:29:40 -0700 (PDT)
+Received: by 10.229.192.197 with HTTP; Mon, 5 Jul 2010 14:29:40 -0700 (PDT)
+In-Reply-To: <7vy6dpyeqf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150296>
 
-Jeff King <peff@peff.net> writes:
+It looks like Johannes has already supplied the explanation that was
+missing from my commit message.  Thanks.
 
-> On Mon, Jul 05, 2010 at 01:10:43PM -0700, Junio C Hamano wrote:
+
+On Mon, Jul 5, 2010 at 1:18 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Johannes Sixt <j.sixt@viscovery.net> writes:
 >
->> Jeff King <peff@peff.net> writes:
->> 
->> > It would be nice if the index-refreshing code only wrote to the index if
->> > there was something worth writing. I'm not sure how hard that would be
->> > to implement, though.
->> 
->> Hmm, don't we already do that with "istate->cache_changed"?
+>> Before the test for emptyness can happen, the complete statement mus=
+t be
+>> parsed, but ksh finds a syntax error in the statement and, therefore=
+,
+>> cannot even begin to execute the statement. (ksh doesn't follow POSI=
+X in
+>> this regard, where this would not be a syntax error.)
 >
-> Apparently not:
+> I had to stare at Brandon's patch that was essentially:
 >
->   $ stat .git/index | grep -i modify
->   Modify: 2010-07-05 16:52:11.000000000 -0400
->   $ git status
->   # On branch master
->   nothing to commit
->   $ stat .git/index | grep -i modify
->   Modify: 2010-07-05 16:53:09.000000000 -0400
+> - =C2=A0 =C2=A0for p in $(FOO); do echo $$p; done
+> + =C2=A0 =C2=A0foo=3D$(FOO); for p in $$foo; do echo $$p; done
 >
-> and it is not just updating some stat-dirtiness. Doing it over and over
-> will keep updating the index. It looks like we unconditionally do the
-> lock and write in cmd_status, but I haven't looked further.
+> and the above two doesn't look like there should be any difference; y=
+our
+> explanation makes quite a lot of sense but that's arcane. =C2=A0I dou=
+bt I will
+> be able to justify and explain the latter construction without consul=
+ting
+> your message I am responsing to, if somebody asks "why do we assign $=
+(FOO)
+> to a shell variable and then iterate over it?" 6 months from now.
+>
+> It might make sense to use $(foreach) instead of rolling our own loop=
+ in
+> the shell to avoid glitches like this.
 
-Something like this, plus possibly a similar fix to "git commit $path"
-codepath, perhaps?
+$(foreach) works too.  I only avoided it because it has already caused =
+a
+problem once before by creating a command line that exceeded the
+maximum argument list length on IRIX.
 
-We may want to audit all uses of write_cache() and write_index() that are
-not protected with active_cache_changed (or istate->cache_changed); I am
-reluctant to suggest placing that logic into write_index() at this point,
-though, as we may be updating the index in bulk, without marking
-active_cache_changed bit, exactly because we know we will unconditionally
-write the result out.
+REMOTE_CURL_ALIASES only has 3 items in it right now, and probably
+won't grow much larger, if it grows at all, so there is little chance o=
+f
+exceeding the maximum argument list length on IRIX.  So $(foreach) is
+fine with me if you think that reads better.
 
- builtin/commit.c |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index c101f00..86d3926 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -343,9 +343,13 @@ static char *prepare_index(int argc, const char **argv, const char *prefix, int
- 	if (!pathspec || !*pathspec) {
- 		fd = hold_locked_index(&index_lock, 1);
- 		refresh_cache_or_die(refresh_flags);
--		if (write_cache(fd, active_cache, active_nr) ||
--		    commit_locked_index(&index_lock))
--			die("unable to write new_index file");
-+		if (active_cache_changed) {
-+			if (write_cache(fd, active_cache, active_nr) ||
-+			    commit_locked_index(&index_lock))
-+				die("unable to write new_index file");
-+		} else {
-+			rollback_lock_file(&index_lock);
-+		}
- 		commit_style = COMMIT_AS_IS;
- 		return get_index_file();
- 	}
+-Brandon
