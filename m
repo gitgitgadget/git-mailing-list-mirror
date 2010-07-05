@@ -1,162 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Mon, 5 Jul 2010 08:39:23 -0400
-Message-ID: <20100705123923.GC21146@sigill.intra.peff.net>
-References: <E1OU82h-0001xY-3b@closure.thunk.org>
- <AANLkTikkLIKm3soF9agXnN34P7Xnq4AiVqGU_qFaaRmZ@mail.gmail.com>
- <20100701121711.GF1333@thunk.org>
- <20100701150331.GA12851@sigill.intra.peff.net>
- <20100701153842.GA15466@sigill.intra.peff.net>
- <20100702192612.GM1333@thunk.org>
- <20100703080618.GA10483@sigill.intra.peff.net>
- <20100704005543.GB6384@thunk.org>
- <20100705122723.GB21146@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: tytso@mit.edu
-X-From: git-owner@vger.kernel.org Mon Jul 05 14:39:33 2010
+From: Dylan Reid <dgreid@gmail.com>
+Subject: [PATCH] xdiff: optimise for no whitespace difference when ignoring whitespace.
+Date: Mon,  5 Jul 2010 09:00:42 -0400
+Message-ID: <1278334842-9701-1-git-send-email-dgreid@gmail.com>
+References: <1278310017-24299-1-git-send-email-dgreid@gmail.com>
+Cc: git@vger.kernel.org, dgreid@gmail.com
+To: git@drmicha.warpmail.net
+X-From: git-owner@vger.kernel.org Mon Jul 05 14:50:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVkxQ-0004gb-QM
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 14:39:33 +0200
+	id 1OVl8A-00017t-OO
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 14:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758720Ab0GEMj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 08:39:27 -0400
-Received: from peff.net ([208.65.91.99]:45772 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758649Ab0GEMj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 08:39:26 -0400
-Received: (qmail 12264 invoked by uid 107); 5 Jul 2010 12:40:21 -0000
-Received: from c-67-172-213-4.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.213.4)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 05 Jul 2010 08:40:21 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Jul 2010 08:39:23 -0400
-Content-Disposition: inline
-In-Reply-To: <20100705122723.GB21146@sigill.intra.peff.net>
+	id S1753189Ab0GEMsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 08:48:51 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:62848 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752475Ab0GEMsu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 08:48:50 -0400
+Received: by qyk38 with SMTP id 38so1506505qyk.19
+        for <git@vger.kernel.org>; Mon, 05 Jul 2010 05:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=tFRnKTKMcZmOxNdVFySz9zuIw//vZjF0RiU95XvV72c=;
+        b=G0pcrxHhA6bnRMq22xaMD/v/rPd1cebWyy+t0mDD9LByXboUbKc3cWN2OXq43rbLwm
+         Hfv7px9uHSdERKIAxBnyBtkSvjuieE77SXcw3k2mTGJTViLr3CLho1Vx18MDyxFNnEw8
+         +PIlYAUTZ7mux05QfyD2YEeTQhD80JB0Ytkjc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=H4wrEY8CRaVszWkwr4P8TOnh9RqJj0Lhf0Km97G0hiUbcmBmICgV4vhWIsNIcup6tG
+         2Hys3SsfqslL90eEhze2t+fhoXDTUAHgfU6JOVOgDCZYpITSSNyWYuaFQHJTjo3sSPeg
+         t4U+0htEkhtRBdqrrfV9jrvMntWG4rvchYTEY=
+Received: by 10.224.115.146 with SMTP id i18mr1361275qaq.275.1278334129533;
+        Mon, 05 Jul 2010 05:48:49 -0700 (PDT)
+Received: from localhost.localdomain (209-6-87-142.c3-0.frm-ubr3.sbo-frm.ma.cable.rcn.com [209.6.87.142])
+        by mx.google.com with ESMTPS id g33sm18007246qcq.16.2010.07.05.05.48.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 05 Jul 2010 05:48:48 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
+In-Reply-To: <1278310017-24299-1-git-send-email-dgreid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150267>
 
-On Mon, Jul 05, 2010 at 08:27:23AM -0400, Jeff King wrote:
+In xdl_recmatch, do the memcmp to check if the two lines are equal before
+checking if whitespace flags are set.  If the lines are identicle, then
+there is no need to check if they differ only in whitespace.
+This makes the common case (there is no whitespace difference) faster.
+It costs the case where lines are the same length and contain
+whitespace differences, but the common case is more than 20% faster.
 
-> As you probably guessed from the specificity of the number, I wrote a
-> short program to actually traverse and find the worst skew. It takes
-> about 5 seconds to run (unsurprisingly, since it is doing the same full
-> traversal that we end up doing in the above numbers). So we could
-> "autoskew" by setting up the configuration on clone, and then
-> periodically updating it as part of "git gc".
+Signed-off-by: Dylan Reid <dgreid@gmail.com>
+---
+ xdiff/xutils.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-This patch doesn't implement auto-detection of skew, but is the program
-I used to calculate, and would provide the basis for such
-auto-detection. It would be interesting to see average skew numbers for
-popular repositories. You can run it as "git skew --all".
-
-diff --git a/.gitignore b/.gitignore
-index 14e2b6b..90aff17 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -132,6 +132,7 @@
- /git-show-branch
- /git-show-index
- /git-show-ref
-+/git-skew
- /git-stage
- /git-stash
- /git-status
-diff --git a/Makefile b/Makefile
-index 9aca8a1..e673bdf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -725,6 +725,7 @@ BUILTIN_OBJS += builtin/send-pack.o
- BUILTIN_OBJS += builtin/shortlog.o
- BUILTIN_OBJS += builtin/show-branch.o
- BUILTIN_OBJS += builtin/show-ref.o
-+BUILTIN_OBJS += builtin/skew.o
- BUILTIN_OBJS += builtin/stripspace.o
- BUILTIN_OBJS += builtin/symbolic-ref.o
- BUILTIN_OBJS += builtin/tag.o
-diff --git a/builtin.h b/builtin.h
-index ed6ee26..5f5dc0a 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -141,5 +141,6 @@ extern int cmd_verify_pack(int argc, const char **argv, const char *prefix);
- extern int cmd_show_ref(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_refs(int argc, const char **argv, const char *prefix);
- extern int cmd_replace(int argc, const char **argv, const char *prefix);
-+extern int cmd_skew(int argc, const char **argv, const char *prefix);
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index bc12f29..22f9bd6 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -190,8 +190,10 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ {
+ 	int i1, i2;
  
- #endif
-diff --git a/builtin/skew.c b/builtin/skew.c
-new file mode 100644
-index 0000000..1046f5f
---- /dev/null
-+++ b/builtin/skew.c
-@@ -0,0 +1,50 @@
-+#include "cache.h"
-+#include "commit.h"
-+#include "diff.h"
-+#include "revision.h"
-+
-+unsigned long worst_skew = 0;
-+
-+static void check_skew_recurse(struct commit *c, unsigned long when)
-+{
-+	struct commit_list *p;
-+
-+	if (c->object.flags & SEEN)
-+		return;
-+	c->object.flags |= SEEN;
-+
-+	if (parse_commit(c) < 0)
-+		return;
-+
-+	if (c->date > when) {
-+		unsigned long skew = c->date - when;
-+		if (skew > worst_skew)
-+			worst_skew = skew;
-+	}
-+
-+	for (p = c->parents; p; p = p->next)
-+		check_skew_recurse(p->item, c->date < when ? c->date : when);
-+}
-+
-+static void check_skew(struct commit *c)
-+{
-+	check_skew_recurse(c, time(NULL));
-+}
-+
-+int cmd_skew(int argc, const char **argv, const char *prefix) {
-+	struct rev_info revs;
-+	int i;
-+
-+	git_config(git_default_config, NULL);
-+	init_revisions(&revs, prefix);
-+	argc = setup_revisions(argc, argv, &revs, NULL);
-+
-+	for (i = 0; i < revs.pending.nr; i++) {
-+		struct object *o = revs.pending.objects[i].item;
-+		if (o->type == OBJ_COMMIT)
-+			check_skew((struct commit *)o);
-+	}
-+
-+	printf("%lu\n", worst_skew);
-+	return 0;
-+}
-diff --git a/git.c b/git.c
-index 265fa09..8a77fe3 100644
---- a/git.c
-+++ b/git.c
-@@ -399,6 +399,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "verify-pack", cmd_verify_pack },
- 		{ "show-ref", cmd_show_ref, RUN_SETUP },
- 		{ "pack-refs", cmd_pack_refs, RUN_SETUP },
-+		{ "skew", cmd_skew, RUN_SETUP },
- 	};
- 	int i;
- 	static const char ext[] = STRIP_EXTENSION;
++	if (s1 == s2 && !memcmp(l1, l2, s1))
++		return 1;
+ 	if (!(flags & XDF_WHITESPACE_FLAGS))
+-		return s1 == s2 && !memcmp(l1, l2, s1);
++		return 0;
+ 
+ 	i1 = 0;
+ 	i2 = 0;
+-- 
+1.7.1
