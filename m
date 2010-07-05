@@ -1,80 +1,64 @@
-From: Dylan Reid <dgreid@gmail.com>
-Subject: [PATCH] xdiff: optimise for no whitespace difference when ignoring whitespace.
-Date: Mon,  5 Jul 2010 02:06:57 -0400
-Message-ID: <1278310017-24299-1-git-send-email-dgreid@gmail.com>
-Cc: dgreid@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 05 08:02:21 2010
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC PATCH] rerere: fix overeager gc
+Date: Mon, 05 Jul 2010 08:02:34 +0200
+Message-ID: <4C31757A.1000207@viscovery.net>
+References: <1277811498-17288-1-git-send-email-szeder@ira.uka.de> <7vy6dx90uk.fsf@alter.siamese.dyndns.org> <4C2AE04E.9090901@viscovery.net> <7v1vbn417d.fsf@alter.siamese.dyndns.org> <4C2D7DF7.8030408@viscovery.net> <7vmxu923up.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 05 08:02:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVekz-000623-Tx
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 08:02:18 +0200
+	id 1OVelU-0006AG-8O
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 08:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918Ab0GEGCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 02:02:11 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:54334 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844Ab0GEGCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 02:02:09 -0400
-X-Greylist: delayed 455 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Jul 2010 02:02:09 EDT
-Received: by qyk38 with SMTP id 38so1385238qyk.19
-        for <git@vger.kernel.org>; Sun, 04 Jul 2010 23:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=E9qfOP3G49hxIev8rnKD5xk4gjHsM+3B8KErf1sDMp4=;
-        b=TCcQb/4ogIWXrJMn/3nG73YC2M0NeLpyirle2hHp8hN6aAqQn2BjJq7PZgd0cvzGjY
-         bl1r55JEK7FFXis2CiTHJX3vc5E0h0bUkJkcW0DHgwxo+IY59YPtXpgFCm36ulHw3ms+
-         d+Iqnr0TBoaXvNQZ1fWgybIckPYnH888qRXxU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=hbZuCircVMg2yi2NzmyCG9Npc/41Gy4o8Y2iruDvJPtFQhDahzrwCIxmunguHbhP3h
-         qf3neuuCDvnhIQmwTVOgKEE/XihiDHT8KNBBi55uXiOxkVgHw4/ty8PvKpytZbXphxoA
-         o2iR9eDpZ/4xHBm9FVqH4yI++6JsbEkUja35o=
-Received: by 10.224.69.14 with SMTP id x14mr1109477qai.212.1278309273702;
-        Sun, 04 Jul 2010 22:54:33 -0700 (PDT)
-Received: from localhost.localdomain (209-6-87-142.c3-0.frm-ubr3.sbo-frm.ma.cable.rcn.com [209.6.87.142])
-        by mx.google.com with ESMTPS id e32sm16536998qcg.22.2010.07.04.22.54.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 04 Jul 2010 22:54:33 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
+	id S1752008Ab0GEGCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 02:02:43 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:43710 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498Ab0GEGCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 02:02:42 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OVelK-0005sL-9Q; Mon, 05 Jul 2010 08:02:38 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 62B7B1660F;
+	Mon,  5 Jul 2010 08:02:35 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <7vmxu923up.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150243>
 
-Invert the order of the memcmp and flag check are done in xdl_recmatch,
-as it makes the common case (there is no whitespace difference) faster.
-It costs the case where lines are the same length and contain
-whitespace differences, but the common case is more than 20% faster.
+Am 7/2/2010 19:25, schrieb Junio C Hamano:
+> If anything, "preimage" that has newer timestamp than "postimage" feels
+> wrong,...
 
-Signed-off-by: Dylan Reid <dgreid@gmail.com>
----
- xdiff/xutils.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+Indeed; I agree.
 
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index bc12f29..dc97a21 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -190,8 +190,10 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
- {
- 	int i1, i2;
- 
--	if (!(flags & XDF_WHITESPACE_FLAGS))
--		return s1 == s2 && !memcmp(l1, l2, s1);
-+	if (s1 == s2 && !memcmp(l1, l2, s1))
-+		return 1;
-+	else if (!(flags & XDF_WHITESPACE_FLAGS))
-+		return 0;
- 
- 	i1 = 0;
- 	i2 = 0;
--- 
-1.7.1
+> If we for whatever reason trust placing an extra timestamp on a regular
+> file more than using directory timestamp (which I think may be a valid
+> concern from portability point of view),
+
+Windows behaves well in this regard. Writing of thisimage must be
+converted to lockfile infrastructure, of course.
+
+> I'd rather see "preimage"
+> timestamp to keep track of the time when we _first_ encountered the
+> particular conflict, and "postimage" used for recording the time when we
+> saw the conflict most recently.
+
+That would be fine, too.
+
+-- Hannes
