@@ -1,89 +1,103 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
-Date: Mon, 5 Jul 2010 07:06:45 -0400
-Message-ID: <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
-References: <1278296639-25024-1-git-send-email-tytso@mit.edu> <20100705025900.GQ22659@josefsipek.net>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: jeffpc@josefsipek.net
-X-From: git-owner@vger.kernel.org Mon Jul 05 13:07:08 2010
+From: Gisle Aas <gisle@aas.no>
+Subject: Make author and committer available to pre-commit hook
+Date: Mon, 5 Jul 2010 13:30:46 +0200
+Message-ID: <AANLkTinpCDRf_Yhuj2-tdZwmvHk8yna1Xjdtbrmx35CB@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 05 13:31:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVjVx-0004SH-Eh
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 13:07:05 +0200
+	id 1OVjtG-0006nY-Rq
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 13:31:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108Ab0GELGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 07:06:49 -0400
-Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:53551 "EHLO
-	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750733Ab0GELGs convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Jul 2010 07:06:48 -0400
-X-AuditID: 1209190d-b7c19ae0000009ea-e1-4c31bcc7a07c
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id 2A.8F.02538.7CCB13C4; Mon,  5 Jul 2010 07:06:47 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o65B6kj2031667;
-	Mon, 5 Jul 2010 07:06:46 -0400
-Received: from [10.0.42.106] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o65B6iCA023490
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 5 Jul 2010 07:06:45 -0400 (EDT)
-In-Reply-To: <20100705025900.GQ22659@josefsipek.net>
-X-Mailer: Apple Mail (2.1081)
-X-Brightmail-Tracker: AAAAAA==
+	id S1752195Ab0GELat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 07:30:49 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50260 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009Ab0GELas (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 07:30:48 -0400
+Received: by fxm14 with SMTP id 14so3558786fxm.19
+        for <git@vger.kernel.org>; Mon, 05 Jul 2010 04:30:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=fMUftqfQFx/3a2a5CxXXT+A6qFLdo/Wm1LX9KKNSXWw=;
+        b=fSC++pbakSlqVYEgZ2Gn90OE0l9nG9mMjdSuiHRbH3ynn+qMWoRYanvMmt+7+Jn8rF
+         EeFThw9/1Mk26xIikJi0WyC5/NBr1qxBlpnaWHM0wH04w3ohc0AWtTQ88Tb7vtXER1Y/
+         BzVvqLT8d+/AlEtp2WcabzptRgvTNfoIns5Gs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=QttnG8WghD35hgXSEJZqijxzD0MbVakXEZegVvd7lazb1JAY+dGnZGax17irS0buMw
+         QJhKFIPykAXhVndzfj7tRePVxkTCWZPJ/WmMw823qu6eY3U3cYunjmyAnYVyeGkRIaBK
+         UM0punT94wtTLXkw6OzNQBgWw/70ZFV2oBbD4=
+Received: by 10.103.177.3 with SMTP id e3mr272207mup.38.1278329446876; Mon, 05 
+	Jul 2010 04:30:46 -0700 (PDT)
+Received: by 10.103.250.16 with HTTP; Mon, 5 Jul 2010 04:30:46 -0700 (PDT)
+X-Google-Sender-Auth: vCs8XbxAriQ3Q7cH_7PbAS_F0uQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150257>
+
+I would like to implement a pre-commit hook that validates the
+--author set for the commit.  Our use case is a shared repository of
+configuration info where different persons all commit as root; but we
+want to make sure they override the --author to something sensible.
+
+What would be the preferred mechanism to pass on this information?  It
+could for instance be arguments to the hook script or via environment
+variables.
+
+I created the following patch to explore what it would take to pass on
+this information as command line arguments.  It seems to do the trick
+for me.  Any drawback with this approach?
+
+Regards,
+Gisle
 
 
-On Jul 4, 2010, at 10:59 PM, jeffpc@josefsipek.net wrote:
-> 
-> Am I understanding this right?  You want the timestamps to be monotonically
-> increasing?  
+diff --git a/builtin/commit.c b/builtin/commit.c
+index c101f00..acb8dc2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -557,8 +557,20 @@ static int prepare_to_commit(const char
+*index_file, const char *prefix,
+        const char *hook_arg2 = NULL;
+        int ident_shown = 0;
 
-Yup, that's correct.  In more modern versions of git most (all?) of the places
-that depend on the committer time of the child commit to be greater than the
-committer time of its parents have been relaxed to accept up to a day's worth
-of clock skew, but in the interests of "be conservative in what you send",
-strictly increasing seemed like the best thing to do.
+-       if (!no_verify && run_hook(index_file, "pre-commit", NULL))
++       determine_author_info();
++       if (!no_verify) {
++           int rc;
++           hook_arg1 = xstrdup(fmt_name(author_name, author_email));
++           hook_arg2 = xstrdup(fmt_name(getenv("GIT_COMMITTER_NAME"),
++                                        getenv("GIT_COMMITTER_EMAIL")));
++           rc = run_hook(index_file, "pre-commit", hook_arg1, hook_arg2, NULL);
++           free((char*)hook_arg1);
++           free((char*)hook_arg2);
++           if (rc)
+                return 0;
++           hook_arg1 = NULL;
++           hook_arg2 = NULL;
++       }
 
-> Is the +60 the most obvious choice?
+        if (message.len) {
+                strbuf_addbuf(&sb, &message);
+@@ -632,8 +644,6 @@ static int prepare_to_commit(const char
+*index_file, const char *prefix,
 
-It's somewhat arbitrary.  I figured a minute increase between commits was
-more aesthetically pleasing than a second, 5 minutes, or an hour, which
-were some other deltas that previous versions of my patch used while I
-was experimenting.
+        strbuf_release(&sb);
 
-> 
-> Can I get an example of how git can get confused?
-
-This first one is explicitly my/guilt's fault (and it's when I learned that I
-was causing problems by how I was using guilt in the ext4 tree):
-
-http://kerneltrap.org/mailarchive/git/2010/4/22/28928/thread
-
-In this thread we see how the clock skew gets in the way of an optimization
-that speeds up "git tag --contains" by over two orders of magnitude, but it
-gets screwed over by extreme clock skew.  I suggested in that thread that 
-if git is going to depend on it, then maybe "git commit" should either warn
-or error out if the git committer timestamp goes backwards --- and that's when
-I decided maybe I should offer up a patch to guilt to fix this, either before or
-instead of fixing up "git commit" to throw a warning/error:
-
-http://www.spinics.net/lists/git/msg134307.html
-
-Other threads:
-
-http://kerneltrap.org/mailarchive/git/2010/4/8/27731/thread
-http://www.kerneltrap.com/mailarchive/git/2007/5/24/247375
-
--- Ted
+-       determine_author_info();
+-
+        /* This checks if committer ident is explicitly given */
+        git_committer_info(0);
+        if (use_editor && include_status) {
