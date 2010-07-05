@@ -1,94 +1,85 @@
-From: Tim Mazid <timmazid@hotmail.com>
-Subject: RE: git repository setup
-Date: Tue, 6 Jul 2010 07:50:41 +1000
-Message-ID: <SNT124-W43732E3DF417A0FB7E5F3CC4B10@phx.gbl>
-References: <29078904.post@talk.nabble.com>
+From: Finn Arne Gangstad <finnag@pvv.org>
+Subject: Re: help moving boost.org to git
+Date: Tue, 6 Jul 2010 00:04:43 +0200
+Message-ID: <20100705220443.GA23727@pvv.org>
+References: <4C31E944.30801@boostpro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: <adamkurjewicz@yahoo.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 05 23:57:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Niebler <eric@boostpro.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 00:04:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVter-0003JH-L0
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 23:56:58 +0200
+	id 1OVtmU-0006D4-Lr
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 00:04:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755877Ab0GEV4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 17:56:52 -0400
-Received: from snt0-omc2-s27.snt0.hotmail.com ([65.55.90.102]:60912 "EHLO
-	snt0-omc2-s27.snt0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755693Ab0GEV4v convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 5 Jul 2010 17:56:51 -0400
-X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Mon, 05 Jul 2010 17:56:51 EDT
-Received: from SNT124-W43 ([65.55.90.72]) by snt0-omc2-s27.snt0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 5 Jul 2010 14:50:42 -0700
-X-Originating-IP: [60.241.190.75]
-Importance: Normal
-In-Reply-To: <29078904.post@talk.nabble.com>
-X-OriginalArrivalTime: 05 Jul 2010 21:50:42.0243 (UTC) FILETIME=[1D47B930:01CB1C8C]
+	id S1755282Ab0GEWEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 18:04:46 -0400
+Received: from decibel.pvv.ntnu.no ([129.241.210.179]:48344 "EHLO
+	decibel.pvv.ntnu.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043Ab0GEWEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 18:04:45 -0400
+Received: from finnag by decibel.pvv.ntnu.no with local (Exim 4.69)
+	(envelope-from <finnag@pvv.ntnu.no>)
+	id 1OVtmN-0001f0-GF; Tue, 06 Jul 2010 00:04:43 +0200
+Content-Disposition: inline
+In-Reply-To: <4C31E944.30801@boostpro.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150299>
 
+On Mon, Jul 05, 2010 at 10:16:36AM -0400, Eric Niebler wrote:
+> I have a question about the best approach to take for refactoring a
+> large svn project into git. The project, boost.org, is a collection of
+> C++ libraries (>100) that are mostly independent. (There may be
+> cross-library dependencies, but we plan to handle that at a higher
+> level.) After the move to git, we'd like each library to be in its own
+> git repository. Boost can then be a stitching-together of these, using
+> submodules or something (opinions welcome). It's an old project with
+> lots of history that we don't want to lose. The naive approach of simply
+> forking into N repositories for the N libraries and deleting the
+> unwanted files in each is unworkable because we'll end up with all the
+> history duplicated everywhere ... >100 repositories, each larger than 100Mb.
 
-Hi Adam,
+If the libraries are not independent (i.e. some commits are across
+multiple libraries), submodules will give you some interesting
+challenges to put it mildly.
 
-I am certain that a more experienced giter will correct me where I err, but I believe that that would only be the case if you put x1 in a single repository.
+The current boost 1.43 is 29344 files, is this all there is? This
+should fit eaily into a single repository. The Linux kernel is much
+larger, and that is sort of the canonical single repo git project. I
+_strongly_ recommend that you go for a single repo if you can make it
+work.
 
-Will anybody actually need to have the entirety of x1?
+If you manage to create a single git repo with the history you want,
+it is trivial to split out separate repositories of subdirectories
+later (and those repos will then be comparatively small). git subtree
+allegedly automates this process more or less (I have not used it, but
+have heard good things about it). What about having a single "master
+repository", and then using subtree to create single-library repos for
+the library developers if they want a smaller repo to play around in?
 
-The best thing to do would be to create a separate repository for each project, then if needed, create a repository for x1 which has all the other repositories as submodules if you need a single repository containing all the others.
+> So,, what are the options? Can I somehow delete from each repository the
+> history that is irrelevant? Is these some feature of git I don't know
+> about that can solve this problem for us?
 
-You can enter "git help submodule" for the man page on submodules.
+How do you define "irrelevant"? Do you only require enough history for
+git annotate/blame to give correct results?  Or does this only refer
+to multiple repositories sharing the same ancient history?
 
-Regards,
-Tim
+> At boost, We've already discussed a few possible approaches. Feel free
+> to comment and/or criticize any of the solutions suggested here:
+> 
+>   http://github.com/ryppl/ryppl/issues#issue/4
 
-----------------------------------------
-> Date: Mon, 5 Jul 2010 12:19:08 -0700
-> From: adamkurjewicz@yahoo.com
-> To: git@vger.kernel.org
-> Subject: git repository setup
->
->
-> Hi, my company is looking to move away from cvs and git was one of the
-> options. The problem that we have is that our file structure looks like
-> follows, each of these directories have hundreds of programs some which
-> would be modified by various programming units.
->
-> /x1/system/
-> /x1/config_apps/
-> /x1/drivers/
-> /x1/web/apps/
->
-> What we were hoping to have was one repository for "x1" and then have
-> separate sub repositories for each of the extra areas. So that if there are
-> any developers needing to change a sub repository then they could without
-> affected the other sub-repositories and without having to have a copy of the
-> x1 repository on their systems. From what I have read most of the
-> documentation suggests that there be one repository and then it gets cloned
-> to a developers repository, this would be a challenge as the storage
-> requirements to do this would be rather large.
->
-> Would anyone have any suggestions on what to do? or if this would be
-> possible?
->
-> Thanks,
-> Adam
-> --
-> View this message in context: http://old.nabble.com/git-repository-setup-tp29078904p29078904.html
-> Sent from the git mailing list archive at Nabble.com.
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at http://vger.kernel.org/majordomo-info.html
- 		 	   		  
-_________________________________________________________________
-New, Used, Demo, Dealer or Private? Find it at CarPoint.com.au
-http://clk.atdmt.com/NMN/go/206222968/direct/01/
+It is unclear from the discussion if you will change to git, or use
+git in addition to svn? This will have some impact on how to go about
+this.
+
+- Finn Arne
