@@ -1,184 +1,171 @@
 From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 1/4] tag: speed up --contains calculation
-Date: Mon, 5 Jul 2010 08:33:36 -0400
-Message-ID: <20100705123335.GA25699@sigill.intra.peff.net>
+Subject: [RFC/PATCH 2/4] limit "contains" traversals based on commit
+ timestamp
+Date: Mon, 5 Jul 2010 08:34:19 -0400
+Message-ID: <20100705123419.GB25699@sigill.intra.peff.net>
 References: <20100705122723.GB21146@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
 To: tytso@mit.edu
-X-From: git-owner@vger.kernel.org Mon Jul 05 14:33:46 2010
+X-From: git-owner@vger.kernel.org Mon Jul 05 14:34:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVkro-0002EZ-5r
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 14:33:44 +0200
+	id 1OVksV-0002QW-H2
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 14:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752938Ab0GEMdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 08:33:39 -0400
-Received: from peff.net ([208.65.91.99]:38138 "EHLO peff.net"
+	id S1755639Ab0GEMeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 08:34:22 -0400
+Received: from peff.net ([208.65.91.99]:38144 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751237Ab0GEMdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 08:33:38 -0400
-Received: (qmail 12117 invoked by uid 107); 5 Jul 2010 12:34:34 -0000
+	id S1754419Ab0GEMeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 08:34:21 -0400
+Received: (qmail 12146 invoked by uid 107); 5 Jul 2010 12:35:17 -0000
 Received: from c-67-172-213-4.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.213.4)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 05 Jul 2010 08:34:34 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Jul 2010 08:33:36 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 05 Jul 2010 08:35:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Jul 2010 08:34:19 -0400
 Content-Disposition: inline
 In-Reply-To: <20100705122723.GB21146@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150262>
 
-When we want to know if commit A contains commit B (or any
-one of a set of commits, B through Z), we generally
-calculate the merge bases and see if B is a merge base of A
-(or for a set, if any of the commits B through Z have that
-property).
+When looking for commits that contain other commits (e.g.,
+via "git tag --contains"), we can end up traversing useless
+portions of the graph. For example, if I am looking for a
+tag that contains a commit made last week, there is not much
+point in traversing portions of the history graph made five
+years ago.
 
-When we are going to check a series of commits A1 through An
-to see whether each contains B (e.g., because we are
-deciding which tags to show with "git tag --contains"), we
-do a series of merge base calculations. This can be very
-expensive, as we repeat a lot of traversal work.
+This optimization can provide massive speedups. For example,
+doing "git tag --contains HEAD~200" in the linux-2.6
+repository goes from:
 
-Instead, let's leverage the fact that we are going to use
-the same --contains list for each tag, and mark areas of the
-commit graph is definitely containing those commits, or
-definitely not containing those commits. Later tags can then
-stop traversing as soon as they see a previously calculated
-answer.
-
-This sped up "git tag --contains HEAD~200" in the linux-2.6
-repository from:
-
-  real    0m15.417s
-  user    0m15.197s
-  sys     0m0.220s
+  real    0m5.302s
+  user    0m5.116s
+  sys     0m0.184s
 
 to:
 
-  real    0m5.329s
-  user    0m5.144s
-  sys     0m0.184s
+  real    0m0.030s
+  user    0m0.020s
+  sys     0m0.008s
+
+The downside is that we will no longer find some answers in
+the face of extreme clock skew, as we will stop the
+traversal early when seeing commits skewed too far into the
+past.
+
+Name-rev already implements a similar optimization, using a
+"slop" of one day to allow for a certain amount of clock
+skew in commit timestamps. This patch introduces a
+"core.clockskew" variable, which allows specifying the
+allowable amount of clock skew in seconds.  For safety, it
+defaults to "none", causing a full traversal (i.e., no
+change in behavior from previous versions).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Note that this is a depth first search, whereas we generally traverse in
-a more breadth-first way. So it can actually make things slightly slower
-than the current merge-base code, if:
+ cache.h  |    1 +
+ commit.c |   27 ++++++++++++++++++++++++---
+ config.c |    8 ++++++++
+ 3 files changed, 33 insertions(+), 3 deletions(-)
 
-  1. You don't have any merge base calculations that involve going very
-     far back in history.
-
-  2. We depth-first down the wrong side of a merge.
-
-However, in the usual cases, I think it will perform much better.
-Comparing an old tag with a recent commit means we have to look at a lot
-of the commit graph, anyway.
-
-If anybody has a clever idea for making it breadth-first, I would be
-happy to hear it.
-
-Other caveats:
-
-  1. This can probably be a one-liner change to use in "git branch
-     --contains", as well. I didn't measure it, as that already tends to
-     be reasonably fast.
-
-  2. It uses commit marks, which means it doesn't behave well with other
-     traversals. I have no idea if I should be using alternate marks or
-     not.
-
-  3. We never clear the marks, or check them against the "want" list. So
-     we just assume that repeated calls to contains will have the same
-     "want" list.
-
- builtin/tag.c |    2 +-
- commit.c      |   42 ++++++++++++++++++++++++++++++++++++++++++
- commit.h      |    2 ++
- 3 files changed, 45 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index d311491..c200e1e 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -49,7 +49,7 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- 			commit = lookup_commit_reference_gently(sha1, 1);
- 			if (!commit)
- 				return 0;
--			if (!is_descendant_of(commit, filter->with_commit))
-+			if (!contains(commit, filter->with_commit))
- 				return 0;
- 		}
+diff --git a/cache.h b/cache.h
+index c9fa3df..2dfb636 100644
+--- a/cache.h
++++ b/cache.h
+@@ -551,6 +551,7 @@ extern int read_replace_refs;
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
++extern int core_clock_skew;
  
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE = 0,
 diff --git a/commit.c b/commit.c
-index e9b0750..20354c6 100644
+index 20354c6..c849b50 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -845,3 +845,45 @@ int commit_tree(const char *msg, unsigned char *tree,
- 	strbuf_release(&buffer);
- 	return result;
- }
-+
-+static int in_commit_list(const struct commit_list *want, struct commit *c)
-+{
-+	for (; want; want = want->next)
-+		if (!hashcmp(want->item->object.sha1, c->object.sha1))
-+			return 1;
-+	return 0;
-+}
-+
-+static int contains_recurse(struct commit *candidate,
-+			    const struct commit_list *want)
-+{
-+	struct commit_list *p;
-+
-+	/* was it previously marked as containing a want commit? */
-+	if (candidate->object.flags & TMP_MARK)
-+		return 1;
-+	/* or marked as not possibly containing a want commit? */
-+	if (candidate->object.flags & UNINTERESTING)
-+		return 0;
-+	/* or are we it? */
-+	if (in_commit_list(want, candidate))
-+		return 1;
-+
-+	if (parse_commit(candidate) < 0)
-+		return 0;
-+
-+	/* Otherwise recurse and mark ourselves for future traversals. */
-+	for (p = candidate->parents; p; p = p->next) {
-+		if (contains_recurse(p->item, want)) {
-+			candidate->object.flags |= TMP_MARK;
-+			return 1;
-+		}
-+	}
-+	candidate->object.flags |= UNINTERESTING;
-+	return 0;
-+}
-+
-+int contains(struct commit *candidate, const struct commit_list *want)
-+{
-+	return contains_recurse(candidate, want);
-+}
-diff --git a/commit.h b/commit.h
-index eb2b8ac..1a7299e 100644
---- a/commit.h
-+++ b/commit.h
-@@ -153,6 +153,8 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
- int is_descendant_of(struct commit *, struct commit_list *);
- int in_merge_bases(struct commit *, struct commit **, int);
+@@ -7,6 +7,7 @@
+ #include "revision.h"
+ #include "notes.h"
  
-+int contains(struct commit *, const struct commit_list *);
++int core_clock_skew = -1;
+ int save_commit_buffer = 1;
+ 
+ const char *commit_type = "commit";
+@@ -855,7 +856,8 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
+ }
+ 
+ static int contains_recurse(struct commit *candidate,
+-			    const struct commit_list *want)
++			    const struct commit_list *want,
++			    unsigned long cutoff)
+ {
+ 	struct commit_list *p;
+ 
+@@ -872,9 +874,13 @@ static int contains_recurse(struct commit *candidate,
+ 	if (parse_commit(candidate) < 0)
+ 		return 0;
+ 
++	/* stop searching if we go too far back in time */
++	if (candidate->date < cutoff)
++		return 0;
 +
- extern int interactive_add(int argc, const char **argv, const char *prefix);
- extern int run_add_interactive(const char *revision, const char *patch_mode,
- 			       const char **pathspec);
+ 	/* Otherwise recurse and mark ourselves for future traversals. */
+ 	for (p = candidate->parents; p; p = p->next) {
+-		if (contains_recurse(p->item, want)) {
++		if (contains_recurse(p->item, want, cutoff)) {
+ 			candidate->object.flags |= TMP_MARK;
+ 			return 1;
+ 		}
+@@ -885,5 +891,20 @@ static int contains_recurse(struct commit *candidate,
+ 
+ int contains(struct commit *candidate, const struct commit_list *want)
+ {
+-	return contains_recurse(candidate, want);
++	unsigned long cutoff = 0;
++
++	if (core_clock_skew >= 0) {
++		const struct commit_list *c;
++		unsigned long min_date = ULONG_MAX;
++		for (c = want; c; c = c->next) {
++			if (parse_commit(c->item) < 0)
++				continue;
++			if (c->item->date < min_date)
++				min_date = c->item->date;
++		}
++		if (min_date > core_clock_skew)
++			cutoff = min_date - core_clock_skew;
++	}
++
++	return contains_recurse(candidate, want, cutoff);
+ }
+diff --git a/config.c b/config.c
+index cdcf583..7a18bc9 100644
+--- a/config.c
++++ b/config.c
+@@ -595,6 +595,14 @@ static int git_default_core_config(const char *var, const char *value)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.clockskew")) {
++		if (!value || !strcmp(value, "none"))
++			core_clock_skew = -1;
++		else
++			core_clock_skew = git_config_int(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
 -- 
 1.7.2.rc1.209.g2a36c
