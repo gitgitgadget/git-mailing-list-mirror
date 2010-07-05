@@ -1,67 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git commit --short' without touching index?
-Date: Mon, 05 Jul 2010 13:10:43 -0700
-Message-ID: <7veifhy9j0.fsf@alter.siamese.dyndns.org>
-References: <loom.20100703T102242-536@post.gmane.org>
- <20100703091748.GA11714@sigill.intra.peff.net>
+From: Joshua ben Jore <twists@gmail.com>
+Subject: Commit ending in \ breaks rebase commitlog parsing
+Date: Mon, 5 Jul 2010 13:24:22 -0700
+Message-ID: <AANLkTim8BGaTvaBFdNDeQp26hwMCztScZFoIHI00DjkD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel <friedan@muon.rutgers.edu>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 05 22:11:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 05 22:24:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVs0K-00034E-5d
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 22:11:00 +0200
+	id 1OVsDN-0000wW-DE
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 22:24:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753252Ab0GEUKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 16:10:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56584 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504Ab0GEUKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 16:10:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD800C1F41;
-	Mon,  5 Jul 2010 16:10:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0R5hTHjBFJ/zpYdaIIJaVD6RZiQ=; b=QhyBrk
-	csN2gTwP0VR2+pT4LCgQK+1VmZ38TyF+8v995OtC1I+WRMsBS9tdjLCvq7Qu2oxb
-	Bgxa8Zq2C3jeXq3lS+vrPG9uafDPN9er6NHoxA9rn0cKqLe8pmsZ0vwUIRL5DZj0
-	EFpwqTkobego2h3G/nFRb33azPJA1nHpRbRl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EMbU8l6u1Fedrlh0XrDrgm5NBLPhJYmi
-	kpVe1BPc9sB2fVGttN1YH0NtS0tpSmH7DyuAURK475ZHq0iiGEAzB1Cmgvd9GDyu
-	ZFgBlntlzLLzCeAkOyopdbuTaUGr6TVqXn6ihoDFS640GM//brcncMRWSXga4+0X
-	qU6Jib5H7KE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C8D5C1F40;
-	Mon,  5 Jul 2010 16:10:49 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF08CC1F3E; Mon,  5 Jul
- 2010 16:10:45 -0400 (EDT)
-In-Reply-To: <20100703091748.GA11714@sigill.intra.peff.net> (Jeff King's
- message of "Sat\, 3 Jul 2010 05\:17\:48 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 67889F18-8871-11DF-BB1D-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754343Ab0GEUYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 16:24:24 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:36980 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752680Ab0GEUYX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 16:24:23 -0400
+Received: by vws5 with SMTP id 5so6497056vws.19
+        for <git@vger.kernel.org>; Mon, 05 Jul 2010 13:24:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=ZBh38G2abXGlKHCcQ5WqXGWto5OGYRMBfJbUuoSr2MU=;
+        b=wiS2/b34PE4mrDiTU68kAFBjrsng3zxo+/utPTw2mGaKJ9GUg5NtV+ytavNxnazDjW
+         /S2k5EEdmdHf9xpDAEFGQgP3+DE/pxesBqzTmV0/wfMBAjYI7l7jgUk4r6iEGacn0nWU
+         RvMoaF9iQ6TOe9L+a58ATO45eWlEtvPrH7xUg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=X9+7p2iQ07jfkOR3BAFfzDsSykwRbYxi3J1/+miJ9C4m/KjKdTfVOpXDdnZgB5pjtQ
+         Bns4EdWoPJFBiqr0YQ3PhyqqHoXsH5GCm7hkHVPQp6JdXfzJBPuo+nfUI6HU2X7tZ3Q8
+         pcWyG8urVzB9V9ZWjxRI/kXuSkxw+hJBt/6jU=
+Received: by 10.220.159.14 with SMTP id h14mr1805341vcx.255.1278361462854; 
+	Mon, 05 Jul 2010 13:24:22 -0700 (PDT)
+Received: by 10.220.48.35 with HTTP; Mon, 5 Jul 2010 13:24:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150293>
 
-Jeff King <peff@peff.net> writes:
+Hi,
+Through typos on my part, I have a commit with a message ending in a \.
 
-> It would be nice if the index-refreshing code only wrote to the index if
-> there was something worth writing. I'm not sure how hard that would be
-> to implement, though.
+    Prefer ! and && to \\not\ and 'and\
 
-Hmm, don't we already do that with "istate->cache_changed"?
+The rebase command or something it is using is parsing this
+incorrectly and leaving my .git in a "bad" state.
 
-In any case, we should diagnose "commit --short" (and "--procelain") as an
-error, perhaps by splitting option parsers for commit and status further.
+    pick 43d2369 Prefer ! and && to
+    ot and 'and8c7ee99 Upgrade to Devel::PPPort-3.19
+
+That should have read:
+
+    pick 43d2369 Perefer ! and && to \\not\ and 'and\
+    pick 8c7ee99 Upgrade to Devel::PPPort-3.19
+
+Initially, I started editing my pick list to be proper and was
+receiving some strange sort of parsing errors but now am not. I'd
+manually edited the backup picklist file in .git as well. For a repro,
+I tried the following. This also seems to show up a perhaps related
+problem of a commit message consisting of only a single backslash. The
+pick list just *drops* the commit, perhaps because some layer thinks
+the commit message is empty?
+
+    mkdir slash
+    cd slash
+    git init
+
+    echo data1 > foo
+    git add foo
+    git commit -m root
+    export PARENT=$(git rev-parse HEAD)
+
+    echo data2 > foo
+    git add foo
+    git commit -m \\
+
+    echo data3 > foo
+    git add foo
+    git commit -m next
+
+    git rebase -i $PARENT
+    # .git/rebase-merge/git-rebase-todo is now incorrect
+
+Josh
