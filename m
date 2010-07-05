@@ -1,171 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFC/PATCH 2/4] limit "contains" traversals based on commit
- timestamp
-Date: Mon, 5 Jul 2010 08:34:19 -0400
-Message-ID: <20100705123419.GB25699@sigill.intra.peff.net>
-References: <20100705122723.GB21146@sigill.intra.peff.net>
+From: Dylan Reid <dgreid@gmail.com>
+Subject: Re: [PATCH] xdiff: optimise for no whitespace difference when 
+	ignoring whitespace.
+Date: Mon, 5 Jul 2010 08:34:29 -0400
+Message-ID: <AANLkTinmdeTSRVCTblnGrG5lGpNKCiYIb8BO8jMhajXW@mail.gmail.com>
+References: <1278310017-24299-1-git-send-email-dgreid@gmail.com>
+	<4C319931.4020603@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: tytso@mit.edu
-X-From: git-owner@vger.kernel.org Mon Jul 05 14:34:31 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Jul 05 14:34:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVksV-0002QW-H2
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 14:34:27 +0200
+	id 1OVkse-0002XQ-Qp
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 14:34:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755639Ab0GEMeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 08:34:22 -0400
-Received: from peff.net ([208.65.91.99]:38144 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754419Ab0GEMeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 08:34:21 -0400
-Received: (qmail 12146 invoked by uid 107); 5 Jul 2010 12:35:17 -0000
-Received: from c-67-172-213-4.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.213.4)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 05 Jul 2010 08:35:17 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Jul 2010 08:34:19 -0400
-Content-Disposition: inline
-In-Reply-To: <20100705122723.GB21146@sigill.intra.peff.net>
+	id S1755958Ab0GEMeb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Jul 2010 08:34:31 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:33446 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755861Ab0GEMea convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Jul 2010 08:34:30 -0400
+Received: by gye5 with SMTP id 5so1203344gye.19
+        for <git@vger.kernel.org>; Mon, 05 Jul 2010 05:34:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pTYW+KzgEQbmliVwTT+3jjVncGOWDid7Oj7VJH/qmgY=;
+        b=DZvN+g46txuo+ZLgtk/XtZBVxmXI26I0fscnryf8JikjCMson6YlXJtqBnaCX/8PXU
+         nuRsFf/i1gFBzhhM3pXruvaLv4IFYRJp83GTrcmBT5SGkDDFuIBvFbLpOKxlnLqx5efC
+         FBD8HBGSFFLWYLU7KMqUtt5X03Ji97S/ikcAQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DgGEYp8UBF6V5odJKrBCBPLuAsDxhYyhz89GXDlFZ0VdNGLWKj+o9XOCoWaKl3QMnS
+         zrSee7dGSbAGkED4YjF7kCY+4YfimnA7IpU9pkuhk7bG2/QUHqTy+Lpa3J0tRUw1MnV5
+         mgkmULrTzK/Jjhq8jqHRkW0SXWDuiip9IGojk=
+Received: by 10.229.28.74 with SMTP id l10mr1484643qcc.142.1278333269234; Mon, 
+	05 Jul 2010 05:34:29 -0700 (PDT)
+Received: by 10.150.51.17 with HTTP; Mon, 5 Jul 2010 05:34:29 -0700 (PDT)
+In-Reply-To: <4C319931.4020603@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150263>
 
-When looking for commits that contain other commits (e.g.,
-via "git tag --contains"), we can end up traversing useless
-portions of the graph. For example, if I am looking for a
-tag that contains a commit made last week, there is not much
-point in traversing portions of the history graph made five
-years ago.
+On Mon, Jul 5, 2010 at 4:34 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Dylan Reid venit, vidit, dixit 05.07.2010 08:06:
+>> Invert the order of the memcmp and flag check are done in xdl_recmat=
+ch,
+>
+> I was wondering whether you describe old (before patch) or new (after
+> patch) here. Maybe one of the following is clearer:
+>
+> "Invert the order of the memcmp and flag check which are done in
+> xdl_recmatch,"
+>
+> "Invert the order of the memcmp and flag check in xdl_recmatch,"
+>
 
-This optimization can provide massive speedups. For example,
-doing "git tag --contains HEAD~200" in the linux-2.6
-repository goes from:
+I'll make that more clear.
 
-  real    0m5.302s
-  user    0m5.116s
-  sys     0m0.184s
+>> + =A0 =A0 if (s1 =3D=3D s2 && !memcmp(l1, l2, s1))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 return 1;
+>> + =A0 =A0 else if (!(flags & XDF_WHITESPACE_FLAGS))
+>
+> You can do without the "else" here.
 
-to:
+sure can, will do.
 
-  real    0m0.030s
-  user    0m0.020s
-  sys     0m0.008s
+>> + =A0 =A0 =A0 =A0 =A0 =A0 return 0;
+>>
+>> =A0 =A0 =A0 i1 =3D 0;
+>> =A0 =A0 =A0 i2 =3D 0;
+>
+> BTW: How did you find this? Are you profiling parts of git?
+>
+> Michael
+>
 
-The downside is that we will no longer find some answers in
-the face of extreme clock skew, as we will stop the
-traversal early when seeing commits skewed too far into the
-past.
+I was looking to add an unrelated feature and just happened to notice
+this.  It was a really cheap change for a good speedup.
 
-Name-rev already implements a similar optimization, using a
-"slop" of one day to allow for a certain amount of clock
-skew in commit timestamps. This patch introduces a
-"core.clockskew" variable, which allows specifying the
-allowable amount of clock skew in seconds.  For safety, it
-defaults to "none", causing a full traversal (i.e., no
-change in behavior from previous versions).
+Thanks,
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- cache.h  |    1 +
- commit.c |   27 ++++++++++++++++++++++++---
- config.c |    8 ++++++++
- 3 files changed, 33 insertions(+), 3 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index c9fa3df..2dfb636 100644
---- a/cache.h
-+++ b/cache.h
-@@ -551,6 +551,7 @@ extern int read_replace_refs;
- extern int fsync_object_files;
- extern int core_preload_index;
- extern int core_apply_sparse_checkout;
-+extern int core_clock_skew;
- 
- enum safe_crlf {
- 	SAFE_CRLF_FALSE = 0,
-diff --git a/commit.c b/commit.c
-index 20354c6..c849b50 100644
---- a/commit.c
-+++ b/commit.c
-@@ -7,6 +7,7 @@
- #include "revision.h"
- #include "notes.h"
- 
-+int core_clock_skew = -1;
- int save_commit_buffer = 1;
- 
- const char *commit_type = "commit";
-@@ -855,7 +856,8 @@ static int in_commit_list(const struct commit_list *want, struct commit *c)
- }
- 
- static int contains_recurse(struct commit *candidate,
--			    const struct commit_list *want)
-+			    const struct commit_list *want,
-+			    unsigned long cutoff)
- {
- 	struct commit_list *p;
- 
-@@ -872,9 +874,13 @@ static int contains_recurse(struct commit *candidate,
- 	if (parse_commit(candidate) < 0)
- 		return 0;
- 
-+	/* stop searching if we go too far back in time */
-+	if (candidate->date < cutoff)
-+		return 0;
-+
- 	/* Otherwise recurse and mark ourselves for future traversals. */
- 	for (p = candidate->parents; p; p = p->next) {
--		if (contains_recurse(p->item, want)) {
-+		if (contains_recurse(p->item, want, cutoff)) {
- 			candidate->object.flags |= TMP_MARK;
- 			return 1;
- 		}
-@@ -885,5 +891,20 @@ static int contains_recurse(struct commit *candidate,
- 
- int contains(struct commit *candidate, const struct commit_list *want)
- {
--	return contains_recurse(candidate, want);
-+	unsigned long cutoff = 0;
-+
-+	if (core_clock_skew >= 0) {
-+		const struct commit_list *c;
-+		unsigned long min_date = ULONG_MAX;
-+		for (c = want; c; c = c->next) {
-+			if (parse_commit(c->item) < 0)
-+				continue;
-+			if (c->item->date < min_date)
-+				min_date = c->item->date;
-+		}
-+		if (min_date > core_clock_skew)
-+			cutoff = min_date - core_clock_skew;
-+	}
-+
-+	return contains_recurse(candidate, want, cutoff);
- }
-diff --git a/config.c b/config.c
-index cdcf583..7a18bc9 100644
---- a/config.c
-+++ b/config.c
-@@ -595,6 +595,14 @@ static int git_default_core_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.clockskew")) {
-+		if (!value || !strcmp(value, "none"))
-+			core_clock_skew = -1;
-+		else
-+			core_clock_skew = git_config_int(var, value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
--- 
-1.7.2.rc1.209.g2a36c
+Dylan
