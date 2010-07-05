@@ -1,92 +1,72 @@
-From: Joshua ben Jore <twists@gmail.com>
-Subject: Commit ending in \ breaks rebase commitlog parsing
-Date: Mon, 5 Jul 2010 13:24:22 -0700
-Message-ID: <AANLkTim8BGaTvaBFdNDeQp26hwMCztScZFoIHI00DjkD@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: 'git commit --short' without touching index?
+Date: Mon, 5 Jul 2010 16:56:52 -0400
+Message-ID: <20100705205651.GA32728@sigill.intra.peff.net>
+References: <loom.20100703T102242-536@post.gmane.org>
+ <20100703091748.GA11714@sigill.intra.peff.net>
+ <7veifhy9j0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 05 22:24:29 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Daniel <friedan@muon.rutgers.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 05 22:57:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OVsDN-0000wW-DE
-	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 22:24:29 +0200
+	id 1OVsis-0001R4-Ge
+	for gcvg-git-2@lo.gmane.org; Mon, 05 Jul 2010 22:57:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754343Ab0GEUYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Jul 2010 16:24:24 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36980 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752680Ab0GEUYX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Jul 2010 16:24:23 -0400
-Received: by vws5 with SMTP id 5so6497056vws.19
-        for <git@vger.kernel.org>; Mon, 05 Jul 2010 13:24:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=ZBh38G2abXGlKHCcQ5WqXGWto5OGYRMBfJbUuoSr2MU=;
-        b=wiS2/b34PE4mrDiTU68kAFBjrsng3zxo+/utPTw2mGaKJ9GUg5NtV+ytavNxnazDjW
-         /S2k5EEdmdHf9xpDAEFGQgP3+DE/pxesBqzTmV0/wfMBAjYI7l7jgUk4r6iEGacn0nWU
-         RvMoaF9iQ6TOe9L+a58ATO45eWlEtvPrH7xUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=X9+7p2iQ07jfkOR3BAFfzDsSykwRbYxi3J1/+miJ9C4m/KjKdTfVOpXDdnZgB5pjtQ
-         Bns4EdWoPJFBiqr0YQ3PhyqqHoXsH5GCm7hkHVPQp6JdXfzJBPuo+nfUI6HU2X7tZ3Q8
-         pcWyG8urVzB9V9ZWjxRI/kXuSkxw+hJBt/6jU=
-Received: by 10.220.159.14 with SMTP id h14mr1805341vcx.255.1278361462854; 
-	Mon, 05 Jul 2010 13:24:22 -0700 (PDT)
-Received: by 10.220.48.35 with HTTP; Mon, 5 Jul 2010 13:24:22 -0700 (PDT)
+	id S1755859Ab0GEU4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Jul 2010 16:56:55 -0400
+Received: from peff.net ([208.65.91.99]:45648 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755645Ab0GEU4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Jul 2010 16:56:54 -0400
+Received: (qmail 17939 invoked by uid 107); 5 Jul 2010 20:57:50 -0000
+Received: from c-67-172-213-4.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.213.4)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 05 Jul 2010 16:57:50 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Jul 2010 16:56:52 -0400
+Content-Disposition: inline
+In-Reply-To: <7veifhy9j0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150294>
 
-Hi,
-Through typos on my part, I have a commit with a message ending in a \.
+On Mon, Jul 05, 2010 at 01:10:43PM -0700, Junio C Hamano wrote:
 
-    Prefer ! and && to \\not\ and 'and\
+> Jeff King <peff@peff.net> writes:
+> 
+> > It would be nice if the index-refreshing code only wrote to the index if
+> > there was something worth writing. I'm not sure how hard that would be
+> > to implement, though.
+> 
+> Hmm, don't we already do that with "istate->cache_changed"?
 
-The rebase command or something it is using is parsing this
-incorrectly and leaving my .git in a "bad" state.
+Apparently not:
 
-    pick 43d2369 Prefer ! and && to
-    ot and 'and8c7ee99 Upgrade to Devel::PPPort-3.19
+  $ stat .git/index | grep -i modify
+  Modify: 2010-07-05 16:52:11.000000000 -0400
+  $ git status
+  # On branch master
+  nothing to commit
+  $ stat .git/index | grep -i modify
+  Modify: 2010-07-05 16:53:09.000000000 -0400
 
-That should have read:
+and it is not just updating some stat-dirtiness. Doing it over and over
+will keep updating the index. It looks like we unconditionally do the
+lock and write in cmd_status, but I haven't looked further.
 
-    pick 43d2369 Perefer ! and && to \\not\ and 'and\
-    pick 8c7ee99 Upgrade to Devel::PPPort-3.19
+> In any case, we should diagnose "commit --short" (and "--procelain") as an
+> error, perhaps by splitting option parsers for commit and status further.
 
-Initially, I started editing my pick list to be proper and was
-receiving some strange sort of parsing errors but now am not. I'd
-manually edited the backup picklist file in .git as well. For a repro,
-I tried the following. This also seems to show up a perhaps related
-problem of a commit message consisting of only a single backslash. The
-pick list just *drops* the commit, perhaps because some layer thinks
-the commit message is empty?
+I don't think it's an error. "commit --short" implies "commit --dry-run
+--short", which is actually a useful thing (well, _I_ don't find it
+useful, but I believe it was kept intentionally during the "status is no
+longer commit --dry-run" conversion).
 
-    mkdir slash
-    cd slash
-    git init
-
-    echo data1 > foo
-    git add foo
-    git commit -m root
-    export PARENT=$(git rev-parse HEAD)
-
-    echo data2 > foo
-    git add foo
-    git commit -m \\
-
-    echo data3 > foo
-    git add foo
-    git commit -m next
-
-    git rebase -i $PARENT
-    # .git/rebase-merge/git-rebase-todo is now incorrect
-
-Josh
+-Peff
