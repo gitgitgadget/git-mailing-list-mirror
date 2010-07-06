@@ -1,90 +1,68 @@
-From: Eric Niebler <eric@boostpro.com>
+From: Raja R Harinath <harinath@hurrynot.org>
 Subject: Re: help moving boost.org to git
-Date: Tue, 06 Jul 2010 14:29:33 -0400
-Message-ID: <4C33760D.9000404@boostpro.com>
-References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org> 	<4C32668E.9040000@boostpro.com>	<AANLkTimAqL8gvgIisLpWE6xj2p0jEZD5wetdGYJnOpdr@mail.gmail.com> 	<4C3275C0.8000406@boostpro.com>	<AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com> 	<4C336F3D.1010906@boostpro.com> <AANLkTikfTFw_UdV1ia58MbWxH4h8TJAr-Y5WPvlXCjeJ@mail.gmail.com>
+Date: Tue, 06 Jul 2010 20:36:24 +0530
+Message-ID: <878w5o7iq7.fsf@hariville.hurrynot.org>
+References: <4C31E944.30801@boostpro.com> <4C31F0D4.1040207@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 20:29:58 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 06 20:41:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWCu3-0006fQ-O2
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:29:56 +0200
+	id 1OWD4w-0005M2-PO
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753852Ab0GFS3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 14:29:47 -0400
-Received: from boostpro.com ([206.217.198.21]:38603 "EHLO boostpro.com"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1753815Ab0GFS3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 14:29:47 -0400
-Received: from [10.75.247.254] (unknown [166.198.188.124])
-	(Authenticated sender: eric)
-	by boostpro.com (Postfix) with ESMTPSA id D76DB14BCD8;
-	Tue,  6 Jul 2010 19:29:42 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.10) Gecko/20100512 Lightning/1.0b1 Thunderbird/3.0.5
-In-Reply-To: <AANLkTikfTFw_UdV1ia58MbWxH4h8TJAr-Y5WPvlXCjeJ@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
+	id S1754942Ab0GFSkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 14:40:24 -0400
+Received: from lo.gmane.org ([80.91.229.12]:48787 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752176Ab0GFSiv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 14:38:51 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OWD2g-0003uv-G6
+	for git@vger.kernel.org; Tue, 06 Jul 2010 20:38:50 +0200
+Received: from 117.192.143.200 ([117.192.143.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 20:38:50 +0200
+Received: from harinath by 117.192.143.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 20:38:50 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 117.192.143.200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:x3wPrMw7fUIbEJjQpIUUMnGJOJA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150386>
 
-On 7/6/2010 2:13 PM, Avery Pennarun wrote:
-<snip>
-> Specifically, with a tool like git-subtree, it only really works if a
-> particular subproject has always existed in the same subdir of your
-> repo since it started.  If the subdir was ever renamed, or if some of
-> the files were previously part of one subdir but then moved around,
-> git-subtree doesn't (currently) know how to deal with that.
+Hi,
 
-Bah! Yes, directories have moved around in our svn repro. :-( In
-particular, we've had cases where libraries in boost began life as
-sub-projects of a different library and then got spun off.
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> git-filter-branch can do anything you want, but you have to teach it
-> how, which is obviously even *more* error prone.
+> Am 7/5/2010 16:16, schrieb Eric Niebler:
+>> I have a question about the best approach to take for refactoring a
+>> large svn project into git. The project, boost.org, is a collection of
+>> C++ libraries (>100) that are mostly independent. (There may be
+>> cross-library dependencies, but we plan to handle that at a higher
+>> level.) After the move to git, we'd like each library to be in its own
+>> git repository.
+>
+> You could use svn2git: http://gitorious.org/svn2git
+> KDE uses it to split its SVN repository into pieces. The tool is driven by
+> a "ruleset" that specifies SVN subdirectories and revision numbers that
+> make up a module.
 
-I can only imagine.
+I'm also involved in moving a large SVN project to git (the mono
+project).  I have found and fixed several issues with svn2git
 
-> Things are also a little messy if you have some kind of top-level
-> directory with build infrastructure shared by all the subdirs.  Does
-> the top-level Makefile have a list of the subdirs it needs to build?
+  git://gitorious.org/~harinath/svn2git/rrh-svn2git.git
 
-Bah! Yes, the build, the docs and the test infrastructure all currently
-share files across our submodules-to-be. Surely other projects have
-encountered this problem before, right? (KDE, I'm looking in your
-direction.)
-
-> If so, there's no way to extract only a subset of true history that
-> will still build correctly - it'll be looking for directories that you
-> explicitly removed.  You could update the Makefiles programmatically
-> in every single revision, but that's starting to get extremely
-> messy... and your history stops representing what *real life* really
-> looked like at the time.
-
-I see what you mean.
-
-> If your subdirs haven't been moving around (which sounds like that
-> might be the case for you), and you don't have any top-level files
-> that you care about, rewriting might turn out to be straightforward.
-> You could also make the decision on a subdir-by-subdir basis, I guess.
-
-More evidence that the fancy filter/branch/subtree/svn2git/whatever
-utilities aren't going to get us where we'd like to be. A simple
-conversion and grafts look like the only workable approach.
-
-> Have fun,
-
-Having heaps! Thanks,
-
--- 
-Eric Niebler
-BoostPro Computing
-http://www.boostpro.com
+- Hari
