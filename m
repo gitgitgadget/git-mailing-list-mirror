@@ -1,63 +1,69 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: get-remote-ref hook
-Date: Tue, 6 Jul 2010 22:00:49 +0200
-Message-ID: <20100706200049.GD29232@nibiru.local>
-Reply-To: weigelt@metux.de
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH] Bugfix: grep: Do not colorize output when -O is set
+Date: Tue, 06 Jul 2010 22:19:03 +0200
+Message-ID: <4C338FB7.8060005@lsrfire.ath.cx>
+References: <1278064941-30689-1-git-send-email-ayiehere@gmail.com> <4C2E1185.1040406@lsrfire.ath.cx> <20100706193845.GA7438@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 06 22:13:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nazri Ramliy <ayiehere@gmail.com>, gitster@pobox.com,
+	git@vger.kernel.org, johannes.schindelin@gmx.de
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 22:19:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWEW4-0003n3-LP
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 22:13:16 +0200
+	id 1OWEbt-0007iU-Kp
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 22:19:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462Ab0GFUNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 16:13:12 -0400
-Received: from forum.psychotherapie.org ([217.160.22.205]:34659 "EHLO
-	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752200Ab0GFUNK (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 16:13:10 -0400
-X-Greylist: delayed 376 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Jul 2010 16:13:10 EDT
-Received: (from uucp@localhost)
-	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o66K6q2M011714
-	for git@vger.kernel.org; Tue, 6 Jul 2010 22:06:52 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o66K0n9c008303
-	for git@vger.kernel.org; Tue, 6 Jul 2010 22:00:49 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1754965Ab0GFUTM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 16:19:12 -0400
+Received: from india601.server4you.de ([85.25.151.105]:59776 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753031Ab0GFUTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 16:19:11 -0400
+Received: from [10.0.1.101] (p57B7D7E9.dip.t-dialin.net [87.183.215.233])
+	by india601.server4you.de (Postfix) with ESMTPSA id D8B9C2F80F0;
+	Tue,  6 Jul 2010 22:19:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.4) Gecko/20100608 Thunderbird/3.1
+In-Reply-To: <20100706193845.GA7438@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150408>
 
+Am 06.07.2010 21:38, schrieb Jonathan Nieder:
+> Hi,
+>=20
+> Ren=C3=A9 Scharfe wrote:
+>=20
+>> Hmm, but with --open-files-in-pager without argument or -Oless colou=
+rs
+>> may be handled correctly and desirable.
+>=20
+> Sorry I missed this before.  Is there really a pager that will accept
+> \e[36m as a command-line argument and do something reasonable with it=
+?
 
-Hi folks,
+I was missing that -O enforces -l, and that it makes the pager open all
+files directly from the worktree, one by one.  Somehow I assumed that i=
+t
+would pipe something like the output of "grep -h -C inf" to the pager,
+colour marks and all -- similar to what is done without -O, except that
+it would start a new pager for each file.
 
+I think the "pager" part of the long option name confused me, but that'=
+s
+a weak excuse.  Just ignore me, your original patch was fine.
 
-I've implemented a little hook for filtering out remote refs
-(and the associated objects). This allows to make partial clones.
+[snip]
+> Probably a better solution is to recommend -C option, possibly
+> implementing -C infinity so people don=E2=80=99t have to use -C 10000=
+00.
 
-http://repo.or.cz/w/oss-qm-packages.git/commitdiff/9deb95ff86cb1bd9fc86f7cb4978bf831879f948
+Hmm, that could be useful, also with -A and -B.
 
-
-cu
--- 
----------------------------------------------------------------------
- Enrico Weigelt    ==   metux IT service - http://www.metux.de/
----------------------------------------------------------------------
- Please visit the OpenSource QM Taskforce:
- 	http://wiki.metux.de/public/OpenSource_QM_Taskforce
- Patches / Fixes for a lot dozens of packages in dozens of versions:
-	http://patches.metux.de/
----------------------------------------------------------------------
+Ren=C3=A9
