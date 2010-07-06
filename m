@@ -1,158 +1,84 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: =?UTF-8?q?=5BPATCH=20v2=5D=20use=20=22up-to-date=22=20instead=20of=20=22uptodate=22=20for=20consistency?=
-Date: Tue,  6 Jul 2010 17:55:44 +0200
-Message-ID: <b49995cd151b36cfff5231b28f5e8ff3970c14a2.1278431239.git.nicolas.s.dev@gmx.fr>
-References: <AANLkTimvQ8_SKa_VSvQk1_c3aRVv1lZCMYNOVLXBuC4W@mail.gmail.com>
+From: tytso@mit.edu
+Subject: Re: Why is "git tag --contains" so slow?
+Date: Tue, 6 Jul 2010 12:53:36 -0400
+Message-ID: <20100706165336.GJ25518@thunk.org>
+References: <20100701121711.GF1333@thunk.org>
+ <20100701150331.GA12851@sigill.intra.peff.net>
+ <20100701153842.GA15466@sigill.intra.peff.net>
+ <20100702192612.GM1333@thunk.org>
+ <20100703080618.GA10483@sigill.intra.peff.net>
+ <20100704005543.GB6384@thunk.org>
+ <20100705122723.GB21146@sigill.intra.peff.net>
+ <20100705141012.GA25518@thunk.org>
+ <20100706115826.GA15413@sigill.intra.peff.net>
+ <1278430303.32094.15.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>, <git@vger.kernel.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 17:56:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Avery Pennarun <apenwarr@gmail.com>,
+	git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 18:53:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWAVP-00059p-8y
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:56:19 +0200
+	id 1OWBP2-0004RS-9S
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 18:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754861Ab0GFP4O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 11:56:14 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:37930 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754031Ab0GFP4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 11:56:13 -0400
-Received: by yxk8 with SMTP id 8so212052yxk.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 08:56:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=SthbTJl41gCgv1jMDq+2uAHvtrkr/v4LdP2+AlTpDRs=;
-        b=vq0t7PMwmK2xP63xYDfaQkkh934WZZoGOFQbF1tnGkoz5QMsIUn3enlx+9X5sMcMbF
-         y7nkw2wPPSd0nVxIp43dHLvPgRCxEVriwKPW33HuMnrZ5vChixvuD5/7Qn5uGiDxAOpl
-         Ss7KjpSoGSLonKHzcPIcZXWecK88mMvWlSVEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references:mime-version:content-type:content-transfer-encoding;
-        b=BtV07g0lCIwXbLx55TjGk0kAdQCVjKRWEJUdjdVbSv3FfAFj6CqfKAxTXdOwGtFyJP
-         bwhUDe06Q/Eb8/hP9xyH4+GGnGiSZ5g6WCR4FT588+VIGArnpNfyjyvHhAaeFl3JyBWK
-         +nFl8xxfhxmJBdoGnaNWfDWU77sJEMgiNgAcQ=
-Received: by 10.213.2.132 with SMTP id 4mr4189689ebj.94.1278431769112;
-        Tue, 06 Jul 2010 08:56:09 -0700 (PDT)
-Received: from localhost (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id a48sm52344518eei.13.2010.07.06.08.56.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 08:56:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.rc1.212.g4c287
-In-Reply-To: <AANLkTimvQ8_SKa_VSvQk1_c3aRVv1lZCMYNOVLXBuC4W@mail.gmail.com>
+	id S1753053Ab0GFQxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 12:53:43 -0400
+Received: from THUNK.ORG ([69.25.196.29]:43449 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752920Ab0GFQxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 12:53:42 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1OWBOs-0000oN-CJ; Tue, 06 Jul 2010 12:53:38 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1OWBOq-0006nX-9J; Tue, 06 Jul 2010 12:53:36 -0400
+Content-Disposition: inline
+In-Reply-To: <1278430303.32094.15.camel@wpalmer.simply-domain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150368>
 
-Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
----
+On Tue, Jul 06, 2010 at 04:31:43PM +0100, Will Palmer wrote:
+> Is it wrong to expect that git perform poorly in the edge-cases (hugely
+> skewed timestamps), but that it perform /correctly/ in all cases?
+> 
+> Clearly, marking already-traversed histories was the right thing to do,
+> and if I read correctly, made a good improvement on its own. But you
+> seem to have crossed a line at some point between "optimization" and
+> "potentially giving the wrong answer because it's faster"
 
-The 06/07/10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+When "it's faster" is between 100-1000 times faster, I think we have
+to look at things a bit more closely.  That's the difference between a
+command being usable and not usable.
 
-> Did you run the tests after applying this patch? This looks like it w=
-ould break:
->=20
-> t/t7110-reset-merge.sh
-> 176:    grep file1 err.log | grep "not uptodate"
-> 192:    grep file1 err.log | grep "not uptodate"
+We would be much better off if our tools enforced the fact that
+committer times were always increasing.  If from the beginning, we had
+introduced checks so that "git commit" refused to create new commits
+where the committer time was before its parent commit(s), and
+git-receive-pack refused to accept packs that contained
+non-monotonically increasing commits or commits that occurred in the
+future according to its system clock, then these optimizations would
+be completely valid.
 
-I forgot about them. Thanks for a reminder.
+But we didn't, and we do have skew in some repositories.  So the
+question is what to do going forward?  One solution might be to
+enforce this moving forward, and to have varying levels of strictness
+in enforcing this constraint.  So for completely new repositories,
+this becomes a non-brainer.  For older repositories, Jeff's idea of
+having a tunable parameter so that results are correct given a maximum
+clock skew --- which can be determined --- will allow us to have
+correctness _and_ performance.
 
-
- Documentation/git-checkout.txt |    2 +-
- merge-recursive.c              |    2 +-
- t/t7110-reset-merge.sh         |    4 ++--
- unpack-trees.c                 |    4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
-t.txt
-index 261dd90..c04eceb 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -263,7 +263,7 @@ the above checkout would fail like this:
- +
- ------------
- $ git checkout mytopic
--fatal: Entry 'frotz' not uptodate. Cannot merge.
-+fatal: Entry 'frotz' not up-to-date. Cannot merge.
- ------------
- +
- You can give the `-m` flag to the command, which would try a
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 856e98c..fb6aa4a 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1214,7 +1214,7 @@ int merge_trees(struct merge_options *o,
- 	}
-=20
- 	if (sha_eq(common->object.sha1, merge->object.sha1)) {
--		output(o, 0, "Already uptodate!");
-+		output(o, 0, "Already up-to-date!");
- 		*result =3D head;
- 		return 1;
- 	}
-diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
-index 70cdd8e..6a5f78d 100755
---- a/t/t7110-reset-merge.sh
-+++ b/t/t7110-reset-merge.sh
-@@ -173,7 +173,7 @@ test_expect_success 'reset --merge fails with chang=
-es in file it touches' '
-     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
-     mv file3 file1 &&
-     test_must_fail git reset --merge HEAD^ 2>err.log &&
--    grep file1 err.log | grep "not uptodate"
-+    grep file1 err.log | grep "not up-to-date"
- '
-=20
- # The next test will test the following:
-@@ -189,7 +189,7 @@ test_expect_success 'reset --keep fails with change=
-s in file it touches' '
-     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
-     mv file3 file1 &&
-     test_must_fail git reset --keep HEAD^ 2>err.log &&
--    grep file1 err.log | grep "not uptodate"
-+    grep file1 err.log | grep "not up-to-date"
- '
-=20
- test_expect_success 'setup 3 different branches' '
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8cf0da3..024846e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -22,7 +22,7 @@ static struct unpack_trees_error_msgs unpack_plumbing=
-_errors =3D {
- 	"Entry '%s' would be overwritten by merge. Cannot merge.",
-=20
- 	/* not_uptodate_file */
--	"Entry '%s' not uptodate. Cannot merge.",
-+	"Entry '%s' not up-to-date. Cannot merge.",
-=20
- 	/* not_uptodate_dir */
- 	"Updating '%s' would lose untracked files in it",
-@@ -34,7 +34,7 @@ static struct unpack_trees_error_msgs unpack_plumbing=
-_errors =3D {
- 	"Entry '%s' overlaps with '%s'.  Cannot bind.",
-=20
- 	/* sparse_not_uptodate_file */
--	"Entry '%s' not uptodate. Cannot update sparse checkout.",
-+	"Entry '%s' not up-to-date. Cannot update sparse checkout.",
-=20
- 	/* would_lose_orphaned */
- 	"Working tree file '%s' would be %s by sparse checkout update.",
---=20
-1.7.2.rc1.212.g4c287
+						- Ted
