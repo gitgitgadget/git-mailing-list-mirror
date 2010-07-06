@@ -1,112 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
-Date: Tue, 6 Jul 2010 03:03:22 -0500
-Message-ID: <20100706080322.GA2856@burratino>
-References: <1278296639-25024-1-git-send-email-tytso@mit.edu>
- <20100705025900.GQ22659@josefsipek.net>
- <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
- <20100705185238.GS22659@josefsipek.net>
- <20100705192201.GI25518@thunk.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: help moving boost.org to git
+Date: Tue, 06 Jul 2010 01:51:00 -0700 (PDT)
+Message-ID: <m3ocelm1tj.fsf@localhost.localdomain>
+References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org>
+	<4C32668E.9040000@boostpro.com>
+	<loom.20100706T034440-190@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jeffpc@josefsipek.net, Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: tytso@mit.edu
-X-From: git-owner@vger.kernel.org Tue Jul 06 10:04:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Niebler <eric@boostpro.com>
+To: Dave Abrahams <dave@boostpro.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 10:51:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OW38i-00050f-SM
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 10:04:25 +0200
+	id 1OW3rz-0005EB-JJ
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 10:51:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751898Ab0GFIEH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 04:04:07 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:63891 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751134Ab0GFIEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 04:04:05 -0400
-Received: by iwn7 with SMTP id 7so6391869iwn.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 01:04:02 -0700 (PDT)
+	id S1754331Ab0GFIvE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 04:51:04 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53729 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753281Ab0GFIvD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 04:51:03 -0400
+Received: by bwz1 with SMTP id 1so3319809bwz.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 01:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=4653JcYKpIcdWlNLVelIMma1am+PLl2fzejhwcZiW2c=;
-        b=aP7TQwxfxQ+LbJuIDaNzMDoNrdt+OrDwCwBcD3X4moPzNYtHYXjp/ihbinKrBeEe6o
-         a/lxVwIcTJjxpf1CxF9cGAy7QEjNUtcp9fX03d20EHFo/2OGQpej8nuAbWHEz3inK06U
-         3zdo3IL3RkOvnuaCOyduiOV1iEjAHyIAS5kO0=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=3U9ZNJra5x2wpAL6PJoiEEaM/HoQaxvZ4cL2qMVl718=;
+        b=W9M9Uq+r1zS6y/hMMvp4sUfHHaqBOpWli8Fn3GZMSFcSMc7WbEoc0a0kz3HAWHxG2/
+         JrnOSEeq68aAEBFqqe8gssxZRTcGz4QXLhIchADyoPBZ7n4ypDvfnxSiguPBAq+T/qlO
+         iNteLU3w3SpIQ/wgTWepAxAhQtFQzKz5EZfOs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=yCQlniryt7GG1IyfeKvYjMq07eGmRi/ykMkCb4QA/GJseUbN2wMQg7I3b+0k1MOKz3
-         MXMTZkW2pd07p7z9ZmU9B4Wz/JItXDJ/GOUpDBYfXg2It5JquKO4nSqxmJsW4ojEAaBs
-         YTtTT7vk8W0shzn7Upms0x2eiQGJrjaM0YNzY=
-Received: by 10.231.35.10 with SMTP id n10mr4197370ibd.137.1278403441940;
-        Tue, 06 Jul 2010 01:04:01 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 34sm22389789ibi.6.2010.07.06.01.04.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 01:04:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100705192201.GI25518@thunk.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=m02wVMI9aWpOQ5RvDldDyAXk76Qve16b5VPQ0n3UGqQVy0omPYuqlwdSAIAjwx4FTm
+         fGTwaSmK/muCudokTsvfAM0wR8b+AyMWsHDzPqn1YE/o3vMgw2e/AhoQplfSYA078SiR
+         UjU2VIAL1VVpICBnvQSr0F58ku2mhofN81VCE=
+Received: by 10.204.83.211 with SMTP id g19mr3365337bkl.50.1278406261069;
+        Tue, 06 Jul 2010 01:51:01 -0700 (PDT)
+Received: from localhost.localdomain (abwo240.neoplus.adsl.tpnet.pl [83.8.238.240])
+        by mx.google.com with ESMTPS id 24sm21980056bkr.19.2010.07.06.01.50.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 06 Jul 2010 01:51:00 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o668oXgd007454;
+	Tue, 6 Jul 2010 10:50:43 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o668oG65007447;
+	Tue, 6 Jul 2010 10:50:16 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <loom.20100706T034440-190@post.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150335>
 
-tytso@mit.edu wrote:
-> On Mon, Jul 05, 2010 at 02:52:38PM -0400, jeffpc@josefsipek.net wrote=
-:
+Dave Abrahams <dave@boostpro.com> writes:
 
->> if I commit, and immediately after push 10 patches, wouldn't the HEA=
-D end up
->> with a commit that's ~10 minutes in the future?
+> Eric Niebler <eric <at> boostpro.com> writes:
+> 
+> > We are aiming to make boost a clearing-house for C++ libraries (like
+> > CPAN, or PyPi for python), 
+> 
+> Clarification: that's our goal for Ryppl, not Boost.
 
-I don=E2=80=99t think git has ever required commit dates to be _strictl=
-y_
-monotonic.
+By the way, could you please add information about Ryppl to Git Wiki?
+https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
 
-At one point rev-list did require monotonic --- i.e., the committer
-date of each commit had to be equal to or later than that of each of
-its parents) with no clock skew but that was considered a bug and
-fixed by v1.5.5-rc1~16 (Make revision limiting more robust against
-occasional bad commit dates, 2008-03-17)
-
-> diff --git a/guilt b/guilt
-> index b6e2a6c..edcfb34 100755
-> --- a/guilt
-> +++ b/guilt
-> @@ -535,6 +535,17 @@ commit()
->                          export GIT_AUTHOR_EMAIL=3D"`echo $author_str=
- | sed -e 's/[^<]*//'`"
->  		fi
-> =20
-> +		ct=3D$(git log -1 --pretty=3D%ct)
-> +		if [ $ct -gt $(stat -c %Y "$p") ]; then
-> +		    echo "Adjusting mod time of" $(basename "$p")
-> +		    ct=3D$(expr $ct + 60)
-> +		    if [ $ct -gt $(date +%s) ]; then
-> +			touch "$p"
-> +		    else
-> +			touch -d @$(expr $ct + 60) "$p"
-
-So I would suggest
-
- echo "Adjusting mod time of $(basename "$p")"
- touch -d "$ct" "$p"
-
-If the parent commit time happens to be in the future, well, at
-least we=E2=80=99re not making it worse.
-
-By the way, I think your idea to have commit warn about nonmonotonic
-commit dates is a good one.  We should also decide on a rule,
-hopefully one the kernel repo obeys (30 days max skew? *crosses
-fingers*) and make git fsck warn loudly about violations.
+Thanks in advance
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
