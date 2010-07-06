@@ -1,91 +1,140 @@
-From: tytso@mit.edu
-Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
-Date: Tue, 6 Jul 2010 13:21:09 -0400
-Message-ID: <20100706172109.GM25518@thunk.org>
-References: <1278296639-25024-1-git-send-email-tytso@mit.edu>
- <20100705025900.GQ22659@josefsipek.net>
- <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
- <20100705185238.GS22659@josefsipek.net>
- <20100705192201.GI25518@thunk.org>
- <20100706080322.GA2856@burratino>
- <AANLkTinZ4UV9in60Y4myfUWv08Vx3OMvh-_YQl2BXSjC@mail.gmail.com>
- <20100706142921.GB6666@sigill.intra.peff.net>
- <AANLkTikWGzEq8wiVyu_xJ-tK92N1oRFOrawjOe9UQXkr@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: help moving boost.org to git
+Date: Tue, 6 Jul 2010 13:27:56 -0400
+Message-ID: <AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com>
+References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org> 
+	<4C32668E.9040000@boostpro.com> <AANLkTimAqL8gvgIisLpWE6xj2p0jEZD5wetdGYJnOpdr@mail.gmail.com> 
+	<4C3275C0.8000406@boostpro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	jeffpc@josefsipek.net, Git Mailing List <git@vger.kernel.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Jul 06 19:21:21 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eric Niebler <eric@boostpro.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 19:28:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWBpg-0003M6-79
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 19:21:20 +0200
+	id 1OWBwY-00078b-0H
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 19:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257Ab0GFRVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 13:21:14 -0400
-Received: from THUNK.ORG ([69.25.196.29]:57091 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751712Ab0GFRVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 13:21:13 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1OWBpX-0000ur-HR; Tue, 06 Jul 2010 13:21:11 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1OWBpV-0006pl-JZ; Tue, 06 Jul 2010 13:21:09 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTikWGzEq8wiVyu_xJ-tK92N1oRFOrawjOe9UQXkr@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1755442Ab0GFR2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 13:28:20 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:44378 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753127Ab0GFR2T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 13:28:19 -0400
+Received: by pwi5 with SMTP id 5so2059689pwi.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 10:28:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oGFf1/BOv8FSQdl+cAAz3rCbcpQoCoVvJIh18WBj/VQ=;
+        b=SNbgnGbVugyj0QIB7dvOfXUrIt66N+31biPyO4Ryme4F7AC3Y2/Tg4a/OghXa3F7Au
+         wNL8c9TaZVCrVTiu3UPZxA3i9n20doZ88KmOj1OL+TK7bIpo+yOvWpkhYoC2suUhwl4e
+         BQwty8W9I9jcelMEh5VCIar6cBwv5RN9qM5Tk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=fpn4iaIC5rQ8/2f/aGy1nFh7JZ3M06um3NYSBZsYGamkaOfVG7Dv6dVFipXiM66SUg
+         Oivudjyxp46GKK/EwJkGSGSflCv5q5OT0xlxFjP6F4AXje0jX5wqekmC32VN78bN9iMv
+         YIpQQc6lZG15Y9By27k6q/OxmWiVExdTtTKWI=
+Received: by 10.142.126.1 with SMTP id y1mr6017974wfc.99.1278437297422; Tue, 
+	06 Jul 2010 10:28:17 -0700 (PDT)
+Received: by 10.151.45.4 with HTTP; Tue, 6 Jul 2010 10:27:56 -0700 (PDT)
+In-Reply-To: <4C3275C0.8000406@boostpro.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150371>
 
-On Tue, Jul 06, 2010 at 05:02:51PM +0200, Erik Faye-Lund wrote:
-> But I can imagine it becoming a big deal when the skew is high. The
-> again, perhaps this should constitute a "bad commit" and commit should
-> error out if a parent commit was more than some number of minutes
-> newer than the current time (or whatever)? That way, skewed commits
-> would be caught early if a developer is working with other people, and
-> a lot of the traversal could perhaps be faster (or more robust). If
-> the developer with the skewed clock doesn't work with anyone, skew
-> isn't really a problem, but perhaps he'd have to do some
-> branch-filtering to un-skew commits when starting to work with others.
-> And only if the skew is really high... like, multiple days... Which
-> can't really be THAT common?
+On Mon, Jul 5, 2010 at 8:16 PM, Eric Niebler <eric@boostpro.com> wrote:
+> On 7/5/2010 7:32 PM, Avery Pennarun wrote:
+>> Eric Niebler wrote:
+>>> If multiple repositories share the same ancient history, wouldn't t=
+hat
+>>> give git annotate/blame enough information? Sorry, git newbie here.
+>>
+>> Yes, it would. =A0But how much of the ancient history do you want? =A0=
+If
+>> you want all of it, you don't save any space in your repo.
+>
+> Repos, plural. We'd save space because the history wouldn't be
+> duplicated in each one. Right? Or else I'm confused and this somethin=
+g
+> that will become clear after I understand what git subtree does.
 
-Guilt uses the modtime of the patch in a patch series for the
-committer time and the author time.  The reasoning behind it doing
-this is so that you can do "git pop -a" followed by "git push -a" and
-if the patch files haven't changed, the commit id's don't change
-either.
+The statement "multiple repositories share the same ancient history"
+above is the part that's confusing.  If you use a tool like
+git-subtree or git-filter-branch, you're actually generating a "new
+history" based on the original history.  The "new history" obviously
+contains fewer files than the original, which would take less space.
+But if you want multiple repositories to "share the same ancient
+history" you can't rewrite it, and thus you aren't saving any space in
+any one repo.
 
-But if you change a commit in the middle of the series, you can end up
-with clock skews that could be several days or weeks.  Becuase of my
-ext4 workflow, the Linux kernel has a maximum skew of 100 days.  Mea
-culpa; I stopped doing this as soon as I was told that git was
-depending on committer time being roughly increasing, and so I at
-least haven't introduced any such time skews since v2.6.34.  And part
-of my making up for this has been to submit a patch to guilt to
-prevent this from happening again in the future, by fixing up guilt so
-that it won't request "git commit" to create timestamps that show very
-wild clock skews within a single linear branch.
+I'm assuming you want to rewrite history to save space (since that's
+what this thread is about).  And git annotate/blame will work as long
+as your rewritten history contains all the files you care about in
+that repo.
 
-We could still get potentially screwed though.  Every so often I will
-see someone sending e-mail from a client host whose time is years if
-not decades in the past or in the future.  If they were to do a "git
-commit", and then push that commit to a public repository, we could
-easily introduce a large clock skew into a git repo.  Has that ever
-happened to date?  Not to my knowledge.  Could it happen?  Very
-clearly, yes.  Should we try to put in some safety checks to prevent
-it, or at least issue warnings?  Maybe.
+> Right now, the other boost developers are pushing for a solution that
+> uses grafts. I'm fuzzy on what they are exactly, but it seems that we=
+'d
+> freeze a svn mirror and have anybody interested in history put grafts=
+ in
+> their local repository pointing back at the mirror. I don't know enou=
+gh
+> yet to say what the pros/cons of this approach might be wrt git subtr=
+ee.
 
-						- Ted
+The primary advantage of grafts is that you can do something easy
+*right now* and then fix it all up later.  eg. if you screw up your
+history extraction and do it better later, you can just re-graft it
+and you're done.
+
+A secondary advantage of grafts is that cloning the "primary"
+repository will be tiny since it doesn't have much ancient history.
+
+A disadvantage of grafts is that each user has to deal with grafts in
+his cloned repo, and unless he does, things like 'git log' and 'git
+blame' won't show anything from the grafted history.  Supposedly 'git
+replace' was designed to help with this issue, but I've never used it
+so I don't know for sure.
+
+And of course, grafts don't actually do any history rewriting for you.
+ You could split out a subtree's history and then graft it on, but the
+splitting process is still the same as it would be without grafts.
+The alternative would be to *not* rewrite history, just keep the
+entire history of the whole project in one place, and graft it on if
+you really need it.  That's actually pretty clean (and accurately
+reflects exactly what *really happened*, which is a nice feature to
+have in a vcs history), but you'll then never have a single repo of
+just one subproject with the entire history of that subproject.  That
+latter turns out to not actually be very important in practice, so you
+might want to do it.
+
+>> The confusing part is taking *submissions* back through both channel=
+s.
+>> If you value your sanity, you probably want to only allow submission=
+s
+>> back via svn while you're running the two in parallel; but that make=
+s
+>> git's added features a lot less useful, so you probably want to run =
+in
+>> parallel for only a short time.
+>
+> Oh my! I don't think we'd open the git repositories for changes until
+> after we close down svn. This problem is hard enough.
+
+It can be done, and I've done it :)  But you're wise to avoid that situ=
+ation.
+
+Have fun,
+
+Avery
