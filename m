@@ -1,106 +1,99 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 2/2 v2] Makefile: work around ksh's failure to handle missing list argument to for loop
-Date: Tue,  6 Jul 2010 14:56:51 -0700
-Message-ID: <vUheaJEBKF4RpCQidVNBD1qrdnnqrcfK_TfSmMUj8l53PCm3F-faBNN2Pxk97G5Mf5GY3dVoDgwkpzK8xO7nXw@cipher.nrlssc.navy.mil>
-References: <7v630t72vo.fsf@alter.siamese.dyndns.org>
-Cc: git@vger.kernel.org, j.sixt@viscovery.net,
-	git@drmicha.warpmail.net, PWalker752@aol.com,
-	newsletter@dirk.my1.cc, bruce.stephens@isode.com,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 06 23:53:27 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] git submodule: add submodules with git add -f <path>
+Date: Tue, 6 Jul 2010 22:33:34 +0000
+Message-ID: <AANLkTinn_Vz6I619Do4AOCVMUgfpyy84L1wh3lkuCP7R@mail.gmail.com>
+References: <1278098521-5321-1-git-send-email-avarab@gmail.com>
+	<1278351183-18734-1-git-send-email-avarab@gmail.com>
+	<7vmxu572w5.fsf@alter.siamese.dyndns.org>
+	<4C33A552.5060008@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 07 00:33:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWG4y-0000DY-HH
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 23:53:24 +0200
+	id 1OWGhx-0002rs-LY
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 00:33:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756248Ab0GFVxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 17:53:20 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:49692 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753383Ab0GFVxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 17:53:19 -0400
-Received: by mail.nrlssc.navy.mil id o66LqqAE008444; Tue, 6 Jul 2010 16:52:52 -0500
-In-Reply-To: <7v630t72vo.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 06 Jul 2010 21:52:52.0071 (UTC) FILETIME=[9513A770:01CB1D55]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1755714Ab0GFWdg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 18:33:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56733 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755328Ab0GFWdf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 18:33:35 -0400
+Received: by iwn7 with SMTP id 7so7139851iwn.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 15:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RKXRhGFWD57C9sxxq0qFe4x+fkIGLhc99EqS6M0KVcc=;
+        b=L4NYXHn45HnlWoLdJX2t7Kq9Td9MiVhmYm1Rjwg+ocZjhJknUoZf/+GYUgxzGwWHwn
+         0ReUj2GpqKjQTR/UaGBbXl7kGp4B2YuNfCLgxS2KhuNlwHBLfJKpSlpPy/8tuthwWcbY
+         U8a5vEeimfLtGgCgp9/fni1qVwnJjAsTpCjqA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DBJ5uoHvkvZ+dGhsrc2JeR4uOPH5jpQfZ1IdPBz82cmSQ+PYIvz36KNtcMZoDA5LvD
+         2uoYqjNFjQPVpPix3oRKDvAOYqcmhM08XQ2gXpvHVcDoJ/LDgo0wnO2Zuz2L2ngfSG5C
+         IsXmo6dSD/0rKmGmRCe/RnXqNzESSDQqZwWCw=
+Received: by 10.231.118.28 with SMTP id t28mr5003730ibq.131.1278455614777; 
+	Tue, 06 Jul 2010 15:33:34 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Tue, 6 Jul 2010 15:33:34 -0700 (PDT)
+In-Reply-To: <4C33A552.5060008@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150414>
 
-From: Brandon Casey <drafnel@gmail.com>
+On Tue, Jul 6, 2010 at 21:51, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> [...]
+> But while I think adding the --force option to the "git add .gitmodul=
+es"
+> makes perfect sense (as the submodule can't be successfully added unt=
+il
+> it is recorded in this file and there is really no point in ignoring
+> .gitmodules when you decide to use submodules), I'm not so sure about
+> what to do when the submodule path itself is ignored.
+>
+> I see two possible behaviors here:
+>
+> a) We just ignore .gitignore and add the submodule anyways (which is
+> =C2=A0 what this patch does)
+>
+> b) We do the same a "git add <ignored file>" does: Print an error
+> =C2=A0 message, maybe even tell the user to use a - still to be added=
+ -
+> =C2=A0 "--force" (or "-f") option and exit. But without checking out =
+the
+> =C2=A0 submodule first nor adding or changing .gitmodules.
+>
+> IMHO b) is more consistent with the current behavior of "git add". An=
+d
+> when you later decide that the submodules files should live in the
+> superproject and you drop the submodule, the then probably still
+> present entry in .gitignore might really shoot you in the foot when
+> you add new files there and they won't show up because they are still
+> ignored.
+>
+> What do others think?
 
-ksh does not like it when the list argument is missing in a 'for' loop.
-This can happen when NO_CURL is set which causes REMOTE_CURL_ALIASES to be
-unset.  In this case, the 'for' loop in the Makefile is expanded to look
-like this:
+Option C would be treating it like git init as the current patch
+does. But init isn't strictly comparable to git add or git submodule
+add since it's not adding something to *another* repository.
 
-   for p in ; do
+I really don't care, B or C works for me, although C is of course
+easier since I don't have to write another patch :)
 
-and ksh complains like this:
-
-   /bin/ksh: syntax error at line 15 : `;' unexpected
-
-The existing attempt to work around this issue, introduced by 70b89f87,
-tried to protect the 'for' loop by first testing whether REMOTE_CURL_ALIASES
-was empty, but this does not work since, as Johannes Sixt explains, "Before
-the test for emptyness can happen, the complete statement must be parsed,
-but ksh finds a syntax error in the statement and, therefore, cannot even
-begin to execute the statement. (ksh doesn't follow POSIX in this regard,
-where this would not be a syntax error.)".
-
-Make's $(foreach) function could be used to avoid this shell glitch, but
-since it has already caused a problem once before by generating a command
-line that exceeded the maximum argument list length on IRIX, let's adopt
-Bruce Stephens's suggestion for working around this issue in the same way
-the OpenSSL folks have done it.  This solution first assigns the contents
-of the REMOTE_CURL_ALIASES make variable to a shell variable and then
-supplies the shell variable as the list argument in the 'for' loop.  This
-satisfies ksh and has the expected behavior even if $(REMOTE_CURL_ALIASES)
-is empty.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
-
-
-On 07/05/2010 09:36 PM, Junio C Hamano wrote:
-> Well your patch fixes the issue, and I would actually prefer it as long as
-> it is explained well ;-).
-
-Heh, ok, hopefully this commit message does a better job.
-
--Brandon
-
-
- Makefile |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 527d872..bc3c570 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2085,13 +2085,13 @@ endif
- 		ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
- 		cp "$$execdir/git$X" "$$execdir/$$p" || exit; \
- 	done && \
--	{ test x"$(REMOTE_CURL_ALIASES)" = x || \
--		for p in $(REMOTE_CURL_ALIASES); do \
-+	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
-+	for p in $$remote_curl_aliases; do \
- 		$(RM) "$$execdir/$$p" && \
- 		ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
- 		ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
- 		cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; \
--	done; } && \
-+	done && \
- 	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
- 
- install-gitweb:
--- 
-1.7.2.rc1
+Option b) is more consistent with git-add, but I can't find a way to
+ask any git tool whether a non-existing path is ignored without
+actually adding something. git add --dry-run will die on "pathspec
+'foo' did not match any files" unless the file exists already.
