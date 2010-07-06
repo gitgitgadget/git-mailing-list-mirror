@@ -1,64 +1,98 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 3/5] git-cvsserver: take care of empty passwords
-Date: Tue, 6 Jul 2010 18:05:40 +0000
-Message-ID: <AANLkTilSvEf6DIM_JZql8pTnSCrnFQ2tAOGuqownVl4e@mail.gmail.com>
-References: <3594077658746039911@unknownmsgid>
-	<AANLkTinpjbOStczVo7NaPlxqyAh_32kLy0kWKc_AsLiI@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: help moving boost.org to git
+Date: Tue, 6 Jul 2010 14:13:47 -0400
+Message-ID: <AANLkTikfTFw_UdV1ia58MbWxH4h8TJAr-Y5WPvlXCjeJ@mail.gmail.com>
+References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org> 
+	<4C32668E.9040000@boostpro.com> <AANLkTimAqL8gvgIisLpWE6xj2p0jEZD5wetdGYJnOpdr@mail.gmail.com> 
+	<4C3275C0.8000406@boostpro.com> <AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com> 
+	<4C336F3D.1010906@boostpro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?TMOhc3psw7Mgw4FTSElO?= <laszlo.ashin@neti.hu>
-To: =?UTF-8?B?w4FzaGluIEzDoXN6bMOz?= <ashinlaszlo@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 20:05:52 2010
+Cc: git@vger.kernel.org
+To: Eric Niebler <eric@boostpro.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 20:14:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWCWm-0001fQ-Al
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:05:52 +0200
+	id 1OWCew-00060D-Kv
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522Ab0GFSFn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 14:05:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:57804 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751311Ab0GFSFm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 14:05:42 -0400
-Received: by iwn7 with SMTP id 7so6909829iwn.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 11:05:40 -0700 (PDT)
+	id S1756287Ab0GFSOK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 14:14:10 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:34573 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753721Ab0GFSOI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 14:14:08 -0400
+Received: by pvc7 with SMTP id 7so2743216pvc.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 11:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=4ayS4cGeQTN6vzqJzKOm9HLHRnrk8AJE05ooyqQDAtA=;
-        b=R9yVSS9qP74ENm0fkABc+QYIX1GBJiLlmXTmb860fwFJXBHUP1F2TvqwnNNNyajldQ
-         9HO2qZq3GwQWitYQOUmtMhOVpQ17tIVTaKkECfuG2Auh9fR+7yBtQuLqDGKfPzEYvHfO
-         T6fWBPQ5N1TAeB9QZyyZ07KPw8jpu9HocA738=
+        bh=QtvbVMWmMiIVvZdZI3pDujTmb9sOl88P97Ex38WkbWw=;
+        b=osHhWPNYG7KXRUh1yEOFQIRb1yOuWu91O54nXoLTaAer2adwGuQrKQyyV6xxeyVR2D
+         7QN081dCMfADkVqTjnHxSzTVb+lFoyR9Q3COrzdxYy4PPy18dWUoAuQDolq1XMksTezw
+         XOlcq6E2rQIA3pZrJUxuLhDq+UO0wS+Tqb88Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=V1kgAOzYsXenqUD9L0oXuTu/E40FkmlbkF/8hZVjhbyvw4zErCsFxYh/qgn2up3SHI
-         GH9ebRMLKNBfcqMySI6VPNniikp4bjqS9u0vT8XUuqLBf7u6Wzolb85m7wPtynMAetwh
-         xtmJa4X9fg+/T6Fiz8573Nx1KZDQh0ALRPuao=
-Received: by 10.42.4.75 with SMTP id 11mr1595722icr.50.1278439540865; Tue, 06 
-	Jul 2010 11:05:40 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Tue, 6 Jul 2010 11:05:40 -0700 (PDT)
-In-Reply-To: <AANLkTinpjbOStczVo7NaPlxqyAh_32kLy0kWKc_AsLiI@mail.gmail.com>
+        b=FdbjUfrRP/lFqxkYKnh8VXeOul4wZi0C0nE5tH9jFC7xd8oKaA9Db29Ahnu/bpe4Ej
+         bUJeLtSP3zvetd9K2rdZ8v/ynWjyxShepaVfctfQq+dyYXSawoiTSQfX0Q62FxVzar0z
+         BE6PmElffUgKhaMiwBfX3VOn8/LdFHj7Jf8go=
+Received: by 10.142.164.3 with SMTP id m3mr5967600wfe.293.1278440047649; Tue, 
+	06 Jul 2010 11:14:07 -0700 (PDT)
+Received: by 10.151.45.4 with HTTP; Tue, 6 Jul 2010 11:13:47 -0700 (PDT)
+In-Reply-To: <4C336F3D.1010906@boostpro.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150383>
 
-On Tue, Jul 6, 2010 at 17:37, =C3=81shin L=C3=A1szl=C3=B3 <ashinlaszlo@=
-gmail.com> wrote:
-> Do not try to descramble them.
+On Tue, Jul 6, 2010 at 2:00 PM, Eric Niebler <eric@boostpro.com> wrote:
+> On 7/6/2010 1:27 PM, Avery Pennarun wrote:
+>> The primary advantage of grafts is that you can do something easy
+>> *right now* and then fix it all up later. =A0eg. if you screw up you=
+r
+>> history extraction and do it better later, you can just re-graft it
+>> and you're done.
+>
+> How does one screw up the history extraction, if one is not doing any
+> fancy history rewriting (in this scenario)? Be there dragons?
 
-This commit message isn't very revealing. What does this do exactly?
-Is the behavior with empty passwords changed now? Does git-cvsserver
-no longer support empty passwords? Is the on-disk format in the authdb
-just different? (I.e. "" instead of "A" or something). Or something
-else?
+Well, "rewriting history" necessarily involves changing things about
+the permanent record.  Every time you change things, you have a
+potential to change them incorrectly.  So in general, not rewriting is
+less error-prone than rewriting :)
+
+Specifically, with a tool like git-subtree, it only really works if a
+particular subproject has always existed in the same subdir of your
+repo since it started.  If the subdir was ever renamed, or if some of
+the files were previously part of one subdir but then moved around,
+git-subtree doesn't (currently) know how to deal with that.
+git-filter-branch can do anything you want, but you have to teach it
+how, which is obviously even *more* error prone.
+
+Things are also a little messy if you have some kind of top-level
+directory with build infrastructure shared by all the subdirs.  Does
+the top-level Makefile have a list of the subdirs it needs to build?
+If so, there's no way to extract only a subset of true history that
+will still build correctly - it'll be looking for directories that you
+explicitly removed.  You could update the Makefiles programmatically
+in every single revision, but that's starting to get extremely
+messy... and your history stops representing what *real life* really
+looked like at the time.
+
+If your subdirs haven't been moving around (which sounds like that
+might be the case for you), and you don't have any top-level files
+that you care about, rewriting might turn out to be straightforward.
+You could also make the decision on a subdir-by-subdir basis, I guess.
+
+Have fun,
+
+Avery
