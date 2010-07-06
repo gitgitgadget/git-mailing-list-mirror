@@ -1,79 +1,121 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: git sub modules related
-Date: Tue, 6 Jul 2010 13:59:02 -0400
-Message-ID: <AANLkTil2ULzcREY2KsQtcHLmwT7or1lMo4Ju1cUYrq2o@mail.gmail.com>
-References: <AANLkTinej91PZbh_axJqz92mI0Y3GUako8tuKtU24iwV@mail.gmail.com>
+From: Eric Niebler <eric@boostpro.com>
+Subject: Re: help moving boost.org to git
+Date: Tue, 06 Jul 2010 14:00:29 -0400
+Message-ID: <4C336F3D.1010906@boostpro.com>
+References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org> 	<4C32668E.9040000@boostpro.com> <AANLkTimAqL8gvgIisLpWE6xj2p0jEZD5wetdGYJnOpdr@mail.gmail.com> 	<4C3275C0.8000406@boostpro.com> <AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 19:59:30 2010
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 20:00:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWCQb-0006l0-TC
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 19:59:30 +0200
+	id 1OWCRt-0007Ph-5z
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:00:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977Ab0GFR7Y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 13:59:24 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:56892 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755549Ab0GFR7X convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 13:59:23 -0400
-Received: by pwi5 with SMTP id 5so2074082pwi.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 10:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qqoQKDdV1eX+P2YZQg+QyyoI9VNVssFy4fX5s4r4rNw=;
-        b=Q8+0SXx1kvnnbueP4TIb/2ttBj+/RppCvY0zpaX5S9bcVOOkDKN94+ADjQerRScwYu
-         cfecSUfQN0jzGiJs5q56TD1oYAN8ICp6vEq5DevkGiUeSIFN9HVEzglLzh5tOwJc0VVA
-         MQb+mZPEbk4kwpXdMsYF8M6trhqJppF/j73J4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DvBwqHW4oESeFsMCk5y+uzwQkwZOPwTsdx0uj//cnChgeNmBczmCY/IUFj3122GgP6
-         nYuNTSce7SITFgXOSnm1qfVSNE7OAGM2mBH+WPjMuezNJUfb1uXwqVcDf3D6EfsoE2dw
-         HLnMhWBkd5auXlicdGIUZ0KeWfvCVlTr+7xGg=
-Received: by 10.142.187.19 with SMTP id k19mr6053026wff.16.1278439162497; Tue, 
-	06 Jul 2010 10:59:22 -0700 (PDT)
-Received: by 10.151.45.4 with HTTP; Tue, 6 Jul 2010 10:59:02 -0700 (PDT)
-In-Reply-To: <AANLkTinej91PZbh_axJqz92mI0Y3GUako8tuKtU24iwV@mail.gmail.com>
+	id S1756168Ab0GFSAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 14:00:42 -0400
+Received: from boostpro.com ([206.217.198.21]:53647 "EHLO boostpro.com"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756083Ab0GFSAl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 14:00:41 -0400
+Received: from [192.168.3.170] (host57.72.248.152.conversent.net [72.248.152.57])
+	(Authenticated sender: eric)
+	by boostpro.com (Postfix) with ESMTPSA id CB7C914BC97;
+	Tue,  6 Jul 2010 19:00:35 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.10) Gecko/20100512 Lightning/1.0b1 Thunderbird/3.0.5
+In-Reply-To: <AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150381>
 
-On Tue, Jul 6, 2010 at 1:45 PM, Mahesh Vaidya <forvaidya@gmail.com> wro=
-te:
-> Created a 'super' level module top and add 2 sub modules a and b (As
-> given in manual); However I am not able to create a Global branch /
-> Tag.
->
-> super ---> a
-> =A0 =A0 =A0 =A0 =A0|
-> =A0 =A0 =A0 =A0 =A0---->b
->
-> I am hoping to create a branch FOO which will recursively go in super=
-,
-> a and b; In that case how do need to associate tags and branch in
-> super, a and b by a single artifact
+On 7/6/2010 1:27 PM, Avery Pennarun wrote:
+> On Mon, Jul 5, 2010 at 8:16 PM, Eric Niebler <eric@boostpro.com> wrote:
+>> On 7/5/2010 7:32 PM, Avery Pennarun wrote:
+>>> Eric Niebler wrote:
+>>>> If multiple repositories share the same ancient history, wouldn't that
+>>>> give git annotate/blame enough information? Sorry, git newbie here.
+>>>
+>>> Yes, it would.  But how much of the ancient history do you want?  If
+>>> you want all of it, you don't save any space in your repo.
+>>
+>> Repos, plural. We'd save space because the history wouldn't be
+>> duplicated in each one. Right? Or else I'm confused and this something
+>> that will become clear after I understand what git subtree does.
+> 
+> The statement "multiple repositories share the same ancient history"
+> above is the part that's confusing.  If you use a tool like
+> git-subtree or git-filter-branch, you're actually generating a "new
+> history" based on the original history.  The "new history" obviously
+> contains fewer files than the original, which would take less space.
+> But if you want multiple repositories to "share the same ancient
+> history" you can't rewrite it, and thus you aren't saving any space in
+> any one repo.
 
-As far as I know, there is no feature to do this automatically.  And
-it would be kind of complicated to add, since you'd have to be able to
-push that branch to multiple repositories at the same time, and so on.
+I think I have reached understanding! Thank you. It *would* save if I
+pull down, say, 100 of these new repos+ancient history because git would
+just store the ancient history locally once. I'm also guessing git is
+smart enough to avoid /downloading/ the ancient history 100x.
 
-I wrote git-subtree (http://github.com/apenwarr/git-subtree) to solve
-exactly this sort of problem in my own projects.  It has a very
-different workflow than submodules, but you might like it.
+> I'm assuming you want to rewrite history to save space (since that's
+> what this thread is about).  And git annotate/blame will work as long
+> as your rewritten history contains all the files you care about in
+> that repo.
 
-Have fun,
+Right. I now understand that, too.
 
-Avery
+>> Right now, the other boost developers are pushing for a solution that
+>> uses grafts. I'm fuzzy on what they are exactly, but it seems that we'd
+>> freeze a svn mirror and have anybody interested in history put grafts in
+>> their local repository pointing back at the mirror. I don't know enough
+>> yet to say what the pros/cons of this approach might be wrt git subtree.
+> 
+> The primary advantage of grafts is that you can do something easy
+> *right now* and then fix it all up later.  eg. if you screw up your
+> history extraction and do it better later, you can just re-graft it
+> and you're done.
+
+How does one screw up the history extraction, if one is not doing any
+fancy history rewriting (in this scenario)? Be there dragons?
+
+> A secondary advantage of grafts is that cloning the "primary"
+> repository will be tiny since it doesn't have much ancient history.
+
+Right. Only those who ask for it will pay for it. And only developers
+will have need of it, and not all developers at that.
+
+> A disadvantage of grafts is that each user has to deal with grafts in
+> his cloned repo, and unless he does, things like 'git log' and 'git
+> blame' won't show anything from the grafted history.  Supposedly 'git
+> replace' was designed to help with this issue, but I've never used it
+> so I don't know for sure.
+
+I'll add it to the list of things to learn about.
+
+> And of course, grafts don't actually do any history rewriting for you.
+> You could split out a subtree's history and then graft it on, but the
+> splitting process is still the same as it would be without grafts.
+> The alternative would be to *not* rewrite history, just keep the
+> entire history of the whole project in one place, and graft it on if
+> you really need it.  That's actually pretty clean (and accurately
+> reflects exactly what *really happened*, which is a nice feature to
+> have in a vcs history), but you'll then never have a single repo of
+> just one subproject with the entire history of that subproject.  That
+> latter turns out to not actually be very important in practice, so you
+> might want to do it.
+
+That's starting to sound pretty good.
+
+Thanks,
+
+-- 
+Eric Niebler
+BoostPro Computing
+http://www.boostpro.com
