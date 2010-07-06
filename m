@@ -1,99 +1,96 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] git submodule: add submodules with git add -f <path>
-Date: Tue, 6 Jul 2010 22:33:34 +0000
-Message-ID: <AANLkTinn_Vz6I619Do4AOCVMUgfpyy84L1wh3lkuCP7R@mail.gmail.com>
-References: <1278098521-5321-1-git-send-email-avarab@gmail.com>
-	<1278351183-18734-1-git-send-email-avarab@gmail.com>
-	<7vmxu572w5.fsf@alter.siamese.dyndns.org>
-	<4C33A552.5060008@web.de>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] rebase -i: use 'read -r' to avoid backslash acting as an
+ escape character
+Date: Wed, 7 Jul 2010 00:55:22 +0200
+Message-ID: <20100706225522.GA31048@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Jul 07 00:33:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 07 00:55:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWGhx-0002rs-LY
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 00:33:41 +0200
+	id 1OWH36-0003yo-6F
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 00:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755714Ab0GFWdg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 18:33:36 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:56733 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755328Ab0GFWdf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 18:33:35 -0400
-Received: by iwn7 with SMTP id 7so7139851iwn.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 15:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RKXRhGFWD57C9sxxq0qFe4x+fkIGLhc99EqS6M0KVcc=;
-        b=L4NYXHn45HnlWoLdJX2t7Kq9Td9MiVhmYm1Rjwg+ocZjhJknUoZf/+GYUgxzGwWHwn
-         0ReUj2GpqKjQTR/UaGBbXl7kGp4B2YuNfCLgxS2KhuNlwHBLfJKpSlpPy/8tuthwWcbY
-         U8a5vEeimfLtGgCgp9/fni1qVwnJjAsTpCjqA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DBJ5uoHvkvZ+dGhsrc2JeR4uOPH5jpQfZ1IdPBz82cmSQ+PYIvz36KNtcMZoDA5LvD
-         2uoYqjNFjQPVpPix3oRKDvAOYqcmhM08XQ2gXpvHVcDoJ/LDgo0wnO2Zuz2L2ngfSG5C
-         IsXmo6dSD/0rKmGmRCe/RnXqNzESSDQqZwWCw=
-Received: by 10.231.118.28 with SMTP id t28mr5003730ibq.131.1278455614777; 
-	Tue, 06 Jul 2010 15:33:34 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Tue, 6 Jul 2010 15:33:34 -0700 (PDT)
-In-Reply-To: <4C33A552.5060008@web.de>
+	id S1752069Ab0GFWzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 18:55:25 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:46664 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751618Ab0GFWzZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 18:55:25 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A55535809C;
+	Wed,  7 Jul 2010 00:55:22 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 89D0444659;
+	Wed,  7 Jul 2010 00:55:22 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 3E08912D90F0; Wed,  7 Jul 2010 00:55:22 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150415>
 
-On Tue, Jul 6, 2010 at 21:51, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> [...]
-> But while I think adding the --force option to the "git add .gitmodul=
-es"
-> makes perfect sense (as the submodule can't be successfully added unt=
-il
-> it is recorded in this file and there is really no point in ignoring
-> .gitmodules when you decide to use submodules), I'm not so sure about
-> what to do when the submodule path itself is ignored.
->
-> I see two possible behaviors here:
->
-> a) We just ignore .gitignore and add the submodule anyways (which is
-> =C2=A0 what this patch does)
->
-> b) We do the same a "git add <ignored file>" does: Print an error
-> =C2=A0 message, maybe even tell the user to use a - still to be added=
- -
-> =C2=A0 "--force" (or "-f") option and exit. But without checking out =
-the
-> =C2=A0 submodule first nor adding or changing .gitmodules.
->
-> IMHO b) is more consistent with the current behavior of "git add". An=
-d
-> when you later decide that the submodules files should live in the
-> superproject and you drop the submodule, the then probably still
-> present entry in .gitignore might really shoot you in the foot when
-> you add new files there and they won't show up because they are still
-> ignored.
->
-> What do others think?
+The last backslash in the commit message will make 'read' read two lines
+without '-r', loosing the next commit, so use it.
 
-Option C would be treating it like git init as the current patch
-does. But init isn't strictly comparable to git add or git submodule
-add since it's not adding something to *another* repository.
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
+ git-rebase--interactive.sh    |    4 ++--
+ t/t3404-rebase-interactive.sh |   14 ++++++++++++++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-I really don't care, B or C works for me, although C is of course
-easier since I don't have to write another patch :)
-
-Option b) is more consistent with git-add, but I can't find a way to
-ask any git tool whether a non-existing path is ignored without
-actually adding something. git add --dry-run will die on "pathspec
-'foo' did not match any files" unless the file exists already.
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 6b86abc..4b822e3 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -591,7 +591,7 @@ do_rest () {
+ # skip picking commits whose parents are unchanged
+ skip_unnecessary_picks () {
+ 	fd=3
+-	while read command sha1 rest
++	while read -r command sha1 rest
+ 	do
+ 		# fd=3 means we skip the command
+ 		case "$fd,$command,$(git rev-parse --verify --quiet $sha1^)" in
+@@ -890,7 +890,7 @@ first and then run 'git rebase --continue' again."
+ 		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
+ 			--abbrev=7 --reverse --left-right --topo-order \
+ 			$REVISIONS | \
+-			sed -n "s/^>//p" | while read shortsha1 rest
++			sed -n "s/^>//p" | while read -r shortsha1 rest
+ 		do
+ 			if test t != "$PRESERVE_MERGES"
+ 			then
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index ee9a1b2..ddfa790 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -630,4 +630,18 @@ test_expect_success 'always cherry-pick with --no-ff' '
+ 	test_cmp empty out
+ '
+ 
++test_expect_success 'commit message with backslash at the end' '
++	echo a > file &&
++	git add file &&
++	git commit -m 1st &&
++	echo b >> file &&
++	git commit -a -m "escape \\t, \\{, \\} and \\" &&
++	echo c >> file &&
++	git commit -a -m 3rd &&
++	orig=$(git rev-parse HEAD) &&
++	git rebase -i HEAD~2 &&
++	git diff $orig HEAD > out &&
++	test_cmp empty out
++'
++
+ test_done
+-- 
+1.7.1
