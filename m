@@ -1,45 +1,43 @@
 From: tytso@mit.edu
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Tue, 6 Jul 2010 12:53:36 -0400
-Message-ID: <20100706165336.GJ25518@thunk.org>
-References: <20100701121711.GF1333@thunk.org>
- <20100701150331.GA12851@sigill.intra.peff.net>
- <20100701153842.GA15466@sigill.intra.peff.net>
- <20100702192612.GM1333@thunk.org>
- <20100703080618.GA10483@sigill.intra.peff.net>
- <20100704005543.GB6384@thunk.org>
- <20100705122723.GB21146@sigill.intra.peff.net>
- <20100705141012.GA25518@thunk.org>
- <20100706115826.GA15413@sigill.intra.peff.net>
- <1278430303.32094.15.camel@wpalmer.simply-domain>
+Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
+Date: Tue, 6 Jul 2010 13:12:31 -0400
+Message-ID: <20100706171231.GL25518@thunk.org>
+References: <1278296639-25024-1-git-send-email-tytso@mit.edu>
+ <20100705025900.GQ22659@josefsipek.net>
+ <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
+ <20100705185238.GS22659@josefsipek.net>
+ <20100705192201.GI25518@thunk.org>
+ <20100706080322.GA2856@burratino>
+ <DD1E6EE4-1196-4FCA-87DA-EB9EBCA3AC83@mit.edu>
+ <20100706150917.GA1558@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Avery Pennarun <apenwarr@gmail.com>,
-	git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 18:53:48 2010
+Cc: jeffpc@josefsipek.net, Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 19:12:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWBP2-0004RS-9S
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 18:53:48 +0200
+	id 1OWBhO-0006wq-Io
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 19:12:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753053Ab0GFQxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 12:53:43 -0400
-Received: from THUNK.ORG ([69.25.196.29]:43449 "EHLO thunker.thunk.org"
+	id S1755547Ab0GFRMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 13:12:36 -0400
+Received: from THUNK.ORG ([69.25.196.29]:47058 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752920Ab0GFQxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 12:53:42 -0400
+	id S1755461Ab0GFRMf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 13:12:35 -0400
 Received: from root (helo=closure.thunk.org)
 	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1OWBOs-0000oN-CJ; Tue, 06 Jul 2010 12:53:38 -0400
+	id 1OWBhB-0000t0-6z; Tue, 06 Jul 2010 13:12:33 -0400
 Received: from tytso by closure.thunk.org with local (Exim 4.71)
 	(envelope-from <tytso@thunk.org>)
-	id 1OWBOq-0006nX-9J; Tue, 06 Jul 2010 12:53:36 -0400
+	id 1OWBh9-0006p3-AI; Tue, 06 Jul 2010 13:12:31 -0400
 Content-Disposition: inline
-In-Reply-To: <1278430303.32094.15.camel@wpalmer.simply-domain>
+In-Reply-To: <20100706150917.GA1558@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 X-SA-Exim-Connect-IP: <locally generated>
 X-SA-Exim-Mail-From: tytso@thunk.org
@@ -48,37 +46,22 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150369>
 
-On Tue, Jul 06, 2010 at 04:31:43PM +0100, Will Palmer wrote:
-> Is it wrong to expect that git perform poorly in the edge-cases (hugely
-> skewed timestamps), but that it perform /correctly/ in all cases?
+On Tue, Jul 06, 2010 at 10:09:17AM -0500, Jonathan Nieder wrote:
 > 
-> Clearly, marking already-traversed histories was the right thing to do,
-> and if I read correctly, made a good improvement on its own. But you
-> seem to have crossed a line at some point between "optimization" and
-> "potentially giving the wrong answer because it's faster"
+> I have never heard of any version of Git copying poorly with #1
+> (commits with the same timestamp).  Avoiding it artificially leads
+> inevitably to timestamps in the future when you somehow try to assign
+> 100 timestamps for the series you have rebased on top of a patch
+> committed a few seconds ago.
+> 
+> Incrementing the timestamp to ensure strictly monotonic commits seems
+> like a recipe for trouble to me.
 
-When "it's faster" is between 100-1000 times faster, I think we have
-to look at things a bit more closely.  That's the difference between a
-command being usable and not usable.
+Um, I'm guessing you spent a lot of time typing your note, but not a
+lot of time looking at my most recent patch?  My most recent patch for
+guilt simply will set the time of the patch to the current time to
+avoid setting it into the future.
 
-We would be much better off if our tools enforced the fact that
-committer times were always increasing.  If from the beginning, we had
-introduced checks so that "git commit" refused to create new commits
-where the committer time was before its parent commit(s), and
-git-receive-pack refused to accept packs that contained
-non-monotonically increasing commits or commits that occurred in the
-future according to its system clock, then these optimizations would
-be completely valid.
-
-But we didn't, and we do have skew in some repositories.  So the
-question is what to do going forward?  One solution might be to
-enforce this moving forward, and to have varying levels of strictness
-in enforcing this constraint.  So for completely new repositories,
-this becomes a non-brainer.  For older repositories, Jeff's idea of
-having a tunable parameter so that results are correct given a maximum
-clock skew --- which can be determined --- will allow us to have
-correctness _and_ performance.
-
-						- Ted
+      	      				- Ted
