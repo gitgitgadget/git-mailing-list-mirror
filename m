@@ -1,75 +1,90 @@
-From: =?ISO-8859-1?B?wXNoaW4gTOFzemzz?= <ashinlaszlo@gmail.com>
-Subject: Re: [PATCH 3/5] git-cvsserver: take care of empty passwords
-Date: Tue, 6 Jul 2010 20:21:37 +0200
-Message-ID: <AANLkTinkg-i3KczWliWymP1FWYx0_YeoLGLHq2h2jLa-@mail.gmail.com>
-References: <3594077658746039911@unknownmsgid> <AANLkTinpjbOStczVo7NaPlxqyAh_32kLy0kWKc_AsLiI@mail.gmail.com> 
-	<AANLkTilSvEf6DIM_JZql8pTnSCrnFQ2tAOGuqownVl4e@mail.gmail.com>
+From: Eric Niebler <eric@boostpro.com>
+Subject: Re: help moving boost.org to git
+Date: Tue, 06 Jul 2010 14:29:33 -0400
+Message-ID: <4C33760D.9000404@boostpro.com>
+References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org> 	<4C32668E.9040000@boostpro.com>	<AANLkTimAqL8gvgIisLpWE6xj2p0jEZD5wetdGYJnOpdr@mail.gmail.com> 	<4C3275C0.8000406@boostpro.com>	<AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com> 	<4C336F3D.1010906@boostpro.com> <AANLkTikfTFw_UdV1ia58MbWxH4h8TJAr-Y5WPvlXCjeJ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?B?TOFzemzzIMFTSElO?= <laszlo.ashin@neti.hu>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 20:22:06 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 20:29:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWCmT-0002HT-6h
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:22:05 +0200
+	id 1OWCu3-0006fQ-O2
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:29:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751773Ab0GFSV7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 14:21:59 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50950 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751114Ab0GFSV6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 14:21:58 -0400
-Received: by bwz1 with SMTP id 1so3713994bwz.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 11:21:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=B59+xo4YTSahLmhiz/j7dvnzO1MqwukcbByPshTOv2s=;
-        b=NO7sVfwOdibcmnyYeKKsxtYfzKLJ3o5i/Mp+MlsYOfVxRsRdtld04HarqN62ad4W5G
-         SJ6ayjdGcEj3u4EoVEmf0Cnwu7wBEofFXwgPb8He9Fm3Nk8lPbJnNmYYBFen+cikysZp
-         tljyoKDbd3aOPXafBVgdhzAKkq6jrnb2xi2uY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=OSRquZm8b6m1/+2+y8MV12Bpk6wMGIcJAcqHkbTRJd6CGPiIv9jy+uRAleEEwPY7to
-         Z5EroI2w6N/L1swlfDSsNFuVitZIALulE3CP0iJ+i4djugSNoGWmP8Wcmsdecu9i1EL0
-         hU8hEUOAcH9XQ0oPi5D9SEij8e3SfPpTxfUWM=
-Received: by 10.204.26.208 with SMTP id f16mr4125186bkc.71.1278440517309; Tue, 
-	06 Jul 2010 11:21:57 -0700 (PDT)
-Received: by 10.204.79.19 with HTTP; Tue, 6 Jul 2010 11:21:37 -0700 (PDT)
-In-Reply-To: <AANLkTilSvEf6DIM_JZql8pTnSCrnFQ2tAOGuqownVl4e@mail.gmail.com>
+	id S1753852Ab0GFS3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 14:29:47 -0400
+Received: from boostpro.com ([206.217.198.21]:38603 "EHLO boostpro.com"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753815Ab0GFS3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 14:29:47 -0400
+Received: from [10.75.247.254] (unknown [166.198.188.124])
+	(Authenticated sender: eric)
+	by boostpro.com (Postfix) with ESMTPSA id D76DB14BCD8;
+	Tue,  6 Jul 2010 19:29:42 +0100 (BST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.10) Gecko/20100512 Lightning/1.0b1 Thunderbird/3.0.5
+In-Reply-To: <AANLkTikfTFw_UdV1ia58MbWxH4h8TJAr-Y5WPvlXCjeJ@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150385>
 
-descramble() dies if it is called with empty string as an argument.
-This patch only fixes this.
+On 7/6/2010 2:13 PM, Avery Pennarun wrote:
+<snip>
+> Specifically, with a tool like git-subtree, it only really works if a
+> particular subproject has always existed in the same subdir of your
+> repo since it started.  If the subdir was ever renamed, or if some of
+> the files were previously part of one subdir but then moved around,
+> git-subtree doesn't (currently) know how to deal with that.
 
-The test case written to check empty passwords only checks the case
-when the user is not in the authdb, so the old code doesn't even call
-descramble().
+Bah! Yes, directories have moved around in our svn repro. :-( In
+particular, we've had cases where libraries in boost began life as
+sub-projects of a different library and then got spun off.
 
-On Tue, Jul 6, 2010 at 20:05, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gma=
-il.com> wrote:
-> On Tue, Jul 6, 2010 at 17:37, =C1shin L=E1szl=F3 <ashinlaszlo@gmail.c=
-om> wrote:
->> Do not try to descramble them.
->
-> This commit message isn't very revealing. What does this do exactly?
-> Is the behavior with empty passwords changed now? Does git-cvsserver
-> no longer support empty passwords? Is the on-disk format in the authd=
-b
-> just different? (I.e. "" instead of "A" or something). Or something
-> else?
->
+> git-filter-branch can do anything you want, but you have to teach it
+> how, which is obviously even *more* error prone.
+
+I can only imagine.
+
+> Things are also a little messy if you have some kind of top-level
+> directory with build infrastructure shared by all the subdirs.  Does
+> the top-level Makefile have a list of the subdirs it needs to build?
+
+Bah! Yes, the build, the docs and the test infrastructure all currently
+share files across our submodules-to-be. Surely other projects have
+encountered this problem before, right? (KDE, I'm looking in your
+direction.)
+
+> If so, there's no way to extract only a subset of true history that
+> will still build correctly - it'll be looking for directories that you
+> explicitly removed.  You could update the Makefiles programmatically
+> in every single revision, but that's starting to get extremely
+> messy... and your history stops representing what *real life* really
+> looked like at the time.
+
+I see what you mean.
+
+> If your subdirs haven't been moving around (which sounds like that
+> might be the case for you), and you don't have any top-level files
+> that you care about, rewriting might turn out to be straightforward.
+> You could also make the decision on a subdir-by-subdir basis, I guess.
+
+More evidence that the fancy filter/branch/subtree/svn2git/whatever
+utilities aren't going to get us where we'd like to be. A simple
+conversion and grafts look like the only workable approach.
+
+> Have fun,
+
+Having heaps! Thanks,
+
+-- 
+Eric Niebler
+BoostPro Computing
+http://www.boostpro.com
