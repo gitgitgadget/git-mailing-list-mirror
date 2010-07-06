@@ -1,113 +1,122 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
-Date: Tue, 6 Jul 2010 17:02:51 +0200
-Message-ID: <AANLkTikWGzEq8wiVyu_xJ-tK92N1oRFOrawjOe9UQXkr@mail.gmail.com>
+Date: Tue, 6 Jul 2010 10:09:17 -0500
+Message-ID: <20100706150917.GA1558@burratino>
 References: <1278296639-25024-1-git-send-email-tytso@mit.edu>
-	<20100705025900.GQ22659@josefsipek.net>
-	<67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
-	<20100705185238.GS22659@josefsipek.net>
-	<20100705192201.GI25518@thunk.org>
-	<20100706080322.GA2856@burratino>
-	<AANLkTinZ4UV9in60Y4myfUWv08Vx3OMvh-_YQl2BXSjC@mail.gmail.com>
-	<20100706142921.GB6666@sigill.intra.peff.net>
-Reply-To: kusmabite@gmail.com
+ <20100705025900.GQ22659@josefsipek.net>
+ <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
+ <20100705185238.GS22659@josefsipek.net>
+ <20100705192201.GI25518@thunk.org>
+ <20100706080322.GA2856@burratino>
+ <DD1E6EE4-1196-4FCA-87DA-EB9EBCA3AC83@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, tytso@mit.edu,
-	jeffpc@josefsipek.net, Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 06 17:05:58 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: jeffpc@josefsipek.net, Git Mailing List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Jul 06 17:10:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OW9iY-0000kq-SU
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:05:51 +0200
+	id 1OW9me-0003Gx-6c
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:10:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752989Ab0GFPCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 11:02:54 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:39013 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753067Ab0GFPCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 11:02:53 -0400
-Received: by bwz1 with SMTP id 1so3578346bwz.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 08:02:52 -0700 (PDT)
+	id S1753259Ab0GFPJ6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 11:09:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33168 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753127Ab0GFPJ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 11:09:57 -0400
+Received: by iwn7 with SMTP id 7so6750512iwn.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 08:09:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=JmjcGk+RxxAZ5hgLJGM+qvtUq4I2or5N2bfvciNQ6ow=;
-        b=Mg+yzFbkz8LX5cbwdVW+uxiFqsd9+Js0f1LTKy55R3c394wmlaNX3CIVZCK6vl/ZaW
-         YSm+9dwLCFt+u9CiZzs9erGZIHu/E/XU6ODS/4o3p9FeGMwvq3IJBN4UO3L8T5c99HWn
-         hLjd/sYaCIQw1Ld4tMAgEoHihYQLnKxff2QH8=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=s+mXOOf3xYbmII5ud+4nOdCK8TlCd8oTc9+g2aLtJtQ=;
+        b=LFpJkgH5wYL0WeJh3tKFEUHinI6VR4LumtLKz60bylyLt7f9eS7ThFWVn02ZEqeGNs
+         liis4jL6PV6BWvxFGigTvL9SL+hAsrjzO7vAPJpbUY4iEMbYfaby5GYyt8dGEZ1lICv0
+         4ZD01BW4/qa+RbwPcZ2BNUHCQwdkvEwIPgDqA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        b=OgM6hWo+vbXOrhRIzOJCCjpIe7oQhfugRNN05LKwv6do80x0Vcta8J/3eJNyp3kFWZ
-         s5wPg89BMJNTnkdGQ3VxDjhzWf4btCFydW37u9XhbBx2t7kTjjm1yq4VwmABd1GGSFD3
-         7ruk/xv0ZpXoummQPV0ml+dkD5RbmcJXWnDHU=
-Received: by 10.204.85.89 with SMTP id n25mr3792769bkl.105.1278428571979; Tue, 
-	06 Jul 2010 08:02:51 -0700 (PDT)
-Received: by 10.204.71.1 with HTTP; Tue, 6 Jul 2010 08:02:51 -0700 (PDT)
-In-Reply-To: <20100706142921.GB6666@sigill.intra.peff.net>
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=CGCul9su355cIztN0EhJdg6xTMWeqIuFKgnZPyUK+Ht5lUFcRUtcAL0ArnM8hhV+zt
+         XQ9LiOkdfHoSQTcVTRln8rz2EfJzooCIjmYftyDYUEJS9lrgyoGlCY6fhLx06zJ3Xaiz
+         0sfG7ZHG/9dvYtNJl7pEFM1+sDuAIehnLzyxE=
+Received: by 10.42.0.3 with SMTP id 3mr1503902ica.47.1278428996729;
+        Tue, 06 Jul 2010 08:09:56 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g31sm23822095ibh.22.2010.07.06.08.09.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 06 Jul 2010 08:09:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <DD1E6EE4-1196-4FCA-87DA-EB9EBCA3AC83@mit.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150362>
 
-On Tue, Jul 6, 2010 at 4:29 PM, Jeff King <peff@peff.net> wrote:
-> On Tue, Jul 06, 2010 at 03:53:56PM +0200, Erik Faye-Lund wrote:
->
->> > At one point rev-list did require monotonic --- i.e., the committer
->> > date of each commit had to be equal to or later than that of each of
->> > its parents) with no clock skew but that was considered a bug and
->> > fixed by v1.5.5-rc1~16 (Make revision limiting more robust against
->> > occasional bad commit dates, 2008-03-17)
->> >
->>
->> This might be a stupid question, but I'm not entirely clear on why
->> it's not a strict requirement; surely it would be easy to ensure that
->> the commit-time is at least as big as the parents when generating the
->> commit...?
->>
->> Is it to avoid the case where a user commits with the clock set to
->> some point (potentially far) in the future, so all subsequent commits
->> would have the same, artificially high commit time? Or is there some
->> other reason I can't think of?
->
-> You can have clock skew between distributed developers. So imagine you
-> commit at 5:00pm, then I pull at 5:01pm, but it turns out your clock is
-> two minutes fast, so it's actually 4:59pm.
->
-> What should my commit do? If I insist on monotonic increases, then my
-> clock gets pushed forward artificially by your fast, broken clock (which
-> is probably not the end of the world; in practice, if your clock is N
-> seconds fast, there will presumably be some N second period where I'm
-> not making a commit, and the clocks can "catch up" with each other).
->
+Theodore Tso wrote:
 
-Yeah, but this doesn't really answer my question; as you're saying,
-it's probably not the end of the world, at least when the skew is low.
+> You're right that it's been a while since git has run into problems w=
+ith=20
+> mild forms of clock skew (even Debian Stable is shipping v1.5.6) but
+> I think it's better to times in the future if we can at all help it, =
+and it's not
+> like we're talking about a lot of extra complexity to guilt to test f=
+or this.
 
-But I can imagine it becoming a big deal when the skew is high. The
-again, perhaps this should constitute a "bad commit" and commit should
-error out if a parent commit was more than some number of minutes
-newer than the current time (or whatever)? That way, skewed commits
-would be caught early if a developer is working with other people, and
-a lot of the traversal could perhaps be faster (or more robust). If
-the developer with the skewed clock doesn't work with anyone, skew
-isn't really a problem, but perhaps he'd have to do some
-branch-filtering to un-skew commits when starting to work with others.
-And only if the skew is really high... like, multiple days... Which
-can't really be THAT common?
+Sorry, I=E2=80=99m a little lost.  There are five phenomena one could
+forbid:
 
-However, turning a technical problem that already have a solution that
-seems to work for everyone into a social one might be a bad idea. I'm
-really just thinking out loud here :)
+ 1. Commits with timestamp equal to or before a parent
+ 2. Commits with timestamp before a parent
+ 3. Commits with timestamp unreasonably long before a parent
+ 4. Commits with timestamp unreasonably long before an ancestor
+ 5. Commits with timestamp in the future
 
--- 
-Erik "kusma" Faye-Lund
+Git has always been able to cope with #5 (timestamps in the future).
+I see no reason to avoid it, except that it is hard to assign a
+timestamp for commits on top of that one.
+
+Git=E2=80=99s problem today is #4 (long-term slop).  Maybe as Jeff sugg=
+ested
+"unreasonably long" should defined per repository.  Or we could
+measure the kernel=E2=80=99s maximum (something like 120 days?) and mak=
+e that
+a hard limit.
+
+Do #3 a few times, and you get #4.  So =E2=80=98commit=E2=80=99 should =
+warn
+about it (where =E2=80=98unreasonably long=E2=80=99 could be as short a=
+s 0 or
+1 days).
+
+#2 (nonmonotonic commits) was broken in ancient git; I think it=E2=80=99=
+s too
+rigid of a rule to worry about it on that account.  But a variant of
+the rationale for avoiding #3 applies to it.
+
+I have never heard of any version of Git copying poorly with #1
+(commits with the same timestamp).  Avoiding it artificially leads
+inevitably to timestamps in the future when you somehow try to assign
+100 timestamps for the series you have rebased on top of a patch
+committed a few seconds ago.
+
+Incrementing the timestamp to ensure strictly monotonic commits seems
+like a recipe for trouble to me.
+
+=46or guilt, I think the best thing to do would to save a Date: line
+for the author date with the From: and Subject: and then touch
+patches with the _current_ date when appropriate to avoid skew.
+
+HTH,
+Jonathan
