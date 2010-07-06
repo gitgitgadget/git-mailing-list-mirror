@@ -1,72 +1,102 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
-Date: Tue, 6 Jul 2010 06:56:36 -0400
-Message-ID: <DD1E6EE4-1196-4FCA-87DA-EB9EBCA3AC83@mit.edu>
-References: <1278296639-25024-1-git-send-email-tytso@mit.edu> <20100705025900.GQ22659@josefsipek.net> <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu> <20100705185238.GS22659@josefsipek.net> <20100705192201.GI25518@thunk.org> <20100706080322.GA2856@burratino>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: jeffpc@josefsipek.net, Git Mailing List <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 12:56:47 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: Why is "git tag --contains" so slow?
+Date: Tue, 6 Jul 2010 07:58:28 -0400
+Message-ID: <20100706115826.GA15413@sigill.intra.peff.net>
+References: <E1OU82h-0001xY-3b@closure.thunk.org>
+ <AANLkTikkLIKm3soF9agXnN34P7Xnq4AiVqGU_qFaaRmZ@mail.gmail.com>
+ <20100701121711.GF1333@thunk.org>
+ <20100701150331.GA12851@sigill.intra.peff.net>
+ <20100701153842.GA15466@sigill.intra.peff.net>
+ <20100702192612.GM1333@thunk.org>
+ <20100703080618.GA10483@sigill.intra.peff.net>
+ <20100704005543.GB6384@thunk.org>
+ <20100705122723.GB21146@sigill.intra.peff.net>
+ <20100705141012.GA25518@thunk.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+To: tytso@mit.edu
+X-From: git-owner@vger.kernel.org Tue Jul 06 13:58:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OW5pW-0002Gr-3M
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 12:56:46 +0200
+	id 1OW6nN-0000O8-Uq
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 13:58:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756647Ab0GFK4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 06:56:40 -0400
-Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:50864 "EHLO
-	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756634Ab0GFK4j convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 06:56:39 -0400
-X-AuditID: 1209190d-b7c19ae0000009ea-34-4c330be69b4f
-Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
-	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id 80.15.02538.6EB033C4; Tue,  6 Jul 2010 06:56:38 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o66AucWh022162;
-	Tue, 6 Jul 2010 06:56:38 -0400
-Received: from [10.0.42.106] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o66AuZia004004
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 6 Jul 2010 06:56:37 -0400 (EDT)
-In-Reply-To: <20100706080322.GA2856@burratino>
-X-Mailer: Apple Mail (2.1081)
-X-Brightmail-Tracker: AAAAAA==
+	id S1756781Ab0GFL6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 07:58:32 -0400
+Received: from peff.net ([208.65.91.99]:52104 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756438Ab0GFL6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 07:58:31 -0400
+Received: (qmail 28360 invoked by uid 107); 6 Jul 2010 11:59:26 -0000
+Received: from c-67-172-213-4.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.213.4)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 06 Jul 2010 07:59:26 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jul 2010 07:58:28 -0400
+Content-Disposition: inline
+In-Reply-To: <20100705141012.GA25518@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150343>
 
+On Mon, Jul 05, 2010 at 10:10:12AM -0400, tytso@mit.edu wrote:
 
-On Jul 6, 2010, at 4:03 AM, Jonathan Nieder wrote:
-> At one point rev-list did require monotonic --- i.e., the committer
-> date of each commit had to be equal to or later than that of each of
-> its parents) with no clock skew but that was considered a bug and
-> fixed by v1.5.5-rc1~16 (Make revision limiting more robust against
-> occasional bad commit dates, 2008-03-17)
+> As time progresses, the clock skew breakage should be less likely to
+> be hit by a typical developer, right?  That is, unless you are
+> specifically referencing one of the commits which were skewed, two
+> years from now, the chances of someone (who isn't doing code
+> archeology) of getting hit by a problem should be small, right?  This
 
-You're right that it's been a while since git has run into problems with 
-mild forms of clock skew (even Debian Stable is shipping v1.5.6) but
-I think it's better to times in the future if we can at all help it, and it's not
-like we're talking about a lot of extra complexity to guilt to test for this.
+It's not about directly referencing skewed commits. It's about
+traversing history that contains skewed commits. So if I have a history
+like:
 
-> By the way, I think your idea to have commit warn about nonmonotonic
-> commit dates is a good one.  We should also decide on a rule,
-> hopefully one the kernel repo obeys (30 days max skew? *crosses
-> fingers*) and make git fsck warn loudly about violations.
+  A -- B -- C -- D
 
-Having git commit warn, absolutely.
+and "B" is skewed, then I will generally give up on finding "A" when
+searching backwards from "C" or "D", or their descendants. So as time
+moves forward, you will continue to have your old tags pointing to "C"
+or "D", but also tags pointing to their descendants. Doing "git tag
+--contains A" will continue to be inaccurate, since it will continue to
+look for "A" from "C" and "D", but also from newer tags, all of which
+involve traversing the skewed "B".
 
-Unfortunately, there is already ~100 days of skew (see the earlier
-discusion on this thread by Jeff King) in the Linux kernel repo
-already...
+What I think is true is that people will be less likely to look at "A"
+as time goes on, as code it introduced presumably becomes less relevant
+(either bugs are shaken out, or it gets replaced, or whatever). And
+obviously looking at "C" from "D", the skew in "B" will be irrelevant.
 
--- Ted
+So I think typical developers become less likely to hit the issue as
+time goes on, but software archaeologists will hit it forever.
+
+> If so, I could imagine the automagic scheme choosing a default that
+> only finds the worst skew in the past N months.  This would speed up
+> things up for users who are using repositories that have skews in the
+> distant past, at the cost of introducing potentially confusuing edge
+> cases for people doing code archeology.
+
+How do you decide, when looking for commits that have bogus timestamps,
+which ones happened in the past N months? Certainly you can do some
+statistical analysis to pick out anomalous ones. And you could perhaps
+favor future skewing over past skewing, since that skew doesn't tend to
+impact traversal cutoffs (and large past skewing seems to be more
+common). But that is getting kind of complex.
+
+> I'm not sure this is a good tradeoff, but given in practice how rarely
+> most developers go back in time more than say, 12-24 months, maybe
+> it's worth doing.  What do you think?
+
+I'm not sure. I am tempted to just default it to 86400 and go no
+further.  People who care about archaeology can turn off traversal
+cutoffs if they like, and as the skewed history ages, people get less
+likely to look at it. We could also pick half a year or some high number
+as the default allowable. The performance increase is still quite
+noticeable there, and it covers the only large skew we know about. I'd
+be curious to see if other projects have skew, and how much.
+
+-Peff
