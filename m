@@ -1,97 +1,80 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [PATCH] use "up-to-date" in messages instead of "uptodate" for consistency
-Date: Tue,  6 Jul 2010 11:13:57 +0200
-Message-ID: <7012ea639b8beddcd42eceff0898e33ce7c455e9.1278407491.git.nicolas.s.dev@gmx.fr>
-References: <ACE6C748-1F26-473B-BC69-33C59A3969BD@wincent.com>
-Cc: Wincent Colaiuta <win@wincent.com>, <git@vger.kernel.org>,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 11:14:34 2010
+From: Gisle Aas <gisle@aas.no>
+Subject: Re: Make author and committer available to pre-commit hook
+Date: Tue, 6 Jul 2010 11:22:07 +0200
+Message-ID: <AANLkTilsdbJLHTY7cx2GeZg9ai_OZhmnEt0KdFjF81Pd@mail.gmail.com>
+References: <AANLkTinpCDRf_Yhuj2-tdZwmvHk8yna1Xjdtbrmx35CB@mail.gmail.com>
+	<20100705114619.GA21146@sigill.intra.peff.net>
+	<AANLkTinlGBt3nBa7Ge5ytjisTeDu3As4wCkF8M1iz5JV@mail.gmail.com>
+	<AANLkTim-TXX4uVyUN9loOI276wnKp22m4F7g5c-js61U@mail.gmail.com>
+	<7vocel5n08.fsf@alter.siamese.dyndns.org>
+	<20100706072947.GB3567@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 06 11:22:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OW4Ea-000174-HM
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 11:14:32 +0200
+	id 1OW4M6-0004yf-QQ
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 11:22:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754081Ab0GFJO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 05:14:27 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50912 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752720Ab0GFJO0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 05:14:26 -0400
-Received: by bwz1 with SMTP id 1so3334775bwz.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 02:14:25 -0700 (PDT)
+	id S1755836Ab0GFJWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 05:22:10 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37780 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754905Ab0GFJWJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 05:22:09 -0400
+Received: by fxm14 with SMTP id 14so4527578fxm.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 02:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=5S5vyqSC725Bu+0cFAdQcHS/OQTZ9P/pdSYpaxiTflw=;
-        b=a4My5IAn1qjcYE5h/+6NTNytgGz/pCeM1ZsfOXQlmUCrnuCCEbHptiBU6JJvQU9b/g
-         23qPdBMNTy2ERtaV5h7y3B2a8wiNHrrjRWlD0cFwrbv+EmklX8Y54+mdFcPxNuZR9wup
-         23jUW2H685DqUwhdIsasSyor0Iy40u++Dt+Fs=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        bh=tVbBnKPap/vtcDD/lkMDSeIlM+C8t+//gtXbJmbBAeU=;
+        b=lT5oBQFZBpYO1OZ0JmhOwIc4aUZ0JL7AdPDvHAM1/Yi4gXHntb4fpGk9BBd8rOqSVy
+         IfyaGtBR7y6BELThogt1oesMBzhkft9jKxD/p9vCf3nrUxFAmyNeLsDxOtk1KLBVVIop
+         NsdIMmy53IykMovWA1JIaDFEzRfGkqBQq3/cM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
-         :references;
-        b=KjAjH+bZv0KaG93bT1UC3wKkRj4P31OmLiqnOKe24dJoT0X+BexukHkCPx47AIQzyO
-         F419fEDnSTeWL01adWyN6GIkfZIbXAC75KzklNJuwNaLfmnTS2Juqbk6HUxRkRd0jp1o
-         8j7340dEz2kAkcBAjWyRYgDo0rh8YAimNqIz0=
-Received: by 10.204.163.134 with SMTP id a6mr3399997bky.162.1278407664926;
-        Tue, 06 Jul 2010 02:14:24 -0700 (PDT)
-Received: from localhost (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id bq20sm21306374bkb.16.2010.07.06.02.14.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 02:14:24 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.rc1.210.g7b476
-In-Reply-To: <ACE6C748-1F26-473B-BC69-33C59A3969BD@wincent.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=fBzv2g3odMxbiDT2K/gi8Vjk29nEpsQ1k8u4CpPW2k2n5q3UiHGKO1XOxJPnNk409z
+         +CMq16qn8GmXgkL1n593ISVBO6MH79gGD9IGquzHLM4hj1OSaeGhJRvIA4UfXi3rtWB9
+         7IJLpzo6kEbyQsj+2IEG9rlYIaH+bsUQaceKo=
+Received: by 10.239.131.202 with SMTP id 10mr295024hbo.115.1278408127722; Tue, 
+	06 Jul 2010 02:22:07 -0700 (PDT)
+Received: by 10.239.173.201 with HTTP; Tue, 6 Jul 2010 02:22:07 -0700 (PDT)
+In-Reply-To: <20100706072947.GB3567@sigill.intra.peff.net>
+X-Google-Sender-Auth: 1eNWkMsQKGuZ0zoBR4dZF0gBLT4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150339>
 
-Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
----
- merge-recursive.c |    2 +-
- unpack-trees.c    |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+On Tue, Jul 6, 2010 at 09:29, Jeff King <peff@peff.net> wrote:
+> On Mon, Jul 05, 2010 at 08:04:39PM -0700, Junio C Hamano wrote:
+>
+>> I wonder if we should also make author/committer dates available via the
+>> same mechanism.
+>
+> I don't see why not. It is a trivial amount of code, and I can see at
+> least author date being useful.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 856e98c..fb6aa4a 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1214,7 +1214,7 @@ int merge_trees(struct merge_options *o,
- 	}
- 
- 	if (sha_eq(common->object.sha1, merge->object.sha1)) {
--		output(o, 0, "Already uptodate!");
-+		output(o, 0, "Already up-to-date!");
- 		*result = head;
- 		return 1;
- 	}
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8cf0da3..024846e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -22,7 +22,7 @@ static struct unpack_trees_error_msgs unpack_plumbing_errors = {
- 	"Entry '%s' would be overwritten by merge. Cannot merge.",
- 
- 	/* not_uptodate_file */
--	"Entry '%s' not uptodate. Cannot merge.",
-+	"Entry '%s' not up-to-date. Cannot merge.",
- 
- 	/* not_uptodate_dir */
- 	"Updating '%s' would lose untracked files in it",
-@@ -34,7 +34,7 @@ static struct unpack_trees_error_msgs unpack_plumbing_errors = {
- 	"Entry '%s' overlaps with '%s'.  Cannot bind.",
- 
- 	/* sparse_not_uptodate_file */
--	"Entry '%s' not uptodate. Cannot update sparse checkout.",
-+	"Entry '%s' not up-to-date. Cannot update sparse checkout.",
- 
- 	/* would_lose_orphaned */
- 	"Working tree file '%s' would be %s by sparse checkout update.",
--- 
-1.7.2.rc1.210.g7b476
+One question that arise is what format the date variables should have.
+ Is the raw format (that is "1278400946 +0200") sensible?
+
+I've created a patch for this locally, but it has some side effects in
+messing up the dates stored by 'git commit -C...' which I have not
+figured out yet; and now I need to get some other stuff done.  It
+might take some days until a revised patch is ready.  Feel free to
+contribute your "trivial amount of code" before I get around to it :-)
+
+Regards,
+Gisle
