@@ -1,86 +1,158 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Make author and committer available to pre-commit hook
-Date: Tue, 06 Jul 2010 08:47:37 -0700
-Message-ID: <7veifg4nom.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinpCDRf_Yhuj2-tdZwmvHk8yna1Xjdtbrmx35CB@mail.gmail.com>
- <20100705114619.GA21146@sigill.intra.peff.net>
- <AANLkTinlGBt3nBa7Ge5ytjisTeDu3As4wCkF8M1iz5JV@mail.gmail.com>
- <AANLkTim-TXX4uVyUN9loOI276wnKp22m4F7g5c-js61U@mail.gmail.com>
- <7vocel5n08.fsf@alter.siamese.dyndns.org>
- <20100706072947.GB3567@sigill.intra.peff.net>
- <AANLkTilsdbJLHTY7cx2GeZg9ai_OZhmnEt0KdFjF81Pd@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: =?UTF-8?q?=5BPATCH=20v2=5D=20use=20=22up-to-date=22=20instead=20of=20=22uptodate=22=20for=20consistency?=
+Date: Tue,  6 Jul 2010 17:55:44 +0200
+Message-ID: <b49995cd151b36cfff5231b28f5e8ff3970c14a2.1278431239.git.nicolas.s.dev@gmx.fr>
+References: <AANLkTimvQ8_SKa_VSvQk1_c3aRVv1lZCMYNOVLXBuC4W@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Gisle Aas <gisle@aas.no>
-X-From: git-owner@vger.kernel.org Tue Jul 06 17:47:56 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Wincent Colaiuta <win@wincent.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>, <git@vger.kernel.org>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 17:56:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWANH-0008JW-OC
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:47:56 +0200
+	id 1OWAVP-00059p-8y
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753797Ab0GFPru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 11:47:50 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48869 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752176Ab0GFPrt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 11:47:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AE2BC2D0D;
-	Tue,  6 Jul 2010 11:47:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hTIgEwjrZF53m1b7C+OTbjmnd34=; b=bT2yZK
-	00+h6vG0IkVnAcfOC6L/pOVCyp9Xt034yUJdzJFec1EK47jBPPCOcTmsyI7Lg6BH
-	UiuZpvcvyie9Pogif4OzufJPRk33eFxMj5zi3/goJ8iZzYt2Ea2hqdlcPOYSBXGU
-	NkWBdKKgbHAhWS2J6xGxmR1kCyzNYYe3ClNQI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=EPmnF5S0Xsun47e/T+bqt30myfFThi+T
-	1a0nTlzLOnFZEc9IWcxeoDhEX8dZvewSakP2+D5luiyTh8cGg1ONV3th5L7r2nTN
-	BWwUtU9CkXkVYSdLwbFJIUAuPHaBgm8QhFT1iKtoTl+HNoLM+r9nAs4OeETNlInz
-	LsgoY3+cgsk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EFBDCC2D0C;
-	Tue,  6 Jul 2010 11:47:43 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 14D8BC2D05; Tue,  6 Jul
- 2010 11:47:38 -0400 (EDT)
-In-Reply-To: <AANLkTilsdbJLHTY7cx2GeZg9ai_OZhmnEt0KdFjF81Pd@mail.gmail.com>
- (Gisle Aas's message of "Tue\, 6 Jul 2010 11\:22\:07 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D1144ADC-8915-11DF-A611-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754861Ab0GFP4O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 11:56:14 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:37930 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754031Ab0GFP4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 11:56:13 -0400
+Received: by yxk8 with SMTP id 8so212052yxk.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 08:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=SthbTJl41gCgv1jMDq+2uAHvtrkr/v4LdP2+AlTpDRs=;
+        b=vq0t7PMwmK2xP63xYDfaQkkh934WZZoGOFQbF1tnGkoz5QMsIUn3enlx+9X5sMcMbF
+         y7nkw2wPPSd0nVxIp43dHLvPgRCxEVriwKPW33HuMnrZ5vChixvuD5/7Qn5uGiDxAOpl
+         Ss7KjpSoGSLonKHzcPIcZXWecK88mMvWlSVEw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
+         :references:mime-version:content-type:content-transfer-encoding;
+        b=BtV07g0lCIwXbLx55TjGk0kAdQCVjKRWEJUdjdVbSv3FfAFj6CqfKAxTXdOwGtFyJP
+         bwhUDe06Q/Eb8/hP9xyH4+GGnGiSZ5g6WCR4FT588+VIGArnpNfyjyvHhAaeFl3JyBWK
+         +nFl8xxfhxmJBdoGnaNWfDWU77sJEMgiNgAcQ=
+Received: by 10.213.2.132 with SMTP id 4mr4189689ebj.94.1278431769112;
+        Tue, 06 Jul 2010 08:56:09 -0700 (PDT)
+Received: from localhost (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
+        by mx.google.com with ESMTPS id a48sm52344518eei.13.2010.07.06.08.56.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 06 Jul 2010 08:56:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.rc1.212.g4c287
+In-Reply-To: <AANLkTimvQ8_SKa_VSvQk1_c3aRVv1lZCMYNOVLXBuC4W@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150366>
 
-Gisle Aas <gisle@aas.no> writes:
+Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+---
 
-> One question that arise is what format the date variables should have.
-> Is the raw format (that is "1278400946 +0200") sensible?
+The 06/07/10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-I'd say so.  We are doing this for scripts (hooks) and there is not much
-point doing machine-readable-to-human conversion they could do if they so
-choose.
+> Did you run the tests after applying this patch? This looks like it w=
+ould break:
+>=20
+> t/t7110-reset-merge.sh
+> 176:    grep file1 err.log | grep "not uptodate"
+> 192:    grep file1 err.log | grep "not uptodate"
 
-> I've created a patch for this locally, but it has some side effects in
-> messing up the dates stored by 'git commit -C...' which I have not
-> figured out yet; and now I need to get some other stuff done.
+I forgot about them. Thanks for a reminder.
 
-I imagine that you would be sending the date information just the same way
-you send the author information, so if your addition messes up the dates
-for "commit -C", wouldn't your original patch mess up the authorship
-information the same way?
 
-In any case, this new feature won't be in 'master' nor 'next' while we are
-in pre-release freeze, so no need to rush.
+ Documentation/git-checkout.txt |    2 +-
+ merge-recursive.c              |    2 +-
+ t/t7110-reset-merge.sh         |    4 ++--
+ unpack-trees.c                 |    4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-Thanks.
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkou=
+t.txt
+index 261dd90..c04eceb 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -263,7 +263,7 @@ the above checkout would fail like this:
+ +
+ ------------
+ $ git checkout mytopic
+-fatal: Entry 'frotz' not uptodate. Cannot merge.
++fatal: Entry 'frotz' not up-to-date. Cannot merge.
+ ------------
+ +
+ You can give the `-m` flag to the command, which would try a
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 856e98c..fb6aa4a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1214,7 +1214,7 @@ int merge_trees(struct merge_options *o,
+ 	}
+=20
+ 	if (sha_eq(common->object.sha1, merge->object.sha1)) {
+-		output(o, 0, "Already uptodate!");
++		output(o, 0, "Already up-to-date!");
+ 		*result =3D head;
+ 		return 1;
+ 	}
+diff --git a/t/t7110-reset-merge.sh b/t/t7110-reset-merge.sh
+index 70cdd8e..6a5f78d 100755
+--- a/t/t7110-reset-merge.sh
++++ b/t/t7110-reset-merge.sh
+@@ -173,7 +173,7 @@ test_expect_success 'reset --merge fails with chang=
+es in file it touches' '
+     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
+     mv file3 file1 &&
+     test_must_fail git reset --merge HEAD^ 2>err.log &&
+-    grep file1 err.log | grep "not uptodate"
++    grep file1 err.log | grep "not up-to-date"
+ '
+=20
+ # The next test will test the following:
+@@ -189,7 +189,7 @@ test_expect_success 'reset --keep fails with change=
+s in file it touches' '
+     sed -e "s/line 1/changed line 1/" <file1 >file3 &&
+     mv file3 file1 &&
+     test_must_fail git reset --keep HEAD^ 2>err.log &&
+-    grep file1 err.log | grep "not uptodate"
++    grep file1 err.log | grep "not up-to-date"
+ '
+=20
+ test_expect_success 'setup 3 different branches' '
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 8cf0da3..024846e 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -22,7 +22,7 @@ static struct unpack_trees_error_msgs unpack_plumbing=
+_errors =3D {
+ 	"Entry '%s' would be overwritten by merge. Cannot merge.",
+=20
+ 	/* not_uptodate_file */
+-	"Entry '%s' not uptodate. Cannot merge.",
++	"Entry '%s' not up-to-date. Cannot merge.",
+=20
+ 	/* not_uptodate_dir */
+ 	"Updating '%s' would lose untracked files in it",
+@@ -34,7 +34,7 @@ static struct unpack_trees_error_msgs unpack_plumbing=
+_errors =3D {
+ 	"Entry '%s' overlaps with '%s'.  Cannot bind.",
+=20
+ 	/* sparse_not_uptodate_file */
+-	"Entry '%s' not uptodate. Cannot update sparse checkout.",
++	"Entry '%s' not up-to-date. Cannot update sparse checkout.",
+=20
+ 	/* would_lose_orphaned */
+ 	"Working tree file '%s' would be %s by sparse checkout update.",
+--=20
+1.7.2.rc1.212.g4c287
