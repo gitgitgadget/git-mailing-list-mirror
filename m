@@ -1,70 +1,227 @@
-From: Greg Price <price@ksplice.com>
-Subject: Re: [PATCH] pack-refs: remove newly empty directories
-Date: Tue, 6 Jul 2010 15:13:55 -0400
-Message-ID: <AANLkTilsfURYKOQC-kAtNrr1cTmULOXDTn0zxicgb9-S@mail.gmail.com>
-References: <1278368848-7037-1-git-send-email-price@ksplice.com>
-	<m2y6doqwch.fsf@igel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Tue Jul 06 21:14:09 2010
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2 3/4] extent setup_revisions() so it works with submodules
+Date: Tue,  6 Jul 2010 21:34:33 +0200
+Message-ID: <ab9c0f88b30060401d99735cb78eec7cc1e95b86.1278444110.git.hvoigt@hvoigt.net>
+References: <cover.1278444110.git.hvoigt@hvoigt.net>
+Cc: git@vger.kernel.org, jens.lehmann@web.de, jherland@gmail.com
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 06 21:34:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWDaq-0007SE-SA
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 21:14:09 +0200
+	id 1OWDun-0003j4-8Y
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 21:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753130Ab0GFTN6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 15:13:58 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51914 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752733Ab0GFTN5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 15:13:57 -0400
-Received: by wwb24 with SMTP id 24so2143959wwb.1
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 12:13:56 -0700 (PDT)
-Received: by 10.213.32.140 with SMTP id c12mr4507344ebd.99.1278443635821; Tue, 
-	06 Jul 2010 12:13:55 -0700 (PDT)
-Received: by 10.213.14.129 with HTTP; Tue, 6 Jul 2010 12:13:55 -0700 (PDT)
-In-Reply-To: <m2y6doqwch.fsf@igel.home>
+	id S1755348Ab0GFTel (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 15:34:41 -0400
+Received: from darksea.de ([83.133.111.250]:56026 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754524Ab0GFTeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 15:34:37 -0400
+Received: (qmail 13693 invoked from network); 6 Jul 2010 21:34:35 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 6 Jul 2010 21:34:35 +0200
+X-Mailer: git-send-email 1.7.2.rc1.217.g7dc0db.dirty
+In-Reply-To: <cover.1278444110.git.hvoigt@hvoigt.net>
+In-Reply-To: <cover.1278444110.git.hvoigt@hvoigt.net>
+References: <cover.1278444110.git.hvoigt@hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150398>
 
-On Tue, Jul 6, 2010 at 2:49 PM, Andreas Schwab <schwab@linux-m68k.org> =
-wrote:
-> What happens if a parallel running git wants to update a ref in one o=
-f
-> the now-empty directories? =C2=A0Can it get a spurious error after it=
- has
-> called safe_create_leading_directories?
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ refs.c     |   31 +++++++++++++++++++++++++++++++
+ refs.h     |    8 ++++++++
+ revision.c |   32 ++++++++++++++++++--------------
+ revision.h |    1 +
+ 4 files changed, 58 insertions(+), 14 deletions(-)
 
-Good question!  I asked the same question. =3D)  It can get the same
-kind of error that happens if two parallel running git processes try
-to update the same ref.
-
-Anything that tries to update a ref will call lock_ref_sha1_basic(),
-which calls safe_create_leading_directories() to make the directory
-and then hold_lock_file_for_update() to open(O_CREAT|O_EXCL) a lock
-file inside the directory.  So if the prune happens after the open(),
-it will simply not remove the directory and all is well.  If it
-happens between the safe_create_leading_directories() and the open(),
-then the open() will fail.  This is also what happens if the lock has
-been taken by another git process updating the same ref.  Currently
-lock_ref_sha1_basic() chooses to have the process die in this case and
-print an error message.
-
-Similarly the prune could remove a directory just before
-safe_create_leading_directories() creates one inside it.  Then
-safe_create_leading_directories() will fail and loc_ref_sha1_basic()
-will print an error message and return failure.  In both cases, since
-we are exposed to a similar failure if a parallel process is updating
-the same ref (a common operation) rather than packing refs (an
-uncommon operation), I don't think this is a problem.
-
-Greg
+diff --git a/refs.c b/refs.c
+index c8649b1..37e2794 100644
+--- a/refs.c
++++ b/refs.c
+@@ -721,31 +721,62 @@ int head_ref(each_ref_fn fn, void *cb_data)
+ 	return do_head_ref(NULL, fn, cb_data);
+ }
+ 
++int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return do_head_ref(submodule, fn, cb_data);
++}
++
+ int for_each_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_ref(NULL, "refs/", fn, 0, 0, cb_data);
+ }
+ 
++int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(submodule, "refs/", fn, 0, 0, cb_data);
++}
++
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_ref(NULL, prefix, fn, strlen(prefix), 0, cb_data);
+ }
+ 
++int for_each_ref_in_submodule(const char *submodule, const char *prefix,
++		each_ref_fn fn, void *cb_data)
++{
++	return do_for_each_ref(submodule, prefix, fn, strlen(prefix), 0, cb_data);
++}
++
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return for_each_ref_in("refs/tags/", fn, cb_data);
+ }
+ 
++int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
++}
++
+ int for_each_branch_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return for_each_ref_in("refs/heads/", fn, cb_data);
+ }
+ 
++int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
++}
++
+ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return for_each_ref_in("refs/remotes/", fn, cb_data);
+ }
+ 
++int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
++}
++
+ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_ref(NULL, "refs/replace/", fn, 13, 0, cb_data);
+diff --git a/refs.h b/refs.h
+index 762ce50..5e7a9a5 100644
+--- a/refs.h
++++ b/refs.h
+@@ -28,6 +28,14 @@ extern int for_each_replace_ref(each_ref_fn, void *);
+ extern int for_each_glob_ref(each_ref_fn, const char *pattern, void *);
+ extern int for_each_glob_ref_in(each_ref_fn, const char *pattern, const char* prefix, void *);
+ 
++extern int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
++extern int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
++extern int for_each_ref_in_submodule(const char *submodule, const char *prefix,
++		each_ref_fn fn, void *cb_data);
++extern int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
++extern int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
++extern int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data);
++
+ static inline const char *has_glob_specials(const char *pattern)
+ {
+ 	return strpbrk(pattern, "?*[");
+diff --git a/revision.c b/revision.c
+index 7e82efd..5f2cf1e 100644
+--- a/revision.c
++++ b/revision.c
+@@ -820,12 +820,12 @@ static void init_all_refs_cb(struct all_refs_cb *cb, struct rev_info *revs,
+ 	cb->all_flags = flags;
+ }
+ 
+-static void handle_refs(struct rev_info *revs, unsigned flags,
+-		int (*for_each)(each_ref_fn, void *))
++static void handle_refs(const char *submodule, struct rev_info *revs, unsigned flags,
++		int (*for_each)(const char *, each_ref_fn, void *))
+ {
+ 	struct all_refs_cb cb;
+ 	init_all_refs_cb(&cb, revs, flags);
+-	for_each(handle_one_ref, &cb);
++	for_each(submodule, handle_one_ref, &cb);
+ }
+ 
+ static void handle_one_reflog_commit(unsigned char *sha1, void *cb_data)
+@@ -1417,14 +1417,14 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 	ctx->argc -= n;
+ }
+ 
+-static int for_each_bad_bisect_ref(each_ref_fn fn, void *cb_data)
++static int for_each_bad_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+-	return for_each_ref_in("refs/bisect/bad", fn, cb_data);
++	return for_each_ref_in_submodule(submodule, "refs/bisect/bad", fn, cb_data);
+ }
+ 
+-static int for_each_good_bisect_ref(each_ref_fn fn, void *cb_data)
++static int for_each_good_bisect_ref(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+-	return for_each_ref_in("refs/bisect/good", fn, cb_data);
++	return for_each_ref_in_submodule(submodule, "refs/bisect/good", fn, cb_data);
+ }
+ 
+ static void append_prune_data(const char ***prune_data, const char **av)
+@@ -1466,6 +1466,10 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ {
+ 	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0;
+ 	const char **prune_data = NULL;
++	const char *submodule = NULL;
++
++	if (opt)
++		submodule = opt->submodule;
+ 
+ 	/* First, search for "--" */
+ 	seen_dashdash = 0;
+@@ -1490,26 +1494,26 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			int opts;
+ 
+ 			if (!strcmp(arg, "--all")) {
+-				handle_refs(revs, flags, for_each_ref);
+-				handle_refs(revs, flags, head_ref);
++				handle_refs(submodule, revs, flags, for_each_ref_submodule);
++				handle_refs(submodule, revs, flags, head_ref_submodule);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--branches")) {
+-				handle_refs(revs, flags, for_each_branch_ref);
++				handle_refs(submodule, revs, flags, for_each_branch_ref_submodule);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--bisect")) {
+-				handle_refs(revs, flags, for_each_bad_bisect_ref);
+-				handle_refs(revs, flags ^ UNINTERESTING, for_each_good_bisect_ref);
++				handle_refs(submodule, revs, flags, for_each_bad_bisect_ref);
++				handle_refs(submodule, revs, flags ^ UNINTERESTING, for_each_good_bisect_ref);
+ 				revs->bisect = 1;
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--tags")) {
+-				handle_refs(revs, flags, for_each_tag_ref);
++				handle_refs(submodule, revs, flags, for_each_tag_ref_submodule);
+ 				continue;
+ 			}
+ 			if (!strcmp(arg, "--remotes")) {
+-				handle_refs(revs, flags, for_each_remote_ref);
++				handle_refs(submodule, revs, flags, for_each_remote_ref_submodule);
+ 				continue;
+ 			}
+ 			if (!prefixcmp(arg, "--glob=")) {
+diff --git a/revision.h b/revision.h
+index 36fdf22..05659c6 100644
+--- a/revision.h
++++ b/revision.h
+@@ -151,6 +151,7 @@ extern volatile show_early_output_fn_t show_early_output;
+ struct setup_revision_opt {
+ 	const char *def;
+ 	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
++	const char *submodule;
+ };
+ 
+ extern void init_revisions(struct rev_info *revs, const char *prefix);
+-- 
+1.7.2.rc1.217.g7dc0db.dirty
