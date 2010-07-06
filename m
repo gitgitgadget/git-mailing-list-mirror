@@ -1,121 +1,64 @@
-From: Eric Niebler <eric@boostpro.com>
-Subject: Re: help moving boost.org to git
-Date: Tue, 06 Jul 2010 14:00:29 -0400
-Message-ID: <4C336F3D.1010906@boostpro.com>
-References: <4C31E944.30801@boostpro.com> <20100705220443.GA23727@pvv.org> 	<4C32668E.9040000@boostpro.com> <AANLkTimAqL8gvgIisLpWE6xj2p0jEZD5wetdGYJnOpdr@mail.gmail.com> 	<4C3275C0.8000406@boostpro.com> <AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 3/5] git-cvsserver: take care of empty passwords
+Date: Tue, 6 Jul 2010 18:05:40 +0000
+Message-ID: <AANLkTilSvEf6DIM_JZql8pTnSCrnFQ2tAOGuqownVl4e@mail.gmail.com>
+References: <3594077658746039911@unknownmsgid>
+	<AANLkTinpjbOStczVo7NaPlxqyAh_32kLy0kWKc_AsLiI@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 06 20:00:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?TMOhc3psw7Mgw4FTSElO?= <laszlo.ashin@neti.hu>
+To: =?UTF-8?B?w4FzaGluIEzDoXN6bMOz?= <ashinlaszlo@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 20:05:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWCRt-0007Ph-5z
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:00:49 +0200
+	id 1OWCWm-0001fQ-Al
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 20:05:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756168Ab0GFSAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 14:00:42 -0400
-Received: from boostpro.com ([206.217.198.21]:53647 "EHLO boostpro.com"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756083Ab0GFSAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 14:00:41 -0400
-Received: from [192.168.3.170] (host57.72.248.152.conversent.net [72.248.152.57])
-	(Authenticated sender: eric)
-	by boostpro.com (Postfix) with ESMTPSA id CB7C914BC97;
-	Tue,  6 Jul 2010 19:00:35 +0100 (BST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.10) Gecko/20100512 Lightning/1.0b1 Thunderbird/3.0.5
-In-Reply-To: <AANLkTikkKhvzsczKJwjsc0kmCmWQGAIUzc__Wr20Dbwd@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
+	id S1752522Ab0GFSFn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 14:05:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57804 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311Ab0GFSFm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 14:05:42 -0400
+Received: by iwn7 with SMTP id 7so6909829iwn.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 11:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4ayS4cGeQTN6vzqJzKOm9HLHRnrk8AJE05ooyqQDAtA=;
+        b=R9yVSS9qP74ENm0fkABc+QYIX1GBJiLlmXTmb860fwFJXBHUP1F2TvqwnNNNyajldQ
+         9HO2qZq3GwQWitYQOUmtMhOVpQ17tIVTaKkECfuG2Auh9fR+7yBtQuLqDGKfPzEYvHfO
+         T6fWBPQ5N1TAeB9QZyyZ07KPw8jpu9HocA738=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=V1kgAOzYsXenqUD9L0oXuTu/E40FkmlbkF/8hZVjhbyvw4zErCsFxYh/qgn2up3SHI
+         GH9ebRMLKNBfcqMySI6VPNniikp4bjqS9u0vT8XUuqLBf7u6Wzolb85m7wPtynMAetwh
+         xtmJa4X9fg+/T6Fiz8573Nx1KZDQh0ALRPuao=
+Received: by 10.42.4.75 with SMTP id 11mr1595722icr.50.1278439540865; Tue, 06 
+	Jul 2010 11:05:40 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Tue, 6 Jul 2010 11:05:40 -0700 (PDT)
+In-Reply-To: <AANLkTinpjbOStczVo7NaPlxqyAh_32kLy0kWKc_AsLiI@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150382>
 
-On 7/6/2010 1:27 PM, Avery Pennarun wrote:
-> On Mon, Jul 5, 2010 at 8:16 PM, Eric Niebler <eric@boostpro.com> wrote:
->> On 7/5/2010 7:32 PM, Avery Pennarun wrote:
->>> Eric Niebler wrote:
->>>> If multiple repositories share the same ancient history, wouldn't that
->>>> give git annotate/blame enough information? Sorry, git newbie here.
->>>
->>> Yes, it would.  But how much of the ancient history do you want?  If
->>> you want all of it, you don't save any space in your repo.
->>
->> Repos, plural. We'd save space because the history wouldn't be
->> duplicated in each one. Right? Or else I'm confused and this something
->> that will become clear after I understand what git subtree does.
-> 
-> The statement "multiple repositories share the same ancient history"
-> above is the part that's confusing.  If you use a tool like
-> git-subtree or git-filter-branch, you're actually generating a "new
-> history" based on the original history.  The "new history" obviously
-> contains fewer files than the original, which would take less space.
-> But if you want multiple repositories to "share the same ancient
-> history" you can't rewrite it, and thus you aren't saving any space in
-> any one repo.
+On Tue, Jul 6, 2010 at 17:37, =C3=81shin L=C3=A1szl=C3=B3 <ashinlaszlo@=
+gmail.com> wrote:
+> Do not try to descramble them.
 
-I think I have reached understanding! Thank you. It *would* save if I
-pull down, say, 100 of these new repos+ancient history because git would
-just store the ancient history locally once. I'm also guessing git is
-smart enough to avoid /downloading/ the ancient history 100x.
-
-> I'm assuming you want to rewrite history to save space (since that's
-> what this thread is about).  And git annotate/blame will work as long
-> as your rewritten history contains all the files you care about in
-> that repo.
-
-Right. I now understand that, too.
-
->> Right now, the other boost developers are pushing for a solution that
->> uses grafts. I'm fuzzy on what they are exactly, but it seems that we'd
->> freeze a svn mirror and have anybody interested in history put grafts in
->> their local repository pointing back at the mirror. I don't know enough
->> yet to say what the pros/cons of this approach might be wrt git subtree.
-> 
-> The primary advantage of grafts is that you can do something easy
-> *right now* and then fix it all up later.  eg. if you screw up your
-> history extraction and do it better later, you can just re-graft it
-> and you're done.
-
-How does one screw up the history extraction, if one is not doing any
-fancy history rewriting (in this scenario)? Be there dragons?
-
-> A secondary advantage of grafts is that cloning the "primary"
-> repository will be tiny since it doesn't have much ancient history.
-
-Right. Only those who ask for it will pay for it. And only developers
-will have need of it, and not all developers at that.
-
-> A disadvantage of grafts is that each user has to deal with grafts in
-> his cloned repo, and unless he does, things like 'git log' and 'git
-> blame' won't show anything from the grafted history.  Supposedly 'git
-> replace' was designed to help with this issue, but I've never used it
-> so I don't know for sure.
-
-I'll add it to the list of things to learn about.
-
-> And of course, grafts don't actually do any history rewriting for you.
-> You could split out a subtree's history and then graft it on, but the
-> splitting process is still the same as it would be without grafts.
-> The alternative would be to *not* rewrite history, just keep the
-> entire history of the whole project in one place, and graft it on if
-> you really need it.  That's actually pretty clean (and accurately
-> reflects exactly what *really happened*, which is a nice feature to
-> have in a vcs history), but you'll then never have a single repo of
-> just one subproject with the entire history of that subproject.  That
-> latter turns out to not actually be very important in practice, so you
-> might want to do it.
-
-That's starting to sound pretty good.
-
-Thanks,
-
--- 
-Eric Niebler
-BoostPro Computing
-http://www.boostpro.com
+This commit message isn't very revealing. What does this do exactly?
+Is the behavior with empty passwords changed now? Does git-cvsserver
+no longer support empty passwords? Is the on-disk format in the authdb
+just different? (I.e. "" instead of "A" or something). Or something
+else?
