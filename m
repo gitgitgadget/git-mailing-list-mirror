@@ -1,93 +1,79 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Tue, 06 Jul 2010 16:31:43 +0100
-Message-ID: <1278430303.32094.15.camel@wpalmer.simply-domain>
-References: <E1OU82h-0001xY-3b@closure.thunk.org>
-	 <AANLkTikkLIKm3soF9agXnN34P7Xnq4AiVqGU_qFaaRmZ@mail.gmail.com>
-	 <20100701121711.GF1333@thunk.org>
-	 <20100701150331.GA12851@sigill.intra.peff.net>
-	 <20100701153842.GA15466@sigill.intra.peff.net>
-	 <20100702192612.GM1333@thunk.org>
-	 <20100703080618.GA10483@sigill.intra.peff.net>
-	 <20100704005543.GB6384@thunk.org>
-	 <20100705122723.GB21146@sigill.intra.peff.net>
-	 <20100705141012.GA25518@thunk.org>
-	 <20100706115826.GA15413@sigill.intra.peff.net>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: global hooks - once again
+Date: Tue, 6 Jul 2010 11:32:35 -0400
+Message-ID: <AANLkTik-CHI2D4HYn1T2ExsyE7G3kKX4LwHf0eQRrfP1@mail.gmail.com>
+References: <AANLkTikXJS5QCXMXgsOfkYn9cMBQV6o23tds5YG3A_OI@mail.gmail.com>
+	<7v630x1yl8.fsf@alter.siamese.dyndns.org>
+	<AANLkTikMEDUI7d5Mzwm8r43zCYTqefyI06PHOMvT1iLz@mail.gmail.com>
+	<A612847CFE53224C91B23E3A5B48BAC744940F6E57@xmail3.se.axis.com>
+	<AANLkTimSvwo50Q9jsbKkzvplSPE82fNJJDSFmZVw3r5o@mail.gmail.com>
+	<AANLkTilZcuYxb6ASgJq82JVdgcRcuak5PvYXZF6fcojm@mail.gmail.com>
+	<A612847CFE53224C91B23E3A5B48BAC744940F7000@xmail3.se.axis.com>
+	<AANLkTinCFP18B8PQoGREt-izxGSlUb3IzitxK4aeiFRD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: tytso@mit.edu, Avery Pennarun <apenwarr@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 06 17:31:56 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 17:32:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWA7n-0007RY-AH
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:31:55 +0200
+	id 1OWA8Z-0007mx-95
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 17:32:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753666Ab0GFPbt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 11:31:49 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57469 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752250Ab0GFPbs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 11:31:48 -0400
-Received: by fxm14 with SMTP id 14so4930754fxm.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 08:31:47 -0700 (PDT)
+	id S1752938Ab0GFPci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 11:32:38 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:33828 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751126Ab0GFPci (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 11:32:38 -0400
+Received: by pxi14 with SMTP id 14so2201742pxi.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 08:32:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=2orUV0MKZTW6im4lLKutH5FZ1zp5xKpik5C/TwnkHaU=;
-        b=Vbjy2tqocpONZrsJlTUbR2rmjRm81hYMgb804iEPtQql3cBHoEBNitrBJ5JpBl9yjX
-         s9pdrhA1yJYQqBEng604wgofPXpBk3HiN8hfv0rknD+nUE91oG7iSv9GFm5mdZM98V1I
-         XLOW5G2ZlUbM2GaJCPazc0wpF+M409UH3HCWk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=rtyS5ZbiFGY8ejS5a7FkVb9QM6sdh6Dyh7bAcoLK4C0=;
+        b=OxuHG4WJOILPoZXpeAAcIME8VLnvqHsZHCjjp+cmrWf141JBQ66YkcL7kFATRHCBbH
+         c/E0hd7zAKQZu1hcIRF5Y2Jp1tRIAxOvGcciqeRIBSepNCRslrX+YxV/umc9+YTg+uDv
+         GJvCVVwCLJQ/5BRRKogrOngifn8y9s0BNCRLE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=ED4b/G4WKzpcB/WvW2gDptHVPxJf9zgoeWXVRguragzoKeazQpMTonyZ6W7MxDqpU8
-         29oKh38aBNL9SQsJAbNItFiKVFRkZpfLSxaftomyHABJbydISNEyPIqwm54hL7fGPiWr
-         8X1h5P1Un1UpZhWjVz3FHugUiCd55lTo2LKMM=
-Received: by 10.86.27.5 with SMTP id a5mr3863098fga.32.1278430307279;
-        Tue, 06 Jul 2010 08:31:47 -0700 (PDT)
-Received: from [192.168.2.64] ([193.164.118.24])
-        by mx.google.com with ESMTPS id i1sm12143075faa.5.2010.07.06.08.31.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 08:31:45 -0700 (PDT)
-In-Reply-To: <20100706115826.GA15413@sigill.intra.peff.net>
-X-Mailer: Evolution 2.28.3 
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=LZgLQKT35pJ0uyIGLBftCEf5tnKXG1y+7SNM5tSA664tM4ItmGNt5g7UiA22scPNGg
+         QiQU6etW5zNp/WERrZI1LXm6soyyWlou0xMFa7R8zZWX6Wk7Um2bfYNctqSgTFkzxAb3
+         6N3ShGtWrm9CD83i1FGDevMdtiG5auCiIqLGQ=
+Received: by 10.229.189.147 with SMTP id de19mr2789690qcb.216.1278430355397; 
+	Tue, 06 Jul 2010 08:32:35 -0700 (PDT)
+Received: by 10.229.212.209 with HTTP; Tue, 6 Jul 2010 08:32:35 -0700 (PDT)
+In-Reply-To: <AANLkTinCFP18B8PQoGREt-izxGSlUb3IzitxK4aeiFRD@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150364>
 
-On Tue, 2010-07-06 at 07:58 -0400, Jeff King wrote:
-> On Mon, Jul 05, 2010 at 10:10:12AM -0400, tytso@mit.edu wrote:
-> > I'm not sure this is a good tradeoff, but given in practice how rarely
-> > most developers go back in time more than say, 12-24 months, maybe
-> > it's worth doing.  What do you think?
-> 
-> I'm not sure. I am tempted to just default it to 86400 and go no
-> further.  People who care about archaeology can turn off traversal
-> cutoffs if they like, and as the skewed history ages, people get less
-> likely to look at it. We could also pick half a year or some high number
-> as the default allowable. The performance increase is still quite
-> noticeable there, and it covers the only large skew we know about. I'd
-> be curious to see if other projects have skew, and how much.
-> 
-> -Peff
+> For instance i can imagine that boxes that devs actively work on would
+> have no global setting, and central version control boxes would have
+> it.
+>
+> cheers,
+> Yves
+>
 
-Is it wrong to expect that git perform poorly in the edge-cases (hugely
-skewed timestamps), but that it perform /correctly/ in all cases?
+I suppose the default configuration is not suggesting any system or
+global level hooks folders defined in proposed solution. If some admin
+or SCM makes a decision about system level hooks - he has to know what
+he's doing - that's is pretty much it. But it might be very
+comfortable way to set up some rules or enforce policies.
+OTOH user level (--global) hooks are going to be responsible for what
+user does all the time and wants to automate.
 
-Clearly, marking already-traversed histories was the right thing to do,
-and if I read correctly, made a good improvement on its own. But you
-seem to have crossed a line at some point between "optimization" and
-"potentially giving the wrong answer because it's faster"
 
-Or am I just misunderstanding here?
+Thanks,
+Eugene
