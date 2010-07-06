@@ -1,102 +1,102 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Tue, 6 Jul 2010 07:58:28 -0400
-Message-ID: <20100706115826.GA15413@sigill.intra.peff.net>
-References: <E1OU82h-0001xY-3b@closure.thunk.org>
- <AANLkTikkLIKm3soF9agXnN34P7Xnq4AiVqGU_qFaaRmZ@mail.gmail.com>
- <20100701121711.GF1333@thunk.org>
- <20100701150331.GA12851@sigill.intra.peff.net>
- <20100701153842.GA15466@sigill.intra.peff.net>
- <20100702192612.GM1333@thunk.org>
- <20100703080618.GA10483@sigill.intra.peff.net>
- <20100704005543.GB6384@thunk.org>
- <20100705122723.GB21146@sigill.intra.peff.net>
- <20100705141012.GA25518@thunk.org>
+Subject: Re: 'git commit --short' without touching index?
+Date: Tue, 6 Jul 2010 08:10:22 -0400
+Message-ID: <20100706121022.GB15413@sigill.intra.peff.net>
+References: <loom.20100703T102242-536@post.gmane.org>
+ <20100703091748.GA11714@sigill.intra.peff.net>
+ <7veifhy9j0.fsf@alter.siamese.dyndns.org>
+ <20100705205651.GA32728@sigill.intra.peff.net>
+ <7vk4p9wrdb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: tytso@mit.edu
-X-From: git-owner@vger.kernel.org Tue Jul 06 13:58:39 2010
+Cc: Daniel <friedan@muon.rutgers.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 14:10:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OW6nN-0000O8-Uq
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 13:58:38 +0200
+	id 1OW6yy-0006xb-94
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 14:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756781Ab0GFL6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 07:58:32 -0400
-Received: from peff.net ([208.65.91.99]:52104 "EHLO peff.net"
+	id S1754932Ab0GFMK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 08:10:26 -0400
+Received: from peff.net ([208.65.91.99]:49307 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756438Ab0GFL6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 07:58:31 -0400
-Received: (qmail 28360 invoked by uid 107); 6 Jul 2010 11:59:26 -0000
+	id S1753063Ab0GFMKZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 08:10:25 -0400
+Received: (qmail 28446 invoked by uid 107); 6 Jul 2010 12:11:20 -0000
 Received: from c-67-172-213-4.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (67.172.213.4)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 06 Jul 2010 07:59:26 -0400
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jul 2010 07:58:28 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 06 Jul 2010 08:11:20 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Jul 2010 08:10:22 -0400
 Content-Disposition: inline
-In-Reply-To: <20100705141012.GA25518@thunk.org>
+In-Reply-To: <7vk4p9wrdb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150344>
 
-On Mon, Jul 05, 2010 at 10:10:12AM -0400, tytso@mit.edu wrote:
+On Mon, Jul 05, 2010 at 02:28:16PM -0700, Junio C Hamano wrote:
 
-> As time progresses, the clock skew breakage should be less likely to
-> be hit by a typical developer, right?  That is, unless you are
-> specifically referencing one of the commits which were skewed, two
-> years from now, the chances of someone (who isn't doing code
-> archeology) of getting hit by a problem should be small, right?  This
+> > Apparently not:
+> >
+> >   $ stat .git/index | grep -i modify
+> >   Modify: 2010-07-05 16:52:11.000000000 -0400
+> >   $ git status
+> >   # On branch master
+> >   nothing to commit
+> >   $ stat .git/index | grep -i modify
+> >   Modify: 2010-07-05 16:53:09.000000000 -0400
+> >
+> > and it is not just updating some stat-dirtiness. Doing it over and over
+> > will keep updating the index. It looks like we unconditionally do the
+> > lock and write in cmd_status, but I haven't looked further.
+> 
+> Something like this, plus possibly a similar fix to "git commit $path"
+> codepath, perhaps?
 
-It's not about directly referencing skewed commits. It's about
-traversing history that contains skewed commits. So if I have a history
-like:
+Yeah, that looks sane, though the one for "git status" is actually:
 
-  A -- B -- C -- D
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 8258a16..5e578af 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1090,9 +1090,11 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 
+ 	fd = hold_locked_index(&index_lock, 0);
+ 	if (0 <= fd) {
+-		if (!write_cache(fd, active_cache, active_nr))
++		if (active_cache_changed &&
++		    !write_cache(fd, active_cache, active_nr))
+ 			commit_locked_index(&index_lock);
+-		rollback_lock_file(&index_lock);
++		else
++			rollback_lock_file(&index_lock);
+ 	}
+ 
+ 	s.is_initial = get_sha1(s.reference, sha1) ? 1 : 0;
 
-and "B" is skewed, then I will generally give up on finding "A" when
-searching backwards from "C" or "D", or their descendants. So as time
-moves forward, you will continue to have your old tags pointing to "C"
-or "D", but also tags pointing to their descendants. Doing "git tag
---contains A" will continue to be inaccurate, since it will continue to
-look for "A" from "C" and "D", but also from newer tags, all of which
-involve traversing the skewed "B".
+and I did confirm that it works (does not touch the index when nothing
+changes, and does write out the index even for a stat-dirty entry).
 
-What I think is true is that people will be less likely to look at "A"
-as time goes on, as code it introduced presumably becomes less relevant
-(either bugs are shaken out, or it gets replaced, or whatever). And
-obviously looking at "C" from "D", the skew in "B" will be irrelevant.
+> We may want to audit all uses of write_cache() and write_index() that are
+> not protected with active_cache_changed (or istate->cache_changed); I am
+> reluctant to suggest placing that logic into write_index() at this point,
+> though, as we may be updating the index in bulk, without marking
+> active_cache_changed bit, exactly because we know we will unconditionally
+> write the result out.
 
-So I think typical developers become less likely to hit the issue as
-time goes on, but software archaeologists will hit it forever.
+I don't think changing write_index() is a good idea. There are a lot of
+calls, and I would rather have each one opt into this optimization than
+break them in a mass change.
 
-> If so, I could imagine the automagic scheme choosing a default that
-> only finds the worst skew in the past N months.  This would speed up
-> things up for users who are using repositories that have skews in the
-> distant past, at the cost of introducing potentially confusuing edge
-> cases for people doing code archeology.
-
-How do you decide, when looking for commits that have bogus timestamps,
-which ones happened in the past N months? Certainly you can do some
-statistical analysis to pick out anomalous ones. And you could perhaps
-favor future skewing over past skewing, since that skew doesn't tend to
-impact traversal cutoffs (and large past skewing seems to be more
-common). But that is getting kind of complex.
-
-> I'm not sure this is a good tradeoff, but given in practice how rarely
-> most developers go back in time more than say, 12-24 months, maybe
-> it's worth doing.  What do you think?
-
-I'm not sure. I am tempted to just default it to 86400 and go no
-further.  People who care about archaeology can turn off traversal
-cutoffs if they like, and as the skewed history ages, people get less
-likely to look at it. We could also pick half a year or some high number
-as the default allowable. The performance increase is still quite
-noticeable there, and it covers the only large skew we know about. I'd
-be curious to see if other projects have skew, and how much.
+I was thinking that we might be able to simplify all of these lines into
+a "lock, write, and commit" function that would either rollback or die
+on failure, depending on a parameter. But there's often more complex
+logic going on between those functions, so I don't think it would really
+save us much.
 
 -Peff
