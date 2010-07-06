@@ -1,79 +1,71 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: messages confusing
-Date: Tue, 6 Jul 2010 07:35:43 +0200
-Message-ID: <20100706053543.GA13054@vidovic>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] Fix MSVC build
+Date: Tue, 06 Jul 2010 07:55:08 +0200
+Message-ID: <4C32C53C.8020105@viscovery.net>
+References: <1278358897-488-1-git-send-email-pharris@opentext.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 06 07:36:19 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, git@vger.kernel.org,
+	ramsay@ramsay1.demon.co.uk, jrnieder@gmail.com
+To: Peter Harris <pharris@opentext.com>
+X-From: git-owner@vger.kernel.org Tue Jul 06 07:55:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OW0pL-0007Yz-Ur
-	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 07:36:16 +0200
+	id 1OW17z-0007fq-IZ
+	for gcvg-git-2@lo.gmane.org; Tue, 06 Jul 2010 07:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525Ab0GFFfv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 01:35:51 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:52098 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751684Ab0GFFfu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 01:35:50 -0400
-Received: by bwz1 with SMTP id 1so3204025bwz.19
-        for <git@vger.kernel.org>; Mon, 05 Jul 2010 22:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=8GM77GUUA8mY7NE+8fe9ggcZxm9TzBwFp5CDYxSN92A=;
-        b=CzgjHdIPoFu5YY038uGrsoYILU09fAw+z3gFa8lLWWwQiOwhK2qynwym145btpmJVy
-         DExqs2D+M98tsIPuQ+EUYFPgCtx+HRYNnWnFP86i+4beHZ2eGp+kKR0fD+OLxs6d+kqP
-         k4vK1DdILFGBq6SkhFHyHI+mVxCo67k81jYHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=Y7PPTdQbjC9BD3SVO2dcijZzZ1aDXmF+c17DU/QZMr47kwVdTFEsrzVm/ES6V0wRtn
-         aIrZ+6MBoHa6dlcHN6uimakSLLuPoxwYiyeNWtdc9ut2bVB5F07Y/02LBHahhf11qViZ
-         6WPxKg+nLctJ/eSKUIuMHVbgkShWyJEFfmqiU=
-Received: by 10.204.47.99 with SMTP id m35mr3170413bkf.106.1278394548167;
-        Mon, 05 Jul 2010 22:35:48 -0700 (PDT)
-Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id f10sm21224814bkl.17.2010.07.05.22.35.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 05 Jul 2010 22:35:47 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752686Ab0GFFzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Jul 2010 01:55:13 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:32997 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752472Ab0GFFzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Jul 2010 01:55:12 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OW17c-0004JP-Vx; Tue, 06 Jul 2010 07:55:09 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 9D6611660F;
+	Tue,  6 Jul 2010 07:55:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <1278358897-488-1-git-send-email-pharris@opentext.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150321>
 
-Hi all,
+Am 7/5/2010 21:41, schrieb Peter Harris:
+> Signed-off-by: Peter Harris <pharris@opentext.com>
+> ---
+>  compat/mingw.h |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+> 
+> diff --git a/compat/mingw.h b/compat/mingw.h
+> index 8104039..08fea02 100644
+> --- a/compat/mingw.h
+> +++ b/compat/mingw.h
+> @@ -14,11 +14,13 @@ typedef int uid_t;
+>  #define S_ISSOCK(x) 0
+>  
+>  #ifndef _STAT_H_
+> +#ifndef S_IRUSR
+>  #define S_IRUSR 0
+>  #define S_IWUSR 0
+>  #define S_IXUSR 0
+>  #define S_IRWXU (S_IRUSR | S_IWUSR | S_IXUSR)
+>  #endif
+> +#endif
+>  #define S_IRGRP 0
+>  #define S_IWGRP 0
+>  #define S_IXGRP 0
 
-I had those messages today
+This doesn't apply: I don't see the #ifndef _STAT_H_ brackets anywhere in
+my version of compat/mingw.h.
 
-  % git merge origin/master
-    Already uptodate!
-    Merge made by recursive.
-  %
-
-with git version 1.7.2.rc1.210.g7b476 and I wonder if it is really
-intended.  It did create an empty merge commit but I find both messages
-together a bit confusing here.  Why would Git merge if uptodate?
-
-I don't think I will have time to investigate in the comming weeks but
-you should be able to reproduce it by following these steps (it is by
-now, at least):
-
-  % git clone git://github.com/nvie/gitflow.git
-  % cd gitflow
-  % git merge origin/master
-  %
-
-Thanks,
-  
--- 
-Nicolas Sebrecht
+-- Hannes
