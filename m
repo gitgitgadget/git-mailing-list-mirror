@@ -1,96 +1,93 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] rebase -i: use 'read -r' to avoid backslash acting as an
- escape character
-Date: Wed, 7 Jul 2010 00:55:22 +0200
-Message-ID: <20100706225522.GA31048@genesis.frugalware.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: git-svn error: ambiguous argument
+Date: Wed, 7 Jul 2010 01:11:11 +0200
+Message-ID: <AANLkTilv1RywImw4RM3jMZl6YTawGhvodlhnX4RN1RWo@mail.gmail.com>
+References: <7A6370FC-843B-43FD-8064-4F44C9C66493@inuus.com>
+	<AANLkTik_YK6_KbRIq4MsrU-LDn8apHQfm1_f7XHKKfX1@mail.gmail.com>
+	<AANLkTil7WdGZTtmwwK0kYPkK6-y4W5HKKLNdtkoI0riM@mail.gmail.com>
+	<AANLkTimE6Wo9HT0p5WMfTggJ059dhDg4fyPeax93VCLy@mail.gmail.com>
+	<0D702391-E490-4942-AAB6-C8C887E671C5@inuus.com>
+	<AANLkTikKdDI_NMzvsA7e_VoYo7Ie97e2pBkZe_0xPt9P@mail.gmail.com>
+	<20100628062409.GA13203@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 07 00:55:32 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Paul Lindner <lindner@inuus.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 07 01:12:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWH36-0003yo-6F
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 00:55:32 +0200
+	id 1OWHJ1-0002bk-Na
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 01:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab0GFWzZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 18:55:25 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:46664 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751618Ab0GFWzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 18:55:25 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id A55535809C;
-	Wed,  7 Jul 2010 00:55:22 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 89D0444659;
-	Wed,  7 Jul 2010 00:55:22 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3E08912D90F0; Wed,  7 Jul 2010 00:55:22 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753158Ab0GFXLN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Jul 2010 19:11:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37800 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752951Ab0GFXLM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Jul 2010 19:11:12 -0400
+Received: by iwn7 with SMTP id 7so7172659iwn.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 16:11:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UYMtXUFlqNdXPmEju33LaYlOIXsf55Vvvc+Skv4D9DM=;
+        b=DimDSSNJbH9wE3Ud51RPVcN/OApxjLCZhsBlkyVGfCFyMTN0KDsc6hKAX5AYt7HddG
+         G06Fj1T1kMbO9MM6VN4zdLZlY6IVj68EhjKjzF0IlYuTE+/o4R3hHaPPKP8Jtf8qQ+84
+         1Km/udfdhP6biKZOLArNO1P9FsIf0mJpfdE/g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EyxUEZBTJZO6aK7Be2xeAHHf3xehPwTm9tgoZdL65uG/jyJ8YtnfjboiAACCb3Pc+O
+         a8MK2CBCoSxsOK0mPn6QQykjFAEB6oIftp+fmE52V1Nv8k/UxkvOhzw+PLPnS0x6xx1B
+         4DSbVdJ857Ubt5uk4QGofPutrIYfVLvS1ehDY=
+Received: by 10.231.176.1 with SMTP id bc1mr5310280ibb.46.1278457871804; Tue, 
+	06 Jul 2010 16:11:11 -0700 (PDT)
+Received: by 10.231.34.198 with HTTP; Tue, 6 Jul 2010 16:11:11 -0700 (PDT)
+In-Reply-To: <20100628062409.GA13203@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150416>
 
-The last backslash in the commit message will make 'read' read two lines
-without '-r', loosing the next commit, so use it.
+On Mon, Jun 28, 2010 at 08:24, Eric Wong <normalperson@yhbt.net> wrote:
+> Bert Wesarg <bert.wesarg@googlemail.com> wrote:
+>> On Tue, May 11, 2010 at 21:44, Paul Lindner <lindner@inuus.com> wrot=
+e:
+>> > This fixed it for my situation. =C2=A0Thanks!
+>> > On May 11, 2010, at 9:20 AM, Bert Wesarg wrote:
+>> >> Can you try this patch, it worked on my site:
+>
+> <snip>
+>
+>> Eric, have you picked this up, or should I re-send it as a propper p=
+atch?
+>
+> A proper patch + commit message would be easier, thanks Bert!
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- git-rebase--interactive.sh    |    4 ++--
- t/t3404-rebase-interactive.sh |   14 ++++++++++++++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+I have invested some time to verify my patch before sending. And I
+think I will break something. The current patch changes the range
+argument for git rev-list from "r1^..r2" to "r1^!" & "r2", which
+should not be the same, because "r1^..r2" is equivalent to "^r1^" &
+"r2". This reads 'all commits reachable from r2 but not reachable from
+the parent of r1' where my conversion should read 'all reachable from
+r1 (excluding all of its parents) or reachable from r2'. But maybe the
+'excluding all of its parents'-part quarantines that the semantic
+still holds?
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 6b86abc..4b822e3 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -591,7 +591,7 @@ do_rest () {
- # skip picking commits whose parents are unchanged
- skip_unnecessary_picks () {
- 	fd=3
--	while read command sha1 rest
-+	while read -r command sha1 rest
- 	do
- 		# fd=3 means we skip the command
- 		case "$fd,$command,$(git rev-parse --verify --quiet $sha1^)" in
-@@ -890,7 +890,7 @@ first and then run 'git rebase --continue' again."
- 		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
- 			--abbrev=7 --reverse --left-right --topo-order \
- 			$REVISIONS | \
--			sed -n "s/^>//p" | while read shortsha1 rest
-+			sed -n "s/^>//p" | while read -r shortsha1 rest
- 		do
- 			if test t != "$PRESERVE_MERGES"
- 			then
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index ee9a1b2..ddfa790 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -630,4 +630,18 @@ test_expect_success 'always cherry-pick with --no-ff' '
- 	test_cmp empty out
- '
- 
-+test_expect_success 'commit message with backslash at the end' '
-+	echo a > file &&
-+	git add file &&
-+	git commit -m 1st &&
-+	echo b >> file &&
-+	git commit -a -m "escape \\t, \\{, \\} and \\" &&
-+	echo c >> file &&
-+	git commit -a -m 3rd &&
-+	orig=$(git rev-parse HEAD) &&
-+	git rebase -i HEAD~2 &&
-+	git diff $orig HEAD > out &&
-+	test_cmp empty out
-+'
-+
- test_done
--- 
-1.7.1
+At least test 5 of t9151-svn-mergeinfo.sh does not pass, so my patch
+proved to be wrong.
+
+Bert
+
+>
+> --
+> Eric Wong
+>
