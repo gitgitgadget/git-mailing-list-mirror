@@ -1,201 +1,124 @@
-From: newren@gmail.com
-Subject: [PATCHv2 2/2] fast-export: Add a --full-tree option
-Date: Wed,  7 Jul 2010 14:46:02 -0600
-Message-ID: <1278535562-14875-3-git-send-email-newren@gmail.com>
-References: <1278535562-14875-1-git-send-email-newren@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 07 22:38:44 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWbOC-0007Ae-Vx
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 22:38:41 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755204Ab0GGUi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 16:38:29 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38268 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751556Ab0GGUi1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 16:38:27 -0400
-Received: by pwi5 with SMTP id 5so26557pwi.19
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:38:26 -0700 (PDT)
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 02/13] Add skeleton SVN client and Makefile
+Date: Wed, 7 Jul 2010 22:47:02 +0200
+Message-ID: <20100707204702.GE16065@debian>
+References: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
+ <1278461693-3828-3-git-send-email-artagnon@gmail.com>
+ <20100707162516.GA1529@burratino>
+ <20100707170926.GC18806@debian>
+ <20100707193017.GA2911@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Bert Huijben <rhuijben@collab.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>, dev@subversion.apache.org,
+	Stefan Sperling <stsp@elego.de>,
+	Julian Foad <julian.foad@wandisco.com>,
+	Will Palmer <wmpalmer@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: dev-return-4867-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 07 22:45:50 2010
+Return-path: <dev-return-4867-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@lo.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by lo.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-4867-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1OWbV8-0002Xq-Em
+	for gcvsd-dev@lo.gmane.org; Wed, 07 Jul 2010 22:45:50 +0200
+Received: (qmail 21463 invoked by uid 500); 7 Jul 2010 20:45:48 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+Precedence: bulk
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 21455 invoked by uid 99); 7 Jul 2010 20:45:48 -0000
+Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 20:45:48 +0000
+X-ASF-Spam-Status: No, hits=0.0 required=10.0
+	tests=FREEMAIL_FROM,SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (nike.apache.org: domain of artagnon@gmail.com designates 209.85.215.43 as permitted sender)
+Received: from [209.85.215.43] (HELO mail-ew0-f43.google.com) (209.85.215.43)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 20:45:39 +0000
+Received: by ewy1 with SMTP id 1so41946ewy.16
+        for <dev@subversion.apache.org>; Wed, 07 Jul 2010 13:45:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=F4G0Db0cPKIqL0Sd2JXqJf8qpfriNgGmsZq/J11zRKE=;
-        b=jm5hgwTLdcpzFzNV5LcoY+yv9jWgtgo/8ec7ONwZ7pKyUxlGrUoAD5tdHdZ/qhjqq8
-         MZqFI310JpzYLfdykbK7ivTjSPDQ005wF1ZqvHIZzV4DFoTE9lQK8kfls3tFEy21VuO9
-         nj0CfgdlQt3upYVIUf7W/DBSST9Za9AznTubI=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=f389/s6FHVMx89hEqad4Xwn1gRBMeCRVOhPE03RCV18=;
+        b=aJAC3NihpysCtxyva67nvu+W8TsRVq0kMCHM1OvS52JLZEkyAvxTFoE4e2hErzkhY8
+         iui7qCT5IvcQ4ZIhiV9iO1ReVqj9kYfOzb/mukQzOoVSvx8wcHyKZaUkE1IUaHqDu9UW
+         uBqCXCIKJNzjqOcV9hP4L/YfHxO82hqg5nZy8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NrE6DluiMFLXuUKdEMKV3xTXUYp6QRBVFNI1pJUqde6bd4MksfGfsJRzt/BeiDb1k7
-         6pjxBt9/yF28nlf1dvPfGpZIrBEXoyT836qesuGN1s5Pr0OADGXmC7G5S78LgA+33GS/
-         m4tvW0FOhWBEOxpeNySAx9h8ZnUQI4pvOwYU8=
-Received: by 10.142.233.12 with SMTP id f12mr8941036wfh.19.1278535106568;
-        Wed, 07 Jul 2010 13:38:26 -0700 (PDT)
-Received: from localhost.localdomain (c-76-113-59-120.hsd1.nm.comcast.net [76.113.59.120])
-        by mx.google.com with ESMTPS id c26sm7589013rvf.15.2010.07.07.13.38.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 07 Jul 2010 13:38:25 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.rc1.14.g19914
-In-Reply-To: <1278535562-14875-1-git-send-email-newren@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150503>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Yu8leS6UdZ1tblqpFm4O2K6Ah7eMHcOxeswpF1lpLKnrVq5rNrVv9mh73Wd10+oi5T
+         qLRWQvmxQ64cJk9s304rgBit4T2YTXvQZRJxj2fG+b/EJtbPW8xN8uS/l6QZWSRMkQMf
+         qLSXR34Zvn98Fyzc7oCEDwaw6OXtnflH3p+RE=
+Received: by 10.213.27.68 with SMTP id h4mr6273764ebc.67.1278535518964;
+        Wed, 07 Jul 2010 13:45:18 -0700 (PDT)
+Received: from debian (adm12-98.itu.dk [130.226.133.98])
+        by mx.google.com with ESMTPS id a48sm64363304eei.19.2010.07.07.13.45.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 07 Jul 2010 13:45:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100707193017.GA2911@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150504>
 
-From: Elijah Newren <newren@gmail.com>
+Hi,
 
-This option adds symmetry with fast-import, enabling it to also work with
-complete trees instead of just incremental changes.  It works by issuing a
-'deleteall' directive with each commit and then listing the full set of
-files that make up that commit, rather than just showing the list of files
-that have changed since the (first) parent commit.  Note that this
-functionality is automatically turned on when using --import-marks together
-with path limiting in order to avoid dropping important but unchanged
-files.
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+> 
+> > Here's a diff of the modifications I made after your review:
+> 
+> That’s quite helpful.
+> 
+> > +++ b/svndumpr.c
+> > @@ -76,31 +76,19 @@ static svn_error_t *replay_revend(svn_revnum_t revision,
+> [...]
+> > +	/* Populte ctx->auth_baton with the auth baton
+> > +	   non-interactively. Arguments 3, 4 and 5 are for username,
+> > +	   password and config_dir which is NULL in this case. Set
+> > +	   no_auth_cache and trust_serv_cert to FALSE, don't provide a
+> > +	   config, and omit cancel_func/ cancel_baton */
+> >  	SVN_ERR(svn_cmdline_create_auth_baton(&(ctx->auth_baton), TRUE,
+> >  					      NULL, NULL, NULL, FALSE,
+> >  					      FALSE, NULL, NULL, NULL,
+> 
+> I think you took my suggestion too seriously here.  Such a comment
+> probably will not help people much; instead, maybe a more focused
+> comment can help the curious avoid looking up
+> svn_cmdline_create_auth_baton:
+> 
+> 	/* Default authentication providers for noninteractive
+> 	   use. */
+> 	SVN_ERR(svn_cmdline_create_auth_baton(...
 
-This functionality is desired when using hand-written filters along with
-'fast-export | some-filter | fast-import' as it can be easier to write
-<some-filter> in terms of complete trees than incremental changes.
+Fixed.
 
-We could avoid the need to add this option by simply always turning it on.
-While the end result would be identical, it would slow things down slightly
-by printing many more filenames per commit which goes somewhat against the
-'fast' in 'fast-export'.
+> Looking this up, I notice that function was added in svn 1.6.
+> Hopefully that is okay, since this code is destined for svn trunk.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-fast-export.txt |    6 +++
- builtin/fast-export.c             |    4 ++-
- t/t9350-fast-export.sh            |   70 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 79 insertions(+), 1 deletions(-)
+I have a working 1.6 fork now that I intend to merge into
+git.git. When there's a new release of Subversion that includes my
+patch, I'll remove it from git.git.
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index 98ec6b5..8a6a3cb 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -90,6 +90,12 @@ marks the same across runs.
- 	resulting stream can only be used by a repository which
- 	already contains the necessary objects.
- 
-+--full-tree::
-+	This option will cause fast-export to issue a "deleteall"
-+	directive for each commit followed by a full list of all files
-+	in the commit (as opposed to just listing the files which are
-+	different from the commit's first parent).
-+
- [git-rev-list-args...]::
-        A list of arguments, acceptable to 'git rev-parse' and
-        'git rev-list', that specifies the specific objects and references
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 25d13a1..8c77602 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -27,7 +27,7 @@ static enum { ABORT, VERBATIM, WARN, STRIP } signed_tag_mode = ABORT;
- static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ABORT;
- static int fake_missing_tagger;
- static int no_data;
--static int full_tree = 0;
-+static int full_tree;
- 
- static int parse_opt_signed_tag_mode(const struct option *opt,
- 				     const char *arg, int unset)
-@@ -588,6 +588,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 			     "Import marks from this file"),
- 		OPT_BOOLEAN(0, "fake-missing-tagger", &fake_missing_tagger,
- 			     "Fake a tagger when tags lack one"),
-+		OPT_BOOLEAN(0, "full-tree", &full_tree,
-+			     "Output full tree for each commit"),
- 		{ OPTION_NEGBIT, 0, "data", &no_data, NULL,
- 			"Skip output of blob data",
- 			PARSE_OPT_NOARG | PARSE_OPT_NEGHELP, NULL, 1 },
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 6069e1f..b08954e 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -364,6 +364,76 @@ test_expect_success 'path limiting with import-marks does not lose unmodified fi
- 	git fast-export --import-marks=marks simple -- file file0 | grep file0
- '
- 
-+cat > expected << EOF
-+blob
-+mark :1
-+data 8
-+Wohlauf
-+
-+blob
-+mark :2
-+data 9
-+break it
-+
-+reset refs/heads/simple
-+commit refs/heads/simple
-+mark :3
-+author A U Thor <author@example.com> 1112912053 -0700
-+committer C O Mitter <committer@example.com> 1112912053 -0700
-+data 8
-+initial
-+deleteall
-+M 100644 :1 file
-+M 100644 :2 file0
-+
-+blob
-+mark :4
-+data 9
-+die Luft
-+
-+blob
-+mark :5
-+data 12
-+geht frisch
-+
-+commit refs/heads/simple
-+mark :6
-+author A U Thor <author@example.com> 1112912113 -0700
-+committer C O Mitter <committer@example.com> 1112912113 -0700
-+data 7
-+second
-+from :3
-+deleteall
-+M 100644 :4 file
-+M 100644 :2 file0
-+M 100644 :5 file2
-+
-+blob
-+mark :7
-+data 22
-+die Luft
-+more content
-+
-+commit refs/heads/simple
-+mark :8
-+author A U Thor <author@example.com> 1112912773 -0700
-+committer C O Mitter <committer@example.com> 1112912773 -0700
-+data 5
-+next
-+from :6
-+deleteall
-+M 100644 :7 file
-+M 100644 :2 file0
-+M 100644 :5 file2
-+
-+EOF
-+
-+test_expect_success 'full-tree shows all files in commits'        '
-+	git checkout -f simple &&
-+	git fast-export --full-tree simple > output &&
-+	test_cmp output expected
-+'
-+
- test_expect_success 'set-up a few more tags for tag export tests' '
- 	git checkout -f master &&
- 	HEAD_TREE=`git show -s --pretty=raw HEAD | grep tree | sed "s/tree //"` &&
--- 
-1.7.2.rc1.14.g19914
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+-- Ram
