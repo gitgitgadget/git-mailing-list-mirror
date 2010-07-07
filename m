@@ -1,124 +1,80 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 02/13] Add skeleton SVN client and Makefile
-Date: Wed, 7 Jul 2010 22:47:02 +0200
-Message-ID: <20100707204702.GE16065@debian>
-References: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
- <1278461693-3828-3-git-send-email-artagnon@gmail.com>
- <20100707162516.GA1529@burratino>
- <20100707170926.GC18806@debian>
- <20100707193017.GA2911@burratino>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git rebase bug?
+Date: Wed, 7 Jul 2010 22:51:26 +0200
+Message-ID: <20100707205126.GA11240@glandium.org>
+References: <20100707150545.GA24814@glandium.org> <20100707180004.GA3165@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>, dev@subversion.apache.org,
-	Stefan Sperling <stsp@elego.de>,
-	Julian Foad <julian.foad@wandisco.com>,
-	Will Palmer <wmpalmer@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: dev-return-4867-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 07 22:45:50 2010
-Return-path: <dev-return-4867-gcvsd-dev=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsd-dev@lo.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by lo.gmane.org with smtp (Exim 4.69)
-	(envelope-from <dev-return-4867-gcvsd-dev=m.gmane.org@subversion.apache.org>)
-	id 1OWbV8-0002Xq-Em
-	for gcvsd-dev@lo.gmane.org; Wed, 07 Jul 2010 22:45:50 +0200
-Received: (qmail 21463 invoked by uid 500); 7 Jul 2010 20:45:48 -0000
-Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
-Precedence: bulk
-List-Help: <mailto:dev-help@subversion.apache.org>
-List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
-List-Post: <mailto:dev@subversion.apache.org>
-List-Id: <dev.subversion.apache.org>
-Delivered-To: mailing list dev@subversion.apache.org
-Received: (qmail 21455 invoked by uid 99); 7 Jul 2010 20:45:48 -0000
-Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 20:45:48 +0000
-X-ASF-Spam-Status: No, hits=0.0 required=10.0
-	tests=FREEMAIL_FROM,SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (nike.apache.org: domain of artagnon@gmail.com designates 209.85.215.43 as permitted sender)
-Received: from [209.85.215.43] (HELO mail-ew0-f43.google.com) (209.85.215.43)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 20:45:39 +0000
-Received: by ewy1 with SMTP id 1so41946ewy.16
-        for <dev@subversion.apache.org>; Wed, 07 Jul 2010 13:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=f389/s6FHVMx89hEqad4Xwn1gRBMeCRVOhPE03RCV18=;
-        b=aJAC3NihpysCtxyva67nvu+W8TsRVq0kMCHM1OvS52JLZEkyAvxTFoE4e2hErzkhY8
-         iui7qCT5IvcQ4ZIhiV9iO1ReVqj9kYfOzb/mukQzOoVSvx8wcHyKZaUkE1IUaHqDu9UW
-         uBqCXCIKJNzjqOcV9hP4L/YfHxO82hqg5nZy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Yu8leS6UdZ1tblqpFm4O2K6Ah7eMHcOxeswpF1lpLKnrVq5rNrVv9mh73Wd10+oi5T
-         qLRWQvmxQ64cJk9s304rgBit4T2YTXvQZRJxj2fG+b/EJtbPW8xN8uS/l6QZWSRMkQMf
-         qLSXR34Zvn98Fyzc7oCEDwaw6OXtnflH3p+RE=
-Received: by 10.213.27.68 with SMTP id h4mr6273764ebc.67.1278535518964;
-        Wed, 07 Jul 2010 13:45:18 -0700 (PDT)
-Received: from debian (adm12-98.itu.dk [130.226.133.98])
-        by mx.google.com with ESMTPS id a48sm64363304eei.19.2010.07.07.13.45.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Jul 2010 13:45:18 -0700 (PDT)
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Jul 07 22:51:57 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by lo.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OWbay-0006nx-85
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 22:51:52 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756283Ab0GGUvr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 16:51:47 -0400
+Received: from vuizook.err.no ([85.19.221.46]:56207 "EHLO vuizook.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755854Ab0GGUvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 16:51:46 -0400
+Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=vserv6.glandium.org)
+	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1OWbac-0000uo-HG; Wed, 07 Jul 2010 22:51:44 +0200
+Received: from vserv6.glandium.org ([192.168.1.10] helo=goemon)
+	by vserv6.glandium.org with esmtp (Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1OWbaY-0002vX-It; Wed, 07 Jul 2010 22:51:27 +0200
+Received: from mh by goemon with local (Exim 4.69)
+	(envelope-from <mh@glandium.org>)
+	id 1OWbaY-0002vU-8P; Wed, 07 Jul 2010 22:51:26 +0200
 Content-Disposition: inline
-In-Reply-To: <20100707193017.GA2911@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150504>
+In-Reply-To: <20100707180004.GA3165@atjola.homenet>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 192.168.1.10
+X-SA-Exim-Mail-From: mh@glandium.org
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on vserv6.glandium.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+X-SA-Exim-Version: 4.2.1 (built Wed, 25 Jun 2008 17:14:11 +0000)
+X-SA-Exim-Scanned: Yes (on vserv6.glandium.org)
+X-Spam-Status: (score 2.5): No, score=2.5 required=5.0 tests=DNS_FROM_OPENWHOIS,RDNS_DYNAMIC autolearn=disabled version=3.2.4
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150505>
 
-Hi,
+On Wed, Jul 07, 2010 at 08:00:04PM +0200, Bj=F6rn Steinbrink <B.Steinbr=
+ink@gmx.de> wrote:
+> On 2010.07.07 17:05:45 +0200, Mike Hommey wrote:
+> > See how the security/manager/ssl/public/nsIBadCertListener.idl file=
+ that
+> > was created by the original patch is created as
+> > xulrunner/examples/simple/content/contents.rdf.
+>=20
+> The "problem" is that nsIBadCertListener.idl wasn't actually created =
+by
+> the cherry-picked commit, but was modified. It was an empty file befo=
+re,
+> created in 4292283190983fa91b875e22664a79a3aa9ea45d.
+>=20
+> And as nsIBadCertListener.idl is missing from the xulrunner/2.0 branc=
+h,
+> git does the usual rename detection, finding another empty file and e=
+nds
+> up patching that one instead.
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
-> 
-> > Here's a diff of the modifications I made after your review:
-> 
-> That’s quite helpful.
-> 
-> > +++ b/svndumpr.c
-> > @@ -76,31 +76,19 @@ static svn_error_t *replay_revend(svn_revnum_t revision,
-> [...]
-> > +	/* Populte ctx->auth_baton with the auth baton
-> > +	   non-interactively. Arguments 3, 4 and 5 are for username,
-> > +	   password and config_dir which is NULL in this case. Set
-> > +	   no_auth_cache and trust_serv_cert to FALSE, don't provide a
-> > +	   config, and omit cancel_func/ cancel_baton */
-> >  	SVN_ERR(svn_cmdline_create_auth_baton(&(ctx->auth_baton), TRUE,
-> >  					      NULL, NULL, NULL, FALSE,
-> >  					      FALSE, NULL, NULL, NULL,
-> 
-> I think you took my suggestion too seriously here.  Such a comment
-> probably will not help people much; instead, maybe a more focused
-> comment can help the curious avoid looking up
-> svn_cmdline_create_auth_baton:
-> 
-> 	/* Default authentication providers for noninteractive
-> 	   use. */
-> 	SVN_ERR(svn_cmdline_create_auth_baton(...
+Oh, makes sense. Thanks. So that's a quite troubling corner case...
+I wonder if empty files shouldn't be special cased...
 
-Fixed.
-
-> Looking this up, I notice that function was added in svn 1.6.
-> Hopefully that is okay, since this code is destined for svn trunk.
-
-I have a working 1.6 fork now that I intend to merge into
-git.git. When there's a new release of Subversion that includes my
-patch, I'll remove it from git.git.
-
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
-
--- Ram
+Mike
