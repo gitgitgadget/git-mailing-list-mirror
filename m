@@ -1,156 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 3/6] merge-recursive: Fix D/F conflicts
-Date: Wed, 07 Jul 2010 14:40:24 -0700
-Message-ID: <7v630rt1h3.fsf@alter.siamese.dyndns.org>
-References: <1278480034-22939-1-git-send-email-newren@gmail.com>
- <1278480034-22939-4-git-send-email-newren@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git rebase bug?
+Date: Wed, 07 Jul 2010 14:44:50 -0700 (PDT)
+Message-ID: <m3bpajm0gw.fsf@localhost.localdomain>
+References: <20100707150545.GA24814@glandium.org>
+	<20100707180004.GA3165@atjola.homenet>
+	<20100707205126.GA11240@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, spearce@spearce.org, agladysh@gmail.com
-To: newren@gmail.com
+Content-Type: text/plain; charset=iso-8859-14
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-14?q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
 X-From: git-owner@vger.kernel.org Wed Jul 07 23:45:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWcQW-0003sb-NH
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 23:45:09 +0200
+	id 1OWcQY-0003sb-7W
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 23:45:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758028Ab0GGVoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 17:44:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50151 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757693Ab0GGVki (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 17:40:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F1DF3C2020;
-	Wed,  7 Jul 2010 17:40:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=v5uR23WKv53J/LCGi6vz37F9d2o=; b=co4U8PsIzjCIo9XdU/e69BO
-	FxCCZc9UMWbMKoGBNhzI+0QFOV4Mh2OEsodB0otul5dryKzoak5JuDrQBjpITdhl
-	kM3J8iO+1+uiQCLUwJN9NrwSdCVFl4eiX/8kN47UGkqFhWCCYXHD0nO8DttgMf4+
-	wAkHFHrv1SoPgENC9ILQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=WMK79P+sdhC551J0T7/+5w6v6l6UunDg72YtxAGnl8cUkmhSQ
-	Oa3NoUiYp1kevq/SPhLA+qapnDAr3zrOJ+9q9KO6qyf/F9UkbG2rVqVt4D+zNCzX
-	Q6PhX07NTqDWQJNvUtxH/egAYr0aZKyOVaCpBWAG0+h4+TWRhUTHJ+Nlr8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5D36C201F;
-	Wed,  7 Jul 2010 17:40:31 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 982C3C201B; Wed,  7 Jul
- 2010 17:40:25 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 446D3160-8A10-11DF-B220-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757666Ab0GGVox convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 17:44:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50196 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757667Ab0GGVow convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 17:44:52 -0400
+Received: by fxm14 with SMTP id 14so55272fxm.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 14:44:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=z4Me8Q+JNFgm+CC9CY2CGLGvt7hFhPYTRaRw12hm65s=;
+        b=l/4FhJ1yhE8oHUEbq6KoIvhyrwNJI3IOogbxHf6uMV/+RfqNQ8hxENyCCxaLV1HCT0
+         zLkgB5iPUwW3tx8/RRYyNA5inFRqJFvWS3+/SXl8RbRNQAhfoN361acejQC0oZ16cEtK
+         24nrbhZsvOwFABFxjHgUnMad/TCBzeNhDzVf0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=k+4+w/ypcJtrZa9g2ixuAOs4qAoVvwYAOWe+cWOoWyMFedH6q2AUle9jpADw0Vv1kw
+         f7K/myZCY63geza5GtXnMsc9sZZyZWJcdCAyGd1FAfvLFbRs/6IwyFY1BSnG2gRZNH1r
+         +CEt6QifnD/NWZn95AczZBEwYqs8JoYCExZgg=
+Received: by 10.86.70.2 with SMTP id s2mr5465226fga.19.1278539090541;
+        Wed, 07 Jul 2010 14:44:50 -0700 (PDT)
+Received: from localhost.localdomain (abvr9.neoplus.adsl.tpnet.pl [83.8.215.9])
+        by mx.google.com with ESMTPS id 17sm15353367fau.45.2010.07.07.14.44.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 07 Jul 2010 14:44:50 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o67LiG61002661;
+	Wed, 7 Jul 2010 23:44:26 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o67Li0oB002656;
+	Wed, 7 Jul 2010 23:44:00 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20100707205126.GA11240@glandium.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150513>
 
-newren@gmail.com writes:
+Mike Hommey <mh@glandium.org> writes:
+> On Wed, Jul 07, 2010 at 08:00:04PM +0200, Bj=F6rn Steinbrink <B.Stein=
+brink@gmx.de> wrote:
+> > On 2010.07.07 17:05:45 +0200, Mike Hommey wrote:
 
-> From: Elijah Newren <newren@gmail.com>
->
-> The D/F conflicts that can be automatically resolved (file or directory
-> unmodified on one side of history), have the nice property that
-> process_entry() can correctly handle all subpaths of the D/F conflict.  In
-> the case of D->F conversions, it will correctly delete all non-conflicting
-> files below the relevant directory and the directory itself (note that both
-> untracked and conflicting files below the directory will prevent its
-> removal).  So if we handle D/F conflicts after all other conflicts, they
-> become fairly simple to handle -- we just need to check for whether or not
-> a path (file/directory) is in the way of creating the new content.  We do
-> this by having process_entry() defer handling such entries to a subsequent
-> process_df_entry() step.
+> > > See how the security/manager/ssl/public/nsIBadCertListener.idl fi=
+le that
+> > > was created by the original patch is created as
+> > > xulrunner/examples/simple/content/contents.rdf.
+> >=20
+> > The "problem" is that nsIBadCertListener.idl wasn't actually create=
+d by
+> > the cherry-picked commit, but was modified. It was an empty file be=
+fore,
+> > created in 4292283190983fa91b875e22664a79a3aa9ea45d.
+> >=20
+> > And as nsIBadCertListener.idl is missing from the xulrunner/2.0 bra=
+nch,
+> > git does the usual rename detection, finding another empty file and=
+ ends
+> > up patching that one instead.
+>=20
+> Oh, makes sense. Thanks. So that's a quite troubling corner case...
+> I wonder if empty files shouldn't be special cased...
 
-The basic idea of this patch to process all removals first and then
-process additions in a separate step feels very sound.  It is exactly the
-same strategy that is used by "git apply" to avoid a similar issue of
-applying a patch that removes "a/b" and creates "a" at the same time.
+Well, similarity score (of contents and of filename) is weighted by
+contents length, but perhaps empty files / zero length somehow fall
+out as an edge case...
 
-And it feels both correct and sufficient to have this additional logic
-only in the "Added in one, but the path happens to be a directory on the
-other branch" codepath.  The only case you will end up having to create D
-(blob) where D used to be a directory (hence needing to make sure
-everything under D/ is gone) is when you are the only one adding D (and
-the other party is not adding nor modifying it---if it were, it means that
-the other party also wants D as a blob and not a directory, and there
-won't be D/F conflict in such a case).
-
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  merge-recursive.c               |   93 ++++++++++++++++++++++++++++++++-------
->  t/t6035-merge-dir-to-symlink.sh |    8 ++--
->  2 files changed, 81 insertions(+), 20 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 206c103..865729a 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1072,6 +1072,7 @@ static int process_entry(struct merge_options *o,
->  	unsigned char *a_sha = stage_sha(entry->stages[2].sha, a_mode);
->  	unsigned char *b_sha = stage_sha(entry->stages[3].sha, b_mode);
->  
-> +	entry->processed = 1;
-
-In the original code, process_renames() used to use this to signal the
-loop that drives process_entry() that the stage data has been dealt with,
-and this function was unaware of the flag.  Now it uses it to communicate
-the same fact to its downstream (process_df_entry), which makes sense, but
-somehow it made me feel a bit uneasy.
-
-> @@ -1178,6 +1174,64 @@ static int process_entry(struct merge_options *o,
->  	return clean_merge;
->  }
->  
-> +/* Per entry merge function for D/F conflicts, to be called only after
-> + * all files below dir have been processed.  We do this because in the
-> + * cases we can cleanly resolve D/F conflicts, process_entry() can clean
-> + * out all the files below the directory for us.
-> + */
-
-/*
- * Please format large comment like
- * this.
- */
-
-Style aside, what happens when we cannot cleanly resolve D/F conflicts,
-i.e. when some untracked/modified paths still remain after the earlier
-removal?  We would signal conflict but at that point what happens to the
-files in the working tree that are involved in this new codepath?  They
-are already gone, I presume, and they at least match the original index
-entries, so not much is lost, but what would the recovery procedure out of
-the resulting mess?  "reset --hard"?
-
-> +static int process_df_entry(struct merge_options *o,
-> +			 const char *path, struct stage_data *entry)
-> +{
-> +	int clean_merge = 1;
-> +	unsigned o_mode = entry->stages[1].mode;
-> +	unsigned a_mode = entry->stages[2].mode;
-> +	unsigned b_mode = entry->stages[3].mode;
-> +	unsigned char *o_sha = stage_sha(entry->stages[1].sha, o_mode);
-> +	unsigned char *a_sha = stage_sha(entry->stages[2].sha, a_mode);
-> +	unsigned char *b_sha = stage_sha(entry->stages[3].sha, b_mode);
-> +
-> +	/* We currently only handle D->F cases */
-> +	assert((!o_sha && a_sha && !b_sha) ||
-> +	       (!o_sha && !a_sha && b_sha));
-> +	const char *add_branch;
-> +	const char *other_branch;
-> +	unsigned mode;
-> +	const unsigned char *sha;
-> +	const char *conf;
-
-As an assert becomes code under debugging build, do not put one before
-declarations like this.
-
-Also "struct stat st" later in this file needs to be lifted up for the
-same reason to avoid decl-after-statement.
-
-Thanks.
+I agree that empty files should be special cased... unless filename is
+_very_ similar.
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
