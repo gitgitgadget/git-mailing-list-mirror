@@ -1,219 +1,75 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 09/13] Implement directory-related functions
-Date: Wed,  7 Jul 2010 02:14:49 +0200
-Message-ID: <1278461693-3828-10-git-send-email-artagnon@gmail.com>
-References: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
-Cc: David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	avarb@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	dev@subversion.apache.org
-To: Git Mailing List <git@vger.kernel.org>
-X-From: dev-return-4828-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 07 02:15:07 2010
-Return-path: <dev-return-4828-gcvsd-dev=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsd-dev@lo.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by lo.gmane.org with smtp (Exim 4.69)
-	(envelope-from <dev-return-4828-gcvsd-dev=m.gmane.org@subversion.apache.org>)
-	id 1OWII2-0005PA-Dc
-	for gcvsd-dev@lo.gmane.org; Wed, 07 Jul 2010 02:15:02 +0200
-Received: (qmail 2139 invoked by uid 500); 7 Jul 2010 00:15:01 -0000
-Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t/README: document more test helpers
+Date: Tue, 06 Jul 2010 21:25:21 -0700
+Message-ID: <7v630r5366.fsf@alter.siamese.dyndns.org>
+References: <1278064941-30689-1-git-send-email-ayiehere@gmail.com>
+ <20100702192102.GA6585@burratino>
+ <AANLkTilI0NZiDk3I850x28pr5I0sYRiPLW7HAST9sduU@mail.gmail.com>
+ <m3wrtdm1y9.fsf@localhost.localdomain> <20100706200410.GA7606@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Nazri Ramliy <ayiehere@gmail.com>,
+	=?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 07 06:25:51 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by lo.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OWMCl-0007XN-D3
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 06:25:51 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751376Ab0GGEZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 00:25:48 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42015 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751330Ab0GGEZq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 00:25:46 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 98A29C2E39;
+	Wed,  7 Jul 2010 00:25:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yN05PU8H5XC2FNQGMTfMAKsqimo=; b=c7ww25
+	0OGFmwEVMAC7dfEZ2JBUoUpNzvGb4ZV+eLW1q5S4DUF+6GNlppkqlA5BTIT0jzSZ
+	BkHfDAQoLwkPqtcX9OKHRbWsDFwVDYuVvfTOqeku5xhPJ6hiLXDr4DMZY+vM/fl2
+	Ble+CDsHH2lK8d4YKsfNpEDu7lqyF3cy2Z6w4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YrYEpDpipSBgvpqKOwDsTkNZf/zsCaKD
+	wy38dQ7RVaMf2bJPM0WlF5upbfug80oSvPLLzbWOH/hpqYoklSr1sUshzME7jPnx
+	4GC/uzlt0AaJbtlZDMow1WTTzqLlowEwwUaKte2BeLJYt765xHNaIIZepL/DSi7S
+	YQsx2GCiHOk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F09FEC2E38;
+	Wed,  7 Jul 2010 00:25:36 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7D104C2E34; Wed,  7 Jul
+ 2010 00:25:28 -0400 (EDT)
+In-Reply-To: <20100706200410.GA7606@burratino> (Jonathan Nieder's message of
+ "Tue\, 6 Jul 2010 15\:04\:10 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B118BFF0-897F-11DF-B273-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Help: <mailto:dev-help@subversion.apache.org>
-List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
-List-Post: <mailto:dev@subversion.apache.org>
-List-Id: <dev.subversion.apache.org>
-Delivered-To: mailing list dev@subversion.apache.org
-Received: (qmail 2131 invoked by uid 99); 7 Jul 2010 00:15:01 -0000
-Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 00:15:01 +0000
-X-ASF-Spam-Status: No, hits=0.0 required=10.0
-	tests=FREEMAIL_FROM,SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (nike.apache.org: domain of artagnon@gmail.com designates 209.85.215.43 as permitted sender)
-Received: from [209.85.215.43] (HELO mail-ew0-f43.google.com) (209.85.215.43)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 00:14:51 +0000
-Received: by ewy1 with SMTP id 1so2219892ewy.16
-        for <dev@subversion.apache.org>; Tue, 06 Jul 2010 17:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=653m5Z8+Htc8qV2lT0QMb3ZxIg1mN65JCiVDc0vpvTY=;
-        b=L6SrBHReRXtLKaSOe6t7/Y69RJH+DwV4+vCXmfr/fqL5z84RGNhrsyzut4hcexRWgF
-         5GyVleGHe1DH3rhmO5TSf7uebWi93r0MqpDxAw5t/FSHM+txY6WGC6lnP+78HNW9dYYw
-         IGnQvfLjtByy5/BNXNMB+Nc67AK+3TvHOr4Uw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Z91AndhMK5WXyFqRmdtnapcP1tIDL23mYwwaCJHxwX8wgXRot9fISdJrmnhHlKhwxg
-         YGn/SLsQkBiTBPeqR8MhBrts2wMtL0ZS0SXFCYOD+HK6TeWq1b8FlbG+c5aIFfAtZaDk
-         vDrzcRLjwL8KidXNSWqymxxtaTDEIj2ruszn4=
-Received: by 10.213.98.71 with SMTP id p7mr5052209ebn.18.1278461622595;
-        Tue, 06 Jul 2010 17:13:42 -0700 (PDT)
-Received: from localhost (adm12-98.itu.dk [130.226.133.98])
-        by mx.google.com with ESMTPS id x54sm55866062eeh.11.2010.07.06.17.13.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 17:13:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150435>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150436>
 
-Implement open_directory, add_directory, change_dir_prop and
-close_directory. All of them involve adding and removing entries from
-the directory_baton and dumping the related node information. Note
-that open_directory doesn't need any corresponding node information to
-be printed.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- dump_editor.c |  101 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 101 insertions(+), 0 deletions(-)
+> + - test_cmp <expected> <actual>
+> +
+> +   Check whether the content of the <actual> file matches the
+> +   <expected> file.  This behaves like "cmp" but produces more
+> +   helpful output.
 
-diff --git a/dump_editor.c b/dump_editor.c
-index 0f7d231..6077e5c 100644
---- a/dump_editor.c
-+++ b/dump_editor.c
-@@ -226,6 +226,12 @@ svn_error_t *delete_entry(const char *path,
-                           void *parent_baton,
-                           apr_pool_t *pool)
- {
-+	struct dir_baton *pb = parent_baton;
-+	const char *mypath = apr_pstrdup(pb->pool, path);
-+
-+	/* remember this path needs to be deleted */
-+	apr_hash_set(pb->deleted_entries, mypath, APR_HASH_KEY_STRING, pb);
-+
- 	return SVN_NO_ERROR;
- }
- 
-@@ -236,6 +242,32 @@ svn_error_t *add_directory(const char *path,
-                            apr_pool_t *pool,
-                            void **child_baton)
- {
-+	struct dir_baton *pb = parent_baton;
-+	void *val;
-+	struct dir_baton *new_db
-+		= make_dir_baton(path, copyfrom_path, copyfrom_rev, pb->eb, pb, TRUE, pool);
-+
-+	/* This might be a replacement -- is the path already deleted? */
-+	val = apr_hash_get(pb->deleted_entries, path, APR_HASH_KEY_STRING);
-+
-+	/* Detect an add-with-history */
-+	pb->eb->is_copy = ARE_VALID_COPY_ARGS(copyfrom_path, copyfrom_rev);
-+
-+	/* Dump the node */
-+	SVN_ERR(dump_node(pb->eb, path,
-+	                  svn_node_dir,
-+	                  val ? svn_node_action_replace : svn_node_action_add,
-+	                  pb->eb->is_copy ? copyfrom_path : NULL,
-+	                  pb->eb->is_copy ? copyfrom_rev : SVN_INVALID_REVNUM,
-+	                  pool));
-+
-+	if (val)
-+		/* Delete the path, it's now been dumped */
-+		apr_hash_set(pb->deleted_entries, path, APR_HASH_KEY_STRING, NULL);
-+
-+	new_db->written_out = TRUE;
-+
-+	*child_baton = new_db;
- 	return SVN_NO_ERROR;
- }
- 
-@@ -245,12 +277,53 @@ svn_error_t *open_directory(const char *path,
-                             apr_pool_t *pool,
-                             void **child_baton)
- {
-+	struct dir_baton *pb = parent_baton;
-+	struct dir_baton *new_db;
-+	const char *cmp_path = NULL;
-+	svn_revnum_t cmp_rev = SVN_INVALID_REVNUM;
-+	apr_array_header_t *compose_path = apr_array_make(pool, 2, sizeof(const char *));
-+
-+	/* If the parent directory has explicit comparison path and rev,
-+	   record the same for this one. */
-+	if (pb && ARE_VALID_COPY_ARGS(pb->cmp_path, pb->cmp_rev)) {
-+		APR_ARRAY_PUSH(compose_path, const char *) = pb->cmp_path;
-+		APR_ARRAY_PUSH(compose_path, const char *) = svn_dirent_basename(path, pool);
-+		cmp_path = svn_path_compose(compose_path, pool);
-+		cmp_rev = pb->cmp_rev;
-+	}
-+
-+	new_db = make_dir_baton(path, cmp_path, cmp_rev, pb->eb, pb, FALSE, pool);
-+	*child_baton = new_db;
- 	return SVN_NO_ERROR;
- }
- 
- svn_error_t *close_directory(void *dir_baton,
-                              apr_pool_t *pool)
- {
-+	struct dir_baton *db = dir_baton;
-+	struct edit_baton *eb = db->eb;
-+	apr_hash_index_t *hi;
-+	apr_pool_t *subpool = svn_pool_create(pool);
-+
-+	/* Some pending properties to dump? */
-+	SVN_ERR(dump_props(eb, &dump_props_pending, TRUE, pool));
-+
-+	/* Dump the directory entries */
-+	for (hi = apr_hash_first(pool, db->deleted_entries); hi;
-+	     hi = apr_hash_next(hi)) {
-+		const void *key;
-+		const char *path;
-+		apr_hash_this(hi, &key, NULL, NULL);
-+		path = key;
-+
-+		svn_pool_clear(subpool);
-+
-+		SVN_ERR(dump_node(db->eb, path,
-+		                  svn_node_unknown, svn_node_action_delete,
-+		                  NULL, SVN_INVALID_REVNUM, subpool));
-+	}
-+
-+	svn_pool_destroy(subpool);
- 	return SVN_NO_ERROR;
- }
- 
-@@ -278,6 +351,34 @@ svn_error_t *change_dir_prop(void *parent_baton,
-                              const svn_string_t *value,
-                              apr_pool_t *pool)
- {
-+	struct dir_baton *db = parent_baton;
-+
-+	if (svn_property_kind(NULL, name) != svn_prop_regular_kind)
-+		return SVN_NO_ERROR;
-+
-+	value ? apr_hash_set(db->eb->properties, apr_pstrdup(pool, name),
-+	                     APR_HASH_KEY_STRING, svn_string_dup(value, pool)) :
-+		apr_hash_set(db->eb->del_properties, apr_pstrdup(pool, name),
-+		             APR_HASH_KEY_STRING, (void *)0x1);
-+
-+	/* This function is what distinguishes between a directory that is
-+	   opened to merely get somewhere, vs. one that is opened because it
-+	   actually changed by itself  */
-+	if (! db->written_out) {
-+		SVN_ERR(dump_node(db->eb, db->path,
-+		                  svn_node_dir, svn_node_action_change,
-+		                  db->cmp_path, db->cmp_rev, pool));
-+
-+		/* If dump_props_pending was set, it means that the
-+		   node information corresponding to add_directory has already
-+		   been written; just don't unset it and dump_node will dump
-+		   the properties before doing anything else. If it wasn't
-+		   set, node information hasn't been written yet: so dump the
-+		   node itself before dumping the props */
-+
-+		SVN_ERR(dump_props(db->eb, NULL, TRUE, pool));
-+		db->written_out = TRUE;
-+	}
- 	return SVN_NO_ERROR;
- }
- 
--- 
-1.7.1
+I'd add '... when the test is run with "-v" option.' at the end.
+
+Otherwise the explanation reads very well.  Thanks.
