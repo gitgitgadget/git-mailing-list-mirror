@@ -1,234 +1,111 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 06/13] Dump the revprops at the start of every revision
-Date: Wed,  7 Jul 2010 02:14:46 +0200
-Message-ID: <1278461693-3828-7-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 01/13] Add LICENSE
+Date: Wed,  7 Jul 2010 02:14:41 +0200
+Message-ID: <1278461693-3828-2-git-send-email-artagnon@gmail.com>
 References: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
 Cc: David Michael Barr <david.barr@cordelta.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarb@gmail.com,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	avarb@gmail.com,
 	Daniel Shahaf <d.s@daniel.shahaf.name>,
 	Bert Huijben <rhuijben@collab.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>, dev@subversion.apache.org
+	Eric Wong <normalperson@yhbt.net>,
+	dev@subversion.apache.org
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 07 02:13:52 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWIGo-0004kM-Ab
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 02:13:46 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755682Ab0GGANh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 20:13:37 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:39519 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755008Ab0GGANe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 20:13:34 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 23so1968051ewy.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 17:13:34 -0700 (PDT)
+X-From: dev-return-4817-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 07 02:13:53 2010
+Return-path: <dev-return-4817-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@lo.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by lo.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-4817-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1OWIGu-0004md-IG
+	for gcvsd-dev@lo.gmane.org; Wed, 07 Jul 2010 02:13:53 +0200
+Received: (qmail 96464 invoked by uid 500); 7 Jul 2010 00:13:50 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+Precedence: bulk
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 96456 invoked by uid 99); 7 Jul 2010 00:13:50 -0000
+Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 00:13:50 +0000
+X-ASF-Spam-Status: No, hits=0.0 required=10.0
+	tests=FREEMAIL_FROM,SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (nike.apache.org: domain of artagnon@gmail.com designates 209.85.215.43 as permitted sender)
+Received: from [209.85.215.43] (HELO mail-ew0-f43.google.com) (209.85.215.43)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 00:13:41 +0000
+Received: by ewy1 with SMTP id 1so2219808ewy.16
+        for <dev@subversion.apache.org>; Tue, 06 Jul 2010 17:13:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=wJBUi+UdiwNG216b2i1QU1oWQiI9A8rBs8EQSUias8U=;
-        b=jMrx5MjHhplokO46qMBGnKg0EwNHFsNYRPk8Jf4dHdM0MiX+8zx9vyhK3Lkaf5tmN4
-         wqhJAZZO/4hwZBQs1nNuNXNuKavclmbi3VGxcdHXQ3BQGBF1UaL+diIql+KOpIJKgDyM
-         UkD6b6hebM4khcYLaIobXIK15tcjJwmHSeDrg=
+        bh=o0PL6YJK9drIhW9pUhUn3XSr8QncYyOxpwzN3TtR4cc=;
+        b=B7/IYVLn4kHYx+b74/ltYD0rnRFFLJMZIM54Ol5JmGfMYWOyC84ikgkwwA8jX1oWAs
+         /LdH6fUC3G60uLAnpmV1KZTmgzu9Vvpaf4YRzNOq1Ct3gx4eb+9bsoUjk1SBwdA/xLV9
+         nduEoKCvNXDxKLwOnp1ylapmk0msi49CLl7r8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nccuWLhN7F5wdSfQ+TawXIn8EQXmE2y6Spnb1ALZCCTTPyId2m/w1wPg3l1CCsbhhz
-         MNNv0vZy3ZpSxj0Nx2xwG21lrj4ElpPbeSn1RNa1vpAO9TWiaUQxz712aWz39lLJ73BC
-         C08Cw1FzPCbLXHGZNEVakFYbfgD4SHZywqgHI=
-Received: by 10.213.90.146 with SMTP id i18mr4826754ebm.7.1278461614048;
-        Tue, 06 Jul 2010 17:13:34 -0700 (PDT)
+        b=G7aM976RMDbXlnKRrUAsuXkdETKvFRLd6mgOVtUNIunTqpxJI3DuXtOGjDa26XxRmz
+         RUTVKgKGnOfLciTpVC9ten9KY1ef+GZzKtwQZzjx2vIoo3XEBlHNv9MnF7gQblbjtD2c
+         xcS2fQcOWt+cUIArc2Q8A4LlpLEZWXyLyUYvA=
+Received: by 10.213.7.65 with SMTP id c1mr3121471ebc.73.1278461601004;
+        Tue, 06 Jul 2010 17:13:21 -0700 (PDT)
 Received: from localhost (adm12-98.itu.dk [130.226.133.98])
-        by mx.google.com with ESMTPS id a48sm55873080eei.13.2010.07.06.17.13.32
+        by mx.google.com with ESMTPS id a48sm55854848eei.19.2010.07.06.17.13.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 17:13:33 -0700 (PDT)
+        Tue, 06 Jul 2010 17:13:20 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150427>
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150428>
 
-Fill in replay_revstart to dump the revprops at the start of every
-revision. Add an additional write_hash_to_stringbuf helper function.
+License the project under a two-clause BSD-style license. A dual
+license will be required later when attempting to merge into
+Subversion.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Makefile     |    4 +-
- dumpr_util.c |   64 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- dumpr_util.h |    5 ++++
- svndumpr.c   |   38 ++++++++++++++++++++++++++++++++-
- 4 files changed, 107 insertions(+), 4 deletions(-)
- create mode 100644 dumpr_util.c
+ LICENSE |   26 ++++++++++++++++++++++++++
+ 1 files changed, 26 insertions(+), 0 deletions(-)
+ create mode 100644 LICENSE
 
-diff --git a/Makefile b/Makefile
-index fea646e..c0b5c8a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1,8 +1,8 @@
- svndumpr: *.c *.h
--	$(CC) -Wall -Werror -DAPR_POOL_DEBUG -ggdb3 -O0 -o $@ svndumpr.c debug_editor.c dump_editor.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
-+	$(CC) -Wall -Werror -DAPR_POOL_DEBUG -ggdb3 -O0 -o $@ svndumpr.c debug_editor.c dump_editor.c dumpr_util.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
- 
- svndumpr_bench: *.c *.h
--	$(CC) -O2 -o $@ svndumpr.c debug_editor.c dump_editor.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
-+	$(CC) -O2 -o $@ svndumpr.c debug_editor.c dump_editor.c dumpr_util.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
- 
- clean:
- 	$(RM) svndumpr svndumpr_bench
-diff --git a/dumpr_util.c b/dumpr_util.c
+diff --git a/LICENSE b/LICENSE
 new file mode 100644
-index 0000000..41940d4
+index 0000000..4367b7c
 --- /dev/null
-+++ b/dumpr_util.c
-@@ -0,0 +1,64 @@
-+/* Licensed under a two-clause BSD-style license.
-+ * See LICENSE for details.
-+ */
++++ b/LICENSE
+@@ -0,0 +1,26 @@
++Copyright (C) 2010 Ramkumar Ramachandra
++All rights reserved.
 +
-+#include "svn_pools.h"
-+#include "svn_cmdline.h"
-+#include "svn_client.h"
-+#include "svn_ra.h"
-+#include "svn_repos.h"
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions
++are met:
++1. Redistributions of source code must retain the above copyright
++   notice(s), this list of conditions and the following disclaimer
++   unmodified other than the allowable addition of one or more
++   copyright notices.
++2. Redistributions in binary form must reproduce the above copyright
++   notice(s), this list of conditions and the following disclaimer in
++   the documentation and/or other materials provided with the
++   distribution.
 +
-+#include "dumpr_util.h"
-+
-+void write_hash_to_stringbuf(apr_hash_t *properties,
-+			     svn_boolean_t deleted,
-+			     svn_stringbuf_t **strbuf,
-+			     apr_pool_t *pool)
-+{
-+	apr_hash_index_t *this;
-+	const void *key;
-+	void *val;
-+	apr_ssize_t keylen;
-+	svn_string_t *value;
-+	
-+	if (!deleted) {
-+		for (this = apr_hash_first(pool, properties); this;
-+		     this = apr_hash_next(this)) {
-+			/* Get this key and val. */
-+			apr_hash_this(this, &key, &keylen, &val);
-+			value = val;
-+
-+			/* Output name length, then name. */
-+			svn_stringbuf_appendcstr(*strbuf,
-+						 apr_psprintf(pool, "K %" APR_SSIZE_T_FMT "\n",
-+							      keylen));
-+
-+			svn_stringbuf_appendbytes(*strbuf, (const char *) key, keylen);
-+			svn_stringbuf_appendbytes(*strbuf, "\n", 1);
-+
-+			/* Output value length, then value. */
-+			svn_stringbuf_appendcstr(*strbuf,
-+						 apr_psprintf(pool, "V %" APR_SIZE_T_FMT "\n",
-+							      value->len));
-+
-+			svn_stringbuf_appendbytes(*strbuf, value->data, value->len);
-+			svn_stringbuf_appendbytes(*strbuf, "\n", 1);
-+		}
-+	}
-+	else {
-+		/* Output a "D " entry for each deleted property */
-+		for (this = apr_hash_first(pool, properties); this;
-+		     this = apr_hash_next(this)) {
-+			/* Get this key */
-+			apr_hash_this(this, &key, &keylen, NULL);
-+
-+			/* Output name length, then name */
-+			svn_stringbuf_appendcstr(*strbuf,
-+						 apr_psprintf(pool, "D %" APR_SSIZE_T_FMT "\n",
-+							      keylen));
-+
-+			svn_stringbuf_appendbytes(*strbuf, (const char *) key, keylen);
-+			svn_stringbuf_appendbytes(*strbuf, "\n", 1);
-+		}
-+	}
-+}
-diff --git a/dumpr_util.h b/dumpr_util.h
-index 166e214..1a5752b 100644
---- a/dumpr_util.h
-+++ b/dumpr_util.h
-@@ -31,4 +31,9 @@ struct edit_baton {
- 	svn_checksum_t *checksum;
- };
- 
-+void write_hash_to_stringbuf(apr_hash_t *properties,
-+			     svn_boolean_t deleted,
-+			     svn_stringbuf_t **strbuf,
-+			     apr_pool_t *pool);
-+
- #endif
-diff --git a/svndumpr.c b/svndumpr.c
-index 853facd..011941f 100644
---- a/svndumpr.c
-+++ b/svndumpr.c
-@@ -23,6 +23,37 @@ static svn_error_t *replay_revstart(svn_revnum_t revision,
-                                     apr_hash_t *rev_props,
-                                     apr_pool_t *pool)
- {
-+	/* Editing this revision has just started; dump the revprops
-+	   before invoking the editor callbacks */
-+	svn_stringbuf_t *propstring = svn_stringbuf_create("", pool);
-+	svn_stream_t *stdout_stream;
-+
-+	/* Create an stdout stream */
-+	svn_stream_for_stdout(&stdout_stream, pool);
-+
-+        /* Print revision number and prepare the propstring */
-+	SVN_ERR(svn_stream_printf(stdout_stream, pool,
-+				  SVN_REPOS_DUMPFILE_REVISION_NUMBER
-+				  ": %ld\n", revision));
-+	write_hash_to_stringbuf(rev_props, FALSE, &propstring, pool);
-+	svn_stringbuf_appendbytes(propstring, "PROPS-END\n", 10);
-+
-+	/* prop-content-length header */
-+	SVN_ERR(svn_stream_printf(stdout_stream, pool,
-+				  SVN_REPOS_DUMPFILE_PROP_CONTENT_LENGTH
-+				  ": %" APR_SIZE_T_FMT "\n", propstring->len));
-+
-+	/* content-length header */
-+	SVN_ERR(svn_stream_printf(stdout_stream, pool,
-+				  SVN_REPOS_DUMPFILE_CONTENT_LENGTH
-+				  ": %" APR_SIZE_T_FMT "\n\n", propstring->len));
-+
-+	/* Print the revprops now */
-+	SVN_ERR(svn_stream_write(stdout_stream, propstring->data,
-+				 &(propstring->len)));
-+
-+	svn_stream_close(stdout_stream);
-+
- 	/* Extract editor and editor_baton from the replay_baton and
- 	   set them so that the editor callbacks can use them */
- 	struct replay_baton *rb = replay_baton;
-@@ -39,6 +70,9 @@ static svn_error_t *replay_revend(svn_revnum_t revision,
-                                   apr_hash_t *rev_props,
-                                   apr_pool_t *pool)
- {
-+	/* Editor has finished for this revision and close_edit has
-+	   been called; do nothing: just continue to the next
-+	   revision */
- 	return SVN_NO_ERROR;
- }
- 
-@@ -89,8 +123,8 @@ svn_error_t *replay_range(svn_revnum_t start_revision, svn_revnum_t end_revision
- 	                                    dump_baton, pool));
- 
- 	struct replay_baton *replay_baton = apr_palloc(pool, sizeof(struct replay_baton));
--	replay_baton->editor = debug_editor;
--	replay_baton->baton = debug_baton;
-+	replay_baton->editor = dump_editor;
-+	replay_baton->baton = dump_baton;
- 	SVN_ERR(svn_cmdline_printf(pool, SVN_REPOS_DUMPFILE_MAGIC_HEADER ": %d\n",
- 				   SVN_REPOS_DUMPFILE_FORMAT_VERSION));
- 	SVN_ERR(svn_ra_replay_range(session, start_revision, end_revision,
++THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) ``AS IS'' AND ANY
++EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
++PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER(S) BE
++LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
++EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -- 
 1.7.1
