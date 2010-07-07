@@ -1,88 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] git-cvsserver: break the loop after successful hit
-Date: Tue, 06 Jul 2010 22:28:41 -0700
-Message-ID: <7vwrt7zwqe.fsf@alter.siamese.dyndns.org>
-References: <-1324832183078898154@unknownmsgid>
- <AANLkTik0pMkYDHZD9jgzn3OaGUdyeiFwAv7o3OTUmEvO@mail.gmail.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [PATCH v2] Re: use "up-to-date" instead of "uptodate" for
+ consistency
+Date: Wed, 7 Jul 2010 07:46:21 +0200
+Message-ID: <20100707054621.GC13054@vidovic>
+References: <AANLkTimvQ8_SKa_VSvQk1_c3aRVv1lZCMYNOVLXBuC4W@mail.gmail.com>
+ <b49995cd151b36cfff5231b28f5e8ff3970c14a2.1278431239.git.nicolas.s.dev@gmx.fr>
+ <7v8w5n2744.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	=?utf-8?B?TMOhc3psw7Mgw4FTSElO?= <laszlo.ashin@neti.hu>
-To: =?utf-8?B?w4FzaGluIEzDoXN6bMOz?= <ashinlaszlo@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 07 07:28:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Wincent Colaiuta <win@wincent.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 07 07:46:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWNBq-00006z-CM
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 07:28:58 +0200
+	id 1OWNSp-0007pB-OU
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 07:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206Ab0GGF2x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 01:28:53 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41477 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751877Ab0GGF2w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 01:28:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E054C2433;
-	Wed,  7 Jul 2010 01:28:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=H+MxBNL74Rt4p6ito1TY711Di
-	DM=; b=MJCsIcKpIuZ7Ay60OeZS0iRMdltVdxL+I6+HEETFn3zd/jFfrs2IitLFo
-	JXtRfMkJ5Dl+FoXNxeg3AoTydrKckQqUcSEc1wrc59YOuFeuvAnURao1PsmGC+Z9
-	ESvXJxUmK5diPMjMwHGg9vM/LRB6w+Y+e0YA5tLK1eBMJnxecQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=AA98yesMwquwU7aln7b
-	JraHEjK/xXISaFo4zBQBEfNfcARbFjUuYgyTGzBNjgxB8yvzUSBMJUl/X/rwJpie
-	ws7kTRVMS9G12Gbz0lFm9tL3H34DIfFMYWfQ10skfYoBKJlDGu2uQ3hGogXeROOo
-	BcdBg7hbuh23ChE8D7J01d4I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C94B8C2432;
-	Wed,  7 Jul 2010 01:28:47 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFCB2C2430; Wed,  7 Jul
- 2010 01:28:42 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 849EF684-8988-11DF-A953-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752328Ab0GGFq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 01:46:26 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64319 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750937Ab0GGFqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 01:46:25 -0400
+Received: by wyf23 with SMTP id 23so2956733wyf.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 22:46:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=csQTsHTQlq+0vyF9lcJ+6xytD330Spcfe+I1BBfRtUY=;
+        b=ju15mWEs3zQlJt71FHSWUxkfJIuRPJXk3hmifKc/vxw/maZWsN+CKxtOVBlZ9lApJY
+         eklK6ExVZEqf04b+eaNM1kgDiq3SS+6ZxqSfodlZrZINGR3CPWp5hL5l3cpEkHPPt2UA
+         UanjGs5y+SE4ws0QJFwlwBTyzINXI0FmXPrC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=U2jB1edyfeJdXl6ZftF/aza9s8Bhhrbadtieuq2bvXkJeQGADlxJZGggAO6mWNu2z1
+         gWw3Zk+mie2Be5feaPMaIoGbPlnhuuo1u4juTq0X3C2ao9YjLmD4VWyvqa6NFZGRMssT
+         eRU5yWODD2j6V+aK+MwMs4lOQPjVkUvu0lays=
+Received: by 10.227.144.1 with SMTP id x1mr4447277wbu.199.1278481584469;
+        Tue, 06 Jul 2010 22:46:24 -0700 (PDT)
+Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
+        by mx.google.com with ESMTPS id o54sm187122wej.29.2010.07.06.22.46.23
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 06 Jul 2010 22:46:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8w5n2744.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150451>
 
-=C3=81shin L=C3=A1szl=C3=B3 <ashinlaszlo@gmail.com> writes:
+The 06/07/10, Junio C Hamano wrote:
+> Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+> 
+> > @@ -22,7 +22,7 @@ static struct unpack_trees_error_msgs unpack_plumbing_errors = {
+> 
+> What word do you see before "errors" on the hunk comment line?
 
-> No need to check for more lines of the authentication database after =
-found a
-> matching one.
+So you'd rather not touching it? Or wait until the next release cycle?
+Or a better commit message? Anything else?
 
-s/found/finding/;
-
-But I see a bigger issue here.  Is it plausible that you might want to
-allow two entries for one user, with two different passwords, in an aut=
-hdb
-file?  The current code allows it, but if we want to disallow it, we co=
-uld
-instead add your "last", like this, if you do not break the structure o=
-f
-the conditional statements in the original code.
-
-	while (<$passwd>) {
-		if (m{^\Q$user\E:(.*)}) {
-			if (crypt($user, $password) eq $1) {
-				$auth_ok =3D 1;
-			}
-			last;
-		}
-	}
-
-Or have the "last" inside the inner "if" statement to keep that logic.
-
-Either way I think the original nested "if" is much easier to read than
-your version.
+-- 
+Nicolas Sebrecht
