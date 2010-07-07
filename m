@@ -1,141 +1,91 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: Poor status output during conflicted merge
-Date: Tue, 6 Jul 2010 23:07:39 -0600
-Message-ID: <AANLkTimWugg7IznbXfVFDZe44Ag6VW-PJPAdDl7rWLY-@mail.gmail.com>
-References: <loom.20100701T195742-266@post.gmane.org>
-	<7v1vbm3g8j.fsf@alter.siamese.dyndns.org>
-	<AANLkTimBQULqlIVLOOpFoOO5Lg7hGrgm7N69qouafFyG@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 07 07:07:56 2010
+From: newren@gmail.com
+Subject: [PATCHv3 0/6] D/F conflict fixes
+Date: Tue,  6 Jul 2010 23:20:28 -0600
+Message-ID: <1278480034-22939-1-git-send-email-newren@gmail.com>
+Cc: gitster@pobox.com, spearce@spearce.org, agladysh@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 07 07:13:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWMrL-00081B-9p
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 07:07:47 +0200
+	id 1OWMwV-000285-1h
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 07:13:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751027Ab0GGFHm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 01:07:42 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:62225 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab0GGFHl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 01:07:41 -0400
-Received: by vws5 with SMTP id 5so8460952vws.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 22:07:39 -0700 (PDT)
+	id S1751196Ab0GGFNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 01:13:00 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:40958 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750916Ab0GGFNA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 01:13:00 -0400
+Received: by gye5 with SMTP id 5so2206137gye.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 22:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=d5Lbv5d2FUDyxv5jVVrtPI7AoOOCMEqzLnNZ9kinzig=;
-        b=InojVZNPFx3y51Gob9WIPmLMFFlKvcS+L73ox7dP9d3GThKHo7XlllSyI6TuBlYxoh
-         pZcPVw57AnFGdfE6c93geh5Pnw58h7tzDH9jO9gf2LJVgIYtdR7mvgohVJ1hfqeEHZuU
-         diJkIdVwf5pNXwiT7c6Hno5JO3qYMLf030ypE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=F9x/LkDRaFSS9b30iPFPMPQ5PRITWY11ocUvraRY8w0=;
+        b=e1MADHt920pt5GhIxPz9FckUCJG6hm5xXb+lWga6WHT0+ZA43He5SMnJKe86c1B1OH
+         QsIJynFyZj4yHvtX0stffpAysN0l3NqZbxcKVDV7L0BUcNGKHIcl+Gc4Aa2FRsUzX+qH
+         ZmJ8yGH7nRaELu2LrnYYkCD1s/4dz/Up53zsI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vNvt69zIrCOTisCpnoQ2eNfNpIxMH8Nlmos2Kwtw0PmhjEJmxArDPAkia8we7lyysg
-         ymVHZQ6I6XYvyX7WcuUMzpinOQ5dsm+mWdxIBzG4RSx2xUvIp49wUi0QDJVwq7SAzD3Y
-         1CAmLKZfcl0MpNSbwzKyKv2wuPA7385J7lsEw=
-Received: by 10.220.168.10 with SMTP id s10mr3105514vcy.50.1278479259742; Tue, 
-	06 Jul 2010 22:07:39 -0700 (PDT)
-Received: by 10.220.83.138 with HTTP; Tue, 6 Jul 2010 22:07:39 -0700 (PDT)
-In-Reply-To: <AANLkTimBQULqlIVLOOpFoOO5Lg7hGrgm7N69qouafFyG@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ACF0fowY+Hy+Zxn7z8fH5wJlvTEWk/57nZ2/RbqtS8wwzW3rkKbVx5xWNPRGNWK/qz
+         ZFKFwRQLGLIbV7G0QV77wAyNWgmMS/vNSajDs0kEOj+tEGNl5XOalpW0VmbT8ho5rGbv
+         NFSOq1bWP3aJd15V8YsUDDvvRMMYB9bB/Ef4k=
+Received: by 10.101.154.15 with SMTP id g15mr3248796ano.222.1278479579330;
+        Tue, 06 Jul 2010 22:12:59 -0700 (PDT)
+Received: from localhost.localdomain (c-76-113-59-120.hsd1.nm.comcast.net [76.113.59.120])
+        by mx.google.com with ESMTPS id h5sm60464675anb.28.2010.07.06.22.12.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 06 Jul 2010 22:12:58 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.1.10.g6dbc5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150438>
 
-On Tue, Jul 6, 2010 at 6:12 PM, Eric Raible <raible@gmail.com> wrote:
-> On Thu, Jul 1, 2010 at 5:00 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> It might be just a simple matter of ...
->>
->> =C2=A0wt-status.c | =C2=A0 =C2=A02 ++
->> =C2=A01 files changed, 2 insertions(+), 0 deletions(-)
->>
->> diff --git a/wt-status.c b/wt-status.c
->> index 2f9e33c..757536f 100644
->> --- a/wt-status.c
->> +++ b/wt-status.c
->> @@ -674,6 +674,8 @@ void wt_status_print(struct wt_status *s)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0fprintf(s->fp, "# No changes\n");
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else if (s->n=
-owarn)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0; /* nothing */
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else if (s->in_me=
-rge)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 printf("merge result will be the same as HEAD commit\n");
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0else if (s->w=
-orkdir_dirty)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0printf("no changes added to commit%s\n",
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0advice_status_hints
->
-> I suppose that's better than nothing, but I can't help but think that
-> the output would =C2=A0be more useful if it explicitly mentioned the =
-merge.
->
-> Most sensible people probably already have that in their bash prompt,
-> of course, but we have some users at $dayjob who use the anemic
-> windows cmd.exe as their "command shell".
->
-> So how about something like this:
->
-> $ git status
-> # Merging branch 'master' into topic
-> # Changes to be committed:
-> #
-> # =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 file2
->
-> The "branch 'master' into topic" part can come
-> from .git/MERGE_MSG
+This patch series fixes a number of spurious directory/file conflicts
+and associated bugs appearing in cherry-pick, rebase, merge, and
+fast-export.  It also has a minor robustness improvement for
+fast-import.  This series includes testsuite fixes for currently known
+failures in both t6020-merge-df.sh and t6035-merge-dir-to-symlink.sh.
 
-At my $dayjob, when we switched from cvs to git, I got _lots_ of
-support questions around people being confused with merges and rebases
--- they often didn't realize they were still in the middle of one, or
-didn't know how to resolve conflicts, or didn't know how to complete
-the operation (i.e. didn't know that they needed to "commit" or
-"rebase --continue"), or didn't know how to abort the operation.  This
-despite a few hours of dedicated training on basic git usage for
-everyone including some nice handouts.  [Granted, most developers were
-engineers that were more interested in engineering and physics than
-"computer science stuff", didn't have a very strong grasp of version
-control, plus they had years of brain damage from CVS usage to cope
-with, so this user group may be uncommon -- at least other than the
-CVS usage bit.]  Fixing the bash prompt would help in reminding people
-that they were in the middle of an operation, but not the other
-issues.  And most people were stubbornly sticking with tcsh as their
-shell, preventing even using that solution.
+The right person to review most the changes (all but the trivial
+fast-import change that Shawn already commented on, modulo one minor new
+change) is probably Dscho.  In his absence, the next most logical
+reviewer as far as I can tell is probably Junio or perhaps Shawn.  I
+hate to overwork them even more, so if anyone else has some time to take
+a look or even do some simple testing, it'd be much appreciated.
 
-Most such users were using EasyGit (lightweight git-like wrapper
-designed to assist in avoiding common gotchas for those braindamaged
-by CVS or SVN), so I quickly modified "eg status" to also print
-annoying "YOU ARE IN THE MIDDLE OF A <OP> OPERATION.  TYPE 'eg help
-topic middle-of-<OP> FOR MORE INFO" notices when relevant[1].
+Changes since the previous submission:
+  * Added a new patch (5/6) fixing fast-export -- Shawn pointed out
+    in the previous round that the bug I attributed to fast-import was
+    actually a fast-export issue
+  * Modified the fast-import patch (6/6) to note that it was just a
+    robustness improvement rather than bugfix, and extended the patch to
+    also handle regular files in addition to symlinks
 
-After making that change, support questions dropped _dramatically_.
+Alexander Gladysh (1):
+      Add a rename + D/F conflict testcase
 
-I'm a bit ashamed I never got around to making that into a proper RFC
-patch for git (yet?).  I'm not sure whether it'd fit git, but it's
-certainly worth discussion and was amazing how much it helped us.
+Elijah Newren (5):
+      Add additional testcases for D/F conflicts
+      merge-recursive: Fix D/F conflicts
+      merge_recursive: Fix renames across paths below D/F conflicts
+      fast-export: Fix output order of D/F changes
+      fast-import: Improve robustness when D->F changes provided in wrong order
 
-Elijah
-
-[1] See http://people.gnome.org/~newren/eg/documentation/topic-middle-o=
-f-merge.html
-and http://people.gnome.org/~newren/eg/documentation/topic-middle-of-re=
-base.html
-for what the help pages suggested; there are similar ones for am and
-bisect as well.
+ builtin/fast-export.c           |    1 +
+ diff.h                          |    1 +
+ fast-import.c                   |    7 +++
+ merge-recursive.c               |  106 ++++++++++++++++++++++++++++++++-------
+ t/t3508-cherry-pick-merge-df.sh |   34 ++++++++++++
+ t/t6020-merge-df.sh             |    2 +-
+ t/t6035-merge-dir-to-symlink.sh |   37 +++++++++++++-
+ t/t9350-fast-export.sh          |   24 +++++++++
+ tree-diff.c                     |    4 +-
+ 9 files changed, 194 insertions(+), 22 deletions(-)
