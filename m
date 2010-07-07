@@ -1,78 +1,154 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] t/t0006: specify timezone as EST5 not EST to comply with 
-	POSIX
-Date: Wed, 7 Jul 2010 11:48:41 +0200
-Message-ID: <AANLkTin5czoPMgqg5SsiuURjZ-1tpg-S-Die4DejjAMs@mail.gmail.com>
-References: <20100704110017.GA23121@sigill.intra.peff.net>
-	<upBu73z-yHJSTQ58c-Br0BxGwDzKGa1fPzZXA71AfI3kG3dMsRRPOX76JRJVhEOcDGoNaf1z9Lg@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: peff@peff.net, gitster@pobox.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Jul 07 11:48:51 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCHv2/RFC] gitweb: Prepare for splitting gitweb
+Date: Wed,  7 Jul 2010 11:57:56 +0200
+Message-ID: <1278496676-26575-1-git-send-email-jnareb@gmail.com>
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Petr Baudis <pasky@ucw.cz>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 07 11:58:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWRFJ-0007j9-Et
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 11:48:49 +0200
+	id 1OWROU-0004Cm-80
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 11:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333Ab0GGJso convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 05:48:44 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:54597 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751922Ab0GGJsn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 05:48:43 -0400
-Received: by wwb24 with SMTP id 24so2588059wwb.1
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 02:48:41 -0700 (PDT)
+	id S1753498Ab0GGJ6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 05:58:09 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:65095 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab0GGJ6H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 05:58:07 -0400
+Received: by fxm14 with SMTP id 14so5414771fxm.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 02:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0tQWH36lfvsTOPuyxN6bt49Ly1tbhp3Tg7sLWAG/Cp8=;
-        b=ewed+8fDut/ZOZMIkgvT5zyWHlt6fh9ppIgNpIRj4Rbi6TfyZjZuIeDubKAZnE/Q/y
-         HLyXMrbamiLxGSuZWdUIU+85afVjN8QXpkt6Ahi/HUFP9RHKOw3REf6wF7pPVjbe1TzD
-         IAQfYHUldikElAJIXHzbKLGyEIN01am82xFJg=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=mYj7/Rx0v3I3wKxmgCCqo84hjDS2J8qYwUboW9+Tn6U=;
+        b=ikZZvMT/OI4FAqxJVPkjdCBG3pM14Q/e+OxJYiRFegeSWyBlmMWFgvlsaT26/EQv3Q
+         9FPuKqw1KNrFNNlouUupDNyKYdQnVHlVAl4BMUwbI6xNkOYf6P1ZYIVISvntHF0Toagv
+         42Hl/Im38FBLu6P1RqBmaWK+HwAy8EJkTP3uU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gUEYHGlys7nRMZvEIVbG4ppofL8FSiKs6WGN4BUgltmzibdp4u5cAp1MHXLWiUPlm8
-         0iB/Fq2ETGQwqUPRBKSeGjw21qwgOBNIMKV1HrNnmpPkIE+fI2SIP0UEAeXBytpIGWp4
-         /SEC1IrPWWJQgYM2Zp+0ACWygPSnPmA6MSFTM=
-Received: by 10.213.108.65 with SMTP id e1mr5460574ebp.47.1278496121504; Wed, 
-	07 Jul 2010 02:48:41 -0700 (PDT)
-Received: by 10.213.112.208 with HTTP; Wed, 7 Jul 2010 02:48:41 -0700 (PDT)
-In-Reply-To: <upBu73z-yHJSTQ58c-Br0BxGwDzKGa1fPzZXA71AfI3kG3dMsRRPOX76JRJVhEOcDGoNaf1z9Lg@cipher.nrlssc.navy.mil>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=DxsnQ2kxUZ9Oby9s+cyKB/4lP3QhaqPuWfq3RDt4B8DJ+4jJkmlKMzcg04LffEw8T5
+         dgFKXa52TvA5M4Kp5ZAHFQ4J6c2XRVdec6NPMr09iCUYU/cMJ7XHRm0B53VtB1byabsW
+         1s80Kg4Ek/rCz9erh6oIEICmJAla4bP836CkU=
+Received: by 10.223.121.4 with SMTP id f4mr5409391far.1.1278496685917;
+        Wed, 07 Jul 2010 02:58:05 -0700 (PDT)
+Received: from localhost.localdomain (abvr9.neoplus.adsl.tpnet.pl [83.8.215.9])
+        by mx.google.com with ESMTPS id h3sm14120342faj.44.2010.07.07.02.58.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 07 Jul 2010 02:58:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150463>
 
-On Wed, Jul 7, 2010 at 01:34, Brandon Casey <casey@nrlssc.navy.mil> wro=
-te:
-> From: Brandon Casey <drafnel@gmail.com>
->
-> POSIX requires that both the timezone "standard" and "offset" be spec=
-ified
-> in the TZ environment variable. =C2=A0This causes a problem on IRIX w=
-hich does
-> not understand the timezone 'EST'.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-> ---
->
-> I guess 'EST' is an alias? for EST5EDT? =C2=A0Linux and Solaris both =
-grok EST
-> just fine. =C2=A0POSIX says the offset is required. =C2=A0I don't see=
- any mention of
-> aliases.
+Prepare gitweb for having been split into modules that are to be
+installed alongside gitweb in 'lib/' subdirectory, by adding
 
-Same on the Cygwin installation I happen to have here: it doesn't
-recongnize EST,
-but does know about EST5.
+  use lib __DIR__.'/lib';
+
+to gitweb.perl (to main gitweb script), and preparing for putting
+modules (relative path) in $(GITWEB_MODULES) in gitweb/Makefile.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+
+This version uses shell 'for' loop, instead of make's $(foreach)
+function, to avoid possible problem with generating a command line
+that exceeded the maximum argument list length.  This solution has
+also advantage of being more readable than original $(foreach ...)
+version, with its overly long lines.
+
+This idea is based on discussion surrounding Brandon Casey's patch.
+In particular Bruce Stephens's suggestion was implemented to solve
+issue of empty $(GITWEB_MODULES) variable (which is in this patch),
+as implemented in
+  [PATCH 2/2 v2] Makefile: work around ksh's failure to handle missing list argument to for loop
+  http://thread.gmane.org/gmane.comp.version-control.git/147796/focus=150413
+
+This version also moves installing modules to separate install-modules
+target, as compared to previous version.
+
+It also contains improvement from Pavan Kumar Sunkara, namely that
+target is a directory, rather than destibation filename.  This might
+be not necessary (and not much of an improvement).
+
+ gitweb/Makefile    |   14 +++++++++++++-
+ gitweb/gitweb.perl |    9 +++++++++
+ 2 files changed, 22 insertions(+), 1 deletions(-)
+
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 2fb7c2d..84a1d71 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -55,6 +55,7 @@ PERL_PATH  ?= /usr/bin/perl
+ bindir_SQ = $(subst ','\'',$(bindir))#'
+ gitwebdir_SQ = $(subst ','\'',$(gitwebdir))#'
+ gitwebstaticdir_SQ = $(subst ','\'',$(gitwebdir)/static)#'
++gitweblibdir_SQ = $(subst ','\'',$(gitwebdir)/lib)#'
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))#'
+ PERL_PATH_SQ  = $(subst ','\'',$(PERL_PATH))#'
+ DESTDIR_SQ    = $(subst ','\'',$(DESTDIR))#'
+@@ -145,12 +146,23 @@ gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
+ 
+ ### Installation rules
+ 
+-install: all
++install: all install-modules
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+ 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
+ 	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
+ 
++install-modules:
++	install_dirs=$(sort $(dir $(GITWEB_MODULES))) && \
++	for dir in $$install_dirs; do \
++		test -d '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$dir' || \
++		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$dir'; \
++	done
++	gitweb_modules=$(GITWEB_MODULES) && \
++	for mod in $$gitweb_modules; do \
++		$(INSTALL) -m 644 $$mod '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$(dirname $$mod)'; \
++	done
++
+ ### Cleaning rules
+ 
+ clean:
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1f611d2..bf1485c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -9,6 +9,14 @@
+ 
+ use strict;
+ use warnings;
++
++use File::Spec;
++# __DIR__ is taken from Dir::Self __DIR__ fragment
++sub __DIR__ () {
++	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1]);
++}
++use lib __DIR__ . '/lib';
++
+ use CGI qw(:standard :escapeHTML -nosticky);
+ use CGI::Util qw(unescape);
+ use CGI::Carp qw(fatalsToBrowser set_message);
+@@ -16,6 +24,7 @@ use Encode;
+ use Fcntl ':mode';
+ use File::Find qw();
+ use File::Basename qw(basename);
++
+ binmode STDOUT, ':utf8';
+ 
+ our $t0;
+-- 
+1.7.0.1
