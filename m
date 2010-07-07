@@ -1,364 +1,111 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v3 2/4] teach ref iteration module about submodules
-Date: Wed,  7 Jul 2010 15:39:11 +0200
-Message-ID: <17527e05975d1a23b09059a9cb2ae2180d296165.1278508352.git.hvoigt@hvoigt.net>
-References: <cover.1278508352.git.hvoigt@hvoigt.net>
-Cc: git@vger.kernel.org, jens.lehmann@web.de, jherland@gmail.com
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 07 15:39:56 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] string_list: Add STRING_LIST_INIT macro and make use
+ of it.
+Date: Wed, 7 Jul 2010 10:19:56 -0500
+Message-ID: <20100707151956.GA1529@burratino>
+References: <20100702202257.GA7539@burratino>
+ <546093148a7ccecace6552c75a70a1cd66b3f420.1278272508.git.tfransosi@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, srabbelier@gmail.com, gitster@pobox.com,
+	raa.lkml@gmail.com, peter.kjellerstedt@axis.com
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 07 17:20:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWUqw-0008Dn-TA
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:39:55 +0200
+	id 1OWWQa-00053g-G2
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 17:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755977Ab0GGNjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 09:39:23 -0400
-Received: from darksea.de ([83.133.111.250]:52770 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755455Ab0GGNjP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 09:39:15 -0400
-Received: (qmail 17317 invoked from network); 7 Jul 2010 15:39:13 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 7 Jul 2010 15:39:13 +0200
-X-Mailer: git-send-email 1.7.2.rc1.13.g513fa.dirty
-In-Reply-To: <cover.1278508352.git.hvoigt@hvoigt.net>
-In-Reply-To: <cover.1278508352.git.hvoigt@hvoigt.net>
-References: <cover.1278508352.git.hvoigt@hvoigt.net>
+	id S1756467Ab0GGPUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 11:20:41 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39085 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752438Ab0GGPUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 11:20:40 -0400
+Received: by iwn7 with SMTP id 7so7951008iwn.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 08:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=MGEfvf663ngP3NbFWFgqpMQ5ka9/zlBws4oi8pBcTt4=;
+        b=LjzPHutF87rGgv49o4CO6kIKPTzLGKzlqA0eNQyTc5EG0AYtok95Py1KG8grxhuP8n
+         bauFS4Rv7lWXDCEWQiDdQm+zEjl8D7a9oRayDs/BrdJD9EK/ro6IdCEVJRg3wG+H3oe9
+         hdxzuCrptLzxvslyA/x70yw21FK7Kv91km488=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Wto+4AiwQ/7up3nhn/im1zpekhlnUlR4kiBlUysm5mtRw/z9WKd5UR32IKzuf1Nhq5
+         SYhJicc5nYO46pgBgV1HUUjYWDDM/uoQAmhQzczjbDHV6py2y526SGXsHi6BzhPC8tnd
+         qNqnSxAw/WUu0tTqvj0lFojVr26KNAHTPkgHM=
+Received: by 10.231.59.13 with SMTP id j13mr6608886ibh.77.1278516037655;
+        Wed, 07 Jul 2010 08:20:37 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id r3sm29204843ibk.13.2010.07.07.08.20.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 07 Jul 2010 08:20:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <546093148a7ccecace6552c75a70a1cd66b3f420.1278272508.git.tfransosi@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150477>
 
-We will use this in a later patch to extend setup_revisions() to
-load revisions directly from a submodule.
+Hi Thiago,
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- cache.h |    3 ++
- path.c  |   38 ++++++++++++++++++++
- refs.c  |  118 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
- 3 files changed, 127 insertions(+), 32 deletions(-)
+Thiago Farina wrote:
 
-diff --git a/cache.h b/cache.h
-index c9fa3df..32932e8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -641,6 +641,9 @@ extern char *git_pathdup(const char *fmt, ...)
- /* Return a statically allocated filename matching the sha1 signature */
- extern char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
- extern char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
-+extern char *git_path_submodule(const char *path, const char *fmt, ...)
-+	__attribute__((format (printf, 2, 3)));
-+
- extern char *sha1_file_name(const unsigned char *sha1);
- extern char *sha1_pack_name(const unsigned char *sha1);
- extern char *sha1_pack_index_name(const unsigned char *sha1);
-diff --git a/path.c b/path.c
-index b4c8d91..e32c61c 100644
---- a/path.c
-+++ b/path.c
-@@ -122,6 +122,44 @@ char *git_path(const char *fmt, ...)
- 	return cleanup_path(pathname);
- }
- 
-+char *git_path_submodule(const char *path, const char *fmt, ...)
-+{
-+	char *pathname = get_pathname();
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *git_dir;
-+	va_list args;
-+	unsigned len;
-+
-+	len = strlen(path);
-+	if (len > PATH_MAX-100)
-+		return bad_path;
-+
-+	strbuf_addstr(&buf, path);
-+	if (len && path[len-1] != '/')
-+		strbuf_addch(&buf, '/');
-+	strbuf_addstr(&buf, ".git");
-+
-+	git_dir = read_gitfile_gently(buf.buf);
-+	if (git_dir) {
-+		strbuf_reset(&buf);
-+		strbuf_addstr(&buf, git_dir);
-+	}
-+	strbuf_addch(&buf, '/');
-+
-+	if (buf.len >= PATH_MAX)
-+		return bad_path;
-+	memcpy(pathname, buf.buf, buf.len + 1);
-+
-+	strbuf_release(&buf);
-+	len = strlen(pathname);
-+
-+	va_start(args, fmt);
-+	len += vsnprintf(pathname + len, PATH_MAX - len, fmt, args);
-+	va_end(args);
-+	if (len >= PATH_MAX)
-+		return bad_path;
-+	return cleanup_path(pathname);
-+}
- 
- /* git_mkstemp() - create tmp file honoring TMPDIR variable */
- int git_mkstemp(char *path, size_t len, const char *template)
-diff --git a/refs.c b/refs.c
-index 6f486ae..c8649b1 100644
---- a/refs.c
-+++ b/refs.c
-@@ -157,7 +157,7 @@ static struct cached_refs {
- 	char did_packed;
- 	struct ref_list *loose;
- 	struct ref_list *packed;
--} cached_refs;
-+} cached_refs, submodule_refs;
- static struct ref_list *current_ref;
- 
- static struct ref_list *extra_refs;
-@@ -229,23 +229,45 @@ void clear_extra_refs(void)
- 	extra_refs = NULL;
- }
- 
--static struct ref_list *get_packed_refs(void)
-+static struct ref_list *get_packed_refs(const char *submodule)
- {
--	if (!cached_refs.did_packed) {
--		FILE *f = fopen(git_path("packed-refs"), "r");
--		cached_refs.packed = NULL;
-+	const char *packed_refs_file;
-+	struct cached_refs *refs;
-+
-+	if (submodule) {
-+		packed_refs_file = git_path_submodule(submodule, "packed-refs");
-+		refs = &submodule_refs;
-+		free_ref_list(refs->packed);
-+	} else {
-+		packed_refs_file = git_path("packed-refs");
-+		refs = &cached_refs;
-+	}
-+
-+	if (!refs->did_packed || submodule) {
-+		FILE *f = fopen(packed_refs_file, "r");
-+		refs->packed = NULL;
- 		if (f) {
--			read_packed_refs(f, &cached_refs);
-+			read_packed_refs(f, refs);
- 			fclose(f);
- 		}
--		cached_refs.did_packed = 1;
-+		refs->did_packed = 1;
- 	}
--	return cached_refs.packed;
-+	return refs->packed;
- }
- 
--static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
-+static struct ref_list *get_ref_dir(const char *submodule, const char *base,
-+				    struct ref_list *list)
- {
--	DIR *dir = opendir(git_path("%s", base));
-+	DIR *dir;
-+	const char *path;
-+
-+	if (submodule)
-+		path = git_path_submodule(submodule, "%s", base);
-+	else
-+		path = git_path("%s", base);
-+
-+
-+	dir = opendir(path);
- 
- 	if (dir) {
- 		struct dirent *de;
-@@ -261,6 +283,7 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
- 			struct stat st;
- 			int flag;
- 			int namelen;
-+			const char *refdir;
- 
- 			if (de->d_name[0] == '.')
- 				continue;
-@@ -270,16 +293,27 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
- 			if (has_extension(de->d_name, ".lock"))
- 				continue;
- 			memcpy(ref + baselen, de->d_name, namelen+1);
--			if (stat(git_path("%s", ref), &st) < 0)
-+			refdir = submodule
-+				? git_path_submodule(submodule, "%s", ref)
-+				: git_path("%s", ref);
-+			if (stat(refdir, &st) < 0)
- 				continue;
- 			if (S_ISDIR(st.st_mode)) {
--				list = get_ref_dir(ref, list);
-+				list = get_ref_dir(submodule, ref, list);
- 				continue;
- 			}
--			if (!resolve_ref(ref, sha1, 1, &flag)) {
-+			if (submodule) {
- 				hashclr(sha1);
--				flag |= REF_BROKEN;
--			}
-+				flag = 0;
-+				if (resolve_gitlink_ref(submodule, ref, sha1) < 0) {
-+					hashclr(sha1);
-+					flag |= REF_BROKEN;
-+				}
-+			} else
-+				if (!resolve_ref(ref, sha1, 1, &flag)) {
-+					hashclr(sha1);
-+					flag |= REF_BROKEN;
-+				}
- 			list = add_ref(ref, sha1, flag, list, NULL);
- 		}
- 		free(ref);
-@@ -322,10 +356,16 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
- 	for_each_rawref(warn_if_dangling_symref, &data);
- }
- 
--static struct ref_list *get_loose_refs(void)
-+static struct ref_list *get_loose_refs(const char *submodule)
- {
-+	if (submodule) {
-+		free_ref_list(submodule_refs.loose);
-+		submodule_refs.loose = get_ref_dir(submodule, "refs", NULL);
-+		return submodule_refs.loose;
-+	}
-+
- 	if (!cached_refs.did_loose) {
--		cached_refs.loose = get_ref_dir("refs", NULL);
-+		cached_refs.loose = get_ref_dir(NULL, "refs", NULL);
- 		cached_refs.did_loose = 1;
- 	}
- 	return cached_refs.loose;
-@@ -459,7 +499,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
- 		git_snpath(path, sizeof(path), "%s", ref);
- 		/* Special case: non-existing file. */
- 		if (lstat(path, &st) < 0) {
--			struct ref_list *list = get_packed_refs();
-+			struct ref_list *list = get_packed_refs(NULL);
- 			while (list) {
- 				if (!strcmp(ref, list->name)) {
- 					hashcpy(sha1, list->sha1);
-@@ -588,7 +628,7 @@ int peel_ref(const char *ref, unsigned char *sha1)
- 		return -1;
- 
- 	if ((flag & REF_ISPACKED)) {
--		struct ref_list *list = get_packed_refs();
-+		struct ref_list *list = get_packed_refs(NULL);
- 
- 		while (list) {
- 			if (!strcmp(list->name, ref)) {
-@@ -615,12 +655,12 @@ fallback:
- 	return -1;
- }
- 
--static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
--			   int flags, void *cb_data)
-+static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
-+			   int trim, int flags, void *cb_data)
- {
- 	int retval = 0;
--	struct ref_list *packed = get_packed_refs();
--	struct ref_list *loose = get_loose_refs();
-+	struct ref_list *packed = get_packed_refs(submodule);
-+	struct ref_list *loose = get_loose_refs(submodule);
- 
- 	struct ref_list *extra;
- 
-@@ -657,24 +697,38 @@ end_each:
- 	return retval;
- }
- 
--int head_ref(each_ref_fn fn, void *cb_data)
-+
-+static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
- {
- 	unsigned char sha1[20];
- 	int flag;
- 
-+	if (submodule) {
-+		if (resolve_gitlink_ref(submodule, "HEAD", sha1) == 0)
-+			return fn("HEAD", sha1, 0, cb_data);
-+
-+		return 0;
-+	}
-+
- 	if (resolve_ref("HEAD", sha1, 1, &flag))
- 		return fn("HEAD", sha1, flag, cb_data);
-+
- 	return 0;
- }
- 
-+int head_ref(each_ref_fn fn, void *cb_data)
-+{
-+	return do_head_ref(NULL, fn, cb_data);
-+}
-+
- int for_each_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/", fn, 0, 0, cb_data);
-+	return do_for_each_ref(NULL, "refs/", fn, 0, 0, cb_data);
- }
- 
- int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(prefix, fn, strlen(prefix), 0, cb_data);
-+	return do_for_each_ref(NULL, prefix, fn, strlen(prefix), 0, cb_data);
- }
- 
- int for_each_tag_ref(each_ref_fn fn, void *cb_data)
-@@ -694,7 +748,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
- 
- int for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/replace/", fn, 13, 0, cb_data);
-+	return do_for_each_ref(NULL, "refs/replace/", fn, 13, 0, cb_data);
- }
- 
- int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
-@@ -734,7 +788,7 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
- 
- int for_each_rawref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/", fn, 0,
-+	return do_for_each_ref(NULL, "refs/", fn, 0,
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
-@@ -958,7 +1012,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(ref, NULL, get_packed_refs(), 0)) {
-+	     !is_refname_available(ref, NULL, get_packed_refs(NULL), 0)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
-@@ -1021,7 +1075,7 @@ static int repack_without_ref(const char *refname)
- 	int fd;
- 	int found = 0;
- 
--	packed_ref_list = get_packed_refs();
-+	packed_ref_list = get_packed_refs(NULL);
- 	for (list = packed_ref_list; list; list = list->next) {
- 		if (!strcmp(refname, list->name)) {
- 			found = 1;
-@@ -1110,10 +1164,10 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
- 	if (!symref)
- 		return error("refname %s not found", oldref);
- 
--	if (!is_refname_available(newref, oldref, get_packed_refs(), 0))
-+	if (!is_refname_available(newref, oldref, get_packed_refs(NULL), 0))
- 		return 1;
- 
--	if (!is_refname_available(newref, oldref, get_loose_refs(), 0))
-+	if (!is_refname_available(newref, oldref, get_loose_refs(NULL), 0))
- 		return 1;
- 
- 	lock = lock_ref_sha1_basic(renamed_ref, NULL, 0, NULL);
--- 
-1.7.2.rc1.13.g513fa.dirty
+> I see that no one commentted in the patch, but I can't see it on
+> http://git.kernel.org/?p=git/git.git;a=summary, so I'm not sure if it
+> was accepted.
+> 
+> What is the easiest way to verify if the patch was committed?
+
+Good question.  When no one comments on a patch, that is usually
+a bad sign.  In this case, I think the patch is good and I was too
+lazy to comment on it (sorry).
+
+| $ git log --oneline --author=Thiago origin/pu
+| 183113a string_list: Add STRING_LIST_INIT macro and make use of it.
+| [...]
+| $ git branch tf/string-list-init 183113a
+| $ git branch -r --contains tf/string-list-init
+| origin/pu
+| $
+
+So it has been queued in "pu" but not graduated to "next" yet.
+
+Side note.  From the description of the "pu" branch in
+origin/todo:MaintNotes
+
+	The "pu" branch, and topic branches that are only in
+	"pu", are subject to rebasing in general.  By the above
+	definition of how "next" works, you can tell that this
+	branch will contain quite experimental and obviously
+	broken stuff.
+
+it might sound like Junio thinks your patch is obviously broken!
+I suspect that description of "pu" is intended for testers
+(meaning: try this branch only if you found "next" too boring and
+like writing bug reports) rather than patch authors[1].
+
+Especially during a release candidate period (which this is),
+promising new features are often queued to "pu" and only merged to
+"next" when Junio has had time to look them over again.
+
+HTH,
+Jonathan
+
+[1] Maybe it could be clarified: how about inserting "sometimes"
+before "contain"?
+
+	                           ... you can tell that this
+	branch will sometimes contain quite experimental and
+	obviously broken stuff.
