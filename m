@@ -1,7 +1,7 @@
 From: newren@gmail.com
-Subject: [PATCHv3 5/6] fast-export: Fix output order of D/F changes
-Date: Tue,  6 Jul 2010 23:20:33 -0600
-Message-ID: <1278480034-22939-6-git-send-email-newren@gmail.com>
+Subject: [PATCHv3 6/6] fast-import: Improve robustness when D->F changes provided in wrong order
+Date: Tue,  6 Jul 2010 23:20:34 -0600
+Message-ID: <1278480034-22939-7-git-send-email-newren@gmail.com>
 References: <1278480034-22939-1-git-send-email-newren@gmail.com>
 Cc: gitster@pobox.com, spearce@spearce.org, agladysh@gmail.com,
 	Elijah Newren <newren@gmail.com>
@@ -12,116 +12,101 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWMwq-0002I3-Sj
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 07:13:29 +0200
+	id 1OWMwr-0002I3-S6
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 07:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751768Ab0GGFNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1751874Ab0GGFNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 01:13:22 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47654 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751743Ab0GGFNN (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 7 Jul 2010 01:13:13 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61704 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282Ab0GGFNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 01:13:11 -0400
-Received: by mail-gw0-f46.google.com with SMTP id 21so1665527gwj.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 22:13:10 -0700 (PDT)
+Received: by mail-gx0-f174.google.com with SMTP id 23so3440291gxk.19
+        for <git@vger.kernel.org>; Tue, 06 Jul 2010 22:13:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=gf67hE4y1uPXKwYb/FRU8jpvqQJ6v9fEjtH68ZTYm7A=;
-        b=nSoGU2p+9AN4x8zbMo9B5cNPA0fkDv3Hibf0rfuA+/HM6V35Yo08vLFkCaLrJZiryg
-         nNmK46caNhOaxXfQmZBviA2fjSiFjq3IRfzYigzPrDTqMQ9sBjgFOXte/3fn0DZT5Ti3
-         j3zvVWdjZPLcjt0hrKqLXZMKYqrs8yr1Z9xr0=
+        bh=MMpzThI55mv5IWs2y7WnvJCLzbtzRz5qsgypI4mGfKY=;
+        b=NDlPvMLN+7f6INk4TT/8zOZa7FlnCPwUDIdyRLlgPyf3gOQIb72de/cInKFjP04Rws
+         kZAnYrq0ja2syRWrQP//OnUyzFG+2esKsZ5fYgFoM9Wnfe95OV/hCIUKcZ7uA0UDUS5/
+         Cwm+eRlDYrjGx706Kd2g6LNSfvrQAznYUd09Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=FhGJHWoT7JL42lz1LiLGXQDo1vG9ghkN2OVLx4rAi4qWN2xDNuhpbQYUVIG6Gy2kOC
-         wGFJ4+W0RJjEXAbkB9k6ka8DYBRErkfhEiIfn9+zUEyOlqhGHOQz69xmCTqy7ZRj6Fmc
-         9yGeTLwrf9u6L7IIEKuKxr8UvAFwymGZD/p/s=
-Received: by 10.101.189.8 with SMTP id r8mr90775anp.53.1278479590689;
-        Tue, 06 Jul 2010 22:13:10 -0700 (PDT)
+        b=CNprScCqqVGIMI58MWcWQEhXhI9G6De4/gd7pSwpqiIgESAVuh/YRMDMjCX0vlivkI
+         g1+SfWBkUxJ1WHADEwe0v8TnLVHkXVhMKGUxo3XmSfyVUZE1QXcTVE8DhbAsOkTS75pX
+         yYPfnkL18xJ55cJcpFBiWFgq05YyAx3+ulhQc=
+Received: by 10.101.158.39 with SMTP id k39mr7213678ano.203.1278479592811;
+        Tue, 06 Jul 2010 22:13:12 -0700 (PDT)
 Received: from localhost.localdomain (c-76-113-59-120.hsd1.nm.comcast.net [76.113.59.120])
-        by mx.google.com with ESMTPS id h5sm60464675anb.28.2010.07.06.22.13.08
+        by mx.google.com with ESMTPS id h5sm60464675anb.28.2010.07.06.22.13.10
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 22:13:10 -0700 (PDT)
+        Tue, 06 Jul 2010 22:13:12 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.1.10.g6dbc5
 In-Reply-To: <1278480034-22939-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150444>
 
 From: Elijah Newren <newren@gmail.com>
 
-The fast-import stream format requires incremental changes which take place
-immediately, meaning that for D->F conversions all files below the relevant
-directory must be deleted before the resulting file of the same name is
-created.  Reversing the order can result in fast-import silently deleting
-the file right after creating it, resulting in the file missing from the
-resulting repository.
+When older versions of fast-export came across a directory changing to a
+symlink (or regular file), it would output the changes in the form
+  M 120000 :239821 dir-changing-to-symlink
+  D dir-changing-to-symlink/filename1
+When fast-import sees the first line, it deletes the directory named
+dir-changing-to-symlink (and any files below it) and creates a symlink in
+its place.  When fast-import came across the second line, it was previously
+trying to remove the file and relevant leading directories in
+tree_content_remove(), and as a side effect it would delete the symlink
+that was just created.  This resulted in the symlink silently missing from
+the resulting repository.
 
-We correct the order by instructing the diff_tree machinery to compare
-entries using df_name_compare instead of base_name_compare.
+To improve robustness, we ignore file deletions underneath directory names
+that correspond to non-directories.  This can also be viewed as a minor
+optimization: since there cannot be a file and a directory with the same
+name in the same directory, the file clearly can't exist so nothing needs
+to be done to delete it.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/fast-export.c  |    1 +
- diff.h                 |    1 +
- t/t9350-fast-export.sh |    2 +-
- tree-diff.c            |    4 +++-
- 4 files changed, 6 insertions(+), 2 deletions(-)
+Quoting Shawn's comments on the previous version of this patch:
 
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index c6dd71a..de6349f 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -614,6 +614,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
- 		die("revision walk setup failed");
- 	revs.diffopt.format_callback = show_filemodify;
- 	DIFF_OPT_SET(&revs.diffopt, RECURSIVE);
-+	DIFF_OPT_SET(&revs.diffopt, COMPARE_DF_EQUAL);
- 	while ((commit = get_revision(&revs))) {
- 		if (has_unshown_parent(commit)) {
- 			add_object_array(&commit->object, NULL, &commits);
-diff --git a/diff.h b/diff.h
-index 6a71013..6e1a1db 100644
---- a/diff.h
-+++ b/diff.h
-@@ -71,6 +71,7 @@ typedef void (*diff_format_fn_t)(struct diff_queue_struct *q,
- #define DIFF_OPT_SUBMODULE_LOG       (1 << 23)
- #define DIFF_OPT_DIRTY_SUBMODULES    (1 << 24)
- #define DIFF_OPT_IGNORE_UNTRACKED_IN_SUBMODULES (1 << 25)
-+#define DIFF_OPT_COMPARE_DF_EQUAL    (1 << 26)
- 
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 69179c6..1ee1461 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -376,7 +376,7 @@ test_expect_success 'tree_tag-obj'    'git fast-export tree_tag-obj'
- test_expect_success 'tag-obj_tag'     'git fast-export tag-obj_tag'
- test_expect_success 'tag-obj_tag-obj' 'git fast-export tag-obj_tag-obj'
- 
--test_expect_failure 'directory becomes symlink'        '
-+test_expect_success 'directory becomes symlink'        '
- 	git init dirtosymlink &&
- 	git init result &&
- 	(
-diff --git a/tree-diff.c b/tree-diff.c
-index fe9f52c..03f93b7 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -40,7 +40,9 @@ static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *t2, const
- 
- 	pathlen1 = tree_entry_len(path1, sha1);
- 	pathlen2 = tree_entry_len(path2, sha2);
--	cmp = base_name_compare(path1, pathlen1, mode1, path2, pathlen2, mode2);
-+	cmp = DIFF_OPT_TST(opt, COMPARE_DF_EQUAL) ?
-+	      df_name_compare(path1, pathlen1, mode1, path2, pathlen2, mode2) :
-+	      base_name_compare(path1, pathlen1, mode1, path2, pathlen2, mode2);
- 	if (cmp < 0) {
- 		show_entry(opt, "-", t1, base, baselen);
- 		return -1;
+  I'm not against making the input parser more robust...
+
+  It probably makes sense to still do this in fast-import, deleting
+  something that doesn't exist is probably OK, its still going to
+  be deleted in the end anyway.
+
+I'm guessing that probably qualifies as an Acked-by, but I'm not quite
+sure.  However, I made a minor change to the patch: the previous
+version only handled directory->symlink changes (S_ISLNK), whereas
+this one also handles directory->(normal)file changes and
+directory->gitlink changes (!S_ISDIR).
+
+ fast-import.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index 309f2c5..c8c717a 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1528,6 +1528,13 @@ static int tree_content_remove(
+ 	for (i = 0; i < t->entry_count; i++) {
+ 		e = t->entries[i];
+ 		if (e->name->str_len == n && !strncmp(p, e->name->str_dat, n)) {
++			if (slash1 && !S_ISDIR(e->versions[1].mode))
++				/* If p names a file in some subdirectory, and a
++				 * file or symlink matching the name of the
++				 * parent directory of p exists, then p cannot
++				 * exist and need not be deleted.
++				 */
++				return 1;
+ 			if (!slash1 || !S_ISDIR(e->versions[1].mode))
+ 				goto del_entry;
+ 			if (!e->tree)
 -- 
 1.7.1.1.10.g2e807
