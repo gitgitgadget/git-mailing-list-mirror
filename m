@@ -1,91 +1,74 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH v2 4/4] implement automatic fast forward merge for
-	submodules
-Date: Wed, 7 Jul 2010 15:35:58 +0200
-Message-ID: <20100707133557.GA35678@book.hvoigt.net>
-References: <cover.1278444110.git.hvoigt@hvoigt.net> <f17d78656a71558fd290e0b84cad03f22f6fcbd8.1278444110.git.hvoigt@hvoigt.net> <201007070152.17802.johan@herland.net>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: Handling tags/branches after git-svn fetch during SVN to Git 
+	conversion
+Date: Wed, 7 Jul 2010 09:36:55 -0400
+Message-ID: <AANLkTim56UOYQJfX3M5Jpt0vXD8iTnkLuG68IjQG39Xn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, jens.lehmann@web.de
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jul 07 15:36:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 07 15:37:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWUnL-0005qw-Fs
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:36:11 +0200
+	id 1OWUoI-0006Y2-3Z
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:37:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755031Ab0GGNgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 09:36:01 -0400
-Received: from darksea.de ([83.133.111.250]:52750 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754803Ab0GGNgA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 09:36:00 -0400
-Received: (qmail 17262 invoked from network); 7 Jul 2010 15:35:58 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 7 Jul 2010 15:35:58 +0200
-Content-Disposition: inline
-In-Reply-To: <201007070152.17802.johan@herland.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1755806Ab0GGNg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 09:36:57 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:61175 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755290Ab0GGNg4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 09:36:56 -0400
+Received: by yxk8 with SMTP id 8so360039yxk.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 06:36:56 -0700 (PDT)
+Received: by 10.229.248.139 with SMTP id mg11mr3896719qcb.41.1278509815870; 
+	Wed, 07 Jul 2010 06:36:55 -0700 (PDT)
+Received: by 10.229.38.133 with HTTP; Wed, 7 Jul 2010 06:36:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150470>
 
-Hi,
+I had a fairly complicated config for my SVN to Git migration with
+multiple branch and tag locations. Therefore, I had to break up the
+"git svn clone" because I didn't know how to pass multiple branch
+locations to "git svn clone":
 
-On Wed, Jul 07, 2010 at 01:52:16AM +0200, Johan Herland wrote:
-> On Tuesday 06 July 2010, Heiko Voigt wrote:
-> [...]
-> 
-> > +	/* get all revisions that merge commit a */
-> > +	snprintf(merged_revision, sizeof(merged_revision), "^%s",
-> > +			find_unique_abbrev(a->object.sha1, 40));
-> 
-> Why do you call find_unique_abbrev(..., 40) here?
-> Isn't sha1_to_hex(a->object.sha1) a better solution?
+1. git svn init
+2. Update .git/config with branch/tag locations
+[svn-remote "svn"]
+        url = file:///Users/Developers/git_transition/svn_repo
+        fetch = project/trunk:refs/remotes/svn/trunk
+        branches =
+project/branches/{feature1-branch,feature2-branch}:refs/remotes/svn/*
+        branches =
+project/branches/{6.x,5.x,4.x,3.x,archive}/*:refs/remotes/svn/*
+        tags = project/tags/{3.7.x,4.x,5.x,6.x,old-releases}/*:refs/remotes/svn/tags/*
+3. git svn -A/path/to/mappings fetch
 
-Because I did not know it better at the time I wrote this :) Will be
-corrected.
+Do I need to convert these remote tags/branches into local Git
+tags/branches before pushing them to my remote Git repo or is there a
+way to push remote branches directly to my remote Git repo?
 
-> > +	init_revisions(&revs, NULL);
-> > +	rev_opts.submodule = path;
-> > +	setup_revisions(sizeof(rev_args)/sizeof(char *)-1, rev_args, &revs, &rev_opts);
-> > +
-> > +	/* save all revisions from the above list that contain b */
-> > +	if (prepare_revision_walk(&revs))
-> > +		die("revision walk setup failed");
-> > +	while ((commit = get_revision(&revs)) != NULL) {
-> > +		struct object *o = &(commit->object);
-> > +		if (in_merge_bases(b, (struct commit **) &o, 1)) {
-> 
-> Why not s/(struct commit **) &o/&commit/ ?
+The command that someone else told me was "git checkout -b
+<local_branch_name> <remote_branch_name>". Though, I've seen other
+places mention different strategies for converting the branches.
 
-Similar, because I needed objects for the array. Will be corrected.
+The script I devised to convert the tags does this for each tags
+folder to maintain the original commit date, author, and commit
+message:
 
-> > +	 (cd sub &&
-> > +	  git rev-parse sub-d > ../expect) &&
-> > +	 test_cmp actual expect)
-> > +'
-> > +
-> > +test_expect_success 'merging should conflict for non fast-forward' '
-> > +	(cd merge-search &&
-> > +	 git checkout -b test-nonforward b &&
-> > +	 (cd sub &&
-> > +	  git rev-parse sub-d > ../expect) &&
-> > +	 test_must_fail 	git merge c 2> actual  &&
-> > +	 grep $(<expect) actual > /dev/null &&
-> 
-> I cannot find the "$(<expect)" construct anywhere else in out test scripts.
-> Is it portable? Should we maybe use "$(cat expect)" instead?
+git for-each-ref --format="%(refname)" refs/remotes/svn/tags/6.x |
+grep -v @ | while read tag; do GIT_COMMITTER_DATE="$(git log -1
+--pretty=format:"%ad" "$tag")" GIT_COMMITTER_EMAIL="$(git log -1
+--pretty=format:"%ce" "$tag")" GIT_COMMITTER_NAME="$(git log -1
+--pretty=format:"%cn" "$tag")" git tag -m "$(git log -1
+--pretty=format:"%s%n%b" "$tag")" ${tag#refs/remotes/svn/tags/6.x/}
+"$tag"; done
 
-I do not know. Just to be sure I will change it to cat.
+Please let me know if this is correct.
 
-> Otherwise, it looks good to me. Thanks for the effort!
-
-Thank you as well. The rest of the comments are already incorporated.
-
-cheers Heiko
+Thanks!
