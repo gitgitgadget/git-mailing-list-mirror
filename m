@@ -1,73 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-parse: fix --parse-opt --keep-dashdash
- --stop-at-non-option
-Date: Wed, 07 Jul 2010 14:41:33 -0700
-Message-ID: <7vr5jfrmuq.fsf@alter.siamese.dyndns.org>
-References: <1278427565-11057-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Wed, 07 Jul 2010 14:43:16 -0700 (PDT)
+Message-ID: <m3fwzvm0jc.fsf@localhost.localdomain>
+References: <201007032158.57700.jnareb@gmail.com>
+	<AANLkTilD8N6rnj9e3KzRB7_q3J0I4cJGx5EduX_UJScC@mail.gmail.com>
+	<201007041013.40563.jnareb@gmail.com>
+	<loom.20100707T105938-93@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Jul 07 23:42:18 2010
+To: Yann Dirson <ydirson@free.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 07 23:43:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWcNi-0002M1-Mc
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 23:42:15 +0200
+	id 1OWcP5-00036x-EW
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 23:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757944Ab0GGVln convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 17:41:43 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50978 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757861Ab0GGVll convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 17:41:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CC15DC204C;
-	Wed,  7 Jul 2010 17:41:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=iNUBJ56HIqZygAS+WpBo9BW6u
-	jk=; b=Q21x5hiGpCYZ+Z6tK/kwu3jlzkoyP5yFQqitB7/lgYkI42lqLq/QK+auV
-	bSH16lc60aG6eU0bWD0GYGzGRBCcprVM96IojwWelpvUkl8E8qgo69p8JASg99Aj
-	AC6TmttGZJNYY3z654KS8H9vHn6Os9nSM/E+pqymx62ZdIJ7Ac=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=ZaDy/W67NwFfMIrYJNP
-	L+EYq4b5EENv9otwezn2YSOdEQhQs2a9nJGh9QNUl86mN+SsC52Q6ORM7BMprjZI
-	BifRtrHIjSOsb3pPv+DqSD38gPA9Y3eegDDmlfm5115HX2vvKqGYg6FUkINUB34+
-	yvuGL6DgF/hfbMDLTBPqqvV0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F13DC2046;
-	Wed,  7 Jul 2010 17:41:38 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ED647C2043; Wed,  7 Jul
- 2010 17:41:35 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6C572550-8A10-11DF-9AC8-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757841Ab0GGVnW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 17:43:22 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59260 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757667Ab0GGVnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 17:43:19 -0400
+Received: by fxm14 with SMTP id 14so54732fxm.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 14:43:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=yf3bxJCMHGtSdAaDNMHPNwMv3FGjciurxuiXBxiUthg=;
+        b=bHfIut011y8oYv13nJaeJaDErRPi4sGgGEdCNKI6Hl0A67POCQ3XGVmQzNaJrOEkmD
+         zlDAWWb96N3StWiVNklBgTCLbv38RJr9kEsalvMObPZpy9FLcQ+o1vVyhWKJR7+zLewQ
+         XxFn2AMmREkYZVJQv/iXnIY/3RvxWuvVU12DA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=ZlFl2RspAyDQ+8JxaLdNVusheqO03zUkoXrij0cXSoFGT6koIq7QkW20GuWazM/XtS
+         HBR6jEtelmttHTlPKn1Tb2hEKVKwLD+C8GyTc3KAuexuM/MCg2DNQ46KCOQkKKGS2C5O
+         U9C+BFIblKvYAyg0A6YnapHI+9Y4+dp79Lv6c=
+Received: by 10.223.103.211 with SMTP id l19mr6391870fao.62.1278538997502;
+        Wed, 07 Jul 2010 14:43:17 -0700 (PDT)
+Received: from localhost.localdomain (abvr9.neoplus.adsl.tpnet.pl [83.8.215.9])
+        by mx.google.com with ESMTPS id q24sm15353564faa.42.2010.07.07.14.43.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 07 Jul 2010 14:43:16 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o67LglBO002636;
+	Wed, 7 Jul 2010 23:42:47 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o67LgVlO002632;
+	Wed, 7 Jul 2010 23:42:31 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <loom.20100707T105938-93@post.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150511>
 
-Uwe Kleine-K=C3=B6nig  <u.kleine-koenig@pengutronix.de> writes:
+Yann Dirson <ydirson@free.fr> writes:
 
-> The ?: operator has a lower priority than |, so the implicit associat=
-ivity
-> made the 6th argument of parse_options be PARSE_OPT_KEEP_DASHDASH if
-> keep_dashdash was true discarding PARSE_OPT_STOP_AT_NON_OPTION and
-> PARSE_OPT_SHELL_EVAL.
+> Jakub Narebski <jnareb <at> gmail.com> writes:
+> > === xx. Have you found distributed version control easy? ===
+> > (multiple choice)
+> > 
+> >  + Very easy
+> >  + Easy
+> >  + Reasonably easy
+> >  + Hard
+> >  + Very hard
+> > 
+> > Or something like that, with separate question if DVCS is difficult
+> > or not.
+> > 
+> > Alternatively we could ask about _relative_ ease of learning / use.
+> > But I don't think this would go well (and I don't think we could get
+> > good answers from that).
+> 
+> Related to that, would be whether the user was familiar with DVCS before
+> starting to use git, or even familiar with VCS - the answers would be different
+> for people for whom git is the first VCS they ever used, or for people having
+> used other DVCS before...
 
-Wow, this is an age-old breakage dating back to 6e0800e (parse-opt: mak=
-e
-PARSE_OPT_STOP_AT_NON_OPTION available to git rev-parse, 2009-06-14) th=
-at
-dates back to the very original --stop-at-non-option patch, isn't it?
+Relative ease of use of Git as compared to perceived ease of
+distributed version control as generic subject.
 
-I wonder if I should issue an updated maintenance release v1.6.4.5 ;-)
+But I don't think it is a good way to go (and get meaningfull
+answers).
+ 
+> > Well, Git User's Surveys always served more or less accidentally as
+> > the source of information about git and git community ("we have wiki?"
+> > from the first survey )
+> 
+> Count me in for "we have git new-worktree ?" :)
+> In fact, I found nothing by that name in git's tree or in the wiki's
+> InterfacesFrontendsAndTools.  Google finally pointed me to contrib/ where I
+> noticed workdir/git-new-workdir.
+> 
+> It may be worth to use a URL for publicizing non-mainstream stuff.  That's
+> better as publicizing goes, and makes it easy to crowdsource discovery of
+> mistakes or outdated things.
 
-Thanks.
+Hmmm... perhaps it would be worth to create GitContrib page on Git
+Wiki, and link it from InterfacesFrontendsAndTools page...
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
