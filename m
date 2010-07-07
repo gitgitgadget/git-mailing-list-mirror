@@ -1,269 +1,298 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's cooking in git.git (Jul 2010, #01; Wed, 7)
-Date: Wed, 07 Jul 2010 16:51:47 -0700
-Message-ID: <7vlj9msve4.fsf@alter.siamese.dyndns.org>
+Subject: [ANNOUNCE] Git 1.7.2-rc2
+Date: Wed, 07 Jul 2010 16:52:40 -0700
+Message-ID: <7vhbkasvcn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 08 01:52:02 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+X-From: linux-kernel-owner@vger.kernel.org Thu Jul 08 01:53:03 2010
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWePJ-0003B0-QL
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 01:52:02 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1OWeQI-0003Wg-S7
+	for glk-linux-kernel-3@lo.gmane.org; Thu, 08 Jul 2010 01:53:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745Ab0GGXv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 19:51:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38107 "EHLO
+	id S1757978Ab0GGXww convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 7 Jul 2010 19:52:52 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38594 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753392Ab0GGXvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 19:51:55 -0400
+	with ESMTP id S1757089Ab0GGXwu convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 7 Jul 2010 19:52:50 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 241C2C22BE;
-	Wed,  7 Jul 2010 19:51:52 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A4532C22DA;
+	Wed,  7 Jul 2010 19:52:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=NpHA
-	oA/0qxdTNYkRDV8yKZrtXMc=; b=idd6Kvr/0LNYlh/fcVzqPBrbMdzZ6U5D4R6f
-	o6M0ufZHQefjclz8i7jCNTQYrTBobd2GLHqppZbsvaV9VeWuIzg3XpCOAmnY8T7p
-	e3KIVkwBN1GNOmDmcewR9FJLVmJtctPCYHrZBwtSekhza5c6sCPAQ+SZpEVum2Ew
-	PmpXRWg=
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=PmW6lUwu9ttULr9CTwfs4hQf7
+	Z8=; b=rTue7HObKsJTNM2v1a9v5zThHR0Nz8d8aWI+AAMaVmwNCROVusBKmcCz4
+	CtHW8jY/rQ7p2LZ51mfvINEMyCeL1Ws/U3/Tzd+zakTEDXA9+bna9SvLIe2uSylH
+	PgS/jw3DT2TQnau1Nu3l7IPtNV5WVb2EXerPNRj1U/0peynLMM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=lj7
-	CF8CC/9sqp8RwKZj3SwMFfz15Pv4X9AGVoyWylGFMIctUuAavDC5vMnCeBcWS1we
-	kcnqw0V8rNb6K3cntt+pBMSpXh1gMuITjsMH+Jixs0U/yo3znhfmECwLyFRxOLz9
-	jpbMdBs/vUaKvJSO6dlElShMU/Lc4fsr057+Txiw=
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=kxtuIZxHwXfcnQTb/pi
+	rr2ZzZThF9SLg9JCJ8QBcvgGcDx6FzsqmUSXG8/sVDENWNIdFlDSwwdYiQQxcp2X
+	pD5tD5ZeKo7+aWkJQ1IJW6/IDqR/oc8AMU7G1XRYRxJ9e1taNboT+G7HmiYogBOm
+	cTVVLZ+8jAY8VfilxjPqmpKc=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F754C22BD;
-	Wed,  7 Jul 2010 19:51:51 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71BE5C22D9;
+	Wed,  7 Jul 2010 19:52:46 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB693C22BC; Wed,  7 Jul
- 2010 19:51:48 -0400 (EDT)
-X-master-at: 9918285fb10d81af9021dae99c5f4de88ded497c
-X-next-at: d2de19aa28e5ced283c67ce145b26a327a88acd4
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FFF6C22D8; Wed,  7 Jul
+ 2010 19:52:42 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9CE7AE1C-8A22-11DF-BAE4-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: BDED9EBE-8A22-11DF-BAE4-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150515>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150516>
 
-Here are the topics that have been cooking.  Commits prefixed with '-' are
-only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
-marked with '.' do not appear in any of the integration branches, but I am
-still holding onto them.
+A release candidate Git 1.7.2-rc2 is available at the usual places
+for testing:
 
---------------------------------------------------
-[Graduated to "master"]
+  http://www.kernel.org/pub/software/scm/git/
 
-* ab/tap (2010-06-28) 7 commits
-  (merged to 'next' on 2010-06-29 at c73dc30)
- + t/t9700/test.pl: don't access private object members, use public access methods
-  (merged to 'next' on 2010-06-27 at a761d14)
- + t9700: Use Test::More->builder, not $Test::Builder::Test
- + tests: Say "pass" rather than "ok" on empty lines for TAP
- + tests: Skip tests in a way that makes sense under TAP
- + test-lib: output a newline before "ok" under a TAP harness
- + test-lib: Make the test_external_* functions TAP-aware
- + test-lib: Adjust output to be valid TAP format
+  git-1.7.2.rc2.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.2.rc2.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.2.rc2.tar.{gz,bz2}		(preformatted docs)
 
-* ar/decorate-color (2010-06-29) 5 commits
-  (merged to 'next' on 2010-06-30 at 2d72999)
- + Add test for correct coloring of git log --decoration
- + Allow customizable commit decorations colors
- + log --decorate: Colorize commit decorations
- + log-tree.c: Use struct name_decoration's type for classifying decoration
- + commit.h: add 'type' to struct name_decoration
+The RPM binary packages for a few architectures are found in:
 
-* as/maint-completion-set-u-fix (2010-06-17) 1 commit
-  (merged to 'next' on 2010-06-27 at 24ce8c2)
- + bash-completion: Fix __git_ps1 to work with "set -u"
+  testing/git-*-1.7.2.rc2-1.fc11.$arch.rpm	(RPM)
 
-* cc/cherry-pick-stdin (2010-06-14) 4 commits
-  (merged to 'next' on 2010-06-29 at ee7a28a)
- + revert: do not rebuild argv on heap
- + Merge commit 'v1.7.2-rc0~6^2' into cc/cherry-pick-stdin
-  (merged to 'next' on 2010-06-27 at 3af0bba)
- + revert: accept arbitrary rev-list options
- + t3508 (cherry-pick): futureproof against unmerged files
 
-* jk/url-decode (2010-06-24) 1 commit
-  (merged to 'next' on 2010-06-28 at 5144a8f)
- + url_decode: URL scheme ends with a colon and does not require a slash
+Git v1.7.2 Release Notes (draft)
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
 
-* jl/maint-diff-ignore-submodules (2010-06-25) 3 commits
-  (merged to 'next' on 2010-06-25 at d75dbf1)
- + t4027,4041: Use test -s to test for an empty file
-  (merged to 'next' on 2010-06-23 at 057acb7)
- + Add optional parameters to the diff option "--ignore-submodules"
- + git diff: rename test that had a conflicting name
+Updates since v1.7.1
+--------------------
 
-* jl/maint-submodule-ignore-dirty-submodules (2010-06-25) 1 commit
- + git submodule: ignore dirty submodules for summary and status
+ * core.eol configuration and text/eol attributes are the new way to co=
+ntrol
+   the end of line conventions for files in the working tree.
 
-* jl/status-ignore-submodules (2010-06-25) 1 commit
-  (merged to 'next' on 2010-06-28 at bd9ae9e)
- + Add the option "--ignore-submodules" to "git status"
+ * core.autocrlf has been made safer - it will now only handle line
+   endings for new files and files that are LF-only in the
+   repository. To normalize content that has been checked in with
+   CRLF, use the new eol/text attributes.
 
-* jp/string-list-api-cleanup (2010-06-26) 6 commits
-  (merged to 'next' on 2010-06-27 at b1e8b97)
- + string_list: Fix argument order for string_list_append
- + string_list: Fix argument order for string_list_lookup
- + string_list: Fix argument order for string_list_insert_at_index
- + string_list: Fix argument order for string_list_insert
- + string_list: Fix argument order for for_each_string_list
- + string_list: Fix argument order for print_string_list
+ * The whitespace rules used in "git apply --whitespace" and "git diff"
+   gained a new member in the family (tab-in-indent) to help projects w=
+ith
+   policy to indent only with spaces.
 
-* mg/doc-rev-parse-treepath-syntax (2010-06-28) 2 commits
-  (merged to 'next' on 2010-06-30 at be16ac8)
- + git-rev-parse.txt: Add more examples for caret and colon
- + git-rev-parse.txt: Document ":path" specifier
+ * When working from a subdirectory, by default, git does not look for =
+its
+   metadirectory ".git" across filesystems, primarily to help people wh=
+o
+   have invocations of git in their custom PS1 prompts, as being outsid=
+e
+   of a git repository would look for ".git" all the way up to the root
+   directory, and NFS mounts are often slow.  DISCOVERY_ACROSS_FILESYST=
+EM
+   environment variable can be used to tell git not to stop at a
+   filesystem boundary.
 
-* mg/rev-parse-tests (2010-05-14) 2 commits
-  (merged to 'next' on 2010-06-27 at 3336145)
- + t6018: make sure all tested symbolic names are different revs
- + t6018: add tests for rev-list's --branches and --tags
+ * Usage help messages generated by parse-options library (i.e. most
+   of the Porcelain commands) are sent to the standard output now.
 
-* tr/rev-list-count (2010-06-17) 2 commits
-  (merged to 'next' on 2010-06-27 at 0525b63)
- + bash completion: Support "divergence from upstream" messages in __git_ps1
- + rev-list: introduce --count option
+ * ':/<string>' notation to look for a commit now takes regular express=
+ion
+   and it is not anchored at the beginning of the commit log message
+   anymore (this is a backward incompatible change).
 
---------------------------------------------------
-[New Topics]
+ * "git" wrapper learned "-c name=3Dvalue" option to override configura=
+tion
+   variable from the command line.
 
-* jn/paginate-fix (2010-06-26) 4 commits
- - git --paginate: do not commit pager choice too early
- - tests: local config file should be honored from subdirs of toplevel
- - t7006: test pager configuration for several git commands
- - t7006 (pager): introduce helper for parameterized tests
+ * Improved portability for various platforms including older SunOS,
+   HP-UX 10/11, AIX, Tru64, etc. and platforms with Python 2.4.
 
-* ar/string-list-foreach (2010-07-03) 2 commits
- - Convert the users of for_each_string_list to for_each_string_list_item macro
- - Add a for_each_string_list_item macro
- (this branch is used by tf/string-list-init.)
+ * The message from "git am -3" has been improved when conflict
+   resolution ended up making the patch a no-op.
 
-* il/rfc-remote-fd-ext (2010-06-28) 2 commits
- - New remote helper: git-remote-ext
- - New remote helper git-remote-fd
+ * "git blame" applies the textconv filter to the contents it works
+   on, when available.
 
-* ab/submodule-add-f (2010-07-05) 1 commit
- - git submodule: add submodules with git add -f <path>
+ * "git checkout --orphan newbranch" is similar to "-b newbranch" but
+   prepares to create a root commit that is not connected to any existi=
+ng
+   commit.
 
-* bc/maint-makefile-fixes (2010-07-06) 2 commits
- - Makefile: work around ksh's failure to handle missing list argument to for loop
- - Makefile: remove some unnecessary curly braces
+ * "git cherry-pick" learned to pick a range of commits
+   (e.g. "cherry-pick A..B" and "cherry-pick --stdin"), so did "git
+   revert"; these do not support the nicer sequencing control "rebase
+   [-i]" has, though.
 
-* gp/pack-refs-remove-empty-dirs (2010-07-06) 1 commit
- - pack-refs: remove newly empty directories
+ * "git cherry-pick" and "git revert" learned --strategy option to spec=
+ify
+   the merge strategy to be used when performing three-way merges.
 
-* hv/submodule-find-ff-merge (2010-07-07) 3 commits
- - Implement automatic fast-forward merge for submodules
- - setup_revisions(): Allow walking history in a submodule
- - Teach ref iteration module about submodules
+ * "git cvsserver" can be told to use pserver; its password file can be
+   stored outside the repository.
 
-* jc/rebase-i-commit-msg-fix (2010-07-05) 2 commits
- - rebase-i: do not get fooled by a log message ending with backslash
- - rebase-i: style fix
+ * The output from the textconv filter used by "git diff" can be cached=
+ to
+   speed up their reuse.
 
-* jk/maint-status-keep-index-timestamp (2010-07-06) 1 commit
- - do not write out index when status does not have to
+ * "git diff --word-diff=3D<mode>" extends the existing "--color-words"
+   option, making it more useful in color-challenged environments.
 
-* jk/tag-contains (2010-07-05) 4 commits
- - Why is "git tag --contains" so slow?
- - default core.clockskew variable to one day
- - limit "contains" traversals based on commit timestamp
- - tag: speed up --contains calculation
+ * The regexp to detect function headers used by "git diff" for PHP has
+   been enhanced for visibility modifiers (public, protected, etc.) to
+   better support PHP5.
 
-* jn/fast-import-subtree (2010-06-30) 1 commit
- - Teach fast-import to import subtrees named by tree id
+ * "diff.noprefix" configuration variable can be used to implicitly
+   ask for "diff --no-prefix" behaviour.
 
-* mg/revision-doc (2010-07-05) 3 commits
- - Documentation: link to gitrevisions rather than git-rev-parse
- - Documentation: gitrevisions
- - Documentation: split off rev doc into include file
+ * "git for-each-ref" learned "%(objectname:short)" that gives the obje=
+ct
+   name abbreviated.
 
-* sg/rerere-gc-old-still-used (2010-07-01) 2 commits
- . rerere: fix overeager gc
- . mingw_utime(): handle NULL times parameter
+ * "git format-patch" learned --signature option and format.signature
+   configuration variable to customize the e-mail signature used in the
+   output.
 
-* tf/string-list-init (2010-07-04) 1 commit
- - string_list: Add STRING_LIST_INIT macro and make use of it.
- (this branch uses ar/string-list-foreach.)
+ * Various options to "git grep" (e.g. --count, --name-only) work bette=
+r
+   with binary files.
 
-* en/d-f-conflict-fix (2010-07-07) 9 commits
- - Merge branch 'jc/d-f-conflict-fix-fixup' into en/d-f-conflict-fix
- - fast-import: Improve robustness when D->F changes provided in wrong order
- - Fixup (5)
- - fast-export: Fix output order of D/F changes
- - Fixup (4)
- - merge_recursive: Fix renames across paths below D/F conflicts
- - Fixup (3)
- - merge-recursive: Fix D/F conflicts
- - Add a rename + D/F conflict testcase
- (this branch uses jc/d-f-conflict-fix-fixup.)
+ * "git grep" learned "-Ovi" to open the files with hits in your editor=
+=2E
 
-* jc/d-f-conflict-fix-fixup (2010-07-07) 4 commits
- - Fixup (2)
- - Add a rename + D/F conflict testcase
- - Fixup (1)
- - Add additional testcases for D/F conflicts
- (this branch is used by en/d-f-conflict-fix.)
+ * "git help -w" learned "chrome" and "chromium" browsers.
 
---------------------------------------------------
-[Stalled -- would discard unless there are some movements soon]
+ * "git log --decorate" shows commit decorations in various colours.
 
-* ps/gitweb-soc (2010-06-02) 2 commits
-  (merged to 'next' on 2010-06-13 at 92245ae)
- + git-instaweb: Add option to reuse previous config file
- + Makefile: Use $(sharedir)/gitweb for target 'install-gitweb'
+ * "git log --follow <path>" follows across copies (it used to only fol=
+low
+   renames).  This may make the processing more expensive.
 
-If we are going to have a configuration variable to control this, I
-strongly suspect that --reuse-config should be renamed so that the
-variable can be named more sanely and in line with whatever option
-that replaces it.
+ * "git log --pretty=3Dformat:<template>" specifier learned "% <somethi=
+ng>"
+   magic that inserts a space only when %<something> expands to a
+   non-empty string; this is similar to "%+<something>" magic, but is
+   useful in a context to generate a single line output.
 
-* js/rebase-origin-x (2010-02-05) 1 commit
- - [RFC w/o test and incomplete] rebase: add -x option to record original commit name
+ * "git notes prune" learned "-n" (dry-run) and "-v" options, similar t=
+o
+   what "git prune" has.
 
-I retract my objection against the idea of -x; needs polishing before
-moving forward.
+ * "git patch-id" can be fed a mbox without getting confused by the
+   signature line in the format-patch output.
 
-* zl/mailinfo-recode-patch (2010-06-14) 2 commits
- - add --recode-patch option to git-am
- - add --recode-patch option to git-mailinfo
+ * "git remote" learned "set-branches" subcommand.
 
-I recall there was another round of re-roll planned for this one.
+ * "git rev-list A..B" learned --ancestry-path option to further limit
+   the result to the commits that are on the ancestry chain between A a=
+nd
+   B (i.e. commits that are not descendants of A are excluded).
 
-* rr/svn-export (2010-06-10) 7 commits
- - Add LICENSE
- - Add SVN dump parser
- - Add infrastructure to write revisions in fast-export format
- - Add stream helper library
- - Add library for string-specific memory pool
- - Add cpp macro implementation of treaps
- - Add memory pool library
+ * "git show -5" is equivalent to "git show --do-walk 5"; this is simil=
+ar
+   to the update to make "git show master..next" walk the history,
+   introduced in 1.6.4.
 
-I recall there was another round of re-roll planned for this one.
+ * "git status [-s] --ignored" can be used to list ignored paths.
 
---------------------------------------------------
-[Cooking]
+ * "git status -s -b" shows the current branch in the output.
 
-* jn/grep-open (2010-07-02) 1 commit
- - grep -O: Do not pass color sequences as filenames to pager
+ * "git status" learned "--ignore-submodules" option.
 
-* ab/i18n (2010-06-23) 1 commit
- - Add infrastructure for translating Git with gettext
+ * Various "gitweb" enhancements and clean-ups, including syntax
+   highlighting, "plackup" support for instaweb, .fcgi suffix to run
+   it as FastCGI script, etc.
 
-* tc/checkout-B (2010-06-24) 3 commits
- - builtin/checkout: learn -B
- - builtin/checkout: reword hint for -b
- - add tests for checkout -b
+ * The test harness has been updated to produce TAP-friendly output.
 
-* eb/double-convert-before-merge (2010-07-02) 3 commits
- - Don't expand CRLFs when normalizing text during merge
- - Try normalizing files to avoid delete/modify conflicts when merging
- - Avoid conflicts when merging branches with mixed normalization
+
+=46ixes since v1.7.1
+------------------
+
+All of the fixes in v1.7.1.X maintenance series are included in this
+release, unless otherwise noted.
+
+ * We didn't URL decode "file:///path/to/repo" correctly when path/to/r=
+epo
+   had percent-encoded characters (638794c, 9d2e942, ce83eda, 3c73a1d).
+
+ * "git clone" did not configure remote.origin.url correctly for bare
+   clones (df61c889).
+
+ * "git diff --graph" works better with "--color-words" and other optio=
+ns
+   (81fa024..4297c0a).
+
+ * "git diff" could show ambiguous abbreviation of blob object names on
+   its "index" line (3e5a188).
+
+ * "git reset --hard" started from a wrong directory and a working tree=
+ in
+   a nonstandard location is in use got confused (560fb6a1).
+
+----------------------------------------------------------------
+
+Changes since v1.7.2-rc1 are as follows:
+
+Brandon Casey (2):
+      t/t9700/test.pl: don't access private object members, use public =
+access methods
+      t/t0006: specify timezone as EST5 not EST to comply with POSIX
+
+Chris Packham (1):
+      Documentation/git-gc.txt: add reference to githooks
+
+Dylan Reid (1):
+      xdiff: optimise for no whitespace difference when ignoring whites=
+pace.
+
+Heiko Voigt (1):
+      add missing && to submodule-merge testcase
+
+Jakub Narebski (1):
+      gitweb: Move evaluate_gitweb_config out of run_request
+
+Jeff King (3):
+      t0006: test timezone parsing
+      parse_date: fix signedness in timezone calculation
+      test-date: fix sscanf type conversion
+
+Jonathan Nieder (1):
+      t/README: document more test helpers
+
+Junio C Hamano (4):
+      Updates from the list to 1.7.2 Release Notes
+      t/README: proposed rewording...
+      backmerge a few more fixes to 1.7.1.X series
+      Git 1.7.2-rc2
+
+Michael J Gruber (1):
+      rerere.txt: Document forget subcommand
+
+Pierre Habouzit (1):
+      fix git branch -m in presence of cross devices
+
+Uwe Kleine-K=C3=B6nig (1):
+      rev-parse: fix --parse-opt --keep-dashdash --stop-at-non-option
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (13):
+      test-lib: Adjust output to be valid TAP format
+      test-lib: Make the test_external_* functions TAP-aware
+      test-lib: output a newline before "ok" under a TAP harness
+      tests: Skip tests in a way that makes sense under TAP
+      tests: Say "pass" rather than "ok" on empty lines for TAP
+      t9700: Use Test::More->builder, not $Test::Builder::Test
+      t/README: The trash is in 't/trash directory.$name'
+      t/README: Typo: paralell -> parallel
+      t/README: Document the prereq functions, and 3-arg test_*
+      t/README: Document test_external*
+      t/README: Document test_expect_code
+      t/README: Add a section about skipping tests
+      t/README: Document the do's and don'ts of tests
