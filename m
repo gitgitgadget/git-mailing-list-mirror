@@ -1,288 +1,219 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 04/13] Add skeleton dump editor
-Date: Wed,  7 Jul 2010 02:14:44 +0200
-Message-ID: <1278461693-3828-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 09/13] Implement directory-related functions
+Date: Wed,  7 Jul 2010 02:14:49 +0200
+Message-ID: <1278461693-3828-10-git-send-email-artagnon@gmail.com>
 References: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
 Cc: David Michael Barr <david.barr@cordelta.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarb@gmail.com,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	avarb@gmail.com,
 	Daniel Shahaf <d.s@daniel.shahaf.name>,
 	Bert Huijben <rhuijben@collab.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>, dev@subversion.apache.org
+	Eric Wong <normalperson@yhbt.net>,
+	dev@subversion.apache.org
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 07 02:14:35 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWIHV-00057s-BO
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 02:14:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755444Ab0GGANc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Jul 2010 20:13:32 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:39519 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755312Ab0GGAN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Jul 2010 20:13:29 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 23so1968051ewy.19
-        for <git@vger.kernel.org>; Tue, 06 Jul 2010 17:13:28 -0700 (PDT)
+X-From: dev-return-4828-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 07 02:15:07 2010
+Return-path: <dev-return-4828-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@lo.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by lo.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-4828-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1OWII2-0005PA-Dc
+	for gcvsd-dev@lo.gmane.org; Wed, 07 Jul 2010 02:15:02 +0200
+Received: (qmail 2139 invoked by uid 500); 7 Jul 2010 00:15:01 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+Precedence: bulk
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 2131 invoked by uid 99); 7 Jul 2010 00:15:01 -0000
+Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 00:15:01 +0000
+X-ASF-Spam-Status: No, hits=0.0 required=10.0
+	tests=FREEMAIL_FROM,SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (nike.apache.org: domain of artagnon@gmail.com designates 209.85.215.43 as permitted sender)
+Received: from [209.85.215.43] (HELO mail-ew0-f43.google.com) (209.85.215.43)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 07 Jul 2010 00:14:51 +0000
+Received: by ewy1 with SMTP id 1so2219892ewy.16
+        for <dev@subversion.apache.org>; Tue, 06 Jul 2010 17:13:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=/huR/SpZDx3dj3kSHPAwcxfmJEmFyUWgeKE5zTeHsDY=;
-        b=SW/YwS42PYLhVosLAIZ94s4rOgiq2O2NdGulejVlQUcSZxSr0jEUmo1aJHFH3OAjIE
-         7gxSuov0Nj6nnNwmioMlaoo/CQZqH2/cAe5baVLMHjySKHvGjg61zRExX0q7BnPiWPnY
-         wfMA+O3ZruT/yW5VshmihZRsfR8UCWt8Y1Leg=
+        bh=653m5Z8+Htc8qV2lT0QMb3ZxIg1mN65JCiVDc0vpvTY=;
+        b=L6SrBHReRXtLKaSOe6t7/Y69RJH+DwV4+vCXmfr/fqL5z84RGNhrsyzut4hcexRWgF
+         5GyVleGHe1DH3rhmO5TSf7uebWi93r0MqpDxAw5t/FSHM+txY6WGC6lnP+78HNW9dYYw
+         IGnQvfLjtByy5/BNXNMB+Nc67AK+3TvHOr4Uw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=pP2dG1pfhbd5oot7nXQugq8X0FZJBsJCvOMCp3QiyczZ1ztja1aXxjrwIx9fxbIa1t
-         BIOGpTeqbD9AZgrtHKNiZjwyuHrB9G2S1vCWQ5AUS/fK+BGEXQ3f76HxBv2xwuJOCDxj
-         ZBnixbin+1UWnpXPFvKCLHMt5C3gEIKfQT4Ac=
-Received: by 10.213.10.147 with SMTP id p19mr4605932ebp.66.1278461608744;
-        Tue, 06 Jul 2010 17:13:28 -0700 (PDT)
+        b=Z91AndhMK5WXyFqRmdtnapcP1tIDL23mYwwaCJHxwX8wgXRot9fISdJrmnhHlKhwxg
+         YGn/SLsQkBiTBPeqR8MhBrts2wMtL0ZS0SXFCYOD+HK6TeWq1b8FlbG+c5aIFfAtZaDk
+         vDrzcRLjwL8KidXNSWqymxxtaTDEIj2ruszn4=
+Received: by 10.213.98.71 with SMTP id p7mr5052209ebn.18.1278461622595;
+        Tue, 06 Jul 2010 17:13:42 -0700 (PDT)
 Received: from localhost (adm12-98.itu.dk [130.226.133.98])
-        by mx.google.com with ESMTPS id v8sm55873279eeh.8.2010.07.06.17.13.27
+        by mx.google.com with ESMTPS id x54sm55866062eeh.11.2010.07.06.17.13.41
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 06 Jul 2010 17:13:28 -0700 (PDT)
+        Tue, 06 Jul 2010 17:13:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150434>
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150435>
 
-Add a dump editor and write out skeleton callback functions according
-to the API documentation of svn_delta_editor_t. Also expose
-get_dump_editor through a header.
+Implement open_directory, add_directory, change_dir_prop and
+close_directory. All of them involve adding and removing entries from
+the directory_baton and dumping the related node information. Note
+that open_directory doesn't need any corresponding node information to
+be printed.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 ---
- Makefile      |    4 +-
- dump_editor.c |  143 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- dump_editor.h |    8 +++
- dumpr_util.h  |   29 ++++++++++++
- 4 files changed, 182 insertions(+), 2 deletions(-)
- create mode 100644 dump_editor.c
- create mode 100644 dump_editor.h
- create mode 100644 dumpr_util.h
+ dump_editor.c |  101 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 101 insertions(+), 0 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index e4d106e..fea646e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1,8 +1,8 @@
- svndumpr: *.c *.h
--	$(CC) -Wall -Werror -DAPR_POOL_DEBUG -ggdb3 -O0 -o $@ svndumpr.c debug_editor.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
-+	$(CC) -Wall -Werror -DAPR_POOL_DEBUG -ggdb3 -O0 -o $@ svndumpr.c debug_editor.c dump_editor.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
- 
- svndumpr_bench: *.c *.h
--	$(CC) -O2 -o $@ svndumpr.c debug_editor.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
-+	$(CC) -O2 -o $@ svndumpr.c debug_editor.c dump_editor.c -lsvn_client-1 -I. -I/usr/local/include/subversion-1 -I/usr/include/apr-1.0
- 
- clean:
- 	$(RM) svndumpr svndumpr_bench
 diff --git a/dump_editor.c b/dump_editor.c
-new file mode 100644
-index 0000000..2fdf93c
---- /dev/null
+index 0f7d231..6077e5c 100644
+--- a/dump_editor.c
 +++ b/dump_editor.c
-@@ -0,0 +1,143 @@
-+/* Licensed under a two-clause BSD-style license.
-+ * See LICENSE for details.
-+ */
+@@ -226,6 +226,12 @@ svn_error_t *delete_entry(const char *path,
+                           void *parent_baton,
+                           apr_pool_t *pool)
+ {
++	struct dir_baton *pb = parent_baton;
++	const char *mypath = apr_pstrdup(pb->pool, path);
 +
-+#include "svn_pools.h"
-+#include "svn_error.h"
-+#include "svn_iter.h"
-+#include "svn_repos.h"
-+#include "svn_string.h"
-+#include "svn_dirent_uri.h"
-+#include "svn_path.h"
-+#include "svn_time.h"
-+#include "svn_checksum.h"
-+#include "svn_props.h"
++	/* remember this path needs to be deleted */
++	apr_hash_set(pb->deleted_entries, mypath, APR_HASH_KEY_STRING, pb);
 +
-+#include "dumpr_util.h"
+ 	return SVN_NO_ERROR;
+ }
+ 
+@@ -236,6 +242,32 @@ svn_error_t *add_directory(const char *path,
+                            apr_pool_t *pool,
+                            void **child_baton)
+ {
++	struct dir_baton *pb = parent_baton;
++	void *val;
++	struct dir_baton *new_db
++		= make_dir_baton(path, copyfrom_path, copyfrom_rev, pb->eb, pb, TRUE, pool);
 +
-+svn_error_t *open_root(void *edit_baton,
-+                       svn_revnum_t base_revision,
-+                       apr_pool_t *pool,
-+                       void **root_baton)
-+{
-+	return SVN_NO_ERROR;
-+}
++	/* This might be a replacement -- is the path already deleted? */
++	val = apr_hash_get(pb->deleted_entries, path, APR_HASH_KEY_STRING);
 +
-+svn_error_t *delete_entry(const char *path,
-+                          svn_revnum_t revision,
-+                          void *parent_baton,
-+                          apr_pool_t *pool)
-+{
-+	return SVN_NO_ERROR;
-+}
++	/* Detect an add-with-history */
++	pb->eb->is_copy = ARE_VALID_COPY_ARGS(copyfrom_path, copyfrom_rev);
 +
-+svn_error_t *add_directory(const char *path,
-+                           void *parent_baton,
-+                           const char *copyfrom_path,
-+                           svn_revnum_t copyfrom_rev,
-+                           apr_pool_t *pool,
-+                           void **child_baton)
-+{
-+	return SVN_NO_ERROR;
-+}
++	/* Dump the node */
++	SVN_ERR(dump_node(pb->eb, path,
++	                  svn_node_dir,
++	                  val ? svn_node_action_replace : svn_node_action_add,
++	                  pb->eb->is_copy ? copyfrom_path : NULL,
++	                  pb->eb->is_copy ? copyfrom_rev : SVN_INVALID_REVNUM,
++	                  pool));
 +
-+svn_error_t *open_directory(const char *path,
-+                            void *parent_baton,
-+                            svn_revnum_t base_revision,
-+                            apr_pool_t *pool,
-+                            void **child_baton)
-+{
-+	return SVN_NO_ERROR;
-+}
++	if (val)
++		/* Delete the path, it's now been dumped */
++		apr_hash_set(pb->deleted_entries, path, APR_HASH_KEY_STRING, NULL);
 +
-+svn_error_t *close_directory(void *dir_baton,
-+                             apr_pool_t *pool)
-+{
-+	return SVN_NO_ERROR;
-+}
++	new_db->written_out = TRUE;
 +
-+svn_error_t *add_file(const char *path,
-+                      void *parent_baton,
-+                      const char *copyfrom_path,
-+                      svn_revnum_t copyfrom_rev,
-+                      apr_pool_t *pool,
-+                      void **file_baton)
-+{
-+	return SVN_NO_ERROR;
-+}
++	*child_baton = new_db;
+ 	return SVN_NO_ERROR;
+ }
+ 
+@@ -245,12 +277,53 @@ svn_error_t *open_directory(const char *path,
+                             apr_pool_t *pool,
+                             void **child_baton)
+ {
++	struct dir_baton *pb = parent_baton;
++	struct dir_baton *new_db;
++	const char *cmp_path = NULL;
++	svn_revnum_t cmp_rev = SVN_INVALID_REVNUM;
++	apr_array_header_t *compose_path = apr_array_make(pool, 2, sizeof(const char *));
 +
-+svn_error_t *open_file(const char *path,
-+                       void *parent_baton,
-+                       svn_revnum_t ancestor_revision,
-+                       apr_pool_t *pool,
-+                       void **file_baton)
-+{
-+	return SVN_NO_ERROR;
-+}
++	/* If the parent directory has explicit comparison path and rev,
++	   record the same for this one. */
++	if (pb && ARE_VALID_COPY_ARGS(pb->cmp_path, pb->cmp_rev)) {
++		APR_ARRAY_PUSH(compose_path, const char *) = pb->cmp_path;
++		APR_ARRAY_PUSH(compose_path, const char *) = svn_dirent_basename(path, pool);
++		cmp_path = svn_path_compose(compose_path, pool);
++		cmp_rev = pb->cmp_rev;
++	}
 +
-+svn_error_t *change_dir_prop(void *parent_baton,
-+                             const char *name,
-+                             const svn_string_t *value,
-+                             apr_pool_t *pool)
-+{
-+	return SVN_NO_ERROR;
-+}
++	new_db = make_dir_baton(path, cmp_path, cmp_rev, pb->eb, pb, FALSE, pool);
++	*child_baton = new_db;
+ 	return SVN_NO_ERROR;
+ }
+ 
+ svn_error_t *close_directory(void *dir_baton,
+                              apr_pool_t *pool)
+ {
++	struct dir_baton *db = dir_baton;
++	struct edit_baton *eb = db->eb;
++	apr_hash_index_t *hi;
++	apr_pool_t *subpool = svn_pool_create(pool);
 +
-+svn_error_t *change_file_prop(void *file_baton,
-+                              const char *name,
-+                              const svn_string_t *value,
-+                              apr_pool_t *pool)
-+{
-+	return SVN_NO_ERROR;
-+}
++	/* Some pending properties to dump? */
++	SVN_ERR(dump_props(eb, &dump_props_pending, TRUE, pool));
 +
-+svn_error_t *apply_textdelta(void *file_baton, const char *base_checksum,
-+                             apr_pool_t *pool,
-+                             svn_txdelta_window_handler_t *handler,
-+                             void **handler_baton)
-+{
-+	return SVN_NO_ERROR;
-+}
++	/* Dump the directory entries */
++	for (hi = apr_hash_first(pool, db->deleted_entries); hi;
++	     hi = apr_hash_next(hi)) {
++		const void *key;
++		const char *path;
++		apr_hash_this(hi, &key, NULL, NULL);
++		path = key;
 +
-+svn_error_t *close_file(void *file_baton,
-+			const char *text_checksum,
-+			apr_pool_t *pool)
-+{
-+	return SVN_NO_ERROR;
-+}
++		svn_pool_clear(subpool);
 +
-+svn_error_t *close_edit(void *edit_baton, apr_pool_t *pool)
-+{
-+	return SVN_NO_ERROR;
-+}
++		SVN_ERR(dump_node(db->eb, path,
++		                  svn_node_unknown, svn_node_action_delete,
++		                  NULL, SVN_INVALID_REVNUM, subpool));
++	}
 +
-+svn_error_t *get_dump_editor(const svn_delta_editor_t **editor,
-+                             void **edit_baton,
-+                             svn_revnum_t from_rev,
-+                             apr_pool_t *pool)
-+{
-+	struct edit_baton *eb = apr_pcalloc(pool, sizeof(struct edit_baton));
-+	eb->current_rev = from_rev;
-+	SVN_ERR(svn_stream_for_stdout(&(eb->stream), pool));
-+	svn_delta_editor_t *de = svn_delta_default_editor(pool);
-+	
-+	de->open_root = open_root;
-+	de->delete_entry = delete_entry;
-+	de->add_directory = add_directory;
-+	de->open_directory = open_directory;
-+	de->close_directory = close_directory;
-+	de->change_dir_prop = change_dir_prop;
-+	de->change_file_prop = change_file_prop;
-+	de->apply_textdelta = apply_textdelta;
-+	de->add_file = add_file;
-+	de->open_file = open_file;
-+	de->close_file = close_file;
-+	de->close_edit = close_edit;
++	svn_pool_destroy(subpool);
+ 	return SVN_NO_ERROR;
+ }
+ 
+@@ -278,6 +351,34 @@ svn_error_t *change_dir_prop(void *parent_baton,
+                              const svn_string_t *value,
+                              apr_pool_t *pool)
+ {
++	struct dir_baton *db = parent_baton;
 +
-+	/* Set the edit_baton and editor */
-+	*edit_baton = eb;
-+	*editor = de;
++	if (svn_property_kind(NULL, name) != svn_prop_regular_kind)
++		return SVN_NO_ERROR;
 +
-+	return SVN_NO_ERROR;
-+}
-+ 
-diff --git a/dump_editor.h b/dump_editor.h
-new file mode 100644
-index 0000000..9c70b74
---- /dev/null
-+++ b/dump_editor.h
-@@ -0,0 +1,8 @@
-+#ifndef DUMP_EDITOR_H_
-+#define DUMP_EDITOR_H_
++	value ? apr_hash_set(db->eb->properties, apr_pstrdup(pool, name),
++	                     APR_HASH_KEY_STRING, svn_string_dup(value, pool)) :
++		apr_hash_set(db->eb->del_properties, apr_pstrdup(pool, name),
++		             APR_HASH_KEY_STRING, (void *)0x1);
 +
-+svn_error_t *get_dump_editor(const svn_delta_editor_t **editor,
-+			     void **edit_baton,
-+			     svn_revnum_t to_rev,
-+			     apr_pool_t *pool);
-+#endif
-diff --git a/dumpr_util.h b/dumpr_util.h
-new file mode 100644
-index 0000000..d206c19
---- /dev/null
-+++ b/dumpr_util.h
-@@ -0,0 +1,29 @@
-+#ifndef DUMPR_UTIL_H_
-+#define DUMPR_UTIL_H_
++	/* This function is what distinguishes between a directory that is
++	   opened to merely get somewhere, vs. one that is opened because it
++	   actually changed by itself  */
++	if (! db->written_out) {
++		SVN_ERR(dump_node(db->eb, db->path,
++		                  svn_node_dir, svn_node_action_change,
++		                  db->cmp_path, db->cmp_rev, pool));
 +
-+struct edit_baton {
-+	/* The stream to dump to: stdout */
-+	svn_stream_t *stream;
++		/* If dump_props_pending was set, it means that the
++		   node information corresponding to add_directory has already
++		   been written; just don't unset it and dump_node will dump
++		   the properties before doing anything else. If it wasn't
++		   set, node information hasn't been written yet: so dump the
++		   node itself before dumping the props */
 +
-+	/* pool is for per-edit-session allocations */
-+	apr_pool_t *pool;
-+
-+	svn_revnum_t current_rev;
-+	
-+	/* Store the properties that changed */
-+	apr_hash_t *properties;
-+	apr_hash_t *del_properties; /* Value is always 0x1 */
-+	svn_stringbuf_t *propstring;
-+
-+	/* Path of changed file */
-+	const char *changed_path;
-+
-+	/* Was a copy command issued? */
-+	svn_boolean_t is_copy;
-+
-+	/* Temporary file to write delta to along with its checksum */
-+	char *temp_filepath;
-+	svn_checksum_t *checksum;
-+};
-+
-+#endif
++		SVN_ERR(dump_props(db->eb, NULL, TRUE, pool));
++		db->written_out = TRUE;
++	}
+ 	return SVN_NO_ERROR;
+ }
+ 
 -- 
 1.7.1
