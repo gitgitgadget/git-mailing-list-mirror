@@ -1,88 +1,80 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv2/RFC] gitweb: Prepare for splitting gitweb
-Date: Wed, 7 Jul 2010 10:30:12 +0000
-Message-ID: <AANLkTinxDSS2G60_nQ12UqZpSJCvg_kfWYKzmTqJU7Ox@mail.gmail.com>
-References: <1278496676-26575-1-git-send-email-jnareb@gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Wed, 7 Jul 2010 09:18:55 +0000 (UTC)
+Message-ID: <loom.20100707T105938-93@post.gmane.org>
+References: <201007032158.57700.jnareb@gmail.com> <AANLkTilD8N6rnj9e3KzRB7_q3J0I4cJGx5EduX_UJScC@mail.gmail.com> <201007041013.40563.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 07 12:30:30 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 07 13:55:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWRtd-0005w1-I8
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 12:30:29 +0200
+	id 1OWTDe-0005uA-0z
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 13:55:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022Ab0GGKaO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 06:30:14 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42677 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754009Ab0GGKaN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 06:30:13 -0400
-Received: by iwn7 with SMTP id 7so7711427iwn.19
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 03:30:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=qS3K1MKUjNx24uG1YZBOeLSOOW5RsTMMy08XByIsiFQ=;
-        b=YyEr0ehOlc12DVUhVr5jwqFgrM6MJeiRiT+P+Bx/i/2zTEb+6+gqP5mkzNulHAixzy
-         DWICOuOAxjXAtV5dP+QTj3ECpZRhm0q+kjC7A062Zu5LLBmR8HWNbt09dg/OeuOtAMA8
-         RzNQooKg8EA8WqJHscDcI2Eo8EfRz9//yhKOI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Bu40qTfyB+kL4Wr76strgWY0T38LdscrqU9yTQWZlLA/cLMw9Hr+xe0ViwZZXZzYNx
-         d0mefnOgrlzX+K3Aym3gFnI5mth8z+QkeGzVsTjnnUAQ18quZ+wuISSzKx9QzslbMCJ/
-         CMx1lbDdRgmEYmJP+my/SWUkv23YMvzMft6Xw=
-Received: by 10.231.170.144 with SMTP id d16mr6649175ibz.160.1278498612980; 
-	Wed, 07 Jul 2010 03:30:12 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Wed, 7 Jul 2010 03:30:12 -0700 (PDT)
-In-Reply-To: <1278496676-26575-1-git-send-email-jnareb@gmail.com>
+	id S1754997Ab0GGLzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 07:55:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:42880 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751394Ab0GGLzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 07:55:05 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OWTDT-0005lc-3u
+	for git@vger.kernel.org; Wed, 07 Jul 2010 13:55:03 +0200
+Received: from host.1.68.26.195.rev.coltfrance.com ([host.1.68.26.195.rev.coltfrance.com])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:55:03 +0200
+Received: from ydirson by host.1.68.26.195.rev.coltfrance.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:55:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 195.68.26.1 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.4) Gecko/20100628 Iceweasel/3.6.4 (like Firefox/3.6.4))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150465>
 
-On Wed, Jul 7, 2010 at 09:57, Jakub Narebski <jnareb@gmail.com> wrote:
-> [...]
-> =C2=A0use strict;
-> =C2=A0use warnings;
-> +
-> +use File::Spec;
-> +# __DIR__ is taken from Dir::Self __DIR__ fragment
-> +sub __DIR__ () {
-> + =C2=A0 =C2=A0 =C2=A0 File::Spec->rel2abs(join '', (File::Spec->spli=
-tpath(__FILE__))[0, 1]);
-> +}
-> +use lib __DIR__ . '/lib';
-> +
+Jakub Narebski <jnareb <at> gmail.com> writes:
+> === xx. Have you found distributed version control easy? ===
+> (multiple choice)
+> 
+>  + Very easy
+>  + Easy
+>  + Reasonably easy
+>  + Hard
+>  + Very hard
+> 
+> Or something like that, with separate question if DVCS is difficult
+> or not.
+> 
+> Alternatively we could ask about _relative_ ease of learning / use.
+> But I don't think this would go well (and I don't think we could get
+> good answers from that).
 
-What was the result of the discussion about using __DIR__ again? You
-only need to use that method when you call a perl program whith *then*
-includes a module. If you just need to add the lib/ directory relative
-to the script you're invoking you can use FindBin:
+Related to that, would be whether the user was familiar with DVCS before
+starting to use git, or even familiar with VCS - the answers would be different
+for people for whom git is the first VCS they ever used, or for people having
+used other DVCS before...
 
-    use FindBin qw($Bin);
-    use lib "$Bin/lib";
+> Well, Git User's Surveys always served more or less accidentally as
+> the source of information about git and git community ("we have wiki?"
+> from the first survey )
 
-> =C2=A0use CGI qw(:standard :escapeHTML -nosticky);
-> =C2=A0use CGI::Util qw(unescape);
-> =C2=A0use CGI::Carp qw(fatalsToBrowser set_message);
-> @@ -16,6 +24,7 @@ use Encode;
-> =C2=A0use Fcntl ':mode';
-> =C2=A0use File::Find qw();
-> =C2=A0use File::Basename qw(basename);
-> +
-> =C2=A0binmode STDOUT, ':utf8';
+Count me in for "we have git new-worktree ?" :)
+In fact, I found nothing by that name in git's tree or in the wiki's
+InterfacesFrontendsAndTools.  Google finally pointed me to contrib/ where I
+noticed workdir/git-new-workdir.
 
-The whitespace change distracts from the real patch a bit.
+It may be worth to use a URL for publicizing non-mainstream stuff.  That's
+better as publicizing goes, and makes it easy to crowdsource discovery of
+mistakes or outdated things.
