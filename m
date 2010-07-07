@@ -1,77 +1,78 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] rebase -i: use 'read -r' to avoid backslash acting as
- an escape character
-Date: Wed, 7 Jul 2010 11:46:20 +0200
-Message-ID: <20100707094620.GC31048@genesis.frugalware.org>
-References: <20100706225522.GA31048@genesis.frugalware.org>
- <7vpqyz278o.fsf@alter.siamese.dyndns.org>
- <20100707091633.GB31048@genesis.frugalware.org>
- <AANLkTinFu08juNtz5eYyjzxuW6zbyGyn5f4S3wh0TI0E@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] t/t0006: specify timezone as EST5 not EST to comply with 
+	POSIX
+Date: Wed, 7 Jul 2010 11:48:41 +0200
+Message-ID: <AANLkTin5czoPMgqg5SsiuURjZ-1tpg-S-Die4DejjAMs@mail.gmail.com>
+References: <20100704110017.GA23121@sigill.intra.peff.net>
+	<upBu73z-yHJSTQ58c-Br0BxGwDzKGa1fPzZXA71AfI3kG3dMsRRPOX76JRJVhEOcDGoNaf1z9Lg@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="boT9Oj39GmgPxYhu"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Wed Jul 07 11:46:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: peff@peff.net, gitster@pobox.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Jul 07 11:48:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWRD4-0006T1-2G
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 11:46:30 +0200
+	id 1OWRFJ-0007j9-Et
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 11:48:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753208Ab0GGJqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 05:46:25 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:55638 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751922Ab0GGJqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 05:46:24 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id D62885809C;
-	Wed,  7 Jul 2010 11:46:20 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id BACD944659;
-	Wed,  7 Jul 2010 11:46:20 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 8E97D12D90F0; Wed,  7 Jul 2010 11:46:20 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinFu08juNtz5eYyjzxuW6zbyGyn5f4S3wh0TI0E@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753333Ab0GGJso convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 05:48:44 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54597 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab0GGJsn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 05:48:43 -0400
+Received: by wwb24 with SMTP id 24so2588059wwb.1
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 02:48:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0tQWH36lfvsTOPuyxN6bt49Ly1tbhp3Tg7sLWAG/Cp8=;
+        b=ewed+8fDut/ZOZMIkgvT5zyWHlt6fh9ppIgNpIRj4Rbi6TfyZjZuIeDubKAZnE/Q/y
+         HLyXMrbamiLxGSuZWdUIU+85afVjN8QXpkt6Ahi/HUFP9RHKOw3REf6wF7pPVjbe1TzD
+         IAQfYHUldikElAJIXHzbKLGyEIN01am82xFJg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gUEYHGlys7nRMZvEIVbG4ppofL8FSiKs6WGN4BUgltmzibdp4u5cAp1MHXLWiUPlm8
+         0iB/Fq2ETGQwqUPRBKSeGjw21qwgOBNIMKV1HrNnmpPkIE+fI2SIP0UEAeXBytpIGWp4
+         /SEC1IrPWWJQgYM2Zp+0ACWygPSnPmA6MSFTM=
+Received: by 10.213.108.65 with SMTP id e1mr5460574ebp.47.1278496121504; Wed, 
+	07 Jul 2010 02:48:41 -0700 (PDT)
+Received: by 10.213.112.208 with HTTP; Wed, 7 Jul 2010 02:48:41 -0700 (PDT)
+In-Reply-To: <upBu73z-yHJSTQ58c-Br0BxGwDzKGa1fPzZXA71AfI3kG3dMsRRPOX76JRJVhEOcDGoNaf1z9Lg@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150462>
 
+On Wed, Jul 7, 2010 at 01:34, Brandon Casey <casey@nrlssc.navy.mil> wro=
+te:
+> From: Brandon Casey <drafnel@gmail.com>
+>
+> POSIX requires that both the timezone "standard" and "offset" be spec=
+ified
+> in the TZ environment variable. =C2=A0This causes a problem on IRIX w=
+hich does
+> not understand the timezone 'EST'.
+>
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+>
+> I guess 'EST' is an alias? for EST5EDT? =C2=A0Linux and Solaris both =
+grok EST
+> just fine. =C2=A0POSIX says the offset is required. =C2=A0I don't see=
+ any mention of
+> aliases.
 
---boT9Oj39GmgPxYhu
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Jul 07, 2010 at 11:22:29AM +0200, Santi B=E9jar <santi@agolina.net>=
- wrote:
-> No. This one:
->=20
-> http://article.gmane.org/gmane.comp.version-control.git/150328
->=20
-> :-)
-
-Heh, then sorry for the noise. I noticed the problem on 2th, added the
-"I should fix this" to my TODO, then made the patch yesterday. I forgot
-to check the list archive again before sending the patch. ;-)
-
---boT9Oj39GmgPxYhu
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkw0TOwACgkQe81tAgORUJZ+5wCcC0JclvrvaIlEr++6gRV3Ki2d
-v6EAn0NJ6qbDScdzlSOZQ7Wc1E3wHgdC
-=IZIA
------END PGP SIGNATURE-----
-
---boT9Oj39GmgPxYhu--
+Same on the Cygwin installation I happen to have here: it doesn't
+recongnize EST,
+but does know about EST5.
