@@ -1,74 +1,58 @@
-From: Bradley Wagner <bradley.wagner@hannonhill.com>
-Subject: Handling tags/branches after git-svn fetch during SVN to Git 
-	conversion
-Date: Wed, 7 Jul 2010 09:36:55 -0400
-Message-ID: <AANLkTim56UOYQJfX3M5Jpt0vXD8iTnkLuG68IjQG39Xn@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH v2 3/4] extent setup_revisions() so it works with
+	submodules
+Date: Wed, 7 Jul 2010 15:37:23 +0200
+Message-ID: <20100707133723.GB35678@book.hvoigt.net>
+References: <cover.1278444110.git.hvoigt@hvoigt.net> <cover.1278444110.git.hvoigt@hvoigt.net> <ab9c0f88b30060401d99735cb78eec7cc1e95b86.1278444110.git.hvoigt@hvoigt.net> <7veiff274b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 07 15:37:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jens.lehmann@web.de, jherland@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 07 15:37:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWUoI-0006Y2-3Z
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:37:10 +0200
+	id 1OWUof-0006mX-Ea
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:37:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755806Ab0GGNg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 09:36:57 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61175 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755290Ab0GGNg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 09:36:56 -0400
-Received: by yxk8 with SMTP id 8so360039yxk.19
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 06:36:56 -0700 (PDT)
-Received: by 10.229.248.139 with SMTP id mg11mr3896719qcb.41.1278509815870; 
-	Wed, 07 Jul 2010 06:36:55 -0700 (PDT)
-Received: by 10.229.38.133 with HTTP; Wed, 7 Jul 2010 06:36:55 -0700 (PDT)
+	id S1755982Ab0GGNh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 09:37:26 -0400
+Received: from darksea.de ([83.133.111.250]:52755 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755953Ab0GGNhZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 09:37:25 -0400
+Received: (qmail 17276 invoked from network); 7 Jul 2010 15:37:23 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 7 Jul 2010 15:37:23 +0200
+Content-Disposition: inline
+In-Reply-To: <7veiff274b.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150471>
 
-I had a fairly complicated config for my SVN to Git migration with
-multiple branch and tag locations. Therefore, I had to break up the
-"git svn clone" because I didn't know how to pass multiple branch
-locations to "git svn clone":
+Hi,
 
-1. git svn init
-2. Update .git/config with branch/tag locations
-[svn-remote "svn"]
-        url = file:///Users/Developers/git_transition/svn_repo
-        fetch = project/trunk:refs/remotes/svn/trunk
-        branches =
-project/branches/{feature1-branch,feature2-branch}:refs/remotes/svn/*
-        branches =
-project/branches/{6.x,5.x,4.x,3.x,archive}/*:refs/remotes/svn/*
-        tags = project/tags/{3.7.x,4.x,5.x,6.x,old-releases}/*:refs/remotes/svn/tags/*
-3. git svn -A/path/to/mappings fetch
+On Tue, Jul 06, 2010 at 10:28:20PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+> 
+> This needs a bit more explanation.  "Exten_d_ setup_revisions()" is fine,
+> but "works with submodules"???  How? and what do the caller need to do?
+> 
+> Something like...
+> 
+>     Subject: setup_revisions(): allow walking history in a submodule
+> 
+>     By passing the path to a submodule in opt->submodule, the function can
+>     be used to walk history in the named submodule repository, instead of
+>     the toplevel repository.
 
-Do I need to convert these remote tags/branches into local Git
-tags/branches before pushing them to my remote Git repo or is there a
-way to push remote branches directly to my remote Git repo?
+Will take that. Thanks.
 
-The command that someone else told me was "git checkout -b
-<local_branch_name> <remote_branch_name>". Though, I've seen other
-places mention different strategies for converting the branches.
-
-The script I devised to convert the tags does this for each tags
-folder to maintain the original commit date, author, and commit
-message:
-
-git for-each-ref --format="%(refname)" refs/remotes/svn/tags/6.x |
-grep -v @ | while read tag; do GIT_COMMITTER_DATE="$(git log -1
---pretty=format:"%ad" "$tag")" GIT_COMMITTER_EMAIL="$(git log -1
---pretty=format:"%ce" "$tag")" GIT_COMMITTER_NAME="$(git log -1
---pretty=format:"%cn" "$tag")" git tag -m "$(git log -1
---pretty=format:"%s%n%b" "$tag")" ${tag#refs/remotes/svn/tags/6.x/}
-"$tag"; done
-
-Please let me know if this is correct.
-
-Thanks!
+cheers Heiko
