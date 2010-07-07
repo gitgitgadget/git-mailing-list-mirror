@@ -1,130 +1,131 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCHv2/RFC] gitweb: Prepare for splitting gitweb
-Date: Wed, 7 Jul 2010 22:05:12 +0200
-Message-ID: <201007072205.14345.jnareb@gmail.com>
-References: <1278496676-26575-1-git-send-email-jnareb@gmail.com> <AANLkTinxDSS2G60_nQ12UqZpSJCvg_kfWYKzmTqJU7Ox@mail.gmail.com>
+Date: Wed, 7 Jul 2010 22:20:18 +0200
+Message-ID: <201007072220.18824.jnareb@gmail.com>
+References: <1278496676-26575-1-git-send-email-jnareb@gmail.com> <7viq4rxnro.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
 	Petr Baudis <pasky@ucw.cz>,
 	Christian Couder <chriscool@tuxfamily.org>
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 07 22:05:32 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 07 22:20:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWas8-0004zH-Bw
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 22:05:32 +0200
+	id 1OWb6f-0004tM-3Z
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 22:20:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757376Ab0GGUF0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 16:05:26 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33094 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755354Ab0GGUFZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 16:05:25 -0400
-Received: by fxm14 with SMTP id 14so13798fxm.19
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:05:24 -0700 (PDT)
+	id S1757520Ab0GGUU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 16:20:27 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:35621 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755120Ab0GGUU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 16:20:26 -0400
+Received: by bwz1 with SMTP id 1so56565bwz.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:20:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=+JQ6yXb+CNJH865F3b7oDVpXc4UpqUTYs8Vlw8q4P4M=;
-        b=tluCuY6C0BXfTJXsGKdT7WpZV3KT47+vqDmq/PN2oFlJgz7pxI3JAdET/aMxBd2JA1
-         SsVM9oU2tV84MNrsPCnGSUAvDVd00BPHFXu0JibQjAT10/4VDL5/LzLpUhItxJ9mjciT
-         DKGxJg262bwFIMnDNfKfDa08raIDIeYoJ82U8=
+        bh=IgYgVd+1iQIazShSnl9JClTnf1iQXmo94iw1H3VFpZs=;
+        b=RJjThlCIkDNLmbVRMmBtx6JS89C2bBJm1wOK3ct7Sd57gfNbC1IvKViKOwuQy974i1
+         +2tYKH9128JggXayVt8u2ZbCys1/LrSHL+EwayDoFRfSVOVF1cS4iTqjzXnM5L1mMSF6
+         8TtKBDWLzMlwPK3BZRPG5/oDxyDpSlsgLQ5aA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=BJp+yl7tLmW2T4fE7Fp7xqGcRiUHKAkzhzmMRvzA4fLlbqJOrmFhlfI72DuCIVf9g6
-         96ihJqpFUHMysHQ/3XXMgrwGmEIENgUjehm3MVpgmQM0FZcIAA8Tdv3+BQoDixH5KAJJ
-         rOjOdgDBkRTLP+RknR0x5vjw6ro6ioSlK7/5c=
-Received: by 10.86.52.2 with SMTP id z2mr5397702fgz.72.1278533124237;
-        Wed, 07 Jul 2010 13:05:24 -0700 (PDT)
+        b=n8ETzx4f2HvrDZS1yrNKAQBluDlLKYvPDr9JwBzNdNQ8gaY57iDkz0uOcgx91xBeUQ
+         KjrsOfI+jh1in7orB281ej3JWpZfOT3O7aFhMB2yIAU/AekSh4IFgTqTTESwyZQwWt+x
+         Rqg0W8FoPX+zjHbrmc655+TZzdO11JNrkzYtw=
+Received: by 10.204.126.161 with SMTP id c33mr5481261bks.108.1278534024613;
+        Wed, 07 Jul 2010 13:20:24 -0700 (PDT)
 Received: from [192.168.1.15] (abvr9.neoplus.adsl.tpnet.pl [83.8.215.9])
-        by mx.google.com with ESMTPS id 26sm5375502fax.7.2010.07.07.13.05.21
+        by mx.google.com with ESMTPS id g11sm29500845bkw.22.2010.07.07.13.20.22
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 07 Jul 2010 13:05:22 -0700 (PDT)
+        Wed, 07 Jul 2010 13:20:23 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTinxDSS2G60_nQ12UqZpSJCvg_kfWYKzmTqJU7Ox@mail.gmail.com>
+In-Reply-To: <7viq4rxnro.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150498>
 
-On Wed, 7 Jul 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason napisa=C5=82=
-:
-> On Wed, Jul 7, 2010 at 09:57, Jakub Narebski <jnareb@gmail.com> wrote=
-:
-> > [...]
-> > =C2=A0use strict;
-> > =C2=A0use warnings;
+On Wed, 7 Jul 2010, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > diff --git a/gitweb/Makefile b/gitweb/Makefile
+> > index 2fb7c2d..84a1d71 100644
+> > --- a/gitweb/Makefile
+> > +++ b/gitweb/Makefile
+> > @@ -145,12 +146,23 @@ gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
+> >  
+> >  ### Installation rules
+> >  
+> > -install: all
+> > +install: all install-modules
+> >  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+> >  	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
+> >  	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
+> >  	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
+> >  
+> > +install-modules:
+> > +	install_dirs=$(sort $(dir $(GITWEB_MODULES))) && \
+> > +	for dir in $$install_dirs; do \
+> > +		test -d '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$dir' || \
+> > +		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$dir'; \
+> > +	done
+> > +	gitweb_modules=$(GITWEB_MODULES) && \
+> > +	for mod in $$gitweb_modules; do \
+> > +		$(INSTALL) -m 644 $$mod '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$(dirname $$mod)'; \
+> > +	done
 > > +
-> > +use File::Spec;
-> > +# __DIR__ is taken from Dir::Self __DIR__ fragment
-> > +sub __DIR__ () {
-> > + =C2=A0 =C2=A0 =C2=A0 File::Spec->rel2abs(join '', (File::Spec->sp=
-litpath(__FILE__))[0, 1]);
-> > +}
-> > +use lib __DIR__ . '/lib';
-> > +
->=20
-> What was the result of the discussion about using __DIR__ again? You
-> only need to use that method when you call a perl program whith *then=
-*
-> includes a module. If you just need to add the lib/ directory relativ=
-e
-> to the script you're invoking you can use FindBin:
->=20
->     use FindBin qw($Bin);
->     use lib "$Bin/lib";
+> 
+> Sorry, but you lost me here.  Where is GITWEB_MODULES defined (iow, what
+> commit is this patch supposed to be applied)?
 
-It's
+This is preparatory patch either for Pavan GSoC2010 work on splitting
+gitweb and adding committool / admin write capabilities, or for mine
+gitweb caching series split into modules (based on J.H. patch for 
+git.kernel.org).
 
-      use lib "$Bin/../lib";
+So currently $(GITWEB_MODULES) is not defined / empty.
 
-(I don't like this ../lib here, but that's my personal preference).
+> I also suspect that your assignment to "install_dirs" is completely bogus
+> when the files listed in GITWEB_MODULES span multiple directories.
 
-But you might be right that I am overly cautious in avoiding FindBin.
-It is nowadays not recommended solution (on #perl, for example), but
-it is perhaps true that the conditions where it fails are not fulfilled
-for the case of gitweb.
+install_dirs contains _list_ of directories gitweb modules are to be
+installed into.  `$(dir NAMES...)' extracts the directory-part of each
+file name in NAMES ('./' if there is no '/' in a file name), and
+`$(sort LIST)' is used to remove duplicate words in LIST.
 
-Or perhaps not:
+It was actually tested that it works for modularized gitweb caching,
+in the older form using `$(foreach ...)' rather than current shell
+'for' loop.
 
-  KNOWN ISSUES
 
-  If there are two modules using FindBin from different directories
-  under the same interpreter, this won't work. Since FindBin uses a
-  BEGIN block, it'll be executed only once, and only the first caller
-  will get it right. This is a problem under **mod_perl** and other
-  persistent Perl environments, where you shouldn't use this module.
+For example with the following Makefile:
 
-Gitweb can be used under mod_perl (to be more exact ModPerl::Registry).
+  GITWEB_MODULES += GitwebCache/SimpleFileCache.pm
+  GITWEB_MODULES += GitwebCache/Capture.pm
+  GITWEB_MODULES += GitwebCache/Capture/SelectFH.pm
+  GITWEB_MODULES += Gitweb/Config.pm
+  
+  all:
+  	@echo $(sort $(dir $(GITWEB_MODULES)))
 
-> > =C2=A0use CGI qw(:standard :escapeHTML -nosticky);
-> > =C2=A0use CGI::Util qw(unescape);
-> > =C2=A0use CGI::Carp qw(fatalsToBrowser set_message);
-> > @@ -16,6 +24,7 @@ use Encode;
-> > =C2=A0use Fcntl ':mode';
-> > =C2=A0use File::Find qw();
-> > =C2=A0use File::Basename qw(basename);
-> > +
-> > =C2=A0binmode STDOUT, ':utf8';
->=20
-> The whitespace change distracts from the real patch a bit.
+running 'make' results in:
 
-Ooops, I'm sorry.
-
-I'll fix it in resend, if required.
---=20
+  Gitweb/ GitwebCache/ GitwebCache/Capture/
+-- 
 Jakub Narebski
 Poland
