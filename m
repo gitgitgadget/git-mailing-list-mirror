@@ -1,288 +1,364 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v3 0/4] implement automatic submodule merge strategy when possible
-Date: Wed,  7 Jul 2010 15:39:09 +0200
-Message-ID: <cover.1278508352.git.hvoigt@hvoigt.net>
+Subject: [PATCH v3 2/4] teach ref iteration module about submodules
+Date: Wed,  7 Jul 2010 15:39:11 +0200
+Message-ID: <17527e05975d1a23b09059a9cb2ae2180d296165.1278508352.git.hvoigt@hvoigt.net>
+References: <cover.1278508352.git.hvoigt@hvoigt.net>
 Cc: git@vger.kernel.org, jens.lehmann@web.de, jherland@gmail.com
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 07 15:39:29 2010
+X-From: git-owner@vger.kernel.org Wed Jul 07 15:39:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWUqS-0007sH-K0
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:39:24 +0200
+	id 1OWUqw-0008Dn-TA
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 15:39:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755598Ab0GGNjQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 09:39:16 -0400
-Received: from darksea.de ([83.133.111.250]:52760 "HELO darksea.de"
+	id S1755977Ab0GGNjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 09:39:23 -0400
+Received: from darksea.de ([83.133.111.250]:52770 "HELO darksea.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754312Ab0GGNjP (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755455Ab0GGNjP (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 7 Jul 2010 09:39:15 -0400
-Received: (qmail 17305 invoked from network); 7 Jul 2010 15:39:13 +0200
+Received: (qmail 17317 invoked from network); 7 Jul 2010 15:39:13 +0200
 Received: from unknown (HELO localhost) (127.0.0.1)
   by localhost with SMTP; 7 Jul 2010 15:39:13 +0200
 X-Mailer: git-send-email 1.7.2.rc1.13.g513fa.dirty
+In-Reply-To: <cover.1278508352.git.hvoigt@hvoigt.net>
+In-Reply-To: <cover.1278508352.git.hvoigt@hvoigt.net>
+References: <cover.1278508352.git.hvoigt@hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150476>
 
-Hi,
+We will use this in a later patch to extend setup_revisions() to
+load revisions directly from a submodule.
 
-Johan and Junio thank you very much for the review. Here is a new
-iteration with your comments incorporated.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ cache.h |    3 ++
+ path.c  |   38 ++++++++++++++++++++
+ refs.c  |  118 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 3 files changed, 127 insertions(+), 32 deletions(-)
 
-Further below you can find the changes between the last iteration as
-interdiff.
-
-Heiko Voigt (4):
-  add missing && to submodule-merge testcase
-  teach ref iteration module about submodules
-  setup_revisions(): allow walking history in a submodule
-  implement automatic fast-forward merge for submodules
-
- cache.h                    |    3 +
- merge-recursive.c          |    9 ++-
- path.c                     |   38 ++++++++++
- refs.c                     |  149 +++++++++++++++++++++++++++++++---------
- refs.h                     |    8 ++
- revision.c                 |   32 +++++----
- revision.h                 |    1 +
- submodule.c                |  162 ++++++++++++++++++++++++++++++++++++++++++++
- submodule.h                |    2 +
- t/t7405-submodule-merge.sh |  130 +++++++++++++++++++++++++++++++++--
- 10 files changed, 478 insertions(+), 56 deletions(-)
-
--- 
-1.7.2.rc1.13.g513fa.dirty
-
-diff --git a/submodule.c b/submodule.c
-index 62dcabe..9bc4b80 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -240,7 +240,7 @@ static int find_first_merges(struct object_array *result, const char *path,
- 
- 	/* get all revisions that merge commit a */
- 	snprintf(merged_revision, sizeof(merged_revision), "^%s",
--			find_unique_abbrev(a->object.sha1, 40));
-+			sha1_to_hex(a->object.sha1));
- 	init_revisions(&revs, NULL);
- 	rev_opts.submodule = path;
- 	setup_revisions(sizeof(rev_args)/sizeof(char *)-1, rev_args, &revs, &rev_opts);
-@@ -250,14 +250,15 @@ static int find_first_merges(struct object_array *result, const char *path,
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(&revs)) != NULL) {
- 		struct object *o = &(commit->object);
--		if (in_merge_bases(b, (struct commit **) &o, 1)) {
-+		if (in_merge_bases(b, &commit, 1)) {
- 			add_object_array(o, NULL, &merges);
- 		}
- 	}
- 
- 	/* Now we've got all merges that contain a and b. Prune all
- 	 * merges that contain another found merge and save them in
--	 * result. */
-+	 * result.
-+	 */
- 	for (i = 0; i < merges.nr; i++) {
- 		struct commit *m1 = (struct commit *) merges.objects[i].item;
- 
-@@ -281,17 +282,19 @@ static int find_first_merges(struct object_array *result, const char *path,
- 
- static void print_commit(struct commit *commit)
- {
--	static const char *format = " %h: %m %s";
- 	struct strbuf sb = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
- 	ctx.date_mode = DATE_NORMAL;
--	format_commit_message(commit, format, &sb, &ctx);
--	strbuf_addstr(&sb, "\n");
--	fprintf(stderr, "%s", sb.buf);
-+	format_commit_message(commit, " %h: %m %s", &sb, &ctx);
-+	fprintf(stderr, "%s\n", sb.buf);
+diff --git a/cache.h b/cache.h
+index c9fa3df..32932e8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -641,6 +641,9 @@ extern char *git_pathdup(const char *fmt, ...)
+ /* Return a statically allocated filename matching the sha1 signature */
+ extern char *mkpath(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
+ extern char *git_path(const char *fmt, ...) __attribute__((format (printf, 1, 2)));
++extern char *git_path_submodule(const char *path, const char *fmt, ...)
++	__attribute__((format (printf, 2, 3)));
++
+ extern char *sha1_file_name(const unsigned char *sha1);
+ extern char *sha1_pack_name(const unsigned char *sha1);
+ extern char *sha1_pack_index_name(const unsigned char *sha1);
+diff --git a/path.c b/path.c
+index b4c8d91..e32c61c 100644
+--- a/path.c
++++ b/path.c
+@@ -122,6 +122,44 @@ char *git_path(const char *fmt, ...)
+ 	return cleanup_path(pathname);
  }
  
--int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
--		    const unsigned char a[20], const unsigned char b[20])
-+#define MERGE_WARNING(path, msg) \
-+	warning("Failed to merge submodule %s (%s)", path, msg);
++char *git_path_submodule(const char *path, const char *fmt, ...)
++{
++	char *pathname = get_pathname();
++	struct strbuf buf = STRBUF_INIT;
++	const char *git_dir;
++	va_list args;
++	unsigned len;
 +
-+int merge_submodule(unsigned char result[20], const char *path,
-+		    const unsigned char base[20], const unsigned char a[20],
-+		    const unsigned char b[20])
- {
- 	struct commit *commit_base, *commit_a, *commit_b;
- 	int parent_count;
-@@ -311,7 +314,7 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
- 		return 0;
- 
- 	if (add_submodule_odb(path)) {
--		warning("Failed to merge submodule %s (not checked out)", path);
-+		MERGE_WARNING(path, "not checked out");
- 		return 0;
- 	}
- 
-@@ -319,7 +322,7 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
- 	    !(commit_a = lookup_commit_reference(a)) ||
- 	    !(commit_b = lookup_commit_reference(b)))
- 	{
--		warning("Failed to merge submodule %s (commits not present)", path);
-+		MERGE_WARNING(path, "commits not present");
- 		return 0;
- 	}
- 
-@@ -327,11 +330,11 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
- 	if (!in_merge_bases(commit_base, &commit_a, 1) ||
- 	    !in_merge_bases(commit_base, &commit_b, 1))
- 	{
--		warning("Submodule rewound can not merge");
-+		MERGE_WARNING(path, "commits don't follow merge-base");
- 		return 0;
- 	}
- 
--	/* 1. case a is contained in b or vice versa */
-+	/* Case #1: a is contained in b or vice versa */
- 	if (in_merge_bases(commit_a, &commit_b, 1)) {
- 		hashcpy(result, b);
- 		return 1;
-@@ -341,35 +344,39 @@ int merge_submodule(unsigned char result[20], const char *path, const unsigned c
- 		return 1;
- 	}
- 
--	/* 2. case there are one ore more merges that contain a and b the
--	 * submodule. If there is a single one check it out but leave it
--	 * marked unmerged so the user needs to confirm the resolution */
-+	/* Case #2: There are one or more merges that contain a and b in
-+	 * the submodule. If there is only one, then present it as a
-+	 * suggestion to the user, but leave it marked unmerged so the
-+	 * user needs to confirm the resolution.
-+	 */
- 
- 	/* find commit which merges them */
- 	parent_count = find_first_merges(&merges, path, commit_a, commit_b);
--	if (!parent_count) {
--		warning("Failed to merge submodule %s (merge not found)", path);
--		goto finish;
--	}
-+	switch (parent_count) {
-+		case 0:
-+			MERGE_WARNING(path, "merge following commits not found");
-+			break;
- 
--	if (parent_count != 1) {
--		warning("Failed to merge submodule %s (multiple merges found):", path);
--		for (i = 0; i < merges.nr; i++) {
--			print_commit((struct commit *) merges.objects[i].item);
--		}
--		goto finish;
--	}
-+		case 1:
-+			MERGE_WARNING(path,"not fast-forward");
-+			fprintf(stderr, "Found a possible merge resolution "
-+					"for the submodule:\n");
-+			print_commit((struct commit *) merges.objects[0].item);
-+			fprintf(stderr,
-+				"If this is correct simply add it to the index "
-+				"for example\n"
-+				"by using:\n\n"
-+				"  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
-+				"which will accept this suggestion.\n",
-+				sha1_to_hex(merges.objects[0].item->sha1), path);
-+			break;
- 
--	warning("Failed to merge submodule %s (not fast-forward):\n", path);
--	fprintf(stderr, "Found a possible merge resolution for the submodule:\n");
--	print_commit((struct commit *) merges.objects[0].item);
--	fprintf(stderr, "If this is correct simply add it to the index for example\n"
--			"by using:\n\n"
--			"  git update-index --cacheinfo 160000 %s \"%s\"\n\n"
--			"which will accept this suggestion.\n",
--		sha1_to_hex(merges.objects[0].item->sha1), path);
-+		default:
-+			MERGE_WARNING(path, "multiple merges found");
-+			for (i = 0; i < merges.nr; i++)
-+				print_commit((struct commit *) merges.objects[i].item);
++	len = strlen(path);
++	if (len > PATH_MAX-100)
++		return bad_path;
++
++	strbuf_addstr(&buf, path);
++	if (len && path[len-1] != '/')
++		strbuf_addch(&buf, '/');
++	strbuf_addstr(&buf, ".git");
++
++	git_dir = read_gitfile_gently(buf.buf);
++	if (git_dir) {
++		strbuf_reset(&buf);
++		strbuf_addstr(&buf, git_dir);
 +	}
++	strbuf_addch(&buf, '/');
++
++	if (buf.len >= PATH_MAX)
++		return bad_path;
++	memcpy(pathname, buf.buf, buf.len + 1);
++
++	strbuf_release(&buf);
++	len = strlen(pathname);
++
++	va_start(args, fmt);
++	len += vsnprintf(pathname + len, PATH_MAX - len, fmt, args);
++	va_end(args);
++	if (len >= PATH_MAX)
++		return bad_path;
++	return cleanup_path(pathname);
++}
  
--finish:
- 	free(merges.objects);
+ /* git_mkstemp() - create tmp file honoring TMPDIR variable */
+ int git_mkstemp(char *path, size_t len, const char *template)
+diff --git a/refs.c b/refs.c
+index 6f486ae..c8649b1 100644
+--- a/refs.c
++++ b/refs.c
+@@ -157,7 +157,7 @@ static struct cached_refs {
+ 	char did_packed;
+ 	struct ref_list *loose;
+ 	struct ref_list *packed;
+-} cached_refs;
++} cached_refs, submodule_refs;
+ static struct ref_list *current_ref;
+ 
+ static struct ref_list *extra_refs;
+@@ -229,23 +229,45 @@ void clear_extra_refs(void)
+ 	extra_refs = NULL;
+ }
+ 
+-static struct ref_list *get_packed_refs(void)
++static struct ref_list *get_packed_refs(const char *submodule)
+ {
+-	if (!cached_refs.did_packed) {
+-		FILE *f = fopen(git_path("packed-refs"), "r");
+-		cached_refs.packed = NULL;
++	const char *packed_refs_file;
++	struct cached_refs *refs;
++
++	if (submodule) {
++		packed_refs_file = git_path_submodule(submodule, "packed-refs");
++		refs = &submodule_refs;
++		free_ref_list(refs->packed);
++	} else {
++		packed_refs_file = git_path("packed-refs");
++		refs = &cached_refs;
++	}
++
++	if (!refs->did_packed || submodule) {
++		FILE *f = fopen(packed_refs_file, "r");
++		refs->packed = NULL;
+ 		if (f) {
+-			read_packed_refs(f, &cached_refs);
++			read_packed_refs(f, refs);
+ 			fclose(f);
+ 		}
+-		cached_refs.did_packed = 1;
++		refs->did_packed = 1;
+ 	}
+-	return cached_refs.packed;
++	return refs->packed;
+ }
+ 
+-static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
++static struct ref_list *get_ref_dir(const char *submodule, const char *base,
++				    struct ref_list *list)
+ {
+-	DIR *dir = opendir(git_path("%s", base));
++	DIR *dir;
++	const char *path;
++
++	if (submodule)
++		path = git_path_submodule(submodule, "%s", base);
++	else
++		path = git_path("%s", base);
++
++
++	dir = opendir(path);
+ 
+ 	if (dir) {
+ 		struct dirent *de;
+@@ -261,6 +283,7 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
+ 			struct stat st;
+ 			int flag;
+ 			int namelen;
++			const char *refdir;
+ 
+ 			if (de->d_name[0] == '.')
+ 				continue;
+@@ -270,16 +293,27 @@ static struct ref_list *get_ref_dir(const char *base, struct ref_list *list)
+ 			if (has_extension(de->d_name, ".lock"))
+ 				continue;
+ 			memcpy(ref + baselen, de->d_name, namelen+1);
+-			if (stat(git_path("%s", ref), &st) < 0)
++			refdir = submodule
++				? git_path_submodule(submodule, "%s", ref)
++				: git_path("%s", ref);
++			if (stat(refdir, &st) < 0)
+ 				continue;
+ 			if (S_ISDIR(st.st_mode)) {
+-				list = get_ref_dir(ref, list);
++				list = get_ref_dir(submodule, ref, list);
+ 				continue;
+ 			}
+-			if (!resolve_ref(ref, sha1, 1, &flag)) {
++			if (submodule) {
+ 				hashclr(sha1);
+-				flag |= REF_BROKEN;
+-			}
++				flag = 0;
++				if (resolve_gitlink_ref(submodule, ref, sha1) < 0) {
++					hashclr(sha1);
++					flag |= REF_BROKEN;
++				}
++			} else
++				if (!resolve_ref(ref, sha1, 1, &flag)) {
++					hashclr(sha1);
++					flag |= REF_BROKEN;
++				}
+ 			list = add_ref(ref, sha1, flag, list, NULL);
+ 		}
+ 		free(ref);
+@@ -322,10 +356,16 @@ void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+ 	for_each_rawref(warn_if_dangling_symref, &data);
+ }
+ 
+-static struct ref_list *get_loose_refs(void)
++static struct ref_list *get_loose_refs(const char *submodule)
+ {
++	if (submodule) {
++		free_ref_list(submodule_refs.loose);
++		submodule_refs.loose = get_ref_dir(submodule, "refs", NULL);
++		return submodule_refs.loose;
++	}
++
+ 	if (!cached_refs.did_loose) {
+-		cached_refs.loose = get_ref_dir("refs", NULL);
++		cached_refs.loose = get_ref_dir(NULL, "refs", NULL);
+ 		cached_refs.did_loose = 1;
+ 	}
+ 	return cached_refs.loose;
+@@ -459,7 +499,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
+ 		git_snpath(path, sizeof(path), "%s", ref);
+ 		/* Special case: non-existing file. */
+ 		if (lstat(path, &st) < 0) {
+-			struct ref_list *list = get_packed_refs();
++			struct ref_list *list = get_packed_refs(NULL);
+ 			while (list) {
+ 				if (!strcmp(ref, list->name)) {
+ 					hashcpy(sha1, list->sha1);
+@@ -588,7 +628,7 @@ int peel_ref(const char *ref, unsigned char *sha1)
+ 		return -1;
+ 
+ 	if ((flag & REF_ISPACKED)) {
+-		struct ref_list *list = get_packed_refs();
++		struct ref_list *list = get_packed_refs(NULL);
+ 
+ 		while (list) {
+ 			if (!strcmp(list->name, ref)) {
+@@ -615,12 +655,12 @@ fallback:
+ 	return -1;
+ }
+ 
+-static int do_for_each_ref(const char *base, each_ref_fn fn, int trim,
+-			   int flags, void *cb_data)
++static int do_for_each_ref(const char *submodule, const char *base, each_ref_fn fn,
++			   int trim, int flags, void *cb_data)
+ {
+ 	int retval = 0;
+-	struct ref_list *packed = get_packed_refs();
+-	struct ref_list *loose = get_loose_refs();
++	struct ref_list *packed = get_packed_refs(submodule);
++	struct ref_list *loose = get_loose_refs(submodule);
+ 
+ 	struct ref_list *extra;
+ 
+@@ -657,24 +697,38 @@ end_each:
+ 	return retval;
+ }
+ 
+-int head_ref(each_ref_fn fn, void *cb_data)
++
++static int do_head_ref(const char *submodule, each_ref_fn fn, void *cb_data)
+ {
+ 	unsigned char sha1[20];
+ 	int flag;
+ 
++	if (submodule) {
++		if (resolve_gitlink_ref(submodule, "HEAD", sha1) == 0)
++			return fn("HEAD", sha1, 0, cb_data);
++
++		return 0;
++	}
++
+ 	if (resolve_ref("HEAD", sha1, 1, &flag))
+ 		return fn("HEAD", sha1, flag, cb_data);
++
  	return 0;
  }
-diff --git a/t/t7405-submodule-merge.sh b/t/t7405-submodule-merge.sh
-index 0f568ab..6ec559d 100755
---- a/t/t7405-submodule-merge.sh
-+++ b/t/t7405-submodule-merge.sh
-@@ -75,10 +75,10 @@ test_expect_success 'setup for merge search' '
- 	 echo "file-a" > file-a &&
- 	 git add file-a &&
- 	 git commit -m "sub-a" &&
--	 git checkout -b sub-a) &&
-+	 git branch sub-a) &&
- 	git add sub &&
- 	git commit -m "a" &&
--	git checkout -b a &&
-+	git branch a &&
  
- 	git checkout -b b &&
- 	(cd sub &&
-@@ -101,7 +101,7 @@ test_expect_success 'setup for merge search' '
- 	 git checkout -b sub-d sub-b &&
- 	 git merge sub-c) &&
- 	git commit -a -m "d" &&
--	git checkout -b test b &&
-+	git branch test b &&
- 	cd ..
- '
++int head_ref(each_ref_fn fn, void *cb_data)
++{
++	return do_head_ref(NULL, fn, cb_data);
++}
++
+ int for_each_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/", fn, 0, 0, cb_data);
++	return do_for_each_ref(NULL, "refs/", fn, 0, 0, cb_data);
+ }
  
-@@ -109,7 +109,7 @@ test_expect_success 'merge with one side as a fast-forward of the other' '
- 	(cd merge-search &&
- 	 git checkout -b test-forward b &&
- 	 git merge d &&
--	 git ls-tree test-forward | grep sub | cut -f1 | cut -f3 -d" " > actual &&
-+	 git ls-tree test-forward sub | cut -f1 | cut -f3 -d" " > actual &&
- 	 (cd sub &&
- 	  git rev-parse sub-d > ../expect) &&
- 	 test_cmp actual expect)
-@@ -121,21 +121,21 @@ test_expect_success 'merging should conflict for non fast-forward' '
- 	 (cd sub &&
- 	  git rev-parse sub-d > ../expect) &&
- 	 test_must_fail git merge c 2> actual  &&
--	 grep $(<expect) actual > /dev/null &&
-+	 grep $(cat expect) actual > /dev/null &&
- 	 git reset --hard)
- '
+ int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref(prefix, fn, strlen(prefix), 0, cb_data);
++	return do_for_each_ref(NULL, prefix, fn, strlen(prefix), 0, cb_data);
+ }
  
--test_expect_success 'merging should fail for ambigous common parent' '
-+test_expect_success 'merging should fail for ambiguous common parent' '
- 	cd merge-search &&
--	git checkout -b test-ambigous b &&
-+	git checkout -b test-ambiguous b &&
- 	(cd sub &&
--	 git checkout -b ambigous sub-b &&
-+	 git checkout -b ambiguous sub-b &&
- 	 git merge sub-c &&
- 	 git rev-parse sub-d > ../expect1 &&
--	 git rev-parse ambigous > ../expect2) &&
-+	 git rev-parse ambiguous > ../expect2) &&
- 	test_must_fail git merge c 2> actual &&
--	grep $(<expect1) actual > /dev/null &&
--	grep $(<expect2) actual > /dev/null &&
-+	grep $(cat expect1) actual > /dev/null &&
-+	grep $(cat expect2) actual > /dev/null &&
- 	git reset --hard &&
- 	cd ..
- '
-@@ -154,8 +154,9 @@ test_expect_success 'merging should fail for ambigous common parent' '
- #   \
- #    f (sub-d)
- #
--# A merge should fail because one change points backwards.
--
-+# A merge between e and f should fail because one of the submodule
-+# commits (sub-a) does not descend from the submodule merge-base (sub-b).
-+#
- test_expect_success 'merging should fail for changes that are backwards' '
- 	cd merge-search &&
- 	git checkout -b bb a &&
+ int for_each_tag_ref(each_ref_fn fn, void *cb_data)
+@@ -694,7 +748,7 @@ int for_each_remote_ref(each_ref_fn fn, void *cb_data)
+ 
+ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/replace/", fn, 13, 0, cb_data);
++	return do_for_each_ref(NULL, "refs/replace/", fn, 13, 0, cb_data);
+ }
+ 
+ int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+@@ -734,7 +788,7 @@ int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+ 
+ int for_each_rawref(each_ref_fn fn, void *cb_data)
+ {
+-	return do_for_each_ref("refs/", fn, 0,
++	return do_for_each_ref(NULL, "refs/", fn, 0,
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
+ 
+@@ -958,7 +1012,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *ref, const unsigned char
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-	     !is_refname_available(ref, NULL, get_packed_refs(), 0)) {
++	     !is_refname_available(ref, NULL, get_packed_refs(NULL), 0)) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
+ 	}
+@@ -1021,7 +1075,7 @@ static int repack_without_ref(const char *refname)
+ 	int fd;
+ 	int found = 0;
+ 
+-	packed_ref_list = get_packed_refs();
++	packed_ref_list = get_packed_refs(NULL);
+ 	for (list = packed_ref_list; list; list = list->next) {
+ 		if (!strcmp(refname, list->name)) {
+ 			found = 1;
+@@ -1110,10 +1164,10 @@ int rename_ref(const char *oldref, const char *newref, const char *logmsg)
+ 	if (!symref)
+ 		return error("refname %s not found", oldref);
+ 
+-	if (!is_refname_available(newref, oldref, get_packed_refs(), 0))
++	if (!is_refname_available(newref, oldref, get_packed_refs(NULL), 0))
+ 		return 1;
+ 
+-	if (!is_refname_available(newref, oldref, get_loose_refs(), 0))
++	if (!is_refname_available(newref, oldref, get_loose_refs(NULL), 0))
+ 		return 1;
+ 
+ 	lock = lock_ref_sha1_basic(renamed_ref, NULL, 0, NULL);
+-- 
+1.7.2.rc1.13.g513fa.dirty
