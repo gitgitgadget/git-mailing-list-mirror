@@ -1,80 +1,137 @@
 From: newren@gmail.com
-Subject: [PATCH 0/2] non-incremental mode for fast-export
-Date: Wed,  7 Jul 2010 14:46:00 -0600
-Message-ID: <1278535562-14875-1-git-send-email-newren@gmail.com>
+Subject: [PATCHv2 1/2] fast-export: Fix dropping of files with --import-marks and path limiting
+Date: Wed,  7 Jul 2010 14:46:01 -0600
+Message-ID: <1278535562-14875-2-git-send-email-newren@gmail.com>
+References: <1278535562-14875-1-git-send-email-newren@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 07 22:38:28 2010
+X-From: git-owner@vger.kernel.org Wed Jul 07 22:38:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWbO0-00071p-7D
-	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 22:38:28 +0200
+	id 1OWbOC-0007Ae-G2
+	for gcvg-git-2@lo.gmane.org; Wed, 07 Jul 2010 22:38:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907Ab0GGUiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 16:38:22 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:49786 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751551Ab0GGUiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 16:38:21 -0400
-Received: by pvc7 with SMTP id 7so26696pvc.19
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:38:21 -0700 (PDT)
+	id S1755176Ab0GGUi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 16:38:28 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:53423 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751551Ab0GGUi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Jul 2010 16:38:26 -0400
+Received: by pzk26 with SMTP id 26so13557pzk.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 13:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:x-mailer;
-        bh=EoAwbrQC/Go2+HG6invZVj8HR8hw+C8BHEdeD68mB5g=;
-        b=jdnLMu6aSjQ9HrXWc8TQcpATlWm/WpFYKxN23rVinJIiCgCwyPrOmJPUgJ7MZnsjuW
-         c17olY97hq2dBZ1nt5UVVe3VBrt3ZOo1Vn+1obwqANO5uKn+1aI+bfyuX7OwdpJw22YV
-         NoX560A4U2D4Cos17zuaDVlxui8h1uVQNwxIo=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=UbEssJWVR7c2aFGZMZBqY3G8DYKXQD5FKW0rjL53Bx0=;
+        b=x3uInCOxKL/K58+ovkosvq6sUNwVWSOuJtxYgrvvH2UmS72bUj2Lc6zSvAveNjHQjY
+         V0ECYzr/UacOSYBYZmJUHswBzIyIiXclIhg4kit3gNY4RB0431qAzQvi0OT/b4b28+gF
+         v9sgdgCgD2/DWcksGSfKHONxdIqhcVYG21iQc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:x-mailer;
-        b=kTKVZQJu/mFvlkHOkNkefSXdIW0C77HCLUSpB+0uAz4a0f74liEEBNUWbvIDXj7aaH
-         Ac5fpEL06OnC5FDwZJx+y//+MPcq3rKr6LNWSYqQ4pp9rUEML7t4W+ZhZazqego/H30D
-         6PjC0VHbcJIbA1OQdh32qVi0ZC2zFTgXo2/X4=
-Received: by 10.142.204.17 with SMTP id b17mr23532wfg.137.1278535100346;
-        Wed, 07 Jul 2010 13:38:20 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=udwFMckNg9gH0tbcfqYCUZiJ6XX/8nj8Xu0QFF1y6fSlDGZHcikfwbM2dL9qKKNYLJ
+         22E52KzboUy0/gugcghTS8OnTVQ8tr6fO3/6nbN7NXUkn0vWssdLiuRgyG8sk24hxkav
+         KQsGZM6mlpL24snNIM7404BfO7olyaHEA5jtA=
+Received: by 10.142.142.12 with SMTP id p12mr8597224wfd.13.1278535104579;
+        Wed, 07 Jul 2010 13:38:24 -0700 (PDT)
 Received: from localhost.localdomain (c-76-113-59-120.hsd1.nm.comcast.net [76.113.59.120])
-        by mx.google.com with ESMTPS id c26sm7589013rvf.15.2010.07.07.13.38.18
+        by mx.google.com with ESMTPS id c26sm7589013rvf.15.2010.07.07.13.38.20
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 07 Jul 2010 13:38:18 -0700 (PDT)
+        Wed, 07 Jul 2010 13:38:21 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc1.14.g19914
+In-Reply-To: <1278535562-14875-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150502>
 
-This patch series fixes silently dropped files in uses of fast-export
-involving both --import-marks and limiting files by path.  It also
-adds a new feature: a --full-tree option to switch from incremental to
-comprehensive handling of files in commits.  The two changes are
-related in that the bugfix consists of simply automatically activating
-the new feature in a case where it is required for correct operation.
+From: Elijah Newren <newren@gmail.com>
 
-This obsoletes my previous (single) patch submission about the
---full-tree option.  Changes since that submission include splitting
-this into two patches, automatically enabling the feature when needed
-for correct behavior, and providing more explicit testcases that
-probably explain the feature better.
+Since fast-export operates by listing file changes since the (first) parent
+commit, when using --import-marks and path limiting and using a wider list
+of paths than in previous runs, files from the new path(s) will silently be
+omitted from the result unless or until a commit which explicitly changes
+those files.  The resulting repository in such cases is broken and makes no
+sense.
 
-Since we're in feature freeze, it may make sense to split this patch
-series so that the first patch can be applied now and keep the second
-patch in pu until feature freeze is over (the series is currently
-based on maint).  Since the second patch depends on the first, though,
-I thought it made sense to submit them together; let me know if you'd
-rather I submitted them in some other manner.
+This commit fixes this by having fast-export work with complete trees
+instead of incremental changes (when both --import-marks and path limiting
+are used).  It works by issuing a 'deleteall' directive with each commit and
+then listing the full set of files that make up that commit, rather than
+just showing the list of files that have changed since the (first) parent
+commit.
 
-(I'm not sure who to cc on this; other than Dscho who is out, I appear
-to be the biggest contributor to fast-export.)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin/fast-export.c  |    9 ++++++++-
+ t/t9350-fast-export.sh |    9 +++++++++
+ 2 files changed, 17 insertions(+), 1 deletions(-)
 
-Elijah Newren (2):
-      fast-export: Fix dropping of files with --import-marks and path limiting
-      fast-export: Add a --full-tree option
-
- Documentation/git-fast-export.txt |    6 +++
- builtin/fast-export.c             |   11 +++++-
- t/t9350-fast-export.sh            |   79 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 95 insertions(+), 1 deletions(-)
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index c6dd71a..25d13a1 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -27,6 +27,7 @@ static enum { ABORT, VERBATIM, WARN, STRIP } signed_tag_mode = ABORT;
+ static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ABORT;
+ static int fake_missing_tagger;
+ static int no_data;
++static int full_tree = 0;
+ 
+ static int parse_opt_signed_tag_mode(const struct option *opt,
+ 				     const char *arg, int unset)
+@@ -241,7 +242,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 		message += 2;
+ 
+ 	if (commit->parents &&
+-	    get_object_mark(&commit->parents->item->object) != 0) {
++	    get_object_mark(&commit->parents->item->object) != 0 &&
++	    !full_tree) {
+ 		parse_commit(commit->parents->item);
+ 		diff_tree_sha1(commit->parents->item->tree->object.sha1,
+ 			       commit->tree->object.sha1, "", &rev->diffopt);
+@@ -281,6 +283,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 		i++;
+ 	}
+ 
++	if (full_tree)
++		printf("deleteall\n");
+ 	log_tree_diff_flush(rev);
+ 	rev->diffopt.output_format = saved_output_format;
+ 
+@@ -608,6 +612,9 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 	if (import_filename)
+ 		import_marks(import_filename);
+ 
++	if (import_filename && revs.prune_data)
++		full_tree = 1;
++
+ 	get_tags_and_duplicates(&revs.pending, &extra_refs);
+ 
+ 	if (prepare_revision_walk(&revs))
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index d43f37c..6069e1f 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -355,6 +355,15 @@ test_expect_failure 'no exact-ref revisions included' '
+ 	)
+ '
+ 
++test_expect_success 'path limiting with import-marks does not lose unmodified files'        '
++	git checkout -b simple marks~2 &&
++	git fast-export --export-marks=marks simple -- file > /dev/null &&
++	echo more content >> file &&
++	test_tick &&
++	git commit -mnext file &&
++	git fast-export --import-marks=marks simple -- file file0 | grep file0
++'
++
+ test_expect_success 'set-up a few more tags for tag export tests' '
+ 	git checkout -f master &&
+ 	HEAD_TREE=`git show -s --pretty=raw HEAD | grep tree | sed "s/tree //"` &&
+-- 
+1.7.2.rc1.14.g19914
