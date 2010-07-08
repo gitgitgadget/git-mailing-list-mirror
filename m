@@ -1,97 +1,164 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Chronicles, updated?
-Date: Thu, 08 Jul 2010 06:31:10 -0700
-Message-ID: <7viq4qqew1.fsf@alter.siamese.dyndns.org>
-References: <201007081057.51946.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] t9118 (git-svn): prevent early failure from taking down
+ later tests
+Date: Thu, 8 Jul 2010 08:36:02 -0500
+Message-ID: <20100708133602.GA1882@burratino>
+References: <4C352EB5.5020005@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 08 15:31:28 2010
+Cc: git@vger.kernel.org, Torsten Schmutzler <git-ts@theblacksun.eu>,
+	Eric Wong <normalperson@yhbt.net>
+To: A Large Angry SCM <gitzilla@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 15:37:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWrCK-0000zv-Fn
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 15:31:28 +0200
+	id 1OWrHg-0004vv-VW
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 15:37:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755303Ab0GHNbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 09:31:23 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61695 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754674Ab0GHNbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 09:31:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5141DC2FE1;
-	Thu,  8 Jul 2010 09:31:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0xkVyf8t12mm90pZegFTOo6NBak=; b=HAfl7T
-	zaninoNyrB/X6ULvPq928AYaWQs2vUyeIDYEsUSjn5GZcWJbDZzE8fd5lrbhvv3p
-	dHOefwyrqLtahnbWvXs2LLUTQ0w8jLXGHqcQh1TafVLLWvzrGjUCDDozeaZa6qI8
-	Qu5ACivlbrXsG4WFON/86/PldsEndDomAl8HQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MLpEZwWm3sR6I/ZfH4Afn/3vA0RGbs06
-	0SM0RRBydSlfXC4y+QF/k9gS36yLSHzfnFqIgkX65tQOAWoDPGnH+8+qyFU7gD2p
-	T61tyk+8phbGAIsDMFQwyay0py8KGb6++r8rks+un0sz8hfjADnctxzHO1zgO+Kl
-	h7LVQpucXWY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 19F99C2FDE;
-	Thu,  8 Jul 2010 09:31:19 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34B88C2FDC; Thu,  8 Jul
- 2010 09:31:15 -0400 (EDT)
-In-Reply-To: <201007081057.51946.jnareb@gmail.com> (Jakub Narebski's message
- of "Thu\, 8 Jul 2010 10\:57\:48 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1755985E-8A95-11DF-9EF1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757757Ab0GHNgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 09:36:48 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46391 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757738Ab0GHNgq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jul 2010 09:36:46 -0400
+Received: by iwn7 with SMTP id 7so889880iwn.19
+        for <git@vger.kernel.org>; Thu, 08 Jul 2010 06:36:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=V7gcBraHN+RdNyIMDji0oC2DO6YGF6VkbggFUH09ibQ=;
+        b=XtYnuxAOnQPazU4pJHGYEY6aZreT4QOB8LTVW1fpO6JNoRAH9HpMkhqm8kiV0wTw63
+         zGSz53M0LDfEfrympkjqoFM1mGX+V5eu+1gwgdHZ4doidg4nLaJqlgtPTl7B4Dt9KHv0
+         vS7RoHE7xR1Ldel1/KvjLT+/xQ95UAF+eQtuE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=qsXox88dBUFFP6NklR95ukVKBBQXdRgyoyiT9uxERNXLEO9RFyiFTaKHEZfs13OyLT
+         jTQLmtQmUUzoh+fVdIFM5RZyFqZ25yQh7d08iJoOU11TUnOsdydN9fFNneeHXvbP5c4A
+         YgAZRNTk/uclKfaBykeYaevbDbBIqSJagB/j4=
+Received: by 10.42.6.195 with SMTP id b3mr2644157icb.14.1278596206354;
+        Thu, 08 Jul 2010 06:36:46 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id h8sm34144915ibk.15.2010.07.08.06.36.45
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 08 Jul 2010 06:36:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4C352EB5.5020005@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150574>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+When test #2 fails, the cwd is project/, causing all the
+remaining tests in the same script to get confused and fail.
 
-> Now that's Git Together '10 comes near, I wonder if it would be possible
-> to have updated "Git Chronicles".  It was two years of development ago.
-> Hopefuly Junio still has tools he used to generate data for this talk.
+So in the spirit of v1.7.1.1~53^2~10 (t5550-http-fetch: Use subshell
+for repository operations, 2010-04-17), use a subshell for svn
+working copy operations.  This way, the cwd will reliably return
+to the top of the trash directory and later tests can still be run
+when a command has failed.
 
-The tools are unfortunately very small parts of the story.
+Reported-by: A Large Angry SCM <gitzilla@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+A Large Angry SCM wrote:
 
-> One of graphs shown was growth of git codebase and of git contributors.
-> Did git development stabilized during those two years since 2008, or
-> does it still reads as active rather than stable development?
->
-> Another interesting graphs was plot showing number of surviving lines 
-> added in a give release relative to mumber of all lines added in said 
-> release.  This was used to detect which releases were important ones.
-> Were there any releases between 2008 and 2010 of significant importance?
+> *** t9118-git-svn-funky-branch-names.sh ***
+> ok 1 - setup svnrepo
+> not ok - 2 test clone with funky branch names
 
-These two are both interesting questions to ask, and luckily they are
-mostly mechanical.  I'll try to dig up the tools to help generate them.
+Relates to an svn change from some point between 1.5.1 and 1.6.12.
+Not solved yet.  See
+<http://thread.gmane.org/gmane.comp.version-control.git/146498/focus=150549>.
 
-> The slides for "Git Chronicles" from 2008 closed with timelines of git 
-> features.  Were there any important user-visible features added since 
-> 2008 (notes, sparse checkout, "smart" HTTP)?
+> not ok - 3 test dcommit to funky branch
+> not ok - 4 test dcommit to scary branch
+> not ok - 5 test dcommit to trailing_dotlock branch
 
-This was produced manually, out of release notes, blame output from the
-Documentation/, as "feature dates" cannot be discerned mechanically
-(e.g. history of "blame annotate shootout" needs to be written by somebody
-who can tell that the current "git blame" came from "git pickaxe"
-experiment, and all three variants were written from the general algorithm
-description without code I wrote a long time ago).
+Collateral damage.  How about this patch?
 
-> What might be also interesting is a descriotpion of how some important 
-> feature came into being, with hint of an idea, discussions, prototypes, 
-> failed starts, dropped patches, reworkings, accepted version and then
-> improvements.  If one is not watching git mailing list regularly for a 
-> longer time, what one sees is the final product.  One doesn't know what 
-> it might to take to get a large feature into git...
+ t/t9118-git-svn-funky-branch-names.sh |   46 ++++++++++++++++++---------------
+ 1 files changed, 25 insertions(+), 21 deletions(-)
 
-Yes, it would be very interesting.  Will you volunteer to be one of the
-git chroniclers?  It was a lot of work back then, and I don't think I can
-do this properly as a two-day hack-job by myself.
+diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
+index 7d7acc3..5dbea59 100755
+--- a/t/t9118-git-svn-funky-branch-names.sh
++++ b/t/t9118-git-svn-funky-branch-names.sh
+@@ -34,42 +34,46 @@ test_expect_success 'setup svnrepo' '
+ 
+ test_expect_success 'test clone with funky branch names' '
+ 	git svn clone -s "$svnrepo/pr ject" project &&
+-	cd project &&
++	(
++		cd project &&
+ 		git rev-parse "refs/remotes/fun%20plugin" &&
+ 		git rev-parse "refs/remotes/more%20fun%20plugin!" &&
+ 		git rev-parse "refs/remotes/$scary_ref" &&
+ 		git rev-parse "refs/remotes/%2Eleading_dot" &&
+ 		git rev-parse "refs/remotes/trailing_dot%2E" &&
+ 		git rev-parse "refs/remotes/trailing_dotlock%2Elock" &&
+-		git rev-parse "refs/remotes/not-a%40{0}reflog" &&
+-	cd ..
++		git rev-parse "refs/remotes/not-a%40{0}reflog"
++	)
+ 	'
+ 
+ test_expect_success 'test dcommit to funky branch' "
+-	cd project &&
+-	git reset --hard 'refs/remotes/more%20fun%20plugin!' &&
+-	echo hello >> foo &&
+-	git commit -m 'hello' -- foo &&
+-	git svn dcommit &&
+-	cd ..
++	(
++		cd project &&
++		git reset --hard 'refs/remotes/more%20fun%20plugin!' &&
++		echo hello >> foo &&
++		git commit -m 'hello' -- foo &&
++		git svn dcommit
++	)
+ 	"
+ 
+ test_expect_success 'test dcommit to scary branch' '
+-	cd project &&
+-	git reset --hard "refs/remotes/$scary_ref" &&
+-	echo urls are scary >> foo &&
+-	git commit -m "eep" -- foo &&
+-	git svn dcommit &&
+-	cd ..
++	(
++		cd project &&
++		git reset --hard "refs/remotes/$scary_ref" &&
++		echo urls are scary >> foo &&
++		git commit -m "eep" -- foo &&
++		git svn dcommit
++	)
+ 	'
+ 
+ test_expect_success 'test dcommit to trailing_dotlock branch' '
+-	cd project &&
+-	git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
+-	echo who names branches like this anyway? >> foo &&
+-	git commit -m "bar" -- foo &&
+-	git svn dcommit &&
+-	cd ..
++	(
++		cd project &&
++		git reset --hard "refs/remotes/trailing_dotlock%2Elock" &&
++		echo who names branches like this anyway? >> foo &&
++		git commit -m "bar" -- foo &&
++		git svn dcommit
++	)
+ 	'
+ 
+ stop_httpd
+-- 
+1.7.2.rc1.527.gff41c3.dirty
