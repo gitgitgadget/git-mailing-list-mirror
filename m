@@ -1,298 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.2-rc2
-Date: Wed, 07 Jul 2010 16:52:40 -0700
-Message-ID: <7vhbkasvcn.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2010, #01; Wed, 7)
+Date: Thu, 8 Jul 2010 00:22:37 +0000
+Message-ID: <AANLkTilieTlod_GRCzyVz01JRvn73GH2cnz5EnqLgqyv@mail.gmail.com>
+References: <7vlj9msve4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Jul 08 01:53:03 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 02:22:46 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1OWeQI-0003Wg-S7
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 08 Jul 2010 01:53:03 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OWet2-00009e-5K
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 02:22:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757978Ab0GGXww convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 7 Jul 2010 19:52:52 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38594 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757089Ab0GGXwu convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 7 Jul 2010 19:52:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A4532C22DA;
-	Wed,  7 Jul 2010 19:52:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=PmW6lUwu9ttULr9CTwfs4hQf7
-	Z8=; b=rTue7HObKsJTNM2v1a9v5zThHR0Nz8d8aWI+AAMaVmwNCROVusBKmcCz4
-	CtHW8jY/rQ7p2LZ51mfvINEMyCeL1Ws/U3/Tzd+zakTEDXA9+bna9SvLIe2uSylH
-	PgS/jw3DT2TQnau1Nu3l7IPtNV5WVb2EXerPNRj1U/0peynLMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=kxtuIZxHwXfcnQTb/pi
-	rr2ZzZThF9SLg9JCJ8QBcvgGcDx6FzsqmUSXG8/sVDENWNIdFlDSwwdYiQQxcp2X
-	pD5tD5ZeKo7+aWkJQ1IJW6/IDqR/oc8AMU7G1XRYRxJ9e1taNboT+G7HmiYogBOm
-	cTVVLZ+8jAY8VfilxjPqmpKc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71BE5C22D9;
-	Wed,  7 Jul 2010 19:52:46 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3FFF6C22D8; Wed,  7 Jul
- 2010 19:52:42 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BDED9EBE-8A22-11DF-BAE4-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1758179Ab0GHAWi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Jul 2010 20:22:38 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46809 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757260Ab0GHAWh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 20:22:37 -0400
+Received: by iwn7 with SMTP id 7so273818iwn.19
+        for <git@vger.kernel.org>; Wed, 07 Jul 2010 17:22:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+bc7+HmoklB8f9saS0zgvHpkVOdAwEaij/vWZGuKtq0=;
+        b=HZWrEdXHk2Kydvk+NBWx0QtQSWZQMykk/MI9CRiffFBjeHxJgfLN+zL3ZP8p4jMPTf
+         kb4S+bUBD9wpolwRbkP1x57YAU08SGaW1sNwByMo+a61uYOheV+6u47FvIKR3li7SSnR
+         QeB0mUMmwFnXHlKl2L+UKRnhoaD8jmx8+dba8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=waCWzuLlMIWQN7gcgRRcArayX5t0iR/7gfaUiJF7rtWh3d+XY2DHipL3vqpjz7L3Iu
+         siZJLih9Uf723lpnIel7zQfmklkOh5OnbJIVeQx71byhBjTG+7axh4iO6LK7nNOhom6O
+         pYfSMqZjUp+vWAsoR01EXBXbBqymb/2G9w0tQ=
+Received: by 10.231.37.136 with SMTP id x8mr7528298ibd.25.1278548557058; Wed, 
+	07 Jul 2010 17:22:37 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 7 Jul 2010 17:22:37 -0700 (PDT)
+In-Reply-To: <7vlj9msve4.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150516>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150517>
 
-A release candidate Git 1.7.2-rc2 is available at the usual places
-for testing:
+On Wed, Jul 7, 2010 at 23:51, Junio C Hamano <gitster@pobox.com> wrote:
 
-  http://www.kernel.org/pub/software/scm/git/
+> [Graduated to "master"]
+>
+> * ab/tap (2010-06-28) 7 commits
 
-  git-1.7.2.rc2.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.2.rc2.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.2.rc2.tar.{gz,bz2}		(preformatted docs)
+Yay, I can prove master now :)
 
-The RPM binary packages for a few architectures are found in:
+> * ab/i18n (2010-06-23) 1 commit
+> =C2=A0- Add infrastructure for translating Git with gettext
 
-  testing/git-*-1.7.2.rc2-1.fc11.$arch.rpm	(RPM)
+Is there anything I can do to help this along, or is it OK and just
+needs to cook a bit more?
 
+I don't know if you missed it but as a follow-up to "What's cooking in
+git.git (Jun 2010, #04; Wed, 23)" I asked [1] what the status of a few
+patches I've submitted are that have seemingly been forgotten.
 
-Git v1.7.2 Release Notes (draft)
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D
+It'd be nice to know if they were rejected, forgotten or if you just
+didn't have time to check them out yet, so I can act appropriately on
+my end. And what I should in general do in situations like those
+(SubmittingPatches doesn't say), i.e. should I just wait or keep
+re-submitting them?
 
-Updates since v1.7.1
---------------------
+Thanks.
 
- * core.eol configuration and text/eol attributes are the new way to co=
-ntrol
-   the end of line conventions for files in the working tree.
-
- * core.autocrlf has been made safer - it will now only handle line
-   endings for new files and files that are LF-only in the
-   repository. To normalize content that has been checked in with
-   CRLF, use the new eol/text attributes.
-
- * The whitespace rules used in "git apply --whitespace" and "git diff"
-   gained a new member in the family (tab-in-indent) to help projects w=
-ith
-   policy to indent only with spaces.
-
- * When working from a subdirectory, by default, git does not look for =
-its
-   metadirectory ".git" across filesystems, primarily to help people wh=
-o
-   have invocations of git in their custom PS1 prompts, as being outsid=
-e
-   of a git repository would look for ".git" all the way up to the root
-   directory, and NFS mounts are often slow.  DISCOVERY_ACROSS_FILESYST=
-EM
-   environment variable can be used to tell git not to stop at a
-   filesystem boundary.
-
- * Usage help messages generated by parse-options library (i.e. most
-   of the Porcelain commands) are sent to the standard output now.
-
- * ':/<string>' notation to look for a commit now takes regular express=
-ion
-   and it is not anchored at the beginning of the commit log message
-   anymore (this is a backward incompatible change).
-
- * "git" wrapper learned "-c name=3Dvalue" option to override configura=
-tion
-   variable from the command line.
-
- * Improved portability for various platforms including older SunOS,
-   HP-UX 10/11, AIX, Tru64, etc. and platforms with Python 2.4.
-
- * The message from "git am -3" has been improved when conflict
-   resolution ended up making the patch a no-op.
-
- * "git blame" applies the textconv filter to the contents it works
-   on, when available.
-
- * "git checkout --orphan newbranch" is similar to "-b newbranch" but
-   prepares to create a root commit that is not connected to any existi=
-ng
-   commit.
-
- * "git cherry-pick" learned to pick a range of commits
-   (e.g. "cherry-pick A..B" and "cherry-pick --stdin"), so did "git
-   revert"; these do not support the nicer sequencing control "rebase
-   [-i]" has, though.
-
- * "git cherry-pick" and "git revert" learned --strategy option to spec=
-ify
-   the merge strategy to be used when performing three-way merges.
-
- * "git cvsserver" can be told to use pserver; its password file can be
-   stored outside the repository.
-
- * The output from the textconv filter used by "git diff" can be cached=
- to
-   speed up their reuse.
-
- * "git diff --word-diff=3D<mode>" extends the existing "--color-words"
-   option, making it more useful in color-challenged environments.
-
- * The regexp to detect function headers used by "git diff" for PHP has
-   been enhanced for visibility modifiers (public, protected, etc.) to
-   better support PHP5.
-
- * "diff.noprefix" configuration variable can be used to implicitly
-   ask for "diff --no-prefix" behaviour.
-
- * "git for-each-ref" learned "%(objectname:short)" that gives the obje=
-ct
-   name abbreviated.
-
- * "git format-patch" learned --signature option and format.signature
-   configuration variable to customize the e-mail signature used in the
-   output.
-
- * Various options to "git grep" (e.g. --count, --name-only) work bette=
-r
-   with binary files.
-
- * "git grep" learned "-Ovi" to open the files with hits in your editor=
-=2E
-
- * "git help -w" learned "chrome" and "chromium" browsers.
-
- * "git log --decorate" shows commit decorations in various colours.
-
- * "git log --follow <path>" follows across copies (it used to only fol=
-low
-   renames).  This may make the processing more expensive.
-
- * "git log --pretty=3Dformat:<template>" specifier learned "% <somethi=
-ng>"
-   magic that inserts a space only when %<something> expands to a
-   non-empty string; this is similar to "%+<something>" magic, but is
-   useful in a context to generate a single line output.
-
- * "git notes prune" learned "-n" (dry-run) and "-v" options, similar t=
-o
-   what "git prune" has.
-
- * "git patch-id" can be fed a mbox without getting confused by the
-   signature line in the format-patch output.
-
- * "git remote" learned "set-branches" subcommand.
-
- * "git rev-list A..B" learned --ancestry-path option to further limit
-   the result to the commits that are on the ancestry chain between A a=
-nd
-   B (i.e. commits that are not descendants of A are excluded).
-
- * "git show -5" is equivalent to "git show --do-walk 5"; this is simil=
-ar
-   to the update to make "git show master..next" walk the history,
-   introduced in 1.6.4.
-
- * "git status [-s] --ignored" can be used to list ignored paths.
-
- * "git status -s -b" shows the current branch in the output.
-
- * "git status" learned "--ignore-submodules" option.
-
- * Various "gitweb" enhancements and clean-ups, including syntax
-   highlighting, "plackup" support for instaweb, .fcgi suffix to run
-   it as FastCGI script, etc.
-
- * The test harness has been updated to produce TAP-friendly output.
-
-
-=46ixes since v1.7.1
-------------------
-
-All of the fixes in v1.7.1.X maintenance series are included in this
-release, unless otherwise noted.
-
- * We didn't URL decode "file:///path/to/repo" correctly when path/to/r=
-epo
-   had percent-encoded characters (638794c, 9d2e942, ce83eda, 3c73a1d).
-
- * "git clone" did not configure remote.origin.url correctly for bare
-   clones (df61c889).
-
- * "git diff --graph" works better with "--color-words" and other optio=
-ns
-   (81fa024..4297c0a).
-
- * "git diff" could show ambiguous abbreviation of blob object names on
-   its "index" line (3e5a188).
-
- * "git reset --hard" started from a wrong directory and a working tree=
- in
-   a nonstandard location is in use got confused (560fb6a1).
-
-----------------------------------------------------------------
-
-Changes since v1.7.2-rc1 are as follows:
-
-Brandon Casey (2):
-      t/t9700/test.pl: don't access private object members, use public =
-access methods
-      t/t0006: specify timezone as EST5 not EST to comply with POSIX
-
-Chris Packham (1):
-      Documentation/git-gc.txt: add reference to githooks
-
-Dylan Reid (1):
-      xdiff: optimise for no whitespace difference when ignoring whites=
-pace.
-
-Heiko Voigt (1):
-      add missing && to submodule-merge testcase
-
-Jakub Narebski (1):
-      gitweb: Move evaluate_gitweb_config out of run_request
-
-Jeff King (3):
-      t0006: test timezone parsing
-      parse_date: fix signedness in timezone calculation
-      test-date: fix sscanf type conversion
-
-Jonathan Nieder (1):
-      t/README: document more test helpers
-
-Junio C Hamano (4):
-      Updates from the list to 1.7.2 Release Notes
-      t/README: proposed rewording...
-      backmerge a few more fixes to 1.7.1.X series
-      Git 1.7.2-rc2
-
-Michael J Gruber (1):
-      rerere.txt: Document forget subcommand
-
-Pierre Habouzit (1):
-      fix git branch -m in presence of cross devices
-
-Uwe Kleine-K=C3=B6nig (1):
-      rev-parse: fix --parse-opt --keep-dashdash --stop-at-non-option
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (13):
-      test-lib: Adjust output to be valid TAP format
-      test-lib: Make the test_external_* functions TAP-aware
-      test-lib: output a newline before "ok" under a TAP harness
-      tests: Skip tests in a way that makes sense under TAP
-      tests: Say "pass" rather than "ok" on empty lines for TAP
-      t9700: Use Test::More->builder, not $Test::Builder::Test
-      t/README: The trash is in 't/trash directory.$name'
-      t/README: Typo: paralell -> parallel
-      t/README: Document the prereq functions, and 3-arg test_*
-      t/README: Document test_external*
-      t/README: Document test_expect_code
-      t/README: Add a section about skipping tests
-      t/README: Document the do's and don'ts of tests
+1. (in <AANLkTil8zpoBSOih2sVQV33_GxPao4why3EOGGvPxE-u@mail.gmail.com>
+   / http://www.spinics.net/lists/git/msg133946.html)
