@@ -1,97 +1,97 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Thu, 08 Jul 2010 14:21:35 +0100
-Message-ID: <1278595295.2668.10.camel@wpalmer.simply-domain>
-References: <20100701150331.GA12851@sigill.intra.peff.net>
-	 <20100701153842.GA15466@sigill.intra.peff.net>
-	 <20100702192612.GM1333@thunk.org>
-	 <20100703080618.GA10483@sigill.intra.peff.net>
-	 <20100704005543.GB6384@thunk.org>
-	 <20100705122723.GB21146@sigill.intra.peff.net>
-	 <20100705141012.GA25518@thunk.org>
-	 <20100706115826.GA15413@sigill.intra.peff.net>
-	 <1278430303.32094.15.camel@wpalmer.simply-domain>
-	 <20100706165336.GJ25518@thunk.org>
-	 <20100708112802.GA2294@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git Chronicles, updated?
+Date: Thu, 08 Jul 2010 06:31:10 -0700
+Message-ID: <7viq4qqew1.fsf@alter.siamese.dyndns.org>
+References: <201007081057.51946.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: tytso@mit.edu, Avery Pennarun <apenwarr@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 08 15:29:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 15:31:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWr9x-0007d6-Ey
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 15:29:01 +0200
+	id 1OWrCK-0000zv-Fn
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 15:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755711Ab0GHN2y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 09:28:54 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:59047 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755479Ab0GHN2x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 09:28:53 -0400
-Received: by wwb24 with SMTP id 24so3813360wwb.1
-        for <git@vger.kernel.org>; Thu, 08 Jul 2010 06:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=qO5D1yg8H0uAZSDyd2j36ZaMp42pH0c5/hJWR/TocpU=;
-        b=LMY7aZYurnDEgZh8DLZPcpemvCfmYIlk9mXScKb1XG2Z0xB+RfowLRxb37dR1QZGpz
-         9YDL7s5h+PaMK+V3q9Jf72MOQH91IDmRzbNljUo8hS3uUFi8Kkzz7KZf8btHkf569C98
-         tWi5KoyjqQ7cEGYxvNjPSAgTrm70GwCX06ADM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=ANnQ0l+/H7jzgab3TaKnOaZ2jgzXrDGoFVn/i58YhH6xwlEho7loxQxkP5o6Yayv78
-         KylBE6BaCeSZGOk0MWuTuvwrfAf7s5OKF5rc2oAVC6sMESOXqCsZzG3gOA2HFs3Y0hpX
-         MWrjFcQWTGPMhNhgYHGMMz40SQEB5zJUE+A/o=
-Received: by 10.227.135.65 with SMTP id m1mr6650832wbt.212.1278595299233;
-        Thu, 08 Jul 2010 06:21:39 -0700 (PDT)
-Received: from [192.168.2.64] ([193.164.118.24])
-        by mx.google.com with ESMTPS id p29sm51187024wbc.7.2010.07.08.06.21.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 08 Jul 2010 06:21:38 -0700 (PDT)
-In-Reply-To: <20100708112802.GA2294@sigill.intra.peff.net>
-X-Mailer: Evolution 2.28.3 
+	id S1755303Ab0GHNbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 09:31:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61695 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754674Ab0GHNbW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jul 2010 09:31:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5141DC2FE1;
+	Thu,  8 Jul 2010 09:31:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0xkVyf8t12mm90pZegFTOo6NBak=; b=HAfl7T
+	zaninoNyrB/X6ULvPq928AYaWQs2vUyeIDYEsUSjn5GZcWJbDZzE8fd5lrbhvv3p
+	dHOefwyrqLtahnbWvXs2LLUTQ0w8jLXGHqcQh1TafVLLWvzrGjUCDDozeaZa6qI8
+	Qu5ACivlbrXsG4WFON/86/PldsEndDomAl8HQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MLpEZwWm3sR6I/ZfH4Afn/3vA0RGbs06
+	0SM0RRBydSlfXC4y+QF/k9gS36yLSHzfnFqIgkX65tQOAWoDPGnH+8+qyFU7gD2p
+	T61tyk+8phbGAIsDMFQwyay0py8KGb6++r8rks+un0sz8hfjADnctxzHO1zgO+Kl
+	h7LVQpucXWY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 19F99C2FDE;
+	Thu,  8 Jul 2010 09:31:19 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 34B88C2FDC; Thu,  8 Jul
+ 2010 09:31:15 -0400 (EDT)
+In-Reply-To: <201007081057.51946.jnareb@gmail.com> (Jakub Narebski's message
+ of "Thu\, 8 Jul 2010 10\:57\:48 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1755985E-8A95-11DF-9EF1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150573>
 
-On Thu, 2010-07-08 at 07:28 -0400, Jeff King wrote:
-> On Tue, Jul 06, 2010 at 12:53:36PM -0400, tytso@mit.edu wrote:
-> Whatever we do with the optimization, I do agree with your suggestion at
-> least for "git commit" to avoid making such commits.  Rejecting them
-> during fetchs and pushes would be a nice, too, but should probably just
-> be a warning at first, in case you have to pull from somebody with an
-> older git...[snip]
-> Yeah. I think the real question is what the default for that parameter
-> should be: pessimistic but always correct, optimistic but possibly
-> incorrect in the face of skew, or auto-tuned per-repository.
-> -Peff
+Jakub Narebski <jnareb@gmail.com> writes:
 
-I think these two go hand-in-hand, and would resolve most of my issues
-with it. Auto-tune, starting pessimistically, but then using something
-more-optimized after something like gc has detected that it's okay. On
-pull from an older repository (which I see as happening very frequently,
-I add remotes much more often than I do a straight "clone"), a warning
-and an auto-tune to something which would account for the newly-fetched
-bad data.
+> Now that's Git Together '10 comes near, I wonder if it would be possible
+> to have updated "Git Chronicles".  It was two years of development ago.
+> Hopefuly Junio still has tools he used to generate data for this talk.
 
-My only other objection is more wishy-washy and/or lazy: currently a
-"commit" doesn't need to know anything at all about what it references
-in order to be considered a valid object, but saying "the time of commit
-needs to be equal to or greater than the parent commit" means that a
-tool.. and by "tool" I mean "wretched abuse of cat-file and sed", which
-is sometimes just faster to throw-together than filter-branch ..needs to
-be more aware of what it's doing. Yes, it's a horrible abuse, but I was
-always under the impression that low-level abuse of the system is
-something which git supports, by virtue of having such a simple model.
+The tools are unfortunately very small parts of the story.
+
+> One of graphs shown was growth of git codebase and of git contributors.
+> Did git development stabilized during those two years since 2008, or
+> does it still reads as active rather than stable development?
+>
+> Another interesting graphs was plot showing number of surviving lines 
+> added in a give release relative to mumber of all lines added in said 
+> release.  This was used to detect which releases were important ones.
+> Were there any releases between 2008 and 2010 of significant importance?
+
+These two are both interesting questions to ask, and luckily they are
+mostly mechanical.  I'll try to dig up the tools to help generate them.
+
+> The slides for "Git Chronicles" from 2008 closed with timelines of git 
+> features.  Were there any important user-visible features added since 
+> 2008 (notes, sparse checkout, "smart" HTTP)?
+
+This was produced manually, out of release notes, blame output from the
+Documentation/, as "feature dates" cannot be discerned mechanically
+(e.g. history of "blame annotate shootout" needs to be written by somebody
+who can tell that the current "git blame" came from "git pickaxe"
+experiment, and all three variants were written from the general algorithm
+description without code I wrote a long time ago).
+
+> What might be also interesting is a descriotpion of how some important 
+> feature came into being, with hint of an idea, discussions, prototypes, 
+> failed starts, dropped patches, reworkings, accepted version and then
+> improvements.  If one is not watching git mailing list regularly for a 
+> longer time, what one sees is the final product.  One doesn't know what 
+> it might to take to get a large feature into git...
+
+Yes, it would be very interesting.  Will you volunteer to be one of the
+git chroniclers?  It was a lot of work back then, and I don't think I can
+do this properly as a two-day hack-job by myself.
