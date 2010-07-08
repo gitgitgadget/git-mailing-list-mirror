@@ -1,66 +1,76 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Thu, 8 Jul 2010 06:29:04 -0400
-Message-ID: <11D5771D-EB47-42E9-BCC3-69C8FE1999EC@MIT.EDU>
-References: <20100701121711.GF1333@thunk.org> <20100701150331.GA12851@sigill.intra.peff.net> <20100701153842.GA15466@sigill.intra.peff.net> <20100702192612.GM1333@thunk.org> <20100703080618.GA10483@sigill.intra.peff.net> <20100704005543.GB6384@thunk.org> <20100705122723.GB21146@sigill.intra.peff.net> <20100705141012.GA25518@thunk.org> <20100706115826.GA15413@sigill.intra.peff.net> <1278430303.32094.15.camel@wpalmer.simply-domain> <20100707174546.GA4979@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Will Palmer <wmpalmer@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 08 12:34:21 2010
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] rebase -i: use 'read -r' to avoid backslash acting as
+ an escape character
+Date: Thu, 8 Jul 2010 12:35:52 +0200
+Message-ID: <20100708103552.GF31048@genesis.frugalware.org>
+References: <20100706225522.GA31048@genesis.frugalware.org>
+ <7vpqyz278o.fsf@alter.siamese.dyndns.org>
+ <20100707091633.GB31048@genesis.frugalware.org>
+ <AANLkTinFu08juNtz5eYyjzxuW6zbyGyn5f4S3wh0TI0E@mail.gmail.com>
+ <20100707094620.GC31048@genesis.frugalware.org>
+ <7v7hl6stna.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="aJFFgG5QZHt5jcrP"
+Cc: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 12:36:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWoQv-0003Js-88
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 12:34:21 +0200
+	id 1OWoSW-0004Zk-SR
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 12:36:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754928Ab0GHKeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 06:34:16 -0400
-Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:53061 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753887Ab0GHKeP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Jul 2010 06:34:15 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Jul 2010 06:34:15 EDT
-X-AuditID: 1209190e-b7bb8ae0000009f9-ef-4c35a87a7678
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 3B.8D.02553.A78A53C4; Thu,  8 Jul 2010 06:29:14 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o68ATDZg025072;
-	Thu, 8 Jul 2010 06:29:13 -0400
-Received: from [10.0.42.101] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o68AT8aj027045
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 8 Jul 2010 06:29:12 -0400 (EDT)
-In-Reply-To: <20100707174546.GA4979@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.1081)
-X-Brightmail-Tracker: AAAAAA==
+	id S1755019Ab0GHKf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 06:35:56 -0400
+Received: from virgo.iok.hu ([212.40.97.103]:39324 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752613Ab0GHKfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jul 2010 06:35:55 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 3DD7358054;
+	Thu,  8 Jul 2010 12:35:54 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id A246344659;
+	Thu,  8 Jul 2010 12:35:53 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 4AC3B12D90F0; Thu,  8 Jul 2010 12:35:53 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v7hl6stna.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150557>
 
 
-On Jul 7, 2010, at 1:45 PM, Jeff King wrote:
+--aJFFgG5QZHt5jcrP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->     And of course it's just complex, and I tend to shy away from
->     complexity when I can. The question to me comes back to (1) above.
->     Is massive clock skew a breakage that should produce a few
->     incorrect results, or is it something we should always handle?
+On Wed, Jul 07, 2010 at 05:29:29PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Our patches do seem to fix the reading side of the issue, but I am not
+> sure if the writing side needs further fix.  If I recall, the script had
+> liberal use of "echo $var"; some implementations of echo interprets
+> backslash sequence without being asked with an explicit "-e".
 
-Going back to the question that kicked off this thread, I wonder if there
-is some way that cacheing could be used to speed up the all cases,
-or at lest the edge cases, without imposing as much latency as tracking
-the max skew?   i.e., some thing like gitk's gitk.cache file.  For bonus
-points, it could be a cache file that is used by both gitk and git tag
---contains, git branch --contains, and git name-rev.
+Possibly, I just have the bash builtin and the coreutils echo here, both
+are writing \t properly without -e.
 
-Does that sound like reasonable idea?
+--aJFFgG5QZHt5jcrP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
---Ted
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAkw1qggACgkQe81tAgORUJYE9wCfVtyZYsDCaZjhY4gV5N2mkiOA
+jtAAn1Q6/okm3FUweTfBeB9bfS8QScGg
+=ndXa
+-----END PGP SIGNATURE-----
+
+--aJFFgG5QZHt5jcrP--
