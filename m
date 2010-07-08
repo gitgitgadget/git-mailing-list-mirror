@@ -1,77 +1,76 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCHv3 1/6] Add additional testcases for D/F conflicts
-Date: Wed, 7 Jul 2010 21:07:53 -0600
-Message-ID: <AANLkTinVyfWEqJqZgpiXv0hvMLELLb-UThi-0W2izGQc@mail.gmail.com>
-References: <1278480034-22939-1-git-send-email-newren@gmail.com>
-	<1278480034-22939-2-git-send-email-newren@gmail.com>
-	<7vocejt25d.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, spearce@spearce.org, agladysh@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 08 05:08:01 2010
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: t9118 broken in current master, 9918285, git/git/v1.7.2-rc2
+Date: Wed, 7 Jul 2010 23:15:29 -0400
+Message-ID: <68AF81DF-7434-4493-8FBF-6DDEF27BFAB1@silverinsanity.com>
+References: <4C352EB5.5020005@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jul 08 05:15:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWhSx-0004ho-Tv
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 05:08:00 +0200
+	id 1OWhaP-0007VC-T8
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 05:15:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753067Ab0GHDHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Jul 2010 23:07:54 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:49827 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752531Ab0GHDHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Jul 2010 23:07:54 -0400
-Received: by vws5 with SMTP id 5so495651vws.19
-        for <git@vger.kernel.org>; Wed, 07 Jul 2010 20:07:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=mV3WSo0x69G8nESbM0g2vaAUv80vVMPAhaSowvd85zs=;
-        b=Su/eZMdhIPZHfOw8u2Iu9Xrz6WMmXGKQ2TcNASFcpeoDg7oXoYTuQ+x6ccoF7PtZzQ
-         c6xMhvIvlCIxEmyl606gJ11jae4rW8pP3lMWNvpT3IKerZyPlAOpcioQ1+B5C2TebK+Y
-         Bx4VgcxjXG5kI1mPqnS11PB4k0u2mUsoatndI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=CXu3tI6NxOvxz85NWIbn4rp0uP/L+jAG3IgDbDosg5wnFQ01cFkQ0eviLktibMan8f
-         Wk8nwKi2fcAvfFxy3k3XRWSlCAEIxxF2XiEFtbjcawQ+w931tqc0T0oYeoBbpqs0kPa3
-         o56jZTZBp4jlhL99n3oLLj/5qPwVl+EHL8nvA=
-Received: by 10.220.49.28 with SMTP id t28mr3823912vcf.233.1278558473299; Wed, 
-	07 Jul 2010 20:07:53 -0700 (PDT)
-Received: by 10.220.92.199 with HTTP; Wed, 7 Jul 2010 20:07:53 -0700 (PDT)
-In-Reply-To: <7vocejt25d.fsf@alter.siamese.dyndns.org>
+	id S1753037Ab0GHDPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Jul 2010 23:15:35 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:46945 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752091Ab0GHDPe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Jul 2010 23:15:34 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 9FC461FFC058; Thu,  8 Jul 2010 03:15:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.2 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 82EB21FFC056;
+	Thu,  8 Jul 2010 03:15:21 +0000 (UTC)
+In-Reply-To: <4C352EB5.5020005@gmail.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150531>
 
-Hi,
 
-Thanks for the thorough reviews!
+On Jul 7, 2010, at 9:49 PM, A Large Angry SCM wrote:
 
-On Wed, Jul 7, 2010 at 3:25 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> -test_expect_failure 'do not lose a/b-2/c/d in merge (recursive)' '
->> +test_expect_failure 'Handle D/F conflict, do not lose a/b-2/c/d in merge (recursive)' '
->
-> If you retitle this, you would probably want to retitle the corresponding
-> test for resolve (the one before this test) the same way.
-<snip>
-> It may be a good idea to see what resolve does for all these new
-> tests.
+> I've been busy with other projects and haven't attempted a full make & make test since f526d12, which did pass all the tests. Since the test name implies svn/git-svn breakage, I hoping the git-svn experts can find the problem.
 
-I'd be happy to make these and the other changes you suggested, but I
-notice that you've already done so in pu with Fixup commits for this
-and the other patches.  Should I squash those in for a resend of the
-series?
+I'm getting intermittent errors in t9115 instead.  Running the full test suite with prove[1] gives:
 
-Also, do you want me to split the series as you did with the testsuite
-addition patches separate from the fixes?
+./t9115-git-svn-dcommit-funky-renames.sh ............. Dubious, test returned 1 (wstat 256, 0x100)
+Failed 9/10 subtests 
 
-Thanks,
-Elijah
+Running the test separately gives:
+
+ $ ./t9115-git-svn-dcommit-funky-renames.sh 
+ok 1 - load repository with strange names
+ok 2 - init and fetch repository
+ok 3 - create file in existing ugly and empty dir
+ok 4 - rename ugly file
+ok 5 - rename pretty file
+ok 6 - rename pretty file into ugly one
+ok 7 - add a file with plus signs
+ok 8 - clone the repository to test rebase
+ok 9 - make a commit to test rebase
+ok 10 - git svn rebase works inside a fresh-cloned repository
+# passed all 10 test(s)
+1..10
+
+These may be unrelated, but thought I'd bring it up.
+
+$ git describe HEAD
+v1.7.2-rc2-191-gd2de19a
+
+[1] prove -j 3 --state=hot,fresh,slow,save ./t[0-9]*.sh
