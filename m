@@ -1,113 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb.css
-Date: Thu, 8 Jul 2010 20:49:22 +0200
-Message-ID: <201007082049.23550.jnareb@gmail.com>
-References: <19509.15171.909921.769184@winooski.ccs.neu.edu> <m3y6dmklg0.fsf@localhost.localdomain> <19510.3565.336183.72646@winooski.ccs.neu.edu>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-svn: mangle refnames forbidden in git
+Date: Thu, 08 Jul 2010 20:53:41 +0200
+Message-ID: <4C361EB5.7010704@drmicha.warpmail.net>
+References: <4BE3249B.7050100@theblacksun.eu> <20100708084356.GA29856@burratino> <20100708085814.GC10779@dcvr.yhbt.net> <20100708130315.GA1529@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Thu Jul 08 20:49:38 2010
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Torsten Schmutzler <git-ts@theblacksun.eu>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 20:53:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWwAD-0005yE-NT
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 20:49:38 +0200
+	id 1OWwE6-0001SS-VH
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 20:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756002Ab0GHStd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 14:49:33 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38177 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754604Ab0GHStc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 14:49:32 -0400
-Received: by bwz1 with SMTP id 1so615491bwz.19
-        for <git@vger.kernel.org>; Thu, 08 Jul 2010 11:49:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=TNJYPg5qtd90FM6+jNMISxkLDibV/jj1T0eJTBAs4XQ=;
-        b=vdLwmuvU58MhkT2lNBXZdGpIA0SEfJWIwjmf6hi4Bh+UGL0wcFJGU8GvX2hBn9fx8Q
-         +UEELJssbFXcjnwF7/kKXWZNhfw0EoZgArmrbRDYLzii/ZtOlvMIh4osL1m3mMSYFqJ4
-         PCOwaEN0/9B4EYz3VLK/HjuNh40nMgKeFOIdk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Y+cqfcePnjKqFv24zo34GD8xJrOezuU9v2YytDdCufn9if8Tak4LgOLuGme/6lhXR+
-         ZdelW5cxy7L5GBLLTlGbpXfSiU+HLOS+38j9PrJUpijp0/oQ+XWfGMwv7BEFhk7Umh3w
-         UA0FFLLpc9m/aCk31dA7tvfAWan5VQnzSFoME=
-Received: by 10.204.80.98 with SMTP id s34mr6526257bkk.211.1278614970665;
-        Thu, 08 Jul 2010 11:49:30 -0700 (PDT)
-Received: from [192.168.1.15] (abvu212.neoplus.adsl.tpnet.pl [83.8.218.212])
-        by mx.google.com with ESMTPS id o20sm34144706bkw.15.2010.07.08.11.49.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 08 Jul 2010 11:49:29 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <19510.3565.336183.72646@winooski.ccs.neu.edu>
-Content-Disposition: inline
+	id S1758257Ab0GHSxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 14:53:33 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33521 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756846Ab0GHSxd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jul 2010 14:53:33 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4F5D714C41F;
+	Thu,  8 Jul 2010 14:53:32 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 08 Jul 2010 14:53:32 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=yHTm4f6BGymdoL9lsfiahOXTdbM=; b=R2WlBR7gWeDfiQMTzhJppfGQgF0z5dfiYJ3IeJJwCrIjLg54h6JUueyXklu6+4EOncy0jJZ1HU1Sy/jLCT0wnGSFv6HTCki5hjFc9EIp7s1zVlHVbBUk9CYPYnYCqR5UNe4CxH/iTmA2n8lcuLIguWMqKl6yQ7YAbFsVqKGYhRU=
+X-Sasl-enc: HHHARoZInkbmIm3S0JBB9dsB7LqfXazcbViVBYDt2Kz8 1278615211
+Received: from localhost.localdomain (p54859B9B.dip0.t-ipconnect.de [84.133.155.155])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 926AD13C48;
+	Thu,  8 Jul 2010 14:53:30 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100702 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <20100708130315.GA1529@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150592>
 
-On Thu, 8 Jul 2010, Eli Barzilay wrote:
-> On Jul 8 Jakub Narebski wrote:
->> Eli Barzilay <eli@barzilay.org> writes:
->> 
->>> I've been customizing a gitweb server to fit with the rest of our
->>> project pages (the result is http://git.racket-lang.org/). This was
->>> relatively easy to do except for a few places where gitweb.css
->>> specifies formatting for generic tags like `body' `table' and `td' 
->>> which messed up our header.
->>> 
->>> Maybe it makes sense to localize these styles to to gitweb specific
->>> classes? (I know that I can just use my own css but the file is big
->>> enough that I prefer avoiding manually merging in updates.)
->> 
->> Can't you just override gitweb's CSS by your own CSS? Later CSS
->> wins. You can have more than one stylesheet in gitweb
->> (@stylesheets).
+Jonathan Nieder venit, vidit, dixit 08.07.2010 15:03:
+> Eric Wong wrote:
 > 
-> I know -- and I'm using that. The problem is if there's a property
-> that we're not defining then it won't get overridden -- and doing so
-> requires knowing what the default value is and keeping our css
-> updated for future extensions (eg if tomorrow you make add
-> `font-family' to the `table' entry we'll need to add one too etc).
-> And still this means overriding your settings which were probably
-> done for a reason...
-
-Ah, all right.  I think I understand your problem, then.
- 
-The problem is that in included GITWEB_SITE_HEADER, GITWEB_HOMETEXT
-and GITWEB_SITE_FOOTER gitweb style applies to links and tables, and
-you want to have own style based on default HTML style values, isn't
-it?
- 
->> [...]
->> I'd rather not add 'gitweb' class (or similar) to every element just
->> to have common style for all links tables table header cells 
->> table cells.
+>> I can't reproduce it with 1.5.1 here, does URI-escaping the "@{0}"
+>> to "%40%7B0%7D" work?
 > 
-> Why not add just a <div class=".gitweb"> container for all gitweb
-> content then have css for ".gitweb foo" for anything you want?
+> Yes.
+> 
+>  ...
+>  $ svn cp -m reflog file:///tmp/foo/source 'file:///tmp/foo/not-a%40%7B0%7Dreflog'
+>  Committed revision 2.
+>  $ (cd wc && svn update)
+>  A    not-a@{0}reflog
+>  Updated to revision 2.
+> 
+> Does that work with svn 1.5.x?
 
-First, I dislike this solution.
+It turns out this is not so much about general escaping but about the
+treatment of so called svn PEG revisions (not so unsimilar to our @{}).
 
-Second, similar solution would be beter, namely consistent division of
-page into gitweb_header, gitweb_body and gitweb_footer, moving style
-of 'body' to gitweb_*, and 'table' etc. to '.gitweb_body table'.  The
-problem is with the way CSS is structured currently: I had problems
-with some elements losing their margin, and some elements having double
-margin.
+svn r954995 integrated r952973 (which implemented the eating of PEG
+revisions) into the 1.6.x branch. It's considered a bug fix.
 
--- 
-Jakub Narebski
-Poland
+This "fix" is in 1.6.12 but not in 1.6.11.
+
+Now, git-svn adjusts its behaviour to the svn version for things like
+info. But I don't know if it's worth doing in this case - maybe we
+should just change the test not to use the PEG revisions identifier "@".
+
+Michael
