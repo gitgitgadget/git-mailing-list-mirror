@@ -1,85 +1,72 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: git rebase bug?
-Date: Thu, 8 Jul 2010 11:47:20 +0200
-Message-ID: <20100708094720.GB3720@glandium.org>
-References: <20100707150545.GA24814@glandium.org>
- <20100707180004.GA3165@atjola.homenet>
- <20100707205126.GA11240@glandium.org>
- <m3bpajm0gw.fsf@localhost.localdomain>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git status / ls-files
+Date: Thu, 08 Jul 2010 12:06:22 +0200
+Message-ID: <4C35A31E.2040800@drmicha.warpmail.net>
+References: <AANLkTikdA7CEY19bYHIxIsPezaZZo-SrEaSupi2UoRNS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 08 11:47:46 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Mahesh Vaidya <forvaidya@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 12:07:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWnhp-0006Kd-SW
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 11:47:46 +0200
+	id 1OWo0p-0001tK-Ss
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 12:07:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755413Ab0GHJrk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jul 2010 05:47:40 -0400
-Received: from vuizook.err.no ([85.19.221.46]:60759 "EHLO vuizook.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753396Ab0GHJrk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 05:47:40 -0400
-Received: from cha92-13-88-165-248-19.fbx.proxad.net ([88.165.248.19] helo=glandium.org)
-	by vuizook.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <mh@glandium.org>)
-	id 1OWnhR-0002sb-Vf; Thu, 08 Jul 2010 11:47:37 +0200
-Received: from mh by glandium.org with local (Exim 4.72)
-	(envelope-from <mh@glandium.org>)
-	id 1OWnhQ-0001Ej-Ud; Thu, 08 Jul 2010 11:47:20 +0200
-Content-Disposition: inline
-In-Reply-To: <m3bpajm0gw.fsf@localhost.localdomain>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Spam-Status: (score 2.5): No, score=2.5 required=5.0 tests=DNS_FROM_OPENWHOIS,RDNS_DYNAMIC autolearn=disabled version=3.2.4
+	id S1755893Ab0GHKHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 06:07:17 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:57400 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752631Ab0GHKHQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jul 2010 06:07:16 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B57171570A7;
+	Thu,  8 Jul 2010 06:07:15 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 08 Jul 2010 06:07:15 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=MuEKOdqD52hnYna0up0a2OrqlbU=; b=PM0hW4qT0BEE083WOJtDPc1RrhsQCZ6/B/zrL8CwvRMyhH1AtT+Nh7wElU6R5hTWw2eg+cQ6w27A41g3NmJTaACZbxqw+V1AYLJJEd9pTnqWzcvs+NdB82lWfgQA4bLlpUkZ/YlbnhE9kymAG9jXML+G+HBz8ayy88uu1ZeyyMg=
+X-Sasl-enc: zGUFUQ+Ev6E+9XMgJayOgdWVPBh8aG14a/N24EJcL7X6 1278583635
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2FEBB5F0CD;
+	Thu,  8 Jul 2010 06:07:15 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100702 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <AANLkTikdA7CEY19bYHIxIsPezaZZo-SrEaSupi2UoRNS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150554>
 
-On Wed, Jul 07, 2010 at 02:44:50PM -0700, Jakub Narebski wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> > On Wed, Jul 07, 2010 at 08:00:04PM +0200, Bj=F6rn Steinbrink <B.Ste=
-inbrink@gmx.de> wrote:
-> > > On 2010.07.07 17:05:45 +0200, Mike Hommey wrote:
->=20
-> > > > See how the security/manager/ssl/public/nsIBadCertListener.idl =
-file that
-> > > > was created by the original patch is created as
-> > > > xulrunner/examples/simple/content/contents.rdf.
-> > >=20
-> > > The "problem" is that nsIBadCertListener.idl wasn't actually crea=
-ted by
-> > > the cherry-picked commit, but was modified. It was an empty file =
-before,
-> > > created in 4292283190983fa91b875e22664a79a3aa9ea45d.
-> > >=20
-> > > And as nsIBadCertListener.idl is missing from the xulrunner/2.0 b=
-ranch,
-> > > git does the usual rename detection, finding another empty file a=
-nd ends
-> > > up patching that one instead.
-> >=20
-> > Oh, makes sense. Thanks. So that's a quite troubling corner case...
-> > I wonder if empty files shouldn't be special cased...
->=20
-> Well, similarity score (of contents and of filename) is weighted by
-> contents length, but perhaps empty files / zero length somehow fall
-> out as an edge case...
->=20
-> I agree that empty files should be special cased... unless filename i=
-s
-> _very_ similar.
+Mahesh Vaidya venit, vidit, dixit 07.07.2010 22:31:
+> Hi
+> 
+> Is there a query command which I can run on my workspace which will
+> give output of following style. (in the same that of command
+> git merge foo  givesO
+> 
+> I have examined git-lsfiles ; git log ; git-status didn't get output
+> in following style
+> 
+> 
+> Auto-merging nv/aaad/aaad_utils.c
+> Auto-merging nv/aaad/include/aaad_session_private.h
+> CONFLICT (content): Merge conflict in nv/aaad/include/aaad_session_private.h
+> Auto-merging nv/aaad/test/session_authen_test.c
+> CONFLICT (content): Merge conflict in nv/aaad/test/session_authen_test.c
+> 
 
-Question is, in a case like mine, what should the result be?
+You can get this info only by attempting a merge, but you an avoid the
+merge commit with
 
-Mike
+git merge --no-commit
+
+So, maybe "git merge --no-commit foo; git reset --hard"?
+
+Or do you want that info (again) right after a failed merge, during the
+conflict resolution?
+
+Michael
