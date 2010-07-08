@@ -1,141 +1,103 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv3/RFC] gitweb: Prepare for splitting gitweb
-Date: Thu, 8 Jul 2010 09:20:33 +0200
-Message-ID: <201007080920.38724.jnareb@gmail.com>
-References: <1278496676-26575-1-git-send-email-jnareb@gmail.com> <7v39vustku.fsf@alter.siamese.dyndns.org> <201007080859.33958.jnareb@gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Thu, 8 Jul 2010 07:24:34 +0000 (UTC)
+Message-ID: <loom.20100708T091339-404@post.gmane.org>
+References: <201007032158.57700.jnareb@gmail.com> <loom.20100707T112304-178@post.gmane.org> <m3k4p7m0sv.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 08 09:20:58 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 08 09:24:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWlPl-0002B7-Ak
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 09:20:57 +0200
+	id 1OWlTb-0004bY-Km
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 09:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152Ab0GHHUq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jul 2010 03:20:46 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63119 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753001Ab0GHHUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 03:20:44 -0400
-Received: by bwz1 with SMTP id 1so241168bwz.19
-        for <git@vger.kernel.org>; Thu, 08 Jul 2010 00:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=p8PMfHlOT7Hd1mehs4GEBA8OBaTuraOZz9M+EjDc954=;
-        b=fizbEdtGrr6HfsQTfT+DzEzyMOon5gXRmcpHh4OXvjQAuqe34rOuSNcU2/2NFiJyju
-         CjkbyIJMLOrtlFN5jwCgS2+GbU1uEg4k2wJCDrlyXVp1qRplMTtB5OzxtyMgoYQA8pTh
-         S1fWIUYhVeeEryRG8/WJFxeFDzsBg3NnKI7EE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=xsnqj4loga8lTc/VEvqE/Faskh8LOv6Vm11jhuVYLB/ROzc0gXHEgx8ru7soIPqd79
-         fraNNAAic+u9+tZDX5V7+J+2GxPgonoQZoAwaRv9sOvY0ZcN5dK7xeKjNHnmn5RMbVEK
-         2NIPYp0Why7j36SpGY2lQqSsXl+YS7n9yjdgo=
-Received: by 10.204.152.8 with SMTP id e8mr5985877bkw.2.1278573643076;
-        Thu, 08 Jul 2010 00:20:43 -0700 (PDT)
-Received: from [192.168.1.15] (abvu212.neoplus.adsl.tpnet.pl [83.8.218.212])
-        by mx.google.com with ESMTPS id bq20sm30996127bkb.4.2010.07.08.00.20.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 08 Jul 2010 00:20:42 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201007080859.33958.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1753563Ab0GHHYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 03:24:50 -0400
+Received: from lo.gmane.org ([80.91.229.12]:51331 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752581Ab0GHHYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jul 2010 03:24:49 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OWlTT-0004Vi-5K
+	for git@vger.kernel.org; Thu, 08 Jul 2010 09:24:47 +0200
+Received: from host.1.68.26.195.rev.coltfrance.com ([host.1.68.26.195.rev.coltfrance.com])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jul 2010 09:24:47 +0200
+Received: from ydirson by host.1.68.26.195.rev.coltfrance.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 08 Jul 2010 09:24:47 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 195.68.26.1 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.4) Gecko/20100628 Iceweasel/3.6.4 (like Firefox/3.6.4))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150545>
 
-Prepare gitweb for having been split into modules that are to be
-installed alongside gitweb in 'lib/' subdirectory, by adding
+Jakub Narebski <jnareb <at> gmail.com> writes:
+> > > === 12. What kind of Git tools do you use? ===
+> > > (multiple choice, with other)
+> > [...]
+> > >  + graphical blame or pickaxe tool
+> > 
+> > Mention gitk as example here ?
+> 
+> You meant here "git gui blame", didn't you?
 
-  use lib __DIR__.'/lib';
+Well, yes - that comes from the fact I only use the it from gitk :)
 
-to gitweb.perl (to main gitweb script), and preparing for putting
-modules (relative path) in $(GITWEB_MODULES) in gitweb/Makefile.
+> > > === 16. Which of the following features do you use? ===
+> > > (multiple choice, with other)
+> > [...]
+> > >  + one-way interaction with other SCMs (from SCM to git)
+> > 
+> > One-way from git to other SCM ?  I'm sure we care if many people do that :)
+> 
+> One way from SCM to git.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Differences from v2:
-* Fixed issue with quoting value of shell variable, pointed by Junio
-* Removed spurious unrelated addition of an empty line, pointed by =20
-  =C3=86var
+No, I was really suggesting to ask whether people work on a remote git repo
+using another VCS, much like we do access other VCS' repo using git.  Not sure
+whether this survey would reach those users, though.
 
- gitweb/Makefile    |   14 +++++++++++++-
- gitweb/gitweb.perl |    8 ++++++++
- 2 files changed, 21 insertions(+), 1 deletions(-)
+ 
+> > + sophisticated diffcore stages (eg. directory rename, indent detection,
+> >   content move)
+> 
+> Thanks.
+> 
+> BTW. I think wholesame directory rename detection is one of proposed
+> features already.
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 2fb7c2d..b39d716 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -55,6 +55,7 @@ PERL_PATH  ?=3D /usr/bin/perl
- bindir_SQ =3D $(subst ','\'',$(bindir))#'
- gitwebdir_SQ =3D $(subst ','\'',$(gitwebdir))#'
- gitwebstaticdir_SQ =3D $(subst ','\'',$(gitwebdir)/static)#'
-+gitweblibdir_SQ =3D $(subst ','\'',$(gitwebdir)/lib)#'
- SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))#'
- PERL_PATH_SQ  =3D $(subst ','\'',$(PERL_PATH))#'
- DESTDIR_SQ    =3D $(subst ','\'',$(DESTDIR))#'
-@@ -145,12 +146,23 @@ gitweb.cgi: gitweb.perl GITWEB-BUILD-OPTIONS
-=20
- ### Installation rules
-=20
--install: all
-+install: all install-modules
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)'
- 	$(INSTALL) -m 755 $(GITWEB_PROGRAMS) '$(DESTDIR_SQ)$(gitwebdir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
- 	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)=
-'
-=20
-+install-modules:
-+	install_dirs=3D"$(sort $(dir $(GITWEB_MODULES)))" && \
-+	for dir in $$install_dirs; do \
-+		test -d '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$dir' || \
-+		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$dir'; \
-+	done
-+	gitweb_modules=3D"$(GITWEB_MODULES)" && \
-+	for mod in $$gitweb_modules; do \
-+		$(INSTALL) -m 644 $$mod '$(DESTDIR_SQ)$(gitwebdir_SQ)/$$(dirname $$m=
-od)'; \
-+	done
-+
- ### Cleaning rules
-=20
- clean:
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1f611d2..ec60a4d 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -9,6 +9,14 @@
-=20
- use strict;
- use warnings;
-+
-+use File::Spec;
-+# __DIR__ is taken from Dir::Self __DIR__ fragment
-+sub __DIR__ () {
-+	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1])=
-;
-+}
-+use lib __DIR__ . '/lib';
-+
- use CGI qw(:standard :escapeHTML -nosticky);
- use CGI::Util qw(unescape);
- use CGI::Carp qw(fatalsToBrowser set_message);
---=20
-1.7.0.1
+d'oh - how could I miss it :)
+
+
+> > > What features should be mentioned besides those above?  What criteria
+> > > should we have for including features in this list?
+> > 
+> > Not sure if any reasonable idea that appeared on the list should be
+> > left out.  Answers would provide feedback for features not necessarily
+> > interesting to the average git <at> vger reader, but still appealing to our
+> > users.
+> 
+> I don't think ideas about _internal_ changes need to be here.  Also,
+> I do not remember _every_ feature proposel that appeared on the list...
+
+At some point[1] we had a volunteer secretary willing to take note of bugs.  I
+just went to see whether proposed features were tracked as well, but it appears
+that initiative has stalled already :(
+
+http://marc.info/?l=git&m=126299754631066&w=4
+
+Best regards,
+-- 
+Yann
