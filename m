@@ -1,99 +1,72 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Thu, 08 Jul 2010 15:06:34 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1007081443040.6020@xanadu.home>
-References: <20100701121711.GF1333@thunk.org>
- <20100701150331.GA12851@sigill.intra.peff.net>
- <20100701153842.GA15466@sigill.intra.peff.net>
- <20100702192612.GM1333@thunk.org>
- <20100703080618.GA10483@sigill.intra.peff.net>
- <20100704005543.GB6384@thunk.org>
- <20100705122723.GB21146@sigill.intra.peff.net>
- <20100705141012.GA25518@thunk.org>
- <20100706115826.GA15413@sigill.intra.peff.net>
- <1278430303.32094.15.camel@wpalmer.simply-domain>
- <20100707174546.GA4979@coredump.intra.peff.net>
- <11D5771D-EB47-42E9-BCC3-69C8FE1999EC@MIT.EDU>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Will Palmer <wmpalmer@gmail.com>,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Thu Jul 08 21:06:42 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] t9118: avoid PEG revision identifier in tests
+Date: Thu,  8 Jul 2010 21:16:35 +0200
+Message-ID: <2f9f1bd8efb818456fcc386f419fc17f4e435e19.1278616418.git.git@drmicha.warpmail.net>
+References: <4C361EB5.7010704@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Torsten Schmutzler <git-ts@theblacksun.eu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 08 21:16:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWwQj-0003eG-L4
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 21:06:42 +0200
+	id 1OWwaG-0002Xf-KP
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 21:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757348Ab0GHTGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 15:06:36 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:17404 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756682Ab0GHTGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 15:06:35 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L590012H6EY7D60@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 08 Jul 2010 15:06:35 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <11D5771D-EB47-42E9-BCC3-69C8FE1999EC@MIT.EDU>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757394Ab0GHTQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 15:16:27 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33156 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756929Ab0GHTQ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jul 2010 15:16:26 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 44E5916525A;
+	Thu,  8 Jul 2010 15:16:26 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 08 Jul 2010 15:16:26 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=lQAlJ/0LYEbZkdGy17nC7pghj2s=; b=PSnZOr5rpbGWt9RlxfQvr8meAqGJqEz1mdye2UBWm5jADVXRGzz4p5rXwXa+e7WEMlq7o4ja57Y9Ken0fSs6NchbmYFMaM8cxTELwBaMwOndBucZ9aMM88qY1BThjfarPVoOCFruKTBAee9k7gFKY+qvtxZ2B7OkPBonnx9VcUo=
+X-Sasl-enc: ykCpaTh9ROWWpMAx7jWsQX/Td53y8K1zlI6GlE79i/8r 1278616585
+Received: from localhost (p54859B9B.dip0.t-ipconnect.de [84.133.155.155])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 7EDF92B458;
+	Thu,  8 Jul 2010 15:16:25 -0400 (EDT)
+X-Mailer: git-send-email 1.7.2.rc1.212.g850a
+In-Reply-To: <4C361EB5.7010704@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150599>
 
-On Thu, 8 Jul 2010, Theodore Tso wrote:
+@ is SVN's identifier for PEG revisions. But SVN's treatment of PEG
+identifiers in copy target URLs changed in r954995/r952973, i.e. between
+1.6.11 and 1.6.12. They get eaten now (which is considered the right
+way).
 
-> 
-> On Jul 7, 2010, at 1:45 PM, Jeff King wrote:
-> 
-> >     And of course it's just complex, and I tend to shy away from
-> >     complexity when I can. The question to me comes back to (1) above.
-> >     Is massive clock skew a breakage that should produce a few
-> >     incorrect results, or is it something we should always handle?
-> 
-> Going back to the question that kicked off this thread, I wonder if there
-> is some way that cacheing could be used to speed up the all cases,
-> or at lest the edge cases, without imposing as much latency as tracking
-> the max skew?   i.e., some thing like gitk's gitk.cache file.  For bonus
-> points, it could be a cache file that is used by both gitk and git tag
-> --contains, git branch --contains, and git name-rev.
-> 
-> Does that sound like reasonable idea?
+Therefore, avoid the @ in the tests with funky branch names.
 
-I don't think any caching would be as good as fixing the fundamental 
-issue.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+This version is tested with svn 1.6.9 and 1.6.12.
 
-Git is fast, sure.  But it could be way faster yet in its graph 
-traversal.  And my pack v4 format is meant to overcome all those 
-obstacles that Git currently has to work through in order to walk its 
-commit graph.  Once one realize that most of the commit object headers 
-are SHA1 reference which need no be compressed with zlib as it is done 
-now, and that the author and committer info can be factored out in a 
-dictionary table, and that even those SHA1 references can be substituted 
-with an index value into the pack index file (a bit like the OFS variant 
-of the delta object), meaning that even the object lookup could be 
-bypassed, then it would be possible to make graph traversal a magnitude 
-cheaper in terms of computing cycles and memory touched.
+ t/t9118-git-svn-funky-branch-names.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-The pack format v4 has been brewing in my head for... well... years now.  
-And that is good because I've improved on the original v4 design even 
-more since then. And I even found some time to write more code lately.  
-I have the new object encoding code almost working for trees and 
-commits.  My Git hacking time is still limited so this is progressing 
-slowly though.
-
-Just to say that I don't think any kind of caching might be necessary in 
-the end, as it is possible to encode object data in a pack in a way that 
-ought to be about as fast to access as a separate cache would.  So if 
-someone is pondering about working on a cache layer, then I'd have one 
-alternate suggestion or two for that person.  ;-)
-
-
-Nicolas
+diff --git a/t/t9118-git-svn-funky-branch-names.sh b/t/t9118-git-svn-funky-branch-names.sh
+index 7d7acc3..45d5b2d 100755
+--- a/t/t9118-git-svn-funky-branch-names.sh
++++ b/t/t9118-git-svn-funky-branch-names.sh
+@@ -28,7 +28,7 @@ test_expect_success 'setup svnrepo' '
+ 	svn_cmd cp -m "trailing .lock" "$svnrepo/pr ject/trunk" \
+ 			"$svnrepo/pr ject/branches/trailing_dotlock.lock" &&
+ 	svn_cmd cp -m "reflog" "$svnrepo/pr ject/trunk" \
+-			"$svnrepo/pr ject/branches/not-a@{0}reflog" &&
++			"$svnrepo/pr ject/branches/not-a%40{0}reflog" &&
+ 	start_httpd
+ 	'
+ 
+-- 
+1.7.2.rc1.212.g850a
