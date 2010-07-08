@@ -1,80 +1,61 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] rev-parse: fix --parse-opt --keep-dashdash
-	--stop-at-non-option
-Date: Thu, 8 Jul 2010 09:26:23 +0200
-Message-ID: <20100708072623.GC21565@pengutronix.de>
-References: <1278427565-11057-1-git-send-email-u.kleine-koenig@pengutronix.de> <7vr5jfrmuq.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [ANNOUNCE] Git 1.7.2.rc1
+Date: Thu, 08 Jul 2010 10:06:12 +0200
+Message-ID: <vpq4ogaxurv.fsf@bauges.imag.fr>
+References: <7vhbkk3vm7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Luotao Fu <l.fu@pengutronix.de>
-To: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jul 08 09:26:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 08 10:17:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OWlVP-0005k7-1z
-	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 09:26:47 +0200
+	id 1OWmIc-0003DZ-Gg
+	for gcvg-git-2@lo.gmane.org; Thu, 08 Jul 2010 10:17:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329Ab0GHH0m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jul 2010 03:26:42 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:45239 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754179Ab0GHH0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 03:26:41 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1OWlV7-00033c-GY; Thu, 08 Jul 2010 09:26:29 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1OWlV1-0008Vp-KY; Thu, 08 Jul 2010 09:26:23 +0200
-Content-Disposition: inline
-In-Reply-To: <7vr5jfrmuq.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754179Ab0GHIRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Jul 2010 04:17:32 -0400
+Received: from imag.imag.fr ([129.88.30.1]:39227 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754053Ab0GHIRa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Jul 2010 04:17:30 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o6886DGq000451
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 8 Jul 2010 10:06:13 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OWm7Y-0007ps-Sy; Thu, 08 Jul 2010 10:06:12 +0200
+In-Reply-To: <7vhbkk3vm7.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 30 Jun 2010 17\:15\:44 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.1.93 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 08 Jul 2010 10:06:13 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150547>
 
-On Wed, Jul 07, 2010 at 02:41:33PM -0700, Junio C Hamano wrote:
-> Uwe Kleine-K=F6nig  <u.kleine-koenig@pengutronix.de> writes:
->=20
-> > The ?: operator has a lower priority than |, so the implicit associ=
-ativity
-> > made the 6th argument of parse_options be PARSE_OPT_KEEP_DASHDASH i=
-f
-> > keep_dashdash was true discarding PARSE_OPT_STOP_AT_NON_OPTION and
-> > PARSE_OPT_SHELL_EVAL.
->=20
-> Wow, this is an age-old breakage dating back to 6e0800e (parse-opt: m=
-ake
-> PARSE_OPT_STOP_AT_NON_OPTION available to git rev-parse, 2009-06-14) =
-that
-> dates back to the very original --stop-at-non-option patch, isn't it?
-I made a quick C-quiz at my company asking what's wrong with 6e0800e.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Apart from the bug fixed in my patch a colleague wondered about
-stop_at_non_option being static.  I think it doesn't do any harm, still
-I think being an automatic variable would be more common.  Is the stati=
-c
-intended here?  This was introduced in
-21d4783538662143ef52ed6967c948ab27586232, so I cc:d Pierre.
+> Updates since v1.7.1
 
-Best regards
-Uwe
+>  * "git blame" applies the textconv filter to the contents it works
+>    on, when available.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+I think you forgot to mention "git cat-file --textconv" (branch
+cp/textconv-cat-file). How about
+
+* "git cat-file" learnt a new --textconv action, to apply the textconv
+  filter to the selected blob.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
