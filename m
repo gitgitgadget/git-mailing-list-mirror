@@ -1,96 +1,79 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [BUG] git-1.7.2-rc1, cherry-picking with gitk
-Date: Fri, 09 Jul 2010 14:27:50 -0700
-Message-ID: <4C379456.9030401@gmail.com>
-References: <4C3792E6.5060302@gmail.com>
+From: Thomas Berg <merlin66b@gmail.com>
+Subject: Re: git-p4 move/delete errors
+Date: Fri, 9 Jul 2010 23:32:46 +0200
+Message-ID: <AANLkTilQtnIzNCcRzYzSqPEvXenHgND-_SAWmUeM64BH@mail.gmail.com>
+References: <AANLkTinN0Av1CO7mZU-QKeApq43UmEykUV093eyTtKQN@mail.gmail.com>
+	<AANLkTikPHJuf5JUe096BWTWO_oF9u3gNlVNuw7Ik32WQ@mail.gmail.com>
+	<AANLkTin7eMFXT1FwZ2ojcAYgqIMSYnkz-uCoRlHvV6Tm@mail.gmail.com>
+	<F94DAB9A-A06D-46ED-9AAA-EDE850365054@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 09 23:28:05 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
+To: Lance Linder <llinder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 09 23:38:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXL73-0005zg-Up
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 23:28:02 +0200
+	id 1OXLHU-0002O4-Al
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 23:38:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752669Ab0GIV15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 17:27:57 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:45756 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751607Ab0GIV14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 17:27:56 -0400
-Received: by pvc7 with SMTP id 7so1016434pvc.19
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 14:27:55 -0700 (PDT)
+	id S1753864Ab0GIVin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 17:38:43 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61958 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752449Ab0GIVim convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 17:38:42 -0400
+Received: by wwb24 with SMTP id 24so5360037wwb.1
+        for <git@vger.kernel.org>; Fri, 09 Jul 2010 14:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=zJJK0wlhMyCs6KsN/b5Rnu88Kgaolx9t6Fb2vyRvr1E=;
-        b=YIV6VDYo1p+/rZz+2zARs3XdZW5RdreBHB5UWYs2C81lwOMqjZkvnWUIdSoMc7KiBB
-         4ALHWHB1baoED1uwWEyau/2BRiChCWAsmJtUshAN+Du9XwEWrhAwxUdljbnB5JPYFq7+
-         UXEKLmW597PrIlVhR8CxkfHHR86v0JxNGP/Vw=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YtxyR8wd8OIbyWNrgrKDUbEpc9bgRrAWseXvppzLLqY=;
+        b=fYMzkNSMq3O5eBMdydPteGplUjiA+e+vhDVYUuoWDAI2JKXEh3r1Ru0ilpTLXqF4M0
+         BzL+kskvObD8F7cEbPGhrSQYO58CsN8sdTqbgZt5EcX8fpvd7fE+T+TPPEaxqr/hwrHq
+         mp2wVtf7MuutAbFcsHrmFiygqEqRuduA8Gdts=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        b=t9WDEj//QwZVBtU5gR7ATGhmoMdjJrvUMMScMotGUqOiV/WGpf99lj82VljejMZdeY
-         KYIeXekX7I0Y47mamygMkOs59hg2ZMhiRpkEsUPBxK72oIABdJlHxVOE5g8fuShln6xS
-         4x3ktu9yuIpEfMJECbqKdNI3m1vi3muyOYjTQ=
-Received: by 10.114.111.11 with SMTP id j11mr11971512wac.142.1278710875477;
-        Fri, 09 Jul 2010 14:27:55 -0700 (PDT)
-Received: from [10.4.6.94] (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id q6sm19989811waj.10.2010.07.09.14.27.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jul 2010 14:27:54 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.10) Gecko/20100520 SUSE/3.0.5 Thunderbird/3.0.5
-In-Reply-To: <4C3792E6.5060302@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nHFYooPXb8KmAdjJKv+pWlm0rWU6iFeaauAUOXnPi6ujslulaI1ZCEFs5fPik8d6u0
+         du0zwuLlvZGS4GWZvOjuFB19duA04L11rmeLwKvC2/b/Hv8hpQ1DEDUa2VNBBjdx8zo0
+         DS55ySRC3JxC0Zf0kd1Qb+aPk8CbRzxxvCSGE=
+Received: by 10.216.180.202 with SMTP id j52mr4592737wem.112.1278711166546; 
+	Fri, 09 Jul 2010 14:32:46 -0700 (PDT)
+Received: by 10.216.55.197 with HTTP; Fri, 9 Jul 2010 14:32:46 -0700 (PDT)
+In-Reply-To: <F94DAB9A-A06D-46ED-9AAA-EDE850365054@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150691>
 
-On 09/07/10 14:21, Chris Packham wrote:
-> Hi,
-> 
-> Just noticed this when I was trying to cherry-pick a commit from one
-> branch to another.
-> 
-> I launch gitk with 'gitk master..work' and right-click a commit to be
-> cherry-picked. The cherry-pick seems to work (i.e. a new commit appears
-> on master) but I get the following message from gitk:
-> 
-> can't read "circleitem(5)": no such element in array
-> can't read "circleitem(5)": no such element in array
->     while executing
-> "$canv itemconf $circleitem($row) -fill $ofill"
->     (procedure "redrawtags" line 13)
->     invoked from within
-> "redrawtags $oldhead"
->     (procedure "cherrypick" line 46)
->     invoked from within
-> "cherrypick"
->     invoked from within
-> ".rowctxmenu invoke active"
->     ("uplevel" body line 1)
->     invoked from within
-> "uplevel #0 [list $w invoke active]"
->     (procedure "tk::MenuInvoke" line 50)
->     invoked from within
-> "tk::MenuInvoke .rowctxmenu 1"
->     (command bound to event)
-> 
-> I've been doing similar things with older versions of git without
-> problems (technically I usually do 'gitk --all' instead of 'gitk
-> master..work').
-> 
-> --
-> Thanks,
-> Chris
+On Fri, Jul 9, 2010 at 11:20 PM, Lance Linder <llinder@gmail.com> wrote:
+> Thanks for the tip about keyword expansion. Fortunately for me we don't use those.
 
-Just following up if I use 'gitk --all' I don't see the problem. I tried
-git 1.6.4.3 and saw the same error message with 'gitk master..work'
+We don't either.
+
+> When I was trying to debug this the problem seemed to be that the original file is removed from the local Perforce workspace before the p4 diff command is issued. I am not sure how the server upgrade caused this behavior but it was the only thing that changed when I first started seeing the error.
+
+Hasn't Perforce always deleted files immediately when they are marked
+for deletion?
+
+Anyway, as far as I can see from the git-p4 source code, the command
+is only used to generate the diff preview in the interactive window
+that pops up when you "git p4 submit". So if you replace the line
+diff = p4_read_pipe("diff -du ...")
+with
+diff = ""
+
+it should start working again (the diff preview part will become
+empty). I'm unable to test it right now, but fairly sure it will work.
+I'll see if I can find a better solution when I have access to the
+Perforce server again.
+
+Thomas
