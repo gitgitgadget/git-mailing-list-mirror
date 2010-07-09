@@ -1,71 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] war on echo in scripts
-Date: Thu, 8 Jul 2010 21:46:33 -0500
-Message-ID: <20100709024633.GA13739@dert.cs.uchicago.edu>
-References: <20100706225522.GA31048@genesis.frugalware.org> <7vpqyz278o.fsf@alter.siamese.dyndns.org> <20100707091633.GB31048@genesis.frugalware.org> <AANLkTinFu08juNtz5eYyjzxuW6zbyGyn5f4S3wh0TI0E@mail.gmail.com> <20100707094620.GC31048@genesis.frugalware.org> <7v7hl6stna.fsf@alter.siamese.dyndns.org> <20100708103552.GF31048@genesis.frugalware.org> <20100708171418.GA18229@burratino> <m2k4p58tum.fsf@igel.home>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: Re: Handling tags/branches after git-svn fetch during SVN to Git 
+	conversion
+Date: Thu, 8 Jul 2010 23:18:02 -0400
+Message-ID: <AANLkTilJ9tAO6Zf9whowApqhcpXU8Qvm31Z9RrQ3QaS6@mail.gmail.com>
+References: <AANLkTim56UOYQJfX3M5Jpt0vXD8iTnkLuG68IjQG39Xn@mail.gmail.com>
+	<AANLkTinAhxIKD6U3u4OpPnt5kDMPGTyhDhhCRaFtU-gA@mail.gmail.com>
+	<AANLkTilnoIyrKg4PLSL71RDU-vyvIeNEtJ8STkOd9Lcq@mail.gmail.com>
+	<AANLkTilNLjTn1FyRqqz5xmOi4rOnSIwMUy6dOb0c0sRt@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Fri Jul 09 05:10:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 09 05:18:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OX3yw-0000Es-G7
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 05:10:30 +0200
+	id 1OX46N-0003Fh-Qn
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 05:18:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138Ab0GIDK0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 23:10:26 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.11.243]:60866 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857Ab0GIDKZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 23:10:25 -0400
-Received: from dert.cs.uchicago.edu (dert.cs.uchicago.edu [128.135.11.157])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 9EB60A0B1;
-	Thu,  8 Jul 2010 21:46:33 -0500 (CDT)
-Received: by dert.cs.uchicago.edu (Postfix, from userid 10442)
-	id 638F22038A; Thu,  8 Jul 2010 21:46:33 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <m2k4p58tum.fsf@igel.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754654Ab0GIDSF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jul 2010 23:18:05 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:63262 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754425Ab0GIDSD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jul 2010 23:18:03 -0400
+Received: by gwj18 with SMTP id 18so476137gwj.19
+        for <git@vger.kernel.org>; Thu, 08 Jul 2010 20:18:02 -0700 (PDT)
+Received: by 10.229.188.7 with SMTP id cy7mr5615449qcb.57.1278645482492; Thu, 
+	08 Jul 2010 20:18:02 -0700 (PDT)
+Received: by 10.229.38.133 with HTTP; Thu, 8 Jul 2010 20:18:02 -0700 (PDT)
+In-Reply-To: <AANLkTilNLjTn1FyRqqz5xmOi4rOnSIwMUy6dOb0c0sRt@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150636>
 
-Andreas Schwab wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Thanks. Yea I was just looking at the man page trying to find the
+notation with the colon separated ref names.
 
->>  die() {
->> -	echo >&2 "$@"
->> +	printf >&2 '%s\n' "$@"
+Is ":refs/heads/branch-foo" equivalent to just saying ":branch-foo" in
+the remote Git repo? Do I need the refs/heads piece?
+
+I'm trying to understand what a usual "git push origin branch-foo"
+equates to using your syntax.
+
+On Thu, Jul 8, 2010 at 11:09 PM, Jacob Helwig <jacob.helwig@gmail.com> =
+wrote:
+> remote2 would be the name of your remote repo, yes.
 >
-> You probably want to use "$*" here, though it wouldn't matter for the
-> uses of die in this file.
-
-Hmm, maybe something like this would be easier.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 6131670..b38b40b 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -39,6 +39,10 @@ git_broken_path_fix () {
- 
- # @@BROKEN_PATH_FIX@@
- 
-+echo() {
-+	printf '%s\n' "$*"
-+}
-+
- die() {
- 	echo >&2 "$@"
- 	exit 1
--- 
+> origin/branch-foo would be equivalent to svn/branch-foo in your local
+> repo, if you did "git branch -a". =A0It should be the name of one of =
+the
+> git-svn created branches.
+>
+> refs/heads/branch-foo is telling git where to store the reference for
+> the branch within remote2. =A0It does not need to exist already, and
+> should not in your case.
+>
+> The git-push man page has more in-depth explanations, if you're inter=
+ested.
+>
+> On Thu, Jul 8, 2010 at 20:01, Bradley Wagner
+> <bradley.wagner@hannonhill.com> wrote:
+>> In your example, does "remote2" represent the name of my remote Git
+>> repo? What is "origin/branch-foo" and does the path
+>> "refs/heads/branch-foo" need to actually exist in my .git directory?
+>>
+>> On Thu, Jul 8, 2010 at 10:54 PM, Jacob Helwig <jacob.helwig@gmail.co=
+m> wrote:
+>>> On Wed, Jul 7, 2010 at 06:36, Bradley Wagner
+>>> <bradley.wagner@hannonhill.com> wrote:
+>>>> Do I need to convert these remote tags/branches into local Git
+>>>> tags/branches before pushing them to my remote Git repo or is ther=
+e a
+>>>> way to push remote branches directly to my remote Git repo?
+>>>>
+>>>
+>>> You don't need to "convert" the branches to local ones. =A0git-push=
+ will
+>>> accept any ref your local repo knows about when you do a push. =A0F=
+or
+>>> example "git push remote2 origin/branch-foo:refs/heads/branch-foo"
+>>> works just fine, even if you don't have a "local" branch called
+>>> "branch-foo", and it will push the branch-foo branch out to the
+>>> remote2 remote repository.
+>>>
+>>> The tags, you'll need to convert to _actual_ tags, instead of just
+>>> branches under a tags/ namespace. =A0Unless you're fine with them
+>>> staying as pseudo-tags, then you can just push them out as you woul=
+d
+>>> any other branch.
+>>>
+>>> -Jacob
