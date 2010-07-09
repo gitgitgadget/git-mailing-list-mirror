@@ -1,113 +1,113 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] test-lib: TAP compliance for skipping tests on request
-Date: Fri, 9 Jul 2010 19:36:47 +0000
-Message-ID: <AANLkTiml1lQlSBDGgUg9scsvsaffDT2n405USmsSIm1n@mail.gmail.com>
-References: <97f41d49b6e374d3e66908f3c62844da27312501.1278673984.git.git@drmicha.warpmail.net>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: git-p4 move/delete errors
+Date: Fri, 9 Jul 2010 22:21:05 +0200
+Message-ID: <AANLkTin7eMFXT1FwZ2ojcAYgqIMSYnkz-uCoRlHvV6Tm@mail.gmail.com>
+References: <AANLkTinN0Av1CO7mZU-QKeApq43UmEykUV093eyTtKQN@mail.gmail.com>
+	<AANLkTikPHJuf5JUe096BWTWO_oF9u3gNlVNuw7Ik32WQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Jul 09 21:36:59 2010
+Cc: Lance Linder <llinder@gmail.com>, git@vger.kernel.org
+To: Thomas Berg <merlin66b@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 09 22:21:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXJNX-00009U-6b
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 21:36:55 +0200
+	id 1OXK4S-0007sv-QX
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 22:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752449Ab0GITgt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jul 2010 15:36:49 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:37894 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751913Ab0GITgt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 15:36:49 -0400
-Received: by iwn7 with SMTP id 7so2531842iwn.19
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 12:36:48 -0700 (PDT)
+	id S1754518Ab0GIUVK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jul 2010 16:21:10 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50423 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754468Ab0GIUVJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 16:21:09 -0400
+Received: by bwz1 with SMTP id 1so1355437bwz.19
+        for <git@vger.kernel.org>; Fri, 09 Jul 2010 13:21:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=A83UtJ1ALI0l6D4kyonegTzvGgO6iNNwbOQt5Frc3Zo=;
-        b=cLmGkiR+vKLux8VB7TxL24xrvWurbsKT2taEQVRwB7Q/Hn/guxgHblWKkIkMSAC/9R
-         k8V+n7CZemFJwwDQwIcAPAjwR7PRod8ofUYt+MxNTPaNcWxzIIQFgDpk6Rh9EBEvbZPo
-         Xko2n86ZWFjQQBCJcAdedyID7J9s2qvNCw2qQ=
+        bh=NDnw3Ciq7EFVm5kkWL3NeD5kvWkWPy82V47cBhNIqlU=;
+        b=p66BZ85JcG05DsoKoQnXAixOkxstyXsrTBcKxO6LHiWq1Be6Rh9pHUMyR0DANaHff6
+         SJQSQPnEjVPk/tj+4bpsVp1o04RR+x6as2++o0nvPeMOYQuZuZOOW9JuvAiGSWTHs8D8
+         hgTLxe9MVTEGqlJdAbZEjAE+LRXBWPG+/rGr8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=NhoolnOUVh2yOOHsE81rafYJWcayViPmrxyvxWnKTLKyaqaUcPr9R2xtT09wtB/otu
-         BHQ2XGquHzVDdqn9Z3+rNIw4+ClbylXpZiFgWvOiVzEpPVsPNYHcnT2I6lAM9IIqOxYT
-         j6wmCoCQfN1ZU1ROPcOODnB9RTqg9AtIu3x5c=
-Received: by 10.231.32.129 with SMTP id c1mr10600180ibd.112.1278704207771; 
-	Fri, 09 Jul 2010 12:36:47 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Fri, 9 Jul 2010 12:36:47 -0700 (PDT)
-In-Reply-To: <97f41d49b6e374d3e66908f3c62844da27312501.1278673984.git.git@drmicha.warpmail.net>
+        b=KZaIw7z9zCXdsBEjIm3PKVOx80n2HMfOmPVAZPJm15r3s/NdjbtX36S/MEGRKd9VeQ
+         kBncITzfuA4tL0uHx046kwTVPuvwumfu75a6RpwpI8L9+AnCNyF/sIDtxfWrct9DHI5Y
+         NmYTYuXppq/bTmKzMQ2xo1oa+QFClSi+JGvEE=
+Received: by 10.204.45.207 with SMTP id g15mr7637687bkf.14.1278706865090; Fri, 
+	09 Jul 2010 13:21:05 -0700 (PDT)
+Received: by 10.204.98.146 with HTTP; Fri, 9 Jul 2010 13:21:05 -0700 (PDT)
+In-Reply-To: <AANLkTikPHJuf5JUe096BWTWO_oF9u3gNlVNuw7Ik32WQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150685>
 
-On Fri, Jul 9, 2010 at 11:15, Michael J Gruber <git@drmicha.warpmail.ne=
-t> wrote:
-> Make the output TAP compliant for tests skipped on request (GI_SKIP_T=
-ESTS).
-
-That "GI_SKIP_TESTS" has a T-deficit.
-
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> We may want to better spell out the reasons, but I think
-> it's good enough like this for *explicitly* skipped tests.
+On Fri, Jul 9, 2010 at 5:05 PM, Thomas Berg <merlin66b@gmail.com> wrote=
+:
+> Hi,
 >
-> =C2=A0t/test-lib.sh | =C2=A0 =C2=A04 ++--
-> =C2=A01 files changed, 2 insertions(+), 2 deletions(-)
+> On Fri, May 28, 2010 at 2:30 AM, Lance Linder <llinder@gmail.com> wro=
+te:
+>> Until recently I have been successfully using git-p4 with much joy a=
+nd
+>> happiness. Then suddenly git-p4 submit started throwing "Command
+>> failed: p4 diff -du ..." when ever I delete or move a file.
+>>
+>> We recently upgraded our perforce server ( Rev.
+>> P4D/NTX86/2009.2/238357 (2010/03/15) ). It was about this time that
+>> the problem came up. First thing I did of course was upgrade to the
+>> latest version of git ( now on 1.7.1 ) but the problem still persist=
+s.
+>> Next I updated my p4 client ( Rev. P4/MACOSX104U/2009.2/238357
+>> (2010/03/15) ) but still same problem. All other submits work fine a=
+s
+>> long as there are not any deletions or moves.
+> [...]
+>>
+>> Anyone else seeing these issues?
+
+Hi. Are any of you using Perforce's "keyword expansion" stuff? I mean
+the thing where you put a:
+
+$Id$
+
+keyword in a file, and it expands to something like:
+
+$Id: //depot/test/main.c#10 $
+
+If I do that (and, unfortunately, people at my $dayjob do do that),
+I'm almost sure that this is the error I got... The reason seems to be
+that when git imports the file from P4, the keyword expansions get
+stripped off (as in: reset to just $Id$). And then the p4 diff fails
+if the $Id$ type lines are included in the diff. When deleting a file,
+all lines are included in the diff...
+
+It hasn't itched me hard enough that I have tried hard to solve it
+(unfortunately). I simply do deletes from P4 instead of git-p4 :-/
+
+-Tor Arvid-
+
+> Indeed, we just upgraded our Perforce server too, and now I'm getting
+> this exact error. Did you find a solution to the problem?
 >
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 8e3de53..2076271 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -395,7 +395,7 @@ test_skip () {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0case "$to_skip" in
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0t)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0say_color skip=
- >&3 "skipping test: $@"
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say_color skip "ok=
- $test_count: # skip $1"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 say_color skip "ok=
- $test_count # SKIP $1"
-
-Good catch with the s/://, but I think the lower-case "skip" should
-stay that way. At least that's what Test::More does:
-
-    $ perl -MTest::More=3Dtests,2 -E 'SKIP: { skip "no can do", 1 } pas=
-s "can do"'
-    1..2
-    ok 1 # skip no can do
-    ok 2 - can do
-
-It only uses upper-case on skip-all. I.e. when part of the plan line:
-
-    $ perl -MTest::More=3Dskip_all,"this platform sucks" -e1
-    1..0 # SKIP this platform sucks
-
-Maybe I've missed something, or Test::More has a bug.
-
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0: true
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0*)
-> @@ -838,7 +838,7 @@ done
-> =C2=A0case "$to_skip" in
-> =C2=A0t)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0say_color skip >&3 "skipping test $this_te=
-st altogether"
-> - =C2=A0 =C2=A0 =C2=A0 say_color skip "skip all tests in $this_test"
-> + =C2=A0 =C2=A0 =C2=A0 skip_all=3D"skip all tests in $this_test"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_done
-> =C2=A0esac
-
-Good catch. I missed that (again) in my "tests: Use skip_all=3D<reason>
-to skip tests" patch.
+> If not I'm very interested in solving it. Seems like the p4 diff
+> command has changed behaviour and broken the git-p4 script.
+>
+> Cheers,
+> Thomas
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
