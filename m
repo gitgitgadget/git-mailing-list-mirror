@@ -1,96 +1,131 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] test-lib: simplify GIT_SKIP_TESTS loop
-Date: Fri,  9 Jul 2010 12:01:28 +0200
-Message-ID: <0f97dc0377b97675f45b568254dabefb5b1e0146.1278669505.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 09 12:02:50 2010
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH] fix read-tree storing wrong tree reference with
+	modified index
+Date: Fri, 9 Jul 2010 12:04:34 +0200
+Message-ID: <20100709100433.GA7829@book.hvoigt.net>
+References: <20100708224653.GB50404@book.hvoigt.net> <7vvd8po804.fsf@alter.siamese.dyndns.org> <7v630po53r.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 09 12:04:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXAPy-0001Tr-20
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 12:02:50 +0200
+	id 1OXARm-0002hX-Ac
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 12:04:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754969Ab0GIKCp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 06:02:45 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45516 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753849Ab0GIKCo (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 06:02:44 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DDCB416B5D8;
-	Fri,  9 Jul 2010 06:02:22 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Fri, 09 Jul 2010 06:02:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=95RMqvNVzUUiGFDDzLvmixG5Ndk=; b=ijD/oUkQP14A5zm8Gfgaed1UhDOCgEIP3+lnma/GUpHiiMNhGxxkAZVEKrQgnQ5KjRzTd+jqRql7+b66i5aIuOzlxthwUx6itgG/X5tQ5WRsT/sbRmM3cV1NOBH2H8gYApGRWp2Ftyj51acfRJTYSYxbOuoqs3w5gyHX/lMnFLA=
-X-Sasl-enc: D8WuugRyj8ksaXPEKPKD64ilKB2b+ca0ivngs1l3OcD+ 1278669742
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 450BF4D4144;
-	Fri,  9 Jul 2010 06:02:22 -0400 (EDT)
-X-Mailer: git-send-email 1.7.2.rc1.212.g850a
+	id S1755315Ab0GIKEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 06:04:38 -0400
+Received: from darksea.de ([83.133.111.250]:35651 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754516Ab0GIKEg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jul 2010 06:04:36 -0400
+Received: (qmail 26687 invoked from network); 9 Jul 2010 12:04:34 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 9 Jul 2010 12:04:34 +0200
+Content-Disposition: inline
+In-Reply-To: <7v630po53r.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150650>
 
-04ece59 (GIT_SKIP_TESTS: allow users to omit tests that are known to break, 2006-12-28)
-introduced GIT_SKIP_TESTS, and since then we have had two nested loops
-iterating over GIT_SKIP_TESTS with the same loop variable.
+On Thu, Jul 08, 2010 at 05:45:28PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Heiko Voigt <hvoigt@hvoigt.net> writes:
+> >
+> >>  	 * The same holds true if we are switching between two trees
+> >> -	 * using read-tree -m A B.  The index must match B after that.
+> >> +	 * using read-tree A B (without -m). The index must match B
+> >> +	 * after that. With given -m it can be a mix of the old index
+> >> +	 * and the read one.
+> >
+> > I think the justification of the original patch is completely bogus.  Why
+> > not just drop the priming instead?  Two-tree read-tree without -m does not
+> > make much sense but the result would look like an overlay of two trees,
+> > and is not likely to match either of the trees.
 
-Reduce this to one loop.
+If you say so I believe you. I was searching for the reason anyway.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-I am probably making a complete shell fool out of myself by overlooking
-something completely trivial.
+> IOW, how about doing this (backported to 1.6.4 codebase) instead?
 
-But just in case I am not, this reduces the loop from O(N^2) to O(N), although
-I do admit that N is typically not that large...
-(Note that the inner $skp does not overwrite the outer one, at least not with bash.)
+Looks good to me (from what I understand).
 
- t/test-lib.sh |   23 ++++++++++-------------
- 1 files changed, 10 insertions(+), 13 deletions(-)
+For the test code you can add my
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ac496aa..8e3de53 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -827,23 +827,20 @@ cd -P "$test" || exit 1
- 
- this_test=${0##*/}
- this_test=${this_test%%-*}
-+to_skip=
- for skp in $GIT_SKIP_TESTS
- do
--	to_skip=
--	for skp in $GIT_SKIP_TESTS
--	do
--		case "$this_test" in
--		$skp)
--			to_skip=t
--		esac
--	done
--	case "$to_skip" in
--	t)
--		say_color skip >&3 "skipping test $this_test altogether"
--		say_color skip "skip all tests in $this_test"
--		test_done
-+	case "$this_test" in
-+	$skp)
-+		to_skip=t
- 	esac
- done
-+case "$to_skip" in
-+t)
-+	say_color skip >&3 "skipping test $this_test altogether"
-+	say_color skip "skip all tests in $this_test"
-+	test_done
-+esac
- 
- # Provide an implementation of the 'yes' utility
- yes () {
--- 
-1.7.2.rc1.212.g850a
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+
+
+> -- >8 --
+> Subject: [PATCH] Fix "read-tree -m A B" priming the cache-tree
+> 
+> In 456156d a shortcut to priming the index tree reference was
+> introduced, but the justification for it was completely bogus.
+> 
+> "read-tree -m A B" is to take the index (and the working tree)
+> that is largely based on (but does not have to match exactly) A
+> and update it to B, while carrying the local change that does
+> not overlap the difference between A and B, so there is no reason
+> to expect that the resulting index should match the tree B.
+> 
+> Noticed and test provided by Heiko Voigt.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin-read-tree.c         |    5 -----
+>  t/t1001-read-tree-m-2way.sh |   16 ++++++++++++++++
+>  2 files changed, 16 insertions(+), 5 deletions(-)
+> 
+> diff --git a/builtin-read-tree.c b/builtin-read-tree.c
+> index 82e25ea..4fbf5f8 100644
+> --- a/builtin-read-tree.c
+> +++ b/builtin-read-tree.c
+> @@ -199,14 +199,9 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+>  	 * "-m ent" or "--reset ent" form), we can obtain a fully
+>  	 * valid cache-tree because the index must match exactly
+>  	 * what came from the tree.
+> -	 *
+> -	 * The same holds true if we are switching between two trees
+> -	 * using read-tree -m A B.  The index must match B after that.
+>  	 */
+>  	if (nr_trees == 1 && !opts.prefix)
+>  		prime_cache_tree(&active_cache_tree, trees[0]);
+> -	else if (nr_trees == 2 && opts.merge)
+> -		prime_cache_tree(&active_cache_tree, trees[1]);
+>  
+>  	if (write_cache(newfd, active_cache, active_nr) ||
+>  	    commit_locked_index(&lock_file))
+> diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+> index 271bc4e..6e3b601 100755
+> --- a/t/t1001-read-tree-m-2way.sh
+> +++ b/t/t1001-read-tree-m-2way.sh
+> @@ -392,4 +392,20 @@ test_expect_success \
+>       git ls-files --stage | tee >treeMcheck.out &&
+>       test_cmp treeM.out treeMcheck.out'
+>  
+> +test_expect_success '-m references the correct modified tree' '
+> +	echo >file-a &&
+> +	echo >file-b &&
+> +	git add file-a file-b &&
+> +	git commit -a -m "test for correct modified tree"
+> +	git branch initial-mod &&
+> +	echo b >file-b &&
+> +	git commit -a -m "B" &&
+> +	echo a >file-a &&
+> +	git add file-a &&
+> +	git ls-tree $(git write-tree) file-a >expect &&
+> +	git read-tree -m HEAD initial-mod &&
+> +	git ls-tree $(git write-tree) file-a >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+> -- 
+> 1.7.2.rc2.191.gd2de1
+> 
