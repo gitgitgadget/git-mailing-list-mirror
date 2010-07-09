@@ -1,68 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff.c: fix a graph output bug
-Date: Thu, 08 Jul 2010 18:09:41 -0700
-Message-ID: <7vwrt5mpey.fsf@alter.siamese.dyndns.org>
-References: <4c35eb6c.21078e0a.1455.ffffe42d@mx.google.com>
- <7vhbk9o6ie.fsf@alter.siamese.dyndns.org>
- <7v1vbdo4j5.fsf@alter.siamese.dyndns.org>
- <AANLkTilSbmU5ejI5lWcN9GFQ544xd0zBtn-5s-nLzBAv@mail.gmail.com>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: Re: Handling tags/branches after git-svn fetch during SVN to Git 
+	conversion
+Date: Thu, 8 Jul 2010 22:33:40 -0400
+Message-ID: <AANLkTinSdinuL_ZiDsQ9b3wBaJGXRGn5BveS7dRbLZfW@mail.gmail.com>
+References: <AANLkTim56UOYQJfX3M5Jpt0vXD8iTnkLuG68IjQG39Xn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, struggleyb.nku@gmail.com,
-	git@vger.kernel.org
-To: Nazri Ramliy <ayiehere@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 09 03:09:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 09 04:33:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OX26H-0003HE-I9
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 03:09:57 +0200
+	id 1OX3PS-0000gW-UT
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 04:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614Ab0GIBJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Jul 2010 21:09:52 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44897 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045Ab0GIBJw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Jul 2010 21:09:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C77DC2F1F;
-	Thu,  8 Jul 2010 21:09:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fwfYD6iaK1TbnXglilwwz7Oqsck=; b=NRYBwi
-	7HnDsQUHlWOglJw6Hrm1feDH7zadEO9YVC2OWBKTuX+a8PhAn6rgYG7HgEExOObC
-	+l0Oti1DZC2Sknbmva7B4DMY+65BrnGI4fde1scrN8lc1vH08Rg9+yu5tmYbzMMC
-	8N5Q9u6VwK52fKqsF/Ry/snK3pGmoDBKJFDMI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VQuCDZwJLmMNt0blNON9nGqcUAUAEUUb
-	+5+iNMwADt9QvImmcvYPCKEM3aM9TgFwYmkZVBeb85gJ1GQNHPC8jZxZK1wQzi3z
-	JZFnMk5E2lVw13NxYu9XngYxsBiuyh58hfh6s7lcQpx7BDMbhpc6R42PsQOaofbG
-	4iPDBESO+3w=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3326C2F1E;
-	Thu,  8 Jul 2010 21:09:47 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E483BC2F1C; Thu,  8 Jul
- 2010 21:09:42 -0400 (EDT)
-In-Reply-To: <AANLkTilSbmU5ejI5lWcN9GFQ544xd0zBtn-5s-nLzBAv@mail.gmail.com>
- (Nazri Ramliy's message of "Fri\, 9 Jul 2010 09\:04\:45 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AADE08B6-8AF6-11DF-8FA2-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754039Ab0GICdo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Jul 2010 22:33:44 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:42612 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753876Ab0GICdn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Jul 2010 22:33:43 -0400
+Received: by qwh6 with SMTP id 6so371735qwh.19
+        for <git@vger.kernel.org>; Thu, 08 Jul 2010 19:33:40 -0700 (PDT)
+Received: by 10.224.11.12 with SMTP id r12mr5106151qar.0.1278642820496; Thu, 
+	08 Jul 2010 19:33:40 -0700 (PDT)
+Received: by 10.229.38.133 with HTTP; Thu, 8 Jul 2010 19:33:40 -0700 (PDT)
+In-Reply-To: <AANLkTim56UOYQJfX3M5Jpt0vXD8iTnkLuG68IjQG39Xn@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150629>
 
-Nazri Ramliy <ayiehere@gmail.com> writes:
+I posted this question to StackOverflow and got back that I should use
+the svn2git tool. Surely there has to be a native way to convert these
+branches into local branches using git-svn.
 
-> On Fri, Jul 9, 2010 at 8:57 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> reset at the end of line_prefix so it won't be effect anyway.
+http://stackoverflow.com/questions/3206383/what-is-the-correct-way-to-c=
+onvert-svn-remote-branches-and-tags-into-local-git-br
+
+On Wed, Jul 7, 2010 at 9:36 AM, Bradley Wagner
+<bradley.wagner@hannonhill.com> wrote:
 >
-> s/effect/affected/  ?
+> I had a fairly complicated config for my SVN to Git migration with
+> multiple branch and tag locations. Therefore, I had to break up the
+> "git svn clone" because I didn't know how to pass multiple branch
+> locations to "git svn clone":
+>
+> 1. git svn init
+> 2. Update .git/config with branch/tag locations
+> [svn-remote "svn"]
+> =A0 =A0 =A0 =A0url =3D file:///Users/Developers/git_transition/svn_re=
+po
+> =A0 =A0 =A0 =A0fetch =3D project/trunk:refs/remotes/svn/trunk
+> =A0 =A0 =A0 =A0branches =3D
+> project/branches/{feature1-branch,feature2-branch}:refs/remotes/svn/*
+> =A0 =A0 =A0 =A0branches =3D
+> project/branches/{6.x,5.x,4.x,3.x,archive}/*:refs/remotes/svn/*
+> =A0 =A0 =A0 =A0tags =3D project/tags/{3.7.x,4.x,5.x,6.x,old-releases}=
+/*:refs/remotes/svn/tags/*
+> 3. git svn -A/path/to/mappings fetch
+>
+> Do I need to convert these remote tags/branches into local Git
+> tags/branches before pushing them to my remote Git repo or is there a
+> way to push remote branches directly to my remote Git repo?
+>
+> The command that someone else told me was "git checkout -b
+> <local_branch_name> <remote_branch_name>". Though, I've seen other
+> places mention different strategies for converting the branches.
+>
+> The script I devised to convert the tags does this for each tags
+> folder to maintain the original commit date, author, and commit
+> message:
+>
+> git for-each-ref --format=3D"%(refname)" refs/remotes/svn/tags/6.x |
+> grep -v @ | while read tag; do GIT_COMMITTER_DATE=3D"$(git log -1
+> --pretty=3Dformat:"%ad" "$tag")" GIT_COMMITTER_EMAIL=3D"$(git log -1
+> --pretty=3Dformat:"%ce" "$tag")" GIT_COMMITTER_NAME=3D"$(git log -1
+> --pretty=3Dformat:"%cn" "$tag")" git tag -m "$(git log -1
+> --pretty=3Dformat:"%s%n%b" "$tag")" ${tag#refs/remotes/svn/tags/6.x/}
+> "$tag"; done
+>
+> Please let me know if this is correct.
+>
+> Thanks!
 
-Thanks for spotting.  I meant to say "won't be in effect".
+
+
+--
+Hannon Hill - Put Us to the Test
+bradley.wagner@hannonhill.com | http://www.hannonhill.com
