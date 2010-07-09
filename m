@@ -1,78 +1,69 @@
-From: Thomas Berg <merlin66b@gmail.com>
-Subject: Re: git-p4 move/delete errors
-Date: Fri, 9 Jul 2010 17:05:26 +0200
-Message-ID: <AANLkTikPHJuf5JUe096BWTWO_oF9u3gNlVNuw7Ik32WQ@mail.gmail.com>
-References: <AANLkTinN0Av1CO7mZU-QKeApq43UmEykUV093eyTtKQN@mail.gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH] t0005: work around strange $? in ksh when program terminated
+ by a signal
+Date: Fri, 09 Jul 2010 10:45:06 -0500
+Message-ID: <iOZX7rvipLDwT5DTYGPE0q9TlJfav09nJWqaRsyiefjNds9DpaDw1A@cipher.nrlssc.navy.mil>
+References: <20100709030812.GA16877@dert.cs.uchicago.edu> <4C36CA2C.5050305@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Lance Linder <llinder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 09 17:05:38 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jul 09 17:45:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXF8x-0001Kn-BE
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 17:05:35 +0200
+	id 1OXFlS-00048D-Gn
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 17:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757135Ab0GIPF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 11:05:29 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:32817 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755899Ab0GIPF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 11:05:29 -0400
-Received: by wyf23 with SMTP id 23so1605282wyf.19
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 08:05:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=CfZWMVGc9mY4oh+mDQFKGQQGNdTGC3D5v71sjf0o4GA=;
-        b=vN+/Q0QSxqYRkexBbqE4p8uuNYL6f9xwx5QR7Bvdyg5+doRuMiRzo2dqFGSvdoHQou
-         9dJ9VQwoeC1KKQBtqS2ltEBKtP2jhlwjPKZWLnWkfF0t2k+fKlmBnscPt6VBt4CY2zMl
-         /C3ipTJ15Hr7bLUrmSzpgxGv8PvZijHXiSrGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=qBKT9PpP88L+Qw16RLHGa41f9l1QcejDUw2jG0vQt6wDM04WcL/uxhsf8+PuJPWZ+d
-         a+5ZvAkTMAgPNAOShNnUkYas3HBMBgPkDyCMxNqvHkW0BnMBGu2jGxp2K5y/9vOWPvlw
-         3w78EyvnV2ItsTbfIV8W0OL0V3XFHXxWKxWJ8=
-Received: by 10.216.81.195 with SMTP id m45mr4340654wee.23.1278687926961; Fri, 
-	09 Jul 2010 08:05:26 -0700 (PDT)
-Received: by 10.216.55.197 with HTTP; Fri, 9 Jul 2010 08:05:26 -0700 (PDT)
-In-Reply-To: <AANLkTinN0Av1CO7mZU-QKeApq43UmEykUV093eyTtKQN@mail.gmail.com>
+	id S1757495Ab0GIPpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 11:45:16 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:59493 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757131Ab0GIPpO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jul 2010 11:45:14 -0400
+Received: by mail.nrlssc.navy.mil id o69Fj8YE025296; Fri, 9 Jul 2010 10:45:08 -0500
+In-Reply-To: <4C36CA2C.5050305@viscovery.net>
+X-OriginalArrivalTime: 09 Jul 2010 15:45:08.0023 (UTC) FILETIME=[B51E5C70:01CB1F7D]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150675>
 
-Hi,
+On 07/09/2010 02:05 AM, Johannes Sixt wrote:
+> From: Johannes Sixt <j6t@kdbg.org>
+> 
+> ksh is known to report $? of programs that terminated by a signal as
+> 256 + signal number instead of 128 + signal number like other POSIX
+> compliant shells. (ksh's behavior is still POSIX compliant in this regard.)
 
-On Fri, May 28, 2010 at 2:30 AM, Lance Linder <llinder@gmail.com> wrote:
-> Until recently I have been successfully using git-p4 with much joy and
-> happiness. Then suddenly git-p4 submit started throwing "Command
-> failed: p4 diff -du ..." when ever I delete or move a file.
->
-> We recently upgraded our perforce server ( Rev.
-> P4D/NTX86/2009.2/238357 (2010/03/15) ). It was about this time that
-> the problem came up. First thing I did of course was upgrade to the
-> latest version of git ( now on 1.7.1 ) but the problem still persists.
-> Next I updated my p4 client ( Rev. P4/MACOSX104U/2009.2/238357
-> (2010/03/15) ) but still same problem. All other submits work fine as
-> long as there are not any deletions or moves.
-[...]
->
-> Anyone else seeing these issues?
+This may only be true for Ksh93.  The Ksh88 man page says that
+the exit status is 128+signum.  The Public domain Korn shell, and
+ksh on IRIX 6.5, Solaris 7, 9, and 10 all exit with the standard
+behavior of 128+signum.  So, it may be appropriate to change the
+commit message and comment in t0005 to reflect this fact.
+
+-Brandon
 
 
-Indeed, we just upgraded our Perforce server too, and now I'm getting
-this exact error. Did you find a solution to the problem?
-
-If not I'm very interested in solving it. Seems like the p4 diff
-command has changed behaviour and broken the git-p4 script.
-
-Cheers,
-Thomas
+>  t/t0005-signals.sh |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+> 
+> diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+> index 09f855a..93e58c0 100755
+> --- a/t/t0005-signals.sh
+> +++ b/t/t0005-signals.sh
+> @@ -13,6 +13,7 @@ test_expect_success 'sigchain works' '
+>  	test-sigchain >actual
+>  	case "$?" in
+>  	143) true ;; # POSIX w/ SIGTERM=15
+> +	271) true ;; # ksh w/ SIGTERM=15
+>  	  3) true ;; # Windows
+>  	  *) false ;;
+>  	esac &&
