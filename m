@@ -1,102 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] war on echo in scripts
-Date: Fri, 9 Jul 2010 09:10:11 -0500
-Message-ID: <20100709141011.GA1543@burratino>
-References: <7vpqyz278o.fsf@alter.siamese.dyndns.org>
- <20100707091633.GB31048@genesis.frugalware.org>
- <AANLkTinFu08juNtz5eYyjzxuW6zbyGyn5f4S3wh0TI0E@mail.gmail.com>
- <20100707094620.GC31048@genesis.frugalware.org>
- <7v7hl6stna.fsf@alter.siamese.dyndns.org>
- <20100708103552.GF31048@genesis.frugalware.org>
- <20100708171418.GA18229@burratino>
- <m2k4p58tum.fsf@igel.home>
- <20100709024633.GA13739@dert.cs.uchicago.edu>
- <AANLkTint6AfhwKdeizt-YVt4O6AZbLG9A5h6ipJyQyIQ@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] Add svnrdump
+Date: Fri, 9 Jul 2010 16:17:46 +0200
+Message-ID: <20100709141746.GA20383@debian>
+References: <20100708083516.GD29267@debian>
+ <002d01cb1e7f$e0ff03c0$a2fd0b40$@nl>
+ <20100709134228.GB12315@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Schwab <schwab@linux-m68k.org>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 09 16:11:12 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: dev@subversion.apache.org, 'Jonathan Nieder' <jrnieder@gmail.com>,
+	'Sverre Rabbelier' <srabbelier@gmail.com>,
+	'Git Mailing List' <git@vger.kernel.org>
+To: Bert Huijben <bert@qqmail.nl>
+X-From: git-owner@vger.kernel.org Fri Jul 09 16:16:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXEII-0002iT-HA
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 16:11:10 +0200
+	id 1OXENC-0006rb-Uh
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 16:16:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756743Ab0GIOLE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jul 2010 10:11:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:63381 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756824Ab0GIOLD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 10:11:03 -0400
-Received: by iwn7 with SMTP id 7so2226736iwn.19
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 07:11:00 -0700 (PDT)
+	id S1756867Ab0GIOQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 10:16:10 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:59703 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752029Ab0GIOQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jul 2010 10:16:09 -0400
+Received: by ewy23 with SMTP id 23so486899ewy.19
+        for <git@vger.kernel.org>; Fri, 09 Jul 2010 07:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=rBG8r1YZl9/hEjtC4v2hvmwRp3YJX1UYUMzGh20OKNY=;
-        b=kdrCvQj0Yr29FigdDO34KAJRLoKnT4urxILXQYKkWK3o/G06Zj142ZQ6PBTkIioCkj
-         jyclYgjDHXpXylMZqviJQKWb0ZtzAtQcU4Mwm+wHb7ckCWuYVJhddOdio5nlxVK6SzS1
-         3u4YcFEcLx+HK1fNZdLbWgaBKpPA+/brr0vzY=
+         :in-reply-to:user-agent;
+        bh=TifrNy/7o4+nsKSrTiqQN3dEaQQroSbTTbBWXUuYvuU=;
+        b=RQvrCzUwz/fkPYDE6plKUtCcn5Gg13mLpsh3y+au4ZaX0fRisMt/x2MtSgwRZgspa0
+         haTBkWnmXJ5QJcUwZss/64OHbUeUkMMNtQuMvqiqr0HxYUx3y65bTEyeOxMy94FmY2dT
+         T7Zetu4OYH/gDcV5TNlFMtGzoG5F2GT5y5jqY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Cep66w+xH7kxsiQXhlnEfnypphLZ30IeHQPwq6A+1zEm4nrTsIHxU8j+g/0hJhyVO4
-         kClj09FK31sUcPF3JTNDaK2T83N3pvTVaV6lEEunkGISJIxP4bK+bKDoMC+2WqnA2eij
-         Zjy0rZjWNKy4t+OoobazWjukTPwRDsIqS4XoI=
-Received: by 10.231.139.212 with SMTP id f20mr9137631ibu.166.1278684654707;
-        Fri, 09 Jul 2010 07:10:54 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h8sm4340711ibk.9.2010.07.09.07.10.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jul 2010 07:10:53 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=lj7XYrUrrMkZNMz6zGRfcU8G8b+OqNMPwVbsAmDsbad3NpAISTpFYTTnmoH/KNv9JU
+         QP0MzpTuGUhTtqBmyJGRpqjh4y6AOFlaIh+7ZIQauTabzjxw/QTgH7AuII/MxSRQ7Alq
+         8/cCnRVSMOJI5cYE0ooucCKquQ+toVi2p+Wdo=
+Received: by 10.213.14.20 with SMTP id e20mr8360275eba.21.1278684964424;
+        Fri, 09 Jul 2010 07:16:04 -0700 (PDT)
+Received: from debian (adm12-98.itu.dk [130.226.133.98])
+        by mx.google.com with ESMTPS id v8sm7910045eeh.2.2010.07.09.07.16.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Jul 2010 07:16:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTint6AfhwKdeizt-YVt4O6AZbLG9A5h6ipJyQyIQ@mail.gmail.com>
+In-Reply-To: <20100709134228.GB12315@debian>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150670>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Hi,
 
-> (Via H.Merijn Brand): This fails on the old HP-UX 10.20 bourne shell:
+Ramkumar Ramachandra writes:
+> Where is svn_dirent_basename defined? I can't seem to find it in the
+> codebase at all.
 
-Git commands require a Posix-style shell (with support for $() among
-other things), which I suspect would rule out shells like the one
-you=E2=80=99re talking about.  Still, portability is something to worry
-about...
+np, I found it. It's svn_relpath_basename.
 
->     > cat xx.sh
->     #!/bin/sh
->=20
->     echo ()
->     {
->     perl -le'print "Done!"'
->     }
->=20
->     echo 1
->     echo Klaar
->     > sh xx.sh
->     xx.sh[3]: The operation is not allowed in a restricted shell.:
-> echo is a shell builtin.
->     1
->     Klaar
-
-That=E2=80=99s weird.  Where did =E2=80=9Crestricted shell=E2=80=9D com=
-e into it?
-
-Thanks for the example,
-Jonathan
+-- Ram
