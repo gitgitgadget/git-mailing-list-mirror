@@ -1,64 +1,86 @@
-From: Anirban Mitra <anirban.m@directi.com>
-Subject: Git stash bug
-Date: Fri, 09 Jul 2010 11:05:28 +0530
-Message-ID: <4C36B520.70105@directi.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] t0005: work around strange $? in ksh when program terminated
+ by a signal
+Date: Fri, 09 Jul 2010 09:05:16 +0200
+Message-ID: <4C36CA2C.5050305@viscovery.net>
+References: <20100709030812.GA16877@dert.cs.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 09 07:44:01 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 09 09:05:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OX6NR-0000YI-BM
-	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 07:43:57 +0200
+	id 1OX7eX-0001zl-Gx
+	for gcvg-git-2@lo.gmane.org; Fri, 09 Jul 2010 09:05:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751241Ab0GIFnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 01:43:52 -0400
-Received: from smtp.directi.com ([122.182.1.139]:57054 "EHLO smtp.directi.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990Ab0GIFnv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 01:43:51 -0400
-X-Greylist: delayed 492 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Jul 2010 01:43:51 EDT
-Received: from smtp.directi.com (localhost.localdomain [127.0.0.1])
-	by smtp.directi.com (Postfix) with ESMTP id 60DBB46D8476
-	for <git@vger.kernel.org>; Fri,  9 Jul 2010 11:05:31 +0530 (IST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=directi.com; h=
-	message-id:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; s=coopa; bh=Q+rIpAVt6VgyNEZhFjm3/api
-	+2RCq0Zh1t2L3GL4qq0=; b=nF36kPfO5AyYyDU0L2TW8LpRPs86erT7f+7ovKFm
-	lOIwt99eWfHjHqXd+6LzL9rvVEK+pxoe5kiPEjonA0EDUrgrsQsL8vRlsxlgb43O
-	Z5eAReRT8djII0A66c6+vB3B6YaH0U992KazbMefL/fmNptMsT3eKtiyppEiy6T/
-	QmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=directi.com; h=message-id
-	:date:from:mime-version:to:subject:content-type
-	:content-transfer-encoding; q=dns; s=coopa; b=hJh23EqgGusYtjHJwr
-	ms1CDaE327PfeC8CWEckww2g2COYwFmIaSqsXx6Fun97f75ErxkP5cia6j6/Rwk4
-	mKKvQiK4CC61zLvwj1G0RFP7+DusKOdNa04WS93ZmVCX+NlJaM42Bh5xmi2hlHyJ
-	b3P0AvAsO7Dv9t9dPc+Z10f/0=
-Received: from [115.118.212.182] (unknown [115.118.212.182])
-	by smtp.directi.com (Postfix) with ESMTPA id E9F3846D841B
-	for <git@vger.kernel.org>; Fri,  9 Jul 2010 11:05:30 +0530 (IST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.10pre) Gecko/20100410 Shredder/3.0.5pre
+	id S1754107Ab0GIHFW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Jul 2010 03:05:22 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:55793 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753466Ab0GIHFV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 03:05:21 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OX7e9-0000Zu-EJ; Fri, 09 Jul 2010 09:05:18 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 197011660F;
+	Fri,  9 Jul 2010 09:05:16 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <20100709030812.GA16877@dert.cs.uchicago.edu>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150644>
 
-Hi,
+=46rom: Johannes Sixt <j6t@kdbg.org>
 
-I ran into a git stash bug. I added a new project config file used by 
-the IDE in a commit and later reverted the commit. But the same file 
-again created by the IDE and now when I use git stash that file changes 
-are also stashed. When I try stash pop, it complains that the file will 
-be overwritten and aborts.
+ksh is known to report $? of programs that terminated by a signal as
+256 + signal number instead of 128 + signal number like other POSIX
+compliant shells. (ksh's behavior is still POSIX compliant in this rega=
+rd.)
 
-I did not expect this because I have reverted the commit adding the 
-file. Is it intended behaviour? Am I missing something or is this a 
-known bug and will be fixed in later releases? I am using Git version 
-1.7.0.4.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 7/9/2010 5:08, schrieb Jonathan Nieder:
+> I can=E2=80=99t seem to get test-sigchain to run with ksh93 on linux:
+>=20
+>  $ ksh
+> =20
+>  ksh>$ ../bin-wrappers/test-sigchain=20
+>  three
+>  two
+>  one
+>  Terminated
+>  ksh>$ echo $?
+>  271
 
--- Anirban
+ksh is not wrong, just strange. See http://www.opengroup.org/onlinepubs=
+/9699919799/utilities/V3_chap02.html#tag_18_08_02 (last sentence).
+
+ -- Hannes
+
+ t/t0005-signals.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
+index 09f855a..93e58c0 100755
+--- a/t/t0005-signals.sh
++++ b/t/t0005-signals.sh
+@@ -13,6 +13,7 @@ test_expect_success 'sigchain works' '
+ 	test-sigchain >actual
+ 	case "$?" in
+ 	143) true ;; # POSIX w/ SIGTERM=3D15
++	271) true ;; # ksh w/ SIGTERM=3D15
+ 	  3) true ;; # Windows
+ 	  *) false ;;
+ 	esac &&
+--=20
+1.7.1.585.gf3448
