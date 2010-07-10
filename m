@@ -1,109 +1,166 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git merge and GNU gettext po files - how to avoid conflicts?
-Date: Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
-Message-ID: <m3pqyvlnz9.fsf@localhost.localdomain>
-References: <AANLkTinaGzopi8-inuum_rXEzyTcWTD6vvUXRb0yAHLg@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2] add configuration variable for --autosquash option of
+	interactive rebase
+Date: Sat, 10 Jul 2010 11:15:29 +0200
+Message-ID: <20100710091517.GA27323@book.hvoigt.net>
+References: <20100709124659.GA17559@book.hvoigt.net> <m27hl4zg99.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Bruce <davidstuartbruce@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 10 10:51:34 2010
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 10 11:15:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXVmW-00046k-H2
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 10:51:32 +0200
+	id 1OXW9r-0005lQ-NJ
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 11:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752818Ab0GJIvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jul 2010 04:51:23 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38119 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752160Ab0GJIvU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jul 2010 04:51:20 -0400
-Received: by fxm14 with SMTP id 14so1531178fxm.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=iGKFtUzSuRe/3nHpMf8Ee9yW4T/rSSU6+hpKciVljdg=;
-        b=SUlmKWJBKn61/4ZMYrtYzSXtxOlqEZK5fAVFjMYyOa182JH+c4EzQF+v6ic+mIi5kr
-         1tpq5sVefwkXldNQ9I3ru12hVzOh2a4ZQ5vO6l6YwQMLMymrJtlPC0nFG390gk96HySX
-         GtIoZHOD0LQr0y114hphFCg0r2R3heB2TMLEA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=I+BX4bmrtu0XH6zydJjUDOGFoN+7ev8NuXyz4CTR6ln1izo/CUNgF8ZdT8wkM0fJVl
-         PmREW8C8c4JuJAdpuW6imhz1noxRNgD20MD1pkdPjdCrR9Nfh8U1osJg7/GOJsyI9mSn
-         ikHW/AsBeEU630O4W7xop0sFHNLNNst+odC0E=
-Received: by 10.223.124.205 with SMTP id v13mr9217585far.84.1278751877855;
-        Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
-Received: from localhost.localdomain (abvi53.neoplus.adsl.tpnet.pl [83.8.206.53])
-        by mx.google.com with ESMTPS id c3sm3843482fay.14.2010.07.10.01.51.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6A8ojYY014993;
-	Sat, 10 Jul 2010 10:50:55 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6A8oYI1014989;
-	Sat, 10 Jul 2010 10:50:34 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTinaGzopi8-inuum_rXEzyTcWTD6vvUXRb0yAHLg@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753043Ab0GJJPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jul 2010 05:15:34 -0400
+Received: from darksea.de ([83.133.111.250]:49219 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752059Ab0GJJPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jul 2010 05:15:33 -0400
+Received: (qmail 31703 invoked from network); 10 Jul 2010 11:15:30 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 10 Jul 2010 11:15:30 +0200
+Content-Disposition: inline
+In-Reply-To: <m27hl4zg99.fsf@igel.home>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150717>
 
-David Bruce <davidstuartbruce@gmail.com> writes:
+If you use this feature regularly you can now enable it by default.
 
-> First of all, is this list suitable for git usage questions as opposed
-> to git development?  If not, what list is more appropriate?
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
 
-Yes, it is appropriate list.
+On Fri, Jul 09, 2010 at 08:01:22PM +0200, Andreas Schwab wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> > index 6b86abc..54dc983 100755
+> > --- a/git-rebase--interactive.sh
+> > +++ b/git-rebase--interactive.sh
+> > @@ -111,6 +111,7 @@ VERBOSE=
+> >  OK_TO_SKIP_PRE_REBASE=
+> >  REBASE_ROOT=
+> >  AUTOSQUASH=
+> > +test "$(git config --bool rebase.autosquash)" == "true" && AUTOSQUASH=t
+> 
+> That should be '=' instead of '==' (which is non-std).
+
+True, too much C these days.
+
+
+ Documentation/git-rebase.txt |    3 +++
+ git-rebase--interactive.sh   |    1 +
+ t/t3415-rebase-autosquash.sh |   38 ++++++++++++++++++++++++++++++--------
+ 3 files changed, 34 insertions(+), 8 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index be23ad2..8849758 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -199,6 +199,9 @@ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
  
-> Assuming this is an appropriate list, here is the issue:
-> 
-> The .po files used by gettext are largely human-generated, so they
-> need to be under scm control.  However, they are also programatically
-> altered when certain make targets are run.  When this happens, a line
-> in the .po file gets updated with timestamp info (not talking about a
-> filesystem timestamp here, but a change in the text file).  So, if two
-> branches have been worked on for a while and the updated .po files
-> have been committed in each branch, they will generate conflicts when
-> a merge is attempted.  Since our programs have lots of translations,
-> it is a pain to resolve all the conflicts by hand. What is a good way
-> to avoid this in git? My thought would be:
-> 1. generate a diff between the .po files in the po/ directories of the
-> two branches, e.g.
-> (assuming we are trying to merge a branch named "feature" back with master):
-> git diff master feature po/*.po
-> 
-> and look to see if any differences are these innocuous, autogenerated
-> differences.  Perhaps some other type of diff would be more useful,
-> such as diffs from a common ancestor?
-> 
-> 2. If the diff shows that one of the branches has no changes in
-> po/*.po that need to be kept, is there a way to tell git to "merge
-> feature with master, but for po/*.po differences just use the file
-> from feature instead of generating conflicts".  Or, should I just
-> manually copy all the *.po files from one branch into the other branch
-> and commit them prior to attempting the merge?
-
-3. Create a merge driver intended specially for merging *.po files,
-   just like there exists (in the wild) the strategy to merge ChangeLog
-   files.  Then use gitattributes mechanism to associate this merge
-   strategy with *.po files via `merge' attribute.
-
-   But it might be not easy...
-
++rebase.autosquash::
++	If set to true enable --autosquash option by default.
++
+ OPTIONS
+ -------
+ <newbase>::
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 6b86abc..6e181f4 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -111,6 +111,7 @@ VERBOSE=
+ OK_TO_SKIP_PRE_REBASE=
+ REBASE_ROOT=
+ AUTOSQUASH=
++test "$(git config --bool rebase.autosquash)" = "true" && AUTOSQUASH=t
+ NEVER_FF=
+ 
+ GIT_CHERRY_PICK_HELP="  After resolving the conflicts,
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index b63f4e2..ccc5e44 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -21,38 +21,60 @@ test_expect_success setup '
+ 	git tag base
+ '
+ 
+-test_expect_success 'auto fixup' '
++test_auto_fixup() {
+ 	git reset --hard base &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+ 	git commit -m "fixup! first"
+ 
+-	git tag final-fixup &&
++	git tag $1 &&
+ 	test_tick &&
+-	git rebase --autosquash -i HEAD^^^ &&
++	git rebase $2 -i HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	test 3 = $(wc -l <actual) &&
+-	git diff --exit-code final-fixup &&
++	git diff --exit-code $1 &&
+ 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+ 	test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
++}
++
++test_expect_success 'auto fixup (option)' '
++	test_auto_fixup final-fixup-option --autosquash
++'
++
++test_expect_success 'auto fixup (config)' '
++	git config rebase.autosquash true &&
++	test_auto_fixup final-fixup-config-true
++	git config rebase.autosquash false &&
++	test_must_fail test_auto_fixup final-fixup-config-false
+ '
+ 
+-test_expect_success 'auto squash' '
++test_auto_squash() {
+ 	git reset --hard base &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+ 	git commit -m "squash! first"
+ 
+-	git tag final-squash &&
++	git tag $1 &&
+ 	test_tick &&
+-	git rebase --autosquash -i HEAD^^^ &&
++	git rebase $2 -i HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	test 3 = $(wc -l <actual) &&
+-	git diff --exit-code final-squash &&
++	git diff --exit-code $1 &&
+ 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+ 	test 2 = $(git cat-file commit HEAD^ | grep first | wc -l)
++}
++
++test_expect_success 'auto squash (option)' '
++	test_auto_squash final-squash --autosquash
++'
++
++test_expect_success 'auto squash (config)' '
++	git config rebase.autosquash true &&
++	test_auto_squash final-squash-config-true
++	git config rebase.autosquash false &&
++	test_must_fail test_auto_squash final-squash-config-false
+ '
+ 
+ test_expect_success 'misspelled auto squash' '
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.2.rc2.1.geb6d9.dirty
