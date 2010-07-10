@@ -1,166 +1,88 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v2] add configuration variable for --autosquash option of
-	interactive rebase
-Date: Sat, 10 Jul 2010 11:15:29 +0200
-Message-ID: <20100710091517.GA27323@book.hvoigt.net>
-References: <20100709124659.GA17559@book.hvoigt.net> <m27hl4zg99.fsf@igel.home>
+From: Martin Pettersson <martin@siamect.com>
+Subject: Re: Cutting history
+Date: Sat, 10 Jul 2010 17:40:20 +0700
+Message-ID: <201007101740.20854.martin@siamect.com>
+References: <20100710032553.GB554@nibiru.local> <4C37F24E.30407@workspacewhiz.com> <m3tyo7lo6n.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 10 11:15:42 2010
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 10 12:50:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXW9r-0005lQ-NJ
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 11:15:40 +0200
+	id 1OXXdC-0005A9-8l
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 12:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753043Ab0GJJPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jul 2010 05:15:34 -0400
-Received: from darksea.de ([83.133.111.250]:49219 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752059Ab0GJJPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jul 2010 05:15:33 -0400
-Received: (qmail 31703 invoked from network); 10 Jul 2010 11:15:30 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 10 Jul 2010 11:15:30 +0200
-Content-Disposition: inline
-In-Reply-To: <m27hl4zg99.fsf@igel.home>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753543Ab0GJKts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jul 2010 06:49:48 -0400
+Received: from smtp4.34sp.com ([80.82.115.203]:57447 "EHLO smtp4.34sp.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752316Ab0GJKtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jul 2010 06:49:47 -0400
+X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Sat, 10 Jul 2010 06:49:47 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp4.34sp.com (Postfix) with ESMTP id E148CEA1040
+	for <git@vger.kernel.org>; Sat, 10 Jul 2010 11:40:49 +0100 (BST)
+X-Virus-Scanned: amavisd-new at smtp.34sp.com
+Received: from smtp4.34sp.com ([127.0.0.1])
+	by localhost (smtp4.34sp.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 3GkZX470iwKG for <git@vger.kernel.org>;
+	Sat, 10 Jul 2010 11:40:49 +0100 (BST)
+Received: from our-server.localnet (ppp-124-121-207-247.revip2.asianet.co.th [124.121.207.247])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: controlcentres.com)
+	by smtp4.34sp.com (Postfix) with ESMTP id 62FE7EA103F
+	for <git@vger.kernel.org>; Sat, 10 Jul 2010 11:40:49 +0100 (BST)
+User-Agent: KMail/1.13.2 (Linux/2.6.32-22-generic; KDE/4.4.2; x86_64; ; )
+In-Reply-To: <m3tyo7lo6n.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150718>
 
-If you use this feature regularly you can now enable it by default.
-
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
-
-On Fri, Jul 09, 2010 at 08:01:22PM +0200, Andreas Schwab wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
+On Saturday, July 10, 2010 03:47:14 pm you wrote:
+> Joshua Jensen <jjensen@workspacewhiz.com> writes:
+> >   ----- Original Message -----
+> > 
+> > From: Enrico Weigelt
+> > Date: 7/9/2010 9:25 PM
+> > 
+> > > I'm using git for automatic backups (eg. database dumps). This
+> > > works quite well, but as time goes, the history (and so the repo)
+> > > gets larger and larger. It would be really nice to allow cutting
+> > > off old stuff (eg. after N commits in the past).
 > 
-> > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> > index 6b86abc..54dc983 100755
-> > --- a/git-rebase--interactive.sh
-> > +++ b/git-rebase--interactive.sh
-> > @@ -111,6 +111,7 @@ VERBOSE=
-> >  OK_TO_SKIP_PRE_REBASE=
-> >  REBASE_ROOT=
-> >  AUTOSQUASH=
-> > +test "$(git config --bool rebase.autosquash)" == "true" && AUTOSQUASH=t
+> This is certainly Using Git For What It Was Not Intended...
 > 
-> That should be '=' instead of '==' (which is non-std).
+> > > Maybe that could be done by introducing "stopper" tags: commits
+> > > that have an stopper-tag may have missing parents, and git-gc
+> > > can be told to ignore those parents and throw away everything
+> > > behind the stopper (if not referenced otherwise).
+> > > 
+> > > A probably cleaner, but more invasive way could be making refs
+> > > to vectors, which may contain stop points (multiple ones in case
+> > > of merges) additionally to the start point. Remote transmits only
+> > > contain the commits within this range, and GC also just scans
+> > > the range (instead of following all parents).
+> > 
+> > Your post reminded me of this: http://progit.org/2010/03/17/replace.html
+> 
+> Another solution would be to make history shallower like shallow clone
+> ("git clone --depth <depth>") does it[1], and then prune history.  Or
+> you can use grafts to cauterize history.
+> 
+> Both of those solutions have disadvantages wrt pushing and pulling to
+> other repositories (shallow clone less so), but I don't think that
+> would be a problem for your situation.
+> 
+> [1] Documentation/technical/shallow.txt
 
-True, too much C these days.
-
-
- Documentation/git-rebase.txt |    3 +++
- git-rebase--interactive.sh   |    1 +
- t/t3415-rebase-autosquash.sh |   38 ++++++++++++++++++++++++++++++--------
- 3 files changed, 34 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index be23ad2..8849758 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -199,6 +199,9 @@ rebase.stat::
- 	Whether to show a diffstat of what changed upstream since the last
- 	rebase. False by default.
- 
-+rebase.autosquash::
-+	If set to true enable --autosquash option by default.
-+
- OPTIONS
- -------
- <newbase>::
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 6b86abc..6e181f4 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -111,6 +111,7 @@ VERBOSE=
- OK_TO_SKIP_PRE_REBASE=
- REBASE_ROOT=
- AUTOSQUASH=
-+test "$(git config --bool rebase.autosquash)" = "true" && AUTOSQUASH=t
- NEVER_FF=
- 
- GIT_CHERRY_PICK_HELP="  After resolving the conflicts,
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index b63f4e2..ccc5e44 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -21,38 +21,60 @@ test_expect_success setup '
- 	git tag base
- '
- 
--test_expect_success 'auto fixup' '
-+test_auto_fixup() {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
- 	git add -u &&
- 	test_tick &&
- 	git commit -m "fixup! first"
- 
--	git tag final-fixup &&
-+	git tag $1 &&
- 	test_tick &&
--	git rebase --autosquash -i HEAD^^^ &&
-+	git rebase $2 -i HEAD^^^ &&
- 	git log --oneline >actual &&
- 	test 3 = $(wc -l <actual) &&
--	git diff --exit-code final-fixup &&
-+	git diff --exit-code $1 &&
- 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
- 	test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+}
-+
-+test_expect_success 'auto fixup (option)' '
-+	test_auto_fixup final-fixup-option --autosquash
-+'
-+
-+test_expect_success 'auto fixup (config)' '
-+	git config rebase.autosquash true &&
-+	test_auto_fixup final-fixup-config-true
-+	git config rebase.autosquash false &&
-+	test_must_fail test_auto_fixup final-fixup-config-false
- '
- 
--test_expect_success 'auto squash' '
-+test_auto_squash() {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
- 	git add -u &&
- 	test_tick &&
- 	git commit -m "squash! first"
- 
--	git tag final-squash &&
-+	git tag $1 &&
- 	test_tick &&
--	git rebase --autosquash -i HEAD^^^ &&
-+	git rebase $2 -i HEAD^^^ &&
- 	git log --oneline >actual &&
- 	test 3 = $(wc -l <actual) &&
--	git diff --exit-code final-squash &&
-+	git diff --exit-code $1 &&
- 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
- 	test 2 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+}
-+
-+test_expect_success 'auto squash (option)' '
-+	test_auto_squash final-squash --autosquash
-+'
-+
-+test_expect_success 'auto squash (config)' '
-+	git config rebase.autosquash true &&
-+	test_auto_squash final-squash-config-true
-+	git config rebase.autosquash false &&
-+	test_must_fail test_auto_squash final-squash-config-false
- '
- 
- test_expect_success 'misspelled auto squash' '
--- 
-1.7.2.rc2.1.geb6d9.dirty
+Don't complicate things, just make new repo when the old one is too large. 
+That is what I do and it is for me the best backup system I ever had.
+Martin
