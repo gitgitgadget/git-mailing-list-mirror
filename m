@@ -1,107 +1,96 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH 2/2] fix merge-tree where two branches share no changes
-Date: Sat, 10 Jul 2010 01:53:51 +0100
-Message-ID: <1278723231-24802-3-git-send-email-wmpalmer@gmail.com>
-References: <1278723231-24802-1-git-send-email-wmpalmer@gmail.com>
-Cc: wmpalmer@gmail.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 10 03:01:24 2010
+From: "Pickens, James E" <james.e.pickens@intel.com>
+Subject: [BUG] 'diff A...B' fails with multiple merge bases
+Date: Fri, 9 Jul 2010 18:15:45 -0700
+Message-ID: <3BA20DF9B35F384F8B7395B001EC3FB36CF674AE@azsmsx507.amr.corp.intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 10 03:16:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXORQ-0004GL-NX
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 03:01:17 +0200
+	id 1OXOfr-00008e-5r
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 03:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186Ab0GJBBL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 21:01:11 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61731 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751017Ab0GJBBK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 21:01:10 -0400
-Received: by wyf23 with SMTP id 23so2051860wyf.19
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 18:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=k1ZXqO/vqEKLc1Fv6ytrZO6OD2OLpLnp6rh+R+6hXNY=;
-        b=lh1/Lp3/qpxtSXkdWCNhcnaMBIF7kz8kSdgJnu+YgoUx/4IlJ0PMaSToGSmx7rPPQ7
-         /cr4LmdD80JNz3NFnRYyJNj9aLp3Adjs8a2vVR4/Ifq9cYCbXgzCSJg/tngAJV9mxXpi
-         VM4U9iy/p8+wJEesI6T5VdO2GCdODx3krqoT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=lrC05iEXifL7KWpjOYIm7SSVq8Ec4pkQS1BYEfFqKEG990uqu1s5p4OfF9m8EUvxfD
-         hoB6thKnqMtcTUreOhCzGeMEZD5qyGtYbB6uzJD/WqWWdvz/FAwmu8leFHN17r/2He1R
-         qRTDW45rVnZn+yLrBNiQWsaPs38B06zzxBDwQ=
-Received: by 10.227.140.154 with SMTP id i26mr3565039wbu.199.1278723257610;
-        Fri, 09 Jul 2010 17:54:17 -0700 (PDT)
-Received: from localhost.localdomain (5acc3a9a.bb.sky.com [90.204.58.154])
-        by mx.google.com with ESMTPS id i25sm10539963wbi.4.2010.07.09.17.54.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jul 2010 17:54:17 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.703.g42c01
-In-Reply-To: <1278723231-24802-1-git-send-email-wmpalmer@gmail.com>
+	id S1751566Ab0GJBPz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 21:15:55 -0400
+Received: from mga09.intel.com ([134.134.136.24]:33960 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751186Ab0GJBPy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 21:15:54 -0400
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP; 09 Jul 2010 18:15:02 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.55,176,1278313200"; 
+   d="scan'208";a="637122995"
+Received: from azsmsx601.amr.corp.intel.com ([10.2.121.193])
+  by orsmga001.jf.intel.com with ESMTP; 09 Jul 2010 18:15:49 -0700
+Received: from azsmsx001.amr.corp.intel.com (10.2.167.98) by
+ azsmsx601.amr.corp.intel.com (10.2.121.193) with Microsoft SMTP Server (TLS)
+ id 8.2.176.0; Fri, 9 Jul 2010 18:15:47 -0700
+Received: from azsmsx507.amr.corp.intel.com ([10.2.121.87]) by
+ azsmsx001.amr.corp.intel.com ([10.2.167.98]) with mapi; Fri, 9 Jul 2010
+ 18:15:47 -0700
+Thread-Topic: [BUG] 'diff A...B' fails with multiple merge bases
+Thread-Index: AcsfzWxysTcQHrW6TDOKP/yJJ4K9hg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150705>
 
-Here we fix a regression which was introduced by
-15b4f7a68d8c3c8ee28424415b203f61202d65d1 /
-	merge-tree: use ll_merge() not xdl_merge()
+Hi,
 
-Which caused merge-tree to segfault in particular combinations of
-merging files which existed in one branch, but not in the other or in
-the merge-base. This was caused by referencing entry->path at a time
-when entry was known to be possibly-NULL.
+The command 'git diff A...B' is supposed to be equivalent to 'git diff $(git
+merge-base A B) B'.  But when there are multiple merge bases between A and B,
+the former gives no output.  Here's a recipe to reproduce the problem:
 
-To correct the problem, we save the path of the entry we came in with,
-as the path should be the same among all the stages no matter which
-sides are involved in the merge.
+    git init
+    git commit --allow-empty -m 1
+    git checkout -b A
+    touch file1
+    git add file1
+    git commit -m A
+    git checkout master
+    touch file2
+    git add file2
+    git commit -m B
+    git checkout -b B
+    git merge A
+    git checkout A
+    git merge master
+    git diff A...B
+    git diff $(git merge-base A B) B
 
-Signed-off-by: Will Palmer <wmpalmer@gmail.com>
----
- builtin/merge-tree.c  |    3 ++-
- t/t4300-merge-tree.sh |    2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+The diff commands at the end will give different results.  It bisects to:
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index fc00d79..9b25ddc 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -60,6 +60,7 @@ static void *result(struct merge_list *entry, unsigned long *size)
- {
- 	enum object_type type;
- 	struct blob *base, *our, *their;
-+	const char *path = entry->path;
- 
- 	if (!entry->stage)
- 		return read_sha1_file(entry->blob->object.sha1, &type, size);
-@@ -76,7 +77,7 @@ static void *result(struct merge_list *entry, unsigned long *size)
- 	their = NULL;
- 	if (entry)
- 		their = entry->blob;
--	return merge_file(entry->path, base, our, their, size);
-+	return merge_file(path, base, our, their, size);
- }
- 
- static void *origin(struct merge_list *entry, unsigned long *size)
-diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-index afcb89d..97a3deb 100755
---- a/t/t4300-merge-tree.sh
-+++ b/t/t4300-merge-tree.sh
-@@ -30,7 +30,7 @@ test_expect_success 'both added conflict' '
- 	git merge-tree initial diff-A diff-B
- '
- 
--test_expect_failure 'nothing similar' '
-+test_expect_success 'nothing similar' '
- 	git reset --hard initial
- 	test_commit "no-common-A" "ONE" "AAA" 
- 
--- 
-1.7.1.703.g42c01
+commit b75271d93a9e4be960d53fc4f955802530e0e733
+Author: Matt McCutchen <matt@mattmccutchen.net>
+Date:   Fri Oct 10 21:56:15 2008 -0400
+
+    "git diff <tree>{3,}": do not reverse order of arguments
+
+    According to the message of commit 0fe7c1de16f71312e6adac4b85bddf0d62a47168,
+    "git diff" with three or more trees expects the merged tree first followed by
+    the parents, in order.  However, this command reversed the order of its
+    arguments, resulting in confusing diffs.  A comment /* Again, the revs are all
+    reverse */ suggested there was a reason for this, but I can't figure out the
+    reason, so I removed the reversal of the arguments.  Test case included.
+
+
+I verified that if I revert that commit, 'diff A...B' works as expected, but
+test t4013-diff-various.sh fails.  The failing command is 'git diff master
+master^ side'.  I don't understand what that command is supposed to do, so I
+didn't go any further.
+
+Am I right that this is a bug, and if so can someone help to address it?
+
+James
