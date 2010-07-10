@@ -1,110 +1,98 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Cutting history
-Date: Sat, 10 Jul 2010 11:58:50 +0000
-Message-ID: <AANLkTikY8RKseD8K4RVrLHnSdW_Su8hVRPRFkzzz1rGv@mail.gmail.com>
-References: <20100710032553.GB554@nibiru.local>
-	<4C37F24E.30407@workspacewhiz.com>
-	<m3tyo7lo6n.fsf@localhost.localdomain>
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: Re: [PATCH 2/2] rebase -i: Preserve whitespace at beginning of commit 
+	header in $GIT_EDITOR
+Date: Sat, 10 Jul 2010 20:22:41 +0800
+Message-ID: <AANLkTim2cOWWYbco3XYb_dfOCkUp4rfXIvE-8jZWK4a8@mail.gmail.com>
+References: <1278652843-30872-1-git-send-email-ayiehere@gmail.com>
+	<1278652843-30872-2-git-send-email-ayiehere@gmail.com>
+	<7vpqywl1sb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>, weigelt@metux.de,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 10 13:59:07 2010
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 10 14:22:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXYi1-00075F-1C
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 13:59:05 +0200
+	id 1OXZ57-0000dg-LC
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 14:22:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754799Ab0GJL6w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jul 2010 07:58:52 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38456 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754773Ab0GJL6v convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Jul 2010 07:58:51 -0400
-Received: by iwn7 with SMTP id 7so3115461iwn.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 04:58:51 -0700 (PDT)
+	id S1753098Ab0GJMWo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jul 2010 08:22:44 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43845 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751039Ab0GJMWn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Jul 2010 08:22:43 -0400
+Received: by wwb24 with SMTP id 24so5763308wwb.1
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 05:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=RBRzo9YBbxPFPDUoAAgA8a3ERJqMwwzUIoOaOiVhFcM=;
-        b=HEAPXvpk35KNAFTKSbj0chIbtA0ly6nCF2JIzQpjXuAdQdVa3x98bPiM0GEhlDrgQZ
-         nQ9UZNB0UlTYDoQXpHrlOWFmAcdFBLlEeolHk/a8GOcxQlCE/cAHAgYbWFdEq3qipdj7
-         Oz8cAztWXgZ7wG5nwtKmDXxxITyDaUJe+60gQ=
+        bh=DOxUQYakUgRLtmLYad92VFnwceAJZkh8wtRPPqDYo5U=;
+        b=SCs2Xnt9yHcOk2CyFe2Ennoq/a7EB4CccbnfNKLWMZ9v54xwZMCFFWTb6+W4cSV8r6
+         dPOjKWr2ktXWU8X62wNGpTrEdiD1VC1ckAGBtFm/8rBCFETQxcHfAM/g3TA4kX1l3c3N
+         pg0k8RpFGTeGO9+BM7iLnBNp6UF0zWjZgb/1A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=jHwhPxYecsMXUtxXzV9p9fh6On91ZwsYi4ZnEOrNqsLzMN6BWg3WkFEaogFqbkPYyw
-         Dsu+szb9Z0yEsnBwY/NrLTFBcPnOx8qWHN3DfDkERhSkJm/l4Cna6i4yL5cH2PlJNnyC
-         nwTaXtYm0/B2bYyjwIXCdCvQzVuS7cVMcpYzQ=
-Received: by 10.231.31.202 with SMTP id z10mr11442547ibc.85.1278763131030; 
-	Sat, 10 Jul 2010 04:58:51 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Sat, 10 Jul 2010 04:58:50 -0700 (PDT)
-In-Reply-To: <m3tyo7lo6n.fsf@localhost.localdomain>
+        b=sXNHyFTMSTsmQx0JCwOz1c2t60xWRO3P/qZZ6M+E3ymwSDBj1AWZvr2GrFIWlfMMfZ
+         JUDfc23ukkUu8wOppzlkjnsZzWP9O5I70FzRRLIWQaMC9sCawLwLD3C40i9mAPlevT7A
+         uicAH3kVYI+gpe5xHw329AROi+hcswo4So+iE=
+Received: by 10.216.180.202 with SMTP id j52mr5610187wem.112.1278764561830; 
+	Sat, 10 Jul 2010 05:22:41 -0700 (PDT)
+Received: by 10.216.163.142 with HTTP; Sat, 10 Jul 2010 05:22:41 -0700 (PDT)
+In-Reply-To: <7vpqywl1sb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150722>
 
-On Sat, Jul 10, 2010 at 08:47, Jakub Narebski <jnareb@gmail.com> wrote:
-> Joshua Jensen <jjensen@workspacewhiz.com> writes:
+On Sat, Jul 10, 2010 at 6:30 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nazri Ramliy <ayiehere@gmail.com> writes:
 >
->> =C2=A0 ----- Original Message -----
->> From: Enrico Weigelt
->> Date: 7/9/2010 9:25 PM
->>
->> > I'm using git for automatic backups (eg. database dumps). This
->> > works quite well, but as time goes, the history (and so the repo)
->> > gets larger and larger. It would be really nice to allow cutting
->> > off old stuff (eg. after N commits in the past).
+>> +                     sed -i "s/^\([a-z]\+\) [0-9a-f]\+ /\1 $REPLACE=
+_COMMIT_ID /" \
 >
-> This is certainly Using Git For What It Was Not Intended...
+> This is not portable. Escaping an ERE element with a backslash does n=
+ot
+> make it suitable for use in BRE that sed uses.
+>
+> Do we use in-place replacement anywhere else with sed?  I don't think=
+ it
+> is portable, either.
+>
 
-It actually works very well though. I use Git to back up MySQL
-databases like this.
+And later ...
 
-Here's the script I use to dump MySQL databases:
+On Sat, Jul 10, 2010 at 6:37 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cat "$TODO.tmp" | sed "s/^=
+/pick /" > "$TODO"
+>
+> Do not cat a single file into a pipeline.
+>
+> =A0 =A0 =A0 =A0sed "s/^/pick /" <"$TODO.tmp" >"$TODO"
+>
+>> + =A0 =A0 =A0 =A0 =A0 =A0 else
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cat "$TODO.tmp" |
+>
+> Likewise.
+>
+[snip]
+> Don't pipe output of grep into sed.
+>
+> =A0 =A0 =A0 =A0sed -ne "/^$shortsha1 /s/^/pick /p" <"$TODO.tmp" >>"$T=
+ODO"
 
-    http://github.com/avar/linode-etc/blob/master/bin/cron/mysqldump-to=
--git
+I'll send out a v2 of this series that addresses the above issues in
+better ways (i think).
 
-And a small wrapper to dump them all:
-
-    http://github.com/avar/linode-etc/blob/master/bin/cron/mysqldump-to=
--git-all
-
-I make dumps every 6 hours:
-
-    http://github.com/avar/linode-etc/blob/master/cron.d/v-mysql-git-ba=
-ckup
-
-And after each dump I repack & prune (some of this is probably
-redundant given the linear history) the repository:
-
-    http://github.com/avar/linode-etc/blob/master/bin/cron/git-repack-a=
-nd-gc-dir
-
-And here's graph showing how big the dumps get:
-
-    http://munin.nix.is/nix.is/v.nix.is/dirs_var_backup_mysql.html
-
-The climbing charts before the size cutoff were before I started
-repacking them.
-
-As for pruning old history, I thought this *should* work for pruning
-history older than 7 days (given that you dump daily):
-
-    git rebase --strategy=3Dbase --onto master~8 master~7
-
-But of course that deletes new commits. I need to freshen up on my
-rebase understanding. Maybe someone else on list knows how to do
-that. I thought git rebase --interactive might work, but I can't get
-it to display the root commit. Maybe you need git-filter-branch.
+nazri
