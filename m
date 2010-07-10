@@ -1,89 +1,112 @@
 From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCH 0/2] merge-tree: fix (merge-base a b) b a
-Date: Sat, 10 Jul 2010 01:53:49 +0100
-Message-ID: <1278723231-24802-1-git-send-email-wmpalmer@gmail.com>
+Subject: [PATCH 1/2] add basic tests for merge-tree
+Date: Sat, 10 Jul 2010 01:53:50 +0100
+Message-ID: <1278723231-24802-2-git-send-email-wmpalmer@gmail.com>
+References: <1278723231-24802-1-git-send-email-wmpalmer@gmail.com>
 Cc: wmpalmer@gmail.com, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 10 02:54:26 2010
+X-From: git-owner@vger.kernel.org Sat Jul 10 02:54:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXOKl-0002Hh-9V
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 02:54:23 +0200
+	id 1OXOKu-0002K5-FT
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 02:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242Ab0GJAyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 20:54:18 -0400
+	id S1751396Ab0GJAyX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 20:54:23 -0400
 Received: from mail-ww0-f44.google.com ([74.125.82.44]:65329 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750862Ab0GJAyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 20:54:17 -0400
-Received: by wwb24 with SMTP id 24so5477771wwb.1
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 17:54:15 -0700 (PDT)
+	with ESMTP id S1750862Ab0GJAyW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jul 2010 20:54:22 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 24so5477771wwb.1
+        for <git@vger.kernel.org>; Fri, 09 Jul 2010 17:54:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=FReEyNSRMYQhS/9f5otIWFlZ5MW9rAJvL6aB4L39bpM=;
-        b=sJpvpsIDEGFzB+uACdMvS/zfufACRbDkyr6LBrsbpdaDz+KkWFncV0mxdQ7GZE83qt
-         uewFd/EEugcmbcnc2wPtY99k0ce22VHJr+0FgY49g4uQJQkwe8MHGjJtGY18e6thjF7T
-         mVyOMMwq/kPHcGINBdhpyEtpAtPwIXREr5JRQ=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=eQn2pXLPs82auJlGw0etfdFxs6/EE/dE059lZqbQvgs=;
+        b=vh3pL+gzCf/QVIFij+fPElzAfaacJF0YBvIZ6/EZGPB5YkwJM3qSb5kL3BHKaQRhfP
+         tQaPp7Yf3zNT5rkQhNtqaTbqYreMZqMVX5NlrhXGpTbGnb1ESVkTeuR1tMZ5MwIAijfU
+         LBvUQDcteAnjI1jBkJGTJy5eSlI2jhzClsgS4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=sDThQpENarK6xYFo8G+ZPjj8h1Y6t7G3UyN0/ISXegpPx1uAgxvM/EIzlqzFTInhrv
-         aaJ1k/07Pt4B0MANg4fKL1bqux6bv4T5jOUNV0ADRs9ers2j5ksDU87LVfmVyrFtnz8u
-         2eVCHU9rWuzYzygvHPgqkx7lpyg0SB742zP0s=
-Received: by 10.227.134.2 with SMTP id h2mr9098194wbt.196.1278723255788;
-        Fri, 09 Jul 2010 17:54:15 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=lSRGWptNLA2woanh072ugsOfTj/NPLS7xYRD56xKAVMNsFRaRWPd4JoLUGINtBsIC0
+         ZyaMbwQFSHouwDf7zjUcouR42byGGJB8k8OJtjF3tKW2oJzXfqPwYuDVOh6YnxKm65F0
+         C+XdGu356oNxFOBpKtx8yNmq0Aah11TvMtQMI=
+Received: by 10.227.72.197 with SMTP id n5mr9081334wbj.198.1278723256770;
+        Fri, 09 Jul 2010 17:54:16 -0700 (PDT)
 Received: from localhost.localdomain (5acc3a9a.bb.sky.com [90.204.58.154])
-        by mx.google.com with ESMTPS id i25sm10539963wbi.4.2010.07.09.17.54.14
+        by mx.google.com with ESMTPS id i25sm10539963wbi.4.2010.07.09.17.54.15
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 09 Jul 2010 17:54:15 -0700 (PDT)
+        Fri, 09 Jul 2010 17:54:16 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.703.g42c01
+In-Reply-To: <1278723231-24802-1-git-send-email-wmpalmer@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150703>
 
-This series notes, then fixes, a regression introduced by
-15b4f7a68d8c3c8ee28424415b203f61202d65d1 /
-	merge-tree: use ll_merge() not xdl_merge()
+merge-tree had no test cases, so here we add some very basic tests for
+it, including one known-breakage.
 
-I don't know the proper terminology to describe what's being fixed here.
-This seems to most-easily be triggered by (for example):
-	git merge-tree $(git merge-base HEAD @{u}) HEAD @{u}
-
-In the git repository at the moment, this could be triggered with:
-	git merge-tree $(git merge-base origin/next origin/master) \
-		origin/next origin/master
-
-Though as I write this, next has only just been merged with master, so
-that is not the case. For an example which is less likely to go away,
-try:
-	git merge-tree c9eaaab4165d8f402930d12899ec097495b599e6 \
-		be16ac8cc8ce693c6adf37b80db65d10a41b4eb9 \
-		9918285fb10d81af9021dae99c5f4de88ded497c
-
-It's actually very trivial to reproduce this, to the point where I
-can't help but wonder how much merge-tree is actually being used. As
-I narrowed the test-case more and more, I was surprised by how little
-it took to trigger it. The first patch in this series includes some
-very basic tests for merge-tree, the last of which demonstrates the
-regression.
-
-The second patch implements the trivial fix for it.
-
-Will Palmer (2):
-  add basic tests for merge-tree
-  fix merge-tree where two branches share no changes
-
- builtin/merge-tree.c  |    3 ++-
+Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+---
  t/t4300-merge-tree.sh |   43 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 1 deletions(-)
+ 1 files changed, 43 insertions(+), 0 deletions(-)
  create mode 100755 t/t4300-merge-tree.sh
 
+diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+new file mode 100755
+index 0000000..afcb89d
+--- /dev/null
++++ b/t/t4300-merge-tree.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Will Palmer
++#
++
++test_description='git merge-tree'
++. ./test-lib.sh
++
++test_expect_success setup '
++	test_commit "initial"
++'
++
++test_expect_success 'both added same' '
++	git reset --hard initial
++	test_commit "same-A" "ONE" "AAA" 
++
++	git reset --hard initial
++	test_commit "same-B" "ONE" "AAA"
++
++	git merge-tree initial same-A same-B
++'
++
++test_expect_success 'both added conflict' '
++	git reset --hard initial
++	test_commit "diff-A" "ONE" "AAA" 
++
++	git reset --hard initial
++	test_commit "diff-B" "ONE" "BBB"
++
++	git merge-tree initial diff-A diff-B
++'
++
++test_expect_failure 'nothing similar' '
++	git reset --hard initial
++	test_commit "no-common-A" "ONE" "AAA" 
++
++	git reset --hard initial
++	test_commit "no-common-B" "TWO" "BBB"
++
++	git merge-tree initial no-common-A no-common-B
++'
++
++test_done
 -- 
 1.7.1.703.g42c01
