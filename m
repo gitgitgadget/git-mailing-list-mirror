@@ -1,87 +1,75 @@
-From: David Bruce <davidstuartbruce@gmail.com>
-Subject: git merge and GNU gettext po files - how to avoid conflicts?
-Date: Fri, 9 Jul 2010 20:40:24 -0500
-Message-ID: <AANLkTinaGzopi8-inuum_rXEzyTcWTD6vvUXRb0yAHLg@mail.gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: incremental push/pull for large repositories
+Date: Sat, 10 Jul 2010 05:12:59 +0200
+Message-ID: <20100710031258.GA554@nibiru.local>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 10 03:40:32 2010
+X-From: git-owner@vger.kernel.org Sat Jul 10 05:23:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXP3Q-0006kl-1M
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 03:40:32 +0200
+	id 1OXQes-0002Sl-Qy
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 05:23:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751452Ab0GJBk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 21:40:26 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:51075 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053Ab0GJBkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 21:40:25 -0400
-Received: by qyk38 with SMTP id 38so3407836qyk.19
-        for <git@vger.kernel.org>; Fri, 09 Jul 2010 18:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=0KPk3MGEAPUCQ3uND3f7BMdfUkFin242jwAw3q0oXy0=;
-        b=Ty69NM1TvS/XeMiapl2ClhkAUEFiLdnrfwo8uf418ahyXW4rUov/AKcsxSteXptAi3
-         tFmR7peNK5zgWPOoRHG3hXlfg5oZX9Bq2fM4UrL01roM6X+S1Uqw77iGvidbJGEy+Wj7
-         FCC/dzP6wTbHoIdEnFLFQDAcp1DJzT52GhkJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=JBjsNoV6/bJ216ISCV5KtX0ZbUgxSjyfWyz6smdd1H/dYhrohoiCpbo1Adv8Ly0FuK
-         D5gYjZYKdGg4zKWHxkTBQO2FT317gTpKqiDKIFEof2CDl0BM2MXWbQxaUNPMUhMLe5C0
-         y97zNGF8Vlv/xD6KLKS3zRW6GqO2Eti5hJ7Jk=
-Received: by 10.224.3.3 with SMTP id 3mr1408701qal.1.1278726024336; Fri, 09 
-	Jul 2010 18:40:24 -0700 (PDT)
-Received: by 10.229.222.16 with HTTP; Fri, 9 Jul 2010 18:40:24 -0700 (PDT)
+	id S1753682Ab0GJDXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 23:23:14 -0400
+Received: from forum.psychotherapie.org ([217.160.22.205]:37002 "EHLO
+	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753151Ab0GJDXN (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Jul 2010 23:23:13 -0400
+Received: (from uucp@localhost)
+	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6A3NB5S017976
+	for git@vger.kernel.org; Sat, 10 Jul 2010 05:23:11 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o6A3CxJY004776
+	for git@vger.kernel.org; Sat, 10 Jul 2010 05:12:59 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150707>
 
-Hello,
 
-First of all, is this list suitable for git usage questions as opposed
-to git development?  If not, what list is more appropriate?
+Hi folks,
 
-Assuming this is an appropriate list, here is the issue:
 
-The .po files used by gettext are largely human-generated, so they
-need to be under scm control.  However, they are also programatically
-altered when certain make targets are run.  When this happens, a line
-in the .po file gets updated with timestamp info (not talking about a
-filesystem timestamp here, but a change in the text file).  So, if two
-branches have been worked on for a while and the updated .po files
-have been committed in each branch, they will generate conflicts when
-a merge is attempted.  Since our programs have lots of translations,
-it is a pain to resolve all the conflicts by hand. What is a good way
-to avoid this in git? My thought would be:
-1. generate a diff between the .po files in the po/ directories of the
-two branches, e.g.
-(assuming we are trying to merge a branch named "feature" back with master):
-git diff master feature po/*.po
+I often have situations where I've rebased branches with large files 
+(10th of megabytes per file) and pushing them to the remote. Normally 
+these files themselves stay untouched, but the history changes (eg. 
+commits reordered, several changes in smaller files,etc).
 
-and look to see if any differences are these innocuous, autogenerated
-differences.  Perhaps some other type of diff would be more useful,
-such as diffs from a common ancestor?
+It seem that on each push, the whole branch is transferred, including
+all the large files, which already exist on the remote site. Is there
+any way to prevent this ?
 
-2. If the diff shows that one of the branches has no changes in
-po/*.po that need to be kept, is there a way to tell git to "merge
-feature with master, but for po/*.po differences just use the file
-from feature instead of generating conflicts".  Or, should I just
-manually copy all the *.po files from one branch into the other branch
-and commit them prior to attempting the merge?
+IMHO it would be enough having a negotiation on which objects really
+have to be transferred before creating and transmitting the actual
+pack file. That would save _much_ traffic (and transmit time) for
+those situations. 
 
-It seems someone must have encountered and solved this problem before,
-but I haven't have much luck with Google, so I'd greatly appreciate
-hearing from someone with expertise.
+This could also be used to remotely repair broken repositories: 
+just repack leaving off the broken objects and fetch the missing
+ones from remotes.
 
-Thanks for any help,
 
-David Bruce
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
