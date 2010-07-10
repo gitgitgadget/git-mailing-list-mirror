@@ -1,107 +1,271 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: log -S with evil merges
-Date: Sat, 10 Jul 2010 14:48:38 -0500
-Message-ID: <20100710194838.GA2315@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Sat, 10 Jul 2010 21:58:12 +0200
+Message-ID: <201007102158.25961.jnareb@gmail.com>
+References: <201007032158.57700.jnareb@gmail.com> <AANLkTike2cKMtrHA12vsFjTI9MFne3oaRQoj1BQKoTrM@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 10 21:49:40 2010
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 10 21:58:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXg3Q-0001RB-53
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 21:49:40 +0200
+	id 1OXgCL-0004BC-QE
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 21:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752852Ab0GJTta convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jul 2010 15:49:30 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60158 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751229Ab0GJTt3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jul 2010 15:49:29 -0400
-Received: by iwn7 with SMTP id 7so3361235iwn.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 12:49:28 -0700 (PDT)
+	id S1751229Ab0GJT6s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Jul 2010 15:58:48 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:55498 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750960Ab0GJT6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jul 2010 15:58:47 -0400
+Received: by bwz1 with SMTP id 1so1735249bwz.19
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 12:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=GNAlKDr5Yl3owqldaS86xATgdGx3P1YvODWUMELGRn8=;
-        b=xoa4Ovc9Xk6LHDGmrN5i+TQXQdL84RXG0W+ygeuIdweC+DT0UvqSjYEvmhn54pXhrx
-         /k31kKf/zjVvjFGIED6g6QrlPFE6yEeFugUmv4PQNq7wsapLrt4nHsVBkyLaDSbxigjj
-         q2Xq3hPX1h7SNcLCuhre8D7RMrLqXnygxzIVs=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GNg8IjfXy8igPH4Xjo4KM3A3Nq+Wt9diHoVcvR6ZF6o=;
+        b=X0fbyEgSa/Uc/P03bmJjQpdRWXz9WFt2QK7lcdgR11duZBvbXg1PUjZzfz/NGQkc+e
+         SDDnPSATEV7AZnr/gvEhlRPRPB/xHD/Vbs4Tvp0eNvA30ljsK9t5S6X2YwmUsdv7ET33
+         /vsL3QuSEek5FPjJhCxMrt5y1f0LXiH3B4iak=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=yDU5fbQ+LyoWdZt0d86yy0TV9JlwETAd9NMLgcBw6gyG9NXP3TwlDZAWatFJ+M9qdF
-         Nm/r9O6ajDjmzSylnsY1kgGEaXOAMnCJPhRsO7i665jHDr5CqocHVXzSIgIitI3kbKU1
-         fFWS5h48iCyogbZD4Fl1WnnnuVfY3Y6brNw5c=
-Received: by 10.231.146.135 with SMTP id h7mr12376466ibv.149.1278791362660;
-        Sat, 10 Jul 2010 12:49:22 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 34sm10706440ibi.0.2010.07.10.12.49.21
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jul 2010 12:49:22 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=UxZzpKgrQnr3gpxMxT6AHiEdallKZGVNWjax4HZBOwPFB7AiClNnPDTv3YCkB2Cqsh
+         ObPSrjY9QRTdyeVKP3UqAW6EJ9nEkW1vNhV+YnjkTmfsKRJYltJfIwEL7U9i6AiW1lKn
+         TIRkhwuNFT6xsg7AdGAxc/MARQk5RtJXJQldk=
+Received: by 10.204.163.17 with SMTP id y17mr8829955bkx.64.1278791925134;
+        Sat, 10 Jul 2010 12:58:45 -0700 (PDT)
+Received: from [192.168.1.13] (aeho219.neoplus.adsl.tpnet.pl [79.186.196.219])
+        by mx.google.com with ESMTPS id s17sm10011965bkx.18.2010.07.10.12.58.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Jul 2010 12:58:43 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTike2cKMtrHA12vsFjTI9MFne3oaRQoj1BQKoTrM@mail.gmail.com>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150728>
 
-Hi,
+On Sat, 10 July 2010, Felipe Contreras wrote:
+> 2010/7/3 Jakub Narebski <jnareb@gmail.com>:
 
-I was interested to know the origin of the UE_ALWAYS et al flags in
-builtin/reflog.c, so I asked git:
+> > I guess it is time for annual (so far) Git User's Survey. =C2=A0Sho=
+uld
+> > there be one? =C2=A0When should it start, and how long should it la=
+st?
+>=20
+> Yes, I think there should definitely be one! IMO one month is enough.
 
- ; git log --oneline -S'UE_ALWAYS' --follow builtin/reflog.c
- 81b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
- 4264dc1 git reflog expire
+By the way, I think it is important that Git User's Survey 2010 lasts
+past the holidays, i.e. into September or even October, even at the
+cost of lasting two months, and not one month.
 
-Ok, clearly it was not introduced in the builtin/ move.  I guess the
-UE_ flags were part of the original =E2=80=98reflog=E2=80=99 implementa=
-tion.  Right?
+What do you think about this?
 
- ; git show 4264dc1 | grep UE_ALWAYS
- ; git show 4264dc1:builtin-reflog.c | grep UE_ALWAYS
- ;
+> > =3D=3D About you =3D=3D
+> >
+> > NOTES:
+> > ^^^^^^
+> > This section gives us a bit of demographical information about surv=
+ey
+> > responders. =C2=A0Is it useful? =C2=A0Should we leave it in survey,=
+ or remove it?
+> >
+> > Should we for example include 'gender' as one of questions? =C2=A0P=
+erl Survey
+> > 2010 did.
+>=20
+> I don't see the point of 'gender'. What does that tells us?
 
-No, that=E2=80=99s not it.  At this point I decided -S is broken and ju=
-st did
-a grep through log -p, to find that apparently this symbol was
-introduced in builtin-reflog.c with v1.7.2-rc0~122^2 (reflog
---expire-unreachable: special case entries in "HEAD" reflog,
-2010-04-09).
+Well, one can say that 'age' doesn't tell us much either.
 
-So why is log confused?  As far as log -S knows, because of the
-builtin/ move, commit v1.7.2-rc0~122 was an evil merge that produced
-the UE_ flags in builtin/reflog.c out of thin air.  It should be
-blaming that commit, then.  With a little coaxing, it does.
+Sidenote: country of residence, besides giving a bit of demographical
+information, it also gives us information about where we could organize
+mini Git Together (beside the large one at Google, after GSoC Mentors
+Summit).  It would be even better if Survs.com provided Google Map=20
+gadget to mark point of residence... :-)
+=20
+> > =3D=3D=3D 02. How old are you (in years)? =3D=3D=3D
+> > (free-form single line)
+> >
+> > NOTES:
+> > ^^^^^^
+> > Instead of unconstrained free-form response it might be better to h=
+ave
+> > single choice (or menu) of age ranges. =C2=A0What do you think? =C2=
+=A0Of course with
+> > ranges there is question what ranges to use (how to quantize age); =
+goo
+> > solution would be to chose ranges corresponding somewhat to the lev=
+els of
+> > education.
+>=20
+> What's wrong with a free-form? I think that's easy and it works.
 
- ; git log --format=3Doneline \
-	--first-parent -m -S'UE_ALWAYS' --follow builtin/reflog.c |
-   git name-rev --tags --stdin |
-   cut -d' ' -f2-
- (tags/v1.7.2-rc0~122) Merge branch 'jc/maint-no-reflog-expire-unreach-=
-for-head'
- (tags/v1.7.1-rc0~76) Merge branch 'lt/deepen-builtin-source'
- (tags/v1.5.0-rc1~188) Merge branch 'jc/fsck-reflog'
- ;
+O.K., I agree that it is not that hard to analyze free-form in this cas=
+e.
 
-The first is the culprit, the second and third the file=E2=80=99s renam=
-ing and
-introduction[1].
+> > =3D=3D=3D 10. What do you use to edit contents under version contro=
+l with Git? =3D=3D=3D
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0What kind of editor, IDE or RAD you use =
+working with Git?
+> > (multiple choice, with other)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > Is this question useful, or should it be removed from survey?
+>=20
+> I think this is useful to correlate communities.
 
-The more logical
+Hmmm...
 
- ; git log --oneline -c -S'UE_ALWAYS' --follow builtin/reflog.c
+> > =3D=3D=3D 15. How do you publish/propagate your changes? =3D=3D=3D
+> > (multiple choice, with other)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > Should it stay, or should it be removed? =C2=A0I guess it can be
+> > interesting for git hosting sites... =C2=A0Should we have separate =
+answrs
+> > for different kinds of push (ssh, "dumb" HTTP(S) with WebDAV, "smar=
+t"
+> > HTTP - if it is possible, git:// protocol with push enabled)?
+>=20
+> I think this question should stay. It would also help projects to
+> decide how to accept patches based on what most git users are familia=
+r
+> with.
 
-does not work --- it mentions _all_ merges.  Why?
+All right.
 
-[1] I don=E2=80=99t know why =E2=80=98log -S --follow=E2=80=99 should f=
-eel the need to point
-these out, but that=E2=80=99s a different story.
+> > =3D=3D=3D 16. Which of the following features do you use? =3D=3D=3D
+> > (multiple choice, with other)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > The problem is come up not with exhaustive list of features: there =
+are
+> > too many of them to list. =C2=A0The problem is coming up with list =
+of
+> > important and used enough often features.
+> >
+> > So: what features should be included in this list? =C2=A0What featu=
+res
+> > should be removed from above list of answers?
+>=20
+> I propose to add:
+>  + git stage/cache/index
+>=20
+> We really are not sure how many people are actually aware of it, are =
+we?
+>=20
+> And IMO new features should go on the top.
+
+Good idea!
+
+This and the next question about _proposed_ features are IMHO hardest
+to create well.
+
+> > =3D=3D=3D 19. Overall, how happy are you with Git? =3D=3D=3D
+> > (single choice)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > I'm not sure if this question is at all useful.
+>=20
+> I think it is. Otherwise how do we know that people are happy with it=
+?
+
+Well, I think there is rather heavy bias that if people are unhappy
+with Git, they wouldn't be using it (well, unless they have to), and
+they wouldn't be responding to this Git User's Survey (because they
+didn't found it, for example).
+=20
+> > =3D=3D=3D 20. In your opinion, which areas in Git need improvement?=
+ =3D=3D=3D
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0Please state your preference.
+> > (matrix)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > Are there any general areas that are missing from this list?
+> > What are they?
+>=20
+> How about:
+>  + communication channels
+>=20
+> I think if users have trouble reporting issues, asking questions, we
+> should catch that.
+
+O.K.
+
+  + communication channels (incl. requesting help)
+
+> > =3D=3D=3D 22. How do you compare the current version with the versi=
+on from one year ago? =3D=3D=3D
+> > (single choice)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > This question was mainly excuse for providing list of main changes
+> > from the year ago. =C2=A0I think that this question should be remov=
+ed, as
+> > it doesn't bring any important information.
+>=20
+> Yeah, and I think many people don't even notice the changes as they
+> come, but learn slowly features that have been there since a long tim=
+e
+> ago.
+
+O.K.  I think that Git matured enough that improvements are not of the
+kind that make usable out of unusable (or vice versa).
+
+O'd remove this question, then.
+
+> > =3D=3D=3D 28. How did you hear about this Git User's Survey? =3D=3D=
+=3D
+> > (single choice, with other)
+> [...]
+> > NOTES:
+> > ^^^^^^
+> > This list would of course be updated to reflect the list of (planne=
+d)
+> > announcement channels.
+>=20
+> > Should I try to post announcement on mailing list for projects that
+> > use git? =C2=A0There are entirely too many such projects nowadays, =
+and such
+> > announcement can be considered spamming by some...
+>=20
+> I still maintain that we need an official blog (not planet). Last yea=
+r
+> the most popular way of finding about the survey was through blog
+> posts, but you argued that it was because you didn't spam mailing
+> lists.
+>=20
+> http://article.gmane.org/gmane.comp.version-control.git/124609
+>=20
+> I still think it's unnecessary to spam mailing lists, but if it helps
+> us reach considerably more people, we should do it.
+>=20
+> Hopefully after this year's result we will know for sure ;)
+
+Well, there is Junio's blog, there is GitHub blog, and there is
+http://gitlog.wordpress.com/
+
+Well, let's spam mailing lists in the name od "science"! ;-))))
+
+--=20
+Jakub Narebski
+Poland
