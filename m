@@ -1,103 +1,107 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Cutting history
-Date: Sat, 10 Jul 2010 01:47:14 -0700 (PDT)
-Message-ID: <m3tyo7lo6n.fsf@localhost.localdomain>
-References: <20100710032553.GB554@nibiru.local>
-	<4C37F24E.30407@workspacewhiz.com>
+Subject: Re: git merge and GNU gettext po files - how to avoid conflicts?
+Date: Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
+Message-ID: <m3pqyvlnz9.fsf@localhost.localdomain>
+References: <AANLkTinaGzopi8-inuum_rXEzyTcWTD6vvUXRb0yAHLg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: weigelt@metux.de, git@vger.kernel.org
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Sat Jul 10 10:47:26 2010
+Cc: git@vger.kernel.org
+To: David Bruce <davidstuartbruce@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 10 10:51:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXViX-0002fy-G8
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 10:47:25 +0200
+	id 1OXVmW-00046k-H2
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 10:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943Ab0GJIrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jul 2010 04:47:20 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46524 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751511Ab0GJIrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jul 2010 04:47:19 -0400
-Received: by bwz1 with SMTP id 1so1553025bwz.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 01:47:17 -0700 (PDT)
+	id S1752818Ab0GJIvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jul 2010 04:51:23 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38119 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160Ab0GJIvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jul 2010 04:51:20 -0400
+Received: by fxm14 with SMTP id 14so1531178fxm.19
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=X5BxFnzazzMWwMowBdX/52glT0ofARpal4hlBq9CfvY=;
-        b=omZZiT8FbdfB3UQz9N+s1NBlhfYTrGTm+8lNRhj1l0ZsHMaTjsYcj6PAeOtLX1oMyW
-         bsQDRy31EylTDmAqiNcVjI0TvFth7wsjYHS7GGUkzq5CzAr97Ra6WKHfE5s7Cj4aXhGQ
-         fUeuqP9BkGbbxxGmtgLcHxs43Li6TyIg8qdx0=
+        bh=iGKFtUzSuRe/3nHpMf8Ee9yW4T/rSSU6+hpKciVljdg=;
+        b=SUlmKWJBKn61/4ZMYrtYzSXtxOlqEZK5fAVFjMYyOa182JH+c4EzQF+v6ic+mIi5kr
+         1tpq5sVefwkXldNQ9I3ru12hVzOh2a4ZQ5vO6l6YwQMLMymrJtlPC0nFG390gk96HySX
+         GtIoZHOD0LQr0y114hphFCg0r2R3heB2TMLEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=L7V2lE1uc8zujQlhqatjUd6kgz1iPV1KPzGOpQogpMQHeLRLFFMXE1+7eQHbDrL4Gh
-         xraxwWvQzBWdNGGx4nmnrDH5AcUCjMrw3xtFPvH0bO8g0stiq2zzOK4NNzwJSJUuLM6P
-         JmGCYTp0E0CkrZlDzvfs4+6A076pDCLgrfmjY=
-Received: by 10.204.47.193 with SMTP id o1mr8365659bkf.134.1278751637589;
-        Sat, 10 Jul 2010 01:47:17 -0700 (PDT)
+        b=I+BX4bmrtu0XH6zydJjUDOGFoN+7ev8NuXyz4CTR6ln1izo/CUNgF8ZdT8wkM0fJVl
+         PmREW8C8c4JuJAdpuW6imhz1noxRNgD20MD1pkdPjdCrR9Nfh8U1osJg7/GOJsyI9mSn
+         ikHW/AsBeEU630O4W7xop0sFHNLNNst+odC0E=
+Received: by 10.223.124.205 with SMTP id v13mr9217585far.84.1278751877855;
+        Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
 Received: from localhost.localdomain (abvi53.neoplus.adsl.tpnet.pl [83.8.206.53])
-        by mx.google.com with ESMTPS id s34sm7726665bkk.13.2010.07.10.01.47.14
+        by mx.google.com with ESMTPS id c3sm3843482fay.14.2010.07.10.01.51.11
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jul 2010 01:47:14 -0700 (PDT)
+        Sat, 10 Jul 2010 01:51:17 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6A8kV6T014921;
-	Sat, 10 Jul 2010 10:46:46 +0200
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6A8ojYY014993;
+	Sat, 10 Jul 2010 10:50:55 +0200
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6A8k9qN014910;
-	Sat, 10 Jul 2010 10:46:09 +0200
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6A8oYI1014989;
+	Sat, 10 Jul 2010 10:50:34 +0200
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <4C37F24E.30407@workspacewhiz.com>
+In-Reply-To: <AANLkTinaGzopi8-inuum_rXEzyTcWTD6vvUXRb0yAHLg@mail.gmail.com>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150716>
 
-Joshua Jensen <jjensen@workspacewhiz.com> writes:
+David Bruce <davidstuartbruce@gmail.com> writes:
 
->   ----- Original Message -----
-> From: Enrico Weigelt
-> Date: 7/9/2010 9:25 PM
->
-> > I'm using git for automatic backups (eg. database dumps). This
-> > works quite well, but as time goes, the history (and so the repo)
-> > gets larger and larger. It would be really nice to allow cutting
-> > off old stuff (eg. after N commits in the past).
+> First of all, is this list suitable for git usage questions as opposed
+> to git development?  If not, what list is more appropriate?
 
-This is certainly Using Git For What It Was Not Intended...
+Yes, it is appropriate list.
+ 
+> Assuming this is an appropriate list, here is the issue:
+> 
+> The .po files used by gettext are largely human-generated, so they
+> need to be under scm control.  However, they are also programatically
+> altered when certain make targets are run.  When this happens, a line
+> in the .po file gets updated with timestamp info (not talking about a
+> filesystem timestamp here, but a change in the text file).  So, if two
+> branches have been worked on for a while and the updated .po files
+> have been committed in each branch, they will generate conflicts when
+> a merge is attempted.  Since our programs have lots of translations,
+> it is a pain to resolve all the conflicts by hand. What is a good way
+> to avoid this in git? My thought would be:
+> 1. generate a diff between the .po files in the po/ directories of the
+> two branches, e.g.
+> (assuming we are trying to merge a branch named "feature" back with master):
+> git diff master feature po/*.po
+> 
+> and look to see if any differences are these innocuous, autogenerated
+> differences.  Perhaps some other type of diff would be more useful,
+> such as diffs from a common ancestor?
+> 
+> 2. If the diff shows that one of the branches has no changes in
+> po/*.po that need to be kept, is there a way to tell git to "merge
+> feature with master, but for po/*.po differences just use the file
+> from feature instead of generating conflicts".  Or, should I just
+> manually copy all the *.po files from one branch into the other branch
+> and commit them prior to attempting the merge?
 
-> >
-> > Maybe that could be done by introducing "stopper" tags: commits
-> > that have an stopper-tag may have missing parents, and git-gc
-> > can be told to ignore those parents and throw away everything
-> > behind the stopper (if not referenced otherwise).
-> >
-> > A probably cleaner, but more invasive way could be making refs
-> > to vectors, which may contain stop points (multiple ones in case
-> > of merges) additionally to the start point. Remote transmits only
-> > contain the commits within this range, and GC also just scans
-> > the range (instead of following all parents).
->
-> Your post reminded me of this: http://progit.org/2010/03/17/replace.html
+3. Create a merge driver intended specially for merging *.po files,
+   just like there exists (in the wild) the strategy to merge ChangeLog
+   files.  Then use gitattributes mechanism to associate this merge
+   strategy with *.po files via `merge' attribute.
 
-Another solution would be to make history shallower like shallow clone
-("git clone --depth <depth>") does it[1], and then prune history.  Or
-you can use grafts to cauterize history.
-
-Both of those solutions have disadvantages wrt pushing and pulling to
-other repositories (shallow clone less so), but I don't think that
-would be a problem for your situation.
-
-[1] Documentation/technical/shallow.txt 
+   But it might be not easy...
 
 -- 
 Jakub Narebski
