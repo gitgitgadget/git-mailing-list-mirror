@@ -1,95 +1,105 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Rebasing a merged branch
-Date: Sat, 10 Jul 2010 09:19:55 +0200
-Message-ID: <20100710071955.GA12251@m62s10.vlinux.de>
-References: <alpine.DEB.2.00.1007081247410.18908@ds9.cixit.se>
- <20100710065541.GB15600@foursquare.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Cutting history
+Date: Sat, 10 Jul 2010 01:47:14 -0700 (PDT)
+Message-ID: <m3tyo7lo6n.fsf@localhost.localdomain>
+References: <20100710032553.GB554@nibiru.local>
+	<4C37F24E.30407@workspacewhiz.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Chris Frey <cdfrey@foursquare.net>
-X-From: git-owner@vger.kernel.org Sat Jul 10 09:20:09 2010
+Cc: weigelt@metux.de, git@vger.kernel.org
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Sat Jul 10 10:47:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXUM2-0003YW-UZ
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 09:20:07 +0200
+	id 1OXViX-0002fy-G8
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 10:47:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751856Ab0GJHUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Jul 2010 03:20:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33801 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751697Ab0GJHT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Jul 2010 03:19:59 -0400
-Received: (qmail invoked by alias); 10 Jul 2010 07:19:57 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp065) with SMTP; 10 Jul 2010 09:19:57 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+0yu8sYHO0ck6fwZSEiLLaFllwUyMDP9BaXwVlK9
-	9uPEvOVExAwqz/
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id AECF2DC5B0; Sat, 10 Jul 2010 09:19:55 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20100710065541.GB15600@foursquare.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1751943Ab0GJIrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Jul 2010 04:47:20 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46524 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511Ab0GJIrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Jul 2010 04:47:19 -0400
+Received: by bwz1 with SMTP id 1so1553025bwz.19
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 01:47:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=X5BxFnzazzMWwMowBdX/52glT0ofARpal4hlBq9CfvY=;
+        b=omZZiT8FbdfB3UQz9N+s1NBlhfYTrGTm+8lNRhj1l0ZsHMaTjsYcj6PAeOtLX1oMyW
+         bsQDRy31EylTDmAqiNcVjI0TvFth7wsjYHS7GGUkzq5CzAr97Ra6WKHfE5s7Cj4aXhGQ
+         fUeuqP9BkGbbxxGmtgLcHxs43Li6TyIg8qdx0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=L7V2lE1uc8zujQlhqatjUd6kgz1iPV1KPzGOpQogpMQHeLRLFFMXE1+7eQHbDrL4Gh
+         xraxwWvQzBWdNGGx4nmnrDH5AcUCjMrw3xtFPvH0bO8g0stiq2zzOK4NNzwJSJUuLM6P
+         JmGCYTp0E0CkrZlDzvfs4+6A076pDCLgrfmjY=
+Received: by 10.204.47.193 with SMTP id o1mr8365659bkf.134.1278751637589;
+        Sat, 10 Jul 2010 01:47:17 -0700 (PDT)
+Received: from localhost.localdomain (abvi53.neoplus.adsl.tpnet.pl [83.8.206.53])
+        by mx.google.com with ESMTPS id s34sm7726665bkk.13.2010.07.10.01.47.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 10 Jul 2010 01:47:14 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6A8kV6T014921;
+	Sat, 10 Jul 2010 10:46:46 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6A8k9qN014910;
+	Sat, 10 Jul 2010 10:46:09 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <4C37F24E.30407@workspacewhiz.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150715>
 
-On Sat, Jul 10, 2010 at 02:55:41AM -0400, Chris Frey wrote:
-> On Thu, Jul 08, 2010 at 12:52:08PM +0100, Peter Krefting wrote:
-> > Hi!
-> > 
-> > If I slightly modify the example from the git-rebase manual page to look 
-> > like this:
-> > 
-> >   o---o---o---o  master
-> >          \
-> >           o---o---o---o---o  topicA
-> >            \     /
-> >             A---B---C---D  topicB
-> > 
-> > (topicA has merged "B" into its history; its first-parent from the line of 
-> > "o"s).
-> > 
-> > If I now do a "git rebase --onto master topicA topicB", I only get commit C 
-> > and D, as it sees A and B as being part of both branches.
-> > 
-> > Is there a way to make git rebase pick up A, B, C and D (and only them)?
-> > 
-> > I.e., I would like "all commits on topicB which are not in topicA's 
-> > --first-parent history".
-> 
-> 
-> I'm no expert on rebase --onto, but aren't you trying to rebase so that
-> the tree looks like this afterward?
-> 
-> 
->    o---o---o---o  master
->             \   \
->              \   A---B---C---D  topicB
->               \
->                o---o---o---o---o  topicA
->                 \     /
->                  A---B
->  
-> In which case, won't this work?
-> 
-> 	git checkout topicB
-> 	git rebase master
-> 
-> - Chris
+Joshua Jensen <jjensen@workspacewhiz.com> writes:
 
-No, this won't work. You will also rebase A^ (the o) commit in both branches
-A and B.
+>   ----- Original Message -----
+> From: Enrico Weigelt
+> Date: 7/9/2010 9:25 PM
+>
+> > I'm using git for automatic backups (eg. database dumps). This
+> > works quite well, but as time goes, the history (and so the repo)
+> > gets larger and larger. It would be really nice to allow cutting
+> > off old stuff (eg. after N commits in the past).
 
-AFAIK doing the following should do the trick:
+This is certainly Using Git For What It Was Not Intended...
 
-git checkout topicB
-git rebase --onto master A~1 topicB
+> >
+> > Maybe that could be done by introducing "stopper" tags: commits
+> > that have an stopper-tag may have missing parents, and git-gc
+> > can be told to ignore those parents and throw away everything
+> > behind the stopper (if not referenced otherwise).
+> >
+> > A probably cleaner, but more invasive way could be making refs
+> > to vectors, which may contain stop points (multiple ones in case
+> > of merges) additionally to the start point. Remote transmits only
+> > contain the commits within this range, and GC also just scans
+> > the range (instead of following all parents).
+>
+> Your post reminded me of this: http://progit.org/2010/03/17/replace.html
+
+Another solution would be to make history shallower like shallow clone
+("git clone --depth <depth>") does it[1], and then prune history.  Or
+you can use grafts to cauterize history.
+
+Both of those solutions have disadvantages wrt pushing and pulling to
+other repositories (shallow clone less so), but I don't think that
+would be a problem for your situation.
+
+[1] Documentation/technical/shallow.txt 
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
