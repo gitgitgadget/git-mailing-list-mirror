@@ -1,88 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/2] merge-recursive: use "up-to-date" instead of
- "uptodate" in error message for consistency
-Date: Fri, 09 Jul 2010 17:39:17 -0700
-Message-ID: <7vwrt4goga.fsf@alter.siamese.dyndns.org>
-References: <7vd3uystsh.fsf@alter.siamese.dyndns.org>
- <f5c54a4e27321b4ffb0f1f8542530281ef7841eb.1278707023.git.nicolas.s.dev@gmx.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Wincent Colaiuta <win@wincent.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Sat Jul 10 02:39:35 2010
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: [PATCH 0/2] merge-tree: fix (merge-base a b) b a
+Date: Sat, 10 Jul 2010 01:53:49 +0100
+Message-ID: <1278723231-24802-1-git-send-email-wmpalmer@gmail.com>
+Cc: wmpalmer@gmail.com, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 10 02:54:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXO6Q-0006jq-CK
-	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 02:39:34 +0200
+	id 1OXOKl-0002Hh-9V
+	for gcvg-git-2@lo.gmane.org; Sat, 10 Jul 2010 02:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544Ab0GJAj3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Jul 2010 20:39:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58958 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751653Ab0GJAj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Jul 2010 20:39:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 28274C3C2E;
-	Fri,  9 Jul 2010 20:39:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=fDG3XIwEDCcENpGuloPISfng0sI=; b=dxX2Caodwuq2b+Pxr9tClNO
-	D0djpkUhamTiGMp15ERzO/CvI7NzhMGLzGgpiDgUK4UMXE30pucLl86bJj1J9L1X
-	LMS3ptQY0YWgwnxlzD8TyoAIE4lZ5J7XUPhgtGg03Zg6F9TXivrFLTvh0NoO3APS
-	H1/mSGsZHe6BHJX+Y/x0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=AUtD4MEMulp5cjPEyEW8geSh8vco/vv89HP+gbL57DcuiP0Du
-	K9kjtfjh6QfOA+V5yogcw5XGg57s9AdIeKB3IsqaB1L1af/nq4bI6TDbJgwOhZ3W
-	ietxXl1JlebXmBvklR8/K5Se7JfXM/DFkGjphMWDQoh07JOwwBagCK8g+o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D418FC3C2D;
-	Fri,  9 Jul 2010 20:39:23 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E1868C3C2C; Fri,  9 Jul
- 2010 20:39:18 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 96227144-8BBB-11DF-982D-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751242Ab0GJAyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Jul 2010 20:54:18 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:65329 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750862Ab0GJAyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Jul 2010 20:54:17 -0400
+Received: by wwb24 with SMTP id 24so5477771wwb.1
+        for <git@vger.kernel.org>; Fri, 09 Jul 2010 17:54:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=FReEyNSRMYQhS/9f5otIWFlZ5MW9rAJvL6aB4L39bpM=;
+        b=sJpvpsIDEGFzB+uACdMvS/zfufACRbDkyr6LBrsbpdaDz+KkWFncV0mxdQ7GZE83qt
+         uewFd/EEugcmbcnc2wPtY99k0ce22VHJr+0FgY49g4uQJQkwe8MHGjJtGY18e6thjF7T
+         mVyOMMwq/kPHcGINBdhpyEtpAtPwIXREr5JRQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=sDThQpENarK6xYFo8G+ZPjj8h1Y6t7G3UyN0/ISXegpPx1uAgxvM/EIzlqzFTInhrv
+         aaJ1k/07Pt4B0MANg4fKL1bqux6bv4T5jOUNV0ADRs9ers2j5ksDU87LVfmVyrFtnz8u
+         2eVCHU9rWuzYzygvHPgqkx7lpyg0SB742zP0s=
+Received: by 10.227.134.2 with SMTP id h2mr9098194wbt.196.1278723255788;
+        Fri, 09 Jul 2010 17:54:15 -0700 (PDT)
+Received: from localhost.localdomain (5acc3a9a.bb.sky.com [90.204.58.154])
+        by mx.google.com with ESMTPS id i25sm10539963wbi.4.2010.07.09.17.54.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 09 Jul 2010 17:54:15 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.703.g42c01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150702>
 
-Nicolas Sebrecht <nicolas.s.dev@gmx.fr> writes:
+This series notes, then fixes, a regression introduced by
+15b4f7a68d8c3c8ee28424415b203f61202d65d1 /
+	merge-tree: use ll_merge() not xdl_merge()
 
-> Signed-off-by: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-> ---
->  merge-recursive.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 856e98c..fb6aa4a 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -1214,7 +1214,7 @@ int merge_trees(struct merge_options *o,
->  	}
->  
->  	if (sha_eq(common->object.sha1, merge->object.sha1)) {
-> -		output(o, 0, "Already uptodate!");
-> +		output(o, 0, "Already up-to-date!");
->  		*result = head;
->  		return 1;
->  	}
+I don't know the proper terminology to describe what's being fixed here.
+This seems to most-easily be triggered by (for example):
+	git merge-tree $(git merge-base HEAD @{u}) HEAD @{u}
 
-Sorry, but the pros-and-cons is not good enough for me to support this
-change.  It will break users who have been parsing output with scripts.
+In the git repository at the moment, this could be triggered with:
+	git merge-tree $(git merge-base origin/next origin/master) \
+		origin/next origin/master
 
-We do strongly warn people against relying on Porcelain output, but that
-does not mean we are free to change them without having a good reason or
-two.  The new spelling won't help the next reader who will find the
-message confusing the same way you did a few days ago.
+Though as I write this, next has only just been merged with master, so
+that is not the case. For an example which is less likely to go away,
+try:
+	git merge-tree c9eaaab4165d8f402930d12899ec097495b599e6 \
+		be16ac8cc8ce693c6adf37b80db65d10a41b4eb9 \
+		9918285fb10d81af9021dae99c5f4de88ded497c
 
-IOW, if we are touching this line anyway, I'd like to make sure we made an
-effort to make it less confusing, not just spelled correctly, while we
-still have our memory of confusion fresh ;-)
+It's actually very trivial to reproduce this, to the point where I
+can't help but wonder how much merge-tree is actually being used. As
+I narrowed the test-case more and more, I was surprised by how little
+it took to trigger it. The first patch in this series includes some
+very basic tests for merge-tree, the last of which demonstrates the
+regression.
+
+The second patch implements the trivial fix for it.
+
+Will Palmer (2):
+  add basic tests for merge-tree
+  fix merge-tree where two branches share no changes
+
+ builtin/merge-tree.c  |    3 ++-
+ t/t4300-merge-tree.sh |   43 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 1 deletions(-)
+ create mode 100755 t/t4300-merge-tree.sh
+
+-- 
+1.7.1.703.g42c01
