@@ -1,213 +1,110 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v3 05/13] parse the -L options
-Date: Sun, 11 Jul 2010 14:18:53 +0800
-Message-ID: <1278829141-11900-5-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v3 02/13] parse-options: add two helper functions
+Date: Sun, 11 Jul 2010 14:18:50 +0800
+Message-ID: <1278829141-11900-2-git-send-email-struggleyb.nku@gmail.com>
 References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 11 08:21:33 2010
+X-From: git-owner@vger.kernel.org Sun Jul 11 08:21:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXpuu-00021P-Sn
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 08:21:33 +0200
+	id 1OXput-00021P-77
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 08:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751506Ab0GKGVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jul 2010 02:21:25 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:40135 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979Ab0GKGVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 02:21:24 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 5so1399328pwi.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 23:21:24 -0700 (PDT)
+	id S1751209Ab0GKGVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jul 2010 02:21:15 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:58225 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750979Ab0GKGVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 02:21:14 -0400
+Received: by pzk26 with SMTP id 26so808174pzk.19
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 23:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=YGxC5AaP5YzUjOFFnBvr9X6s6RFVLsyhPQ44c3DcFsY=;
-        b=Y0zJF/EFCNOQJjD7VBFVZlZTXXTxOJ/M2JLcMaJX7Xo99jBn3eI75jrKDc+rByNG0Q
-         rFX2JbHtf8WleGl0DYEZ5/IXniVo02Al12U3qggFeuCA7mJs3WhDXGjQV1gR5cLcOi8H
-         14M1kDT8bQtwlgMG1PleD1Pg5MmFau09Wj+ig=
+        bh=cwV1AQyv2lDtzlT5vjL9TVBrnMcUvIoPW8Is6bvjbl0=;
+        b=uzhthFiflz5lpZGtIE74FAQiXPNcbD5lc3Rm9VEfbGeym05yLvYdq+Knr/ddVSS2dm
+         e5CgSLdsrwnUW0SNnBY8LliguBGEOkWScasZmEEcll3HvZr29W2O/XecuxVZ9kPKwmyO
+         HtU8TyHLDPvfEvcaAwsJhILKB+t8fDh8nHQFY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ehtG+ha7UcKq/FYsB0WdlRdvNDsg8DIFidx8dzVsRD8P+dnC5CUc1DOwjhO4QPj7Aq
-         C4Gm+SgouVCtKWgLt+gZoDby7zfuFisovq0Z9XmxVqsO18psWyn8YiavHPGy70OZK7uG
-         a6JHoVhuZEA0LmdcivQEZomm31J5z7Wla2biE=
-Received: by 10.142.234.11 with SMTP id g11mr15117036wfh.202.1278829283911;
-        Sat, 10 Jul 2010 23:21:23 -0700 (PDT)
+        b=T51r4qXWerOZGzDec3a8w86Xd6shFpaf552RwdkJqqbbtoX7DyzoGm3+yKkRTtG1aZ
+         RLjKXH9kMfpROY5qCSH9lPx9w8/njVPTJvwGtW3ZauYKwbOmV/L8ZJvttnWqtXiVIJrx
+         r8S84V8KWgg30ksm87sw02zZO9ExODBGPISJU=
+Received: by 10.142.48.18 with SMTP id v18mr14183977wfv.337.1278829273542;
+        Sat, 10 Jul 2010 23:21:13 -0700 (PDT)
 Received: from localhost.localdomain ([222.35.175.242])
-        by mx.google.com with ESMTPS id c15sm2927911rvi.11.2010.07.10.23.21.20
+        by mx.google.com with ESMTPS id c15sm2927911rvi.11.2010.07.10.23.21.10
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jul 2010 23:21:23 -0700 (PDT)
+        Sat, 10 Jul 2010 23:21:12 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc2.18.g2bc49
 In-Reply-To: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150746>
 
-With the two new APIs of parse options added in the previous
-commit, we parse the multiple '-L n,m <file>' syntax.
+1. parse_options_current: get the current option/argument the API
+   now is dealing with;
+2. parse_options_next: make the API to deal with the next
+   option/argument.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- builtin/log.c |  102 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 101 insertions(+), 1 deletions(-)
+ parse-options.c |   19 +++++++++++++++++++
+ parse-options.h |    4 ++++
+ 2 files changed, 23 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 08b8722..1e90b03 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -19,6 +19,7 @@
- #include "remote.h"
- #include "string-list.h"
- #include "parse-options.h"
-+#include "line.h"
- 
- /* Set a default date-time format for git log ("log.date" config variable) */
- static const char *default_date_mode = NULL;
-@@ -27,11 +28,24 @@ static int default_show_root = 1;
- static int decoration_style;
- static const char *fmt_patch_subject_prefix = "PATCH";
- static const char *fmt_pretty;
-+static const char *dashdash = "--";
- 
--static const char * const builtin_log_usage =
-+static char builtin_log_usage[] =
- 	"git log [<options>] [<since>..<until>] [[--] <path>...]\n"
-+	"git log [<options>] -L n,m <path>\n"
- 	"   or: git show [options] <object>...";
- 
-+static const char *log_opt_usage[] = {
-+	builtin_log_usage,
-+	NULL
-+};
-+
-+struct line_opt_callback_data {
-+	struct diff_line_range **range;
-+	struct parse_opt_ctx_t *ctx;
-+	struct rev_info *rev;
-+};
-+
- static int parse_decoration_style(const char *var, const char *value)
- {
- 	switch (git_config_maybe_bool(var, value)) {
-@@ -49,12 +63,41 @@ static int parse_decoration_style(const char *var, const char *value)
- 	return -1;
+diff --git a/parse-options.c b/parse-options.c
+index cbb49d3..4266bde 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -439,6 +439,25 @@ unknown:
+ 	return PARSE_OPT_DONE;
  }
  
-+static int log_line_range_callback(const struct option *option, const char *arg, int unset)
++const char *parse_options_current(struct parse_opt_ctx_t *ctx)
 +{
-+	struct line_opt_callback_data *data = option->value;
-+	struct diff_line_range *r = *data->range;
-+	struct parse_opt_ctx_t *ctx = data->ctx;
-+	if (!arg)
++	return ctx->argv[0];
++}
++
++int parse_options_next(struct parse_opt_ctx_t *ctx, int retain)
++{
++	if (ctx->argc <= 0)
 +		return -1;
 +
-+	if (r->nr == 0 && r->next == NULL) {
-+		ctx->out[ctx->cpidx++] = dashdash;
-+	}
++	if (retain == 1)
++		ctx->out[ctx->cpidx++] = ctx->argv[0];
 +
-+	diff_line_range_append(r, arg);
-+	data->rev->line = 1;
++	ctx->argc--;
++	ctx->argv++;
++
 +	return 0;
 +}
 +
- static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 			 struct rev_info *rev, struct setup_revision_opt *opt)
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
  {
- 	int i;
- 	int decoration_given = 0;
- 	struct userformat_want w;
-+	const char *path = NULL, *pathspec = NULL;
-+	static struct diff_line_range *range = NULL;
-+	static struct parse_opt_ctx_t ctx;
-+	static struct line_opt_callback_data line_cb = {&range, &ctx, NULL};
-+	static const struct option options[] = {
-+		OPT_CALLBACK('L', NULL, &line_cb, "n,m", "Process only line range n,m, counting from 1", log_line_range_callback),
-+		OPT_END()
-+	};
-+
-+	line_cb.rev = rev;
-+	range = xmalloc(sizeof(*range));
-+	DIFF_LINE_RANGE_INIT(range);
+ 	memmove(ctx->out + ctx->cpidx, ctx->argv, ctx->argc * sizeof(*ctx->out));
+diff --git a/parse-options.h b/parse-options.h
+index 407697a..4791baa 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -187,6 +187,10 @@ extern int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			      const struct option *options,
+ 			      const char * const usagestr[]);
  
- 	rev->abbrev = DEFAULT_ABBREV;
- 	rev->commit_format = CMIT_FMT_DEFAULT;
-@@ -75,6 +118,58 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 	 */
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(builtin_log_usage);
++extern const char *parse_options_current(struct parse_opt_ctx_t *ctx);
 +
-+	parse_options_start(&ctx, argc, argv, prefix, PARSE_OPT_KEEP_DASHDASH |
-+			PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_STOP_AT_NON_OPTION);
-+	for (;;) {
-+		switch (parse_options_step(&ctx, options, log_opt_usage)) {
-+		case PARSE_OPT_HELP:
-+			exit(129);
-+		case PARSE_OPT_DONE:
-+			goto parse_done;
-+		case PARSE_OPT_NON_OPTION:
-+			path = parse_options_current(&ctx);
-+			pathspec = prefix_path(prefix, prefix ? strlen(prefix) : 0, path);
-+			range->spec = alloc_filespec(pathspec);
-+			free((void *)pathspec);
-+			if (range->nr == 0) {
-+				if(range->next) {
-+					die("Path %s need a -L <range> option\n"
-+					"If you want follow the history of the whole file "
-+					"whether to using 'git log' without -L or using "
-+					"'git log -L 1,$ <path>'", range->spec->path);
-+				} else {
-+					parse_options_next(&ctx, 1);
-+					continue;
-+				}
-+			}
-+			struct diff_line_range *r = xmalloc(sizeof(*r));
-+			DIFF_LINE_RANGE_INIT(r);
-+			r->next = range;
-+			range = r;
-+			parse_options_next(&ctx, 1);
-+			continue;
-+		case PARSE_OPT_UNKNOWN:
-+			parse_options_next(&ctx, 1);
-+			continue;
-+		}
++extern int parse_options_next(struct parse_opt_ctx_t *ctx, int retain);
 +
-+		parse_revision_opt(rev, &ctx, options, log_opt_usage);
-+	}
-+parse_done:
-+	argc = parse_options_end(&ctx);
-+
-+	/* die if '-L <range>' with no pathspec follow */
-+	if (range->nr > 0 && range->spec == NULL) {
-+		die("Each -L should follow a pathspec");
-+	}
-+	/* clear up the last range */
-+	if (range->nr == 0) {
-+		struct diff_line_range *r = range->next;
-+		DIFF_LINE_RANGE_CLEAR(range);
-+		range = r;
-+	}
-+
- 	argc = setup_revisions(argc, argv, rev, opt);
+ extern int parse_options_end(struct parse_opt_ctx_t *ctx);
  
- 	memset(&w, 0, sizeof(w));
-@@ -125,6 +220,11 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 		rev->show_decorations = 1;
- 		load_ref_decorations(decoration_style);
- 	}
-+
-+	/* Test whether line level history is asked for */
-+	if (range && range->nr > 0) {
-+		setup_line(rev, range);
-+	}
- }
- 
- /*
+ extern int parse_options_concat(struct option *dst, size_t, struct option *src);
 -- 
 1.7.0.2.273.gc2413.dirty
