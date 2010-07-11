@@ -1,170 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Git User's Survey 2010 (resend)
-Date: Sun, 11 Jul 2010 19:42:52 +0200
-Message-ID: <201007111942.54847.jnareb@gmail.com>
-References: <201007032158.57700.jnareb@gmail.com> <201007102158.25961.jnareb@gmail.com> <AANLkTikQF_tMHz28k2pdpVdtbnE6EDZiKQbwmMTlp-c9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Question about 'branch -d' safety
+Date: Sun, 11 Jul 2010 11:41:54 -0700
+Message-ID: <7v1vb9hnd9.fsf@alter.siamese.dyndns.org>
+References: <20091230065442.6117@nanako3.lavabit.com>
+ <m3lj9jknlr.fsf@localhost.localdomain> <20100711065505.GA19606@localhost>
+ <201007110916.29567.jnareb@gmail.com> <20100711133730.GA10338@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 11 19:43:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Jul 11 20:42:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OY0Ye-00077L-0S
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 19:43:16 +0200
+	id 1OY1Tu-00029D-GV
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 20:42:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753998Ab0GKRnJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jul 2010 13:43:09 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37715 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753979Ab0GKRnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 13:43:07 -0400
-Received: by fxm14 with SMTP id 14so1932405fxm.19
-        for <git@vger.kernel.org>; Sun, 11 Jul 2010 10:43:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=cMvvXuyiAfVmVnL7fQ/MoCWBFO1BKg7Ty8/3wTONaBc=;
-        b=NJZA5TApPRIun0Ps27qJXUXgPdu8mMbxTrOTLaEjFUWrmEan+pUeK6WWBr+Ho6Oy1B
-         1QUQgMjwEZpMuVJGeDKLZjR+KHa19B7t9sJmU540tgQSF0SlF70GRoOOXDYN0puTT25o
-         L8mKrb4zu5QUO44MSq1S94PF5cAhfO17XWxts=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=fN2AKVVnCIF/hrWvu7AyWiFV3YdCjPWmY8R3PhZI5gJ8fJ7QwBmeHa4DA8l8uldbIF
-         c7siHZ5SE+qzkGv3m2FDWfgb6FtkkGPUe32I/evbYoa6KWhJ14wBVfes7Tanoryf48es
-         hYB9v5zDbzTZVAOVsimdURVI0eBVGCbekU6tc=
-Received: by 10.223.103.141 with SMTP id k13mr10505597fao.16.1278870185731;
-        Sun, 11 Jul 2010 10:43:05 -0700 (PDT)
-Received: from [192.168.1.13] (abwj181.neoplus.adsl.tpnet.pl [83.8.233.181])
-        by mx.google.com with ESMTPS id h15sm7197354faj.33.2010.07.11.10.43.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jul 2010 10:43:03 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTikQF_tMHz28k2pdpVdtbnE6EDZiKQbwmMTlp-c9@mail.gmail.com>
-Content-Disposition: inline
+	id S1754703Ab0GKSmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jul 2010 14:42:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48458 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754664Ab0GKSmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 14:42:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E2B7C3842;
+	Sun, 11 Jul 2010 14:42:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=gXp6ezSohof9GA7eKk7s2TR2YWg=; b=V4C69TAcMWJbHLergcPsy3K
+	mTer9jL32ig1yEfe7cHsiPSBOqHaalpoUr82vM8xsdkB3l7g4I4HJxEDM3BJgzBH
+	8Ack3M3LoYyvnEJkf7JOGD8rG6SmVkkyP9DLMa30H3fM3LzW1B8GqIEuuIUe1kjO
+	zm6blR8D1RfKqs6Rulfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=pGS8zTWH7/yClwisTt21EMKFOH7OgEr3VFgKgnBDeqVICbU2h
+	jxhiKllcGQVJ1dGWr15mSTJr7Z3mwBEGPX+4KWskB5AxxtDGUAly2N4oPuRDs4ie
+	P+yTpBrHL4XXBygSRqd3fCazGu/HC6NJZCITBJafaZiz5lCxhICINLgGcc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD4F7C382A;
+	Sun, 11 Jul 2010 14:42:03 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8945C3825; Sun, 11 Jul
+ 2010 14:41:56 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FFA12E10-8D1B-11DF-9FD4-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150782>
 
-On Sun, 11 Jul 2010, Felipe Contreras wrote:
-> On Sat, Jul 10, 2010 at 10:58 PM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
->> On Sat, 10 July 2010, Felipe Contreras wrote:
->>> 2010/7/3 Jakub Narebski <jnareb@gmail.com>:
->>>>
->>>> I guess it is time for annual (so far) Git User's Survey. =C2=A0Sh=
-ould
->>>> there be one? =C2=A0When should it start, and how long should it l=
-ast?
->>>
->>> Yes, I think there should definitely be one! IMO one month is enoug=
-h.
->>
->> By the way, I think it is important that Git User's Survey 2010 last=
-s
->> past the holidays, i.e. into September or even October, even at the
->> cost of lasting two months, and not one month.
->>
->> What do you think about this?
->=20
-> My feeling is that the longer it is, the easier it's for people to
-> postpone it, and then forget about it.
+Clemens Buchacher <drizzd@aon.at> writes:
 
-Hmmm... I haven't thought about this issue.  I certainly don't plan
-for Git User's Survey 2010 to last longer than 2 months.  We can
-always send / post reminders that the survey is coming to be closed.
+> Known issues:
+>
+>  - The reflog cannot be accessed while the ref does not exist.
+>
+>  - Older git versions will not resurrect the reflog, and therefore
+>    leave the renamed reflog behind.
+>
+>  - Breaks t7701, because git-expire tries to lock log entries,
+>    which fails because ~ is an illegal character for refs.
+>
+>  - Breaks t9300.
 
-The problem with duration of last year survey was that some announcemen=
-ts
-got delayed because of holidays.
+Perhaps a few obvious ones are missing?
 
-> But I don't have a strong opinion either way.
+ - It is no longer possible to get rid of objects associated with the
+   history of a branch by deleting the branch and then running gc.
 
-I think that 15 August to 15 September, or to 15 October would be
-good time (this is currently preliminary only).
+ - It is no longer possible to trust git that you would start a history of
+   a branch afresh when you create one.  If you happened to have an
+   unrelated branch with the same name in the past, the new branch
+   inherits reflog entries when it shouldn't.
 
->>>> =3D=3D About you =3D=3D
->>>>
->>>> NOTES:
->>>> ^^^^^^
->>>> This section gives us a bit of demographical information about sur=
-vey
->>>> responders. =C2=A0Is it useful? =C2=A0Should we leave it in survey=
-, or remove it?
->>>>
->>>> Should we for example include 'gender' as one of questions? =C2=A0=
-Perl Survey
->>>> 2010 did.
->>>
->>> I don't see the point of 'gender'. What does that tells us?
->>
->> Well, one can say that 'age' doesn't tell us much either.
->=20
-> I disagree. I think younger people, specially the ones who have not
-> been tainted by CVS, might find git easier to learn. Without this
-> question it's not possible to find that correlation.
+What problem are you guys really trying to solve?
 
-O.K., you convinced me: I'll leave age, but not add gender.
-=20
->>>> =3D=3D=3D 10. What do you use to edit contents under version contr=
-ol with Git? =3D=3D=3D
->>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0What kind of editor, IDE or RAD you use=
- working with Git?
->>>> (multiple choice, with other)
->>> [...]
->>>> NOTES:
->>>> ^^^^^^
->>>> Is this question useful, or should it be removed from survey?
->>>
->>> I think this is useful to correlate communities.
->>
->> Hmmm...
->=20
-> Sorry, I thought the answers would be the actual application used:
-> Vim, Eclipse, MS Visual Studio, etc. If not, then I don't see the
-> point.
->=20
-> At least I remember finding out that most people use vim in some
-> previous survey, and I found that interesting.
 
-The problem is with not going overboard with number of possible answers=
-,
-but we can always take results of previous survey as hint (though=20
-I don't remember if free-form questions are analyzed yet)/
+> diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+> index 759cf12..65f160e 100755
+> --- a/t/t1450-fsck.sh
+> +++ b/t/t1450-fsck.sh
+> @@ -55,6 +55,7 @@ test_expect_success 'object with bad sha1' '
+>  	grep "$sha.*corrupt" out &&
+>  	rm -f .git/objects/$new &&
+>  	git update-ref -d refs/heads/bogus &&
+> +	rm -f .git/logs/refs~/heads~/bogus &&
+>  	git read-tree -u --reset HEAD
+>  '
 
->>>> =3D=3D=3D 19. Overall, how happy are you with Git? =3D=3D=3D
->>>> (single choice)
->>> [...]
->>>> NOTES:
->>>> ^^^^^^
->>>> I'm not sure if this question is at all useful.
->>>
->>> I think it is. Otherwise how do we know that people are happy with =
-it?
->>
->> Well, I think there is rather heavy bias that if people are unhappy
->> with Git, they wouldn't be using it (well, unless they have to), and
->> they wouldn't be responding to this Git User's Survey (because they
->> didn't found it, for example).
->=20
-> There's people that would rather be using something else for various
-> reasons, but need to use git. Also, there's people that think that gi=
-t
-> is the best option, but not particularly ecstatic with it.
-
-All right, let's keep it.
-
---=20
-Jakub Narebski
-Poland
+What is this about???
