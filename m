@@ -1,91 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Question about 'branch -d' safety
-Date: Sun, 11 Jul 2010 09:16:26 +0200
-Message-ID: <201007110916.29567.jnareb@gmail.com>
-References: <20091230065442.6117@nanako3.lavabit.com> <m3lj9jknlr.fsf@localhost.localdomain> <20100711065505.GA19606@localhost>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v6] Add infrastructure for translating Git with gettext
+Date: Sun, 11 Jul 2010 07:22:02 +0000
+Message-ID: <AANLkTikOAzaAzAjst0tAWAuUwyEnKbdafF0qWtXANBnI@mail.gmail.com>
+References: <1278794867-32438-1-git-send-email-avarab@gmail.com>
+	<AANLkTilHE02RUBAnyZReB9zRkmQ2oJXRyspUlx3I9KZH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun Jul 11 09:16:50 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nazri Ramliy <ayiehere@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 11 09:22:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXqmP-0000LA-5e
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 09:16:49 +0200
+	id 1OXqrb-0001r2-CV
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 09:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859Ab0GKHQo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jul 2010 03:16:44 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42735 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500Ab0GKHQn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 03:16:43 -0400
-Received: by bwz1 with SMTP id 1so1834117bwz.19
-        for <git@vger.kernel.org>; Sun, 11 Jul 2010 00:16:42 -0700 (PDT)
+	id S1751306Ab0GKHWF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jul 2010 03:22:05 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56477 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751190Ab0GKHWE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Jul 2010 03:22:04 -0400
+Received: by iwn7 with SMTP id 7so3627683iwn.19
+        for <git@vger.kernel.org>; Sun, 11 Jul 2010 00:22:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=6GgIiS+PRNqHWnnK/lSIuELhfdbGTe5dWID02DoMJJg=;
-        b=GPURYlv9p3BRza56LXWJfxwV5xlmG8G26TWuj5Lx3FDTp8smJbfHUFm9ensu4DRcPL
-         yp373d8rGeWoZ/kOyy5fhcBFB8xX+NXl+obzEpEmVotfj4eP5Cl5cN0nllbxaE1yRa0O
-         IQbzJGQ2y+R/gmCEqaMwXqA6Ag0AAK6R2nnVk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3yG/AHuBGfmKGB0oTHObvwablIuUqQuG0IGV6PGd7JE=;
+        b=T1SLqfeUo7EGcyhBL91N/EH9VkqaQH0GIMnbcYVVGLY/XAWsdYJnUYKoocAxuh1qEQ
+         ykHj6EeF9Iq8o2k7A36+NAiwRB4CxGIwUHLNrlO0Qq49EpdbGAQeUGoghL2Z7JJ0ph8C
+         KgXm5ZNL/ReNsSv+jCwECtdozyNcshNFbQsME=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=xV4WNUbqF76Y8gRjq/6g/KrEAaEgHBpqDnmtc+wPokYdE9HHTE2KoZw8qxndk9f67z
-         jCXNSEeryq6JNM7/TnX0wDZhPJoVc08Dad2Akmm2nb1UeR55VM5WztCav6+6qMe8KI8v
-         HVp+kqjcEdVTfuj+NdldIkGsF0LldOQqSjdq0=
-Received: by 10.204.6.68 with SMTP id 4mr2668442bky.28.1278832601492;
-        Sun, 11 Jul 2010 00:16:41 -0700 (PDT)
-Received: from [192.168.1.13] (abwj181.neoplus.adsl.tpnet.pl [83.8.233.181])
-        by mx.google.com with ESMTPS id o20sm12296819bkw.15.2010.07.11.00.16.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jul 2010 00:16:40 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100711065505.GA19606@localhost>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SKL49DPgp+l6RY6tfQNjjzZBHZWAV0cxM5xgafqT7KkFYR0cjG+2rcmymTC0aevlAe
+         wut+MxfiJolSfkZwlSzrX59LP2KgPvS4UDwoF0/Hwfywf8T5Vsh8WBzxevU63z2kwCFW
+         hwVWYsSygBpoLH8jsgoF6JgmfSGfhrtxLpV5s=
+Received: by 10.231.145.1 with SMTP id b1mr11983525ibv.69.1278832922256; Sun, 
+	11 Jul 2010 00:22:02 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 11 Jul 2010 00:22:02 -0700 (PDT)
+In-Reply-To: <AANLkTilHE02RUBAnyZReB9zRkmQ2oJXRyspUlx3I9KZH@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150766>
 
-Dnia niedziela 11. lipca 2010 08:55, Clemens Buchacher napisa=B3:
-> On Sat, Jul 10, 2010 at 02:57:35PM -0700, Jakub Narebski wrote:
-> >=20
-> > It's unfortunately not so easy.  The problem you have to solve is D=
-/F
-> > conflict: if you have 'foo/bar' branch, you can't create 'foo' bran=
-ch,
-> > but after deleting 'foo/bar' you want to be able to create 'foo'
-> > branch and reflog for 'foo' branch.
->=20
-> I'm going to read up on Jonathan's pointers. But I do not really
-> see the problem above. If the reflog already exists, the new branch
-> simpliy continues using it. So if the branch is re-created, it's as
-> if the branch had never been deleted.
+On Sun, Jul 11, 2010 at 01:55, Nazri Ramliy <ayiehere@gmail.com> wrote:
+> On Sun, Jul 11, 2010 at 4:47 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on
+> <avarab@gmail.com> wrote:
+>> For Shell and Perl programs we rely on the git message
+>> catalog not being available. That's a reasonable assumption since th=
+en
+>> the message catalog won't be installed on the system during make
+>> install.
+>
+> Would a "stale" message catalog (from a previous installation of git
+> with gettext
+> enabled, via make install) be deleted upon new installation (via make
+> install) with
+> NO_GETTEXT=3DYesPlease?
 
-The problem is, that when you have 'foo/bar' branch, then you have
-'foo/bar' reflog.  When you delete branch 'foo/bar', but do not delete
-'foo/bar' reflog (only add to it branch deletion event), and then you
-want to create 'foo' branch, git wouldn't be able to create reflog
-fo 'foo' because of directory / file (D/F) conflict: there is 'foo/'
-directory preventing file 'foo' from being created.
-=20
-> Or possibly we add a special reflog entry which points the branch
-> to a zero sha to signify that the branch had been deleted.
+No. Just like we don't delete anything else that may exist on the
+system from a previous "make install". The patch assumes that this is
+the sort of thing package managers are for.
 
-That is a good idea anyway.
---=20
-Jakub Narebski
-Poland
+I didn't think it was worth it to guard against this case (by
+e.g. cleaning out Shell/Perl support at make time).
