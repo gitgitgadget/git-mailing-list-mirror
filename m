@@ -1,84 +1,170 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t3000 (ls-files -o): modernize style
-Date: Sun, 11 Jul 2010 10:14:32 -0500
-Message-ID: <20100711151432.GA1781@burratino>
-References: <20100711042025.GA7424@burratino>
- <m3d3uul8pd.fsf@localhost.localdomain>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Sun, 11 Jul 2010 19:42:52 +0200
+Message-ID: <201007111942.54847.jnareb@gmail.com>
+References: <201007032158.57700.jnareb@gmail.com> <201007102158.25961.jnareb@gmail.com> <AANLkTikQF_tMHz28k2pdpVdtbnE6EDZiKQbwmMTlp-c9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 11 17:15:25 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 11 19:43:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXyFY-0001C5-Rv
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 17:15:25 +0200
+	id 1OY0Ye-00077L-0S
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 19:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754604Ab0GKPPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jul 2010 11:15:18 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33305 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754535Ab0GKPPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 11:15:17 -0400
-Received: by iwn7 with SMTP id 7so3814048iwn.19
-        for <git@vger.kernel.org>; Sun, 11 Jul 2010 08:15:16 -0700 (PDT)
+	id S1753998Ab0GKRnJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Jul 2010 13:43:09 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37715 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753979Ab0GKRnH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 13:43:07 -0400
+Received: by fxm14 with SMTP id 14so1932405fxm.19
+        for <git@vger.kernel.org>; Sun, 11 Jul 2010 10:43:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=JP7uVpp0msv1enVtCz/EKl8Ny7Q2xNSVCyt44ODaRgw=;
-        b=mgq/6UtgTjgMhiUfWNpz/8L06qil70PWtTmtSr8mcXD64HC6Yfugbs2iN+6xOcb3Dw
-         Hmf0z0v2qPViBwE08eVflSdfxVq/5AGHKVpE5HforIMMJsApQ+Aentws+hPydjXIWHpu
-         xx38j0a+T4zO6zse4bxYjVx66AKV4xZaaKmcg=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=cMvvXuyiAfVmVnL7fQ/MoCWBFO1BKg7Ty8/3wTONaBc=;
+        b=NJZA5TApPRIun0Ps27qJXUXgPdu8mMbxTrOTLaEjFUWrmEan+pUeK6WWBr+Ho6Oy1B
+         1QUQgMjwEZpMuVJGeDKLZjR+KHa19B7t9sJmU540tgQSF0SlF70GRoOOXDYN0puTT25o
+         L8mKrb4zu5QUO44MSq1S94PF5cAhfO17XWxts=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=kWmsflSepqQ6L/DZXHnKAevJlR9n8e21yyyBJfbyQR90R5MPni7e7Ev2RWzhWCknsh
-         7uoH8KmMs0zg7l491ohM/2yt7nEet9By4Z36LoYRmAbNJhGHyuEfPyv8UTlLJWSK44GZ
-         ISyCAoD9fg70FYpL3XZS5HkXhXdo6mpp4R/ys=
-Received: by 10.231.174.72 with SMTP id s8mr10123085ibz.41.1278861316487;
-        Sun, 11 Jul 2010 08:15:16 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 34sm14820975ibi.6.2010.07.11.08.15.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jul 2010 08:15:16 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=fN2AKVVnCIF/hrWvu7AyWiFV3YdCjPWmY8R3PhZI5gJ8fJ7QwBmeHa4DA8l8uldbIF
+         c7siHZ5SE+qzkGv3m2FDWfgb6FtkkGPUe32I/evbYoa6KWhJ14wBVfes7Tanoryf48es
+         hYB9v5zDbzTZVAOVsimdURVI0eBVGCbekU6tc=
+Received: by 10.223.103.141 with SMTP id k13mr10505597fao.16.1278870185731;
+        Sun, 11 Jul 2010 10:43:05 -0700 (PDT)
+Received: from [192.168.1.13] (abwj181.neoplus.adsl.tpnet.pl [83.8.233.181])
+        by mx.google.com with ESMTPS id h15sm7197354faj.33.2010.07.11.10.43.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 11 Jul 2010 10:43:03 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTikQF_tMHz28k2pdpVdtbnE6EDZiKQbwmMTlp-c9@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <m3d3uul8pd.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150781>
 
-Jakub Narebski wrote:
+On Sun, 11 Jul 2010, Felipe Contreras wrote:
+> On Sat, Jul 10, 2010 at 10:58 PM, Jakub Narebski <jnareb@gmail.com> w=
+rote:
+>> On Sat, 10 July 2010, Felipe Contreras wrote:
+>>> 2010/7/3 Jakub Narebski <jnareb@gmail.com>:
+>>>>
+>>>> I guess it is time for annual (so far) Git User's Survey. =C2=A0Sh=
+ould
+>>>> there be one? =C2=A0When should it start, and how long should it l=
+ast?
+>>>
+>>> Yes, I think there should definitely be one! IMO one month is enoug=
+h.
+>>
+>> By the way, I think it is important that Git User's Survey 2010 last=
+s
+>> past the holidays, i.e. into September or even October, even at the
+>> cost of lasting two months, and not one month.
+>>
+>> What do you think about this?
+>=20
+> My feeling is that the longer it is, the easier it's for people to
+> postpone it, and then forget about it.
 
-> ... I don't think it is really needed.  There isn't anything there
-> that can fail, and there isn't anything there that produces any
-> output.
+Hmmm... I haven't thought about this issue.  I certainly don't plan
+for Git User's Survey 2010 to last longer than 2 months.  We can
+always send / post reminders that the survey is coming to be closed.
 
-I should clarify.  I wrote this patch as preparation to add some new
-tests to the same script.  The new tests are not cooked yet, so I just
-sent the trivial part; there certainly is no urgent reason to apply it
-soon (though no reason I see not to apply it either).
+The problem with duration of last year survey was that some announcemen=
+ts
+got delayed because of holidays.
 
-A better explanation for the rationale would be "follow the modern
-style to make the script more readable and set a good example for
-future tests".
+> But I don't have a strong opinion either way.
 
-> BTW. do all sane shells that can be used to run test suite support
-> '<<-' here-doc redirection operators?  Is it in POSIX?
+I think that 15 August to 15 September, or to 15 October would be
+good time (this is currently preliminary only).
 
-Yes[1] and yes[2].
+>>>> =3D=3D About you =3D=3D
+>>>>
+>>>> NOTES:
+>>>> ^^^^^^
+>>>> This section gives us a bit of demographical information about sur=
+vey
+>>>> responders. =C2=A0Is it useful? =C2=A0Should we leave it in survey=
+, or remove it?
+>>>>
+>>>> Should we for example include 'gender' as one of questions? =C2=A0=
+Perl Survey
+>>>> 2010 did.
+>>>
+>>> I don't see the point of 'gender'. What does that tells us?
+>>
+>> Well, one can say that 'age' doesn't tell us much either.
+>=20
+> I disagree. I think younger people, specially the ones who have not
+> been tainted by CVS, might find git easier to learn. Without this
+> question it's not possible to find that correlation.
 
-Thanks for looking it over.
-Jonathan
+O.K., you convinced me: I'll leave age, but not add gender.
+=20
+>>>> =3D=3D=3D 10. What do you use to edit contents under version contr=
+ol with Git? =3D=3D=3D
+>>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0What kind of editor, IDE or RAD you use=
+ working with Git?
+>>>> (multiple choice, with other)
+>>> [...]
+>>>> NOTES:
+>>>> ^^^^^^
+>>>> Is this question useful, or should it be removed from survey?
+>>>
+>>> I think this is useful to correlate communities.
+>>
+>> Hmmm...
+>=20
+> Sorry, I thought the answers would be the actual application used:
+> Vim, Eclipse, MS Visual Studio, etc. If not, then I don't see the
+> point.
+>=20
+> At least I remember finding out that most people use vim in some
+> previous survey, and I found that interesting.
 
-[1] $ git grep -l -F -e '<<-EO' -e '<<-\EO' origin/maint -- t | wc -l
-    13
-[2] http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_07_04
+The problem is with not going overboard with number of possible answers=
+,
+but we can always take results of previous survey as hint (though=20
+I don't remember if free-form questions are analyzed yet)/
+
+>>>> =3D=3D=3D 19. Overall, how happy are you with Git? =3D=3D=3D
+>>>> (single choice)
+>>> [...]
+>>>> NOTES:
+>>>> ^^^^^^
+>>>> I'm not sure if this question is at all useful.
+>>>
+>>> I think it is. Otherwise how do we know that people are happy with =
+it?
+>>
+>> Well, I think there is rather heavy bias that if people are unhappy
+>> with Git, they wouldn't be using it (well, unless they have to), and
+>> they wouldn't be responding to this Git User's Survey (because they
+>> didn't found it, for example).
+>=20
+> There's people that would rather be using something else for various
+> reasons, but need to use git. Also, there's people that think that gi=
+t
+> is the best option, but not particularly ecstatic with it.
+
+All right, let's keep it.
+
+--=20
+Jakub Narebski
+Poland
