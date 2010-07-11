@@ -1,128 +1,127 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v3 06/13] export three functions from diff.c
-Date: Sun, 11 Jul 2010 14:18:54 +0800
-Message-ID: <1278829141-11900-6-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v3 07/13] add range clone functions
+Date: Sun, 11 Jul 2010 14:18:55 +0800
+Message-ID: <1278829141-11900-7-git-send-email-struggleyb.nku@gmail.com>
 References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 11 08:21:35 2010
+X-From: git-owner@vger.kernel.org Sun Jul 11 08:21:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXpuv-00021P-CH
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 08:21:33 +0200
+	id 1OXpvA-00025x-D5
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 08:21:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523Ab0GKGVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jul 2010 02:21:30 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:58225 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750979Ab0GKGV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 02:21:28 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 26so808174pzk.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 23:21:28 -0700 (PDT)
+	id S1751366Ab0GKGVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jul 2010 02:21:36 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:45345 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751532Ab0GKGVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 02:21:32 -0400
+Received: by pxi14 with SMTP id 14so1400905pxi.19
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 23:21:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=IAXr5F0JtMCSAyaN0pcp36uvrFLS2qv76K6BkhnpDIM=;
-        b=XFp0DyjBbqgznE3KzkoMrC8YOhvt4/IlfslHI0zSJ5cnnros5Ggf92Ccd7i53XapQg
-         63/MTmu7I/cnd1+sS1R3ieCGvZnla1E6qATGuyq2JyI4EYlf2lDxIKf6oAls0eRhzaAc
-         hX+/HnF+Jc7E6vkGMQGBRWs/a4JRDw5fHiZ54=
+        bh=lPUH6lNGFLpCC7ps6rorFxuzuAdOh93AFQj5LgTPmQo=;
+        b=TDsjfIQx+iwAzNWICmtzGJADwEeZIXjWNwTHLVL7REEhToaOIMjLONRH6bUlBbFVo5
+         4a06Ba4SBcrVMDgzXqiIZyqP0s+TYchfv1m2qImyK7C3Qgm+qduEy48U0ov7r28Pr2nU
+         HzKmLMK3zpqRRxss/1P9V1j/lCXdqtvQZvUdY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VWg7t0hzGyEwIKXkmVz4gdDZ3hsqY5vT8aE6xTQCUuz1eDfUONvcmqfu33Yw52lnJJ
-         BRdpFFPh+7Sgvx/Fb8Yiu/OoYxSt/aHEOE2FBiyo0OHRsOKp7mW4FYZMUQh8cS5Uwz3J
-         wuTOQS4RUkHq16tYGjkSMzA9rO+DNBHX0Iofw=
-Received: by 10.142.142.15 with SMTP id p15mr11226977wfd.208.1278829287997;
-        Sat, 10 Jul 2010 23:21:27 -0700 (PDT)
+        b=gYO42NxJ+FAzwjjPkwy86ILbvxBsPZmz5e/sK0W1j1Gg2QGXkO5WnfGLZiRglEwPo9
+         hXlDacYomOHtea7eBF2J0PpHi8f4WinlGgsbnDgJ8SxaH6WkSuI8a/J9Pr6+CvJU0LBK
+         qAT/MOVpnEl47/cGMAsQkj1E2ESh8Z8fkFleA=
+Received: by 10.142.171.7 with SMTP id t7mr14396120wfe.211.1278829291801;
+        Sat, 10 Jul 2010 23:21:31 -0700 (PDT)
 Received: from localhost.localdomain ([222.35.175.242])
-        by mx.google.com with ESMTPS id c15sm2927911rvi.11.2010.07.10.23.21.24
+        by mx.google.com with ESMTPS id c15sm2927911rvi.11.2010.07.10.23.21.28
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jul 2010 23:21:27 -0700 (PDT)
+        Sat, 10 Jul 2010 23:21:31 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc2.18.g2bc49
 In-Reply-To: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150750>
 
-Use fill_metainfo to fill the line level diff meta data,
-emit_line to print out a line and quote_two to quote
-paths.
+Both single range clone and deeply clone are supported.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- diff.c |    6 +++---
- diff.h |   17 +++++++++++++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ line.c |   39 +++++++++++++++++++++++++++++++++++++++
+ line.h |    4 ++++
+ 2 files changed, 43 insertions(+), 0 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 3aa695d..d685f5a 100644
---- a/diff.c
-+++ b/diff.c
-@@ -144,7 +144,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 	return git_color_default_config(var, value, cb);
+diff --git a/line.c b/line.c
+index a6bcbdf..ba96d7d 100644
+--- a/line.c
++++ b/line.c
+@@ -378,6 +378,45 @@ void diff_line_range_append(struct diff_line_range *r, const char *arg)
+ 	r->ranges[r->nr - 1].arg = arg;
  }
  
--static char *quote_two(const char *one, const char *two)
-+char *quote_two(const char *one, const char *two)
++struct diff_line_range *diff_line_range_clone(struct diff_line_range *r)
++{
++	struct diff_line_range *ret = xmalloc(sizeof(*ret));
++	int i = 0;
++
++	DIFF_LINE_RANGE_INIT(ret);
++	ret->ranges = xcalloc(r->nr, sizeof(struct range));
++	memcpy(ret->ranges, r->ranges, sizeof(struct range) * r->nr);
++
++	ret->alloc = ret->nr = r->nr;
++
++	for (; i < ret->nr; i++)
++		PRINT_PAIR_INIT(&ret->ranges[i].pair);
++
++	ret->spec = r->spec;
++	assert(ret->spec);
++	ret->spec->count++;
++
++	return ret;
++}
++
++struct diff_line_range *diff_line_range_clone_deeply(struct diff_line_range *r)
++{
++	struct diff_line_range *ret = NULL;
++	struct diff_line_range *tmp = NULL, *prev = NULL;
++
++	assert(r);
++	ret = tmp = prev = diff_line_range_clone(r);
++	r = r->next;
++	while (r) {
++		tmp = diff_line_range_clone(r);
++		prev->next = tmp;
++		prev = tmp;
++		r = r->next;
++	}
++
++	return ret;
++}
++
+ struct diff_line_range *diff_line_range_merge(struct diff_line_range *out,
+ 	struct diff_line_range *other)
  {
- 	int need_one = quote_c_style(one, NULL, NULL, 1);
- 	int need_two = quote_c_style(two, NULL, NULL, 1);
-@@ -325,7 +325,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
- 		fputc('\n', file);
- }
+diff --git a/line.h b/line.h
+index 0eb03bd..885e985 100644
+--- a/line.h
++++ b/line.h
+@@ -112,6 +112,10 @@ extern void diff_line_range_append(struct diff_line_range *r, const char *arg);
  
--static void emit_line(struct diff_options *o, const char *set, const char *reset,
-+void emit_line(struct diff_options *o, const char *set, const char *reset,
- 		      const char *line, int len)
- {
- 	emit_line_0(o, set, reset, line[0], line+1, len-1);
-@@ -2564,7 +2564,7 @@ static int similarity_index(struct diff_filepair *p)
- 	return p->score * 100 / MAX_SCORE;
- }
+ extern void diff_line_range_clear(struct diff_line_range *r);
  
--static void fill_metainfo(struct strbuf *msg,
-+void fill_metainfo(struct strbuf *msg,
- 			  const char *name,
- 			  const char *other,
- 			  struct diff_filespec *one,
-diff --git a/diff.h b/diff.h
-index 063d10a..9676ab9 100644
---- a/diff.h
-+++ b/diff.h
-@@ -12,6 +12,7 @@ struct diff_queue_struct;
- struct strbuf;
- struct diff_filespec;
- struct userdiff_driver;
-+struct diff_filepair;
- 
- typedef void (*change_fn_t)(struct diff_options *options,
- 		 unsigned old_mode, unsigned new_mode,
-@@ -301,4 +302,20 @@ extern size_t fill_textconv(struct userdiff_driver *driver,
- 
- extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
- 
-+/* some output functions line.c need */
-+extern void fill_metainfo(struct strbuf *msg,
-+			  const char *name,
-+			  const char *other,
-+			  struct diff_filespec *one,
-+			  struct diff_filespec *two,
-+			  struct diff_options *o,
-+			  struct diff_filepair *p,
-+			  int *must_show_header,
-+			  int use_color);
++extern struct diff_line_range *diff_line_range_clone(struct diff_line_range *r);
 +
-+extern void emit_line(struct diff_options *o, const char *set, const char *reset,
-+		      const char *line, int len);
++extern struct diff_line_range *diff_line_range_clone_deeply(struct diff_line_range *r);
 +
-+extern char *quote_two(const char *one, const char *two);
-+
- #endif /* DIFF_H */
+ extern struct diff_line_range *diff_line_range_merge(struct diff_line_range *out,
+ 	struct diff_line_range *other);
+ 
 -- 
 1.7.0.2.273.gc2413.dirty
