@@ -1,346 +1,274 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: [PATCHv2 1/2] add basic tests for merge-tree
-Date: Sun, 11 Jul 2010 14:16:54 +0100
-Message-ID: <1278854215-9022-2-git-send-email-wmpalmer@gmail.com>
-References: <1278854215-9022-1-git-send-email-wmpalmer@gmail.com>
-Cc: wmpalmer@gmail.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 11 15:17:35 2010
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: Question about 'branch -d' safety
+Date: Sun, 11 Jul 2010 15:37:30 +0200
+Message-ID: <20100711133730.GA10338@localhost>
+References: <20091230065442.6117@nanako3.lavabit.com>
+ <m3lj9jknlr.fsf@localhost.localdomain>
+ <20100711065505.GA19606@localhost>
+ <201007110916.29567.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ZGiS0Q5IWpPtfppv"
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 11 15:39:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXwPW-0004JH-Vm
-	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 15:17:35 +0200
+	id 1OXwkY-0002tS-Gp
+	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 15:39:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754145Ab0GKNRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jul 2010 09:17:18 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55142 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752997Ab0GKNRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 09:17:06 -0400
-Received: by wyf23 with SMTP id 23so2744595wyf.19
-        for <git@vger.kernel.org>; Sun, 11 Jul 2010 06:17:03 -0700 (PDT)
+	id S1752638Ab0GKNjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jul 2010 09:39:13 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:39500 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752227Ab0GKNjL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 09:39:11 -0400
+Received: by eya25 with SMTP id 25so437109eya.19
+        for <git@vger.kernel.org>; Sun, 11 Jul 2010 06:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=yzqkQ/P/8VzTRAgpdNYoV1w0z0LP1BkAOlDg7g+0axA=;
-        b=wL8ggJlXPxeb+kCa8C/yOlxy7hXL5NFiy75/o5TtKDcDlWdeT0nml+tyyG1Aj12jW2
-         3sYKKgHfLBMnNxe457cdpydRzcgN+Fonwhw4CSIO4KAltwDlDwaJrRh1IpEyvvc+CONs
-         9oRz0jD+hZkxVtDq2rzvSNDm2F3CH4tjluVlY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=RtWN7r1M0oLImZ7KqNqqqYgo6Z63OvFMtoaHofUZNxk=;
+        b=JShAcAV12h504m+YnbAjwHNexF6WPb6ThE1+pK43Fn/kA9S+kA5Er7toV18VeSigU6
+         VZ3Iq2JDQotwfk3gcaFRHImclws+6DOsxq1En0PkCcotpUvjsDExZo9eAvi0xpD5Ahae
+         DgIxQF3GeZA3sGg0srgBQfjiwK6i7jr2I5iyk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ttlIMWl8G/sTD/7U/5f7mgfPJz2gHEDe1TA2X37+8kDgRyQcTW6N1Xeu3olcudkhOc
-         Mp1ml1nHzPbxAcRMZjvXdS6TpiBMVNBZIC/lfEA3nqg80fJSB9YWfIpO90HzAfnsew9y
-         JWb6g+fZZ5Sy5ym8YnYG2Kbnx5TZDSe0iPW9o=
-Received: by 10.227.99.79 with SMTP id t15mr2645406wbn.209.1278854223230;
-        Sun, 11 Jul 2010 06:17:03 -0700 (PDT)
-Received: from localhost.localdomain (5acc3a9a.bb.sky.com [90.204.58.154])
-        by mx.google.com with ESMTPS id a27sm22521966wbe.12.2010.07.11.06.17.02
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:bcc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=aMsFLB4V3WSA+qqmkxSeZEXg+J5ThEIwwwQlalPTZz1BIBHg8O5LEsy+MNnbDOaE+3
+         bLmw1riVSLSXjC3Nv+rj0ieWjSoTPHm3lafu5mDlVvF7l4nKVnOq5JeEiPsa8a0gkJCm
+         1He+ASM9/Lh9mmz7Xx5rTBMC3OnZILMCqytm8=
+Received: by 10.213.10.12 with SMTP id n12mr5410965ebn.71.1278855548734;
+        Sun, 11 Jul 2010 06:39:08 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id a48sm27335245eei.7.2010.07.11.06.39.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jul 2010 06:17:02 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.703.g42c01
-In-Reply-To: <1278854215-9022-1-git-send-email-wmpalmer@gmail.com>
+        Sun, 11 Jul 2010 06:39:06 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OXwio-0002ic-5D; Sun, 11 Jul 2010 15:37:30 +0200
+Content-Disposition: inline
+In-Reply-To: <201007110916.29567.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150778>
 
-merge-tree had no test cases, so here we add some very basic tests for
-it, including some known-breakages.
 
-Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+--ZGiS0Q5IWpPtfppv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Jul 11, 2010 at 09:16:26AM +0200, Jakub Narebski wrote:
+>=20
+> The problem is, that when you have 'foo/bar' branch, then you have
+> 'foo/bar' reflog.  When you delete branch 'foo/bar', but do not delete
+> 'foo/bar' reflog (only add to it branch deletion event), and then you
+> want to create 'foo' branch, git wouldn't be able to create reflog
+> fo 'foo' because of directory / file (D/F) conflict: there is 'foo/'
+> directory preventing file 'foo' from being created.
+
+Right, of course. So how about this?
+
+Clemens
+
+-->o--
+Date: Sun, 11 Jul 2010 12:37:06 +0200
+Subject: [PATCH/RFC] graveyard for reflogs
+
+Instead of removing reflogs together with refs, keep them around
+and reuse them as a starting point, if a ref of the same name is
+created again.
+
+When a ref is deleted, a ~ is appended to each directory of the
+corresponding reflog entry, e.g., refs/heads/branch is renamed to
+refs~/heads~/branch. Since ~ must not be used for ref names,
+directory/file conflicts are thus avoided.
+
+Known issues:
+
+ - The reflog cannot be accessed while the ref does not exist.
+
+ - Older git versions will not resurrect the reflog, and therefore
+   leave the renamed reflog behind.
+
+ - Breaks t7701, because git-expire tries to lock log entries,
+   which fails because ~ is an illegal character for refs.
+
+ - Breaks t9300.
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
 ---
- t/t4300-merge-tree.sh |  277 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 277 insertions(+), 0 deletions(-)
- create mode 100755 t/t4300-merge-tree.sh
+ reflog-walk.c   |    9 +++++--
+ refs.c          |   67 +++++++++++++++++++++++++++++++++++++++++++++++++++=
++++-
+ t/t1450-fsck.sh |    1 +
+ 3 files changed, 73 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
-new file mode 100755
-index 0000000..b2ae3a1
---- /dev/null
-+++ b/t/t4300-merge-tree.sh
-@@ -0,0 +1,277 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Will Palmer
-+#
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 4879615..9415ac8 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -228,15 +228,18 @@ void fake_reflog_parent(struct reflog_walk_info *info=
+, struct commit *commit)
+ 		return;
+ 	}
+=20
+-	reflog =3D &commit_reflog->reflogs->items[commit_reflog->recno];
+ 	info->last_commit_reflog =3D commit_reflog;
+ 	commit_reflog->recno--;
+-	commit_info->commit =3D (struct commit *)parse_object(reflog->osha1);
+-	if (!commit_info->commit) {
++	if (commit_reflog->recno < 0) {
+ 		commit->parents =3D NULL;
+ 		return;
+ 	}
+=20
++	reflog =3D &commit_reflog->reflogs->items[commit_reflog->recno];
++	commit_info->commit =3D (struct commit *)parse_object(reflog->nsha1);
++	if (!commit_info->commit)
++		die("Invalid reflog entry");
 +
-+test_description='git merge-tree'
-+. ./test-lib.sh
+ 	commit->parents =3D xcalloc(sizeof(struct commit_list), 1);
+ 	commit->parents->item =3D commit_info->commit;
+ 	commit->object.flags &=3D ~(ADDED | SEEN | SHOWN);
+diff --git a/refs.c b/refs.c
+index b540067..78c48ad 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1052,6 +1052,70 @@ static int repack_without_ref(const char *refname)
+ 	return commit_lock_file(&packlock);
+ }
+=20
++static void pronounce_dead(struct strbuf *dead_ref, const char *ref)
++{
++	const char *p =3D ref;
++	while (*p) {
++		if (*p =3D=3D '/') {
++			int len =3D p - ref;
++			strbuf_add(dead_ref, ref, len);
++			if (len > 0)
++				strbuf_addstr(dead_ref, "~/");
++			ref =3D p + 1;
++		}
++		p++;
++	}
++	strbuf_addstr(dead_ref, ref);
++}
 +
-+test_expect_success setup '
-+	test_commit "initial" "initial-file" "initial"
-+'
++static int bury_log(const char *ref)
++{
++	struct strbuf dead_ref =3D STRBUF_INIT;
++	struct stat loginfo;
 +
-+test_expect_'file add A, !B' '
-+	cat >expected <<EXPECTED
-+added in remote
-+  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+@@ -0,0 +1 @@
-++AAA
-+EXPECTED
++	if (lstat(git_path("logs/%s", ref), &loginfo))
++		return 0;
 +
-+	git reset --hard initial
-+	test_commit "add-a-not-b" "ONE" "AAA"
++	pronounce_dead(&dead_ref, ref);
 +
-+	git merge-tree initial initial add-a-not-b >actual &&
-+	test_cmp expected actual
-+'
++	if (S_ISLNK(loginfo.st_mode))
++		return error("reflog for %s is a symlink", ref);
 +
-+test_expect_failure 'file add !A, B' '
-+	cat >expected <<EXPECTED
-+added in local
-+  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+EXPECTED
++	if (safe_create_leading_directories(git_path("logs/%s", dead_ref.buf)))
++		return error("unable to create directory for %s", dead_ref.buf);
 +
-+	git reset --hard initial
-+	test_commit "add-not-a-b" "ONE" "AAA"
++	if (rename(git_path("logs/%s", ref), git_path("logs/%s", dead_ref.buf)))
++		return error("unable to move logfile to logs/%s: %s",
++			dead_ref.buf, strerror(errno));
 +
-+	git merge-tree initial add-not-a-b initial >actual &&
-+	test_cmp expected actual
-+'
++	strbuf_release(&dead_ref);
++	return 0;
++}
 +
-+test_expect_success 'file add A, B (same)' '
-+	cat >expected <<EXPECTED
-+added in both
-+  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+EXPECTED
++static int resurrect_log(const char *ref)
++{
++	struct strbuf dead_ref =3D STRBUF_INIT;
++	struct stat loginfo;
 +
-+	git reset --hard initial
-+	test_commit "add-a-b-same-A" "ONE" "AAA"
++	pronounce_dead(&dead_ref, ref);
 +
-+	git reset --hard initial
-+	test_commit "add-a-b-same-B" "ONE" "AAA"
++	if (lstat(git_path("logs/%s", dead_ref.buf), &loginfo))
++		return 0;
 +
-+	git merge-tree initial add-a-b-same-A add-a-b-same-B >actual &&
-+	test_cmp expected actual
-+'
++	if (S_ISLNK(loginfo.st_mode))
++		return error("reflog for %s is a symlink", dead_ref.buf);
 +
-+test_expect_success 'file add A, B (different)' '
-+	cat >expected <<EXPECTED
-+added in both
-+  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+  their  100644 ba629238ca89489f2b350e196ca445e09d8bb834 ONE
-+@@ -1 +1,5 @@
-++<<<<<<< .our
-+ AAA
-++=======
-++BBB
-++>>>>>>> .their
-+EXPECTED
++	if (safe_create_leading_directories(git_path("logs/%s", ref)))
++		return error("unable to create directory for %s", ref);
 +
-+	git reset --hard initial
-+	test_commit "add-a-b-diff-A" "ONE" "AAA"
++	if (rename(git_path("logs/%s", dead_ref.buf), git_path("logs/%s", ref)))
++		return error("unable to move logfile to logs/%s: %s",
++			ref, strerror(errno));
 +
-+	git reset --hard initial
-+	test_commit "add-a-b-diff-B" "ONE" "BBB"
++	strbuf_release(&dead_ref);
++	return 0;
++}
 +
-+	git merge-tree initial add-a-b-diff-A add-a-b-diff-B >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file change A, !B' '
-+	cat >expected <<EXPECTED
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "change-a-not-b" "initial-file" "BBB"
-+
-+	git merge-tree initial change-a-not-b initial >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file change !A, B' '
-+	cat >expected <<EXPECTED
-+merged
-+  result 100644 ba629238ca89489f2b350e196ca445e09d8bb834 initial-file
-+  our    100644 e79c5e8f964493290a409888d5413a737e8e5dd5 initial-file
-+@@ -1 +1 @@
-+-initial
-++BBB
-+EXPECTED
-+	git reset --hard initial
-+	test_commit "change-not-a-b" "initial-file" "BBB"
-+
-+	git merge-tree initial initial change-not-a-b >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file change A, B (same)' '
-+	cat >expected <<EXPECTED
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "change-a-b-same-A" "initial-file" "AAA"
-+
-+	git reset --hard initial
-+	test_commit "change-a-b-same-B" "initial-file" "AAA"
-+
-+	git merge-tree initial change-a-b-same-A change-a-b-same-B >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file change A, B (different)' '
-+	cat >expected <<EXPECTED
-+changed in both
-+  base   100644 e79c5e8f964493290a409888d5413a737e8e5dd5 initial-file
-+  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d initial-file
-+  their  100644 ba629238ca89489f2b350e196ca445e09d8bb834 initial-file
-+@@ -1 +1,5 @@
-++<<<<<<< .our
-+ AAA
-++=======
-++BBB
-++>>>>>>> .their
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "change-a-b-diff-A" "initial-file" "AAA"
-+
-+	git reset --hard initial
-+	test_commit "change-a-b-diff-B" "initial-file" "BBB"
-+
-+	git merge-tree initial change-a-b-diff-A change-a-b-diff-B >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file change A, B (mixed)' '
-+	cat >expected <<EXPECTED
-+changed in both
-+  base   100644 f4f1f998c7776568c4ff38f516d77fef9399b5a7 ONE
-+  our    100644 af14c2c3475337c73759d561ef70b59e5c731176 ONE
-+  their  100644 372d761493f524d44d59bd24700c3bdf914c973c ONE
-+@@ -7,7 +7,11 @@
-+ AAA
-+ AAA
-+ AAA
-++<<<<<<< .our
-+ BBB
-++=======
-++CCC
-++>>>>>>> .their
-+ AAA
-+ AAA
-+ AAA
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "change-a-b-mix-base" "ONE" "
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA
-+AAA"
-+
-+	test_commit "change-a-b-mix-A" "ONE" \
-+		"$(sed -e "1{s/AAA/BBB/;}" -e "10{s/AAA/BBB/;}" <ONE)"
-+
-+	git reset --hard change-a-b-mix-base
-+	test_commit "change-a-b-mix-B" "ONE" \
-+		"$(sed -e "1{s/AAA/BBB/;}" -e "10{s/AAA/CCC/;}" <ONE)"
-+
-+	git merge-tree change-a-b-mix-base change-a-b-mix-A change-a-b-mix-B >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file remove A, !B' '
-+	cat >expected <<EXPECTED
-+removed in local
-+  base   100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+  their  100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "rm-a-not-b-base" "ONE" "AAA"
-+
-+	git rm ONE
-+	git commit -m "rm-a-not-b"
-+	git tag "rm-a-not-b"
-+
-+	git merge-tree rm-a-not-b-base rm-a-not-b rm-a-not-b-base >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_failure 'file remove !A, B' '
-+	cat >expected <<EXPECTED
-+removed in remote
-+  base   100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+  our    100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+@@ -1 +0,0 @@
-+-AAA
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "rm-not-a-b-base" "ONE" "AAA"
-+
-+	git rm ONE
-+	git commit -m "rm-not-a-b"
-+	git tag "rm-not-a-b"
-+
-+	git merge-tree rm-a-not-b-base rm-a-not-b-base rm-a-not-b >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_failure 'file change A, remove B' '
-+	cat >expected <<EXPECTED
-+removed in remote
-+  base   100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+  our    100644 ba629238ca89489f2b350e196ca445e09d8bb834 ONE
-+@@ -1 +0,0 @@
-+-BBB
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "change-a-rm-b-base" "ONE" "AAA"
-+
-+	test_commit "change-a-rm-b-A" "ONE" "BBB"
-+
-+	git reset --hard change-a-rm-b-base
-+	git rm ONE
-+	git commit -m "change-a-rm-b-B"
-+	git tag "change-a-rm-b-B"
-+
-+	git merge-tree change-a-rm-b-base change-a-rm-b-A change-a-rm-b-B >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'file remove A, change B' '
-+	cat >expected <<EXPECTED
-+removed in local
-+  base   100644 43d5a8ed6ef6c00ff775008633f95787d088285d ONE
-+  their  100644 ba629238ca89489f2b350e196ca445e09d8bb834 ONE
-+EXPECTED
-+
-+	git reset --hard initial
-+	test_commit "rm-a-change-b-base" "ONE" "AAA"
-+
-+	git rm ONE
-+	git commit -m "rm-a-change-b-A"
-+	git tag "rm-a-change-b-A"
-+
-+	git reset --hard rm-a-change-b-base
-+	test_commit "rm-a-change-b-B" "ONE" "BBB"
-+
-+	git merge-tree rm-a-change-b-base rm-a-change-b-A rm-a-change-b-B >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-1.7.1.703.g42c01
+ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ {
+ 	struct ref_lock *lock;
+@@ -1084,7 +1148,7 @@ int delete_ref(const char *refname, const unsigned ch=
+ar *sha1, int delopt)
+ 	 */
+ 	ret |=3D repack_without_ref(refname);
+=20
+-	unlink_or_warn(git_path("logs/%s", lock->ref_name));
++	bury_log(lock->ref_name);
+ 	invalidate_cached_refs();
+ 	unlock_ref(lock);
+ 	return ret;
+@@ -1384,6 +1448,7 @@ int write_ref_sha1(struct ref_lock *lock,
+ 		unlock_ref(lock);
+ 		return -1;
+ 	}
++	resurrect_log(lock->ref_name);
+ 	invalidate_cached_refs();
+ 	if (log_ref_write(lock->ref_name, lock->old_sha1, sha1, logmsg) < 0 ||
+ 	    (strcmp(lock->ref_name, lock->orig_ref_name) &&
+diff --git a/t/t1450-fsck.sh b/t/t1450-fsck.sh
+index 759cf12..65f160e 100755
+--- a/t/t1450-fsck.sh
++++ b/t/t1450-fsck.sh
+@@ -55,6 +55,7 @@ test_expect_success 'object with bad sha1' '
+ 	grep "$sha.*corrupt" out &&
+ 	rm -f .git/objects/$new &&
+ 	git update-ref -d refs/heads/bogus &&
++	rm -f .git/logs/refs~/heads~/bogus &&
+ 	git read-tree -u --reset HEAD
+ '
+=20
+--=20
+1.7.1.571.gba4d01
+
+
+--ZGiS0Q5IWpPtfppv
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMOckVAAoJELKdZexG8uqMhS4H/ReTmsDSjTQPVYxxg4zz6ZSq
+aVxoNns7TSpkaFj9g1F9NzH7gxbPcjrwuuuJ6fvMDaI1xvXAnDOFMQ7zxa5+Qjj8
+gbY/JhVZHNueizWIUvPfsrvG7J+Kl92rVjvfrkpn4hjUigfnKQ8UBp2wFiHJVS6p
+UbxyDAg/IF4qTxq6ujyfbZTMB60DHsl3Pl28He4+5l4ipjX9aEDkMRG+HytXMv7k
+p+j/Di7+Dyy55K5IrCLeLVCJOZBFNRIZ6nnPO7+1daMJpXeUVgUPYpxY4xiU5s+r
+DtlIPc+yv7bZ2045moG34cwwqZmssxNORMEb/qwfiNtfIEivmeUQwhZaFhlaKgY=
+=w0rW
+-----END PGP SIGNATURE-----
+
+--ZGiS0Q5IWpPtfppv--
