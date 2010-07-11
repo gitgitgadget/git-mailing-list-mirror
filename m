@@ -1,7 +1,7 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v3 10/13] map/print ranges along traversing the history topologically
-Date: Sun, 11 Jul 2010 14:18:58 +0800
-Message-ID: <1278829141-11900-10-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v3 09/13] print the line log
+Date: Sun, 11 Jul 2010 14:18:57 +0800
+Message-ID: <1278829141-11900-9-git-send-email-struggleyb.nku@gmail.com>
 References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
@@ -11,145 +11,308 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OXpvC-00025x-6f
+	id 1OXpvB-00025x-Mv
 	for gcvg-git-2@lo.gmane.org; Sun, 11 Jul 2010 08:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751866Ab0GKGVn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jul 2010 02:21:43 -0400
+	id S1751794Ab0GKGVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jul 2010 02:21:41 -0400
 Received: from mail-pw0-f46.google.com ([209.85.160.46]:40135 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570Ab0GKGVl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 02:21:41 -0400
+	with ESMTP id S1751570Ab0GKGVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 02:21:38 -0400
 Received: by mail-pw0-f46.google.com with SMTP id 5so1399328pwi.19
-        for <git@vger.kernel.org>; Sat, 10 Jul 2010 23:21:41 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 10 Jul 2010 23:21:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=9LEdvhSw3lhoHjtdY+asOjgR09Vd0uUjQ/+y7431Rfo=;
-        b=ceKoLU64PmQSwa+MMslZcIR8jZW8zSyXmxZ3FWED4e9JCDSFzmwAJm/7CLJFTXcy+9
-         SS71bthZ8zcsBHFvdlWn+ISwiSPfrV4C+snatgnjxVZ1XMEh+evt/Iu3DREzbI2SA2Qv
-         Xpxwl/WdC07VwLJ/A4WNJsoyvK44oNXw1xm4A=
+        bh=T8DC1xpn13QNaVyYMKsUYO2Zd4FF7kUBgEMq1IT2W4g=;
+        b=XM/cv/XQSfQk2LKB/NEGRei6+FQsOEojdyuicARVceB3zGDwUcoEFotnJVE05Roxg0
+         7UPtY0flsCXlvbMT7ZktDXAvQpJw46DHtNU1cZ5cyadchyJv3125zVgA9wDxEWjzS+zM
+         /vetduCDm/Qg25H3qh/OQ8B6HBGwR5aye/1vc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KJ6iGrjeA9BUvK1z2R3TXjRmaQqluwXZe8IygXe2EzuKIM+TlvFc4lgBYnVLxzvzEr
-         AdAht+ceeY7c+g5yXtCzr8/kmBL9fh10ka8S5csSx2uskh+ES3OSbb4YlDqVt8ElQlMG
-         FhVzQ6ZMU5g42T6nkXEshaurq+Um5DwcKhyeE=
-Received: by 10.142.147.7 with SMTP id u7mr14391112wfd.221.1278829301525;
-        Sat, 10 Jul 2010 23:21:41 -0700 (PDT)
+        b=pkW9Pa/MiR4AnuGrt8WrLaZuMktVLbgTTkmiCl5HdRephPwrZ/LyuNOunxxwC6x6sk
+         V2sS95atX9uSgRf9smFYYLGbaSWJsB95fsmkNBlsSGQ5jVxooiJA9kqKdUyg6usL7zFK
+         lasI+08IHs4vRA/dF5DLZzQ4ungBHzj75Jyu8=
+Received: by 10.142.147.7 with SMTP id u7mr14652903wfd.217.1278829298389;
+        Sat, 10 Jul 2010 23:21:38 -0700 (PDT)
 Received: from localhost.localdomain ([222.35.175.242])
-        by mx.google.com with ESMTPS id c15sm2927911rvi.11.2010.07.10.23.21.38
+        by mx.google.com with ESMTPS id c15sm2927911rvi.11.2010.07.10.23.21.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 10 Jul 2010 23:21:40 -0700 (PDT)
+        Sat, 10 Jul 2010 23:21:37 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc2.18.g2bc49
 In-Reply-To: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150753>
 
-Since ranges may change in different branches, we should
-make sure we do not pass range to parent until all the
-ranges get 'combined' at the commit which is a split commit.
-So, topological traversing is necessary.
+'struct line_chunk' is used to make sure each file is scaned
+only once when printing the lines. We trace the line number and
+the start position of intermediate line in this struct.
+Two helper functions from diff.c are used to generate the
+consistent format of diff meta info.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- builtin/log.c |    5 ++++-
- line.c        |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- line.h        |    2 ++
- 3 files changed, 60 insertions(+), 1 deletions(-)
+ line.c |  245 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 245 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 1e90b03..47b386d 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -615,7 +615,10 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
--	return cmd_log_walk(&rev);
-+	if (rev.line)
-+		return cmd_line_log_walk(&rev);
-+	else
-+		return cmd_log_walk(&rev);
- }
- 
- /* format-patch */
 diff --git a/line.c b/line.c
-index 8813376..5c8f77a 100644
+index e1af2f6..8813376 100644
 --- a/line.c
 +++ b/line.c
-@@ -1196,3 +1196,57 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+@@ -951,3 +951,248 @@ static void assign_parents_range(struct rev_info *rev, struct commit *commit)
  	}
  }
  
-+int cmd_line_log_walk(struct rev_info *rev)
++struct line_chunk {
++	int lone, ltwo;
++	const char *one, *two;
++	const char *one_end, *two_end;
++	struct diff_line_range *range;
++};
++
++static void flush_lines(struct diff_options *opt, const char **ptr, const char *end,
++		int slno, int elno, int *lno, const char *color, const char heading)
 +{
-+	struct commit *commit;
-+	struct commit_list *list = NULL;
-+	struct diff_line_range *r = NULL;
++	const char *p = *ptr;
++	struct strbuf buf = STRBUF_INIT;
++	const char *reset;
 +
-+	if (prepare_revision_walk(rev))
-+		die("revision walk prepare failed");
++	if (strcmp(color, ""))
++		reset = "";
++	else
++		reset = diff_get_color_opt(opt, DIFF_RESET);
 +
-+	list = rev->commits;
-+	if (list) {
-+		list->item->object.flags |= RANGE_UPDATE;
-+		list = list->next;
++	strbuf_addf(&buf, "%s%c", color, heading);
++	while (*ptr < end && *lno < slno) {
++		if (**ptr == '\n') {
++			(*lno)++;
++			if (*lno == slno) {
++				(*ptr)++;
++				break;
++			}
++		}
++		(*ptr)++;
 +	}
-+	/* Clear the flags */
-+	while (list) {
-+		list->item->object.flags &= 0x0;
-+		list = list->next;
++	assert(*ptr <= end);
++	p = *ptr;
++
++	/*
++	 * todo: when --graph landed on master, this should be changed
++	 * a little.
++	 */
++	while (*ptr < end && *lno <= elno) {
++		if (**ptr == '\n') {
++			fprintf(opt->file, "%s", buf.buf);
++			if (*ptr - p) {
++				fwrite(p, *ptr - p, 1, opt->file);
++			}
++			fprintf(opt->file, "%s\n", reset);
++			p = *ptr + 1;
++			(*lno)++;
++		}
++		(*ptr)++;
 +	}
-+
-+	list = rev->commits;
-+	while (list) {
-+		struct commit_list *need_free = list;
-+		commit = list->item;
-+
-+		if (commit->object.flags & RANGE_UPDATE) {
-+			assign_parents_range(rev, commit);
++	if (*lno <= elno) {
++		fprintf(opt->file, "%s", buf.buf);
++		if (*ptr - p) {
++			fwrite(p, *ptr - p, 1, opt->file);
 +		}
-+
-+		if (commit->object.flags & NEED_PRINT) {
-+			line_log_flush(rev, commit);
-+		}
-+
-+		r = lookup_line_range(rev, commit);
-+		if (r) {
-+			cleanup(r);
-+			r = NULL;
-+			add_line_range(rev, commit, r);
-+		}
-+
-+		r = lookup_decoration(&rev->nontrivial_merge, &commit->object);
-+		if (r) {
-+			cleanup(r);
-+			r = NULL;
-+			add_decoration(&rev->nontrivial_merge, &commit->object, r);
-+		}
-+
-+		list = list->next;
-+		free(need_free);
++		fprintf(opt->file, "%s\n", reset);
 +	}
-+
-+	return 0;
++	strbuf_release(&buf);
 +}
 +
-diff --git a/line.h b/line.h
-index 885e985..b293894 100644
---- a/line.h
-+++ b/line.h
-@@ -128,4 +128,6 @@ extern struct diff_line_range *lookup_line_range(struct rev_info *revs, struct c
- const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
- 		void *data, long lines, long begin, long *ret);
- 
-+extern int cmd_line_log_walk(struct rev_info *rev);
++static void diff_flush_range(struct diff_options *opt, struct line_chunk *chunk,
++		struct range *range)
++{
++	struct print_pair *pair = &range->pair;
++	const char *old = diff_get_color_opt(opt, DIFF_FILE_OLD);
++	const char *new = diff_get_color_opt(opt, DIFF_FILE_NEW);
++	int i, cur = range->start;
 +
- #endif
++	for (i = 0; i < pair->nr; i++) {
++		struct print_range *pr = pair->ranges + i;
++		if (cur < pr->start)
++			flush_lines(opt, &chunk->two, chunk->two_end,
++				cur, pr->start - 1, &chunk->ltwo, "", ' ');
++
++		if (!pr->line_added)
++			flush_lines(opt, &chunk->one, chunk->one_end,
++				pr->pstart, pr->pend, &chunk->lone, old, '-');
++		flush_lines(opt, &chunk->two, chunk->two_end,
++			pr->start, pr->end, &chunk->ltwo, new, '+');
++
++		cur = pr->end + 1;
++	}
++
++	if (cur <= range->end) {
++		flush_lines(opt, &chunk->two, chunk->two_end,
++			cur, range->end, &chunk->ltwo, "", ' ');
++	}
++}
++
++static void diff_flush_chunks(struct diff_options *opt, struct line_chunk *chunk)
++{
++	struct diff_line_range *range = chunk->range;
++	const char *set = diff_get_color_opt(opt, DIFF_FRAGINFO);
++	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
++	int i;
++
++	for (i = 0; i < range->nr; i++) {
++		struct range *r = range->ranges + i;
++		long lenp = r->pend - r->pstart + 1, pstart = r->pstart;
++		long len = r->end - r->start + 1;
++		if (pstart == 0)
++			lenp = 0;
++
++		fprintf(opt->file, "%s@@ -%ld,%ld +%ld,%ld @@%s\n",
++			set, pstart, lenp, r->start, len, reset);
++
++		diff_flush_range(opt, chunk, r);
++	}
++}
++
++static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *range)
++{
++	struct diff_options *opt = &rev->diffopt;
++	struct diff_filespec *one = range->prev, *two = range->spec;
++	struct diff_filepair p = {one, two, range->status, 0};
++	struct strbuf header = STRBUF_INIT, meta = STRBUF_INIT;
++	const char *a_prefix, *b_prefix;
++	const char *name_a, *name_b, *a_one, *b_two;
++	const char *lbl[2];
++	const char *set = diff_get_color_opt(opt, DIFF_METAINFO);
++	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
++	struct line_chunk chunk;
++	int must_show_header;
++
++	/*
++	 * the ranges that touch no different file, in this case
++	 * the line number will not change, and of course we have
++	 * no sensible rang->pair since there is no diff run.
++	 */
++	if (one == NULL) {
++		return;
++	}
++
++	if (range->status == DIFF_STATUS_DELETED)
++		die("We are following an nonexistent file, interesting!");
++
++	name_a  = one->path;
++	name_b = two->path;
++	fill_metainfo(&meta, name_a, name_b, one, two, opt, &p, &must_show_header,
++			DIFF_OPT_TST(opt, COLOR_DIFF));
++
++	diff_set_mnemonic_prefix(opt, "a/", "b/");
++	if (DIFF_OPT_TST(opt, REVERSE_DIFF)) {
++		a_prefix = opt->b_prefix;
++		b_prefix = opt->a_prefix;
++	} else {
++		a_prefix = opt->a_prefix;
++		b_prefix = opt->b_prefix;
++	}
++
++	name_a = DIFF_FILE_VALID(one) ? name_a : name_b;
++	name_b = DIFF_FILE_VALID(two) ? name_b : name_a;
++
++	a_one = quote_two(a_prefix, name_a + (*name_a == '/'));
++	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
++	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
++	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
++	strbuf_addf(&header, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
++	if (lbl[0][0] == '/') {
++		strbuf_addf(&header, "%snew file mode %06o%s\n", set, two->mode, reset);
++	} else if (lbl[1][0] == '/') {
++		strbuf_addf(&header, "%sdeleted file mode %06o%s\n", set, one->mode, reset);
++	} else if (one->mode != two->mode) {
++			strbuf_addf(&header, "%sold mode %06o%s\n", set, one->mode, reset);
++			strbuf_addf(&header, "%snew mode %06o%s\n", set, two->mode, reset);
++	}
++
++	fprintf(opt->file, "%s%s", header.buf, meta.buf);
++	strbuf_release(&meta);
++	strbuf_release(&header);
++	fprintf(opt->file, "%s--- %s%s\n", set, lbl[0], reset);
++	fprintf(opt->file, "%s+++ %s%s\n", set, lbl[1], reset);
++	free((void *)a_one);
++	free((void *)b_two);
++
++	chunk.one = one->data;
++	chunk.one_end = one->data + one->size;
++	chunk.lone = 1;
++	chunk.two = two->data;
++	chunk.two_end = two->data + two->size;
++	chunk.ltwo = 1;
++	chunk.range = range;
++	diff_flush_chunks(&rev->diffopt, &chunk);
++}
++
++#define EVIL_MERGE_STR "nontrivial merge found"
++static void flush_nontrivial_merge(struct rev_info *rev, struct diff_line_range *range)
++{
++	struct diff_options *opt = &rev->diffopt;
++	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
++	const char *frag = diff_get_color_opt(opt, DIFF_FRAGINFO);
++	const char *meta = diff_get_color_opt(opt, DIFF_METAINFO);
++	const char *new = diff_get_color_opt(opt, DIFF_FILE_NEW);
++
++	fprintf(opt->file, "%s%s%s\n", meta, EVIL_MERGE_STR, reset);
++
++	while (range) {
++		if (range->nr) {
++			fprintf(opt->file, "%s%s%s\n\n", meta, range->spec->path, reset);
++			int lno = 1;
++			const char *ptr = range->spec->data;
++			const char *end = range->spec->data + range->spec->size;
++			int i = 0;
++			for (; i < range->nr; i++) {
++				struct range *r = range->ranges + i;
++				fprintf(opt->file, "%s@@ %ld,%ld @@%s\n", frag, r->start,
++					r->end - r->start + 1, reset);
++				flush_lines(opt, &ptr, end, r->start, r->end,
++					&lno, new, ' ');
++			}
++			fprintf(opt->file, "\n");
++		}
++		range = range->next;
++	}
++}
++
++static void line_log_flush(struct rev_info *rev, struct commit *c)
++{
++	struct diff_line_range *range = lookup_line_range(rev, c);
++	struct diff_line_range *nontrivial = lookup_decoration(&rev->nontrivial_merge, &c->object);
++	struct log_info log;
++
++	if (range == NULL)
++		return;
++
++	log.commit = c;
++	log.parent = NULL;
++	rev->loginfo = &log;
++	show_log(rev);
++	rev->loginfo = NULL;
++	/*
++	 * Add a new line after each commit message, of course we should
++	 * add --graph alignment later when the patches comes to master.
++	 */
++	fprintf(rev->diffopt.file, "\n");
++
++	if (c->object.flags & EVIL_MERGE)
++		return flush_nontrivial_merge(rev, nontrivial);
++
++	while (range) {
++		if (range->diff)
++			diff_flush_filepair(rev, range);
++		range = range->next;
++	}
++}
++
 -- 
 1.7.0.2.273.gc2413.dirty
