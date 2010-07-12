@@ -1,347 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 03/13] add the basic data structure for line level 
- history
-Date: Mon, 12 Jul 2010 09:50:18 -0700
-Message-ID: <7vr5j8bq5x.fsf@alter.siamese.dyndns.org>
-References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
- <1278829141-11900-3-git-send-email-struggleyb.nku@gmail.com>
- <AANLkTim5m2vG3ZiveRcRIGLVszu9mFruTJ2B_6lsqkGH@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] Add support for limiting number of lines generated in 
+	messages by post-receive-email
+Date: Mon, 12 Jul 2010 17:10:06 +0000
+Message-ID: <AANLkTilVNhDl5OurCPpB68buvQZPAulkuEye0FUTyThP@mail.gmail.com>
+References: <1278615790-5433-1-git-send-email-kpfleming@digium.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 12 18:50:35 2010
+To: "Kevin P. Fleming" <kpfleming@digium.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 19:10:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYMD9-0007Ri-Mr
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 18:50:32 +0200
+	id 1OYMWF-0007WL-Ag
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 19:10:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753320Ab0GLQu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 12:50:26 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42249 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751188Ab0GLQuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 12:50:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A764C4424;
-	Mon, 12 Jul 2010 12:50:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=WKltR5kZnnw/eLJT27HK5ZLldmI=; b=K7FfCOE036ArwfK9MWLRAKk
-	2c80HZ1Qgfaia/W5P4XKlsfNswdOtwnHedYWhjbTaC0u94EaItJ9Sd8Pj4gi8BQ2
-	td4Xvr60OVmDQr3wkNE5h1PjO9E02u2ECtT3zGq2DX3ZCkiQycNSuqMhoyO6pu/4
-	qCaox4eyDcPecB7JuuiM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=o71ajiuUlHjoCdA/G/zmvsEr+d8iKN0Q5HkoesgUIvIzl42oM
-	OMeYKJUQ9FaWMCE201aB4VzgTZp9e4Nd3HB7Go4OsN5FG7M3KtqEOe1JY25cYmW4
-	PyHmgGmqIQyCNEa6yt13IE8oCWTW4tdMQ6F4Bv7Lo15GBpekDRDK0JIr1Y=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D9F62C4422;
-	Mon, 12 Jul 2010 12:50:22 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B6ACDC4421; Mon, 12 Jul
- 2010 12:50:19 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 900B6326-8DD5-11DF-868C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756086Ab0GLRKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 13:10:08 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50631 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752087Ab0GLRKH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 13:10:07 -0400
+Received: by iwn7 with SMTP id 7so4838987iwn.19
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 10:10:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=tOZ97gHF5ewT++3C9ZxsTk+Tpq9zeC6lvz0lPGChpUc=;
+        b=eqd0cluCOstrSu32IZoHN/p2H6Q8msnFVqRr9HgIMIIFhlPD8RLJB+KwL3OrycSc5s
+         y3zthRXPvqe//6z7UOEfY+5y9/ffsmLoHGmgiT3e/4LH5WamUv2bDKiCh4KoaPjiYH5o
+         yqJW+OwW9v1kHuS6ttrRXkNAMdeP3+WYxanl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=TgmQDLJ5MJ+grw7uruagmcBxu9MIHSIUtIMum28pnUb/Q6yURN5gsbQeeTs9MhOVmj
+         ENc248r4mJI6hWXayAPud2gYDp+oonDTVIlW5iAckGRfoUj/HPxP39262JnVAkFEJOGa
+         /W3wZkmy2n4BnR6JHBtq14+LfITmbqcMRZkfU=
+Received: by 10.231.171.3 with SMTP id f3mr9874082ibz.145.1278954606709; Mon, 
+	12 Jul 2010 10:10:06 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Mon, 12 Jul 2010 10:10:06 -0700 (PDT)
+In-Reply-To: <1278615790-5433-1-git-send-email-kpfleming@digium.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150831>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+Just a nit on the format, which might help to get this accepted.
 
-> Subject: [PATCH v3 revised 03/13] add the basic data structure for line level history
+This patch has a 84 char subject line, the recommended maximum is 50
+(used for --oneline). See Documents/SubmittingPatches.
+
+On Thu, Jul 8, 2010 at 19:03, Kevin P. Fleming <kpfleming@digium.com> wrote:
+> We have become used to the features of svnmailer when used with Subversion,
+> and one of those useful features is that it can limit the maximum length
+> (in lines) of a commit email message. This is terribly useful since once the
+> goes beyond a reasonable number of lines, nobody is going to read the remainder,
+> and if they really want the entire contents of the commits, they can use
+> git itself to get them using the revision IDs present in the message already.
 >
-> 'struct diff_line_range' is the main data structure to store
-> the user interesting line range. There is one 'diff_line_range'
+> This patch adds a new parameter to the post-receive-email hook script called
+> 'maxlines', that defaults to 2048 if not specified. The entire message is
+> filtered through a function that counts the number of lines generated
+> (including headers), and any lines beyond the limit are suppressed; if any
+> lines are suppressed, a final line is added indicating the number that
+> were suppressed.
 
--ECANTPARSE. Perhaps "to keep track of the line ranges the user is
-interested in"?
-
-Is it the end user, or the code, that is interested in the range recorded
-in this structure?  If you are adjusting the line range while traversing
-the history, then it is more of the latter; i.e. "the user originally
-started digging from this range, but after examining the diff that affect
-that range by this commit, we found that the range corresponds to this
-widened/narrowed range in the history leading to the commit, so we will
-update the range and use it from now on until we hit another commit that
-affects this range".  In that case "to keep track of the line ranges we
-are currently interested in" would be more appropriate than "the ranges
-the user is interested in".
-
-> for each file, and there are multiple 'struct range' in each
-> 'diff_line_range'. In this way, we support multiple ranges.
->
-> Within 'struct range', there are multiple 'struct print_range'
-> which represent a diff chunk.
-
-We call them "hunks" not "chunks", I think.
-
-> diff --git a/diffcore.h b/diffcore.h
-> index 491bea0..13d8e93 100644
-> --- a/diffcore.h
-> +++ b/diffcore.h
-> @@ -23,6 +23,7 @@
->  #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
->
->  struct userdiff_driver;
-> +struct diff_options;
-
-Why???
-
->  struct diff_filespec {
->  	unsigned char sha1[20];
-
-> diff --git a/line.c b/line.c
-> new file mode 100644
-> index 0000000..2f82fd8
-> --- /dev/null
-> +++ b/line.c
-> @@ -0,0 +1,456 @@
-> ...
-> +
-> +static struct object *verify_commit(struct rev_info *revs)
-> +{
-> +	struct object *commit = NULL;
-> +	const char *name = NULL;
-
-Why not use "int found = -1" instead and point at the commit in the
-pending.objects[] array you found with that variable?  Or use a variable
-of the type of a pointer to an element in the pending.objects[] array,
-initialized to NULL.
-
-That way, you do not have to tell stupid compilers that name is set once
-commit is set to avoid warnings, which is the only reason you initialize
-name to NULL.
-
-> +	int i;
-> +
-> +	for (i = 0; i < revs->pending.nr; i++) {
-> +		struct object *obj = revs->pending.objects[i].item;
-> +		if (obj->flags & UNINTERESTING)
-> +			continue;
-> +		while (obj->type == OBJ_TAG)
-> +			obj = deref_tag(obj, NULL, 0);
-> +		if (obj->type != OBJ_COMMIT)
-> +			die("Non commit %s?", revs->pending.objects[i].name);
-> +		if (commit)
-> +			die("More than one commit to dig from: %s and %s?",
-> +			    revs->pending.objects[i].name, name);
-> +		commit = obj;
-> +		name = revs->pending.objects[i].name;
-> +	}
-> +
-> +	if (commit == NULL)
-> +		die("No commit specified?");
-> +
-> +	return commit;
-> +}
-> +
-> +static void fill_blob_sha1(struct commit *commit, struct diff_line_range *r)
-> +{
-> +	unsigned mode;
-> +	unsigned char sha1[20];
-> +
-> +	while (r) {
-> +		if (get_tree_entry(commit->object.sha1, r->spec->path,
-> +			sha1, &mode))
-> +			goto error;
-> +		fill_filespec(r->spec, sha1, mode);
-> +		r = r->next;
-> +	}
-> +
-> +	return;
-> +error:
-> +	die("There is no path %s in the commit", r->spec->path);
-> +}
-
-These two look vaguely familiar...  Cut and paste without refactoring?
-
-> +static void fill_line_ends(struct diff_filespec *spec, long *lines,
-> +	unsigned long **line_ends)
-> +{
-> +	int num = 0, size = 50;
-> +	long cur = 0;
-> +	unsigned long *ends = NULL;
-> +	char *data = NULL;
-> +
-> +	if (diff_populate_filespec(spec, 0))
-> +		die("Cannot read blob %s", sha1_to_hex(spec->sha1));
-> +
-> +	ends = xmalloc(size * sizeof(*ends));
-> +	ends[cur++] = -1;
-
-Wasn't this an array of unsigned longs?
-
-> +static const char *nth_line(struct diff_filespec *spec, int line,
-> +		long lines, unsigned long *line_ends)
-> +{
-> +	assert(line < lines);
-> +	assert(spec && spec->data);
-
-Why aren't "line" and "lines" of the same type?
-
-> +static void parse_range(long lines, unsigned long *line_ends,
-> +		struct range *r, struct diff_filespec *spec)
-> +{
-> +	const char *term;
-> +
-> +	term = parse_loc(r->arg, spec, lines, line_ends, 1, &r->start);
-> +	if (*term == ',') {
-> +		term = parse_loc(term + 1, spec, lines, line_ends,
-> +			r->start + 1, &r->end);
-> +		if (*term) {
-> +			die("-L parameter's argument should be <start>,<end>");
-> +		}
-
-Excess {} around a single statement.
-
-> +struct range *diff_line_range_insert(struct diff_line_range *r, const
-> char *arg,
-> +				int start, int end)
-> +{
-> +	int i = 0;
-> +	struct range *rs = r->ranges;
-> +	int left_extend = 0, right_extend = 0;
-> +
-> +	assert(r != NULL);
-> +	assert(start <= end);
-> +
-> +	if (r->nr == 0 || rs[r->nr - 1].end < start - 1) {
-> +		DIFF_LINE_RANGE_GROW(r);
-> +		rs = r->ranges;
-> +		int num = r->nr - 1;
-
-decl-after-statement
-
-> ...
-> +out:
-> +	assert(r->nr != i);
-> +	if (left_extend) {
-
-Sounds more like a "merge" than "extend" to me...
-
-> diff --git a/line.h b/line.h
-> new file mode 100644
-> index 0000000..a2f8545
-> --- /dev/null
-> +++ b/line.h
-> @@ -0,0 +1,122 @@
-> ...
-> +#define PRINT_RANGE_INIT(r) \
-> +	do { \
-> +		(r)->line_added = 0; \
-> +	} while(0);
-
-	} while (0)
-
-- No semicolon after a macro (the user will give it to us).
-- A SP after "while".
-
-Does this even have to be "do { ... } while (0)"???
-
-> +
-> +#define PRINT_PAIR_INIT(p) \
-> +	do { \
-> +		(p)->alloc = (p)->nr = 0; \
-> +		(p)->ranges = NULL; \
-> +	} while(0);
-> +
-> +#define PRINT_PAIR_GROW(p) \
-> +	do { \
-> +		(p)->nr ++; \
-
-	(p)->nr++;
-
-> +		ALLOC_GROW((p)->ranges, (p)->nr, (p)->alloc); \
-> +	} while (0);
-> +
-> +#define PRINT_PAIR_CLEAR(p) \
-> +	do { \
-> +		(p)->alloc = (p)->nr = 0; \
-> +		if ((p)->ranges) \
-> +			free((p)->ranges); \
-> +		(p)->ranges = NULL; \
-> +	} while(0);
-> +
-> +struct range {
-> +	const char *arg;	//The argument to specify this line range
-
-No C++/C99 comments.
-
-Do you need to keep track of this string representation once you have
-parsed the user input and your main computation have started?
-
-Isn't "range" too generic a term?   Unless you make this as a static
-declaration only visible to functions where "range" can only mean "line
-ranges" in their context, that is.
-
-> +#define RANGE_INIT(r) \
-
-Same comment for the name possibly being too generic.
-
-> +extern struct range *diff_line_range_insert(struct diff_line_range
-> *r, const char *arg,
-
-Linewrapped?
-
-> diff --git a/revision.c b/revision.c
-> index 7e82efd..63f37ea 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1637,6 +1637,12 @@ int setup_revisions(int argc, const char
-> **argv, struct rev_info *revs, struct s
->  	if (revs->combine_merges)
->  		revs->ignore_merges = 0;
->  	revs->diffopt.abbrev = revs->abbrev;
-> +
-> +	if (revs->line) {
-
-"line" what?
-
-> diff --git a/revision.h b/revision.h
-> index 36fdf22..55836e0 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -14,7 +14,8 @@
->  #define CHILD_SHOWN	(1u<<6)
->  #define ADDED		(1u<<7)	/* Parents already parsed and added? */
->  #define SYMMETRIC_LEFT	(1u<<8)
-> -#define ALL_REV_FLAGS	((1u<<9)-1)
-> +#define RANGE_UPDATE	(1u<<9) /* for line level traverse */
-> +#define ALL_REV_FLAGS	((1u<<10)-1)
->
->  #define DECORATE_SHORT_REFS	1
->  #define DECORATE_FULL_REFS	2
-> @@ -68,7 +69,8 @@ struct rev_info {
->  			cherry_pick:1,
->  			bisect:1,
->  			ancestry_path:1,
-> -			first_parent_only:1;
-> +			first_parent_only:1,
-> +			line:1;
-
-Is this really a traversal flag that affects how the history is walked?
-
->  	/* Diff flags */
->  	unsigned int	diff:1,
-> @@ -137,6 +139,8 @@ struct rev_info {
->  	/* commit counts */
->  	int count_left;
->  	int count_right;
-> +	/* line-level intersting range */
-> +	struct decoration line_range;
-
-s/intersting//; or perhaps "line level range that we are chasing"
-
->  };
->
->  #define REV_TREE_SAME		0
-> -- 
-> 1.7.0.2.273.gc2413.dirty
+Maybe change the "We have", "This patch" etc. to use the "Changed"
+wording recommended by Documents/SubmittingPatches?
