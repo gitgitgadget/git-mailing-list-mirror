@@ -1,75 +1,145 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [GSoC update] git-remote-svn: Week 11
-Date: Mon, 12 Jul 2010 16:48:40 +0200
-Message-ID: <4C3B2B48.4070408@drmicha.warpmail.net>
-References: <20100712143546.GA17630@debian>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 2/2] revert: don't print "Finished one cherry-pick." if commit
+	failed
+Date: Mon, 12 Jul 2010 13:54:54 +0200
+Message-ID: <20100712115455.12251.47449.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Greg Stein <gstein@gmail.com>, Stefan Sperling <stsp@elego.de>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Bert Huijben <rhuijben@collab.net>,
-	Sam Vilain <sam@vilain.net>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 12 16:49:48 2010
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 16:56:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYKKF-0004FW-8B
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 16:49:43 +0200
+	id 1OYKQJ-0007F6-2M
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 16:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755817Ab0GLOti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 10:49:38 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:34972 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755767Ab0GLOth (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 10:49:37 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E595E16BDC2;
-	Mon, 12 Jul 2010 10:49:36 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 12 Jul 2010 10:49:37 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=g+ZIbi55euE5tKWqtPupRZ4+99k=; b=VwPd9aLyNj4eoCeLlHfq/HVDZ5Xxo86YaGKMHKHZ2tmNkB/U7lg/vYnPrchN6ZP0mkQhINNd+H49AyKR9MfFiCrLm9qenEJYxJ2ixPpARpsiZXJwNoDDx2fB90jxaL2BpRLyLqeqjtgDZrheCpdVxSMBSHJhIdxgkxAi94xWl1U=
-X-Sasl-enc: TL6SFzfxMZGSynsE+aerDJ6ekUXR6D7jcrE7YUE8mUOV 1278946176
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 149FB4DEEA1;
-	Mon, 12 Jul 2010 10:49:34 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100702 Lightning/1.0b2pre Lanikai/3.1.1pre
-In-Reply-To: <20100712143546.GA17630@debian>
+	id S1755874Ab0GLOzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 10:55:53 -0400
+Received: from smtp2f.orange.fr ([80.12.242.151]:40438 "EHLO smtp2f.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755767Ab0GLOzw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 10:55:52 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2f08.orange.fr (SMTP Server) with ESMTP id DE5BA800110C;
+	Mon, 12 Jul 2010 16:55:50 +0200 (CEST)
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2f08.orange.fr (SMTP Server) with ESMTP id D12BC8001138;
+	Mon, 12 Jul 2010 16:55:50 +0200 (CEST)
+Received: from style.boubyland (ANantes-156-1-132-89.w90-12.abo.wanadoo.fr [90.12.251.89])
+	by mwinf2f08.orange.fr (SMTP Server) with ESMTP id 3EB3A800110C;
+	Mon, 12 Jul 2010 16:55:50 +0200 (CEST)
+X-ME-UUID: 20100712145550256.3EB3A800110C@mwinf2f08.orange.fr
+X-git-sha1: 651474c77e2ff0bfbb47a0b109ceabe6b5308431 
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150817>
 
-Ramkumar Ramachandra venit, vidit, dixit 12.07.2010 16:35:
-> Hi,
-> 
-> I'm happy to report that I'll soon be getting partial committer access
-> to the ASF repository (thanks to Greg for this) and will be able to
-> commit the svnrdump there. At the moment, all the validations pass
-> without any issues and I've shifted my focus towards writing a
-> dumpfile v3 parser [1] to get the data into David's exporter. I will
-> re-roll a series for git.git in some time again after I've fixed a few
-> pending things pointed out by Jonathan in his excellent reviews and
-> merged a few patches from Will; although this isn't top priority, it
-> will be pretty painful for Git developers to compile the SVN trunk
-> even if they want to try out git-remote-svn.
+And, while at it, refactor commit code into a new run_git_commit()
+function.
 
-While this is certainly true for the "compilation" part, at least
-getting the source is a snap for us:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/revert.c |   67 +++++++++++++++++++++++++-----------------------------
+ 1 files changed, 31 insertions(+), 36 deletions(-)
 
-git://git.apache.org/subversion.git
-git://github.com/apache/subversion.git
-
-:)
-
-Michael
+diff --git a/builtin/revert.c b/builtin/revert.c
+index b082bb4..ec931bd 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -361,6 +361,32 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	return !clean;
+ }
+ 
++/*
++ * If we are cherry-pick, and if the merge did not result in
++ * hand-editing, we will hit this commit and inherit the original
++ * author date and name.
++ * If we are revert, or if our cherry-pick results in a hand merge,
++ * we had better say that the current user is responsible for that.
++ */
++static int run_git_commit(const char *defmsg)
++{
++	/* 6 is max possible length of our args array including NULL */
++	const char *args[6];
++	int i = 0;
++
++	args[i++] = "commit";
++	args[i++] = "-n";
++	if (signoff)
++		args[i++] = "-s";
++	if (!edit) {
++		args[i++] = "-F";
++		args[i++] = defmsg;
++	}
++	args[i] = NULL;
++
++	return run_command_v_opt(args, RUN_GIT_CMD);
++}
++
+ static int do_pick_commit(void)
+ {
+ 	unsigned char head[20];
+@@ -492,48 +518,17 @@ static int do_pick_commit(void)
+ 			mebuf.buf, help_msg());
+ 		rerere(allow_rerere_auto);
+ 	} else {
+-		fprintf(stderr, "Finished one %s.\n", mebuf.buf);
++		if (!no_commit)
++			res = run_git_commit(defmsg);
++		if (!res)
++			fprintf(stderr, "Finished one %s.\n", mebuf.buf);
+ 	}
+ 
+ 	strbuf_release(&mebuf);
+ 	free_message(&msg);
+-
+-	if (res)
+-		return 1;
+-
+-	/*
+-	 *
+-	 * If we are cherry-pick, and if the merge did not result in
+-	 * hand-editing, we will hit this commit and inherit the original
+-	 * author date and name.
+-	 * If we are revert, or if our cherry-pick results in a hand merge,
+-	 * we had better say that the current user is responsible for that.
+-	 */
+-
+-	if (!no_commit) {
+-		/* 6 is max possible length of our args array including NULL */
+-		const char *args[6];
+-		int res;
+-		int i = 0;
+-
+-		args[i++] = "commit";
+-		args[i++] = "-n";
+-		if (signoff)
+-			args[i++] = "-s";
+-		if (!edit) {
+-			args[i++] = "-F";
+-			args[i++] = defmsg;
+-		}
+-		args[i] = NULL;
+-		res = run_command_v_opt(args, RUN_GIT_CMD);
+-		free(defmsg);
+-
+-		return res;
+-	}
+-
+ 	free(defmsg);
+ 
+-	return 0;
++	return res;
+ }
+ 
+ static void prepare_revs(struct rev_info *revs)
+-- 
+1.7.2.rc1.213.gf3fb81
