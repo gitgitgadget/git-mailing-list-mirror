@@ -1,71 +1,60 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv2] test-lib: TAP compliance for skipping tests on request
-Date: Mon, 12 Jul 2010 11:07:05 +0000
-Message-ID: <AANLkTimAu6H4hK-WEhjrGDr5CICWzB_wxrD-GgrBtdKe@mail.gmail.com>
-References: <AANLkTiml1lQlSBDGgUg9scsvsaffDT2n405USmsSIm1n@mail.gmail.com>
-	<82aab66bffd86b562c76a13a4666d3cf22a64cca.1278930335.git.git@drmicha.warpmail.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Hi about the installer
+Date: Mon, 12 Jul 2010 13:41:43 +0200
+Message-ID: <201007121341.44284.trast@student.ethz.ch>
+References: <4C3A4494.1080803@prolinux.cl> <201007121146.30642.trast@student.ethz.ch> <AANLkTikAw0Tm496SjnyaN0VQPcHOnw3zoJJ6lIH2rCyJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Jul 12 13:07:21 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Horacio Miranda <hmiranda@prolinux.cl>, <git@vger.kernel.org>
+To: John Tapsell <johnflux@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 13:42:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYGr2-0000Vm-2e
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 13:07:20 +0200
+	id 1OYHOp-0005Ld-Ky
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 13:42:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441Ab0GLLHL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 07:07:11 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:50445 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751937Ab0GLLHH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 07:07:07 -0400
-Received: by iwn7 with SMTP id 7so4517066iwn.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 04:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cmbCGFC0Vo79S3j8Z60mAQpNqpQR8wOMEa5Q+1QuQZ8=;
-        b=MFvWQu4xWI43qYxfzgnYSYFLoxAsdRylZyVobRC+eVosxhtqgRGILTs8aJaznCbbtj
-         9WeIhJhO/Q1ZOk4oUsVFQv6OpwQ/dNHgdIWXVAdh6F1oe3dU81rEpZSVZk8L+WO50hr4
-         Mb7zTfctr3TxCDGV4HdkcAeLH3HIJarGMyTzQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FzfnP5ghQ9kQ7ubathSN4MXL650UWMzmfVrqA3/l/mQVbguP41V0cS8m8Gm+mFgUkv
-         WfY/3e4o+oR+2JbvkUnm3kOxjmMZPKGnrjf4juYQYqUQo56+e7ETDPhISrmbc/LXGoUP
-         d8DwNprAkkfnsT4P8vvMBGl18JOlHa6c6xtcQ=
-Received: by 10.231.176.16 with SMTP id bc16mr15015241ibb.4.1278932825238; 
-	Mon, 12 Jul 2010 04:07:05 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Mon, 12 Jul 2010 04:07:05 -0700 (PDT)
-In-Reply-To: <82aab66bffd86b562c76a13a4666d3cf22a64cca.1278930335.git.git@drmicha.warpmail.net>
+	id S1754361Ab0GLLmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 07:42:08 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:42842 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753605Ab0GLLmH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 07:42:07 -0400
+Received: from CAS20.d.ethz.ch (172.31.51.110) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 12 Jul
+ 2010 13:42:06 +0200
+Received: from thomas.localnet (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 12 Jul
+ 2010 13:41:44 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <AANLkTikAw0Tm496SjnyaN0VQPcHOnw3zoJJ6lIH2rCyJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150812>
 
-On Mon, Jul 12, 2010 at 10:33, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Make the output TAP compliant for tests skipped on request (GIT_SKIP_=
-TESTS).
->
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> v2 has a typo fix in the commit message and the spelling of "skip"
-> as suggested by AAB.
->
-> I think I've read it differently in the RFC, but then I was also conf=
-used about
-> the "#" in the RFC, and following the "reference" implementation (as =
-per AAB)
-> should be the best approach.
+John Tapsell wrote:
+> On 12 July 2010 10:46, Thomas Rast <trast@student.ethz.ch> wrote:
+> > Horacio Miranda wrote:
+> >> Is not working :(
+> >>
+> >> This link is death
+> >> https://git.wiki.kernel.org/index.php/MSysGit:InstallMSysGit
 
-Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Ah well, reading the list forward instead of backward would have
+enlightened me that there indeed was an outage at git.wiki.kernel.org.
+
+> > If you think "[it] is not working" is a valid error description, then
+> > this page isn't for you.  As the first section says
+> 
+> Maybe you have to wait 7 days after clicking the link..
+
+I didn't get that one though...
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
