@@ -1,78 +1,83 @@
-From: Bradley Wagner <bradley.wagner@hannonhill.com>
-Subject: Re: git-svn: both merged commits and original commits are showing up 
-	in branches after migration
-Date: Mon, 12 Jul 2010 14:31:44 -0400
-Message-ID: <AANLkTikTDv5NI_7oEdfdp4ZHY6No4JKTJU28Sat9wQhk@mail.gmail.com>
-References: <AANLkTikwyFwO2G1E6rozSxrI4g51wyA8CFV5jl30qRo-@mail.gmail.com>
-	<AANLkTin3TYuC-y2U-o4NEgXH7N4M59vqWxXsa6J2Ae74@mail.gmail.com>
-	<20100712182421.GA8644@dert.cs.uchicago.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 04/13] refactor parse_loc
+Date: Mon, 12 Jul 2010 11:32:18 -0700
+Message-ID: <7vk4p0blfx.fsf@alter.siamese.dyndns.org>
+References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
+ <1278829141-11900-4-git-send-email-struggleyb.nku@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 12 20:31:52 2010
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 20:32:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYNnD-0003xF-8h
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:31:51 +0200
+	id 1OYNnr-0004Fz-RI
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756269Ab0GLSbp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 14:31:45 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:56680 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753258Ab0GLSbp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 14:31:45 -0400
-Received: by qyk38 with SMTP id 38so4503040qyk.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 11:31:44 -0700 (PDT)
-Received: by 10.224.93.203 with SMTP id w11mr7964219qam.75.1278959504235; Mon, 
-	12 Jul 2010 11:31:44 -0700 (PDT)
-Received: by 10.229.38.133 with HTTP; Mon, 12 Jul 2010 11:31:44 -0700 (PDT)
-In-Reply-To: <20100712182421.GA8644@dert.cs.uchicago.edu>
+	id S1756388Ab0GLSc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 14:32:27 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45924 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab0GLSc0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 14:32:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1844BC32DA;
+	Mon, 12 Jul 2010 14:32:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=oGMs9aixjhP8OeTbqHieXCR6Wnw=; b=HkgOW5mNz0pB+1ckYVybX0p
+	eoKIqoL9S2JegO64qoELj2Eg4KJQh3wxrFRNHf5IA1T8tPVDb2NOfGQPbRxfXoja
+	pRNG/Lvbdpquc4D6PwRShWUdAsfJqLMVC0ni9x9TRfhOcs7IcAph8JIThLUWJN5s
+	AYymNkbluMt/2ujGXiIA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=vhVZ+UeBvxz4HQLS+p49ceoGG9/q1DNte4N9oJBuniatxQeiI
+	tSRtlm5KcuJIsNhCyUs9babQx0fdUG81fbkrmnAEw2zEbhrvMozlivo2KNTzfBak
+	2+dDzxXYwtKe9set3icN+CL63yRaNJyKftPMlHUxYu+ImFu6naxQT0Y2Ps=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E80A8C32D4;
+	Mon, 12 Jul 2010 14:32:22 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40746C32D2; Mon, 12 Jul
+ 2010 14:32:20 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CFE276E8-8DE3-11DF-957C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150838>
 
-Thanks!
+Bo Yang <struggleyb.nku@gmail.com> writes:
 
-Seemed weird at first that I would see both the original commit and
-the merge. I'm realizing now that this is the way Git handles merges,
-however, so I guess it's just trying to apply the same logic during
-the svn 2 git migration by utilizing the svn:merge-info to "re-create"
-the branch history.
+> Both 'git blame -L' and 'git log -L' parse the same style
+> of line number arguments, so put the 'parse_loc' function
+> to line.c and export it.
 
-I noticed that this did not happen in branches created before we
-upgraded to the SVN version that supported merge tracking.
+> The caller of parse_loc should provide a callback function
+> which is used to calculate the nth line start position.
 
-On Mon, Jul 12, 2010 at 2:24 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Hi Bradley,
+"the start position of the nth line"?
+
+> Other parts such as regexp search, line number parsing are
+> abstracted and re-used.
 >
-> Bradley Wagner wrote:
->> On Thu, Jul 8, 2010 at 10:58 PM, Bradley Wagner wrote:
+> Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+> ---
+>  builtin/blame.c |   89 +++++-------------------------------------------------
+>  line.c          |   35 ++++++++++++---------
+>  line.h          |    5 +++
+>  3 files changed, 34 insertions(+), 95 deletions(-)
 >
->>> I've done a migration using "git-svn init" and "git-svn fetch". Aft=
-er
->>> the migration, I did a "git log refs/remotes/svn/6.7" and found tha=
-t
->>> it listed both the commits that I merged into the 6.7 branch and th=
-e
->>> original commits to the trunk/master even though the SVN history
->>> obviously only has what was merged into that branch.
->
-> Yes, this is intentional. =A0If you try =91gitk --all=92, you can see
-> the history of all branches, where they branched from, and so on.
->
-> As far as I know the svn:mergeinfo is not actually used until
-> a merge. =A0Instead, git-svn uses subversion=92s file copy tracking
-> information to follow history past a branch point; see the
-> find_parent_branch function in the git-svn script for details.
->
-> Hope that helps,
-> Jonathan
->
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 01e62fd..17b71cd 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -21,6 +21,7 @@
+
+Nice code reduction.  The abstraction feels right (but I didn't read it
+very carefully).
