@@ -1,66 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Git Wiki is down
-Date: Mon, 12 Jul 2010 00:38:46 +0200
-Message-ID: <201007120038.47625.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: "John 'Warthog9' Hawley" <warthog9@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 12 00:39:00 2010
+From: Nazri Ramliy <ayiehere@gmail.com>
+Subject: [PATCH 1/2] lib-rebase.sh: fake-editor.sh: Allow checking of commit header(s) in $GIT_EDITOR
+Date: Mon, 12 Jul 2010 09:04:22 +0800
+Message-ID: <1278896663-3922-1-git-send-email-ayiehere@gmail.com>
+Cc: Nazri Ramliy <ayiehere@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de
+X-From: git-owner@vger.kernel.org Mon Jul 12 03:04:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OY5Aq-0005kF-1b
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 00:39:00 +0200
+	id 1OY7Ru-0005V3-AR
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 03:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754974Ab0GKWiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Jul 2010 18:38:55 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:52722 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754126Ab0GKWiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Jul 2010 18:38:54 -0400
-Received: by bwz1 with SMTP id 1so2032148bwz.19
-        for <git@vger.kernel.org>; Sun, 11 Jul 2010 15:38:53 -0700 (PDT)
+	id S1755337Ab0GLBEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Jul 2010 21:04:31 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:55338 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753911Ab0GLBEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Jul 2010 21:04:30 -0400
+Received: by pwi5 with SMTP id 5so1565028pwi.19
+        for <git@vger.kernel.org>; Sun, 11 Jul 2010 18:04:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=XUXCTpBU3xlxoMLSK6QxtG7KWwdwWOikQgVGQuL9A38=;
-        b=VqLtfpcc/Sb+QTTFBwxwUR9gbbieOuXNERFqxthV94R7FfAQp4hHIuEM8od2f+1CKj
-         VxGlMQB7TxJ1h83/UscPgWpgnPnlAnenS6JpAixJUcoBiZ6eKe+4srdoU19CB+2b39jk
-         qIxcDCgdSkJfAnRAT+TJk4n8pp7RoFafOSg6w=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=BV8jislZXe0yMw60OGfR33D5yEJZploxYCg1dlFTRlA=;
+        b=hYckdLNb6brSPGguwJT1FUxVzm7nOBWYmOKeyyQG3e0N1czSbMNE4PclcSfx6Al6YM
+         V4ko0ysomcNzP2atQsNF/PWcKpsC98ustYPGa2BIZtkKHRKhWHNHq7uQ+9gcgS7PbMmi
+         tCeRFPmlE0o7Z9JRIWxLGiMxM4eQo6/uzYqJw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=w9V6BDUinN4Fh5aJuIoQ7dA2vcTK4eYqfpP6mvARiDvQkBHRXwv66Y90RoWbfWsm2f
-         75PvlBfe0i+vryaG4uN5BxnO3waSE9VxSXHpQN9VjJbEkBXpaHSHmH2jtJhrc3jhVz+j
-         sustqNMtJUxmOE/RjPALdblIDm4kFinIou2is=
-Received: by 10.204.84.18 with SMTP id h18mr9857000bkl.41.1278887933200;
-        Sun, 11 Jul 2010 15:38:53 -0700 (PDT)
-Received: from [192.168.1.13] (abvv74.neoplus.adsl.tpnet.pl [83.8.219.74])
-        by mx.google.com with ESMTPS id x19sm15461076bkv.9.2010.07.11.15.38.51
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=gtHA33CiW8shVWWBXVJN97G9G3Mr95mZbL896QtpTIlnPAi3Dr0dHvXsPhzlTHmR8j
+         oqJs1uN0Z96thk5RFIIzQ/dOJoKyRKX6+bcGT/rSv1Yct/J7Q3XtJQC9En7jkqLf/0aY
+         7+ucwVGfxfyLeyWjCG6C4tThq/DaZbhWbWASc=
+Received: by 10.142.234.11 with SMTP id g11mr16134702wfh.201.1278896669958;
+        Sun, 11 Jul 2010 18:04:29 -0700 (PDT)
+Received: from localhost.localdomain ([115.134.249.89])
+        by mx.google.com with ESMTPS id f20sm3854387rvb.20.2010.07.11.18.04.26
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 11 Jul 2010 15:38:52 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+        Sun, 11 Jul 2010 18:04:28 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150787>
 
-What happened to Git Wiki?  Every link leads to 404 Not Found error,
-and http://git.wiki.kernel.org leads to test page for Apache web server.
+Signed-off-by: Nazri Ramliy <ayiehere@gmail.com>
+---
+ t/lib-rebase.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-I hope that Git Wiki is backed up, and this is only some temporary 
-glitch related e.g. to upgrading.
- 
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 6aefe27..5804d23 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -4,6 +4,8 @@
+ #
+ # - override the commit message with $FAKE_COMMIT_MESSAGE
+ # - amend the commit message with $FAKE_COMMIT_AMEND
++# - check that commit header(s) in the editor matches that in the
++#   file $EXPECT_HEADER.
+ # - check that non-commit messages have a certain line count with $EXPECT_COUNT
+ # - check the commit count in the commit message header with $EXPECT_HEADER_COUNT
+ # - rewrite a rebase -i script as directed by $FAKE_LINES.
+@@ -34,6 +36,12 @@ case "$1" in
+ 	exit
+ 	;;
+ esac
++test -z "$EXPECT_HEADER" ||
++	(
++		grep '^pick' < "$1" | cut -d' ' -f3- > commit_headers.$$ &&
++		diff "$EXPECT_HEADER" commit_headers.$$ > /dev/null
++	) ||
++	exit
+ test -z "$EXPECT_COUNT" ||
+ 	test "$EXPECT_COUNT" = $(sed -e '/^#/d' -e '/^$/d' < "$1" | wc -l) ||
+ 	exit
 -- 
-Jakub Narebski
-Poland
+1.7.2.rc2
