@@ -1,72 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/2] revert: refactor code that prints success or
- failure message
-Date: Mon, 12 Jul 2010 20:27:33 +0200
-Message-ID: <20100712182733.GD17630@debian>
-References: <20100712115455.12251.53947.chriscool@tuxfamily.org>
+From: Bradley Wagner <bradley.wagner@hannonhill.com>
+Subject: Re: git-svn: both merged commits and original commits are showing up 
+	in branches after migration
+Date: Mon, 12 Jul 2010 14:31:44 -0400
+Message-ID: <AANLkTikTDv5NI_7oEdfdp4ZHY6No4JKTJU28Sat9wQhk@mail.gmail.com>
+References: <AANLkTikwyFwO2G1E6rozSxrI4g51wyA8CFV5jl30qRo-@mail.gmail.com>
+	<AANLkTin3TYuC-y2U-o4NEgXH7N4M59vqWxXsa6J2Ae74@mail.gmail.com>
+	<20100712182421.GA8644@dert.cs.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jul 12 20:26:00 2010
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 20:31:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYNhR-00016r-NU
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:25:54 +0200
+	id 1OYNnD-0003xF-8h
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756187Ab0GLSZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 14:25:49 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:46065 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753258Ab0GLSZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 14:25:48 -0400
-Received: by ewy23 with SMTP id 23so905047ewy.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 11:25:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=HpNG3LOlksJbWlkdiHo7gK4j6X4aajga6hEszt2ftgc=;
-        b=Xhh745ZZWKMEzYFpCWxRakWu14k+aKhdb9d/ue0M+/Z8OMuvi1QT1nlnYlkgnzbhMO
-         tX1wUwBoj6F911sS5f7Ym0yA0dWfebcJAxnvmMr12uAnzb/FqEz26xpNEmDErXcrgPhz
-         yBQafp1AgLyjWugpP6JEdUAxzPjPa0rJGVOjo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=puWIsb+gzgYySCBHcSuvTFSpyeICGErMKKhMj7BKF8pDDT6X9Q2dEwFXVzJHo70ql7
-         +KEhYBBL9WvrX50/NQwxAbvN7Z1x7vLwTEgdjn1QhVjcYBBcZm3aiJtJFden1XJjUm+7
-         rA/S2ErD4bxUx09spAFwK5/X7chUUR8chmVHk=
-Received: by 10.213.105.138 with SMTP id t10mr10232473ebo.77.1278959146913;
-        Mon, 12 Jul 2010 11:25:46 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id a48sm39277690eei.12.2010.07.12.11.25.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Jul 2010 11:25:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100712115455.12251.53947.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756269Ab0GLSbp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 14:31:45 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:56680 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab0GLSbp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 14:31:45 -0400
+Received: by qyk38 with SMTP id 38so4503040qyk.19
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 11:31:44 -0700 (PDT)
+Received: by 10.224.93.203 with SMTP id w11mr7964219qam.75.1278959504235; Mon, 
+	12 Jul 2010 11:31:44 -0700 (PDT)
+Received: by 10.229.38.133 with HTTP; Mon, 12 Jul 2010 11:31:44 -0700 (PDT)
+In-Reply-To: <20100712182421.GA8644@dert.cs.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150837>
 
-Hi Christian,
+Thanks!
 
-Christian Couder writes:
-> This patch refactors the code that prints a message like
-> "Automatic cherry-pick failed. <help message>". This code was
-[...]
+Seemed weird at first that I would see both the original commit and
+the merge. I'm realizing now that this is the way Git handles merges,
+however, so I guess it's just trying to apply the same logic during
+the svn 2 git migration by utilizing the svn:merge-info to "re-create"
+the branch history.
 
-This is good stuff. Can we expect the git-rebase--interactive.sh to be
-refactored to use the "cherry pick a range" feature in future?
+I noticed that this did not happen in branches created before we
+upgraded to the SVN version that supported merge tracking.
 
--- Ram
+On Mon, Jul 12, 2010 at 2:24 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Hi Bradley,
+>
+> Bradley Wagner wrote:
+>> On Thu, Jul 8, 2010 at 10:58 PM, Bradley Wagner wrote:
+>
+>>> I've done a migration using "git-svn init" and "git-svn fetch". Aft=
+er
+>>> the migration, I did a "git log refs/remotes/svn/6.7" and found tha=
+t
+>>> it listed both the commits that I merged into the 6.7 branch and th=
+e
+>>> original commits to the trunk/master even though the SVN history
+>>> obviously only has what was merged into that branch.
+>
+> Yes, this is intentional. =A0If you try =91gitk --all=92, you can see
+> the history of all branches, where they branched from, and so on.
+>
+> As far as I know the svn:mergeinfo is not actually used until
+> a merge. =A0Instead, git-svn uses subversion=92s file copy tracking
+> information to follow history past a branch point; see the
+> find_parent_branch function in the git-svn script for details.
+>
+> Hope that helps,
+> Jonathan
+>
