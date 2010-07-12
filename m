@@ -1,87 +1,59 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [GSoC update] git-remote-svn: Week 11
-Date: Mon, 12 Jul 2010 20:12:33 +0200
-Message-ID: <20100712181233.GC17630@debian>
-References: <20100712143546.GA17630@debian>
- <4C3B2B48.4070408@drmicha.warpmail.net>
- <20100712152403.GH1931@jack.stsp.name>
- <1278949191.1611.5.camel@wpalmer.simply-domain>
+From: Jim Cromie <jim.cromie@gmail.com>
+Subject: skipping commits via commit-msg contents
+Date: Mon, 12 Jul 2010 12:21:20 -0600
+Message-ID: <AANLkTikYcODU96J-cVYCIad1yrd5zGklVj2OV4UT2PxC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stefan Sperling <stsp@elego.de>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Greg Stein <gstein@gmail.com>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Bert Huijben <rhuijben@collab.net>,
-	Sam Vilain <sam@vilain.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 12 20:10:56 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 12 20:21:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYNSx-0002iN-LB
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:10:56 +0200
+	id 1OYNdD-0007fR-Ai
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756334Ab0GLSKu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 14:10:50 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:43926 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753043Ab0GLSKt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 14:10:49 -0400
-Received: by eya25 with SMTP id 25so621220eya.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 11:10:47 -0700 (PDT)
+	id S1754448Ab0GLSVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 14:21:25 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:47627 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab0GLSVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 14:21:24 -0400
+Received: by ewy23 with SMTP id 23so903961ewy.19
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 11:21:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=+s2RDM0Do8Fx+0aoKZYFOjYmOL1U7Vt25aCsju/KKW0=;
-        b=SNfobHwfvxwOCHbbaXP9bEyC8N9k/eauC34hnQ15UzRI5FLu7CvvRj+a2yFt5Qzm9C
-         Njn3/soGNfICoX4F0zqCePXRZ/yLmvALP3CzFORV7BM/fN6s7Gvcj8gFz+4Xr1BP41Sl
-         sqQNdhh8dwjv7x7/r6vhR4GgslhKst6OvizMI=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=ekRY81IFre49BwGY5cUPBLRvgTbkixc3eheWiwAFrp8=;
+        b=nZeD+S4b81oKwXVQtkeEEj2B0eTSbuIt0PJ6fiVzcrPemUCyJnyQQRKF/L1zcIcg86
+         +LgiuCHn122Y+MSPbaqzP0atK1aN+3Z+oZ5grKmj3LgpDmVTF6oqloANJleHBZ9vPdWN
+         GZfJvAbulby3E8W/FH4MIn4RrUmvxwwK9/IQ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=huvyoPrZUB/KuRvALtt+Fdkn8GvEJP7HKbsnCy4RxlNUfT99ioJhkKxDGD0lZkn+ME
-         70bk1wRZ75mVZ3ESmmc9vcwEPW7vKppDTO/RWInYhEe5FrPFGNkjtESXlLo6aNd5MeEh
-         5PBaxb57zl6S+mn7rjKFXVE45MvGsUzGB/ep4=
-Received: by 10.213.31.70 with SMTP id x6mr10189843ebc.42.1278958247852;
-        Mon, 12 Jul 2010 11:10:47 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id v8sm39187845eeh.2.2010.07.12.11.10.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Jul 2010 11:10:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1278949191.1611.5.camel@wpalmer.simply-domain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=VmkLD4vcfkwSyScW1P5KzSkfh5UaLs1o1NYY3b28Nw7deH/gHv78QAZwdGxhTb8HQB
+         zFvn5lrph/VoCYnIZmM9QPvbKySlr/24Yb6eqYw8HdlMZhdrmcPr6nn1fQUbJ266TOvw
+         DrW96cbdXyKWtAkC9e1vUE79Y8lm5/wuYPPjo=
+Received: by 10.213.22.18 with SMTP id l18mr559241ebb.85.1278958880771; Mon, 
+	12 Jul 2010 11:21:20 -0700 (PDT)
+Received: by 10.14.45.79 with HTTP; Mon, 12 Jul 2010 11:21:20 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150834>
 
-Hi,
+sometimes its desirable to commit incomplete work separately,
+for example a struct change thats intended to get compiler to report
+where changes are needed.
 
-Will Palmer writes:
-> This is all moot, because the whole point is that svndumpr compiles
-> against libsvn, so you don't need the whole svn source-tree. All you
-> need to get svndumpr working are some header files and a working libsvn.
-> Everyone who currently uses git-svn already has a working libsvn, since
-> perl's svn bindings wrap around libsvn anyway.
+if git bisect were to recognize  --skip-bisect  in the subject line
+(or in commit-message somewhere, say top or bottom),
+then bisection could proceed silently past such commits.
 
-Yes, I meant that people will need the complete Subversion tree if I
-DON'T get svnrdump merged somewhere in git.git (I'll attempt to get
-the version that compiles against libsvn 1.6 merged). The instructions
-to checkout the right branches and place it in the git tree can be
-complicated: git-remote-svn relies on a chain of tools including
-David's exporter and svnrdump to work.
+This would also allow rebasing a patchset to markup crappy commits
+which need further work.
 
--- Ram
+worth having ?
