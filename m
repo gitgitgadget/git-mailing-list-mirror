@@ -1,10 +1,13 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] git-remote-svn: Week 11
-Date: Mon, 12 Jul 2010 16:35:46 +0200
-Message-ID: <20100712143546.GA17630@debian>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [GSoC update] git-remote-svn: Week 11
+Date: Mon, 12 Jul 2010 16:48:40 +0200
+Message-ID: <4C3B2B48.4070408@drmicha.warpmail.net>
+References: <20100712143546.GA17630@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
 	Greg Stein <gstein@gmail.com>, Stefan Sperling <stsp@elego.de>,
 	Daniel Shahaf <d.s@daniel.shahaf.name>,
 	Will Palmer <wmpalmer@gmail.com>,
@@ -12,75 +15,61 @@ Cc: Sverre Rabbelier <srabbelier@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Bert Huijben <rhuijben@collab.net>,
 	Sam Vilain <sam@vilain.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 12 16:34:16 2010
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 16:49:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYK5F-0005n7-55
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 16:34:13 +0200
+	id 1OYKKF-0004FW-8B
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 16:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755773Ab0GLOeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 10:34:06 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:64944 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754627Ab0GLOeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 10:34:04 -0400
-Received: by ewy23 with SMTP id 23so838308ewy.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 07:34:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=sEljtBhnYTRjDGgodIdV9g323+SfwNFFiHrguRw9K+M=;
-        b=VIe1WQ4lZXiHsWRLO2eOvzxG3CSCnOp9RZVgHvPQ3KnvmDA+W/qa6uZll7EUJrK9Sj
-         2wCVgr6ac8BrYbElssO39ra/XfwP24ouQx//uet4/xW8lc87xEorBSPWuGq7qfOMJZfN
-         6ePHAkGHagcYzCNlCK5WFyF7aQbcd5uzcMAZc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=JEJmzShXwm/kP/kJp6HYPtvsCQezYYC3qn4wmgZAA1On1KTjn0g712p1VdvYta2clm
-         tJ6qubA3k4D8FkssxeGDJN2VeW3DoD3LY9vt4meG4o+Cda/DXGUtG2+/PxYAEa2YIE/J
-         7dyUt19xEi8AYVDiXiXlw1u7QoiTlcWFmjpLc=
-Received: by 10.213.19.207 with SMTP id c15mr1396865ebb.76.1278945242967;
-        Mon, 12 Jul 2010 07:34:02 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id a48sm37640215eei.13.2010.07.12.07.33.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Jul 2010 07:33:59 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755817Ab0GLOti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 10:49:38 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:34972 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755767Ab0GLOth (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 10:49:37 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E595E16BDC2;
+	Mon, 12 Jul 2010 10:49:36 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 12 Jul 2010 10:49:37 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=g+ZIbi55euE5tKWqtPupRZ4+99k=; b=VwPd9aLyNj4eoCeLlHfq/HVDZ5Xxo86YaGKMHKHZ2tmNkB/U7lg/vYnPrchN6ZP0mkQhINNd+H49AyKR9MfFiCrLm9qenEJYxJ2ixPpARpsiZXJwNoDDx2fB90jxaL2BpRLyLqeqjtgDZrheCpdVxSMBSHJhIdxgkxAi94xWl1U=
+X-Sasl-enc: TL6SFzfxMZGSynsE+aerDJ6ekUXR6D7jcrE7YUE8mUOV 1278946176
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 149FB4DEEA1;
+	Mon, 12 Jul 2010 10:49:34 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100702 Lightning/1.0b2pre Lanikai/3.1.1pre
+In-Reply-To: <20100712143546.GA17630@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150816>
 
-Hi,
+Ramkumar Ramachandra venit, vidit, dixit 12.07.2010 16:35:
+> Hi,
+> 
+> I'm happy to report that I'll soon be getting partial committer access
+> to the ASF repository (thanks to Greg for this) and will be able to
+> commit the svnrdump there. At the moment, all the validations pass
+> without any issues and I've shifted my focus towards writing a
+> dumpfile v3 parser [1] to get the data into David's exporter. I will
+> re-roll a series for git.git in some time again after I've fixed a few
+> pending things pointed out by Jonathan in his excellent reviews and
+> merged a few patches from Will; although this isn't top priority, it
+> will be pretty painful for Git developers to compile the SVN trunk
+> even if they want to try out git-remote-svn.
 
-I'm happy to report that I'll soon be getting partial committer access
-to the ASF repository (thanks to Greg for this) and will be able to
-commit the svnrdump there. At the moment, all the validations pass
-without any issues and I've shifted my focus towards writing a
-dumpfile v3 parser [1] to get the data into David's exporter. I will
-re-roll a series for git.git in some time again after I've fixed a few
-pending things pointed out by Jonathan in his excellent reviews and
-merged a few patches from Will; although this isn't top priority, it
-will be pretty painful for Git developers to compile the SVN trunk
-even if they want to try out git-remote-svn.
+While this is certainly true for the "compilation" part, at least
+getting the source is a snap for us:
 
-Currently, I'm implementing svndiff0 parser component of the dumpfile
-v3 parser using Sam's Perl implementation [2] as a guideline. In
-addition, with an excellent specification present in the Subversion
-trunk [3], this shouldn't be a problem.
+git://git.apache.org/subversion.git
+git://github.com/apache/subversion.git
 
--- Ram
+:)
 
-[1]: dumpfilev3 branch of
-http://github.com/artagnon/svn-dump-fast-export/
-[2]: http://search.cpan.org/~samv/Parse-SVNDiff/
-[3]: http://svn.apache.org/repos/asf/subversion/trunk/notes/svndiff
+Michael
