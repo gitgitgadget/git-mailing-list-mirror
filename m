@@ -1,80 +1,63 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH v2] t0005: work around strange $? in ksh93 when program terminated
- by a signal
-Date: Mon, 12 Jul 2010 08:41:13 +0200
-Message-ID: <4C3AB909.80205@viscovery.net>
-References: <20100709030812.GA16877@dert.cs.uchicago.edu> <4C36CA2C.5050305@viscovery.net> <iOZX7rvipLDwT5DTYGPE0q9TlJfav09nJWqaRsyiefjNds9DpaDw1A@cipher.nrlssc.navy.mil>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] t0005: work around strange $? in ksh93 when program
+ terminated by a signal
+Date: Sun, 11 Jul 2010 23:47:05 -0700
+Message-ID: <7vsk3pdwnq.fsf@alter.siamese.dyndns.org>
+References: <20100709030812.GA16877@dert.cs.uchicago.edu>
+ <4C36CA2C.5050305@viscovery.net>
+ <iOZX7rvipLDwT5DTYGPE0q9TlJfav09nJWqaRsyiefjNds9DpaDw1A@cipher.nrlssc.navy.mil> <4C3AB909.80205@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Mon Jul 12 08:41:31 2010
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Jul 12 08:47:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYChi-0001Ip-DD
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 08:41:26 +0200
+	id 1OYCnX-0002xU-Sa
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 08:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754427Ab0GLGlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 02:41:20 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:19011 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753375Ab0GLGlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 02:41:19 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OYChW-0001uR-3q; Mon, 12 Jul 2010 08:41:14 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id E179B1660F;
-	Mon, 12 Jul 2010 08:41:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
-In-Reply-To: <iOZX7rvipLDwT5DTYGPE0q9TlJfav09nJWqaRsyiefjNds9DpaDw1A@cipher.nrlssc.navy.mil>
-X-Enigmail-Version: 1.0.1
-X-Spam-Score: -1.4 (-)
+	id S1755185Ab0GLGrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 02:47:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61874 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754486Ab0GLGrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 02:47:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E5955C3A38;
+	Mon, 12 Jul 2010 02:47:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=85Dv6ctqUgc6K8speA67DuL3cAw=; b=u1r1sf
+	Lu8zc8p+RZr0phor7PW+rHujnnIvZXydUIPouX2knuqUtJD5MhEb5RJh3JzVHgAl
+	VNFOuEmZNefgXkXswqkFWo9SLZaSdcwUKXIJFwt26HwUBrHY7wI8dkTNeyfvt3Mi
+	Hmvvjp14CtdzGKi5aHbidqS7Glb8g5lb2H0PE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aWwtzzxW5CXKK8WUZ7awROfLLdDS4XKY
+	Q8D522DNC6P5Ca6sQzTDGfNDMpl1rAozlepTbAn60P8jljZjIaA6Ekxq95ZnjgIS
+	jtdgvgR0p8ciVdUUJrAqFE8fCi0j+sjCuqZJPl2G4XKwqwN7QFgfOGj8JvHcu/AM
+	pkIIXwFssHo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8EFE4C3A37;
+	Mon, 12 Jul 2010 02:47:14 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6E1A0C3A2D; Mon, 12 Jul
+ 2010 02:47:07 -0400 (EDT)
+In-Reply-To: <4C3AB909.80205@viscovery.net> (Johannes Sixt's message of
+ "Mon\, 12 Jul 2010 08\:41\:13 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4E1BE8A4-8D81-11DF-A989-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150800>
 
-From: Johannes Sixt <j6t@kdbg.org>
-
-ksh93 is known to report $? of programs that terminated by a signal as
-256 + signal number instead of 128 + signal number like other POSIX
-compliant shells. (ksh's behavior is still POSIX compliant in this regard.)
-
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Acked-by: Jeff King <peff@peff.net>
----
-Am 7/9/2010 17:45, schrieb Brandon Casey:
-> This may only be true for Ksh93.  The Ksh88 man page says that
-> the exit status is 128+signum.  The Public domain Korn shell, and
-> ksh on IRIX 6.5, Solaris 7, 9, and 10 all exit with the standard
-> behavior of 128+signum.
-
-Thanks for you input!
-
-Hannes
-
- t/t0005-signals.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/t/t0005-signals.sh b/t/t0005-signals.sh
-index 09f855a..e17c96a 100755
---- a/t/t0005-signals.sh
-+++ b/t/t0005-signals.sh
-@@ -13,6 +13,7 @@ test_expect_success 'sigchain works' '
- 	test-sigchain >actual
- 	case "$?" in
- 	143) true ;; # POSIX w/ SIGTERM=15
-+	271) true ;; # ksh93 w/ SIGTERM=15
- 	  3) true ;; # Windows
- 	  *) false ;;
- 	esac &&
--- 
-1.7.1.585.gf3448
+Thanks; I've queued this last week already but have been busy this weekend
+and haven't managed to push anything out.
