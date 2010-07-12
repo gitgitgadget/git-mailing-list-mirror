@@ -1,67 +1,72 @@
-From: John Tapsell <johnflux@gmail.com>
-Subject: Re: Hi about the installer
-Date: Mon, 12 Jul 2010 11:01:38 +0100
-Message-ID: <AANLkTikAw0Tm496SjnyaN0VQPcHOnw3zoJJ6lIH2rCyJ@mail.gmail.com>
-References: <4C3A4494.1080803@prolinux.cl>
-	<201007121146.30642.trast@student.ethz.ch>
+From: David Bainbridge <david.bainbridge@gmail.com>
+Subject: Re: [RFC] Git User's Survey 2010 (resend)
+Date: Mon, 12 Jul 2010 12:14:41 +0200
+Message-ID: <AANLkTimenfNbx0rfKV26xzhyiw-Ccr0QzeO51Q3pKr3K@mail.gmail.com>
+References: <201007032158.57700.jnareb@gmail.com>
+	<201007102158.25961.jnareb@gmail.com>
+	<AANLkTikQF_tMHz28k2pdpVdtbnE6EDZiKQbwmMTlp-c9@mail.gmail.com>
+	<201007111942.54847.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Horacio Miranda <hmiranda@prolinux.cl>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jul 12 12:01:45 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 12:14:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYFpZ-0000Wy-BU
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 12:01:45 +0200
+	id 1OYG2J-0005Gs-Bz
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 12:14:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753970Ab0GLKBk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 06:01:40 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:39909 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752192Ab0GLKBj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 06:01:39 -0400
-Received: by qyk35 with SMTP id 35so1500738qyk.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 03:01:39 -0700 (PDT)
+	id S1751107Ab0GLKOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 06:14:43 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:50337 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750911Ab0GLKOm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 06:14:42 -0400
+Received: by pxi14 with SMTP id 14so1711775pxi.19
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 03:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kBQEsQI97KzaKllFzdLLcZdnELKMa11U9N3Q92MVC2s=;
-        b=nBZaNBQk4CtVbtXtRC3LaFcuZwlyjLdGuRhsr5HEJNzXhZGDWoO9S6OVuOSKi7KEd2
-         BWl+Sw8R/H3RyiVsRZ+FsJ2qNRkYcCaaVJQjawuum4pvW1z9kgM9ve0IdTyGgwmoomZ5
-         IZiaysIz1xI58BabmbQrtAxLDW1y8qp2nGry4=
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=BxR8flpeiA7pZW8oYCCIQeqy3aY0DD5svS2uyCuiJ50=;
+        b=AjYDiDv5azEBvhZJDQNFE7vgeRapNkF2o62AwbxofwGYhzu3UMT5CKDI9TfNJw60qQ
+         U0mMK0sIGtRdGLuufSDEq1MFOVlvuezPlxikSGKfc1lP2zpp5ywagobAC4pj4+wOY4RG
+         ZHK0oTFIPV0KDvDbUKwTI8TfnYGOwuMm7+VtI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uOxs3owF8VhAxvyttd80ZSD9zQkjM0GuqcQYmq/2iq59BY32uX62D/3Pbu8ojqTYvI
-         DoE55fivnEOc6WwoUMpl0uzndX79dK6TEaNx5oEGqALsBv5i8tAP57OG9GY+xsGP/r/+
-         /U/UN5h/JEC/IpCxhzngtkVFkaoMdj8XDAXiA=
-Received: by 10.224.115.79 with SMTP id h15mr3044427qaq.21.1278928899011; Mon, 
-	12 Jul 2010 03:01:39 -0700 (PDT)
-Received: by 10.224.74.16 with HTTP; Mon, 12 Jul 2010 03:01:38 -0700 (PDT)
-In-Reply-To: <201007121146.30642.trast@student.ethz.ch>
+         :cc:content-type;
+        b=ANmSIhwPnO64OiMjF7iVcWyJfRGLiZzkcwoI/ua3aSg5aMj34Y27w2ZAihrZ3OYSmi
+         sLI85NfuOQNmIbZYptts6tjzl5e2P4GFfuTuPIV9Tr45SKkM6kvf2nZkFB6A0zmxh/SJ
+         Vd1o77OLxYO0Ul9FczXJte7rh2Osg5zTBXFvY=
+Received: by 10.142.192.2 with SMTP id p2mr2018051wff.284.1278929681874; Mon, 
+	12 Jul 2010 03:14:41 -0700 (PDT)
+Received: by 10.142.70.11 with HTTP; Mon, 12 Jul 2010 03:14:41 -0700 (PDT)
+In-Reply-To: <201007111942.54847.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150805>
 
-On 12 July 2010 10:46, Thomas Rast <trast@student.ethz.ch> wrote:
-> Horacio Miranda wrote:
->> Is not working :(
->>
->> This link is death
->> https://git.wiki.kernel.org/index.php/MSysGit:InstallMSysGit
->
-> If you think "[it] is not working" is a valid error description, then
-> this page isn't for you. =C2=A0As the first section says
+Hi Jakub,
 
-Maybe you have to wait 7 days after clicking the link..
+Sorry about disappearing ... I had a product release to deal with :-)
 
-John
+Some interesting things have come up while I have been away.However,
+I have lost track of what the survey looks like now! Can we see the
+current state somewhere?
+
+On the question of spamming here is another aspect; if I send mail to
+everyone on a public list then it is spam. If I send a message to
+everyone at work asking them to respond then I am just doing my job.
+The problem is how to address the unpaid volunteer sector of the open
+source community without being perceived as spamming.
+
+Regards
+
+David Bainbridge
+Sweden
