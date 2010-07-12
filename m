@@ -1,78 +1,91 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: skipping commits via commit-msg contents
-Date: Mon, 12 Jul 2010 20:35:18 +0200
-Message-ID: <20100712183518.GE17630@debian>
-References: <AANLkTikYcODU96J-cVYCIad1yrd5zGklVj2OV4UT2PxC@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 13/13] some document update
+Date: Mon, 12 Jul 2010 11:45:31 -0700
+Message-ID: <7v1vb8bktw.fsf@alter.siamese.dyndns.org>
+References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
+ <1278829141-11900-13-git-send-email-struggleyb.nku@gmail.com>
+ <m3hbk6l901.fsf@localhost.localdomain>
+ <AANLkTinO9uLByOvUMRf4Y9vcne1jNAfPnvT3Dq0l4xa9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jim Cromie <jim.cromie@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 12 20:33:38 2010
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio Hamano <gitster@pobox.com>
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 20:45:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYNov-0004og-VU
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:33:38 +0200
+	id 1OYO0l-0002uA-Hz
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 20:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755823Ab0GLSde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 14:33:34 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:32949 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751099Ab0GLSdd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 14:33:33 -0400
-Received: by ewy23 with SMTP id 23so907332ewy.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 11:33:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=fDGWe2VvNPs7cNv3XGqx8tcvrXN00cmldraklgAoyE4=;
-        b=eh2nZ5Ojn5gncvl0npb0rQB3rCkPrz/54Gl3IjWrjyPDAQ34jGx5mXbN+hhoCt5wzP
-         DjCTxJud8FdmQNmsy9BIjqh4EvwmhDGpIFQvRED1PRvYnhT8j04qkZXQVE4yvWMr+wLT
-         VxoVl+xtwo1A1eNX9CgZg2uvk2m1e3oBxu7DY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GUKM1XKWfw5j4pEAjSQiEYqQApJM/MGIbNBpccDjOq5wkqsARYnalVZF8cqSfJvz91
-         j4Ux+hNlks8tNBQknRg+upZkC47RnPFwsnHqOTyPsQ7VMuboaFElw0XQrtR4hD0evz24
-         y3kNXYVmyZASiVAJ3bxM8QZJ6+EAlgediGlO0=
-Received: by 10.213.26.13 with SMTP id b13mr8169885ebc.91.1278959611731;
-        Mon, 12 Jul 2010 11:33:31 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id z55sm39341113eeh.9.2010.07.12.11.33.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 12 Jul 2010 11:33:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikYcODU96J-cVYCIad1yrd5zGklVj2OV4UT2PxC@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756229Ab0GLSpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 14:45:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37182 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869Ab0GLSpn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 14:45:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B004AC352D;
+	Mon, 12 Jul 2010 14:45:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kl3f5sEE0DLgtiSQPrjaq0v0R0g=; b=ii0Rou
+	N/gO/FUjrhIaYLjn9sdMqyK/FiQZCv8VNFIjf/qx583Te7E3lRG0tDYWF/CCmbp8
+	YUcGEzFZlu3AqbK6PRM2gB2UE9JFfToseqXa9L25Tjlfjm9ZEeI4Y6gDnmfmp0pq
+	ePSQ5Ih5TPOHi9+R0DW7gZD5eH8DnK+7Bcqkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aZcW6aHEAjnWHsW5QC60uKeD7LFdNzfd
+	vfK08CKwGYUSyj0lpatuBat520wyOR1pLi6O6c7Pm3gpwS2cvaqUbO6we6ll2puX
+	FbBFtNJIfoQks4iiduGZHlWmuhsN9EuTkHzRUfJHsL8ITyNIZ2MWypPzN4hTeycA
+	hy7n0PIM21w=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78F3AC3529;
+	Mon, 12 Jul 2010 14:45:38 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8476FC3525; Mon, 12 Jul
+ 2010 14:45:33 -0400 (EDT)
+In-Reply-To: <AANLkTinO9uLByOvUMRf4Y9vcne1jNAfPnvT3Dq0l4xa9@mail.gmail.com>
+ (Bo Yang's message of "Mon\, 12 Jul 2010 22\:12\:57 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AA0F8CD8-8DE5-11DF-AFF5-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150840>
 
-Hi Jim,
+Bo Yang <struggleyb.nku@gmail.com> writes:
 
-Jim Cromie writes:
-> sometimes its desirable to commit incomplete work separately,
-> for example a struct change thats intended to get compiler to report
-> where changes are needed.
-> 
-> if git bisect were to recognize  --skip-bisect  in the subject line
-> (or in commit-message somewhere, say top or bottom),
-> then bisection could proceed silently past such commits.
-> 
-> This would also allow rebasing a patchset to markup crappy commits
-> which need further work.
+> ...
+> Thanks a lot for your advice, I have revised the patch.
+>
+> -----------------------------------------------------------
+>>From 88ed88a53d83c2d46fa4917008efadc531ba1068 Mon Sep 17 00:00:00 2001
+> From: Bo Yang <struggleyb.nku@gmail.com>
+> Date: Sat, 26 Jun 2010 01:35:48 -0700
+> Subject: [PATCH v3 revised 13/13] some document update
+>
+> Both 'git log' and 'git blame' support the same
+> format of '-L' arguments, so put the argument
+> format description into a new file.
+>
+> Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
+> ---
+>  Documentation/blame-options.txt     |   19 +------------------
+>  Documentation/git-log.txt           |   13 +++++++++++++
+>  Documentation/line-range-format.txt |   18 ++++++++++++++++++
+>  3 files changed, 32 insertions(+), 18 deletions(-)
 
-This is perhaps not exactly what you want, but I thought I'd mention
-it anyway: I usually prefix commit messages of temporary commits with
-a "fixup! " or "squash! " and then use the `--autosquash` feature of
-`git rebase --interactive` in a new branch before running `git
-bisect`.
+Every time you do this, you seem to send a corrupt patch, like...
 
--- Ram
+> @@ -19,6 +20,9 @@ command to control what is shown and how, and
+> options applicable to
+> ...
+> diff --git a/Documentation/line-range-format.txt
+> b/Documentation/line-range-format.txt
+
+Please don't.
