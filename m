@@ -1,80 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] test-lib: TAP compliance for skipping tests on request
-Date: Mon, 12 Jul 2010 12:33:49 +0200
-Message-ID: <82aab66bffd86b562c76a13a4666d3cf22a64cca.1278930335.git.git@drmicha.warpmail.net>
-References: <AANLkTiml1lQlSBDGgUg9scsvsaffDT2n405USmsSIm1n@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 12 12:34:55 2010
+From: Michel Lespinasse <walken@google.com>
+Subject: Passing original commit sha1(s) to prepare-commit-msg hook
+Date: Mon, 12 Jul 2010 03:49:28 -0700
+Message-ID: <20100712104928.GA22305@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 12 12:51:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYGLf-00050W-Gh
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 12:34:55 +0200
+	id 1OYGbV-0002kd-Vs
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 12:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751683Ab0GLKev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 06:34:51 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:50874 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751497Ab0GLKeu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 06:34:50 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DFE9E10A5CE;
-	Mon, 12 Jul 2010 06:34:49 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 12 Jul 2010 06:34:50 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=2YSgibY+AQFGoR5wAb2Fiw6nLdE=; b=LCDBIhtVVwlkZcUVSsXOp7FAaUqQ10hMi5SC1Xcf0RR73XGRSW4oInuPl3I8yCGe8a2ZsmbHQOTCEvH5ZaeYHuB77/H9fTdJo2eQYNonwvVDXEOJ0LdZ9BqlTVTkz21Vu6naWV1nEcA7mdkcjXq0RHtW4pN78AYUiOEEbJEWwn8=
-X-Sasl-enc: Rq6PZyfbj8drtgZxf+dfr2WADkg77YtqjDuao3c7UHIE 1278930884
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0A5574E68CD;
-	Mon, 12 Jul 2010 06:34:43 -0400 (EDT)
-X-Mailer: git-send-email 1.7.2.rc1.212.g850a
-In-Reply-To: <AANLkTiml1lQlSBDGgUg9scsvsaffDT2n405USmsSIm1n@mail.gmail.com>
+	id S1755823Ab0GLKti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 06:49:38 -0400
+Received: from smtp-out.google.com ([74.125.121.35]:28514 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755773Ab0GLKth (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Jul 2010 06:49:37 -0400
+Received: from hpaq3.eem.corp.google.com (hpaq3.eem.corp.google.com [172.25.149.3])
+	by smtp-out.google.com with ESMTP id o6CAnZFS025119
+	for <git@vger.kernel.org>; Mon, 12 Jul 2010 03:49:35 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1278931775; bh=fKVENnc4egE5Q82+q4WTR+2+Jnc=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+	b=Ft8op1uqHvAid5IsGI51KziKtY/7aVGB2CSqHq/z3JvPWmGiAsvBSo/KAg/ckAwEF
+	 FkUyzKr/VR5/aKbaDgPgQ==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=date:from:to:subject:message-id:mime-version:content-type:
+	content-disposition:user-agent:x-system-of-record;
+	b=oGnF+9SciXAvoKQVWA4MHlFtZ4H0H/efNetwp1aJ/KSZVr3Zy1AhFvTdOr6I5hCBr
+	cPE5LCpHRSneyePCWBYyQ==
+Received: from pxi11 (pxi11.prod.google.com [10.243.27.11])
+	by hpaq3.eem.corp.google.com with ESMTP id o6CAnXp2016353
+	for <git@vger.kernel.org>; Mon, 12 Jul 2010 03:49:34 -0700
+Received: by pxi11 with SMTP id 11so2003686pxi.7
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 03:49:33 -0700 (PDT)
+Received: by 10.142.144.16 with SMTP id r16mr11492873wfd.259.1278931773150;
+        Mon, 12 Jul 2010 03:49:33 -0700 (PDT)
+Received: from google.com (studio.mtv.corp.google.com [172.22.65.142])
+        by mx.google.com with ESMTPS id k25sm4390148rvb.16.2010.07.12.03.49.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Jul 2010 03:49:32 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150810>
 
-Make the output TAP compliant for tests skipped on request (GIT_SKIP_TESTS).
+Hi,
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-v2 has a typo fix in the commit message and the spelling of "skip"
-as suggested by AAB.
+I would like to use a prepare-commit-msg hook to automatically edit commit
+comments when a rebase is done, using information from the original
+commit. For example:
 
-I think I've read it differently in the RFC, but then I was also confused about
-the "#" in the RFC, and following the "reference" implementation (as per AAB)
-should be the best approach.
+- Adding a commit message line indicating that the commit is a rebase of
+  the original commit(s),
+- Adding comments based on information stored in git notes on the original
+  commit(s).
 
- t/test-lib.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Currently (I'm using git 1.7.1) the old->new commit sha1 information is
+passed to the post-rewrite hook; however by then it is too late to do
+anything with commit messages. During "git rebase" the applypatch-msg hook
+is called with the original commit sha1 in
+.git/rebase-apply/original-commit, and during "git rebase -i" the
+prepare-commit-msg hook is called with current status of the rebase
+available in .git/rebase-merge/done; however relying on this would seem
+very fragile to me.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index bc06564..db8371c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -396,7 +396,7 @@ test_skip () {
- 	case "$to_skip" in
- 	t)
- 		say_color skip >&3 "skipping test: $@"
--		say_color skip "ok $test_count: # skip $1"
-+		say_color skip "ok $test_count # skip $1"
- 		: true
- 		;;
- 	*)
-@@ -833,7 +833,7 @@ do
- 	case "$this_test" in
- 	$skp)
- 		say_color skip >&3 "skipping test $this_test altogether"
--		say_color skip "skip all tests in $this_test"
-+		skip_all="skip all tests in $this_test"
- 		test_done
- 	esac
- done
+Would there be support for the idea of making the original commit sha1
+information available to commit message hooks ? And if so, any advice how
+I should go about implementing this ? (I have little experience with git
+codebase).
+
+Thanks,
+
 -- 
-1.7.2.rc1.212.g850a
+Michel "Walken" Lespinasse
+A program is never fully debugged until the last user dies.
