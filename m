@@ -1,93 +1,121 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jim Cromie <jim.cromie@gmail.com>
 Subject: Re: skipping commits via commit-msg contents
-Date: Mon, 12 Jul 2010 14:02:03 -0500
-Message-ID: <20100712190203.GA9365@dert.cs.uchicago.edu>
+Date: Mon, 12 Jul 2010 13:56:20 -0600
+Message-ID: <AANLkTikVNpFPBMO_SDIfn-5np42ALI-qGAHTOvlmONxo@mail.gmail.com>
 References: <AANLkTikYcODU96J-cVYCIad1yrd5zGklVj2OV4UT2PxC@mail.gmail.com>
+	<20100712190203.GA9365@dert.cs.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jim Cromie <jim.cromie@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 12 21:02:15 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 12 21:56:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYOGa-0002U2-TU
-	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 21:02:13 +0200
+	id 1OYP78-00021k-Vn
+	for gcvg-git-2@lo.gmane.org; Mon, 12 Jul 2010 21:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753516Ab0GLTCH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 15:02:07 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.11.243]:59107 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752584Ab0GLTCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 15:02:06 -0400
-Received: from dert.cs.uchicago.edu (dert.cs.uchicago.edu [128.135.11.157])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 588CFA132;
-	Mon, 12 Jul 2010 14:02:04 -0500 (CDT)
-Received: by dert.cs.uchicago.edu (Postfix, from userid 10442)
-	id 2189C4E5A; Mon, 12 Jul 2010 14:02:04 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikYcODU96J-cVYCIad1yrd5zGklVj2OV4UT2PxC@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752235Ab0GLT4Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 15:56:24 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:52199 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751217Ab0GLT4X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 15:56:23 -0400
+Received: by eya25 with SMTP id 25so641896eya.19
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 12:56:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QAUvcWw0kAgDRcmZQnRPUqyw1ZC8f8clRW819M7nXyM=;
+        b=oE9qNdVejkUlEyp2DEYVVZuItpZhyYW8yq7dJ8BfB6IdO85P8PGZa9lEC0mwDbVXvb
+         zp39GJWLFEZaiwnPVNOCV1ctjM8waOnY312OJGyQzJA0UOBe1gjAH86SxW3SD+LE4b+P
+         57m2V8wxm7i13uFktGwyxkKLMsOEMU0m8omKk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YprVvxXZ0bhXpkKlLLMouJj8Aiidxduuo+9xl3p3Pa+M8M+3Xa2xU/8EGRN3ZVAdma
+         yUQlE7NWYLpZK4DKdLRiOTQ3IC0PmhQtm4I8uLoaRSeY3K+RHCYiHmONONXjBLKQ/Hoj
+         QaJiyZg9qsqFDzo21oPxXntcwmeICIOboeV+I=
+Received: by 10.213.15.212 with SMTP id l20mr1847123eba.49.1278964580564; Mon, 
+	12 Jul 2010 12:56:20 -0700 (PDT)
+Received: by 10.14.45.79 with HTTP; Mon, 12 Jul 2010 12:56:20 -0700 (PDT)
+In-Reply-To: <20100712190203.GA9365@dert.cs.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150844>
 
-Hi Jim,
+thanks guys,
 
-Jim Cromie wrote:
+Ram, not what I want, but good to know..
 
-> if git bisect were to recognize  --skip-bisect  in the subject line
-> (or in commit-message somewhere, say top or bottom),
-> then bisection could proceed silently past such commits.
+Jonathan, replace feels like a big hammer for a newbie..
+I havent published these, since they need bisection amongst other reaso=
+ns :-O
+and the BUGS also require more -fu to understand than I possess
 
-In addition to Ram=E2=80=99s suggestion, you might want to look into
-=E2=80=98git replace=E2=80=99[1].  It can be useful when the broken com=
-mits
-have already been published.  It works like this:
 
- git replace <bad commit> <bad commit>^
+On Mon, Jul 12, 2010 at 1:02 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Hi Jim,
+>
+> Jim Cromie wrote:
+>
+>> if git bisect were to recognize =A0--skip-bisect =A0in the subject l=
+ine
+>> (or in commit-message somewhere, say top or bottom),
+>> then bisection could proceed silently past such commits.
+>
+> In addition to Ram=92s suggestion, you might want to look into
+> =91git replace=92[1]. =A0It can be useful when the broken commits
+> have already been published. =A0It works like this:
+>
+> =A0git replace <bad commit> <bad commit>^
+>
+> and then =91git bisect=92 and lower-level commands like git show and
+> checkout will silently substitute the parent of the broken commit
+> when ever you refer to it.
+>
+> You can publish the resulting =93replace refs=94 in the refs/replace/=
+*
+> namespace and anyone who explicitly chooses to fetch them will be
+> able to see the same effect.
+>
+> Two problems:
+>
+> =A0- bisect skip is a bit more sophisticated (read: better) than just
+> =A0 substituting a parent, especially when the commit to be skipped
+> =A0 is a merge. =A0So it might still make sense to teach bisect to
+> =A0 respect a refs/notes/skip-bisect note that requests for it
+> =A0 to skip a specific ref.
 
-and then =E2=80=98git bisect=E2=80=99 and lower-level commands like git=
- show and
-checkout will silently substitute the parent of the broken commit
-when ever you refer to it.
+This sounds nice.
+Notionally, extending it further would be cool -
 
-You can publish the resulting =E2=80=9Creplace refs=E2=80=9D in the ref=
-s/replace/*
-namespace and anyone who explicitly chooses to fetch them will be
-able to see the same effect.
+[jimc@groucho perl-git]$ git notes show 2de9db42d3e578becacbd237bf4f59b=
+432cc82f0
+good make test
 
-Two problems:
+with this note, Ive told myself that it passes (good), and what it
+passes (make test)
 
- - bisect skip is a bit more sophisticated (read: better) than just
-   substituting a parent, especially when the commit to be skipped
-   is a merge.  So it might still make sense to teach bisect to
-   respect a refs/notes/skip-bisect note that requests for it
-   to skip a specific ref.
+I could imagine bisect knowing enough to take that as an implicit start=
+,
+unless overridden on a command line, or by a similar note on a later co=
+mmit.
 
-   One can try this out by making an appropriate wrapper script
-   for =E2=80=98git bisect next=E2=80=99 (using =E2=80=98git notes=E2=80=
-=99).
+a note like:
+skip-bisect until <tag|commit|branch>
+could be cool too, though there may be deeper problems with skipping
+entire subranges.
 
- - replace refs are a little too powerful.  It would be nicer to
-   by able to use =E2=80=98git replace --refs=3Drefs/replace/bisect/=E2=
-=80=99
-   and =E2=80=98GIT_REPLACE_REFS=3Drefs/replace/bisect/ git bisect=E2=80=
-=99 to
-   make them take effect only when needed.  In other words,
-   it would be nicer if =E2=80=9Cgit replace=E2=80=9D were configurable=
- in the
-   same way as =E2=80=9Cgit notes=E2=80=9D is.
-
-   One can get something like that effect by using git for-each-ref
-   and git update-ref to rename replace refs into place only when
-   needed.
-
-[1] http://www.kernel.org/pub/software/scm/git/docs/git-bisect-lk2009.h=
-tml#_git_replace
+thanks again,
+Jim
