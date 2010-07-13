@@ -1,105 +1,91 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH 1/2] lib-rebase.sh: fake-editor.sh: Allow checking of 
-	commit header(s) in $GIT_EDITOR
-Date: Tue, 13 Jul 2010 08:36:59 +0800
-Message-ID: <AANLkTin03Ea2fIBQiSDpIqRYLYjWRe9U62nZpfczbfST@mail.gmail.com>
-References: <1278764821-32647-1-git-send-email-ayiehere@gmail.com>
-	<7v7hl1fd0n.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] rerere: fix overeager gc
+Date: Mon, 12 Jul 2010 17:40:11 -0700
+Message-ID: <7v630k6wpg.fsf@alter.siamese.dyndns.org>
+References: <7vlj9lo6w6.fsf@alter.siamese.dyndns.org>
+ <1278978124-3035-2-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 02:37:28 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Jul 13 02:40:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYTV2-0000kI-B0
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 02:37:28 +0200
+	id 1OYTXy-0001eG-OH
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 02:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753310Ab0GMAhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 20:37:05 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39923 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752978Ab0GMAhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 20:37:03 -0400
-Received: by wyf23 with SMTP id 23so3808274wyf.19
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 17:37:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=YRm5zzR8/A7hS9HsX3KLqM7S8EvASkbp+si29/VE70E=;
-        b=J1+ZE9Ay1ij2j3yQBcjsf41/37AG0ZokJQ98eDI1hWMNPw5rc/B+6jWNYSiMbNb+Rc
-         rD/vtBQ6Z5Uca1fTQX3lNFlDBGk3tfrfnykkvT+tJzGEsS0tkQt/eCgYCin5MRSyrxgc
-         6Ei3RN5XKgLmnkrYJZF2L4K/KKNRHPy4htmy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=KSAO0CJGz2Qq9lsfkN9+49ZJzRv4fjkWfD/RHtbWu2rIibjs+Jt5h+E1jns2aM3vHY
-         2p9f9emU2yJ3iJUZ9OSYeB9z9NEXbidJWbM/bTu97le32NJyaGAhh1I+sxS7ICh2t8yX
-         M246oYUIoYRnOEkWN+ZhO9OseHToIs7i9EbbQ=
-Received: by 10.216.131.161 with SMTP id m33mr9352463wei.13.1278981419743; 
-	Mon, 12 Jul 2010 17:36:59 -0700 (PDT)
-Received: by 10.216.163.142 with HTTP; Mon, 12 Jul 2010 17:36:59 -0700 (PDT)
-In-Reply-To: <7v7hl1fd0n.fsf@alter.siamese.dyndns.org>
+	id S1753608Ab0GMAk0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Jul 2010 20:40:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34810 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751622Ab0GMAkZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 20:40:25 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 16C33C4B93;
+	Mon, 12 Jul 2010 20:40:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=7iu3kPrb5btc
+	vJW17an7yC1+EEs=; b=cOoXKZUMiZLQozIPi4V86O42QDvZufMDCaextkB2OrlF
+	BCBZr+9ltJMZ8FVXkus+a1hZxLd78MhuP1KeoDq9gIIqDwBE+wbOpIsVIT4klm+e
+	pT7rJjF40h92Mcso2OCMWKPsEB9GUOYdWXi+BsxD4gm1caZ+RLM4daEm8ZHs7XU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=tWtjsv
+	hZIwGvDO5wiLmSnLMazMvB6yxJqsBdY2xmOfvOyUpAKSB+tiyZm/kXnRD50ir54f
+	WJhKiYn1bR3V100NkuTwIB8gZJCVfjjDrjafnJ7z+LUekv+X/f+nk3UVhfSpBQaV
+	5uDPJHKW2DNEabnvYux9OSmQGFqq6I8t+PTJ0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D5199C4B92;
+	Mon, 12 Jul 2010 20:40:17 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4BE25C4B91; Mon, 12 Jul
+ 2010 20:40:13 -0400 (EDT)
+In-Reply-To: <1278978124-3035-2-git-send-email-szeder@ira.uka.de> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?= message of "Tue\, 13 Jul 2010 01\:42\:04 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3590771E-8E17-11DF-9F3C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150859>
 
-On Mon, Jul 12, 2010 at 2:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nazri Ramliy <ayiehere@gmail.com> writes:
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+
+> 'rerere gc' prunes resolutions of conflicted merges that occurred lon=
+g
+> time ago, and when doing so it takes the creation time of the
+> conflicted automerge results into account.  This can cause the loss o=
+f
+> frequently used conflict resolutions (e.g. long-living topic branches
+> are merged into a regularly rebuilt integration branch (think of git'=
+s
+> pu)) when they become old enough to exceed 'rerere gc's threshold.
 >
->> +test -z "$EXPECT_HEADER" ||
->> +     (
->> +             grep '^pick' < "$1" | cut -d' ' -f3- > commit_headers.$$ &&
->
-> Sending output from grep to cut does not sound very cool; wouldn't a
-> single "sed" invocation more appropriate?
+> To prevent the loss of valuable merge resolutions 'rerere' will (1)
+> update the timestamp of the recorded conflict resolution (i.e.
+> 'postimage') each time when encountering and resolving the same merge
+> conflict, and (2) take this timestamp, i.e. the time of the last usag=
+e
+> into account when gc'ing.
 
-If I were to use a single "sed" invocation here's how it's going to look like:
+Thanks.
 
-	sed -e "s/^pick [0-9a-f]\+//" < "$1" > commit_headers.$$
+> +static time_t rerere_last_used_at(const char *name)
+> +{
+> +	struct stat st;
+> +	return stat(rerere_path(name, "postimage"), &st) ? (time_t) 0 : st.=
+st_mtime;
+> +}
 
-But doing so reminds me of this:
-
-On Sat, Jul 10, 2010 at 6:30 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nazri Ramliy <ayiehere@gmail.com> writes:
->
->> +                     sed -i "s/^\([a-z]\+\) [0-9a-f]\+ /\1 $REPLACE_COMMIT_ID /" \
->
-> This is not portable. Escaping an ERE element with a backslash does not
-> make it suitable for use in BRE that sed uses.
-
-Aren't we back to square one? Or am I missing something?
-
->> +             diff "$EXPECT_HEADER" commit_headers.$$ > /dev/null
->
-> Is "test_cmp" inappropriate here for some reason?
-
-It seems appropriate, but this will require a ". ./test-lib.sh" from inside
-lib-rebase.sh, which fails because at that point we are already in the trash
-directory for the test, the solution is to do a ". $TEST_DIRECTORY/test-lib.sh"
-instead but that gives more errors due to test-lib.sh assumes that it is always
-being "sourced" when $CWD is $TEST_DIRECTORY, i think.
-
->
->> +     ) ||
->
-> Do you need a subshell for this, or just a grouping {} sufficient?
-
-Yes a grouping {} is sufficient.
-
-Note: The only user of the feature that this patch provides is my patch to
-t3404-rebase-interactive.sh
-(1278896663-3922-2-git-send-email-ayiehere@gmail.com),
-the rationale of which is discussed in 7vbpadfd4r.fsf@alter.siamese.dyndns.org.
-
-I'll send a reply to that one in a bit.
-
-
-nazri.
+Doesn't has_rerere_resolution() already do a stat on this path?  There =
+are
+only two allers of the function so it would probably make sense to pass=
+ a
+pointer to struct stat from the caller to avoid one extra call to stat.
