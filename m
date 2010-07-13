@@ -1,69 +1,77 @@
-From: Raja R Harinath <harinath@hurrynot.org>
-Subject: Re: [PATCH] Use dev_t for device id (st_dev) from stat in  setup_git_directory_gently()
-Date: Tue, 13 Jul 2010 17:31:06 +0530
-Message-ID: <87d3ur7fr1.fsf@hariville.hurrynot.org>
-References: <1279011720-21424-1-git-send-email-harinath@hurrynot.org>
-	<AANLkTiku82MylNMUX6P8be3xSLVg8g8aYsNWodaOM6LQ@mail.gmail.com>
+From: Daniel F <nanotube@gmail.com>
+Subject: Re: git am mangles commit author name.
+Date: Tue, 13 Jul 2010 10:54:52 -0400
+Message-ID: <AANLkTinPCZ79vwZ9eVeHChgTuFGBrz3ACi_grM28Q5Y-@mail.gmail.com>
+References: <AANLkTinqTL7gH4CHEfy8UrhK13xcO_3UzgIyQka00MAh@mail.gmail.com>
+	<20100713054949.GB2425@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 13 14:39:28 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 13 16:55:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYelg-0008Q5-3n
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 14:39:24 +0200
+	id 1OYgsu-0000V9-Ai
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 16:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755634Ab0GMMjT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jul 2010 08:39:19 -0400
-Received: from lo.gmane.org ([80.91.229.12]:35105 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751253Ab0GMMjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 08:39:18 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OYelW-0008MT-EN
-	for git@vger.kernel.org; Tue, 13 Jul 2010 14:39:14 +0200
-Received: from 117.192.154.99 ([117.192.154.99])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 14:39:14 +0200
-Received: from harinath by 117.192.154.99 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 14:39:14 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 117.192.154.99
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-Cancel-Lock: sha1:BAULcBJFBKj6iWcqwuM8yhypeR8=
+	id S1756703Ab0GMOyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 10:54:54 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:51211 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756313Ab0GMOyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 10:54:54 -0400
+Received: by vws5 with SMTP id 5so5894693vws.19
+        for <git@vger.kernel.org>; Tue, 13 Jul 2010 07:54:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=ttxbZIq+N3a1lE/tEswXvUb0JrYKwwzVGeEJ7yW8/l8=;
+        b=HqHJwbnD+ePU6v2aTD91nQnqbOedB/gHtLkRyK5XHerWJ8x0fTcj0syh+St+51gBOD
+         ZjHPTK2VeWXpHkuE6NAhfbfW94Rv46LIHG2DIF44kGW9Q4zZ2YtG2uAPBb1lBsMC5bNj
+         4AqTgZD2OlnOQxWG9JBoezb6AQLPpzehu88BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=b8KYWZMaQGsmTqHsiSBqGE5bbj8eLAnDQbwFHCmYS6wakRlI8MUV4WTN/CAWyGoAfd
+         LVuIM4pNaMbqE9dkD5DRf9DNi6tCfePEwdA4r5lUCG+Yw7+i1F2V5ZDJh86AkNsE27wN
+         sgFB7gJ0hHPcOVk2zbxauMCTvgNd4TvsMhXYM=
+Received: by 10.220.171.211 with SMTP id i19mr7858306vcz.252.1279032893047; 
+	Tue, 13 Jul 2010 07:54:53 -0700 (PDT)
+Received: by 10.220.186.132 with HTTP; Tue, 13 Jul 2010 07:54:52 -0700 (PDT)
+In-Reply-To: <20100713054949.GB2425@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150901>
 
-Hi,
+Hi Jonathan,
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Thanks for your response!
 
-> On Tue, Jul 13, 2010 at 09:02, Raja R Harinath <harinath@hurrynot.org=
-> wrote:
->> The original declaration was int, which seems to cause trouble on my
->> machine.
+On 7/13/10, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> The commit author showed up with name and email address as I expected.
+> What did I do wrong?
 >
-> What OS/architecture is your machine running?
+> Alternatively: could you send the first few lines of your .patch file?
 
-Nothing fancy
+I figured it out :) This was the from line:
+From: bc <email@somedomain.net>
 
-  $ uname -a
-  Linux hariville.hurrynot.org 2.6.35-rc3-00397-g123f94f #146 SMP PREEM=
-PT Mon Jul 5 15:50:47 IST 2010 x86_64 GNU/Linux
+Apparently, git-am fails when the username is just one word.
+if i put a space between the b and the c, it works just fine.
 
-  $ df .
-  Filesystem           1K-blocks      Used Available Use% Mounted on
-  /dev/sda1            959314384 389150456 521433560  43% /
+However... do you not think that it is still a bug? Is it not quite reasonable
+for a person to want to identify with just a nick, rather than a full
+first and last name?
 
-- Hari
+And more to the immediate point... is there any way i can get git am
+to do what i want? :)
+
+Thanks,
+Daniel
