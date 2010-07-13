@@ -1,100 +1,189 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use dev_t for device id (st_dev) from stat in
- setup_git_directory_gently()
-Date: Tue, 13 Jul 2010 13:55:35 -0700
-Message-ID: <7voceb2jaw.fsf@alter.siamese.dyndns.org>
-References: <1279011720-21424-1-git-send-email-harinath@hurrynot.org>
+From: "Kevin P. Fleming" <kpfleming@digium.com>
+Subject: Re: [PATCH] Add support for limiting number of lines generated in
+ messages by post-receive-email
+Date: Tue, 13 Jul 2010 15:56:31 -0500
+Organization: Digium, Inc.
+Message-ID: <4C3CD2FF.4040000@digium.com>
+References: <1278615790-5433-1-git-send-email-kpfleming@digium.com> <4C3B4734.5070400@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Raja R Harinath <harinath@hurrynot.org>
-X-From: git-owner@vger.kernel.org Tue Jul 13 22:55:52 2010
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Jul 13 22:56:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYmW8-0002YD-9e
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 22:55:52 +0200
+	id 1OYmWu-0002qj-OO
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 22:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757273Ab0GMUzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 16:55:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:32841 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757144Ab0GMUzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 16:55:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CCDD5C430A;
-	Tue, 13 Jul 2010 16:55:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=exJkAWp5xgrkSc+BCQIcY/awCms=; b=SIcqfQ
-	m+oyPfJIM4q4txWz7x4Xe8VYDDoJyjUbSzyNs9AlAe3WzN5UNuDTG/WCbGlcMl04
-	kvxsXiTZUidTMZBJ7lx8QlmCeFXKVxeC1bbs0in9sZk9QkP8Q3uhNOe/FIVk5azR
-	fy46wP9O55+YQ+j3m7JlEmUFmxTgnNWrXAuHI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ELeDRMkU82cdYn2Hd99ybmYxB+Rr4tT0
-	w68KR/roQK5HRYmjQBBsyw8SDGNsU/ERNJacF0sFa54B8Xx0Vht3yW3gZRqfaQH1
-	QIpQz3WDbAeAF4kRrPAdD1bs3a22MK6rsZWjJ/lI7/bZG6F6ooHfheWomjIvLa6/
-	GVBU3WAd5tE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB87BC4309;
-	Tue, 13 Jul 2010 16:55:39 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E2D1AC4308; Tue, 13 Jul
- 2010 16:55:36 -0400 (EDT)
-In-Reply-To: <1279011720-21424-1-git-send-email-harinath@hurrynot.org> (Raja
- R. Harinath's message of "Tue\, 13 Jul 2010 14\:32\:00 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FE5C9F2A-8EC0-11DF-BBE1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755009Ab0GMU4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 16:56:36 -0400
+Received: from mail.digium.com ([216.207.245.2]:54818 "EHLO mail.digium.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751076Ab0GMU4f (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 16:56:35 -0400
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <kpfleming@digium.com>)
+	id 1OYmWm-0001wT-G3
+	for git@vger.kernel.org; Tue, 13 Jul 2010 15:56:32 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id 68E65D8025
+	for <git@vger.kernel.org>; Tue, 13 Jul 2010 15:56:32 -0500 (CDT)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ofjnzr0A3MtY for <git@vger.kernel.org>;
+	Tue, 13 Jul 2010 15:56:31 -0500 (CDT)
+Received: from [10.24.250.46] (unknown [10.24.250.46])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id E2F69D8023
+	for <git@vger.kernel.org>; Tue, 13 Jul 2010 15:56:31 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
+In-Reply-To: <4C3B4734.5070400@xiplink.com>
+X-Enigmail-Version: 1.0.1
+OpenPGP: id=05FB8DB2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150913>
 
-Raja R Harinath <harinath@hurrynot.org> writes:
+On 07/12/2010 11:47 AM, Marc Branchaud wrote:
+> On 10-07-08 03:03 PM, Kevin P. Fleming wrote:
+>> We have become used to the features of svnmailer when used with Subversion,
+>> and one of those useful features is that it can limit the maximum length
+>> (in lines) of a commit email message. This is terribly useful since once the
+>> goes beyond a reasonable number of lines, nobody is going to read the remainder,
+>> and if they really want the entire contents of the commits, they can use
+>> git itself to get them using the revision IDs present in the message already.
+>>
+>> This patch adds a new parameter to the post-receive-email hook script called
+>> 'maxlines', that defaults to 2048 if not specified. The entire message is
+>> filtered through a function that counts the number of lines generated
+>> (including headers), and any lines beyond the limit are suppressed; if any
+>> lines are suppressed, a final line is added indicating the number that
+>> were suppressed.
+> 
+> Hi Kevin,
+> 
+> I appreciate the work and the need you're addressing.  Thanks!
+> 
+> I do have a request though, which is to make this match the current
+> (unlimited) behavior by default instead of imposing an arbitrary (although
+> seemingly large) limit.
 
-> The original declaration was int, which seems to cause trouble on my
-> machine.  It causes spurious "filesystem boundary" errors when running
-> the testsuite.  The cause seems to be
->
->   $ stat -c%d .
->   2147549952
->
-> which is too large for a 32-bit int type.
->
-> Using the correct type, dev_t, solves the issue.  (Because I'm
-> paranoid and forgetful, I checked -- yes, Unix v7 had dev_t.)
->
-> Other uses of st_dev seem to be reasonably safe.   fill_stat_cache_info
-> truncates it to an 'unsigned int', but that value seems to be used only
-> to validate the cache, and only if USE_STDEV is defined.
-> ---
+Done.
 
-Makes sense; thanks.
+> I admit I don't have a strong reason for this, mainly just a desire to not
+> force features on folks that don't need them.  IMHO the limit is a bit too
+> hidden and likely to surprise someone at an inopportune time.  Plus what
+> would someone do if they *want* no limit?
+> 
+> (FYI, we dealt with large-email syndrome by taking the diffs out of the
+> emails and using a custom format to embed a gitweb URL instead.  Folks who
+> care about the actual code change can browse the commit in gitweb.  This also
+> helped make it easier for humans to parse the emails and the commits they
+> contain.)
 
-Sign-off?
+Yes, we'll probably include a gitweb URL as well.
 
+> A couple more comments below...
+> 
+>> Signed-off-by: Kevin P. Fleming <kpfleming@digium.com>
+>> ---
+>>  contrib/hooks/post-receive-email |   31 ++++++++++++++++++++++++++++++-
+>>  1 files changed, 30 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+>> index 30ae63d..436c13f 100755
+>> --- a/contrib/hooks/post-receive-email
+>> +++ b/contrib/hooks/post-receive-email
+>> @@ -55,6 +55,11 @@
+>>  #     "t=%s; printf 'http://.../?id=%%s' \$t; echo;echo; git show -C \$t; echo"
+>>  #   Be careful if "..." contains things that will be expanded by shell "eval"
+>>  #   or printf.
+>> +# hooks.maxlines
+> 
+> Why not call this something like "hooks.maxemaillines"?  "maxlines" is so
+> generic that it might collide with something some other hook might use.
 
->  setup.c |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 7e04602..87c21f0 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -323,7 +323,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
->  	const char *gitdirenv;
->  	const char *gitfile_dir;
->  	int len, offset, ceil_offset, root_len;
-> -	int current_device = 0, one_filesystem = 1;
-> +	dev_t current_device = 0;
-> +	int one_filesystem = 1;
->  	struct stat buf;
->  
->  	/*
-> -- 
-> 1.7.2.rc2.11.g03e33
+Changed.
+
+> 
+>> +#   The maximum number of lines that should be included in the generated
+>> +#   email (including its headers). If not specified, defaults to 2048.
+>> +#   Lines beyond the limit are suppressed and counted, and a final
+>> +#   line is added indicating the number of suppressed lines.
+>>  #
+>>  # Notes
+>>  # -----
+>> @@ -642,6 +647,29 @@ show_new_revisions()
+>>  }
+>>  
+>>  
+>> +limit_lines()
+>> +{
+>> +    lines=0
+>> +    skipped=0
+>> +    limit=$(($1 - 2))
+>> +    while IFS="" read line
+>> +    do
+>> +	lines=$((lines + 1))
+>> +	if [ $lines -gt $limit ]
+>> +	then
+>> +	    skipped=$((skipped + 1))
+>> +	else
+>> +	    echo "$line"
+>> +	fi
+>> +    done
+>> +    if [ $skipped -ne 0 ]
+>> +    then
+>> +	echo
+>> +	echo "... $skipped lines suppressed ..."
+>> +    fi
+>> +}
+>> +
+>> +
+>>  send_mail()
+>>  {
+>>  	if [ -n "$envelopesender" ]; then
+>> @@ -679,6 +707,7 @@ announcerecipients=$(git config hooks.announcelist)
+>>  envelopesender=$(git config hooks.envelopesender)
+>>  emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
+>>  custom_showrev=$(git config hooks.showrev)
+>> +maxlines=$(git config hooks.maxlines || echo '2048')
+>>  
+>>  # --- Main loop
+>>  # Allow dual mode: run from the command line just like the update hook, or
+>> @@ -691,6 +720,6 @@ if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
+>>  else
+>>  	while read oldrev newrev refname
+>>  	do
+>> -		generate_email $oldrev $newrev $refname | send_mail
+>> +		generate_email $oldrev $newrev $refname | limit_lines $maxlines | send_mail
+> 
+> I'm a little concerned about the performance hit of piping the output through
+> limit_lines(), which buffers all the lines in memory.  Folks who want large
+> emails might get bitten by this.
+
+The shell should start another process for limit_lines(), just as it
+does for send_mail(), and thus only a small number of lines should ever
+be in memory at once.
+
+> 
+> (That said, I don't know anything about the memory efficiency of the shell's
+> pipes, or if "git diff-tree" itself would suck up a lot of memory on a series
+> of huge patches.)
+> 
+> Maybe only pipe through limit_lines() if $maxlines > 0?
+
+I've made this change as well; I'll post a new patch shortly.
+
+-- 
+Kevin P. Fleming
+Digium, Inc. | Director of Software Technologies
+445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
+skype: kpfleming | jabber: kfleming@digium.com
+Check us out at www.digium.com & www.asterisk.org
