@@ -1,79 +1,93 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Massive repository corruptions
-Date: Tue, 13 Jul 2010 12:22:45 +0200
-Message-ID: <20100713102245.GE29392@nibiru.local>
-References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local> <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com>
-Reply-To: weigelt@metux.de
+From: Thomas Berg <merlin66b@gmail.com>
+Subject: Re: git-p4 move/delete errors
+Date: Tue, 13 Jul 2010 13:22:40 +0200
+Message-ID: <AANLkTimWeZq3yPo01Ytj-rfP5tY8k100kDHJX_eWRwUq@mail.gmail.com>
+References: <AANLkTinN0Av1CO7mZU-QKeApq43UmEykUV093eyTtKQN@mail.gmail.com>
+	<AANLkTikPHJuf5JUe096BWTWO_oF9u3gNlVNuw7Ik32WQ@mail.gmail.com>
+	<AANLkTin7eMFXT1FwZ2ojcAYgqIMSYnkz-uCoRlHvV6Tm@mail.gmail.com>
+	<F94DAB9A-A06D-46ED-9AAA-EDE850365054@gmail.com>
+	<AANLkTilQtnIzNCcRzYzSqPEvXenHgND-_SAWmUeM64BH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 13 12:30:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
+To: Lance Linder <llinder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 13 13:23:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYckf-0006ql-B1
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 12:30:13 +0200
+	id 1OYdZj-00065J-IA
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 13:22:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936Ab0GMKaG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jul 2010 06:30:06 -0400
-Received: from forum.psychotherapie.org ([217.160.22.205]:49950 "EHLO
-	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752126Ab0GMKaE convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 06:30:04 -0400
-Received: (from uucp@localhost)
-	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6DAU0B7025978
-	for git@vger.kernel.org; Tue, 13 Jul 2010 12:30:00 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o6DAMjmY016825
-	for git@vger.kernel.org; Tue, 13 Jul 2010 12:22:45 +0200
-Content-Disposition: inline
-In-Reply-To: <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1753173Ab0GMLWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 07:22:43 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:35524 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751218Ab0GMLWm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 07:22:42 -0400
+Received: by wwi17 with SMTP id 17so886705wwi.1
+        for <git@vger.kernel.org>; Tue, 13 Jul 2010 04:22:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=+b74O9RA/h5jhiGARkKlTndjswBpBIZyEs16km+vhMU=;
+        b=ejUJ0FyeFeJRXWIAkF5+erN7VqzXnCGjR3cKqL0ycIqf/BqQ+UBmhVlwfArYjVjuTd
+         Cciz1OkXFFxGfDmkpuZ4s7YDse2HZyzFiU629V5U8Gt/8gDs9/G1aOumgRkQr92eeSfo
+         BJd9c8hK5E6nAWmvElxULp81tVsYSmXjBMQWE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=IM85MVjF84S8zVdIQ0uW7cVpg7BnHoLAz5MBkP7K/2knU4EeVNax5Nxt+K9NWbdaoM
+         wBg3i2kOChpXdOO0iU4EfyJro4zLs5mzQtcaALp6LsPKSWvBAzIa4VG3gllK6J3tECE+
+         8g0vJbxpUd0dtM0BOXpmPXrlbtVrQla+YxMbI=
+Received: by 10.227.154.9 with SMTP id m9mr6431311wbw.123.1279020160618; Tue, 
+	13 Jul 2010 04:22:40 -0700 (PDT)
+Received: by 10.216.45.205 with HTTP; Tue, 13 Jul 2010 04:22:40 -0700 (PDT)
+In-Reply-To: <AANLkTilQtnIzNCcRzYzSqPEvXenHgND-_SAWmUeM64BH@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150896>
 
-* Avery Pennarun <apenwarr@gmail.com> wrote:
-> On Tue, Jul 13, 2010 at 1:03 AM, Enrico Weigelt <weigelt@metux.de> wr=
-ote:
-> > * Avery Pennarun <apenwarr@gmail.com> wrote:
-> >> Do you know which packfiles are corrupted? =A0Does 'git index-pack=
-' on
-> >> the files reveal anything?
-> >
-> > git@blackwidow ~/metux/work.git/pack $ git index-pack pack-3b6cbd5d=
-c5f54cf390cfaa479cac6a99d7401375.pack
-> > error: inflate: data stream error (incorrect data check)
-> > fatal: pack has bad object at offset 37075832: inflate returned -3
-> >
-> > (that's essentially the same git-gc says)
->=20
-> What's the size of that .pack file?
+On Fri, Jul 9, 2010 at 11:32 PM, Thomas Berg <merlin66b@gmail.com> wrote:
 
-Somewhat over 300MB.=20
+> Anyway, as far as I can see from the git-p4 source code, the command
+> is only used to generate the diff preview in the interactive window
+> that pops up when you "git p4 submit". So if you replace the line
+> diff = p4_read_pipe("diff -du ...")
+> with
+> diff = ""
+>
+> it should start working again (the diff preview part will become
+> empty). I'm unable to test it right now, but fairly sure it will work.
+> I'll see if I can find a better solution when I have access to the
+> Perforce server again.
 
-Lowering the packfile size seemed to help.
-(but I still only can do that for git-repack, not remote transfers)
+It seems like they have done some bugfixes to "p4 diff -du ...", I
+guess that's why we get different behaviour now. It prints the correct
+output, but exits with an error code anyway when files have been
+removed.
 
+My solution is in the diff below. I'll run with it for a few days,
+then I'll submit a proper patch to the mailing list (unless someone
+else beat me to it).
 
-cu
---=20
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
+Thomas
 
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index c1ea643..19f4519 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -706,7 +706,7 @@ class P4Submit(Command):
+             submitTemplate = self.prepareLogMessage(template, logMessage)
+             if os.environ.has_key("P4DIFF"):
+                 del(os.environ["P4DIFF"])
+-            diff = p4_read_pipe("diff -du ...")
++            diff = p4_read_pipe("diff -du ...", ignore_error=True)
+
+             newdiff = ""
+             for newFile in filesToAdd:
