@@ -1,67 +1,86 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Massive repository corruptions
-Date: Tue, 13 Jul 2010 07:31:54 +0200
-Message-ID: <20100713053154.GC29392@nibiru.local>
-References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local>
-Reply-To: weigelt@metux.de
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git am mangles commit author name.
+Date: Tue, 13 Jul 2010 00:49:49 -0500
+Message-ID: <20100713054949.GB2425@burratino>
+References: <AANLkTinqTL7gH4CHEfy8UrhK13xcO_3UzgIyQka00MAh@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 13 07:37:31 2010
+Cc: git@vger.kernel.org
+To: Daniel F <nanotube@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 13 07:50:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYYBM-0006Yt-1S
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 07:37:28 +0200
+	id 1OYYO8-0001Tg-VD
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 07:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab0GMFhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 01:37:22 -0400
-Received: from forum.psychotherapie.org ([217.160.22.205]:47881 "EHLO
-	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751128Ab0GMFhV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jul 2010 01:37:21 -0400
-Received: (from uucp@localhost)
-	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6D5bJ10032220
-	for git@vger.kernel.org; Tue, 13 Jul 2010 07:37:19 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o6D5VsJp003050
-	for git@vger.kernel.org; Tue, 13 Jul 2010 07:31:54 +0200
+	id S1751825Ab0GMFug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 01:50:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44101 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153Ab0GMFuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 01:50:35 -0400
+Received: by iwn7 with SMTP id 7so5484541iwn.19
+        for <git@vger.kernel.org>; Mon, 12 Jul 2010 22:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=KRXh0/v5DX1+iPHpbmoGlGSJWly4XUZ8KROx5evdeEE=;
+        b=kqP76gQQc12Ga21e31uOkaNpvu9a2TNt9zx/YIp2QJGPjys8pP9FiEEqIyzxgM+9+f
+         gAFrSu4bZeT58gNCbKDZ4GCll8cDGlLHGafYIKop9Flk1uKefFgGO1odw5lo3GrA6iP3
+         FpOmwnCZkp4Dl9kpgsx77kYGwGLf+1u7eaYeI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=T4/oFe7D0+JiMKjxLGoexGgibc6N9f6o89SCxVMi0E13CxLEojDzskJ8EH1CiEBhKW
+         rgddjmnq3rTy0RhlxyvdsFJc9BuqRlh4PuzoV+QepJV/FrJKS4H3GxB2NwDIN0+yb3qM
+         78C3fbpVoTK5osFt5t8rP19nARZHYIV8mcWZY=
+Received: by 10.231.192.144 with SMTP id dq16mr16483490ibb.28.1279000234639;
+        Mon, 12 Jul 2010 22:50:34 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id h8sm23361730ibk.3.2010.07.12.22.50.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 12 Jul 2010 22:50:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100713050350.GB29392@nibiru.local>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+In-Reply-To: <AANLkTinqTL7gH4CHEfy8UrhK13xcO_3UzgIyQka00MAh@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150877>
 
-* Enrico Weigelt <weigelt@metux.de> wrote:
+Hi Daniel,
 
-<snip>
+Daniel F wrote:
 
-What's strange: 
+> The file contains the line (along with the rest of the patch, of course):
+> From: username <emailaddress>
+> 
+> So I do the following:
+> git am --signoff < patchfile.patch
+> It applies just fine, but the commit author shows in in git log as:
+> emailaddress <emailaddress>
+> (i.e., the username is nowhere to be seen)
 
-when copying pack files from another machine to this box and
-run git index-pack there, it fails with the same error. 
+Because I am lazy I tried with the latest 1.7.2 release candidate.
+Here is what I did:
 
-also: pushing into a new (bare) repo sometimes fails with 
-inflate errors, sometimes succeeds but leaves an broken packfile.
+ $ git fetch git://repo.or.cz/git/jrn.git rr/svn-fe
+ $ git checkout FETCH_HEAD
+ $ git format-patch HEAD^..HEAD
+ $ git reset --keep HEAD^
+ $ git am --signoff <0001-*
 
+The commit author showed up with name and email address as I expected.
+What did I do wrong?
 
-cu
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
+Alternatively: could you send the first few lines of your .patch file?
 
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Thanks,
+Jonathan
