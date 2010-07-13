@@ -1,101 +1,69 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH] rebase: Allow to turn of ignore-if-in-upstream
-Date: Tue, 13 Jul 2010 10:13:24 +0200
-Message-ID: <645d8a9bf671937c1a6962b49cf1c512e0af0d82.1279008702.git.git@drmicha.warpmail.net>
-References: <4C3C1FE9.40605@drmicha.warpmail.net>
-Cc: Marat Radchenko <marat@slonopotamus.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 13 10:14:47 2010
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Question about 'branch -d' safety
+Date: Tue, 13 Jul 2010 10:30:45 +0200
+Message-ID: <4C3C2435.8010500@viscovery.net>
+References: <20091230065442.6117@nanako3.lavabit.com>	 <m3lj9jknlr.fsf@localhost.localdomain> <20100711065505.GA19606@localhost>	 <201007110916.29567.jnareb@gmail.com> <20100711133730.GA10338@localhost>	 <7v1vb9hnd9.fsf@alter.siamese.dyndns.org>	 <20100712184754.GA18429@localhost>	 <7v39vo8dkn.fsf@alter.siamese.dyndns.org>	 <20100713071317.GA26348@localhost> <1279008023.2030.11.camel@wpalmer.simply-domain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 13 10:30:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYada-000307-Md
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 10:14:47 +0200
+	id 1OYatE-0001nv-N2
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 10:30:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754256Ab0GMIOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 04:14:24 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:55947 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754116Ab0GMIOW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Jul 2010 04:14:22 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 02EA216E4BE;
-	Tue, 13 Jul 2010 04:14:21 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Tue, 13 Jul 2010 04:14:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=VxRemXEv/K/EV/jdmwHcywC0F94=; b=iNL/0QF+J4X3+zAsxg364u70Yehact29zAsLBjW5fkxbFErYmWtKTQXR4eOP3I0/qocTI+bUAfg2JCZsUr378sb7Naa7pxGTaxAFkIRwNQf7WQgrZ8OHuwGTvWzccL7eV1SUJmjYvu300aVJpDqarig/SzmS0BaAwlPqu0tuD+E=
-X-Sasl-enc: +IryYn0Ee3BqJaXknGl+B1oTEESSFs7YZB7jUvZfsu+6 1279008861
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6BF0C6DCDB;
-	Tue, 13 Jul 2010 04:14:21 -0400 (EDT)
-X-Mailer: git-send-email 1.7.2.rc1.212.g850a
-In-Reply-To: <4C3C1FE9.40605@drmicha.warpmail.net>
+	id S1752135Ab0GMIav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 04:30:51 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:19941 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751288Ab0GMIau (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 04:30:50 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OYat4-0004UH-F5; Tue, 13 Jul 2010 10:30:46 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 220E11660F;
+	Tue, 13 Jul 2010 10:30:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <1279008023.2030.11.camel@wpalmer.simply-domain>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150888>
 
-git-rebase uses "format-patch --ignore-if-in-upstream" do determine
-which commits to apply. This may or may not be desired: a user may want
-to transplant all commits, or may opt to avoid the possibly time
-consuming calculation of patch-ids.
+Am 7/13/2010 10:00, schrieb Will Palmer:
+> On Tue, 2010-07-13 at 09:13 +0200, Clemens Buchacher wrote:
+>> Why would we need that? Even now, it is not enough to do "git
+>> branch -D frotz; git gc --prune". You need to expire the reflog,
+>> since HEAD may still have a reference to it. So instead you would
+>> need
+>>
+>>  git branch -D frotz
+>>  git reflog expire --expire=now HEAD frotz
+>>  git gc --prune
+>>
+>> Purging a branch becomes just a special case of purging anything
+>> from history.
+> 
+> With that in mind, would it not be enough to simply remove the ref, but
+> not the reflog,
 
-Therefore, introduce rebase.cherry (defaulting to true) and --cherry and
---no-cherry options (to override the config), where --cherry means the
-current behavior and --no-cherry avoids "--ignore-if-in-upstream".
+With that in mind, shouldn't it be exactly the other way around, i.e.,
+dump the reflog (the objects are still referenced from HEAD's reflog), but
+keep the ref around in some attic, just in case the branch is so old that
+its reflog was empty and its objects would otherwise be pruned right away?
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-RFC for obvious reasons (doc, tests).
-
- git-rebase.sh |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index ab4afa7..1eb6ad1 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -53,6 +53,7 @@ git_am_opt=
- rebase_root=
- force_rebase=
- allow_rerere_autoupdate=
-+cherry=$(git config --bool rebase.cherry)
- 
- continue_merge () {
- 	test -n "$prev_head" || die "prev_head must be defined"
-@@ -307,6 +308,12 @@ do
- 		esac
- 		do_merge=t
- 		;;
-+	--cherry)
-+		cherry=true
-+		;;
-+	--no-cherry)
-+		cherry=false
-+		;;
- 	-n|--no-stat)
- 		diffstat=
- 		;;
-@@ -540,9 +547,16 @@ else
- 	revisions="$upstream..$orig_head"
- fi
- 
-+if test "x$cherry" = "xfalse"
-+then
-+	cherry_opt=""
-+else
-+	cherry_opt="--ignore-if-in-upstream"
-+fi
-+
- if test -z "$do_merge"
- then
--	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
-+	git format-patch -k --stdout --full-index $cherry_opt \
- 		$root_flag "$revisions" |
- 	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
- 	move_to_original_branch
--- 
-1.7.2.rc1.212.g850a
+-- Hannes
