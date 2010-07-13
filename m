@@ -1,193 +1,138 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v3] add configuration variable for --autosquash option of
-	interactive rebase
-Date: Tue, 13 Jul 2010 13:24:40 +0200
-Message-ID: <20100713112316.GA758@book.hvoigt.net>
-References: <20100709124659.GA17559@book.hvoigt.net> <m27hl4zg99.fsf@igel.home> <20100710091517.GA27323@book.hvoigt.net> <7vk4p1fdlg.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 13:24:48 2010
+From: Raja R Harinath <harinath@hurrynot.org>
+Subject: [PATCH] fast-import: export correctly marks larger than 2^20-1
+Date: Tue, 13 Jul 2010 17:21:48 +0530
+Message-ID: <1279021908-21291-1-git-send-email-harinath@hurrynot.org>
+Cc: Raja R Harinath <harinath@hurrynot.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 13 14:02:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYdbT-00074X-Eb
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 13:24:47 +0200
+	id 1OYeBx-00006i-Bu
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 14:02:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755532Ab0GMLYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 07:24:43 -0400
-Received: from darksea.de ([83.133.111.250]:56381 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755391Ab0GMLYm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 07:24:42 -0400
-Received: (qmail 13376 invoked from network); 13 Jul 2010 13:24:40 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 13 Jul 2010 13:24:40 +0200
-Content-Disposition: inline
-In-Reply-To: <7vk4p1fdlg.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1754937Ab0GMMCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 08:02:15 -0400
+Received: from [117.192.154.99] ([117.192.154.99]:50532 "EHLO
+	hariville.hurrynot.org" rhost-flags-FAIL-FAIL-OK-OK)
+	by vger.kernel.org with ESMTP id S1751400Ab0GMMCO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jul 2010 08:02:14 -0400
+X-Greylist: delayed 607 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Jul 2010 08:02:14 EDT
+Received: by hariville.hurrynot.org (Postfix, from userid 1000)
+	id 6EE841E80FBA; Tue, 13 Jul 2010 17:22:04 +0530 (IST)
+X-Mailer: git-send-email 1.7.2.rc2.11.g03e33
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150898>
 
-If you use this feature regularly you can now enable it by default. In
-case the user wants to override this config on the commandline
---no-autosquash can be used to force disabling.
+dump_marks_helper() has a bug when dumping marks larger than 2^20-1,
+i.e., when the sparse array has more than two levels.  The bug was
+that the 'base' counter was being shifted by 20 bits at level 3, and
+then again by 10 bits at level 2, rather than a total shift of 20 bits
+in this argument to the recursive call:
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+  (base + k) << m->shift
+
+There are two ways to fix this correctly, the elegant:
+
+  (base + k) << 10
+
+and the one I chose due to edit distance:
+
+  base + (k << m->shift)
+
+Cc: Shawn O. Pearce <spearce@spearce.org>
+Signed-off-by: Raja R Harinath <harinath@hurrynot.org>
 ---
-On Sun, Jul 11, 2010 at 10:55:55PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
-> 
-> > If you use this feature regularly you can now enable it by default.
-> 
-> And if you use this often _but_ you sometimes need to countermand from the
-> command line, do you provide a way to do so (I didn't bother to check).
+ fast-import.c          |    2 +-
+ t/t9300-fast-import.sh |   57 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 1 deletions(-)
 
-No I did not see the exact use case because you could simply not prefix
-you commits with 'fixup!' or 'squash!' and if your project regularly
-uses those on commits you probably would like to configure different
-prefixes.
-
-On the other hand I think it is a good convention to always provide a
---no-... option for things you can enable in the config and it does not
-hurt to do so. So here is a new patch implementing this. I also fixed
-some places with missing && in the testcases I implemented.
-
-cheers Heiko
-
- Documentation/git-rebase.txt |    8 ++++++++
- git-rebase--interactive.sh   |    4 ++++
- t/t3415-rebase-autosquash.sh |   40 ++++++++++++++++++++++++++++++++--------
- 3 files changed, 44 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index be23ad2..d357ab1 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -199,6 +199,9 @@ rebase.stat::
- 	Whether to show a diffstat of what changed upstream since the last
- 	rebase. False by default.
+diff --git a/fast-import.c b/fast-import.c
+index 309f2c5..0c79289 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1666,7 +1666,7 @@ static void dump_marks_helper(FILE *f,
+ 	if (m->shift) {
+ 		for (k = 0; k < 1024; k++) {
+ 			if (m->data.sets[k])
+-				dump_marks_helper(f, (base + k) << m->shift,
++				dump_marks_helper(f, base + (k << m->shift),
+ 					m->data.sets[k]);
+ 		}
+ 	} else {
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 131f032..2aeed7b 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -166,6 +166,63 @@ test_expect_success \
+ 	 test `git rev-parse --verify master:file2` \
+ 	    = `git rev-parse --verify verify--import-marks:copy-of-file2`'
  
-+rebase.autosquash::
-+	If set to true enable '--autosquash' option by default.
++test_tick
++mt=$(git hash-object --stdin < /dev/null)
++: >input.blob
++: >marks.exp
++: >tree.exp
 +
- OPTIONS
- -------
- <newbase>::
-@@ -335,6 +338,11 @@ idea unless you know what you are doing (see BUGS below).
- +
- This option is only valid when the '--interactive' option is used.
- 
-+--no-autosquash::
-+	If the '--autosquash' option is enabled by default using the
-+	configuration variable `rebase.autosquash` this option can be
-+	used to override and disable this setting.
++cat >input.commit <<EOF
++commit refs/heads/verify--dump-marks
++committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++data <<COMMIT
++test the sparse array dumping routines with exponentially growing marks
++COMMIT
++EOF
 +
- --no-ff::
- 	With --interactive, cherry-pick all rebased commits instead of
- 	fast-forwarding over the unchanged ones.  This ensures that the
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 6b86abc..7b35f80 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -111,6 +111,7 @@ VERBOSE=
- OK_TO_SKIP_PRE_REBASE=
- REBASE_ROOT=
- AUTOSQUASH=
-+test "$(git config --bool rebase.autosquash)" = "true" && AUTOSQUASH=t
- NEVER_FF=
- 
- GIT_CHERRY_PICK_HELP="  After resolving the conflicts,
-@@ -795,6 +796,9 @@ first and then run 'git rebase --continue' again."
- 	--autosquash)
- 		AUTOSQUASH=t
- 		;;
-+	--no-autosquash)
-+		AUTOSQUASH=
-+		;;
- 	--onto)
- 		shift
- 		ONTO=$(parse_onto "$1") ||
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index b63f4e2..37cb89a 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -21,38 +21,62 @@ test_expect_success setup '
- 	git tag base
- '
- 
--test_expect_success 'auto fixup' '
-+test_auto_fixup() {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
- 	git add -u &&
- 	test_tick &&
- 	git commit -m "fixup! first"
- 
--	git tag final-fixup &&
-+	git tag $1 &&
- 	test_tick &&
--	git rebase --autosquash -i HEAD^^^ &&
-+	git rebase $2 -i HEAD^^^ &&
- 	git log --oneline >actual &&
- 	test 3 = $(wc -l <actual) &&
--	git diff --exit-code final-fixup &&
-+	git diff --exit-code $1 &&
- 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
- 	test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+}
++i=0
++l=4
++m=6
++n=7
++while test "$i" -lt 27; do
++    cat >>input.blob <<EOF
++blob
++mark :$l
++data 0
++blob
++mark :$m
++data 0
++blob
++mark :$n
++data 0
++EOF
++    echo "M 100644 :$l l$i" >>input.commit
++    echo "M 100644 :$m m$i" >>input.commit
++    echo "M 100644 :$n n$i" >>input.commit
 +
-+test_expect_success 'auto fixup (option)' '
-+	test_auto_fixup final-fixup-option --autosquash
-+'
++    echo ":$l $mt" >>marks.exp
++    echo ":$m $mt" >>marks.exp
++    echo ":$n $mt" >>marks.exp
 +
-+test_expect_success 'auto fixup (config)' '
-+	git config rebase.autosquash true &&
-+	test_auto_fixup final-fixup-config-true &&
-+	test_must_fail test_auto_fixup fixup-config-true-no --no-autosquash &&
-+	git config rebase.autosquash false &&
-+	test_must_fail test_auto_fixup final-fixup-config-false
- '
- 
--test_expect_success 'auto squash' '
-+test_auto_squash() {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
- 	git add -u &&
- 	test_tick &&
- 	git commit -m "squash! first"
- 
--	git tag final-squash &&
-+	git tag $1 &&
- 	test_tick &&
--	git rebase --autosquash -i HEAD^^^ &&
-+	git rebase $2 -i HEAD^^^ &&
- 	git log --oneline >actual &&
- 	test 3 = $(wc -l <actual) &&
--	git diff --exit-code final-squash &&
-+	git diff --exit-code $1 &&
- 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
- 	test 2 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+}
++    printf "100644 blob $mt\tl$i\n" >>tree.exp
++    printf "100644 blob $mt\tm$i\n" >>tree.exp
++    printf "100644 blob $mt\tn$i\n" >>tree.exp
 +
-+test_expect_success 'auto squash (option)' '
-+	test_auto_squash final-squash --autosquash
-+'
++    l=$(($l + $l))
++    m=$(($m + $m))
++    n=$(($l + $n))
 +
-+test_expect_success 'auto squash (config)' '
-+	git config rebase.autosquash true &&
-+	test_auto_squash final-squash-config-true &&
-+	test_must_fail test_auto_squash squash-config-true-no --no-autosquash &&
-+	git config rebase.autosquash false &&
-+	test_must_fail test_auto_squash final-squash-config-false
- '
- 
- test_expect_success 'misspelled auto squash' '
++    i=$((1 + $i))
++done
++
++sort tree.exp > tree.exp_s
++
++test_expect_success 'A: export marks with large values' '
++	cat input.blob input.commit | git fast-import --export-marks=marks.large &&
++	git ls-tree refs/heads/verify--dump-marks >tree.out &&
++	test_cmp tree.exp_s tree.out &&
++	test_cmp marks.exp marks.large'
++
+ ###
+ ### series B
+ ###
 -- 
-1.7.2.rc2.1.gf1735.dirty
+1.7.2.rc2.11.g03e33
