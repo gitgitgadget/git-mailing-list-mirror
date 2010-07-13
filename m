@@ -1,118 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 05/13] parse the -L options
-Date: Tue, 13 Jul 2010 16:03:14 -0700
-Message-ID: <7vbpab2de5.fsf@alter.siamese.dyndns.org>
-References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
- <1278829141-11900-5-git-send-email-struggleyb.nku@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Git branch
+Date: Tue, 13 Jul 2010 18:04:18 -0500
+Message-ID: <20100713230418.GA1818@burratino>
+References: <1279061452603-5290193.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 01:03:28 2010
+To: jhapk <pradeep.kumar.jha@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 01:05:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYoVc-0007SY-6q
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 01:03:28 +0200
+	id 1OYoXI-0007r2-JO
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 01:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755900Ab0GMXDX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 19:03:23 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43829 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755151Ab0GMXDW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 19:03:22 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C073C3539;
-	Tue, 13 Jul 2010 19:03:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U6e7L8R2ZXyVaxKOfFL0ZncjYyk=; b=iJR3af
-	KAsaLxTO6XaWixa/s+EXsPstyH07lpttOqBBDqfN3eCKGjN7Up5KUzrl1VCbfZIY
-	a5Qe37C11o60lWCeLPNrtx/hPB0xcF1PM7pgma3bAPOrh/5DdtkXki0uyiv8U0Bc
-	ZLLFghAPdcdGl7zT3o48JhbaEQPHFcdVhGbgA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wEXWAxzAqG7l8NIDdlp9WXPNH+gnQjqc
-	st7QjlkN6BmyhxAYqSkdJn56P7ETvhjK1M0jMMf5VOwSXqMKa3g4yYzSaxtDNjcF
-	lFfYRusaf1e/kEmPTp3ifVXC33sSMbjDocj8SjVCw+GwdPAn84OAAO4OOeRpApGy
-	nmGxgb6wcJs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6951AC3538;
-	Tue, 13 Jul 2010 19:03:19 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 730CBC3532; Tue, 13 Jul
- 2010 19:03:16 -0400 (EDT)
-In-Reply-To: <1278829141-11900-5-git-send-email-struggleyb.nku@gmail.com> (Bo
- Yang's message of "Sun\, 11 Jul 2010 14\:18\:53 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D3E752FA-8ED2-11DF-9EF6-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754366Ab0GMXFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 19:05:06 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44741 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751649Ab0GMXFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 19:05:05 -0400
+Received: by iwn7 with SMTP id 7so6325051iwn.19
+        for <git@vger.kernel.org>; Tue, 13 Jul 2010 16:05:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=tkXbF6736tRhTz19jFIaSssrKw5q7gOeIKFdmjAEuRc=;
+        b=Wtz01mgottA8KL7CfaWWRAce9wd4gSrkovP09fzynkYFRgCs0w3GxnCBjjmOJQrPE8
+         lNm3/0HA37bGW1ZOPCBsuyWZsmT6OFo+Zfu+ypZctLgDlSS2usWrPig09vNsmr8I70Hl
+         aPwkIye4a2D54pJLXultishvH8zf0nIgDn4Go=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Z/VQVsy4sdTl56Coi0Go7OBDkm5o9VTwezAfdOY3HvMzLm+XE/BbquNxdkjG1xxFlG
+         7zewmAMCtmDuB0s9KlLz1GbZv2+aRUm2/O0TF1+R1kvoHl9KlaoN9RPm/uMZG4/mEAJe
+         2p7bRvT664hrzT+e6ShDduDimMHBO0CNuJMFg=
+Received: by 10.231.31.200 with SMTP id z8mr17222008ibc.90.1279062304484;
+        Tue, 13 Jul 2010 16:05:04 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g31sm27128102ibh.10.2010.07.13.16.05.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 13 Jul 2010 16:05:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1279061452603-5290193.post@n2.nabble.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150938>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+Hi,
 
-> +static int log_line_range_callback(const struct option *option, const char *arg, int unset)
-> +{
-> +	struct line_opt_callback_data *data = option->value;
-> +	struct diff_line_range *r = *data->range;
-> +	struct parse_opt_ctx_t *ctx = data->ctx;
+jhapk wrote:
 
-Need a blank line here for readability.
+> I manually enter the following lines in
+> the .git/config files of A1 and A2
+> [branch "branchA"]
+>     remote = origin
+>     merge = refs/heads/branchA
+> 
+> Then I create a branch in the bare repository B called branchA. Once this is
+> done, all the push and pull works smoothly between the two repositories. 
+> 
+> Just wondering, is there a better way to do this? :)
 
-> +	if (!arg)
-> +		return -1;
-> ...
-> @@ -75,6 +118,58 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
->  	 */
->  	if (argc == 2 && !strcmp(argv[1], "-h"))
->  		usage(builtin_log_usage);
-> +
-> +	parse_options_start(&ctx, argc, argv, prefix, PARSE_OPT_KEEP_DASHDASH |
-> +			PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_STOP_AT_NON_OPTION);
-> +	for (;;) {
-> +		switch (parse_options_step(&ctx, options, log_opt_usage)) {
-> +		case PARSE_OPT_HELP:
-> +			exit(129);
-> +		case PARSE_OPT_DONE:
-> +			goto parse_done;
-> +		case PARSE_OPT_NON_OPTION:
-> +			path = parse_options_current(&ctx);
-> +			pathspec = prefix_path(prefix, prefix ? strlen(prefix) : 0, path);
-> +			range->spec = alloc_filespec(pathspec);
-> +			free((void *)pathspec);
-> +			if (range->nr == 0) {
-> +				if(range->next) {
-> +					die("Path %s need a -L <range> option\n"
-> +					"If you want follow the history of the whole file "
-> +					"whether to using 'git log' without -L or using "
-> +					"'git log -L 1,$ <path>'", range->spec->path);
-> +				} else {
-> +					parse_options_next(&ctx, 1);
-> +					continue;
+Maybe something like the following would work.
 
-This loop smells bad.
+>From A1:
 
-When "-L n,m" appears on the command line, log_line_range_callback() would
-be called and would eat n,m (which is correct), but at that point you
-would not just want to be prepared to accept a non-option ("path" in "-L
-n,m path"), but actually would want to force the user to give a path, no?
-IOW, isn't "git log -L n,m -U20" an error, unless "-U20" is a filename
-that the user wants to track?
+  git checkout -b branchA
+  ... hack hack hack ...
+  git push --set-upstream origin branchA
+  ssh A2
 
-I somehow suspect that futzing with STOP_AT_NON_OPTION (done in the first
-two patches in the series) to parse "-L n,m path" is a misguided design
-attempt.  Shouldn't you be instead giving a support for option callback to
-take more than one argument to do this?
+>From A2:
 
-> +				}
-> +			}
-> +			struct diff_line_range *r = xmalloc(sizeof(*r));
-
-decl-after-statement, but at this point it may be moot as I am doubting
-the higher-level design of this option parser now.
+  git checkout -t origin/branchA
