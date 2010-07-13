@@ -1,94 +1,79 @@
-From: Daniel F <nanotube@gmail.com>
-Subject: Re: git am mangles commit author name.
-Date: Tue, 13 Jul 2010 11:48:55 -0400
-Message-ID: <AANLkTimCjfFh25vbzotufpTnUjfRglzHiQeDzWz8O5RJ@mail.gmail.com>
-References: <AANLkTinqTL7gH4CHEfy8UrhK13xcO_3UzgIyQka00MAh@mail.gmail.com>
-	<20100713054949.GB2425@burratino>
-	<AANLkTinPCZ79vwZ9eVeHChgTuFGBrz3ACi_grM28Q5Y-@mail.gmail.com>
-	<AANLkTikAcZa5J8XhKKJuDCHY3VMhSRzETv0ZQ34EcjMx@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] add configuration variable for --autosquash option of
+ interactive rebase
+Date: Tue, 13 Jul 2010 09:08:49 -0700
+Message-ID: <7vlj9f4b5a.fsf@alter.siamese.dyndns.org>
+References: <20100709124659.GA17559@book.hvoigt.net>
+ <m27hl4zg99.fsf@igel.home> <20100710091517.GA27323@book.hvoigt.net>
+ <7vk4p1fdlg.fsf@alter.siamese.dyndns.org>
+ <20100713112316.GA758@book.hvoigt.net>
+ <AANLkTilFOOK1eXkzWJXlr3zf78xZ82nIK9Jrr1END3-Y@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 17:49:05 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Heiko Voigt <hvoigt@hvoigt.net>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Tue Jul 13 18:09:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYhjE-0005jn-3E
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 17:49:04 +0200
+	id 1OYi35-0007Rb-5g
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 18:09:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756832Ab0GMPs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 11:48:58 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36937 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753457Ab0GMPs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 11:48:57 -0400
-Received: by vws5 with SMTP id 5so5952117vws.19
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 08:48:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=TEYcOo2i9Cyctzuk8V18GwyFC7LhM8B/xFaNVaQGQY0=;
-        b=FWr1l7xcOXP3FfPIzLiAxFjD89p+XqWx8oLfWuLkAQ7UOcWOWsGiqVOD8JDzzKZA83
-         4vbT58s8R7guCBuC9LlPZEBQTIMp39PHbY/GUhAuFeaDCGggHZ/QIo/xQzVQPciuzXVV
-         eyyRt2YUatYCOHrXbdZZD0TJFyi+q9CL5Frzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=U1Y6V6ILlxN82iFQD9vBd0dPg5vpwFoz71lG8Ys0ARZe+SSJRYg5UUQykwRYulL2EQ
-         vT7EV+YfXNzPlchzjMZ7lIoNsEU3rk7bKB8lmDgudXhEO+K9CgyKNC4xo9MNCm1heS/c
-         aaw4biqcXGSITJy5jRrekd7qrkOx6aDVZQjEg=
-Received: by 10.220.124.66 with SMTP id t2mr7895457vcr.46.1279036136015; Tue, 
-	13 Jul 2010 08:48:56 -0700 (PDT)
-Received: by 10.220.186.132 with HTTP; Tue, 13 Jul 2010 08:48:55 -0700 (PDT)
-In-Reply-To: <AANLkTikAcZa5J8XhKKJuDCHY3VMhSRzETv0ZQ34EcjMx@mail.gmail.com>
+	id S1756997Ab0GMQJ0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jul 2010 12:09:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34381 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754054Ab0GMQJE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jul 2010 12:09:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D0E38C2418;
+	Tue, 13 Jul 2010 12:09:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=xvZf/y6skAPg
+	yCuc+gh6E8baLr4=; b=e/tk8ChLhgxu+B/gLKRtIM4io8O+p4AL/Fx3omxO9n+U
+	e0Y1766t7kQQ34yfjBO5bXhmW9sn+reUZbccPG7cX8BgOxPrWvo7wiLW7cQvJ1We
+	mxMvQYc+rdAKyXB7zgZt6NRBbseTI9HQRcTbLOpowEPlMnkBkTftra4gxosQxLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=N+6VA8
+	z4JUDcqSR8yjxO3VjHnE5b/dDiLsmDgEOsxOzMHiPdlwIvR6ZvX5GF9vrc7XOCxt
+	29/mSh9m9x8EU/sECJvYcVw/i0vT4TZJ4pZySiNdPrhxalJi2cnkVO+dmFvO5XMu
+	leXYOOJusofEH0ZVncgMbUevbXMAmB7JtOkg0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 67700C2417;
+	Tue, 13 Jul 2010 12:08:56 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 848EEC2413; Tue, 13 Jul
+ 2010 12:08:51 -0400 (EDT)
+In-Reply-To: <AANLkTilFOOK1eXkzWJXlr3zf78xZ82nIK9Jrr1END3-Y@mail.gmail.com>
+ ("Santi =?utf-8?Q?B=C3=A9jar=22's?= message of "Tue\, 13 Jul 2010 14\:34\:54
+ +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F06834E2-8E98-11DF-B502-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150904>
 
-On 7/13/10, Jay Soffian <jaysoffian@gmail.com> wrote:
-> On Tue, Jul 13, 2010 at 10:54 AM, Daniel F <nanotube@gmail.com> wrote:
->> Apparently, git-am fails when the username is just one word.
->
-> And is less than 3 characters.
->
-> This is happening due to the get_sane_name check in mailinfo.c. The
-> rules for a "sane" name are actually from Linus' original code. From
-> 2744b23 (Start of early patch applicator tools for git., 2005-04-11):
->
-> +static char *sanity_check(char *name, char *email)
-> +{
-> +       int len = strlen(name);
-> +       if (len < 3 || len > 60)
-> +               return email;
-> +       if (strchr(name, '@') || strchr(name, '<') || strchr(name, '>'))
-> +               return email;
-> +       return name;
-> +}
->
-> You could add an option to mailinfo to disable the sanity check and
-> then plumb that option into its various callers.
->
+Santi B=C3=A9jar <santi@agolina.net> writes:
 
-Ah yes, indeed... Well, is there any reason to even have that
-length sanity check in the first place? If someone wants to be
-identified with a nick of 1 or 2 chars, what's wrong with that?
+> You could also merge this entry with the --autosquash as with --squas=
+h
+> option in git-pull(1):
+>
+> --autosquash::
+> --noautosquash::
+> [original text]
+> +
+> If the '--autosquash' option is enabled by default using the
+> configuration variable `rebase.autosquash` this option can be
+> used to override and disable this setting.
 
-I have approximately zero familiarity with various git internals,
-so not sure if anything else depends on this length checkbeing there... But
-if not, if it is essentially arbitrary... why add complexity with
-extra options, instead of removing complexity by simply taking
-out the minimum length check?
-
-At any rate... seeing as how it is hard-coded at the moment,
-I guess my immediate solution would be to discuss with my
-patch submitter about choosing a longer nick :)
-
-Thanks,
-Daniel
+Thanks for the suggestion; that probably reads better.
