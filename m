@@ -1,68 +1,67 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH 2/2] rebase -i: Preserve whitespace at beginning of commit 
-	header in $GIT_EDITOR
-Date: Tue, 13 Jul 2010 13:19:16 +0800
-Message-ID: <AANLkTinY9LGB1v8WdwJvFr8f-InaqFx5BozsAH2xlVBQ@mail.gmail.com>
-References: <1278764821-32647-1-git-send-email-ayiehere@gmail.com>
-	<1278764821-32647-2-git-send-email-ayiehere@gmail.com>
-	<7vbpadfd4r.fsf@alter.siamese.dyndns.org>
-	<AANLkTin9vUliwD5Ufa1vMTC2RZ7TSiyNaPmnDNtz1FQd@mail.gmail.com>
-	<7vzkxw3r8f.fsf@alter.siamese.dyndns.org>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Massive repository corruptions
+Date: Tue, 13 Jul 2010 07:31:54 +0200
+Message-ID: <20100713053154.GC29392@nibiru.local>
+References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 07:19:24 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 13 07:37:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYXtr-0002bp-D3
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 07:19:23 +0200
+	id 1OYYBM-0006Yt-1S
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 07:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751575Ab0GMFTS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 01:19:18 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:41440 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751207Ab0GMFTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 01:19:17 -0400
-Received: by wwi17 with SMTP id 17so663862wwi.1
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 22:19:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=ROlqQcQvwwzSXUnpXMg9hJPzTEf4PBU4PCiYE5wp8ns=;
-        b=cR8eRXHah41eJoUo8zzxmHY3tBE2sS2rez6B8FbgdtC2ZfYX/tV79D5Uwjn+BHhjPx
-         J6On7KvNkoTeeJSfIVISGKy5dXq7LQBUAVn4M4l2Kze/iTBG260oxtldR63+qZnSia9L
-         4sLH8B0jP/Egau0yGHdvNleOsXwu4yV2jIECo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=TluLpDdNg7WYoQlJGxgL8xDmXx2RTOoepzRiMxDuszQOWOc5yTwQYSQTCQL47aeh58
-         IfTBVPon0WdESoLJ/z76NYm9XUUp0qQFsWuT3TgRNCb1w3ClAImaf9/hBXk42BARXGy/
-         FZVtQakX945nvdtKupGjOMSzc8Xw8MiY81AbY=
-Received: by 10.227.128.144 with SMTP id k16mr1526895wbs.196.1278998356223; 
-	Mon, 12 Jul 2010 22:19:16 -0700 (PDT)
-Received: by 10.216.163.142 with HTTP; Mon, 12 Jul 2010 22:19:16 -0700 (PDT)
-In-Reply-To: <7vzkxw3r8f.fsf@alter.siamese.dyndns.org>
+	id S1751559Ab0GMFhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 01:37:22 -0400
+Received: from forum.psychotherapie.org ([217.160.22.205]:47881 "EHLO
+	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751128Ab0GMFhV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Jul 2010 01:37:21 -0400
+Received: (from uucp@localhost)
+	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6D5bJ10032220
+	for git@vger.kernel.org; Tue, 13 Jul 2010 07:37:19 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o6D5VsJp003050
+	for git@vger.kernel.org; Tue, 13 Jul 2010 07:31:54 +0200
+Content-Disposition: inline
+In-Reply-To: <20100713050350.GB29392@nibiru.local>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150876>
 
-On Tue, Jul 13, 2010 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> To put it differently, if we really do perceive this "impossible to spot
-> if you _only_ look at the insn sheet, but it is easy to remember which
-> ones to edit" as an issue, shouldn't the patch at least mention that it
-> attempts to solve only one and punts on the other two that are still to be
-> fixed later (so that other people can come back to help)?
+* Enrico Weigelt <weigelt@metux.de> wrote:
 
-Thanks for spending your time to clarify the issues.  I'll see if I
-can improve the commit
-message and/or the patch to handle those issues.
+<snip>
 
-nazri.
+What's strange: 
+
+when copying pack files from another machine to this box and
+run git index-pack there, it fails with the same error. 
+
+also: pushing into a new (bare) repo sometimes fails with 
+inflate errors, sometimes succeeds but leaves an broken packfile.
+
+
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
