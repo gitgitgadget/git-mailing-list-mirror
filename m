@@ -1,63 +1,79 @@
-From: Valeo de Vries <valeo@valeo.co.cc>
+From: Enrico Weigelt <weigelt@metux.de>
 Subject: Re: Massive repository corruptions
-Date: Tue, 13 Jul 2010 11:17:25 +0100
-Message-ID: <AANLkTil5XgnUqm3hy4OAEBS9-ylUu7rSmKUAQXD7LcHX@mail.gmail.com>
-References: <20100713015600.GA29392@nibiru.local>
-	<AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com>
-	<20100713050350.GB29392@nibiru.local>
-	<20100713053154.GC29392@nibiru.local>
+Date: Tue, 13 Jul 2010 12:22:45 +0200
+Message-ID: <20100713102245.GE29392@nibiru.local>
+References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local> <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git <git@vger.kernel.org>
-To: weigelt <weigelt@metux.de>
-X-From: git-owner@vger.kernel.org Tue Jul 13 12:18:10 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 13 12:30:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYcYz-000149-QR
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 12:18:10 +0200
+	id 1OYckf-0006ql-B1
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 12:30:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754992Ab0GMKRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 06:17:31 -0400
-Received: from mail-wy0-f194.google.com ([74.125.82.194]:57258 "EHLO
-	mail-wy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754938Ab0GMKR3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 06:17:29 -0400
-Received: by wyi11 with SMTP id 11so1269954wyi.1
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 03:17:27 -0700 (PDT)
-Received: by 10.216.68.142 with SMTP id l14mr5007680wed.67.1279016246835;
-        Tue, 13 Jul 2010 03:17:26 -0700 (PDT)
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-        by mx.google.com with ESMTPS id m40sm2309676wej.40.2010.07.13.03.17.26
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 13 Jul 2010 03:17:26 -0700 (PDT)
-Received: by wwi17 with SMTP id 17so835451wwi.1
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 03:17:25 -0700 (PDT)
-Received: by 10.227.154.136 with SMTP id o8mr11433882wbw.189.1279016245385; 
-	Tue, 13 Jul 2010 03:17:25 -0700 (PDT)
-Received: by 10.227.142.147 with HTTP; Tue, 13 Jul 2010 03:17:25 -0700 (PDT)
-In-Reply-To: <20100713053154.GC29392@nibiru.local>
+	id S1754936Ab0GMKaG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jul 2010 06:30:06 -0400
+Received: from forum.psychotherapie.org ([217.160.22.205]:49950 "EHLO
+	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752126Ab0GMKaE convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 06:30:04 -0400
+Received: (from uucp@localhost)
+	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6DAU0B7025978
+	for git@vger.kernel.org; Tue, 13 Jul 2010 12:30:00 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o6DAMjmY016825
+	for git@vger.kernel.org; Tue, 13 Jul 2010 12:22:45 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150895>
 
-On 13 July 2010 06:31, Enrico Weigelt <weigelt@metux.de> wrote:
-> * Enrico Weigelt <weigelt@metux.de> wrote:
->
-> <snip>
->
-> What's strange:
->
-> when copying pack files from another machine to this box and
-> run git index-pack there, it fails with the same error.
->
-> also: pushing into a new (bare) repo sometimes fails with
-> inflate errors, sometimes succeeds but leaves an broken packfile.
+* Avery Pennarun <apenwarr@gmail.com> wrote:
+> On Tue, Jul 13, 2010 at 1:03 AM, Enrico Weigelt <weigelt@metux.de> wr=
+ote:
+> > * Avery Pennarun <apenwarr@gmail.com> wrote:
+> >> Do you know which packfiles are corrupted? =A0Does 'git index-pack=
+' on
+> >> the files reveal anything?
+> >
+> > git@blackwidow ~/metux/work.git/pack $ git index-pack pack-3b6cbd5d=
+c5f54cf390cfaa479cac6a99d7401375.pack
+> > error: inflate: data stream error (incorrect data check)
+> > fatal: pack has bad object at offset 37075832: inflate returned -3
+> >
+> > (that's essentially the same git-gc says)
+>=20
+> What's the size of that .pack file?
 
-The pack files you copied over from another machine, were they sane
-(i.e. non-corrupt)? If so, that perhaps smells like your hard drive
-could be on its last legs...
+Somewhat over 300MB.=20
+
+Lowering the packfile size seemed to help.
+(but I still only can do that for git-repack, not remote transfers)
+
+
+cu
+--=20
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
