@@ -1,67 +1,89 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] format-patch: document the format.to configuration
- setting
-Date: Tue, 13 Jul 2010 10:41:40 +0200
-Message-ID: <20100713084139.GS31048@genesis.frugalware.org>
-References: <20100712185838.GR31048@genesis.frugalware.org>
- <20100713060551.GC2425@burratino>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: Question about 'branch -d' safety
+Date: Tue, 13 Jul 2010 10:00:33 +0100
+Message-ID: <1279011633.2030.17.camel@wpalmer.simply-domain>
+References: <20091230065442.6117@nanako3.lavabit.com>
+	 <m3lj9jknlr.fsf@localhost.localdomain> <20100711065505.GA19606@localhost>
+	 <201007110916.29567.jnareb@gmail.com> <20100711133730.GA10338@localhost>
+	 <7v1vb9hnd9.fsf@alter.siamese.dyndns.org>
+	 <20100712184754.GA18429@localhost>
+	 <7v39vo8dkn.fsf@alter.siamese.dyndns.org>
+	 <20100713071317.GA26348@localhost>
+	 <1279008023.2030.11.camel@wpalmer.simply-domain>
+	 <4C3C2435.8010500@viscovery.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="RnxXMyWEPIZsopkG"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 10:41:54 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Clemens Buchacher <drizzd@aon.at>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Jul 13 11:00:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYb3p-0007AQ-0a
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 10:41:53 +0200
+	id 1OYbM5-0007Xx-6u
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 11:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492Ab0GMIln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 04:41:43 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:41218 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751103Ab0GMIlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 04:41:42 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 7CB14580AD;
-	Tue, 13 Jul 2010 10:41:40 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 35CD644659;
-	Tue, 13 Jul 2010 10:41:40 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 3926912D90F0; Tue, 13 Jul 2010 10:41:40 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20100713060551.GC2425@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752637Ab0GMJAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 05:00:40 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63100 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166Ab0GMJAj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 05:00:39 -0400
+Received: by bwz1 with SMTP id 1so56791bwz.19
+        for <git@vger.kernel.org>; Tue, 13 Jul 2010 02:00:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=if8AsOq8zecR56c+COuASy4QMRNHPV6vg/rlV9vjtP0=;
+        b=II2DL8tjtxfCOubofqN2CSaON9jKP9+cYEmBva693OfoqWbt2wPaoAWnG6GlRM/Osk
+         d7u+gc1ANBlKuWSxqOsebu6fwFl6MRGzynN9Kmin5Y1FwsQgwi4QzcZGVS1i19It+mi2
+         kbkbBpEL/DI5o6yPgVQA8Jw9flp9BoG6eiex0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=uWXOFTw7IWb7+X21KYrEJb/qWbeS/5kjlc7erevheDlmSRRpuZES64B0hBlgGReBG2
+         tBskJVnn9s713UR7qAuiR+pSsO7xQ9vjSAuAd1ExOl/XUJRW+mspZcK4Mz2jb8W2CHt5
+         hvlcjtdmwHptBKgH/N7ZsDstE4eKDWjtl9qFI=
+Received: by 10.204.101.207 with SMTP id d15mr2492657bko.59.1279011636684;
+        Tue, 13 Jul 2010 02:00:36 -0700 (PDT)
+Received: from [192.168.2.128] ([193.164.118.24])
+        by mx.google.com with ESMTPS id y27sm22764398bkw.14.2010.07.13.02.00.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 13 Jul 2010 02:00:35 -0700 (PDT)
+In-Reply-To: <4C3C2435.8010500@viscovery.net>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150890>
 
+On Tue, 2010-07-13 at 10:30 +0200, Johannes Sixt wrote:
+> With that in mind, shouldn't it be exactly the other way around, i.e.,
+> dump the reflog (the objects are still referenced from HEAD's reflog), but
+> keep the ref around in some attic, just in case the branch is so old that
+> its reflog was empty and its objects would otherwise be pruned right away?
+> 
+> -- Hannes
 
---RnxXMyWEPIZsopkG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+It would probably be more sensible to add a "deleted" entry to the
+reflog just prior to removing the ref (yes, this will make HEAD@{1}
+equal to HEAD@{0} in many cases). Keeping the ref itself around in an
+attic doesn't make sense - the reflog can act as a better "attic"
+anyway, if we stop deleting nonempty reflogs just because they don't
+have a live ref associated with them.
 
-On Tue, Jul 13, 2010 at 01:05:51AM -0500, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Maybe something like this would make sense on top?
-
-I don't mind. :)
-
---RnxXMyWEPIZsopkG
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkw8JsMACgkQe81tAgORUJYY2ACgpwk0XlmpJFWsGf9ox0a+3vbe
-IYEAn2leYeFNy8ngGNl0vaL5oZMPS2do
-=Y+jt
------END PGP SIGNATURE-----
-
---RnxXMyWEPIZsopkG--
+Having a separate "attic" just runs into problems of "what if you delete
+the ref twice?" and adds an entirely separate mechanism for tracking
+something which we already have a perfectly good method of tracking: the
+previous state of a ref.
