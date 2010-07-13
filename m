@@ -1,86 +1,67 @@
-From: Nazri Ramliy <ayiehere@gmail.com>
-Subject: Re: [PATCH 1/2] lib-rebase.sh: fake-editor.sh: Allow checking of 
-	commit header(s) in $GIT_EDITOR
-Date: Tue, 13 Jul 2010 09:58:35 +0800
-Message-ID: <AANLkTikZaPR0iaUkREU83EAyYPbuTvsB2frksHqLSX41@mail.gmail.com>
-References: <1278764821-32647-1-git-send-email-ayiehere@gmail.com>
-	<7v7hl1fd0n.fsf@alter.siamese.dyndns.org>
-	<AANLkTin03Ea2fIBQiSDpIqRYLYjWRe9U62nZpfczbfST@mail.gmail.com>
-	<AANLkTik7KDM8Vp_nc1NYRZ89cd1IdyfBffq5vUitbrzj@mail.gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Massive repository corruptions
+Date: Tue, 13 Jul 2010 03:56:00 +0200
+Message-ID: <20100713015600.GA29392@nibiru.local>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 03:58:45 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 13 04:02:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYUle-0005kM-JL
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 03:58:42 +0200
+	id 1OYUpF-0006wf-83
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 04:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755551Ab0GMB6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Jul 2010 21:58:37 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:35131 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751399Ab0GMB6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Jul 2010 21:58:37 -0400
-Received: by wwi17 with SMTP id 17so600643wwi.1
-        for <git@vger.kernel.org>; Mon, 12 Jul 2010 18:58:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=yhgtYL/sX5yV40vqtai+6HnWAO8pukf5w8ZLbSPNahA=;
-        b=E6X3EbaBgwfm4c0BJ8hWOQrI8el7T6syUL/4Ps1a8qGw0yCzsN+yX4u1HmPbjdhW22
-         gsbYY1/iWU/rZqDnEdIxT0302fzo4RoaDSGNOt1Iq4a0fB0mMvrzdMTjPlVlTs4t0mi4
-         kgrNBEF+xSBYU+I3o62h8OxrNKh0lcdazXtls=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=WIjP/tUIWo29n6Wd+I/2karJBnadJkmC1oXO6lI5/H1fuK8mJr/Es3t9nSXMvvAGyh
-         HxUw5PCWTJHUZzn7zzgefC23TWGaV09xriETVG90vQf+Afxzp/1f2J0kk3HayEPm0iwe
-         m+ZlcyWe846mimYxfLd9M5JSvmU3c18MLzr+c=
-Received: by 10.227.142.136 with SMTP id q8mr13405262wbu.95.1278986315640; 
-	Mon, 12 Jul 2010 18:58:35 -0700 (PDT)
-Received: by 10.216.163.142 with HTTP; Mon, 12 Jul 2010 18:58:35 -0700 (PDT)
-In-Reply-To: <AANLkTik7KDM8Vp_nc1NYRZ89cd1IdyfBffq5vUitbrzj@mail.gmail.com>
+	id S1755949Ab0GMCCU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Jul 2010 22:02:20 -0400
+Received: from forum.psychotherapie.org ([217.160.22.205]:58507 "EHLO
+	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755532Ab0GMCCT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Jul 2010 22:02:19 -0400
+Received: (from uucp@localhost)
+	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6D22GbA017831
+	for git@vger.kernel.org; Tue, 13 Jul 2010 04:02:16 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o6D1u0bw017027
+	for git@vger.kernel.org; Tue, 13 Jul 2010 03:56:00 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150869>
 
-On Tue, Jul 13, 2010 at 8:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Come on ;-) The most portable, traditional and straightforward way to
-> spell that would be "[a-z][a-z]*", no?
 
-On Tue, Jul 13, 2010 at 9:39 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> sed 's/^pick [0-9a-f]\{1,\} //'
->
-> is a valid posix BRE. Alternately + can be expressed as:
->
-> sed 's/^pick [0-9a-f][0-9a-f]* //'
+Hi folks,
 
-Thanks for the cluestick guys.
 
-On Tue, Jul 13, 2010 at 8:50 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Somebody is already using test_set_editor inside lib-rebase.sh --- where
-> else does it come from other than test-lib?  Don't the scripts that
-> include lib-rebase already include test-lib.sh to make test_cmp available
-> to you?
+I've just reorganized several repositories (eg. splitted off a large 
+repo into several small ones), and then I had massive corruptions
+(broken pack files) in the new repos (after they already had been clean).
 
-On Tue, Jul 13, 2010 at 9:39 AM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> Don't the scripts that source lib-rebase.sh all source test-lib.sh
-> ahead of it? lib-rebase.sh shouldn't need to re-source test-lib.sh.
-> No?
+Maybe it has something to do with a cronjob which frequently GC's
+all the repos, and it could get even worse if the fs sometimes 
+goes full within this process.
 
-Ah, sorry for not reporting the exact cause of the problem, it is
-actually due to the fact that test_cmp will be called (later) by
-"fake-editor.sh", which does not source test-lib.sh, and sourcing
-test-lib.sh will not be a correct solution in that case yes?
+Could multiple GCs running on the same repo cause this ?
 
-nazri.
+
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
