@@ -1,93 +1,193 @@
-From: Thomas Berg <merlin66b@gmail.com>
-Subject: Re: git-p4 move/delete errors
-Date: Tue, 13 Jul 2010 13:22:40 +0200
-Message-ID: <AANLkTimWeZq3yPo01Ytj-rfP5tY8k100kDHJX_eWRwUq@mail.gmail.com>
-References: <AANLkTinN0Av1CO7mZU-QKeApq43UmEykUV093eyTtKQN@mail.gmail.com>
-	<AANLkTikPHJuf5JUe096BWTWO_oF9u3gNlVNuw7Ik32WQ@mail.gmail.com>
-	<AANLkTin7eMFXT1FwZ2ojcAYgqIMSYnkz-uCoRlHvV6Tm@mail.gmail.com>
-	<F94DAB9A-A06D-46ED-9AAA-EDE850365054@gmail.com>
-	<AANLkTilQtnIzNCcRzYzSqPEvXenHgND-_SAWmUeM64BH@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v3] add configuration variable for --autosquash option of
+	interactive rebase
+Date: Tue, 13 Jul 2010 13:24:40 +0200
+Message-ID: <20100713112316.GA758@book.hvoigt.net>
+References: <20100709124659.GA17559@book.hvoigt.net> <m27hl4zg99.fsf@igel.home> <20100710091517.GA27323@book.hvoigt.net> <7vk4p1fdlg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
-To: Lance Linder <llinder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 13 13:23:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 13 13:24:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYdZj-00065J-IA
-	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 13:22:59 +0200
+	id 1OYdbT-00074X-Eb
+	for gcvg-git-2@lo.gmane.org; Tue, 13 Jul 2010 13:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753173Ab0GMLWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 07:22:43 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:35524 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751218Ab0GMLWm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 07:22:42 -0400
-Received: by wwi17 with SMTP id 17so886705wwi.1
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 04:22:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=+b74O9RA/h5jhiGARkKlTndjswBpBIZyEs16km+vhMU=;
-        b=ejUJ0FyeFeJRXWIAkF5+erN7VqzXnCGjR3cKqL0ycIqf/BqQ+UBmhVlwfArYjVjuTd
-         Cciz1OkXFFxGfDmkpuZ4s7YDse2HZyzFiU629V5U8Gt/8gDs9/G1aOumgRkQr92eeSfo
-         BJd9c8hK5E6nAWmvElxULp81tVsYSmXjBMQWE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=IM85MVjF84S8zVdIQ0uW7cVpg7BnHoLAz5MBkP7K/2knU4EeVNax5Nxt+K9NWbdaoM
-         wBg3i2kOChpXdOO0iU4EfyJro4zLs5mzQtcaALp6LsPKSWvBAzIa4VG3gllK6J3tECE+
-         8g0vJbxpUd0dtM0BOXpmPXrlbtVrQla+YxMbI=
-Received: by 10.227.154.9 with SMTP id m9mr6431311wbw.123.1279020160618; Tue, 
-	13 Jul 2010 04:22:40 -0700 (PDT)
-Received: by 10.216.45.205 with HTTP; Tue, 13 Jul 2010 04:22:40 -0700 (PDT)
-In-Reply-To: <AANLkTilQtnIzNCcRzYzSqPEvXenHgND-_SAWmUeM64BH@mail.gmail.com>
+	id S1755532Ab0GMLYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 07:24:43 -0400
+Received: from darksea.de ([83.133.111.250]:56381 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755391Ab0GMLYm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 07:24:42 -0400
+Received: (qmail 13376 invoked from network); 13 Jul 2010 13:24:40 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 13 Jul 2010 13:24:40 +0200
+Content-Disposition: inline
+In-Reply-To: <7vk4p1fdlg.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150897>
 
-On Fri, Jul 9, 2010 at 11:32 PM, Thomas Berg <merlin66b@gmail.com> wrote:
+If you use this feature regularly you can now enable it by default. In
+case the user wants to override this config on the commandline
+--no-autosquash can be used to force disabling.
 
-> Anyway, as far as I can see from the git-p4 source code, the command
-> is only used to generate the diff preview in the interactive window
-> that pops up when you "git p4 submit". So if you replace the line
-> diff = p4_read_pipe("diff -du ...")
-> with
-> diff = ""
->
-> it should start working again (the diff preview part will become
-> empty). I'm unable to test it right now, but fairly sure it will work.
-> I'll see if I can find a better solution when I have access to the
-> Perforce server again.
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+On Sun, Jul 11, 2010 at 10:55:55PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > If you use this feature regularly you can now enable it by default.
+> 
+> And if you use this often _but_ you sometimes need to countermand from the
+> command line, do you provide a way to do so (I didn't bother to check).
 
-It seems like they have done some bugfixes to "p4 diff -du ...", I
-guess that's why we get different behaviour now. It prints the correct
-output, but exits with an error code anyway when files have been
-removed.
+No I did not see the exact use case because you could simply not prefix
+you commits with 'fixup!' or 'squash!' and if your project regularly
+uses those on commits you probably would like to configure different
+prefixes.
 
-My solution is in the diff below. I'll run with it for a few days,
-then I'll submit a proper patch to the mailing list (unless someone
-else beat me to it).
+On the other hand I think it is a good convention to always provide a
+--no-... option for things you can enable in the config and it does not
+hurt to do so. So here is a new patch implementing this. I also fixed
+some places with missing && in the testcases I implemented.
 
-Thomas
+cheers Heiko
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index c1ea643..19f4519 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -706,7 +706,7 @@ class P4Submit(Command):
-             submitTemplate = self.prepareLogMessage(template, logMessage)
-             if os.environ.has_key("P4DIFF"):
-                 del(os.environ["P4DIFF"])
--            diff = p4_read_pipe("diff -du ...")
-+            diff = p4_read_pipe("diff -du ...", ignore_error=True)
+ Documentation/git-rebase.txt |    8 ++++++++
+ git-rebase--interactive.sh   |    4 ++++
+ t/t3415-rebase-autosquash.sh |   40 ++++++++++++++++++++++++++++++++--------
+ 3 files changed, 44 insertions(+), 8 deletions(-)
 
-             newdiff = ""
-             for newFile in filesToAdd:
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index be23ad2..d357ab1 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -199,6 +199,9 @@ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
+ 
++rebase.autosquash::
++	If set to true enable '--autosquash' option by default.
++
+ OPTIONS
+ -------
+ <newbase>::
+@@ -335,6 +338,11 @@ idea unless you know what you are doing (see BUGS below).
+ +
+ This option is only valid when the '--interactive' option is used.
+ 
++--no-autosquash::
++	If the '--autosquash' option is enabled by default using the
++	configuration variable `rebase.autosquash` this option can be
++	used to override and disable this setting.
++
+ --no-ff::
+ 	With --interactive, cherry-pick all rebased commits instead of
+ 	fast-forwarding over the unchanged ones.  This ensures that the
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 6b86abc..7b35f80 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -111,6 +111,7 @@ VERBOSE=
+ OK_TO_SKIP_PRE_REBASE=
+ REBASE_ROOT=
+ AUTOSQUASH=
++test "$(git config --bool rebase.autosquash)" = "true" && AUTOSQUASH=t
+ NEVER_FF=
+ 
+ GIT_CHERRY_PICK_HELP="  After resolving the conflicts,
+@@ -795,6 +796,9 @@ first and then run 'git rebase --continue' again."
+ 	--autosquash)
+ 		AUTOSQUASH=t
+ 		;;
++	--no-autosquash)
++		AUTOSQUASH=
++		;;
+ 	--onto)
+ 		shift
+ 		ONTO=$(parse_onto "$1") ||
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index b63f4e2..37cb89a 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -21,38 +21,62 @@ test_expect_success setup '
+ 	git tag base
+ '
+ 
+-test_expect_success 'auto fixup' '
++test_auto_fixup() {
+ 	git reset --hard base &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+ 	git commit -m "fixup! first"
+ 
+-	git tag final-fixup &&
++	git tag $1 &&
+ 	test_tick &&
+-	git rebase --autosquash -i HEAD^^^ &&
++	git rebase $2 -i HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	test 3 = $(wc -l <actual) &&
+-	git diff --exit-code final-fixup &&
++	git diff --exit-code $1 &&
+ 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+ 	test 1 = $(git cat-file commit HEAD^ | grep first | wc -l)
++}
++
++test_expect_success 'auto fixup (option)' '
++	test_auto_fixup final-fixup-option --autosquash
++'
++
++test_expect_success 'auto fixup (config)' '
++	git config rebase.autosquash true &&
++	test_auto_fixup final-fixup-config-true &&
++	test_must_fail test_auto_fixup fixup-config-true-no --no-autosquash &&
++	git config rebase.autosquash false &&
++	test_must_fail test_auto_fixup final-fixup-config-false
+ '
+ 
+-test_expect_success 'auto squash' '
++test_auto_squash() {
+ 	git reset --hard base &&
+ 	echo 1 >file1 &&
+ 	git add -u &&
+ 	test_tick &&
+ 	git commit -m "squash! first"
+ 
+-	git tag final-squash &&
++	git tag $1 &&
+ 	test_tick &&
+-	git rebase --autosquash -i HEAD^^^ &&
++	git rebase $2 -i HEAD^^^ &&
+ 	git log --oneline >actual &&
+ 	test 3 = $(wc -l <actual) &&
+-	git diff --exit-code final-squash &&
++	git diff --exit-code $1 &&
+ 	test 1 = "$(git cat-file blob HEAD^:file1)" &&
+ 	test 2 = $(git cat-file commit HEAD^ | grep first | wc -l)
++}
++
++test_expect_success 'auto squash (option)' '
++	test_auto_squash final-squash --autosquash
++'
++
++test_expect_success 'auto squash (config)' '
++	git config rebase.autosquash true &&
++	test_auto_squash final-squash-config-true &&
++	test_must_fail test_auto_squash squash-config-true-no --no-autosquash &&
++	git config rebase.autosquash false &&
++	test_must_fail test_auto_squash final-squash-config-false
+ '
+ 
+ test_expect_success 'misspelled auto squash' '
+-- 
+1.7.2.rc2.1.gf1735.dirty
