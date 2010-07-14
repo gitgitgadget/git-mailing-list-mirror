@@ -1,116 +1,90 @@
-From: Daniel Shahaf <d.s@daniel.shahaf.name>
-Subject: Re: [PATCH 1/9] Add LICENSE
-Date: Wed, 14 Jul 2010 07:47:12 +0300
-Message-ID: <20100714044712.GB3081@daniel3.local>
-References: <1279064176-6645-1-git-send-email-artagnon@gmail.com> <1279064176-6645-2-git-send-email-artagnon@gmail.com>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH v3] add configuration variable for --autosquash option
+ of interactive rebase
+Date: Tue, 13 Jul 2010 22:15:46 -0700
+Message-ID: <4C3D4802.2010707@gmail.com>
+References: <20100709124659.GA17559@book.hvoigt.net> <m27hl4zg99.fsf@igel.home> <20100710091517.GA27323@book.hvoigt.net> <7vk4p1fdlg.fsf@alter.siamese.dyndns.org> <20100713112316.GA758@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 06:47:52 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 14 07:24:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYtss-0008EB-Up
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 06:47:51 +0200
+	id 1OYuS7-0001m4-CX
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 07:24:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751453Ab0GNErp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 00:47:45 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36657 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751437Ab0GNEro (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 00:47:44 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 06CBE16EA4D;
-	Wed, 14 Jul 2010 00:47:44 -0400 (EDT)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 14 Jul 2010 00:47:44 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=smtpout; bh=+QH9FDv9usu6nwgeJOywFYGIHO4=; b=eOGSfCWESdC93yh3jWITEbwWtCbnTrqwEzzI2JIQtSzuTWKeWnmZPn8yD2hLxjCBOH9vif/vGmDF5z88kF2Ks3huSvvy1HvDDOeV9ZEQSz5Oc+R+fjOCbq9EIeiRQMh3GUyOrNFLpevJU28gCgPsaS8/Z9ZjWKPxjsLRRBNmBFI=
-X-Sasl-enc: O7BuPdyvza60kAuC2LjYSzbiYBY/x1xaWvcDy+qp2kLH8H4uYqghJFWmr8shbA 1279082863
-Received: from daniel3.local (bzq-79-182-17-192.red.bezeqint.net [79.182.17.192])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2343620288;
-	Wed, 14 Jul 2010 00:47:40 -0400 (EDT)
-Mail-Followup-To: Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>, Will Palmer <wpalmer@gmail.com>,
-	Greg Stein <gstein@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <1279064176-6645-2-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751437Ab0GNFYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 01:24:09 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:38587 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750983Ab0GNFYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 01:24:08 -0400
+Received: by pzk26 with SMTP id 26so1515269pzk.19
+        for <git@vger.kernel.org>; Tue, 13 Jul 2010 22:24:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=FQq1KEZFW7kluZj6huF01XrHcP89/gxB4n65XvXzx2g=;
+        b=Cq5DrQp2SmwrgJ8loFzcYxzEUV44TFS4hq01GpF02YXh8fdyeqpxrAW7WIaSAbeTAY
+         J6eQGlLnJaeUgZdJieWf492ZgyJ20L0A3h05FHl2IPXruN48RVlks0sGxo/a7aQNPzO3
+         lBalal8yvhm8ao89zmEpEJZEd1IdqeajiAyGQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=Rg/+AQdpY+zrEoMZuFqqz5lZVyKgkicH/AWJH4S+jh2/wdKdVpzZZSoQgeqABrSklp
+         ZDweiGXh16/MordAqYr1YOrRK9FOdv7FwZWNv93I3WJo7jdoO6rGF2ceZsD1v/x6J4jz
+         j5Hxm47DicjLe9XTV8h/DE6JBxpQoSIEB/bLU=
+Received: by 10.114.122.13 with SMTP id u13mr1780013wac.0.1279084554196;
+        Tue, 13 Jul 2010 22:15:54 -0700 (PDT)
+Received: from [192.168.1.101] ([75.85.182.25])
+        by mx.google.com with ESMTPS id c10sm98170574wam.13.2010.07.13.22.15.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Jul 2010 22:15:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.4) Gecko/20100713 Thunderbird/3.1
+In-Reply-To: <20100713112316.GA758@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150964>
 
-[ are all of these CCs really necessary?  that's another thing I almost never
-see over at dev@svn ]
-
-Ramkumar Ramachandra wrote on Wed, Jul 14, 2010 at 01:36:08 +0200:
-> License the project under a two-clause BSD-style license. A dual
-> license will be required later when attempting to merge into
-> Subversion.
-> 
-
-If it ends in svn trunk as subversion/svnrdump/ (and not as a tools/ utility),
-it's going to have to be licensed under the Apache License v2.
-
-Daniel
-(AFAIK)
-
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  LICENSE |   26 ++++++++++++++++++++++++++
->  1 files changed, 26 insertions(+), 0 deletions(-)
->  create mode 100644 LICENSE
-> 
-> diff --git a/LICENSE b/LICENSE
-> new file mode 100644
-> index 0000000..4367b7c
-> --- /dev/null
-> +++ b/LICENSE
-> @@ -0,0 +1,26 @@
-> +Copyright (C) 2010 Ramkumar Ramachandra
-> +All rights reserved.
+  On 07/13/2010 04:24 AM, Heiko Voigt wrote:
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index be23ad2..d357ab1 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -199,6 +199,9 @@ rebase.stat::
+>   	Whether to show a diffstat of what changed upstream since the last
+>   	rebase. False by default.
+>
+> +rebase.autosquash::
+> +	If set to true enable '--autosquash' option by default.
 > +
-> +Redistribution and use in source and binary forms, with or without
-> +modification, are permitted provided that the following conditions
-> +are met:
-> +1. Redistributions of source code must retain the above copyright
-> +   notice(s), this list of conditions and the following disclaimer
-> +   unmodified other than the allowable addition of one or more
-> +   copyright notices.
-> +2. Redistributions in binary form must reproduce the above copyright
-> +   notice(s), this list of conditions and the following disclaimer in
-> +   the documentation and/or other materials provided with the
-> +   distribution.
-> +
-> +THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) ``AS IS'' AND ANY
-> +EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-> +IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-> +PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER(S) BE
-> +LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-> +CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-> +SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-> +BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-> +WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-> +OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-> +EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-> -- 
-> 1.7.1
-> 
+
+Can you squash this in too? I know we duplicate the wording, but rebase.stat has set some precedence here on that one.
+
+---->8-------
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 79d54e5..9e3c48b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1533,6 +1533,9 @@ rebase.stat::
+         Whether to show a diffstat of what changed upstream since the last
+         rebase. False by default.
+
++rebase.autosquash::
++       If set to true enable '--autosquash' option by default.
++
+  receive.autogc::
+         By default, git-receive-pack will run "git-gc --auto" after
+         receiving data from git-push and updating refs.  You can stop
