@@ -1,72 +1,77 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [GSoC update] git-remote-svn: Week 11
-Date: Wed, 14 Jul 2010 10:58:22 +0200
-Message-ID: <20100714085822.GC25630@jack.stsp.name>
-References: <20100712143546.GA17630@debian>
- <4C3B2B48.4070408@drmicha.warpmail.net>
- <20100712152403.GH1931@jack.stsp.name>
- <1278949191.1611.5.camel@wpalmer.simply-domain>
+From: Alexander Gladysh <agladysh@gmail.com>
+Subject: git rebase does not understand --work-tree
+Date: Wed, 14 Jul 2010 13:04:46 +0400
+Message-ID: <AANLkTimnk6tflv9ZZCydlX1la35GjsRfvjgTk44uDFbO@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Greg Stein <gstein@gmail.com>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Bert Huijben <rhuijben@collab.net>,
-	Sam Vilain <sam@vilain.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 10:58:51 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 14 11:04:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYxnl-0003hu-HK
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 10:58:49 +0200
+	id 1OYxte-0006bn-9D
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 11:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752787Ab0GNI6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 04:58:45 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:56122 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264Ab0GNI6n (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 04:58:43 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from jack.stsp.name (i577B52DC.versanet.de [87.123.82.220])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6E8wTM9015013
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Jul 2010 10:58:29 +0200
-Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
-	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id o6E8wSp1008714;
-	Wed, 14 Jul 2010 10:58:28 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.name (8.14.3/8.14.3/Submit) id o6E8wMFt026501;
-	Wed, 14 Jul 2010 10:58:22 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <1278949191.1611.5.camel@wpalmer.simply-domain>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752503Ab0GNJEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 05:04:48 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:37300 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751738Ab0GNJEs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 05:04:48 -0400
+Received: by wyb42 with SMTP id 42so781192wyb.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 02:04:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=H2E7QwotuBlLomuVxTiPMY/BeXQVObH/EXn9DEmbPko=;
+        b=mztl3ielsVa1y8H4o5zioJl1USsox6qFi/EQFjrWknOgNbEcp9XmxArzbYgoUnIg+d
+         HV61RzCDpyDQOrABwguw0HIABpNMGv9J5Fvwh6WnNexL8w8vYZQXhqdNTc+Sueu1FyWm
+         q5qvEwhZ07DNwR4dEOr6YjxFYgYwG3zdNbgjk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=HWJhirGseBV/XtpBNRxFWEai/Cs5pvnb2r2yCOoom9NdftHM/a8Mz8dCmoBrP1J1KK
+         09bxYMFhIzmJ9BNiXbv6wr9L9qJhhoVBWLYoFbaw/4sJ2n9YRYF/GHbHItjyiE3v0jst
+         CHobOGMvX+hLG+pxW++A/Qt3HQsUGiX42h+Kk=
+Received: by 10.216.178.199 with SMTP id f49mr11522040wem.110.1279098286683; 
+	Wed, 14 Jul 2010 02:04:46 -0700 (PDT)
+Received: by 10.216.165.6 with HTTP; Wed, 14 Jul 2010 02:04:46 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150973>
 
-On Mon, Jul 12, 2010 at 04:39:51PM +0100, Will Palmer wrote:
-> On Mon, 2010-07-12 at 17:24 +0200, Stefan Sperling wrote:
-> > Regarding compilation, take a look at tools/dev/unix-build/Makefile.svn
-> This is all moot, because the whole point is that svndumpr compiles
-> against libsvn, so you don't need the whole svn source-tree.
+Hi, list!
 
-It's not moot. svndumpr may now or in the future be using API calls which
-are specific to the Subversion 1.7 libraries, in which case you'll need
-to compile Subversion from trunk to get compatible libraries until
-1.7 is released. Maybe Ramkumar wants to maintain a 1.6.x-specific
-version you can use, but that won't be living in our repository anyway.
+$ git --version
+git version 1.7.1.1
 
-Stefan
+I often use --work-tree and --git-dir to avoid doing cd in my scripts.
+
+However, I've found that git rebase does not understand --work-tree
+option (see test below). Is this fixable?
+
+Thanks,
+Alexander.
+
+mkdir tmp
+cd tmp
+git init
+echo "test">file.txt
+git add .
+git commit -m "initial commit"
+
+git checkout -b other-branch
+echo "test2">otherfile.txt
+git add .
+git commit -m "second commit"
+
+cd ..
+git --git-dir=tmp/.git --work-tree=tmp rebase other-branch
+
+fatal: /usr/local/libexec/git-core/git-rebase cannot be used without a
+working tree.
