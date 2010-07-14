@@ -1,85 +1,76 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: Re: [PATCH/RFC 0/4] Providing mechanism to list available 
-	repositories
-Date: Wed, 14 Jul 2010 15:29:31 -0400
-Message-ID: <AANLkTilCoyOcm8cvW06UTWJk7P4m6WNLeZICHrTp5-aI@mail.gmail.com>
-References: <1279076475-27730-1-git-send-email-gdb@mit.edu>
-	<7viq4hyj3g.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 1/2] add basic tests for merge-tree
+Date: Wed, 14 Jul 2010 12:59:29 -0700
+Message-ID: <7veif5ygv2.fsf@alter.siamese.dyndns.org>
+References: <1279127047-3273-1-git-send-email-wmpalmer@gmail.com>
+ <1279127047-3273-2-git-send-email-wmpalmer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 21:29:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 21:59:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ7eH-00043U-Is
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 21:29:41 +0200
+	id 1OZ87N-0003Fv-JG
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 21:59:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756779Ab0GNT3g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 15:29:36 -0400
-Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:60856 "EHLO
-	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754734Ab0GNT3g convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 15:29:36 -0400
-X-AuditID: 12074423-b7be0ae000000a83-7d-4c3e101f4029
-Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
-	by dmz-mailsec-scanner-6.mit.edu (Symantec Brightmail Gateway) with SMTP id 4D.28.02691.F101E3C4; Wed, 14 Jul 2010 15:29:35 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o6EJTY7C010529
-	for <git@vger.kernel.org>; Wed, 14 Jul 2010 15:29:34 -0400
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6EJTW5O022853
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 14 Jul 2010 15:29:34 -0400 (EDT)
-Received: by wwi17 with SMTP id 17so2399822wwi.1
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 12:29:31 -0700 (PDT)
-Received: by 10.227.147.135 with SMTP id l7mr16534619wbv.37.1279135771785; 
-	Wed, 14 Jul 2010 12:29:31 -0700 (PDT)
-Received: by 10.227.129.16 with HTTP; Wed, 14 Jul 2010 12:29:31 -0700 (PDT)
-In-Reply-To: <7viq4hyj3g.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: AAAAARUsEms=
+	id S1756979Ab0GNT7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 15:59:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63747 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754090Ab0GNT7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 15:59:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 937D8C44B2;
+	Wed, 14 Jul 2010 15:59:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EQKsXaGFNoeHTwHhdJGQBdPT78o=; b=wu+ZhH
+	vZCFgqnAOdJh6sV9Dgq2TUxs3olcw5y+xUiTHzMA7N6N68GtIZu/5JyCLtj+xQM/
+	PcQAZOjgrBuN5GMzKWPMDrVO+5emPJJA10olgTa+0yxn/zdjzUrN/rdQ3yzibNxs
+	lnq5awQ5WOgSa5C9IF9yWjQoZmyvOKe9kPN+I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qGxjMDpIp8dsK7M/6xtHsRcCdrq0W1vM
+	UCNsancNfY2MP4s7N2cg4PLlKlmjFT9lhF5hzpNfpAkLmnK7dNF14RDiStxzM5nQ
+	0zPeO276ov5u4K8dK2luoGrrj/WQ+qbu0RL/JvYX+IstNTPqG9hzX6Dk9OVy4DnV
+	x+IN6sPzD7A=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6A6D1C44AF;
+	Wed, 14 Jul 2010 15:59:35 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A88D5C44AD; Wed, 14 Jul
+ 2010 15:59:31 -0400 (EDT)
+In-Reply-To: <1279127047-3273-2-git-send-email-wmpalmer@gmail.com> (Will
+ Palmer's message of "Wed\, 14 Jul 2010 18\:04\:06 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 53830DC4-8F82-11DF-B000-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151031>
 
->> We find this mechanism useful in that it requires no extra
->> infrastructure on either our end or the user's end. =A0Our
->> implementation is extensible, allowing the system administrator to
->> place arbitrary commands in ~/git-shell-commands (if the directory i=
-s
->> omitted, no extra functionality is exposed), and also supports an
->> interactive mode.
->>
->> What do people think of this approach? =A0I'd love to get this
->> functionality merged in some form.
+Will Palmer <wmpalmer@gmail.com> writes:
+
+> merge-tree had no test cases, so here we add some very basic tests for
+> it, including some known-breakages.
 >
-> It seems to me that any time you need to add a new helper command, th=
-e
-> administrator needs to make sure that appears in ~$user/git-shell-com=
-mands
-> of all the users who need it. =A0When adding a new user, a similar
-> management action needs to happen. =A0Perhaps that is done by making =
-a
-> symlink from all the users' home directories to one shared place. =A0=
-Is that
-> the general idea?
-That's correct.  Our particular environment only has a single git
-user, but if we were to add more we would probably make
-git-shell-commands a symlink as you suggest.
+> Signed-off-by: Will Palmer <wmpalmer@gmail.com>
+> ---
+> diff --git a/t/t4300-merge-tree.sh b/t/t4300-merge-tree.sh
+> new file mode 100755
+> index 0000000..c02c986
+> --- /dev/null
+> +++ b/t/t4300-merge-tree.sh
+> @@ -0,0 +1,257 @@
+> ...
+> +test_expect_'file add A, !B' '
 
-> In any case, I'd prefer that the sample command implementations like =
-list
-> and help to live in contrib/ somewhere. =A0They are not part of what =
-the
-> main Makefile needs to know about, right?
-Also correct.  I'll look for a reasonable place within contrib/ to put =
-them.
+Oops?
+
+I'll queue with obvious/trivial fixups.  Thanks.
