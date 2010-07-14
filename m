@@ -1,71 +1,72 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: [BUG] git-svn returning "Incomplete data: Delta source ended 
-	unexpectedly"
-Date: Wed, 14 Jul 2010 13:05:29 +0000
-Message-ID: <AANLkTiljzOuaEToKscBxlc4qGilyNRiUtjoBxW1lJZlp@mail.gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Massive repository corruptions
+Date: Wed, 14 Jul 2010 15:22:24 +0200
+Message-ID: <20100714132224.GF29392@nibiru.local>
+References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local> <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com> <20100713102245.GE29392@nibiru.local> <AANLkTimYeKr0asVE9mo8VcQEp5kdC18Wk5ykY9OFwixN@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Wong <normalperson@yhbt.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 14 15:05:45 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 14 15:29:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ1ei-0003vA-Hg
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 15:05:44 +0200
+	id 1OZ21K-0000Fr-Ec
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 15:29:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514Ab0GNNFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 09:05:38 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:40433 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752900Ab0GNNFh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 09:05:37 -0400
-Received: by gwj18 with SMTP id 18so3321522gwj.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 06:05:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=5YdiskyaSCdk+QMpyWzK+tNS+ZERTG22lyOgnGZEvLE=;
-        b=DB0nIzWvMZDk1gUufmHKaPPGJ+PCOOGwYC0C6IGUlGys/UonGOK1a8ubl2CApXHBz9
-         TEDVbNaCwGUIciYHIXTdZ+LOzSB/aoWTw8ZnV8oJg+zp/eG4aUTLq+YwoXftKLkb5/6p
-         fzizN80vmH1iM4G1BFfoZWBqrC3hFkYp/XUxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=KQHMcKOiHByflES3gkd+YcAbbIznc7mS54rnXb7IqlAQQoCHnUHtHDXm7osHun8HdU
-         yTve5Xhqyi443X5elNHg0G0chivypQfqAmKRsYvie/PNSpp5RgN7CLhzDPehAGE88fad
-         sigKZFzZKqD3JuU9qndFolgf1ExfYOnUrb920=
-Received: by 10.101.201.37 with SMTP id d37mr18510360anq.62.1279112729364; 
-	Wed, 14 Jul 2010 06:05:29 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Wed, 14 Jul 2010 06:05:29 -0700 (PDT)
+	id S1756999Ab0GNN3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 09:29:01 -0400
+Received: from forum.psychotherapie.org ([217.160.22.205]:52896 "EHLO
+	s15216962.onlinehome-server.info" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756980Ab0GNN27 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 09:28:59 -0400
+Received: (from uucp@localhost)
+	by s15216962.onlinehome-server.info (8.13.3/8.13.3) with UUCP id o6EDSv3Z005159
+	for git@vger.kernel.org; Wed, 14 Jul 2010 15:28:57 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o6EDMPGf004969
+	for git@vger.kernel.org; Wed, 14 Jul 2010 15:22:25 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTimYeKr0asVE9mo8VcQEp5kdC18Wk5ykY9OFwixN@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150988>
 
-I run a SVN -> Git mirror which fetches & rebases with git-svn and
-pushes the result to GitHub:
+* Avery Pennarun <apenwarr@gmail.com> wrote:
 
-    http://github.com/avar/openstreetmap-mirror/blob/master/josm-mirror.sh
+> If you got corruption at offset 37,075,832 (about 37 megs) and the
+> pack is over 300 megs, then the file itself is corrupted right in the
+> middle (not truncated) and this couldn't have been caused by disk full
+> errors.  Either you have memory corruption problems, or disk
+> corruption problems, or filesystem corruption problems.  You'd better
+> watch out.
 
-Something about what that script is doing corrupted the git-svn
-repository, likely due to a git-svn bug. Now when I do git svn fetch
-on 1.7.1:
+hmm, I have no signs of any hw corruption, but I had a patched
+version of zlib installed. Maybe some of my patches broke it, 
+so some strange overflow or sth like that caused that trouble.
 
-    $ git svn fetch
-    Incomplete data: Delta source ended unexpectedly at
-/usr/lib/git-core/git-svn line 5061
+Meanwhile, after reinstalling (unpatched) zlib and recloning the
+broken repos, everything seems fine again. Maybe some of you would
+like to have a look at my zlib patches ;-o
 
-I re-cloned the repository and started running my mirror again from
-that. But it would be nice if we could track this bug down.
 
-Here's a copy of the repository:
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
-    http://v.nix.is/~avar/josm.old.tar.gz
-
-Unpacking it and running git svn fetch will yield the same error on
-another box I have with 1.7.1.
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
