@@ -1,75 +1,92 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Merging branches
-Date: Wed, 14 Jul 2010 01:24:52 -0400
-Message-ID: <AANLkTimFGQg1KEqpVBvifrLR8_BH_p6s6qswn614s58q@mail.gmail.com>
-References: <1279056529462-5289861.post@n2.nabble.com> <AANLkTikPdOVCs5aB7Gs5QCFGDIgBm00DO5XPkP39mzIW@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [CGit RFC/PATCH 0/5] Commit graph on CGit's 'log' view
+Date: Wed, 14 Jul 2010 07:59:01 +0200
+Message-ID: <201007140759.02822.johan@herland.net>
+References: <1279056219-27096-1-git-send-email-johan@herland.net>
+ <1279057221-28036-1-git-send-email-johan@herland.net>
+ <AANLkTilWENrG8wf1P4EMlzLSj0CdG9s3M8WAwmAZTYUX@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: jhapk <pradeep.kumar.jha@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 07:25:24 2010
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 07:59:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYuTA-00026y-NY
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 07:25:21 +0200
+	id 1OYuzx-0003lO-O3
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 07:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751526Ab0GNFZO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 01:25:14 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:50567 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983Ab0GNFZN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 01:25:13 -0400
-Received: by gwj18 with SMTP id 18so3183953gwj.19
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 22:25:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1EMNaKBGRjZB40QkH6Z/nglAbmAaMJPgMOxrQl+BrpA=;
-        b=AEwe9LnSujvFtv7ztf1m7aZll3MQhzu6kO51FbxM5+5Bt2gHSr1zw+MXJQQqY5YN0C
-         09MH+gnpD0kA56HIA1u65wI6SB0rleiWg1sAJcWdGGmOclCXirmiZVTB4oammh32lLj6
-         r4S8q29aGUAdWDhAyhOFkdBpgR+5Bq61Vdemw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=hIqg6b2C4fikIFZrcia2nGP/zx4kWNhjeZ/1NgU5bTqrWgK98B6Ux5zLV4Vrufos5a
-         Cybv97slBKYkmjzj1lUftpqeJSxqBauHTLNftBLq7wGcJXQsc9CkmlzGA5Op9EZaZu9b
-         xxgStBvVivmWIUrIZy2R6Of/MQ9fRxvToBv94=
-Received: by 10.150.52.11 with SMTP id z11mr7930309ybz.274.1279085112367; Tue, 
-	13 Jul 2010 22:25:12 -0700 (PDT)
-Received: by 10.151.85.19 with HTTP; Tue, 13 Jul 2010 22:24:52 -0700 (PDT)
-In-Reply-To: <AANLkTikPdOVCs5aB7Gs5QCFGDIgBm00DO5XPkP39mzIW@mail.gmail.com>
+	id S1751507Ab0GNF7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 01:59:08 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:52874 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751248Ab0GNF7H (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 01:59:07 -0400
+Received: from get-mta-scan03.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L5J009CJ9YGBY40@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 14 Jul 2010 07:59:04 +0200 (MEST)
+Received: from get-mta-scan03.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 2BF001EEF394_C3D5228B	for <git@vger.kernel.org>; Wed,
+ 14 Jul 2010 05:59:04 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan03.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id E45FD1EEC17E_C3D5227F	for <git@vger.kernel.org>; Wed,
+ 14 Jul 2010 05:59:03 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L5J00KUU9YF0W10@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 14 Jul 2010 07:59:03 +0200 (MEST)
+User-Agent: KMail/1.13.5 (Linux/2.6.34-ARCH; KDE/4.4.5; x86_64; ; )
+In-reply-to: <AANLkTilWENrG8wf1P4EMlzLSj0CdG9s3M8WAwmAZTYUX@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150966>
 
-On Tue, Jul 13, 2010 at 6:05 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, Jul 13, 2010 at 21:28, jhapk <pradeep.kumar.jha@gmail.com> wr=
-ote:
->> I have a git history which looks something like as in the figure abo=
-ve. I
->> want to merge Branch A in Branch B. However, the commits a1, a2 and =
-a3 are
->> ugly and so I don't want those commits in my Branch B log. Is there =
-anyway
->> that I can only pull the final form of Branch A without pulling the =
-whole
->> history of Branch A?
->
-> Yes, you use rebase to squash or drop those commits, and then merge t=
-he branch.
+On Wednesday 14 July 2010, Lars Hjemli wrote:
+> On Tue, Jul 13, 2010 at 23:40, Johan Herland <johan@herland.net> wrote:
+> > Here are some patches to implement an ASCII-art commit graph on CGit's
+> > 'log' page. The patches reuse the graph-drawing code from Git's own
+> > 'git log --graph'. As such, these patches depend on the two patches
+> > I just submitted to the Git list for extending the graph.h API.
+> 
+> Thanks. I've applied the git patches to the jh/graph branch in
+> git://hjemli.net/pub/git/git (based on v1.7.1-rc2) and updated the
+> submodule in cgit to point at the tip of this branch. The cgit patches
+> are then applied on top of this and merged into the wip branch in
+> git://hjemli.net/pub/git/cgit.
 
-Or just "git merge --squash".
+Thanks.
 
-Have fun,
+> The end result can be seen in action at http://hjemli.net/git/cgit/log
+> [1] - it works, but I'll have to think about possible compromises
+> between correctness and performance (i.e. the dependency on
+> --topo-order).
 
-Avery
+Yes, this feature definitely introduces a performance tradeoff. IMHO it's up 
+to the server admin to choose whether to enable this in the config or not. 
+If you're serving large repos from a small server, you might simply want to 
+turn it off.
+
+We might also want to consider adding a query (and cookie?) flag enabling 
+visitors to turn off graphs for faster browsing as well.
+
+BTW, have you had time to look at my previous patch series for ignoring 
+whitespace in diffs?
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
