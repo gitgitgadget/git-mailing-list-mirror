@@ -1,85 +1,94 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/9] Add LICENSE
-Date: Wed, 14 Jul 2010 13:23:42 +0200
-Message-ID: <20100714112342.GB3496@debian>
+Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
+Date: Wed, 14 Jul 2010 13:26:20 +0200
+Message-ID: <20100714112620.GC3496@debian>
 References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
- <1279064176-6645-2-git-send-email-artagnon@gmail.com>
- <20100714044712.GB3081@daniel3.local>
+ <20100713235825.GC12639@debian>
+ <20100714001530.GB2308@burratino>
+ <20100714002235.GF12639@debian>
+ <20100714002843.GC2308@burratino>
+ <20100714004959.GG12639@debian>
+ <20100714070323.GB25630@jack.stsp.name>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Daniel Shahaf <d.s@daniel.shahaf.name>,
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <
-X-From: git-owner@vger.kernel.org Wed Jul 14 13:22:05 2010
+	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Bert Huijben <rhuijben@collab.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
+To: Stefan Sperling <stsp@elego.de>
+X-From: git-owner@vger.kernel.org Wed Jul 14 13:24:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ02N-0000pg-6t
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 13:22:03 +0200
+	id 1OZ04v-0001wo-9u
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 13:24:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754665Ab0GNLV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 07:21:57 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:54957 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752454Ab0GNLV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 07:21:56 -0400
-Received: by ewy23 with SMTP id 23so1367018ewy.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 04:21:55 -0700 (PDT)
+	id S1753648Ab0GNLYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 07:24:36 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:48025 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753371Ab0GNLYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 07:24:35 -0400
+Received: by eya25 with SMTP id 25so970341eya.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 04:24:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
+        h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=NgDyiWVog4eR3hggjUleKXoWV6piFtJSwlnzmRwGBr8=;
-        b=PgjL9aihFWkiwS0ktnHzUc/xUpXc6WcAbD5CVePmlh7bI9V7VMtPXud7Sz1VzH4Fgr
-         InuibC7UOVIetQw4YqqQkynHcSMGgfuC0+ANwdIPEqcN5aFAEShJyiyAKlkAUKu7j9Ni
-         pvSdfx74LIURtDsjgQHhVxK9ly/BgaoSpg6K4=
+        bh=96c0aDAep8zR6E63Z1mKLU5R1KGVHCpeNaT4aVOLgZg=;
+        b=XujnHkERFQqczH+qYaVX6phvTtxvUJ1W2MTJxvqWHkmHQVXhtlSn+PF9l6OIFni37l
+         RMBfPTzVEj/q7d4X9OJL3/2qSVxRxnuL5nFmeK/7JJtxtilmXXSup1JdOeboykcPBZxi
+         mCV20eOXz9k586l45cxa2EXFokzNTJESNjBbo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=QXGcnyfiBbKbPKaSduNDdHtYwwSRDy9kzbKO7kXNZVInTohzT0nPkOTknl2kfCAehM
-         L7J8SCbjC2hIrqJx1D/mqPsZo1v78PlXmy1UDRk6xD7FzQK3P3XtAdAHqsGXAU5HAgf5
-         l3JFAZvdLo89DjoNVdPbaDXhLm8GSspPn9Lfk=
-Received: by 10.213.35.18 with SMTP id n18mr6185467ebd.7.1279106515232;
-        Wed, 14 Jul 2010 04:21:55 -0700 (PDT)
+        b=NxpPqRKvB8cJ4LC/MOkApv4xaDmB9kFsG4XA7F7adbLtHZEMNCcGIE0etYuNIE7tpP
+         cPfjNWp3NEFRtG6y1yVi/KDGuK24siJHVmw19smmvkwdqe3O9WgGBB+6fQoaderXx4y9
+         e9o7b3LXq8qqaKYKf/qz8OU/FnrklxDsf9mMI=
+Received: by 10.213.25.130 with SMTP id z2mr1152066ebb.42.1279106673918;
+        Wed, 14 Jul 2010 04:24:33 -0700 (PDT)
 Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id v59sm56344065eeh.16.2010.07.14.04.21.53
+        by mx.google.com with ESMTPS id v59sm56395699eeh.4.2010.07.14.04.24.31
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Jul 2010 04:21:54 -0700 (PDT)
+        Wed, 14 Jul 2010 04:24:32 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100714044712.GB3081@daniel3.local>
+In-Reply-To: <20100714070323.GB25630@jack.stsp.name>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150979>
 
-Hi Daniel,
+Hi Stefan,
 
-Daniel Shahaf writes:
-> [ are all of these CCs really necessary?  that's another thing I almost never
-> see over at dev@svn ]
+Stefan Sperling writes:
+> Git devs will want a version of svnrdump that compiles against
+> the 1.6.x libraries. We'll want a version that compiles against
+> the trunk (so we can release it with 1.7).
+> 
+> So depending on which APIs svnrdump is using, it's likely that
+> you'll have to maintain 2 slightly differing versions anyway,
+> until 1.7 is released. (The current ETA for 1.7 is autumn, BTW).
 
-It's Git culture. Since our list is so high volume, many people aren't
-subscribed to the list. Even those who are subscribed often cannot
-read all the emails. When I CC someone on a list email, I'm implicitly
-telling them "Please review this patch" or "Please comment on this" or
-simply "You were involved with this work; just FYI, this is where it's
-going". Most email clients have convinient markers to tell people if
-they're marked on the To or Cc fields, or are simply receiving it
-because they're subscribed to a list.
+Right, that's alright. I'll just have a commit that I'll keep `rebase
+--onto`ing to have the 1.6-specific changes.
 
-> If it ends in svn trunk as subversion/svnrdump/ (and not as a tools/ utility),
-> it's going to have to be licensed under the Apache License v2.
+> > Also, could the Subversion
+> > people confirm that licensing isn't an issue?
+> 
+> I didn't catch any licensing discussion. What's the issue?
 
-Yes, I know. PATCH v2 is licensed appropriately. My intial idea was to
-dual-license it: two-clause BSD for the git.git version and Apache for
-the ASF version, but it seems like too much work now.
+I guess there's no issue then- sorry, I know close to nothing about
+licensing.
 
 -- Ram
