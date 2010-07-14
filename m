@@ -1,86 +1,113 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
-Date: Wed, 14 Jul 2010 14:55:05 +0200
-Message-ID: <20100714125505.GF25630@jack.stsp.name>
-References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
- <20100713235825.GC12639@debian>
- <20100714001530.GB2308@burratino>
- <20100714002235.GF12639@debian>
- <20100714002843.GC2308@burratino>
- <20100714004959.GG12639@debian>
- <20100714070323.GB25630@jack.stsp.name>
- <20100714112620.GC3496@debian>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 14:56:20 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC/PATCH] am/pull/rebase/stash: cd_to_toplevel before require_work_tree
+Date: Wed, 14 Jul 2010 14:55:21 +0200
+Message-ID: <96abf622ca2cf92998ce4ed393ccaa75d95dd9a8.1279112025.git.git@drmicha.warpmail.net>
+References: <4C3DB396.2040109@drmicha.warpmail.net>
+Cc: Alexander Gladysh <agladysh@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 14 14:56:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ1VY-00075D-3d
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 14:56:16 +0200
+	id 1OZ1Vk-0007EF-Dn
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 14:56:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756654Ab0GNM4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 08:56:11 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:58455 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754703Ab0GNM4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 08:56:09 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from jack.stsp.name (i577B52DC.versanet.de [87.123.82.220])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6ECtDSN005533
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Jul 2010 14:55:13 +0200
-Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
-	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id o6ECtCSl030769;
-	Wed, 14 Jul 2010 14:55:12 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.name (8.14.3/8.14.3/Submit) id o6ECt5AN028555;
-	Wed, 14 Jul 2010 14:55:05 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20100714112620.GC3496@debian>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1756716Ab0GNM4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 08:56:24 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:38993 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754703Ab0GNM4X (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 08:56:23 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EB64916EB7D;
+	Wed, 14 Jul 2010 08:56:22 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 14 Jul 2010 08:56:22 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=l4LDfHl1vqTCXO2Yy5cDMJPjzzY=; b=ob5hik6J2U+GRtujKlNUOElzDugDJO7xi9Lqg0felKpxR9Hbtbyu9ggY8052nwF8Qg34lHcXjOriELc6CNr2cDb6XpE91WDPtOnIyzcihsIFtX66r0xFWMloxSwsl+s7l3xYilSE/iD4K1gshxh2Q0LFBITP5s8iv7KIdMcuLp0=
+X-Sasl-enc: dAijMn9k23V7wjDZnTInobRzQwQxeDckhyuRk/2xsMZD 1279112182
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5AFFD4DED78;
+	Wed, 14 Jul 2010 08:56:22 -0400 (EDT)
+X-Mailer: git-send-email 1.7.2.rc1.212.g850a
+In-Reply-To: <4C3DB396.2040109@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150986>
 
-On Wed, Jul 14, 2010 at 01:26:20PM +0200, Ramkumar Ramachandra wrote:
-> Stefan Sperling writes:
-> > I didn't catch any licensing discussion. What's the issue?
-> 
-> I guess there's no issue then- sorry, I know close to nothing about
-> licensing.
+Currently, "cd_to_toplevel" comes right after "require_work_tree" for
+these commands.
 
-Well, the only theoretical issue I can see is that the FSF says that
-the GPLv2 was incompatible with the Apache 2.0 licence.
-See http://www.apache.org/licenses/GPL-compatibility.html
+Put "cd_to_toplevel" before "require_work_tree" so that these commands
+do not die fatally when called with --work-tree or GIT_WORK_TREE
+properly set from outside of the work tree.
 
-So if git distributed their own version of svnrdump licensed under GPLv2,
-depending on who you believe, distributors of Git binaries would violate
-the GPLv2 by linking svnrdump to the Subversion libraries.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ git-am.sh     |    2 +-
+ git-pull.sh   |    2 +-
+ git-rebase.sh |    2 +-
+ git-stash.sh  |    2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-Mercurial recently switched to GPLv3 for this reason. They have code
-that uses Subversion's Python bindings. They made this switch on their
-own accord, however, after consulting the Software Freedom Law Center.
-The Subversion project itself was not involved in that decision.
-
-Possible workarounds are simply ignoring the FSF, or distributing all
-copies of svnrdump under Apache 2.0 or GPLv3 (but the svnrdump included
-in Subversion itself must be licensed under Apache 2.0).
-
-Stefan
+diff --git a/git-am.sh b/git-am.sh
+index e7f008c..bf81030 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -39,8 +39,8 @@ rebasing*       (internal use for git-rebase)"
+ . git-sh-setup
+ prefix=$(git rev-parse --show-prefix)
+ set_reflog_action am
+-require_work_tree
+ cd_to_toplevel
++require_work_tree
+ 
+ git var GIT_COMMITTER_IDENT >/dev/null ||
+ 	die "You need to set your committer info first"
+diff --git a/git-pull.sh b/git-pull.sh
+index a09a44e..83c25b9 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -10,8 +10,8 @@ SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
+ . git-sh-setup
+ set_reflog_action "pull $*"
+-require_work_tree
+ cd_to_toplevel
++require_work_tree
+ 
+ 
+ die_conflict () {
+diff --git a/git-rebase.sh b/git-rebase.sh
+index ab4afa7..96dd34f 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -31,8 +31,8 @@ SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
+ . git-sh-setup
+ set_reflog_action rebase
+-require_work_tree
+ cd_to_toplevel
++require_work_tree
+ 
+ LF='
+ '
+diff --git a/git-stash.sh b/git-stash.sh
+index 1d95447..4564892 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -13,8 +13,8 @@ USAGE="list [<options>]
+ SUBDIRECTORY_OK=Yes
+ OPTIONS_SPEC=
+ . git-sh-setup
+-require_work_tree
+ cd_to_toplevel
++require_work_tree
+ 
+ TMP="$GIT_DIR/.git-stash.$$"
+ trap 'rm -f "$TMP-*"' 0
+-- 
+1.7.2.rc1.212.g850a
