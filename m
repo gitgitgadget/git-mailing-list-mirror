@@ -1,107 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC/PATCH 2/3] Documentation: gitrevisions
-Date: Wed, 14 Jul 2010 10:42:05 +0200
-Message-ID: <4C3D785D.1050000@drmicha.warpmail.net>
-References: <cover.1278346173.git.git@drmicha.warpmail.net> <7efed85cefddff1cd2cc3a0e3802326306117f4e.1278346173.git.git@drmicha.warpmail.net> <4C3D562B.3070404@gmail.com>
+From: Stefan Sperling <stsp@elego.de>
+Subject: Re: [GSoC update] git-remote-svn: Week 11
+Date: Wed, 14 Jul 2010 10:58:22 +0200
+Message-ID: <20100714085822.GC25630@jack.stsp.name>
+References: <20100712143546.GA17630@debian>
+ <4C3B2B48.4070408@drmicha.warpmail.net>
+ <20100712152403.GH1931@jack.stsp.name>
+ <1278949191.1611.5.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 10:43:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Greg Stein <gstein@gmail.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Bert Huijben <rhuijben@collab.net>,
+	Sam Vilain <sam@vilain.net>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 10:58:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYxYf-0004CK-VC
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 10:43:14 +0200
+	id 1OYxnl-0003hu-HK
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 10:58:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752464Ab0GNInI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 04:43:08 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43929 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752190Ab0GNInF (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 04:43:05 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 6343E16E7D8;
-	Wed, 14 Jul 2010 04:43:04 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 14 Jul 2010 04:43:04 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1uHKuiNWuUZ9VKtkXi/w+hiCfJs=; b=BSiQpMnIo1HItz909yet5AxTriqJlpESw/uSsyqxQFnxGrHxGSW67Ts1CgsNwTgXUN+XOcFivJuHXSWO8YDXYv7ZaJBa7Lu3q/2VnhZTul1EClMEn7ik7VICxBOn40JKCT0TgGJxkh7ztKmNz+5mRUllaoZycsOYZ46OeIWzW28=
-X-Sasl-enc: F6ng/RPKQRJsEmBL/HZN51Q4Ll5xxFSbZxfHiRO/rP8v 1279096984
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D3F774F6253;
-	Wed, 14 Jul 2010 04:43:03 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100714 Lightning/1.0b2pre Lanikai/3.1.2pre
-In-Reply-To: <4C3D562B.3070404@gmail.com>
+	id S1752787Ab0GNI6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 04:58:45 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:56122 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752264Ab0GNI6n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 04:58:43 -0400
+X-Envelope-From: stsp@stsp.name
+Received: from jack.stsp.name (i577B52DC.versanet.de [87.123.82.220])
+	(authenticated bits=128)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6E8wTM9015013
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 14 Jul 2010 10:58:29 +0200
+Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
+	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id o6E8wSp1008714;
+	Wed, 14 Jul 2010 10:58:28 +0200 (CEST)
+Received: (from stsp@localhost)
+	by jack.stsp.name (8.14.3/8.14.3/Submit) id o6E8wMFt026501;
+	Wed, 14 Jul 2010 10:58:22 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1278949191.1611.5.camel@wpalmer.simply-domain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150972>
 
-Stephen Boyd venit, vidit, dixit 14.07.2010 08:16:
->   On 07/05/2010 09:11 AM, Michael J Gruber wrote:
->> +
->> +DESCRIPTION
->> +-----------
->> +
->> +Many Git commands take revision parameters as arguments. Depending on
->> +the command, they denote a specific commit or, for commands which
->> +walk the revision graph (such as linkgit:git-log[1]), all commits which can
->> +be reached from that commit. In the latter case one can also specify a
->> +range of revisions explicitly.
->> +
->> +In addition, some Git commands (such as linkgit:git-show[1]) also take
->> +revision parameters which denote other objects than commits, e.g. blobs
->> +("files") or trees ("directories of files").
->> +
-> 
-> Is any of this text (section?) necessary besides including revisions.txt? It seems that revisions.txt nicely covers the types of revisions in the first paragraph of each section and these two paragraphs repeat that.
-> 
-> Can you squash this in?
-> 
-> --->8----
-> 
-> index fc4789f..0e25c5f 100644
-> --- a/Documentation/gitrevisions.txt
-> +++ b/Documentation/gitrevisions.txt
-> @@ -10,19 +10,6 @@ SYNOPSIS
->   gitrevisions
-> 
-> 
-> -DESCRIPTION
-> ------------
-> -
-> -Many Git commands take revision parameters as arguments. Depending on
-> -the command, they denote a specific commit or, for commands which
-> -walk the revision graph (such as linkgit:git-log[1]), all commits which can
-> -be reached from that commit. In the latter case one can also specify a
-> -range of revisions explicitly.
-> -
-> -In addition, some Git commands (such as linkgit:git-show[1]) also take
-> -revision parameters which denote other objects than commits, e.g. blobs
-> -("files") or trees ("directories of files").
-> -
->   include::revisions.txt[]
-> 
-> 
-> 
+On Mon, Jul 12, 2010 at 04:39:51PM +0100, Will Palmer wrote:
+> On Mon, 2010-07-12 at 17:24 +0200, Stefan Sperling wrote:
+> > Regarding compilation, take a look at tools/dev/unix-build/Makefile.svn
+> This is all moot, because the whole point is that svndumpr compiles
+> against libsvn, so you don't need the whole svn source-tree.
 
-I added this text on purpose. The "DESCRIPTION" section is meant to give
-a concise description of the overall picture so that, e.g., you
-understand which section will answer which question without having to
-read all of them. In this case it gives you a short overview of what can
-be referred to by revisions (commit, commit range, general object)
-before the sections go into the details of how to specify them.
+It's not moot. svndumpr may now or in the future be using API calls which
+are specific to the Subversion 1.7 libraries, in which case you'll need
+to compile Subversion from trunk to get compatible libraries until
+1.7 is released. Maybe Ramkumar wants to maintain a 1.6.x-specific
+version you can use, but that won't be living in our repository anyway.
 
-Also, as I mentioned in the cover letter, I suggest a rework of the
-actual (included, old) content if that structure is to stay. So, in a
-second step, one could avoid duplications.
-
-But here, I find it really natural (if not necessary) that the first
-paragraph in each detailed section picks up on the pertaining parts of
-the concise description.
-
-Michael
+Stefan
