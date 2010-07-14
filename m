@@ -1,127 +1,105 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2/RFC] gitweb: Prepare for splitting gitweb
-Date: Wed, 14 Jul 2010 23:21:24 +0200
-Message-ID: <201007142321.26034.jnareb@gmail.com>
-References: <1278496676-26575-1-git-send-email-jnareb@gmail.com> <201007141125.01863.jnareb@gmail.com> <AANLkTikDtlHwtk4j0E5vYViFVWtsV_yA5e90z-6nZb8_@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 0/4] git --paginate: do not commit pager choice too
+ early
+Date: Wed, 14 Jul 2010 16:30:43 -0500
+Message-ID: <20100714213043.GA1590@burratino>
+References: <20100626192203.GA19973@burratino>
+ <7vpqzacs3h.fsf@alter.siamese.dyndns.org>
+ <7v630hyf5r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@ucw.cz>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 23:21:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 23:31:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ9Oj-0000Hi-P9
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 23:21:46 +0200
+	id 1OZ9YR-0004yO-Ab
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 23:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757562Ab0GNVVk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 17:21:40 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50559 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756624Ab0GNVVj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 17:21:39 -0400
-Received: by bwz1 with SMTP id 1so218694bwz.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 14:21:38 -0700 (PDT)
+	id S1757419Ab0GNVbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 17:31:40 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:56815 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754606Ab0GNVbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 17:31:40 -0400
+Received: by gxk23 with SMTP id 23so204208gxk.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 14:31:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=9uNE8xgm8QFq5FXPF8y108h1jpBHOyYyVmWBEY8sIG4=;
-        b=ZebgqINQVwlpX/QOoLnTLIQ0yLWyhqtkBRdEpsZ6lQpe+6kzxhRPHH9X21/Z1AiRrU
-         reaZnh/fHkuzrAKCfx5xz+YDVh/cHzfn9VvE0c2es4BczSnkIjCYwsXjMF/84VKg6kuo
-         cmTgK8sTFz1P3x8iLn7alYEFDpnB6A5dTTqWM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=x1Q3YS/OFHVi6Mf9I6YYnT2l2LSm0oNAkAIr6shJ5S4=;
+        b=sV45QuAVR+bNmBkJXGol5vkVxoIfweDTSBry+FKBGzkdmRYPBkY7ky2Qj6BApFX6JG
+         NHOzd6kBiXL9QwaDTdQV0CrC5beH7NuKy2fgLLZt/WQJvUd9Kc0ivKl7pcAbWrGCj42t
+         eH73CurtbgQXQ4s6x8EWsnwnwvxK4B/C+9F1Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Xm8tFIEUy6hGMNgTj2KU2xKext2PboqOXPybLCVO5aB1dZLybcBBHeoxofIDfCxohi
-         nwF12VJC04WJuIlcnh9WjkihShTziRvo7bjWL0UJpv/qogLU9WiB8RRGbhc18Awhi0tv
-         P8GSaM2X0d7aED6dWkAQrscVx/xOpEs2OVS0g=
-Received: by 10.204.46.129 with SMTP id j1mr8154338bkf.144.1279142497093;
-        Wed, 14 Jul 2010 14:21:37 -0700 (PDT)
-Received: from [192.168.1.13] (abvm223.neoplus.adsl.tpnet.pl [83.8.210.223])
-        by mx.google.com with ESMTPS id s34sm2127656bkk.13.2010.07.14.14.21.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Jul 2010 14:21:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTikDtlHwtk4j0E5vYViFVWtsV_yA5e90z-6nZb8_@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=YHsOhAn+gQ3kXiAQ50g2vKb+xpQH/2ZGYYFh5U8uPFztQQDmUV7DoDkc3LeATKk5Nm
+         ojKdLLRI5MYb/M+ziuMAaXuJnArR1n5tHmeYCYCE/z8IEQLmEIFuy80sPk125IefDq77
+         mUC4+ZbhTgYhMvKYbwlpR2cN/B4TQ3Z2T8TgA=
+Received: by 10.224.1.42 with SMTP id 42mr9762261qad.91.1279143099086;
+        Wed, 14 Jul 2010 14:31:39 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id js14sm1192643qcb.18.2010.07.14.14.31.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Jul 2010 14:31:37 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <7v630hyf5r.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151037>
 
-On Wed, 14 Jul 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Jul 14, 2010 at 09:24, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
->> On Wed, 14 Jul 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>> On Tue, Jul 13, 2010 at 22:24, Jakub Narebski <jnareb@gmail.com> wr=
-ote:
->>>
->>>> I wrote simple script that tests result of __DIR__ and $FindBin::B=
-in.
->>>> For cgi-bin / mod_cgi it was:
->>>>
->>>> =C2=A0__DIR__ =C2=A0 =C2=A0 =C2=A0 =3D /var/www/cgi-bin/gitweb (sy=
-mlink to /home/local/gitweb)
->>>> =C2=A0$FindBin::Bin =3D /home/local/gitweb
->>>>
->>>> For mod_perl (ModPerl::Registry handler) it was
->>>>
->>>> =C2=A0__DIR__ =C2=A0 =C2=A0 =C2=A0 =3D /var/www/perl/gitweb (symli=
-nk to /home/local/gitweb)
->>>> =C2=A0$FindBin::Bin =3D /
->>>>
->>>> As you can see it's useless. =C2=A0I have't checked the FastCGI ca=
-se...
->>>
->>> Thanks for spending time researching what was an offhand ignorant "=
-hey
->>> wasn't .." comment. Also, sorry :)
->>
->> Nothing to it. =C2=A0I wanted to check if there really is a problem =
-with
->> FindBin on mod_perl, as I was not sure with description in "Known Is=
-sues"
->> section in FindBin manpage.
->>
->> Note that using 'FindBin->again();' after 'use FindBin;' fixes this
->> issue. =C2=A0So perhaps it would be beter to use FindBin than borrow=
- code
->> for __DIR__ from Dir::Self.
->=20
-> That should work, though note that FindBin->again requires at least
-> perl 5.8.3. This should work on older versions (if Gitweb cares):
->=20
->     if ($] <=3D 5.008003) {
->         delete $INC{'FindBin.pm'};
->         require FindBin;
->     } else {
->         FindBin->again;
->     }
->=20
-> See https://rt.cpan.org/Public/Bug/Display.html?id=3D57988 and
-> http://search.cpan.org/diff?from=3DModule-Install-0.98&to=3DModule-In=
-stall-0.99
-> for reference.
+Junio C Hamano wrote:
 
-Thanks for research.
+> ... and for commands that do not use RUN_SETUP, what happens?
 
-I don't think gitweb cares, as it requires Perl with sane Unicode suppo=
-rt,
-which means at least Perl 5.8.0 (for Encode module), but I think it rea=
-lly
-means at least 5.8.3
+run_builtin() still commits pager choice.  The bug is neither
+fixed nor made worse for them.
 
---=20
-Jakub Narebski
-Poland
+> Missing from the above enumeration are are external commands.  They depend
+> on commit_pager_choice() to be called before execv_dashed_external() gets
+> called.  For example, "git -p request-pull $args" no longer works with
+> this patch.
+
+Something like the following may help.
+
+This does not protect against calling setup_pager() more than
+once.  Once the first pager has been set up, isatty(1) is false,
+preventing additional pagers from being spawned and competing with it.
+
+As futureproofing against --paginate=always, setup_pager() should
+probably be taught to check pager_in_use(), but that should
+probably wait for a separate patch.
+
+diff --git a/git.c b/git.c
+index 25e7693..2dcd952 100644
+--- a/git.c
++++ b/git.c
+@@ -162,6 +162,7 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	int unused_nongit;
+ 
+ 	subdir = setup_git_directory_gently(&unused_nongit);
++	commit_pager_choice();
+ 
+ 	alias_command = (*argv)[0];
+ 	alias_string = alias_lookup(alias_command);
+@@ -433,6 +434,7 @@ static void execv_dashed_external(const char **argv)
+ 	int status;
+ 
+ 	strbuf_addf(&cmd, "git-%s", argv[0]);
++	commit_pager_choice();
+ 
+ 	/*
+ 	 * argv[0] must be the git command, but the argv array
+-- 
