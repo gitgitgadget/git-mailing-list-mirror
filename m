@@ -1,127 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 1/4] Allow creation of arbitrary git-shell commands
-Date: Wed, 14 Jul 2010 08:27:58 -0700
-Message-ID: <7vbpaaytfl.fsf@alter.siamese.dyndns.org>
-References: <1279076475-27730-1-git-send-email-gdb@mit.edu>
- <1279076475-27730-2-git-send-email-gdb@mit.edu>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: serving git with both "git:" and "http:" and submodules
+Date: Wed, 14 Jul 2010 18:29:51 +0300
+Message-ID: <4C3DD7EF.6010805@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Jul 14 17:28:15 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 14 17:30:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ3sd-0004J1-Ai
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:28:15 +0200
+	id 1OZ3uO-0005LH-RR
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757288Ab0GNP2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 11:28:09 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45950 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757227Ab0GNP2I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 11:28:08 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 291F4C4889;
-	Wed, 14 Jul 2010 11:28:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gTZVwHYcVUv9hYlvX8LhJ82AzlY=; b=xNIw8J
-	MSBGF1Cv6j5ITTryh81y+UwgbOCwFEJs4u5vUb83rX+UEyBHGthA7NTuNcF3/Tng
-	HjCHTQyThHTMwJrCr+OEEMJ5WkJdX+BccVO4STX50aiIpPI/IEu5uhAH9Pdq21q/
-	0iKOBL7P0MJ6vfG9RYl+xj+E/BiABZVsRnwxc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gQq4shAS6qXM0WFM3vHxtaa5O9AKBOXW
-	3KXLbLSxz/lOoqwpzDRm/EEl4EK0dkEMhgj+GmwaZXl78I0hZOhCZoS4qDicMu0y
-	WclwTkj00GYAGR7hgc6Vi4t3glyFzsjhmnCTXTdk+DDRlZ5ZjOyRVwaKsOVT7PJW
-	e0OckOh6+qo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 009E0C4873;
-	Wed, 14 Jul 2010 11:28:02 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 05D6DC486F; Wed, 14 Jul
- 2010 11:27:59 -0400 (EDT)
-In-Reply-To: <1279076475-27730-2-git-send-email-gdb@mit.edu> (Greg Brockman's
- message of "Tue\, 13 Jul 2010 23\:01\:12 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 64718F28-8F5C-11DF-B993-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757072Ab0GNP34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 11:29:56 -0400
+Received: from daytona.panasas.com ([67.152.220.89]:33370 "EHLO
+	daytona.int.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756811Ab0GNP3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 11:29:54 -0400
+Received: from fs2.bhalevy.com ([172.17.33.181]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 14 Jul 2010 11:29:52 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4
+X-OriginalArrivalTime: 14 Jul 2010 15:29:52.0889 (UTC) FILETIME=[67B8BE90:01CB2369]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150996>
 
-Greg Brockman <gdb@MIT.EDU> writes:
 
-> This provides a mechanism for the server to expose custom
-> functionality to clients.  My particular use case is that I would like
-> a way of discovering all repositories available for cloning.  A
-> client that clones via
->   git clone user@example.com
-> can invoke a command by
->   ssh user@example.com $command
+I have a public tree that I maintain for users. The tree is consisted
+of a main-tree and a submodule tree which is also served from the same
+server.
 
-Please have a blank line above and below sample command display like these
-for readability.
+The main tree:
+git://my-domain.org/my-tree/.git
+The sub-tree:
+git://my-domain.org/my-tree/sub/.git
 
-> Signed-off-by: Greg Brockman <gdb@mit.edu>
-> ---
->  shell.c |   16 ++++++++++++++++
->  1 files changed, 16 insertions(+), 0 deletions(-)
->
-> diff --git a/shell.c b/shell.c
-> index e4864e0..3fee0ed 100644
-> --- a/shell.c
-> +++ b/shell.c
-> @@ -3,6 +3,8 @@
->  #include "exec_cmd.h"
->  #include "strbuf.h"
->  
-> +#define COMMAND_DIR "git-shell-commands"
-> +
->  static int do_generic_cmd(const char *me, char *arg)
->  {
->  	const char *my_argv[4];
-> @@ -33,6 +35,12 @@ static int do_cvs_cmd(const char *me, char *arg)
->  	return execv_git_cmd(cvsserver_argv);
->  }
->  
-> +static int is_valid_cmd_name(const char *cmd)
-> +{
-> +	/* Test command contains no . or / characters */
-> +	return cmd[strcspn(cmd, "./")] == '\0';
-> +}
-> +
->  
->  static struct commands {
->  	const char *name;
-> @@ -99,5 +107,13 @@ int main(int argc, char **argv)
->  		}
->  		exit(cmd->exec(cmd->name, arg));
->  	}
-> +
-> +	/* Shell should be spawned with cwd in the git user's home directory */
-> +	if (chdir(COMMAND_DIR))
-> +		die("unrecognized command '%s'", prog);
+in my .gitmodule I have the usual
+[submodule "sub"]
+        url = git://my-domain.org/my-tree/sub/.git
 
-Hmm, could you justify "should be" above please?
+So smart people using git will just do:
+1. $ git clone git://my-domain.org/my-tree/.git
+2. $ git submodule init
+3. $ git submodule update
 
-An example would be "All of the custom commands I wrote to give added
-features to users at my installation wanted to be in that directory, not
-at the user's home directory, as they mostly operated on files in that
-directory", but please do not make me (or other reviewers) guess why.
+And all is well... But smart ass corporate people would not use "git:"
+protocol because of fire-walls and for them I have a dumb "http:" export
+as:
+1. $ git clone http://my-domain.org/trees/my-tree/.git
 
-What I am getting at is that it may be more natural and useful to run
-these custom commands in the user's $HOME directory---you would need to
-make sure that execl() finds the command you get from the request, perhaps
-by prefixing COMMAND_DIR / to the command name, though.
+With them, step 3 above will not work. My current instructions
+for them is that after the step 2 "git submodule init" they should
+manually edit my-tree/.git/config and change to:
+[submodule "sub"]
+-        url = git://my-domain.org/my-tree/sub/.git
++        url = http://my-domain.org/trees/my-tree/sub/.git
 
-> +	if (is_valid_cmd_name(prog))
-> +		execl(prog, prog, (char *) NULL);
-> +
->  	die("unrecognized command '%s'", prog);
->  }
+And then do step 3 to clone the sub-module.
+
+So my question is: Can I automate this so people with "http:"
+clones are not forced to manually edit their config files?
+(Some users are just not up to it)
+
+Thanks, (Sorry if that has been raised before. Couldn't find any.)
+Boaz
