@@ -1,94 +1,61 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
-Date: Wed, 14 Jul 2010 13:26:20 +0200
-Message-ID: <20100714112620.GC3496@debian>
-References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
- <20100713235825.GC12639@debian>
- <20100714001530.GB2308@burratino>
- <20100714002235.GF12639@debian>
- <20100714002843.GC2308@burratino>
- <20100714004959.GG12639@debian>
- <20100714070323.GB25630@jack.stsp.name>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH v3] add configuration variable for --autosquash
+	option of interactive rebase
+Date: Wed, 14 Jul 2010 13:50:03 +0200
+Message-ID: <20100714115003.GA15316@book.hvoigt.net>
+References: <20100709124659.GA17559@book.hvoigt.net> <m27hl4zg99.fsf@igel.home> <20100710091517.GA27323@book.hvoigt.net> <7vk4p1fdlg.fsf@alter.siamese.dyndns.org> <20100713112316.GA758@book.hvoigt.net> <AANLkTilFOOK1eXkzWJXlr3zf78xZ82nIK9Jrr1END3-Y@mail.gmail.com> <7vlj9f4b5a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
-To: Stefan Sperling <stsp@elego.de>
-X-From: git-owner@vger.kernel.org Wed Jul 14 13:24:42 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>,
+	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 13:50:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ04v-0001wo-9u
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 13:24:41 +0200
+	id 1OZ0Te-0005fp-0o
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 13:50:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753648Ab0GNLYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 07:24:36 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48025 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753371Ab0GNLYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 07:24:35 -0400
-Received: by eya25 with SMTP id 25so970341eya.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 04:24:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=96c0aDAep8zR6E63Z1mKLU5R1KGVHCpeNaT4aVOLgZg=;
-        b=XujnHkERFQqczH+qYaVX6phvTtxvUJ1W2MTJxvqWHkmHQVXhtlSn+PF9l6OIFni37l
-         RMBfPTzVEj/q7d4X9OJL3/2qSVxRxnuL5nFmeK/7JJtxtilmXXSup1JdOeboykcPBZxi
-         mCV20eOXz9k586l45cxa2EXFokzNTJESNjBbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=NxpPqRKvB8cJ4LC/MOkApv4xaDmB9kFsG4XA7F7adbLtHZEMNCcGIE0etYuNIE7tpP
-         cPfjNWp3NEFRtG6y1yVi/KDGuK24siJHVmw19smmvkwdqe3O9WgGBB+6fQoaderXx4y9
-         e9o7b3LXq8qqaKYKf/qz8OU/FnrklxDsf9mMI=
-Received: by 10.213.25.130 with SMTP id z2mr1152066ebb.42.1279106673918;
-        Wed, 14 Jul 2010 04:24:33 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id v59sm56395699eeh.4.2010.07.14.04.24.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 14 Jul 2010 04:24:32 -0700 (PDT)
+	id S1754174Ab0GNLuH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 07:50:07 -0400
+Received: from darksea.de ([83.133.111.250]:51832 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753294Ab0GNLuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 07:50:06 -0400
+Received: (qmail 18429 invoked from network); 14 Jul 2010 13:50:03 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 14 Jul 2010 13:50:03 +0200
 Content-Disposition: inline
-In-Reply-To: <20100714070323.GB25630@jack.stsp.name>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vlj9f4b5a.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150980>
 
-Hi Stefan,
+Hi,
 
-Stefan Sperling writes:
-> Git devs will want a version of svnrdump that compiles against
-> the 1.6.x libraries. We'll want a version that compiles against
-> the trunk (so we can release it with 1.7).
-> 
-> So depending on which APIs svnrdump is using, it's likely that
-> you'll have to maintain 2 slightly differing versions anyway,
-> until 1.7 is released. (The current ETA for 1.7 is autumn, BTW).
+On Tue, Jul 13, 2010 at 09:08:49AM -0700, Junio C Hamano wrote:
+> Santi B=E9jar <santi@agolina.net> writes:
+>=20
+> > You could also merge this entry with the --autosquash as with --squ=
+ash
+> > option in git-pull(1):
+> >
+> > --autosquash::
+> > --noautosquash::
+> > [original text]
+> > +
+> > If the '--autosquash' option is enabled by default using the
+> > configuration variable `rebase.autosquash` this option can be
+> > used to override and disable this setting.
+>=20
+> Thanks for the suggestion; that probably reads better.
 
-Right, that's alright. I'll just have a commit that I'll keep `rebase
---onto`ing to have the 1.6-specific changes.
+Same from me. Will change the patch accordingly.
 
-> > Also, could the Subversion
-> > people confirm that licensing isn't an issue?
-> 
-> I didn't catch any licensing discussion. What's the issue?
-
-I guess there's no issue then- sorry, I know close to nothing about
-licensing.
-
--- Ram
+cheers Heiko
