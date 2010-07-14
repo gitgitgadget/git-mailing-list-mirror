@@ -1,112 +1,91 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH v2] Add svnrdump
-Date: Wed, 14 Jul 2010 17:32:06 +0200
-Message-ID: <20100714153206.GH25630@jack.stsp.name>
-References: <20100709142910.GB20383@debian>
- <20100713201105.GN13310@ted.stsp.name>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: serving git with both "git:" and "http:" and submodules
+Date: Wed, 14 Jul 2010 10:39:00 -0500
+Message-ID: <20100714153900.GB1583@burratino>
+References: <4C3DD7EF.6010805@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "dev@subversion.apache.org" <dev@subversion.apache.org>,
-        Bert Huijben <rhuijben@collab.net>,
-        Daniel Shahaf <d.s@daniel.shahaf.name>,
-        Will Palmer <wmpalmer@gmail.com>,
-        David Michael Barr <david.barr@cordelta.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sverre Rabbelier <srabbelier@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: dev-return-5003-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 14 17:33:15 2010
-Return-path: <dev-return-5003-gcvsd-dev=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsd-dev@lo.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by lo.gmane.org with smtp (Exim 4.69)
-	(envelope-from <dev-return-5003-gcvsd-dev=m.gmane.org@subversion.apache.org>)
-	id 1OZ3xR-0007AF-TX
-	for gcvsd-dev@lo.gmane.org; Wed, 14 Jul 2010 17:33:14 +0200
-Received: (qmail 48176 invoked by uid 500); 14 Jul 2010 15:33:12 -0000
-Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
-Precedence: bulk
-List-Help: <mailto:dev-help@subversion.apache.org>
-List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
-List-Post: <mailto:dev@subversion.apache.org>
-List-Id: <dev.subversion.apache.org>
-Delivered-To: mailing list dev@subversion.apache.org
-Received: (qmail 48168 invoked by uid 99); 14 Jul 2010 15:33:11 -0000
-Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 15:33:11 +0000
-X-ASF-Spam-Status: No, hits=-0.7 required=10.0
-	tests=RCVD_IN_DNSWL_LOW,SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (nike.apache.org: local policy)
-Received: from [192.109.42.8] (HELO einhorn.in-berlin.de) (192.109.42.8)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 15:33:04 +0000
-X-Envelope-From: stsp@stsp.name
-Received: from jack.stsp.name (i577B52DC.versanet.de [87.123.82.220])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6EFWAnP017020
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Jul 2010 17:32:10 +0200
-Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
-	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id o6EFW9bJ003129;
-	Wed, 14 Jul 2010 17:32:09 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.name (8.14.3/8.14.3/Submit) id o6EFW6mZ030831;
-	Wed, 14 Jul 2010 17:32:06 +0200 (CEST)
-Mail-Followup-To: Ramkumar Ramachandra <artagnon@gmail.com>,
-	"dev@subversion.apache.org" <dev@subversion.apache.org>,
-	Bert Huijben <rhuijben@collab.net>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 17:40:15 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by lo.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OZ449-0002Tj-CM
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:40:09 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1757347Ab0GNPj5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 11:39:57 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45816 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753902Ab0GNPjz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 11:39:55 -0400
+Received: by wyb42 with SMTP id 42so1105654wyb.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 08:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=9aTWO1qhBrU1ZNKpzkJATVRZnpmTlg/YJpOBiA1pM2A=;
+        b=W3oMyI+IRCE0fwkqDJQB387u3TxyuYNHmy9QPgzHkCCzkbcLVKti/iwvYW/WIHFjxN
+         3ww5Li4w5FJbbehVtF5yC+cufYngsBZC/vfoavXJdcGDGJHNmJGZQEOrYQLMsZ7bVEnk
+         lxD8RG7p/AZtxIZlnCLq2cdgM32KRcAuwVKEE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=EQf4l0kBEZHxqaa9kZesBJoDDGyfmZA9Gf6/TJG34zFB3ZUN3qWJIq4X5SmZUrWPfF
+         590Iwd9FgtNIlPLHx12nw29/eI7fl0yoZvbNU6cmBriZcTobqrA/PX6uvHdyOnMI44N3
+         Mvx1asXXNFR7JsODaRK6GdUO90ZbJC+TZnP0c=
+Received: by 10.227.129.12 with SMTP id m12mr11408970wbs.102.1279121990170;
+        Wed, 14 Jul 2010 08:39:50 -0700 (PDT)
+Received: from burratino ([98.212.3.231])
+        by mx.google.com with ESMTPS id g37sm48425380wbg.21.2010.07.14.08.39.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 14 Jul 2010 08:39:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100713201105.GN13310@ted.stsp.name>
+In-Reply-To: <4C3DD7EF.6010805@panasas.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150997>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150998>
 
-On Tue, Jul 13, 2010 at 10:11:05PM +0200, Stefan Sperling wrote:
-> Review below.
+Boaz Harrosh wrote:
 
-A couple of additional remarks:
+> So smart people using git will just do:
+> 1. $ git clone git://my-domain.org/my-tree/.git
+> 2. $ git submodule init
+> 3. $ git submodule update
+>=20
+> And all is well... But smart ass corporate people would not use "git:=
+"
+> protocol because of fire-walls and for them I have a dumb "http:" exp=
+ort
+> as:
+> 1. $ git clone http://my-domain.org/trees/my-tree/.git
+[...]
+> So my question is: Can I automate this so people with "http:"
+> clones are not forced to manually edit their config files?
+> (Some users are just not up to it)
 
-Playing with svnrdump and comparing its output to the output of
-svnadmin dump --deltas, I noticed that:
+Sure.  For example, you can ship an update-submodules.sh script
+to take care of checking =E2=80=9Cgit config remote.origin.url=E2=80=9D=
+ and
+updating the =E2=80=98[submodule "sub"] url=E2=80=99 configuration to m=
+atch.
 
- - svnrdump doesn't dump revision 0.
-   It should dump revision 0, because that revision can contain important
-   revprops such as metadata for svnsync (svn:sync-last-merge-rev etc.)
- - You're missing a couple of fields:
-   The UUID of the repository.
-   Text-content-sha1
-   Text-delta-base-md5
-   Text-delta-base-sha1
- - I've seen a "Prop-delta: true" line which svnadmin dump does not print.
- - You're missing some newlines that svnadmin dump prints (cosmetic,
-   but it would be nice if both produced matching output).
+Of course, even this would not make
+'git clone --recursive http://my-domain.org/trees/my-tree/.git'
+work.  If you can get git-http-backend working, I=E2=80=99d suggest usi=
+ng
+that so you only have to deal with one url.
 
-How to reproduce what I'm seeing:
-  Use svnsync to get a copy of the numptyphysics repository at
-    https://vcs.maemo.org/svn/numptyphysics (I had a dump of that lying
-    around... other repositories might do the job just as well, of course)
-  Dump the repository using svnadmin dump --deltas.
-  Dump the repository using svnrdump.
-  Compare output with diff -u.
-
-Please get rid of all global variables in svnrdump.c:
-subversion/svnrdump/svnrdump.c:43: warning: declaration of `pool' shadows a glob
-al declaration
-subversion/svnrdump/svnrdump.c:33: warning: shadowed declaration is here
-subversion/svnrdump/svnrdump.c:91: warning: declaration of `pool' shadows a glob
-al declaration
-subversion/svnrdump/svnrdump.c:33: warning: shadowed declaration is here
-
-When adding unit tests for svnrdump, please make each and every one of
-those tests compare with output of svnadmin dump --deltas, so that we
-will keep them in sync.
-
-Thanks,
-Stefan
+Hope that helps,
+Jonathan
