@@ -1,98 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/4] git --paginate: do not commit pager choice too early
-Date: Wed, 14 Jul 2010 13:36:16 -0700
-Message-ID: <7v630hyf5r.fsf@alter.siamese.dyndns.org>
-References: <20100626192203.GA19973@burratino>
- <7vpqzacs3h.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: help with distributed workflow/signoff
+Date: Wed, 14 Jul 2010 21:03:25 +0000
+Message-ID: <AANLkTilo4TnMQcr7p1dfAeQ4tESHjO4Nbr8274hqxOnD@mail.gmail.com>
+References: <loom.20100714T180615-173@post.gmane.org>
+	<AANLkTimdVvKYPQn84IQvk7yxMo-gtrjWWqzN-ypXV78X@mail.gmail.com>
+	<loom.20100714T195109-665@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 22:36:43 2010
+Cc: git@vger.kernel.org
+To: Brock Peabody <brock.peabody@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 23:03:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ8h8-0004Yo-MZ
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 22:36:43 +0200
+	id 1OZ977-0000VJ-6d
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 23:03:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757693Ab0GNUga convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 16:36:30 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45471 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757473Ab0GNUg3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 16:36:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AFA39C4B82;
-	Wed, 14 Jul 2010 16:36:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=HNTDoYINTBPO
-	ZcfvoPlY3qBMtGo=; b=ev35xZbcyjX6NmT9c4WSxxttiyDpOzf2NX2WNZCtFt5P
-	OqdFs1gCxWfkyELe98K/3OKyh6Gj9HcdH+T19qWb0xblYO7sJryZ9BbXY9Y5zf9G
-	MP8YzFJU+eBA4ZSnwdi6w96jMKLyxucvkdQUa3SXjgRh48PSZEHn0Dli5rlSuVA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=svEJIy
-	sjn9Cv9tTNmUmaGksNQCLXk/W/LBfX/yiyC7SjO2/ZHY0/7aTdL/d40SfDlZJUtD
-	mhUlym3l7ZdRnk3QCPj9K4h2A0RDWjqGSijMIkVSErOdTcBWIppA7oFgI0zJ0xWJ
-	8GU5vOzfUQ0rZ5LJDx1VDMVOPanMMOFpqGPs4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E675C4B80;
-	Wed, 14 Jul 2010 16:36:23 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82044C4B7F; Wed, 14 Jul
- 2010 16:36:18 -0400 (EDT)
-In-Reply-To: <7vpqzacs3h.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 28 Jun 2010 22\:42\:26 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 779878A2-8F87-11DF-BBF0-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757464Ab0GNVD1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 17:03:27 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:48821 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754160Ab0GNVD0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 17:03:26 -0400
+Received: by iwn7 with SMTP id 7so181845iwn.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 14:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QvAWmH9tGMWBXEgovnB6D4IkAthCjIziE8k0MztY/sM=;
+        b=fiUcoljEuCa7EIT6TBkDfvamv8cHpZv3QPITSDWYD/IK9A5IreSW80Glej5NWNzfrX
+         fvnl0/UztkKuCgo+fR4l6dr5jGtq59TS3O37PLnnDdwo/01sleGZbHwHTUrISENqr2BH
+         gQl2s0ddookR5IehM5/qN/sMnVvJ7rqBLzeho=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UICVXwUh4yr0UA1fmMc3KVK2CFqtRD6oF1oNgojuRGUmhVw5PuB4LCIwX1fdhvhaJW
+         z3EsjXpIYFGgnDVD0FNLFjPHEom709tQf6QOa02mZ3tPJgzcNW5du3IMfmpcM32ETxnR
+         EUH/vl3jlDyXKcO6KWU+wsd7Ja7dG6jYagbsE=
+Received: by 10.231.31.7 with SMTP id w7mr17948505ibc.83.1279141405703; Wed, 
+	14 Jul 2010 14:03:25 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 14 Jul 2010 14:03:25 -0700 (PDT)
+In-Reply-To: <loom.20100714T195109-665@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151034>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Wed, Jul 14, 2010 at 18:06, Brock Peabody <brock.peabody@gmail.com> =
+wrote:
+> Hi Avery,
 >
->> Patch is against master.  There is a small semantic conflict with
->> jn/grep-open: SIMPLEPAGER should be changed to SIMPLEPAGERTTY in the
->> prerequisites for the test_default_pager function.  Please let me
->> know if I should push a merge commit to help resolve that.
+> Avery Pennarun <apenwarr <at> gmail.com> writes:
 >
-> Thanks for advance warning; please double check the merge result in '=
-pu'
-> when I push it out...
+>> For an open source project, where most contributions are by voluntee=
+rs
+>> and need to have their patches reviewed multiple times before
+>> submission - and frequently, more patchsets are rejected than applie=
+d
+>> - this works reasonably well. =C2=A0For a company where (in my exper=
+ience
+>> at least) most people's patches *are* applied, and the ratio of
+>> reviewers to coders is much lower, that's much less workable. =C2=A0=
+And
+>> unfortunately the elegant looking multiple-signed-off-by or acked-by
+>> lines don't work so well for that.
+>
+> I think you've hit the nail on the head here. =C2=A0In our environmen=
+t, commits are
+> frequent and signoffs prompt. =C2=A0Revisions are very rarely rejecte=
+d, and will
+> never pass through more than one reviewer except in extreme cases. =C2=
+=A0Contributors
+> will have little tolerance for per-commit time or complexity overhead=
+ incurred
+> from the process.
 
-I hate an enumeration that pretends to be exhausitive but is not.
+Well, consider that even if you push most patches through, the peer
+review you get from having a setup similar to Git's own might very
+well be worth it. Everyone makes mistakes, having a second set of
+eyeballs to look at your code eliminates a lot of that.
 
-    So delay the pager startup when possible:
-   =20
-    1. run_argv() already commits pager choice inside run_builtin() if =
-a
-       command is found.  For commands that use RUN_SETUP, waiting unti=
-l
-       then fixes the problem described above: once git knows where to
-       look, it happily respects the core.pager setting.
-
-=2E.. and for commands that do not use RUN_SETUP, what happens?
-
-    2. list_common_cmds_help() prints out 29 lines and exits....
-    3. help_unknown_cmd() prints out a few lines to stderr.  It is not
-       important to paginate this, so don=E2=80=99t.
-
-Missing from the above enumeration are are external commands.  They dep=
-end
-on commit_pager_choice() to be called before execv_dashed_external() ge=
-ts
-called.  For example, "git -p request-pull $args" no longer works with
-this patch.
-
-Sigh..
+That may not be acceptable to your corporate culture, but consider
+that most big corporations (e.g. Google) do detailed code review
+before anything gets commited to the master repository.
