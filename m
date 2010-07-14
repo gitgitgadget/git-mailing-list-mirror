@@ -1,114 +1,85 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH/RFC 4/4] Add interactive mode to git-shell for user-friendliness
-Date: Wed, 14 Jul 2010 12:27:23 +0200
-Message-ID: <4C3D910B.7080401@viscovery.net>
-References: <1279076475-27730-1-git-send-email-gdb@mit.edu> <1279076475-27730-5-git-send-email-gdb@mit.edu>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/9] Add LICENSE
+Date: Wed, 14 Jul 2010 13:23:42 +0200
+Message-ID: <20100714112342.GB3496@debian>
+References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
+ <1279064176-6645-2-git-send-email-artagnon@gmail.com>
+ <20100714044712.GB3081@daniel3.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Jul 14 12:27:36 2010
+Content-Type: text/plain; charset=us-ascii
+To: Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <
+X-From: git-owner@vger.kernel.org Wed Jul 14 13:22:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYzBf-0002Sr-OL
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 12:27:36 +0200
+	id 1OZ02N-0000pg-6t
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 13:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942Ab0GNK1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 06:27:30 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:48175 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753641Ab0GNK13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 06:27:29 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OYzBU-0005XA-GT; Wed, 14 Jul 2010 12:27:24 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 3C4911660F;
-	Wed, 14 Jul 2010 12:27:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
-In-Reply-To: <1279076475-27730-5-git-send-email-gdb@mit.edu>
-X-Spam-Score: -1.4 (-)
+	id S1754665Ab0GNLV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 07:21:57 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:54957 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752454Ab0GNLV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 07:21:56 -0400
+Received: by ewy23 with SMTP id 23so1367018ewy.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 04:21:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=NgDyiWVog4eR3hggjUleKXoWV6piFtJSwlnzmRwGBr8=;
+        b=PgjL9aihFWkiwS0ktnHzUc/xUpXc6WcAbD5CVePmlh7bI9V7VMtPXud7Sz1VzH4Fgr
+         InuibC7UOVIetQw4YqqQkynHcSMGgfuC0+ANwdIPEqcN5aFAEShJyiyAKlkAUKu7j9Ni
+         pvSdfx74LIURtDsjgQHhVxK9ly/BgaoSpg6K4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=QXGcnyfiBbKbPKaSduNDdHtYwwSRDy9kzbKO7kXNZVInTohzT0nPkOTknl2kfCAehM
+         L7J8SCbjC2hIrqJx1D/mqPsZo1v78PlXmy1UDRk6xD7FzQK3P3XtAdAHqsGXAU5HAgf5
+         l3JFAZvdLo89DjoNVdPbaDXhLm8GSspPn9Lfk=
+Received: by 10.213.35.18 with SMTP id n18mr6185467ebd.7.1279106515232;
+        Wed, 14 Jul 2010 04:21:55 -0700 (PDT)
+Received: from debian (nat-wireless.itu.dk [130.226.142.243])
+        by mx.google.com with ESMTPS id v59sm56344065eeh.16.2010.07.14.04.21.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 14 Jul 2010 04:21:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100714044712.GB3081@daniel3.local>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150978>
 
-I don't have an immediate need for features implemented by this series,
-but I think they can be useful occasionally.
+Hi Daniel,
 
-Am 7/14/2010 5:01, schrieb Greg Brockman:
-> --- a/shell.c
-> +++ b/shell.c
-> @@ -1,8 +1,11 @@
-> +#include <stdio.h>
+Daniel Shahaf writes:
+> [ are all of these CCs really necessary?  that's another thing I almost never
+> see over at dev@svn ]
 
-Is it really needed? Doesn't cache.h pull it in already?
+It's Git culture. Since our list is so high volume, many people aren't
+subscribed to the list. Even those who are subscribed often cannot
+read all the emails. When I CC someone on a list email, I'm implicitly
+telling them "Please review this patch" or "Please comment on this" or
+simply "You were involved with this work; just FYI, this is where it's
+going". Most email clients have convinient markers to tell people if
+they're marked on the To or Cc fields, or are simply receiving it
+because they're subscribed to a list.
 
-> +
->  #include "cache.h"
-...
-> +static int run(const char *prog)
-> +{
-> +	pid_t pid, res;
-> +	int w;
-> +	pid = fork();
-> +	if (pid == -1) {
-> +		perror("fork");
-> +		exit(-1);
-> +	} else if ( pid == 0 ) {
-> +		execl(prog, prog, (char *) NULL);
-> +		if (prog[0] != '\0')
-> +			fprintf(stderr, "unrecognized command '%s'\n", prog);
-> +		exit(127);
-> +	} else {
-> +		do {
-> +			res = waitpid (pid, &w, 0);
-> +		} while (res == -1 && errno == EINTR);
-> +	}
-> +}
+> If it ends in svn trunk as subversion/svnrdump/ (and not as a tools/ utility),
+> it's going to have to be licensed under the Apache License v2.
 
-Is there a reason that you duplicate functionality offered by run_command()?
+Yes, I know. PATCH v2 is licensed appropriately. My intial idea was to
+dual-license it: two-clause BSD for the git.git version and Apache for
+the ASF version, but it seems like too much work now.
 
-> @@ -81,8 +105,30 @@ int main(int argc, char **argv)
->  	 * We do not accept anything but "-c" followed by "cmd arg",
->  	 * where "cmd" is a very limited subset of git commands.
->  	 */
-> -	else if (argc != 3 || strcmp(argv[1], "-c"))
-> -		die("What do you think I am? A shell?");
-> +	else if (argc != 3 || strcmp(argv[1], "-c")) {
-> +		if (chdir(COMMAND_DIR))
-> +			die("Sorry, the interactive git-shell is not enabled");
-> +		for (;;) {
-> +			printf("git> ");
-> +			if (fgets(line, MAX_LINE_LEN, stdin) == NULL) {
-> +				printf("\n");
-> +				exit(0);
-> +			}
-> +
-> +			if (line[strlen(line) - 1] == '\n')
-> +				line[strlen(line) - 1] = '\0';
-> +
-> +			if (!strcmp(line, "quit") || !strcmp(line, "logout") ||
-> +				   !strcmp(line, "exit")) {
-> +				exit(0);
-> +			} else if (!strcmp(line, "")) {
-> +			} else if (is_valid_cmd_name(line)) {
-> +				run(line);
-> +			} else {
-> +				fprintf(stderr, "invalid command format '%s'\n", line);
-> +			}
-> +		};
-> +	}
-
-I can imagine that this loop grows in the future, so I suggest to move it
-to a separate function right from the beginning.
-
-I think it would make sense to print a help message before the first prompt.
-
--- Hannes
+-- Ram
