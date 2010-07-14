@@ -1,113 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [RFC/PATCH] am/pull/rebase/stash: cd_to_toplevel before require_work_tree
-Date: Wed, 14 Jul 2010 14:55:21 +0200
-Message-ID: <96abf622ca2cf92998ce4ed393ccaa75d95dd9a8.1279112025.git.git@drmicha.warpmail.net>
-References: <4C3DB396.2040109@drmicha.warpmail.net>
-Cc: Alexander Gladysh <agladysh@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 14 14:56:30 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: [BUG] git-svn returning "Incomplete data: Delta source ended 
+	unexpectedly"
+Date: Wed, 14 Jul 2010 13:05:29 +0000
+Message-ID: <AANLkTiljzOuaEToKscBxlc4qGilyNRiUtjoBxW1lJZlp@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Eric Wong <normalperson@yhbt.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 14 15:05:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ1Vk-0007EF-Dn
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 14:56:28 +0200
+	id 1OZ1ei-0003vA-Hg
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 15:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab0GNM4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 08:56:24 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:38993 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754703Ab0GNM4X (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 08:56:23 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EB64916EB7D;
-	Wed, 14 Jul 2010 08:56:22 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 14 Jul 2010 08:56:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=l4LDfHl1vqTCXO2Yy5cDMJPjzzY=; b=ob5hik6J2U+GRtujKlNUOElzDugDJO7xi9Lqg0felKpxR9Hbtbyu9ggY8052nwF8Qg34lHcXjOriELc6CNr2cDb6XpE91WDPtOnIyzcihsIFtX66r0xFWMloxSwsl+s7l3xYilSE/iD4K1gshxh2Q0LFBITP5s8iv7KIdMcuLp0=
-X-Sasl-enc: dAijMn9k23V7wjDZnTInobRzQwQxeDckhyuRk/2xsMZD 1279112182
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 5AFFD4DED78;
-	Wed, 14 Jul 2010 08:56:22 -0400 (EDT)
-X-Mailer: git-send-email 1.7.2.rc1.212.g850a
-In-Reply-To: <4C3DB396.2040109@drmicha.warpmail.net>
+	id S1753514Ab0GNNFi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 09:05:38 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:40433 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752900Ab0GNNFh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 09:05:37 -0400
+Received: by gwj18 with SMTP id 18so3321522gwj.19
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 06:05:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=5YdiskyaSCdk+QMpyWzK+tNS+ZERTG22lyOgnGZEvLE=;
+        b=DB0nIzWvMZDk1gUufmHKaPPGJ+PCOOGwYC0C6IGUlGys/UonGOK1a8ubl2CApXHBz9
+         TEDVbNaCwGUIciYHIXTdZ+LOzSB/aoWTw8ZnV8oJg+zp/eG4aUTLq+YwoXftKLkb5/6p
+         fzizN80vmH1iM4G1BFfoZWBqrC3hFkYp/XUxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=KQHMcKOiHByflES3gkd+YcAbbIznc7mS54rnXb7IqlAQQoCHnUHtHDXm7osHun8HdU
+         yTve5Xhqyi443X5elNHg0G0chivypQfqAmKRsYvie/PNSpp5RgN7CLhzDPehAGE88fad
+         sigKZFzZKqD3JuU9qndFolgf1ExfYOnUrb920=
+Received: by 10.101.201.37 with SMTP id d37mr18510360anq.62.1279112729364; 
+	Wed, 14 Jul 2010 06:05:29 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 14 Jul 2010 06:05:29 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150987>
 
-Currently, "cd_to_toplevel" comes right after "require_work_tree" for
-these commands.
+I run a SVN -> Git mirror which fetches & rebases with git-svn and
+pushes the result to GitHub:
 
-Put "cd_to_toplevel" before "require_work_tree" so that these commands
-do not die fatally when called with --work-tree or GIT_WORK_TREE
-properly set from outside of the work tree.
+    http://github.com/avar/openstreetmap-mirror/blob/master/josm-mirror.sh
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- git-am.sh     |    2 +-
- git-pull.sh   |    2 +-
- git-rebase.sh |    2 +-
- git-stash.sh  |    2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+Something about what that script is doing corrupted the git-svn
+repository, likely due to a git-svn bug. Now when I do git svn fetch
+on 1.7.1:
 
-diff --git a/git-am.sh b/git-am.sh
-index e7f008c..bf81030 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -39,8 +39,8 @@ rebasing*       (internal use for git-rebase)"
- . git-sh-setup
- prefix=$(git rev-parse --show-prefix)
- set_reflog_action am
--require_work_tree
- cd_to_toplevel
-+require_work_tree
- 
- git var GIT_COMMITTER_IDENT >/dev/null ||
- 	die "You need to set your committer info first"
-diff --git a/git-pull.sh b/git-pull.sh
-index a09a44e..83c25b9 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -10,8 +10,8 @@ SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
- . git-sh-setup
- set_reflog_action "pull $*"
--require_work_tree
- cd_to_toplevel
-+require_work_tree
- 
- 
- die_conflict () {
-diff --git a/git-rebase.sh b/git-rebase.sh
-index ab4afa7..96dd34f 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -31,8 +31,8 @@ SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
- . git-sh-setup
- set_reflog_action rebase
--require_work_tree
- cd_to_toplevel
-+require_work_tree
- 
- LF='
- '
-diff --git a/git-stash.sh b/git-stash.sh
-index 1d95447..4564892 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -13,8 +13,8 @@ USAGE="list [<options>]
- SUBDIRECTORY_OK=Yes
- OPTIONS_SPEC=
- . git-sh-setup
--require_work_tree
- cd_to_toplevel
-+require_work_tree
- 
- TMP="$GIT_DIR/.git-stash.$$"
- trap 'rm -f "$TMP-*"' 0
--- 
-1.7.2.rc1.212.g850a
+    $ git svn fetch
+    Incomplete data: Delta source ended unexpectedly at
+/usr/lib/git-core/git-svn line 5061
+
+I re-cloned the repository and started running my mirror again from
+that. But it would be nice if we could track this bug down.
+
+Here's a copy of the repository:
+
+    http://v.nix.is/~avar/josm.old.tar.gz
+
+Unpacking it and running git svn fetch will yield the same error on
+another box I have with 1.7.1.
