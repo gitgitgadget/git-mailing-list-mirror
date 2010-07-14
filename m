@@ -1,125 +1,135 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: help with distributed workflow/signoff
-Date: Wed, 14 Jul 2010 13:24:22 -0400
-Message-ID: <AANLkTimdVvKYPQn84IQvk7yxMo-gtrjWWqzN-ypXV78X@mail.gmail.com>
-References: <loom.20100714T180615-173@post.gmane.org>
+From: Stefan Sperling <stsp@elego.de>
+Subject: Re: [PATCH v2] Add svnrdump
+Date: Wed, 14 Jul 2010 19:24:29 +0200
+Message-ID: <20100714172429.GC25861@ted.stsp.name>
+References: <20100709142910.GB20383@debian>
+ <20100713201105.GN13310@ted.stsp.name>
+ <20100714153206.GH25630@jack.stsp.name>
+ <20100714160149.GA7561@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Brock Peabody <brock.peabody@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 19:24:50 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ5hR-0007D7-O8
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 19:24:50 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753294Ab0GNRYo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 13:24:44 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:34171 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721Ab0GNRYo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 13:24:44 -0400
-Received: by gwj18 with SMTP id 18so3526718gwj.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 10:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=x+0OWySChxuaE9G/HDUsSdJe1xsluRdNyHTMHk7ryCI=;
-        b=LMv29Wjd0czxvI5JedZLbvuWiSl50QNagZeRWC1Xm7IJpxPIDYBk1jCQ5MhKa6ft44
-         /eyMSNk2+02ys+XV4767h1iegO92xiRHVQj1DyV96FoQyb/jC3wCuB4URj1lzyljodCk
-         8+SXyk8VBSuvUta+Arcc46w0weYg3S0OV4+mk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=errSoi+cMd5dI/NUC8wu5IOo77+lLWEi2sVvY3rPbdo67Vv4lD2yBxpKJdCpRNs9HH
-         /s1OXZd6LWqTRWzUze8YOjBM6qmmCwTJHiYBgNbU1Dp00LEgmtiIFZq7zoALmt8yCR1k
-         gBW1NmwGgTxkfVZ3ryyFDmVbL5RRJnYoj9yZI=
-Received: by 10.150.214.20 with SMTP id m20mr2629932ybg.368.1279128282122; 
-	Wed, 14 Jul 2010 10:24:42 -0700 (PDT)
-Received: by 10.151.85.19 with HTTP; Wed, 14 Jul 2010 10:24:22 -0700 (PDT)
-In-Reply-To: <loom.20100714T180615-173@post.gmane.org>
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: "dev@subversion.apache.org" <dev@subversion.apache.org>,
+        Bert Huijben <rhuijben@collab.net>,
+        Daniel Shahaf <d.s@daniel.shahaf.name>,
+        Will Palmer <wmpalmer@gmail.com>,
+        David Michael Barr <david.barr@cordelta.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sverre Rabbelier <srabbelier@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: dev-return-5009-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 14 19:25:21 2010
+Return-path: <dev-return-5009-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@lo.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by lo.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-5009-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1OZ5ht-0007Ya-UB
+	for gcvsd-dev@lo.gmane.org; Wed, 14 Jul 2010 19:25:18 +0200
+Received: (qmail 28080 invoked by uid 500); 14 Jul 2010 17:25:16 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151017>
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 28072 invoked by uid 99); 14 Jul 2010 17:25:15 -0000
+Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 17:25:15 +0000
+X-ASF-Spam-Status: No, hits=-0.7 required=10.0
+	tests=RCVD_IN_DNSWL_LOW,SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (nike.apache.org: local policy)
+Received: from [192.109.42.8] (HELO einhorn.in-berlin.de) (192.109.42.8)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 17:25:06 +0000
+X-Envelope-From: stsp@stsp.name
+Received: from ted.stsp.name (ted.stsp.name [217.197.84.186])
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6EHOWRt025160
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 14 Jul 2010 19:24:33 +0200
+Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
+	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id o6EHOWpM027373;
+	Wed, 14 Jul 2010 19:24:32 +0200 (CEST)
+Received: (from stsp@localhost)
+	by ted.stsp.name (8.14.3/8.14.3/Submit) id o6EHOTS4022138;
+	Wed, 14 Jul 2010 19:24:29 +0200 (CEST)
+Mail-Followup-To: Ramkumar Ramachandra <artagnon@gmail.com>,
+	"dev@subversion.apache.org" <dev@subversion.apache.org>,
+	Bert Huijben <rhuijben@collab.net>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Will Palmer <wmpalmer@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20100714160149.GA7561@debian>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151018>
 
-On Wed, Jul 14, 2010 at 12:33 PM, Brock Peabody <brock.peabody@gmail.co=
-m> wrote:
-> We've scoured the internet for solutions. =A0One idea we have tried a=
-nd abandoned
-> is using 'git commit -s --amend'. This does create a new revision wit=
-h the
-> signoff information we want, but the problem is that it creates a new=
- revision.
-> Eventually, the developers (and the GateKeeper repository) will end u=
-p with both
-> the revision containing the signoff and one without it.
+On Wed, Jul 14, 2010 at 06:01:49PM +0200, Ramkumar Ramachandra wrote:
+> Yeah, I forgot to ask about this: passing 0 as an argument to the
+> replay API doesn't seem to work. Why? How do I dump revision 0 then?
 
-One option is to avoid trying to signoff each *revision*, but instead
-signoff on an entire *batch* of changes.  Basically, the maintainer
-would do something like this:
+Indeed. This seems to be a problem in the replay API.
+This is not a problem for svnsync itself because svnsync manually
+sets the revision properties while doing a sync.
+We can fix the replay API to allow svnrdump to get revprops for r0.
+ 
+> >  - You're missing a couple of fields:
+> >    The UUID of the repository.
+> >    Text-content-sha1
+> >    Text-delta-base-md5
+> >    Text-delta-base-sha1
+> 
+> Yes, I'm aware.
 
-   git checkout master
-   git merge --no-ff whateveruser/whateverchanges
-   git commit --amend --signoff
-   git push
+OK.
+ 
+> >  - I've seen a "Prop-delta: true" line which svnadmin dump does not print.
+> 
+> Correct. `svnadmin dump` has a logic for determining when the prop is
+> really a delta (as opposed to a delta against /dev/null). Since
+> there's no harm printing extra Prop-delta headers, I decided not to
+> implement this logic.
 
-Then the maintainer will have a merge commit that shows he looked at
-it.  All the individual sub-patches will remain identical, so nobody's
-history gets confused.
+We can fix this later.
 
-> I've seen evidence of what we're after - by browsing the repository o=
-f git
-> itself. =A0Each revision in it contains an "Author" field and a (freq=
-uently
-> different) "Committer" field. =A0Furthermore, there are often multipl=
-e
-> "Signed-off-by" and "Acked by" logs. =A0How are these fields populate=
-d? =A0Are new
-> revisions created each time the sign-off information is added? If so,=
- how do the
-> contributors deal with these new revisions when synchronizing with th=
-e master
-> later? =A0How are the pre-signoff revisions purged from the bare Gate=
-Keeper
-> repositories?
+> >  - You're missing some newlines that svnadmin dump prints (cosmetic,
+> >    but it would be nice if both produced matching output).
+> 
+> This isn't in the dump-load-format spec document (atleast afaik), and
+> it's very hard to get this right (yes, I tried). Moreover, it's very
+> ungratifying to have a few extra newlines (reverse engineered from
+> `svnadmin dump`) printed at the end of 10+ hrs of work; yes, that's
+> what I estimate it'll take to fix this.
 
-The way it works in git is that patches are sent in via this mailing
-list - the maintainer rarely uses git merge or pull (except to merge
-his own branches).  Thus, the "author" is the person who emailed the
-patch, and the "committer" is the person who applied the patch to his
-own tree.
+Well, it would be really nice to have.
+Details like this are time sinks, I know. But it pays off.
+You don't have to do it right away. We can file an issue so we don't
+forget about fixing it before 1.7 release.
+If necessary, feel free to adjust the output of svnadmin dump a little
+if that makes it easier for svnrdump to produce matching output.
 
-The result is an elegant looking history, but of course, the committer
-generates an entirely different commit id than the author had in his
-own history.  Since the maintainer never pulls directly from the
-author, it's each author's job to wipe/rebase his own history
-occasionally to stay in sync with the "upstream."
+> gawk '$0 !~ "Prop-delta: true|Text-delta-base-|sha1|Text-copy-source-|^-$" && $0 ~ "^+|^-" { print; }'
 
-=46or an open source project, where most contributions are by volunteer=
-s
-and need to have their patches reviewed multiple times before
-submission - and frequently, more patchsets are rejected than applied
-- this works reasonably well.  For a company where (in my experience
-at least) most people's patches *are* applied, and the ratio of
-reviewers to coders is much lower, that's much less workable.  And
-unfortunately the elegant looking multiple-signed-off-by or acked-by
-lines don't work so well for that.
+Fine for testing. But I still think the end-result should look just
+like svnadmin dump, if possible. That would make testing even easier.
 
-Oh, now that I think of it, you might find git-notes useful.  I've
-never used it but I understand it lets you add lines to the log
-messages retroactively.  Of course, that can be both a blessing and a
-curse.  If you can retroactively change signoffs, the signoffs aren't
-that valuable.
+> > Please get rid of all global variables in svnrdump.c:
+> Will do. I'm waiting for commit access, because I don't want to make
+> un-versioned edits to the file that I cannot track or revert in
+> future.
 
-Have fun,
+What about using git until then? It does not matter which state you
+initially import into the Subversion repository. But well, whatever
+works for you is best.
+ 
+> Please see the current `validate.sh` for an example of the
+> functionality I'll write into the unit tests.
 
-Avery
+Thanks, I'll take a look.
+
+Stefan
