@@ -1,91 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: serving git with both "git:" and "http:" and submodules
-Date: Wed, 14 Jul 2010 10:39:00 -0500
-Message-ID: <20100714153900.GB1583@burratino>
-References: <4C3DD7EF.6010805@panasas.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC 4/4] Add interactive mode to git-shell for user-friendliness
+Date: Wed, 14 Jul 2010 17:40:37 +0200
+Message-ID: <201007141740.37867.trast@student.ethz.ch>
+References: <1279076475-27730-1-git-send-email-gdb@mit.edu> <4C3DC2BD.6020907@digium.com> <20100714152444.GA26674@pcpool00.mathematik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Boaz Harrosh <bharrosh@panasas.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 17:40:15 2010
+Cc: <git@vger.kernel.org>, "Kevin P. Fleming" <kpfleming@digium.com>,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Greg Brockman <gdb@mit.edu>
+To: "Bernhard R. Link" <brlink@debian.org>
+X-From: git-owner@vger.kernel.org Wed Jul 14 17:41:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ449-0002Tj-CM
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:40:09 +0200
+	id 1OZ458-00035e-JU
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757347Ab0GNPj5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 11:39:57 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45816 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753902Ab0GNPjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 11:39:55 -0400
-Received: by wyb42 with SMTP id 42so1105654wyb.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 08:39:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=9aTWO1qhBrU1ZNKpzkJATVRZnpmTlg/YJpOBiA1pM2A=;
-        b=W3oMyI+IRCE0fwkqDJQB387u3TxyuYNHmy9QPgzHkCCzkbcLVKti/iwvYW/WIHFjxN
-         3ww5Li4w5FJbbehVtF5yC+cufYngsBZC/vfoavXJdcGDGJHNmJGZQEOrYQLMsZ7bVEnk
-         lxD8RG7p/AZtxIZlnCLq2cdgM32KRcAuwVKEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=EQf4l0kBEZHxqaa9kZesBJoDDGyfmZA9Gf6/TJG34zFB3ZUN3qWJIq4X5SmZUrWPfF
-         590Iwd9FgtNIlPLHx12nw29/eI7fl0yoZvbNU6cmBriZcTobqrA/PX6uvHdyOnMI44N3
-         Mvx1asXXNFR7JsODaRK6GdUO90ZbJC+TZnP0c=
-Received: by 10.227.129.12 with SMTP id m12mr11408970wbs.102.1279121990170;
-        Wed, 14 Jul 2010 08:39:50 -0700 (PDT)
-Received: from burratino ([98.212.3.231])
-        by mx.google.com with ESMTPS id g37sm48425380wbg.21.2010.07.14.08.39.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 14 Jul 2010 08:39:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4C3DD7EF.6010805@panasas.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753575Ab0GNPlE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 11:41:04 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:36504 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752516Ab0GNPlD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 11:41:03 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 14 Jul
+ 2010 17:41:00 +0200
+Received: from thomas.localnet (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.0.702.0; Wed, 14 Jul
+ 2010 17:40:39 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <20100714152444.GA26674@pcpool00.mathematik.uni-freiburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150999>
 
-Boaz Harrosh wrote:
+[Please don't trim the Cc list without good reason.]
 
-> So smart people using git will just do:
-> 1. $ git clone git://my-domain.org/my-tree/.git
-> 2. $ git submodule init
-> 3. $ git submodule update
+Bernhard R. Link wrote:
+> * Kevin P. Fleming <kpfleming@digium.com> [100714 15:59]:
+> > On 07/14/2010 04:04 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+> > > On Wed, Jul 14, 2010 at 03:01, Greg Brockman <gdb@mit.edu> wrote:
+> > >> +               execl(prog, prog, (char *) NULL);
+> > >
+> > > Why the casting of NULL? It's not done in the builtin/help.c code=
+=2E
+> > >
+> > > Anyway, if it was cast it should be to (const char *), shouldn't =
+it?
+> >
+> > When a NULL sentinel is passed to a varargs function that only
+> > understands 'char *' arguments, the NULL must be cast specifically,
+> > otherwise it will appear in the varargs array as an int or a long.
 >=20
-> And all is well... But smart ass corporate people would not use "git:=
-"
-> protocol because of fire-walls and for them I have a dumb "http:" exp=
-ort
-> as:
-> 1. $ git clone http://my-domain.org/trees/my-tree/.git
-[...]
-> So my question is: Can I automate this so people with "http:"
-> clones are not forced to manually edit their config files?
-> (Some users are just not up to it)
+> To be more specific: If NULL is (void *)0 then it does not need to be
+> cast. Sadly the standard allows to define it as 0, and so it is on
+> some systems. So to be portable it needs to be cast to be a pointer,
+> otherwise the varargs argument is assumed to be an int.
 
-Sure.  For example, you can ship an update-submodules.sh script
-to take care of checking =E2=80=9Cgit config remote.origin.url=E2=80=9D=
- and
-updating the =E2=80=98[submodule "sub"] url=E2=80=99 configuration to m=
-atch.
+Worse, the pointer representations need not be the same between types,
+even though that is a fairly exotic idea:
 
-Of course, even this would not make
-'git clone --recursive http://my-domain.org/trees/my-tree/.git'
-work.  If you can get git-http-backend working, I=E2=80=99d suggest usi=
-ng
-that so you only have to deal with one url.
+  http://c-faq.com/null/machexamp.html
 
-Hope that helps,
-Jonathan
+So it seems execl() must always have an explicitly-cast (char*)NULL
+sentinel.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
