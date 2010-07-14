@@ -1,72 +1,112 @@
-From: Boaz Harrosh <bharrosh@panasas.com>
-Subject: serving git with both "git:" and "http:" and submodules
-Date: Wed, 14 Jul 2010 18:29:51 +0300
-Message-ID: <4C3DD7EF.6010805@panasas.com>
+From: Stefan Sperling <stsp@elego.de>
+Subject: Re: [PATCH v2] Add svnrdump
+Date: Wed, 14 Jul 2010 17:32:06 +0200
+Message-ID: <20100714153206.GH25630@jack.stsp.name>
+References: <20100709142910.GB20383@debian>
+ <20100713201105.GN13310@ted.stsp.name>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 14 17:30:09 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ3uO-0005LH-RR
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:30:05 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757072Ab0GNP34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 11:29:56 -0400
-Received: from daytona.panasas.com ([67.152.220.89]:33370 "EHLO
-	daytona.int.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756811Ab0GNP3y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 11:29:54 -0400
-Received: from fs2.bhalevy.com ([172.17.33.181]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 14 Jul 2010 11:29:52 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4
-X-OriginalArrivalTime: 14 Jul 2010 15:29:52.0889 (UTC) FILETIME=[67B8BE90:01CB2369]
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: "dev@subversion.apache.org" <dev@subversion.apache.org>,
+        Bert Huijben <rhuijben@collab.net>,
+        Daniel Shahaf <d.s@daniel.shahaf.name>,
+        Will Palmer <wmpalmer@gmail.com>,
+        David Michael Barr <david.barr@cordelta.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Sverre Rabbelier <srabbelier@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: dev-return-5003-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 14 17:33:15 2010
+Return-path: <dev-return-5003-gcvsd-dev=m.gmane.org@subversion.apache.org>
+Envelope-to: gcvsd-dev@lo.gmane.org
+Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
+	by lo.gmane.org with smtp (Exim 4.69)
+	(envelope-from <dev-return-5003-gcvsd-dev=m.gmane.org@subversion.apache.org>)
+	id 1OZ3xR-0007AF-TX
+	for gcvsd-dev@lo.gmane.org; Wed, 14 Jul 2010 17:33:14 +0200
+Received: (qmail 48176 invoked by uid 500); 14 Jul 2010 15:33:12 -0000
+Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150996>
+List-Help: <mailto:dev-help@subversion.apache.org>
+List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
+List-Post: <mailto:dev@subversion.apache.org>
+List-Id: <dev.subversion.apache.org>
+Delivered-To: mailing list dev@subversion.apache.org
+Received: (qmail 48168 invoked by uid 99); 14 Jul 2010 15:33:11 -0000
+Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 15:33:11 +0000
+X-ASF-Spam-Status: No, hits=-0.7 required=10.0
+	tests=RCVD_IN_DNSWL_LOW,SPF_PASS
+X-Spam-Check-By: apache.org
+Received-SPF: pass (nike.apache.org: local policy)
+Received: from [192.109.42.8] (HELO einhorn.in-berlin.de) (192.109.42.8)
+    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 15:33:04 +0000
+X-Envelope-From: stsp@stsp.name
+Received: from jack.stsp.name (i577B52DC.versanet.de [87.123.82.220])
+	(authenticated bits=128)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6EFWAnP017020
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 14 Jul 2010 17:32:10 +0200
+Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
+	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id o6EFW9bJ003129;
+	Wed, 14 Jul 2010 17:32:09 +0200 (CEST)
+Received: (from stsp@localhost)
+	by jack.stsp.name (8.14.3/8.14.3/Submit) id o6EFW6mZ030831;
+	Wed, 14 Jul 2010 17:32:06 +0200 (CEST)
+Mail-Followup-To: Ramkumar Ramachandra <artagnon@gmail.com>,
+	"dev@subversion.apache.org" <dev@subversion.apache.org>,
+	Bert Huijben <rhuijben@collab.net>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Will Palmer <wmpalmer@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20100713201105.GN13310@ted.stsp.name>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+X-Virus-Checked: Checked by ClamAV on apache.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150997>
 
+On Tue, Jul 13, 2010 at 10:11:05PM +0200, Stefan Sperling wrote:
+> Review below.
 
-I have a public tree that I maintain for users. The tree is consisted
-of a main-tree and a submodule tree which is also served from the same
-server.
+A couple of additional remarks:
 
-The main tree:
-git://my-domain.org/my-tree/.git
-The sub-tree:
-git://my-domain.org/my-tree/sub/.git
+Playing with svnrdump and comparing its output to the output of
+svnadmin dump --deltas, I noticed that:
 
-in my .gitmodule I have the usual
-[submodule "sub"]
-        url = git://my-domain.org/my-tree/sub/.git
+ - svnrdump doesn't dump revision 0.
+   It should dump revision 0, because that revision can contain important
+   revprops such as metadata for svnsync (svn:sync-last-merge-rev etc.)
+ - You're missing a couple of fields:
+   The UUID of the repository.
+   Text-content-sha1
+   Text-delta-base-md5
+   Text-delta-base-sha1
+ - I've seen a "Prop-delta: true" line which svnadmin dump does not print.
+ - You're missing some newlines that svnadmin dump prints (cosmetic,
+   but it would be nice if both produced matching output).
 
-So smart people using git will just do:
-1. $ git clone git://my-domain.org/my-tree/.git
-2. $ git submodule init
-3. $ git submodule update
+How to reproduce what I'm seeing:
+  Use svnsync to get a copy of the numptyphysics repository at
+    https://vcs.maemo.org/svn/numptyphysics (I had a dump of that lying
+    around... other repositories might do the job just as well, of course)
+  Dump the repository using svnadmin dump --deltas.
+  Dump the repository using svnrdump.
+  Compare output with diff -u.
 
-And all is well... But smart ass corporate people would not use "git:"
-protocol because of fire-walls and for them I have a dumb "http:" export
-as:
-1. $ git clone http://my-domain.org/trees/my-tree/.git
+Please get rid of all global variables in svnrdump.c:
+subversion/svnrdump/svnrdump.c:43: warning: declaration of `pool' shadows a glob
+al declaration
+subversion/svnrdump/svnrdump.c:33: warning: shadowed declaration is here
+subversion/svnrdump/svnrdump.c:91: warning: declaration of `pool' shadows a glob
+al declaration
+subversion/svnrdump/svnrdump.c:33: warning: shadowed declaration is here
 
-With them, step 3 above will not work. My current instructions
-for them is that after the step 2 "git submodule init" they should
-manually edit my-tree/.git/config and change to:
-[submodule "sub"]
--        url = git://my-domain.org/my-tree/sub/.git
-+        url = http://my-domain.org/trees/my-tree/sub/.git
+When adding unit tests for svnrdump, please make each and every one of
+those tests compare with output of svnadmin dump --deltas, so that we
+will keep them in sync.
 
-And then do step 3 to clone the sub-module.
-
-So my question is: Can I automate this so people with "http:"
-clones are not forced to manually edit their config files?
-(Some users are just not up to it)
-
-Thanks, (Sorry if that has been raised before. Couldn't find any.)
-Boaz
+Thanks,
+Stefan
