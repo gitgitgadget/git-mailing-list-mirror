@@ -1,13 +1,13 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
-Date: Wed, 14 Jul 2010 02:22:35 +0200
-Message-ID: <20100714002235.GF12639@debian>
+Date: Tue, 13 Jul 2010 19:28:43 -0500
+Message-ID: <20100714002843.GC2308@burratino>
 References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
  <20100713235825.GC12639@debian>
  <20100714001530.GB2308@burratino>
+ <20100714002235.GF12639@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
 	David Michael Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
@@ -16,66 +16,66 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Eric Wong <normalperson@yhbt.net>,
 	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 02:21:01 2010
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 02:29:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYpib-0003GI-D2
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 02:20:57 +0200
+	id 1OYpqx-0005oo-Oq
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 02:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008Ab0GNAUw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Jul 2010 20:20:52 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:47141 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751121Ab0GNAUv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 20:20:51 -0400
-Received: by ewy23 with SMTP id 23so1277015ewy.19
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 17:20:49 -0700 (PDT)
+	id S1752571Ab0GNA3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 20:29:30 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47242 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121Ab0GNA33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 20:29:29 -0400
+Received: by iwn7 with SMTP id 7so6396144iwn.19
+        for <git@vger.kernel.org>; Tue, 13 Jul 2010 17:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=obiFz+jUkKlcLgODoET2qgDdvd/l5IfswzurVy3zBvE=;
-        b=JJXFiwlb7GtN61DrkcGV6KwyV/IwM4I49FfuBhGfnUswtF1n2WxSzWxLQB4g51mU9J
-         8LkYt8KPqH+lwFdHqGRVPQq4moqajK0C7HxDDu9HHaYqZDybVqiMJML0bnTco5QVfJCc
-         YR8xf0pQ/gS2pFgrOkO1pP5x034bpQld6Gd/o=
+         :in-reply-to:user-agent;
+        bh=/sCv1IpZg+8RLyMr87slk+oTbLUN7L2UxezSecxXBvY=;
+        b=w2K571b1lYhX6lEflEidJcCN6WKdIh8GLkJgS6wobKwEXS+6IOzHTblAfWrGN0HvHY
+         yy6G47Gghpc2mRyHnApNChjx1bc9tv3g59eY/6CaWsaiNoo6u76orQc60OneJL/MfWue
+         fTGE4P9Jt4YtRwrXWwwNE2bgg6oQJAjLL60sI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=r5Wl0LNkkFTriqC6aleJ348s7USOzEfzO/gsmoEeeTXgxkDD+1gN90P7ZZrlgThu6L
-         yTwkseODComd/+wWK7t4vM+KlKj+Db8B3ryVid7kVsNEYsduOUEi8/DqnRnWk+0vhpJz
-         9ibUOYh6DLMVR5xn8E7uF9zZd27YaRNTVPxT8=
-Received: by 10.213.16.140 with SMTP id o12mr10157138eba.20.1279066849154;
-        Tue, 13 Jul 2010 17:20:49 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id x54sm51785356eeh.11.2010.07.13.17.20.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 Jul 2010 17:20:47 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=lvDHYqi9yMy0ok0Uju1dEdHnpH7eL9Snmt6NrN9boyfQ26e7bDknCIRbYXmt930TJr
+         mK0JP6/7/O2ut3BQjiyHsW7i2y00MoraqKHYIMhz5G0xj6HFAziVPz/wTH3oyvN6heo+
+         IsU11SUPssVAk67KwTQwoTjv+hf9vsQXq4tzg=
+Received: by 10.231.161.16 with SMTP id p16mr11209059ibx.61.1279067369145;
+        Tue, 13 Jul 2010 17:29:29 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id g31sm27435872ibh.16.2010.07.13.17.29.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 13 Jul 2010 17:29:28 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100714001530.GB2308@burratino>
+In-Reply-To: <20100714002235.GF12639@debian>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150953>
 
-Hi Jonathan,
+Ramkumar Ramachandra wrote:
 
-Jonathan Nieder writes:
-> If we are including a convenience copy of files that are (soon to be)
-> in svn trunk, I don=E2=80=99t see much reason to diverge from the svn
-> version except for API differences and the overhead of updating too
-> frequently.
+> Is licensing an issue? I won't be the copyright holder or the sole
+> contributor to svnrdump when it's in ASF. Can I just copy-paste from
+> there into the git.git tree?
 
-Is licensing an issue? I won't be the copyright holder or the sole
-contributor to svnrdump when it's in ASF. Can I just copy-paste from
-there into the git.git tree?
+As long as the relevant licenses permit that.  svnrdump only links to
+libsvnclient, right?  So copy-pasting the code along with
 
--- Ram
+ - a copy of the Apache license
+ - prominent notices in any files that differ from the svn version
+ - the notices from the Subversion NOTICE file
+
+should be okay.
