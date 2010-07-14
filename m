@@ -1,95 +1,96 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
-Date: Wed, 14 Jul 2010 02:49:59 +0200
-Message-ID: <20100714004959.GG12639@debian>
-References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
- <20100713235825.GC12639@debian>
- <20100714001530.GB2308@burratino>
- <20100714002235.GF12639@debian>
- <20100714002843.GC2308@burratino>
+From: Raja R Harinath <harinath@hurrynot.org>
+Subject: Re: [PATCH] Use dev_t for device id (st_dev) from stat in setup_git_directory_gently()
+Date: Wed, 14 Jul 2010 06:38:13 +0530
+Message-ID: <878w5elvk2.fsf@hariville.hurrynot.org>
+References: <1279011720-21424-1-git-send-email-harinath@hurrynot.org>
+	<7voceb2jaw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>,
-	Stefan Sperling <stsp@elego.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 02:48:35 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 14 03:20:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYq9L-0002Nv-71
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 02:48:35 +0200
+	id 1OYqeE-0002HU-FU
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 03:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780Ab0GNAsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 20:48:18 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44454 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753641Ab0GNAsO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 20:48:14 -0400
-Received: by ewy23 with SMTP id 23so1279831ewy.19
-        for <git@vger.kernel.org>; Tue, 13 Jul 2010 17:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=I7Q2mntGOsKnZGrT0xflndAkBm5PHlZYlP8dEpNSGNs=;
-        b=tJfOEKzQgEu3MzvF8Dix1jtsmk4/NcwD9el8LD21PMi3rWtaIfu2KRbqCvzM499k9T
-         uIDKjmJn+YalsX7UdZNKusVyOrmOwwjeZ/GzJPWyIyPRuyc9a6PbDoeINQHP5oPcSnjJ
-         fEb9XLq8qZ/UlyyOgtbOkPB3deVpElZXgX0+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bjkHtFgxyVcNSUazEI0bivIOB7hzB5R3TJvDw6IsiJ3tCQLeUipAqPfmf7kexPzpRa
-         sJUrssWHJ2McxGfsIbW+cgtzqRLh84LhyaYNaSeRV00/yijeWy5bDzIW0bAgcuNYFEGI
-         w+74udmrq9Z9RD68PexDbWZHe3+jKuaHupZCo=
-Received: by 10.213.7.2 with SMTP id b2mr3582973ebb.22.1279068492685;
-        Tue, 13 Jul 2010 17:48:12 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id x54sm51942589eeh.23.2010.07.13.17.48.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 13 Jul 2010 17:48:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100714002843.GC2308@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753874Ab0GNBUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 21:20:25 -0400
+Received: from lo.gmane.org ([80.91.229.12]:57554 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752873Ab0GNBUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 21:20:24 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OYqe4-0002Ew-GU
+	for git@vger.kernel.org; Wed, 14 Jul 2010 03:20:20 +0200
+Received: from 117.192.131.222 ([117.192.131.222])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 03:20:20 +0200
+Received: from harinath by 117.192.131.222 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 03:20:20 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 117.192.131.222
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:hpc3ha7PKv0JGCCZWSaDfD7GUCg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150955>
 
 Hi,
 
-Jonathan Nieder writes:
-> As long as the relevant licenses permit that.  svnrdump only links to
-> libsvnclient, right?
+Junio C Hamano <gitster@pobox.com> writes:
 
-I can see another problem coming: things are likely to move around
-quite a bit after the code gets into the ASF. For instance, Stefan's
-recent review points out that write_hash_to_stringbuf should probably
-be in a reusable library. If these changes happen soon, svnrdump will
-be tightly integrated into Subversion, and it'll be hard to separate
-out an independent program. Then again, we don't know how soon this
-will happen.
+> Raja R Harinath <harinath@hurrynot.org> writes:
+>
+>> The original declaration was int, which seems to cause trouble on my
+>> machine.  It causes spurious "filesystem boundary" errors when running
+>> the testsuite.  The cause seems to be
+>>
+>>   $ stat -c%d .
+>>   2147549952
+>>
+>> which is too large for a 32-bit int type.
+>>
+>> Using the correct type, dev_t, solves the issue.  (Because I'm
+>> paranoid and forgetful, I checked -- yes, Unix v7 had dev_t.)
+>>
+>> Other uses of st_dev seem to be reasonably safe.   fill_stat_cache_info
+>> truncates it to an 'unsigned int', but that value seems to be used only
+>> to validate the cache, and only if USE_STDEV is defined.
+>> ---
+>
+> Makes sense; thanks.
+>
+> Sign-off?
 
-If you get this series merged into git.git, Git people will be able to
-read and review it easily and it'll be guaranteed to compile against
-SVN 1.6. In other words, it won't be a moving part. The downside being
-that it's too painful to backport changes from the ASF version, so
-it'll remain outdated atleast until the next Subversion release, and
-we don't know how soon that'll happen and be widely available.
+Signed-off-by: Raja R Harinath <harinath@hurrynot.org>
 
-If the former option is preferred, I'll send one large patch to the
-list for mirroring the version in ASF. Also, could the Subversion
-people confirm that licensing isn't an issue?
+Do I need to resend?
 
--- Ram
+>>  setup.c |    3 ++-
+>>  1 files changed, 2 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/setup.c b/setup.c
+>> index 7e04602..87c21f0 100644
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -323,7 +323,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>>  	const char *gitdirenv;
+>>  	const char *gitfile_dir;
+>>  	int len, offset, ceil_offset, root_len;
+>> -	int current_device = 0, one_filesystem = 1;
+>> +	dev_t current_device = 0;
+>> +	int one_filesystem = 1;
+>>  	struct stat buf;
+>>  
+>>  	/*
+>> -- 
+>> 1.7.2.rc2.11.g03e33
