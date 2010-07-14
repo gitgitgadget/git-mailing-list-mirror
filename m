@@ -1,100 +1,107 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
-Date: Wed, 14 Jul 2010 09:03:23 +0200
-Message-ID: <20100714070323.GB25630@jack.stsp.name>
-References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
- <20100713235825.GC12639@debian>
- <20100714001530.GB2308@burratino>
- <20100714002235.GF12639@debian>
- <20100714002843.GC2308@burratino>
- <20100714004959.GG12639@debian>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC/PATCH 2/3] Documentation: gitrevisions
+Date: Wed, 14 Jul 2010 10:42:05 +0200
+Message-ID: <4C3D785D.1050000@drmicha.warpmail.net>
+References: <cover.1278346173.git.git@drmicha.warpmail.net> <7efed85cefddff1cd2cc3a0e3802326306117f4e.1278346173.git.git@drmicha.warpmail.net> <4C3D562B.3070404@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 10:00:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 10:43:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYwsz-0001hM-Ua
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 10:00:10 +0200
+	id 1OYxYf-0004CK-VC
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 10:43:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657Ab0GNIAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 04:00:04 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:55530 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751951Ab0GNIAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Jul 2010 04:00:01 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from jack.stsp.name (i577B52DC.versanet.de [87.123.82.220])
-	(authenticated bits=128)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6E73Z7c006739
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Jul 2010 09:03:35 +0200
-Received: from jack.stsp.name (stsp@localhost [127.0.0.1])
-	by jack.stsp.name (8.14.3/8.14.3) with ESMTP id o6E73YUe025211;
-	Wed, 14 Jul 2010 09:03:34 +0200 (CEST)
-Received: (from stsp@localhost)
-	by jack.stsp.name (8.14.3/8.14.3/Submit) id o6E73NgJ027690;
-	Wed, 14 Jul 2010 09:03:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20100714004959.GG12639@debian>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752464Ab0GNInI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 04:43:08 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43929 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752190Ab0GNInF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 04:43:05 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6343E16E7D8;
+	Wed, 14 Jul 2010 04:43:04 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 14 Jul 2010 04:43:04 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=1uHKuiNWuUZ9VKtkXi/w+hiCfJs=; b=BSiQpMnIo1HItz909yet5AxTriqJlpESw/uSsyqxQFnxGrHxGSW67Ts1CgsNwTgXUN+XOcFivJuHXSWO8YDXYv7ZaJBa7Lu3q/2VnhZTul1EClMEn7ik7VICxBOn40JKCT0TgGJxkh7ztKmNz+5mRUllaoZycsOYZ46OeIWzW28=
+X-Sasl-enc: F6ng/RPKQRJsEmBL/HZN51Q4Ll5xxFSbZxfHiRO/rP8v 1279096984
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D3F774F6253;
+	Wed, 14 Jul 2010 04:43:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100714 Lightning/1.0b2pre Lanikai/3.1.2pre
+In-Reply-To: <4C3D562B.3070404@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150971>
 
-On Wed, Jul 14, 2010 at 02:49:59AM +0200, Ramkumar Ramachandra wrote:
-> Hi,
+Stephen Boyd venit, vidit, dixit 14.07.2010 08:16:
+>   On 07/05/2010 09:11 AM, Michael J Gruber wrote:
+>> +
+>> +DESCRIPTION
+>> +-----------
+>> +
+>> +Many Git commands take revision parameters as arguments. Depending on
+>> +the command, they denote a specific commit or, for commands which
+>> +walk the revision graph (such as linkgit:git-log[1]), all commits which can
+>> +be reached from that commit. In the latter case one can also specify a
+>> +range of revisions explicitly.
+>> +
+>> +In addition, some Git commands (such as linkgit:git-show[1]) also take
+>> +revision parameters which denote other objects than commits, e.g. blobs
+>> +("files") or trees ("directories of files").
+>> +
 > 
-> Jonathan Nieder writes:
-> > As long as the relevant licenses permit that.  svnrdump only links to
-> > libsvnclient, right?
-
-It links against a couple of Subversion libraries and against APR.
-
-> I can see another problem coming: things are likely to move around
-> quite a bit after the code gets into the ASF. For instance, Stefan's
-> recent review points out that write_hash_to_stringbuf should probably
-> be in a reusable library. If these changes happen soon, svnrdump will
-> be tightly integrated into Subversion, and it'll be hard to separate
-> out an independent program. Then again, we don't know how soon this
-> will happen.
+> Is any of this text (section?) necessary besides including revisions.txt? It seems that revisions.txt nicely covers the types of revisions in the first paragraph of each section and these two paragraphs repeat that.
 > 
-> If you get this series merged into git.git, Git people will be able to
-> read and review it easily and it'll be guaranteed to compile against
-> SVN 1.6. In other words, it won't be a moving part. The downside being
-> that it's too painful to backport changes from the ASF version, so
-> it'll remain outdated atleast until the next Subversion release, and
-> we don't know how soon that'll happen and be widely available.
+> Can you squash this in?
 > 
-> If the former option is preferred, I'll send one large patch to the
-> list for mirroring the version in ASF.
+> --->8----
+> 
+> index fc4789f..0e25c5f 100644
+> --- a/Documentation/gitrevisions.txt
+> +++ b/Documentation/gitrevisions.txt
+> @@ -10,19 +10,6 @@ SYNOPSIS
+>   gitrevisions
+> 
+> 
+> -DESCRIPTION
+> ------------
+> -
+> -Many Git commands take revision parameters as arguments. Depending on
+> -the command, they denote a specific commit or, for commands which
+> -walk the revision graph (such as linkgit:git-log[1]), all commits which can
+> -be reached from that commit. In the latter case one can also specify a
+> -range of revisions explicitly.
+> -
+> -In addition, some Git commands (such as linkgit:git-show[1]) also take
+> -revision parameters which denote other objects than commits, e.g. blobs
+> -("files") or trees ("directories of files").
+> -
+>   include::revisions.txt[]
+> 
+> 
+> 
 
-Git devs will want a version of svnrdump that compiles against
-the 1.6.x libraries. We'll want a version that compiles against
-the trunk (so we can release it with 1.7).
+I added this text on purpose. The "DESCRIPTION" section is meant to give
+a concise description of the overall picture so that, e.g., you
+understand which section will answer which question without having to
+read all of them. In this case it gives you a short overview of what can
+be referred to by revisions (commit, commit range, general object)
+before the sections go into the details of how to specify them.
 
-So depending on which APIs svnrdump is using, it's likely that
-you'll have to maintain 2 slightly differing versions anyway,
-until 1.7 is released. (The current ETA for 1.7 is autumn, BTW).
+Also, as I mentioned in the cover letter, I suggest a rework of the
+actual (included, old) content if that structure is to stay. So, in a
+second step, one could avoid duplications.
 
-> Also, could the Subversion
-> people confirm that licensing isn't an issue?
+But here, I find it really natural (if not necessary) that the first
+paragraph in each detailed section picks up on the pertaining parts of
+the concise description.
 
-I didn't catch any licensing discussion. What's the issue?
-
-Stefan
+Michael
