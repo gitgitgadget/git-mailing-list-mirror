@@ -1,75 +1,85 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH/RFC 4/4] Add interactive mode to git-shell for user-friendliness
-Date: Wed, 14 Jul 2010 17:40:37 +0200
-Message-ID: <201007141740.37867.trast@student.ethz.ch>
-References: <1279076475-27730-1-git-send-email-gdb@mit.edu> <4C3DC2BD.6020907@digium.com> <20100714152444.GA26674@pcpool00.mathematik.uni-freiburg.de>
+From: Boaz Harrosh <bharrosh@panasas.com>
+Subject: Re: serving git with both "git:" and "http:" and submodules
+Date: Wed, 14 Jul 2010 18:58:50 +0300
+Message-ID: <4C3DDEBA.8010509@panasas.com>
+References: <4C3DD7EF.6010805@panasas.com> <20100714153900.GB1583@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, "Kevin P. Fleming" <kpfleming@digium.com>,
-	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Greg Brockman <gdb@mit.edu>
-To: "Bernhard R. Link" <brlink@debian.org>
-X-From: git-owner@vger.kernel.org Wed Jul 14 17:41:11 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 17:59:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ458-00035e-JU
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:41:10 +0200
+	id 1OZ4MO-0004PE-EA
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 17:59:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753575Ab0GNPlE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 11:41:04 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:36504 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752516Ab0GNPlD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 11:41:03 -0400
-Received: from CAS21.d.ethz.ch (172.31.51.111) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 14 Jul
- 2010 17:41:00 +0200
-Received: from thomas.localnet (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.0.702.0; Wed, 14 Jul
- 2010 17:40:39 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <20100714152444.GA26674@pcpool00.mathematik.uni-freiburg.de>
+	id S1753688Ab0GNP6z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 11:58:55 -0400
+Received: from daytona.panasas.com ([67.152.220.89]:1580 "EHLO
+	daytona.int.panasas.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751686Ab0GNP6y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 11:58:54 -0400
+Received: from fs2.bhalevy.com ([172.17.33.181]) by daytona.int.panasas.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Wed, 14 Jul 2010 11:58:53 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.9) Gecko/20100430 Fedora/3.0.4-2.fc12 Thunderbird/3.0.4
+In-Reply-To: <20100714153900.GB1583@burratino>
+X-OriginalArrivalTime: 14 Jul 2010 15:58:53.0322 (UTC) FILETIME=[7519BEA0:01CB236D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151000>
 
-[Please don't trim the Cc list without good reason.]
-
-Bernhard R. Link wrote:
-> * Kevin P. Fleming <kpfleming@digium.com> [100714 15:59]:
-> > On 07/14/2010 04:04 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
-> > > On Wed, Jul 14, 2010 at 03:01, Greg Brockman <gdb@mit.edu> wrote:
-> > >> +               execl(prog, prog, (char *) NULL);
-> > >
-> > > Why the casting of NULL? It's not done in the builtin/help.c code=
-=2E
-> > >
-> > > Anyway, if it was cast it should be to (const char *), shouldn't =
-it?
-> >
-> > When a NULL sentinel is passed to a varargs function that only
-> > understands 'char *' arguments, the NULL must be cast specifically,
-> > otherwise it will appear in the varargs array as an int or a long.
+On 07/14/2010 06:39 PM, Jonathan Nieder wrote:
+> Boaz Harrosh wrote:
 >=20
-> To be more specific: If NULL is (void *)0 then it does not need to be
-> cast. Sadly the standard allows to define it as 0, and so it is on
-> some systems. So to be portable it needs to be cast to be a pointer,
-> otherwise the varargs argument is assumed to be an int.
+>> So smart people using git will just do:
+>> 1. $ git clone git://my-domain.org/my-tree/.git
+>> 2. $ git submodule init
+>> 3. $ git submodule update
+>>
+>> And all is well... But smart ass corporate people would not use "git=
+:"
+>> protocol because of fire-walls and for them I have a dumb "http:" ex=
+port
+>> as:
+>> 1. $ git clone http://my-domain.org/trees/my-tree/.git
+> [...]
+>> So my question is: Can I automate this so people with "http:"
+>> clones are not forced to manually edit their config files?
+>> (Some users are just not up to it)
+>=20
+> Sure.  For example, you can ship an update-submodules.sh script
+> to take care of checking =E2=80=9Cgit config remote.origin.url=E2=80=9D=
+ and
+> updating the =E2=80=98[submodule "sub"] url=E2=80=99 configuration to=
+ match.
+>=20
+> Of course, even this would not make
+> 'git clone --recursive http://my-domain.org/trees/my-tree/.git'
 
-Worse, the pointer representations need not be the same between types,
-even though that is a fairly exotic idea:
+Right
 
-  http://c-faq.com/null/machexamp.html
+> work.  If you can get git-http-backend working, I=E2=80=99d suggest u=
+sing
+> that so you only have to deal with one url.
+>=20
 
-So it seems execl() must always have an explicitly-cast (char*)NULL
-sentinel.
+Ok I'll dive into "git-http-backend" (any pointers). But I thought
+this one will still serve me an "http:" url. Are you suggesting to
+just drop the "git:" protocol? (Since "git-http-backend" is just as
+good, through http?)
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+> Hope that helps,
+> Jonathan
+
+But a script for users might be a very good idea. I might even add
+it to the main Makefile. And make it totally transparent.
+$ git-clone; make;
+
+Thanks that actually helped
+Boaz
