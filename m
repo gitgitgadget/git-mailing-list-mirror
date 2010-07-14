@@ -1,96 +1,57 @@
-From: Raja R Harinath <harinath@hurrynot.org>
-Subject: Re: [PATCH] Use dev_t for device id (st_dev) from stat in setup_git_directory_gently()
-Date: Wed, 14 Jul 2010 06:38:13 +0530
-Message-ID: <878w5elvk2.fsf@hariville.hurrynot.org>
-References: <1279011720-21424-1-git-send-email-harinath@hurrynot.org>
-	<7voceb2jaw.fsf@alter.siamese.dyndns.org>
+From: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Subject: Re: [PATCH] guilt: Make sure the commit time is increasing
+Date: Tue, 13 Jul 2010 23:01:17 -0400
+Message-ID: <20100714030117.GA8658@maat.home>
+References: <1278296639-25024-1-git-send-email-tytso@mit.edu>
+ <20100705025900.GQ22659@josefsipek.net>
+ <67D0ABD4-BD1A-4B7A-B3EC-F48F21B5DD01@mit.edu>
+ <20100705185238.GS22659@josefsipek.net>
+ <20100705192201.GI25518@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 14 03:20:35 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: tytso@mit.edu
+X-From: git-owner@vger.kernel.org Wed Jul 14 05:01:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OYqeE-0002HU-FU
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 03:20:30 +0200
+	id 1OYsDv-0008WC-KC
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 05:01:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753874Ab0GNBUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Jul 2010 21:20:25 -0400
-Received: from lo.gmane.org ([80.91.229.12]:57554 "EHLO lo.gmane.org"
+	id S1755059Ab0GNDBW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Jul 2010 23:01:22 -0400
+Received: from josefsipek.net ([141.212.112.63]:39956 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752873Ab0GNBUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Jul 2010 21:20:24 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OYqe4-0002Ew-GU
-	for git@vger.kernel.org; Wed, 14 Jul 2010 03:20:20 +0200
-Received: from 117.192.131.222 ([117.192.131.222])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 03:20:20 +0200
-Received: from harinath by 117.192.131.222 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 03:20:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 117.192.131.222
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
-Cancel-Lock: sha1:hpc3ha7PKv0JGCCZWSaDfD7GUCg=
+	id S1753237Ab0GNDBV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Jul 2010 23:01:21 -0400
+Received: by josefsipek.net (Postfix, from userid 108)
+	id 2361B7EDB; Tue, 13 Jul 2010 23:01:21 -0400 (EDT)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on odin.josefsipek.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED
+	autolearn=unavailable version=3.3.1
+Received: from maat.home (unknown [141.212.213.226])
+	by josefsipek.net (Postfix) with ESMTPSA id DAC0F287;
+	Tue, 13 Jul 2010 23:01:20 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20100705192201.GI25518@thunk.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/150956>
 
-Hi,
+FWIW, I pushed the change out.  I think this is a major enough fix that I'll
+cut a new release soon.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thanks!
 
-> Raja R Harinath <harinath@hurrynot.org> writes:
->
->> The original declaration was int, which seems to cause trouble on my
->> machine.  It causes spurious "filesystem boundary" errors when running
->> the testsuite.  The cause seems to be
->>
->>   $ stat -c%d .
->>   2147549952
->>
->> which is too large for a 32-bit int type.
->>
->> Using the correct type, dev_t, solves the issue.  (Because I'm
->> paranoid and forgetful, I checked -- yes, Unix v7 had dev_t.)
->>
->> Other uses of st_dev seem to be reasonably safe.   fill_stat_cache_info
->> truncates it to an 'unsigned int', but that value seems to be used only
->> to validate the cache, and only if USE_STDEV is defined.
->> ---
->
-> Makes sense; thanks.
->
-> Sign-off?
+Jeff.
 
-Signed-off-by: Raja R Harinath <harinath@hurrynot.org>
-
-Do I need to resend?
-
->>  setup.c |    3 ++-
->>  1 files changed, 2 insertions(+), 1 deletions(-)
->>
->> diff --git a/setup.c b/setup.c
->> index 7e04602..87c21f0 100644
->> --- a/setup.c
->> +++ b/setup.c
->> @@ -323,7 +323,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
->>  	const char *gitdirenv;
->>  	const char *gitfile_dir;
->>  	int len, offset, ceil_offset, root_len;
->> -	int current_device = 0, one_filesystem = 1;
->> +	dev_t current_device = 0;
->> +	int one_filesystem = 1;
->>  	struct stat buf;
->>  
->>  	/*
->> -- 
->> 1.7.2.rc2.11.g03e33
+-- 
+The obvious mathematical breakthrough would be development of an easy way to
+factor large prime numbers.
+		- Bill Gates, The Road Ahead, pg. 265
