@@ -1,83 +1,92 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH v2] Add svnrdump
-Date: Wed, 14 Jul 2010 19:34:09 +0200
-Message-ID: <20100714173409.GD25861@ted.stsp.name>
-References: <20100709142910.GB20383@debian>
- <20100713201105.GN13310@ted.stsp.name>
- <20100714153206.GH25630@jack.stsp.name>
- <20100714160149.GA7561@debian>
- <20100714172429.GC25861@ted.stsp.name>
- <4C3DF456.20803@collab.net>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [PATCH/RFC 1/4] Allow creation of arbitrary git-shell commands
+Date: Wed, 14 Jul 2010 13:42:49 -0400
+Message-ID: <AANLkTimAkSB1bysyE6R3CWp-U3vk_S5L0CbMhIWXJfHE@mail.gmail.com>
+References: <1279076475-27730-1-git-send-email-gdb@mit.edu>
+	<1279076475-27730-2-git-send-email-gdb@mit.edu>
+	<7vbpaaytfl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-        "dev@subversion.apache.org" <dev@subversion.apache.org>,
-        Bert Huijben <rhuijben@collab.net>,
-        Daniel Shahaf <d.s@daniel.shahaf.name>,
-        Will Palmer <wmpalmer@gmail.com>,
-        David Michael Barr <david.barr@cordelta.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Sverre Rabbelier <srabbelier@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-To: "C. Michael Pilato" <cmpilato@collab.net>
-X-From: dev-return-5011-gcvsd-dev=m.gmane.org@subversion.apache.org Wed Jul 14 19:34:56 2010
-Return-path: <dev-return-5011-gcvsd-dev=m.gmane.org@subversion.apache.org>
-Envelope-to: gcvsd-dev@lo.gmane.org
-Received: from hermes.apache.org ([140.211.11.3] helo=mail.apache.org)
-	by lo.gmane.org with smtp (Exim 4.69)
-	(envelope-from <dev-return-5011-gcvsd-dev=m.gmane.org@subversion.apache.org>)
-	id 1OZ5rC-0005gp-D2
-	for gcvsd-dev@lo.gmane.org; Wed, 14 Jul 2010 19:34:54 +0200
-Received: (qmail 47703 invoked by uid 500); 14 Jul 2010 17:34:52 -0000
-Mailing-List: contact dev-help@subversion.apache.org; run by ezmlm
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 14 19:43:00 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
+	by lo.gmane.org with esmtp (Exim 4.69)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OZ5z1-0002nY-SW
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 19:43:00 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755064Ab0GNRmy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 13:42:54 -0400
+Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:58508 "EHLO
+	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753902Ab0GNRmy convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 13:42:54 -0400
+X-AuditID: 12074425-b7b12ae0000009fd-51-4c3df71ded08
+Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
+	by dmz-mailsec-scanner-8.mit.edu (Symantec Brightmail Gateway) with SMTP id 4C.25.02557.D17FD3C4; Wed, 14 Jul 2010 13:42:53 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o6EHgqCk030744
+	for <git@vger.kernel.org>; Wed, 14 Jul 2010 13:42:53 -0400
+Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6EHgnJM000782
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 14 Jul 2010 13:42:52 -0400 (EDT)
+Received: by wwi17 with SMTP id 17so2294577wwi.1
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 10:42:49 -0700 (PDT)
+Received: by 10.227.156.11 with SMTP id u11mr12681519wbw.146.1279129369394; 
+	Wed, 14 Jul 2010 10:42:49 -0700 (PDT)
+Received: by 10.227.129.16 with HTTP; Wed, 14 Jul 2010 10:42:49 -0700 (PDT)
+In-Reply-To: <7vbpaaytfl.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: AAAAAhUsEmsVLC1f
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-Help: <mailto:dev-help@subversion.apache.org>
-List-Unsubscribe: <mailto:dev-unsubscribe@subversion.apache.org>
-List-Post: <mailto:dev@subversion.apache.org>
-List-Id: <dev.subversion.apache.org>
-Delivered-To: mailing list dev@subversion.apache.org
-Received: (qmail 47695 invoked by uid 99); 14 Jul 2010 17:34:52 -0000
-Received: from nike.apache.org (HELO nike.apache.org) (192.87.106.230)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 17:34:52 +0000
-X-ASF-Spam-Status: No, hits=-0.7 required=10.0
-	tests=RCVD_IN_DNSWL_LOW,SPF_PASS
-X-Spam-Check-By: apache.org
-Received-SPF: pass (nike.apache.org: local policy)
-Received: from [192.109.42.8] (HELO einhorn.in-berlin.de) (192.109.42.8)
-    by apache.org (qpsmtpd/0.29) with ESMTP; Wed, 14 Jul 2010 17:34:42 +0000
-X-Envelope-From: stsp@stsp.name
-Received: from ted.stsp.name (ted.stsp.name [217.197.84.186])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6EHYAAP025678
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 14 Jul 2010 19:34:10 +0200
-Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
-	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id o6EHY9uP018556;
-	Wed, 14 Jul 2010 19:34:09 +0200 (CEST)
-Received: (from stsp@localhost)
-	by ted.stsp.name (8.14.3/8.14.3/Submit) id o6EHY9MN008827;
-	Wed, 14 Jul 2010 19:34:09 +0200 (CEST)
-Mail-Followup-To: "C. Michael Pilato" <cmpilato@collab.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"dev@subversion.apache.org" <dev@subversion.apache.org>,
-	Bert Huijben <rhuijben@collab.net>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4C3DF456.20803@collab.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-X-Virus-Checked: Checked by ClamAV on apache.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151020>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151021>
 
-On Wed, Jul 14, 2010 at 01:31:02PM -0400, C. Michael Pilato wrote:
-> Revprops aren't handled by the replay API for any revision.
+>> This provides a mechanism for the server to expose custom
+>> functionality to clients. =A0My particular use case is that I would =
+like
+>> a way of discovering all repositories available for cloning. =A0A
+>> client that clones via
+>> =A0 git clone user@example.com
+>> can invoke a command by
+>> =A0 ssh user@example.com $command
+>
+> Please have a blank line above and below sample command display like =
+these
+> for readability.
+Sounds good.
 
-Ah, I didn't know that.
-I was assuming they were transmitted via the replay API but I didn't check.
+>> + =A0 =A0 /* Shell should be spawned with cwd in the git user's home=
+ directory */
+>> + =A0 =A0 if (chdir(COMMAND_DIR))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 die("unrecognized command '%s'", prog);
+>
+> Hmm, could you justify "should be" above please?
+>
+> An example would be "All of the custom commands I wrote to give added
+> features to users at my installation wanted to be in that directory, =
+not
+> at the user's home directory, as they mostly operated on files in tha=
+t
+> directory", but please do not make me (or other reviewers) guess why.
+>
+> What I am getting at is that it may be more natural and useful to run
+> these custom commands in the user's $HOME directory---you would need =
+to
+> make sure that execl() finds the command you get from the request, pe=
+rhaps
+> by prefixing COMMAND_DIR / to the command name, though.
+Err, good point.  The commands I wrote end up running 'cd ..' anyway
+:).  Instead just running these commands in the user's $HOME does make
+a lot more sense.
 
-Thanks,
-Stefan
+Thanks everyone for the comments thus far.
