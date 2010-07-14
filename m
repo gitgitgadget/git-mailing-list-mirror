@@ -1,73 +1,77 @@
-From: "C. Michael Pilato" <cmpilato@collab.net>
-Subject: Re: [PATCH v2] Add svnrdump
-Date: Wed, 14 Jul 2010 13:56:14 -0400
-Organization: CollabNet, Inc.
-Message-ID: <4C3DFA3E.7000809@collab.net>
-References: <20100709142910.GB20383@debian> <20100713201105.GN13310@ted.stsp.name> <20100714153206.GH25630@jack.stsp.name> <20100714160149.GA7561@debian> <20100714172429.GC25861@ted.stsp.name> <4C3DF456.20803@collab.net> <20100714174716.GB2866@burratino>
+From: Brock Peabody <brock.peabody@gmail.com>
+Subject: Re: help with distributed workflow/signoff
+Date: Wed, 14 Jul 2010 18:06:28 +0000 (UTC)
+Message-ID: <loom.20100714T195109-665@post.gmane.org>
+References: <loom.20100714T180615-173@post.gmane.org> <AANLkTimdVvKYPQn84IQvk7yxMo-gtrjWWqzN-ypXV78X@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	"dev@subversion.apache.org" <dev@subversion.apache.org>,
-	Bert Huijben <rhuijben@collab.net>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 14 19:56:25 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 14 20:07:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZ6C0-0003e4-2S
-	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 19:56:24 +0200
+	id 1OZ6MS-0002F3-CR
+	for gcvg-git-2@lo.gmane.org; Wed, 14 Jul 2010 20:07:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756708Ab0GNR4S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Jul 2010 13:56:18 -0400
-Received: from sp-exchfea.sp.corp.collab.net ([204.16.106.198]:14364 "EHLO
-	sp-exchfea.sp.corp.collab.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753692Ab0GNR4R (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 13:56:17 -0400
-Received: from [204.11.125.142] ([204.11.125.142]) by sp-exchfea.sp.corp.collab.net with Microsoft SMTPSVC(6.0.3790.3959);
-	 Wed, 14 Jul 2010 10:56:16 -0700
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.10) Gecko/20100527 Thunderbird/3.0.5
-In-Reply-To: <20100714174716.GB2866@burratino>
-X-Enigmail-Version: 1.0.1
-X-OriginalArrivalTime: 14 Jul 2010 17:56:17.0078 (UTC) FILETIME=[DB819D60:01CB237D]
+	id S1757352Ab0GNSGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Jul 2010 14:06:48 -0400
+Received: from lo.gmane.org ([80.91.229.12]:37679 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756492Ab0GNSGr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Jul 2010 14:06:47 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OZ6Lu-0001re-1V
+	for git@vger.kernel.org; Wed, 14 Jul 2010 20:06:38 +0200
+Received: from proxy-nj2.bloomberg.com ([69.191.241.48])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 20:06:38 +0200
+Received: from brock.peabody by proxy-nj2.bloomberg.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Jul 2010 20:06:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 69.191.241.48 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151025>
 
-On 07/14/2010 01:47 PM, Jonathan Nieder wrote:
-> C. Michael Pilato wrote:
-> 
->> Revprops aren't handled by the replay API for any revision.
-> 
-> Hmm?  What is the rev_props argument to the
-> 
-> typedef svn_error_t (*svn_ra_replay_revstart_callback_t)(
-> 				svn_revnum_t revision,
-> 				void *replay_baton,
-> 				const svn_delta_editor_t **editor,
-> 				void **edit_baton,
-> 				apr_hash_t *rev_props,
-> 				apr_pool_t *pool)
-> 
-> callback for, then?
-> 
-> Using svn_ra_rev_prop() for rev 0 does seem simple enough, though.
+Hi Avery,
 
-Ah, I was talking about the svn_repos_replay() API (which is used by the
-svn_ra_replay() API).  It definitely makes sense to me that the RA's replay
-API be able to report the revprops for revision 0.
+Avery Pennarun <apenwarr <at> gmail.com> writes:
 
-Sorry for the confusion.
+> For an open source project, where most contributions are by volunteers
+> and need to have their patches reviewed multiple times before
+> submission - and frequently, more patchsets are rejected than applied
+> - this works reasonably well.  For a company where (in my experience
+> at least) most people's patches *are* applied, and the ratio of
+> reviewers to coders is much lower, that's much less workable.  And
+> unfortunately the elegant looking multiple-signed-off-by or acked-by
+> lines don't work so well for that.
 
--- 
-C. Michael Pilato <cmpilato@collab.net>
-CollabNet   <>   www.collab.net   <>   Distributed Development On Demand
+I think you've hit the nail on the head here.  In our environment, commits are
+frequent and signoffs prompt.  Revisions are very rarely rejected, and will
+never pass through more than one reviewer except in extreme cases.  Contributors
+will have little tolerance for per-commit time or complexity overhead incurred
+from the process.
+
+> Oh, now that I think of it, you might find git-notes useful.  I've
+> never used it but I understand it lets you add lines to the log
+> messages retroactively.  Of course, that can be both a blessing and a
+> curse.  If you can retroactively change signoffs, the signoffs aren't
+> that valuable.
+
+Actually, that might be exactly what we need.  I'm sure we could set it up in
+such a way so that this signoff is only added mechanically, once, when a
+reviewer decides to add a revision to the 'master' repository.
+
+Much thanks,
+Brock
