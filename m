@@ -1,105 +1,98 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
 Subject: Re: [PATCH v2] Add svnrdump
-Date: Thu, 15 Jul 2010 14:01:43 +0200
-Message-ID: <20100715120143.GE22574@debian>
+Date: Thu, 15 Jul 2010 14:07:32 +0200
+Message-ID: <20100715120732.GF22574@debian>
 References: <20100709142910.GB20383@debian>
  <20100713201105.GN13310@ted.stsp.name>
  <20100714153206.GH25630@jack.stsp.name>
  <20100714160149.GA7561@debian>
- <20100714172429.GC25861@ted.stsp.name>
+ <000101cb238a$5b2bfea0$1183fbe0$@collab.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: "dev@subversion.apache.org" <dev@subversion.apache.org>,
-	Bert Huijben <rhuijben@collab.net>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
-	David Michael B
-X-From: git-owner@vger.kernel.org Thu Jul 15 14:00:07 2010
+Cc: 'Stefan Sperling' <stsp@elego.de>, dev@subversion.apache.org,
+	'Daniel Shahaf' <d.s@daniel.shahaf.name>,
+	'Will Palmer' <wmpalmer@gmail.com>,
+	'David Michael Barr' <david.barr@cordelta.com>,
+	'Jonathan Nieder' <jrnieder@gmail.com>,
+	'Sverre Rabbelier' <srabbelier@gmail.com>,
+	'Git Mailing List' <git@vger.kernel.org>
+To: Bert Huijben <rhuijben@collab.net>
+X-From: git-owner@vger.kernel.org Thu Jul 15 14:06:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZN6j-0006el-T5
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 14:00:06 +0200
+	id 1OZNCf-00013B-Nw
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 14:06:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933095Ab0GOL77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 07:59:59 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:51236 "EHLO
+	id S933130Ab0GOMFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 08:05:50 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:54276 "EHLO
 	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758420Ab0GOL76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 07:59:58 -0400
-Received: by eya25 with SMTP id 25so133970eya.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 04:59:56 -0700 (PDT)
+	with ESMTP id S933127Ab0GOMFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 08:05:48 -0400
+Received: by eya25 with SMTP id 25so134939eya.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 05:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
+        h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=8vOjPc8WPbnMyJU1InwGC8adg44gs9UDj73AXlpSBFo=;
-        b=v2N4YxuwG3oyPN5sWxSTD+E8+hgvU+72+F4rK+YKHL//aqERVFxc+dPwuP5PREq8e6
-         SLDmlyucBYXm9gvZZFqbkGR83gtccrj50+5ayRRWe86eltGN6z+qRvo4nN1dUJVSIe4F
-         Ziz8pXyKREJf/PXqvBJJ3JVL2fJlmZhO6Wfzg=
+        bh=32j+9GLECxvg+AxzY/iQSennJUxVAy9r7xlIQcFEVgQ=;
+        b=sAxOOj0hMUAspZTfGbR+0Fx+MEgzkQokO5fn1dqcA/BYH+c+6X2SYjuJJ04rzl39Ky
+         6E5PdztWM6Wpp26thulJCoRA8+0VgTXJPIwDm5tYpbUG2fdUPKPqcGUHISHH6PXhEVAG
+         BPLwNd0DWGGpN0/Wmp37+bEYTtWMjNRIonWPU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=FGDCCUlsXve0bATLsH+E7HZytgsEuhOm53E/i0H7RqudTJqC2xucG2RGXmL8mStjZl
-         pmHss4RCF8yag2YXr5YpvE39mSOvTk0qQZGhLtkK5Gm/60Mnyge8ucFIRe5ogxhNU9Y3
-         EoU681hOjdRSe93qqiSaI9Tr2ookiNV3WYcHc=
-Received: by 10.213.29.8 with SMTP id o8mr13838339ebc.84.1279195196529;
-        Thu, 15 Jul 2010 04:59:56 -0700 (PDT)
+        b=TbAobIL3tAxRzLUQjgxxmY/ryyOGrtvA1fqPMjmilSIYwqJPJKRYijuPcBIxej9e3E
+         9mf9NEsPAJE7COK2e0VnfwijuKKU0A5TicHD5V86yJKnCaxycqXw22Thl07fnGVXa2P4
+         MFXdNLMVlwOKD+k7bxUSvzOTMaLLO3mHS0CDs=
+Received: by 10.213.34.140 with SMTP id l12mr4792695ebd.31.1279195546411;
+        Thu, 15 Jul 2010 05:05:46 -0700 (PDT)
 Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id a48sm7558931eei.12.2010.07.15.04.59.54
+        by mx.google.com with ESMTPS id a48sm7586248eei.19.2010.07.15.05.05.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 04:59:55 -0700 (PDT)
+        Thu, 15 Jul 2010 05:05:44 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100714172429.GC25861@ted.stsp.name>
+In-Reply-To: <000101cb238a$5b2bfea0$1183fbe0$@collab.net>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151077>
 
-Hi Stefan,
+Hi Bert,
 
-Stefan Sperling writes:
-> > This isn't in the dump-load-format spec document (atleast afaik), and
-> > it's very hard to get this right (yes, I tried). Moreover, it's very
-> > ungratifying to have a few extra newlines (reverse engineered from
-> > `svnadmin dump`) printed at the end of 10+ hrs of work; yes, that's
-> > what I estimate it'll take to fix this.
+Bert Huijben writes:
+> > >  - I've seen a "Prop-delta: true" line which svnadmin dump does not
+> print.
+> > 
+> > Correct. `svnadmin dump` has a logic for determining when the prop is
+> > really a delta (as opposed to a delta against /dev/null). Since
+> > there's no harm printing extra Prop-delta headers, I decided not to
+> > implement this logic.
 > 
-> Well, it would be really nice to have.
-> Details like this are time sinks, I know. But it pays off.
-> You don't have to do it right away. We can file an issue so we don't
-> forget about fixing it before 1.7 release.
-> If necessary, feel free to adjust the output of svnadmin dump a little
-> if that makes it easier for svnrdump to produce matching output.
+> Do you know if this is this something as simple as: 'Is this a new node?' or
+> if this is some advanced scheme?
 
-I think the latter is certainly an option. We definitely need to fix
-the dump-load-format spec to show everything.
+The former actually; although the task looks deceptively simple, it's
+a little more involved than that: I'm a little worried about messing
+up the node-action-handling logic, as it might break something. Once
+we have a large server constantly running validations against my
+latest changes, I can change stuff more confidently.
 
-> > gawk '$0 !~ "Prop-delta: true|Text-delta-base-|sha1|Text-copy-source-|^-$" && $0 ~ "^+|^-" { print; }'
+> > gawk '$0 !~ "Prop-delta: true|Text-delta-base-|sha1|Text-copy-source-|^-
+> > $" && $0 ~ "^+|^-" { print; }'
 > 
-> Fine for testing. But I still think the end-result should look just
-> like svnadmin dump, if possible. That would make testing even easier.
+> Your mail explains Prop-delta, sha1, but what about these Text-delta-base
+> and Text-copy-source lines?
 
-Right. We can use the same test suite and maintenance would become
-infinitely easier.
-
-> > > Please get rid of all global variables in svnrdump.c:
-> > Will do. I'm waiting for commit access, because I don't want to make
-> > un-versioned edits to the file that I cannot track or revert in
-> > future.
-> 
-> What about using git until then? It does not matter which state you
-> initially import into the Subversion repository. But well, whatever
-> works for you is best.
-
-Oh, I didn't think it would take this long for my account to get
-activated. I'll consider using Git to stage for now because I don't
-want to delay the response to your review.
+These headers are also not strictly necessary, and I haven't found out
+where this information is hidden. I'll dig through the API and find
+out where this information and print it later.
 
 -- Ram
