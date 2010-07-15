@@ -1,203 +1,103 @@
-From: Stefan Sperling <stsp@elego.de>
-Subject: Re: [PATCH v2] Add svnrdump
-Date: Thu, 15 Jul 2010 21:23:21 +0200
-Message-ID: <20100715192321.GA722@ted.stsp.name>
-References: <20100709142910.GB20383@debian>
- <20100713201105.GN13310@ted.stsp.name>
- <20100715190220.GI22574@debian>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 7/8] Add infrastructure to write revisions in
+ fast-export format
+Date: Thu, 15 Jul 2010 14:28:39 -0500
+Message-ID: <20100715192839.GD2774@burratino>
+References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
+ <1279210984-31604-8-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "dev@subversion.apache.org" <dev@subversion.apache.org>,
-	Bert Huijben <rhuijben@collab.net>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
+Cc: Git Mailing List <git@vger.kernel.org>,
 	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 15 21:24:40 2010
+X-From: git-owner@vger.kernel.org Thu Jul 15 21:29:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZU2v-0001Lr-7f
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 21:24:37 +0200
+	id 1OZU7o-0003jf-3v
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 21:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934427Ab0GOTYc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 15:24:32 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:44708 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934384Ab0GOTYb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 15:24:31 -0400
-X-Envelope-From: stsp@stsp.name
-Received: from ted.stsp.name (ted.stsp.name [217.197.84.186])
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o6FJNQY4020015
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 15 Jul 2010 21:23:26 +0200
-Received: from ted.stsp.name (stsp@localhost [127.0.0.1])
-	by ted.stsp.name (8.14.3/8.14.3) with ESMTP id o6FJNPjj024738;
-	Thu, 15 Jul 2010 21:23:25 +0200 (CEST)
-Received: (from stsp@localhost)
-	by ted.stsp.name (8.14.3/8.14.3/Submit) id o6FJNLF0032561;
-	Thu, 15 Jul 2010 21:23:21 +0200 (CEST)
-Mail-Followup-To: Ramkumar Ramachandra <artagnon@gmail.com>,
-	"dev@subversion.apache.org" <dev@subversion.apache.org>,
-	Bert Huijben <rhuijben@collab.net>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Will Palmer <wmpalmer@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S934473Ab0GOT3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 15:29:33 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:53018 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934378Ab0GOT3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 15:29:33 -0400
+Received: by ewy23 with SMTP id 23so364297ewy.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 12:29:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=+5F0UjxDokN5Z4qbBHs2zCbZfknn9HnNWo3qTwGKCzE=;
+        b=x3mJAbCDAwacqJv0j7qolCIAQvpaOyheOJEkr9yTkc6MfPI5nDyK7Vt2O43BPOXIdO
+         23yZCkZwyGA/WPdxBMiKLs7MCWBv3JuvdO2Gjtd73Qi9Kv7xiUeso7wmzap407GJuQDo
+         ZETu11jQYyfhnQTY9Bx3at5CxwBwV810vHA8w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZV2ecK1FaRx6RZ18pBnyj4pgp0si2m76HL4pH/EeJoS0y3kq/KlWwKcFRt9razwRhl
+         d+opEnzRwYTAtqr/axoXuDSR7avUFDJXm7hbEOc97rjhg1Zz6AkL9pYfpKq3Z6YWVx2h
+         428MNCm0A4DvRpxCU6l5S7mtld5ZmlF6F1oW4=
+Received: by 10.213.16.143 with SMTP id o15mr3454722eba.0.1279222171476;
+        Thu, 15 Jul 2010 12:29:31 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id x54sm10661996eeh.23.2010.07.15.12.29.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 15 Jul 2010 12:29:30 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100715190220.GI22574@debian>
+In-Reply-To: <1279210984-31604-8-git-send-email-artagnon@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151116>
 
-On Thu, Jul 15, 2010 at 09:02:20PM +0200, Ramkumar Ramachandra wrote:
-> Stefan Sperling writes:
-> > > +};
-> > > +
-> > > +struct handler_baton
-> > > +{
-> > > +  svn_txdelta_window_handler_t apply_handler;
-> > > +  void *apply_baton;
-> > > +  apr_pool_t *pool;
-> > 
-> > Yet another pool. What's it for?
-> 
-> See window_handler below :)
+Ramkumar Ramachandra wrote:
 
-Oops, I meant to imply that you should add a docstring :)
+> diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+> new file mode 100644
+> index 0000000..7552803
+> --- /dev/null
+> +++ b/vcs-svn/fast_export.c
+> @@ -0,0 +1,75 @@
+[...]
+> +void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
+> +                        uint32_t mark)
+> +{
+> +	/* Mode must be 100644, 100755, 120000, or 160000. */
+> +	printf("M %06o :%d ", mode, mark);
 
-> > > +  }
-> > > +  else
-> > > +    full_path = apr_pstrdup(pool, "/");
-> > 
-> > Why allocate "/" in a pool? This can be static string unless you
-> > intend to write to it.
-> 
-> Frankly, working with APR pools was quite a nightmare for me- after
-> observing many cases of leaks and crashes, I jotted down some notes
-> about using them and I made it a point to follow them strictly. This
-> alloc adheres to those notes. I'll submit those notes to dev@ once
-> I've polished them- new devs will probably find it useful.
+David tweaked the API nicely upstream to enforce this constraint.  So
+nice things will come with the next pull from him.
 
-It's not that hard once you get used to the concept.
-When you send your notes, we can comment on them in case there's
-anything you misunderstood.
+> diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+> new file mode 100644
+> index 0000000..47e8f56
+> --- /dev/null
+> +++ b/vcs-svn/fast_export.h
+> @@ -0,0 +1,14 @@
+> +#ifndef FAST_EXPORT_H_
+> +#define FAST_EXPORT_H_
+> +
+> +#include <stdint.h>
+> +#include <time.h>
 
-> > > +  if (val)
-> > > +    /* Delete the path, it's now been dumped */
-> > > +    apr_hash_set(pb->deleted_entries, path, APR_HASH_KEY_STRING, NULL);
-> > 
-> > You don't need to set the value to NULL in the hash table.
-> > Doing so won't save any memory. I've say just remove the above 3 lines.
-> 
-> Oh, I'm not doing it to save memory. Although I'm not sure if I still
-> need it in my logic, this definitely makes debugging nicer.
+The usual convention within git is to rely on .c files to include
+git-compat-util.h (indirectly through cache.h or directly).
 
-Then please say so in the comment:
+> +/* Memory pools for commit, dir and dirent */
+> +obj_pool_gen(commit, struct repo_commit, 4096);
+> +obj_pool_gen(dir, struct repo_dir, 4096);
+> +obj_pool_gen(dirent, struct repo_dirent, 4096);
 
- /* Small debugging aid: set path to NULL so we crash if we use it again. */
+Are the semicolons necessary?  (A nitpick, I know).
 
-> > > +  /* Write information about the filepath to hb->eb */
-> > 
-> > s/to hb->eb/from the handler baton to the edit baton/
-> 
-> Er, I did mean `hb->eb` literally (the editor baton in the handler
-> baton).
-
-Ah, right. Though maybe saying "edit baton" is just as clear?
-
-> > > +static int verbose = 0;
-> > > +static apr_pool_t *pool = NULL;
-> > > +static svn_client_ctx_t *ctx = NULL;
-> > 
-> > You're only using the client context in open_connection.
-> > Make it a local variable there?
-> 
-> I was actually worried about lifetime issues. If ctx won't be read/
-> written after open_connection, this is okay. Otherwise, not. TODO.
-
-The global variables are still wrong.
-Just pass the root pool you create in main() down to open_connection()
-and use it when creating the client context. There won't be a lifetime
-problem.
-
-> > > +    "usage: svnrdump URL [-r LOWER[:UPPER]]\n\n"
-> > 
-> > This string needs to be marked for localisation like this: _("my string")
-> 
-> TODO. I'm missing some header: _ is undefined.
-
-#include "svn_private_config.h"
-
-> > > +    "Dump the contents of repository at remote URL to stdout in a 'dumpfile'\n"
-> > > +    "v3 portable format.  Dump revisions LOWER rev through UPPER rev.\n"
-> > 
-> > You don't need to mention the dumpfile format version in the help
-> > string.
-> 
-> Okay. I need to mention somewhere that svnrdump doesn't support
-> undeltified dumps though, don't I?
-
-Not yet. My plan is to ask people why we're not using the v3 format
-by default. Unless there is a good reason not to do so I'd like to
-make v3 the default format for svnadmin dump in 1.7.
-
-> > > +    "LOWER defaults to 1 and UPPER defaults to the highest possible revision\n"
-> > > +    "if omitted.\n");
-> > > +  for (i = 1; i < argc; i++) {
-> > 
-> > Please use svn_cmdline__getopt_init() and apr_getopt_long().
-> > See svnsync for an example.
-> 
-> Ouch. Don't you think it's an overkill for the current svnrdump? There
-> are no subcommands and just a few command-line arguments.
-
-The point is to have consistent code.
-
-> > Please add a docstring.
-> > 
-> > > +svn_error_t *
-> > > +dump_props(struct dump_edit_baton *eb,
-> > > +           svn_boolean_t *trigger_var,
-> > > +           svn_boolean_t dump_data_too,
-> > > +           apr_pool_t *pool);
-> > > +
-> > > +#endif
-> 
-> Fixed. Doxygen-friendly docstrings are a TODO.
-
-You only need to be doxygen-friendly in the public headers,
-which are the ones in subversion/include.
-
-> > > +void
-> > > +write_hash_to_stringbuf(apr_hash_t *properties,
-> > > +                        svn_boolean_t deleted,
-> > > +                        svn_stringbuf_t **strbuf,
-> > > +                        apr_pool_t *pool)
-> > > +{
-> > 
-> > This function needs a docstring, too.
-> 
-> Wait. I just need to write the docstrings once, right? In the header?
-
-Right. It goes in the header, unless the function is static. My bad.
-
-> You can see the changes I made after your review in the most recent
-> couple of commits on my GitHub [1].
-> 
-> [1]: http://github.com/artagnon/svn-dump-fast-export/commits/svn-merge
-
-Thanks!
-
-Stefan
+That said, this part is looking pretty good.
