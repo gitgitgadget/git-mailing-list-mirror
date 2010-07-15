@@ -1,51 +1,80 @@
-From: Brock Peabody <brock.peabody@gmail.com>
-Subject: Re: help with distributed workflow/signoff
-Date: Thu, 15 Jul 2010 17:42:38 +0000 (UTC)
-Message-ID: <loom.20100715T193756-750@post.gmane.org>
-References: <loom.20100714T180615-173@post.gmane.org> <AANLkTimdVvKYPQn84IQvk7yxMo-gtrjWWqzN-ypXV78X@mail.gmail.com> <loom.20100714T195109-665@post.gmane.org> <AANLkTilo4TnMQcr7p1dfAeQ4tESHjO4Nbr8274hqxOnD@mail.gmail.com> <loom.20100714T232116-579@post.gmane.org> <4C3E462E.9010205@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/8] Introduce vcs-svn lib
+Date: Thu, 15 Jul 2010 12:46:29 -0500
+Message-ID: <20100715174629.GA32323@burratino>
+References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
+ <1279210984-31604-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 15 19:42:57 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 15 19:47:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZSSU-0005x1-GZ
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 19:42:54 +0200
+	id 1OZSWt-0008Fm-CM
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 19:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933920Ab0GORmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 13:42:49 -0400
-Received: from lo.gmane.org ([80.91.229.12]:51174 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933810Ab0GORmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 13:42:49 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OZSSN-0005rl-TH
-	for git@vger.kernel.org; Thu, 15 Jul 2010 19:42:48 +0200
-Received: from proxy-nj1.bloomberg.com ([69.191.241.47])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 19:42:47 +0200
-Received: from brock.peabody by proxy-nj1.bloomberg.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 19:42:47 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 69.191.241.47 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6)
+	id S933925Ab0GORrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 13:47:22 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:56292 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933810Ab0GORrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 13:47:21 -0400
+Received: by yxn35 with SMTP id 35so162160yxn.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 10:47:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=x3XGbUNUkzwMscEa84FPbZ9aMa4JhIIzUh06UuxxRzY=;
+        b=qdxgqsCSdPJ3MF0EX9jE/ZcnSYqEc+wGsopu4p3KE3Re2iL4Xp4LBcg7ZPG3JxLXxA
+         wXPmhKNT7w9C951DhPqU+ffS2hvp6JLJjorBzPDVfCspBX04T+AfzYmOaO6+JcXu01Uk
+         gtDxHWqybwHEyrYwZ6FenFdQPzRJ9/ST21hwE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=rc1g84ZJ6ajGsAZsyD3gxgYOb660NeFTSpWQgjsIzl+wymu7EJFsi39MMMxtVhrYoz
+         aEI2hri1b19V2UK8YR9aqrUeaWEEiUsiU56aKggnt/t48eu97s+WT6N8Eh5n94W2KzQM
+         Bp/q+qTklcyYKkr/MaFP3OPrx35PasBByQ2GE=
+Received: by 10.224.73.106 with SMTP id p42mr2285276qaj.176.1279216040656;
+        Thu, 15 Jul 2010 10:47:20 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id js14sm5713145qcb.6.2010.07.15.10.47.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 15 Jul 2010 10:47:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1279210984-31604-3-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151100>
 
-A Large Angry SCM <gitzilla <at> gmail.com> writes:
+Ramkumar Ramachandra wrote:
 
-> Have you investigated Gerrit Code Review?
+> @@ -1908,6 +1912,8 @@ $(LIB_FILE): $(LIB_OBJS)
+>  $(XDIFF_LIB): $(XDIFF_OBJS)
+>  	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(XDIFF_OBJS)
+>  
+> +$(VCSSVN_LIB): $(VCSSVN_OBJS)
+> +	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
 
-I just did. It looks promising, thanks.
+ $ make vcs-svn/lib.a V=1
+ rm -f vcs-svn/lib.a && ar rcs vcs-svn/lib.a 
+ ar: vcs-svn/lib.a: No such file or directory
+ make: *** [vcs-svn/lib.a] Error 1
+
+That is because the vcs-svn directory does not exist.  So
+probably the LICENSE should be added with the same patch
+(and git should learn to track empty directories).
+
+Jonathan
