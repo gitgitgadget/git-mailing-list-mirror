@@ -1,1011 +1,1076 @@
 From: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-Subject: [PATCHv2 GSOC 09/11] gitweb: Create Gitweb::Util module
-Date: Thu, 15 Jul 2010 12:59:09 +0530
-Message-ID: <1279178951-23712-10-git-send-email-pavan.sss1991@gmail.com>
+Subject: [PATCHv2 GSOC 07/11] gitweb: Create Gitweb::RepoConfig module
+Date: Thu, 15 Jul 2010 12:59:07 +0530
+Message-ID: <1279178951-23712-8-git-send-email-pavan.sss1991@gmail.com>
 References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com>
 Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 To: git@vger.kernel.org, jnareb@gmail.com, chriscool@tuxfamily.org,
 	pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Thu Jul 15 09:30:13 2010
+X-From: git-owner@vger.kernel.org Thu Jul 15 09:30:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZItW-0003HF-Td
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 09:30:11 +0200
+	id 1OZItV-0003HF-Bs
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 09:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932558Ab0GOHaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 03:30:00 -0400
+	id S932551Ab0GOH3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 03:29:47 -0400
 Received: from mail-pv0-f174.google.com ([74.125.83.174]:52152 "EHLO
 	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932531Ab0GOH36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 03:29:58 -0400
+	with ESMTP id S932531Ab0GOH3q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 03:29:46 -0400
 Received: by mail-pv0-f174.google.com with SMTP id 7so152737pvc.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 00:29:58 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 00:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=KFHTXQ7ibejQIDgmPbZLWGf0tKwnJ7tr/Hu0ks+fcyI=;
-        b=sMWf74vhYRHKc5FVqYy1vkfn558hzOfUvYOHeXTPeEIVLgPkAk0DEomxq4T5kAJuhj
-         44G+I9xzK6XZyiUxIiWdJnOUHNQrTqonp2nWBFoNckEo6gom+pScN6cHa2QLT0QSF8T6
-         sMYHoMDi+ixFhEyNCmP1iZZVMbFdREVbQrErU=
+        bh=W3K0n+DTNJLiS4iYORjMz0oyVi43yXKpRDzIufqAovA=;
+        b=IywGaxy7rIxU/jYYjbUZ8HdLWoe44XXH2nz/dKyNHcOWc1CZMrWsWVtRTR0t/YL4iV
+         zZZvqhjog0i9mfyO9QdJp1q8zxpPHTfO2UBLggNFKXS2ttSp5hWTXo9B+C6KPKonlQw4
+         /buL25WoSJfu00zmLr5xgV08+ixxemSGCCM1k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=SNXYD0fsgF9Gcic/GRuGKzBfIzQFWR3NgxoX2eUN9WYb51V9RhdwCQYMUuO2+CFolJ
-         I1IWxQjDjE2Z/r0J/k+6JEqcV9haPH47gqiHnJw9SMFmqnJ71zRhOhHXkZwdCCZ/955q
-         twhSOPhqtXaXiC0tADboBZ0U5EGYTRQkCuud4=
-Received: by 10.142.199.20 with SMTP id w20mr22209116wff.27.1279178993917;
-        Thu, 15 Jul 2010 00:29:53 -0700 (PDT)
+        b=szKHbv4ZKLWW3g5crm2/rPPFklybLfh7XGOyQIodY+zBo5+BKGg4+cbNTo0gE6xJeK
+         eRbYjbVUE5CYZvkJojXwOiMjeyOFS7/s+EdJ1V1DkXNRsYdX08p4PWyxQSm6jH/QY4tP
+         OC+ldIpehJIoxkLHhSFu5uJBxsMJZsinvtHMs=
+Received: by 10.142.232.16 with SMTP id e16mr1373739wfh.12.1279178985763;
+        Thu, 15 Jul 2010 00:29:45 -0700 (PDT)
 Received: from localhost.localdomain ([202.63.112.132])
-        by mx.google.com with ESMTPS id l29sm8484428rvb.7.2010.07.15.00.29.50
+        by mx.google.com with ESMTPS id l29sm8484428rvb.7.2010.07.15.00.29.42
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 00:29:53 -0700 (PDT)
+        Thu, 15 Jul 2010 00:29:45 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.455.g8f441
 In-Reply-To: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151057>
 
-Create Gitweb::Util module in 'gitweb/lib/Gitweb/Util.pm'
-to store the git utility subroutines related to gitweb.
+Create a Gitweb::RepoConfig module in 'gitweb/lib/Gitweb/RepoConfig.pm'
+to store and handle all the configuration and subroutines
+related to a single repository regarding the gitweb.perl script.
 
-This module include subroutines in various categories
-such as git utility subs invoking git commands, git
-utility subs accessing git repository, mimetype related
-subs and HTML output utility subs.
+This module depend on several other modules like Git.pm,
+Config.pm, Request.pm and Escape.pm.
+
+It also include subroutines regarding project_list and
+it's handling.
 
 Subroutines moved:
-	git_get_head_hash
-	git_get_full_hash
-	git_get_short_hash
-	git_get_hash
-	git_get_type
-	git_get_hash_by_path
-	git_get_path_by_hash
-	git_get_last_activity
-	git_get_references
-	git_get_rev_name_tags
-	git_get_heads_list
-	git_get_tags_list
-	mimetype_guess_file
-	mimetype_guess
-	blob_mimetype
-	blob_contenttype
-	guess_file_syntax
-	run_highlighter
-	fill_from_file_info
-	is_deleted
-	is_patch_split
+	check_head_link
+	check_export_ok
+	hash_set_multi
+	git_parse_project_config
+	config_to_bool
+	config_to_int
+	config_to_multi
+	feature_bool
+	feature_snapshot
+	feature_patches
+	feature_avatar
+	git_get_project_config
+	git_get_project_description
+	git_get_project_ctags
+	git_populate_project_tagcloud
+	git_show_project_tagcloud
+	git_get_project_url_list
+	git_get_projects_list
+	git_get_project_list_from_file
+	git_get_project_owner
+	get_file_owner
+	project_in_list
 
-Update 'gitweb/Makefile' to install Gitweb::Util alongside gitweb.
+Update gitweb/Makefile to install Gitweb::RepoConfig module
+alongside gitweb
 
 Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 ---
- gitweb/Makefile           |    1 +
- gitweb/gitweb.perl        |  420 +------------------------------------------
- gitweb/lib/Gitweb/Util.pm |  447 +++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 449 insertions(+), 419 deletions(-)
- create mode 100644 gitweb/lib/Gitweb/Util.pm
+ gitweb/Makefile                 |    1 +
+ gitweb/gitweb.perl              |  441 +------------------------------------
+ gitweb/lib/Gitweb/RepoConfig.pm |  466 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 468 insertions(+), 440 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/RepoConfig.pm
 
 diff --git a/gitweb/Makefile b/gitweb/Makefile
-index ce9f372..1c37609 100644
+index c145ebd..726f393 100644
 --- a/gitweb/Makefile
 +++ b/gitweb/Makefile
-@@ -118,6 +118,7 @@ GITWEB_MODULES += lib/Gitweb/Request.pm
+@@ -116,6 +116,7 @@ GITWEB_MODULES += lib/Gitweb/Git.pm
+ GITWEB_MODULES += lib/Gitweb/Config.pm
+ GITWEB_MODULES += lib/Gitweb/Request.pm
  GITWEB_MODULES += lib/Gitweb/Escape.pm
- GITWEB_MODULES += lib/Gitweb/RepoConfig.pm
- GITWEB_MODULES += lib/Gitweb/View.pm
-+GITWEB_MODULES += lib/Gitweb/Util.pm
++GITWEB_MODULES += lib/Gitweb/RepoConfig.pm
  
  GITWEB_REPLACE = \
  	-e 's|++GIT_VERSION++|$(GIT_VERSION)|g' \
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 80c4a40..5f9ca4c 100755
+index ed64910..16e705e 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -31,6 +31,7 @@ use Gitweb::Request;
+@@ -18,7 +18,6 @@ sub __DIR__ () {
+ use lib __DIR__ . '/lib';
+ 
+ use CGI qw(:standard :escapeHTML -nosticky);
+-use CGI::Util qw(unescape);
+ use CGI::Carp qw(fatalsToBrowser set_message);
+ use Fcntl ':mode';
+ use File::Find qw();
+@@ -30,6 +29,7 @@ use Gitweb::Git;
+ use Gitweb::Config;
+ use Gitweb::Request;
  use Gitweb::Escape;
- use Gitweb::RepoConfig;
- use Gitweb::View;
-+use Gitweb::Util;
++use Gitweb::RepoConfig;
  
  BEGIN {
  	CGI->compile() if $ENV{'MOD_PERL'};
-@@ -1114,164 +1115,6 @@ sub format_snapshot_links {
+@@ -69,64 +69,6 @@ $strict_export = "++GITWEB_STRICT_EXPORT++";
+ $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
+ $GITWEB_CONFIG_SYSTEM = $ENV{'GITWEB_CONFIG_SYSTEM'} || "++GITWEB_CONFIG_SYSTEM++";
+ 
+-sub feature_bool {
+-	my $key = shift;
+-	my ($val) = git_get_project_config($key, '--bool');
+-
+-	if (!defined $val) {
+-		return ($_[0]);
+-	} elsif ($val eq 'true') {
+-		return (1);
+-	} elsif ($val eq 'false') {
+-		return (0);
+-	}
+-}
+-
+-sub feature_snapshot {
+-	my (@fmts) = @_;
+-
+-	my ($val) = git_get_project_config('snapshot');
+-
+-	if ($val) {
+-		@fmts = ($val eq 'none' ? () : split /\s*[,\s]\s*/, $val);
+-	}
+-
+-	return @fmts;
+-}
+-
+-sub feature_patches {
+-	my @val = (git_get_project_config('patches', '--int'));
+-
+-	if (@val) {
+-		return @val;
+-	}
+-
+-	return ($_[0]);
+-}
+-
+-sub feature_avatar {
+-	my @val = (git_get_project_config('avatar'));
+-
+-	return @val ? @val : @_;
+-}
+-
+-# checking HEAD file with -e is fragile if the repository was
+-# initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
+-# and then pruned.
+-sub check_head_link {
+-	my ($dir) = @_;
+-	my $headfile = "$dir/HEAD";
+-	return ((-e $headfile) ||
+-		(-l $headfile && readlink($headfile) =~ /^refs\/heads\//));
+-}
+-
+-sub check_export_ok {
+-	my ($dir) = @_;
+-	return (check_head_link($dir) &&
+-		(!$export_ok || -e "$dir/$export_ok") &&
+-		(!$export_auth_hook || $export_auth_hook->($dir)));
+-}
+-
+ # Get loadavg of system, to compare against $maxload.
+ # Currently it requires '/proc/loadavg' present to get loadavg;
+ # if it is not present it returns 0, which means no load checking.
+@@ -781,12 +723,6 @@ sub unquote {
+ 	return $str;
  }
  
+-sub project_in_list {
+-	my $project = shift;
+-	my @list = git_get_projects_list();
+-	return @list && scalar(grep { $_->{'path'} eq $project } @list);
+-}
+-
  ## ----------------------------------------------------------------------
--## git utility subroutines, invoking git commands
+ ## HTML aware string manipulation
+ 
+@@ -1595,129 +1531,6 @@ sub git_get_type {
+ 	return $type;
+ }
+ 
+-# repository configuration
+-our $config_file = '';
+-our %config;
 -
--# get HEAD ref of given project as hash
--sub git_get_head_hash {
--	return git_get_full_hash(shift, 'HEAD');
--}
+-# store multiple values for single key as anonymous array reference
+-# single values stored directly in the hash, not as [ <value> ]
+-sub hash_set_multi {
+-	my ($hash, $key, $value) = @_;
 -
--sub git_get_full_hash {
--	return git_get_hash(@_);
--}
--
--sub git_get_short_hash {
--	return git_get_hash(@_, '--short=7');
--}
--
--sub git_get_hash {
--	my ($project, $hash, @options) = @_;
--	my $o_git_dir = $git_dir;
--	my $retval = undef;
--	$git_dir = "$projectroot/$project";
--	if (open my $fd, '-|', git_cmd(), 'rev-parse',
--	    '--verify', '-q', @options, $hash) {
--		$retval = <$fd>;
--		chomp $retval if defined $retval;
--		close $fd;
+-	if (!exists $hash->{$key}) {
+-		$hash->{$key} = $value;
+-	} elsif (!ref $hash->{$key}) {
+-		$hash->{$key} = [ $hash->{$key}, $value ];
+-	} else {
+-		push @{$hash->{$key}}, $value;
 -	}
--	if (defined $o_git_dir) {
--		$git_dir = $o_git_dir;
--	}
--	return $retval;
 -}
 -
--# get type of given object
--sub git_get_type {
--	my $hash = shift;
--
--	open my $fd, "-|", git_cmd(), "cat-file", '-t', $hash or return;
--	my $type = <$fd>;
--	close $fd or return;
--	chomp $type;
--	return $type;
--}
--
--# get hash of given path at given ref
--sub git_get_hash_by_path {
--	my $base = shift;
--	my $path = shift || return undef;
--	my $type = shift;
--
--	$path =~ s,/+$,,;
--
--	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
--		or die_error(500, "Open git-ls-tree failed");
--	my $line = <$fd>;
--	close $fd or return undef;
--
--	if (!defined $line) {
--		# there is no tree or hash given by $path at $base
--		return undef;
--	}
--
--	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
--	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/;
--	if (defined $type && $type ne $2) {
--		# type doesn't match
--		return undef;
--	}
--	return $3;
--}
--
--# get path of entry with given hash at given tree-ish (ref)
--# used to get 'from' filename for combined diff (merge commit) for renames
--sub git_get_path_by_hash {
--	my $base = shift || return;
--	my $hash = shift || return;
+-# return hash of git project configuration
+-# optionally limited to some section, e.g. 'gitweb'
+-sub git_parse_project_config {
+-	my $section_regexp = shift;
+-	my %config;
 -
 -	local $/ = "\0";
 -
--	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z', $base
--		or return undef;
--	while (my $line = <$fd>) {
--		chomp $line;
+-	open my $fh, "-|", git_cmd(), "config", '-z', '-l',
+-		or return;
 -
--		#'040000 tree 595596a6a9117ddba9fe379b6b012b558bac8423	gitweb'
--		#'100644 blob e02e90f0429be0d2a69b76571101f20b8f75530f	gitweb/README'
--		if ($line =~ m/(?:[0-9]+) (?:.+) $hash\t(.+)$/) {
--			close $fd;
--			return $1;
--		}
+-	while (my $keyval = <$fh>) {
+-		chomp $keyval;
+-		my ($key, $value) = split(/\n/, $keyval, 2);
+-
+-		hash_set_multi(\%config, $key, $value)
+-			if (!defined $section_regexp || $key =~ /^(?:$section_regexp)\./o);
 -	}
--	close $fd;
--	return undef;
+-	close $fh;
+-
+-	return %config;
 -}
 -
--## ......................................................................
--## git utility functions, directly accessing git repository
+-# convert config value to boolean: 'true' or 'false'
+-# no value, number > 0, 'true' and 'yes' values are true
+-# rest of values are treated as false (never as error)
+-sub config_to_bool {
+-	my $val = shift;
 -
--sub git_get_last_activity {
--	my ($path) = @_;
--	my $fd;
+-	return 1 if !defined $val;             # section.key
+-
+-	# strip leading and trailing whitespace
+-	$val =~ s/^\s+//;
+-	$val =~ s/\s+$//;
+-
+-	return (($val =~ /^\d+$/ && $val) ||   # section.key = 1
+-	        ($val =~ /^(?:true|yes)$/i));  # section.key = true
+-}
+-
+-# convert config value to simple decimal number
+-# an optional value suffix of 'k', 'm', or 'g' will cause the value
+-# to be multiplied by 1024, 1048576, or 1073741824
+-sub config_to_int {
+-	my $val = shift;
+-
+-	# strip leading and trailing whitespace
+-	$val =~ s/^\s+//;
+-	$val =~ s/\s+$//;
+-
+-	if (my ($num, $unit) = ($val =~ /^([0-9]*)([kmg])$/i)) {
+-		$unit = lc($unit);
+-		# unknown unit is treated as 1
+-		return $num * ($unit eq 'g' ? 1073741824 :
+-		               $unit eq 'm' ?    1048576 :
+-		               $unit eq 'k' ?       1024 : 1);
+-	}
+-	return $val;
+-}
+-
+-# convert config value to array reference, if needed
+-sub config_to_multi {
+-	my $val = shift;
+-
+-	return ref($val) ? $val : (defined($val) ? [ $val ] : []);
+-}
+-
+-sub git_get_project_config {
+-	my ($key, $type) = @_;
+-
+-	return unless defined $git_dir;
+-
+-	# key sanity check
+-	return unless ($key);
+-	$key =~ s/^gitweb\.//;
+-	return if ($key =~ m/\W/);
+-
+-	# type sanity check
+-	if (defined $type) {
+-		$type =~ s/^--//;
+-		$type = undef
+-			unless ($type eq 'bool' || $type eq 'int');
+-	}
+-
+-	# get config
+-	if (!defined $config_file ||
+-	    $config_file ne "$git_dir/config") {
+-		%config = git_parse_project_config('gitweb');
+-		$config_file = "$git_dir/config";
+-	}
+-
+-	# check if config variable (key) exists
+-	return unless exists $config{"gitweb.$key"};
+-
+-	# ensure given type
+-	if (!defined $type) {
+-		return $config{"gitweb.$key"};
+-	} elsif ($type eq 'bool') {
+-		# backward compatibility: 'git config --bool' returns true/false
+-		return config_to_bool($config{"gitweb.$key"}) ? 'true' : 'false';
+-	} elsif ($type eq 'int') {
+-		return config_to_int($config{"gitweb.$key"});
+-	}
+-	return $config{"gitweb.$key"};
+-}
+-
+ # get hash of given path at given ref
+ sub git_get_hash_by_path {
+ 	my $base = shift;
+@@ -1772,245 +1585,6 @@ sub git_get_path_by_hash {
+ ## ......................................................................
+ ## git utility functions, directly accessing git repository
+ 
+-sub git_get_project_description {
+-	my $path = shift;
 -
 -	$git_dir = "$projectroot/$path";
--	open($fd, "-|", git_cmd(), 'for-each-ref',
--	     '--format=%(committer)',
--	     '--sort=-committerdate',
--	     '--count=1',
--	     'refs/heads') or return;
--	my $most_recent = <$fd>;
--	close $fd or return;
--	if (defined $most_recent &&
--	    $most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
--		my $timestamp = $1;
--		my $age = time - $timestamp;
--		return ($age, age_string($age));
+-	open my $fd, '<', "$git_dir/description"
+-		or return git_get_project_config('description');
+-	my $descr = <$fd>;
+-	close $fd;
+-	if (defined $descr) {
+-		chomp $descr;
 -	}
--	return (undef, undef);
+-	return $descr;
 -}
 -
--sub git_get_references {
--	my $type = shift || "";
--	my %refs;
--	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
--	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
--	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
--		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
--		or return;
+-sub git_get_project_ctags {
+-	my $path = shift;
+-	my $ctags = {};
 -
--	while (my $line = <$fd>) {
--		chomp $line;
--		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type.*)$!) {
--			if (defined $refs{$1}) {
--				push @{$refs{$1}}, $2;
--			} else {
--				$refs{$1} = [ $2 ];
--			}
+-	$git_dir = "$projectroot/$path";
+-	opendir my $dh, "$git_dir/ctags"
+-		or return $ctags;
+-	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
+-		open my $ct, '<', $_ or next;
+-		my $val = <$ct>;
+-		chomp $val;
+-		close $ct;
+-		my $ctag = $_; $ctag =~ s#.*/##;
+-		$ctags->{$ctag} = $val;
+-	}
+-	closedir $dh;
+-	$ctags;
+-}
+-
+-sub git_populate_project_tagcloud {
+-	my $ctags = shift;
+-
+-	# First, merge different-cased tags; tags vote on casing
+-	my %ctags_lc;
+-	foreach (keys %$ctags) {
+-		$ctags_lc{lc $_}->{count} += $ctags->{$_};
+-		if (not $ctags_lc{lc $_}->{topcount}
+-		    or $ctags_lc{lc $_}->{topcount} < $ctags->{$_}) {
+-			$ctags_lc{lc $_}->{topcount} = $ctags->{$_};
+-			$ctags_lc{lc $_}->{topname} = $_;
 -		}
 -	}
--	close $fd or return;
--	return \%refs;
+-
+-	my $cloud;
+-	if (eval { require HTML::TagCloud; 1; }) {
+-		$cloud = HTML::TagCloud->new;
+-		foreach (sort keys %ctags_lc) {
+-			# Pad the title with spaces so that the cloud looks
+-			# less crammed.
+-			my $title = $ctags_lc{$_}->{topname};
+-			$title =~ s/ /&nbsp;/g;
+-			$title =~ s/^/&nbsp;/g;
+-			$title =~ s/$/&nbsp;/g;
+-			$cloud->add($title, $home_link."?by_tag=".$_, $ctags_lc{$_}->{count});
+-		}
+-	} else {
+-		$cloud = \%ctags_lc;
+-	}
+-	$cloud;
 -}
 -
--sub git_get_rev_name_tags {
--	my $hash = shift || return undef;
+-sub git_show_project_tagcloud {
+-	my ($cloud, $count) = @_;
+-	print STDERR ref($cloud)."..\n";
+-	if (ref $cloud eq 'HTML::TagCloud') {
+-		return $cloud->html_and_css($count);
+-	} else {
+-		my @tags = sort { $cloud->{$a}->{count} <=> $cloud->{$b}->{count} } keys %$cloud;
+-		return '<p align="center">' . join (', ', map {
+-			"<a href=\"$home_link?by_tag=$_\">$cloud->{$_}->{topname}</a>"
+-		} splice(@tags, 0, $count)) . '</p>';
+-	}
+-}
 -
--	open my $fd, "-|", git_cmd(), "name-rev", "--tags", $hash
--		or return;
--	my $name_rev = <$fd>;
+-sub git_get_project_url_list {
+-	my $path = shift;
+-
+-	$git_dir = "$projectroot/$path";
+-	open my $fd, '<', "$git_dir/cloneurl"
+-		or return wantarray ?
+-		@{ config_to_multi(git_get_project_config('url')) } :
+-		   config_to_multi(git_get_project_config('url'));
+-	my @git_project_url_list = map { chomp; $_ } <$fd>;
 -	close $fd;
 -
--	if ($name_rev =~ m|^$hash tags/(.*)$|) {
--		return $1;
--	} else {
--		# catches also '$hash undefined' output
+-	return wantarray ? @git_project_url_list : \@git_project_url_list;
+-}
+-
+-sub git_get_projects_list {
+-	my ($filter) = @_;
+-	my @list;
+-
+-	$filter ||= '';
+-	$filter =~ s/\.git$//;
+-
+-	my $check_forks = gitweb_check_feature('forks');
+-
+-	if (-d $projects_list) {
+-		# search in directory
+-		my $dir = $projects_list . ($filter ? "/$filter" : '');
+-		# remove the trailing "/"
+-		$dir =~ s!/+$!!;
+-		my $pfxlen = length("$dir");
+-		my $pfxdepth = ($dir =~ tr!/!!);
+-
+-		File::Find::find({
+-			follow_fast => 1, # follow symbolic links
+-			follow_skip => 2, # ignore duplicates
+-			dangling_symlinks => 0, # ignore dangling symlinks, silently
+-			wanted => sub {
+-				# skip project-list toplevel, if we get it.
+-				return if (m!^[/.]$!);
+-				# only directories can be git repositories
+-				return unless (-d $_);
+-				# don't traverse too deep (Find is super slow on os x)
+-				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
+-					$File::Find::prune = 1;
+-					return;
+-				}
+-
+-				my $subdir = substr($File::Find::name, $pfxlen + 1);
+-				# we check related file in $projectroot
+-				my $path = ($filter ? "$filter/" : '') . $subdir;
+-				if (check_export_ok("$projectroot/$path")) {
+-					push @list, { path => $path };
+-					$File::Find::prune = 1;
+-				}
+-			},
+-		}, "$dir");
+-
+-	} elsif (-f $projects_list) {
+-		# read from file(url-encoded):
+-		# 'git%2Fgit.git Linus+Torvalds'
+-		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
+-		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
+-		my %paths;
+-		open my $fd, '<', $projects_list or return;
+-	PROJECT:
+-		while (my $line = <$fd>) {
+-			chomp $line;
+-			my ($path, $owner) = split ' ', $line;
+-			$path = unescape($path);
+-			$owner = unescape($owner);
+-			if (!defined $path) {
+-				next;
+-			}
+-			if ($filter ne '') {
+-				# looking for forks;
+-				my $pfx = substr($path, 0, length($filter));
+-				if ($pfx ne $filter) {
+-					next PROJECT;
+-				}
+-				my $sfx = substr($path, length($filter));
+-				if ($sfx !~ /^\/.*\.git$/) {
+-					next PROJECT;
+-				}
+-			} elsif ($check_forks) {
+-			PATH:
+-				foreach my $filter (keys %paths) {
+-					# looking for forks;
+-					my $pfx = substr($path, 0, length($filter));
+-					if ($pfx ne $filter) {
+-						next PATH;
+-					}
+-					my $sfx = substr($path, length($filter));
+-					if ($sfx !~ /^\/.*\.git$/) {
+-						next PATH;
+-					}
+-					# is a fork, don't include it in
+-					# the list
+-					next PROJECT;
+-				}
+-			}
+-			if (check_export_ok("$projectroot/$path")) {
+-				my $pr = {
+-					path => $path,
+-					owner => to_utf8($owner),
+-				};
+-				push @list, $pr;
+-				(my $forks_path = $path) =~ s/\.git$//;
+-				$paths{$forks_path}++;
+-			}
+-		}
+-		close $fd;
+-	}
+-	return @list;
+-}
+-
+-our $gitweb_project_owner = undef;
+-sub git_get_project_list_from_file {
+-
+-	return if (defined $gitweb_project_owner);
+-
+-	$gitweb_project_owner = {};
+-	# read from file (url-encoded):
+-	# 'git%2Fgit.git Linus+Torvalds'
+-	# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
+-	# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
+-	if (-f $projects_list) {
+-		open(my $fd, '<', $projects_list);
+-		while (my $line = <$fd>) {
+-			chomp $line;
+-			my ($pr, $ow) = split ' ', $line;
+-			$pr = unescape($pr);
+-			$ow = unescape($ow);
+-			$gitweb_project_owner->{$pr} = to_utf8($ow);
+-		}
+-		close $fd;
+-	}
+-}
+-
+-sub git_get_project_owner {
+-	my $project = shift;
+-	my $owner;
+-
+-	return undef unless $project;
+-	$git_dir = "$projectroot/$project";
+-
+-	if (!defined $gitweb_project_owner) {
+-		git_get_project_list_from_file();
+-	}
+-
+-	if (exists $gitweb_project_owner->{$project}) {
+-		$owner = $gitweb_project_owner->{$project};
+-	}
+-	if (!defined $owner){
+-		$owner = git_get_project_config('owner');
+-	}
+-	if (!defined $owner) {
+-		$owner = get_file_owner("$git_dir");
+-	}
+-
+-	return $owner;
+-}
+-
+ sub git_get_last_activity {
+ 	my ($path) = @_;
+ 	my $fd;
+@@ -2518,19 +2092,6 @@ sub git_get_tags_list {
+ ## ----------------------------------------------------------------------
+ ## filesystem-related functions
+ 
+-sub get_file_owner {
+-	my $path = shift;
+-
+-	my ($dev, $ino, $mode, $nlink, $st_uid, $st_gid, $rdev, $size) = stat($path);
+-	my ($name, $passwd, $uid, $gid, $quota, $comment, $gcos, $dir, $shell) = getpwuid($st_uid);
+-	if (!defined $gcos) {
 -		return undef;
 -	}
+-	my $owner = $gcos;
+-	$owner =~ s/[,;].*$//;
+-	return to_utf8($owner);
 -}
 -
--## ----------------------------------------------------------------------
- ## parse to hash functions
- 
- sub parse_date {
-@@ -1627,231 +1470,6 @@ sub parse_from_to_diffinfo {
- }
- 
- ## ......................................................................
--## parse to array of hashes functions
--
--sub git_get_heads_list {
--	my $limit = shift;
--	my @headslist;
--
--	open my $fd, '-|', git_cmd(), 'for-each-ref',
--		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
--		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
--		'refs/heads'
--		or return;
--	while (my $line = <$fd>) {
--		my %ref_item;
--
--		chomp $line;
--		my ($refinfo, $committerinfo) = split(/\0/, $line);
--		my ($hash, $name, $title) = split(' ', $refinfo, 3);
--		my ($committer, $epoch, $tz) =
--			($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
--		$ref_item{'fullname'}  = $name;
--		$name =~ s!^refs/heads/!!;
--
--		$ref_item{'name'}  = $name;
--		$ref_item{'id'}    = $hash;
--		$ref_item{'title'} = $title || '(no commit message)';
--		$ref_item{'epoch'} = $epoch;
--		if ($epoch) {
--			$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
--		} else {
--			$ref_item{'age'} = "unknown";
--		}
--
--		push @headslist, \%ref_item;
--	}
--	close $fd;
--
--	return wantarray ? @headslist : \@headslist;
--}
--
--sub git_get_tags_list {
--	my $limit = shift;
--	my @tagslist;
--
--	open my $fd, '-|', git_cmd(), 'for-each-ref',
--		($limit ? '--count='.($limit+1) : ()), '--sort=-creatordate',
--		'--format=%(objectname) %(objecttype) %(refname) '.
--		'%(*objectname) %(*objecttype) %(subject)%00%(creator)',
--		'refs/tags'
--		or return;
--	while (my $line = <$fd>) {
--		my %ref_item;
--
--		chomp $line;
--		my ($refinfo, $creatorinfo) = split(/\0/, $line);
--		my ($id, $type, $name, $refid, $reftype, $title) = split(' ', $refinfo, 6);
--		my ($creator, $epoch, $tz) =
--			($creatorinfo =~ /^(.*) ([0-9]+) (.*)$/);
--		$ref_item{'fullname'} = $name;
--		$name =~ s!^refs/tags/!!;
--
--		$ref_item{'type'} = $type;
--		$ref_item{'id'} = $id;
--		$ref_item{'name'} = $name;
--		if ($type eq "tag") {
--			$ref_item{'subject'} = $title;
--			$ref_item{'reftype'} = $reftype;
--			$ref_item{'refid'}   = $refid;
--		} else {
--			$ref_item{'reftype'} = $type;
--			$ref_item{'refid'}   = $id;
--		}
--
--		if ($type eq "tag" || $type eq "commit") {
--			$ref_item{'epoch'} = $epoch;
--			if ($epoch) {
--				$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
--			} else {
--				$ref_item{'age'} = "unknown";
--			}
--		}
--
--		push @tagslist, \%ref_item;
--	}
--	close $fd;
--
--	return wantarray ? @tagslist : \@tagslist;
--}
--
--## ......................................................................
--## mimetype related functions
--
--sub mimetype_guess_file {
--	my $filename = shift;
--	my $mimemap = shift;
--	-r $mimemap or return undef;
--
--	my %mimemap;
--	open(my $mh, '<', $mimemap) or return undef;
--	while (<$mh>) {
--		next if m/^#/; # skip comments
--		my ($mimetype, $exts) = split(/\t+/);
--		if (defined $exts) {
--			my @exts = split(/\s+/, $exts);
--			foreach my $ext (@exts) {
--				$mimemap{$ext} = $mimetype;
--			}
--		}
--	}
--	close($mh);
--
--	$filename =~ /\.([^.]*)$/;
--	return $mimemap{$1};
--}
--
--sub mimetype_guess {
--	my $filename = shift;
--	my $mime;
--	$filename =~ /\./ or return undef;
--
--	if ($mimetypes_file) {
--		my $file = $mimetypes_file;
--		if ($file !~ m!^/!) { # if it is relative path
--			# it is relative to project
--			$file = "$projectroot/$project/$file";
--		}
--		$mime = mimetype_guess_file($filename, $file);
--	}
--	$mime ||= mimetype_guess_file($filename, '/etc/mime.types');
--	return $mime;
--}
--
--sub blob_mimetype {
--	my $fd = shift;
--	my $filename = shift;
--
--	if ($filename) {
--		my $mime = mimetype_guess($filename);
--		$mime and return $mime;
--	}
--
--	# just in case
--	return $default_blob_plain_mimetype unless $fd;
--
--	if (-T $fd) {
--		return 'text/plain';
--	} elsif (! $filename) {
--		return 'application/octet-stream';
--	} elsif ($filename =~ m/\.png$/i) {
--		return 'image/png';
--	} elsif ($filename =~ m/\.gif$/i) {
--		return 'image/gif';
--	} elsif ($filename =~ m/\.jpe?g$/i) {
--		return 'image/jpeg';
--	} else {
--		return 'application/octet-stream';
--	}
--}
--
--sub blob_contenttype {
--	my ($fd, $file_name, $type) = @_;
--
--	$type ||= blob_mimetype($fd, $file_name);
--	if ($type eq 'text/plain' && defined $default_text_plain_charset) {
--		$type .= "; charset=$default_text_plain_charset";
--	}
--
--	return $type;
--}
--
--# guess file syntax for syntax highlighting; return undef if no highlighting
--# the name of syntax can (in the future) depend on syntax highlighter used
--sub guess_file_syntax {
--	my ($highlight, $mimetype, $file_name) = @_;
--	return undef unless ($highlight && defined $file_name);
--
--	# configuration for 'highlight' (http://www.andre-simon.de/)
--	# match by basename
--	my %highlight_basename = (
--		#'Program' => 'py',
--		#'Library' => 'py',
--		'SConstruct' => 'py', # SCons equivalent of Makefile
--		'Makefile' => 'make',
--	);
--	# match by extension
--	my %highlight_ext = (
--		# main extensions, defining name of syntax;
--		# see files in /usr/share/highlight/langDefs/ directory
--		map { $_ => $_ }
--			qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl),
--		# alternate extensions, see /etc/highlight/filetypes.conf
--		'h' => 'c',
--		map { $_ => 'cpp' } qw(cxx c++ cc),
--		map { $_ => 'php' } qw(php3 php4),
--		map { $_ => 'pl'  } qw(perl pm), # perhaps also 'cgi'
--		'mak' => 'make',
--		map { $_ => 'xml' } qw(xhtml html htm),
--	);
--
--	my $basename = basename($file_name, '.in');
--	return $highlight_basename{$basename}
--		if exists $highlight_basename{$basename};
--
--	$basename =~ /\.([^.]*)$/;
--	my $ext = $1 or return undef;
--	return $highlight_ext{$ext}
--		if exists $highlight_ext{$ext};
--
--	return undef;
--}
--
--# run highlighter and return FD of its output,
--# or return original FD if no highlighting
--sub run_highlighter {
--	my ($fd, $highlight, $syntax) = @_;
--	return $fd unless ($highlight && defined $syntax);
--
--	close $fd
--		or die_error(404, "Reading blob failed");
--	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
--	          "highlight --xhtml --fragment --syntax $syntax |"
--		or die_error(500, "Couldn't open file or run syntax highlighter");
--	return $fd;
--}
--
--## ......................................................................
- ## functions printing or outputting HTML: div
- 
- # Outputs the author name and date in long form
-@@ -1950,42 +1568,6 @@ sub git_print_log {
- ## ......................................................................
- ## functions printing large fragments of HTML
- 
--# get pre-image filenames for merge (combined) diff
--sub fill_from_file_info {
--	my ($diff, @parents) = @_;
--
--	$diff->{'from_file'} = [ ];
--	$diff->{'from_file'}[$diff->{'nparents'} - 1] = undef;
--	for (my $i = 0; $i < $diff->{'nparents'}; $i++) {
--		if ($diff->{'status'}[$i] eq 'R' ||
--		    $diff->{'status'}[$i] eq 'C') {
--			$diff->{'from_file'}[$i] =
--				git_get_path_by_hash($parents[$i], $diff->{'from_id'}[$i]);
--		}
--	}
--
--	return $diff;
--}
--
--# is current raw difftree line of file deletion
--sub is_deleted {
--	my $diffinfo = shift;
--
--	return $diffinfo->{'to_id'} eq ('0' x 40);
--}
--
--# does patch correspond to [previous] difftree raw line
--# $diffinfo  - hashref of parsed raw diff format
--# $patchinfo - hashref of parsed patch diff format
--#              (the same keys as in $diffinfo)
--sub is_patch_split {
--	my ($diffinfo, $patchinfo) = @_;
--
--	return defined $diffinfo && defined $patchinfo
--		&& $diffinfo->{'to_file'} eq $patchinfo->{'to_file'};
--}
--
--
- sub git_difftree_body {
- 	my ($difftree, $hash, @parents) = @_;
- 	my ($parent) = $parents[0];
-diff --git a/gitweb/lib/Gitweb/Util.pm b/gitweb/lib/Gitweb/Util.pm
+ # assume that file exists
+ sub insert_file {
+ 	my $filename = shift;
+diff --git a/gitweb/lib/Gitweb/RepoConfig.pm b/gitweb/lib/Gitweb/RepoConfig.pm
 new file mode 100644
-index 0000000..4d0f5d8
+index 0000000..c8d961d
 --- /dev/null
-+++ b/gitweb/lib/Gitweb/Util.pm
-@@ -0,0 +1,447 @@
++++ b/gitweb/lib/Gitweb/RepoConfig.pm
+@@ -0,0 +1,466 @@
 +#!/usr/bin/perl
 +#
-+# Gitweb::Util -- gitweb's utility function subs package
++# Gitweb::RepoConfig -- gitweb's per-repository configuration subs package
 +#
 +# This program is licensed under the GPLv2
 +
-+package Gitweb::Util;
++package Gitweb::RepoConfig;
 +
 +use strict;
 +use warnings;
 +use Exporter qw(import);
 +
-+our @EXPORT = qw(guess_file_syntax run_highlighter git_get_head_hash git_get_hash
-+                 git_get_full_hash git_get_short_hash git_get_type git_get_hash_by_path
-+                 git_get_path_by_hash git_get_last_activity git_get_references
-+                 git_get_rev_name_tags git_get_heads_list git_get_tags_list blob_mimetype
-+                 blob_contenttype fill_from_file_info is_deleted is_patch_split);
++our @EXPORT = qw($config_file %config $gitweb_project_owner git_get_project_url_list
++                 git_get_project_config git_get_project_description git_get_project_ctags
++                 git_populate_project_tagcloud git_show_project_tagcloud check_head_link
++                 check_export_ok git_get_projects_list git_get_project_list_from_file
++                 git_get_project_owner project_in_list feature_bool feature_snapshot
++                 feature_patches feature_avatar);
 +
-+use File::Basename qw(basename);
-+use Gitweb::Git qw(git_cmd $git_dir quote_command);
-+use Gitweb::Config qw($projectroot $mimetypes_file $default_text_plain_charset
-+                      $default_blob_plain_mimetype);
-+use Gitweb::Request qw($project $hash);
-+use Gitweb::View qw(die_error age_string);
++use CGI::Util qw(unescape);
++use Gitweb::Git qw(git_cmd $git_dir);
++use Gitweb::Config qw(gitweb_check_feature $projectroot $projects_list
++                      $project_maxdepth $export_ok $export_auth_hook);
++use Gitweb::Request qw($home_link);
++use Gitweb::Escape qw(to_utf8);
 +
-+## ----------------------------------------------------------------------
-+## git utility subroutines, invoking git commands
++# repository configuration
++our $config_file = '';
++our %config;
 +
-+# get HEAD ref of given project as hash
-+sub git_get_head_hash {
-+	return git_get_full_hash(shift, 'HEAD');
++# checking HEAD file with -e is fragile if the repository was
++# initialized long time ago (i.e. symlink HEAD) and was pack-ref'ed
++# and then pruned.
++sub check_head_link {
++	my ($dir) = @_;
++	my $headfile = "$dir/HEAD";
++	return ((-e $headfile) ||
++		(-l $headfile && readlink($headfile) =~ /^refs\/heads\//));
 +}
 +
-+sub git_get_full_hash {
-+	return git_get_hash(@_);
++sub check_export_ok {
++	my ($dir) = @_;
++	return (check_head_link($dir) &&
++		(!$export_ok || -e "$dir/$export_ok") &&
++		(!$export_auth_hook || $export_auth_hook->($dir)));
 +}
 +
-+sub git_get_short_hash {
-+	return git_get_hash(@_, '--short=7');
-+}
++# store multiple values for single key as anonymous array reference
++# single values stored directly in the hash, not as [ <value> ]
++sub hash_set_multi {
++	my ($hash, $key, $value) = @_;
 +
-+sub git_get_hash {
-+	my ($project, $hash, @options) = @_;
-+	my $o_git_dir = $git_dir;
-+	my $retval = undef;
-+	$git_dir = "$projectroot/$project";
-+	if (open my $fd, '-|', git_cmd(), 'rev-parse',
-+	    '--verify', '-q', @options, $hash) {
-+		$retval = <$fd>;
-+		chomp $retval if defined $retval;
-+		close $fd;
++	if (!exists $hash->{$key}) {
++		$hash->{$key} = $value;
++	} elsif (!ref $hash->{$key}) {
++		$hash->{$key} = [ $hash->{$key}, $value ];
++	} else {
++		push @{$hash->{$key}}, $value;
 +	}
-+	if (defined $o_git_dir) {
-+		$git_dir = $o_git_dir;
-+	}
-+	return $retval;
 +}
 +
-+# get type of given object
-+sub git_get_type {
-+	my $hash = shift;
-+
-+	open my $fd, "-|", git_cmd(), "cat-file", '-t', $hash or return;
-+	my $type = <$fd>;
-+	close $fd or return;
-+	chomp $type;
-+	return $type;
-+}
-+
-+# get hash of given path at given ref
-+sub git_get_hash_by_path {
-+	my $base = shift;
-+	my $path = shift || return undef;
-+	my $type = shift;
-+
-+	$path =~ s,/+$,,;
-+
-+	open my $fd, "-|", git_cmd(), "ls-tree", $base, "--", $path
-+		or die_error(500, "Open git-ls-tree failed");
-+	my $line = <$fd>;
-+	close $fd or return undef;
-+
-+	if (!defined $line) {
-+		# there is no tree or hash given by $path at $base
-+		return undef;
-+	}
-+
-+	#'100644 blob 0fa3f3a66fb6a137f6ec2c19351ed4d807070ffa	panic.c'
-+	$line =~ m/^([0-9]+) (.+) ([0-9a-fA-F]{40})\t/;
-+	if (defined $type && $type ne $2) {
-+		# type doesn't match
-+		return undef;
-+	}
-+	return $3;
-+}
-+
-+# get path of entry with given hash at given tree-ish (ref)
-+# used to get 'from' filename for combined diff (merge commit) for renames
-+sub git_get_path_by_hash {
-+	my $base = shift || return;
-+	my $hash = shift || return;
++# return hash of git project configuration
++# optionally limited to some section, e.g. 'gitweb'
++sub git_parse_project_config {
++	my $section_regexp = shift;
++	my %config;
 +
 +	local $/ = "\0";
 +
-+	open my $fd, "-|", git_cmd(), "ls-tree", '-r', '-t', '-z', $base
-+		or return undef;
-+	while (my $line = <$fd>) {
-+		chomp $line;
++	open my $fh, "-|", git_cmd(), "config", '-z', '-l',
++		or return;
 +
-+		#'040000 tree 595596a6a9117ddba9fe379b6b012b558bac8423	gitweb'
-+		#'100644 blob e02e90f0429be0d2a69b76571101f20b8f75530f	gitweb/README'
-+		if ($line =~ m/(?:[0-9]+) (?:.+) $hash\t(.+)$/) {
-+			close $fd;
-+			return $1;
-+		}
++	while (my $keyval = <$fh>) {
++		chomp $keyval;
++		my ($key, $value) = split(/\n/, $keyval, 2);
++
++		hash_set_multi(\%config, $key, $value)
++			if (!defined $section_regexp || $key =~ /^(?:$section_regexp)\./o);
 +	}
-+	close $fd;
-+	return undef;
++	close $fh;
++
++	return %config;
 +}
 +
-+## ......................................................................
-+## git utility functions, directly accessing git repository
++# convert config value to boolean: 'true' or 'false'
++# no value, number > 0, 'true' and 'yes' values are true
++# rest of values are treated as false (never as error)
++sub config_to_bool {
++	my $val = shift;
 +
-+sub git_get_last_activity {
-+	my ($path) = @_;
-+	my $fd;
++	return 1 if !defined $val;             # section.key
++
++	# strip leading and trailing whitespace
++	$val =~ s/^\s+//;
++	$val =~ s/\s+$//;
++
++	return (($val =~ /^\d+$/ && $val) ||   # section.key = 1
++	        ($val =~ /^(?:true|yes)$/i));  # section.key = true
++}
++
++# convert config value to simple decimal number
++# an optional value suffix of 'k', 'm', or 'g' will cause the value
++# to be multiplied by 1024, 1048576, or 1073741824
++sub config_to_int {
++	my $val = shift;
++
++	# strip leading and trailing whitespace
++	$val =~ s/^\s+//;
++	$val =~ s/\s+$//;
++
++	if (my ($num, $unit) = ($val =~ /^([0-9]*)([kmg])$/i)) {
++		$unit = lc($unit);
++		# unknown unit is treated as 1
++		return $num * ($unit eq 'g' ? 1073741824 :
++		               $unit eq 'm' ?    1048576 :
++		               $unit eq 'k' ?       1024 : 1);
++	}
++	return $val;
++}
++
++# convert config value to array reference, if needed
++sub config_to_multi {
++	my $val = shift;
++
++	return ref($val) ? $val : (defined($val) ? [ $val ] : []);
++}
++
++sub feature_bool {
++	my $key = shift;
++	my ($val) = git_get_project_config($key, '--bool');
++
++	if (!defined $val) {
++		return ($_[0]);
++	} elsif ($val eq 'true') {
++		return (1);
++	} elsif ($val eq 'false') {
++		return (0);
++	}
++}
++
++sub feature_snapshot {
++	my (@fmts) = @_;
++
++	my ($val) = git_get_project_config('snapshot');
++
++	if ($val) {
++		@fmts = ($val eq 'none' ? () : split /\s*[,\s]\s*/, $val);
++	}
++
++	return @fmts;
++}
++
++sub feature_patches {
++	my @val = (git_get_project_config('patches', '--int'));
++
++	if (@val) {
++		return @val;
++	}
++
++	return ($_[0]);
++}
++
++sub feature_avatar {
++	my @val = (git_get_project_config('avatar'));
++
++	return @val ? @val : @_;
++}
++
++sub git_get_project_config {
++	my ($key, $type) = @_;
++
++	return unless defined $git_dir;
++
++	# key sanity check
++	return unless ($key);
++	$key =~ s/^gitweb\.//;
++	return if ($key =~ m/\W/);
++
++	# type sanity check
++	if (defined $type) {
++		$type =~ s/^--//;
++		$type = undef
++			unless ($type eq 'bool' || $type eq 'int');
++	}
++
++	# get config
++	if (!defined $config_file ||
++	    $config_file ne "$git_dir/config") {
++		%config = git_parse_project_config('gitweb');
++		$config_file = "$git_dir/config";
++	}
++
++	# check if config variable (key) exists
++	return unless exists $config{"gitweb.$key"};
++
++	# ensure given type
++	if (!defined $type) {
++		return $config{"gitweb.$key"};
++	} elsif ($type eq 'bool') {
++		# backward compatibility: 'git config --bool' returns true/false
++		return config_to_bool($config{"gitweb.$key"}) ? 'true' : 'false';
++	} elsif ($type eq 'int') {
++		return config_to_int($config{"gitweb.$key"});
++	}
++	return $config{"gitweb.$key"};
++}
++
++sub git_get_project_description {
++	my $path = shift;
 +
 +	$git_dir = "$projectroot/$path";
-+	open($fd, "-|", git_cmd(), 'for-each-ref',
-+	     '--format=%(committer)',
-+	     '--sort=-committerdate',
-+	     '--count=1',
-+	     'refs/heads') or return;
-+	my $most_recent = <$fd>;
-+	close $fd or return;
-+	if (defined $most_recent &&
-+	    $most_recent =~ / (\d+) [-+][01]\d\d\d$/) {
-+		my $timestamp = $1;
-+		my $age = time - $timestamp;
-+		return ($age, age_string($age));
++	open my $fd, '<', "$git_dir/description"
++		or return git_get_project_config('description');
++	my $descr = <$fd>;
++	close $fd;
++	if (defined $descr) {
++		chomp $descr;
 +	}
-+	return (undef, undef);
++	return $descr;
 +}
 +
-+sub git_get_references {
-+	my $type = shift || "";
-+	my %refs;
-+	# 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c refs/tags/v2.6.11
-+	# c39ae07f393806ccf406ef966e9a15afc43cc36a refs/tags/v2.6.11^{}
-+	open my $fd, "-|", git_cmd(), "show-ref", "--dereference",
-+		($type ? ("--", "refs/$type") : ()) # use -- <pattern> if $type
-+		or return;
++sub git_get_project_ctags {
++	my $path = shift;
++	my $ctags = {};
 +
-+	while (my $line = <$fd>) {
-+		chomp $line;
-+		if ($line =~ m!^([0-9a-fA-F]{40})\srefs/($type.*)$!) {
-+			if (defined $refs{$1}) {
-+				push @{$refs{$1}}, $2;
-+			} else {
-+				$refs{$1} = [ $2 ];
-+			}
++	$git_dir = "$projectroot/$path";
++	opendir my $dh, "$git_dir/ctags"
++		or return $ctags;
++	foreach (grep { -f $_ } map { "$git_dir/ctags/$_" } readdir($dh)) {
++		open my $ct, '<', $_ or next;
++		my $val = <$ct>;
++		chomp $val;
++		close $ct;
++		my $ctag = $_; $ctag =~ s#.*/##;
++		$ctags->{$ctag} = $val;
++	}
++	closedir $dh;
++	$ctags;
++}
++
++sub git_populate_project_tagcloud {
++	my $ctags = shift;
++
++	# First, merge different-cased tags; tags vote on casing
++	my %ctags_lc;
++	foreach (keys %$ctags) {
++		$ctags_lc{lc $_}->{count} += $ctags->{$_};
++		if (not $ctags_lc{lc $_}->{topcount}
++		    or $ctags_lc{lc $_}->{topcount} < $ctags->{$_}) {
++			$ctags_lc{lc $_}->{topcount} = $ctags->{$_};
++			$ctags_lc{lc $_}->{topname} = $_;
 +		}
 +	}
-+	close $fd or return;
-+	return \%refs;
++
++	my $cloud;
++	if (eval { require HTML::TagCloud; 1; }) {
++		$cloud = HTML::TagCloud->new;
++		foreach (sort keys %ctags_lc) {
++			# Pad the title with spaces so that the cloud looks
++			# less crammed.
++			my $title = $ctags_lc{$_}->{topname};
++			$title =~ s/ /&nbsp;/g;
++			$title =~ s/^/&nbsp;/g;
++			$title =~ s/$/&nbsp;/g;
++			$cloud->add($title, $home_link."?by_tag=".$_, $ctags_lc{$_}->{count});
++		}
++	} else {
++		$cloud = \%ctags_lc;
++	}
++	$cloud;
 +}
 +
-+sub git_get_rev_name_tags {
-+	my $hash = shift || return undef;
++sub git_show_project_tagcloud {
++	my ($cloud, $count) = @_;
++	print STDERR ref($cloud)."..\n";
++	if (ref $cloud eq 'HTML::TagCloud') {
++		return $cloud->html_and_css($count);
++	} else {
++		my @tags = sort { $cloud->{$a}->{count} <=> $cloud->{$b}->{count} } keys %$cloud;
++		return '<p align="center">' . join (', ', map {
++			"<a href=\"$home_link?by_tag=$_\">$cloud->{$_}->{topname}</a>"
++		} splice(@tags, 0, $count)) . '</p>';
++	}
++}
 +
-+	open my $fd, "-|", git_cmd(), "name-rev", "--tags", $hash
-+		or return;
-+	my $name_rev = <$fd>;
++sub git_get_project_url_list {
++	my $path = shift;
++
++	$git_dir = "$projectroot/$path";
++	open my $fd, '<', "$git_dir/cloneurl"
++		or return wantarray ?
++		@{ config_to_multi(git_get_project_config('url')) } :
++		   config_to_multi(git_get_project_config('url'));
++	my @git_project_url_list = map { chomp; $_ } <$fd>;
 +	close $fd;
 +
-+	if ($name_rev =~ m|^$hash tags/(.*)$|) {
-+		return $1;
-+	} else {
-+		# catches also '$hash undefined' output
++	return wantarray ? @git_project_url_list : \@git_project_url_list;
++}
++
++sub git_get_projects_list {
++	my ($filter) = @_;
++	my @list;
++
++	$filter ||= '';
++	$filter =~ s/\.git$//;
++
++	my $check_forks = gitweb_check_feature('forks');
++
++	if (-d $projects_list) {
++		# search in directory
++		my $dir = $projects_list . ($filter ? "/$filter" : '');
++		# remove the trailing "/"
++		$dir =~ s!/+$!!;
++		my $pfxlen = length("$dir");
++		my $pfxdepth = ($dir =~ tr!/!!);
++
++		File::Find::find({
++			follow_fast => 1, # follow symbolic links
++			follow_skip => 2, # ignore duplicates
++			dangling_symlinks => 0, # ignore dangling symlinks, silently
++			wanted => sub {
++				# skip project-list toplevel, if we get it.
++				return if (m!^[/.]$!);
++				# only directories can be git repositories
++				return unless (-d $_);
++				# don't traverse too deep (Find is super slow on os x)
++				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
++					$File::Find::prune = 1;
++					return;
++				}
++
++				my $subdir = substr($File::Find::name, $pfxlen + 1);
++				# we check related file in $projectroot
++				my $path = ($filter ? "$filter/" : '') . $subdir;
++				if (check_export_ok("$projectroot/$path")) {
++					push @list, { path => $path };
++					$File::Find::prune = 1;
++				}
++			},
++		}, "$dir");
++
++	} elsif (-f $projects_list) {
++		# read from file(url-encoded):
++		# 'git%2Fgit.git Linus+Torvalds'
++		# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
++		# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
++		my %paths;
++		open my $fd, '<', $projects_list or return;
++	PROJECT:
++		while (my $line = <$fd>) {
++			chomp $line;
++			my ($path, $owner) = split ' ', $line;
++			$path = unescape($path);
++			$owner = unescape($owner);
++			if (!defined $path) {
++				next;
++			}
++			if ($filter ne '') {
++				# looking for forks;
++				my $pfx = substr($path, 0, length($filter));
++				if ($pfx ne $filter) {
++					next PROJECT;
++				}
++				my $sfx = substr($path, length($filter));
++				if ($sfx !~ /^\/.*\.git$/) {
++					next PROJECT;
++				}
++			} elsif ($check_forks) {
++			PATH:
++				foreach my $filter (keys %paths) {
++					# looking for forks;
++					my $pfx = substr($path, 0, length($filter));
++					if ($pfx ne $filter) {
++						next PATH;
++					}
++					my $sfx = substr($path, length($filter));
++					if ($sfx !~ /^\/.*\.git$/) {
++						next PATH;
++					}
++					# is a fork, don't include it in
++					# the list
++					next PROJECT;
++				}
++			}
++			if (check_export_ok("$projectroot/$path")) {
++				my $pr = {
++					path => $path,
++					owner => to_utf8($owner),
++				};
++				push @list, $pr;
++				(my $forks_path = $path) =~ s/\.git$//;
++				$paths{$forks_path}++;
++			}
++		}
++		close $fd;
++	}
++	return @list;
++}
++
++our $gitweb_project_owner = undef;
++sub git_get_project_list_from_file {
++
++	return if (defined $gitweb_project_owner);
++
++	$gitweb_project_owner = {};
++	# read from file (url-encoded):
++	# 'git%2Fgit.git Linus+Torvalds'
++	# 'libs%2Fklibc%2Fklibc.git H.+Peter+Anvin'
++	# 'linux%2Fhotplug%2Fudev.git Greg+Kroah-Hartman'
++	if (-f $projects_list) {
++		open(my $fd, '<', $projects_list);
++		while (my $line = <$fd>) {
++			chomp $line;
++			my ($pr, $ow) = split ' ', $line;
++			$pr = unescape($pr);
++			$ow = unescape($ow);
++			$gitweb_project_owner->{$pr} = to_utf8($ow);
++		}
++		close $fd;
++	}
++}
++
++sub git_get_project_owner {
++	my $project = shift;
++	my $owner;
++
++	return undef unless $project;
++	$git_dir = "$projectroot/$project";
++
++	if (!defined $gitweb_project_owner) {
++		git_get_project_list_from_file();
++	}
++
++	if (exists $gitweb_project_owner->{$project}) {
++		$owner = $gitweb_project_owner->{$project};
++	}
++	if (!defined $owner){
++		$owner = git_get_project_config('owner');
++	}
++	if (!defined $owner) {
++		$owner = get_file_owner("$git_dir");
++	}
++
++	return $owner;
++}
++
++sub get_file_owner {
++	my $path = shift;
++
++	my ($dev, $ino, $mode, $nlink, $st_uid, $st_gid, $rdev, $size) = stat($path);
++	my ($name, $passwd, $uid, $gid, $quota, $comment, $gcos, $dir, $shell) = getpwuid($st_uid);
++	if (!defined $gcos) {
 +		return undef;
 +	}
++	my $owner = $gcos;
++	$owner =~ s/[,;].*$//;
++	return to_utf8($owner);
 +}
 +
-+## ......................................................................
-+## parse to array of hashes functions
-+
-+sub git_get_heads_list {
-+	my $limit = shift;
-+	my @headslist;
-+
-+	open my $fd, '-|', git_cmd(), 'for-each-ref',
-+		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
-+		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
-+		'refs/heads'
-+		or return;
-+	while (my $line = <$fd>) {
-+		my %ref_item;
-+
-+		chomp $line;
-+		my ($refinfo, $committerinfo) = split(/\0/, $line);
-+		my ($hash, $name, $title) = split(' ', $refinfo, 3);
-+		my ($committer, $epoch, $tz) =
-+			($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
-+		$ref_item{'fullname'}  = $name;
-+		$name =~ s!^refs/heads/!!;
-+
-+		$ref_item{'name'}  = $name;
-+		$ref_item{'id'}    = $hash;
-+		$ref_item{'title'} = $title || '(no commit message)';
-+		$ref_item{'epoch'} = $epoch;
-+		if ($epoch) {
-+			$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
-+		} else {
-+			$ref_item{'age'} = "unknown";
-+		}
-+
-+		push @headslist, \%ref_item;
-+	}
-+	close $fd;
-+
-+	return wantarray ? @headslist : \@headslist;
-+}
-+
-+sub git_get_tags_list {
-+	my $limit = shift;
-+	my @tagslist;
-+
-+	open my $fd, '-|', git_cmd(), 'for-each-ref',
-+		($limit ? '--count='.($limit+1) : ()), '--sort=-creatordate',
-+		'--format=%(objectname) %(objecttype) %(refname) '.
-+		'%(*objectname) %(*objecttype) %(subject)%00%(creator)',
-+		'refs/tags'
-+		or return;
-+	while (my $line = <$fd>) {
-+		my %ref_item;
-+
-+		chomp $line;
-+		my ($refinfo, $creatorinfo) = split(/\0/, $line);
-+		my ($id, $type, $name, $refid, $reftype, $title) = split(' ', $refinfo, 6);
-+		my ($creator, $epoch, $tz) =
-+			($creatorinfo =~ /^(.*) ([0-9]+) (.*)$/);
-+		$ref_item{'fullname'} = $name;
-+		$name =~ s!^refs/tags/!!;
-+
-+		$ref_item{'type'} = $type;
-+		$ref_item{'id'} = $id;
-+		$ref_item{'name'} = $name;
-+		if ($type eq "tag") {
-+			$ref_item{'subject'} = $title;
-+			$ref_item{'reftype'} = $reftype;
-+			$ref_item{'refid'}   = $refid;
-+		} else {
-+			$ref_item{'reftype'} = $type;
-+			$ref_item{'refid'}   = $id;
-+		}
-+
-+		if ($type eq "tag" || $type eq "commit") {
-+			$ref_item{'epoch'} = $epoch;
-+			if ($epoch) {
-+				$ref_item{'age'} = age_string(time - $ref_item{'epoch'});
-+			} else {
-+				$ref_item{'age'} = "unknown";
-+			}
-+		}
-+
-+		push @tagslist, \%ref_item;
-+	}
-+	close $fd;
-+
-+	return wantarray ? @tagslist : \@tagslist;
-+}
-+
-+## ......................................................................
-+## mimetype related functions
-+
-+sub mimetype_guess_file {
-+	my $filename = shift;
-+	my $mimemap = shift;
-+	-r $mimemap or return undef;
-+
-+	my %mimemap;
-+	open(my $mh, '<', $mimemap) or return undef;
-+	while (<$mh>) {
-+		next if m/^#/; # skip comments
-+		my ($mimetype, $exts) = split(/\t+/);
-+		if (defined $exts) {
-+			my @exts = split(/\s+/, $exts);
-+			foreach my $ext (@exts) {
-+				$mimemap{$ext} = $mimetype;
-+			}
-+		}
-+	}
-+	close($mh);
-+
-+	$filename =~ /\.([^.]*)$/;
-+	return $mimemap{$1};
-+}
-+
-+sub mimetype_guess {
-+	my $filename = shift;
-+	my $mime;
-+	$filename =~ /\./ or return undef;
-+
-+	if ($mimetypes_file) {
-+		my $file = $mimetypes_file;
-+		if ($file !~ m!^/!) { # if it is relative path
-+			# it is relative to project
-+			$file = "$projectroot/$project/$file";
-+		}
-+		$mime = mimetype_guess_file($filename, $file);
-+	}
-+	$mime ||= mimetype_guess_file($filename, '/etc/mime.types');
-+	return $mime;
-+}
-+
-+sub blob_mimetype {
-+	my $fd = shift;
-+	my $filename = shift;
-+
-+	if ($filename) {
-+		my $mime = mimetype_guess($filename);
-+		$mime and return $mime;
-+	}
-+
-+	# just in case
-+	return $default_blob_plain_mimetype unless $fd;
-+
-+	if (-T $fd) {
-+		return 'text/plain';
-+	} elsif (! $filename) {
-+		return 'application/octet-stream';
-+	} elsif ($filename =~ m/\.png$/i) {
-+		return 'image/png';
-+	} elsif ($filename =~ m/\.gif$/i) {
-+		return 'image/gif';
-+	} elsif ($filename =~ m/\.jpe?g$/i) {
-+		return 'image/jpeg';
-+	} else {
-+		return 'application/octet-stream';
-+	}
-+}
-+
-+sub blob_contenttype {
-+	my ($fd, $file_name, $type) = @_;
-+
-+	$type ||= blob_mimetype($fd, $file_name);
-+	if ($type eq 'text/plain' && defined $default_text_plain_charset) {
-+		$type .= "; charset=$default_text_plain_charset";
-+	}
-+
-+	return $type;
-+}
-+
-+# guess file syntax for syntax highlighting; return undef if no highlighting
-+# the name of syntax can (in the future) depend on syntax highlighter used
-+sub guess_file_syntax {
-+	my ($highlight, $mimetype, $file_name) = @_;
-+	return undef unless ($highlight && defined $file_name);
-+
-+	# configuration for 'highlight' (http://www.andre-simon.de/)
-+	# match by basename
-+	my %highlight_basename = (
-+		#'Program' => 'py',
-+		#'Library' => 'py',
-+		'SConstruct' => 'py', # SCons equivalent of Makefile
-+		'Makefile' => 'make',
-+	);
-+	# match by extension
-+	my %highlight_ext = (
-+		# main extensions, defining name of syntax;
-+		# see files in /usr/share/highlight/langDefs/ directory
-+		map { $_ => $_ }
-+			qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl),
-+		# alternate extensions, see /etc/highlight/filetypes.conf
-+		'h' => 'c',
-+		map { $_ => 'cpp' } qw(cxx c++ cc),
-+		map { $_ => 'php' } qw(php3 php4),
-+		map { $_ => 'pl'  } qw(perl pm), # perhaps also 'cgi'
-+		'mak' => 'make',
-+		map { $_ => 'xml' } qw(xhtml html htm),
-+	);
-+
-+	my $basename = basename($file_name, '.in');
-+	return $highlight_basename{$basename}
-+		if exists $highlight_basename{$basename};
-+
-+	$basename =~ /\.([^.]*)$/;
-+	my $ext = $1 or return undef;
-+	return $highlight_ext{$ext}
-+		if exists $highlight_ext{$ext};
-+
-+	return undef;
-+}
-+
-+# run highlighter and return FD of its output,
-+# or return original FD if no highlighting
-+sub run_highlighter {
-+	my ($fd, $highlight, $syntax) = @_;
-+	return $fd unless ($highlight && defined $syntax);
-+
-+	close $fd
-+		or die_error(404, "Reading blob failed");
-+	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
-+	          "highlight --xhtml --fragment --syntax $syntax |"
-+		or die_error(500, "Couldn't open file or run syntax highlighter");
-+	return $fd;
-+}
-+
-+## ......................................................................
-+## functions printing large fragments of HTML
-+
-+# get pre-image filenames for merge (combined) diff
-+sub fill_from_file_info {
-+	my ($diff, @parents) = @_;
-+
-+	$diff->{'from_file'} = [ ];
-+	$diff->{'from_file'}[$diff->{'nparents'} - 1] = undef;
-+	for (my $i = 0; $i < $diff->{'nparents'}; $i++) {
-+		if ($diff->{'status'}[$i] eq 'R' ||
-+		    $diff->{'status'}[$i] eq 'C') {
-+			$diff->{'from_file'}[$i] =
-+				git_get_path_by_hash($parents[$i], $diff->{'from_id'}[$i]);
-+		}
-+	}
-+
-+	return $diff;
-+}
-+
-+# is current raw difftree line of file deletion
-+sub is_deleted {
-+	my $diffinfo = shift;
-+
-+	return $diffinfo->{'to_id'} eq ('0' x 40);
-+}
-+
-+# does patch correspond to [previous] difftree raw line
-+# $diffinfo  - hashref of parsed raw diff format
-+# $patchinfo - hashref of parsed patch diff format
-+#              (the same keys as in $diffinfo)
-+sub is_patch_split {
-+	my ($diffinfo, $patchinfo) = @_;
-+
-+	return defined $diffinfo && defined $patchinfo
-+		&& $diffinfo->{'to_file'} eq $patchinfo->{'to_file'};
++sub project_in_list {
++	my $project = shift;
++	my @list = git_get_projects_list();
++	return @list && scalar(grep { $_->{'path'} eq $project } @list);
 +}
 +
 +1;
