@@ -1,85 +1,85 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 0/9] Get svnrdump merged into git.git
-Date: Thu, 15 Jul 2010 12:55:27 +0200
-Message-ID: <20100715105527.GC22574@debian>
-References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
- <7vsk3myuyo.fsf@alter.siamese.dyndns.org>
+From: "Luis Gutierrez" <Luis.Gutierrez@arm.com>
+Subject: git svn problem
+Date: Thu, 15 Jul 2010 12:00:33 +0100
+Message-ID: <DBB61D38F7942B49AD43397D38954724080AB1@ZIPPY.Emea.Arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarab@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Eric Wong <normalperson@yhbt.net>,
-	Will Palmer <wpalmer@gmail.com>, Greg Stein <gstein@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 15 12:53:57 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 15 13:45:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZM4j-0008Re-5j
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 12:53:57 +0200
+	id 1OZMsD-0007Tj-Je
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 13:45:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933026Ab0GOKxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 06:53:45 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:53072 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933014Ab0GOKxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 06:53:44 -0400
-Received: by eya25 with SMTP id 25so123946eya.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 03:53:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=MaCLFaPUdIhqJqGLakJs0ie+8MvzRVpi/1we58n0Yxc=;
-        b=COch0/4EmF47nQ2h2giOdGXGX11lRdBzVDFHz5C9q7RLSs2G461DAY3GoYVI6VMEVs
-         WS9grTwLtm0mOt5HqrO1qR/F1t/Zak1YMdla2iDCTRi0fMO8RRDvLUo/9gErquEttvIO
-         Cwdaw7HjebuiN1ZzEOw9eIeAK7RJ8+TAKw3Lc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XIQygNeSC2Hl5BHe3csX223Nd2unMRgME3zjq7Gsm/csVNWzLu8hLsmFH56AnCy0Rr
-         tPzN4i9PUoPociDLAOYwjToSFIU3zU6zmierBAHcyJh1eCZXcE5rVg42XD4mo/n0pDsj
-         91lPdlrzQgkAQ1WIbRn0dfm0DJNyE1zV2kQ0Q=
-Received: by 10.213.3.83 with SMTP id 19mr5547147ebm.5.1279191221731;
-        Thu, 15 Jul 2010 03:53:41 -0700 (PDT)
-Received: from debian (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id a48sm7147922eei.0.2010.07.15.03.53.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 03:53:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vsk3myuyo.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757875Ab0GOLo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 07:44:59 -0400
+Received: from new-admin0.cambridge.arm.com ([217.140.96.53]:52260 "EHLO
+	new-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757438Ab0GOLo6 convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 07:44:58 -0400
+X-Greylist: delayed 2660 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jul 2010 07:44:58 EDT
+Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
+	by new-admin0.cambridge.arm.com (8.13.8+Sun/8.13.8) with ESMTP id o6FB0poH025617
+	for <git@vger.kernel.org>; Thu, 15 Jul 2010 12:00:51 +0100 (BST)
+x-mimeole: Produced By Microsoft Exchange V6.5
+x-cr-puzzleid: {C0B12E38-06E6-4149-951F-4F3B928DD440}
+x-cr-hashedpuzzle: AuyF BIcE BPbp BeGZ CRA/ DMOf DNcw EDQb EISA Emqh GH/I IgEJ JJ+s Jrnv KZ5R Kpfu;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{C0B12E38-06E6-4149-951F-4F3B928DD440};bAB1AGkAcwAuAGcAdQB0AGkAZQByAHIAZQB6AEAAYQByAG0ALgBjAG8AbQA=;Thu, 15 Jul 2010 11:00:33 GMT;ZwBpAHQAIABzAHYAbgAgAHAAcgBvAGIAbABlAG0A
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git svn problem
+Thread-Index: AcskDPJaXEIex5XlRr6dW0m2ushHog==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151074>
 
-Hi Junio,
+Hi,
 
-Junio C Hamano writes:
-> Given you'll be maintaining a variant that can link with 1.6 subversion
-> libraries anyway, I'd rather see you host this as an independent, related
-> project, perhaps at repo.or.cz and/or github.com, and add a link to point
-> at it at https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
+I did the usual google search, wiki  and mail list search looking for an
+answer, but I can't find it anywhere.
 
-I think that sorts it out then. Thanks. I've merged this series into a
-new project on my GitHub [1]. I'll soon convert whitespace/ style and
-add some instructions, and maintain a branch that compiles against
-libsvn 1.6. Until svnrdump is in a re-usable library in the ASF, I'm
-afraid the git-remote-svn toolchain will simply have to spawn the
-executable and read the output from a pipe. Instructions can then be
-simplified to: compile `svnrdump` and place the executable anywhere in
-your $PATH.
+I'm trying to use git svn to interact with (surprise) and SVN
+repository. 
+git svn clone <url> does the trick in getting a copy of the repo.
+However, there are a couple of misbehaving sym links that git-index does
+not know how to handle.
 
-[1]: http://github.com/artagnon/svnrdump
+Doing a git-svn-rebase or a git-stash will result in this error:
 
--- Ram
+> git stash
+Saved working directory and index state WIP on master: 919e091 L2C:
+added X-checking assertions and l2c->RAM interface properties.
+error: git checkout-index: unable to create symlink < path to file>
+(File name too long)
+error: git checkout-index: unable to create symlink < path to file >
+<filename> (File name too long)
+fatal: Could not reset index file to revision 'HEAD'.
+
+As far as I can tell, the symlink was full-path symlink (instead of the
+usual relative path) done by someone thousand of svn commits ago.
+
+I've tried with both a full history import, and a shallow (the last 10
+commits) import and in both cases I'm stuck with this files.
+
+Now, I can't really replace this file with the svn one because on a
+git-svn-dcommit it will try to replace it.
+
+As you can imagine, this is killing all the fun. 
+
+Any ideas on what to do?
+I would really love to use git instead of SVN for development, but I'll
+settle for using just to browse the history and changes. 
+
+Regards,
+
+Luis Gutierrez
+-- 
+IMPORTANT NOTICE: The contents of this email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please notify the sender immediately and do not disclose the contents to any other person, use it for any purpose, or store or copy the information in any medium.  Thank you.
