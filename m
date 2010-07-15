@@ -1,79 +1,201 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/8] Export parse_date_basic() to convert a date string
- to timestamp
-Date: Thu, 15 Jul 2010 12:25:06 -0500
-Message-ID: <20100715172506.GA23989@burratino>
-References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
- <1279210984-31604-2-git-send-email-artagnon@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] post-receive-email: optional message line count limit
+Date: Thu, 15 Jul 2010 10:36:55 -0700
+Message-ID: <7v1vb4wsso.fsf@alter.siamese.dyndns.org>
+References: <m2vd8jhxbd.fsf@igel.home>
+ <1279205516-3302-1-git-send-email-kpfleming@digium.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 15 19:26:19 2010
+Cc: git@vger.kernel.org
+To: "Kevin P. Fleming" <kpfleming@digium.com>
+X-From: git-owner@vger.kernel.org Thu Jul 15 19:37:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZSCO-0005KD-Pj
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 19:26:17 +0200
+	id 1OZSMz-000393-US
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 19:37:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933908Ab0GOR0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 13:26:08 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:37507 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933810Ab0GOR0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 13:26:06 -0400
-Received: by qwh6 with SMTP id 6so289946qwh.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 10:26:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=CN9YHYy0pyP8R5ZY7OlIk36ZYRhnwJLhI5CNl3IEDYg=;
-        b=fpEFOHBdcYj62z2afgkPutSfGrF8MCeauY+gwhz6vZx5OkvKaFjZhZ9UfezjRK1eqs
-         hHlwaJId5L4OKg1cJ/FMD+pqaihi3bBzsDkUgnODyBikM5+LTAMK8NrS/dHUdsXreiK2
-         7mHPy5jV2GyxcaAHb7TydMTMzfjYy2PZSu6xo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=OHrcC0x+y6rL03/tTYSwzXObIqKw3lvninG06/MzFId/Eeiuk9sPysLeULuYDvtFB6
-         ygpBKQGXX1Qt3g9LX4otWGV4wCzdKMMbPk8gghsX0HKQnlN6bcYMJFu+f0ttP2C5O5CW
-         uPbOnQ8JelI84A+SmepLJJee02azPvlgYObIo=
-Received: by 10.224.114.204 with SMTP id f12mr5338143qaq.150.1279214760364;
-        Thu, 15 Jul 2010 10:26:00 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h41sm5613848qcz.1.2010.07.15.10.25.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 10:25:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1279210984-31604-2-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933919Ab0GORhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 13:37:07 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43335 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933914Ab0GORhG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 13:37:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D412CC43F6;
+	Thu, 15 Jul 2010 13:37:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qQ901F1qvL1Vxzrf39OAInO6Uxk=; b=fBfBYU
+	M0oZIguwBLNDN6epbLEWPIWNM5GuuAcAxRA5nA222VBcW4n/d4tLRI/s23zjp4Jn
+	d+wbbQegKm8GzSg4huh1J3yHGG+bhXrSKfB2d3CB2/1sT7olKfY5H8eK4/3PMr6u
+	LYrBI7xPgnmhPtARXhobZ86lp4lt9BFxoTzt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=a/qm/O8SgA6r7rDFqiGbav7A6BC0SOdB
+	s7UKAkY2tnhZkRz3ajwkwBJ0BfwOKjrwHXujZGGaDKP57AQ8k3ArHhgW+xyuj5fs
+	wVIWpAlT1cscOV4EmvqdZaYJHUdCvTBO5TL4OdzCsCNAC0VMVhCWqY5cV7z3jUCN
+	ORrG8UoE660=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AF705C43F4;
+	Thu, 15 Jul 2010 13:37:00 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8FA86C43F3; Thu, 15 Jul
+ 2010 13:36:57 -0400 (EDT)
+In-Reply-To: <1279205516-3302-1-git-send-email-kpfleming@digium.com> (Kevin
+ P. Fleming's message of "Thu\, 15 Jul 2010 09\:51\:56 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 92EB32CE-9037-11DF-92FC-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151098>
 
-Ramkumar Ramachandra wrote:
+"Kevin P. Fleming" <kpfleming@digium.com> writes:
 
-> approxidate() is not appropriate for reading machine-written dates
-> because it guesses instead of erroring out on malformed dates.
-> parse_date() is less convenient since it returns its output as a
-> string.  So export the underlying function that writes a timestamp.
-> 
-> While at it, change the return value to match the usual convention:
-> return 0 for success and -1 for failure.
+> We have become used to the features of svnmailer when used with Subversion,
+> and one of those useful features is that it can limit the maximum length
+> (in lines) of a commit email message. This is terribly useful since once the
+> goes beyond a reasonable number of lines, nobody is going to read the remainder,
+> and if they really want the entire contents of the commits, they can use
+> git itself to get them using the revision IDs present in the message already.
+>
+> Change the post-receive-email script to respond to an 'emailmaxlines' config key
+> which, if specified, will limit the number of lines generated (including
+> headers); any lines beyond the limit are suppressed, and a final line is added
+> indicating the number that were suppressed.
+> ---
 
-Junio: I think this should be ejected from the series as an
-independently useful cleanup.
+Sign-off?
 
-Currently parse_date_toffset() is exported but not declared anywhere.
-This patch gives it a more predictable API and adds a declaration.
+> diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+> index 30ae63d..4dc85c2 100755
+> --- a/contrib/hooks/post-receive-email
+> +++ b/contrib/hooks/post-receive-email
+> @@ -642,6 +647,27 @@ show_new_revisions()
+>  }
+>  
+>  
+> +limit_lines()
+> +{
+> +	lines=0
+> +	skipped=0
+> +	while IFS="" read -r line
+> +	do
+> +		lines=$((lines + 1))
+> +		if [ $lines -gt $1 ]
+> +		then
 
-Ram: thanks for the reminder.
+Since this is a contrib/ material, I should probably be not so picky about
+it, but the style used in this script seems to be to use "; then" tacked
+at the end on the same line as "if" is on.  Which is different from the
+main scripted Porcelains in git.git, but you would want to be consistent
+with the local convention around your code.
+
+> +			skipped=$((skipped + 1))
+> +		else
+> +			printf "%s\n" "$line"
+> +		fi
+> +	done
+> +	if [ $skipped -ne 0 ]
+> +	then
+> +		echo "... $skipped lines suppressed ..."
+> +	fi
+> +}
+
+The above makes me wonder if the nicety of saying "we are not showing
+everything; instead we skipped N lines" is really worth the trouble of the
+shell loop.  Otherwise, a lot simpler:
+
+	limit_lines ()
+        {
+        	head -n "$1"
+	}
+
+would be sufficient.  I dunno, and I don't deeply care either way.
+
+> @@ -679,6 +705,7 @@ announcerecipients=$(git config hooks.announcelist)
+>  envelopesender=$(git config hooks.envelopesender)
+>  emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
+>  custom_showrev=$(git config hooks.showrev)
+> +maxlines=$(git config hooks.emailmaxlines)
+>  
+>  # --- Main loop
+>  # Allow dual mode: run from the command line just like the update hook, or
+> @@ -691,6 +718,10 @@ if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
+>  else
+>  	while read oldrev newrev refname
+>  	do
+> -		generate_email $oldrev $newrev $refname | send_mail
+> +		if [ -z "$maxlines" ]; then
+> +			generate_email $oldrev $newrev $refname | send_mail
+> +		else
+> +			generate_email $oldrev $newrev $refname | limit_lines $maxlines | send_mail
+> +		fi
+
+Hmm, the above made me wonder how the raw message needs to be generated
+differently depending on maxlines and eyeball the common part for three
+times to spot there is no difference.  I wouldn't have if it were written
+this way:
+
+	generate_email $oldrev $newrev $refname |
+        if ...; then
+        	send_mail
+	else
+        	limit_lines ... | send_mail
+	fi
+
+But more importantly, I have a suspicion that this patch is hooking into a
+wrong place.  Look at what generate_email does.  It consists of calls to
+
+ - generate_email_header, that gives the To:/Subject:/etc and the header
+   boilerplate;
+
+ - generate_*_*_email, that gives the body of the message; and
+
+ - generate_email_footer, that gives the standard "-- " signature line.
+
+You would never want to shorten the output so much that the header is cut
+in the middle.  What you are trying to shorten is the body of the message,
+so it would make a lot more sense to cut only the generate_*_*_email part.
+
+IOW, shouldn't the patch be more like this?
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 30ae63d..d8964b6 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -84,6 +84,7 @@ generate_email()
+ 	oldrev=$(git rev-parse $1)
+ 	newrev=$(git rev-parse $2)
+ 	refname="$3"
++	maxlines=$4
+ 
+ 	# --- Interpret
+ 	# 0000->1234 (create)
+@@ -192,7 +193,12 @@ generate_email()
+ 		fn_name=atag
+ 		;;
+ 	esac
+-	generate_${change_type}_${fn_name}_email
++	if [ -z "$maxlines" ]; then
++		generate_${change_type}_${fn_name}_email
++	else
++		generate_${change_type}_${fn_name}_email |
++		limit_lines $maxlines
++	fi
+ 
+ 	generate_email_footer
+ }
+@@ -691,6 +697,6 @@ if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
+ else
+ 	while read oldrev newrev refname
+ 	do
+-		generate_email $oldrev $newrev $refname | send_mail
++		generate_email $oldrev $newrev $refname $maxlines | send_mail
+ 	done
+ fi
