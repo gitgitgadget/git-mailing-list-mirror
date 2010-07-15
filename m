@@ -1,73 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 0/2] non-incremental mode for fast-export
-Date: Wed, 14 Jul 2010 21:44:36 -0500
-Message-ID: <AANLkTilpIlOaupzzSdLWxjE3PAsZg9J9UB9_pM12H8wE@mail.gmail.com>
-References: <1278535562-14875-1-git-send-email-newren@gmail.com> 
-	<AANLkTim9CU-2CNz8lUbKiKXHHICugMhts_1aIDP2_81g@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: serving git with both "git:" and "http:" and submodules
+Date: Thu, 15 Jul 2010 07:46:25 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1007150745340.13735@perkele.intern.softwolves.pp.se>
+References: <4C3DD7EF.6010805@panasas.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 15 04:45:09 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Boaz Harrosh <bharrosh@panasas.com>
+X-From: git-owner@vger.kernel.org Thu Jul 15 08:46:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZERd-00022d-0d
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 04:45:05 +0200
+	id 1OZIDR-0002Ax-DQ
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 08:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932175Ab0GOCo5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Jul 2010 22:44:57 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:60552 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932128Ab0GOCo5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Jul 2010 22:44:57 -0400
-Received: by gyh4 with SMTP id 4so351202gyh.19
-        for <git@vger.kernel.org>; Wed, 14 Jul 2010 19:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dUKzSU0hIJkWHvf8263HPZc3Wsy3LSfTCTrkSMRoopw=;
-        b=W4rE+fKBjghrhJi8UXLivnceVs1wT0ISRM/cEb2x7RF4i7VMuYI3LSNNcGSu3h0kjW
-         Dg67AhiyE92cXXtbttOeAsZ3Li2OEaDJSpWoXozro38moEEZvPT+cB27E4y3O90N+eVB
-         VTUQqEY9J0FZD09oi75uN7nxqg0M4hx+3pUOQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=SxkaeKlGTLZf1HicAJWICCWl2w9Aj47ugZhRVVJtdnUUx+1m41o4Go/05yGZqH6E9g
-         55coduxcCCRc6iL97YvKM1/Z9IyhUeDCcVCfyN4mTehS9N+OSvpSbyXxlbvN+gj8ob3v
-         VLCWCNfSoR0lTnCpqWnZ6kg4xLbED9gM3KGdc=
-Received: by 10.151.24.12 with SMTP id b12mr273732ybj.180.1279161896086; Wed, 
-	14 Jul 2010 19:44:56 -0700 (PDT)
-Received: by 10.150.93.19 with HTTP; Wed, 14 Jul 2010 19:44:36 -0700 (PDT)
-In-Reply-To: <AANLkTim9CU-2CNz8lUbKiKXHHICugMhts_1aIDP2_81g@mail.gmail.com>
+	id S1752884Ab0GOGqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 02:46:32 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:37951 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752160Ab0GOGqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 02:46:32 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L5L00HGO6TEYE70@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 15 Jul 2010 08:46:26 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 40F101EA57FF_C3EAEC2B	for <git@vger.kernel.org>; Thu,
+ 15 Jul 2010 06:46:26 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id F2F301EA2876_C3EAEC1F	for <git@vger.kernel.org>; Thu,
+ 15 Jul 2010 06:46:25 +0000 (GMT)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L5L0024H6TDEO20@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 15 Jul 2010 08:46:25 +0200 (MEST)
+Received: by perkele (Postfix, from userid 501)	id C88B92FBF1; Thu,
+ 15 Jul 2010 08:46:25 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id C40432FBEF; Thu, 15 Jul 2010 07:46:25 +0100 (CET)
+In-reply-to: <4C3DD7EF.6010805@panasas.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151047>
 
-Heya,
+Boaz Harrosh:
 
-On Wed, Jul 14, 2010 at 20:03, Elijah Newren <newren@gmail.com> wrote:
-> Hmm..no comments. =C2=A0Am I (and others at my $dayjob) unique enough=
- in
-> our combination of options we use that no one else ever runs into thi=
-s
-> mangling of exported repositories?
+> [submodule "sub"]
+>        url = git://my-domain.org/my-tree/sub/.git
 
-The first patch makes sense to me and should probably go into maint.
-The second one is so trivial that even if you are the only user of it
-I can see no reason _not_ to include it. So even if I'm not exactly an
-expert on fast-export, I think I know enough of fast-import to be able
-to say this should be merged :).
+> So my question is: Can I automate this so people with "http:" clones are 
+> not forced to manually edit their config files?
 
---=20
-Cheers,
+You should be able to use a relative URL in .gitmodules, something like this 
+should work:
 
-Sverre Rabbelier
+[submodule "sub"]
+        url = ../sub/.git
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
