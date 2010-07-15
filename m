@@ -1,79 +1,114 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Git has been granted the Famous Software Award - Download.FamousWhy.com
-Date: Thu, 15 Jul 2010 17:13:08 -0400
-Message-ID: <4C3F79E4.7040803@gmail.com>
-References: <20100715133338.17833310BD9@mail.famouswhy.com> <AANLkTil5j4pPwDl8zZDoiZYKFTBd7xi_90B0SCdiab-3@mail.gmail.com> <1279226674-sup-1508@nixos>
-Reply-To: gitzilla@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 GSOC 04/11] gitweb: Create Gitweb::Config module
+Date: Thu, 15 Jul 2010 23:21:46 +0200
+Message-ID: <201007152321.47358.jnareb@gmail.com>
+References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com> <1279178951-23712-5-git-send-email-pavan.sss1991@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Marc Weber <marco-oweber@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jul 15 23:13:22 2010
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 15 23:22:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZVk8-0004bz-N4
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 23:13:21 +0200
+	id 1OZVsX-0008Pn-59
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 23:22:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934798Ab0GOVNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 17:13:15 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46330 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934789Ab0GOVNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 17:13:14 -0400
-Received: by gwj18 with SMTP id 18so732708gwj.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 14:13:13 -0700 (PDT)
+	id S934832Ab0GOVVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 17:21:55 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:59984 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934799Ab0GOVVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 17:21:55 -0400
+Received: by bwz1 with SMTP id 1so858091bwz.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 14:21:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=+88ykiQQ+JgbGk//iF0re+JZixMars5wnZDHweqx1/Q=;
-        b=CzlKN+mywo79xv8cnPD3jHzY8mJMQp5/GSOxPkgPGL+Jsv49VpCQ3eA+pXMTm7cZaB
-         PzuOAsn9Vx92RFz+mGy2mTLlsnudzxID5JKiHxVgpusoWNMIDS8/Phd0/6dyMFk2K33H
-         c1f3BKEbpW2lsABjvmDNcfoVoMwZLwykKyR48=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=D3V2yDyE9EtB35s5UNytNmdYzaGXw45PA29M9qVr6Ws=;
+        b=POxycR/Gs6oYi4VBtRo0dJpXQOmKfx2rYBNKkZQ4fI53+sUq9rU4hzP33O/HlTgDik
+         hXGoEtoWm1PDqIKTRnrX0vEj6aW1BwVPuzOCGNfQh5VFLJKheJczA+gWVztfgs8Qvy7n
+         26WOGX+VDZFlDwLUU8bPu7nmht6PGXw1AdDnM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=tjnCjQuTnljp7BfgTA3kHwgKBbL5t01bqzCVETCnZT4//5YcscH1a7juYXUmqo7R0K
-         4M15y9gokmI8j1+OTkIRvMaIyjAH12JTNmcIL3xpFBly6R2ZbymWNk4eBr9dGW7ifu79
-         lQu2aClkD6tIPorkjemjXiCUm+5l+pHP4QU9w=
-Received: by 10.100.128.16 with SMTP id a16mr330183and.34.1279228391397;
-        Thu, 15 Jul 2010 14:13:11 -0700 (PDT)
-Received: from [10.0.1.133] (c-24-129-111-166.hsd1.fl.comcast.net [24.129.111.166])
-        by mx.google.com with ESMTPS id t24sm13538032ano.12.2010.07.15.14.13.09
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Ey1jpQtEHb3cEVQDlhjntZWAS9lmQshgnTFCB5P2LSG9GTMDvl20NKx0gb9/sh87T3
+         IeNQgnKf7D7pPMgHcL4BjKZhLwSLJ/67GctiNoYyM+HRBMhQgcVBB5T3f4SwnApF1RO/
+         UF2tMctyQAlCUlkBYMw8YbWhjm/PEi/zCJ6MQ=
+Received: by 10.204.34.2 with SMTP id j2mr212149bkd.21.1279228913305;
+        Thu, 15 Jul 2010 14:21:53 -0700 (PDT)
+Received: from [192.168.1.13] (abwm47.neoplus.adsl.tpnet.pl [83.8.236.47])
+        by mx.google.com with ESMTPS id s34sm7658196bkk.1.2010.07.15.14.21.50
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 14:13:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100620 Icedove/3.0.5
-In-Reply-To: <1279226674-sup-1508@nixos>
+        Thu, 15 Jul 2010 14:21:51 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1279178951-23712-5-git-send-email-pavan.sss1991@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151123>
 
-On 07/15/2010 04:47 PM, Marc Weber wrote:
-> Excerpts from Sverre Rabbelier's message of Thu Jul 15 21:02:43 +0200 2010:
->> Heya,
->
->> Are you spam?
-> If it was spam you would find more of it using google. I checked (not
-> too carefully though). They may award any project once a month or so.
->
-> On the other hand the git page is a nice place to put backlinks on.
->
-> So maybe it depends on how you define spam :)
+On Thu, 15 Jul 2010, Pavan Kumar Sunkara wrote:
 
-It fits my definition of SEO (search engine optimization) SPAM.
+> Create Gitweb::Config module in 'gitweb/lib/Gitweb/Config.pm'
+> to store all the configuration variables and subroutines
+> regarding the gitweb.perl script.
+> 
+> This module depends only on $git_dir from Gitweb::Git and
+> includes the configuration related variables and
+> subroutines (Including those required for configuration
+> of gitweb features).
 
-* The backlink appears to be what is valuable to them since they make a 
-number of promises of things they will do (implied: only) in return for 
-a backlink.
+Here it might be worth noting that subroutines related to per-repository
+config (feature_* subroutines) are not in this module, I guess because
+of (inter)dependencies.
 
-* The site appears to be advertising supported.
+> 
+> Subroutines moved:
+> 	evaluate_gitweb_config
+> 	configure_gitweb_features
+> 	filter_snapshot_fmts
+> 	gitweb_get_feature
+> 	gitweb_check_feature
+> 
+> Update gitweb/Makefile to install Gitweb::Config module alongside gitweb
+> 
+> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+> ---
+>  gitweb/Makefile             |    1 +
+>  gitweb/gitweb.perl          |  495 ++----------------------------------------
+>  gitweb/lib/Gitweb/Config.pm |  498 +++++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 522 insertions(+), 472 deletions(-)
+>  create mode 100644 gitweb/lib/Gitweb/Config.pm
+[...]
+
+> -our $version = "++GIT_VERSION++";
+> +# Only configuration variables with build-time overridable
+> +# defaults are listed below. The complete set of variables
+> +# with their descriptions is listed in Gitweb::Config.
+> +$version = "++GIT_VERSION++";
+
+Ah, I see that here you address (somewhat) the issue of moving
+descriptions of build-time configuration variables out of gitweb.perl
+into individual module(s).
+  
+[...]
+
+Nice straight refactoring.   It's a pity that git-diff cannot show this
+as code movement + some changes, like it would in the case of wholesame
+file rename.
+
+-- 
+Jakub Narebski
+Poland
