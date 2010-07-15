@@ -1,85 +1,75 @@
-From: "Luis Gutierrez" <Luis.Gutierrez@arm.com>
-Subject: git svn problem
-Date: Thu, 15 Jul 2010 12:00:33 +0100
-Message-ID: <DBB61D38F7942B49AD43397D38954724080AB1@ZIPPY.Emea.Arm.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2010, #02; Wed, 14)
+Date: Thu, 15 Jul 2010 13:58:22 +0200
+Message-ID: <20100715115822.GD22574@debian>
+References: <7vhbk1wt8k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 15 13:45:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 15 13:56:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZMsD-0007Tj-Je
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 13:45:05 +0200
+	id 1OZN3T-0004nK-0N
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 13:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757875Ab0GOLo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 07:44:59 -0400
-Received: from new-admin0.cambridge.arm.com ([217.140.96.53]:52260 "EHLO
-	new-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757438Ab0GOLo6 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 07:44:58 -0400
-X-Greylist: delayed 2660 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jul 2010 07:44:58 EDT
-Received: from ZIPPY.Emea.Arm.com (cam-exch2.emea.arm.com [10.1.255.58])
-	by new-admin0.cambridge.arm.com (8.13.8+Sun/8.13.8) with ESMTP id o6FB0poH025617
-	for <git@vger.kernel.org>; Thu, 15 Jul 2010 12:00:51 +0100 (BST)
-x-mimeole: Produced By Microsoft Exchange V6.5
-x-cr-puzzleid: {C0B12E38-06E6-4149-951F-4F3B928DD440}
-x-cr-hashedpuzzle: AuyF BIcE BPbp BeGZ CRA/ DMOf DNcw EDQb EISA Emqh GH/I IgEJ JJ+s Jrnv KZ5R Kpfu;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{C0B12E38-06E6-4149-951F-4F3B928DD440};bAB1AGkAcwAuAGcAdQB0AGkAZQByAHIAZQB6AEAAYQByAG0ALgBjAG8AbQA=;Thu, 15 Jul 2010 11:00:33 GMT;ZwBpAHQAIABzAHYAbgAgAHAAcgBvAGIAbABlAG0A
-Content-class: urn:content-classes:message
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git svn problem
-Thread-Index: AcskDPJaXEIex5XlRr6dW0m2ushHog==
+	id S1758336Ab0GOL4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 07:56:37 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:43265 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758231Ab0GOL4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 07:56:36 -0400
+Received: by ewy23 with SMTP id 23so179398ewy.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 04:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7GUKXeQyqIrUZd1FhjXx/UqWFCo4zwCeWcT5UYNPrrE=;
+        b=IlJZlS73uo4FqK68d60LEPPkDZ4Xi62UzYV4FiuTpqioMdv71zeUfZLtqM9MOg1LpT
+         g3n0d9Fd1ap8c4HUw8f8Oey0PkYtpkVYPPlpCauDKUQspZ44W94wj8Axn+RKswqU0P1D
+         kR/gZwRLWZJjn0vAGQd0aYFoBAKNuvUY717M4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ABof/2yR3h5VXWE1xl0kdJPAnkDyeiwUov+spF8GmwyagmthoHJdNuEBqcSqlTTOcX
+         mmPFIAPmKzax9eOCuxWDHUmeWtsYkK6u7/KiVKVeSD2GSiKyPH0Ub7GqHRPtUXFc1I1S
+         4R+wtpWSCY+h45jcX9j+Dr1xv5WkWC+M6OOTA=
+Received: by 10.213.13.69 with SMTP id b5mr653640eba.29.1279194995363;
+        Thu, 15 Jul 2010 04:56:35 -0700 (PDT)
+Received: from debian (nat-wireless.itu.dk [130.226.142.243])
+        by mx.google.com with ESMTPS id a48sm7535647eei.12.2010.07.15.04.56.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Jul 2010 04:56:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vhbk1wt8k.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151075>
 
-Hi,
+Hi Junio,
 
-I did the usual google search, wiki  and mail list search looking for an
-answer, but I can't find it anywhere.
+Junio C Hamano writes:
+> * rr/svn-export (2010-06-10) 7 commits
+>  - Add LICENSE
+>  - Add SVN dump parser
+>  - Add infrastructure to write revisions in fast-export format
+>  - Add stream helper library
+>  - Add library for string-specific memory pool
+>  - Add cpp macro implementation of treaps
+>  - Add memory pool library
+> 
+> I recall there was another round of re-roll planned for this one.
 
-I'm trying to use git svn to interact with (surprise) and SVN
-repository. 
-git svn clone <url> does the trick in getting a copy of the repo.
-However, there are a couple of misbehaving sym links that git-index does
-not know how to handle.
+I was waiting for the ternary treap refactor, but I figure that it's
+taking longer than I expected. I'll try to re-roll today.
 
-Doing a git-svn-rebase or a git-stash will result in this error:
-
-> git stash
-Saved working directory and index state WIP on master: 919e091 L2C:
-added X-checking assertions and l2c->RAM interface properties.
-error: git checkout-index: unable to create symlink < path to file>
-(File name too long)
-error: git checkout-index: unable to create symlink < path to file >
-<filename> (File name too long)
-fatal: Could not reset index file to revision 'HEAD'.
-
-As far as I can tell, the symlink was full-path symlink (instead of the
-usual relative path) done by someone thousand of svn commits ago.
-
-I've tried with both a full history import, and a shallow (the last 10
-commits) import and in both cases I'm stuck with this files.
-
-Now, I can't really replace this file with the svn one because on a
-git-svn-dcommit it will try to replace it.
-
-As you can imagine, this is killing all the fun. 
-
-Any ideas on what to do?
-I would really love to use git instead of SVN for development, but I'll
-settle for using just to browse the history and changes. 
-
-Regards,
-
-Luis Gutierrez
--- 
-IMPORTANT NOTICE: The contents of this email and any attachments are confidential and may also be privileged. If you are not the intended recipient, please notify the sender immediately and do not disclose the contents to any other person, use it for any purpose, or store or copy the information in any medium.  Thank you.
+-- Ram
