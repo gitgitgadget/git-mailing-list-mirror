@@ -1,476 +1,590 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 4/8] Add treap implementation
-Date: Thu, 15 Jul 2010 18:23:00 +0200
-Message-ID: <1279210984-31604-5-git-send-email-artagnon@gmail.com>
+Subject: [PATCH 7/8] Add infrastructure to write revisions in fast-export format
+Date: Thu, 15 Jul 2010 18:23:03 +0200
+Message-ID: <1279210984-31604-8-git-send-email-artagnon@gmail.com>
 References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Michael Barr <david.barr@cordelta.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 15 18:22:12 2010
+X-From: git-owner@vger.kernel.org Thu Jul 15 18:22:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZRCL-0006nr-OQ
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 18:22:10 +0200
+	id 1OZRCN-0006nr-8v
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 18:22:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933685Ab0GOQVd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 12:21:33 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:56031 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933679Ab0GOQVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 12:21:30 -0400
-Received: by mail-ey0-f174.google.com with SMTP id 25so213063eya.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 09:21:29 -0700 (PDT)
+	id S933696Ab0GOQVm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 12:21:42 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:61019 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933689Ab0GOQVi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 12:21:38 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 23so286658ewy.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 09:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=YjIRpjkkbdaRvLcrJO8RLt4WjPekgn3mBef5ZqLqiwY=;
-        b=farcrSRdZTMXFiW6/Snvzk7De50iijKz0m/NkPcdLx/qXMGM3CCiR6UpOA2ReJGQaQ
-         aj90G4JlK+Y5b8T7NuYfFiuox0eEzZpI1Un5wKBTbn2cNNFQ5Z5CEJiq4Px7jYR7J1X3
-         37IIK4/0Vzp/pzIdaOOfMEGU0JqvjC12wmOSU=
+        bh=gtbDmn9yekR3x+4P/07Ohq5UChMql9wCTDoNuTUwcs4=;
+        b=TeJeAoclTEe684+NVJk2DiUZFG8lMPK0qxNAuuPT42k+Pwd08dYiDfyQ5pLP+amH1g
+         bdPM0+Dw49w0MhUfLsUWgcH8ADybKQ910j1kUKA/ywqQ5r/0iGAnZ9H0s/jk3FxhCeIR
+         d3b67VuCdowtOnZ9ReMQKw59/MlqC90bP44UI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=QplE1Z4pRuqb7s/Fh0ckZf26JmxCKhi/FMHGv2FZxzRuaEQVqT0B9gIJbY7b1EiCgP
-         R52jzXdbVQGRv13h3csw52e0Sq1jimgTc7WK/1zliayV0K9ETCBz4cJwRr7R01ouwLd+
-         XEspuJ77nKERS7LhSXzr36LYDmURb1/CjnzLA=
-Received: by 10.213.32.141 with SMTP id c13mr2940096ebd.44.1279210889272;
-        Thu, 15 Jul 2010 09:21:29 -0700 (PDT)
+        b=YykvGtBiiYqXMu2AWPOjdtEWwCfvla/YXinP3os12mNVCQCXIZQcMFuoAQfCfQcdxp
+         u00vnD1cAViQjfyU5Er8CSr0xQySpO+A+4D2g4bIOJh5OtS3DL6xs6CRkMx8u1+8X3zY
+         5a3kelBfYpzg+gcwmcmGipoBq6QoZWfzTzOws=
+Received: by 10.213.32.136 with SMTP id c8mr1264548ebd.64.1279210897732;
+        Thu, 15 Jul 2010 09:21:37 -0700 (PDT)
 Received: from localhost (nat-wireless.itu.dk [130.226.142.243])
-        by mx.google.com with ESMTPS id a48sm9363251eei.18.2010.07.15.09.21.27
+        by mx.google.com with ESMTPS id v59sm9407261eeh.4.2010.07.15.09.21.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 09:21:28 -0700 (PDT)
+        Thu, 15 Jul 2010 09:21:36 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151094>
 
-=46rom: Jason Evans <jasone@canonware.com>
+From: David Barr <david.barr@cordelta.com>
 
-Provide macros to generate a type-specific treap implementation and
-various functions to operate on it. It uses obj_pool.h to store memory
-nodes in a treap.  Previously committed nodes are never removed from
-the pool; after any *_commit operation, it is assumed (correctly, in
-the case of svn-fast-export) that someone else must care about them.
+repo_tree maintains the exporter's state and provides a facility to to
+call fast_export, which writes objects to stdout suitable for
+consumption by fast-import.
 
-Treaps provide a memory-efficient binary search tree structure.
-Insertion/deletion/search are about as about as fast in the average
-case as red-black trees and the chances of worst-case behavior are
-vanishingly small, thanks to (pseudo-)randomness.  The bad worst-case
-behavior is a small price to pay, given that treaps are much simpler
-to implement.
+The exported functions roughly correspond to Subversion FS operations.
 
-=46rom http://www.canonware.com/download/trp/trp_hash/trp.h
+ . repo_add, repo_modify, repo_copy, repo_replace, and repo_delete
+   update the current commit, based roughly on the corresponding
+   Subversion FS operation.
 
-[db: Altered to reference nodes by offset from a common base pointer]
-[db: Bob Jenkins' hashing implementation dropped for Knuth's]
-[db: Methods unnecessary for search and insert dropped]
+ . repo_commit calls out to fast_export to write the current commit to
+   the fast-import stream in stdout.
+
+ . repo_diff is used by the fast_export module to write the changes
+   for a commit.
+
+ . repo_reset erases the exporter's state, so valgrind can be happy.
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile        |    2 +-
- vcs-svn/LICENSE |    3 +
- vcs-svn/trp.h   |  220 +++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- vcs-svn/trp.txt |  102 +++++++++++++++++++++++++
- 4 files changed, 326 insertions(+), 1 deletions(-)
- create mode 100644 vcs-svn/trp.h
- create mode 100644 vcs-svn/trp.txt
+ Makefile              |    5 +-
+ vcs-svn/fast_export.c |   75 +++++++++++
+ vcs-svn/fast_export.h |   14 ++
+ vcs-svn/repo_tree.c   |  335 +++++++++++++++++++++++++++++++++++++++++++++++++
+ vcs-svn/repo_tree.h   |   26 ++++
+ 5 files changed, 453 insertions(+), 2 deletions(-)
+ create mode 100644 vcs-svn/fast_export.c
+ create mode 100644 vcs-svn/fast_export.h
+ create mode 100644 vcs-svn/repo_tree.c
+ create mode 100644 vcs-svn/repo_tree.h
 
 diff --git a/Makefile b/Makefile
-index fc31ee0..663a366 100644
+index 8223d9b..7c66dcc 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1864,7 +1864,7 @@ xdiff-interface.o $(XDIFF_OBJS): \
- 	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
-=20
- $(VCSSVN_OBJS): \
--	vcs-svn/obj_pool.h
-+	vcs-svn/obj_pool.h vcs-svn/trp.h
+@@ -1740,7 +1740,8 @@ ifndef NO_CURL
  endif
-=20
- exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS =3D \
-diff --git a/vcs-svn/LICENSE b/vcs-svn/LICENSE
-index 6e52372..a3d384c 100644
---- a/vcs-svn/LICENSE
-+++ b/vcs-svn/LICENSE
-@@ -1,6 +1,9 @@
- Copyright (C) 2010 David Barr <david.barr@cordelta.com>.
- All rights reserved.
-=20
-+Copyright (C) 2008 Jason Evans <jasone@canonware.com>.
-+All rights reserved.
-+
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met:
-diff --git a/vcs-svn/trp.h b/vcs-svn/trp.h
+ XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
+ 	xdiff/xmerge.o xdiff/xpatience.o
+-VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o
++VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o \
++	vcs-svn/repo_tree.o vcs-svn/fast_export.o
+ OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS) $(VCSSVN_OBJS)
+ 
+ dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
+@@ -1865,7 +1866,7 @@ xdiff-interface.o $(XDIFF_OBJS): \
+ 
+ $(VCSSVN_OBJS): \
+ 	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h \
+-	vcs-svn/line_buffer.h
++	vcs-svn/line_buffer.h vcs-svn/repo_tree.h vcs-svn/fast_export.h
+ endif
+ 
+ exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
 new file mode 100644
-index 0000000..dd7d5ee
+index 0000000..7552803
 --- /dev/null
-+++ b/vcs-svn/trp.h
-@@ -0,0 +1,220 @@
++++ b/vcs-svn/fast_export.c
+@@ -0,0 +1,75 @@
 +/*
-+ * C macro implementation of treaps.
-+ *
-+ * Usage:
-+ *   #include <stdint.h>
-+ *   #include "trp.h"
-+ *   trp_gen(...)
-+ *
 + * Licensed under a two-clause BSD-style license.
 + * See LICENSE for details.
 + */
 +
-+#ifndef TRP_H_
-+#define TRP_H_
++#include "git-compat-util.h"
 +
-+#define MAYBE_UNUSED __attribute__((__unused__))
++#include "fast_export.h"
++#include "line_buffer.h"
++#include "repo_tree.h"
++#include "string_pool.h"
 +
-+/* Node structure. */
-+struct trp_node {
-+	uint32_t trpn_left;
-+	uint32_t trpn_right;
-+};
++#define MAX_GITSVN_LINE_LEN 4096
 +
-+/* Root structure. */
-+struct trp_root {
-+	uint32_t trp_root;
-+};
++static uint32_t first_commit_done;
 +
-+/* Pointer/Offset conversion. */
-+#define trpn_pointer(a_base, a_offset) (a_base##_pointer(a_offset))
-+#define trpn_offset(a_base, a_pointer) (a_base##_offset(a_pointer))
-+#define trpn_modify(a_base, a_offset) \
-+	do { \
-+		if ((a_offset) < a_base##_pool.committed) { \
-+			uint32_t old_offset =3D (a_offset);\
-+			(a_offset) =3D a_base##_alloc(1); \
-+			*trpn_pointer(a_base, a_offset) =3D \
-+				*trpn_pointer(a_base, old_offset); \
-+		} \
-+	} while (0);
++void fast_export_delete(uint32_t depth, uint32_t *path)
++{
++	putchar('D');
++	putchar(' ');
++	pool_print_seq(depth, path, '/', stdout);
++	putchar('\n');
++}
 +
-+/* Left accessors. */
-+#define trp_left_get(a_base, a_field, a_node) \
-+	(trpn_pointer(a_base, a_node)->a_field.trpn_left)
-+#define trp_left_set(a_base, a_field, a_node, a_left) \
-+	do { \
-+		trpn_modify(a_base, a_node); \
-+		trp_left_get(a_base, a_field, a_node) =3D (a_left); \
-+	} while(0)
++void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
++                        uint32_t mark)
++{
++	/* Mode must be 100644, 100755, 120000, or 160000. */
++	printf("M %06o :%d ", mode, mark);
++	pool_print_seq(depth, path, '/', stdout);
++	putchar('\n');
++}
 +
-+/* Right accessors. */
-+#define trp_right_get(a_base, a_field, a_node) \
-+	(trpn_pointer(a_base, a_node)->a_field.trpn_right)
-+#define trp_right_set(a_base, a_field, a_node, a_right) \
-+	do { \
-+		trpn_modify(a_base, a_node); \
-+		trp_right_get(a_base, a_field, a_node) =3D (a_right); \
-+	} while(0)
++static char gitsvnline[MAX_GITSVN_LINE_LEN];
++void fast_export_commit(uint32_t revision, uint32_t author, char *log,
++			uint32_t uuid, uint32_t url,
++			unsigned long timestamp)
++{
++	if (!log)
++		log = "";
++	if (~uuid && ~url) {
++		snprintf(gitsvnline, MAX_GITSVN_LINE_LEN, "\n\ngit-svn-id: %s@%d %s\n",
++				 pool_fetch(url), revision, pool_fetch(uuid));
++	} else {
++		*gitsvnline = '\0';
++	}
++	printf("commit refs/heads/master\n");
++	printf("committer %s <%s@%s> %ld +0000\n",
++		   ~author ? pool_fetch(author) : "nobody",
++		   ~author ? pool_fetch(author) : "nobody",
++		   ~uuid ? pool_fetch(uuid) : "local", timestamp);
++	printf("data %zd\n%s%s\n",
++		   strlen(log) + strlen(gitsvnline), log, gitsvnline);
++	if (!first_commit_done) {
++		if (revision > 1)
++			printf("from refs/heads/master^0\n");
++		first_commit_done = 1;
++	}
++	repo_diff(revision - 1, revision);
++	fputc('\n', stdout);
 +
-+/*
-+ * Fibonacci hash function.
-+ * The multiplier is the nearest prime to (2^32 times (=E2=88=9A5 - 1)=
-/2).
-+ * See Knuth =C2=A76.4: volume 3, 3rd ed, p518.
-+ */
-+#define trpn_hash(a_node) (uint32_t) (2654435761u * (a_node))
++	printf("progress Imported commit %d.\n\n", revision);
++}
 +
-+/* Priority accessors. */
-+#define trp_prio_get(a_node) trpn_hash(a_node)
++void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len)
++{
++	if (mode == REPO_MODE_LNK) {
++		/* svn symlink blobs start with "link " */
++		buffer_skip_bytes(5);
++		len -= 5;
++	}
++	printf("blob\nmark :%d\ndata %d\n", mark, len);
++	buffer_copy_bytes(len);
++	fputc('\n', stdout);
++}
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+new file mode 100644
+index 0000000..47e8f56
+--- /dev/null
++++ b/vcs-svn/fast_export.h
+@@ -0,0 +1,14 @@
++#ifndef FAST_EXPORT_H_
++#define FAST_EXPORT_H_
 +
-+/* Node initializer. */
-+#define trp_node_new(a_base, a_field, a_node) \
-+	do { \
-+		trp_left_set(a_base, a_field, (a_node), ~0); \
-+		trp_right_set(a_base, a_field, (a_node), ~0); \
-+	} while(0)
++#include <stdint.h>
++#include <time.h>
 +
-+/* Internal utility macros. */
-+#define trpn_first(a_base, a_field, a_root, r_node) \
-+	do { \
-+		(r_node) =3D (a_root); \
-+		if ((r_node) =3D=3D ~0) \
-+			return NULL; \
-+		while (~trp_left_get(a_base, a_field, (r_node))) \
-+			(r_node) =3D trp_left_get(a_base, a_field, (r_node)); \
-+	} while (0)
-+
-+#define trpn_rotate_left(a_base, a_field, a_node, r_node) \
-+	do { \
-+		(r_node) =3D trp_right_get(a_base, a_field, (a_node)); \
-+		trp_right_set(a_base, a_field, (a_node), \
-+			trp_left_get(a_base, a_field, (r_node))); \
-+		trp_left_set(a_base, a_field, (r_node), (a_node)); \
-+	} while(0)
-+
-+#define trpn_rotate_right(a_base, a_field, a_node, r_node) \
-+	do { \
-+		(r_node) =3D trp_left_get(a_base, a_field, (a_node)); \
-+		trp_left_set(a_base, a_field, (a_node), \
-+			trp_right_get(a_base, a_field, (r_node))); \
-+		trp_right_set(a_base, a_field, (r_node), (a_node)); \
-+	} while(0)
-+
-+#define trp_gen(a_attr, a_pre, a_type, a_field, a_base, a_cmp) \
-+a_attr a_type MAYBE_UNUSED *a_pre##first(struct trp_root *treap) \
-+{ \
-+	uint32_t ret; \
-+	trpn_first(a_base, a_field, treap->trp_root, ret); \
-+	return trpn_pointer(a_base, ret); \
-+} \
-+a_attr a_type MAYBE_UNUSED *a_pre##next(struct trp_root *treap, a_type=
- *node) \
-+{ \
-+	uint32_t ret; \
-+	uint32_t offset =3D trpn_offset(a_base, node); \
-+	if (~trp_right_get(a_base, a_field, offset)) { \
-+		trpn_first(a_base, a_field, \
-+			trp_right_get(a_base, a_field, offset), ret); \
-+	} else { \
-+		uint32_t tnode =3D treap->trp_root; \
-+		ret =3D ~0; \
-+		while (1) { \
-+			int cmp =3D (a_cmp)(trpn_pointer(a_base, offset), \
-+				trpn_pointer(a_base, tnode)); \
-+			if (cmp < 0) { \
-+				ret =3D tnode; \
-+				tnode =3D trp_left_get(a_base, a_field, tnode); \
-+			} else if (cmp > 0) { \
-+				tnode =3D trp_right_get(a_base, a_field, tnode); \
-+			} else { \
-+				break; \
-+			} \
-+		} \
-+	} \
-+	return trpn_pointer(a_base, ret); \
-+} \
-+a_attr a_type MAYBE_UNUSED *a_pre##search(struct trp_root *treap, a_ty=
-pe *key) \
-+{ \
-+	int cmp; \
-+	uint32_t ret =3D treap->trp_root; \
-+	while (~ret && (cmp =3D (a_cmp)(key, trpn_pointer(a_base,ret)))) { \
-+		if (cmp < 0) \
-+			ret =3D trp_left_get(a_base, a_field, ret); \
-+		else \
-+			ret =3D trp_right_get(a_base, a_field, ret); \
-+	} \
-+	return trpn_pointer(a_base, ret); \
-+} \
-+a_attr uint32_t MAYBE_UNUSED a_pre##insert_recurse(uint32_t cur_node, =
-uint32_t ins_node) \
-+{ \
-+	if (cur_node =3D=3D ~0) { \
-+		return (ins_node); \
-+	} else { \
-+		uint32_t ret; \
-+		int cmp =3D (a_cmp)(trpn_pointer(a_base, ins_node), \
-+					trpn_pointer(a_base, cur_node)); \
-+		if (cmp < 0) { \
-+			uint32_t left =3D a_pre##insert_recurse( \
-+				trp_left_get(a_base, a_field, cur_node), ins_node); \
-+			trp_left_set(a_base, a_field, cur_node, left); \
-+			if (trp_prio_get(left) < trp_prio_get(cur_node)) \
-+				trpn_rotate_right(a_base, a_field, cur_node, ret); \
-+			else \
-+				ret =3D cur_node; \
-+		} else { \
-+			uint32_t right =3D a_pre##insert_recurse( \
-+				trp_right_get(a_base, a_field, cur_node), ins_node); \
-+			trp_right_set(a_base, a_field, cur_node, right); \
-+			if (trp_prio_get(right) < trp_prio_get(cur_node)) \
-+				trpn_rotate_left(a_base, a_field, cur_node, ret); \
-+			else \
-+				ret =3D cur_node; \
-+		} \
-+		return (ret); \
-+	} \
-+} \
-+a_attr void MAYBE_UNUSED a_pre##insert(struct trp_root *treap, a_type =
-*node) \
-+{ \
-+	uint32_t offset =3D trpn_offset(a_base, node); \
-+	trp_node_new(a_base, a_field, offset); \
-+	treap->trp_root =3D a_pre##insert_recurse(treap->trp_root, offset); \
-+} \
-+a_attr uint32_t MAYBE_UNUSED a_pre##remove_recurse(uint32_t cur_node, =
-uint32_t rem_node) \
-+{ \
-+	int cmp =3D a_cmp(trpn_pointer(a_base, rem_node), \
-+			trpn_pointer(a_base, cur_node)); \
-+	if (cmp =3D=3D 0) { \
-+		uint32_t ret; \
-+		uint32_t left =3D trp_left_get(a_base, a_field, cur_node); \
-+		uint32_t right =3D trp_right_get(a_base, a_field, cur_node); \
-+		if (left =3D=3D ~0) { \
-+			if (right =3D=3D ~0) \
-+				return (~0); \
-+		} else if (right =3D=3D ~0 || trp_prio_get(left) < trp_prio_get(righ=
-t)) { \
-+			trpn_rotate_right(a_base, a_field, cur_node, ret); \
-+			right =3D a_pre##remove_recurse(cur_node, rem_node); \
-+			trp_right_set(a_base, a_field, ret, right); \
-+			return (ret); \
-+		} \
-+		trpn_rotate_left(a_base, a_field, cur_node, ret); \
-+		left =3D a_pre##remove_recurse(cur_node, rem_node); \
-+		trp_left_set(a_base, a_field, ret, left); \
-+		return (ret); \
-+	} else if (cmp < 0) { \
-+		uint32_t left =3D a_pre##remove_recurse( \
-+			trp_left_get(a_base, a_field, cur_node), rem_node); \
-+		trp_left_set(a_base, a_field, cur_node, left); \
-+		return (cur_node); \
-+	} else { \
-+		uint32_t right =3D a_pre##remove_recurse( \
-+			trp_right_get(a_base, a_field, cur_node), rem_node); \
-+		trp_right_set(a_base, a_field, cur_node, right); \
-+		return (cur_node); \
-+	} \
-+} \
-+a_attr void MAYBE_UNUSED a_pre##remove(struct trp_root *treap, a_type =
-*node) \
-+{ \
-+	treap->trp_root =3D a_pre##remove_recurse(treap->trp_root, \
-+		trpn_offset(a_base, node)); \
-+} \
++void fast_export_delete(uint32_t depth, uint32_t *path);
++void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
++			uint32_t mark);
++void fast_export_commit(uint32_t revision, uint32_t author, char *log,
++			uint32_t uuid, uint32_t url, unsigned long timestamp);
++void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len);
 +
 +#endif
-diff --git a/vcs-svn/trp.txt b/vcs-svn/trp.txt
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
 new file mode 100644
-index 0000000..943c385
+index 0000000..59a7434
 --- /dev/null
-+++ b/vcs-svn/trp.txt
-@@ -0,0 +1,102 @@
-+Motivation
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++++ b/vcs-svn/repo_tree.c
+@@ -0,0 +1,335 @@
++/*
++ * Licensed under a two-clause BSD-style license.
++ * See LICENSE for details.
++ */
 +
-+Treaps provide a memory-efficient binary search tree structure.
-+Insertion/deletion/search are about as about as fast in the average
-+case as red-black trees and the chances of worst-case behavior are
-+vanishingly small, thanks to (pseudo-)randomness.  The bad worst-case
-+behavior is a small price to pay, given that treaps are much simpler
-+to implement.
-+   =20
-+From http://www.canonware.com/download/trp/trp_hash/trp.h
++#include "git-compat-util.h"
 +
-+API
-+=3D=3D=3D
++#include "string_pool.h"
++#include "repo_tree.h"
++#include "obj_pool.h"
++#include "fast_export.h"
 +
-+The trp API generates a data structure and functions to handle a
-+large growing set of objects stored in a pool.
++#include "trp.h"
 +
-+The caller:
-+
-+. Specifies parameters for the generated functions with the
-+  trp_gen(static, foo_, ...) macro.
-+
-+. Allocates and clears a `struct trp_node` variable.
-+
-+. Adds new items to the set using `foo_insert`.
-+
-+. Can find a specific item in the set using `foo_search`.
-+
-+. Can iterate over items in the set using `foo_first` and `foo_next`.
-+
-+. Can remove an item from the set using `foo_remove`.
-+
-+. The set is never freed.
-+
-+Example:
-+
-+----
-+struct ex_node {
-+	const char *s;
-+	struct trp_node ex_link;
++struct repo_dirent {
++	uint32_t name_offset;
++	struct trp_node children;
++	uint32_t mode;
++	uint32_t content_offset;
 +};
-+static struct trp_root ex_base;
-+obj_pool_gen(ex, struct ex_node, 4096);
-+trp_gen(static, ex_, struct ex_node, ex_link, ex, strcmp)
-+struct ex_node *item;
 +
-+item =3D ex_pointer(ex_alloc(1));
-+item->s =3D "hello";
-+ex_insert(&ex_base, item);
-+item =3D ex_pointer(ex_alloc(1));
-+item->s =3D "goodbye";
-+ex_insert(&ex_base, item);
-+for (item =3D ex_first(&ex_base); item; item =3D ex_next(&ex_base, ite=
-m))
-+	printf("%s\n", item->s);
-+----
++struct repo_dir {
++	struct trp_root entries;
++};
 +
-+Functions
-+---------
++struct repo_commit {
++	uint32_t root_dir_offset;
++};
 +
-+trp_gen(attr, foo_, node_type, link_field, pool, cmp)::
++/* Memory pools for commit, dir and dirent */
++obj_pool_gen(commit, struct repo_commit, 4096);
++obj_pool_gen(dir, struct repo_dir, 4096);
++obj_pool_gen(dirent, struct repo_dirent, 4096);
 +
-+	Generate a type-specific treap implementation.
-++
-+. The storage class for generated functions will be 'attr' (e.g., `sta=
-tic`).
-+. Generated function names are prefixed with 'foo_' (e.g., `treap_`).
-+. Treap nodes will be of type 'node_type' (e.g., `struct treap_node`).
-+  This type must be a struct with at least one `struct trp_node` field
-+  to point to its children.
-+. The field used to access child nodes will be 'link_field'.
-+. All treap nodes must lie in the 'pool' object pool.
-+. Treap nodes must be totally ordered by the 'cmp' relation, with the
-+  following prototype:
-++
-+int (*cmp)(node_type \*a, node_type \*b)
-++
-+and returning a value less than, equal to, or greater than zero
-+according to the result of comparison.
++static uint32_t active_commit;
++static uint32_t mark;
 +
-+void foo_insert(struct trp_root *treap, node_type \*node)::
++static int repo_dirent_name_cmp(const void *a, const void *b);
 +
-+	Insert node into treap.  If inserted multiple times,
-+	a node will appear in the treap multiple times.
++/* Treap for directory entries */
++trp_gen(static, dirent_, struct repo_dirent, children, dirent, repo_dirent_name_cmp);
 +
-+void foo_remove(struct trp_root *treap, node_type \*node)::
++uint32_t next_blob_mark(void)
++{
++	return mark++;
++}
 +
-+	Remove node from treap.  Caller must ensure node is
-+	present in treap before using this function.
++static struct repo_dir *repo_commit_root_dir(struct repo_commit *commit)
++{
++	return dir_pointer(commit->root_dir_offset);
++}
 +
-+node_type *foo_search(struct trp_root \*treap, node_type \*key)::
++static struct repo_dirent *repo_first_dirent(struct repo_dir *dir)
++{
++	return dirent_first(&dir->entries);
++}
 +
-+	Search for a node that matches key.  If no match is found,
-+	return what would be key's successor, were key in treap
-+	(NULL if no successor).
++static int repo_dirent_name_cmp(const void *a, const void *b)
++{
++	const struct repo_dirent *dirent1 = a, *dirent2 = b;
++	uint32_t a_offset = dirent1->name_offset;
++	uint32_t b_offset = dirent2->name_offset;
++	return (a_offset > b_offset) - (a_offset < b_offset);
++}
 +
-+node_type *foo_first(struct trp_root \*treap)::
++static int repo_dirent_is_dir(struct repo_dirent *dirent)
++{
++	return dirent != NULL && dirent->mode == REPO_MODE_DIR;
++}
 +
-+	Find the first item from the treap, in sorted order.
++static struct repo_dir *repo_dir_from_dirent(struct repo_dirent *dirent)
++{
++	if (!repo_dirent_is_dir(dirent))
++		return NULL;
++	return dir_pointer(dirent->content_offset);
++}
 +
-+node_type *foo_next(struct trp_root \*treap, node_type \*node)::
++static struct repo_dir *repo_clone_dir(struct repo_dir *orig_dir)
++{
++	uint32_t orig_o, new_o;
++	orig_o = dir_offset(orig_dir);
++	if (orig_o >= dir_pool.committed)
++		return orig_dir;
++	new_o = dir_alloc(1);
++	orig_dir = dir_pointer(orig_o);
++	*dir_pointer(new_o) = *orig_dir;
++	return dir_pointer(new_o);
++}
 +
-+	Find the next item.
---=20
++static struct repo_dirent *repo_read_dirent(uint32_t revision, uint32_t *path)
++{
++	uint32_t name = 0;
++	struct repo_dirent *key = dirent_pointer(dirent_alloc(1));
++	struct repo_dir *dir = NULL;
++	struct repo_dirent *dirent = NULL;
++	dir = repo_commit_root_dir(commit_pointer(revision));
++	while (~(name = *path++)) {
++		key->name_offset = name;
++		dirent = dirent_search(&dir->entries, key);
++		if (dirent == NULL || !repo_dirent_is_dir(dirent))
++			break;
++		dir = repo_dir_from_dirent(dirent);
++	}
++	dirent_free(1);
++	return dirent;
++}
++
++static void repo_write_dirent(uint32_t *path, uint32_t mode,
++                              uint32_t content_offset, uint32_t del)
++{
++	uint32_t name, revision, dir_o = ~0, parent_dir_o = ~0;
++	struct repo_dir *dir;
++	struct repo_dirent *key;
++	struct repo_dirent *dirent = NULL;
++	revision = active_commit;
++	dir = repo_commit_root_dir(commit_pointer(revision));
++	dir = repo_clone_dir(dir);
++	commit_pointer(revision)->root_dir_offset = dir_offset(dir);
++	while (~(name = *path++)) {
++		parent_dir_o = dir_offset(dir);
++
++		key = dirent_pointer(dirent_alloc(1));
++		key->name_offset = name;
++
++		dirent = dirent_search(&dir->entries, key);
++		if (dirent == NULL)
++			dirent = key;
++		else
++			dirent_free(1);
++
++		if (dirent == key) {
++			dirent->mode = REPO_MODE_DIR;
++			dirent->content_offset = 0;
++			dirent_insert(&dir->entries, dirent);
++		}
++
++		if (dirent_offset(dirent) < dirent_pool.committed) {
++			dir_o = repo_dirent_is_dir(dirent) ?
++					dirent->content_offset : ~0;
++			dirent_remove(&dir->entries, dirent);
++			dirent = dirent_pointer(dirent_alloc(1));
++			dirent->name_offset = name;
++			dirent->mode = REPO_MODE_DIR;
++			dirent->content_offset = dir_o;
++			dirent_insert(&dir->entries, dirent);
++		}
++
++		dir = repo_dir_from_dirent(dirent);
++		dir = repo_clone_dir(dir);
++		dirent->content_offset = dir_offset(dir);
++	}
++	if (dirent == NULL)
++		return;
++	dirent->mode = mode;
++	dirent->content_offset = content_offset;
++	if (del && ~parent_dir_o)
++		dirent_remove(&dir_pointer(parent_dir_o)->entries, dirent);
++}
++
++uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
++{
++	uint32_t mode = 0, content_offset = 0;
++	struct repo_dirent *src_dirent;
++	src_dirent = repo_read_dirent(revision, src);
++	if (src_dirent != NULL) {
++		mode = src_dirent->mode;
++		content_offset = src_dirent->content_offset;
++		repo_write_dirent(dst, mode, content_offset, 0);
++	}
++	return mode;
++}
++
++void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark)
++{
++	repo_write_dirent(path, mode, blob_mark, 0);
++}
++
++uint32_t repo_replace(uint32_t *path, uint32_t blob_mark)
++{
++	uint32_t mode = 0;
++	struct repo_dirent *src_dirent;
++	src_dirent = repo_read_dirent(active_commit, path);
++	if (src_dirent != NULL) {
++		mode = src_dirent->mode;
++		repo_write_dirent(path, mode, blob_mark, 0);
++	}
++	return mode;
++}
++
++void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark)
++{
++	struct repo_dirent *src_dirent;
++	src_dirent = repo_read_dirent(active_commit, path);
++	if (src_dirent != NULL && blob_mark == 0)
++		blob_mark = src_dirent->content_offset;
++	repo_write_dirent(path, mode, blob_mark, 0);
++}
++
++void repo_delete(uint32_t *path)
++{
++	repo_write_dirent(path, 0, 0, 1);
++}
++
++static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo_dir *dir);
++
++static void repo_git_add(uint32_t depth, uint32_t *path, struct repo_dirent *dirent)
++{
++	if (repo_dirent_is_dir(dirent))
++		repo_git_add_r(depth, path, repo_dir_from_dirent(dirent));
++	else
++		fast_export_modify(depth, path,
++		                   dirent->mode, dirent->content_offset);
++}
++
++static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo_dir *dir)
++{
++	struct repo_dirent *de = repo_first_dirent(dir);
++	while (de) {
++		path[depth] = de->name_offset;
++		repo_git_add(depth + 1, path, de);
++		de = dirent_next(&dir->entries, de);
++	}
++}
++
++static void repo_diff_r(uint32_t depth, uint32_t *path, struct repo_dir *dir1,
++                        struct repo_dir *dir2)
++{
++	struct repo_dirent *de1, *de2;
++	de1 = repo_first_dirent(dir1);
++	de2 = repo_first_dirent(dir2);
++
++	while (de1 && de2) {
++		if (de1->name_offset < de2->name_offset) {
++			path[depth] = de1->name_offset;
++			fast_export_delete(depth + 1, path);
++			de1 = dirent_next(&dir1->entries, de1);
++			continue;
++		}
++		if (de1->name_offset > de2->name_offset) {
++			path[depth] = de2->name_offset;
++			repo_git_add(depth + 1, path, de2);
++			de2 = dirent_next(&dir2->entries, de2);
++			continue;
++		}
++		path[depth] = de1->name_offset;
++
++		if (de1->mode == de2->mode &&
++		    de1->content_offset == de2->content_offset) {
++			; /* No change. */
++		} else if (repo_dirent_is_dir(de1) && repo_dirent_is_dir(de2)) {
++			repo_diff_r(depth + 1, path,
++				    repo_dir_from_dirent(de1),
++				    repo_dir_from_dirent(de2));
++		} else if (!repo_dirent_is_dir(de1) && !repo_dirent_is_dir(de2)) {
++			repo_git_add(depth + 1, path, de2);
++		} else {
++			fast_export_delete(depth + 1, path);
++			repo_git_add(depth + 1, path, de2);
++		}
++		de1 = dirent_next(&dir1->entries, de1);
++		de2 = dirent_next(&dir2->entries, de2);
++	}
++	while (de1) {
++		path[depth] = de1->name_offset;
++		fast_export_delete(depth + 1, path);
++		de1 = dirent_next(&dir1->entries, de1);
++	}
++	while (de2) {
++		path[depth] = de2->name_offset;
++		repo_git_add(depth + 1, path, de2);
++		de2 = dirent_next(&dir2->entries, de2);
++	}
++}
++
++static uint32_t path_stack[REPO_MAX_PATH_DEPTH];
++
++void repo_diff(uint32_t r1, uint32_t r2)
++{
++	repo_diff_r(0,
++	            path_stack,
++	            repo_commit_root_dir(commit_pointer(r1)),
++	            repo_commit_root_dir(commit_pointer(r2)));
++}
++
++void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
++                 uint32_t url, unsigned long timestamp)
++{
++	fast_export_commit(revision, author, log, uuid, url, timestamp);
++	pool_commit();
++	dirent_commit();
++	dir_commit();
++	commit_commit();
++	active_commit = commit_alloc(1);
++	commit_pointer(active_commit)->root_dir_offset =
++		commit_pointer(active_commit - 1)->root_dir_offset;
++}
++
++static void mark_init(void)
++{
++	uint32_t i;
++	mark = 0;
++	for (i = 0; i < dirent_pool.size; i++)
++		if (!repo_dirent_is_dir(dirent_pointer(i)) &&
++		    dirent_pointer(i)->content_offset > mark)
++			mark = dirent_pointer(i)->content_offset;
++	mark++;
++}
++
++void repo_init() {
++	pool_init();
++	commit_init();
++	dir_init();
++	dirent_init();
++	mark_init();
++	if (commit_pool.size == 0) {
++		/* Create empty tree for commit 0. */
++		commit_alloc(1);
++		commit_pointer(0)->root_dir_offset = dir_alloc(1);
++		dir_pointer(0)->entries.trp_root = ~0;
++		dir_commit();
++		commit_commit();
++	}
++	/* Preallocate next commit, ready for changes. */
++	active_commit = commit_alloc(1);
++	commit_pointer(active_commit)->root_dir_offset =
++		commit_pointer(active_commit - 1)->root_dir_offset;
++}
++
++void repo_reset(void)
++{
++	pool_reset();
++	commit_reset();
++	dir_reset();
++	dirent_reset();
++}
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+new file mode 100644
+index 0000000..92a7a7b
+--- /dev/null
++++ b/vcs-svn/repo_tree.h
+@@ -0,0 +1,26 @@
++#ifndef REPO_TREE_H_
++#define REPO_TREE_H_
++
++#include "git-compat-util.h"
++
++#define REPO_MODE_DIR 0040000
++#define REPO_MODE_BLB 0100644
++#define REPO_MODE_EXE 0100755
++#define REPO_MODE_LNK 0120000
++
++#define REPO_MAX_PATH_LEN 4096
++#define REPO_MAX_PATH_DEPTH 1000
++
++uint32_t next_blob_mark(void);
++uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst);
++void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
++uint32_t repo_replace(uint32_t *path, uint32_t blob_mark);
++void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark);
++void repo_delete(uint32_t *path);
++void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
++                 uint32_t url, long unsigned timestamp);
++void repo_diff(uint32_t r1, uint32_t r2);
++void repo_init(void);
++void repo_reset(void);
++
++#endif
+-- 
 1.7.1
