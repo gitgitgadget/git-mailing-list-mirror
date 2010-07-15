@@ -1,93 +1,92 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: **
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,HEADER_FROM_DIFFERENT_DOMAINS,INVALID_MSGID,
-	MSGID_FROM_MTA_HEADER,MSGID_NOFQDN1,PLING_QUERY,RP_MATCHES_RCVD,
-	UNPARSEABLE_RELAY shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
-Received: (qmail 919 invoked by uid 111); 24 Jun 2008 08:08:44 -0000
-Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 24 Jun 2008 04:08:37 -0400
+X-Spam-Level: 
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=-3.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,RP_MATCHES_RCVD,T_DKIM_INVALID
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+Received: (qmail 24963 invoked by uid 111); 15 Jul 2010 13:50:24 -0000
+Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
+    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 15 Jul 2010 13:50:23 +0000
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757306AbYFXIIW (ORCPT <rfc822;peff@peff.net>);
-	Tue, 24 Jun 2008 04:08:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756940AbYFXIIV
-	(ORCPT <rfc822;git-outgoing>); Tue, 24 Jun 2008 04:08:21 -0400
-Received: from w2.willowmail.com ([64.243.175.54]:60053 "HELO
-	w2.willowmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1757247AbYFXIIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2008 04:08:17 -0400
-Received: (qmail 10103 invoked by uid 90); 24 Jun 2008 08:07:54 -0000
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-From:	"David Jeske" <jeske@google.com>
-To:	Jeff King <peff@peff.net>
-Cc:	"Avery Pennarun" <apenwarr@gmail.com>,
-	"Nicolas Pitre" <nico@cam.org>, git@vger.kernel.org
-Subject: Re: why is git destructive by default? (i suggest it not be!)
-X-Mailer: Willow v0.02
-Date:	Tue, 24 Jun 2008 07:31:31 -0000
-Message-ID: <willow-jeske-01l5kbGzFEDjCX3J>
-Received: from 67.188.42.104 at Tue, 24 Jun 2008 07:31:31 -0000
-References: <20080624072455.GF19224@sigill.intra.peff.net>
-	<willow-jeske-01l5PFjPFEDjCfzf-01l5jmMuFEDjChvB>
-In-Reply-To: <20080624072455.GF19224@sigill.intra.peff.net>
+	id S933235Ab0GONuR (ORCPT <rfc822;peff@peff.net>);
+	Thu, 15 Jul 2010 09:50:17 -0400
+Received: from mail.famouswhy.com ([174.120.208.205]:48170 "EHLO
+	mail.famouswhy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933231Ab0GONuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 09:50:16 -0400
+X-Greylist: delayed 500 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Jul 2010 09:50:16 EDT
+Received: from localhost (unknown [127.0.0.1])
+	by mail.famouswhy.com (Postfix) with ESMTP id 67F8B310BE7
+	for <git@vger.kernel.org>; Thu, 15 Jul 2010 13:33:46 +0000 (UTC)
+X-DKIM:	Sendmail DKIM Filter v2.8.3 mail.famouswhy.com 67F8B310BE7
+DKIM-Signature:	v=1; a=rsa-sha256; c=simple/simple; d=famouswhy.com;
+	s=mydkim; t=1279200826;
+	bh=mg/kOUAIgJuke/v/BLhloPAgsiMDkhNf7amx4wtzu7k=; l=2662;
+	h=From:To:Subject:Message-Id:Date;
+	b=EE61EHnUz/91Whd8kTI474yfMxNd2vvL1JnVBU5sXp+IvSdjwa0Oe7pESpSgmXewX
+	 e1ERC6+UvFK8NpFPCb0rVCW4wi+WZ+J7gj0OWM8ONpImfOFlq+vAkkI1RfUBmS/BCW
+	 VRbhwXRp4VBhJ7AzTY8tp8hgqj6sbK4nmzoX6CkM=
+X-Virus-Scanned: amavisd-new at famouswhy.com
+Received: from mail.famouswhy.com ([174.120.208.205])
+	by localhost (famouswhy.theplanet.host [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OQfVgNAXKiUc for <git@vger.kernel.org>;
+	Thu, 15 Jul 2010 08:33:45 -0500 (CDT)
+Received: by mail.famouswhy.com (Postfix, from userid 2003)
+	id 226DB310BE6; Thu, 15 Jul 2010 08:33:44 -0500 (CDT)
+X-DKIM:	Sendmail DKIM Filter v2.8.3 mail.famouswhy.com 226DB310BE6
+Received: from localhost (mail.famouswhy.com [174.120.208.205])
+	by mail.famouswhy.com (Postfix) with ESMTPSA id 17833310BD9
+	for <git@vger.kernel.org>; Thu, 15 Jul 2010 08:33:38 -0500 (CDT)
+X-DKIM:	Sendmail DKIM Filter v2.8.3 mail.famouswhy.com 17833310BD9
+From:	contact@famouswhy.com
+To:	git@vger.kernel.org
+Subject: Git has been granted the Famous Software Award - Download.FamousWhy.com
+Message-Id: <20100715133338.17833310BD9@mail.famouswhy.com>
+Date:	Thu, 15 Jul 2010 08:33:38 -0500 (CDT)
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
--- Jeff King wrote:
-> I think you are confusing two aspects of history.
->
-> There is the commit DAG, which says "at some time T, the files were at
-> some state S, and the commit message by author A was M". And those
-> commits form a chain so you can see how the state of the files
-> progressed. And anything that is reachable through that history will
+Hello,
 
-okay.
+Congratulations!
 
-> always be kept by git, and you can always go back to any point.
+Your product "Git (http://download.famouswhy.com/git/)" has been granted the "Famous Software Award" by Download.FamousWhy.com.  
 
-..are you saying that if I reset --hard, or delete a branch ref, or do a
-rebase, and then do a GC beyond the GC timeout, that git will NEVER throw away
-any of those DAGs? (the actual source diffs committed)
+The Famous Software Award has been initiated by Download.FamousWhy.com to recognize "Famous Software", which come up with innovative and efficient ways to reflect the best relationship with users assuring their satisfaction.
 
-> And the ref history is what gets garbage collected. Most people are fine
-> with that, because they care about the actual commit history, and the
-> reflog is just a convenient way of saying "oops, what was happening
-> yesterday?" But if you really care, then by all means, set the reflog
-> expiration much higher.
+More information about our "Famous Software Award" is available on this page:
 
-My (possibly flawed) understanding was that it drops any DAG sections that are
-not referenced by valid refs which are older than the GC timeout.
+http://download.famouswhy.com/Awards/Famous-Software_3.html
 
-It came from wording like this in the docs:
+We really hope that you will consider placing a banner with a link from your website to the software page at Download.FamousWhy.com because if you do it, visitors could come straight to the page and also discover the award which will give higher importance, confidence and value to your software and to all the services you're offering. They can also vote for it in order to keep a high position, a better exposure in our listings pages from the main page, categories, sub-categories and tops.
 
-"The optional configuration variable gc.reflogExpireUnreachable
-can be set to indicate how long historical reflog entries which
-are not part of the current branch should remain available in
-this repository. These types of entries are generally created
-as a result of using git commit --amend or git rebase and are the
-commits prior to the amend or rebase occurring. Since
-these changes are not part of the current project most users
-^^^^^^^^^^^^^
-will want to expire them sooner. This option defaults to 30 days."
+Below is the HTML code, you can copy and paste it on your page:
 
-In the above, I resolve "these changes" to "commits prior to the amend" in the
-previous sentence.
+-------------------------
+<a href="http://download.famouswhy.com/git/" target="_blank"><img src="http://download.famouswhy.com/awards/Famous_Software_Award_Logo.png"
+alt="Git" style="border:0"></a>
+-------------------------
 
-"git-gc tries very hard to be safe about the garbage it collects.
-In particular, it will keep not only objects referenced by your
-current set of branches and tags, but also objects referenced by
-the index, remote tracking branches, refs saved by
-git-filter-branch(1) in refs/original/, or reflogs (which may
-references commits in branches that were later amended or rewound)."
+IMPORTANT!
 
-In the above, I resolve "keep .. only objects referenced by your current set of
-branches and tags [and some other stuff]" to "commmits in the DAG pointed to by
-refs [and other stuff]".
-Are you saying this GC process will never collect source diffs in the DAG?
+If you decide to place a link pointing to your software page at Download.FamousWhy.com, just let us know and our editors will write reviews (http://download.famouswhy.com/portable_irfanview/), create polls, articles (http://articles.famouswhy.com/first_impressions_on_east-tec_eraser_2010/), tutorials (http://forum.famouswhy.com/index.php?showtopic=19590), questions, famous lists for your software and will take you a "famous interview" (http://download.famouswhy.com/publisher/irfan_skiljan/) about your website, business or services which will significantly improve your popularity as a company and it can promote your software and website in front of thousands of people, outrunning your competitors. We proudly announce that everything mentioned above is FREE OF COST!
+
+We can soon promote your software exposing it in our Featured Section of the website we're working on right now.
+
+So proudly display a "Famous Software Award" badge with a link back to your software page!
+
+Don't hesitate to contact us for more information.
+
+Thanks -- and again, congratulations!
+
+Sincerely,
+
+The FamousWhy Software Editorial Team
+http://Download.FamousWhy.com
+
+----------------------------------------------
+"Making your software famous has never been easier!"
+----------------------------------------------
