@@ -1,65 +1,100 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: git-svn question
-Date: Thu, 15 Jul 2010 12:50:31 -0600
-Organization: icecavern.net
-Message-ID: <201007151250.32974.wjl@icecavern.net>
-References: <20100715171849.GA31823@heretic.net-ronin.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 GSOC 01/11] gitweb: fix esc_url
+Date: Thu, 15 Jul 2010 11:57:48 -0700
+Message-ID: <7vfwzkvahf.fsf@alter.siamese.dyndns.org>
+References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com>
+ <1279178951-23712-2-git-send-email-pavan.sss1991@gmail.com>
+ <201007151552.23324.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: carbonated beverage <ramune@net-ronin.org>
-X-From: git-owner@vger.kernel.org Thu Jul 15 20:50:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 15 20:58:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZTWJ-0000gg-KE
-	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 20:50:55 +0200
+	id 1OZTdL-0004e6-Vw
+	for gcvg-git-2@lo.gmane.org; Thu, 15 Jul 2010 20:58:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934273Ab0GOSut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Jul 2010 14:50:49 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:43889 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S934118Ab0GOSus (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 14:50:48 -0400
-Received: from tonberry.icecavern.net (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id DC19635B22;
-	Thu, 15 Jul 2010 12:50:44 -0600 (MDT)
-User-Agent: KMail/1.13.3 (Linux/2.6.32-trunk-amd64; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <20100715171849.GA31823@heretic.net-ronin.org>
-X-Face: #;qMWg=Msk*d]z]X1P2-t9]~6+RoGF$nJo89f%|Y`^whfl3Wj$X2Q_1u)ZAW@Hx|g)J]!)
- =?utf-8?q?=0A=09Br0=3FK3Imj?=)np=]r*QN,Q8].V99^Og'xl-d9FM~$yaSGB"mfXb>x[QNi[()
- =?utf-8?q?oob=60/4M42=26We=0A=09cC1jq=3DQ=5CS?=@ck\>H@
- =?utf-8?q?t=26Y7Y=3Apub=3DHOWqY=7D-d=5CwrCxvsTo7k1Ek=7DqQO=5D5=7EngK=5E=25?=
- =?utf-8?q?cT5IzmmG=5BQ=0A=09Nha=7D=5DAmI=60R-6m84VcWT4=236c?=)1`>t{$~l6:gZMtv18ge'!d[Yk-/?T3>C5O-|6On4(
- =?utf-8?q?N=7BAV=23=0A=094Eyw52=5B=3A=25Z?=>#"c
+	id S934331Ab0GOS6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 14:58:08 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50594 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934314Ab0GOS6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 14:58:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 79898C456B;
+	Thu, 15 Jul 2010 14:58:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=NsDHRYauBQTPo/GG4MGgrDR92mw=; b=CMlCT6
+	dpJKfc2/8ZS9/dVFeZMt6WpNvUQgCD0S7u1uj7aSW6XUtGpP/86FiqOpy3LUpET1
+	se7a6zG3ddjkw+nKa5N9r344CJFRXR4CsxyJppGyVT8lB18fNOSbguRuBg+SKkUz
+	/F/rLISpr+hAjQCHuItKaag65fWcKg6BzPYAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=PUymt5a6JC5Htlcyj09N/jhFVzkSZKae
+	IbhaOpPakGDQl0kloz0vZ8Yl80u5Cnd+cMhAfhuOCxT8J+A5YzPHkmk56oNWIw4k
+	EzY0O4hGS3ze2qkgTNaOtcJf9FibA39NPzgt7c5xTowwLf/vqNWZQjwFUo7idz6V
+	zMksV89bWiE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD6B9C4568;
+	Thu, 15 Jul 2010 14:57:57 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC8DCC4567; Thu, 15 Jul
+ 2010 14:57:50 -0400 (EDT)
+In-Reply-To: <201007151552.23324.jnareb@gmail.com> (Jakub Narebski's message
+ of "Thu\, 15 Jul 2010 15\:52\:21 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E1FD8906-9042-11DF-8B1D-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151106>
 
-On Thursday, July 15, 2010 11:18:49 carbonated beverage wrote:
-> I'm trying to figure out how to import a rather large SVN tree that has
-> been around for a while, initially converted from CVS.
-[...]
-> Given multiple projects that are nested as such, is there a way to get
-> git-svn to import the tree and be able to derive the tags and branches? 
-> Also, this tree is a little over 1TiB in size, though a large chunk of
-> that is due to the duplicates made by SVN's branches/tags.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-That sounds pretty messed up. Someone may have better advice, but I'd 
-probably approach it by doing one or more of the following:
+> On Thu, 15 Jul 2010, Pavan Kumar Sunkara wrote:
+>> The custom CGI escaping done in esc_url failed to escape UTF-8
+>> properly. Fix by using CGI::escape on each sequence of matched
+>> characters instead of sprintf()ing a custom escaping for each byte.
+>> 
+>> Additionally, the space -> + escape was being escaped due to greedy
+>> matching on the first substitution. Fix by adding space to the
+>> list of characters not handled on the first substitution.
+>> 
+>> Finally, remove an unnecessary escaping of the + sign.
+>> 
+>> commit 452e225 has missed fixing esc_url.
+>> 
+>> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+>
+> First, as this patch is independent and unrelated to either splitting
+> gitweb, or write support, it would be better if this patch was sent
+> individually to git mailing list, and not only as a part of a large
+> patch series.  It would likely to be applied, as it is pure bugfix.
+>
+> Second, I would probably write commit message differently, to emphasize
+> that it is just finishing work of commit 452e225 (gitweb: fix esc_param,
+> 2009-10-13) by fixing esc_url like it fixed esc_params.  But it is not
+> something very important.
 
-  1) Fix it up with svndumpfilter first to get rid of useless or duplicated 
-parts, then import it.
+I tentatively rewrote the message like so:
 
-  2) Once imported into use git rebase and/or git filter-branch to clean 
-things up until it's how you like it.
+    Earlier, 452e225 (gitweb: fix esc_param, 2009-10-13) fixed CGI
+    escaping rules used in esc_url.  A very similar logic exists in
+    esc_param and needs to be fixed the same way.
 
-  3) If all else fails, archive the SVN repository (or the git imported 
-equivalent), call it "old history", and then start over and manually import 
-only the active and useful branches and tags into git.
+It makes one wonder why they have to be separate functions, doesn't it,
+though?
+
+> For what it is worth, ACK from me for this patch.
+
+Thanks
