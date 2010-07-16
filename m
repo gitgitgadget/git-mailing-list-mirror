@@ -1,144 +1,92 @@
-From: "Kevin P. Fleming" <kpfleming@digium.com>
-Subject: [PATCH] post-receive-email: optional message line count limit
-Date: Fri, 16 Jul 2010 14:16:23 -0500
-Message-ID: <1279307783-4859-1-git-send-email-kpfleming@digium.com>
-References: <7v1vb4wsso.fsf@alter.siamese.dyndns.org>
-Cc: "Kevin P. Fleming" <kpfleming@digium.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jul 16 21:16:47 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git am mangles commit author name.
+Date: Fri, 16 Jul 2010 14:19:54 -0500
+Message-ID: <20100716191954.GB16371@burratino>
+References: <AANLkTinqTL7gH4CHEfy8UrhK13xcO_3UzgIyQka00MAh@mail.gmail.com>
+ <20100713054949.GB2425@burratino>
+ <AANLkTinPCZ79vwZ9eVeHChgTuFGBrz3ACi_grM28Q5Y-@mail.gmail.com>
+ <AANLkTikAcZa5J8XhKKJuDCHY3VMhSRzETv0ZQ34EcjMx@mail.gmail.com>
+ <AANLkTim6Ax-4SVJU_LvR86SyD5q3VhCfGBlGOkSPTocL@mail.gmail.com>
+ <AANLkTilZJ0g-XbkOsMh3Q1Jo7XQ2dbT1cY-YP_BdXvuh@mail.gmail.com>
+ <AANLkTimIkepwy93dYCu5mkdSMHNuh3dbMyxcHPl4hGmt@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Tor Arntsen <tor@spacetec.no>,
+	Jay Soffian <jaysoffian@gmail.com>, git@vger.kernel.org
+To: Daniel F <nanotube@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 16 21:20:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZqOn-0006MB-Do
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 21:16:41 +0200
+	id 1OZqSt-0008F8-IB
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 21:20:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759002Ab0GPTQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jul 2010 15:16:36 -0400
-Received: from mail.digium.com ([216.207.245.2]:1026 "EHLO mail.digium.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758995Ab0GPTQg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jul 2010 15:16:36 -0400
-Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
-	by mail.digium.com with esmtp (Exim 4.69)
-	(envelope-from <kpfleming@digium.com>)
-	id 1OZqOh-0006lC-Qt; Fri, 16 Jul 2010 14:16:35 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.hsv.digium.com (Postfix) with ESMTP id BD98DD8026;
-	Fri, 16 Jul 2010 14:16:35 -0500 (CDT)
-Received: from zimbra.hsv.digium.com ([127.0.0.1])
-	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Hnc2dOtkOw7K; Fri, 16 Jul 2010 14:16:35 -0500 (CDT)
-Received: from kildare (unknown [10.24.250.46])
-	by zimbra.hsv.digium.com (Postfix) with ESMTPS id 55194D8023;
-	Fri, 16 Jul 2010 14:16:35 -0500 (CDT)
-Received: from kpfleming by kildare with local (Exim 4.71)
-	(envelope-from <kpfleming@digium.com>)
-	id 1OZqOg-0001Gv-Uy; Fri, 16 Jul 2010 14:16:35 -0500
-X-Mailer: git-send-email 1.7.1.1
-In-Reply-To: <7v1vb4wsso.fsf@alter.siamese.dyndns.org>
+	id S1759046Ab0GPTUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jul 2010 15:20:50 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:45789 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759016Ab0GPTUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jul 2010 15:20:49 -0400
+Received: by gxk23 with SMTP id 23so1438046gxk.19
+        for <git@vger.kernel.org>; Fri, 16 Jul 2010 12:20:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=BqhLxFIKgu/pZESNeKI8n18UtcaiUZ4hnCCN1WrbBdw=;
+        b=Yjj9N3oIADer6I0aTuHgu1gi/W0jqHAiTE3Y4FAvQT8Aa5xZW1Cc9JQIUAW1h7TETC
+         ojxTllQ+CwFL0RQKivZ+lgTOV5f0d5qQ5TRjsP4/xxqSxpliuxdlOfMNTgf3Hcb5jJGG
+         /DI+6JSlF2FfI94uZxw9zIexlhXbgy43XnQqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=U8eZYdmTwE943H9d027ubPLld80LU1OIFxuh03GJD8/M5197qgyLzEyE6RpyuHF8S5
+         L7uQrEGY4HPGKUGlx7+HjwjRInhLXIqvX329vkjN4ltRn3/xsr+0E8ET3A3DtvSbuzNi
+         tdSCtNc2SCaLdAd7Ydls+n7ZlilGatw1a8NDg=
+Received: by 10.224.72.37 with SMTP id k37mr1295702qaj.398.1279308048648;
+        Fri, 16 Jul 2010 12:20:48 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id m24sm11304450qck.29.2010.07.16.12.20.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 16 Jul 2010 12:20:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimIkepwy93dYCu5mkdSMHNuh3dbMyxcHPl4hGmt@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151166>
 
-We have become used to the features of svnmailer when used with Subversion,
-and one of those useful features is that it can limit the maximum length
-(in lines) of a commit email message. This is terribly useful since once the
-goes beyond a reasonable number of lines, nobody is going to read the remainder,
-and if they really want the entire contents of the commits, they can use
-git itself to get them using the revision IDs present in the message already.
+Hi Daniel,
 
-Change the post-receive-email script to respond to an 'emailmaxlines' config key
-which, if specified, will limit the number of lines generated (including
-headers); any lines beyond the limit are suppressed, and a final line is added
-indicating the number that were suppressed.
+Daniel F wrote: 
 
-Signed-off-by: Kevin P. Fleming <kpfleming@digium.com>
----
- contrib/hooks/post-receive-email |   34 ++++++++++++++++++++++++++++++++--
- 1 files changed, 32 insertions(+), 2 deletions(-)
+> would simply setting minimum length to 1 have any negative
+> side effects?
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 30ae63d..11e51ec 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -55,6 +55,11 @@
- #     "t=%s; printf 'http://.../?id=%%s' \$t; echo;echo; git show -C \$t; echo"
- #   Be careful if "..." contains things that will be expanded by shell "eval"
- #   or printf.
-+# hooks.emailmaxlines
-+#   The maximum number of lines that should be included in the generated
-+#   email body. If not specified, there is no limit.
-+#   Lines beyond the limit are suppressed and counted, and a final
-+#   line is added indicating the number of suppressed lines.
- #
- # Notes
- # -----
-@@ -84,6 +89,7 @@ generate_email()
- 	oldrev=$(git rev-parse $1)
- 	newrev=$(git rev-parse $2)
- 	refname="$3"
-+	maxlines=$4
- 
- 	# --- Interpret
- 	# 0000->1234 (create)
-@@ -192,7 +198,12 @@ generate_email()
- 		fn_name=atag
- 		;;
- 	esac
--	generate_${change_type}_${fn_name}_email
-+
-+	if [ -z "$maxlines" ]; then
-+		generate_${change_type}_${fn_name}_email
-+	else
-+		generate_${change_type}_${fn_name}_email | limit_lines $maxlines
-+	fi
- 
- 	generate_email_footer
- }
-@@ -642,6 +653,24 @@ show_new_revisions()
- }
- 
- 
-+limit_lines()
-+{
-+	lines=0
-+	skipped=0
-+	while IFS="" read -r line; do
-+		lines=$((lines + 1))
-+		if [ $lines -gt $1 ]; then
-+			skipped=$((skipped + 1))
-+		else
-+			printf "%s\n" "$line"
-+		fi
-+	done
-+	if [ $skipped -ne 0 ]; then
-+		echo "... $skipped lines suppressed ..."
-+	fi
-+}
-+
-+
- send_mail()
- {
- 	if [ -n "$envelopesender" ]; then
-@@ -679,6 +708,7 @@ announcerecipients=$(git config hooks.announcelist)
- envelopesender=$(git config hooks.envelopesender)
- emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
- custom_showrev=$(git config hooks.showrev)
-+maxlines=$(git config hooks.emailmaxlines)
- 
- # --- Main loop
- # Allow dual mode: run from the command line just like the update hook, or
-@@ -691,6 +721,6 @@ if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
- else
- 	while read oldrev newrev refname
- 	do
--		generate_email $oldrev $newrev $refname | send_mail
-+		generate_email $oldrev $newrev $refname $maxlines | send_mail
- 	done
- fi
--- 
-1.7.1.1
+I am not a git maintainer, but I would suggest writing a patch to do
+that.  Then you can try it and see, and send us a copy of the patch
+when reporting the results.
+
+My guess is Linus wanted to make sure he had meaningful names in
+patches he applies[1].  There is no technical limit I know of that would
+lead one to forbid an author name longer than 60 characters, either.
+So the questions are:
+
+ - did any code learn to rely on those limits later?
+ - are any _people_ relying on those limits now?
+
+I suspect the answer to question 2, at least for the lower bound,
+is no.
+
+Hope that helps,
+Jonathan
+
+[1] See v0.99.2~51^2~21 (Start of early patch applicator tools for
+git., 2005-04-11) for the original script.
