@@ -1,93 +1,116 @@
-From: Adrian Barbu - Webmaster <webmaster@famouswhy.com>
-Subject: Re: Git has been granted the Famous Software Award - Download.FamousWhy.com
-Date: Fri, 16 Jul 2010 08:49:32 +0000 (UTC)
-Message-ID: <loom.20100716T103549-783@post.gmane.org>
-References: <20100715133338.17833310BD9@mail.famouswhy.com> <AANLkTil5j4pPwDl8zZDoiZYKFTBd7xi_90B0SCdiab-3@mail.gmail.com> <1279226674-sup-1508@nixos>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 GSOC 06/11] gitweb: Create Gitweb::Escape module
+Date: Fri, 16 Jul 2010 11:01:23 +0200
+Message-ID: <201007161101.23766.jnareb@gmail.com>
+References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com> <1279178951-23712-7-git-send-email-pavan.sss1991@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 16 10:55:18 2010
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 16 11:01:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZghS-0004L1-6l
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 10:55:18 +0200
+	id 1OZgnc-0006m2-4a
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 11:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936043Ab0GPIzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Jul 2010 04:55:08 -0400
-Received: from lo.gmane.org ([80.91.229.12]:54304 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S936040Ab0GPIzG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jul 2010 04:55:06 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OZghD-0004Ax-0F
-	for git@vger.kernel.org; Fri, 16 Jul 2010 10:55:03 +0200
-Received: from 86-124-219-227.rdsnet.ro ([86-124-219-227.rdsnet.ro])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Jul 2010 10:55:02 +0200
-Received: from webmaster by 86-124-219-227.rdsnet.ro with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 16 Jul 2010 10:55:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 86.124.219.227 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.6) Gecko/20100625 Firefox/3.6.6 GTB7.1)
+	id S936051Ab0GPJBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Jul 2010 05:01:31 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56891 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936026Ab0GPJBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jul 2010 05:01:30 -0400
+Received: by fxm14 with SMTP id 14so903366fxm.19
+        for <git@vger.kernel.org>; Fri, 16 Jul 2010 02:01:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=ADqbWox5anYD3/oabZGYiKPixOMl9BbGyLM79cvWRvI=;
+        b=w8E08Z4t56gv+/mwlZmoYDalfTzyTI4plMiBfsJhwRAK0mu2T398SIrHAi9tyVQaIX
+         XMTHjnKakcm3qNJX8NxjJTLCv8eMBTdHE9RP0+LU+aNajsK6gE0E5qdd3fQLvOR5KnT0
+         suHoKtyC7Xl7m/ZdhCwLb3BF2NvgRU5FPriuI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=p6tkgi710pHzv0TYYihrfKWOHfKQ3CSHBFCIpGG2mrnvzcONhIAZVBFduf7m7hhA4I
+         pk80xdBMFO3DjU+YqeZv8TQaM/xhV3g5DIkGLWbRyBuhU4vzXRHmbJv0OqzRzYs5PKT2
+         pM/RwRGoAmi/WhHa6ACFH3aeBjMhtpnkVb5b0=
+Received: by 10.223.122.198 with SMTP id m6mr377539far.87.1279270888914;
+        Fri, 16 Jul 2010 02:01:28 -0700 (PDT)
+Received: from [192.168.1.13] (abwm47.neoplus.adsl.tpnet.pl [83.8.236.47])
+        by mx.google.com with ESMTPS id h8sm679648faj.38.2010.07.16.02.01.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 16 Jul 2010 02:01:26 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1279178951-23712-7-git-send-email-pavan.sss1991@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151135>
 
-Marc Weber <marco-oweber <at> gmx.de> writes:
+On Thu, 15 Jul 2010, Pavan Kumar Sunkara wrote:
 
+> Create a Gitweb::Escape module in 'gitweb/lib/Gitweb/Escape.pm'
+> to store all the quoting/unquoting and escaping subroutines
+> regarding the gitweb.perl script.
 > 
-> Excerpts from Sverre Rabbelier's message of Thu Jul 15 21:02:43 +0200 2010:
-> > Heya,
+> This module imports $fallback_encoding variable from
+> Gitweb::Config module to use it in sub 'to_utf8'
 > 
-> > Are you spam?
-> If it was spam you would find more of it using google. I checked (not
-> too carefully though). They may award any project once a month or so.
+> Subroutines moved:
+> 	to_utf8
+> 	esc_param
+> 	esc_url
+> 	esc_html
+> 	esc_path
+> 	quot_cec
+> 	quot_upr
+> 	untabify
 > 
-> On the other hand the git page is a nice place to put backlinks on.
-> 
-> So maybe it depends on how you define spam :)
-> 
-> Marc Weber
-> 
+> Update gitweb/Makefile to install Gitweb::Escape module alongside gitweb
 
+Nice and straightforward refactoring.
 
-Hello Marc, 
+For what it is worth, ACK from me.
 
-This is definitely not a spam message. We usually award some of the most popular
-software we consider as being famous and we also download, install, test and
-then write the following things for the awarded software:
+[...]
+> +# quote unsafe chars, but keep the slash, even when it's not
+> +# correct, but quoted slashes look too horrible in bookmarks
+> +sub esc_param {
+> +	my $str = shift;
+> +	return undef unless defined $str;
+> +	$str =~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
+> +	$str =~ s/ /\+/g;
+> +	return $str;
+> +}
+> +
+> +# quote unsafe chars in whole URL, so some charactrs cannot be quoted
+> +sub esc_url {
+> +	my $str = shift;
+> +	return undef unless defined $str;
+> +	$str =~ s/([^A-Za-z0-9\-_.~();\/;?:@&= ]+)/CGI::escape($1)/eg;
+> +	$str =~ s/ /\+/g;
+> +	return $str;
+> +}
 
-- write a review focused on the "fame" reasons of that software;
+I see that here (or rather in corresponding preimage) you have dependency
+on first patch in series, i.e. "gitweb: fix esc_url".
 
-- write a tutorial
+If you had send first patch as a separate email, not as part of series,
+you would have need to mention in cover letter that the series (without
+first patch) is based on / requires "gitweb: fix esc_url".
 
-- create few polls
-
-- create few frequently asked questions
-
-- write an article
-
-- take a short online interview to the publisher, of course if that would be
-possible.
-
-All the things above are free of cost and we do them only for the software we
-consider as being famous.
-
-Thank you very much for your interest in our website.
-
-Adrian Barbu - Webmaster
-http://download.famouswhy.com/
--------------------------------
-"Making your software famous has never been easier!"
--------------------------------
+-- 
+Jakub Narebski
+Poland
