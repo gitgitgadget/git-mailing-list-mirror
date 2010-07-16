@@ -1,85 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation: add submodule.* to the big
- configuration variable list
-Date: Thu, 15 Jul 2010 18:12:43 -0500
-Message-ID: <20100715231243.GA8270@burratino>
-References: <4C3DD7EF.6010805@panasas.com>
- <20100715074155.GA22244@burratino>
- <20100715075119.GB22244@burratino>
- <201007151134.56090.johan@herland.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 GSOC 05/11] gitweb: Create Gitweb::Request module
+Date: Fri, 16 Jul 2010 02:11:41 +0200
+Message-ID: <201007160211.42631.jnareb@gmail.com>
+References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com> <1279178951-23712-6-git-send-email-pavan.sss1991@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Boaz Harrosh <bharrosh@panasas.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Lars Hjemli <hjemli@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 16 01:13:45 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 16 02:12:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZXce-0007ff-SP
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 01:13:45 +0200
+	id 1OZYX4-0006rx-LL
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 02:12:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934951Ab0GOXNj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Jul 2010 19:13:39 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:64297 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933661Ab0GOXNi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Jul 2010 19:13:38 -0400
-Received: by qyk38 with SMTP id 38so258818qyk.19
-        for <git@vger.kernel.org>; Thu, 15 Jul 2010 16:13:37 -0700 (PDT)
+	id S935077Ab0GPALu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Jul 2010 20:11:50 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33201 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935075Ab0GPALt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Jul 2010 20:11:49 -0400
+Received: by bwz1 with SMTP id 1so919958bwz.19
+        for <git@vger.kernel.org>; Thu, 15 Jul 2010 17:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=BWwKo7TSMX/I0sBx1yWvQTjow1Md5D9LKz4zDIJvRZ4=;
-        b=wwTuKxwTR8yPb+ubE/YavSJe7mp7e+5M87d8jrEKs/TXckB3sKfH2rYIrv1kptRpPt
-         dmph02sdKv7IHWSX/0zdrtounStj/GiE/tpDrOH0jmK9IUVqcaUq6uFE5u4ymfgHlr/s
-         siBJ7aLTuGSC0mHqnaspOA+qxq2BYKXVkLgw0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=K0FzM6l/y1KqgpB5dDAKJc+tG2t53ixp5sL4pqrjNK0=;
+        b=q5biEpAPm96sbo6e9NtK+5o8J9QIo1XYP5BSayXubgHrNa7hnSZWuvgWkqUZUoawAW
+         SxIBp5ujml6Y4897L3ln8IdE5Y1wPqzLCA9V0pTYKbWRjSWlf4Go3JCoKxIMdqVv9gs4
+         KRJA2PsvSA2fexd87iyqi/+lDeJHWEH/3nANk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=gUOnZD4NbLeD5Gi51culE4yt1FwvDOqbcmTyEiDZfLdffFWQd9+0JlMMut+P8spXd2
-         aQIFnLJNEGPQXhUAHEcW9zXGyP/9CZfIKqPr4mpOkZvSV41gZkS0dix6fU+RI0qyNoyu
-         E3DNn/gRzuUhI169a3L7DKIhF4RNVucq1LR78=
-Received: by 10.224.59.223 with SMTP id m31mr165302qah.207.1279235616069;
-        Thu, 15 Jul 2010 16:13:36 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id i26sm6924032qcm.43.2010.07.15.16.13.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 15 Jul 2010 16:13:35 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=RvI46Kyyjg6NlmLopxeb0gUxa/wIRtc4YS8TgZzDd6bRibT41DOxRyE1fpEb+1BLkC
+         odVGeG5gG5x2MzCw03RifL9C8LLY+900SGKDtO8vQYG4XhSNq30zgIDaDnNpo8yCYG+V
+         H4zYNeFQg4dRRf8llp9leTNbxKW0ilS9oe4qQ=
+Received: by 10.204.27.20 with SMTP id g20mr313223bkc.114.1279239108314;
+        Thu, 15 Jul 2010 17:11:48 -0700 (PDT)
+Received: from [192.168.1.13] (abwm47.neoplus.adsl.tpnet.pl [83.8.236.47])
+        by mx.google.com with ESMTPS id o20sm8200045bkw.15.2010.07.15.17.11.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Jul 2010 17:11:47 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1279178951-23712-6-git-send-email-pavan.sss1991@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <201007151134.56090.johan@herland.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151129>
 
-Johan Herland wrote:
+On Thu, 15 Jul 2010, Pavan Kumar Sunkara wrote:
 
-> May be more legible with:
->=20
->   The path within this project, the URL, and the updating strategy...
+> Create a Gitweb::Request module in 'gitweb/lib/Gitweb/Request.pm'
+> to store and handle all the cgi params and related variables
+> regarding the gitweb.perl script.
+> 
+> This module is intended as standalone module, which does not require
+> (include) other gitweb' modules to avoid circular dependencies.
+> 
+> Subroutines moved:
+> 	evaluate_uri
+> 	evaluate_query_params
 
-Thanks, Johan.  I=E2=80=99ve pushed both patches out to
-  git://repo.or.cz/git/jrn.git submodule-doc
-including that change.
+Here you would really need to explain why Gitweb::Request does not
+include evaluate_path_info, the companion to evaluate_query_params.
+It is strange to me that query_params is in it, but path_info is not.
 
-Jonathan Nieder (2):
-      gitmodules.5: url can be a relative path
-      Documentation: add submodule.* to the big configuration variable =
-list
+Would it be possible, perhaps, to modify evaluate_path_info so it can
+be moved to Gitweb::Request without adding additional dependencies to
+it?
+ 
+> Update gitweb/Makefile to install Gitweb::Request module alongside gitweb
+> 
+> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
 
- Documentation/config.txt     |    9 +++++++++
- Documentation/gitmodules.txt |    3 +++
- 2 files changed, 12 insertions(+), 0 deletions(-)
+[...]
+> --- /dev/null
+> +++ b/gitweb/lib/Gitweb/Request.pm
+[...]
+> +our @EXPORT = qw($cgi $my_url $my_uri $base_url $path_info $home_link $action $project $file_name
+> +                 $file_parent $hash $hash_parent $hash_base $hash_parent_base @extra_options $page
+> +                 $searchtype $search_use_regexp $searchtext $search_regexp %input_params %allowed_options
+> +                 @cgi_param_mapping %cgi_param_mapping $t0 evaluate_query_params evaluate_uri);
+
+You are working off older base, which did not include reset_timer
+subroutine, added in 869d588 (gitweb: Move evaluate_gitweb_config
+out of run_request, 2010-07-05).
+
+-- 
+Jakub Narebski
+Poland
