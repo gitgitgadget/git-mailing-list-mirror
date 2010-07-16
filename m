@@ -1,69 +1,75 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [RFC/PATCH] Update compat/regex
-Date: Fri, 16 Jul 2010 16:17:54 +0200
-Message-ID: <m2630fqzn1.fsf@igel.home>
-References: <1278549735-19278-1-git-send-email-avarab@gmail.com>
-	<7viq4ppxt9.fsf@alter.siamese.dyndns.org>
-	<AANLkTikuGY4LVrCB6UoGFhxthoI8MgvAXCwCbiXhwq_d@mail.gmail.com>
-	<7vtyo0vdpz.fsf@alter.siamese.dyndns.org>
-	<AANLkTim-4I5Sdu653yJOmnVYDqI8bb71839Vqfd3FKCi@mail.gmail.com>
-	<20100715220059.GA3312@burratino>
-	<AANLkTimQZDT3PuiLDdjPXzWlLiEI5Iv1zy5iFPlRswyC@mail.gmail.com>
+From: Daniel F <nanotube@gmail.com>
+Subject: Re: git am mangles commit author name.
+Date: Fri, 16 Jul 2010 10:18:21 -0400
+Message-ID: <AANLkTimIkepwy93dYCu5mkdSMHNuh3dbMyxcHPl4hGmt@mail.gmail.com>
+References: <AANLkTinqTL7gH4CHEfy8UrhK13xcO_3UzgIyQka00MAh@mail.gmail.com>
+	<20100713054949.GB2425@burratino>
+	<AANLkTinPCZ79vwZ9eVeHChgTuFGBrz3ACi_grM28Q5Y-@mail.gmail.com>
+	<AANLkTikAcZa5J8XhKKJuDCHY3VMhSRzETv0ZQ34EcjMx@mail.gmail.com>
+	<AANLkTim6Ax-4SVJU_LvR86SyD5q3VhCfGBlGOkSPTocL@mail.gmail.com>
+	<AANLkTilZJ0g-XbkOsMh3Q1Jo7XQ2dbT1cY-YP_BdXvuh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 16 16:18:08 2010
+Cc: Tor Arntsen <tor@spacetec.no>, Jay Soffian <jaysoffian@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 16 16:18:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZljo-0007Ns-3f
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 16:18:04 +0200
+	id 1OZlkL-0007cS-1K
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 16:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965689Ab0GPOR6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 10:17:58 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:53003 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965654Ab0GPOR5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jul 2010 10:17:57 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 2AECD1C005F8;
-	Fri, 16 Jul 2010 16:17:55 +0200 (CEST)
-Received: from igel.home (ppp-88-217-114-100.dynamic.mnet-online.de [88.217.114.100])
-	by mail.mnet-online.de (Postfix) with ESMTP id 1C12F1C002F0;
-	Fri, 16 Jul 2010 16:17:55 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id E51E9CA297; Fri, 16 Jul 2010 16:17:54 +0200 (CEST)
-X-Yow: Yow!  I'm out of work...I could go into shock absorbers...or SCUBA
- GEAR!!
-In-Reply-To: <AANLkTimQZDT3PuiLDdjPXzWlLiEI5Iv1zy5iFPlRswyC@mail.gmail.com>
-	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 16 Jul
- 2010 13:58:03
-	+0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S965690Ab0GPOSb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 10:18:31 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:56333 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965654Ab0GPOSa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jul 2010 10:18:30 -0400
+Received: by vws5 with SMTP id 5so2581381vws.19
+        for <git@vger.kernel.org>; Fri, 16 Jul 2010 07:18:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zbL2hHLviIakXG7JBz+OfXzOtbslQl7lhHiU/OQjC1M=;
+        b=uN53ZghwtxeM2VdvBHeOQJPb5cMK/tMm1oixpOld7y+11DSxjmAuBgdPNcovWCPTsQ
+         DTdEs9N3nedOJWm7UeATGzZFtADIAUBkGT8czGD5kjs3oqqahyjk6XNcJG/jZTE3uiWb
+         RBDYV4l6b46zNkIf6Mss3jJ1a+9Lh4hl84q9g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MiZYUUXd2DEQLvIIg6jZAaDCXalgf68HBRGDGIqBiy9Q78+h3niLW/cin+3UEQsn8H
+         fSJLmWGD+NQ7zc49hQCmdl8siAkw80ctULhOMcXj3fjyjDH90/X0RNeJEuiRMEFO73oZ
+         pzP0zwg81zX0SPgyHZ7K/WD5CGpcFBbefsVsA=
+Received: by 10.220.62.136 with SMTP id x8mr577720vch.177.1279289902160; Fri, 
+	16 Jul 2010 07:18:22 -0700 (PDT)
+Received: by 10.220.186.132 with HTTP; Fri, 16 Jul 2010 07:18:21 -0700 (PDT)
+In-Reply-To: <AANLkTilZJ0g-XbkOsMh3Q1Jo7XQ2dbT1cY-YP_BdXvuh@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151152>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 7/14/10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> w=
+rote:
+> On Wed, Jul 14, 2010 at 14:16, Tor Arntsen <tor@spacetec.no> wrote:
+>> On Tue, Jul 13, 2010 at 17:11, Jay Soffian <jaysoffian@gmail.com> wr=
+ote:
+>>> On Tue, Jul 13, 2010 at 10:54 AM, Daniel F <nanotube@gmail.com> wro=
+te:
+>>>> Apparently, git-am fails when the username is just one word.
+>>>
+>>> And is less than 3 characters.
+>> [..]
 
-> This patch has all the glibc-specific stuff that makes it break hard
-> if you don't have the GNU C library. Writing macros/definitions to fi=
-x all that
-> stuff up was the "easier said than done" part I was referring to.
-
-You might want to try out the gnulib version instead.
-
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+so... any git maintainers have thoughts on how this should
+be addressed, or whether this should be addressed at all?
+would simply setting minimum length to 1 have any negative
+side effects?
