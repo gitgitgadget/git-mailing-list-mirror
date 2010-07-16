@@ -1,122 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] grep: Don't pass a TODO test if REG_STARTEND is
- supported
-Date: Fri, 16 Jul 2010 16:06:09 -0500
-Message-ID: <20100716210609.GA23044@burratino>
-References: <1278549735-19278-1-git-send-email-avarab@gmail.com>
- <7viq4ppxt9.fsf@alter.siamese.dyndns.org>
- <AANLkTikuGY4LVrCB6UoGFhxthoI8MgvAXCwCbiXhwq_d@mail.gmail.com>
- <7vtyo0vdpz.fsf@alter.siamese.dyndns.org>
- <AANLkTim-4I5Sdu653yJOmnVYDqI8bb71839Vqfd3FKCi@mail.gmail.com>
- <AANLkTimZ3f550HQwx3OEpO6n1b037He6hJ6rAXP8vfIk@mail.gmail.com>
- <20100716195007.GC16371@burratino>
- <AANLkTikDwJaBN8Y0814m6JaVab9BAXPx_VKE7Z_Q6hq7@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] blame: Odd -L 1,+0 behavior
+Date: Fri, 16 Jul 2010 14:11:34 -0700
+Message-ID: <7vy6dbqghl.fsf@alter.siamese.dyndns.org>
+References: <AANLkTin-6nck9aVKPTwOy_PmrGUs1iS8ruqzIORbf8jb@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Andreas Schwab <schwab@linux-m68k.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 16 23:07:17 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 16 23:11:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZs7n-0000vL-D0
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 23:07:15 +0200
+	id 1OZsCD-0002aK-4g
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 23:11:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966218Ab0GPVHH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 17:07:07 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:52170 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966094Ab0GPVHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Jul 2010 17:07:06 -0400
-Received: by yxn35 with SMTP id 35so569922yxn.19
-        for <git@vger.kernel.org>; Fri, 16 Jul 2010 14:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=FTCpoL/phSjybd2HHCGAg6I3DwQt3OTdf4DACwNMthM=;
-        b=nCJ/sDTj89cjFhBXQ/rmLyH4o5/N2pHIOnD2SnQ7rl3XFZATlLDAMmFdG7KchBXdQS
-         EQeOr18RdfghYbmsy/MNAjmW7/PZfa9x2OYPvn07VZgD8aEDdb83GiDGtZSXaypEtt4R
-         Yvvlf0jIfm32VZXnJdOE1bJkevHj30TSfX9IU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=IeThPYZ/gUuvXaOFd1ON+HK1j/4pjgPMmmpI4u2qsgxlX2AfbEH4LmdlUW929K624/
-         mwsAxzIMDE44UdOnH5jXvR82qoY8JNfK62EwjmNYrc5jDmL9Xd4YXBSVyVx8lW5UYvLs
-         Pid/FS6WvassAiN+tLcEgj8XlH7gSKDAthHtU=
-Received: by 10.224.26.68 with SMTP id d4mr1466417qac.324.1279314424843;
-        Fri, 16 Jul 2010 14:07:04 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h20sm11707579qcm.9.2010.07.16.14.07.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 16 Jul 2010 14:07:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikDwJaBN8Y0814m6JaVab9BAXPx_VKE7Z_Q6hq7@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759113Ab0GPVLo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 17:11:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37537 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754754Ab0GPVLn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 Jul 2010 17:11:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9C9A1C5ACB;
+	Fri, 16 Jul 2010 17:11:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=inLFlyFn1gIU
+	8lkOFzeGorVVq9c=; b=xTdav/3B+0kCsiVv097U6cTj9NeG+2+3m7eJGpibs10a
+	wsbOEsoMPMjN52oRf4x7MgJWf6vuB7z+sqi76cIi+2cnGgfCXPjyzK0wN9Qxg/8x
+	LMpm9aClYwrGSBEPs0Z7adsrH/RVyq1IFyX+vMoisF49THyREO67UMka9pR/2Sw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=i5Lm0R
+	IUaUsIS2+Dz1shIKVtmNKYePLeqmZCDCA0NpEzst2MCgbD16IjOOz9edmcCmXyJ3
+	kHxQSM+SX730TTQPD4BBxLXMYoDI9OwO8SpbO/BRf6y6X4V3El4q3Y1TVHFAdqN8
+	9cRSrm1yZ/4kmyZ3hYQII4f5aW55al5GnxoWQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 66B2FC5ACA;
+	Fri, 16 Jul 2010 17:11:39 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AB855C5AC8; Fri, 16 Jul
+ 2010 17:11:35 -0400 (EDT)
+In-Reply-To: <AANLkTin-6nck9aVKPTwOy_PmrGUs1iS8ruqzIORbf8jb@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri\, 16 Jul
+ 2010 15\:50\:52 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B9A1B5B8-911E-11DF-8BB1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151173>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> The failure is totally predicated on whether or not REG_STARTEND is
-> available on the system
-[...]
-> Then you could do:
->=20
->     test_expect_success REG_STARTEND 'git grep ile a' '
->         git grep ile a
->     '
+> ok, +/- are zero-indexed:
+>
+>     $ git blame -L 1,+2 cow
 
-Sorry to harp on this, but no, that would not be right.  When
-REG_STARTEND is not available on a system, this is still a bug and
-we still want to know when it is fixed.  The test should not be
-skipped.
+I don't know what "zero-indexed" means, but +2 means "starting from the
+line I told you earlier, give me two lines".  Likewise -2 means "ending=
+ at
+the line I told you earlier, give me two lines".  As a side effect of t=
+he
+internal implementation of this logic -L 5,3 means the same thing as -L=
+ 3,5
+but that is not an intended nor documented behaviour.
 
-So one could do:
+> Shouldn't this either print nothing, er be an error:
+(multiple)
 
- if have_reg_startend
- then
-	expectation=3Dsuccess
- else
-	expectation=3Dfailure
- fi
- test_expect_$expectation 'git grep ile a' '
-	git grep ile a
- '
-
-> The glibc one is probably pretty good as far as minimal POSIX DFA
-> engines go. Hopefully you can patch it up to get it to compile on
-> non-GNU systems.
-
-No promises, in particular because I don=E2=80=99t have any non-GNU
-installations handy to test on.  Probably gnulib=E2=80=99s copy will do=
-,
-as Andreas suggested.
-
-> Regarding regular expression implementations. We might want to look
-> into bundling one implementation and using it everywhere
-
-Please no. :)
-
-If we can do better than glibc, then glibc should be improved (yes,
-I know GNU grep does much better than glibc already).
-
-> Using NFA engines like that also gives you some performance guarantee=
-s
-
-Do you mean =E2=80=9Cusing DFA engines=E2=80=9D?  i.e. I thought GNU gr=
-ep avoids
-backtracking by converting the NFA to a DFA, at least conceptually.
-
-Thanks for the food for thought,
-Jonathan
+The parsing code is lax in the sense that rejecting nonsensical input l=
+ike
+"-L 10,-100" and "-L 2,+0" as an error was not considered a primary goa=
+l.
+The only error checking it does is to make sure it does not parse numbe=
+rs
+that it cannot use (i.e. start from line 30 in a file that does not hav=
+e
+that many lines).
