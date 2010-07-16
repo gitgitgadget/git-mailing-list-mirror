@@ -1,101 +1,113 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: [BUG?] blame: Odd -L 1,+0 behavior
-Date: Fri, 16 Jul 2010 15:50:52 +0000
-Message-ID: <AANLkTin-6nck9aVKPTwOy_PmrGUs1iS8ruqzIORbf8jb@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: gitk: add "grep diff" selection criterion (Re: find commit
+ adding/removing could use changing option)
+Date: Fri, 16 Jul 2010 12:28:06 -0500
+Message-ID: <20100716172806.GA15491@burratino>
+References: <D163BB49BCC4479AB3E4BA4F87826184@csmith>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 16 17:51:01 2010
+Cc: git@vger.kernel.org
+To: Chris Smith <smiles@worksmail.net>
+X-From: git-owner@vger.kernel.org Fri Jul 16 19:29:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZnBl-00034u-2M
-	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 17:51:01 +0200
+	id 1OZoil-0006B9-8U
+	for gcvg-git-2@lo.gmane.org; Fri, 16 Jul 2010 19:29:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965927Ab0GPPuy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 11:50:54 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36164 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965842Ab0GPPux convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jul 2010 11:50:53 -0400
-Received: by iwn7 with SMTP id 7so2265941iwn.19
-        for <git@vger.kernel.org>; Fri, 16 Jul 2010 08:50:52 -0700 (PDT)
+	id S1755944Ab0GPR3F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 13:29:05 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:38756 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754249Ab0GPR3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Jul 2010 13:29:02 -0400
+Received: by yxn35 with SMTP id 35so499226yxn.19
+        for <git@vger.kernel.org>; Fri, 16 Jul 2010 10:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=bN7P6pzbFQ5OVYdP7YLFcTFl6UTC7z1V5EsSJTKkaM8=;
-        b=IegJb2T6Yy7iOAFHMJkAByO7qJq1nJxeZqtmWcfB9WsT4sFZcEiXwUJV9+p5yQSudQ
-         ebLXJoM35w42ws/9ZQqopQRKfrgD76iRqU+OOMsbZMV8nG3xD/1eACISuPDVVM3yEbVw
-         g6VMXEQgznZphGfEuP7XeXDXX6RK9ds02gTq8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=xMaWPf1xKgzps9jyh7+randk/VXzJxnzHoIH2fn9GwE=;
+        b=jrbPZtp6JeOC29RNdB8mMb+mkaVNMDxq+4TPuhrcCE+wBO0mfHiWMHIKvLYNh00IOf
+         At/zlL9ElX/vy0OhvzHXOotQI+zGO+9b7wk+0kjDVWjVRb433FG+FEsq5TAD9u63aBIz
+         PCAHODeINcJSP48O+3JT8eDEHLoaetNt2vkK4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=RxKeWXCWlJl8X9tS4A1DZ6DsFpw6rJzCLSIT7HobWJhirIK32m8yUgJqOxu1G+E3M2
-         JpEsTCIA4Ck0KkFsbNmjo/eR8PaE63IkZTM5G+R64guaAvRtQ18WZ9pGt81yxZ63W2PQ
-         UCRTBec3voGm3sqO5bvTWp+K1V1y0lZRLL6OU=
-Received: by 10.231.14.201 with SMTP id h9mr1090933iba.129.1279295452365; Fri, 
-	16 Jul 2010 08:50:52 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Fri, 16 Jul 2010 08:50:52 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=KZfgLXNMaQyoWmiiiaCyzOikVS00a8r2JLHKY++rb4CUPb9UVdGIf54CrSXOwmBF/w
+         VzWtG+LIikoXU52auqcWWCZuGLgvtarKqHE/TXBxd2pqIBJwZjYg9c/sNYy4S1BWo1WT
+         2pzSpt9Ew3pQ8U1luIxPbbZ6Tf2QwRcjuXJzU=
+Received: by 10.224.28.211 with SMTP id n19mr1206960qac.258.1279301341486;
+        Fri, 16 Jul 2010 10:29:01 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id e32sm10855902qcg.46.2010.07.16.10.29.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 16 Jul 2010 10:29:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <D163BB49BCC4479AB3E4BA4F87826184@csmith>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151159>
 
-On Fri, Jul 16, 2010 at 15:35, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> git-pickaxe (later git-blame) gained support for the -L/start/,/end/
-> form in 2006 (931233bc66 by Junio C Hamano), but nothing was added to
-> test this functionality. Change that by adding more -L tests to
-> t8003-blame.sh.
+Hi Chris,
 
-I was also going to patch t8003-blame.sh to test for the functionality
-introduced in 7bd9641df5, but I'm not sure what it's supposed to do:
+Chris Smith wrote:
 
-ok:
+> One thing I find myself wishing for is the ability to find a line tha=
+t has
+> been modified by using gitk. It seems to me that if I have the follow=
+ing in a
+> diff
+>=20
+> - def foo(this)
+> + def foo(this, that=3DFalse)
+>=20
+> that I can't find the line by searching for foo.
 
-    $ git blame cow
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 1) ABC
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 2) DEF
-    018e3134 (Fifth  2005-04-07 15:17:13 -0700 3) XXXX
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 4) GHIJK
+Ah, so you want a cousin to =E2=80=98log -S=E2=80=99 that /does/ search=
+ through
+diffs.  See [1].
 
-ok:
+As that thread explains, it is doable from the commandline already,
+though not in a nicely packaged form.  But what about from gitk?
 
-    $ git blame -L 1,2 cow
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 1) ABC
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 2) DEF
+A possible hack would be to teach gitk to add arbitrary criteria to
+the end of the =E2=80=98git diff-tree=E2=80=99 command line[2].  In thi=
+s case, the
+criterion would be =E2=80=98| search-diff $term=E2=80=99, where search-=
+diff is a
+script something like the following:
 
-ok, +/- are zero-indexed:
+ #!/bin/sh
+ while read -r commit
+ do
+	if
+		git diff-tree -p -c "$commit" | grep -q "$@"
+	then
+		printf '%s\n' "$commit"
+	fi
+ done
 
-    $ git blame -L 1,+2 cow
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 1) ABC
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 2) DEF
+If that proves useful, afterwards one could teach =E2=80=98diff-tree=E2=
+=80=99 to do
+the check itself, which would allow commands like
 
-Shouldn't this either print nothing, er be an error:
+ git log --search-diff=3Dfoo
 
-    $ git blame -L 1,+0 cow
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 1) ABC
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 2) DEF
+too.
 
-same here, line 0-0 prints the whole file:
+Thoughts?
+Jonathan
 
-    $ git blame -L 0,0 cow
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 1) ABC
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 2) DEF
-    018e3134 (Fifth  2005-04-07 15:17:13 -0700 3) XXXX
-    5b22ca36 (Fourth 2005-04-07 15:16:13 -0700 4) GHIJK
-
-And these need a better error message:
-
-    $ git blame -L 0,0a cow
-    usage: git blame [options] [rev-opts] [rev] [--] file
-
-Is there any use for +/- 0, or should it always be an error?
+[1] http://thread.gmane.org/gmane.comp.version-control.git/122478
+[2] You can find the code one would need to touch for this by
+searching for gdtargs and gdttype in the gitk script.
