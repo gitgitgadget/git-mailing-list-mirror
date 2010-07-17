@@ -1,82 +1,62 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Git Fetch / updating HEAD
-Date: Sat, 17 Jul 2010 18:11:13 +0200
-Message-ID: <201007171811.13624.johan@herland.net>
-References: <AANLkTinuK4gx9SG1VKo_NbkP_QWMCmtsfJgUgfoL_KGo@mail.gmail.com>
- <AANLkTilp5lZn99QZPWSkCHStnRdkGx6mMU2IQBvllaU4@mail.gmail.com>
+From: "Rainer Lauer" <lauerr@gmx.net>
+Subject: Challenge with Git-Bash
+Date: Sat, 17 Jul 2010 18:20:04 +0200
+Message-ID: <001d01cb25cb$eb176980$c1463c80$@net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Mahesh Vaidya <forvaidya@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 17 18:11:31 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "'Rainer Lauer'" <lauerr@gmx.net>, <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 17 18:20:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oa9z8-0006lh-SL
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 18:11:31 +0200
+	id 1OaA7q-0001Pk-AJ
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 18:20:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756232Ab0GQQLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jul 2010 12:11:17 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:48800 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756199Ab0GQQLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jul 2010 12:11:16 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L5P00606MAQMC70@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sat, 17 Jul 2010 18:11:14 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 4EF781EA583B_C41D622B	for <git@vger.kernel.org>; Sat,
- 17 Jul 2010 16:11:14 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 363F01EA3CEB_C41D622F	for <git@vger.kernel.org>; Sat,
- 17 Jul 2010 16:11:14 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L5P00NY4MAQ1W10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sat, 17 Jul 2010 18:11:14 +0200 (MEST)
-User-Agent: KMail/1.13.5 (Linux/2.6.34-ARCH; KDE/4.4.5; x86_64; ; )
-In-reply-to: <AANLkTilp5lZn99QZPWSkCHStnRdkGx6mMU2IQBvllaU4@mail.gmail.com>
+	id S1756255Ab0GQQUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jul 2010 12:20:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54889 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756094Ab0GQQUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jul 2010 12:20:11 -0400
+Received: (qmail invoked by alias); 17 Jul 2010 16:20:09 -0000
+Received: from pD9E09ADD.dip.t-dialin.net (EHLO Workstation) [217.224.154.221]
+  by mail.gmx.net (mp062) with SMTP; 17 Jul 2010 18:20:09 +0200
+X-Authenticated: #9219177
+X-Provags-ID: V01U2FsdGVkX18wCARQLOQwAB0DyM1LoSLnwo61j+Wlk4StPL0F2t
+	OJGyNbxnCnDEhH
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: Acsly+omN2A8ZS5PSiyW+PUbP2saiQ==
+Content-Language: de
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151191>
 
-On Saturday 17 July 2010, Mahesh Vaidya wrote:
-> BTW - I have tried this
-> git  update-ref HEAD  FETCH_HEAD; is this ok ??
-> 
-> On Sat, Jul 17, 2010 at 9:02 PM, Mahesh Vaidya <forvaidya@gmail.com> 
-wrote:
-> > Hi,
-> > 
-> > git fetch --all --append updates FETCH_HEAD. I'd like this command to
-> > update HEAD as well; is there any flag ?
-> > 
-> > I have a reason to do it; trying to implement multisite
-> > 
-> > A (master) -> B (readonly mirror) -> C (workspace)
-> > 
-> > if sitting in B; git fetch does't update HEAD
+Hello,
+with my Windows 7 Git-Installation I get following challenge:
+1)	Set GIT_EDITOR to editor of your choice
+2)	With Windows7 let this editor run in admin-mode
+	Goto .exe-file -> right mouse-click -> compatibility -> run program
+as admin (I'm running a German version maybe English names are slightly
+different)
+3)	Make a git action like git add file
+                             git commit
+	from the git bash.
+4)	Now following message appears:  sh.exe: ./"editor of your choice":
+Bad file number
+Everything is fine without Admin-Mode set for editor. In other words if you
+get rid of step 2) step 4) doesn't appear instead the editor starts.
+Due to other tasks my editor of choice has to run in this mode - stupid
+enough.
 
-You need to set up special refspecs in your B repo, so that git fetch 
-updates refs/heads/* instead of refs/remotes/origin/*. When that is done, a 
-simple 'git fetch' will update your branches (and HEAD as a result).
+Any chance to get around this problem?
+(No not taking a different editor, no not getting rid of admin mode :) )
 
-In short, you should create the B repo using 'git clone --mirror' (which 
-will set up the correct refspecs for you)
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Reggies,
+Rainer Lauer
