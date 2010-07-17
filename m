@@ -1,79 +1,124 @@
-From: Mahesh Vaidya <forvaidya@gmail.com>
-Subject: Re: Git Fetch / updating HEAD
-Date: Sat, 17 Jul 2010 21:05:38 +0530
-Message-ID: <AANLkTilp5lZn99QZPWSkCHStnRdkGx6mMU2IQBvllaU4@mail.gmail.com>
-References: <AANLkTinuK4gx9SG1VKo_NbkP_QWMCmtsfJgUgfoL_KGo@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] git submodule add: Remove old docs about implicit -f
+Date: Sat, 17 Jul 2010 15:53:45 +0000
+Message-ID: <1279382025-24814-1-git-send-email-avarab@gmail.com>
+References: <4C41C82F.8030200@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 17 17:36:05 2010
+X-From: git-owner@vger.kernel.org Sat Jul 17 17:54:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oa9Qp-0003Pm-Qv
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 17:36:04 +0200
+	id 1Oa9iF-00011v-0L
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 17:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760007Ab0GQPf7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jul 2010 11:35:59 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:39634 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755998Ab0GQPf6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 Jul 2010 11:35:58 -0400
-Received: by gwj18 with SMTP id 18so1519719gwj.19
-        for <git@vger.kernel.org>; Sat, 17 Jul 2010 08:35:53 -0700 (PDT)
+	id S1756194Ab0GQPx5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jul 2010 11:53:57 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:65354 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756113Ab0GQPx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jul 2010 11:53:56 -0400
+Received: by eya25 with SMTP id 25so752396eya.19
+        for <git@vger.kernel.org>; Sat, 17 Jul 2010 08:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=d1yhJ03BAjn4nbOtO4QiS9oIo2ixqqRqTzilXXkFhsY=;
-        b=bPiYATre3Iy2s5gf6mKZ1Rp/N+YRf2Z+9MJzXPrkbX3A3cxdy7WuOkPgDLNXmCv/i+
-         n6pfbM8a1bqHLc/FIvO09XpWNJTlAFAxzrywyIvIA1169KupfzXgKiprMNRwVlU11w7I
-         E6dCa4skYrVefxpUI9woTjGOmgRwoPaNnYvW8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=bg151W6c+GwgVi40eNn9QM226u5Er2yGvyjN4477j9s=;
+        b=kve8UJaB5huD8BNziyMAzlPEUqyLztxeW+DHJTT0p6ywSEDqw1zzgSm+ZYrgTjwR7/
+         Q/cHz5q+RxDMCZEsahWwGq6vg/9ClyBPMWB5FTCuJyNYsuZufMJm0EeX8b3FR9GO3IPe
+         9PTf8DfVwszrJb3ZR/+cOOgXjbPCG0Raufu3k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=m6VLzvtOuMMC1oNNLzC65vD/iRfML9BchejzeUV0mkbYyo2qhkCfTttlVoY3iJtjs+
-         +SCSlzLEkm8/6oTO97i6fsOvafC3rsKOPFZQYS5YqyJihtZRhbBxEfQviMfOA8lQx5ZO
-         jsiCENhi3g91BkmY+88JN18jyQOxZpjwlt190=
-Received: by 10.90.115.2 with SMTP id n2mr1664278agc.199.1279380938843; Sat, 
-	17 Jul 2010 08:35:38 -0700 (PDT)
-Received: by 10.90.33.8 with HTTP; Sat, 17 Jul 2010 08:35:38 -0700 (PDT)
-In-Reply-To: <AANLkTinuK4gx9SG1VKo_NbkP_QWMCmtsfJgUgfoL_KGo@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=PydARFpJ1C9ROnHE4CPn6kQPKTuOhn7h7NjaNXnptFCl71AOm1Q3kkoWFOUO1rP3Wv
+         lVb3U8ym1R+KIXJgKSFcJS5rZkUWUunrpdsz4OF4KE5pZxth/LW7O4aRFPXo7kBGz926
+         Zs1+LA+eR2rGlkUbkQqaxIYQC8BDR9rb4uk8A=
+Received: by 10.213.10.67 with SMTP id o3mr781925ebo.31.1279382035454;
+        Sat, 17 Jul 2010 08:53:55 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-233-160.pools.arcor-ip.net [88.67.233.160])
+        by mx.google.com with ESMTPS id x54sm28963749eeh.5.2010.07.17.08.53.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 17 Jul 2010 08:53:54 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.rc3.125.g94e09.dirty
+In-Reply-To: <4C41C82F.8030200@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151189>
 
-BTW - I have tried this
-git  update-ref HEAD  FETCH_HEAD; is this ok ??
+git submodule add no longer implicitly adds with --force. Remove
+references to the old functionality in the documentation.
 
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
 
-On Sat, Jul 17, 2010 at 9:02 PM, Mahesh Vaidya <forvaidya@gmail.com> wr=
-ote:
-> Hi,
+> To make the behavior of "git submodule add" more consistent with "git=
+ add"
+> ignored submodule paths should not be silently added when they match =
+an
+> entry in a .gitignore file. To be able to override that default behav=
+ior
+> in the same way as we can do that for "git add", the new option "--fo=
+rce"
+> is introduced.
 >
-> git fetch --all --append updates FETCH_HEAD. I'd like this command to
-> update HEAD as well; is there any flag ?
->
-> I have a reason to do it; trying to implement multisite
->
-> A (master) -> B (readonly mirror) -> C (workspace)
->
-> if sitting in B; git fetch does't update HEAD
->
->
-> Mahesh Vaidya
->
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 
+You beat me to it. I like this better than the original functionality
+that I implemented, and it's now possible with --ignore-missing.
 
+So,:
 
+    Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+
+This amended patch removes some obsolete documentation that you
+missed.
+
+> +               echo >&2 "The following path is ignored by one of you=
+r .gitignore files:" &&
+> +               echo >&2 $path &&
+> +               echo >&2 "Use -f if you really want to add it."
+
+Is the "it" intentional? We currently say "them" in git add regardless
+of how many things are being added, so perhaps we should say "it"
+there too for singulars.
+
+I'll jot this down as something to look at for plural support once
+gettext gets merged.
+
+ Documentation/git-submodule.txt |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
+ule.txt
+index 617069f..1ed331c 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -95,10 +95,6 @@ is the superproject and submodule repositories will =
+be kept
+ together in the same relative location, and only the
+ superproject's URL needs to be provided: git-submodule will correctly
+ locate the submodule using the relative URL in .gitmodules.
+-+
+-The submodule will be added with "git add --force <path>". I.e. git
+-doesn't care if the new path is in a `gitignore`. Your invocation of
+-"git submodule add" is considered enough to override it.
+=20
+ status::
+ 	Show the status of the submodules. This will print the SHA-1 of the
 --=20
-Thank you and best regards.
-Mahesh Vaidya=A0 / 9740500144
-http://www.twitter.com/forvaidya
+1.7.2.rc3.125.g94e09.dirty
