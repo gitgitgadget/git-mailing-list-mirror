@@ -1,69 +1,202 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: Re: [PATCH/RFC 4/4] Add interactive mode to git-shell for 
-	user-friendliness
-Date: Sat, 17 Jul 2010 10:53:08 -0400
-Message-ID: <AANLkTik7VJlCIZHGVLX-eVRTrf45RDUggQqq-FjUtqq9@mail.gmail.com>
-References: <1279076475-27730-1-git-send-email-gdb@mit.edu>
-	<4C3DC2BD.6020907@digium.com>
-	<20100714152444.GA26674@pcpool00.mathematik.uni-freiburg.de>
-	<201007141740.37867.trast@student.ethz.ch>
-	<20100714160730.GA27078@pcpool00.mathematik.uni-freiburg.de>
-	<AANLkTikEjMeKPkyY4RdRq-ESkmmq4PvqCFPgp8yvLVBz@mail.gmail.com>
-	<AANLkTikiOgV1iE7dwPUkLpWTb_zXSFdEuOYvyqJ1eDCo@mail.gmail.com>
-	<20100717055257.GB29290@burratino>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] git submodule add: Require the new --force option to add
+ ignored paths
+Date: Sat, 17 Jul 2010 17:11:43 +0200
+Message-ID: <4C41C82F.8030200@web.de>
+References: <1278098521-5321-1-git-send-email-avarab@gmail.com> <1278351183-18734-1-git-send-email-avarab@gmail.com> <7vmxu572w5.fsf@alter.siamese.dyndns.org> <4C33A552.5060008@web.de> <AANLkTinn_Vz6I619Do4AOCVMUgfpyy84L1wh3lkuCP7R@mail.gmail.com> <4C37A03E.7030801@web.de> <7viq4k8i0e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Bernhard R. Link" <brlink@debian.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	"Kevin P. Fleming" <kpfleming@digium.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 17 16:53:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 17 17:12:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oa8le-0005Si-DY
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 16:53:30 +0200
+	id 1Oa944-0003Q0-8z
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 17:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755906Ab0GQOxO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jul 2010 10:53:14 -0400
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:57192 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755212Ab0GQOxN convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jul 2010 10:53:13 -0400
-X-AuditID: 12074424-b7b63ae000000a0b-d8-4c41c3d7cef0
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id 74.48.02571.7D3C14C4; Sat, 17 Jul 2010 10:53:12 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o6HErAoT002962
-	for <git@vger.kernel.org>; Sat, 17 Jul 2010 10:53:11 -0400
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6HEr9V4022372
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 17 Jul 2010 10:53:10 -0400 (EDT)
-Received: by iwn7 with SMTP id 7so3099573iwn.19
-        for <git@vger.kernel.org>; Sat, 17 Jul 2010 07:53:09 -0700 (PDT)
-Received: by 10.231.146.196 with SMTP id i4mr2197646ibv.110.1279378389127; 
-	Sat, 17 Jul 2010 07:53:09 -0700 (PDT)
-Received: by 10.231.160.195 with HTTP; Sat, 17 Jul 2010 07:53:08 -0700 (PDT)
-In-Reply-To: <20100717055257.GB29290@burratino>
-X-Brightmail-Tracker: AAAAAxUrKT8VKysPFSwSbA==
+	id S1756006Ab0GQPMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Jul 2010 11:12:25 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:35869 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754540Ab0GQPMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jul 2010 11:12:24 -0400
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 7383B1647058C;
+	Sat, 17 Jul 2010 17:11:47 +0200 (CEST)
+Received: from [80.128.59.5] (helo=[192.168.178.29])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1Oa93L-00036U-00; Sat, 17 Jul 2010 17:11:47 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <7viq4k8i0e.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19XtMuFPL9FWqUbDrq0uN/FjusXhzmoKQzktgz4
+	D2y8dgOcGy5JDg+94R3jVc6QAp0ckpdszjsvmMlVxgrBptKwIF
+	ubWZ21pLjEuZy9TUK4gQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151184>
 
-> But first a more basic question: why not just add =93./=94 to the sta=
-rt of
-> the command name?
-Wow, of course... that's the obvious solution.
+To make the behavior of "git submodule add" more consistent with "git add"
+ignored submodule paths should not be silently added when they match an
+entry in a .gitignore file. To be able to override that default behavior
+in the same way as we can do that for "git add", the new option "--force"
+is introduced.
 
-Thanks for the comments!
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+
+Am 13.07.2010 00:14, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> With this patch it should be easy to have "git submodule add" return
+>> an error /before/ adding a submodule path and its contents when it
+>> is found in .gitignore.
+>>
+>> Opinions?
+> 
+> Sounds like a right thing to do.
+
+So here we go. This patch applies to pu as it needs the
+'git add: Add the "--ignore-missing" option for the dry run'
+patch to work.
+
+
+ Documentation/git-submodule.txt |    7 ++++++-
+ git-submodule.sh                |   16 ++++++++++++++--
+ t/t7400-submodule-basic.sh      |   27 +++++++++++++++------------
+ 3 files changed, 35 insertions(+), 15 deletions(-)
+
+diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
+index 76a832a..617069f 100644
+--- a/Documentation/git-submodule.txt
++++ b/Documentation/git-submodule.txt
+@@ -9,7 +9,7 @@ git-submodule - Initialize, update or inspect submodules
+ SYNOPSIS
+ --------
+ [verse]
+-'git submodule' [--quiet] add [-b branch]
++'git submodule' [--quiet] add [-b branch] [-f|--force]
+ 	      [--reference <repository>] [--] <repository> [<path>]
+ 'git submodule' [--quiet] status [--cached] [--recursive] [--] [<path>...]
+ 'git submodule' [--quiet] init [--] [<path>...]
+@@ -187,6 +187,11 @@ OPTIONS
+ --branch::
+ 	Branch of repository to add as submodule.
+
++-f::
++--force::
++	This option is only valid for the add command.
++	Allow adding an otherwise ignored submodule path.
++
+ --cached::
+ 	This option is only valid for status and summary commands.  These
+ 	commands typically use the commit found in the submodule HEAD, but
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ad2417d..170186f 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -5,7 +5,7 @@
+ # Copyright (c) 2007 Lars Hjemli
+
+ dashless=$(basename "$0" | sed -e 's/-/ /')
+-USAGE="[--quiet] add [-b branch] [--reference <repository>] [--] <repository> [<path>]
++USAGE="[--quiet] add [-b branch] [-f|--force] [--reference <repository>] [--] <repository> [<path>]
+    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
+    or: $dashless [--quiet] init [--] [<path>...]
+    or: $dashless [--quiet] update [--init] [-N|--no-fetch] [--rebase] [--reference <repository>] [--merge] [--recursive] [--] [<path>...]
+@@ -19,6 +19,7 @@ require_work_tree
+
+ command=
+ branch=
++force=
+ reference=
+ cached=
+ recursive=
+@@ -133,6 +134,9 @@ cmd_add()
+ 			branch=$2
+ 			shift
+ 			;;
++		-f | --force)
++			force=$1
++			;;
+ 		-q|--quiet)
+ 			GIT_QUIET=1
+ 			;;
+@@ -201,6 +205,14 @@ cmd_add()
+ 	git ls-files --error-unmatch "$path" > /dev/null 2>&1 &&
+ 	die "'$path' already exists in the index"
+
++	if test -z "$force" && ! git add --dry-run --ignore-missing "$path" > /dev/null 2>&1
++	then
++		echo >&2 "The following path is ignored by one of your .gitignore files:" &&
++		echo >&2 $path &&
++		echo >&2 "Use -f if you really want to add it."
++		exit 1
++	fi
++
+ 	# perhaps the path exists and is already a git repo, else clone it
+ 	if test -e "$path"
+ 	then
+@@ -234,7 +246,7 @@ cmd_add()
+ 		) || die "Unable to checkout submodule '$path'"
+ 	fi
+
+-	git add --force "$path" ||
++	git add $force "$path" ||
+ 	die "Failed to add submodule '$path'"
+
+ 	git config -f .gitmodules submodule."$path".path "$path" &&
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index d9f2785..9bda970 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -86,25 +86,28 @@ test_expect_success 'submodule add' '
+ 	test_cmp empty untracked
+ '
+
+-test_expect_success 'submodule add to .gitignored path' '
+-	echo "refs/heads/master" >expect &&
+-	>empty &&
+-
++test_expect_success 'submodule add to .gitignored path fails' '
+ 	(
+ 		cd addtest-ignore &&
++		cat <<-\EOF >expect &&
++		The following path is ignored by one of your .gitignore files:
++		submod
++		Use -f if you really want to add it.
++		EOF
+ 		# Does not use test_commit due to the ignore
+ 		echo "*" > .gitignore &&
+ 		git add --force .gitignore &&
+ 		git commit -m"Ignore everything" &&
+-		git submodule add "$submodurl" submod &&
+-		git submodule init
+-	) &&
++		! git submodule add "$submodurl" submod >actual 2>&1 &&
++		test_cmp expect actual
++	)
++'
+
+-	rm -f heads head untracked &&
+-	inspect addtest/submod ../.. &&
+-	test_cmp expect heads &&
+-	test_cmp expect head &&
+-	test_cmp empty untracked
++test_expect_success 'submodule add to .gitignored path with --force' '
++	(
++		cd addtest-ignore &&
++		git submodule add --force "$submodurl" submod
++	)
+ '
+
+ test_expect_success 'submodule add --branch' '
+-- 
+1.7.2.rc3.262.gcf61
