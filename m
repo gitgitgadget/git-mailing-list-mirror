@@ -1,60 +1,85 @@
-From: Mahesh Vaidya <forvaidya@gmail.com>
-Subject: Git Fetch / updating HEAD
-Date: Sat, 17 Jul 2010 21:02:47 +0530
-Message-ID: <AANLkTinuK4gx9SG1VKo_NbkP_QWMCmtsfJgUgfoL_KGo@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] git add: Add --ignore-missing to SYNOPSIS
+Date: Sat, 17 Jul 2010 15:33:15 +0000
+Message-ID: <1279380795-15118-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 17 17:33:12 2010
+X-From: git-owner@vger.kernel.org Sat Jul 17 17:33:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oa9Nz-0002OU-He
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 17:33:07 +0200
+	id 1Oa9Oh-0002e9-Jn
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 17:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756084Ab0GQPcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Jul 2010 11:32:52 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:41874 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755998Ab0GQPcw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Jul 2010 11:32:52 -0400
-Received: by gwj18 with SMTP id 18so1519113gwj.19
-        for <git@vger.kernel.org>; Sat, 17 Jul 2010 08:32:50 -0700 (PDT)
+	id S1760033Ab0GQPde convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jul 2010 11:33:34 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:56386 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755998Ab0GQPdd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jul 2010 11:33:33 -0400
+Received: by eya25 with SMTP id 25so750454eya.19
+        for <git@vger.kernel.org>; Sat, 17 Jul 2010 08:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=MqQm7y9uMbFgiDE+CTlcb57dpkwWfRA+BVWuCC7chM8=;
-        b=I0xJmDTRlWALq808rwKgNRymiVuLUevQCaBBlq32rYCCKgRa0xMLCL1jaB9FdV3hPJ
-         N0G8jhnYgagqMCnbKd2Y2So/ANphRq8nP5iAdM6q5wXZznSPDdcpL6kkt5xSvUOZhPv5
-         xvybl6DbpAdUpghC8kBFoB1jkOO+UjVUUqRLY=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=zGY1pNo2t7CScU+CvBVmHT/hzSZJXtwP9eN9Ha3v+r8=;
+        b=bRb7PSNAWV7KSefcF4D/0if6Oxl3P+SnQQ53HwFpCg/F4x/SewMKeBiMV5m1NKEikM
+         YhjnVSG+pu2qgGtl6fyLK6/rErjsLp+Q7nGU0H3/gpApq+MhIPCer9EQaefIKadFpCnH
+         kWCROxhAxs+u5t5lF7YARXLu1L+uO0qLRVke0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=eU2ABIdYjGKtP+/BBWCH4ZOdmR2wbt+ZSam5nSScX8SA2qESUo+k21b5gr9sXSkbJy
-         VGUPN730VmZDiGryx3wA+z5RnFghNii1NhoimumJ3QrBbNBKlP8LA3fk5Qq9WEVIEs/v
-         wRof9H4ve54uPmdM1ol3O+82G98wcEeEktaOs=
-Received: by 10.90.49.7 with SMTP id w7mr1659317agw.184.1279380767176; Sat, 17 
-	Jul 2010 08:32:47 -0700 (PDT)
-Received: by 10.90.33.8 with HTTP; Sat, 17 Jul 2010 08:32:47 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=ZnjNdhxEbt9IhaeJmY6YmzvyhTt0b8M5UUkZV3ogu6r9jvohOpiOPZ5yayHW0A0+K3
+         LTxAymA42d16s7uEJMLF0vn8AplrypUiMWgzbF3ySRbd7razE5ApfkQHF4D6c7ugQLs7
+         JZpor1nUe9DdworNQ12/pkG6YGEbu7Vk+uL5w=
+Received: by 10.213.15.197 with SMTP id l5mr732860eba.95.1279380811227;
+        Sat, 17 Jul 2010 08:33:31 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-233-160.pools.arcor-ip.net [88.67.233.160])
+        by mx.google.com with ESMTPS id a48sm28797308eei.19.2010.07.17.08.33.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 17 Jul 2010 08:33:29 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151187>
 
-Hi,
+All the git add options were listed in the synopsis until the
+--ignore-missing option was added. Change that so that the git add
+documentation now has the complete listing.
 
-git fetch --all --append updates FETCH_HEAD. I'd like this command to
-update HEAD as well; is there any flag ?
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ Documentation/git-add.txt |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-I have a reason to do it; trying to implement multisite
-
-A (master) -> B (readonly mirror) -> C (workspace)
-
-if sitting in B; git fetch does't update HEAD
-
-
-Mahesh Vaidya
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index bfea2c2..e22a62f 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -10,7 +10,8 @@ SYNOPSIS
+ [verse]
+ 'git add' [-n] [-v] [--force | -f] [--interactive | -i] [--patch | -p]
+ 	  [--edit | -e] [--all | [--update | -u]] [--intent-to-add | -N]
+-	  [--refresh] [--ignore-errors] [--] [<filepattern>...]
++	  [--refresh] [--ignore-errors] [--ignore-missing] [--]
++	  [<filepattern>...]
+=20
+ DESCRIPTION
+ -----------
+--=20
+1.7.0.4
