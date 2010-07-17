@@ -1,111 +1,138 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: git top links: 2010-7
-Date: Sat, 17 Jul 2010 02:16:59 +0300
-Message-ID: <AANLkTilmTwl9RaX31MDmVY3YCeATg5RKF3RQbNqb3Soq@mail.gmail.com>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [PATCH/RFC 4/4] Add interactive mode to git-shell for 
+	user-friendliness
+Date: Sat, 17 Jul 2010 00:12:33 -0400
+Message-ID: <AANLkTikiOgV1iE7dwPUkLpWTb_zXSFdEuOYvyqJ1eDCo@mail.gmail.com>
+References: <1279076475-27730-1-git-send-email-gdb@mit.edu>
+	<4C3DC2BD.6020907@digium.com>
+	<20100714152444.GA26674@pcpool00.mathematik.uni-freiburg.de>
+	<201007141740.37867.trast@student.ethz.ch>
+	<20100714160730.GA27078@pcpool00.mathematik.uni-freiburg.de>
+	<AANLkTikEjMeKPkyY4RdRq-ESkmmq4PvqCFPgp8yvLVBz@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 17 01:17:12 2010
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	"Kevin P. Fleming" <kpfleming@digium.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: "Bernhard R. Link" <brlink@debian.org>
+X-From: git-owner@vger.kernel.org Sat Jul 17 06:12:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OZu9X-0007Jl-RA
-	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 01:17:12 +0200
+	id 1OZyla-0000Ko-Mh
+	for gcvg-git-2@lo.gmane.org; Sat, 17 Jul 2010 06:12:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759462Ab0GPXRF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Jul 2010 19:17:05 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:52583 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754185Ab0GPXRD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Jul 2010 19:17:03 -0400
-Received: by eya25 with SMTP id 25so686367eya.19
-        for <git@vger.kernel.org>; Fri, 16 Jul 2010 16:17:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=CIhJvBnflJ87+RjDH4TjG9p/im6SPwvuWGAGoeX1Z4A=;
-        b=B6asy0Uvi9FOa/a6fve5fBsMtIVAkohG5vC7c8DgaVUtd+EPRS9EBtOJ+U+fZy/SQN
-         hmrDlUSNbif/+oH4k64uAtxEETuSO+qc1qhgZ5dev+OqWAQtu/s+zmOgKZINt2WeOQbm
-         ULAZZx8D9SgPpnkXv9xVfIVprSkhnsNI+VQ4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=O8TeTjhyNVqUWiBNQ7HGbTa1biYcVYt5spolO5mZtJmGo1k6AjToE1Lti0CxjgLvSW
-         vIbEGqoexiAm/q3g25WWtK1S5+c6RJVsq58dTtz553vXU2bpQLIY6UL2JoAPSR5PGUBa
-         YV40IealjYYE0czhLs5TX8wdSuUB21vMSKBLU=
-Received: by 10.213.20.132 with SMTP id f4mr66382ebb.23.1279322219348; Fri, 16 
-	Jul 2010 16:16:59 -0700 (PDT)
-Received: by 10.213.34.212 with HTTP; Fri, 16 Jul 2010 16:16:59 -0700 (PDT)
+	id S1751192Ab0GQEMi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Jul 2010 00:12:38 -0400
+Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:44176 "EHLO
+	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750799Ab0GQEMh convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Jul 2010 00:12:37 -0400
+X-AuditID: 12074423-b7be0ae000000a83-03-4c412db47988
+Received: from mailhub-auth-4.mit.edu (MAILHUB-AUTH-4.MIT.EDU [18.7.62.39])
+	by dmz-mailsec-scanner-6.mit.edu (Symantec Brightmail Gateway) with SMTP id 5A.4B.02691.4BD214C4; Sat, 17 Jul 2010 00:12:37 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o6H4CZqT027788
+	for <git@vger.kernel.org>; Sat, 17 Jul 2010 00:12:35 -0400
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6H4CYdd006541
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Sat, 17 Jul 2010 00:12:35 -0400 (EDT)
+Received: by iwn7 with SMTP id 7so2806706iwn.19
+        for <git@vger.kernel.org>; Fri, 16 Jul 2010 21:12:34 -0700 (PDT)
+Received: by 10.231.14.201 with SMTP id h9mr1826846iba.129.1279339953964; Fri, 
+	16 Jul 2010 21:12:33 -0700 (PDT)
+Received: by 10.231.160.195 with HTTP; Fri, 16 Jul 2010 21:12:33 -0700 (PDT)
+In-Reply-To: <AANLkTikEjMeKPkyY4RdRq-ESkmmq4PvqCFPgp8yvLVBz@mail.gmail.com>
+X-Brightmail-Tracker: AAAAAhUrKw8VLBJs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151178>
 
-Hi,
+It looks like git@ got dropped from the CC at some point, but I had
+written a few days ago:
 
-git top links is my attempt to gather all the links people have been
-tagging as "git" in delicious.com[1] (these are not chosen by me).
+>> Is there a reason that you duplicate functionality offered by run_co=
+mmand()?
+> No--I hadn't realized that existed. =A0I'll switch over to that in V2=
+ of
+> this patch series.
 
-It has been a long time since the last post. I blame it to a) I
-haven=E2=80=99t had much time b) there hasn=E2=80=99t been so much acti=
-vity b.1) or
-there=E2=80=99s a problem with Google Reader that it=E2=80=99s doping s=
-ome activity.
+Today, I inspected run_command() in more detail.  Unfortunately, I'm
+not sure of the best way to use it in this situation.  In particular,
+run_command() uses execvp, meaning that PATH is invoked.  However, the
+user should only be able to run commands in the git-shell-commands
+directory.   I do have a few ideas for approaches here; maybe others
+see more?  Anyway:
+- Set PATH to just $HOME/git-shell-commands.  But then the helper
+scripts have to restore PATH to a sane value themselves, and it's not
+really clear to me what that value should be.
+- Under the hood, exec a different script, which processes the user's
+command on its own.  (So if the user types 'help' at the git shell
+prompt, actually exec 'git-shell-wrapper help'.)  The
+git-shell-wrapper could be a dumb wrapper that just execs
+$HOME/git-shell-commands/help or similar.
+- Extend run_command to optionally use execv.  Would any other code
+actually want this functionality though?  If not, it's probably an
+excessively large code change for little benefit.
+- Continue using the one-off run() method that I wrote here.
 
-I=E2=80=99ll be taking a close look at Google Reader to see if it=E2=80=
-=99s doping
-some stuff, but if anyone has a recommendation for an RSS aggregator
-that would store thousands of entries, that would be nice.
+Do people have opinions on the most elegant way to handle this?
 
-The fancier blog version is here:
-http://gitlog.wordpress.com/2010/07/16/git-top-links-2010-7/
+Thanks!
 
-1. Git Reference (191)
-Comprehensive guide for git; well organized, and pleasant to the eye
-http://gitref.org/
+Greg
 
-2. Git for the lazy (62)
-Straightforward introduction to git
-http://www.spheredev.org/wiki/Git_for_the_lazy
-
-3. Gitbox -- Everyday git interface for human beings. (57)
-Graphical UI for Mac OS X
-http://gitbox.pierlis.com/
-
-4. Agile git Workflow (25)
-Tips to use git on an "agile" environment
-http://geewax.org/2009/11/21/agile-git-workflow.html
-
-5. Tv's cobweb: Git for Computer Scientists (18)
-Explanation of git operations through diagrams
-http://eagain.net/articles/git-for-computer-scientists/
-
-6. Distributed Version Control is here to stay, baby (14)
-A story of why Stack Overflow's podcast regarding DVCS was plain wrong
-http://www.joelonsoftware.com/items/2010/03/17.html
-
-7. An Illustrated Guide to Git on Windows (12)
-http://nathanj.github.com/gitguide/tour.html
-
-8. Mercurial tutorial (12)
-/me shrugs
-http://hginit.com/
-
-9. Git for the nervous developer (10)
-Explaining git from a convert
-http://beust.com/weblog/2010/04/06/git-for-the-nervous-developer/
-
-10. Sparkle Share (9)
-Tool to replace dropbox (uses git internally)
-http://www.sparkleshare.org/
-
-[1] http://delicious.com/tag/git
-
---=20
-=46elipe Contreras
+> On Wed, Jul 14, 2010 at 12:07 PM, Bernhard R. Link <brlink@debian.org=
+> wrote:
+>> * Thomas Rast <trast@student.ethz.ch> [100714 17:41]:
+>>> [Please don't trim the Cc list without good reason.]
+>>
+>> The mail I answered to had only git@vger.kernel.org in CC and some
+>> syntax errors in To.
+>>
+>>> Bernhard R. Link wrote:
+>>> > To be more specific: If NULL is (void *)0 then it does not need t=
+o be
+>>> > cast. Sadly the standard allows to define it as 0, and so it is o=
+n
+>>> > some systems. So to be portable it needs to be cast to be a point=
+er,
+>>> > otherwise the varargs argument is assumed to be an int.
+>>>
+>>> Worse, the pointer representations need not be the same between typ=
+es,
+>>> even though that is a fairly exotic idea:
+>>>
+>>> =A0 http://c-faq.com/null/machexamp.html
+>>>
+>>> So it seems execl() must always have an explicitly-cast (char*)NULL
+>>> sentinel.
+>>
+>> There is a difference between ugly operating systems where everythin=
+g
+>> else works and you need to cast it and things too exotic to have any
+>> chance to get the rest of the code to work without big changes.
+>>
+>> Machines where you do not get a NULL pointer by a memset(,0,), callo=
+c
+>> or the like will have bigger problems anyway. (have not looked at gi=
+t,
+>> but I'd be suprised if at every place there is an explicit assignmen=
+t
+>> for the pointers).
+>> Note that in the other examples, char * and void * are the same anyw=
+ay.
+>>
+>> =A0 =A0 =A0 =A0Bernhard R. Link
+>>
+>
