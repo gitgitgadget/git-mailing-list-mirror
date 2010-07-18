@@ -1,113 +1,102 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv2 GSOC 09/11] gitweb: Create Gitweb::Util module
-Date: Sun, 18 Jul 2010 19:45:45 +0200
-Message-ID: <201007181945.46117.jnareb@gmail.com>
-References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com> <1279178951-23712-10-git-send-email-pavan.sss1991@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: git top links: 2010-7
+Date: Sun, 18 Jul 2010 20:46:12 +0300
+Message-ID: <AANLkTikTNxJtg5NV4tCK64skQx9DBAq7osB7g7Q0xmxI@mail.gmail.com>
+References: <AANLkTilmTwl9RaX31MDmVY3YCeATg5RKF3RQbNqb3Soq@mail.gmail.com>
+	<m3eif0ncva.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Petr Baudis <pasky@ucw.cz>
-To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 18 19:46:10 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 18 19:46:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaXwH-0006WT-Mv
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 19:46:10 +0200
+	id 1OaXwZ-0006ck-9S
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 19:46:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756795Ab0GRRpy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jul 2010 13:45:54 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45565 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756789Ab0GRRpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jul 2010 13:45:53 -0400
-Received: by fxm14 with SMTP id 14so1810193fxm.19
-        for <git@vger.kernel.org>; Sun, 18 Jul 2010 10:45:51 -0700 (PDT)
+	id S1756813Ab0GRRqQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 13:46:16 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:65244 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756789Ab0GRRqO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 13:46:14 -0400
+Received: by ewy23 with SMTP id 23so1124253ewy.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 10:46:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=LvfLsMvzrCiwq+kXpRlhp3TBUfyz4oo4KuMUfIfcqyM=;
-        b=t5PgDPA1GlvJQ6MSVqS3lGYWqvBfBFTquPYIHN8dY9bWUhsNUpK9cZaSgoZ0NmcQZ7
-         cmPm4lyQc6s2rKXei7d+VDigr/QSsCV8wLEheau4edFcmlv+Rk+crRLNPXY76JwlmUWl
-         etv1cCw/9qwchzWSjfcHZMTO/R+Q66jt3pRI0=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AxuPSMjNBc2LqHhWp1cN+szHTSQv80fUgJbYUQiMcTA=;
+        b=WZzk75H3WgCQlQ08y2SYVsjgGIex8CJTfilXhIEPfO44WB/s1Em7KP6t9ZCntOyJ/n
+         bgLkYX97xJhz/Bv5OrkUwAZeUbwB6X64akWiyQuGLecRAr/kfKHSXAeRaayEBD5TUjW5
+         x1vi53/UHmWDooVez9KkJ8NufJMtSQsmNWyrE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=F6uwwjVZoyIHVDmOnfw12KyJBSlifZPU+uSsQTKVHhrblzaPT/PhawHhkHjGhQnzrc
-         3F1UWu6xAUG+vH/D8AC7qzHL2SwXQ+YORYnEuJ5ptlV08xxO6TzfVWuioNUPhjXYETO3
-         bXtefHMxBa+5j09ZEsDa53JT57ZaSlRV3W63E=
-Received: by 10.86.57.19 with SMTP id f19mr2070391fga.78.1279475151809;
-        Sun, 18 Jul 2010 10:45:51 -0700 (PDT)
-Received: from [192.168.1.13] (abwa30.neoplus.adsl.tpnet.pl [83.8.224.30])
-        by mx.google.com with ESMTPS id y2sm1670742fau.12.2010.07.18.10.45.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 18 Jul 2010 10:45:51 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1279178951-23712-10-git-send-email-pavan.sss1991@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=r8uFzyL3YSmNRyPKKAcLcwKbvanGGcxXsYJJSPuUvxrwW1AVEN7FNJ+w+AqeYupo6e
+         zz/0tGg2WLGNNydPvzHiKww80JebnJscjocgd5/MMliSRXX0drpD0KGy1NBRZJYe8nNi
+         umph63tykQyi3UW5Oq7mov0i0GJdv0tQ4pNZc=
+Received: by 10.213.20.132 with SMTP id f4mr3508763ebb.92.1279475173027; Sun, 
+	18 Jul 2010 10:46:13 -0700 (PDT)
+Received: by 10.213.28.148 with HTTP; Sun, 18 Jul 2010 10:46:12 -0700 (PDT)
+In-Reply-To: <m3eif0ncva.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151223>
 
-On Thu, 15 Jul 2010, Pavan Kumar Sunkara wrote:
-
-> Create Gitweb::Util module in 'gitweb/lib/Gitweb/Util.pm'
-> to store the git utility subroutines related to gitweb.
-> 
-> This module include subroutines in various categories
-> such as git utility subs invoking git commands, git
-> utility subs accessing git repository, mimetype related
-> subs and HTML output utility subs.
-
-O.K. so the theme is small helper subroutines, isn't it?
-
-> 
-> Subroutines moved:
-> 	git_get_head_hash
-> 	git_get_full_hash
-> 	git_get_short_hash
-> 	git_get_hash
-> 	git_get_type
-> 	git_get_hash_by_path
-> 	git_get_path_by_hash
-> 	git_get_last_activity
-> 	git_get_references
-> 	git_get_rev_name_tags
-> 	git_get_heads_list
-> 	git_get_tags_list
-> 	mimetype_guess_file
-> 	mimetype_guess
-> 	blob_mimetype
-> 	blob_contenttype
-> 	guess_file_syntax
-> 	run_highlighter
-> 	fill_from_file_info
-> 	is_deleted
-> 	is_patch_split
-
-Just a question: shouldn't git_get_last_activity subroutine be in
-Gitweb::RepoConfig module?  Or is Gitweb::RepoConfig only about "static"
-properties of a repository?
-
+On Sun, Jul 18, 2010 at 4:23 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
 >
-> Update 'gitweb/Makefile' to install Gitweb::Util alongside gitweb.
-> 
-> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-> ---
+>> 6. Distributed Version Control is here to stay, baby (14)
+>> A story of why Stack Overflow's podcast regarding DVCS was plain wro=
+ng
+>> http://www.joelonsoftware.com/items/2010/03/17.html
+>
+> And if you read this blog post carefully, you would see that Joel
+> still doesn't f***ing get it.
 
-I have not checked the patch, but is should be mainly straightforward
-code movement plus some boilerplate.
+Yeah, but it's progress.
 
--- 
-Jakub Narebski
-Poland
+>> 9. Git for the nervous developer (10)
+>> Explaining git from a convert
+>> http://beust.com/weblog/2010/04/06/git-for-the-nervous-developer/
+>
+> This quote from abovementioned blog is especially apt
+>
+> =C2=A0"Here is an analogy that might help, though: to me, learning Gi=
+t is
+> =C2=A0very similar to learning a foreign language. Natural languages =
+are
+> =C2=A0notoriously hard to learn for adults because their organic grow=
+th
+> =C2=A0has resulted in all kinds of inconsistencies and oddities. At t=
+he
+> =C2=A0end of the day, the only way to learn a foreign language is to
+> =C2=A0memorize, memorize and memorize. As years go by, practice make
+> =C2=A0memory regurgitation more automatic and the use of that languag=
+e
+> =C2=A0requires less and less conscious effort, but the learning curve=
+ is
+> =C2=A0something that just can't be avoided."
+>
+> The Git UI was result of organic growth. =C2=A0It is not as much as i=
+t was
+> designed, rather than "happened".
+
+Yeap, in a similar fashion than linux; some call it "evolutive"
+programming, I think.
+
+"True macho linux developers don't design" -- can't remember where I he=
+ard that.
+
+--=20
+=46elipe Contreras
