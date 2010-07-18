@@ -1,102 +1,80 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: git top links: 2010-7
-Date: Sun, 18 Jul 2010 20:46:12 +0300
-Message-ID: <AANLkTikTNxJtg5NV4tCK64skQx9DBAq7osB7g7Q0xmxI@mail.gmail.com>
-References: <AANLkTilmTwl9RaX31MDmVY3YCeATg5RKF3RQbNqb3Soq@mail.gmail.com>
-	<m3eif0ncva.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 18 19:46:29 2010
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: remove duplicate code and not needed break statement
+Date: Sun, 18 Jul 2010 19:49:59 +0200
+Message-ID: <1279475399-6081-1-git-send-email-ralf.thielow@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 18 19:50:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaXwZ-0006ck-9S
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 19:46:27 +0200
+	id 1OaY0C-0007kW-2s
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 19:50:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756813Ab0GRRqQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 13:46:16 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:65244 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756789Ab0GRRqO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 13:46:14 -0400
-Received: by ewy23 with SMTP id 23so1124253ewy.19
-        for <git@vger.kernel.org>; Sun, 18 Jul 2010 10:46:13 -0700 (PDT)
+	id S1756819Ab0GRRuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jul 2010 13:50:07 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:63428 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756789Ab0GRRuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jul 2010 13:50:06 -0400
+Received: by eya25 with SMTP id 25so839887eya.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 10:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AxuPSMjNBc2LqHhWp1cN+szHTSQv80fUgJbYUQiMcTA=;
-        b=WZzk75H3WgCQlQ08y2SYVsjgGIex8CJTfilXhIEPfO44WB/s1Em7KP6t9ZCntOyJ/n
-         bgLkYX97xJhz/Bv5OrkUwAZeUbwB6X64akWiyQuGLecRAr/kfKHSXAeRaayEBD5TUjW5
-         x1vi53/UHmWDooVez9KkJ8NufJMtSQsmNWyrE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=BE3+sgc4PuOyLkCRwVU01Ae5cKbQUzpsKg4gB3qyJi8=;
+        b=amyopEizzUiPJJdKTa7wXiGg9yEYQ5SBhZjecIA99FAJDEN9GrTIoCMfMm0UlsKAvZ
+         dpK6Xz0OlMLp43uwF8Y5uRF/M6xGPWsh5KFteem7LsTaHdhyxkqrBswK04C0i7TbFqBK
+         WvOqCdC7Ep+6UglvITpZEK9BVCVl9M6fsDKMY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=r8uFzyL3YSmNRyPKKAcLcwKbvanGGcxXsYJJSPuUvxrwW1AVEN7FNJ+w+AqeYupo6e
-         zz/0tGg2WLGNNydPvzHiKww80JebnJscjocgd5/MMliSRXX0drpD0KGy1NBRZJYe8nNi
-         umph63tykQyi3UW5Oq7mov0i0GJdv0tQ4pNZc=
-Received: by 10.213.20.132 with SMTP id f4mr3508763ebb.92.1279475173027; Sun, 
-	18 Jul 2010 10:46:13 -0700 (PDT)
-Received: by 10.213.28.148 with HTTP; Sun, 18 Jul 2010 10:46:12 -0700 (PDT)
-In-Reply-To: <m3eif0ncva.fsf@localhost.localdomain>
+        d=googlemail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=hBqDDoV5CyA1ICHqUVnZ3RJ/wf+5FpTKuXc/LTtz0TCLomV7tDjZfHogJXLY24aUCY
+         KcIT0L/zmlCWYpSbrk9fRrrf+UQh6piQhLA5cjGpwRTHrebo3IFOeaZKGkLFzt1stJ0u
+         y1DQwdr15aYami2iVB1h5lebYuCxiIrpe59Sg=
+Received: by 10.213.22.18 with SMTP id l18mr3503121ebb.85.1279475404868;
+        Sun, 18 Jul 2010 10:50:04 -0700 (PDT)
+Received: from localhost.localdomain (dslb-094-222-159-075.pools.arcor-ip.net [94.222.159.75])
+        by mx.google.com with ESMTPS id z55sm39496218eeh.21.2010.07.18.10.50.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 18 Jul 2010 10:50:04 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151224>
 
-On Sun, Jul 18, 2010 at 4:23 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> 6. Distributed Version Control is here to stay, baby (14)
->> A story of why Stack Overflow's podcast regarding DVCS was plain wro=
-ng
->> http://www.joelonsoftware.com/items/2010/03/17.html
->
-> And if you read this blog post carefully, you would see that Joel
-> still doesn't f***ing get it.
+Remove duplicate code and not needed break statement.
 
-Yeah, but it's progress.
+On switch statements you can use multiple cases for one
+statement and on a goto statement you not need a break.
 
->> 9. Git for the nervous developer (10)
->> Explaining git from a convert
->> http://beust.com/weblog/2010/04/06/git-for-the-nervous-developer/
->
-> This quote from abovementioned blog is especially apt
->
-> =C2=A0"Here is an analogy that might help, though: to me, learning Gi=
-t is
-> =C2=A0very similar to learning a foreign language. Natural languages =
-are
-> =C2=A0notoriously hard to learn for adults because their organic grow=
-th
-> =C2=A0has resulted in all kinds of inconsistencies and oddities. At t=
-he
-> =C2=A0end of the day, the only way to learn a foreign language is to
-> =C2=A0memorize, memorize and memorize. As years go by, practice make
-> =C2=A0memory regurgitation more automatic and the use of that languag=
-e
-> =C2=A0requires less and less conscious effort, but the learning curve=
- is
-> =C2=A0something that just can't be avoided."
->
-> The Git UI was result of organic growth. =C2=A0It is not as much as i=
-t was
-> designed, rather than "happened".
+>From 5b3e7c8f8b81a295b5c58534be250f5a818ccc64 Mon Sep 17 00:00:00 2001
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Date: Sun, 18 Jul 2010 18:48:58 +0200
+Subject: [PATCH] remove duplicate code and not needed break statement
 
-Yeap, in a similar fashion than linux; some call it "evolutive"
-programming, I think.
+---
+ server-info.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
 
-"True macho linux developers don't design" -- can't remember where I he=
-ard that.
-
---=20
-=46elipe Contreras
+diff --git a/server-info.c b/server-info.c
+index 4098ca2..9ec744e 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -113,11 +113,8 @@ static int read_pack_info_file(const char *infofile)
+ 				goto out_stale;
+ 			break;
+ 		case 'D': /* we used to emit D but that was misguided. */
+-			goto out_stale;
+-			break;
+ 		case 'T': /* we used to emit T but nobody uses it. */
+ 			goto out_stale;
+-			break;
+ 		default:
+ 			error("unrecognized: %s", line);
+ 			break;
+-- 
