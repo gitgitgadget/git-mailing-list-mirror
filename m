@@ -1,282 +1,93 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 3/5] Documentation/reset: promote 'examples' one section up
-Date: Sun, 18 Jul 2010 20:23:24 +0200
-Message-ID: <469f6ac3519d656e6755f4ceda9df49778dc9cb5.1279477130.git.trast@student.ethz.ch>
-References: <cover.1279477130.git.trast@student.ethz.ch>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: remove duplicate code and not needed break statement
+Date: Sun, 18 Jul 2010 20:29:06 +0200
+Message-ID: <AANLkTinrg2cp0XL0HOApGN25kmuL7xdik5aEo3lfRqz0@mail.gmail.com>
+References: <1279475399-6081-1-git-send-email-ralf.thielow@googlemail.com>
+	<AANLkTilhNLWEF-40hE9tWdJQX6FXpYWXCu7yhAC11Zvq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jul 18 20:24:08 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Valeo de Vries <valeo@valeo.co.cc>
+X-From: git-owner@vger.kernel.org Sun Jul 18 20:29:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaYWz-0002SZ-TW
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 20:24:06 +0200
+	id 1OaYbz-00043I-NN
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 20:29:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756952Ab0GRSXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jul 2010 14:23:41 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:9245 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756885Ab0GRSXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jul 2010 14:23:39 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 18 Jul
- 2010 20:23:37 +0200
-Received: from localhost.localdomain (129.132.209.162) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sun, 18 Jul
- 2010 20:23:35 +0200
-X-Mailer: git-send-email 1.7.2.rc3.317.gc287
-In-Reply-To: <cover.1279477130.git.trast@student.ethz.ch>
+	id S1756982Ab0GRS3L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 14:29:11 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50049 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756907Ab0GRS3K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 14:29:10 -0400
+Received: by wyb42 with SMTP id 42so3679865wyb.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 11:29:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W0KKYMFX2cYIc+3xthtDuj3t5bX20WZxY+FR63D5WpY=;
+        b=dTrtTpQbBs3jHdHFGTJ+5L1sPEALH298oVkR38cNFRhaTPOPBGnBwPTnW+JLXRLQGp
+         dYfr/AQd50aQdStoLIaxHaov9g0V6jX2nG3sFfhPwrKs9yAgAC8LadYS69UJ4e2oiAmV
+         1LSlmzohxFwZpT0lfNAt/uFNtkUE4DAFNT6BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=dvpeynkwSFLlSiyWj+eYoXMKx9IYSnMlxl9KGFM4xH9r79AJ7Nwzve7Z8Ms5J3DZ/S
+         xAKJR0QsbvpvZ9sA4zvNGfVhRuzy46PAJNJgs4OLqNcybOT053pXKd5oRfwp7lsUv3FW
+         rJmn5SPwGWintSOjDJj+VnrrBr+71u8bASy8w=
+Received: by 10.227.141.138 with SMTP id m10mr1789851wbu.20.1279477746375; 
+	Sun, 18 Jul 2010 11:29:06 -0700 (PDT)
+Received: by 10.216.91.11 with HTTP; Sun, 18 Jul 2010 11:29:06 -0700 (PDT)
+In-Reply-To: <AANLkTilhNLWEF-40hE9tWdJQX6FXpYWXCu7yhAC11Zvq@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151237>
 
-Move the examples section upwards, before the discussion that gives
-the gory details.  Adjust the style of the heading accordingly.
+2010/7/18 Valeo de Vries <valeo@valeo.co.cc>:
+> On 18 July 2010 18:49, Ralf Thielow <ralf.thielow@googlemail.com> wro=
+te:
+>> Remove duplicate code and not needed break statement.
+>>
+>> On switch statements you can use multiple cases for one
+>> statement and on a goto statement you not need a break.
+>>
+>> From 5b3e7c8f8b81a295b5c58534be250f5a818ccc64 Mon Sep 17 00:00:00 20=
+01
+>> From: Ralf Thielow <ralf.thielow@googlemail.com>
+>> Date: Sun, 18 Jul 2010 18:48:58 +0200
+>> Subject: [PATCH] remove duplicate code and not needed break statemen=
+t
+>>
+>> ---
+>> =C2=A0server-info.c | =C2=A0 =C2=A03 ---
+>> =C2=A01 files changed, 0 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/server-info.c b/server-info.c
+>> index 4098ca2..9ec744e 100644
+>> --- a/server-info.c
+>> +++ b/server-info.c
+>> @@ -113,11 +113,8 @@ static int read_pack_info_file(const char *info=
+file)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0goto out_stale;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0break;
+>
+> You seem to have missed another, or am I just lacking context? ;)
+>
+> Valeo
+>
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- Documentation/git-reset.txt |  216 ++++++++++++++++++++++---------------------
- 1 files changed, 109 insertions(+), 107 deletions(-)
+There were 2 cases on that switch statement which do the same thing.
+in case 'P' there is an if-statment before.
 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index dca75b3..70198f9 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -83,113 +83,7 @@ OPTIONS
- 	Be quiet, only report errors.
- 
- 
--DISCUSSION
------------
--
--The tables below show what happens when running:
--
------------
--git reset --option target
------------
--
--to reset the HEAD to another commit (`target`) with the different
--reset options depending on the state of the files.
--
--In these tables, A, B, C and D are some different states of a
--file. For example, the first line of the first table means that if a
--file is in state A in the working tree, in state B in the index, in
--state C in HEAD and in state D in the target, then "git reset --soft
--target" will put the file in state A in the working tree, in state B
--in the index and in state D in HEAD.
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       A       B     C    D     --soft   A       B     D
--				--mixed  A       D     D
--				--hard   D       D     D
--				--merge (disallowed)
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       A       B     C    C     --soft   A       B     C
--				--mixed  A       C     C
--				--hard   C       C     C
--				--merge (disallowed)
--				--keep   A       C     C
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       B     C    D     --soft   B       B     D
--				--mixed  B       D     D
--				--hard   D       D     D
--				--merge  D       D     D
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       B     C    C     --soft   B       B     C
--				--mixed  B       C     C
--				--hard   C       C     C
--				--merge  C       C     C
--				--keep   B       C     C
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       C     C    D     --soft   B       C     D
--				--mixed  B       D     D
--				--hard   D       D     D
--				--merge (disallowed)
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       C     C    C     --soft   B       C     C
--				--mixed  B       C     C
--				--hard   C       C     C
--				--merge  B       C     C
--				--keep   B       C     C
--
--"reset --merge" is meant to be used when resetting out of a conflicted
--merge. Any mergy operation guarantees that the work tree file that is
--involved in the merge does not have local change wrt the index before
--it starts, and that it writes the result out to the work tree. So if
--we see some difference between the index and the target and also
--between the index and the work tree, then it means that we are not
--resetting out from a state that a mergy operation left after failing
--with a conflict. That is why we disallow --merge option in this case.
--
--"reset --keep" is meant to be used when removing some of the last
--commits in the current branch while keeping changes in the working
--tree. If there could be conflicts between the changes in the commit we
--want to remove and the changes in the working tree we want to keep,
--the reset is disallowed. That's why it is disallowed if there are both
--changes between the working tree and HEAD, and between HEAD and the
--target. To be safe, it is also disallowed when there are unmerged
--entries.
--
--The following tables show what happens when there are unmerged
--entries:
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       X       U     A    B     --soft  (disallowed)
--				--mixed  X       B     B
--				--hard   B       B     B
--				--merge  B       B     B
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       X       U     A    A     --soft  (disallowed)
--				--mixed  X       A     A
--				--hard   A       A     A
--				--merge  A       A     A
--				--keep  (disallowed)
--
--X means any state and U means an unmerged index.
--
--Examples
-+EXAMPLES
- --------
- 
- Undo a commit and redo::
-@@ -383,6 +277,114 @@ $ git reset --keep start                    <3>
- <3> But you can use "reset --keep" to remove the unwanted commit after
-     you switched to "branch2".
- 
-+
-+DISCUSSION
-+----------
-+
-+The tables below show what happens when running:
-+
-+----------
-+git reset --option target
-+----------
-+
-+to reset the HEAD to another commit (`target`) with the different
-+reset options depending on the state of the files.
-+
-+In these tables, A, B, C and D are some different states of a
-+file. For example, the first line of the first table means that if a
-+file is in state A in the working tree, in state B in the index, in
-+state C in HEAD and in state D in the target, then "git reset --soft
-+target" will put the file in state A in the working tree, in state B
-+in the index and in state D in HEAD.
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       A       B     C    D     --soft   A       B     D
-+				--mixed  A       D     D
-+				--hard   D       D     D
-+				--merge (disallowed)
-+				--keep  (disallowed)
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       A       B     C    C     --soft   A       B     C
-+				--mixed  A       C     C
-+				--hard   C       C     C
-+				--merge (disallowed)
-+				--keep   A       C     C
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       B       B     C    D     --soft   B       B     D
-+				--mixed  B       D     D
-+				--hard   D       D     D
-+				--merge  D       D     D
-+				--keep  (disallowed)
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       B       B     C    C     --soft   B       B     C
-+				--mixed  B       C     C
-+				--hard   C       C     C
-+				--merge  C       C     C
-+				--keep   B       C     C
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       B       C     C    D     --soft   B       C     D
-+				--mixed  B       D     D
-+				--hard   D       D     D
-+				--merge (disallowed)
-+				--keep  (disallowed)
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       B       C     C    C     --soft   B       C     C
-+				--mixed  B       C     C
-+				--hard   C       C     C
-+				--merge  B       C     C
-+				--keep   B       C     C
-+
-+"reset --merge" is meant to be used when resetting out of a conflicted
-+merge. Any mergy operation guarantees that the work tree file that is
-+involved in the merge does not have local change wrt the index before
-+it starts, and that it writes the result out to the work tree. So if
-+we see some difference between the index and the target and also
-+between the index and the work tree, then it means that we are not
-+resetting out from a state that a mergy operation left after failing
-+with a conflict. That is why we disallow --merge option in this case.
-+
-+"reset --keep" is meant to be used when removing some of the last
-+commits in the current branch while keeping changes in the working
-+tree. If there could be conflicts between the changes in the commit we
-+want to remove and the changes in the working tree we want to keep,
-+the reset is disallowed. That's why it is disallowed if there are both
-+changes between the working tree and HEAD, and between HEAD and the
-+target. To be safe, it is also disallowed when there are unmerged
-+entries.
-+
-+The following tables show what happens when there are unmerged
-+entries:
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       X       U     A    B     --soft  (disallowed)
-+				--mixed  X       B     B
-+				--hard   B       B     B
-+				--merge  B       B     B
-+				--keep  (disallowed)
-+
-+      working index HEAD target         working index HEAD
-+      ----------------------------------------------------
-+       X       U     A    A     --soft  (disallowed)
-+				--mixed  X       A     A
-+				--hard   A       A     A
-+				--merge  A       A     A
-+				--keep  (disallowed)
-+
-+X means any state and U means an unmerged index.
-+
-+
- Author
- ------
- Written by Junio C Hamano <gitster@pobox.com> and Linus Torvalds <torvalds@osdl.org>
--- 
-1.7.2.rc3.317.gc287
+Ralf
