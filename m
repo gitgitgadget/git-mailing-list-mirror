@@ -1,104 +1,81 @@
-From: "Rainer Lauer" <lauerr@gmx.net>
-Subject: AW: Challenge with Git-Bash
-Date: Sun, 18 Jul 2010 20:08:44 +0200
-Message-ID: <008a01cb26a4$4313e360$c93baa20$@gmx.net>
-References: <001d01cb25cb$eb176980$c1463c80$@net> <20100717171303.GB10730@burratino>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Challenge with Git-Bash
+Date: Sun, 18 Jul 2010 18:11:30 +0000
+Message-ID: <AANLkTinZCKIDh8bJUVXceqNYD1qkmWZ1fO67t0XJI5Uo@mail.gmail.com>
+References: <001d01cb25cb$eb176980$c1463c80$@net>
+	<20100717171303.GB10730@burratino>
+	<008a01cb26a4$4313e360$c93baa20$@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, <msysgit@googlegroups.com>
-To: "'Jonathan Nieder'" <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 18 20:08:53 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: Rainer Lauer <lauerr@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Jul 18 20:11:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaYIH-0005kJ-FO
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 20:08:53 +0200
+	id 1OaYKt-0006bz-Or
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 20:11:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756844Ab0GRSIs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 14:08:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53062 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756830Ab0GRSIr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 14:08:47 -0400
-Received: (qmail invoked by alias); 18 Jul 2010 18:08:45 -0000
-Received: from pD9E08E8C.dip.t-dialin.net (EHLO Lappi) [217.224.142.140]
-  by mail.gmx.net (mp064) with SMTP; 18 Jul 2010 20:08:45 +0200
-X-Authenticated: #9219177
-X-Provags-ID: V01U2FsdGVkX1/gVJkOsLLgRFtSbZrqOdk+N3D712NgZiNHpff+Fo
-	COS06uMzwBEcNM
-In-Reply-To: <20100717171303.GB10730@burratino>
-X-Mailer: Microsoft Outlook 14.0
-thread-index: AQJBLblBgdg5C3/Ahc5qaLKbDJjUnQNsR91rka+Ek0A=
-Content-Language: de
-X-Y-GMX-Trusted: 0
+	id S1756856Ab0GRSLb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 14:11:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39915 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756830Ab0GRSLa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 14:11:30 -0400
+Received: by iwn7 with SMTP id 7so3820088iwn.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 11:11:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bxuUsVGjpWvtllxXxCvqB+oXtTwMeM2jtYeAow11+Qw=;
+        b=r1KRInelnkYZkRut/DJA716eHTY+CslwtW58/JFS5+iaNcokt/DnmPRK5sbcKKzkC0
+         OwNQ6WdkESt5dKO8dA8XU2CFJixSKbEcpanicZKEK2z+R+7jrJQw2dMigEdztd556YW2
+         vxu3EZPwGPrgMLZIaM5GSCAWRLgny037qKEL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ArE40KZ/Sawu11hZeJmP6vQcnoW+tILmt2ddH/omft1/AH5vU5Wmaw6CcnwObAsSqy
+         +1qqALIUaMN4NIj3FbAXjOyN09LrlIm+vK2YriwXKxb5GGrUPpJw7OLHTJEJ6hgeEhco
+         VMxf53kalUkk9AQFokgln/einzUW9YwKPDPN0=
+Received: by 10.231.171.18 with SMTP id f18mr4631464ibz.9.1279476690124; Sun, 
+	18 Jul 2010 11:11:30 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 18 Jul 2010 11:11:30 -0700 (PDT)
+In-Reply-To: <008a01cb26a4$4313e360$c93baa20$@gmx.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151228>
 
-Hi Jonathan,
-thanks for this hint. Now it is working on the base of environment vari=
-ables.
-
-In order of automatically setting up my projects I'd like to use the co=
-nfiguration file for preparing  CVS-work instead introducing environmen=
-t variables.
-Unfortunately, I'm facing another problem.
-=46ollowing commands don't modify .git/config coming along with my proj=
+On Sun, Jul 18, 2010 at 18:08, Rainer Lauer <lauerr@gmx.net> wrote:
+> Hi Jonathan,
+> thanks for this hint. Now it is working on the base of environment va=
+riables.
+>
+> In order of automatically setting up my projects I'd like to use the =
+configuration file for preparing =C2=A0CVS-work instead introducing env=
+ironment variables.
+> Unfortunately, I'm facing another problem.
+> Following commands don't modify .git/config coming along with my proj=
 ect(s).
-git config user.name=3D"Rainer Lauer"
-git config user.email=3D"Rainer.Lauer@gmx.net"
-git config core.editor=3D"c:/Program Files/SlickEditV14.0.2/win/vs.exe"
-The file seems to stay in initial revision as created with the command =
-git init.
-
-Where is following information stored? Command:  git config --global us=
-er.name=3D"Rainer Lauer". Did I get the documentation right that this i=
-s a definition for all projects?
-
-Regards,
-Rainer
-
------Urspr=C3=BCngliche Nachricht-----
-Von: Jonathan Nieder [mailto:jrnieder@gmail.com]=20
-Gesendet: Samstag, 17. Juli 2010 19:13
-An: Rainer Lauer
-Cc: git@vger.kernel.org; msysgit@googlegroups.com
-Betreff: Re: Challenge with Git-Bash
-
-(+cc: msysgit)
-
-Hi Rainer,
-
-Rainer Lauer wrote:
-
-> with my Windows 7 Git-Installation I get following challenge:
+> git config user.name=3D"Rainer Lauer"
+> git config user.email=3D"Rainer.Lauer@gmx.net"
+> git config core.editor=3D"c:/Program Files/SlickEditV14.0.2/win/vs.ex=
+e"
+> The file seems to stay in initial revision as created with the comman=
+d git init.
 >
-> 1)	Set GIT_EDITOR to editor of your choice
->
-> 2)	With Windows7 let this editor run in admin-mode
-> 	Goto .exe-file -> right mouse-click -> compatibility -> run program
->	as admin (I'm running a German version maybe English names are slight=
-ly
->	different)
->
-> 3)	Make a git action like git add file
->	                       git commit
-> 	from the git bash.
->
-> 4)	Now following message appears:  sh.exe: ./"editor of your choice":
-> Bad file number
->
-> Everything is fine without Admin-Mode set for editor.
+> Where is following information stored? Command: =C2=A0git config --gl=
+obal user.name=3D"Rainer Lauer". Did I get the documentation right that=
+ this is a definition for all projects?
 
-Apparently =E2=80=9CBad file number=E2=80=9D can mean =E2=80=9CPermissi=
-on denied=E2=80=9D among other things on Windows.  I do not have any be=
-tter suggestion than to try running git bash as administrator too, sorr=
-y.
-
-Regards,
-Jonathan
+If you're asking why your .git/config file isn't being carried over
+when you clone the repository that's because it's not supposed to, Git
+doesn't work like that.
