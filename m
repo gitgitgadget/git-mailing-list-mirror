@@ -1,92 +1,114 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: remove duplicate code and not needed break statement
-Date: Sun, 18 Jul 2010 20:56:33 +0200
-Message-ID: <AANLkTilU1T5ppfVZ5UXpsRXet0tcffjJ2Bi3q67wnF6L@mail.gmail.com>
-References: <1279475399-6081-1-git-send-email-ralf.thielow@googlemail.com>
-	<20100718184716.GD14367@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv2 GSOC 10/11] gitweb: Create Gitweb::Format module
+Date: Sun, 18 Jul 2010 22:16:14 +0200
+Message-ID: <201007182216.15997.jnareb@gmail.com>
+References: <1279178951-23712-1-git-send-email-pavan.sss1991@gmail.com> <1279178951-23712-11-git-send-email-pavan.sss1991@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 18 20:56:41 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@ucw.cz>
+To: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 18 22:16:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaZ2W-0004Fd-PM
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 20:56:41 +0200
+	id 1OaaHu-0005zs-Du
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 22:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757122Ab0GRS4g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 14:56:36 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38877 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757101Ab0GRS4f convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 14:56:35 -0400
-Received: by wyb42 with SMTP id 42so3697559wyb.19
-        for <git@vger.kernel.org>; Sun, 18 Jul 2010 11:56:34 -0700 (PDT)
+	id S1757242Ab0GRUQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jul 2010 16:16:24 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:32988 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757226Ab0GRUQY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jul 2010 16:16:24 -0400
+Received: by bwz1 with SMTP id 1so1970148bwz.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 13:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9UTRlcYhopn598Wpi8PHfovuNcxd/V4LfofGaGDObQw=;
-        b=V8sXEtaROLqWiq+lpKrlX1to/y42F1CNzpdmYnAnJwPK7gPJjZ+4oAIwLwAFJ6A/D7
-         24rQANmOpwudAcExYPux2YiTKWImFFdhnPCJPEDcCgLwxUyVMp5uy4E+uTcAQ02Esg98
-         WcSpezhfCVEgIvk9XlB6q+S3oMY0sDD4z3o90=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=0K1rhviF49C2Y1mU3Df4YNC5YXuPWa9Pz7nrjefFfbM=;
+        b=Qaj9zws8T5gV7aYeKdHQIHPe1EQ4cfjte8DgmpDHGqyDPzmaSM+Dmvv3C47BM/rv2W
+         E5F4fsBAIV9qxudeoS7H59mMDUSTZMsoKJmOr/hVXwJyrQGec3etOdHDQIC4n1XOsZox
+         IsIw1E3X0R+cq7A1I6jjj08H9HNPgwc1VO10c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=a6PMwYsPuc4F5F0KzVykEZVyDR8qV3gYBo2Njieywu58hbGHQ+VYsTAYzQLxnyb8Qy
-         tChdoo+pxGs1TVNQdrdy9gzfVop8O6cUoK+1ewSw0WfyUXl7QebhaWwZPpNr+YYxJwTB
-         dH9CfAQrimfMRcRxTTSs9f/RZhaGmfk/KCtAo=
-Received: by 10.216.187.142 with SMTP id y14mr2942421wem.45.1279479393967; 
-	Sun, 18 Jul 2010 11:56:33 -0700 (PDT)
-Received: by 10.216.91.11 with HTTP; Sun, 18 Jul 2010 11:56:33 -0700 (PDT)
-In-Reply-To: <20100718184716.GD14367@burratino>
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Mk6HYMQRbTU36KtMTswvyMixZnLWCx+/BB9pXwnO/NlgxTyWyWknjhBQH0EyW71lJB
+         2+bQy7piosFuQ6hq3Som2syQcfFe4kOoKHqTG3xmNeVTf4zMfxVjI8Be9O2zSDEaqrY6
+         wIzz/zchHV7h8WhUXAiiC+r3fP/tcxVRvPm1E=
+Received: by 10.204.16.82 with SMTP id n18mr3236910bka.212.1279484181871;
+        Sun, 18 Jul 2010 13:16:21 -0700 (PDT)
+Received: from [192.168.1.13] (abwa30.neoplus.adsl.tpnet.pl [83.8.224.30])
+        by mx.google.com with ESMTPS id y27sm22252741bkw.2.2010.07.18.13.16.20
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 18 Jul 2010 13:16:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1279178951-23712-11-git-send-email-pavan.sss1991@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151240>
 
-2010/7/18 Jonathan Nieder <jrnieder@gmail.com>:
-> Hi Ralf!
->
-> Ralf Thielow wrote:
->
->> Remove duplicate code and not needed break statement.
->
-> This looks like a reasonable change, with the nice effect of getting
-> read_pack_info_file() to almost fit in one screen.
->
-> The commit message is not super clear. =C2=A0I would say:
->
-> =C2=A0Subject: update-server-info: Shorten read_pack_info_file()
->
-> =C2=A0The correct responses to a D and a T line in .git/objects/info/=
-packs
-> =C2=A0are the same, so combine their case arms. =C2=A0In both cases w=
-e already
-> =C2=A0=E2=80=98goto=E2=80=99 out of the switch so while at it, remove=
- a redundant =E2=80=98break=E2=80=99
-> =C2=A0to avoid yet another line of code.
->
-> i.e., impact in the subject line, details in the commit message body.
->
-> It is missing a sign-off. =C2=A0See Documentation/SubmittingPatches f=
-or
-> what that means.
->
-> Hope that helps,
-> Jonathan
->
+On Thu, 15 Jul 2010, Pavan Kumar Sunkara wrote:
 
-Thank you,
-this is my first patch on a mailing list using git, you see.
-In future I do it better and read the whole documentation
-before. :)
+> Create Gitweb::Format module in 'gitweb/lib/Gitweb/Format.pm'
+> to store the subroutines related to formatting of HTML
+> fragments required for gitweb.
 
-Ralf
+What is the criterion of choosing whether to put given subroutine in
+Gitweb::View / Gitweb::HTML and in Gitweb::Format (this module)?
+
+> 
+> This module depends on Config.pm, View.pm, Escape.pm,
+> Util.pm and Request.pm.
+
+O.K., although we should decide consistently through the series if we
+want to use the Config.pm form for describing dependencies in the commit
+message, or would it be better to use Gitweb::Config, i.e. the module
+name.
+
+>                         It mainly contain functions returning 
+> short HTML fragments or transforming HTML fragments. Also
+> include subroutines regarding avatar formatting.
+
+I think you should say aomething about _why_ did you pur avatar
+formatting in this module; I guess that is because git_get_avatar
+returns also short HTML fragment.
+
+> 
+> Subroutines moved:
+> 	format_log_line_html
+> 	format_ref_marker
+> 	format_subject_html
+> 	picon_url
+> 	gravatar_url
+> 	git_get_avatar
+> 	format_search_author
+> 	format_author_html
+> 	format_git_diff_header_line
+> 	format_extended_diff_header_line
+> 	format_diff_from_to_header
+> 	format_diff_cc_simplified
+> 	format_diff_line
+> 	format_snapshot_links
+> 
+> Update 'gitweb/Makefile' to install Gitweb::Format alongside gitweb.
+> 
+> Signed-off-by: Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+> ---
+
+I have not checked patch itself.
+
+-- 
+Jakub Narebski
+Poland
