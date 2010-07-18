@@ -1,69 +1,95 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/4] git --paginate: do not commit pager choice too early
-Date: Sun, 18 Jul 2010 22:27:00 +1000
-Message-ID: <AANLkTim9f_A5OjiXYRK584CrKTG_Lol9oXwguBwwIW19@mail.gmail.com>
-References: <20100626192203.GA19973@burratino> <7vpqzacs3h.fsf@alter.siamese.dyndns.org> 
-	<7v630hyf5r.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git top links: 2010-7
+Date: Sun, 18 Jul 2010 06:23:13 -0700 (PDT)
+Message-ID: <m3eif0ncva.fsf@localhost.localdomain>
+References: <AANLkTilmTwl9RaX31MDmVY3YCeATg5RKF3RQbNqb3Soq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 18 14:27:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 18 15:23:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaSxp-0006uF-TK
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 14:27:26 +0200
+	id 1OaTq4-0001Tc-Au
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 15:23:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754682Ab0GRM1V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 08:27:21 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:50438 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754639Ab0GRM1U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 08:27:20 -0400
-Received: by pvc7 with SMTP id 7so1349751pvc.19
-        for <git@vger.kernel.org>; Sun, 18 Jul 2010 05:27:20 -0700 (PDT)
+	id S1754928Ab0GRNXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Jul 2010 09:23:15 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51007 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754845Ab0GRNXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Jul 2010 09:23:15 -0400
+Received: by bwz1 with SMTP id 1so1871021bwz.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 06:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=h0Cvk8n5rVIZTQpsETeq54SBmBL6GF+906nLaJVDY+o=;
-        b=uXH+kHqGiiHuKUhzH5PPpKiRQ+RYPlGvc/3EfPKoEUad4KOLvawEIO4lecX0IMqgQv
-         LiYa4xgHTHLC/GUaJ0YsioYBCuyNQYeBcuQ0P3dmjuQVMASklfsooRbDRnvoYV4SBGwq
-         51ychNbIlAfFnWIdFH6fyBZxqkhn1ISKIvX0Q=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=8vZvGk+bXeoU4v5mvJG832rhqnuSz/llPZ92rczJwYo=;
+        b=FeJSUNxhNQpuLN5mJxZYaNKR9Ck6vzGOvkXg5zpBPGiqeWRvFTsUlXfSIwJGEGga8C
+         TbZPs7Tc28JZc8eT25vS4GtU3Mc4Xn+Zzms5csTeSyHfsqorRMLQlR8ezbEyvxCp3GCV
+         62P7n60BXTgPesrIaS41XkoMkgHV2uaw4aJrw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=O7raIedFi+e/mgF2rM1AQVXi91z6kUAoS0qfQSfdmlONDQvNpBSqSBHxIIJ5lLtg7j
-         HLMc/fHFUwy2oyhAhxPptS4IhrwrsUYNo8Ek+0M9v/IB64MPUXpRVPD/PgjxCtzdpDcW
-         5HZg59mkPZD19+cTu/vMTHIuxKoCFWui4Frjs=
-Received: by 10.142.192.2 with SMTP id p2mr4928694wff.222.1279456040223; Sun, 
-	18 Jul 2010 05:27:20 -0700 (PDT)
-Received: by 10.142.98.1 with HTTP; Sun, 18 Jul 2010 05:27:00 -0700 (PDT)
-In-Reply-To: <7v630hyf5r.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=lJyQZatGE+VfbF4S+GhLjDOEye+3peJ6oAuqe/eLVvcOKicBrnKBiLUY+MPLEp9nUj
+         QLkPY5KVyBVaxilPnYfbxMrDSatZkYL9FISjewrZMg1o+co8dPDArCZ3mRrjpNAb5fqC
+         SNo/QEYwCAbx58go1IwtVBvkiYnMUpqKsErqQ=
+Received: by 10.204.10.140 with SMTP id p12mr2631125bkp.58.1279459393554;
+        Sun, 18 Jul 2010 06:23:13 -0700 (PDT)
+Received: from localhost.localdomain (abwa30.neoplus.adsl.tpnet.pl [83.8.224.30])
+        by mx.google.com with ESMTPS id y2sm20780855bkx.20.2010.07.18.06.23.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 18 Jul 2010 06:23:13 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6IDMkS7017677;
+	Sun, 18 Jul 2010 15:22:57 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6IDMY5X017659;
+	Sun, 18 Jul 2010 15:22:34 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTilmTwl9RaX31MDmVY3YCeATg5RKF3RQbNqb3Soq@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151209>
 
-2010/7/15 Junio C Hamano <gitster@pobox.com>:
-> Missing from the above enumeration are are external commands. =C2=A0T=
-hey depend
-> on commit_pager_choice() to be called before execv_dashed_external() =
-gets
-> called. =C2=A0For example, "git -p request-pull $args" no longer work=
-s with
-> this patch.
->
-> Sigh..
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-I'm sorry. I missed those paths..
---=20
-Duy
+> 6. Distributed Version Control is here to stay, baby (14)
+> A story of why Stack Overflow's podcast regarding DVCS was plain wrong
+> http://www.joelonsoftware.com/items/2010/03/17.html
+
+And if you read this blog post carefully, you would see that Joel
+still doesn't f***ing get it.
+
+> 9. Git for the nervous developer (10)
+> Explaining git from a convert
+> http://beust.com/weblog/2010/04/06/git-for-the-nervous-developer/
+
+This quote from abovementioned blog is especially apt
+
+ "Here is an analogy that might help, though: to me, learning Git is
+  very similar to learning a foreign language. Natural languages are
+  notoriously hard to learn for adults because their organic growth
+  has resulted in all kinds of inconsistencies and oddities. At the
+  end of the day, the only way to learn a foreign language is to
+  memorize, memorize and memorize. As years go by, practice make
+  memory regurgitation more automatic and the use of that language
+  requires less and less conscious effort, but the learning curve is
+  something that just can't be avoided."
+
+The Git UI was result of organic growth.  It is not as much as it was
+designed, rather than "happened".
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
