@@ -1,141 +1,87 @@
-From: "Rainer Lauer" <lauerr@gmx.net>
-Subject: AW: Challenge with Git-Bash
-Date: Sun, 18 Jul 2010 19:02:26 +0200
-Message-ID: <007f01cb269b$0015dbd0$00419370$@gmx.net>
-References: <001d01cb25cb$eb176980$c1463c80$@net>	<AANLkTinKt2Mbsw4SbTCjbTOuzOpzYEBjQsGGh2Fq67Bo@mail.gmail.com>	<007d01cb2687$62100a90$26301fb0$@gmx.net> <AANLkTinODbTbZ7CXaAxs83T_pdyvafWnjSI8kzjcWAXN@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Merge commit subjects git.git
+Date: Sun, 18 Jul 2010 17:22:01 +0000
+Message-ID: <AANLkTim4FxPdHsDxkRmHzJT24LnZyiv9xLUqbTUndS9T@mail.gmail.com>
+References: <AANLkTikavL0DH8FgFxBw7hbGLtj2tqxnP-BT77zo5FJT@mail.gmail.com>
+	<201007181733.59704.trast@student.ethz.ch>
+	<AANLkTinTOMxWVM9kwhIfcG44SqOjpexY-Xy6kZYkemU9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_0080_01CB26AB.C3A00B60"
-Cc: "'Git Mailing List'" <git@vger.kernel.org>
-To: =?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 18 19:02:39 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 18 19:22:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaXG7-0000tX-G3
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 19:02:35 +0200
+	id 1OaXZG-0007a3-G8
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 19:22:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756704Ab0GRRCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jul 2010 13:02:30 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:46942 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1756669Ab0GRRCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jul 2010 13:02:30 -0400
-Received: (qmail invoked by alias); 18 Jul 2010 17:02:27 -0000
-Received: from pD9E08E8C.dip.t-dialin.net (EHLO Lappi) [217.224.142.140]
-  by mail.gmx.net (mp003) with SMTP; 18 Jul 2010 19:02:27 +0200
-X-Authenticated: #9219177
-X-Provags-ID: V01U2FsdGVkX18Ki65WHl4Ko3tbsBZpqbMa02JMCEuS3NfJC60D8I
-	3lXg0ptbkOsfRI
-In-Reply-To: <AANLkTinODbTbZ7CXaAxs83T_pdyvafWnjSI8kzjcWAXN@mail.gmail.com>
-X-Mailer: Microsoft Outlook 14.0
-thread-index: AQJBLblBgdg5C3/Ahc5qaLKbDJjUnQEA0M0YAeyk8RABJs2XJ5GqNNUQ
-Content-Language: de
-X-Y-GMX-Trusted: 0
+	id S1756754Ab0GRRWF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 13:22:05 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39603 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756731Ab0GRRWD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 13:22:03 -0400
+Received: by iwn7 with SMTP id 7so3795156iwn.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 10:22:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V3Rwq8jod0M/1Qwvdp96ERmISeJVijyy69toM7DQXzA=;
+        b=PgTB+vy2ArnvZb9kffV/bjSol8cSspCHsSHmVIueqUXXfFoELHPKOKveO0oFyjY6JZ
+         Q8V1FcxvmcclMijB/6ukQ0w7uu3eseXsYHQgG+9ptI4ZVheSjtE3BZphieikH70wKbkd
+         3eG2y4yFraeJYdxO9yIb7OqN1uuJtNef4HfwM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=K3I4p5VPdUpz6xiZy1CPdd9Ct6KF5HBW1pRm9RgWu5WTwqGFBI7/bgDCJqlt4EwT4h
+         EJSwQmu6vFKQ1eYgu/dZUP7iFhM/dPodYuFrmwmuyvGoglWrB6fcxaFYjFWKRZU1h8VH
+         wBQwH5oANEa5LoXRITFas6ICP5/7FqJDhehSw=
+Received: by 10.231.39.196 with SMTP id h4mr3617371ibe.64.1279473721916; Sun, 
+	18 Jul 2010 10:22:01 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 18 Jul 2010 10:22:01 -0700 (PDT)
+In-Reply-To: <AANLkTinTOMxWVM9kwhIfcG44SqOjpexY-Xy6kZYkemU9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151221>
 
-This is a multipart message in MIME format.
-
-------=_NextPart_000_0080_01CB26AB.C3A00B60
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-from Jonathan Nieder <jrnieder@gmail.com> I got a successfully =
-work-around. See attached mail.
-Thanks for your support and amazingly fast response.
-
-Regis,
-Rainer Lauer
-
------Urspr=C3=BCngliche Nachricht-----
-Von: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason [mailto:avarab@gmail.com]=20
-Gesendet: Sonntag, 18. Juli 2010 16:56
-An: Rainer Lauer
-Cc: Git Mailing List
-Betreff: Re: Challenge with Git-Bash
-
-On Sun, Jul 18, 2010 at 14:42, Rainer Lauer <lauerr@gmx.net> wrote:
-> Hi,
-> thanks for the reply. I did set the full path to my editor of choice.
-
-Good that it worked out. CC-ing the list so that others encountering =
-this problem will find the solution.
-
-------=_NextPart_000_0080_01CB26AB.C3A00B60
-Content-Type: message/rfc822
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment
-
-Received: by mail-iw0-f173.google.com with SMTP id 6so3096986iwn.18
-        for <lauerr@gmx.net>; Sat, 17 Jul 2010 10:14:00 -0700 (PDT)
-Received: from mail-iw0-f173.google.com (EHLO mail-iw0-f173.google.com) [209.85.214.173]
-  by mx0.gmx.net (mx032) with SMTP; 17 Jul 2010 19:14:01 +0200
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h8sm15591616ibk.21.2010.07.17.10.13.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 17 Jul 2010 10:13:58 -0700 (PDT)
-Received: by 10.231.36.72 with SMTP id s8mr2756915ibd.49.1279386838887;
-        Sat, 17 Jul 2010 10:13:58 -0700 (PDT)
-Received: (qmail invoked by alias); 17 Jul 2010 17:14:01 -0000
-Return-Path: <jrnieder@gmail.com>
-From: "Jonathan Nieder" <jrnieder@gmail.com>
-To: "Rainer Lauer" <lauerr@gmx.net>
-Cc: <git@vger.kernel.org>,
-	<msysgit@googlegroups.com>
-References: <001d01cb25cb$eb176980$c1463c80$@net>
-In-Reply-To: <001d01cb25cb$eb176980$c1463c80$@net>
-Subject: Re: Challenge with Git-Bash
-Date: Sat, 17 Jul 2010 19:13:03 +0200
-Message-ID: <20100717171303.GB10730@burratino>
-MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 14.0
-X-GMX-Antivirus: 0 (no virus found)
-X-GMX-Antispam: 0 (Mail was not recognized as spam); Detail=5D7Q89H36p4U4jfdfC5HDevlx1X2sAZgAaLl3DbFfW0PXxL7WgvovMFXXSEPrACW/b9IW Qp+GhEViZlUW4mdBntgP1X8KwB5tjHCA/yxSZMu7BXBiPs3ujyaoi2xLHDqpg8dk65Dhpb3Lg0c1 iTjGg==V1;
-thread-index: AQJBLblBgdg5C3/Ahc5qaLKbDJjUnQNsR91r
-
-(+cc: msysgit)
-
-Hi Rainer,
-
-Rainer Lauer wrote:
-
-> with my Windows 7 Git-Installation I get following challenge:
+On Sun, Jul 18, 2010 at 16:56, Sverre Rabbelier <srabbelier@gmail.com> =
+wrote:
+> Heya,
 >
-> 1)	Set GIT_EDITOR to editor of your choice
+> On Sun, Jul 18, 2010 at 10:33, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!strcmp("master", current_branch))
 >
-> 2)	With Windows7 let this editor run in admin-mode
-> 	Goto .exe-file -> right mouse-click -> compatibility -> run program
->	as admin (I'm running a German version maybe English names are =
-slightly
->	different)
->
-> 3)	Make a git action like git add file
->	                       git commit
-> 	from the git bash.
->
-> 4)	Now following message appears:  sh.exe: ./"editor of your choice":
-> Bad file number
->
-> Everything is fine without Admin-Mode set for editor.
+> Wow, I thought the only place where we gave "master" any special
+> meaning was in that we create it as the default branch. Can't we fix
+> this to be less hard-coded?
 
-Apparently =E2=80=9CBad file number=E2=80=9D can mean =
-=E2=80=9CPermission denied=E2=80=9D among other
-things on Windows.  I do not have any better suggestion than to try
-running git bash as administrator too, sorry.
+In addition, Ilari on IRC pointed this out:
 
-Regards,
-Jonathan
+    < avar> What does git use to determine what branch gets checked out
+            (not always master) on git clone URL?
+    < Ilari> avar: HEAD
+    < avar> Ah, just the HEAD of the remote, but that doesn't help afte=
+r
+            you've switched branches locally to find out what the main
+            is..
+    < Ilari> avar: Except that if you have another branch with same com=
+mit
+             as the one you set to default, either of them may be selec=
+ted
+             (if one is 'master', then the tie is broken for it).
 
-------=_NextPart_000_0080_01CB26AB.C3A00B60--
+I.e. master is also treated more magically than others when
+cloning. But I couldn't find the code that does this, so perhaps it
+doesn't do that.
