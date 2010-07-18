@@ -1,93 +1,103 @@
-From: Michel Lespinasse <walken@google.com>
-Subject: git diff slow after initial checkout
-Date: Sun, 18 Jul 2010 07:17:19 -0700
-Message-ID: <20100718141719.GA32660@google.com>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: Re: [PATCH v3 03/13] add the basic data structure for line level 
+	history
+Date: Sun, 18 Jul 2010 22:35:42 +0800
+Message-ID: <AANLkTilba9j1IfPbWuNUIxG-fkPjDIKAWubDneVJu4_N@mail.gmail.com>
+References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
+	<1278829141-11900-3-git-send-email-struggleyb.nku@gmail.com>
+	<AANLkTim5m2vG3ZiveRcRIGLVszu9mFruTJ2B_6lsqkGH@mail.gmail.com>
+	<7vr5j8bq5x.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 18 16:17:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 18 16:35:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaUgQ-0004WE-Fz
-	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 16:17:34 +0200
+	id 1OaUy5-0002Lb-I3
+	for gcvg-git-2@lo.gmane.org; Sun, 18 Jul 2010 16:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307Ab0GROR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Jul 2010 10:17:29 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:9845 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755240Ab0GROR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Jul 2010 10:17:28 -0400
-Received: from hpaq12.eem.corp.google.com (hpaq12.eem.corp.google.com [172.25.149.12])
-	by smtp-out.google.com with ESMTP id o6IEHQN9001461
-	for <git@vger.kernel.org>; Sun, 18 Jul 2010 07:17:27 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1279462647; bh=DZILClK9V71qFMnIlRnbSEOy/g8=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
-	b=J5sRVA/fZuLafz3v/Hu07BbY5WoxVdGmkXAeM+TubnzzNieVfwvQz8b9rNhHnNBhf
-	 6oCKsfV1HviFqPcJOKwBg==
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=date:from:to:subject:message-id:mime-version:content-type:
-	content-disposition:user-agent:x-system-of-record;
-	b=KvTlpreRA/s7IOe13WN+sYByR/+RNDE3/xGjEhD76FqlNdCGjdZD+FZE7ETHd1ilN
-	wFm88ILyxeqOsS5Cqug6A==
-Received: from pzk36 (pzk36.prod.google.com [10.243.19.164])
-	by hpaq12.eem.corp.google.com with ESMTP id o6IEHOb3021822
-	for <git@vger.kernel.org>; Sun, 18 Jul 2010 07:17:25 -0700
-Received: by pzk36 with SMTP id 36so2295646pzk.35
-        for <git@vger.kernel.org>; Sun, 18 Jul 2010 07:17:24 -0700 (PDT)
-Received: by 10.114.120.20 with SMTP id s20mr5183115wac.15.1279462644392;
-        Sun, 18 Jul 2010 07:17:24 -0700 (PDT)
-Received: from google.com (studio.mtv.corp.google.com [172.22.65.142])
-        by mx.google.com with ESMTPS id d39sm59008513wam.16.2010.07.18.07.17.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 18 Jul 2010 07:17:22 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
-X-System-Of-Record: true
+	id S1756003Ab0GROfo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Jul 2010 10:35:44 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:58156 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755919Ab0GROfn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Jul 2010 10:35:43 -0400
+Received: by qwh6 with SMTP id 6so1334059qwh.19
+        for <git@vger.kernel.org>; Sun, 18 Jul 2010 07:35:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7mWvo7Vm+eKahMQbdW983b4Qgs03qBRlUYcq6eCIIbg=;
+        b=AD3MPENk5msDxLrG7KvSLWuW7Ky4nUts+HsDmKKHKE08gFw1HQVqojjJCIBNyekj24
+         YDpRKf9O20oLXShFUaxMtk6mMssSpwr7Cmt+OvYYW7mra9n4PGW6wePZrPNzdP61Zssm
+         jbSFRi/JdzOyAPyoUEnd12KHzCt9GTvlMaqLQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=M/jGHyY7h5CgAxX4BE1an8/UKk2mnRBt4K12yLwdRGHYd7lyvPWs3mACKeaL4vBD8s
+         HuEzSyvCmVolXIpnAX0tknsMRqADwVGr+GV3QNyhgmGWh0VUpcNV6p2tqZYg2FP72gqs
+         6syCRFh6G4QWLuyIrtJDFUihbwWOAOY9f9O0o=
+Received: by 10.224.60.19 with SMTP id n19mr3123298qah.248.1279463742466; Sun, 
+	18 Jul 2010 07:35:42 -0700 (PDT)
+Received: by 10.229.79.148 with HTTP; Sun, 18 Jul 2010 07:35:42 -0700 (PDT)
+In-Reply-To: <7vr5j8bq5x.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151212>
 
-Hi,
+Hi Junio,
+On Tue, Jul 13, 2010 at 12:50 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> diff --git a/diffcore.h b/diffcore.h
+>> index 491bea0..13d8e93 100644
+>> --- a/diffcore.h
+>> +++ b/diffcore.h
+>> @@ -23,6 +23,7 @@
+>> =A0#define MINIMUM_BREAK_SIZE =A0 =A0 400 /* do not break a file sma=
+ller than this */
+>>
+>> =A0struct userdiff_driver;
+>> +struct diff_options;
+>
+> Why???
 
-I am seeing a slow 'git diff' when doing the following with git 1.7.0.4:
+The line:
+extern void diffcore_rename(struct diff_options *);
+later in this file use it. So, forward declare it.
 
-% git clone /path/to/repo
-% cd repo
-% git checkout e0d960b
-% time git diff | cat
-git diff  0.15s user 0.30s system 96% cpu 0.468 total
-cat  0.00s user 0.00s system 0% cpu 0.467 total
-% strace -o ../strace.before git diff | cat
-% touch .git/index
-% time git diff | cat
-git diff  0.00s user 0.00s system 0% cpu 0.006 total
-cat  0.00s user 0.00s system 0% cpu 0.005 total
-% strace -o ../strace.after git diff | cat
+>>
+=2E..
+>> =A0#define DECORATE_SHORT_REFS =A01
+>> =A0#define DECORATE_FULL_REFS =A0 2
+>> @@ -68,7 +69,8 @@ struct rev_info {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 cherry_pick:1,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 bisect:1,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ancestry_path:1,
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 first_parent_only:1;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 first_parent_only:1,
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 line:1;
+>
+> Is this really a traversal flag that affects how the history is walke=
+d?
 
-The first diff is ~100 times slower than what git has gotten me used to.
-If I run the diff multiple times, it stays slow every time until I touch
-the index.
+Hmm, a 'line' means topologically traverse at least. So, I added it
+here. And I can't find a better place to put it. :)
 
-The strace shows that before I touch the index, 'git diff' mmaps .git/index
-and then does an lstat/open/read/close loop on every file in the repository.
-After I touch the index, 'git diff' only does an lstat on every file.
+I have changed my code according your comments, thanks a lot!
 
-
-It looks like 'git checkout' should touch the index file after it's done ?
-
-Alternatively, maybe 'git diff' should do that after it notices there are
-no modified files ?
-
-Is this fixed with a more recent version of git ? (in RelNotes-1.7.1.1.txt
-I see something about 'git status' stopped refreshing the index by mistake
-in git 1.7.1, which sounds like the same problem but in a different place ?)
-
--- 
-Michel "Walken" Lespinasse
-A program is never fully debugged until the last user dies.
+--=20
+Regards!
+Bo
+----------------------------
+My blog: http://blog.morebits.org
+Why Git: http://www.whygitisbetterthanx.com/
