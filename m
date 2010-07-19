@@ -1,71 +1,94 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: Re: [PATCH] Add --exclude to git-clean.j
-Date: Mon, 19 Jul 2010 12:21:16 -0400
-Message-ID: <20100719162116.GA4463@localhost.localdomain>
-References: <bf4ea4e83162ebf1d915b87413aad54a1162a637.1279554580.git.jaredhance@gmail.com>
- <20100719161414.GA17597@burratino>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
+Subject: Re: remove duplicate code and not needed break statement
+Date: Mon, 19 Jul 2010 18:26:12 +0200
+Message-ID: <AANLkTilB1eNHZWHLoBsVmEOObdSdCZQ0fxzqWc-SkC_a@mail.gmail.com>
+References: <1279475399-6081-1-git-send-email-ralf.thielow@googlemail.com>
+	<AANLkTimHHJnvgFh3Kd7jMqTJJFensZjkD7YCU1gdt-FT@mail.gmail.com>
+	<20100719160632.GA17526@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 19 18:21:36 2010
+Cc: kusmabite@gmail.com, git@vger.kernel.org,
+	Valeo de Vries <valeo@valeo.co.cc>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 18:26:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oat5v-0004n5-F2
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 18:21:31 +0200
+	id 1OatAa-0006rj-KS
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 18:26:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936364Ab0GSQVZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 12:21:25 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49381 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936320Ab0GSQVZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 12:21:25 -0400
-Received: by mail-gy0-f174.google.com with SMTP id 4so2186003gyh.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 09:21:24 -0700 (PDT)
+	id S936414Ab0GSQ0O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 12:26:14 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:63300 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936396Ab0GSQ0N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jul 2010 12:26:13 -0400
+Received: by wwb39 with SMTP id 39so370141wwb.1
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 09:26:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=L5+fSSK+TZsnS3lZe7UOR5cQ1ebcMl9WhgegM7ZIArI=;
-        b=n31rfENZO6FfMTv6j8WRtn207S55mq6TnEGzJj39vFF8BFTjhfwsMyH/2gwjJ8/L8Y
-         HI55ihq8Saf5G0NtEKogTzds7YVlsxyKQdRkRytajZ5LFORAd/U5JUxixC2VM8hWqApu
-         VvmyMmpxk2kFIwKg60PR6/AB8eu4n9BH1SF54=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hq5JY6NJgus8+Cvs6izNEWfv82j8GadzBwtvEJSdZuQ=;
+        b=tNIQqxxJeK/dW2Xvxh8BTsHVyzWjh4m+cRk4KlCk9W5e38kaNCrmd12dGBrKddN1LJ
+         W5A4S6lK4ZZRll06fIjkDN2s3FWLYnDizjeio/XXMoAH9c/CzmlJ6D/zA0LcsfVzFvdL
+         3mQbPmMCfYxbzHoY7DdV2v9WfgYcRQyp5Wo7k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=by09tGXIpuVDkO+LqaQ4YhiWz1uUbL/TtDwrJrDW+vUdZI+FVfJ56LUXhzAU5LXgUa
-         t8zXwMMVCKoqwQTHWgGjV2kgSvJrEBYuslv3jLO1uzGwAVE5haMqJMq83Tmddvw2SEuu
-         EdDY9bN1ppMhZBX8tz5xdCsZLy1nol885swoI=
-Received: by 10.224.115.79 with SMTP id h15mr4200341qaq.21.1279556484314;
-        Mon, 19 Jul 2010 09:21:24 -0700 (PDT)
-Received: from localhost.localdomain (cpe-75-186-1-50.cinci.res.rr.com [75.186.1.50])
-        by mx.google.com with ESMTPS id q30sm26148511qcq.24.2010.07.19.09.21.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 09:21:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100719161414.GA17597@burratino>
-User-Agent: Mutt/1.5.20 (2009-12-10)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cEdv0xx5/D4rgEhC938T2mN0rU94moMLNHDnPXcW/7eRYtUNDrjSr2F4llzHh0tzHu
+         c22O+PEihGwkpgEfOVmWaw1O4o+vZ7qC1l/B8RubM2zFWtqPxED0Zaiq531GGlTJ8Cf2
+         e6FGQRuJohoE9wL9x95rq0F1JO/dFvwy4Mly0=
+Received: by 10.216.179.140 with SMTP id h12mr3664406wem.39.1279556772253; 
+	Mon, 19 Jul 2010 09:26:12 -0700 (PDT)
+Received: by 10.216.163.132 with HTTP; Mon, 19 Jul 2010 09:26:12 -0700 (PDT)
+In-Reply-To: <20100719160632.GA17526@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151257>
 
-On Mon, Jul 19, 2010 at 11:14:14AM -0500, Jonathan Nieder wrote:
-Johnathon wrote:
-> No thoughts on your patch, but have you looked into =E2=80=9Cgit add =
--N=E2=80=9D?
+=46rom 5b3e7c8f8b81a295b5c58534be250f5a818ccc64 Mon Sep 17 00:00:00 200=
+1
+=46rom: Ralf Thielow <ralf.thielow@googlemail.com>
+Date: Sun, 18 Jul 2010 18:48:58 +0200
+Subject: [PATCH] update-server-info: Shorten read_pack_info_file()
 
-That is interesting. However, it doesn't really help for files that
-you don't intend to add to the index later. "git clean -e" is nice for
-when you have a file you are using for some temporary purpose.
+The correct responses to a D and a T line in .git/objects/info/packs
+are the same, so combine their case arms.  In both cases we already
+=E2=80=98goto=E2=80=99 out of the switch so while at it, remove a redun=
+dant =E2=80=98break=E2=80=99
+to avoid yet another line of code.
 
-On another note, I failed getting my title correct, so I sent another
-patch with the correct title (I think it affects the description of
-the commit).
+
+Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
+Reviewed-by: Jonathan Nieder <jrnieder <at> gmail.com>
+---
+ server-info.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+diff --git a/server-info.c b/server-info.c
+index 4098ca2..9ec744e 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -113,11 +113,8 @@ static int read_pack_info_file(const char *infofil=
+e)
+ 				goto out_stale;
+ 			break;
+ 		case 'D': /* we used to emit D but that was misguided. */
+-			goto out_stale;
+-			break;
+ 		case 'T': /* we used to emit T but nobody uses it. */
+ 			goto out_stale;
+-			break;
+ 		default:
+ 			error("unrecognized: %s", line);
+ 			break;
+--=20
+1.7.0.4
