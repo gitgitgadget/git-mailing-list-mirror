@@ -1,102 +1,112 @@
-From: Will Palmer <wmpalmer@gmail.com>
-Subject: Re: Question about 'branch -d' safety
-Date: Mon, 19 Jul 2010 08:12:03 +0100
-Message-ID: <1279523523.3077.8.camel@dreddbeard>
-References: <20091230065442.6117@nanako3.lavabit.com>
-	 <201007181355.36691.jnareb@gmail.com> <1279484847.8999.22.camel@dreddbeard>
-	 <201007190119.04873.jnareb@gmail.com>
-Reply-To: wmpalmer@gmail.com
+From: Pierre Habouzit <madcoder@madism.org>
+Subject: Re: fixing workdirs
+Date: Mon, 19 Jul 2010 11:02:48 +0200
+Message-ID: <20100719090248.GA10802@madism.org>
+References: <20100708110842.GC12789@madism.org>
+ <7v7hl5pxt0.fsf@alter.siamese.dyndns.org>
+ <20100709075617.GD2304@madism.org>
+ <7vy6dkl2d0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 09:12:26 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 11:02:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OakWX-0005vW-Hc
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 09:12:25 +0200
+	id 1OamFW-0008WJ-JX
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 11:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702Ab0GSHMI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 03:12:08 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:53107 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752605Ab0GSHMH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 03:12:07 -0400
-Received: by wyb42 with SMTP id 42so4087485wyb.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 00:12:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=IY7NcxggtxYH1UO/Pf9DT5oqBMZg1c6e/dgJ1eRBTPo=;
-        b=czoeaBPCbdJOwrljI/QxpEuARK+uVmGzuNWdTREUuvK9a/qy/SDycdhl4ITSHwSivC
-         wAy4crqLUg8PUdkAy2ukbh3eGvlvtFXdoV4LUhVTrQ8GZmT7CZI8LREif8Mpxme1F6m4
-         KFC18a0TT+bPXjIYvKm3ziWijQ+qSA+Q9QUfo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=xx7kw4SnAphtsSb9bjuUVL5hObPrMMFwUEwu5kn4jg3xUovB6p3K27LS4Zzq744EEW
-         DCnQBoQe28XbE7t+gMa8ZEPvQ/nSfPcT6NetOK7VPi1mOaK01YeRAIloIACyWvMmUMPi
-         lnKgJeuEcgi4nVR55xfKhPBB322YPgSWbXeMg=
-Received: by 10.227.157.68 with SMTP id a4mr3597094wbx.208.1279523526244;
-        Mon, 19 Jul 2010 00:12:06 -0700 (PDT)
-Received: from [192.168.0.129] (5acc3a9a.bb.sky.com [90.204.58.154])
-        by mx.google.com with ESMTPS id w29sm2072595weq.18.2010.07.19.00.12.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 00:12:05 -0700 (PDT)
-In-Reply-To: <201007190119.04873.jnareb@gmail.com>
-X-Mailer: Evolution 2.28.3 
+	id S1760237Ab0GSJCw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 05:02:52 -0400
+Received: from pan.madism.org ([88.191.52.104]:50394 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760216Ab0GSJCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 05:02:51 -0400
+Received: from madism.org (unknown [94.228.180.170])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 115264E0EC;
+	Mon, 19 Jul 2010 11:02:49 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id B47421D69FF; Mon, 19 Jul 2010 11:02:48 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7vy6dkl2d0.fsf@alter.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151247>
 
-On Mon, 2010-07-19 at 01:19 +0200, Jakub Narebski wrote:
-> On Sun, 18 Jul 2010, Will Palmer wrote:
-> > On Sun, 2010-07-18 at 13:55 +0200, Jakub Narebski wrote:
-> > having any kind of suffix like refs~/heads~/bar is just asking for
-> > someone to delete a branch twice.
-> 
-> I don't understand what you wanted to say here.  Using the
-> 
->   $GIT_DIR/logs/refs~/heads~/bar
-> 
-> (and not $GIT_DIR/refs~/heads~/bar) as a reflog for a deleted branch
-> 'bar' is an implementation detail.  You wouldn't see refs~/heads~/bar
-> when listing branches... well, perhaps 'git branch --list-deleted'
-> could be used to list deleted branches (by scanning for reflogs).
->  
+On Fri, Jul 09, 2010 at 03:25:15PM -0700, Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@madism.org> writes:
+>=20
+> > On Thu, Jul 08, 2010 at 12:40:11PM -0700, Junio C Hamano wrote:
+> >> Pierre Habouzit <madcoder@madism.org> writes:
+> >>=20
+> >> > for the first one, the fix is simple: workdirs have now a name, =
+and
+> >> > their HEAD reflog lives in the "master" git repository reflog na=
+mespace
+> >> > under logs/workdir/$workdir_name/HEAD. The workdir HEAD reflog i=
+s then a
+> >> > symlink to the masters.
+> >>=20
+> >> I think this is a sane thing to do, except for the "symlink" part =
+but that
+> >> would be just a minor implementation detail.
+> >
+> > What would you suggest instead of the symlink then ? (knowing that =
+all
+> > the workdir is just a full symlink farm at them moment).
+>=20
+> I can imagine that we may want to have a general mechanism to help an
+> object store that belongs to one "primary" repository be aware of ref=
+-like
+> things that live outside of the repoistory itself, and not just a spe=
+cial
+> purpose hack suitable only to handle the workdirs.  E.g., we have tal=
+ked
+> about a "fork" created by "clone -s" wanting the forkee repository to=
+ be
+> aware of its refs, so that rewinding the refs in the forkee repositor=
+y and
+> then running gc there won't remove the objects now unnecessary in the
+> forkee but still needed by the forker repository.
+>=20
+> It shouldn't be hard to do something similar to "gitdir: " support fo=
+r
+> this without using a symlink, no?
 
-git branch -d integration
-# git renames refs/heads/integration to refs~/heads~/integration
-git co -b integration sometopic
-# git creates refs/heads/integration, unrelated to the old one
-(do some work)
-(merge into the main branch)
-git branch -d integration
+Sorry for the delay, I was on vacation.
 
-Now what?
-git renames refs/heads/integration to ... what?
-- does the old refs~/heads~/integration get clobbered? If that's ever
-okay, why are we even having this discussion?
-- does the "old reflog" stuff get combined? If that's ever okay, why
-even have an extra reflog, instead of just using the reflog we already
-have?
-- do we move everything else one step down, so refs~/heads~/integration
-becomes refs~2/heads~2/integration? (ie: 2-dimensional reflog, which
-sounds rather too fancy, to me)
+Okay, I see, this makes sense. I'll see what I can do on this path,
+though it's probably harder than simply extending gitfiles. We still
+want a .git/ directory as we want most of the top level stuff to be
+local to each repository (HEAD, ORIG_HEAD, ...) but not:
 
+  - subdirectories (most of them being references, logs, ...)
+  - the lock (which is kind of the weak point in my proposal atm, yours
+    is nicer)
+  - config (or do we want a cascading semantics: local workdir config,
+    master repository config, user .gitconfig, /etc/.... ? I think not
+    but ...)
+  - packed-refs
 
--- 
--- Will
+Plus, to make everything work, the reflogs of a given "workdir" (or
+shared clone) must be put in a different namespace to avoid clashes.
+Though this is probably the simplest bit.
+
+All in all, I'm afraid to have to look at every single git script that
+for now writes without thinking twice under .git/ :/
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@d=
+ebian.org
+OOO                                                http://www.madism.or=
+g
