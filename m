@@ -1,112 +1,127 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Add --exclude to git-clean.
-Date: Mon, 19 Jul 2010 10:43:43 -0700
-Message-ID: <7vbpa3pdtc.fsf@alter.siamese.dyndns.org>
-References: <bf4ea4e83162ebf1d915b87413aad54a1162a637.1279556172.git.jaredhance@gmail.com>
+Subject: Re: Question about 'branch -d' safety
+Date: Mon, 19 Jul 2010 11:06:23 -0700
+Message-ID: <7v7hkrpcrk.fsf@alter.siamese.dyndns.org>
+References: <20091230065442.6117@nanako3.lavabit.com>
+ <m3lj9jknlr.fsf@localhost.localdomain> <20100711065505.GA19606@localhost>
+ <201007110916.29567.jnareb@gmail.com> <20100711133730.GA10338@localhost>
+ <20100717093006.GA11452@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jared Hance <jaredhance@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 19:44:03 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Jul 19 20:06:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OauNn-000849-Fx
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 19:44:03 +0200
+	id 1Oaujm-000102-5f
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 20:06:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932403Ab0GSRn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 13:43:58 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63021 "EHLO
+	id S1760814Ab0GSSGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jul 2010 14:06:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50780 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760747Ab0GSRn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 13:43:57 -0400
+	with ESMTP id S1760784Ab0GSSGj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 14:06:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BC5EFC6AC4;
-	Mon, 19 Jul 2010 13:43:55 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 17C48C6E13;
+	Mon, 19 Jul 2010 14:06:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xcExicP4A7I8pydh79zMWpYhZIo=; b=FL8Bds
-	FtBxr4nc7Odv/eZiWy9TZBrXScRqbf5YFsictQ3O3zyST4wgJrBiNnoChOqeCoIF
-	oOq1V8v5p4a2XaztyKzEJBd2a+nrDqCdCZ6PdpifSl4JjoPs/IlisND7WdIoh2E6
-	E0UQzOCcrDFpGwrcOO3uW+xAo4o2ZERTHozik=
+	:content-type; s=sasl; bh=NEeYAYAjubG1Emh4bo5LMAfEDos=; b=TDJM+A
+	v3BEGun9bAIh9Au6fg8GBjgiDfxQ7YtbKx7Ei92/KuDUjIO7sut8WdaRsXy+tROb
+	Uy74Xkb3vRSzltIjh7nPHUx4Oh5uuYzst92P57Sa3eCPEEXRYvAfC8yPM5HnF1SM
+	Xa9roj5Q0iwa+1yerch7BXAIdnbLOTMEPNZss=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OwJfzX0SDVs7rEhfFfwKp1jAvbRYX9dL
-	Z5sMkGThaX/p5aTzFQ6IL1kHD/xDsNV1mvtWH/s+zsPWvUHH0ceXsl5H26l/LuZB
-	0nq0UAKBQn27H8SXlr6spBcM8Tvl55yWYgCQGaTeD1U1FevCK5zvFY751InL/xXg
-	pz+dHW9mEqU=
+	:content-type; q=dns; s=sasl; b=cLn4yBUE1V5khC6m0p4SqmiBULMup8XJ
+	Jmt7VFzGnvFecbCUii9sKRXv5n+oYjvqlTQD4Tg4OV3vGszIpxNdAoQ11nK4oNAf
+	50t7vRT4QdceWGuTRvF6yBHyfYEREQQNBBtksc3+FeBQEB8krO0Bdt76N44513O+
+	P4J8UA8qxFk=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 98FFCC6AC3;
-	Mon, 19 Jul 2010 13:43:53 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A160BC6E11;
+	Mon, 19 Jul 2010 14:06:32 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F15AC6AC0; Mon, 19 Jul
- 2010 13:43:50 -0400 (EDT)
-In-Reply-To: <bf4ea4e83162ebf1d915b87413aad54a1162a637.1279556172.git.jaredhance@gmail.com> (Jared Hance's message of "Mon\, 19 Jul 2010 12\:18\:08 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 52753C6E0E; Mon, 19 Jul
+ 2010 14:06:25 -0400 (EDT)
+In-Reply-To: <20100717093006.GA11452@localhost> (Clemens Buchacher's message
+ of "Sat\, 17 Jul 2010 11\:30\:06 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 32AF664A-935D-11DF-9002-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 5CBB76BA-9360-11DF-9819-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151264>
 
-Jared Hance <jaredhance@gmail.com> writes:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-> index a81cb6c..2bf9cf2 100644
-> --- a/Documentation/git-clean.txt
-> +++ b/Documentation/git-clean.txt
-> @@ -8,7 +8,7 @@ git-clean - Remove untracked files from the working tree
->  SYNOPSIS
->  --------
->  [verse]
-> -'git clean' [-d] [-f] [-n] [-q] [-x | -X] [--] <path>...
-> +'git clean' [-d] [-f] [-n] [-q] [-e] [-x | -X] [--] <path>...
+> Pros and cons for "undeleting branches":
+>
+> + safety net
+> It should not be easy to lose information with git.
 
-This and ...
+I am personally not very convinced by this argument when it comes to the
+cases where the user actively asks us to remove something.
 
->  DESCRIPTION
->  -----------
-> @@ -45,6 +45,10 @@ OPTIONS
->  	Be quiet, only report errors, but not the files that are
->  	successfully removed.
->  
-> +-e::
-> +--exclude::
+> + less dependant on git branch -d
+>
+> Since git branch -d deletes branches which have been merged to a
+> remote tracking branch, it does no longer guarantee that the branch
+> is still available in history locally, and if the branch is also
+> deleted remotely, running git remote prune removes it entirely.
 
-this both look wrong.  They do not tell the readers that the option takes
-a mandatory argument that specifies the "exceptions".  Worse yet,
+Sorry, I have no idea what you are talking about in this paragraph.  I
+cannot read "Who depends on git branch -d to achieve what" from your
+description.  All I read in the above description is that what the command
+does is a good thing.  If you want to keep the remote tracking branches
+around, don't run "branch -d".  If you do want to remove the history of a
+branch, run "branch -d".  Isn't it that simple?
 
-> +	Specify special exceptions to not be cleaned. Separate with colon.
+Perhaps the missing "achieve what" may be that "output from 'git branch'
+is too cluttered if I don't remove already merged branches as early as
+possible, and forces me to run 'git branch -d' to clean things up too
+often"?  If that is the issue you are trying to address, perhaps we can
+solve that in a more direct way, e.g. "git branch --no-merged" easier to
+access?
 
-this does not tell _how_ exceptions are specified.
+> - user interface complexity
+>
+> How to prune deleted branches? Currently, it is enough to do "git
+> branch -D branch; git gc --prune" in order to get rid of the branch
+> objects, at least if the HEAD reflog does not contain it or has
+> expired. Consider for example adding a remote, and removing it
+> again. This operation would leave a bunch of deleted branches,
+> which potentially occupy a lot of disk space.
+>
+> How to find and restore deleted branches? If the reflog is used to
+> record deleted branches, and a new branch of the same name is
+> created, the reflog contains entries from unrelated branches. [1]
+> If the deleted reflogs are stored in an attic, how do we reference
+> those?
 
-What should each element on the list look like?
+This is the area I am most concerned about.
 
-Is it a dot-suffix without dot (e.g. "html") or with dot (e.g. ".html")?
-Or is it a glob (e.g. "*.html")?  Or is it a full path relative to the
-worktree root (e.g. "Documentation/index.html")?
+If you take an analogy in say a file server implementation, yes, it should
+not be easy to lose information there.  But it is and should be easy to
+say "rm junk".  How would people recover from a mistake if they typed a
+wrong filename, "rm junio" to lose a precious file "junio", when they
+meant to lose "junk"?  They go to backups.  Can't git users do the same?
+After all, .git directory is stored on a filesystem of some sort, and
+taking a backup (you do take backups, don't you?) and picking the stuff
+you lost from there should be a standard procedure that can be learned
+outside of the context of git.
 
-Using colon as an inter-element separator makes sense only if last one is
-true (i.e. "concrete path, not glob nor suffix"), so an intelligent reader
-could probably guess what you meant, but you shouldn't make readers guess
-in the first place.
-
-If on the other hand you wanted to allow specifying the same kind of
-patterns used in the gitignore files from the command line:
-
- (1) A list separated with whitespace would be more natural, not a colon;
-     and
-
- (2) I have to wonder why do we give such a command line exclude override
-     to begin with.
-
-     (2-a) wouldn't it be easier for the user to add such a local
-           configuration to $GIT_DIR/info/exclude once and be done with
-           it?
-
-     (2-b) if command-line override has benefit, why is it limited to only
-           _exclude_ and not include (iow, additional ignore patterns)?
+This is pretty-much a tangent, but I recall from time to time people
+wonder why the branch namespace is not flat.  If that is a common wish,
+your "tilde-suffix all the intermediate path components" trick could be
+used in later versions of git (perhaps 1.8.X series) to improve the system
+to allow "maint-1.7.0" branch and topic branches that forked from it
+e.g. "maint-1.7.0/fix-frotz" and "maint-1.7.0/fix-nitfol" peacefully
+co-exist.
