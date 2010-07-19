@@ -1,140 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] Documentation spelling fixes.
-Date: Mon, 19 Jul 2010 18:11:24 -0500
-Message-ID: <20100719231123.GA1708@burratino>
-References: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi>
+From: Ketan Padegaonkar <ketanpadegaonkar@gmail.com>
+Subject: Re: [http] Git error messages reveal password encoded in the URL
+Date: Mon, 19 Jul 2010 16:25:43 -0700
+Message-ID: <4C44DEF7.4000903@gmail.com>
+References: <4C4484A4.5010009@gmail.com> <m3aapnmbid.fsf@localhost.localdomain> 	<AANLkTikP3eNVs34ZcB9gHqV60-aqexfCPgcyBWSGn_Y7@mail.gmail.com> 	<201007192310.56399.jnareb@gmail.com> <AANLkTilby7GWOuObh6W4z_caUG83O5A5Wh4Wb-JJnSdJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ville =?iso-8859-1?Q?Skytt=E4?= <ville.skytta@iki.fi>
-X-From: git-owner@vger.kernel.org Tue Jul 20 01:12:27 2010
+Cc: Jakub Narebski <jnareb@gmail.com>, git-dev <git@vger.kernel.org>
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 01:26:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OazVb-0006ge-1t
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 01:12:27 +0200
+	id 1Oazim-0001gU-Bj
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 01:26:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967145Ab0GSXMW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 19:12:22 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:44524 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S967133Ab0GSXMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 19:12:21 -0400
-Received: by qyk35 with SMTP id 35so1950183qyk.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 16:12:20 -0700 (PDT)
+	id S1756571Ab0GSXZu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 19:25:50 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:41480 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754567Ab0GSXZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 19:25:49 -0400
+Received: by pzk26 with SMTP id 26so1499884pzk.19
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 16:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vcTon3043HKECvo5FbyEGZ3MYiQZKEW0Iybmw8K2Cfg=;
-        b=AyzBO8thI0FRShDM7RRY7lB7onIgqALdmgxQcANCYrTngjHrr5C+68AgKHp7upn69Y
-         IrHdjfMFCSQQFsigndpguoxmOcTTfruwptk21UPEwuFILeLF9gSjZkiwAyXRd/UnSrFT
-         9UPI2ETLmBRf+Fhb+ynARLPsiyAdE54Hrd+2I=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=eq6bK9GjosI0rW30T7Mvo96gA+XbCwqumV7UN1NL6x4=;
+        b=Ab1y/5fD3/66YRgsWGLxvQ3weu/kwHIESdzu1VpcBcY/EGTLvAD5PCrDS7waeb/j5R
+         skLbQL8/XscMY3CUEXfoHBwNMBjSR4uQX9imJsLWHvouIxWz1uxBL5ms0jOYm3cD3h4u
+         cgpCKOJwDpMIMmlutYE70pnSuMeK6w6In5NGw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=NYitV+qFFgiZNDpA1TF/FEPB0fz1hQ4HoUm279/y08+xag/CNEO2dJneeM+CaMmo7A
-         rsjmqK8s2D8RrZzRwQRjwLS+OG9aHgCW+WkxRtGG6bBVnEXZlrm7Fzpkdtjp/u/lPmJU
-         B3GJAVqWzQUCvzTRKC0rhklcd2sa7yAsT3dLU=
-Received: by 10.224.113.27 with SMTP id y27mr4925750qap.67.1279581140390;
-        Mon, 19 Jul 2010 16:12:20 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id js14sm27280817qcb.30.2010.07.19.16.12.18
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=xz67MuDkVOj/kjl/eEPqGXCYn9Zi6/Ods+f8OUXPfVcv5UWMo6oSe9L+28VQz924hy
+         AZ5GbdFrX0ECTRs7QlLsM5wAEnDASYySx9MxotItVauh+uscNz/BHLsEbIlAR7R0KSkV
+         aUflPQg9rn941MzBEBZ1ScqKtpTdvo42aCaVs=
+Received: by 10.142.147.7 with SMTP id u7mr7966157wfd.218.1279581948608;
+        Mon, 19 Jul 2010 16:25:48 -0700 (PDT)
+Received: from storm.corporate.thoughtworks.com ([204.15.2.181])
+        by mx.google.com with ESMTPS id y16sm7006087wff.2.2010.07.19.16.25.45
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 16:12:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Mon, 19 Jul 2010 16:25:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.2.4) Gecko/20100608 Lightning/1.0b2 Thunderbird/3.1
+In-Reply-To: <AANLkTilby7GWOuObh6W4z_caUG83O5A5Wh4Wb-JJnSdJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151291>
 
-Hi Ville,
+On 7/19/10 2:16 PM, Jacob Helwig wrote:
+> On Mon, Jul 19, 2010 at 14:10, Jakub Narebski<jnareb@gmail.com>  wrot=
+e:
+>> Dnia poniedzia=C5=82ek 19. lipca 2010 23:05, Jacob Helwig napisa=C5=82=
+:
+>>> On Mon, Jul 19, 2010 at 14:02, Jakub Narebski<jnareb@gmail.com>  wr=
+ote:
+>>>> Ketan Padegaonkar<ketanpadegaonkar@gmail.com>  writes:
+>>>>
+>>>>> We use http to serve our git repos, in order for git to not ask m=
+e a
+>>>>> username/password everytime,
 
-Ville Skytt=E4 wrote:
+Apologies. I used the wrong punctuation. It should read as:
 
-> ---
+We use https+basic auth to serve up git repos. Unfortunately SSH is not=
+=20
+an option for various reasons.
 
-If this does not end up needing a re-roll, would it be okay for
-Junio (or whoever else picks up the patch) to forge your sign-off?
-(See "Sign your work" in Documentation/SubmittingPatches for what I
-mean.)
+In order for git to not ask me the username/password, I 'encoded' the=20
+username/password into the url.
 
-> +++ b/Documentation/config.txt
-> @@ -418,7 +418,7 @@ Common unit suffixes of 'k', 'm', or 'g' are supp=
-orted.
-> =20
->  core.deltaBaseCacheLimit::
->  	Maximum number of bytes to reserve for caching base objects
-> -	that multiple deltafied objects reference.  By storing the
-> +	that multiple deltified objects reference.  By storing the
+I'm using git v1.7.1.1 on MacOSX Leopard. I can see the same behavior o=
+n=20
+master (rev 24e7a5).
 
-Huh?  Maybe
-
-	Maximum number of bytes to reserve for caching based objects
-	that might be referenced by multiple deltified objects.
-
-Or:
-
-	Amount of memory (in bytes) to reserve for speeding up
-	unpacking of deltified objects.  By storing entire
-	decompressed base objects in a cache, Git can avoid
-	unpacking and decompressing frequently-used base objects
-	multiple times.
-
-> @@ -1275,7 +1275,7 @@ instaweb.local::
->  	be bound to the local IP (127.0.0.1).
-> =20
->  instaweb.modulepath::
-> -	The module path for an apache httpd used by linkgit:git-instaweb[1]=
-=2E
-> +	The module path for an Apache httpd used by linkgit:git-instaweb[1]=
-=2E
-
-Maybe:
-
-	Default module path for linkgit:git-instaweb[1] to use
-	instead of /usr/lib/apache2/modules.  Only used if httpd
-	is Apache.
-
-> +++ b/Documentation/git-cvsserver.txt
-> @@ -366,8 +366,8 @@ CRLF Line Ending Conversions
->  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> =20
->  By default the server leaves the '-k' mode blank for all files,
-> -which causes the cvs client to treat them as a text files, subject
-> +which causes the CVS client to treat them as a text files, subject
-
-Should we call the cvs(1) command "the CVS client"?  Maybe
-"the cvs(1) client" or something would be clearer, but I
-don't see anything wrong with your choice.
-
-> -to crlf conversion on some platforms.
-> +to CRLF conversion on some platforms.
-
-This term can be confusing, as we've seen in other contexts.
-Maybe:
-
-	subject to line-ending conversion on some platforms.
-
-> +++ b/Documentation/git-hash-object.txt
-> @@ -49,7 +49,7 @@ OPTIONS
-> =20
->  --no-filters::
->  	Hash the contents as is, ignoring any input filter that would
-> -	have been chosen by the attributes mechanism, including crlf
-> +	have been chosen by the attributes mechanism, including CRLF
->  	conversion. If the file is read from standard input then this
-
-It's called "end-of-line conversion" in gitattributes(5) now,
-apparently.
-
-The rest of this one looks good.  Thanks.
+--=20
+Ketan
+http://ketan.padegaonkar.name | http://eclipse.org/swtbot
