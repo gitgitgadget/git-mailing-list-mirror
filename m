@@ -1,118 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Git Config Question
-Date: Mon, 19 Jul 2010 00:59:09 -0500
-Message-ID: <20100719055909.GA16276@burratino>
-References: <AANLkTin8tW_qiRO57F-yjYHzhUkrZbO1g3L_hmesenGL@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: write memoized data explicitly to avoid
+	Storable bug
+Date: Mon, 19 Jul 2010 06:39:03 +0000
+Message-ID: <20100719063903.GA3680@dcvr.yhbt.net>
+References: <1279455469-6384-1-git-send-email-vsu@altlinux.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>
-To: Shilpa Kulkarni <syk@payasonline.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 08:00:15 2010
+Cc: git@vger.kernel.org, A Large Angry SCM <gitzilla@gmail.com>,
+	Sergey Vlasov <vsu@altlinux.ru>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 08:39:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OajOg-0003jv-MN
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 08:00:15 +0200
+	id 1Oak0O-0004yk-OB
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 08:39:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388Ab0GSGAG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 02:00:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42909 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752826Ab0GSGAF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 02:00:05 -0400
-Received: by iwn7 with SMTP id 7so4235978iwn.19
-        for <git@vger.kernel.org>; Sun, 18 Jul 2010 23:00:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ZJv4EUiA4a4nZIr0iWRa6LjoW34+u0VUvRqBj9tDxjk=;
-        b=Rhyk0ySmgfJMqGIRWnfHPEiF1ido3MiMbzfSv64GeOuH4/3ECcw1DHtX14ExWEIOQj
-         FwDv8nRMFKC34ERhMqtgLQzJY5DqgTtzrxoQF//JF19fWHkqXNvIIHBLpHi0fRagGdC7
-         vVIUxNtDhh4vPcX+GdMMrh+Dt629QeVGqT9ds=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=qxWrsvcPzivsFX+bDk63OHGHKU06y1xt/fARmH8Z8dm4244R6gthZnsyE689l8MuNE
-         2WEtVXTH4zIk/9ftRg4/GdeI8b0tLWiIYwmqsXgX40yLwTvuk/Z8E8XOmV+YtHg89IK0
-         vsE1NSSCf52OPHJIWaiA8E2OhpGqUvbQgK3Ko=
-Received: by 10.231.185.142 with SMTP id co14mr3822946ibb.97.1279519203682;
-        Sun, 18 Jul 2010 23:00:03 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id r3sm23615249ibk.19.2010.07.18.23.00.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 18 Jul 2010 23:00:02 -0700 (PDT)
+	id S1754199Ab0GSGjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jul 2010 02:39:06 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:45992 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754103Ab0GSGjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 02:39:05 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F9FF1F516;
+	Mon, 19 Jul 2010 06:39:04 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <AANLkTin8tW_qiRO57F-yjYHzhUkrZbO1g3L_hmesenGL@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1279455469-6384-1-git-send-email-vsu@altlinux.ru>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151245>
 
-(+cc: Eyvind Bernhardsen, Finn Arne Gangstad)
+Sergey Vlasov <vsu@altlinux.ru> wrote:
+> Apparently using the Storable module during global destruction is
+> unsafe - there is a bug which can cause segmentation faults:
+> 
+>   http://rt.cpan.org/Public/Bug/Display.html?id=36087
+>   http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482355
+> 
+> The persistent memoization support introduced in commit 8bff7c538
+> relied on global destruction to write cached data, which was leading
+> to segfaults in some Perl configurations.  Calling Memoize::unmemoize
+> in the END block forces the cache writeout to be performed earlier,
+> thus avoiding the bug.
+> 
+> Signed-off-by: Sergey Vlasov <vsu@altlinux.ru>
 
-Hi!
+Thanks Sergey,
 
-Shilpa Kulkarni wrote:
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-> 2. Person Y checks in code (commit & push). Checks in file a, b.
->
-> 3. Person X does a 'git pull origin master'.
->
-> Pull succeeds - however
-> 'git status' shows file a, b as modified even though person X has done
-> nothing with these files.
-[...]
-> Someone has recommended we all use
-> core.safecrlf=false
-> core.autocrlf=false
-> But this would require running dos2unix cmd while running scripts on
-> linux which seems like an overhead.
+...and pushed to git://git.bogomips.org/git-svn
 
-I have not kept up with the latest best practices.  But I suspect
-something like the following would work:
-
-1. In .git/config, ~/.gitconfig, or /etc/gitconfig, on Windows:
-
-	[core]
-		autocrlf = true
-
-See core.autocrlf in git-config(1).  I think git for windows does this
-automatically.
-
-2. In .git/config, ~/.gitconfig, or /etc/gitconfig, on Unix:
-
-	[core]
-		autocrlf = input
-
-3. Convert line-endings in the tracked content.  Something like:
-
-	$ git status; # make sure there are no untracked files present
-	$ git rm -fr --cached .; # stop tracking all files
-	$ git add .; # fix line-endings on all files
-	$ git commit; # record that you have done so
-
-4. Convert line-endings in the work tree.  Something like:
-
-	$ git rm -fr .; # remove all tracked files
-	$ git checkout HEAD -- .; # fetch them back again
-
-5. In .gitattributes, something like:
-
-	*	auto
-	*.sh	crlf
-	*.[ch]	crlf
-	*.jpg	-crlf
-
-See gitattributes(5) for details.
-
-Hope that helps,
-Jonathan
+-- 
+Eric Wong
