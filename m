@@ -1,87 +1,54 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Question about 'branch -d' safety
-Date: Mon, 19 Jul 2010 22:36:20 +0200
-Message-ID: <201007192236.21786.jnareb@gmail.com>
-References: <20091230065442.6117@nanako3.lavabit.com> <1279523523.3077.8.camel@dreddbeard> <4C448879.4040202@workspacewhiz.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2] tests: rename test to work around GNU gettext bug
+Date: Mon, 19 Jul 2010 22:38:57 +0200
+Message-ID: <201007192238.57783.trast@student.ethz.ch>
+References: <1279570409-5293-1-git-send-email-avarab@gmail.com> <1279571291-5555-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: wmpalmer@gmail.com, Jonathan Nieder <jrnieder@gmail.com>,
-	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Nanako Shiraishi <nanako3@lavabit.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 22:36:33 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 22:39:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oax4i-00050F-LW
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 22:36:32 +0200
+	id 1Oax7X-0006Lq-7y
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 22:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966708Ab0GSUg1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 16:36:27 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57148 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936465Ab0GSUg1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 16:36:27 -0400
-Received: by bwz1 with SMTP id 1so2500680bwz.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 13:36:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=xwFrkTHfKeSYBc9Pxkzm8rYiXOrDMH0TvDtBH2bNfX4=;
-        b=D3OtW6lptfQiXgHw5Bc+5MbeBMbB6kRyfNcnJxhgfYGMzaRJJw+ZZ7oDlqWlbadHnJ
-         djQQQ7SDcO702c5k7CfBB2I5hPJbhlqCAarVgt+tG2cvHS+0bqKq7TtFfUS23Df/pEH2
-         1wgqZDckLTdSZFWAEslK+usuuOmj10HtcQAH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=D+/RIXpSl/BK0PL0F0RKGPnMSIDu4rX70p4a2O8PWA2sYaLaYSsUKuKwR2uWvmJzYy
-         rmfwMwR/iNghYRgBD0AQLBrhx5PzUndlbwEdK39h8LvvokitYXnyL+DI7MPrd8hpF0S5
-         OR13qhgyxZ9/layqItesXxGBfqV3oIqLOhMGI=
-Received: by 10.204.136.71 with SMTP id q7mr4363761bkt.111.1279571785598;
-        Mon, 19 Jul 2010 13:36:25 -0700 (PDT)
-Received: from [192.168.1.13] (abwh94.neoplus.adsl.tpnet.pl [83.8.231.94])
-        by mx.google.com with ESMTPS id x19sm27306853bkv.21.2010.07.19.13.36.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 13:36:24 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4C448879.4040202@workspacewhiz.com>
-Content-Disposition: inline
+	id S966719Ab0GSUjW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 16:39:22 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:46714 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936513Ab0GSUjV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jul 2010 16:39:21 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 19 Jul
+ 2010 22:39:20 +0200
+Received: from thomas.localnet (84.74.100.241) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 19 Jul
+ 2010 22:38:59 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <1279571291-5555-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151277>
 
-On Mon, 19 Jul 2010, Joshua Jensen wrote:
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+> t0200-gettext.sh matched the former broken check, so on systems with
+> an old GNU gettext (like RHEL 5.4) the test simply printed:
+>=20
+>     ./t0200-gettext.sh
+>     GNU gettext shell script function library version 0.14.6
+>     Usage: . gettext.sh
+>     FATAL: Unexpected exit with code 1
 
-> My brain has become muddied with all the ~2 stuff.  Explain again why it 
-> can't be as simple as this?
-> 
-> git branch -d integration
-> 
-> git reflog
-> 
-> 0000001 HEAD@{0}: (fake)checkout: moving from integration to master 
-> (0000001)
-> 8000000 HEAD@{1}: branch -d: Deleting integration
-> 0000001 HEAD@{2}: (fake)checkout: moving from master to integration 
-> (8000000)
+ACK and tested (on the RHEL5.4 that started this).  Thanks for the
+help and fast fix!
 
-Because 'integration' branch nowadays might have been never checked out,
-and not be in HEAD, even though 'git branch -d integration' works.
-Stuffing unrelated events in HEAD reflog, instead of having it be action
-history of HEAD symref is IMVHO a bad idea.
-
--- 
-Jakub Narebski
-Poland
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
