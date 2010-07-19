@@ -1,94 +1,101 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: remove duplicate code and not needed break statement
-Date: Mon, 19 Jul 2010 18:26:12 +0200
-Message-ID: <AANLkTilB1eNHZWHLoBsVmEOObdSdCZQ0fxzqWc-SkC_a@mail.gmail.com>
-References: <1279475399-6081-1-git-send-email-ralf.thielow@googlemail.com>
-	<AANLkTimHHJnvgFh3Kd7jMqTJJFensZjkD7YCU1gdt-FT@mail.gmail.com>
-	<20100719160632.GA17526@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Merge commit subjects git.git
+Date: Mon, 19 Jul 2010 09:31:58 -0700
+Message-ID: <7vpqyjph4x.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikavL0DH8FgFxBw7hbGLtj2tqxnP-BT77zo5FJT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Valeo de Vries <valeo@valeo.co.cc>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 18:26:21 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 18:32:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OatAa-0006rj-KS
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 18:26:20 +0200
+	id 1OatGK-00016u-Sl
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 18:32:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936414Ab0GSQ0O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 12:26:14 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:63300 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936396Ab0GSQ0N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jul 2010 12:26:13 -0400
-Received: by wwb39 with SMTP id 39so370141wwb.1
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 09:26:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hq5JY6NJgus8+Cvs6izNEWfv82j8GadzBwtvEJSdZuQ=;
-        b=tNIQqxxJeK/dW2Xvxh8BTsHVyzWjh4m+cRk4KlCk9W5e38kaNCrmd12dGBrKddN1LJ
-         W5A4S6lK4ZZRll06fIjkDN2s3FWLYnDizjeio/XXMoAH9c/CzmlJ6D/zA0LcsfVzFvdL
-         3mQbPmMCfYxbzHoY7DdV2v9WfgYcRQyp5Wo7k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cEdv0xx5/D4rgEhC938T2mN0rU94moMLNHDnPXcW/7eRYtUNDrjSr2F4llzHh0tzHu
-         c22O+PEihGwkpgEfOVmWaw1O4o+vZ7qC1l/B8RubM2zFWtqPxED0Zaiq531GGlTJ8Cf2
-         e6FGQRuJohoE9wL9x95rq0F1JO/dFvwy4Mly0=
-Received: by 10.216.179.140 with SMTP id h12mr3664406wem.39.1279556772253; 
-	Mon, 19 Jul 2010 09:26:12 -0700 (PDT)
-Received: by 10.216.163.132 with HTTP; Mon, 19 Jul 2010 09:26:12 -0700 (PDT)
-In-Reply-To: <20100719160632.GA17526@burratino>
+	id S936423Ab0GSQcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jul 2010 12:32:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:32804 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936407Ab0GSQcI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 12:32:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 40CF8C5F8D;
+	Mon, 19 Jul 2010 12:32:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H4UJ1+3nkbcgZuEiwpxvBxlMIHU=; b=dzoolV
+	uYeLClYU1IrIa/TNTGEHiE9JfWu1pw9XzB1qFtC2hQQnG9R0hpb+YzymCH0lOZFa
+	cOaTR6qbeecNxJS2shWalcdf8Lpg7Q6QgMDrHYu4mo6N0SMJKzISGMtTFF+JOiZU
+	G9DSiT4gjXSbmPCL6NYbCfPT7rl6uXYJ5XpT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mYDI2LzLKb24Twk+03AuAO8HoeIx7xGn
+	eXeFZe8NjyM3SzHnie/Xb9PuNZNYwAflMCiwSd97eJ3uBKwydkJUA80dQJK+2sxx
+	WHqSARm5JZpATvfoFiv7J80xFjwwuqzXNKVg17+1dkoWFxmjw27RLumKMsSL+m8Q
+	RMufjhqKkRI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1F1AEC5F8C;
+	Mon, 19 Jul 2010 12:32:03 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F4DDC5F87; Mon, 19 Jul
+ 2010 12:32:00 -0400 (EDT)
+In-Reply-To: <AANLkTikavL0DH8FgFxBw7hbGLtj2tqxnP-BT77zo5FJT@mail.gmail.com>
+ (Jay Soffian's message of "Sun\, 18 Jul 2010 04\:22\:25 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 296C701E-9353-11DF-BED6-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151258>
 
-=46rom 5b3e7c8f8b81a295b5c58534be250f5a818ccc64 Mon Sep 17 00:00:00 200=
-1
-=46rom: Ralf Thielow <ralf.thielow@googlemail.com>
-Date: Sun, 18 Jul 2010 18:48:58 +0200
-Subject: [PATCH] update-server-info: Shorten read_pack_info_file()
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-The correct responses to a D and a T line in .git/objects/info/packs
-are the same, so combine their case arms.  In both cases we already
-=E2=80=98goto=E2=80=99 out of the switch so while at it, remove a redun=
-dant =E2=80=98break=E2=80=99
-to avoid yet another line of code.
+> Color me curious, but why do the merge commit message in git.git
+> sometimes look like this:
 
+The merge messages that are autogenerated by "git merge" (rather, "git
+fmt-merge-msg") are optimized for Linus's workflow ;-) and hasn't changed
+much during the past 4-5 years.
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
-Reviewed-by: Jonathan Nieder <jrnieder <at> gmail.com>
----
- server-info.c |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
+>   Merge branch 'jn/paginate-fix'
 
-diff --git a/server-info.c b/server-info.c
-index 4098ca2..9ec744e 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -113,11 +113,8 @@ static int read_pack_info_file(const char *infofil=
-e)
- 				goto out_stale;
- 			break;
- 		case 'D': /* we used to emit D but that was misguided. */
--			goto out_stale;
--			break;
- 		case 'T': /* we used to emit T but nobody uses it. */
- 			goto out_stale;
--			break;
- 		default:
- 			error("unrecognized: %s", line);
- 			break;
---=20
-1.7.0.4
+You have _one_ primary integration branch (well, by definition, there
+should be only one "primary") called "master", and when you merge into
+that branch you are merging work done by a side branch that has been
+cooking.  You get a terse "Merge branch x", "Merge $URL", etc. without
+"into".
+
+>   Merge remote branch 'ko/master' into jc/read-tree-cache-tree-fix
+
+You are not supposed to merge the integration branch into topics without a
+very good reason.  Again, because by default the tool assumes you have one
+primary integration branch, merging into a branch that is not "master"
+gets "into ..." so that it will later stand out in the output of "git log"
+and "git shortlog".
+
+I sometimes/often add some comments explaining why I needed the merge to
+such a merge with "commit --amend" (the particular one you noticed,
+jc/read-tree-cache-tree-fix, doesn't have it but I should have.  The topic
+was about fixing an ancient bug and I wanted an early conflict resolution
+before bringing the fix to more up-to-date codebase).
+
+> Also, the "Sync with 1.7.1.1" merges are I guess are from something like:
+>
+>   git merge -s ours -m "Sync with 1.7.1.1" maint
+
+I almost never use "-s ours"; the only exception is when fixing mistakes,
+and "merging all the fixes that accumulated on 'maint' to 'master'" is
+certainly not an example of "fixing mistakes".
+
+This "Sync with 1.7.1.1" is an example of me using "commit --amend" to
+note the exact reason why this merge of 'maint' to 'master' was made---"to
+make sure that we have all the fix in the last maintenance release in the
+development version".  Because the fixes to 1.7.1.1 were all cooked first
+in "master" and then merged to "maint", the result of this particular
+merge didn't change the tree of "master", but that is not always the case.
