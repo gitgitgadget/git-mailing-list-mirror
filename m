@@ -1,91 +1,112 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Merge commit subjects git.git
-Date: Mon, 19 Jul 2010 13:23:06 -0400
-Message-ID: <AANLkTimtrGF=5k2toJo5T1oA5Q2Fp0fzDAJOw2-DR9AD@mail.gmail.com>
-References: <AANLkTikavL0DH8FgFxBw7hbGLtj2tqxnP-BT77zo5FJT@mail.gmail.com>
-	<7vpqyjph4x.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add --exclude to git-clean.
+Date: Mon, 19 Jul 2010 10:43:43 -0700
+Message-ID: <7vbpa3pdtc.fsf@alter.siamese.dyndns.org>
+References: <bf4ea4e83162ebf1d915b87413aad54a1162a637.1279556172.git.jaredhance@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 19:23:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 19:44:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oau3f-0007yd-2i
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 19:23:15 +0200
+	id 1OauNn-000849-Fx
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 19:44:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760753Ab0GSRXK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 13:23:10 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42594 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760724Ab0GSRXH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Jul 2010 13:23:07 -0400
-Received: by iwn7 with SMTP id 7so4785401iwn.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 10:23:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Qpk3vvTLsUJyRqrwuyZe0KX0EdcV3MUk4mTXNxnP/FQ=;
-        b=H5HI8NQdd30/Hjz6/na6drbgvNgq4HqVVtBiabmcSFrDf9eP400ca8pAmao5TPUE49
-         rIBSJylB1AqHae287rslht4BSEIQrCSFfAe+xkms9T8TGNx6KFN8W00HBoukoJvFWTbp
-         ZVtaXkWTHsHGMLO51snOYZGhx/T73Kzj771Nk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Mg+qsLedmmqJAMERzyBP+0WI6G5s7WXviOsLDZcNFgFR/93cdVfOyvw2rX3KPCde1E
-         4J9jK94GQgYR01BreF9RtLRiwmXhyZY3rP/s4JABfkeBLEMCjHM6fVje1VXk55LQrJ+O
-         O1kLsXcikGMT9VnclVlz4Cb0F9MwdQ2pvkKT4=
-Received: by 10.231.157.143 with SMTP id b15mr5933636ibx.113.1279560186907; 
-	Mon, 19 Jul 2010 10:23:06 -0700 (PDT)
-Received: by 10.231.152.133 with HTTP; Mon, 19 Jul 2010 10:23:06 -0700 (PDT)
-In-Reply-To: <7vpqyjph4x.fsf@alter.siamese.dyndns.org>
+	id S932403Ab0GSRn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jul 2010 13:43:58 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63021 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760747Ab0GSRn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 13:43:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BC5EFC6AC4;
+	Mon, 19 Jul 2010 13:43:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xcExicP4A7I8pydh79zMWpYhZIo=; b=FL8Bds
+	FtBxr4nc7Odv/eZiWy9TZBrXScRqbf5YFsictQ3O3zyST4wgJrBiNnoChOqeCoIF
+	oOq1V8v5p4a2XaztyKzEJBd2a+nrDqCdCZ6PdpifSl4JjoPs/IlisND7WdIoh2E6
+	E0UQzOCcrDFpGwrcOO3uW+xAo4o2ZERTHozik=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OwJfzX0SDVs7rEhfFfwKp1jAvbRYX9dL
+	Z5sMkGThaX/p5aTzFQ6IL1kHD/xDsNV1mvtWH/s+zsPWvUHH0ceXsl5H26l/LuZB
+	0nq0UAKBQn27H8SXlr6spBcM8Tvl55yWYgCQGaTeD1U1FevCK5zvFY751InL/xXg
+	pz+dHW9mEqU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 98FFCC6AC3;
+	Mon, 19 Jul 2010 13:43:53 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8F15AC6AC0; Mon, 19 Jul
+ 2010 13:43:50 -0400 (EDT)
+In-Reply-To: <bf4ea4e83162ebf1d915b87413aad54a1162a637.1279556172.git.jaredhance@gmail.com> (Jared Hance's message of "Mon\, 19 Jul 2010 12\:18\:08 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 32AF664A-935D-11DF-9002-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151263>
 
-On Mon, Jul 19, 2010 at 12:31 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> The merge messages that are autogenerated by "git merge" (rather, "gi=
-t
-> fmt-merge-msg") are optimized for Linus's workflow ;-) and hasn't cha=
-nged
-> much during the past 4-5 years.
+Jared Hance <jaredhance@gmail.com> writes:
 
-Ah, thank you for the explanation.
+> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+> index a81cb6c..2bf9cf2 100644
+> --- a/Documentation/git-clean.txt
+> +++ b/Documentation/git-clean.txt
+> @@ -8,7 +8,7 @@ git-clean - Remove untracked files from the working tree
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git clean' [-d] [-f] [-n] [-q] [-x | -X] [--] <path>...
+> +'git clean' [-d] [-f] [-n] [-q] [-e] [-x | -X] [--] <path>...
 
-> I almost never use "-s ours"; the only exception is when fixing mista=
-kes,
-> and "merging all the fixes that accumulated on 'maint' to 'master'" i=
-s
-> certainly not an example of "fixing mistakes".
->
-> This "Sync with 1.7.1.1" is an example of me using "commit --amend" t=
-o
-> note the exact reason why this merge of 'maint' to 'master' was made-=
---"to
-> make sure that we have all the fix in the last maintenance release in=
- the
-> development version". =C2=A0Because the fixes to 1.7.1.1 were all coo=
-ked first
-> in "master" and then merged to "maint", the result of this particular
-> merge didn't change the tree of "master", but that is not always the =
-case.
+This and ...
 
-Can you explain a bit about how you manage the DEF_VER variable in
-GIT-VERSION-GEN?
+>  DESCRIPTION
+>  -----------
+> @@ -45,6 +45,10 @@ OPTIONS
+>  	Be quiet, only report errors, but not the files that are
+>  	successfully removed.
+>  
+> +-e::
+> +--exclude::
 
-I think I was confused not to see GIT-VERSION-GEN listed as a conflict
-in the merge message, but looking more carefully I see that the files
-with embedded versions did indeed conflict. Do you just edit this out
-of the merge message?
+this both look wrong.  They do not tell the readers that the option takes
+a mandatory argument that specifies the "exceptions".  Worse yet,
 
-j.
+> +	Specify special exceptions to not be cleaned. Separate with colon.
+
+this does not tell _how_ exceptions are specified.
+
+What should each element on the list look like?
+
+Is it a dot-suffix without dot (e.g. "html") or with dot (e.g. ".html")?
+Or is it a glob (e.g. "*.html")?  Or is it a full path relative to the
+worktree root (e.g. "Documentation/index.html")?
+
+Using colon as an inter-element separator makes sense only if last one is
+true (i.e. "concrete path, not glob nor suffix"), so an intelligent reader
+could probably guess what you meant, but you shouldn't make readers guess
+in the first place.
+
+If on the other hand you wanted to allow specifying the same kind of
+patterns used in the gitignore files from the command line:
+
+ (1) A list separated with whitespace would be more natural, not a colon;
+     and
+
+ (2) I have to wonder why do we give such a command line exclude override
+     to begin with.
+
+     (2-a) wouldn't it be easier for the user to add such a local
+           configuration to $GIT_DIR/info/exclude once and be done with
+           it?
+
+     (2-b) if command-line override has benefit, why is it limited to only
+           _exclude_ and not include (iow, additional ignore patterns)?
