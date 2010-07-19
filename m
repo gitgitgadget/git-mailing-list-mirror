@@ -1,223 +1,141 @@
-From: =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
-Subject: [PATCH 1/2] Documentation spelling fixes.
-Date: Tue, 20 Jul 2010 00:17:17 +0300
-Message-ID: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 19 23:17:28 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] blame: Add tests for -L/start/,/end/
+Date: Mon, 19 Jul 2010 21:21:49 +0000
+Message-ID: <AANLkTinyTFzZgL2U7cvwnRVJeZTAhS3xW4v3TT6llVAn@mail.gmail.com>
+References: <1279294507-9238-1-git-send-email-avarab@gmail.com>
+	<7voce3nppy.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 19 23:21:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OaxiK-0001K9-HB
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 23:17:28 +0200
+	id 1Oaxme-0003SL-QE
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 23:21:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966817Ab0GSVRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 17:17:22 -0400
-Received: from filtteri1.pp.htv.fi ([213.243.153.184]:40525 "EHLO
-	filtteri1.pp.htv.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S966812Ab0GSVRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 17:17:21 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtteri1.pp.htv.fi (Postfix) with ESMTP id B985321B01C
-	for <git@vger.kernel.org>; Tue, 20 Jul 2010 00:17:19 +0300 (EEST)
-X-Virus-Scanned: Debian amavisd-new at pp.htv.fi
-Received: from smtp5.welho.com ([213.243.153.39])
-	by localhost (filtteri1.pp.htv.fi [213.243.153.184]) (amavisd-new, port 10024)
-	with ESMTP id mCqotRAMtuSa for <git@vger.kernel.org>;
-	Tue, 20 Jul 2010 00:17:19 +0300 (EEST)
-Received: from viper.bobcat.mine.nu.bobcat.mine.nu (cs181085020.pp.htv.fi [82.181.85.20])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp5.welho.com (Postfix) with ESMTPS id 2E2F45BC002
-	for <git@vger.kernel.org>; Tue, 20 Jul 2010 00:17:19 +0300 (EEST)
-X-Mailer: git-send-email 1.7.1.1
+	id S966821Ab0GSVVv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 17:21:51 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51652 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965514Ab0GSVVu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Jul 2010 17:21:50 -0400
+Received: by fxm14 with SMTP id 14so2427304fxm.19
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 14:21:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=s2HpLwuU4r0eoNfo0FH7S8mB7yjkwUgSHvsqCit295M=;
+        b=xMbP3d7YF/k0tofEwypDXXuCm2gbmGNTWtLNjuxP0qcokepYthDXNGfV57rJazuVe1
+         037Krp9w56LZe8DqCiujIZAWn94SISexKb9JYRNKI5iItu4iEMcXL11UhMqSgiX2T8ty
+         AjpCqdFDH3zHe2mLwQ8hy3dkhGO/mhHlsW8Cs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ft5BB4opRmTWg/ok2dEpOrVIRY3SJFwtE0m3jecBzdFJyTSPmjCi+gQjE8uH3VMsD3
+         SbCtFBp2AASpipxnAGtJJ/bmM+7Bq+GU9P9zWbhD/eKqVNONtoEwTTqDofsfhes2e7l4
+         9CfsN3NvAn2lYygqFjIlFOdX9z6l61pSkAn4Y=
+Received: by 10.86.59.14 with SMTP id h14mr3268194fga.70.1279574509170; Mon, 
+	19 Jul 2010 14:21:49 -0700 (PDT)
+Received: by 10.223.119.17 with HTTP; Mon, 19 Jul 2010 14:21:49 -0700 (PDT)
+In-Reply-To: <7voce3nppy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151287>
 
----
- Documentation/config.txt               |   10 +++++-----
- Documentation/git-bisect-lk2009.txt    |    2 +-
- Documentation/git-commit.txt           |    4 ++--
- Documentation/git-cvsimport.txt        |    4 ++--
- Documentation/git-cvsserver.txt        |    4 ++--
- Documentation/git-hash-object.txt      |    2 +-
- Documentation/git-reset.txt            |    2 +-
- Documentation/gitrepository-layout.txt |    2 +-
- Documentation/urls.txt                 |    2 +-
- 9 files changed, 16 insertions(+), 16 deletions(-)
+On Mon, Jul 19, 2010 at 21:09, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
+s:
+>
+>> git-pickaxe (later git-blame) gained support for the -L/start/,/end/
+>> form in 2006 (931233bc66 by Junio C Hamano), but nothing was added t=
+o
+>> test this functionality. Change that by adding more -L tests to
+>> t8003-blame.sh.
+>
+> If we look at the existing tests carefully, there is no tests for the
+> range notation -L<start>,<end> in general, not just the regexp varian=
+t. =C2=A0A
+> few existing uses are only to limit the output for testing other feat=
+ures
+> and take it granted that -L works correctly (meaning they may detect =
+it if
+> you break -L implementation but that is merely a side effect).
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e75434b..e7e505d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -128,7 +128,7 @@ advice.*::
- 		when writing commit messages. Default: true.
- 	commitBeforeMerge::
- 		Advice shown when linkgit:git-merge[1] refuses to
--		merge to avoid overwritting local changes.
-+		merge to avoid overwriting local changes.
- 		Default: true.
- 	resolveConflict::
- 		Advices shown by various commands when conflicts
-@@ -418,7 +418,7 @@ Common unit suffixes of 'k', 'm', or 'g' are supported.
- 
- core.deltaBaseCacheLimit::
- 	Maximum number of bytes to reserve for caching base objects
--	that multiple deltafied objects reference.  By storing the
-+	that multiple deltified objects reference.  By storing the
- 	entire decompressed base objects in a cache Git is able
- 	to avoid unpacking and decompressing frequently used base
- 	objects multiple times.
-@@ -563,7 +563,7 @@ not necessarily be the current directory.
- am.keepcr::
- 	If true, git-am will call git-mailsplit for patches in mbox format
- 	with parameter '--keep-cr'. In this case git-mailsplit will
--	not remove `\r` from lines ending with `\r\n`. Can be overrriden
-+	not remove `\r` from lines ending with `\r\n`. Can be overridden
- 	by giving '--no-keep-cr' from the command line.
- 	See linkgit:git-am[1], linkgit:git-mailsplit[1].
- 
-@@ -1002,7 +1002,7 @@ gitcvs.usecrlfattr::
- 	If true, the server will look up the end-of-line conversion
- 	attributes for files to determine the '-k' modes to use. If
- 	the attributes force git to treat a file as text,
--	the '-k' mode will be left blank so cvs clients will
-+	the '-k' mode will be left blank so CVS clients will
- 	treat it as text. If they suppress text conversion, the file
- 	will be set with '-kb' mode, which suppresses any newline munging
- 	the client might otherwise do. If the attributes do not allow
-@@ -1275,7 +1275,7 @@ instaweb.local::
- 	be bound to the local IP (127.0.0.1).
- 
- instaweb.modulepath::
--	The module path for an apache httpd used by linkgit:git-instaweb[1].
-+	The module path for an Apache httpd used by linkgit:git-instaweb[1].
- 
- instaweb.port::
- 	The port number to bind the gitweb httpd to. See
-diff --git a/Documentation/git-bisect-lk2009.txt b/Documentation/git-bisect-lk2009.txt
-index 86b3015..efbe379 100644
---- a/Documentation/git-bisect-lk2009.txt
-+++ b/Documentation/git-bisect-lk2009.txt
-@@ -971,7 +971,7 @@ logical change in each commit.
- The smaller the changes in your commit, the most effective "git
- bisect" will be. And you will probably need "git bisect" less in the
- first place, as small changes are easier to review even if they are
--only reviewed by the commiter.
-+only reviewed by the committer.
- 
- Another good idea is to have good commit messages. They can be very
- helpful to understand why some changes were made.
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index c28603e..42fb1f5 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -130,11 +130,11 @@ OPTIONS
- 	Usually recording a commit that has the exact same tree as its
- 	sole parent commit is a mistake, and the command prevents you
- 	from making such a commit.  This option bypasses the safety, and
--	is primarily for use by foreign scm interface scripts.
-+	is primarily for use by foreign SCM interface scripts.
- 
- --allow-empty-message::
-        Like --allow-empty this command is primarily for use by foreign
--       scm interface scripts. It allows you to create a commit with an
-+       SCM interface scripts. It allows you to create a commit with an
-        empty commit message without using plumbing commands like
-        linkgit:git-commit-tree[1].
- 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 8bcd875..608cd63 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -188,7 +188,7 @@ ISSUES
- ------
- Problems related to timestamps:
- 
-- * If timestamps of commits in the cvs repository are not stable enough
-+ * If timestamps of commits in the CVS repository are not stable enough
-    to be used for ordering commits changes may show up in the wrong
-    order.
-  * If any files were ever "cvs import"ed more than once (e.g., import of
-@@ -201,7 +201,7 @@ Problems related to branches:
- 
-  * Branches on which no commits have been made are not imported.
-  * All files from the branching point are added to a branch even if
--   never added in cvs.
-+   never added in CVS.
-  * This applies to files added to the source branch *after* a daughter
-    branch was created: if previously no commit was made on the daughter
-    branch they will erroneously be added to the daughter branch in git.
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 7004dd2..5ee9f69 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -366,8 +366,8 @@ CRLF Line Ending Conversions
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- By default the server leaves the '-k' mode blank for all files,
--which causes the cvs client to treat them as a text files, subject
--to crlf conversion on some platforms.
-+which causes the CVS client to treat them as a text files, subject
-+to CRLF conversion on some platforms.
- 
- You can make the server use the end-of-line conversion attributes to
- set the '-k' modes for files by setting the `gitcvs.usecrlfattr`
-diff --git a/Documentation/git-hash-object.txt b/Documentation/git-hash-object.txt
-index 6904739..11bf251 100644
---- a/Documentation/git-hash-object.txt
-+++ b/Documentation/git-hash-object.txt
-@@ -49,7 +49,7 @@ OPTIONS
- 
- --no-filters::
- 	Hash the contents as is, ignoring any input filter that would
--	have been chosen by the attributes mechanism, including crlf
-+	have been chosen by the attributes mechanism, including CRLF
- 	conversion. If the file is read from standard input then this
- 	is always implied, unless the --path option is given.
- 
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 645f0c1..a9d287f 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -355,7 +355,7 @@ Keep changes in working tree while discarding some previous commits::
- Suppose you are working on something and you commit it, and then you
- continue working a bit more, but now you think that what you have in
- your working tree should be in another branch that has nothing to do
--with what you commited previously. You can start a new branch and
-+with what you committed previously. You can start a new branch and
- reset it while keeping the changes in your work tree.
- +
- ------------
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/gitrepository-layout.txt
-index 3cd32d6..eb3d040 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -16,7 +16,7 @@ You may find these things in your git repository (`.git`
- directory for a repository associated with your working tree, or
- `<project>.git` directory for a public 'bare' repository. It is
- also possible to have a working tree where `.git` is a plain
--ascii file containing `gitdir: <path>`, i.e. the path to the
-+ASCII file containing `gitdir: <path>`, i.e. the path to the
- real git repository).
- 
- objects::
-diff --git a/Documentation/urls.txt b/Documentation/urls.txt
-index 1dcd1e7..2890194 100644
---- a/Documentation/urls.txt
-+++ b/Documentation/urls.txt
-@@ -25,7 +25,7 @@ The ssh and git protocols additionally support ~username expansion:
- - git://host.xz{startsb}:port{endsb}/~{startsb}user{endsb}/path/to/repo.git/
- - {startsb}user@{endsb}host.xz:/~{startsb}user{endsb}/path/to/repo.git/
- 
--For local respositories, also supported by git natively, the following
-+For local repositories, also supported by git natively, the following
- syntaxes may be used:
- 
- - /path/to/repo.git/
--- 
-1.7.1.1
+I didn't submit tests for -L in general because I'm not happy with how
+it behaves (as noted in "[BUG?] blame: Odd -L 1,+0 behavior"). So this
+patch only tests the regex portion of parse_loc().
+
+I might add tests for -L in general it later, but that patch will
+probably include a behavior change.
+
+>> +for comma in '' ','
+>> +do
+>> + =C2=A0 =C2=A0 # The comma in -L/regex/, is optional
+>
+> Is it just -L/regex/? =C2=A0I thought -L<start> regardless of the sha=
+pe of <start>
+> was equivalent to -L<start>,END-OF-FILE.
+
+No, it's not just -L/regex/, but I try to in general to write tests
+for thing that *might* break, not just things that are guaranteed not
+to break as things are now implemented. If blame.c is rewritten in the
+future "-L123", might continue to work but "-L/start/," might be
+broken as a result of some code shuffling.
+
+>> +test_expect_success 'blame -LINT,/end/' '
+>> + =C2=A0 =C2=A0 git blame -L3,/GH/ cow =C2=A0>current 2>errors &&
+>
+> This is somewhat an interesting one. =C2=A0It asks for a range that b=
+egins at
+> the third line in the file, extending to a line after that line that
+> matches the given expression. =C2=A0Unfortunately the test vector doe=
+s not have
+> a line that contains GH before the third line, nor more than one line=
+s
+> that contain GH after the third line (we should stop at the first hit=
+), so
+> this test is not as effective as it could be.
+
+Yeah, I didn't test for ambiguities like that. I was going to expand
+on that later, but see above about not having patched that yet.
+
+>> +test_expect_success 'blame -L,/end/' '
+>> + =C2=A0 =C2=A0 git blame -L",/^X/" cow >current 2>errors &&
+>
+> Missing <start> defaults to the beginning of file; the same as -L,INT=
+ and
+> not specific to the regex variant.
+
+Yup, but I think it should be tested for anyway.
+
+>> +test_expect_success 'blame -L/invalid regex/' '
+>> + =C2=A0 =C2=A0 # At least GNU, Solaris and FreeBSD (and by extensio=
+n, Mac OS X)
+>> + =C2=A0 =C2=A0 # complain about this
+>> + =C2=A0 =C2=A0 ! git blame -L/[b-a]/ cow >current 2>errors &&
+>> + =C2=A0 =C2=A0 grep b-a errors &&
+>
+> The b-a in the error message comes from us, not the regex library, so=
+ this
+> test should be portable, I think, as long as the library detects the =
+empty
+> range correctly.
+
+Yeah, it's just a test for:
+
+    1. Invalid regexes being detected at all, i.e. git not ignoring
+       the return value of regcomp().
+
+    2. That we have an error message at all for it, and that the error
+        message includes the invalid regex that the user supplied.
