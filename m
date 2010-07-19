@@ -1,149 +1,112 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: [PATCH] Add --exclude to git-clean.j
-Date: Mon, 19 Jul 2010 11:50:08 -0400
-Message-ID: <bf4ea4e83162ebf1d915b87413aad54a1162a637.1279554580.git.jaredhance@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: remove duplicate code and not needed break statement
+Date: Mon, 19 Jul 2010 11:06:32 -0500
+Message-ID: <20100719160632.GA17526@burratino>
+References: <1279475399-6081-1-git-send-email-ralf.thielow@googlemail.com>
+ <AANLkTimHHJnvgFh3Kd7jMqTJJFensZjkD7YCU1gdt-FT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 19 17:50:40 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ralf Thielow <ralf.thielow@googlemail.com>, git@vger.kernel.org,
+	Valeo de Vries <valeo@valeo.co.cc>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jul 19 18:07:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oasbw-0005uF-N2
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 17:50:33 +0200
+	id 1OassU-0005mw-NI
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 18:07:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936115Ab0GSPuR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 11:50:17 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:52330 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936228Ab0GSPuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 11:50:15 -0400
-Received: by ewy23 with SMTP id 23so1336583ewy.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 08:50:14 -0700 (PDT)
+	id S936309Ab0GSQHc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 12:07:32 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37916 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936228Ab0GSQHc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 12:07:32 -0400
+Received: by wwb39 with SMTP id 39so351150wwb.1
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 09:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=qtpS1hZH64IP2PH6Uosm2cdYBrg58TyommMw+vizP+w=;
-        b=KumueDNdbPUi7NUct8PC9UjvW/dfiYAgp9vOrOWfs6zgoksV3pd8ZD499aYEZI6ZpR
-         kWmOD5xCODwJRCfAu9b4oFM5/SnIvUkB70IfWR4wkH/MWLhFeDtHHp/v086R1kbtN9cz
-         f/t8hSBjlHktNMrFRcPzZnnrnSNivc2l76DZs=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=YpP5BUEydyekKxQ5cbYk9hx9TDMCoA+tsdtkNk4QNkY=;
+        b=gZQfXn4OZCzxHKAR44Z0CpU6w4jj/oNdLJbYf9saVGeTPAL8rnRpQNnoZ11lU3vpwE
+         2dkuV9nhRb8xpZJVYVBa60IniS8PEPXlQtLCW/WWJ82do2oalGjasmdcZgSMmXpbM6IR
+         1zDsPvEJcnpu78A35rK7BWUeO0MrdSqArNyxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=J1yha8a6uK529M77XBpCEp3sKr8/6iDbyBWuGZOop+wB207RoqpuK2OKuGHpgkw04c
-         IwTjzKFMx/oHEJZwR7eNGtE/bZo/DBGmCGITzourec0GbzM07y9M2mfvZPXDIcsMImBE
-         iJWpHhLLdi+ylTKOmvyGOd7bloh1zadbWwoSE=
-Received: by 10.213.7.2 with SMTP id b2mr4890455ebb.22.1279554613651;
-        Mon, 19 Jul 2010 08:50:13 -0700 (PDT)
-Received: from localhost.localdomain (cpe-75-186-1-50.cinci.res.rr.com [75.186.1.50])
-        by mx.google.com with ESMTPS id h34sm26001596qcm.2.2010.07.19.08.50.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 08:50:13 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=TTPdxYX3p/cUYGv+wJfoJfk+gh7Dr76o7r9Rt6qU4b7UfIKYPiNALoaYzd5q0pZYfj
+         1arKfORjEm8rhZs4fB9YJ0L/brEUG/xwYzYTU9sB5pKfykkatpdvvDPHOhCgCwqW0jzd
+         VfzwjfIegWtw7YAEARJjoW/Zv7XTxRgSsiOJ4=
+Received: by 10.216.232.90 with SMTP id m68mr4045987weq.10.1279555649776;
+        Mon, 19 Jul 2010 09:07:29 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id v11sm2364506weq.40.2010.07.19.09.07.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 19 Jul 2010 09:07:28 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-12-10)
+In-Reply-To: <AANLkTimHHJnvgFh3Kd7jMqTJJFensZjkD7YCU1gdt-FT@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151253>
 
-With the -e/--exclude option for git-clean, a user can specify files
-that they haven't yet told git about, but either need for a short amount
-of time or plan to tell git about them later. This allows one to still
-use git-clean while these files are around without losing data.
+Hi Erik,
 
-Signed-off-by: Jared Hance <jaredhance@gmail.com>
----
- Documentation/git-clean.txt |    6 +++++-
- builtin/clean.c             |   21 +++++++++++++++++++++
- 2 files changed, 26 insertions(+), 1 deletions(-)
+Erik Faye-Lund wrote:
+> On Sun, Jul 18, 2010 at 7:49 PM, Ralf Thielow
 
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index a81cb6c..2bf9cf2 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -8,7 +8,7 @@ git-clean - Remove untracked files from the working tree
- SYNOPSIS
- --------
- [verse]
--'git clean' [-d] [-f] [-n] [-q] [-x | -X] [--] <path>...
-+'git clean' [-d] [-f] [-n] [-q] [-e] [-x | -X] [--] <path>...
- 
- DESCRIPTION
- -----------
-@@ -45,6 +45,10 @@ OPTIONS
- 	Be quiet, only report errors, but not the files that are
- 	successfully removed.
- 
-+-e::
-+--exclude::
-+	Specify special exceptions to not be cleaned. Separate with colon.
-+
- -x::
- 	Don't use the ignore rules.  This allows removing all untracked
- 	files, including build products.  This can be used (possibly in
-diff --git a/builtin/clean.c b/builtin/clean.c
-index fac64e6..aa3eed8 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -13,6 +13,7 @@
- #include "quote.h"
- 
- static int force = -1; /* unset */
-+static char *excludes;
- 
- static const char *const builtin_clean_usage[] = {
- 	"git clean [-d] [-f] [-n] [-q] [-x | -X] [--] <paths>...",
-@@ -36,6 +37,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	struct dir_struct dir;
- 	static const char **pathspec;
- 	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf excludes_buf = STRBUF_INIT;
-+	struct strbuf **excludes_split;
- 	const char *qname;
- 	char *seen = NULL;
- 	struct option options[] = {
-@@ -44,6 +47,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN('f', "force", &force, "force"),
- 		OPT_BOOLEAN('d', NULL, &remove_directories,
- 				"remove whole directories"),
-+		OPT_STRING('e', "exclude", &excludes, "EXCLUDES", "specify files not to clean"),
- 		OPT_BOOLEAN('x', NULL, &ignored, "remove ignored files, too"),
- 		OPT_BOOLEAN('X', NULL, &ignored_only,
- 				"remove only ignored files"),
-@@ -81,6 +85,17 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	if (!ignored)
- 		setup_standard_excludes(&dir);
- 
-+	if (excludes) {
-+		strbuf_addstr(&excludes_buf, excludes);
-+		excludes_split = strbuf_split(&excludes_buf, ':');
-+		for (i = 0; excludes_split[i]; i++) {
-+			if (excludes_split[i]->buf[excludes_split[i]->len - 1] == ':') {
-+				strbuf_remove(excludes_split[i], excludes_split[i]->len - 1, 1);
-+			}
-+			add_exclude(excludes_split[i]->buf, "", 0, dir.exclude_list);
-+		}
-+	}
-+
- 	pathspec = get_pathspec(prefix, argv);
- 
- 	fill_directory(&dir, pathspec);
-@@ -167,5 +182,11 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	free(seen);
- 
- 	strbuf_release(&directory);
-+	if (excludes) {
-+		strbuf_release(&excludes_buf);
-+		for (i = 0; excludes_split[i]; i++) {
-+			strbuf_release(excludes_split[i]);
-+		}
-+	}
- 	return (errors != 0);
- }
--- 
-1.7.1.1
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 'D': /* =
+we used to emit D but that was misguided. */
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 goto out_stale;
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 break;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0case 'T': /* =
+we used to emit T but nobody uses it. */
+>
+> We have a tendency of adding a comment pointing out fall through
+> between case-statements. Perhaps you should add one?
+
+I think in this case that would not be appropriate.  It is the
+difference between:
+
+	case 1:
+	case 2:
+	case 3:
+		puts("one to three");
+		break;
+
+and
+
+	case 1:
+		puts("one");
+		/* fall through */
+	case 2:
+	case 3:
+		puts("one to three");
+		break;
+
+I admit, I am surprised to see multiple suggestions for improvements
+to details of the patch.  I guess I should say, except for the log
+message, it is
+
+  Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+i.e., I don=E2=80=99t see any low-hanging fruit for improving it withou=
+t
+actually taking a deeper look at the surrounding code.  Ralf, can we
+have your sign-off?  That way maybe it could be applied and people
+could suggest patches on top.
+
+Still, thanks for looking it over.
+
+Jonathan
