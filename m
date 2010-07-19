@@ -1,102 +1,140 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v3 05/13] parse the -L options
-Date: Tue, 20 Jul 2010 00:48:17 +0200
-Message-ID: <201007200048.18284.trast@student.ethz.ch>
-References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com> <AANLkTimNAyKZNdIIc6R5ylHuOVJho7UF0fnYC8jiaF9i@mail.gmail.com> <7vwrsrnwg0.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] Documentation spelling fixes.
+Date: Mon, 19 Jul 2010 18:11:24 -0500
+Message-ID: <20100719231123.GA1708@burratino>
+References: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Bo Yang <struggleyb.nku@gmail.com>, <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 00:48:49 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ville =?iso-8859-1?Q?Skytt=E4?= <ville.skytta@iki.fi>
+X-From: git-owner@vger.kernel.org Tue Jul 20 01:12:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oaz8i-0008KQ-58
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 00:48:48 +0200
+	id 1OazVb-0006ge-1t
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 01:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966754Ab0GSWsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 18:48:43 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:17568 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966583Ab0GSWsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 18:48:42 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 20 Jul
- 2010 00:48:40 +0200
-Received: from thomas.localnet (84.74.100.241) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Tue, 20 Jul
- 2010 00:48:19 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <7vwrsrnwg0.fsf@alter.siamese.dyndns.org>
+	id S967145Ab0GSXMW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 19:12:22 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:44524 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S967133Ab0GSXMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 19:12:21 -0400
+Received: by qyk35 with SMTP id 35so1950183qyk.19
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 16:12:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vcTon3043HKECvo5FbyEGZ3MYiQZKEW0Iybmw8K2Cfg=;
+        b=AyzBO8thI0FRShDM7RRY7lB7onIgqALdmgxQcANCYrTngjHrr5C+68AgKHp7upn69Y
+         IrHdjfMFCSQQFsigndpguoxmOcTTfruwptk21UPEwuFILeLF9gSjZkiwAyXRd/UnSrFT
+         9UPI2ETLmBRf+Fhb+ynARLPsiyAdE54Hrd+2I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=NYitV+qFFgiZNDpA1TF/FEPB0fz1hQ4HoUm279/y08+xag/CNEO2dJneeM+CaMmo7A
+         rsjmqK8s2D8RrZzRwQRjwLS+OG9aHgCW+WkxRtGG6bBVnEXZlrm7Fzpkdtjp/u/lPmJU
+         B3GJAVqWzQUCvzTRKC0rhklcd2sa7yAsT3dLU=
+Received: by 10.224.113.27 with SMTP id y27mr4925750qap.67.1279581140390;
+        Mon, 19 Jul 2010 16:12:20 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id js14sm27280817qcb.30.2010.07.19.16.12.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 19 Jul 2010 16:12:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151290>
 
-Junio C Hamano wrote:
-> It almost feels as if you want to have something more like
-> 
->     -L <begin>,<end>[,<path>]
-> 
-> where <path> is mandatory for the first use of -L (i.e. missing ,<path>
-> means the same path from the previous -L that has one) to make it clear
-> that this is completely different from the normal pathspec.
+Hi Ville,
 
-I think that would just needlessly break the analogy to git-blame.[0]
-With the current code,
+Ville Skytt=E4 wrote:
 
-  git blame -L 2,3 <path>
-  git log -L 2,3 <path>
+> ---
 
-work the same.  Multiple -L options could be retrofitted to git-blame,
-making
+If this does not end up needing a re-roll, would it be okay for
+Junio (or whoever else picks up the patch) to forge your sign-off?
+(See "Sign your work" in Documentation/SubmittingPatches for what I
+mean.)
 
-  git {blame,log} -L 2,3 -L 4,5 <path>
+> +++ b/Documentation/config.txt
+> @@ -418,7 +418,7 @@ Common unit suffixes of 'k', 'm', or 'g' are supp=
+orted.
+> =20
+>  core.deltaBaseCacheLimit::
+>  	Maximum number of bytes to reserve for caching base objects
+> -	that multiple deltafied objects reference.  By storing the
+> +	that multiple deltified objects reference.  By storing the
 
-work as expected.
+Huh?  Maybe
 
-As long as you only give a single path, even blame disambiguates in
-favour of the filename:
+	Maximum number of bytes to reserve for caching based objects
+	that might be referenced by multiple deltified objects.
 
-  git blame -L 2,3 master # wants a file 'master'
+Or:
 
-It only starts breaking down as soon as you put the -L further away
-from the filename:
+	Amount of memory (in bytes) to reserve for speeding up
+	unpacking of deltified objects.  By storing entire
+	decompressed base objects in a cache, Git can avoid
+	unpacking and decompressing frequently-used base objects
+	multiple times.
 
-  git blame -L 2,3 master master # looks for the file master:master
-  git blame master -L 2,3 master # ditto
-  git log -L 2,3 master master   # errors out since the second file has no -L [1]
-  git log master -L 2,3 master   # looks for the file master:master
+> @@ -1275,7 +1275,7 @@ instaweb.local::
+>  	be bound to the local IP (127.0.0.1).
+> =20
+>  instaweb.modulepath::
+> -	The module path for an apache httpd used by linkgit:git-instaweb[1]=
+=2E
+> +	The module path for an Apache httpd used by linkgit:git-instaweb[1]=
+=2E
 
-And as you have noted, the -- can also cause weird effects.  Currently
+Maybe:
 
-  git log -L 2,3 --branches      # error
-  git log -L 2,3 ./--branches    # ok
-  git log -L 2,3 -- --branches   # error
+	Default module path for linkgit:git-instaweb[1] to use
+	instead of /usr/lib/apache2/modules.  Only used if httpd
+	is Apache.
 
-The last one is unfortunate, but fixing it while allowing a natural
-positioning of the -L would require parsing the -L after a --.  That's
-just as inconsistent, only in a different way.
+> +++ b/Documentation/git-cvsserver.txt
+> @@ -366,8 +366,8 @@ CRLF Line Ending Conversions
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> =20
+>  By default the server leaves the '-k' mode blank for all files,
+> -which causes the cvs client to treat them as a text files, subject
+> +which causes the CVS client to treat them as a text files, subject
 
+Should we call the cvs(1) command "the CVS client"?  Maybe
+"the cvs(1) client" or something would be clearer, but I
+don't see anything wrong with your choice.
 
-[0] It also requires special support from shell completion.
+> -to crlf conversion on some platforms.
+> +to CRLF conversion on some platforms.
 
-[1] I agree with erroring out but I think the message wrongly
-    recommends path filtering (since that doesn't work well with
-    renames):
+This term can be confusing, as we've seen in other contexts.
+Maybe:
 
-      fatal: Path master need a -L <range> option
-      If you want follow the history of the whole file whether to using 'git log' without -L or using 'git log -L 1,$ <path>'
+	subject to line-ending conversion on some platforms.
 
-    Bo, can you please change it to e.g.:
+> +++ b/Documentation/git-hash-object.txt
+> @@ -49,7 +49,7 @@ OPTIONS
+> =20
+>  --no-filters::
+>  	Hash the contents as is, ignoring any input filter that would
+> -	have been chosen by the attributes mechanism, including crlf
+> +	have been chosen by the attributes mechanism, including CRLF
+>  	conversion. If the file is read from standard input then this
 
-      fatal: Path 'master' needs a -L<range> option
-      If you want to follow the history of the whole file, use 'git log -L 1,$ <path>'
+It's called "end-of-line conversion" in gitattributes(5) now,
+apparently.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+The rest of this one looks good.  Thanks.
