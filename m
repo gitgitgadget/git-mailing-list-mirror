@@ -1,75 +1,83 @@
-From: Ketan Padegaonkar <ketanpadegaonkar@gmail.com>
-Subject: [http] Git error messages reveal password encoded in the URL
-Date: Mon, 19 Jul 2010 10:00:20 -0700
-Message-ID: <4C4484A4.5010009@gmail.com>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Question about 'branch -d' safety
+Date: Mon, 19 Jul 2010 11:16:41 -0600
+Message-ID: <4C448879.4040202@workspacewhiz.com>
+References: <20091230065442.6117@nanako3.lavabit.com>	 <201007181355.36691.jnareb@gmail.com> <1279484847.8999.22.camel@dreddbeard>	 <201007190119.04873.jnareb@gmail.com> <1279523523.3077.8.camel@dreddbeard>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git-dev <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 19 19:00:34 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: wmpalmer@gmail.com
+X-From: git-owner@vger.kernel.org Mon Jul 19 19:16:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oathh-0006N1-Sy
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 19:00:34 +0200
+	id 1OatxQ-0004tT-Jl
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 19:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754994Ab0GSRA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 13:00:27 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:34361 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750740Ab0GSRA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 13:00:26 -0400
-Received: by wwf26 with SMTP id 26so402515wwf.1
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 10:00:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=3rSVw5x9ufoACIbUoeDRbTPQetlcLzKUDEByjvLvwmI=;
-        b=agb0ultqr3rIOQHFu0UeC3K1EM2dgl26Bcqt1L1MyVzqZwnXm8uQXtPWsDzVL0VPAN
-         C3oc4i3skBmhE7+hUu+WQ6HEZGl0yF4ANfwoabH6bh+upoExoTxjwawLA5Ot2U1ctVmL
-         tw/vSi/zvRHk2OMCszuELYEgw5M/DXy08bVVI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=VFbYhsp8t2GvH+8agEWFnTKWeaoovPzhcU99nE6fwOoHofNmCVPARAmQIZPJsHFn8t
-         3dYBR8h330JqYLC+jHAk8V4OECuDxB0OKnkpzQbdP5LxNWv6QDtgWdYZW7chT7pDAzZv
-         sdyNbvCpNVaj8uUCDP3vDucaBtZGWlj6ks4AM=
-Received: by 10.216.232.144 with SMTP id n16mr4148871weq.1.1279558824062;
-        Mon, 19 Jul 2010 10:00:24 -0700 (PDT)
-Received: from storm.corporate.thoughtworks.com ([204.15.2.181])
-        by mx.google.com with ESMTPS id v16sm2396518weq.32.2010.07.19.10.00.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 10:00:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.5; en-US; rv:1.9.2.4) Gecko/20100608 Lightning/1.0b2 Thunderbird/3.1
+	id S1760703Ab0GSRQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Jul 2010 13:16:42 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:49033 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756782Ab0GSRQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 13:16:41 -0400
+Received: (qmail 7654 invoked by uid 399); 19 Jul 2010 11:16:40 -0600
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.220.63.200)
+  by hsmail.qwknetllc.com with ESMTPAM; 19 Jul 2010 11:16:40 -0600
+X-Originating-IP: 75.220.63.200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.4) Gecko/20100608 Lightning/1.0b2 Thunderbird/3.1
+In-Reply-To: <1279523523.3077.8.camel@dreddbeard>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151261>
 
-Hi,
+  ----- Original Message -----
+From: Will Palmer
+Date: 7/19/2010 1:12 AM
+> git branch -d integration
+> # git renames refs/heads/integration to refs~/heads~/integration
+> git co -b integration sometopic
+> # git creates refs/heads/integration, unrelated to the old one
+> (do some work)
+> (merge into the main branch)
+> git branch -d integration
+>
+> Now what?
+> git renames refs/heads/integration to ... what?
+> - does the old refs~/heads~/integration get clobbered? If that's ever
+> okay, why are we even having this discussion?
+> - does the "old reflog" stuff get combined? If that's ever okay, why
+> even have an extra reflog, instead of just using the reflog we already
+> have?
+> - do we move everything else one step down, so refs~/heads~/integration
+> becomes refs~2/heads~2/integration? (ie: 2-dimensional reflog, which
+> sounds rather too fancy, to me
+I was bit by this last week.  I deleted a branch.  A few days later, I 
+realized I needed the branch.  It wasn't in the reflog, so I had to look 
+through the "lost" objects to find it.
 
-We use http to serve our git repos, in order for git to not ask me a 
-username/password everytime, I've put the following in my .git/config:
+My brain has become muddied with all the ~2 stuff.  Explain again why it 
+can't be as simple as this?
 
-[remote "origin"]
-   url = https://user:pass@host/repo.git
+git branch -d integration
 
-What is discerning is that every time git encounters a problem 
-connecting to the repo, I get the following error containing both my 
-username and password.
+git reflog
 
-error: Couldn't resolve host 'host' while accessing 
-https://user:pass@host/repo.git/info/refs
+0000001 HEAD@{0}: (fake)checkout: moving from integration to master 
+(0000001)
+8000000 HEAD@{1}: branch -d: Deleting integration
+0000001 HEAD@{2}: (fake)checkout: moving from master to integration 
+(8000000)
 
-I would like to suggest that the password be removed/masked from this 
-error message.
+git checkout -b integration HEAD@{1}  (or 8000000)
 
--- 
-Ketan
-http://ketan.padegaonkar.name | http://eclipse.org/swtbot
+-Josh
