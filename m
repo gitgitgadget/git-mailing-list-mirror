@@ -1,112 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 05/13] parse the -L options
-Date: Mon, 19 Jul 2010 11:44:15 -0700
-Message-ID: <7vwrsrnwg0.fsf@alter.siamese.dyndns.org>
-References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
- <1278829141-11900-5-git-send-email-struggleyb.nku@gmail.com>
- <7vbpab2de5.fsf@alter.siamese.dyndns.org>
- <AANLkTimNAyKZNdIIc6R5ylHuOVJho7UF0fnYC8jiaF9i@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] gitignore: Ignore the new /git-remote-{ext,fd} helpers
+Date: Mon, 19 Jul 2010 18:50:27 +0000
+Message-ID: <1279565427-413-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 19 20:46:13 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 19 20:50:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OavLq-00023y-Hx
-	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 20:46:06 +0200
+	id 1OavQR-0004Mv-WA
+	for gcvg-git-2@lo.gmane.org; Mon, 19 Jul 2010 20:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966479Ab0GSSoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Jul 2010 14:44:30 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54076 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936492Ab0GSSoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Jul 2010 14:44:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1DE54C54C8;
-	Mon, 19 Jul 2010 14:44:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gETHivnSpLz7o1SXUhc17/VweuU=; b=MGaTY6
-	iXFBFCFRQvC/IFWKOkclemTF4JvucKuD+lwElZecG1ZaOJS8OkiNuo2ldmkQz4s8
-	B6dzuo3Zg4G6Z0KjdUh0q5PR9iOCeoZMQQSj/wG2/L8rklct8JAalUozFp4NQWpj
-	ZQ8qelRRfqCzpGwMKPp3ZXKqnWqGR7am6Q+hI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CTASTa6ShwhirgVYRfpyWdVlnRopWKv1
-	U7e468ovdh794QhFT+PjLWbNYbL3D5AUkhU+dQ+kVOU5xKeNiTXd3nRyrj2GLRxb
-	7PxrAVvSWq8oyYQS4jwqUBiRKKecsrvubPNKNDZWNK+tDo/2BNNCXhHbW/9gP+Hj
-	uX2Hrcg7/pc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EF46EC54C7;
-	Mon, 19 Jul 2010 14:44:19 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3D988C54C6; Mon, 19 Jul
- 2010 14:44:17 -0400 (EDT)
-In-Reply-To: <AANLkTimNAyKZNdIIc6R5ylHuOVJho7UF0fnYC8jiaF9i@mail.gmail.com>
- (Bo Yang's message of "Sun\, 18 Jul 2010 22\:49\:41 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A428C6C4-9365-11DF-AC52-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S965025Ab0GSSuo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Jul 2010 14:50:44 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:53122 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936486Ab0GSSun (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Jul 2010 14:50:43 -0400
+Received: by eya25 with SMTP id 25so1053700eya.19
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 11:50:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=0L9qgd1h2EVc923naMkFSCOamPkXeUqKHjO2tz9uurM=;
+        b=Sj5cbdzAuuqT/5Gb9uBVzzeq8Y/Aas1O1RC9FRMBFg3KTzMn6bBEnhOIdqSIGcZoN2
+         GJNlI27PJHV23Ce1t7/O4yiqLnGJpUtx95ELTyD8I5ks/Kswq1tu8G6L3UgJDqIhl0Lt
+         qb0DzKuH/YdXIJddexgXc9PrnwdoaCMDfVbFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=SUc4SMpq3crQPWqBUbjvA9+n1Z56iQz1fGZJN807TVwakIls4BP+zvI/ctxP8ebIHf
+         7CzDhtAvfaEutFsmV4o1vkZVyo5Gb/wrIUvmwMUsI8sz9VjjZbz9+gn645IssUEibt1S
+         jkob6O3FxT3Ars1OCjpm5vaKUd7v73dJUxSZw=
+Received: by 10.213.7.2 with SMTP id b2mr3452330ebb.40.1279565440345;
+        Mon, 19 Jul 2010 11:50:40 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-233-160.pools.arcor-ip.net [88.67.233.160])
+        by mx.google.com with ESMTPS id z55sm49764987eeh.21.2010.07.19.11.50.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 19 Jul 2010 11:50:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.rc3.125.g94e09.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151269>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+Change the top-level .gitignore to include the new
+/git-remote-{ext,fd} helpers. They were added as part of the
+il/rfc-remote-fd-ext, but .gitignore wasn't proprely updated in that
+series..
 
-> The point is that, the syntax we support is:
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> -L n1,m1 -L n2,m2 pathspec1  -L n3,m3 pathspec2
+---
+ .gitignore |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-That itself smells like a bad design, unless done very carefully and
-documented clearly.
-
-For example, what does this mean?
-
-    $ git log -L n1,m1 master
-
-As -L wants to see at least one path before running out of the command
-line argument, we take "master" as the filename.  Hence, the command line
-does not have any revision specified and defaults to HEAD.  I.e. "traverse
-from the current HEAD and show only commits that touch the line region
-n1,m1 that appears in the version of path 'master' in HEAD".
-
-What about this?
-
-    $ git log -L n1,m1 master..next one two
-
-Clearly the user wants to traverse revision range between master and next.
-The -L option wants to see one path so slurps "one".  The traversal
-however is further limited by a pathspec "two".  Should the use of "one"
-as an argument to -L automatically add it also to the pathspec?  I.e.
-"traverse from 'next' down to 'master', checking commits that touch either
-path 'one' or 'two', and show only commits that touch the line region
-n1,m1 that appears in the version of path 'one' in 'next'"?
-
-Or perhaps master..next is the name of the file the user is interested in?
-I.e. "Starting from branches 'one' and 'two', show only commits that touch
-the line region n1,m1 that appears in file 'master..next'"?  But that is a
-broken interpretation, as "-L range path" cannto possibly make sense if
-you have more than one starting point, and this interpretation gives you
-two (i.e. 'one' and 'two').
-
-How would you disambiguate -Lpaths, revisions and pathspecs?  How does -Lpath
-interact with pathspecs?
-
-What if the name of the file the user wants to annotate begins with a "-"?
-For pathspec limiter, the users have already learned that "--" can be used
-to say "everything that comes after this token is pathspec", but that
-knowledge cannot be reused with this syntax.
-
-It almost feels as if you want to have something more like
-
-    -L <begin>,<end>[,<path>]
-
-where <path> is mandatory for the first use of -L (i.e. missing ,<path>
-means the same path from the previous -L that has one) to make it clear
-that this is completely different from the normal pathspec.
+diff --git a/.gitignore b/.gitignore
+index 2cb4e8e..eda6fbc 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -108,6 +108,8 @@
+ /git-relink
+ /git-remote
+ /git-remote-curl
++/git-remote-ext
++/git-remote-fd
+ /git-remote-http
+ /git-remote-https
+ /git-remote-ftp
+--=20
+1.7.2.rc3.125.g94e09.dirty
