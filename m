@@ -1,90 +1,76 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] git-svn: write memoized data explicitly to avoid Storable 
-	bug
-Date: Tue, 20 Jul 2010 17:32:31 +0000
-Message-ID: <AANLkTime7QQZGLXmXg_X3W7CsbyLe5NbPKcqs9dp0oaa@mail.gmail.com>
-References: <1279455469-6384-1-git-send-email-vsu@altlinux.ru>
+From: Peter Harris <git@peter.is-a-geek.org>
+Subject: Re: Run git from .bat file (Windows)
+Date: Tue, 20 Jul 2010 13:34:33 -0400
+Message-ID: <AANLkTik-Mk0pMKWHqzMXUcSzPexAQd2bTAPZF9Q2WKer@mail.gmail.com>
+References: <0vy6d6nmcc.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Sergey Vlasov <vsu@altlinux.ru>
-X-From: git-owner@vger.kernel.org Tue Jul 20 19:32:55 2010
+Cc: git@vger.kernel.org
+To: Markus Heller <hellerm2@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 19:34:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObGgV-0001X4-8E
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 19:32:51 +0200
+	id 1ObGiK-0002UJ-2M
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 19:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758399Ab0GTRcp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 13:32:45 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:47172 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756924Ab0GTRco convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 13:32:44 -0400
-Received: by pwi5 with SMTP id 5so2244353pwi.19
-        for <git@vger.kernel.org>; Tue, 20 Jul 2010 10:32:44 -0700 (PDT)
+	id S1751512Ab0GTRek convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 13:34:40 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44499 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757285Ab0GTRei convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 13:34:38 -0400
+Received: by fxm14 with SMTP id 14so3012766fxm.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 10:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lGwtB6V4u0OZh5sIyYG+zV6TlsH2TpeRVpYM/miSvZ0=;
-        b=v6Y13jBNOtz/spQ8KtnavXYZ9aqLWDHj0Qt6Bew0O2Ei32hRSXZqnhYcVVuEBzUtGy
-         buRvfgM0OWm0S5BEbIe1/nk1Bkn0JJwqbmxZ3s/dwqAGxDWW8aqp0klw9FjO64u/9Rrb
-         R/kO8Y/C76t6CF71ODFTK06L38PX839WdzeUw=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=HFIYRXSWL2Tz+ltCD7wI60ctfMu05dEXQKV+OREiiZ4=;
+        b=R4XT/quEhmakSOGFxVL1X1zAbB2rb3Fl6y6eRV2EebJb5RGV9qLc0bfZvuNPWN01EX
+         agcRtmFrDKWA1hrt3q4JL/m4AZTliMYBQA4zT12g4Q+VUxjU1+MW9LkXpd0kuB5k6aq4
+         /sdLh0qny8grK/eyU1QOh1W425SjEM6CXnHfs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CZs7PUCN2tbXZ3/PhZtNueXxO68QQPnowiMggTPTnzhPfDnvemYfuXh05O5HQkPzFu
-         gyrgFjradwzAEcwXavx6/q3VgD6gkX/TRyPHU+RhUBFufG37jWYd5clLTzJIGjK3+nIp
-         ZDvbKKLUJ9qDi5eQ3EBtKzebEowW7L9MXmGDQ=
-Received: by 10.142.193.19 with SMTP id q19mr9667347wff.268.1279647151735; 
-	Tue, 20 Jul 2010 10:32:31 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Tue, 20 Jul 2010 10:32:31 -0700 (PDT)
-In-Reply-To: <1279455469-6384-1-git-send-email-vsu@altlinux.ru>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=aE6FRQmpDVZNSdEBb2fTOMhvv4psylRMflZFnFmZK6UJJa71eePW/EYincbbfDW1nv
+         7mxgXaKIpunZy8zcAAqgQWN8IaKAlcbMlhybVye+nQhSKWTZpY62FxWfYMg/eW/GFoso
+         S+iszDvjm/at/ii6G1pJwuJiC4sQOuzcFtKmY=
+Received: by 10.216.176.83 with SMTP id a61mr5629238wem.47.1279647273767; Tue, 
+	20 Jul 2010 10:34:33 -0700 (PDT)
+Received: by 10.216.160.85 with HTTP; Tue, 20 Jul 2010 10:34:33 -0700 (PDT)
+In-Reply-To: <0vy6d6nmcc.fsf@gmail.com>
+X-Google-Sender-Auth: MvG9D5j0kCk-LY3aMtHhBG3RLtA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151335>
 
-On Sun, Jul 18, 2010 at 12:17, Sergey Vlasov <vsu@altlinux.ru> wrote:
-> Apparently using the Storable module during global destruction is
-> unsafe - there is a bug which can cause segmentation faults:
+On Tue, Jul 20, 2010 at 12:34 PM, Markus Heller wrote:
+> git add .
+> git commit -a -m "Automated commit by org-git-sync.bat on %fvar%"
+
+> The line "git add ." works, as I can see the additions when I type "g=
+it
+> status" after executing the script. =A0Committing doesn't work, howev=
+er:
+> "git log" shows that no commit was created.
 >
-> =C2=A0http://rt.cpan.org/Public/Bug/Display.html?id=3D36087
-> =C2=A0http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D482355
+> Any idea what's going on?
 
-I did some investigation into the upstream issue:
-https://rt.cpan.org/Ticket/Display.html?id=3D36087#txn-806832
+git itself is wrapped by a batch file on Windows. You need to "call" it=
+=2E eg:
 
-> The persistent memoization support introduced in commit 8bff7c538
-> relied on global destruction to write cached data, which was leading
-> to segfaults in some Perl configurations. =C2=A0Calling Memoize::unme=
-moize
-> in the END block forces the cache writeout to be performed earlier,
-> thus avoiding the bug.
+call git add .
+call git commit ...
 
-Maybe I'm missing something obvious, but this seems like the wrong
-solution. The core issue is that we don't want to clean up during
-global destruction, but then we should just do:
+("call /?" for more details)
 
-       sub DESTROY {
-               return if not $memoized;
-               $memoized =3D 0;
-
-               Memoize::unmemoize 'lookup_svn_merge';
-               Memoize::unmemoize 'check_cherry_pick';
-               Memoize::unmemoize 'has_no_changes';
-       }
-
-That should work since memoize_svn_mergeinfo_functions(); is being
-called in find_extra_svn_parents, which is a Git::SVN object
-method. Can you try this and confirm/deny? I can't because I can't get
-the original to segfault on my box when run within git-svn.
+Peter Harris
