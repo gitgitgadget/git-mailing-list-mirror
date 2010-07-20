@@ -1,72 +1,94 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Automatically exclude hunks from the commit
-Date: Tue, 20 Jul 2010 07:36:16 +0200
-Message-ID: <51F8E66E-9CDD-466A-8411-38CA8431D8AC@wincent.com>
-References: <4C4511C8.8090405@workspacewhiz.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=iso-8859-1
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [http] Git error messages reveal password encoded in the URL
+Date: Tue, 20 Jul 2010 15:46:18 +0800
+Message-ID: <AANLkTilYeKkJlUaB7zRgvIR_OyzrabWG1iPLbmrvkAqu@mail.gmail.com>
+References: <4C4484A4.5010009@gmail.com>
+	<AANLkTilby7GWOuObh6W4z_caUG83O5A5Wh4Wb-JJnSdJ@mail.gmail.com>
+	<4C44DEF7.4000903@gmail.com>
+	<201007200241.46972.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 08:37:37 2010
+Cc: Ketan Padegaonkar <ketanpadegaonkar@gmail.com>,
+	Jacob Helwig <jacob.helwig@gmail.com>,
+	git-dev <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 09:46:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ob6SO-0004Un-8Y
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 08:37:36 +0200
+	id 1Ob7X2-0006PU-QU
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 09:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754632Ab0GTGhb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 02:37:31 -0400
-Received: from outmail128155.authsmtp.co.uk ([62.13.128.155]:55606 "EHLO
-	outmail128155.authsmtp.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754398Ab0GTGha convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 02:37:30 -0400
-X-Greylist: delayed 3665 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Jul 2010 02:37:30 EDT
-Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
-	by punt2.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o6K5aNQe007339;
-	Tue, 20 Jul 2010 05:36:23 GMT
-Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id o6K5aKdm029806
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 20 Jul 2010 06:36:21 +0100 (BST)
-Received: from [192.168.1.6] (182.Red-88-3-76.dynamicIP.rima-tde.net [88.3.76.182])
-	(authenticated bits=0)
-	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id o6K5aHCf027562
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 20 Jul 2010 01:36:19 -0400
-In-Reply-To: <4C4511C8.8090405@workspacewhiz.com>
-X-Mailer: Apple Mail (2.1081)
-X-Server-Quench: bac9d12f-93c0-11df-97bb-002264978518
-X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH aB4dDEdXdwdEHAkR A2ABWFJeUl8/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNEn5tUGdV Wx4cWxFycUtCcHdw KxQzDXkPXUYsaE9+ EU5JFGxSM3ppbzJN TUBYdQFSdApNdhpE Yh4dAXkdECBDOScx Aw44NjQ1LH1SOC9R Xw0AZVIPR0UQVjAm QBVKATUiVUYCQiAy M3QA
-X-Authentic-SMTP: 61633436303433.1014:706/Kp
-X-AuthFastPath: 0 (Was 255)
-X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1752375Ab0GTHqX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 03:46:23 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61788 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160Ab0GTHqW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 03:46:22 -0400
+Received: by iwn7 with SMTP id 7so5513804iwn.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 00:46:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ziz6Toge1MWhRSGpASxICsJOcB8gNgFYifHodj7zjy8=;
+        b=iuJXIZhD2m/HraJqmcWQ+6JccEFg2CzCpoeLOPNzjDwKhTkk1GPwTVWIZKaiQ+xKKk
+         YozKQYKES/SSUohzX37MLkbJqnXQ90svlQmWBE619W+c8HhWuYGFBE1EsD3IrUggt0lP
+         iVeMje4GPr5diu+NPdO5yyc7w7VgLbQjSlLl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aHCe8w5L4oU4PVVsBoocSiyVi+ctd5hqgjFPUMBaHBeLQMOjB6LwbFQdjkK9S3mHys
+         WY0c/NGg6PMscchG5OOua+wE4tET1bSmQEuBYo1M3BPYCYVPvTe28iwidipZ71587l7X
+         bSJryv5Nvt92Q7Zra4MGqkWNCnLpTykT99bG8=
+Received: by 10.231.192.67 with SMTP id dp3mr6847588ibb.180.1279611978438; 
+	Tue, 20 Jul 2010 00:46:18 -0700 (PDT)
+Received: by 10.231.153.12 with HTTP; Tue, 20 Jul 2010 00:46:18 -0700 (PDT)
+In-Reply-To: <201007200241.46972.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151307>
 
-El 20/07/2010, a las 05:02, Joshua Jensen escribi=F3:
+Hi:
 
-> I have some files I update frequently where I have some normally comm=
-ented out debug code purposely uncommented during development.  Git's h=
-unk-level staging saves the day.  I can stage everything but the debug =
-code without issue.
->=20
-> This got me to thinking.  Is there a better way?  Is there a facility=
- in Git where I could mark a hunk as 'permanently frozen unstaged'?  An=
-ything marked as such would never be staged for commit.  I could rest a=
-ssured I would never accidentally commit my debug code, be it extra pri=
-ntfs or a development server or a password or so on.
+On Tue, Jul 20, 2010 at 8:41 AM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> Dnia wtorek 20. lipca 2010 01:25, Ketan Padegaonkar napisa=C5=82:
+[snip]
+> Can't you use ~/.netrc file[1] instead? =C2=A0As far as I see this wo=
+uld not
+> show password info on error. =C2=A0Not that the current situation sho=
+uld
+> not be fixed, but it might be worthwhile workaround for a time.
+>
+> The ~/.netrc file would look like this for your example:
+>
+> =C2=A0machine host
+> =C2=A0login user
+> =C2=A0password pass
+>
+> You should of course `chmod 600 ~/.netrc`
+>
+> [1] This is unfortunately underdocumented: only this documentation
+> Documentation/howto/setup-git-server-over-http.txt mentions ~/.netrc
+> file. =C2=A0I think that handling the $HOME/.netrc is done by the cur=
+l
+> library that git uses, see libcurl-tutorial(3) manpage.
 
-A custom pre-commit hook might be of some use here. You could create on=
-e which rejects changes which are obviously debug code.
++1
 
+This is the only way I know of to "hide" your password.
+
+Of course, depending on your authentication scheme, your efforts for
+this setup may prove worthless.
+
+--=20
 Cheers,
-Wincent
+Ray Chuan
