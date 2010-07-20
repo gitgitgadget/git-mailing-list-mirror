@@ -1,88 +1,362 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: write memoized data explicitly to avoid
-	Storable bug
-Date: Tue, 20 Jul 2010 12:02:23 -0700
-Message-ID: <20100720190223.GB2732@dcvr.yhbt.net>
-References: <1279455469-6384-1-git-send-email-vsu@altlinux.ru> <AANLkTime7QQZGLXmXg_X3W7CsbyLe5NbPKcqs9dp0oaa@mail.gmail.com>
+From: Jared Hance <jaredhance@gmail.com>
+Subject: [PATCH] Convert "! git" to "test_must_fail" git.
+Date: Tue, 20 Jul 2010 15:09:04 -0400
+Message-ID: <fe4308a0ab1c3d7296efa986d5cfe63c6ff4014a.1279652856.git.jaredhance@gmail.com>
+References: <20100720181431.GA12857@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sergey Vlasov <vsu@altlinux.ru>, git@vger.kernel.org,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 21:02:32 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 20 21:09:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObI5H-0000p9-Fj
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 21:02:31 +0200
+	id 1ObIBs-0003qJ-Am
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 21:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757700Ab0GTTCZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 15:02:25 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34962 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752488Ab0GTTCY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 15:02:24 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEA411F744;
-	Tue, 20 Jul 2010 19:02:23 +0000 (UTC)
+	id S932494Ab0GTTJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 15:09:14 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64933 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932356Ab0GTTJM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 15:09:12 -0400
+Received: by gwj18 with SMTP id 18so2896792gwj.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 12:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=kbwbY569lYlfzpR1OSmaPlyFeR/FTbfvrRoTkmyVHW8=;
+        b=mea3AaiCpYpJ49mRvWFNEeOWS7nJgbPIkuz+LmdAUa4wadATo72X7bEZU3xeY6RtHO
+         qzOBd6fkgOdsdpxZfReLlUm31owQgPJRkC67GiT1u8BIvWSDsnPSfuUsZW9p1t50JZjk
+         GuOtD2jZGANJ+TxyFatApJ75W6rRgD5Dxib4M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=b7jbD3RTJS/tXWqegX6RS+7Id2DtrAwGAjWTcd1gtaprMtYB4sqCNdA/UvHFGCpYwC
+         mKHzO7i9jEMXV/PlITjqR+aJWnNfq9BM/ZVkiiXDxWm9KCWrSis9aNkjfCBsBcjcor2c
+         vd/RfX7iAQz/icGK9LVDQ4xmIySTSFJzmm+k4=
+Received: by 10.224.48.200 with SMTP id s8mr5879236qaf.168.1279652950590;
+        Tue, 20 Jul 2010 12:09:10 -0700 (PDT)
+Received: from localhost.localdomain (cpe-75-186-1-50.cinci.res.rr.com [75.186.1.50])
+        by mx.google.com with ESMTPS id m24sm28335285qck.5.2010.07.20.12.09.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 20 Jul 2010 12:09:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTime7QQZGLXmXg_X3W7CsbyLe5NbPKcqs9dp0oaa@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20100720181431.GA12857@localhost.localdomain>
+User-Agent: Mutt/1.5.20 (2009-12-10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151351>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> wrote:
-> On Sun, Jul 18, 2010 at 12:17, Sergey Vlasov <vsu@altlinux.ru> wrote:
-> > Apparently using the Storable module during global destruction is
-> > unsafe - there is a bug which can cause segmentation faults:
-> >
-> > =A0http://rt.cpan.org/Public/Bug/Display.html?id=3D36087
-> > =A0http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D482355
->=20
-> I did some investigation into the upstream issue:
-> https://rt.cpan.org/Ticket/Display.html?id=3D36087#txn-806832
->=20
-> > The persistent memoization support introduced in commit 8bff7c538
-> > relied on global destruction to write cached data, which was leadin=
-g
-> > to segfaults in some Perl configurations. =A0Calling Memoize::unmem=
-oize
-> > in the END block forces the cache writeout to be performed earlier,
-> > thus avoiding the bug.
->=20
-> Maybe I'm missing something obvious, but this seems like the wrong
-> solution. The core issue is that we don't want to clean up during
-> global destruction, but then we should just do:
->=20
->        sub DESTROY {
->                return if not $memoized;
->                $memoized =3D 0;
->=20
->                Memoize::unmemoize 'lookup_svn_merge';
->                Memoize::unmemoize 'check_cherry_pick';
->                Memoize::unmemoize 'has_no_changes';
->        }
+test_must_fail prevents problems with segfault, so it is better to use
+rather than "! git".
 
-I haven't looked at this issue in-depth, but I believe the problem is
-triggered due to Memoize::Storable trying to use Storable::nstore
-in its own DESTROY function.  So trying to do the same in our own
-DESTROY would be just as bad.
+Signed-off-by: Jared Hance <jaredhance@gmail.com>
+---
+ t/t1001-read-tree-m-2way.sh                |    2 +-
+ t/t3301-notes.sh                           |    6 +++---
+ t/t3306-notes-prune.sh                     |    8 ++++----
+ t/t3410-rebase-preserve-dropped-merges.sh  |    8 ++++----
+ t/t6037-merge-ours-theirs.sh               |    2 +-
+ t/t7509-commit.sh                          |    4 ++--
+ t/t7607-merge-overwrite.sh                 |   12 ++++++------
+ t/t7810-grep.sh                            |    4 ++--
+ t/t9100-git-svn-basic.sh                   |    2 +-
+ t/t9130-git-svn-authors-file.sh            |    4 ++--
+ t/t9139-git-svn-non-utf8-commitencoding.sh |    2 +-
+ t/t9140-git-svn-reset.sh                   |    2 +-
+ 12 files changed, 28 insertions(+), 28 deletions(-)
 
-> That should work since memoize_svn_mergeinfo_functions(); is being
-> called in find_extra_svn_parents, which is a Git::SVN object
-> method. Can you try this and confirm/deny? I can't because I can't ge=
-t
-> the original to segfault on my box when run within git-svn.
-
-I wasn't able to reproduce the segfault on my systems, either, but
-it seems plausible it would only happen on some systems.
-
---=20
-Eric Wong
+diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+index 0c562bb..93ca84f 100755
+--- a/t/t1001-read-tree-m-2way.sh
++++ b/t/t1001-read-tree-m-2way.sh
+@@ -359,7 +359,7 @@ test_expect_success \
+ 
+ test_expect_success \
+     'a/b (untracked) vs a, plus c/d case test.' \
+-    '! git read-tree -u -m "$treeH" "$treeM" &&
++    'test_must_fail git read-tree -u -m "$treeH" "$treeM" &&
+      git ls-files --stage &&
+      test -f a/b'
+ 
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 2d67a40..421c988 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -299,7 +299,7 @@ cat expect-F >> expect-rm-F
+ test_expect_success 'verify note removal with -F /dev/null' '
+ 	git log -4 > output &&
+ 	test_cmp expect-rm-F output &&
+-	! git notes show
++	test_must_fail git notes show
+ '
+ 
+ test_expect_success 'do not create empty note with -m "" (setup)' '
+@@ -309,7 +309,7 @@ test_expect_success 'do not create empty note with -m "" (setup)' '
+ test_expect_success 'verify non-creation of note with -m ""' '
+ 	git log -4 > output &&
+ 	test_cmp expect-rm-F output &&
+-	! git notes show
++	test_must_fail git notes show
+ '
+ 
+ cat > expect-combine_m_and_F << EOF
+@@ -357,7 +357,7 @@ cat expect-multiline >> expect-rm-remove
+ test_expect_success 'verify note removal with "git notes remove"' '
+ 	git log -4 > output &&
+ 	test_cmp expect-rm-remove output &&
+-	! git notes show HEAD^
++	test_must_fail git notes show HEAD^
+ '
+ 
+ cat > expect << EOF
+diff --git a/t/t3306-notes-prune.sh b/t/t3306-notes-prune.sh
+index b455404..c428217 100755
+--- a/t/t3306-notes-prune.sh
++++ b/t/t3306-notes-prune.sh
+@@ -67,7 +67,7 @@ test_expect_success 'remove some commits' '
+ 
+ test_expect_success 'verify that commits are gone' '
+ 
+-	! git cat-file -p 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	test_must_fail git cat-file -p 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+ 	git cat-file -p 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+ 	git cat-file -p ab5f302035f2e7aaf04265f08b42034c23256e1f
+ '
+@@ -106,7 +106,7 @@ test_expect_success 'prune notes' '
+ 
+ test_expect_success 'verify that notes are gone' '
+ 
+-	! git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	test_must_fail git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+ 	git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+ 	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
+ '
+@@ -130,8 +130,8 @@ test_expect_success 'prune -v notes' '
+ 
+ test_expect_success 'verify that notes are gone' '
+ 
+-	! git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
+-	! git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
++	test_must_fail git notes show 5ee1c35e83ea47cd3cc4f8cbee0568915fbbbd29 &&
++	test_must_fail git notes show 08341ad9e94faa089d60fd3f523affb25c6da189 &&
+ 	git notes show ab5f302035f2e7aaf04265f08b42034c23256e1f
+ '
+ 
+diff --git a/t/t3410-rebase-preserve-dropped-merges.sh b/t/t3410-rebase-preserve-dropped-merges.sh
+index c49143a..6f73b95 100755
+--- a/t/t3410-rebase-preserve-dropped-merges.sh
++++ b/t/t3410-rebase-preserve-dropped-merges.sh
+@@ -43,11 +43,11 @@ test_expect_success 'setup' '
+ # G2 = same changes as G
+ test_expect_success 'skip same-resolution merges with -p' '
+ 	git checkout H &&
+-	! git merge E &&
++	test_must_fail git merge E &&
+ 	test_commit L file1 23 &&
+ 	git checkout I &&
+ 	test_commit G2 file1 3 &&
+-	! git merge E &&
++	test_must_fail git merge E &&
+ 	test_commit J file1 23 &&
+ 	test_commit K file7 file7 &&
+ 	git rebase -i -p L &&
+@@ -65,11 +65,11 @@ test_expect_success 'skip same-resolution merges with -p' '
+ # G2 = different changes as G
+ test_expect_success 'keep different-resolution merges with -p' '
+ 	git checkout H &&
+-	! git merge E &&
++	test_must_fail git merge E &&
+ 	test_commit L2 file1 23 &&
+ 	git checkout I &&
+ 	test_commit G3 file1 4 &&
+-	! git merge E &&
++	test_must_fail git merge E &&
+ 	test_commit J2 file1 24 &&
+ 	test_commit K2 file7 file7 &&
+ 	test_must_fail git rebase -i -p L2 &&
+diff --git a/t/t6037-merge-ours-theirs.sh b/t/t6037-merge-ours-theirs.sh
+index 8ab3d61..2cf42c7 100755
+--- a/t/t6037-merge-ours-theirs.sh
++++ b/t/t6037-merge-ours-theirs.sh
+@@ -58,7 +58,7 @@ test_expect_success 'pull with -X' '
+ 	git reset --hard master && git pull -s recursive -X ours . side &&
+ 	git reset --hard master && git pull -s recursive -Xtheirs . side &&
+ 	git reset --hard master && git pull -s recursive -X theirs . side &&
+-	git reset --hard master && ! git pull -s recursive -X bork . side
++	git reset --hard master && test_must_fail git pull -s recursive -X bork . side
+ '
+ 
+ test_done
+diff --git a/t/t7509-commit.sh b/t/t7509-commit.sh
+index 3ea33db..643ab03 100755
+--- a/t/t7509-commit.sh
++++ b/t/t7509-commit.sh
+@@ -111,7 +111,7 @@ test_expect_success '--amend option with empty author' '
+ 	test_when_finished "git checkout Initial" &&
+ 	echo "Empty author test" >>foo &&
+ 	test_tick &&
+-	! git commit -a -m "empty author" --amend 2>err &&
++	test_must_fail git commit -a -m "empty author" --amend 2>err &&
+ 	grep "empty ident" err
+ '
+ 
+@@ -125,7 +125,7 @@ test_expect_success '--amend option with missing author' '
+ 	test_when_finished "git checkout Initial" &&
+ 	echo "Missing author test" >>foo &&
+ 	test_tick &&
+-	! git commit -a -m "malformed author" --amend 2>err &&
++	test_must_fail git commit -a -m "malformed author" --amend 2>err &&
+ 	grep "empty ident" err
+ '
+ 
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index 49f4e15..d82349a 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -31,7 +31,7 @@ test_expect_success 'setup' '
+ test_expect_success 'will not overwrite untracked file' '
+ 	git reset --hard c1 &&
+ 	cat important > c2.c &&
+-	! git merge c2 &&
++	test_must_fail git merge c2 &&
+ 	test_cmp important c2.c
+ '
+ 
+@@ -39,7 +39,7 @@ test_expect_success 'will not overwrite new file' '
+ 	git reset --hard c1 &&
+ 	cat important > c2.c &&
+ 	git add c2.c &&
+-	! git merge c2 &&
++	test_must_fail git merge c2 &&
+ 	test_cmp important c2.c
+ '
+ 
+@@ -48,7 +48,7 @@ test_expect_success 'will not overwrite staged changes' '
+ 	cat important > c2.c &&
+ 	git add c2.c &&
+ 	rm c2.c &&
+-	! git merge c2 &&
++	test_must_fail git merge c2 &&
+ 	git checkout c2.c &&
+ 	test_cmp important c2.c
+ '
+@@ -58,7 +58,7 @@ test_expect_success 'will not overwrite removed file' '
+ 	git rm c1.c &&
+ 	git commit -m "rm c1.c" &&
+ 	cat important > c1.c &&
+-	! git merge c1a &&
++	test_must_fail git merge c1a &&
+ 	test_cmp important c1.c
+ '
+ 
+@@ -68,7 +68,7 @@ test_expect_success 'will not overwrite re-added file' '
+ 	git commit -m "rm c1.c" &&
+ 	cat important > c1.c &&
+ 	git add c1.c &&
+-	! git merge c1a &&
++	test_must_fail git merge c1a &&
+ 	test_cmp important c1.c
+ '
+ 
+@@ -79,7 +79,7 @@ test_expect_success 'will not overwrite removed file with staged changes' '
+ 	cat important > c1.c &&
+ 	git add c1.c &&
+ 	rm c1.c &&
+-	! git merge c1a &&
++	test_must_fail git merge c1a &&
+ 	git checkout c1.c &&
+ 	test_cmp important c1.c
+ '
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 8a63227..b20edff 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -65,7 +65,7 @@ do
+ 
+ 	test_expect_success "grep -w $L (w)" '
+ 		: >expected &&
+-		! git grep -n -w -e "^w" >actual &&
++		test_must_fail git grep -n -w -e "^w" >actual &&
+ 		test_cmp expected actual
+ 	'
+ 
+@@ -134,7 +134,7 @@ do
+ 	'
+ 
+ 	test_expect_success "grep -c $L (no /dev/null)" '
+-		! git grep -c test $H | grep /dev/null
++		test_must_fail git grep -c test $H | grep /dev/null
+         '
+ 
+ 	test_expect_success "grep --max-depth -1 $L" '
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index 13766ab..9e86e9f 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -245,7 +245,7 @@ test_expect_success 'dcommit $rev does not clobber current branch' '
+ 	test $old_head = $(git rev-parse HEAD) &&
+ 	test refs/heads/my-bar = $(git symbolic-ref HEAD) &&
+ 	git log refs/remotes/bar | grep "change 1" &&
+-	! git log refs/remotes/bar | grep "change 2" &&
++	test_must_fail git log refs/remotes/bar | grep "change 2" &&
+ 	git checkout master &&
+ 	git branch -D my-bar
+ 	'
+diff --git a/t/t9130-git-svn-authors-file.sh b/t/t9130-git-svn-authors-file.sh
+index 134411e..3c4f319 100755
+--- a/t/t9130-git-svn-authors-file.sh
++++ b/t/t9130-git-svn-authors-file.sh
+@@ -20,7 +20,7 @@ test_expect_success 'setup svnrepo' '
+ 	'
+ 
+ test_expect_success 'start import with incomplete authors file' '
+-	! git svn clone --authors-file=svn-authors "$svnrepo" x
++	test_must_fail git svn clone --authors-file=svn-authors "$svnrepo" x
+ 	'
+ 
+ test_expect_success 'imported 2 revisions successfully' '
+@@ -63,7 +63,7 @@ test_expect_success 'authors-file against globs' '
+ 	'
+ 
+ test_expect_success 'fetch fails on ee' '
+-	( cd aa-work && ! git svn fetch --authors-file=../svn-authors )
++	( cd aa-work && test_must_fail git svn fetch --authors-file=../svn-authors )
+ 	'
+ 
+ tmp_config_get () {
+diff --git a/t/t9139-git-svn-non-utf8-commitencoding.sh b/t/t9139-git-svn-non-utf8-commitencoding.sh
+index f337959..22d80b0 100755
+--- a/t/t9139-git-svn-non-utf8-commitencoding.sh
++++ b/t/t9139-git-svn-non-utf8-commitencoding.sh
+@@ -39,7 +39,7 @@ do
+ 	(
+ 		cd $H &&
+ 		git config --unset i18n.commitencoding &&
+-		! git svn dcommit
++		test_must_fail git svn dcommit
+ 	)
+ 	'
+ done
+diff --git a/t/t9140-git-svn-reset.sh b/t/t9140-git-svn-reset.sh
+index 0735526..e855904 100755
+--- a/t/t9140-git-svn-reset.sh
++++ b/t/t9140-git-svn-reset.sh
+@@ -41,7 +41,7 @@ test_expect_success 'modify hidden file in SVN repo' '
+ test_expect_success 'fetch fails on modified hidden file' '
+ 	( cd g &&
+ 	  git svn find-rev refs/remotes/git-svn > ../expect &&
+-	  ! git svn fetch 2> ../errors &&
++	  test_must_fail git svn fetch 2> ../errors &&
+ 	  git svn find-rev refs/remotes/git-svn > ../expect2 ) &&
+ 	fgrep "not found in commit" errors &&
+ 	test_cmp expect expect2
+-- 
+1.7.1.1
