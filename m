@@ -1,198 +1,88 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t/: work around one-shot variable assignment with test_must_fail
-Date: Tue, 20 Jul 2010 16:55:31 -0500
-Message-ID: <iU5XdZGtMeaspoCqSJIp6Y--60TPVkZUrm3SdW86dsTZkNYZWqbSppLBrMXyL1rVqqYtHm94ACo@cipher.nrlssc.navy.mil>
-References: <8HvhdiflWJtex2eC6n_6Q38YcvRRYhnh0scnq4s56M4wdwT_YlAiOw@cipher.nrlssc.navy.mil>
-Cc: erick.mattos@gmail.com, avarab@gmail.com, jrnieder@gmail.com,
-	jaredhance@gmail.com, drafnel@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 20 23:55:52 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Can I enforce required approval on some files
+Date: Tue, 20 Jul 2010 15:03:24 -0700 (PDT)
+Message-ID: <m36309n75a.fsf@localhost.localdomain>
+References: <AANLkTinQI9eBnwjzPhYHMM8XZ0ODfHJ1qiZJrNWQWUno@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Dominik Gront <dgront@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 21 00:03:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObKn1-00013j-0h
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 23:55:51 +0200
+	id 1ObKuT-0003ub-OL
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 00:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761583Ab0GTVzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 17:55:45 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:42859 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753943Ab0GTVzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 17:55:44 -0400
-Received: by mail.nrlssc.navy.mil id o6KLtfem013822; Tue, 20 Jul 2010 16:55:42 -0500
-In-Reply-To: <8HvhdiflWJtex2eC6n_6Q38YcvRRYhnh0scnq4s56M4wdwT_YlAiOw@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 20 Jul 2010 21:55:41.0954 (UTC) FILETIME=[4C1E3E20:01CB2856]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1761787Ab0GTWD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 18:03:28 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:65325 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761677Ab0GTWD0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 18:03:26 -0400
+Received: by fxm14 with SMTP id 14so3176792fxm.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 15:03:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=CfYal8nKp6aRdTzFbvqUBkeM2IpnGJVDZsc3aGwGP70=;
+        b=FeE+X3yVB0k5OVssabfm6FhgSMnKdVxgKFxtCOytsRm/rGytpreeHlNm96gFA8u0MT
+         K7/UvZyauePtE9H9SBrbWRX7ef+lDQVi+79Uij4WaZRnGgGE07lVAVDwZ+NVy+OGCPNg
+         QseSj0biNjWGm2B/7TyJZOHEE/nm5dfnkKioE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=ecbR9S1UE3smvxIV1jeqot52ULNyPUkFE7LcmTqUqJeQb2l3F4j3jCWzUYMZwW2axR
+         K4fSet3vWiHEsInp9JZE8e3xGJV7e0QwqZBocY20RrNviETdY3ZJnid1aey5GwBss6+L
+         xd7jyewagRUhYmInyNMIqWVfjkFvh3LHWWdwo=
+Received: by 10.223.114.75 with SMTP id d11mr5982246faq.44.1279663405467;
+        Tue, 20 Jul 2010 15:03:25 -0700 (PDT)
+Received: from localhost.localdomain (abwd240.neoplus.adsl.tpnet.pl [83.8.227.240])
+        by mx.google.com with ESMTPS id y2sm2615270fau.12.2010.07.20.15.03.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 20 Jul 2010 15:03:24 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6KM34gU027300;
+	Wed, 21 Jul 2010 00:03:11 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6KM2wbJ027296;
+	Wed, 21 Jul 2010 00:02:58 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTinQI9eBnwjzPhYHMM8XZ0ODfHJ1qiZJrNWQWUno@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151370>
 
-No time to investigate, but here is an example patch and the
-results of running the affected tests.  Looks like reflog may
-be creating a reflog when it is not supposed to.
+Dominik Gront <dgront@gmail.com> writes:
 
-Erick, I added you to cc since you appear to be the author of the tests
-in question.
+> I have been a happy SVN user for quite a long time, but now I miss
+> some functionality in Subversion. I wonder if it could be done in git.
+> If so, I convert to git right away :-)
+> 
+> There are some files in our repository that all their modification
+> need to be approved by a project leader.  In general the desired
+> behavior would be (examples given in svn commands) :
+> - user runs "svn ci"
+> - some files have status "pending" or "waiting for approval"
+> - anyone can do "svn up", modifications to the pending files are not
+>   retrieved, project leader can get the modified versions
+> - project leader accepts the changes
+> - anyone running "svn ci" sees all the modifications
 
-$ ./t2017-checkout-orphan.sh
-<snip>
-not ok - 8 --orphan does not make reflog when core.logAllRefUpdates = false
-#
-#               git checkout master &&
-#               git config core.logAllRefUpdates false &&
-#               git checkout --orphan epsilon &&
-#               ! test -f .git/logs/refs/heads/epsilon &&
-#               (
-#                       PAGER= &&
-#                       export PAGER &&
-#                       test_must_fail git reflog show epsilon
-#               ) &&
-#               git commit -m Epsilon &&
-#               ! test -f .git/logs/refs/heads/epsilon &&
-#               (
-#                       PAGER= &&
-#                       export PAGER &&
-#                       test_must_fail git reflog show epsilon
-#               )
-#
-<snip>
+Besides solution mentioned by others, namely integration repository
+with moderator, you can also use patch/commit code review tool such as
+Gerrit (http://code.google.com/p/gerrit/), equivalent of Rietveld for
+Subversion, or Mondrian for Perforce.
 
-$ ./t3200-branch.sh
-<snip>
-not ok - 32 checkout -b does not make reflog when core.logAllRefUpdates = false
-#
-#               git checkout master &&
-#               git config core.logAllRefUpdates false &&
-#               git checkout -b beta &&
-#               ! test -f .git/logs/refs/heads/beta &&
-#               (
-#                       PAGER= &&
-#                       export PAGER &&
-#                       test_must_fail git reflog show beta
-#               )
-#
-<snip>
-
-
---->8---
-From: Brandon Casey <drafnel@gmail.com>
-
-See e2007832552ccea9befed9003580c494f09e666e
----
- t/t2017-checkout-orphan.sh |   36 ++++++++++++++++++++++++++++++------
- t/t3200-branch.sh          |    6 +++++-
- t/t3301-notes.sh           |    6 +++++-
- 3 files changed, 40 insertions(+), 8 deletions(-)
-
-diff --git a/t/t2017-checkout-orphan.sh b/t/t2017-checkout-orphan.sh
-index be88d4b..81cb393 100755
---- a/t/t2017-checkout-orphan.sh
-+++ b/t/t2017-checkout-orphan.sh
-@@ -69,7 +69,11 @@ test_expect_success '--orphan makes reflog by default' '
- 	git config --unset core.logAllRefUpdates &&
- 	git checkout --orphan delta &&
- 	! test -f .git/logs/refs/heads/delta &&
--	test_must_fail PAGER= git reflog show delta &&
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show delta
-+	) &&
- 	git commit -m Delta &&
- 	test -f .git/logs/refs/heads/delta &&
- 	PAGER= git reflog show delta
-@@ -80,17 +84,29 @@ test_expect_success '--orphan does not make reflog when core.logAllRefUpdates =
- 	git config core.logAllRefUpdates false &&
- 	git checkout --orphan epsilon &&
- 	! test -f .git/logs/refs/heads/epsilon &&
--	test_must_fail PAGER= git reflog show epsilon &&
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show epsilon
-+	) &&
- 	git commit -m Epsilon &&
- 	! test -f .git/logs/refs/heads/epsilon &&
--	test_must_fail PAGER= git reflog show epsilon
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show epsilon
-+	)
- '
- 
- test_expect_success '--orphan with -l makes reflog when core.logAllRefUpdates = false' '
- 	git checkout master &&
- 	git checkout -l --orphan zeta &&
- 	test -f .git/logs/refs/heads/zeta &&
--	test_must_fail PAGER= git reflog show zeta &&
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show zeta
-+	) &&
- 	git commit -m Zeta &&
- 	PAGER= git reflog show zeta
- '
-@@ -99,10 +115,18 @@ test_expect_success 'giving up --orphan not committed when -l and core.logAllRef
- 	git checkout master &&
- 	git checkout -l --orphan eta &&
- 	test -f .git/logs/refs/heads/eta &&
--	test_must_fail PAGER= git reflog show eta &&
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show eta
-+	) &&
- 	git checkout master &&
- 	! test -f .git/logs/refs/heads/eta &&
--	test_must_fail PAGER= git reflog show eta
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show eta
-+	)
- '
- 
- test_expect_success '--orphan is rejected with an existing name' '
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 859b99a..bf7747d 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -237,7 +237,11 @@ test_expect_success 'checkout -b does not make reflog when core.logAllRefUpdates
- 	git config core.logAllRefUpdates false &&
- 	git checkout -b beta &&
- 	! test -f .git/logs/refs/heads/beta &&
--	test_must_fail PAGER= git reflog show beta
-+	(
-+		PAGER= &&
-+		export PAGER &&
-+		test_must_fail git reflog show beta
-+	)
- '
- 
- test_expect_success 'checkout -b with -l makes reflog when core.logAllRefUpdates = false' '
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 2d67a40..1d82f79 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -693,7 +693,11 @@ test_expect_success 'create note from non-existing note with "git notes add -c"
- 	git add a10 &&
- 	test_tick &&
- 	git commit -m 10th &&
--	test_must_fail MSG="yet another note" git notes add -c deadbeef &&
-+	(
-+		MSG="yet another note" &&
-+		export MSG &&
-+		test_must_fail git notes add -c deadbeef
-+	) &&
- 	test_must_fail git notes list HEAD
- '
- 
 -- 
-1.6.6.2
+Jakub Narebski
+Poland
+ShadeHawk on #git
