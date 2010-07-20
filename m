@@ -1,90 +1,126 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: [PATCH 2/2] Add test for git clean -e.
-Date: Tue, 20 Jul 2010 12:30:13 -0400
-Message-ID: <4cc65cc57f6eea298401a2de0aa5fb378703fb38.1279643093.git.jaredhance@gmail.com>
-References: <e257dd98b7493dcd72de9cf62d5847116e030ed0.1279564639.git.jaredhance@gmail.com>
- <cover.1279643093.git.jaredhance@gmail.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH] t/t3700: convert two uses of negation operator '!' to
+ use 	test_must_fail
+Date: Tue, 20 Jul 2010 11:32:33 -0500
+Message-ID: <fVE942wHC3SFihkQG8AthPTKiTZtYJ9zmR2TT7F5OlkGD4IA9xPcMA@cipher.nrlssc.navy.mil>
+References: <tMTpk3TmiYV54AYDiNJMBdnlXhSooJQQ1gRoAEsSwmcSwJ9ROgOpr75wpEQNx6_kZkqBtD71_QU@cipher.nrlssc.navy.mil> <AANLkTil9jA8Dva_KqW67c1ZgWk9_a5S1rBViui8Jn0Os@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 20 18:30:29 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org, Jens.Lehmann@web.de,
+	Brandon Casey <drafnel@gmail.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 18:33:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObFi7-0004Oa-Uv
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 18:30:28 +0200
+	id 1ObFlG-0005zK-Pr
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 18:33:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761319Ab0GTQaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 12:30:21 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:46337 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758607Ab0GTQaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 12:30:20 -0400
-Received: by qyk38 with SMTP id 38so2643598qyk.19
-        for <git@vger.kernel.org>; Tue, 20 Jul 2010 09:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=atPKZ/GejNrtqhnZiEFd/Q35997JVEF33dRAlAhJ3lo=;
-        b=IB02Yy2SKGDqcUEsiLGjr/T+RbQ3x4hlEMSvKsDvCjX3SZ0MxV1swdZzpn2hXNPL5P
-         cDCnvIhEUSdnmIdrbNe/KnjcpcFVxs+upvtRKR7v7h1ywwyplG+4b3hXpaxT4xiDESqH
-         xfsqEd17eCaLqIb78cQe8KZqYKH3kLxwMA+aI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=x43XisSIEf9KbRg6NzlU4FTA6q+Xzlg/PEdr/XGae53s/gflDV2qFi/eGaH7XSsJkE
-         NrfVkW+2FFyCbrw2dKF50CZeMIDeiQMunm2HrZeuCMBYHanKgLY85sVma5Jd/Kypp8D4
-         apYWbKkOzuHQzlV47ukej2j0qWBLSwOTeGqUw=
-Received: by 10.224.44.77 with SMTP id z13mr5691009qae.342.1279643418839;
-        Tue, 20 Jul 2010 09:30:18 -0700 (PDT)
-Received: from localhost.localdomain (cpe-75-186-1-50.cinci.res.rr.com [75.186.1.50])
-        by mx.google.com with ESMTPS id js14sm28186538qcb.6.2010.07.20.09.30.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 20 Jul 2010 09:30:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <cover.1279643093.git.jaredhance@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-12-10)
+	id S1761348Ab0GTQdg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 12:33:36 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52300 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753692Ab0GTQdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 12:33:36 -0400
+Received: by mail.nrlssc.navy.mil id o6KGWm33020127; Tue, 20 Jul 2010 11:32:48 -0500
+In-Reply-To: <AANLkTil9jA8Dva_KqW67c1ZgWk9_a5S1rBViui8Jn0Os@mail.gmail.com>
+X-OriginalArrivalTime: 20 Jul 2010 16:32:48.0724 (UTC) FILETIME=[30C5F140:01CB2829]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151327>
 
+On 07/20/2010 10:55 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Tue, Jul 20, 2010 at 15:24, Brandon Casey <casey@nrlssc.navy.mil> =
+wrote:
+>=20
+>> These two lines use the negation '!' operator to negate the result o=
+f a
+>> simple command.  Since these commands do not contain any pipes or ot=
+her
+>> complexities, the test_must_fail function can be used and is preferr=
+ed
+>> since it will additionally detect termination due to a signal.
+>=20
+> Maybe I'm missing something, but unless `git add --dry-run` is specia=
+l
+> in being killed due to a signal this seems misguided. We actually
+> prefer to use !, from t/README:
+>=20
+>  - test_must_fail <git-command>
+>=20
+>    Run a git command and ensure it fails in a controlled way.  Use
+>    this instead of "! <git-command>" to fail when git commands
+>    segfault.
 
-Signed-off-by: Jared Hance <jaredhance@gmail.com>
----
- t/t7300-clean.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+I think you have misunderstood the explanation of test_must_fail.  The
+paragraph you quoted actually recommends using test_must_fail instead
+of "! <git-command>".
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 7d8ed68..c6df26d 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -438,4 +438,20 @@ test_expect_success 'force removal of nested git work tree' '
- 	! test -d bar
- '
- 
-+test_expect_success 'git clean -e' '
-+	rm -fr repo &&
-+	mkdir repo &&
-+	(
-+		cd repo &&
-+		git init &&
-+		touch 1 2 3 known &&
-+		git add known &&
-+		git clean -f -e "1 2" &&
-+		test -e 1 &&
-+		test -e 2 &&
-+		! (test -e 3) &&
-+		test -e known
-+	)
-+'
-+
- test_done
--- 
-1.7.1.1
+It says:
+
+   Use this instead of "! <git-command>" to fail when git commands
+   segfault.
+
+Or with a slight rewording:
+
+   Use test_must_fail instead of "! <git-command>" since test_must_fail
+   will fail when <git-command> segfaults.
+
+See, if "! <git-command>" is used, then if "<git-command>" is terminate=
+d
+due to some flaw in git (like a segfault), then the statement will stil=
+l
+be interpreted as a success.  When test_must_fail is used, termination
+due to segfault or other signal is detected, and the statement will
+fail.
+
+>> This was noticed because the second use of '!' does not include a sp=
+ace
+>> between the '!' and the opening parens.  Ksh interprets this as foll=
+ows:
+>>
+>>   !(pattern-list)
+>>      Matches anything except one of the given patterns.
+>>
+>> Ksh performs a file glob using the pattern-list and then tries to ex=
+ecute
+>> the first file in the list.  If a space is added between the '!' and=
+ the
+>> open parens, then Ksh will not interpret it as a pattern list, but i=
+n this
+>> case, it is preferred to use test_must_fail, so lets do so.
+>=20
+> Isn't this a completely seperate thing? Was this test really the only
+> bit in the test suite that did "!foo" instead of "! foo" ?
+
+This was the only instance of "!()" that was failing for me.  I didn't
+look before, but now that I have, there is another instance of "!()" in
+t5541 that should be fixed.  t5541 hasn't caused a problem for me becau=
+se
+GIT_TEST_HTTPD must be set in order to enable it, and I haven't done so=
+=2E
+
+> Does the test pass for you if you just:
+
+Yes.
+
+>     @@ -281,7 +281,7 @@ add 'track-this'
+>      EOF
+>=20
+>      test_expect_success 'git add --dry-run --ignore-missing of
+> non-existing file' '
+>     -       !(git add --dry-run --ignore-missing track-this
+> ignored-file >actual 2>&1) &&
+>     +       ! (git add --dry-run --ignore-missing track-this
+> ignored-file >actual 2>&1) &&
+>            test_cmp expect actual
+>      '
+>=20
+> ?
