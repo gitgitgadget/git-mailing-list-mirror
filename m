@@ -1,139 +1,85 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: [PATCH 1/4] Allow creation of arbitrary git-shell commands
-Date: Tue, 20 Jul 2010 01:16:09 -0400
-Message-ID: <1279602972-1264-2-git-send-email-gdb@mit.edu>
-References: <1279602972-1264-1-git-send-email-gdb@mit.edu>
-Cc: Greg Brockman <gdb@mit.edu>
-To: j.sixt@viscovery.net, git@vger.kernel.org, gitster@pobox.com,
-	avarab@gmail.com, jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Tue Jul 20 07:17:17 2010
+From: Joshua Juran <jjuran@gmail.com>
+Subject: Re: Automatically exclude hunks from the commit
+Date: Mon, 19 Jul 2010 22:17:58 -0700
+Message-ID: <C18AA39F-1ADD-46A8-8A10-25A6B6AF26CB@gmail.com>
+References: <4C4511C8.8090405@workspacewhiz.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 07:18:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ob5Ca-0001ZB-CQ
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 07:17:12 +0200
+	id 1Ob5DW-0001sQ-Up
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 07:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773Ab0GTFQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 01:16:50 -0400
-Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:63123 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753813Ab0GTFQs (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 01:16:48 -0400
-X-AuditID: 1209190e-b7bbeae000000a09-3c-4c453141abc0
-Received: from mailhub-auth-1.mit.edu (MAILHUB-AUTH-1.MIT.EDU [18.9.21.35])
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 83.23.02569.141354C4; Tue, 20 Jul 2010 01:16:49 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o6K5GWID007374;
-	Tue, 20 Jul 2010 01:16:34 -0400
-Received: from localhost (STRATTON-FIVE-FIFTY-FOUR.MIT.EDU [18.187.7.43])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6K5GVhw001113;
-	Tue, 20 Jul 2010 01:16:32 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0.4
-In-Reply-To: <1279602972-1264-1-git-send-email-gdb@mit.edu>
-X-Brightmail-Tracker: AAAAARUsJJY=
+	id S1753198Ab0GTFSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 01:18:05 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:33226 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753974Ab0GTFSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 01:18:03 -0400
+Received: by pzk26 with SMTP id 26so1567691pzk.19
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 22:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=eFbtVFeRwV1kW4Ir5ru9SwG0+2Esx26DumLEPAld3R8=;
+        b=KijX0EFikl3h+/PhqhBkjPre2RruwgcXWHX7twU7l371oO4aOD9rEwLWf3yVj9CnkJ
+         3TmiuyKbH3lqYemJzatIUhaC0yeQF8vg9yV6aN4PmBmfrAoZV9WwBK4PE8hBjjLojw26
+         vBQKbepGLzgDEkO+Cf3LdS89U6b4ArU6JX/rM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=CRfn0qPNYOfqoSC9QtMB+UqVckNDeuZwok7i3vN0BN6C0yxcLV0Kvzc4Pu0Zjvn8Xr
+         SKaUnyPo05ZUv4cTtQeGuQLNTnYZkYv/INwJ+ihyHDuJHjKb+RHjEXPnj4MKTfgrv9uL
+         VRMrBMVH6GGaGoJBP7pFxW5TcElr0yc6Hf+30=
+Received: by 10.114.24.15 with SMTP id 15mr8744752wax.32.1279603081187;
+        Mon, 19 Jul 2010 22:18:01 -0700 (PDT)
+Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id c11sm17888267rvf.3.2010.07.19.22.17.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 19 Jul 2010 22:18:00 -0700 (PDT)
+In-Reply-To: <4C4511C8.8090405@workspacewhiz.com>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151303>
 
-This provides a mechanism for the server to expose custom
-functionality to clients.  My particular use case is that I would like
-a way of discovering all repositories available for cloning.  A
-client that clones via
+On Jul 19, 2010, at 8:02 PM, Joshua Jensen wrote:
 
-  git clone user@example.com
+> I have some files I update frequently where I have some normally  
+> commented out debug code purposely uncommented during development.   
+> Git's hunk-level staging saves the day.  I can stage everything but  
+> the debug code without issue.
+>
+> This got me to thinking.  Is there a better way?  Is there a  
+> facility in Git where I could mark a hunk as 'permanently frozen  
+> unstaged'?  Anything marked as such would never be staged for  
+> commit.  I could rest assured I would never accidentally commit my  
+> debug code, be it extra printfs or a development server or a  
+> password or so on.
 
-can invoke a command by
+How about keeping your debug changes in a separate branch?  I work on  
+a branch called 'hack', to which I'll commit pretty much anything.   
+When a patch is ready, I cherry-pick it from master and rebase hack  
+onto master.[1]
 
-  ssh user@example.com $command
+Passwords which are so sensitive that they can't ever be checked in  
+should be stored in ignored files or outside the repo entirely.
 
-Signed-off-by: Greg Brockman <gdb@mit.edu>
----
- shell.c |   41 ++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 40 insertions(+), 1 deletions(-)
+Josh
 
-diff --git a/shell.c b/shell.c
-index e4864e0..fe1fe73 100644
---- a/shell.c
-+++ b/shell.c
-@@ -3,6 +3,8 @@
- #include "exec_cmd.h"
- #include "strbuf.h"
- 
-+#define COMMAND_DIR "git-shell-commands"
-+
- static int do_generic_cmd(const char *me, char *arg)
- {
- 	const char *my_argv[4];
-@@ -33,6 +35,20 @@ static int do_cvs_cmd(const char *me, char *arg)
- 	return execv_git_cmd(cvsserver_argv);
- }
- 
-+static int is_valid_cmd_name(const char *cmd)
-+{
-+	/* Test command contains no . or / characters */
-+	return cmd[strcspn(cmd, "./")] == '\0';
-+}
-+
-+static char *make_cmd(const char *prog)
-+{
-+	char *prefix = xmalloc((strlen(prog) + strlen(COMMAND_DIR) + 2) * sizeof(char));
-+	strcpy(prefix, COMMAND_DIR);
-+	strcat(prefix, "/");
-+	strcat(prefix, prog);
-+	return prefix;
-+}
- 
- static struct commands {
- 	const char *name;
-@@ -48,6 +64,8 @@ static struct commands {
- int main(int argc, char **argv)
- {
- 	char *prog;
-+	char *prog_cpy;
-+	const char **user_argv;
- 	struct commands *cmd;
- 	int devnull_fd;
- 
-@@ -77,6 +95,7 @@ int main(int argc, char **argv)
- 		die("What do you think I am? A shell?");
- 
- 	prog = argv[2];
-+	prog_cpy = xstrdup(prog);
- 	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
- 		/* Accept "git foo" as if the caller said "git-foo". */
- 		prog[3] = '-';
-@@ -99,5 +118,25 @@ int main(int argc, char **argv)
- 		}
- 		exit(cmd->exec(cmd->name, arg));
- 	}
--	die("unrecognized command '%s'", prog);
-+
-+	if (split_cmdline(prog, &user_argv) != -1) {
-+		if (is_valid_cmd_name(user_argv[0])) {
-+			prog  = make_cmd(user_argv[0]);
-+			user_argv[0] = prog;
-+			execv(user_argv[0], (char *const *) user_argv);
-+			free(prog);
-+		}
-+		free(user_argv);
-+		/*
-+		 * split_cmdline modifies its argument in-place, so 'prog' now
-+		 * holds the actual command name
-+		 */
-+		die("unrecognized command '%s'", prog_cpy);
-+	} else {
-+		/*
-+		 * split_cmdline has clobbered prog and printed an
-+		 * error message, so print the original
-+		 */
-+		die("invalid command format '%s'", prog_cpy);
-+	}
- }
--- 
-1.7.0.4
+[1] It's actually more complicated than that.  I create 'tip' as a  
+merger of master and my formal topic branches, and hack stays rebased  
+on tip.
