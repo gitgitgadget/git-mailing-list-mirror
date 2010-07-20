@@ -1,90 +1,79 @@
-From: Philip Kimmey <philip.kimmey@gmail.com>
-Subject: Re: Git & Paramiko: failed to push some refs to ...
-Date: Tue, 20 Jul 2010 09:12:02 -0500
-Message-ID: <AANLkTikiM9hjqhH_J9kgQwVUmtKa0TUWTeR-w5O2FkB2@mail.gmail.com>
-References: <AANLkTil0soA4pLGRZT-jgdOkB3s8qApG_h2a-UW2P_G5@mail.gmail.com>
-	<201007201218.51717.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 20 16:12:18 2010
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH] t/t3700: convert two uses of negation operator '!' to use test_must_fail
+Date: Tue, 20 Jul 2010 10:24:47 -0500
+Message-ID: <tMTpk3TmiYV54AYDiNJMBdnlXhSooJQQ1gRoAEsSwmcSwJ9ROgOpr75wpEQNx6_kZkqBtD71_QU@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
+	Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 20 17:26:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObDYP-0002G5-0l
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 16:12:17 +0200
+	id 1ObEi1-000728-O5
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 17:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758371Ab0GTOMH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 10:12:07 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46301 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757616Ab0GTOMF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 10:12:05 -0400
-Received: by gwj18 with SMTP id 18so2623344gwj.19
-        for <git@vger.kernel.org>; Tue, 20 Jul 2010 07:12:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=v2+nFCEcX1E7l8MkU9geST/vRzhpr5okbwHPFaVj5VY=;
-        b=tpyUIky5s4eoEn9hk+rMM0ejMa8G3OX3Z6qo7rCnYLuMaBLlNysI4AgIF7D/+pSgOZ
-         d54lVpniD0Z9dvnvOzF/zlRgpQo8kiXDJrZIBsVpIQbiaC7PNqARf+Xn0eBJSH2IoT/G
-         8LTVBncM5zUS8qa1Fjc4CquFKWa+B+Omvjtx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=MMod0bEgoFb3EkSQsCWFLwQJ8lGcGgpPabWlb1nkXR2+pf7KDSRckK+gDzy43iNs37
-         fAjo0Dso1PlpUIEdpU0CIcibhi7xMRSNEzxxMHTnszBAT1DgkKp8Dxu11uuPCA4LCwgx
-         N99ba/vsfxQHNdsVXdWw5dmomM0pYDBBzk5Os=
-Received: by 10.150.218.18 with SMTP id q18mr389338ybg.62.1279635122604; Tue, 
-	20 Jul 2010 07:12:02 -0700 (PDT)
-Received: by 10.231.178.131 with HTTP; Tue, 20 Jul 2010 07:12:02 -0700 (PDT)
-In-Reply-To: <201007201218.51717.trast@student.ethz.ch>
+	id S932384Ab0GTP0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 11:26:10 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39673 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932295Ab0GTP0J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 11:26:09 -0400
+Received: by mail.nrlssc.navy.mil id o6KFOvF5013872; Tue, 20 Jul 2010 10:24:58 -0500
+X-OriginalArrivalTime: 20 Jul 2010 15:24:57.0729 (UTC) FILETIME=[B6456710:01CB281F]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151316>
 
-A *very* good guess in-fact!
+From: Brandon Casey <drafnel@gmail.com>
 
-I hadn't even thought of that! That is exactly what the problem was. I
-return the exit code, and wham! Git is happy.
+These two lines use the negation '!' operator to negate the result of a
+simple command.  Since these commands do not contain any pipes or other
+complexities, the test_must_fail function can be used and is preferred
+since it will additionally detect termination due to a signal.
 
-Thank you so much for the help, I've been trying to figure this one
-out for several days!
+This was noticed because the second use of '!' does not include a space
+between the '!' and the opening parens.  Ksh interprets this as follows:
 
--Phil Kimmey
+   !(pattern-list)
+      Matches anything except one of the given patterns.
 
-On Tue, Jul 20, 2010 at 5:18 AM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> Philip Kimmey wrote:
->> If you prefer you can see the outline of my question at stackoverflo=
-w,
->> with better formatting than e-mail will afford:
->>
->> http://stackoverflow.com/questions/3262161/git-failed-to-push-some-r=
-efs-to-with-custom-git-bridge
->
-> That has a lot more information. =A0Please include it in the email ne=
-xt
-> time.
->
->> To git@localhost:/pckprojects/heyworld/
->> =A0 =A0d83f744..404debd =A0master -> master
->> error: failed to push some refs to 'git@localhost:/pckprojects/heywo=
-rld/'
->
-> A *very* stupid guess: =A0Are you reporting back the exit status
-> correctly?
->
-> --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
->
+Ksh performs a file glob using the pattern-list and then tries to execute
+the first file in the list.  If a space is added between the '!' and the
+open parens, then Ksh will not interpret it as a pattern list, but in this
+case, it is preferred to use test_must_fail, so lets do so.
+
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ t/t3700-add.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 47fbf53..d03495d 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -268,7 +268,7 @@ test_expect_success 'git add --dry-run of existing changed file' "
+ 
+ test_expect_success 'git add --dry-run of non-existing file' "
+ 	echo ignored-file >>.gitignore &&
+-	! (git add --dry-run track-this ignored-file >actual 2>&1) &&
++	test_must_fail git add --dry-run track-this ignored-file >actual 2>&1 &&
+ 	echo \"fatal: pathspec 'ignored-file' did not match any files\" | test_cmp - actual
+ "
+ 
+@@ -281,7 +281,7 @@ add 'track-this'
+ EOF
+ 
+ test_expect_success 'git add --dry-run --ignore-missing of non-existing file' '
+-	!(git add --dry-run --ignore-missing track-this ignored-file >actual 2>&1) &&
++	test_must_fail git add --dry-run --ignore-missing track-this ignored-file >actual 2>&1 &&
+ 	test_cmp expect actual
+ '
+ 
+-- 
+1.6.6.2
