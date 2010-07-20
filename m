@@ -1,103 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] git-shell-commands: Add a command to list bare repos
-Date: Tue, 20 Jul 2010 10:42:51 -0700
-Message-ID: <7vlj96m4mc.fsf@alter.siamese.dyndns.org>
-References: <1279602972-1264-1-git-send-email-gdb@mit.edu>
- <1279602972-1264-3-git-send-email-gdb@mit.edu>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] t/t3700: convert two uses of negation operator '!' to use 
+	test_must_fail
+Date: Tue, 20 Jul 2010 17:52:42 +0000
+Message-ID: <AANLkTilpspywp68veHtYbtfZytHr_0IThksmtkGAjWRg@mail.gmail.com>
+References: <tMTpk3TmiYV54AYDiNJMBdnlXhSooJQQ1gRoAEsSwmcSwJ9ROgOpr75wpEQNx6_kZkqBtD71_QU@cipher.nrlssc.navy.mil>
+	<AANLkTil9jA8Dva_KqW67c1ZgWk9_a5S1rBViui8Jn0Os@mail.gmail.com>
+	<fVE942wHC3SFihkQG8AthPTKiTZtYJ9zmR2TT7F5OlkGD4IA9xPcMA@cipher.nrlssc.navy.mil>
+	<20100720163822.GA8492@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: j.sixt@viscovery.net, git@vger.kernel.org, avarab@gmail.com,
-	jrnieder@gmail.com
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Jul 20 19:43:20 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 19:52:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObGqd-0006GD-Ci
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 19:43:19 +0200
+	id 1ObGzp-00027Y-Ud
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 19:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758472Ab0GTRnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 13:43:12 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40781 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982Ab0GTRnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 13:43:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DFFC2C6BBE;
-	Tue, 20 Jul 2010 13:43:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IwWIMIAtsYfu2hlcNQrAYpB2M7c=; b=GBrLad
-	Sc8rfWDdh9vR0Csz+jlfO+yNNRhSRcmkXVJ3jpp8P70YWM0xh3NIede6XWCBggV8
-	v50Tq7VItjMZ0iEZRlINE0pVamZIGhx7fw5LzStTkCX8noWi4bU7jNIWTgX2X09/
-	uq7yDTmVVLtlKhcF5i/f4YfJaN3dLY+kKnu6k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oAViaDOCpbWOq3k71tWBP36rZY6ze9JN
-	vRf1ZVzfCtDOZTLgEF0yBXoccXtVSQpIBqfX3XW7B3nybHw9TNiyE85ywMJg65at
-	ukUQ0DRr1G5MVB0MUjOzrRKAfJ020phEp0lwVym5dK5K98m7+wpUBzPT5jtAYkbE
-	BsOau+xOgnw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5DF1C6BB9;
-	Tue, 20 Jul 2010 13:42:59 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71572C6BAD; Tue, 20 Jul
- 2010 13:42:53 -0400 (EDT)
-In-Reply-To: <1279602972-1264-3-git-send-email-gdb@mit.edu> (Greg Brockman's
- message of "Tue\, 20 Jul 2010 01\:16\:10 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3CE9C816-9426-11DF-8AA5-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758301Ab0GTRwo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 13:52:44 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:49839 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753405Ab0GTRwn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 13:52:43 -0400
+Received: by pvc7 with SMTP id 7so2248953pvc.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 10:52:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Rid7ZrCoFiK5xCgYRjjCbNgWrWToNPPHp90LRCeHNMg=;
+        b=lZ787fTNzavkqZ36cQLvlO4ZPjy1kH9MiamNir1xA+5QM5RsWzsGWb9P+iK65E2kLP
+         KV+9O+m7KuxjJ/ijaOd0BLdMvrHvXTGoKaqSIFinMiHw4vOodS/mDxfJnA4uY9yJAHxI
+         fa6L/I2USnhgxPLtFnAtsxu7Fw3tlSZxEvcXY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nF420Li7/Hwj3OAGkPf0pS/lkce5hXIa867mMfBBnAoMVQRyHMxLJVqHdS/8z9RYsz
+         erneXV/+InEQ5NwcV9gs2ZczFwB+OQahfGliz1IeRGVP4eR8als0Kv2ena5om+0VJM96
+         AW78ZDPRhZGtlrm5gRl+cjVzCzly1oIWWUiF4=
+Received: by 10.114.196.9 with SMTP id t9mr9965141waf.159.1279648362204; Tue, 
+	20 Jul 2010 10:52:42 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Tue, 20 Jul 2010 10:52:42 -0700 (PDT)
+In-Reply-To: <20100720163822.GA8492@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151337>
 
-Greg Brockman <gdb@MIT.EDU> writes:
-
-> Signed-off-by: Greg Brockman <gdb@mit.edu>
-> ---
->  contrib/git-shell-commands/list |    5 +++++
->  1 files changed, 5 insertions(+), 0 deletions(-)
->  create mode 100755 contrib/git-shell-commands/list
+On Tue, Jul 20, 2010 at 16:38, Jared Hance <jaredhance@gmail.com> wrote=
+:
+> On Tue, Jul 20, 2010 at 11:32:33AM -0500, Brandon Casey wrote:
+>> I think you have misunderstood the explanation of test_must_fail. =C2=
+=A0The
+>> paragraph you quoted actually recommends using test_must_fail instea=
+d
+>> of "! <git-command>".
+>>
+>> It says:
+>>
+>> =C2=A0 =C2=A0Use this instead of "! <git-command>" to fail when git =
+commands
+>> =C2=A0 =C2=A0segfault.
+>>
+>> Or with a slight rewording:
+>>
+>> =C2=A0 =C2=A0Use test_must_fail instead of "! <git-command>" since t=
+est_must_fail
+>> =C2=A0 =C2=A0will fail when <git-command> segfaults.
 >
-> diff --git a/contrib/git-shell-commands/list b/contrib/git-shell-commands/list
-> new file mode 100755
-> index 0000000..cd8b15a
-> --- /dev/null
-> +++ b/contrib/git-shell-commands/list
-> @@ -0,0 +1,5 @@
-> +#!/bin/sh
-> +set -eu
-> +
-> +print_if_bare_repo='[ "$(git --git-dir="$1" rev-parse --is-bare-repository)" = true ] && echo "${1#./}"'
+> I think the wording of description of test_must_fail is slightly
+> ambiguous. I read it to mean that:
+>
+> =C2=A0 =C2=A0Use test_must_fail only when you are testing to see if g=
+it will
+> =C2=A0 =C2=A0segfault.
 
-That's a very long line you have here.  It might be better to do split the
-line perhaps like this for readability:
+I've interpreted it to mean that as well, but it's starting to look
+like a good example of a garden path sentence.
 
-print_if_bare_repo='
-	if "$(git --git-dir="$1" rev-parse --is-bare-repository)" = true
-        then
-	        printf "%s\n" "${1#./}"
-	fi
-'
+Anyway, it looks like we're wrong and Brandon was right. But I'm going
+to submit a doc patch to t/README. Here's the existing use of !
+v.s. test_must_fail:
 
-It is unclear why it limits its listing only to bare repositories.  "It's
-my design decision" is a perfectly acceptable answer, but no matter what
-the reasoning is, it needs to be documented as a part of "How to use this"
-insn to the users.  A separate file README in contrib/git-shell-commands
-that reads like:
+    $ cat *.sh | grep -c 'test_must_fail git'
+    863
+    $ cat *sh | grep -c '! git '
+    30
 
-	Any bare repository whose name ends with ".git" under your home
-	directory is visible by "list" extended command (no other git
-	repositories are visible).
+I.e. ! is only used to negate non-git commands like test.
 
-would probably be a good start.
+The example in the comments for test_must_fail in test-lib.sh backs thi=
+s up:
 
-> +find -type d -name "*.git" -exec sh -c "$print_if_bare_repo" -- \{} \; -prune
+    # Writing this as "! git checkout ../outerspace" is wrong, because
+    # the failure could be due to a segv.  We want a controlled failure=
+=2E
 
-Also do you need "set -eu" at the beginning?  I don't see it serving a
-useful purpose (other than being a development aid, that is).
+> Rather than:
+>
+> =C2=A0 =C2=A0Use test_must_fail to be safe from git segfaults.
