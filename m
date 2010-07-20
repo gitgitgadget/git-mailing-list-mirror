@@ -1,94 +1,89 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [http] Git error messages reveal password encoded in the URL
-Date: Tue, 20 Jul 2010 15:46:18 +0800
-Message-ID: <AANLkTilYeKkJlUaB7zRgvIR_OyzrabWG1iPLbmrvkAqu@mail.gmail.com>
-References: <4C4484A4.5010009@gmail.com>
-	<AANLkTilby7GWOuObh6W4z_caUG83O5A5Wh4Wb-JJnSdJ@mail.gmail.com>
-	<4C44DEF7.4000903@gmail.com>
-	<201007200241.46972.jnareb@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v3 05/13] parse the -L options
+Date: Tue, 20 Jul 2010 09:51:55 +0200
+Message-ID: <201007200951.56218.trast@student.ethz.ch>
+References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com> <201007200048.18284.trast@student.ethz.ch> <7veiezni4m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ketan Padegaonkar <ketanpadegaonkar@gmail.com>,
-	Jacob Helwig <jacob.helwig@gmail.com>,
-	git-dev <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 09:46:29 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Bo Yang <struggleyb.nku@gmail.com>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 09:52:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ob7X2-0006PU-QU
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 09:46:29 +0200
+	id 1Ob7cn-0000Jf-Ii
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 09:52:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752375Ab0GTHqX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 03:46:23 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61788 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752160Ab0GTHqW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 03:46:22 -0400
-Received: by iwn7 with SMTP id 7so5513804iwn.19
-        for <git@vger.kernel.org>; Tue, 20 Jul 2010 00:46:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ziz6Toge1MWhRSGpASxICsJOcB8gNgFYifHodj7zjy8=;
-        b=iuJXIZhD2m/HraJqmcWQ+6JccEFg2CzCpoeLOPNzjDwKhTkk1GPwTVWIZKaiQ+xKKk
-         YozKQYKES/SSUohzX37MLkbJqnXQ90svlQmWBE619W+c8HhWuYGFBE1EsD3IrUggt0lP
-         iVeMje4GPr5diu+NPdO5yyc7w7VgLbQjSlLl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aHCe8w5L4oU4PVVsBoocSiyVi+ctd5hqgjFPUMBaHBeLQMOjB6LwbFQdjkK9S3mHys
-         WY0c/NGg6PMscchG5OOua+wE4tET1bSmQEuBYo1M3BPYCYVPvTe28iwidipZ71587l7X
-         bSJryv5Nvt92Q7Zra4MGqkWNCnLpTykT99bG8=
-Received: by 10.231.192.67 with SMTP id dp3mr6847588ibb.180.1279611978438; 
-	Tue, 20 Jul 2010 00:46:18 -0700 (PDT)
-Received: by 10.231.153.12 with HTTP; Tue, 20 Jul 2010 00:46:18 -0700 (PDT)
-In-Reply-To: <201007200241.46972.jnareb@gmail.com>
+	id S1754640Ab0GTHwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 03:52:20 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:46409 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754043Ab0GTHwT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 03:52:19 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 20 Jul
+ 2010 09:52:17 +0200
+Received: from thomas.localnet (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.0.702.0; Tue, 20 Jul
+ 2010 09:51:56 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7veiezni4m.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151308>
 
-Hi:
+Junio C Hamano wrote:
+> Thomas Rast <trast@student.ethz.ch> writes:
+> > I think that would just needlessly break the analogy to git-blame.[0]
+> > With the current code,
+> >
+> >   git blame -L 2,3 <path>
+> >   git log -L 2,3 <path>
+> >
+> > work the same.
+> 
+> I like the general direction, but I am not sure how far we want to take
+> that analogue with blame, though.
+> 
+> For example, Bo's "log -L" thing also works on more than one path, no?  I
+> suspect it might be be reasonable to teach "blame" to annotate more than
+> one path (with ranges) the same way.  There is no technical limitation in
+> the underlying scoreboard mechanism to prevent it from happening.
+> 
+> Very similar to "blame" but quite differently from any normal "log"
+> operation, "log -L" allows only one positive commit (starting point).
 
-On Tue, Jul 20, 2010 at 8:41 AM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> Dnia wtorek 20. lipca 2010 01:25, Ketan Padegaonkar napisa=C5=82:
-[snip]
-> Can't you use ~/.netrc file[1] instead? =C2=A0As far as I see this wo=
-uld not
-> show password info on error. =C2=A0Not that the current situation sho=
-uld
-> not be fixed, but it might be worthwhile workaround for a time.
->
-> The ~/.netrc file would look like this for your example:
->
-> =C2=A0machine host
-> =C2=A0login user
-> =C2=A0password pass
->
-> You should of course `chmod 600 ~/.netrc`
->
-> [1] This is unfortunately underdocumented: only this documentation
-> Documentation/howto/setup-git-server-over-http.txt mentions ~/.netrc
-> file. =C2=A0I think that handling the $HOME/.netrc is done by the cur=
-l
-> library that git uses, see libcurl-tutorial(3) manpage.
+AFAICT this is not a conceptual requirement, only one of the current
+implementation/option parsing.  [Bo, how hard would it be to remove
+this requirement?]
 
-+1
+'git log --follow', if it were ever unbroken, would have much the same
+problem that while technically allowing more than one starting point,
+using that is only possible if the starting filename happens to agree
+on all of them.
 
-This is the only way I know of to "hide" your password.
+> Perhaps these argue that this new feature shouldn't be a new option of
+> "log" at the UI level after all; rather, I wonder if this should be better
+> presented as a new mode of "blame" (e.g. "blame --log", unlike showing
+> "cvs annotate" like output, shows history like "git log" does).
 
-Of course, depending on your authentication scheme, your efforts for
-this setup may prove worthless.
+Then you suddenly have a mode of git-blame that takes the normal
+options, and another that takes all the git-log arguments that pertain
+to commit formatting.
 
---=20
-Cheers,
-Ray Chuan
+(Ok, you can't reasonably give it any of the diff-formatting options,
+but e.g. --graph and --pretty are supposed to work.)
+
+What's more, we (well, I do anyway) absolutely want gitk to display
+the same output eventually.  So that would also suddenly give you an
+example where gitk isn't so equivalent to git-log-in-a-fancy-window
+any more.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
