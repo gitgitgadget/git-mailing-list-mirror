@@ -1,139 +1,75 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [RFC/PATCH] merge: honor prepare-commit-msg hook
-Date: Tue, 20 Jul 2010 00:29:04 -0400
-Message-ID: <1279600144-89629-1-git-send-email-jaysoffian@gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <junio@kernel.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 20 06:29:24 2010
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: [PATCH 3/4] git-shell-commands: Add a help command
+Date: Tue, 20 Jul 2010 01:16:11 -0400
+Message-ID: <1279602972-1264-4-git-send-email-gdb@mit.edu>
+References: <1279602972-1264-1-git-send-email-gdb@mit.edu>
+Cc: Greg Brockman <gdb@mit.edu>
+To: j.sixt@viscovery.net, git@vger.kernel.org, gitster@pobox.com,
+	avarab@gmail.com, jrnieder@gmail.com
+X-From: git-owner@vger.kernel.org Tue Jul 20 07:17:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ob4SG-0003zb-NL
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 06:29:21 +0200
+	id 1Ob5CZ-0001ZB-DA
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 07:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752271Ab0GTE3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 00:29:15 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:59818 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752228Ab0GTE3O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 00:29:14 -0400
-Received: by gwj18 with SMTP id 18so2368002gwj.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 21:29:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=HAdMjQNF6UNpvW4LQURG2HM+7aecRnN/l41eIKUXP7E=;
-        b=GOZMuQ+c+f1B116XY8h0dSGK8eI4pmnToRfn2mP8g4nZ1B4oElCkPl7aqNMsgXzGOS
-         3gpWUKMdre8QZiXErqQBipeFOX4aj275GsMQqRWfrbnhmkP2KPdNHCl7wpmpf+HAO7de
-         1rYAFX6QBJkLQ9rUGU/06MCFNe4yFnMfo/tXw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=XLSeaHzWBQ0LqFR999vILMw0wfgH6vMQ5ONEg0xe5fqJcYX+gkMkWRzg4V/JPeHhLf
-         0pZ6jcgAhxpH8fuWJ6hveNIC3Zh0DWlY/wi8pfGKeTCjyFFtDZSaqzO7QT4SrCpzpkJg
-         D/336Hy/7nRpwCZFsrVuqkroVTTZf/+fsf6j8=
-Received: by 10.150.181.3 with SMTP id d3mr6007626ybf.63.1279600153162;
-        Mon, 19 Jul 2010 21:29:13 -0700 (PDT)
-Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
-        by mx.google.com with ESMTPS id m11sm6326526ybn.4.2010.07.19.21.29.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 21:29:12 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.rc3.53.g670aa
+	id S1753156Ab0GTFQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 01:16:44 -0400
+Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:63004 "EHLO
+	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753856Ab0GTFQl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 01:16:41 -0400
+X-AuditID: 12074424-b7c35ae000000a07-ba-4c45313a726a
+Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
+	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id E3.42.02567.A31354C4; Tue, 20 Jul 2010 01:16:42 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o6K5Gd86014606;
+	Tue, 20 Jul 2010 01:16:39 -0400
+Received: from localhost (STRATTON-FIVE-FIFTY-FOUR.MIT.EDU [18.187.7.43])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6K5GcvD001121;
+	Tue, 20 Jul 2010 01:16:38 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0.4
+In-Reply-To: <1279602972-1264-1-git-send-email-gdb@mit.edu>
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151298>
 
+Signed-off-by: Greg Brockman <gdb@mit.edu>
 ---
-I couldn't figure out why my prepare-commit-msg wasn't being honored
-by git merge. I assumed that the standard commit hooks would be honored,
-as after-all, merge is creating a new commit. Alas, this is not the case
-since merge calls commit_tree directly.
+ contrib/git-shell-commands/help |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/git-shell-commands/help
 
-I wonder whether the low-level commit_tree should be responsible for
-invoking this hook instead of the commit porcelain?
-
-In any case, this does what I want, but I'm not sure it's the best approach.
-
-Comments?
-
- builtin/merge.c |   38 ++++++++++++++++++++++++++++++--------
- 1 files changed, 30 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 37ce4f5..28a9960 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -768,6 +768,33 @@ static void add_strategies(const char *string, unsigned attr)
- 
- }
- 
-+static void write_merge_msg(void)
-+{
-+	int fd = open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
-+	if (fd < 0)
-+		die_errno("Could not open '%s' for writing",
-+			  git_path("MERGE_MSG"));
-+	if (write_in_full(fd, merge_msg.buf, merge_msg.len) !=
-+		merge_msg.len)
-+		die_errno("Could not write to '%s'", git_path("MERGE_MSG"));
-+	close(fd);
-+}
+diff --git a/contrib/git-shell-commands/help b/contrib/git-shell-commands/help
+new file mode 100755
+index 0000000..19d5277
+--- /dev/null
++++ b/contrib/git-shell-commands/help
+@@ -0,0 +1,18 @@
++#!/bin/sh
 +
-+static void read_merge_msg(void)
-+{
-+	strbuf_reset(&merge_msg);
-+	if (strbuf_read_file(&merge_msg, git_path("MERGE_MSG"), 0) < 0)
-+		die_errno("Could not read from '%s'", git_path("MERGE_MSG"));
-+}
++set -eu
 +
-+static void run_prepare_commit_msg(void)
-+{
-+	write_merge_msg();
-+	run_hook(get_index_file(), "prepare-commit-msg",
-+		 git_path("MERGE_MSG"), "merge", NULL, NULL);
-+	read_merge_msg();
-+}
++if tty -s; then
++    echo "Run 'help' for help, or 'exit' to leave.  Available commands:"
++else
++    echo "Run 'help' for help.  Available commands:"
++fi
 +
- static int merge_trivial(void)
- {
- 	unsigned char result_tree[20], result_commit[20];
-@@ -779,6 +806,7 @@ static int merge_trivial(void)
- 	parent->next = xmalloc(sizeof(*parent->next));
- 	parent->next->item = remoteheads->item;
- 	parent->next->next = NULL;
-+	run_prepare_commit_msg();
- 	commit_tree(merge_msg.buf, result_tree, parent, result_commit, NULL);
- 	finish(result_commit, "In-index merge");
- 	drop_save();
-@@ -808,6 +836,7 @@ static int finish_automerge(struct commit_list *common,
- 	}
- 	free_commit_list(remoteheads);
- 	strbuf_addch(&merge_msg, '\n');
-+	run_prepare_commit_msg();
- 	commit_tree(merge_msg.buf, result_tree, parents, result_commit, NULL);
- 	strbuf_addf(&buf, "Merge made by %s.", wt_strategy);
- 	finish(result_commit, buf.buf);
-@@ -1276,14 +1305,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 			die_errno("Could not write to '%s'", git_path("MERGE_HEAD"));
- 		close(fd);
- 		strbuf_addch(&merge_msg, '\n');
--		fd = open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
--		if (fd < 0)
--			die_errno("Could not open '%s' for writing",
--				  git_path("MERGE_MSG"));
--		if (write_in_full(fd, merge_msg.buf, merge_msg.len) !=
--			merge_msg.len)
--			die_errno("Could not write to '%s'", git_path("MERGE_MSG"));
--		close(fd);
-+		write_merge_msg();
- 		fd = open(git_path("MERGE_MODE"), O_WRONLY | O_CREAT | O_TRUNC, 0666);
- 		if (fd < 0)
- 			die_errno("Could not open '%s' for writing",
++cd "$(dirname "$0")"
++
++for cmd in *; do
++    case "$cmd" in
++	help) ;;
++	*) [ -f "$cmd" ] && [ -x "$cmd" ] && echo "$cmd" ;;
++    esac
++done
 -- 
-1.7.2.rc3.53.g670aa
+1.7.0.4
