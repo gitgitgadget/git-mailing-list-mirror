@@ -1,157 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Bo Yang <struggleyb.nku@gmail.com>
 Subject: Re: [PATCH v3 05/13] parse the -L options
-Date: Tue, 20 Jul 2010 08:45:36 -0700
-Message-ID: <7v39venom7.fsf@alter.siamese.dyndns.org>
+Date: Tue, 20 Jul 2010 23:46:04 +0800
+Message-ID: <AANLkTinXDRV_Ikd-hoGoWPZmn1Tp0NYHoumaqthydsuw@mail.gmail.com>
 References: <1278829141-11900-1-git-send-email-struggleyb.nku@gmail.com>
- <201007200048.18284.trast@student.ethz.ch>
- <7veiezni4m.fsf@alter.siamese.dyndns.org>
- <201007200951.56218.trast@student.ethz.ch>
+	<201007200048.18284.trast@student.ethz.ch>
+	<7veiezni4m.fsf@alter.siamese.dyndns.org>
+	<201007200951.56218.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bo Yang <struggleyb.nku@gmail.com>, <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jul 20 17:45:57 2010
+X-From: git-owner@vger.kernel.org Tue Jul 20 17:46:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObF11-0007s5-Qd
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 17:45:56 +0200
+	id 1ObF1U-00086c-2p
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 17:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932392Ab0GTPps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 11:45:48 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48254 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932354Ab0GTPpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 11:45:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9B62C6C1C;
-	Tue, 20 Jul 2010 11:45:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OiVvhbpukhYuhgXwLCb8POAiGP8=; b=enWT3f
-	i4FSq4lUd/cYQl8/hJXbUIHUGEr/iJqgS9PXVxYDIFagU6rJk0dtnTEQNdIyk7FX
-	ZpBrXXvOANLd5By+/Yyq5Bmulz9UDEMo6U0PO/BQwr4xc7CJz+UNmzdivpCdYlPA
-	7fz5STKIdmxn3IEeqlDcAAYux4YEXHN/3JlZM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vVU9k6268kIbQ62SdH9dLPXwuAoGnN+R
-	QCjFIh12K6XaHAfOMMZ1dGm0VMuzxNYC26pWsMYfSQDqAuLZj6C7i37Da2Jla+Ne
-	+66HXlWCenH4tVhy6ETqffVx/fDKqhy9+5ADr6ehPl4EN2I4EuoCrqvbTkaa46FS
-	S3U5LJfbkw8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 830AFC6C18;
-	Tue, 20 Jul 2010 11:45:42 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57FF0C6C17; Tue, 20 Jul
- 2010 11:45:38 -0400 (EDT)
-In-Reply-To: <201007200951.56218.trast@student.ethz.ch> (Thomas Rast's
- message of "Tue\, 20 Jul 2010 09\:51\:55 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DA78069E-9415-11DF-8592-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932491Ab0GTPqQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 11:46:16 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:51119 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932354Ab0GTPqP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 11:46:15 -0400
+Received: by pwi5 with SMTP id 5so2188727pwi.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 08:46:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Fb+N40Juc2Ot3uu7knTSjOSETBEpbXiBg6dwB6foDZA=;
+        b=ue6zverZAjVjSRrqC+1ZQKzQxygAcy4gmDuvCMBUKezsqlFBKr8PG55ThI8/n1NetD
+         GCwtU/fBtPr0TTmgrPQ2q1VWP1k9ayyVcJ6+KwiDh2m12gbKxzJIQhAjo1nCuNMsQZcM
+         ynbreCK1ETMzZQ6k5aWxNYfiiziSuhwiAGEhU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Lw2OK822Xa+U/EgUcD7Md/8EhW9JmhHSGG4WRRrOcFvhkQzuX/Z5myVUNoHtajechp
+         6e2NNeR8i1jloom7846ZOlc9fRZYl+COeus8UAowG5N3OvendxuoNT91OIAmkDlZSDFE
+         J7MldigJIHDfzeCHncaAYac6iuXGfyqRvJZMM=
+Received: by 10.115.109.6 with SMTP id l6mr9709249wam.164.1279640764981; Tue, 
+	20 Jul 2010 08:46:04 -0700 (PDT)
+Received: by 10.229.217.149 with HTTP; Tue, 20 Jul 2010 08:46:04 -0700 (PDT)
+In-Reply-To: <201007200951.56218.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151319>
 
-Thomas Rast <trast@student.ethz.ch> writes:
-
+On Tue, Jul 20, 2010 at 3:51 PM, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
 > Junio C Hamano wrote:
-> ...
->> I like the general direction, but I am not sure how far we want to take
+>> Thomas Rast <trast@student.ethz.ch> writes:
+>> > I think that would just needlessly break the analogy to git-blame.=
+[0]
+>> > With the current code,
+>> >
+>> > =A0 git blame -L 2,3 <path>
+>> > =A0 git log -L 2,3 <path>
+>> >
+>> > work the same.
+>>
+>> I like the general direction, but I am not sure how far we want to t=
+ake
 >> that analogue with blame, though.
->> 
->> For example, Bo's "log -L" thing also works on more than one path, no?  I
->> suspect it might be be reasonable to teach "blame" to annotate more than
->> one path (with ranges) the same way.  There is no technical limitation in
+>>
+>> For example, Bo's "log -L" thing also works on more than one path, n=
+o? =A0I
+>> suspect it might be be reasonable to teach "blame" to annotate more =
+than
+>> one path (with ranges) the same way. =A0There is no technical limita=
+tion in
 >> the underlying scoreboard mechanism to prevent it from happening.
->> 
+>>
 >> Very similar to "blame" but quite differently from any normal "log"
->> operation, "log -L" allows only one positive commit (starting point).
+>> operation, "log -L" allows only one positive commit (starting point)=
+=2E
 >
 > AFAICT this is not a conceptual requirement, only one of the current
-> implementation/option parsing.
-
-I think "log -L" conceptually is very different from the normal "log with
-pathspecs".
-
-The "log with pathspecs" is about "I have these histories that lead to
-these commits; show commits that touch paths that match them".  On the
-other hand, "log -L" asks "I have these lines in these files; explain how
-they came about in the history leading to...".  Now, the question is:
-"leading to" WHAT?
-
-Because you start from "I have _these lines_", you are fundamentally
-discussing contents that appear as a set of line ranges _in a particular
-version_, adjusting the range to match their older incarnations as
-necessary as you dig deeper, no?
-
-I would say that this is not just _only_ the implementation and option
-parsing.  What is happening looks to me fundamentally very different.
-
-Having said that, it is not entirely implausible to imagine that "log -L"
-can further be enhanced to also dig into the future.  The request becomes
-"I have these lines; explain how they came about, and how they went".
-
-E.g. if you have a history of this shape where commit C is at the tip:
-
-    ---o---A---x---B---o---C
-
-you _could_ ask "log -p -L1,10,B:Makefile A..C" (I am not proposing this
-syntax at all, by the way) to browse the history between A and C, looking
-for commits that touch the region of Makefile that appeared as lines 1..10
-in revision B.  Between B and C, some new lines might have been introduced
-inside the range and you would dig in reverse enlarging the range to show
-what have been added to it.
-
-If you have that kind of "forward digging", then it would also not be
-implausible to deal with a forked history like this:
-
-                 y---z---D
-                /
-    ---o---A---x---B---o---C
-
-and ask a similar "log -p -L1,10,C:Makefile A..C D" question.  You would
-need to dig from C to x, finding the corresponding range in x, and then
-map that corresponding range further while traversing through y, z and to
-D in reverse, just like you mapped and traversed from B through o to C in
-reverse that explained a part of Makefile in revision B in the earlier
-example.
-
-Also the implementation will have to be very different if you really
-wanted to do this properly.  I would imagine you would first build a
-sparse merge-simplified graph that consists of commits that touch Makefile
-(using "Makefile" as a pathspec) in the first pass, map the line ranges
-backward and forward in the second pass, and output the result in the
-final pass.  Presumably you could collapse the backward traversing half of
-the second pass and the third one (which is what Bo's patchset already
-does), but I don't think you can stream x-y-z-D going forward, as "log -L"
-output needs to follow the usual new-to-old order as the other parts of
-the history.
-
-IOW, that "explain how they came and how they went" is also very different
-from the normal "log", even if you choose to lift that restriction.
-
-Also I am not entirely sure if it is easy to explain to the users.
-
-If you instead choose to retain the "start from one commit", then the way
-you ask the question becomes "I have these lines in these files at this
-commit; explain how they came about in the history", which is exactly what
-you ask "blame".  You are just using a different presentation from what
-the default "blame" output gives.
-
->> Perhaps these argue that this new feature shouldn't be a new option of
->> "log" at the UI level after all; rather, I wonder if this should be better
->> presented as a new mode of "blame" (e.g. "blame --log", unlike showing
->> "cvs annotate" like output, shows history like "git log" does).
+> implementation/option parsing. =A0[Bo, how hard would it be to remove
+> this requirement?]
 >
-> Then you suddenly have a mode of git-blame that takes the normal
-> options, and another that takes all the git-log arguments that pertain
-> to commit formatting.
+> 'git log --follow', if it were ever unbroken, would have much the sam=
+e
+> problem that while technically allowing more than one starting point,
+> using that is only possible if the starting filename happens to agree
+> on all of them.
 
-I would consider it similar to "blame --incremental"; you can choose a
-very different output format driven by a single switch to change the mode
-of operation.
+I think Junio here did not ask for 'git log -L' to support multiple
+starting commits. [1]
+Considering the arguments you give below, I am in support of put it in
+'git log -L' as what we do, now.
+
+--=20
+Regards!
+Bo
+----------------------------
+My blog: http://blog.morebits.org
+Why Git: http://www.whygitisbetterthanx.com/
