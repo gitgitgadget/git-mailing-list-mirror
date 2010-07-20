@@ -1,85 +1,67 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: Automatically exclude hunks from the commit
-Date: Mon, 19 Jul 2010 22:17:58 -0700
-Message-ID: <C18AA39F-1ADD-46A8-8A10-25A6B6AF26CB@gmail.com>
-References: <4C4511C8.8090405@workspacewhiz.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 07:18:12 2010
+From: Ville =?iso-8859-1?q?Skytt=E4?= <ville.skytta@iki.fi>
+Subject: Re: [PATCH 1/2] Documentation spelling fixes.
+Date: Tue, 20 Jul 2010 09:05:28 +0300
+Message-ID: <201007200905.29267.ville.skytta@iki.fi>
+References: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi> <20100719231123.GA1708@burratino>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 08:05:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ob5DW-0001sQ-Up
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 07:18:11 +0200
+	id 1Ob5xR-0002Ja-EH
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 08:05:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198Ab0GTFSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 01:18:05 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:33226 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753974Ab0GTFSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 01:18:03 -0400
-Received: by pzk26 with SMTP id 26so1567691pzk.19
-        for <git@vger.kernel.org>; Mon, 19 Jul 2010 22:18:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=eFbtVFeRwV1kW4Ir5ru9SwG0+2Esx26DumLEPAld3R8=;
-        b=KijX0EFikl3h+/PhqhBkjPre2RruwgcXWHX7twU7l371oO4aOD9rEwLWf3yVj9CnkJ
-         3TmiuyKbH3lqYemJzatIUhaC0yeQF8vg9yV6aN4PmBmfrAoZV9WwBK4PE8hBjjLojw26
-         vBQKbepGLzgDEkO+Cf3LdS89U6b4ArU6JX/rM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=CRfn0qPNYOfqoSC9QtMB+UqVckNDeuZwok7i3vN0BN6C0yxcLV0Kvzc4Pu0Zjvn8Xr
-         SKaUnyPo05ZUv4cTtQeGuQLNTnYZkYv/INwJ+ihyHDuJHjKb+RHjEXPnj4MKTfgrv9uL
-         VRMrBMVH6GGaGoJBP7pFxW5TcElr0yc6Hf+30=
-Received: by 10.114.24.15 with SMTP id 15mr8744752wax.32.1279603081187;
-        Mon, 19 Jul 2010 22:18:01 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id c11sm17888267rvf.3.2010.07.19.22.17.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 19 Jul 2010 22:18:00 -0700 (PDT)
-In-Reply-To: <4C4511C8.8090405@workspacewhiz.com>
-X-Mailer: Apple Mail (2.936)
+	id S1752228Ab0GTGFc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 02:05:32 -0400
+Received: from filtteri2.pp.htv.fi ([213.243.153.185]:41475 "EHLO
+	filtteri2.pp.htv.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752122Ab0GTGFb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 02:05:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by filtteri2.pp.htv.fi (Postfix) with ESMTP id 5D28DBFA5;
+	Tue, 20 Jul 2010 09:05:30 +0300 (EEST)
+X-Virus-Scanned: Debian amavisd-new at pp.htv.fi
+Received: from smtp4.welho.com ([213.243.153.38])
+	by localhost (filtteri2.pp.htv.fi [213.243.153.185]) (amavisd-new, port 10024)
+	with ESMTP id cZm8v-sQUV8C; Tue, 20 Jul 2010 09:05:30 +0300 (EEST)
+Received: from viper.bobcat.mine.nu (cs181085020.pp.htv.fi [82.181.85.20])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp4.welho.com (Postfix) with ESMTPS id 00D2F5BC005;
+	Tue, 20 Jul 2010 09:05:30 +0300 (EEST)
+User-Agent: KMail/1.13.5 (Linux/2.6.33.6-147.fc13.x86_64; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <20100719231123.GA1708@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151304>
 
-On Jul 19, 2010, at 8:02 PM, Joshua Jensen wrote:
+On Tuesday 20 July 2010, Jonathan Nieder wrote:
+> Hi Ville,
+>=20
+> Ville Skytt=E4 wrote:
+> > ---
+>=20
+> If this does not end up needing a re-roll, would it be okay for
+> Junio (or whoever else picks up the patch) to forge your sign-off?
+> (See "Sign your work" in Documentation/SubmittingPatches for what I
+> mean.)
 
-> I have some files I update frequently where I have some normally  
-> commented out debug code purposely uncommented during development.   
-> Git's hunk-level staging saves the day.  I can stage everything but  
-> the debug code without issue.
->
-> This got me to thinking.  Is there a better way?  Is there a  
-> facility in Git where I could mark a hunk as 'permanently frozen  
-> unstaged'?  Anything marked as such would never be staged for  
-> commit.  I could rest assured I would never accidentally commit my  
-> debug code, be it extra printfs or a development server or a  
-> password or so on.
+Sure, sorry for missing that point.  Ditto for the 2/2 patch I sent.
 
-How about keeping your debug changes in a separate branch?  I work on  
-a branch called 'hack', to which I'll commit pretty much anything.   
-When a patch is ready, I cherry-pick it from master and rebase hack  
-onto master.[1]
-
-Passwords which are so sensitive that they can't ever be checked in  
-should be stored in ignored files or outside the repo entirely.
-
-Josh
-
-[1] It's actually more complicated than that.  I create 'tip' as a  
-merger of master and my formal topic branches, and hack stays rebased  
-on tip.
+Regarding the rest of your comments, I did not seek to rephrase any doc=
+s, just=20
+fixed some obvious spelling errors and made use of some terms and=20
+abbreviations etc more consistent across the docs.  I have no objection=
+s to=20
+your suggestions but then again they're a bit larger changes which are =
+out of=20
+scope for this patch as far as I'm concerned, and could e.g. be made=20
+separately afterwards.
