@@ -1,67 +1,80 @@
-From: Ville =?iso-8859-1?q?Skytt=E4?= <ville.skytta@iki.fi>
-Subject: Re: [PATCH 1/2] Documentation spelling fixes.
-Date: Tue, 20 Jul 2010 09:05:28 +0300
-Message-ID: <201007200905.29267.ville.skytta@iki.fi>
-References: <1279574238-16649-1-git-send-email-ville.skytta@iki.fi> <20100719231123.GA1708@burratino>
+From: Will Palmer <wmpalmer@gmail.com>
+Subject: Re: Question about 'branch -d' safety
+Date: Tue, 20 Jul 2010 07:31:59 +0100
+Message-ID: <1279607519.3534.14.camel@dreddbeard>
+References: <20091230065442.6117@nanako3.lavabit.com>
+	 <201007181355.36691.jnareb@gmail.com> <1279484847.8999.22.camel@dreddbeard>
+	 <201007190119.04873.jnareb@gmail.com> <1279523523.3077.8.camel@dreddbeard>
+	 <4C448879.4040202@workspacewhiz.com> <1279568744.3009.14.camel@dreddbeard>
+	 <4C451272.8000802@workspacewhiz.com>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 08:05:41 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Nanako Shiraishi <nanako3@lavabit.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Tue Jul 20 08:32:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ob5xR-0002Ja-EH
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 08:05:37 +0200
+	id 1Ob6NB-0002mq-C6
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 08:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752228Ab0GTGFc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 02:05:32 -0400
-Received: from filtteri2.pp.htv.fi ([213.243.153.185]:41475 "EHLO
-	filtteri2.pp.htv.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752122Ab0GTGFb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 02:05:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtteri2.pp.htv.fi (Postfix) with ESMTP id 5D28DBFA5;
-	Tue, 20 Jul 2010 09:05:30 +0300 (EEST)
-X-Virus-Scanned: Debian amavisd-new at pp.htv.fi
-Received: from smtp4.welho.com ([213.243.153.38])
-	by localhost (filtteri2.pp.htv.fi [213.243.153.185]) (amavisd-new, port 10024)
-	with ESMTP id cZm8v-sQUV8C; Tue, 20 Jul 2010 09:05:30 +0300 (EEST)
-Received: from viper.bobcat.mine.nu (cs181085020.pp.htv.fi [82.181.85.20])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp4.welho.com (Postfix) with ESMTPS id 00D2F5BC005;
-	Tue, 20 Jul 2010 09:05:30 +0300 (EEST)
-User-Agent: KMail/1.13.5 (Linux/2.6.33.6-147.fc13.x86_64; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <20100719231123.GA1708@burratino>
+	id S1754723Ab0GTGcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 02:32:08 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:46473 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754352Ab0GTGcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 02:32:07 -0400
+Received: by wwj40 with SMTP id 40so371736wwj.1
+        for <git@vger.kernel.org>; Mon, 19 Jul 2010 23:32:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=/YtZsy5kVtCndqAJhI3E7xhfWpdSnktE5sJCwlcWkR4=;
+        b=p8bjAlE2o1Wc6lq9x95sfEjZd2g4UzdtXwmR7qU9H4CVVHMcJHZFKcUiN1mq5SSKnm
+         TVvQHJ7C9KFH2WqLhLFgM39pgq34yxBl3WueIqSF6umJ3pIIJZW/rmt6byTteSifQdS4
+         GdFN9XFQd7I4rSbCvAvapQSbHOutiymCl+XRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=SY0b6TeqsCPZjCvvyyp+owUtLjOPExEUdTRqrE6ab0/NvCGfDSlvtAZDUNkVmSi3al
+         0NcZn7Xe/nbUZjJ6VcCSLgnHz+quTbOZYt3zg2l7SCbPJMWm9iqL2fFt3qH8SbZbY5hD
+         lURVuhadOwmyYqtotqp4ajev2Xl8bxx+HtWuc=
+Received: by 10.216.159.202 with SMTP id s52mr4768390wek.33.1279607523513;
+        Mon, 19 Jul 2010 23:32:03 -0700 (PDT)
+Received: from [192.168.0.129] (5acc3a9a.bb.sky.com [90.204.58.154])
+        by mx.google.com with ESMTPS id e8sm2653996wej.46.2010.07.19.23.32.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 19 Jul 2010 23:32:02 -0700 (PDT)
+In-Reply-To: <4C451272.8000802@workspacewhiz.com>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151305>
 
-On Tuesday 20 July 2010, Jonathan Nieder wrote:
-> Hi Ville,
->=20
-> Ville Skytt=E4 wrote:
-> > ---
->=20
-> If this does not end up needing a re-roll, would it be okay for
-> Junio (or whoever else picks up the patch) to forge your sign-off?
-> (See "Sign your work" in Documentation/SubmittingPatches for what I
-> mean.)
+On Mon, 2010-07-19 at 21:05 -0600, Joshua Jensen wrote:
+> For my sake, how is the previous tip the easiest-to-recover part of a 
+> deleted branch?  How do you go about finding the lost object?
+> 
+> Josh
 
-Sure, sorry for missing that point.  Ditto for the 2/2 patch I sent.
+git fsck | grep '^dangling commit' | while read dangling commit hash; do
+	git log -1 --format='%at %h %s' $hash
+done | sort -nr | less -FRSX
 
-Regarding the rest of your comments, I did not seek to rephrase any doc=
-s, just=20
-fixed some obvious spelling errors and made use of some terms and=20
-abbreviations etc more consistent across the docs.  I have no objection=
-s to=20
-your suggestions but then again they're a bit larger changes which are =
-out of=20
-scope for this patch as far as I'm concerned, and could e.g. be made=20
-separately afterwards.
+
+-- 
+-- Will
