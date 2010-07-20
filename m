@@ -1,79 +1,64 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] t/t3700: convert two uses of negation operator '!' to use test_must_fail
-Date: Tue, 20 Jul 2010 10:24:47 -0500
-Message-ID: <tMTpk3TmiYV54AYDiNJMBdnlXhSooJQQ1gRoAEsSwmcSwJ9ROgOpr75wpEQNx6_kZkqBtD71_QU@cipher.nrlssc.navy.mil>
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 20 17:26:18 2010
+From: Jared Hance <jaredhance@gmail.com>
+Subject: Re: unpack failed --- is my repos broken?
+Date: Tue, 20 Jul 2010 11:35:53 -0400
+Message-ID: <20100720153553.GA2931@localhost.localdomain>
+References: <4C45A7C5.1050601@llaisdy.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 20 17:36:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObEi1-000728-O5
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 17:26:18 +0200
+	id 1ObEra-0003Gg-UE
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 17:36:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384Ab0GTP0K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Jul 2010 11:26:10 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:39673 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932295Ab0GTP0J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Jul 2010 11:26:09 -0400
-Received: by mail.nrlssc.navy.mil id o6KFOvF5013872; Tue, 20 Jul 2010 10:24:58 -0500
-X-OriginalArrivalTime: 20 Jul 2010 15:24:57.0729 (UTC) FILETIME=[B6456710:01CB281F]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S932441Ab0GTPgB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 11:36:01 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:47705 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932383Ab0GTPgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 11:36:00 -0400
+Received: by eya25 with SMTP id 25so1318104eya.19
+        for <git@vger.kernel.org>; Tue, 20 Jul 2010 08:35:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=N0tdFjTOcf6SeC6s7ameCiKWFK/wMypx8WBeslZ0RYc=;
+        b=EyUU7LAhZ9yzaeIVEjvT0fdX2gKrPKkbjjyFqSYD2aBgcwvqxAB7c4d1HCo62O3oRt
+         /Jd7j0jteCxZORVOtNTszVXy5o2udBLX7HuIAC3Mn++HuztySK11pAiSD/EAwYAIuWbf
+         5WryKF0Hevu+IPXdmixak7G2Vz//E25nKdYts=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=C7e9MV3NwPoTPPPCXuDW65Qtho12LWUWDxp8sOf7ImR5/aksYnchRzMIPD66CjWvzU
+         7VnlfJVmWIxPPvuKr3Dcn9TN7yHxEgJs8ENTYOhfUkD/jgtbBLGwhETosZaQxTdQJm7P
+         Y+d86H07jdP6Pt3osiqkfuR8+FgRSw73SNhHM=
+Received: by 10.213.114.67 with SMTP id d3mr3971561ebq.73.1279640159520;
+        Tue, 20 Jul 2010 08:35:59 -0700 (PDT)
+Received: from localhost.localdomain (cpe-75-186-1-50.cinci.res.rr.com [75.186.1.50])
+        by mx.google.com with ESMTPS id g33sm28135937qcq.28.2010.07.20.08.35.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 20 Jul 2010 08:35:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4C45A7C5.1050601@llaisdy.com>
+User-Agent: Mutt/1.5.20 (2009-12-10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151317>
 
-From: Brandon Casey <drafnel@gmail.com>
+On Tue, Jul 20, 2010 at 02:42:29PM +0100, Ivan Uemlianin wrote:
+> Is smart-http not entirely reliable?  In which case what is the
+> preferred way to communicate remotely (we need to push as well as
+> pull; there are a very small number of active developers)?
 
-These two lines use the negation '!' operator to negate the result of a
-simple command.  Since these commands do not contain any pipes or other
-complexities, the test_must_fail function can be used and is preferred
-since it will additionally detect termination due to a signal.
-
-This was noticed because the second use of '!' does not include a space
-between the '!' and the opening parens.  Ksh interprets this as follows:
-
-   !(pattern-list)
-      Matches anything except one of the given patterns.
-
-Ksh performs a file glob using the pattern-list and then tries to execute
-the first file in the list.  If a space is added between the '!' and the
-open parens, then Ksh will not interpret it as a pattern list, but in this
-case, it is preferred to use test_must_fail, so lets do so.
-
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- t/t3700-add.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 47fbf53..d03495d 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -268,7 +268,7 @@ test_expect_success 'git add --dry-run of existing changed file' "
- 
- test_expect_success 'git add --dry-run of non-existing file' "
- 	echo ignored-file >>.gitignore &&
--	! (git add --dry-run track-this ignored-file >actual 2>&1) &&
-+	test_must_fail git add --dry-run track-this ignored-file >actual 2>&1 &&
- 	echo \"fatal: pathspec 'ignored-file' did not match any files\" | test_cmp - actual
- "
- 
-@@ -281,7 +281,7 @@ add 'track-this'
- EOF
- 
- test_expect_success 'git add --dry-run --ignore-missing of non-existing file' '
--	!(git add --dry-run --ignore-missing track-this ignored-file >actual 2>&1) &&
-+	test_must_fail git add --dry-run --ignore-missing track-this ignored-file >actual 2>&1 &&
- 	test_cmp expect actual
- '
- 
--- 
-1.6.6.2
+I'm not entirely sure why the error is occuring, but the preferred way
+to communicate is over SSH. You can use the git protocol for anonymous
+pulling (but not pushing).
