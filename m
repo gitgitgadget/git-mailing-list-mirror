@@ -1,76 +1,103 @@
-From: Peter Harris <git@peter.is-a-geek.org>
-Subject: Re: Run git from .bat file (Windows)
-Date: Tue, 20 Jul 2010 13:34:33 -0400
-Message-ID: <AANLkTik-Mk0pMKWHqzMXUcSzPexAQd2bTAPZF9Q2WKer@mail.gmail.com>
-References: <0vy6d6nmcc.fsf@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/4] git-shell-commands: Add a command to list bare repos
+Date: Tue, 20 Jul 2010 10:42:51 -0700
+Message-ID: <7vlj96m4mc.fsf@alter.siamese.dyndns.org>
+References: <1279602972-1264-1-git-send-email-gdb@mit.edu>
+ <1279602972-1264-3-git-send-email-gdb@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Markus Heller <hellerm2@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 20 19:34:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: j.sixt@viscovery.net, git@vger.kernel.org, avarab@gmail.com,
+	jrnieder@gmail.com
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Jul 20 19:43:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObGiK-0002UJ-2M
-	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 19:34:44 +0200
+	id 1ObGqd-0006GD-Ci
+	for gcvg-git-2@lo.gmane.org; Tue, 20 Jul 2010 19:43:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512Ab0GTRek convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Jul 2010 13:34:40 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:44499 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757285Ab0GTRei convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Jul 2010 13:34:38 -0400
-Received: by fxm14 with SMTP id 14so3012766fxm.19
-        for <git@vger.kernel.org>; Tue, 20 Jul 2010 10:34:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=HFIYRXSWL2Tz+ltCD7wI60ctfMu05dEXQKV+OREiiZ4=;
-        b=R4XT/quEhmakSOGFxVL1X1zAbB2rb3Fl6y6eRV2EebJb5RGV9qLc0bfZvuNPWN01EX
-         agcRtmFrDKWA1hrt3q4JL/m4AZTliMYBQA4zT12g4Q+VUxjU1+MW9LkXpd0kuB5k6aq4
-         /sdLh0qny8grK/eyU1QOh1W425SjEM6CXnHfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=aE6FRQmpDVZNSdEBb2fTOMhvv4psylRMflZFnFmZK6UJJa71eePW/EYincbbfDW1nv
-         7mxgXaKIpunZy8zcAAqgQWN8IaKAlcbMlhybVye+nQhSKWTZpY62FxWfYMg/eW/GFoso
-         S+iszDvjm/at/ii6G1pJwuJiC4sQOuzcFtKmY=
-Received: by 10.216.176.83 with SMTP id a61mr5629238wem.47.1279647273767; Tue, 
-	20 Jul 2010 10:34:33 -0700 (PDT)
-Received: by 10.216.160.85 with HTTP; Tue, 20 Jul 2010 10:34:33 -0700 (PDT)
-In-Reply-To: <0vy6d6nmcc.fsf@gmail.com>
-X-Google-Sender-Auth: MvG9D5j0kCk-LY3aMtHhBG3RLtA
+	id S1758472Ab0GTRnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Jul 2010 13:43:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40781 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751982Ab0GTRnK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Jul 2010 13:43:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DFFC2C6BBE;
+	Tue, 20 Jul 2010 13:43:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IwWIMIAtsYfu2hlcNQrAYpB2M7c=; b=GBrLad
+	Sc8rfWDdh9vR0Csz+jlfO+yNNRhSRcmkXVJ3jpp8P70YWM0xh3NIede6XWCBggV8
+	v50Tq7VItjMZ0iEZRlINE0pVamZIGhx7fw5LzStTkCX8noWi4bU7jNIWTgX2X09/
+	uq7yDTmVVLtlKhcF5i/f4YfJaN3dLY+kKnu6k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oAViaDOCpbWOq3k71tWBP36rZY6ze9JN
+	vRf1ZVzfCtDOZTLgEF0yBXoccXtVSQpIBqfX3XW7B3nybHw9TNiyE85ywMJg65at
+	ukUQ0DRr1G5MVB0MUjOzrRKAfJ020phEp0lwVym5dK5K98m7+wpUBzPT5jtAYkbE
+	BsOau+xOgnw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A5DF1C6BB9;
+	Tue, 20 Jul 2010 13:42:59 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71572C6BAD; Tue, 20 Jul
+ 2010 13:42:53 -0400 (EDT)
+In-Reply-To: <1279602972-1264-3-git-send-email-gdb@mit.edu> (Greg Brockman's
+ message of "Tue\, 20 Jul 2010 01\:16\:10 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3CE9C816-9426-11DF-8AA5-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151336>
 
-On Tue, Jul 20, 2010 at 12:34 PM, Markus Heller wrote:
-> git add .
-> git commit -a -m "Automated commit by org-git-sync.bat on %fvar%"
+Greg Brockman <gdb@MIT.EDU> writes:
 
-> The line "git add ." works, as I can see the additions when I type "g=
-it
-> status" after executing the script. =A0Committing doesn't work, howev=
-er:
-> "git log" shows that no commit was created.
+> Signed-off-by: Greg Brockman <gdb@mit.edu>
+> ---
+>  contrib/git-shell-commands/list |    5 +++++
+>  1 files changed, 5 insertions(+), 0 deletions(-)
+>  create mode 100755 contrib/git-shell-commands/list
 >
-> Any idea what's going on?
+> diff --git a/contrib/git-shell-commands/list b/contrib/git-shell-commands/list
+> new file mode 100755
+> index 0000000..cd8b15a
+> --- /dev/null
+> +++ b/contrib/git-shell-commands/list
+> @@ -0,0 +1,5 @@
+> +#!/bin/sh
+> +set -eu
+> +
+> +print_if_bare_repo='[ "$(git --git-dir="$1" rev-parse --is-bare-repository)" = true ] && echo "${1#./}"'
 
-git itself is wrapped by a batch file on Windows. You need to "call" it=
-=2E eg:
+That's a very long line you have here.  It might be better to do split the
+line perhaps like this for readability:
 
-call git add .
-call git commit ...
+print_if_bare_repo='
+	if "$(git --git-dir="$1" rev-parse --is-bare-repository)" = true
+        then
+	        printf "%s\n" "${1#./}"
+	fi
+'
 
-("call /?" for more details)
+It is unclear why it limits its listing only to bare repositories.  "It's
+my design decision" is a perfectly acceptable answer, but no matter what
+the reasoning is, it needs to be documented as a part of "How to use this"
+insn to the users.  A separate file README in contrib/git-shell-commands
+that reads like:
 
-Peter Harris
+	Any bare repository whose name ends with ".git" under your home
+	directory is visible by "list" extended command (no other git
+	repositories are visible).
+
+would probably be a good start.
+
+> +find -type d -name "*.git" -exec sh -c "$print_if_bare_repo" -- \{} \; -prune
+
+Also do you need "set -eu" at the beginning?  I don't see it serving a
+useful purpose (other than being a development aid, that is).
