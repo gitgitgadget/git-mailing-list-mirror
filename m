@@ -1,126 +1,155 @@
 From: Greg Brockman <gdb@MIT.EDU>
-Subject: [PATCH 3/3] Add sample commands for git-shell
-Date: Wed, 21 Jul 2010 11:15:55 -0400
-Message-ID: <1279725355-23016-4-git-send-email-gdb@mit.edu>
+Subject: [PATCH 2/3] Add interactive mode to git-shell for user-friendliness
+Date: Wed, 21 Jul 2010 11:15:54 -0400
+Message-ID: <1279725355-23016-3-git-send-email-gdb@mit.edu>
 References: <1279725355-23016-1-git-send-email-gdb@mit.edu>
 Cc: Greg Brockman <gdb@mit.edu>
 To: j.sixt@viscovery.net, gitster@pobox.com, avarab@gmail.com,
 	jrnieder@gmail.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 21 17:16:47 2010
+X-From: git-owner@vger.kernel.org Wed Jul 21 17:16:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Obb2M-0005U8-Ep
+	id 1Obb2L-0005U8-Sm
 	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 17:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753156Ab0GUPQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jul 2010 11:16:35 -0400
-Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:43022 "EHLO
-	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752742Ab0GUPQc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 11:16:32 -0400
-X-AuditID: 1209190f-b7b0aae000000a7d-77-4c470f529a48
-Received: from mailhub-auth-4.mit.edu (MAILHUB-AUTH-4.MIT.EDU [18.7.62.39])
-	by dmz-mailsec-scanner-4.mit.edu (Symantec Brightmail Gateway) with SMTP id 58.F1.02685.25F074C4; Wed, 21 Jul 2010 11:16:35 -0400 (EDT)
+	id S1752846Ab0GUPQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jul 2010 11:16:23 -0400
+Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:56930 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752742Ab0GUPQV (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 11:16:21 -0400
+X-AuditID: 12074422-b7bb6ae0000009fa-70-4c470f473e91
+Received: from mailhub-auth-1.mit.edu (MAILHUB-AUTH-1.MIT.EDU [18.9.21.35])
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id 37.39.02554.74F074C4; Wed, 21 Jul 2010 11:16:23 -0400 (EDT)
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o6LFGVBY005499;
-	Wed, 21 Jul 2010 11:16:31 -0400
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o6LFGKCe019125;
+	Wed, 21 Jul 2010 11:16:20 -0400
 Received: from localhost (dhcp-18-111-45-125.dyn.mit.edu [18.111.45.125])
 	(authenticated bits=0)
         (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6LFGTj8005879;
-	Wed, 21 Jul 2010 11:16:30 -0400 (EDT)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6LFGI5u005831;
+	Wed, 21 Jul 2010 11:16:19 -0400 (EDT)
 X-Mailer: git-send-email 1.7.0.4
 In-Reply-To: <1279725355-23016-1-git-send-email-gdb@mit.edu>
-X-Brightmail-Tracker: AAAAAA==
+X-Brightmail-Tracker: AAAAARVG5Hc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151400>
-
-Provide a 'list' command to view available bare repositories ending in
-.git and a 'help command to display usage.  Also add documentation in
-a README
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151401>
 
 Signed-off-by: Greg Brockman <gdb@mit.edu>
 ---
- contrib/git-shell-commands/README |   23 +++++++++++++++++++++++
- contrib/git-shell-commands/help   |   16 ++++++++++++++++
- contrib/git-shell-commands/list   |   10 ++++++++++
- 3 files changed, 49 insertions(+), 0 deletions(-)
- create mode 100644 contrib/git-shell-commands/README
- create mode 100755 contrib/git-shell-commands/help
- create mode 100755 contrib/git-shell-commands/list
+ shell.c |   75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 69 insertions(+), 6 deletions(-)
 
-diff --git a/contrib/git-shell-commands/README b/contrib/git-shell-commands/README
-new file mode 100644
-index 0000000..57d7a79
---- /dev/null
-+++ b/contrib/git-shell-commands/README
-@@ -0,0 +1,23 @@
-+Sample programs callable through git-shell.  Place a directory named
-+'git-shell-commands' in the home directory of a user whose shell is
-+git-shell.  Then anyone logging in as that user will be able to run
-+executables in the 'git-shell-commands' directory.
+diff --git a/shell.c b/shell.c
+index 34159c4..f839b53 100644
+--- a/shell.c
++++ b/shell.c
+@@ -2,8 +2,10 @@
+ #include "quote.h"
+ #include "exec_cmd.h"
+ #include "strbuf.h"
++#include "run-command.h"
+ 
+ #define COMMAND_DIR "git-shell-commands"
++#define HELP_COMMAND COMMAND_DIR "/help"
+ 
+ static int do_generic_cmd(const char *me, char *arg)
+ {
+@@ -50,6 +52,56 @@ static char *make_cmd(const char *prog)
+ 	return prefix;
+ }
+ 
++static void run_shell(void)
++{
++	int done = 0;
++	static const char *help_argv[] = { HELP_COMMAND, NULL };
++	/* Print help if enabled */
++	run_command_v_opt(help_argv, RUN_SILENT_EXEC_FAILURE);
 +
-+Note that git-shell assumes its CWD is the user's home directory, so
-+trying to 'su' to a user whose shell is git-shell would result in
-+running commands out of "$(cwd)/git-shell-commands", which may not be
-+desired behavior.
++	do {
++		struct strbuf line = STRBUF_INIT;
++		const char *prog;
++		char *full_cmd;
++		char *rawargs;
++		const char **argv;
++		int code;
 +
-+Provided commands:
++		fprintf(stderr, "git> ");
++		if (strbuf_getline(&line, stdin, '\n') == EOF) {
++			fprintf(stderr, "\n");
++			strbuf_release(&line);
++			break;
++		}
++		strbuf_trim(&line);
++		rawargs = strbuf_detach(&line, NULL);
++		if (split_cmdline(rawargs, &argv) == -1) {
++			free(rawargs);
++			continue;
++		}
 +
-+help: Prints out the names of available commands.  When run
-+interactively, git-shell will automatically run 'help' on startup,
-+provided it exists.
++		prog = argv[0];
++		if (!strcmp(prog, "")) {
++		} else if (!strcmp(prog, "quit") || !strcmp(prog, "logout") ||
++			   !strcmp(prog, "exit") || !strcmp(prog, "bye")) {
++			done = 1;
++		} else if (is_valid_cmd_name(prog)) {
++			full_cmd = make_cmd(prog);
++			argv[0] = full_cmd;
++			code = run_command_v_opt(argv, RUN_SILENT_EXEC_FAILURE);
++			if (code == -1 && errno == ENOENT) {
++				fprintf(stderr, "unrecognized command '%s'\n", prog);
++			}
++			free(full_cmd);
++		} else {
++			fprintf(stderr, "invalid command format '%s'\n", prog);
++		}
 +
-+list: Displays any bare repository whose name ends with ".git" under
-+user's home directory.  No other git repositories are visible,
-+although they might be clonable through git-shell.  'list' is designed
-+to minimize the number of calls to git that must be made in finding
-+available repositories; if your setup has additional repositories that
-+should be user-discoverable, you may wish to modify 'list'
-+accordingly.
-diff --git a/contrib/git-shell-commands/help b/contrib/git-shell-commands/help
-new file mode 100755
-index 0000000..a43fcd6
---- /dev/null
-+++ b/contrib/git-shell-commands/help
-@@ -0,0 +1,16 @@
-+#!/bin/sh
++		free(argv);
++		free(rawargs);
++	} while (!done);
++}
 +
-+if tty -s; then
-+    echo "Run 'help' for help, or 'exit' to leave.  Available commands:"
-+else
-+    echo "Run 'help' for help.  Available commands:"
-+fi
-+
-+cd "$(dirname "$0")"
-+
-+for cmd in *; do
-+    case "$cmd" in
-+	help) ;;
-+	*) [ -f "$cmd" ] && [ -x "$cmd" ] && echo "$cmd" ;;
-+    esac
-+done
-diff --git a/contrib/git-shell-commands/list b/contrib/git-shell-commands/list
-new file mode 100755
-index 0000000..4654535
---- /dev/null
-+++ b/contrib/git-shell-commands/list
-@@ -0,0 +1,10 @@
-+#!/bin/sh
-+
-+print_if_bare_repo='
-+       if "$(git --git-dir="$1" rev-parse --is-bare-repository)" = true
-+       then
-+               printf "%s\n" "${1#./}"
-+       fi
-+'
-+
-+find -type d -name "*.git" -exec sh -c "$print_if_bare_repo" -- \{} \; -prune
+ static struct commands {
+ 	const char *name;
+ 	int (*exec)(const char *me, char *arg);
+@@ -83,15 +135,26 @@ int main(int argc, char **argv)
+ 	/*
+ 	 * Special hack to pretend to be a CVS server
+ 	 */
+-	if (argc == 2 && !strcmp(argv[1], "cvs server"))
++	if (argc == 2 && !strcmp(argv[1], "cvs server")) {
+ 		argv--;
+-
++	}
+ 	/*
+-	 * We do not accept anything but "-c" followed by "cmd arg",
+-	 * where "cmd" is a very limited subset of git commands.
++	 * Allow the user to run an interactive shell
+ 	 */
+-	else if (argc != 3 || strcmp(argv[1], "-c"))
+-		die("What do you think I am? A shell?");
++	else if (argc == 1) {
++		if (access(COMMAND_DIR, R_OK | X_OK) == -1)
++			die("Sorry, the interactive git-shell is not enabled");
++		run_shell();
++		exit(0);
++	}
++	/*
++	 * We do not accept any other modes except "-c" followed by
++	 * "cmd arg", where "cmd" is a very limited subset of git
++	 * commands or a command in the COMMAND_DIR
++	 */
++	else if (argc != 3 || strcmp(argv[1], "-c")) {
++		die("Run with no arguments or with -c cmd");
++	}
+ 
+ 	prog = xstrdup(argv[2]);
+ 	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
 -- 
 1.7.0.4
