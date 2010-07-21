@@ -1,75 +1,82 @@
-From: =?UTF-8?q?Ville=20Skytt=C3=A4?= <ville.skytta@iki.fi>
-Subject: [PATCH v2] Improve "move the whole tree into a subdirectory" example.
-Date: Wed, 21 Jul 2010 08:48:32 +0300
-Message-ID: <1279691312-31364-1-git-send-email-ville.skytta@iki.fi>
-References: <7vk4opjtdo.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Can I enforce required approval on some files
+Date: Wed, 21 Jul 2010 09:51:22 +0200
+Message-ID: <201007210951.25150.jnareb@gmail.com>
+References: <AANLkTinQI9eBnwjzPhYHMM8XZ0ODfHJ1qiZJrNWQWUno@mail.gmail.com> <m36309n75a.fsf@localhost.localdomain> <AANLkTilWzSU9Uh0QT5CcauXiiBKtkG37To57s6zUxzDK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 21 07:48:42 2010
+Cc: Dominik Gront <dgront@gmail.com>, git@vger.kernel.org
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 21 09:51:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObSAa-0007kT-TJ
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 07:48:41 +0200
+	id 1ObU5g-0004WC-2H
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 09:51:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933369Ab0GUFsg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 01:48:36 -0400
-Received: from filtteri6.pp.htv.fi ([213.243.153.189]:48566 "EHLO
-	filtteri6.pp.htv.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932940Ab0GUFse (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jul 2010 01:48:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by filtteri6.pp.htv.fi (Postfix) with ESMTP id E6F6056E17C
-	for <git@vger.kernel.org>; Wed, 21 Jul 2010 08:48:32 +0300 (EEST)
-X-Virus-Scanned: Debian amavisd-new at pp.htv.fi
-Received: from smtp6.welho.com ([213.243.153.40])
-	by localhost (filtteri6.pp.htv.fi [213.243.153.189]) (amavisd-new, port 10024)
-	with ESMTP id Q5lNF7XYJqlp for <git@vger.kernel.org>;
-	Wed, 21 Jul 2010 08:48:32 +0300 (EEST)
-Received: from viper.bobcat.mine.nu.bobcat.mine.nu (cs181085020.pp.htv.fi [82.181.85.20])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by smtp6.welho.com (Postfix) with ESMTPS id 90E335BC003
-	for <git@vger.kernel.org>; Wed, 21 Jul 2010 08:48:32 +0300 (EEST)
-X-Mailer: git-send-email 1.7.1.1
-In-Reply-To: <7vk4opjtdo.fsf@alter.siamese.dyndns.org>
+	id S1762783Ab0GUHvi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 03:51:38 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34577 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755065Ab0GUHvh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jul 2010 03:51:37 -0400
+Received: by fxm14 with SMTP id 14so3311291fxm.19
+        for <git@vger.kernel.org>; Wed, 21 Jul 2010 00:51:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=d266pGMLED9Lw+QoI8sLH/wJh/BRbTtVMwBJFqBnXTk=;
+        b=biN5nKxreC4MMau/qy1XsxaeCUuWLQkVcJ52lIw/G4Rwnv5bjXn0441HOvvv5ULIqr
+         nhAFpQiDsDXVVcE3FJDRG1z1exTz0BpNokcK4/YrPc5waG6WNoK0KD6sMavR28YnBc6A
+         lUaCFmnjqtHoiFiH/dHqbLtnlRSX9aAFLcC9U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=rM4twD0Of3rmmEpAcu/CREWq7iF/l8ZHCgqnz1FMWn+9vE8xk3GC8tPyH91eVb3GWu
+         MZAOhpckEfGzfPBNud7Jc4Dort6gL5051jkTQoyGcvxFcDi6+2t6xKP7tflwe0O1xBGM
+         vJuWljMc8vrp2vl4sWY0d6FdgJsMGOrywH6io=
+Received: by 10.86.70.16 with SMTP id s16mr4866818fga.26.1279698696574;
+        Wed, 21 Jul 2010 00:51:36 -0700 (PDT)
+Received: from [192.168.1.13] (aeho173.neoplus.adsl.tpnet.pl [79.186.196.173])
+        by mx.google.com with ESMTPS id r8sm2784711faq.34.2010.07.21.00.51.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 21 Jul 2010 00:51:35 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTilWzSU9Uh0QT5CcauXiiBKtkG37To57s6zUxzDK@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151391>
 
-Using "|" as the sed substitution delimiter is less likely to clash
-with desired subdirectory names than "-".
+On Wed, 21 Jul 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Tue, Jul 20, 2010 at 22:03, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>=20
+> > Besides solution mentioned by others, namely integration repository
+> > with moderator, you can also use patch/commit code review tool such=
+ as
+> > Gerrit (http://code.google.com/p/gerrit/), equivalent of Rietveld f=
+or
+> > Subversion, or Mondrian for Perforce.
+>=20
+> There's also the low-tech solution of just telling people to submit
+> again until their patches don't suck, it works for git.git, and is
+> attainable when you're not doing a centralized tool.
 
-Signed-off-by: Ville Skytt=C3=A4 <ville.skytta@iki.fi>
----
- Documentation/git-filter-branch.txt |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+That's what I meant by "besides [...] integration repository with
+moderator", moderator who reviews patches or pull requests, and accepts
+into integration repository or rejects them.
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-fi=
-lter-branch.txt
-index 020028c..954d195 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -354,11 +354,12 @@ git filter-branch ... C..H --not D
- git filter-branch ... D..H --not C
- ----------------------------------------
-=20
--To move the whole tree into a subdirectory, or remove it from there:
-+To move the whole tree into a subdirectory named newsubdir, or remove
-+it from there:
-=20
- ---------------------------------------------------------------
- git filter-branch --index-filter \
--	'git ls-files -s | sed "s-\t\"*-&newsubdir/-" |
-+	'git ls-files -s | sed "s|\t\"*|&newsubdir/|" |
- 		GIT_INDEX_FILE=3D$GIT_INDEX_FILE.new \
- 			git update-index --index-info &&
- 	 mv $GIT_INDEX_FILE.new $GIT_INDEX_FILE' HEAD
 --=20
-1.7.1.1
+Jakub Narebski
+Poland
