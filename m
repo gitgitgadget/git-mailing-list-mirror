@@ -1,102 +1,104 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: [PATCH] Fix rebase with file move when diff.renames = copies
-Date: Wed, 21 Jul 2010 12:58:23 -0700
-Message-ID: <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net>
-References: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	"David D. Kilzer" <ddkilzer@kilzer.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 21 22:10:10 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Wed, 21 Jul 2010 20:36:04 +0000
+Message-ID: <AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com>
+	<AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com>
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Bryan Larsen <bryan.larsen@gmail.com>, git <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 21 22:36:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObfcH-0006cu-So
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 22:10:10 +0200
+	id 1Obg1X-0001S3-4h
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 22:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752230Ab0GUUKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jul 2010 16:10:00 -0400
-Received: from mail-out3.apple.com ([17.254.13.22]:55981 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751035Ab0GUUKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jul 2010 16:10:00 -0400
-X-Greylist: delayed 676 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 Jul 2010 16:10:00 EDT
-Received: from relay16.apple.com (relay16.apple.com [17.128.113.55])
-	by mail-out3.apple.com (Postfix) with ESMTP id 40C0A9ECC31D;
-	Wed, 21 Jul 2010 12:58:43 -0700 (PDT)
-X-AuditID: 11807137-b7b43ae000004f8e-db-4c4751730354
-Received: from ddkilzer.apple.com (ddkilzer.apple.com [17.202.32.26])
-	by relay16.apple.com (Apple SCV relay) with SMTP id D0.5D.20366.371574C4; Wed, 21 Jul 2010 12:58:43 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org>
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1752540Ab0GUUgJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 16:36:09 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64178 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803Ab0GUUgG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 16:36:06 -0400
+Received: by fxm14 with SMTP id 14so3896558fxm.19
+        for <git@vger.kernel.org>; Wed, 21 Jul 2010 13:36:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xgKT90wlyQJQBtKilN4y9WCOLr1k0GCVuxlMxPUTtUI=;
+        b=Y/72QEfBQJ97xgMk2g+Brei8cet7TCnakOZjRIl3tX9kXMXfEw7PvRYIwtxEiDoBNg
+         539zEToccTiNiejefU5JDLtyuVSVwIqfPDV9sZczlLnU4WbllbCazP9TPRcxRiO1PYK1
+         4BTKyLSomMSgWtX4GqXuGNck4G3JhRBMUjPqs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EcHbpwWjEdU4GDtcC2wXVyFha6z+KGiTjOa3QMKIwxWR1C/V3WR/kHRyIlvZORZb6B
+         A+6CnkSaxwhIZgM4hti36r3hkWWD+UPNxxy8AvtNmeTiYoyNZDh3BvJOinr/+jC2L7Ec
+         1saN/7SWB4MKu8BkEWqvJGhJqnqxIH6Wd4dNc=
+Received: by 10.223.107.140 with SMTP id b12mr990852fap.18.1279744564221; Wed, 
+	21 Jul 2010 13:36:04 -0700 (PDT)
+Received: by 10.223.119.17 with HTTP; Wed, 21 Jul 2010 13:36:04 -0700 (PDT)
+In-Reply-To: <AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151417>
 
-With diff.renames = copies, a rebase with a file move will fail with
-the following error:
+On Wed, Jul 21, 2010 at 19:56, Avery Pennarun <apenwarr@gmail.com> wrot=
+e:
 
-    fatal: mode change for <file>, which is not in current HEAD
-    Repository lacks necessary blobs to fall back on 3-way merge.
-    Cannot fall back to three-way merge.
-    Patch failed at 0001.
+> No amount of bugfixing in git submodule can fix this workflow, becaus=
+e
+> it's not a result of bugs. =C2=A0(The bugs, particularly the
+> disconnected-by-default HEADs on submodule checkouts, do make it a bi=
+t
+> worse :( ) =C2=A0It would require a fundamental redesign to make this=
+ work
+> nicely with submodules.
 
-The bug is that git rebase does not disable diff.renames when it runs
-format-patch internally to feed into "am -3".  The fix is simply to
-include a --no-renames argument to format-patch to override any local
-diff.renames setting.
+I think most of those can be fixed, actually. The only requirement
+that the git plumbing imposes on git-submodules is that a "commit"
+entry exist in your tree, the rest is just (ugly plumbing).
 
-Fix by Junio C Hamano.  Test case by David D. Kilzer.
+Thus, we could:
 
-Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
----
- git-rebase.sh     |    2 +-
- t/t3400-rebase.sh |   17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletions(-)
+   * Hack git-submodule (or its replacement) to check import the tree
+     that contains that "commit" into one central .git
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 6ec155c..0718caf 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -514,7 +514,7 @@ fi
- if test -z "$do_merge"
- then
- 	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
--		$root_flag "$revisions" |
-+		--no-renames $root_flag "$revisions" |
- 	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
- 	move_to_original_branch
- 	ret=$?
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 4e6a44b..6d2ec91 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -155,4 +155,21 @@ test_expect_success 'Rebase a commit that sprinkles CRs in' '
- 	git diff --exit-code file-with-cr:CR HEAD:CR
- '
- 
-+test_expect_success 'rebase a single file move with diff.renames = copies' '
-+     git config diff.renames copies &&
-+     git checkout master &&
-+     echo 1 > Y &&
-+     git add Y &&
-+     test_tick &&
-+     git commit -m "prepare file move" &&
-+     git checkout -b filemove HEAD^ &&
-+     echo 1 > Y &&
-+     git add Y &&
-+     mkdir D &&
-+     git mv A D/A &&
-+     test_tick &&
-+     git commit -m filemove &&
-+     GIT_TRACE=1 git rebase master
-+'
-+
- test_done
--- 
-1.7.1
+   * Fix git status / git commit so that you could commit into
+     submodules, i.e.:
+
+     for each submodule in this-commit:
+         chdir $submodule && commit
+     done && cd $root && commit -m"bumping sumbodules"
+
+   * Make git-push push the submodule contents and the
+     superprojects. You'd just need to have commit access to the url
+     listed in .gitmodules.
+
+What's missing from that (which would be nice) is the ability to check
+out a subdirectory from another repository. That could (I think) be
+done by just adding a normal "tree" entry, and then specifying that
+that tree can be found in git://... instead of the main tree.
+
+> If we can get some kind of consensus in principle that git-subtree is
+> a good idea to merge into git core, I can prepare some patches and we
+> can talk about the details.
+
+=46rom having looked at it briefly it looks very nice. But it looks to
+me as if the main differences between git-submodule and git-subtree
+are in the porcelain, not the plumbing.
+
+It would be a lot less confusing to users of Git in the long term if
+we would at least try to unify these two approaches instead of having
+two mutually incompatible ways of doing essentially the same thing.
