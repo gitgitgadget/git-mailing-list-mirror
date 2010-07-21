@@ -1,78 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Handling multiple parallel versions.
-Date: Wed, 21 Jul 2010 12:09:38 -0500
-Message-ID: <20100721170938.GA14177@burratino>
-References: <4C471223.9050303@ianhobson.co.uk>
+From: Bryan Larsen <bryan.larsen@gmail.com>
+Subject: Avery Pennarun's git-subtree?
+Date: Wed, 21 Jul 2010 13:15:52 -0400
+Message-ID: <4C472B48.8050101@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ian Hobson <ian@ianhobson.co.uk>
-X-From: git-owner@vger.kernel.org Wed Jul 21 19:10:50 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 21 19:16:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Obcoj-0001g5-Jc
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 19:10:49 +0200
+	id 1Obcu1-0004Gs-8P
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 19:16:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751875Ab0GURKo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 13:10:44 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:64438 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986Ab0GURKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jul 2010 13:10:43 -0400
-Received: by wwf26 with SMTP id 26so3297631wwf.1
-        for <git@vger.kernel.org>; Wed, 21 Jul 2010 10:10:41 -0700 (PDT)
+	id S1753450Ab0GURQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jul 2010 13:16:11 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:60354 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752675Ab0GURQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jul 2010 13:16:08 -0400
+Received: by gwj18 with SMTP id 18so3564536gwj.19
+        for <git@vger.kernel.org>; Wed, 21 Jul 2010 10:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=xyk+WrBhRlHISE60KHPnx/G4VTPVcY/G2/Powk1XvgY=;
-        b=q1GGfWgHPpuwIbWlUPSWW0KBH92uKBt9DlP6pQMyleWQ6gxt2eo9p0NJBISaA+dfZS
-         4OB0ieDo3E5BojS/0kXcoTSMcyw201LKquwu3KTWB2JOL0cY87FEXBmU2S93plQLVMvG
-         n/aMENFtkW3r6aKpqojyVAmfoQlvkE8x7QpJc=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=O028mjieXFGQG/KQOlyFlUUXOYUgm/IopPbcupxTnPo=;
+        b=kmkZ4oS0QW2CURGx9fD4VWkQbwsx5shXcy6kkejyQGmDiN563Y0nUS2Sg9oXcSbPEU
+         din89yamGUrgHmHM6sW8JX2lOiFpynFUCXuNogWFT0Nyj/Lq8t3ima91kXgOKlSylWIE
+         HqCp5Gpn/MITi4dxD60Wd9rKdpdlo0+qIby34=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=awGvskVbtfgBb/7mDFphbL7OCjd2qBSU9EQZOCxObUqgR+bvgzx9Q5yKznmxww3IZq
-         WvmX9Tgmx5UEclGq3iCpTA90OSSmfO9mS8GEE9tuyd4PG/vyR8xBdvIpoNL1BMn+HZux
-         pZt6+JHMuiyjXBvoIRF/DBAJeHAS8v0fiHy7U=
-Received: by 10.227.157.17 with SMTP id z17mr460229wbw.122.1279732241061;
-        Wed, 21 Jul 2010 10:10:41 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id p45sm3528579weq.45.2010.07.21.10.10.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 21 Jul 2010 10:10:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4C471223.9050303@ianhobson.co.uk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=E8KMRGptixx6yYkPx2r8atrtgLYwA+0j5uhBzY/qyvUAGt8if2Nlx7qu8WlfyFnPSz
+         icp00758QAfInVNj2A+OHoAI36ckEgx+/kFcu23Zwa251WKjkxSkqupHxBoGrnplShqP
+         OR/Lyrjed+ViarDW50WTq5+jTmabRps+I1P9w=
+Received: by 10.90.78.8 with SMTP id a8mr1418208agb.8.1279732560942;
+        Wed, 21 Jul 2010 10:16:00 -0700 (PDT)
+Received: from [172.50.10.17] ([72.1.195.8])
+        by mx.google.com with ESMTPS id e8sm28945554ibb.8.2010.07.21.10.15.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 21 Jul 2010 10:15:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151408>
 
-Ian Hobson wrote:
+I've been using Avery Pennarun's git-subtree 
+(http://github.com/apenwarr/git-subtree) for a while now and have been 
+finding it very useful and problem-free.
 
-> So this solution is NOT working for maintaining parallel versions.
-[...]
-> re-applying the differences between each version (they are a set
-> of images and a config file).
+Git submodules have been particularly problematic for me on a project 
+which contains submodules which contain submodules.  git-subtree "just 
+works", without any futzing.
 
-Okay, now that I=E2=80=99ve gotten that rebasing rant out of my system:
+We've also had problems with less git savvy users dropping patches 
+because they've occurred inside of a module.
 
-I suspect the best thing would be to track the branding and
-configuration file separately from the main source tree.  See
+It would be really nice if git-subtree became an part of git.    Avery 
+has submitted git-subtree in the past and has indicated a willingness to 
+do so again if there was a good chance of acceptance.
 
-http://thread.gmane.org/gmane.comp.version-control.git/146084/focus=3D1=
-46097
+Avery's announcment of v0.3 is also informative: 
+http://kerneltrap.org/mailarchive/git/2010/2/4/22366
 
-for hints.
-
-(sorry for the noise)
-Jonathan
+thank you,
+Bryan
