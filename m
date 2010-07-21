@@ -1,71 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix rebase with file move when diff.renames = copies
-Date: Wed, 21 Jul 2010 14:54:18 -0700
-Message-ID: <7vpqygijqt.fsf@alter.siamese.dyndns.org>
-References: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org>
- <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net>
+From: John Dlugosz <JDlugosz@TradeStation.com>
+Subject: RE: CRLF behavior
+Date: Wed, 21 Jul 2010 18:00:01 -0400
+Message-ID: <1A9EA7E081C3FE46A0F446FFB66D10EB93991B@FL01EXMB01.trad.tradestation.com>
+References: <1A9EA7E081C3FE46A0F446FFB66D10EB9398F1@FL01EXMB01.trad.tradestation.com>
+ <AANLkTil5hUWwSXcz9T7cgeU_LwYtx8Nio7lUaUebJ5YM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: "David D. Kilzer" <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Wed Jul 21 23:54:37 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Ben Martin <BMartin@TradeStation.com>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 21 23:59:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObhFM-0003LD-TB
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 23:54:37 +0200
+	id 1ObhK8-0005SG-BP
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 23:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758747Ab0GUVya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jul 2010 17:54:30 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54268 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756832Ab0GUVy3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jul 2010 17:54:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2708EC6E8A;
-	Wed, 21 Jul 2010 17:54:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YZI0kh2squOVfGTeYa0BZx/J1Vw=; b=p6Fq+L
-	iqsjgtDhrij6IXfXN32yCp1gS1PkpEfoRQkd+eQqDvPVo2O3Ng1MARZh7LmHxJxH
-	ILwXx2ATbQ5hiWy4HoB74V4PopAgdYPG/lAS/0Xvvnhf2nBUHz8OggZBKQ6KLBqf
-	Ct382o6XtngSccmIG/vOMQNoeZdQ0J+utW4qg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kQ/1NriIMXJUDxd6MOrsZ0MGw2Xln+A0
-	OexONIORdaGblxO3EqJuKxWc0Ba06nLU7rH6mrlnsMrLI6dFMFQsVB0cKrqvdRDz
-	gGX6RisrWEP/No1G0Kducu9k6o/36DL60x6yQsPzH1Mf5c3v9Rp6gPvfwzvhue1s
-	pTozhVadLyA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1A04C6E85;
-	Wed, 21 Jul 2010 17:54:24 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8DBAAC6E84; Wed, 21 Jul
- 2010 17:54:20 -0400 (EDT)
-In-Reply-To: <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net> (David
- D. Kilzer's message of "Wed\, 21 Jul 2010 12\:58\:23 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 86DB245A-9512-11DF-89E0-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757186Ab0GUV71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jul 2010 17:59:27 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:53196 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758751Ab0GUV71 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 17:59:27 -0400
+X-ASG-Debug-ID: 1279749558-34bf972f0001-QuoKaX
+Received: from FL01EXCAHT01.trad.tradestation.com (fl01excaht01.trad.tradestation.com [10.4.0.166]) by mail2.tradestation.com with ESMTP id D1EGCYZ4cVD1QlYH (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Wed, 21 Jul 2010 17:59:18 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
+ FL01EXCAHT01.trad.tradestation.com ([::1]) with mapi; Wed, 21 Jul 2010
+ 17:59:17 -0400
+X-Barracuda-BBL-IP: ::1
+X-Barracuda-RBL-IP: ::1
+X-ASG-Orig-Subj: RE: CRLF behavior
+Thread-Topic: CRLF behavior
+Thread-Index: AcspGrM3vT7clNceT4yoHNk1rQd1/AAAp0zQ
+In-Reply-To: <AANLkTil5hUWwSXcz9T7cgeU_LwYtx8Nio7lUaUebJ5YM@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-Barracuda-Connect: fl01excaht01.trad.tradestation.com[10.4.0.166]
+X-Barracuda-Start-Time: 1279749558
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151426>
 
-"David D. Kilzer" <ddkilzer@kilzer.net> writes:
+> > I'm running MSYSgit on Windows, and have no mention of any kind of
 
-> The bug is that git rebase does not disable diff.renames when it runs
-> format-patch internally to feed into "am -3".  The fix is simply to
-> include a --no-renames argument to format-patch to override any local
-> diff.renames setting.
->
-> Fix by Junio C Hamano.  Test case by David D. Kilzer.
->
-> Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
+> crlf conversion in the config files.
 
-Hmm, I actully do not recall doing this patch, even though I think what it
-does probably makes sense.
+> > Running git config --list shows nothing that would suggest any such
+
+> setting.
+
+> 
+
+> Try 'git config --global --list'
+
+> 
+
+> Avery
+
+
+
+Running from the Windows console window, I get an error about HOME with --global.  From the "git bash here" prompt, doing 'git config --list' by itself shows more settings, including autocrlf=true.  IOW, it finds the global settings and merges them.
+
+
+
+So, perhaps sometimes git sees the setting and sometimes it doesn't?  Doing 'checkout' from the command line might behave differently from git gui or some other Windows extension.
+
+
+
+I don't know how msysgit called from some random process is supposed to set up environment variables for it?  I would think that the UNIX-like $HOME, which shows as some translated cygwin path from the git bash shell, should be set up automatically based on the Windows "special folders" as part of the MSYS stuff.
+
+
+
+The "git gui" program, which is actually wish.exe, appears to have been invoked as:
+
+	"C:\Program Files (x86)\Git\bin\wish.exe"  "C:\Program Files (x86)\Git\libexec\git-core\git-gui" "--working-dir" "D:\work\ORCAL\SCM\Dev"
+
+
+
+Is there a way to tell from within git-gui or kgit whether it is finding that settings file?  I think that git-gui calls git.exe to do the work, just like I can call directly and presumably other extensions and tools do.
+
+
+
+Is there a way to tell what's "really" in the repository, for a commit that pre-dates any trouble?
+
+
+
+--John
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
