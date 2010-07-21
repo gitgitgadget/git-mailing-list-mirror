@@ -1,67 +1,56 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] git-remote-svn: Week 12
-Date: Wed, 21 Jul 2010 18:01:42 +0530
-Message-ID: <20100721123142.GA24156@kytes>
+From: Daniel Shahaf <d.s@daniel.shahaf.name>
+Subject: Re: [PATCH v2] Add svnrdump
+Date: Wed, 21 Jul 2010 16:29:29 +0300
+Message-ID: <20100721132929.GA508@daniel3.local>
+References: <20100709142910.GB20383@debian> <20100713201105.GN13310@ted.stsp.name> <20100715190220.GI22574@debian> <20100715192321.GA722@ted.stsp.name> <20100721114610.GC15903@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
+Cc: Stefan Sperling <stsp@elego.de>,
+	"dev@subversion.apache.org" <dev@subversion.apache.org>,
+	Bert Huijben <rhuijben@collab.net>,
+	Will Palmer <wmpalmer@gmail.com>,
 	David Michael Barr <david.barr@cordelta.com>,
-	Stefan Sperling <stsp@elego.de>,
-	Daniel Shahaf <d.s@daniel.shahaf.name>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 21 14:33:49 2010
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 21 15:30:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObYUd-0001F0-UI
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 14:33:48 +0200
+	id 1ObZNf-0004qd-HK
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 15:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005Ab0GUMdn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jul 2010 08:33:43 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:52522 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305Ab0GUMdm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Jul 2010 08:33:42 -0400
-Received: by pzk26 with SMTP id 26so2055985pzk.19
-        for <git@vger.kernel.org>; Wed, 21 Jul 2010 05:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=gjWWcXMWmg8q1u1/XSr0a49rnr9g/oqjfmEYC246LSA=;
-        b=TExv5ls7RsbmZycbAE+xLRuf2/M+QOhVr8n/FF182WWTnrIHCA2+9+ma7UlB5HHOdh
-         e8CPTdqm6VRWbUdoPIqFTjpG3+Zpf63cwvbaRykfc/PLITFMzAld2qnah1ucDr+ruMcc
-         SfVlk7Hne9w+Y6cUtVsee1w0WevMQVg6RrvUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=BYGl0V9/trjgH6d8a0c7nIAyISSVAWNN4ZGs+k+qivh7X/OGYKH0Eso28AAZd41ck1
-         WPLabCHgqzQy1OQQ/6I5hqlxnM3GhQz+iAq39mPl3Qj3VZOK8aLunoIQvKbZGduqO9ao
-         BwulNHWN4tH/eBSfD0kY8F3GvSoVunImrny/A=
-Received: by 10.142.166.6 with SMTP id o6mr127401wfe.75.1279715621338;
-        Wed, 21 Jul 2010 05:33:41 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id c38sm1866469rvf.17.2010.07.21.05.33.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 21 Jul 2010 05:33:40 -0700 (PDT)
+	id S1756924Ab0GUNab (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jul 2010 09:30:31 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35992 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753405Ab0GUNaa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 09:30:30 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 572AB16EE26;
+	Wed, 21 Jul 2010 09:30:30 -0400 (EDT)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 21 Jul 2010 09:30:30 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=smtpout; bh=HBMOQfkn9wngHo0yucZgz33FIj4=; b=OwcGn6xvuk93DF6F2GwLb3mxaNEDDAOn0qjMofW4+HRKaFmn/htzI0TFqbQixlFCGxYLOOo9tc7BVDf600Ecjtfu5uT+3ybu4zQzWPYAz5sQrN8ADld8CNwzgm6eNep1DsqpeRrLg6j+3wl/4dGoCPS/B6O9yjKhjfSYZ+baCJk=
+X-Sasl-enc: oEBPY0yNkrZ6vhzI8NW+mKOuVIDegX7EMAg6V2UcyTA68RNwIthNSmj4+EjzZQ 1279719029
+Received: from daniel3.local (bzq-79-179-3-226.red.bezeqint.net [79.179.3.226])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id E9879488BA;
+	Wed, 21 Jul 2010 09:30:26 -0400 (EDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100721114610.GC15903@kytes>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151396>
 
-Hi,
+Ramkumar Ramachandra wrote on Wed, Jul 21, 2010 at 17:16:10 +0530:
+> I'm still writing a unittest in Python, although I'm still trying to figure
+> out how to test it without using that ugly awk query to compare it against
+> the `svnadmin dump` output.
 
-I returned to India a few days ago and got a lot of administrative
-work out of the way. I also managed to become a little more familiar
-with Subversion and committed svnrdump with some improvements to
-trunk. Now I'll start focusing on finishing the dumpfilev3 parser so
-that I can plug into svn-fe.
-
--- Ram
+Have a look at svnsync_tests.py and svntest/verify.py.
