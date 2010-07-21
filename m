@@ -1,105 +1,104 @@
-From: Ian Hobson <ian@ianhobson.co.uk>
-Subject: Handling multiple parallel versions.
-Date: Wed, 21 Jul 2010 16:28:35 +0100
-Message-ID: <4C471223.9050303@ianhobson.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Handling multiple parallel versions.
+Date: Wed, 21 Jul 2010 11:59:52 -0500
+Message-ID: <20100721165952.GA14144@burratino>
+References: <4C471223.9050303@ianhobson.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 21 18:50:04 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ian Hobson <ian@ianhobson.co.uk>
+X-From: git-owner@vger.kernel.org Wed Jul 21 19:01:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObcUa-0000Cc-DK
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 18:50:00 +0200
+	id 1ObcfK-0005lW-1L
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 19:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251Ab0GUQty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jul 2010 12:49:54 -0400
-Received: from queueout02-winn.ispmail.ntl.com ([81.103.221.56]:29074 "EHLO
-	queueout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751050Ab0GUQty (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 12:49:54 -0400
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100721152855.MFIE3192.mtaout02-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>
-          for <git@vger.kernel.org>; Wed, 21 Jul 2010 16:28:55 +0100
-Received: from jupiter.ianhobson.co.uk ([86.12.69.89])
-          by aamtaout04-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100721152855.QPIP1593.aamtaout04-winn.ispmail.ntl.com@jupiter.ianhobson.co.uk>
-          for <git@vger.kernel.org>; Wed, 21 Jul 2010 16:28:55 +0100
-Received: (qmail 15735 invoked by uid 453); 21 Jul 2010 15:28:42 -0000
-X-Virus-Checked: Checked by ClamAV on ianhobson.co.uk
-Received: from coachmaster.leda.hcs (HELO [192.168.0.12]) (192.168.0.12)
-    by ianhobson.co.uk (qpsmtpd/0.83) with ESMTP; Wed, 21 Jul 2010 16:28:42 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.1.10) Gecko/20100512 Lightning/1.0b1 Thunderbird/3.0.5
-X-Cloudmark-Analysis: v=1.1 cv=DhNl2YeytwJssBBGe49HJX82LNDFEEVkpVB34RXKaPo= c=1 sm=0 a=d5db43592S0A:10 a=8nJEP1OIZ-IA:10 a=jfYSeKfjs8TI_JA1eSUA:9 a=n2DbP3fI_JNSiJ8Pis0yQ3CiWIYA:4 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1751368Ab0GURAz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 13:00:55 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34627 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750826Ab0GURAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jul 2010 13:00:54 -0400
+Received: by eya25 with SMTP id 25so1734324eya.19
+        for <git@vger.kernel.org>; Wed, 21 Jul 2010 10:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=JT0M682tBwIxTvhRka+OhZeAiWTgzYk3NtvKCWPv8Tw=;
+        b=i5AR7hqvDkMRHpTAW3kdDNphGwLKm+ZFrnSXVyQw4N9Ho1Qhsl9yv2BDD3+aQpIlBx
+         Xc0Yopiqp1Kq0AkBXFKGorRLrW9v6HnFDLwFOsYGCxAknahxB1ykBaPkQhH+7r2yu0eU
+         AZsbGAoqCRQQdrMFsCTt1fDqREXN2b2H+iuug=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=RrWhO1OXM5r+pNRm7SUw6y6A1z/3bcZYu97aW0NYgiiIadJ5P+PS/pHXQL5BCOILeT
+         GD2Xqypacz1Fd/E35A3Ab8mpvIug2lL4I+KzKG3m2wONDXqFdwAyQT5baB3Jrfl14vPk
+         nuBYx2ocOhqG4ZNfl5b22aTaVn2/vwLcLloNk=
+Received: by 10.216.168.198 with SMTP id k48mr408829wel.105.1279731653021;
+        Wed, 21 Jul 2010 10:00:53 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id p45sm3523499weq.45.2010.07.21.10.00.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 21 Jul 2010 10:00:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4C471223.9050303@ianhobson.co.uk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151406>
 
-Hi All,
+Hi Ian,
 
-I need your advice.  I started with the "Rebase master" approach.
+Ian Hobson wrote:
 
-Now I have...
+> O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O  Master
+> | \
+> |  O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O London
+> |
+> | \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Birmingham
+> |
+> | \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Glasgow
+> |
+> | \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Sheffield
+> |
+>  \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Cardiff
+>=20
+> All the rebase master's are taking an age (and involve many
+> conflicts). They are taking linger than the development.
+>=20
+> So this solution is NOT working for maintaining parallel versions.
 
-O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O  Master
-| \
-|  O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O London
-|
-| \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Birmingham
-|
-| \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Glasgow
-|
-| \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Sheffield
-|
-  \ O--O--O--O--O--O--O--many more--O--O--O--O--O--O--O--O Cardiff
+I like the train track guide.  My suggestion would be to take a step
+back and consider what your requirements are.
 
-All the rebase master's are taking an age (and involve many conflicts). 
-They are taking linger than the development.
+=E2=80=98git rebase=E2=80=99 was designed to support a workflow in whic=
+h individuals
+are responsible for short patch series (up to 10 patches, say) that
+have not been reviewed and accepted yet.  To save reviewers the
+trouble of placing themselves in a mindset of the past, the patch
+submitter occasionally =E2=80=9Crefreshes=E2=80=9D the patches to fit a=
+n appropriately
+modern codebase.
 
-So this solution is NOT working for maintaining parallel versions.
+With this comes a downside: if the patch submitter immediately sends
+the patches after doing this (bad submitter!), they are sending
+untested code.  Furthermore, they make it very hard for /other people/
+to develop code on top of their constantly shifting code.  So when
+a patch series grows long enough that a simple read-through would be
+unfeasible anyway, rebasing can be a very bad idea.
 
-I can get to.
+You may also be interested in
+http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=3D34744
 
-O  Master
-| \
-|  O   London
-|\
-|  O  Birmingham
-etc
-
-by re-applying the differences between each version (they are a set of 
-images and a config file).
-
-Then I am left with the main problem that I need help with.
-
-When I have done some development and I have
-
-O--A--B  Master
-| \
-|  O   London
-|\
-|  O  Birmingham
-etc
-
-how do I get to the following?
-
-O--A--B  Master
-            | \
-            |  B''   London
-            |\
-            |  B'''  Birmingham
-              etc
-
-Answers gratefully received.
-
-Regards
-
-Ian
+Good luck,
+Jonathan
