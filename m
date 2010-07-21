@@ -1,87 +1,126 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Avery Pennarun's git-subtree?
-Date: Wed, 21 Jul 2010 19:43:12 +0000
-Message-ID: <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com>
-References: <4C472B48.8050101@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] gitweb: clarify search results page when no matching
+ commit found
+Date: Wed, 21 Jul 2010 14:50:36 -0500
+Message-ID: <20100721195036.GA1825@burratino>
+References: <8HvhdiflWJtex2eC6n_6Q38YcvRRYhnh0scnq4s56M4wdwT_YlAiOw@cipher.nrlssc.navy.mil>
+ <AANLkTinhyFD4RhLLxS-jj-oX5VWqGyy7AiXJ3VJlcU2W@mail.gmail.com>
+ <20100721152311.GA12726@burratino>
+ <201007211951.18439.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Bryan Larsen <bryan.larsen@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 21 21:43:21 2010
+Cc: git@vger.kernel.org, Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Erick Mattos <erick.mattos@gmail.com>,
+	Petr Baudis <pasky@suse.cz>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 21 21:52:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObfCL-0001Xo-Ca
-	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 21:43:21 +0200
+	id 1ObfKh-0005R2-AX
+	for gcvg-git-2@lo.gmane.org; Wed, 21 Jul 2010 21:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932134Ab0GUTnP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 15:43:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55478 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751248Ab0GUTnO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 15:43:14 -0400
-Received: by fxm14 with SMTP id 14so3856043fxm.19
-        for <git@vger.kernel.org>; Wed, 21 Jul 2010 12:43:13 -0700 (PDT)
+	id S1759064Ab0GUTvy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Jul 2010 15:51:54 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:60035 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758957Ab0GUTvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jul 2010 15:51:45 -0400
+Received: by ewy23 with SMTP id 23so2600270ewy.19
+        for <git@vger.kernel.org>; Wed, 21 Jul 2010 12:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+3aeJuNIO0Z0S9Au7xq1C8ZELfsPAtFRwELRTriwx58=;
-        b=k8DEy0hVG30R4ENsa+e5Vi1nYihmKcI9rAD8lJULrQg3HhFxf4cpKg8ZOZNpQy/UrR
-         TCW6Xi6b+8yeCxoeR7xDqyv1csFH48ugmLaIpksOEpjMkDx6ScTjbRTPISDZmWbO50TF
-         iUY7L9BmWeyDUiWD1uykGDqwL245sbAaPIEoY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=zhSUMi5t59tyM0GF/IrPb7JLOK3SccOK/KFdNDbithI=;
+        b=mfGNJW1ZZaHMKmtpwpyLbGoDz4LCPQ8VSbSoZVk+OGW6IPflXGIubscyPWwlzD/Fnh
+         V/GOupfCEMPJWbiad1+Q9ctkdAay20/3F+7x61xE/PtlygYWMKDVN0jouII0XTz2jhQG
+         cdRNFZtEcGRkvFSjMiDlYJuvlyZtwGjAwVjrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Bqbmq2hQCg/C8gz8e//6E6/X7GSsqLMeKvXR5/I3SibGf9ncWs0DKBWgrC6UzzeSCq
-         lP+XrKK5E6xCw8H0BGaHSnoUoctwUrBUO++/+KBtSPcaOwPwaIIlgMXx191x95d8Pl8y
-         ag6/BfrbVG3y4XE7tw6IWrvpleK5EjuwXwkXI=
-Received: by 10.223.117.194 with SMTP id s2mr872969faq.57.1279741392862; Wed, 
-	21 Jul 2010 12:43:12 -0700 (PDT)
-Received: by 10.223.119.17 with HTTP; Wed, 21 Jul 2010 12:43:12 -0700 (PDT)
-In-Reply-To: <4C472B48.8050101@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=x8v/PXoMHUET8Cjs+Fkx71e1cwcDyLwpWIOgyayrCUgYCB8g3RGiC4DzREckZYxUbO
+         zz9roA5lbem3d/bWBX2Um8cFjy/QcCoHHrwb0WYLUXZzPN0sgKFcXXpmzSV/byn6IAUF
+         qPCJF9HfxVz+Io/APx2TjKUes2QD4f97ZYUO0=
+Received: by 10.227.138.76 with SMTP id z12mr700283wbt.60.1279741903625;
+        Wed, 21 Jul 2010 12:51:43 -0700 (PDT)
+Received: from burratino ([64.107.3.126])
+        by mx.google.com with ESMTPS id u32sm3597903weq.35.2010.07.21.12.51.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 21 Jul 2010 12:51:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201007211951.18439.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151414>
 
-On Wed, Jul 21, 2010 at 17:15, Bryan Larsen <bryan.larsen@gmail.com> wr=
-ote:
-> I've been using Avery Pennarun's git-subtree
-> (http://github.com/apenwarr/git-subtree) for a while now and have bee=
-n
-> finding it very useful and problem-free.
->
-> Git submodules have been particularly problematic for me on a project=
- which
-> contains submodules which contain submodules. =C2=A0git-subtree "just=
- works",
-> without any futzing.
->
-> We've also had problems with less git savvy users dropping patches be=
-cause
-> they've occurred inside of a module.
+When searching commits for a string that never occurs, the results
+page looks something like this:
 
-What sort of workflows do you find bad with git-submodule that are
-better with git-subtree?
+	projects / foo.git / search                                 \o/
+	summary | ... | tree          [commit] search: [ kfjdkas ] [ ]re
+	first =E2=8B=85 prev =E2=8B=85 next
 
-The submodule concept is simple, but a lot of the implementation is
-bad IMO. It doesn't integrate well, e.g. you have to remember to do
-git clone --recursive, or git clone and git submodule update --init
-after that, submodules don't remember what branch you wanted, so git
-submodule foreach 'git pull' doesn't DWYM (although I have a hack for
-that) etc.
+	Merge branch 'maint'
 
-I've also wondered if we couldn't just store all the heads .gitmodules
-point to inside the main .git repository, and just git gc them when
-submodules are removed.
+	Foo: a demonstration project
 
-I'd planned to maybe submit patches to fix some of these UI issues,
-knowing about more of them would help. I also haven't tried
-git-subtree.
+Without a list of hits to compare it to, the header describing the
+commit named by the hash parameter (usually HEAD) may itself look
+like a hit.  Add some text (=E2=80=9CNo match.=E2=80=9D) to replace the=
+ empty
+list of hits to avoid this confusion.
+
+While at it, remove some nearby dead code, left behind from a
+simplification a few years ago (v1.5.4-rc0~276^2~4, 2007-11-01).
+
+Noticed-by: Erick Mattos <erick.mattos@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+---
+Jakub Narebski wrote:
+
+> Very good idea
+
+Shoddy implementation, though.  Apparently (yes, I should know this;
+and testing reminded me before I sent the wrong patch) the index of
+the last element ($#array) of an empty array is -1, not 0.
+
+Sorry about that.
+
+ gitweb/gitweb.perl |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index cedc357..801575d 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -6522,12 +6522,13 @@ sub git_search {
+ 			$paging_nav .=3D " &sdot; next";
+ 		}
+=20
+-		if ($#commitlist >=3D 100) {
+-		}
+-
+ 		git_print_page_nav('','', $hash,$co{'tree'},$hash, $paging_nav);
+ 		git_print_header_div('commit', esc_html($co{'title'}), $hash);
+-		git_search_grep_body(\@commitlist, 0, 99, $next_link);
++		if ($page =3D=3D 0 && !@commitlist) {
++			print "<p>No match.\n</p>";
++		} else {
++			git_search_grep_body(\@commitlist, 0, 99, $next_link);
++		}
+ 	}
+=20
+ 	if ($searchtype eq 'pickaxe') {
+--=20
