@@ -1,87 +1,82 @@
-From: John Dlugosz <JDlugosz@TradeStation.com>
-Subject: RE: CRLF behavior
-Date: Wed, 21 Jul 2010 18:25:54 -0400
-Message-ID: <1A9EA7E081C3FE46A0F446FFB66D10EB93992A@FL01EXMB01.trad.tradestation.com>
-References: <1A9EA7E081C3FE46A0F446FFB66D10EB9398F1@FL01EXMB01.trad.tradestation.com>
- 	<AANLkTil5hUWwSXcz9T7cgeU_LwYtx8Nio7lUaUebJ5YM@mail.gmail.com>
- 	<1A9EA7E081C3FE46A0F446FFB66D10EB9398FF@FL01EXMB01.trad.tradestation.com>
- 	<AANLkTinyTlrkALbfVqdqzr_O4ClN-JGS9zsYwH1Upe1v@mail.gmail.com>
- <AANLkTiktnUV8WWSFcsj461QiG6WNv_kKxNFdJ5MBtdoy@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Thu, 22 Jul 2010 00:46:54 +0200
+Message-ID: <4C4778DE.9090905@web.de>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> <AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 22 00:25:36 2010
+X-From: git-owner@vger.kernel.org Thu Jul 22 00:47:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObhjJ-0007JQ-By
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 00:25:33 +0200
+	id 1Obi47-0006ji-W0
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 00:47:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752201Ab0GUWZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Jul 2010 18:25:19 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:53454 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751083Ab0GUWZT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Jul 2010 18:25:19 -0400
-X-ASG-Debug-ID: 1279751111-34bf9bed0001-QuoKaX
-Received: from FL01EXCAHT01.trad.tradestation.com (fl01excaht01.trad.tradestation.com [10.4.0.166]) by mail2.tradestation.com with ESMTP id rETvVcxDw1JOyJPh (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Wed, 21 Jul 2010 18:25:11 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
- FL01EXCAHT01.trad.tradestation.com ([::1]) with mapi; Wed, 21 Jul 2010
- 18:25:10 -0400
-X-Barracuda-BBL-IP: ::1
-X-Barracuda-RBL-IP: ::1
-X-ASG-Orig-Subj: RE: CRLF behavior
-Thread-Topic: CRLF behavior
-Thread-Index: AcspHxXyObIxf2S2SE+AcFusc4Wy6wAAYN9Q
-In-Reply-To: <AANLkTiktnUV8WWSFcsj461QiG6WNv_kKxNFdJ5MBtdoy@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Barracuda-Connect: fl01excaht01.trad.tradestation.com[10.4.0.166]
-X-Barracuda-Start-Time: 1279751111
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at tradestation.com
+	id S1758943Ab0GUWq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Jul 2010 18:46:57 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:57557 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754950Ab0GUWq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Jul 2010 18:46:56 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id A1DFF164B2A04;
+	Thu, 22 Jul 2010 00:46:54 +0200 (CEST)
+Received: from [80.128.113.183] (helo=[192.168.178.29])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1Obi3y-0004ev-00; Thu, 22 Jul 2010 00:46:54 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.7) Gecko/20100713 Thunderbird/3.1.1
+In-Reply-To: <AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/ftzYvFOt4ywqmbZE3TMU0OxCThtqCHAEi8vMD
+	Gub4j1jOd+YDNLHwYl1dH2BHNnJkelVJuYRbA41G6BFN6frbV/
+	gaVU0Qne9HuJLrWh/UNQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151431>
 
-> It take it back: it does do this.  But if $HOME isn't set, apparently
+Am 21.07.2010 23:09, schrieb Avery Pennarun:
+> What we *really* want is a way to have git actually recurse through
+> commit objects when doing *any* operation, as if they were tree
+> objects.
 
-> it silently fails to read $HOME/.gitconfig and uses a different set of
+This would not be useful for every work flow (or to put it in other
+words: this is not what I *really* want ;-). And as you pointed
+out, that only works when you have a single repo you are working
+against (like you do in your subtree model).
 
-> options.  Just confirmed this myself, and it's true.  This probably
-
-> should be considered a serious bug.
-
-> 
-
-> Avery
-
-
-
-The "git bash here" launches a copy of CMD.exe (the brain-dead Windows shell that's descendant from COMMAND.COM) with a command line that tells it to run sh.exe --login -i.
-
-I see that neither the CMD process nor the sh.exe process contains a HOME environment variable.  So, the $HOME reported within bash is something that bash itself came up with based on Windows settings, and was not set before running it.
-
-
-
-The wish.exe running git-gui _does_ contain a HOME environment variable, set to a natural Windows path.  It also contains others, such as GIT_DIR that contains the current repository it was started for, as a Windows drive-letter-path but with Unix-style slashes, and GIT_ASK_YESNO.  Presumably these were set as part of the machinery that launched the program from the context menu in explorer.  I don't see how it's being launched -- it does not show up in Autoruns (from Sysinternals).
+But unless I got something wrong (which might very well be the
+case, as I never have used subtree myself), all changes to the
+subtree will only show up in that single repo, unless you actively
+push them somewhere else. And that, it seems to me, is as easy to
+forget as you can right now forget to push a submodules commit you
+already recorded and pushed in the superproject). So am I wrong
+assuming that subtree is more focused on a single repo containing
+all commits which /might/ then be shared, while submodules are
+about /always/ sharing code via their own repo?
 
 
+> There is no good solution to the submodule problem if each submodule
+> has to go in its own repo.  I've been thinking about this for years
+> now, and watching lots of discussions about it on the git mailing
+> list, and I just can't see any other option.  All the submodules have
+> to get pushed to and fetched from the same repo by default.  Anything
+> else is insane.
 
-
-
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+I have to object here. Your insanity is someone else's work flow ;-)
+And I am the last one not to admit that there are some severe
+usability warts still to be fixed for submodules (I put up a - not
+necessarily complete - list at
+http://wiki.github.com/jlehmann/git-submod-enhancements/ ). And
+myself and others are actively working on them (the next bigger
+thing after a new config option about when to consider a submodule
+modified are recursive checkouts, so that "git submodule update"
+will hopefully be almost obsolete in the near future).
