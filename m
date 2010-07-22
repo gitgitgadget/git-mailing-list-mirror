@@ -1,105 +1,120 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: Avery Pennarun's git-subtree?
-Date: Thu, 22 Jul 2010 14:43:08 -0600
-Message-ID: <AANLkTikUqbAGPXcAmGsx_oML0tZHpMWHOFl7CCkjBca0@mail.gmail.com>
-References: <4C472B48.8050101@gmail.com>
-	<AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com>
-	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com>
-	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com>
-	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com>
-	<4C4778DE.9090905@web.de>
-	<AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com>
-	<m31vavn8la.fsf@localhost.localdomain>
-	<AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
-	<20100722195653.GC4439@burratino>
+From: John Dlugosz <JDlugosz@TradeStation.com>
+Subject: RE: Running git on Windows command line
+Date: Thu, 22 Jul 2010 16:55:50 -0400
+Message-ID: <1A9EA7E081C3FE46A0F446FFB66D10EB939DAC@FL01EXMB01.trad.tradestation.com>
+References: <1A9EA7E081C3FE46A0F446FFB66D10EB939B8A@FL01EXMB01.trad.tradestation.com>
+	<AANLkTimXZtlRKlAVuFH5TzzQ1z19ddYazIRKIgGALMpZ@mail.gmail.com>
+	<1A9EA7E081C3FE46A0F446FFB66D10EB939D37@FL01EXMB01.trad.tradestation.com>
+ <AANLkTin-RMEOfc7FlfnQfTgzxMfV-Vq6r5ahkP6P6_SJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	Bryan Larsen <bryan.larsen@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 22 22:43:16 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "kusmabite@gmail.com" <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 22 22:56:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc2bs-0006bp-54
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:43:16 +0200
+	id 1Oc2oJ-0004Mn-VX
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756698Ab0GVUnM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 16:43:12 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35662 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352Ab0GVUnK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:43:10 -0400
-Received: by vws3 with SMTP id 3so586755vws.19
-        for <git@vger.kernel.org>; Thu, 22 Jul 2010 13:43:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pmwqlw85m0/3Af9sKfALAv05wjampel8/IskgVYbgiY=;
-        b=qJ45NTQn1EV2BRziMKvwX+ZUoojHKrOx35zQDlyHA3T0+mGR42JnIqihO0W4KfNGng
-         Pio4XnJbAgQJ3aj+VRlwJN6+GLzp0aDBRwXDPc7OG9S6JCvjjGbmPE7kMyNlUn+Y50xK
-         1eFZgd/hTV3IAY5SBKgpya5qeGqesgfxva2e0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pIVggOSabc9np2YEj1AYC4F5COxjO+eAtiMQVvH1I7LQhupZNCprotuimDhqB+nIiT
-         yo9mtjO0XrdRqL7C4Ijwz5MzySIpoyocRGgGaAHmrsNKg9seqeROYiLznvi72br2kxYw
-         WMNZE8gMr6ZbWUmlME6QldeYapwl1LqWl/020=
-Received: by 10.220.124.153 with SMTP id u25mr1056901vcr.66.1279831388431; 
-	Thu, 22 Jul 2010 13:43:08 -0700 (PDT)
-Received: by 10.220.99.211 with HTTP; Thu, 22 Jul 2010 13:43:08 -0700 (PDT)
-In-Reply-To: <20100722195653.GC4439@burratino>
+	id S1753749Ab0GVU4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jul 2010 16:56:01 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:39752 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751091Ab0GVU4A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:56:00 -0400
+X-ASG-Debug-ID: 1279832151-34bf9dc30001-QuoKaX
+Received: from FL01EXCAHT01.trad.tradestation.com (fl01excaht01.trad.tradestation.com [10.4.0.166]) by mail2.tradestation.com with ESMTP id 2jq9lj1YAqPeMk4M (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Thu, 22 Jul 2010 16:55:51 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
+ FL01EXCAHT01.trad.tradestation.com ([::1]) with mapi; Thu, 22 Jul 2010
+ 16:55:51 -0400
+X-Barracuda-BBL-IP: ::1
+X-Barracuda-RBL-IP: ::1
+X-ASG-Orig-Subj: RE: Running git on Windows command line
+Thread-Topic: Running git on Windows command line
+Thread-Index: Acsp3kFDtpuLzHJ3QQGI5LxV03H3jgAAKdiQ
+In-Reply-To: <AANLkTin-RMEOfc7FlfnQfTgzxMfV-Vq6r5ahkP6P6_SJ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-Barracuda-Connect: fl01excaht01.trad.tradestation.com[10.4.0.166]
+X-Barracuda-Start-Time: 1279832151
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151483>
 
-Hi,
+> It sounds to me like you've installed indeed Git for Windows (which is
 
-On Thu, Jul 22, 2010 at 1:56 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Avery Pennarun wrote:
->
->> Unfortunately everything built *on top of* Linus's file format
->> contribution has turned out to be a disaster.
->
-> Aside: this kind of statement might make it unlikely for exactly
-> those who would benefit most from your opinions to read them.
->
-> Well, that is my guess, anyway. =C2=A0I know that I have not found th=
-e time
-> to read your email (though I would like to) because I suspect based o=
-n
-> such sweeping statements that it would take a while to separate the
-> useful part from the rest.
+> the end-user product from the msysGit-project); the msysGit installers
 
-I'd usually agree with such a sentiment, but I don't think it's
-accurate in this case.  Having read Avery's emails in this thread, I
-think he does a really good job explaining why submodules don't (and
-won't) work for a lot of people.  I think he provided a better
-explanation than I could have for why I've never had much luck with
-submodules (and further convinced me that not only do they not work
-for me now, but they aren't ever going to fulfill the usecases I had).
+> doesn't show a wizard with questions, it just installs a
 
-I can't really add much other than that we've been relatively happy
-with git-subtree and would like to see it or something like it merged.
- Our problems with it so far have turned out to be issues in other
-areas of git (e.g. the known issue about --prefix being ignored with
-the code being merged under a different directory due to
-rename-detection, and the bugs in merge-recursive's handling of D/F
-changes).
+> self-contained development environment.
+
+> 
+
+> You can tell the packages apart by the name:
+
+> * Git-something.exe and PortableGit-something.exe are installers for
+
+> Git for Windows.
+
+> * msysGit-netinstall-something.exe and
+
+> msysGit-fullinstall-something.exe are installers for msysGit, the
+
+> development environment used to develop Git for Windows.
+
+> 
+
+> I hope this clears up a bit.
+
+> 
+
+> --
+
+> Erik "kusma" Faye-Lund
 
 
-Elijah
+
+OK, "Git-1.7.0.2-preview20100309.exe" installed something that identifies itself as "git version 1.7.0.2.msysgit.0" 
+
+
+
+The web page is identified as "msysgit" with "git for windows" in small type under it, which I take to be a descriptive statement, not a product name also.  The downloads call them "Full installer for official Git" (what I used) and "...if you want to hack on Git".
+
+
+
+The usage on this mailing list has always been "msysgit" as this windows variant git, as opposed to the Cygwin build.  Mentioning that is necessary for accurate help.  I mentioned msysgit as the keyword necessary when asking for help, not to mean I installed the development source.
+
+
+
+--John
+
+
+
+
+
+
+
+
+
+
+
+(ridiculous and unnecessary footer follows)
+
+
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
