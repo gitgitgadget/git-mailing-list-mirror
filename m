@@ -1,129 +1,61 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] t3508: add check_head_differs_from() helper function and use
-	it
-Date: Wed, 21 Jul 2010 06:25:02 +0200
-Message-ID: <20100721042503.1948.5144.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 22 15:39:42 2010
+From: Zeeshan Qureshi <zeeshan@zqureshi.in>
+Subject: Re: Git commit behaving strangely
+Date: Thu, 22 Jul 2010 09:48:39 -0400
+Message-ID: <AANLkTimbeDz_9PPOXBg2FU05Mnba2an-BkK99ye1glDL@mail.gmail.com>
+References: <4C465B34.2040407@zqureshi.in>
+	<20100721030608.GA25992@burratino>
+	<AANLkTikYoNEQpotpfdVci4WSUc1GMNnM9y0OqXJb7Fzu@mail.gmail.com>
+	<20100721050558.GA15273@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 22 15:48:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Obvzx-0007WR-SO
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 15:39:42 +0200
+	id 1Obw8o-0003hA-JF
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 15:48:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759380Ab0GVNjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 09:39:37 -0400
-Received: from smtp2f.orange.fr ([80.12.242.152]:60447 "EHLO smtp2f.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757522Ab0GVNjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jul 2010 09:39:36 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2f18.orange.fr (SMTP Server) with ESMTP id 34963800075B;
-	Thu, 22 Jul 2010 15:39:35 +0200 (CEST)
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2f18.orange.fr (SMTP Server) with ESMTP id 266C580021D8;
-	Thu, 22 Jul 2010 15:39:35 +0200 (CEST)
-Received: from style.boubyland (ANantes-156-1-132-203.w90-12.abo.wanadoo.fr [90.12.251.203])
-	by mwinf2f18.orange.fr (SMTP Server) with ESMTP id 893A38000E97;
-	Thu, 22 Jul 2010 15:39:34 +0200 (CEST)
-X-ME-UUID: 20100722133934562.893A38000E97@mwinf2f18.orange.fr
-X-git-sha1: 2b10d59e207ff647b31019727ba0f852aa5257c0 
-X-Mailer: git-mail-commits v0.5.2
+	id S1759333Ab0GVNso convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 09:48:44 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:35211 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754279Ab0GVNso convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 09:48:44 -0400
+Received: by ewy23 with SMTP id 23so2863396ewy.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 06:48:42 -0700 (PDT)
+Received: by 10.213.113.12 with SMTP id y12mr1797957ebp.53.1279806522080; Thu, 
+	22 Jul 2010 06:48:42 -0700 (PDT)
+Received: by 10.14.37.133 with HTTP; Thu, 22 Jul 2010 06:48:39 -0700 (PDT)
+X-Originating-IP: [209.202.115.133]
+In-Reply-To: <20100721050558.GA15273@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151457>
 
-In a test like:
+Hello Jonathan,
 
-test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
+On Wed, Jul 21, 2010 at 1:05 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Zeeshan Qureshi wrote:
+>
+>> I will do it again when I get to work tomorrow (i don't have remote =
+access
+>> to the workstation) and post the results.
+>
+> Sounds good. =A0Thanks for looking into it.
+>
+> Jonathan
+>
 
-the --verify does not accomplish much, since the exit status of
-git rev-parse is not propagated to test. So it is more robust to
-define and use the helper functions check_head_differs_from() and
-check_head_equals() as done by this patch.
+I did the test again on the Solaris machine, and encountered the same p=
+roblem.
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t3508-cherry-pick-many-commits.sh |   22 +++++++++++++++++-----
- 1 files changed, 17 insertions(+), 5 deletions(-)
-
-diff --git a/t/t3508-cherry-pick-many-commits.sh b/t/t3508-cherry-pick-many-commits.sh
-index 6044173..0f61495 100755
---- a/t/t3508-cherry-pick-many-commits.sh
-+++ b/t/t3508-cherry-pick-many-commits.sh
-@@ -4,6 +4,18 @@ test_description='test cherry-picking many commits'
- 
- . ./test-lib.sh
- 
-+check_head_differs_from() {
-+	head=$(git rev-parse --verify HEAD) &&
-+	arg=$(git rev-parse --verify "$1") &&
-+	test "$head" != "$arg"
-+}
-+
-+check_head_equals() {
-+	head=$(git rev-parse --verify HEAD) &&
-+	arg=$(git rev-parse --verify "$1") &&
-+	test "$head" = "$arg"
-+}
-+
- test_expect_success setup '
- 	echo first > file1 &&
- 	git add file1 &&
-@@ -36,7 +48,7 @@ test_expect_success 'cherry-pick first..fourth works' '
- 	git diff --quiet other &&
- 	git diff --quiet HEAD other &&
- 	test_cmp expected actual &&
--	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+	check_head_differs_from fourth
- '
- 
- test_expect_success 'cherry-pick --strategy resolve first..fourth works' '
-@@ -53,7 +65,7 @@ test_expect_success 'cherry-pick --strategy resolve first..fourth works' '
- 	git diff --quiet other &&
- 	git diff --quiet HEAD other &&
- 	test_cmp expected actual &&
--	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+	check_head_differs_from fourth
- '
- 
- test_expect_success 'cherry-pick --ff first..fourth works' '
-@@ -63,7 +75,7 @@ test_expect_success 'cherry-pick --ff first..fourth works' '
- 	git cherry-pick --ff first..fourth &&
- 	git diff --quiet other &&
- 	git diff --quiet HEAD other &&
--	test "$(git rev-parse --verify HEAD)" = "$(git rev-parse --verify fourth)"
-+	check_head_equals fourth
- '
- 
- test_expect_success 'cherry-pick -n first..fourth works' '
-@@ -113,7 +125,7 @@ test_expect_success 'cherry-pick -3 fourth works' '
- 	git cherry-pick -3 fourth &&
- 	git diff --quiet other &&
- 	git diff --quiet HEAD other &&
--	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+	check_head_differs_from fourth
- '
- 
- test_expect_success 'cherry-pick --stdin works' '
-@@ -123,7 +135,7 @@ test_expect_success 'cherry-pick --stdin works' '
- 	git rev-list --reverse first..fourth | git cherry-pick --stdin &&
- 	git diff --quiet other &&
- 	git diff --quiet HEAD other &&
--	test "$(git rev-parse --verify HEAD)" != "$(git rev-parse --verify fourth)"
-+	check_head_differs_from fourth
- '
- 
- test_done
--- 
-1.7.2.rc3.133.g31b0a
+I am on a Sun Blade 1500 machine running Solaris 10.
+Zeeshan
