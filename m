@@ -1,80 +1,85 @@
-From: Erik Faye-Lund <kusmabite@googlemail.com>
-Subject: Re: Running git on Windows command line
-Date: Fri, 23 Jul 2010 01:00:01 +0200
-Message-ID: <AANLkTilaaSl7gXnu6ctU8CKn5GMp9pf7aSYmLoVAIA5H@mail.gmail.com>
-References: <1A9EA7E081C3FE46A0F446FFB66D10EB939B8A@FL01EXMB01.trad.tradestation.com>
-	<AANLkTimXZtlRKlAVuFH5TzzQ1z19ddYazIRKIgGALMpZ@mail.gmail.com>
-	<1A9EA7E081C3FE46A0F446FFB66D10EB939D37@FL01EXMB01.trad.tradestation.com>
-	<AANLkTin-RMEOfc7FlfnQfTgzxMfV-Vq6r5ahkP6P6_SJ@mail.gmail.com>
-	<1A9EA7E081C3FE46A0F446FFB66D10EB939DAC@FL01EXMB01.trad.tradestation.com>
-	<AANLkTil69VdTLldEcInFcYLwcStFnEEkoBCAWS1kd-S6@mail.gmail.com>
-	<1A9EA7E081C3FE46A0F446FFB66D10EB939E1D@FL01EXMB01.trad.tradestation.com>
-Reply-To: kusmabite@gmail.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/7] revert: fix off by one read when searching the end
+ of a commit subject
+Date: Thu, 22 Jul 2010 18:00:00 -0500
+Message-ID: <20100722230000.GD19745@burratino>
+References: <20100722131141.2148.63850.chriscool@tuxfamily.org>
+ <20100722131836.2148.57468.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: John Dlugosz <JDlugosz@tradestation.com>
-X-From: git-owner@vger.kernel.org Fri Jul 23 01:00:17 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Jul 23 01:01:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc4kP-0001iQ-Ky
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 01:00:13 +0200
+	id 1Oc4lL-00025j-52
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 01:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555Ab0GVXAF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 19:00:05 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38873 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751231Ab0GVXAE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 19:00:04 -0400
-Received: by wyf19 with SMTP id 19so1071468wyf.19
-        for <git@vger.kernel.org>; Thu, 22 Jul 2010 16:00:01 -0700 (PDT)
+	id S1751674Ab0GVXBE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 19:01:04 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:63106 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751685Ab0GVXBB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 19:01:01 -0400
+Received: by yxg6 with SMTP id 6so903327yxg.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 16:01:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=Rbgs3hzIY7gFkbQQ0WClLZFin7gXbrYXzFAvvL3NA6U=;
-        b=QC8IZVt2ZdBn+hFr393Hps7D5Cwx+0nozJGX9MUM7xDg1v9zd4OvVkzM/7OecsnVJ7
-         zB1MyS76LLZy3+52GFydxC7cjJgMc3cGs5XYfChRkd4frG+tpl8eL/wqe8LNLptGjQmF
-         x5B9buF1J8eRjFFft0/qtspR3MXnaS6EVnbWw=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=tJAxvp/8uF+xmp2HysbMYcJw/29m65ACoHdTTL5ztQo=;
+        b=E7K2tQI8w73gqImhO8rMKopj5cbI9PL8Hfb2R8a3Z+3SHLcdEK6Z7N88DeN/v1REz6
+         A6A/1uCE9s8uk+EOrtZGWHPoaEOKWj3fmat1fA4P8JoSYKLaoXnuVuDkkohe0f7opL0e
+         5Q+vrixAxsGK3pU+QWMRVjWGiaciw+49CPv+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=Yms86PaZgILYGzLuHTTGDZW6kQl12U+mofB41tuCEkO1i5ADWdbSv/zhpGAcTxnfEY
-         3TzuC53l4FlMGDhiJvmZmMveQ9Pypg351uigfwjjukR9PPv6SWA0WuXSndyygVuynacc
-         Febmw9r8WrMxQKTuS9XZ5LkEEGGX8X4TLyHDI=
-Received: by 10.216.231.230 with SMTP id l80mr2602851weq.53.1279839601091; 
-	Thu, 22 Jul 2010 16:00:01 -0700 (PDT)
-Received: by 10.216.70.67 with HTTP; Thu, 22 Jul 2010 16:00:01 -0700 (PDT)
-In-Reply-To: <1A9EA7E081C3FE46A0F446FFB66D10EB939E1D@FL01EXMB01.trad.tradestation.com>
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=hF1ISNPoTfryFAfIkdZ+Jtg5dQ+TRNgqDyEvlDYVQiDBLic9WXc3Vex+D/M/FCMIgU
+         uSFJc2XrgjgQeajdzbKkoxEZcZrM6zlbZpPo6YGHDpQMKfOAA7YUq86vkyxi6UOYtlDW
+         tIBWaUi3jiqWKYeAV4l1YQ3rd2Y+Y7tc6r8Rs=
+Received: by 10.224.69.162 with SMTP id z34mr1846909qai.38.1279839660383;
+        Thu, 22 Jul 2010 16:01:00 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id h20sm31025014qcm.21.2010.07.22.16.00.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 22 Jul 2010 16:00:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100722131836.2148.57468.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151493>
 
-On Fri, Jul 23, 2010 at 12:32 AM, John Dlugosz
-<JDlugosz@tradestation.com> wrote:
->
->> I'm aware of all this, but I don't think you're hearing me: the reas=
-on
->> why the behavior has changed for you is very likely to be you having
->> switched package. Yes, the naming is confusing.
->>
->> --
->> Erik "kusma" Faye-Lund
->
-> No, I've only/always installed Git-1.*preview*.exe. =A0I still have t=
-he downloaded files.
->
+Christian Couder wrote:
 
-OK. In that case, I think you're in better luck if you send an e-mail
-to to msysgit mailing list.
+> +++ b/builtin/revert.c
+> @@ -131,7 +131,7 @@ static int get_message(const char *raw_message, s=
+truct commit_message *out)
+>  		p++;
+>  	if (*p) {
+>  		p +=3D 2;
+> -		for (eol =3D p + 1; *eol && *eol !=3D '\n'; eol++)
+> +		for (eol =3D p; *eol && *eol !=3D '\n'; eol++)
+>  			; /* do nothing */
+>  	} else
+>  		eol =3D p;
 
---=20
-Erik "kusma" Faye-Lund
+Good catch.  For what it=E2=80=99s worth, this and the rest of the seri=
+es is
+
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
