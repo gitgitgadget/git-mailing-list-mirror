@@ -1,75 +1,91 @@
-From: Joshua Shrader <jshrader83@gmail.com>
-Subject: Git Notes on Branches
-Date: Thu, 22 Jul 2010 16:22:48 -0400
-Message-ID: <AANLkTinnDBUzoDj-C289l4Kui2qSiKmF-027MzijyCFY@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@googlemail.com>
+Subject: Re: Running git on Windows command line
+Date: Thu, 22 Jul 2010 22:41:23 +0200
+Message-ID: <AANLkTin-RMEOfc7FlfnQfTgzxMfV-Vq6r5ahkP6P6_SJ@mail.gmail.com>
+References: <1A9EA7E081C3FE46A0F446FFB66D10EB939B8A@FL01EXMB01.trad.tradestation.com>
+	<AANLkTimXZtlRKlAVuFH5TzzQ1z19ddYazIRKIgGALMpZ@mail.gmail.com>
+	<1A9EA7E081C3FE46A0F446FFB66D10EB939D37@FL01EXMB01.trad.tradestation.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Joshua Shrader <jshrader83@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 22 22:23:04 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: John Dlugosz <JDlugosz@tradestation.com>
+X-From: git-owner@vger.kernel.org Thu Jul 22 22:41:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc2IH-0005Jv-5A
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:23:01 +0200
+	id 1Oc2aB-0005pN-JI
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:41:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753250Ab0GVUWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 16:22:50 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57588 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752031Ab0GVUWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jul 2010 16:22:49 -0400
-Received: by vws3 with SMTP id 3so566475vws.19
-        for <git@vger.kernel.org>; Thu, 22 Jul 2010 13:22:48 -0700 (PDT)
+	id S1756337Ab0GVUl0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 16:41:26 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:59448 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752352Ab0GVUlZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:41:25 -0400
+Received: by wyf19 with SMTP id 19so976304wyf.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 13:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=bTLmO8s7eLGoS8S4iL8QGkbDFIScfpihSl1Wdvf0Nrk=;
-        b=BukUWbCXgdlezvNKsYFTWuMdc5e0yS/aIck3YDkfVTpGfpb0Fj34OuAtLafrOtrlaZ
-         I4XdLG3QQ65e01KLqOsREr4/t5NQk7ieqCSodJ57EzwZH3Q0p+M+S9j6WigJ9GA+Y9sO
-         +ReuzA8tGUPLXRzXRt6gBbrnbQTBKlP5+QRUY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=gmoLiQFCM/Bhl5jxh7FQMucXLH5flnkTNfszHTA3PmI=;
+        b=thLWhAnDCeyqDqWSXfKoY7rwA6JIiMixbi2SCPtLMzFq5Miuuy5kLMyFzbCVIvUEzC
+         kKi6anlowk2BswL16p1VuKUMWiitPu9xC+0B/03aoyIxG69oKWkwNfcg7KrJV21KyDcY
+         ZVq3MbgEKV4/P3LgkuhvZEBF05CY75EVIuISI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=xllHvI4mC777CAhI58C/OUolN3mso/X+dRCp0nvrqQsf9CwnE5rdtHYj8anBpxtAW3
-         3HAIIL9pKK34amr87l0+kWMnIsV7q4DzRCLsjzQJrCajE+8ccz1Iw/gl/TlVCgyknMEh
-         EhDEP7UB5Jid0/md9DZAUKabEN9wbJ9R1ePfw=
-Received: by 10.220.60.70 with SMTP id o6mr1023482vch.2.1279830168262; Thu, 22 
-	Jul 2010 13:22:48 -0700 (PDT)
-Received: by 10.220.97.20 with HTTP; Thu, 22 Jul 2010 13:22:48 -0700 (PDT)
+        d=googlemail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=V8ioziOwG4Cs8v9i7lyBrlTvvpBjfN5MyCK0pJxEKYIcNYLDkt+iS73i6roriMOs1t
+         ZspnmB2GZW8TkfaD0xRbOqg68++nBGnAdAKDTR70ejdFMfxVSIP8SttSZ8OY0G7E5vXO
+         k1r1wX+Ruz69lUfsuzLzvs7WOdFo6vFrEPNNU=
+Received: by 10.227.128.210 with SMTP id l18mr2439692wbs.189.1279831283895; 
+	Thu, 22 Jul 2010 13:41:23 -0700 (PDT)
+Received: by 10.216.70.67 with HTTP; Thu, 22 Jul 2010 13:41:23 -0700 (PDT)
+In-Reply-To: <1A9EA7E081C3FE46A0F446FFB66D10EB939D37@FL01EXMB01.trad.tradestation.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151481>
 
-I'm wondering if there is a way to (or a reason that would prevent one
-from implementing a feature that allows one to) associate a note with
-a branch, rather than a specific object.  It seems like a notes object
-contains a reference to the object that it annotates:
+On Thu, Jul 22, 2010 at 10:02 PM, John Dlugosz
+<JDlugosz@tradestation.com> wrote:
+>
+>> The msysGit (the development environment for Git for Windows)
+>> installer does not modify the system-wide path, but the Git for
+>> Windows installer does. Perhaps you've previously been using msysGit
+>> instead of Git for Windows?
+>>
+>> --
+>> Erik "kusma" Faye-Lund
+>
+> I've only installed "msysgit". =A0The item in the path, which I assum=
+e was added by the option to "Git from command prompt", with the other =
+two choices being "Git bash only" and "git and included unix tools from=
+ command prompt". =A0I did notice that the exact wording, if not the ch=
+oices meanings (I'm not sure), seemed to change some time within the la=
+st two years.
+>
 
-Annotate 4bd93734af...
+It sounds to me like you've installed indeed Git for Windows (which is
+the end-user product from the msysGit-project); the msysGit installers
+doesn't show a wizard with questions, it just installs a
+self-contained development environment.
 
-Rather than forcing this to be a SHA1, can the same approaches as
-taken with HEAD be employed?  That is, allow it to be either an object
-ID, or a local branch?
+You can tell the packages apart by the name:
+* Git-something.exe and PortableGit-something.exe are installers for
+Git for Windows.
+* msysGit-netinstall-something.exe and
+msysGit-fullinstall-something.exe are installers for msysGit, the
+development environment used to develop Git for Windows.
 
-This would essentially define a new use case for notes.  Rather than
-just being used to annotate objects, they could be used to describe a
-feature branch or a bug fix, for example.  Then, when a release is
-created (from, say, master), a "git branches --merged" will show all
-merged branches.  Assuming the workflow is to develop on well-defined
-branches, if each of these branches had a description in an attached
-note, created Release Notes would be a piece of cake.  Add a
-description via "git notes add feat-branch-2" that you want to show up
-in the Release Notes once the branch is re-integrated.
+I hope this clears up a bit.
 
-I see a potential problem when working remotely and trying to push the
-note to origin, but I don't think its insurmountable.
-
-Thoughts?
-
-Josh
+--=20
+Erik "kusma" Faye-Lund
