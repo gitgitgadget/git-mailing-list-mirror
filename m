@@ -1,100 +1,86 @@
-From: John Dlugosz <JDlugosz@TradeStation.com>
-Subject: RE: Running git on Windows command line
-Date: Thu, 22 Jul 2010 16:02:54 -0400
-Message-ID: <1A9EA7E081C3FE46A0F446FFB66D10EB939D37@FL01EXMB01.trad.tradestation.com>
-References: <1A9EA7E081C3FE46A0F446FFB66D10EB939B8A@FL01EXMB01.trad.tradestation.com>
- <AANLkTimXZtlRKlAVuFH5TzzQ1z19ddYazIRKIgGALMpZ@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Thu, 22 Jul 2010 16:06:02 -0400
+Message-ID: <AANLkTinI6uOQyJcJvbNLhNde8yURyQMSua438TZQKyXv@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 
+	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 
+	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 
+	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
+	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
+	<20100722195653.GC4439@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "kusmabite@gmail.com" <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 22 22:03:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 22 22:06:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc1z5-0002mM-8a
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:03:11 +0200
+	id 1Oc22K-0004ca-7d
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753312Ab0GVUDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 16:03:06 -0400
-Received: from mail2.tradestation.com ([63.99.207.80]:38775 "EHLO
-	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752086Ab0GVUDE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:03:04 -0400
-X-ASG-Debug-ID: 1279828976-34bf93580001-QuoKaX
-Received: from FL01EXCAHT01.trad.tradestation.com (fl01excaht01.trad.tradestation.com [10.4.0.166]) by mail2.tradestation.com with ESMTP id Y2FBTtH4c6bW1ql1 (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Thu, 22 Jul 2010 16:02:56 -0400 (EDT)
-X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
-X-ASG-Whitelist: Client
-Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
- FL01EXCAHT01.trad.tradestation.com ([::1]) with mapi; Thu, 22 Jul 2010
- 16:02:55 -0400
-X-Barracuda-BBL-IP: ::1
-X-Barracuda-RBL-IP: ::1
-X-ASG-Orig-Subj: RE: Running git on Windows command line
-Thread-Topic: Running git on Windows command line
-Thread-Index: AcspzpgiXh6Hm5INQfiYRrovHSPsmgACUi7Q
-In-Reply-To: <AANLkTimXZtlRKlAVuFH5TzzQ1z19ddYazIRKIgGALMpZ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-Barracuda-Connect: fl01excaht01.trad.tradestation.com[10.4.0.166]
-X-Barracuda-Start-Time: 1279828976
-X-Barracuda-Encrypted: AES128-SHA
-X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at tradestation.com
+	id S1752130Ab0GVUG1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 16:06:27 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:55298 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753Ab0GVUG0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:06:26 -0400
+Received: by wyf19 with SMTP id 19so947052wyf.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 13:06:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/C7KcrbcMKPm3B1lIlmw48wWGiS0wsZkUTDQXGL0EsI=;
+        b=nEY+v93fdZnWK8Tvlslcy0+31HtIhzoMLl5GW152aLnmB0xrENqj5hHGuLSp4SHVT/
+         Hl69wRkCW3XR3cspDqNL7NH8oXCm5o1WkkjFglA+ukVVB9B8fUb6dFyN8ZnmcfgGquxI
+         ClBODoZzBLGMvey4wbxQL1N9xCQwf0qfw7qZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=VeU9MmKU9QXESqEBm5bdpsmrnOhY4movO4uEt5eMGaTseCystNjEVJCLYIJgwAfGks
+         93+zjRlvqhGH4UME3+jrz/J9pQ0BIcaYnN29GI8Njz5+R3yIwt3t2avkLBOvYU9KXJIN
+         JkChWkyauWTfUkZv7Ed3fVeggb10D7syGEAkk=
+Received: by 10.227.154.196 with SMTP id p4mr2389063wbw.195.1279829184035; 
+	Thu, 22 Jul 2010 13:06:24 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Thu, 22 Jul 2010 13:06:02 -0700 (PDT)
+In-Reply-To: <20100722195653.GC4439@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151477>
 
- 
+On Thu, Jul 22, 2010 at 3:56 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Avery Pennarun wrote:
+>> Unfortunately everything built *on top of* Linus's file format
+>> contribution has turned out to be a disaster.
+>
+> Aside: this kind of statement might make it unlikely for exactly
+> those who would benefit most from your opinions to read them.
+>
+> Well, that is my guess, anyway. =A0I know that I have not found the t=
+ime
+> to read your email (though I would like to) because I suspect based o=
+n
+> such sweeping statements that it would take a while to separate the
+> useful part from the rest.
 
-> The msysGit (the development environment for Git for Windows)
+Unfortunately you will find that the rest of my email more or less
+just expands in detail on those sweeping statements.
 
-> installer does not modify the system-wide path, but the Git for
+Sorry.
 
-> Windows installer does. Perhaps you've previously been using msysGit
-
-> instead of Git for Windows?
-
-> 
-
-> --
-
-> Erik "kusma" Faye-Lund
-
-
-
-I've only installed "msysgit".  The item in the path, which I assume was added by the option to "Git from command prompt", with the other two choices being "Git bash only" and "git and included unix tools from command prompt".  I did notice that the exact wording, if not the choices meanings (I'm not sure), seemed to change some time within the last two years.
-
-
-
-I'm pretty sure Tortoise doesn't set the path, since it asks me where git is to be found.  I've also installed qgit.
-
-
-
-But, I suppose that "Git from command prompt" has to work somehow.  I don't see anything for that other than changing the global path to point to these batch file wrappers.
-
-
-
---John
-
-
-
-
-
-
-
-
-
-
-
-
-TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
-  If you received this in error, please contact the sender and delete the material from any computer.
+Avery
