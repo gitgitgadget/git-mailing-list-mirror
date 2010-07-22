@@ -1,83 +1,104 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] git-rebase--interactive.sh: use printf instead of echo to 
-	print commit message
-Date: Thu, 22 Jul 2010 20:08:25 +0000
-Message-ID: <AANLkTinBvIE-nW__qN9XpbWiwhx1C6_FWylWQRLGd2BQ@mail.gmail.com>
-References: <MoU2SrLLcYS4J28tNBJjfxYnqoLoX04XwHLgciB5KCUnhqJoXifmNFbSGHS4r8pboBurx-NhZWs@cipher.nrlssc.navy.mil>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Thu, 22 Jul 2010 20:17:08 +0000
+Message-ID: <AANLkTilhKR5wuJPPIF1SiRcTJ0fmz1oqp_NfuSSuKMOn@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com>
+	<AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com>
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com>
+	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com>
+	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com>
+	<4C4778DE.9090905@web.de>
+	<AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com>
+	<m31vavn8la.fsf@localhost.localdomain>
+	<AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
+	<20100722195653.GC4439@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jul 22 22:08:35 2010
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 22 22:17:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc24F-0005jD-P7
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:08:32 +0200
+	id 1Oc2Cw-0002MV-Ag
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 22:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166Ab0GVUI1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 16:08:27 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:52267 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751753Ab0GVUI0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:08:26 -0400
-Received: by gwb20 with SMTP id 20so320456gwb.19
-        for <git@vger.kernel.org>; Thu, 22 Jul 2010 13:08:25 -0700 (PDT)
+	id S1756272Ab0GVURN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 16:17:13 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:55943 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756154Ab0GVURJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 16:17:09 -0400
+Received: by gxk23 with SMTP id 23so4857976gxk.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 13:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Tld3rNAd+XD+AMkkIPtVobLr+gTw7jGAeblSKVdux9g=;
-        b=H+iyQ6wMjvh5j7iIuxehfc/qbeuhAabrIR5I5IBfVvylg3a6ds5P1hNniXf7A94+Yu
-         x1EQYAVJZE1tSTfTBTWu8TTz8uub/V6fTqX/8kyyUp+fp70nkrCkFjw5YD3WsjgEnoCD
-         /Bzv4Lk07+ZGuIawnWfdZPjj7T4SDn64hPUso=
+        bh=/9yvu/8Xc6Q2hYqPmytf9xXAM46gG9SE2CMIwl16ttI=;
+        b=RHR3Ylqjkfj2kgD93hE2XNF+Ao8lYKqcJBpdK4Pt7BC9qUOdZOvmKpLt6xlWjuo1s6
+         c7RIzUNGeJYS7T+Di8myBwJEkaiKEf4LIjsy3QNJkFL4vre11+OEmROnhnMp5yG5QFlK
+         XyVXKzkVaG9hgom9y7ZLMfq3ttCLIzARWo4OI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=vKA5qCCaswCo4MF3lkTUogupH8AdWnKClyoZh6q3xhxI9HaWcRB4lGPQxZ6LvPLQGz
-         9j9wOyhFpFmwRbWGO5bvdN6PtrXZx5/cuRxkWi7qSCgj3uFln1iuAHWErlgBGFOVVHoV
-         K069wwGUZ0pppkxBM/SvzdzDgKPs6fxMIsWqg=
-Received: by 10.150.68.36 with SMTP id q36mr4762598yba.204.1279829305307; Thu, 
-	22 Jul 2010 13:08:25 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Thu, 22 Jul 2010 13:08:25 -0700 (PDT)
-In-Reply-To: <MoU2SrLLcYS4J28tNBJjfxYnqoLoX04XwHLgciB5KCUnhqJoXifmNFbSGHS4r8pboBurx-NhZWs@cipher.nrlssc.navy.mil>
+        b=HJ9555NFRgOPH8WHXy6L6YoPRnlMl0WZ9avCFpxI1HlINjwgn5gzW5Yoj08Tr+A6HM
+         o8Icw3U1wJ60ZTp9oKs0JM3B2/G54+CAV2nXodBMO9G6/uzaCWDkDUlTs/PU5hby7/uM
+         Za5C7F41rwq7Ny3hb9KT2R3KkLmrjC5Ji1rHE=
+Received: by 10.150.146.9 with SMTP id t9mr4672331ybd.10.1279829828162; Thu, 
+	22 Jul 2010 13:17:08 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Thu, 22 Jul 2010 13:17:08 -0700 (PDT)
+In-Reply-To: <20100722195653.GC4439@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151479>
 
-On Thu, Jul 22, 2010 at 19:15, Brandon Casey <casey@nrlssc.navy.mil> wr=
-ote:
-> From: Brandon Casey <drafnel@gmail.com>
+On Thu, Jul 22, 2010 at 19:56, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Avery Pennarun wrote:
 >
-> On systems with an echo which defaults to the XSI-conformant behavior
-> (Solaris, or others using Ksh), echo will interpret certain backslash=
-ed
-> characters as control sequences. =C2=A0This can cause a problem for i=
-nteractive
-> rebase when it is used to rebase commits whose commit "subject" (the =
-first
-> line) contains any of these backslashed sequences. =C2=A0In this case=
-, echo will
-> substitute the control sequence for the backslashed characters and ei=
-ther
-> the rebased commit message will differ from the original, or the reba=
-se
-> process will fail. =C2=A0Neither is desirable.
+>> Unfortunately everything built *on top of* Linus's file format
+>> contribution has turned out to be a disaster.
 >
-> So work around this issue by replacing the echo statements used to pr=
-int
-> out portions of the commit message, with printf.
+> Aside: this kind of statement might make it unlikely for exactly
+> those who would benefit most from your opinions to read them.
 >
-> Also, add a test to test for this breakage.
+> Well, that is my guess, anyway. =C2=A0I know that I have not found th=
+e time
+> to read your email (though I would like to) because I suspect based o=
+n
+> such sweeping statements that it would take a while to separate the
+> useful part from the rest.
+>
+> Of course I am glad to see people thinking about these issues.
+> My comment is only about how the results get presented.
 
-This looks good, especially the test for it:
+Well, it's not like Linus is the image of calmness when attacking
+something he perceives as crap design either >:)
 
-Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Anyway, to answer Bryan's question. My comments in previous messages
+shouldn't be interpreted as opposition to git-subtree being merged at
+all. It's clearly very useful, especially for cases where
+git-submodule is wanting. I'd be happy to review a patch that
+integrated it into the Git tree.
+
+But it's also clear that we have a lot of tribal knowledge about the
+lackings of git submodule / git subtree. It would be *really* useful
+if people like Avery and Jens which have obviously thought hard about
+the submodule/subtree issues would draft up some (calmly written) docs
+about how the two differ (with comparison tables etc.).
+
+That'd be a very helpful resource for Git users in deciding which one
+to use.
