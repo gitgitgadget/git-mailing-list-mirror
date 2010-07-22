@@ -1,143 +1,88 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: Re: [PATCH] Fix rebase with file move when diff.renames = copies
-Date: Thu, 22 Jul 2010 14:59:49 -0700 (PDT)
-Message-ID: <681325.9577.qm@web30002.mail.mud.yahoo.com>
-References: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org> <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net> <20100722075133.GA9292@burratino>
-Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
+From: John Dlugosz <JDlugosz@TradeStation.com>
+Subject: RE: Running git on Windows command line
+Date: Thu, 22 Jul 2010 18:32:59 -0400
+Message-ID: <1A9EA7E081C3FE46A0F446FFB66D10EB939E1D@FL01EXMB01.trad.tradestation.com>
+References: <1A9EA7E081C3FE46A0F446FFB66D10EB939B8A@FL01EXMB01.trad.tradestation.com>
+	<AANLkTimXZtlRKlAVuFH5TzzQ1z19ddYazIRKIgGALMpZ@mail.gmail.com>
+	<1A9EA7E081C3FE46A0F446FFB66D10EB939D37@FL01EXMB01.trad.tradestation.com>
+	<AANLkTin-RMEOfc7FlfnQfTgzxMfV-Vq6r5ahkP6P6_SJ@mail.gmail.com>
+	<1A9EA7E081C3FE46A0F446FFB66D10EB939DAC@FL01EXMB01.trad.tradestation.com>
+ <AANLkTil69VdTLldEcInFcYLwcStFnEEkoBCAWS1kd-S6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 22 23:59:59 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "kusmabite@gmail.com" <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 00:33:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc3o4-00052u-Dt
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 23:59:56 +0200
+	id 1Oc4KM-0000Xu-0u
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 00:33:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270Ab0GVV7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 17:59:51 -0400
-Received: from web30002.mail.mud.yahoo.com ([209.191.69.19]:21842 "HELO
-	web30002.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751166Ab0GVV7u (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 17:59:50 -0400
-Received: (qmail 9845 invoked by uid 60001); 22 Jul 2010 21:59:49 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1279835989; bh=0vGdPyjByTb5uzBI9vxS22yNJwuGERxinWYq4N+7uvw=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=X6IfGyIW8l+mmM83PaYJ9cBFPoCmBgMm3VLvydLBeo+COUrfZg5wzGy7uzF98HbsS7dX94vLDYdk97VUIDBUxF2sSzpm49fVnGRvYtsfUgOVjeqD+/GlDsY5uHdL02uR+ybE5K3+7FSF4tqo96uW4u5GShMNEEhcRS60XXIpOUQ=
-X-YMail-OSG: J_jcx.UVM1m8Iyr9.Lv7QPhxnqdgpOOXUR8DkjJ0LTQlRK8
- byzhlVQyBObqmgSG85FDZWuTvY3AbmLep5g0PGpUftk8Ee3n6bh_ZIQmR7t4
- SlwL_2cvHkWJ4IAnJ.8onPgz9bD_8QF9Xen.2uGMBtaDRu4GcJcgU359xY7i
- RmMs7ODUUu.ckQAlCq1qsqgK6.MczMk5Q7JB31TTOFtyG3gZn9ialOJk19_T
- x6GffCuMHQnATjIdB1eULwKzG5KD1o.CjNnpJ8bKZGeAL9B6CRCohGxqmmMO
- TCfNAPmyFb3Mv1YHiTM9zQSeI1umPa4L4UeEk6kylHMFI0tUGm9k1XN2kKGc
- yaR6j.AeLc3.5CObs2yX1BT31olUy309j
-Received: from [17.202.32.26] by web30002.mail.mud.yahoo.com via HTTP; Thu, 22 Jul 2010 14:59:49 PDT
-X-RocketYMMF: ddkilzer
-X-Mailer: YahooMailRC/420.4 YahooMailWebService/0.8.105.277674
-In-Reply-To: <20100722075133.GA9292@burratino>
+	id S1754379Ab0GVWdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jul 2010 18:33:10 -0400
+Received: from mail2.tradestation.com ([63.99.207.80]:40745 "EHLO
+	mail2.tradestation.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751472Ab0GVWdJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 18:33:09 -0400
+X-ASG-Debug-ID: 1279837981-34beae600001-QuoKaX
+Received: from FL01EXCAHT01.trad.tradestation.com (fl01excaht01.trad.tradestation.com [10.4.0.166]) by mail2.tradestation.com with ESMTP id lbOV1EIoyIa077sh (version=TLSv1 cipher=AES128-SHA bits=128 verify=NO); Thu, 22 Jul 2010 18:33:01 -0400 (EDT)
+X-Barracuda-Envelope-From: JDlugosz@TradeStation.com
+X-ASG-Whitelist: Client
+Received: from FL01EXMB01.trad.tradestation.com ([::1]) by
+ FL01EXCAHT01.trad.tradestation.com ([::1]) with mapi; Thu, 22 Jul 2010
+ 18:33:00 -0400
+X-Barracuda-BBL-IP: ::1
+X-Barracuda-RBL-IP: ::1
+X-ASG-Orig-Subj: RE: Running git on Windows command line
+Thread-Topic: Running git on Windows command line
+Thread-Index: Acsp4X2z9NN8K88LSPygB97G11/mGwADBYaA
+In-Reply-To: <AANLkTil69VdTLldEcInFcYLwcStFnEEkoBCAWS1kd-S6@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-Barracuda-Connect: fl01excaht01.trad.tradestation.com[10.4.0.166]
+X-Barracuda-Start-Time: 1279837981
+X-Barracuda-Encrypted: AES128-SHA
+X-Barracuda-URL: http://192.168.51.31:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at tradestation.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151489>
 
-On Jonathan Nieder wrote:
+ 
 
-> David D. Kilzer wrote:
+> I'm aware of all this, but I don't think you're hearing me: the reason
+
+> why the behavior has changed for you is very likely to be you having
+
+> switched package. Yes, the naming is confusing.
+
 > 
-> > With diff.renames = copies, a rebase with a  file move will fail with
-> > the following error:
-> >
-> >      fatal: mode change for <file>, which is not in current  HEAD
-> >     Repository lacks necessary blobs to fall back on  3-way merge.
-> >     Cannot fall back to three-way  merge.
-> >     Patch failed at 0001.
-> 
-> I would think that the  following works fine:
-> 
->     git init test-repo  &&
->     cd test-repo &&
->      echo hello >greeting.txt &&
->     git add  greeting.txt &&
->     git commit -m base  &&
->     git checkout -b move  &&
->     git mv greeting.txt moved.txt  &&
->     git commit -m move  &&
->     git checkout master  &&
->     echo hi >greeting.txt  &&
->     git add greeting.txt  &&
->     git commit -m change  &&
->     git checkout move  &&
->     echo '[diff] renames = copies'  >>.git/config &&
->     git rebase  master
-> 
-> What am I doing wrong?
+
+> --
+
+> Erik "kusma" Faye-Lund
 
 
-Given the following tree:
 
-      B' topic
-     /
-    A---B master
-
-A: New file "F1" is committed.
-B: New file "F2" is committed.
-B': New file "F2" is committed (identical in content to "F2" on B), and "F1" is 
-renamed to "F3".
-
-When the topic branch is rebased onto master with diff.renames=copies, git fails 
-when attempting to build a fake ancestor for F1.  The key to reproducing the bug 
-is to have an identical new file added on both B and B'.
-
-My original patch in <http://marc.info/?l=git&m=122635667614099&w=2> addressed 
-this in builtin-apply.c, but Junio didn't like this approach as noted in 
-<http://marc.info/?l=git&m=122636097120953&w=2>.
-
-> Patch does not apply to master or maint, due to conflict  with
-> v1.7.1-rc0~37^2~5 (rebase: support automatic notes  copying,
-> 2010-03-12).  One sneaky way to avoid this kind of thing would  be to
-> insert new tests at some logical point in the middle of a test  script.
+No, I've only/always installed Git-1.*preview*.exe.  I still have the downloaded files.
 
 
-Sorry about that--I forgot to rebase it to maint before sending it.
-
-> Test nitpicks:
 
 
-Thanks!  I'll make the requested changes in the next patch.
-
-> This wants to notice that Y  was already added so the top patch can be
-> simplified to include only a  rename.
 
 
-Actually, this is the key to reproducing the bug!
-
-> Can you explain why this test will fail without your  patch?
 
 
-Here is a stand-alone script that reproduces the bug:
 
-    git init test-repo &&
-    cd test-repo &&
-    echo hello > F1 &&
-    git add F1 &&
-    git commit -m "A" &&
-    git checkout -b topic &&
-    echo hi > F2 &&
-    git add F2 &&
-    git mv F1 F3 &&
-    git commit -m "B'" &&
-    git checkout master &&
-    echo hi > F2 &&
-    git add F2 &&
-    git commit -m "B" &&
-    git checkout topic &&
-    git config diff.renames copies &&
-    GIT_TRACE=1 git rebase master
 
-Note that the test case in my patch depended on "F1" (which was "A") being 
-committed by an earlier test.
-
-Dave
+TradeStation Group, Inc. is a publicly-traded holding company (NASDAQ GS: TRAD) of three operating subsidiaries, TradeStation Securities, Inc. (Member NYSE, FINRA, SIPC and NFA), TradeStation Technologies, Inc., a trading software and subscription company, and TradeStation Europe Limited, a United Kingdom, FSA-authorized introducing brokerage firm. None of these companies provides trading or investment advice, recommendations or endorsements of any kind. The information transmitted is intended only for the person or entity to which it is addressed and may contain confidential and/or privileged material. Any review, retransmission, dissemination or other use of, or taking of any action in reliance upon, this information by persons or entities other than the intended recipient is prohibited.
+  If you received this in error, please contact the sender and delete the material from any computer.
