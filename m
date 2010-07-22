@@ -1,72 +1,87 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-rebase--interactive.sh: use printf instead of echo
- to print commit message
-Date: Thu, 22 Jul 2010 14:45:49 -0500
-Message-ID: <20100722194549.GA4439@burratino>
-References: <MoU2SrLLcYS4J28tNBJjfxYnqoLoX04XwHLgciB5KCUnhqJoXifmNFbSGHS4r8pboBurx-NhZWs@cipher.nrlssc.navy.mil>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Thu, 22 Jul 2010 14:56:53 -0500
+Message-ID: <20100722195653.GC4439@burratino>
+References: <4C472B48.8050101@gmail.com>
+ <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com>
+ <AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com>
+ <AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com>
+ <AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com>
+ <4C4778DE.9090905@web.de>
+ <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com>
+ <m31vavn8la.fsf@localhost.localdomain>
+ <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Jul 22 21:47:01 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 22 21:58:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc1jP-0001q8-H1
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 21:46:59 +0200
+	id 1Oc1u9-0007bR-H6
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 21:58:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757327Ab0GVTqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 15:46:54 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:33875 "EHLO
+	id S1754348Ab0GVT56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 Jul 2010 15:57:58 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:63198 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755701Ab0GVTqx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jul 2010 15:46:53 -0400
-Received: by ewy23 with SMTP id 23so3082386ewy.19
-        for <git@vger.kernel.org>; Thu, 22 Jul 2010 12:46:51 -0700 (PDT)
+	with ESMTP id S1752676Ab0GVT55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 Jul 2010 15:57:57 -0400
+Received: by ewy23 with SMTP id 23so3086210ewy.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 12:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=cqYKCgywZkYcAOaEbNk4s5k921VSBi9ne8xtMWk7gKg=;
-        b=CVGlC3GyA6SuF7c5fPrUI8MK6a/7oZ0Som1cYOhubtaTU3AuNbxhpstMbVIuAJfdB/
-         qlJB4HYeuk5pqWLMTMS6mef1dd1G7i9BQuioEKNS8l6SccMJt/mYBUbuT5zuPBhpmBUY
-         hcLr46Injib2cF/yGvgJx/xLnN9VcD9Z/VB8o=
+        bh=oVTBnBZ75BleA9f4NBqkIcs0UccQN0tJ6auv4tvkD38=;
+        b=w9A6aVHmR+rAp5nYd62Ig80fdeilDPxmDHvdMYtcN7O1bxOCjMSCQzFKcMh1p6hfKc
+         xO9SX47cm+bI5YanhqB4xCb5ZWKfo1vaJaY8qRDXfaG0l7DkY+wmvrRVsJuLvEMIg+rV
+         jZBdFIKJTHcKoO6i8jEa+RHMmOoFHCnFJpd4s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=qT1kKRGYzI7NpLmKnYuSeXDU/oX4pAKRpSroUxV7w/ghBu1XY1Us0Oe0NNPZnNaMR+
-         6zZtbK/ruLuqIyGkfTW/8d1VFr/cOlZ/HQzhZovvqsmH0WO8OgtWyLw3+odK/AASYZKK
-         x9GXp3X87BG5OkYMtcqP210X5kP9fGklB79XI=
-Received: by 10.213.26.75 with SMTP id d11mr8306789ebc.27.1279828011808;
-        Thu, 22 Jul 2010 12:46:51 -0700 (PDT)
+        b=DryTCtN0VLAsBwZ71XIVTEZDNxdEqveeWkCHYZVkTT9kfPhbcuWwvUzoHdkb/PmVip
+         NPudY9DeEWN+W0YhRlUmgYabKKrZBXOIy80JMsKKdPU+A1sdOoo7pSPogxPJhs5DnFpU
+         D+1GvO9H/QDjR3XKxw1bLbPrBEeVgPVVjn8NI=
+Received: by 10.213.22.18 with SMTP id l18mr2253862ebb.85.1279828675035;
+        Thu, 22 Jul 2010 12:57:55 -0700 (PDT)
 Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v8sm55792069eeh.20.2010.07.22.12.46.48
+        by mx.google.com with ESMTPS id v59sm55830766eeh.16.2010.07.22.12.57.51
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 22 Jul 2010 12:46:50 -0700 (PDT)
+        Thu, 22 Jul 2010 12:57:53 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <MoU2SrLLcYS4J28tNBJjfxYnqoLoX04XwHLgciB5KCUnhqJoXifmNFbSGHS4r8pboBurx-NhZWs@cipher.nrlssc.navy.mil>
+In-Reply-To: <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151475>
 
-Brandon Casey wrote:
+Avery Pennarun wrote:
 
-> On systems with an echo which defaults to the XSI-conformant behavior
-> (Solaris, or others using Ksh)
+> Unfortunately everything built *on top of* Linus's file format
+> contribution has turned out to be a disaster.
 
-Debian and BSD systems with the Almquist shell, too.
+Aside: this kind of statement might make it unlikely for exactly
+those who would benefit most from your opinions to read them.
 
-> So work around this issue by replacing the echo statements used to print
-> out portions of the commit message, with printf.
+Well, that is my guess, anyway.  I know that I have not found the time
+to read your email (though I would like to) because I suspect based on
+such sweeping statements that it would take a while to separate the
+useful part from the rest.
 
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+Of course I am glad to see people thinking about these issues.
+My comment is only about how the results get presented.
 
-Thanks for taking care of this.
+Jonathan
