@@ -1,80 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t2017: redo physical reflog existance check
-Date: Thu, 22 Jul 2010 10:35:35 -0700
-Message-ID: <7vlj93h120.fsf@alter.siamese.dyndns.org>
-References: <1279763190-32757-1-git-send-email-erick.mattos@gmail.com>
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: Re: [PATCH 1/3] git-instaweb: Fix custom apache log placement
+Date: Thu, 22 Jul 2010 13:01:02 -0500
+Message-ID: <AANLkTiknXtteX77h8Uy1JuWmGLWSSRkAGkS3INMOHBoJ@mail.gmail.com>
+References: <1277865900-25044-1-git-send-email-dpmcgee@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 22 19:35:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric Wong <normalperson@yhbt.net>, Dan McGee <dpmcgee@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 22 20:01:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1ObzgU-0000IK-2b
-	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 19:35:50 +0200
+	id 1Oc05J-0003QL-Qj
+	for gcvg-git-2@lo.gmane.org; Thu, 22 Jul 2010 20:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759291Ab0GVRfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 13:35:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45212 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756055Ab0GVRfn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jul 2010 13:35:43 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 39DA5C66B9;
-	Thu, 22 Jul 2010 13:35:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U0f3WGWRoF4Esmb+nzgNTR62aIQ=; b=kDPl8d
-	LD08zWkv8LPytOCHjletPK7Axsi+8yVXx6rG0E8rN6zlQTLS/qx8CQbChmDmP9Qv
-	maiCje1DPLru1SeXR655CpjlcsYktCvIlwLbJyCfr5AwM1KReGuo160vZaRreVA/
-	uQtO/jsg7+7wJqHZ/xm1mwtNuUtdM5O3nTwV4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XNDmVs5BzVgMfKfGirQqC8EZaPIIXzph
-	d/oPQJWeFxkVnR9dyOaw/su65HAOQzpHY3yXZ/zRgghMe0gC+Fvapymr1wOqaIYb
-	13ZqFecSZmzxRizBg6A7U9IUimetcG906HxTLSJFJm38IUEihQIsK/AceBKnQtjg
-	4tgXwufDW0s=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13D79C66B8;
-	Thu, 22 Jul 2010 13:35:40 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D22DC66B7; Thu, 22 Jul
- 2010 13:35:36 -0400 (EDT)
-In-Reply-To: <1279763190-32757-1-git-send-email-erick.mattos@gmail.com>
- (Erick Mattos's message of "Wed\, 21 Jul 2010 22\:46\:30 -0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8BBEA5AA-95B7-11DF-A054-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759208Ab0GVSBI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 22 Jul 2010 14:01:08 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:59048 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759242Ab0GVSBF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 Jul 2010 14:01:05 -0400
+Received: by wwj40 with SMTP id 40so3741215wwj.1
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 11:01:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5jh74oob9GXcTUS6mpXhe0XZ074lTYKCvrp+viA/Yb4=;
+        b=rymRva1zlSp3TKtCDMOM86pdYrsPM5O41g/8dTiHGFrSkkpngyAp3yRWiDtCqunhaJ
+         06CdSJ82R4HXBOHRnLRZRKKhtI+jeqW760yjFrbJYghJsKiSKFbtVwssJdplzBqz5ZZ2
+         LZpdda5nitcSwSzYdw6GPC0662BGS6HrNFyWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=C8Kq3HaI/gGWqvWAW+omBFBdmsrCtyGuzFI5O41N5T6AvsLOWNKjJUsHl7K5euQYcJ
+         ud3BJQikXd3792D5lQfRHgd3v3Jb0hbh13ypv2G4+GJG+5aqAi0CGQkEl6xDjyK0P6iP
+         AZg1MJtM4tG9syIQXAxKh8LzcuBOPsMVR2xa8=
+Received: by 10.216.185.72 with SMTP id t50mr2231839wem.77.1279821662880; Thu, 
+	22 Jul 2010 11:01:02 -0700 (PDT)
+Received: by 10.216.177.209 with HTTP; Thu, 22 Jul 2010 11:01:02 -0700 (PDT)
+In-Reply-To: <1277865900-25044-1-git-send-email-dpmcgee@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151465>
 
-Erick Mattos <erick.mattos@gmail.com> writes:
+On Tue, Jun 29, 2010 at 9:44 PM, Dan McGee <dpmcgee@gmail.com> wrote:
+> 'CustomLog' is provided by mod_log_config so we need to include the m=
+odule
+> in our generated config. This was added in d94775e1f9a.
+>
+> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
 
-> Although this is not a problem to all the other changes, it is laming to
-> the tenth test.  The implementation of the correspondent problem creates
-> a "touch" reflog that must be wiped out if not used by committing the
-> new branch.
+I noticed this set of patches didn't go anywhere...at least the first
+two were more bug fixes than improvements so I would have expected
+them to get into 1.7.2. Did they get lost in the shuffle?
 
-I thought about it a bit when I sent out my patch, but I do not think that
-is necessary.
+1: http://marc.info/?l=3Dgit&m=3D127786592330110&w=3D2
+2: http://marc.info/?l=3Dgit&m=3D127786592030105&w=3D2
+3: http://marc.info/?l=3Dgit&m=3D127791591706076&w=3D2
 
-The things you care about, after running "-l --orphan eta", are:
+-Dan
 
- - If you make a commit, you get eta@{...} reflog that records it; and
-
- - If you leave the still-to-be-born eta branch without making a commit,
-   you do not leave eta@{...} reflog behind.
-
-Your zeta@{...} test is about the former, and your eta@{...} test is about
-the latter.  I think they already check what they want to see happen.
-
-I also am afraid that the "test -f" check would expose the implementation
-detail more than necessary.  We may want to come up with a different
-implementation of this behaviour later that may not create an empty file
-there.
+> ---
+> =C2=A0git-instaweb.sh | =C2=A0 =C2=A02 +-
+> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-instaweb.sh b/git-instaweb.sh
+> index 6635fbe..a01476a 100755
+> --- a/git-instaweb.sh
+> +++ b/git-instaweb.sh
+> @@ -314,7 +314,7 @@ PidFile "$fqgitdir/pid"
+> =C2=A0Listen $bind$port
+> =C2=A0EOF
+>
+> - =C2=A0 =C2=A0 =C2=A0 for mod in mime dir; do
+> + =C2=A0 =C2=A0 =C2=A0 for mod in mime dir log_config; do
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if test -e $mo=
+dule_path/mod_${mod}.so; then
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0echo "LoadModule ${mod}_module " \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 "$module_path/mod_${mod}.so" >> "$conf"
+> --
+> 1.7.1
+>
+>
