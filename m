@@ -1,149 +1,177 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [WIP/RFC 04/13] notes.h/c: Propagate combine_notes_fn return value
- to add_note() and beyond
-Date: Sat, 24 Jul 2010 00:39:24 +0200
-Message-ID: <201007240039.25005.johan@herland.net>
-References: <1279880104-29796-1-git-send-email-johan@herland.net>
- <1279880104-29796-5-git-send-email-johan@herland.net>
- <20100723152344.GA1709@burratino>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Fri, 23 Jul 2010 18:50:49 -0400
+Message-ID: <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 
+	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 
+	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 
+	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
+	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
+	<4C49B31F.8000102@xiplink.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 24 00:39:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Sat Jul 24 00:51:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcQtw-000394-Nw
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 00:39:33 +0200
+	id 1OcR5K-0006hF-1p
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 00:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757338Ab0GWWj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 18:39:28 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:51333 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756206Ab0GWWj1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 18:39:27 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L61002YR89P7K50@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sat, 24 Jul 2010 00:39:25 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id A2C0E1EA53AF_C4A1A1DB	for <git@vger.kernel.org>; Fri,
- 23 Jul 2010 22:39:25 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 5D6C81EA2DEE_C4A1A1DF	for <git@vger.kernel.org>; Fri,
- 23 Jul 2010 22:39:25 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L6100BR789P8710@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Sat, 24 Jul 2010 00:39:25 +0200 (MEST)
-User-Agent: KMail/1.13.5 (Linux/2.6.34-ARCH; KDE/4.4.5; x86_64; ; )
-In-reply-to: <20100723152344.GA1709@burratino>
+	id S1758002Ab0GWWvM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 18:51:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:55570 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757486Ab0GWWvL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 18:51:11 -0400
+Received: by wyf19 with SMTP id 19so697482wyf.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 15:51:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fVFh9HWpnLMwh1pnBIDCQsk4W1ARtA33qPmsI7l8Rc0=;
+        b=MdAkwyCosm21OJpza0aN4NF7maYxcDZAxaLoyVhFQyadFJqxchJfr3OM7GMc8y2hlo
+         7zcRrl6n94KFA+2YKioSB6NTzSs2bz1fwndtZtQ/OD+4mxKUlYozklg8UPpgFHHMOW5w
+         VJ/aMu9VC8Ta+I4vkf89CUecLrdfcLebOjODs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=KxrP+LsrEKWKY3fidU7PTerT4z+r8J3PxQaLEXrdeiktkAKgWnTalfVsrVIeVCPJhL
+         0Xr7UM5dVK/W83OPeKZfECCysb3/Uh/jVH14CZOOjhhqsN+K2EXfpQY2m0OrVVXQmLvh
+         iGWfYiC5sUi60ERZ3T/Ijk1V/pYrRfWSQaHZM=
+Received: by 10.216.187.143 with SMTP id y15mr4165580wem.74.1279925469422; 
+	Fri, 23 Jul 2010 15:51:09 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Fri, 23 Jul 2010 15:50:49 -0700 (PDT)
+In-Reply-To: <4C49B31F.8000102@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151582>
 
-On Friday 23 July 2010, Jonathan Nieder wrote:
-> Johan Herland wrote:
-> > +		/* No return value checking; c_n_overwrite always returns 0 */
-> >  		add_note(t, object, new_note, combine_notes_overwrite);
-> 
-> I suspect something like
-> 
-> 	if (add_note(t, object, ...))
-> 		die("confused: combine_notes_overwrite failed");
-> 
-> would be less likely to fall out of date. ;-)
+On Fri, Jul 23, 2010 at 11:19 AM, Marc Branchaud <marcnarc@xiplink.com>=
+ wrote:
+> On 10-07-22 03:41 PM, Avery Pennarun wrote:
+>> 1) Sometimes I want to clone only some subdirs of a project
+>> 2) Sometimes I don't want the entire history because it's too big.
+>> 3) Super huge git repositories start to degrade in performance.
+>
+> The reason we turned to submodules is precisely to deal with reposito=
+ry size.
 
-Good call, I'll squash the following into the next iteration:
+I believe that's very common.
 
-Thanks!
+However, I wonder whether that's actually a good reason for git to
+develop better submodules, or actually just a good reason for git to
+get better support for handling huge repositories.
 
-...Johan
+My bup project (http://github.com/apenwarr/bup) is all about huge
+repositories.  It handles repositories with hundreds of gigabytes, and
+trees containing millions of files (entire filesystems), quite nicely.
+ Of course, it's not a version control system, so it won't solve your
+problems.  It's just evidence that large repositories are actually
+quite manageable without changing the fundamentals of git.
 
+> =A0Our code base encompasses the entire FreeBSD tree plus different v=
+ersions of
+> the Linux kernel, along with various third-party libraries & apps. =A0=
+You don't
+> need everything to build a given product (a FreeBSD product doesn't u=
+se any
+> Linux kernels, for example) but because all the products share common=
+ code we
+> need to be able to branch and tag the common code along with the unco=
+mmon code.
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 516401c..5aaae03 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -576,9 +576,8 @@ static int add(int argc, const char **argv, const char *prefix)
- 
- 	if (is_null_sha1(new_note))
- 		remove_note(t, object);
--	else
--		/* No return value checking; c_n_overwrite always returns 0 */
--		add_note(t, object, new_note, combine_notes_overwrite);
-+	else if (add_note(t, object, new_note, combine_notes_overwrite))
-+		die("confused: combine_notes_overwrite failed");
- 
- 	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
- 		 is_null_sha1(new_note) ? "removed" : "added", "add");
-@@ -657,8 +656,8 @@ static int copy(int argc, const char **argv, const char *prefix)
- 		goto out;
- 	}
- 
--	/* No return value checking; c_n_overwrite always returns 0 */
--	add_note(t, object, from_note, combine_notes_overwrite);
-+	if (add_note(t, object, from_note, combine_notes_overwrite))
-+		die("confused: combine_notes_overwrite failed");
- 	commit_notes(t, "Notes added by 'git notes copy'");
- out:
- 	free_notes(t);
-@@ -717,9 +716,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 
- 	if (is_null_sha1(new_note))
- 		remove_note(t, object);
--	else
--		/* No return value checking; c_n_overwrite always returns 0 */
--		add_note(t, object, new_note, combine_notes_overwrite);
-+	else if (add_note(t, object, new_note, combine_notes_overwrite))
-+		die("confused: combine_notes_overwrite failed");
- 
- 	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
- 		 is_null_sha1(new_note) ? "removed" : "added", argv[0]);
-diff --git a/notes-merge.c b/notes-merge.c
-index 122d6b9..47cd32a 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -442,12 +442,14 @@ static int merge_one_change(struct notes_merge_options *o,
- 		return 0;
- 	case NOTES_MERGE_RESOLVE_THEIRS:
- 		OUTPUT(o, 2, "Using remote notes for %s", sha1_to_hex(p->obj));
--		add_note(t, p->obj, p->remote, combine_notes_overwrite);
-+		if (add_note(t, p->obj, p->remote, combine_notes_overwrite))
-+			die("confused: combine_notes_overwrite failed");
- 		return 0;
- 	case NOTES_MERGE_RESOLVE_UNION:
- 		OUTPUT(o, 2, "Concatenating local and remote notes for %s",
- 		       sha1_to_hex(p->obj));
--		add_note(t, p->obj, p->remote, combine_notes_concatenate);
-+		if (add_note(t, p->obj, p->remote, combine_notes_concatenate))
-+			die("confused: combine_notes_concatenate failed");
- 		return 0;
- 	}
- 	die("Unknown resolve method (%i).", o->resolve);
-@@ -489,7 +491,9 @@ static int merge_changes(struct notes_merge_options *o,
- 			   !hashcmp(p->local, p->base)) {
- 			/* no local change; adopt remote change */
- 			OUTPUT(o, 5, "\t\t\tno local change, adopting remote");
--			add_note(t, p->obj, p->remote, combine_notes_overwrite);
-+			if (add_note(t, p->obj, p->remote,
-+				     combine_notes_overwrite))
-+				die("confused: combine_notes_overwrite failed");
- 		} else {
- 			/* need file-level merge between local and remote */
- 			OUTPUT(o, 5, "\t\t\tneed content-level merge");
+Honest question: do you care about the wasted disk space and download
+time for these extra files?  Or just the fact that git gets slow when
+you have them?
 
+How people answer that question very much affects the way git should
+be designed.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+> So a straight "git clone" that would need to fetch all of FreeBSD plu=
+s 4
+> different Linux kernels and check all that out is a major problem, es=
+pecially
+> for our automated build system (which could definitely be implemented=
+ better,
+> but still).
+
+To be absolutely pedantic, the four linux kernels likely share most of
+their objects and so you're only paying the cost (at least during
+fetch) of including it once :)
+
+(If you're actually using git-submodule and each copy of the kernel is
+its own module, then it might be cloning the kernel four times
+separately, in which case the objects *don't* get shared, so this ends
+up being much more expensive than it should be.  That could be fixed
+by slightly improving git-submodule to share some objects rather than
+rearchitecting it though.)
+
+>=A0In truth it's the checkout that takes the most time by far,
+> though commands like git-status also take inconveniently long.
+
+Yeah, git could stand to be optimized a bit here.  And since Windows
+stats files about 10x slower than Linux, this problem occurs about 10x
+sooner on Windows, which makes using git on Windows (which sadly I
+have to do sometimes) extremely painful compared to Linux.
+
+IMHO, the correct answer here is to have an inotify-based daemon prod
+at the .git/index automatically when files get updated, so that git
+itself doesn't have to stat/readdir through the entire tree in order
+to do any of its operations.  (Windows also has something like inotify
+that would work.)  If you had this, then git
+status/diff/checkout/commit would be just as fast with zillions of
+files as with 10 files.  Sooner or later, if nobody implements this, I
+promise I'll get around to it since inotify is actually easy to code
+for :)
+
+Also note that the only reason submodules are faster here is that
+they're ignoring possibly important changes.  Notably, when you do
+'git status' from the top level, it won't warn you if you have any
+not-yet-committed files in any of your submodules.  Personally, I
+consider that to be really important information, but to obtain it
+would make 'git status' take just as long as without submodules, so
+you wouldn't get any benefit.  (I think nowadays there's a way to get
+this recursive status information if you want it, but it'll be slow of
+course.)
+
+> We chose git-submodule over git-subtree mainly because git-submodule =
+lets us
+> selectively checkout different parts of our code. =A0(AFAIK sparse ch=
+eckouts
+> aren't yet an option.)
+
+=46air enough.  If you could confirm or deny my theory that this is
+*entirely* a performance related concern (as opposed to disk space /
+download time), that would be helpful.
+
+>=A0We didn't really consider git-subtree because it's
+> not an official part of git, and we didn't want to have to teach (and=
+ nag)
+> all our developers to install and maintain it in addition to keeping =
+up with
+> git itself.
+
+Arguably, this is a vote for including git-subtree into the core
+(which was Bryan's point when he started this thread); it obviously is
+being rejected sometimes by git users simply because it's not in the
+core, even though it could help them.
+
+Have fun,
+
+Avery
