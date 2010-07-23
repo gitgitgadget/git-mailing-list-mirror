@@ -1,74 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: rfc - Changing the way gitk and git-gui are managed
-Date: Thu, 22 Jul 2010 19:39:11 -0700
-Message-ID: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: rfc - Changing the way gitk and git-gui are managed
+Date: Thu, 22 Jul 2010 23:04:23 -0500
+Message-ID: <AANLkTimdYfv-Z57iHD+YLfjKi66av5xmaC3JEMRNRw+Y@mail.gmail.com>
+References: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 23 04:39:35 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 06:04:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oc8Ag-00085A-K5
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 04:39:34 +0200
+	id 1Oc9VB-0006s6-S6
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 06:04:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585Ab0GWCjU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 Jul 2010 22:39:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39187 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751412Ab0GWCjT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 Jul 2010 22:39:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78834C7083;
-	Thu, 22 Jul 2010 22:39:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=PXEg
-	VGFQTjfVghpNObSiVhXXHCo=; b=ac4ABqPOTTW2SO/qZe2h+sLPchPSdqIvC5LB
-	bTa2NxrYSrGh8hSqLeRaFDxU5tI1/xKeKvr54ZzFV6e0+c3MS53KfqcrZKrtcrGl
-	iGM9PdrQloldsV58kS+4ZkO2w6CmZqrpnVRtVmBqrT0gEfHNCFh/qQUm9AwFV0tx
-	0xR/djk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Oj8
-	GLpqQDYcELeC8A1DWyFC5mIGL6Y+IvWDgV49oyyK2F8SByr0QTDjchW4b4r8mV0Q
-	L+yCoHWRe9VLaEv6WwSWhgnK3Q2WnuyvaS4IdwZyeXNcwM1UkP76zWEzTwSliVJn
-	BKCAXx9hXtwYlhxgu1XGorTjK08/q4pD9SrE3yGE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E37EC7081;
-	Thu, 22 Jul 2010 22:39:15 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE435C7080; Thu, 22 Jul
- 2010 22:39:13 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7BF05DFC-9603-11DF-B5A9-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1750780Ab0GWEEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 00:04:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:41143 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750701Ab0GWEEo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 00:04:44 -0400
+Received: by gyg10 with SMTP id 10so1172114gyg.19
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 21:04:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=g1Tl4PrOuvz9eg+GPxDaZ0PGLbwnV3ijlY1umYGSof4=;
+        b=dKvujaDp8RIlo8KMedXeHhNbPoIwYxP+n9D43XrtWMJeZCjyOWTY41WT9pohDR4292
+         fZXvNw1zCL2ix78D2D23vpV+5EPkHqFd352Ju4n34NCwUXybcngVm0jtYXV2my7p2i6n
+         UGi4sYnXzsPtwUoaBWzqAqeRAPtw8tk0Z2X0c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ub5PKk6ni2MaiEbeYpgASGEcv+I1IeJaCDGJaJ3xw24kiYjtWrai4x7Sgq05LYZM8y
+         1zIKyGAQ8m4mEYZcg2Evm/pX1UDpZvi4wAyu46MxKBlblMt3IgzFnqh3PKlZMJqYdRZW
+         C6SkI+S4M6/GOjqZrCOrp70/5wHLbVtutPNgs=
+Received: by 10.150.179.20 with SMTP id b20mr4958295ybf.312.1279857883173; 
+	Thu, 22 Jul 2010 21:04:43 -0700 (PDT)
+Received: by 10.150.66.12 with HTTP; Thu, 22 Jul 2010 21:04:23 -0700 (PDT)
+In-Reply-To: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151503>
 
-Somebody off-list suggested removing gitk and git-gui directories from my
-repository and I've been playing with the idea and kind of like the end
-result.
+Heya,
 
-The plan (I am not decided to buy into it yet, hence I am sending this
-rfc) is to:
+On Thu, Jul 22, 2010 at 21:39, Junio C Hamano <gitster@pobox.com> wrote:
+> Somebody off-list suggested removing gitk and git-gui directories from my
+> repository and I've been playing with the idea and kind of like the end
+> result.
 
-    - remove gitk-git and git-gui directories;
-    - add modules/gitk and modules/git-gui submodules;
-    - teach the top-level Makefile about the new location of these two
-      packages.
+The neighboring thread [0] about git subtree seems highly relevant to
+this decision. Avery, do you perhaps any additional insights wrt this
+particular use case?
 
-Switching from 1.7.2 to this tree will of course give you a tree without
-gitk and git-gui (nothing a simple "git submodule init/update" cannot
-fix), and switching back from there to 1.7.2 codebase needs manual removal
-of these two directories that will become leftover directories if you want
-to keep the superproject directory pristine clean, but other than that, I
-do not see major downsides.
+I on one hand like that we're going to (finally) start dogfooding
+submodules, but after reading Avery's emails I feel unsure whether
+that really is the right course of action...
 
-I am wondering what people think.  Especially distro people who download
-and package git may be heavily affected.  I haven't adjusted the RPM spec
-file or "make dist" target, so I cannot assess the damage to these people
-myself yet.
+[0] http://thread.gmane.org/gmane.comp.version-control.git/151408
+
+-- 
+Cheers,
+
+Sverre Rabbelier
