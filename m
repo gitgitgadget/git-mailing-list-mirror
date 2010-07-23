@@ -1,83 +1,71 @@
-From: Dan McGee <dpmcgee@gmail.com>
-Subject: Re: [PATCH 1/3] git-instaweb: Fix custom apache log placement
-Date: Fri, 23 Jul 2010 08:40:21 -0500
-Message-ID: <AANLkTimV0kGRMwxYxQu8jgWsiwTC_msU+2QWNAmYZuYe@mail.gmail.com>
-References: <1277865900-25044-1-git-send-email-dpmcgee@gmail.com>
-	<AANLkTiknXtteX77h8Uy1JuWmGLWSSRkAGkS3INMOHBoJ@mail.gmail.com>
-	<20100722234256.GA19581@dcvr.yhbt.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: URL decoding changed semantics of + in URLs
+Date: Fri, 23 Jul 2010 14:10:36 +0000
+Message-ID: <AANLkTinsixPihZRtduuB_0puX_ucC0HYqHPU0UJMX2e-@mail.gmail.com>
+References: <201007231518.31071.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jul 23 15:40:30 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	jstpierre@mecheye.net
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jul 23 16:10:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcIUH-0000fh-Sy
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 15:40:30 +0200
+	id 1OcIxY-00027W-6Z
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 16:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754544Ab0GWNkY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 09:40:24 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58137 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753713Ab0GWNkX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 09:40:23 -0400
-Received: by wwj40 with SMTP id 40so4583442wwj.1
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 06:40:21 -0700 (PDT)
+	id S1754713Ab0GWOKi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 10:10:38 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51954 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870Ab0GWOKh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 10:10:37 -0400
+Received: by iwn7 with SMTP id 7so250039iwn.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 07:10:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=K5zSmnM4tIMuUmi2o8ubWO+FLMIjTNiheeuept8Fz7Q=;
-        b=IOQsrDOn3xuUauQpQ6tjpqzuk49fH/qD5UEQnij5wNRYyx7aWlZVPYGyRGtaz0mA4v
-         Rk20dSmSDnVWSRXokXz8pjM0TcGFH2w0NhjkJso3/OoHyQ8PO3ecFkvAs3+dzGAiKgDY
-         Tjjn5OKJwzvBUDHL/Nquti99l+Z5HCIzyvZ0E=
+        bh=luzwC17F14Lx1wHFMjjn60yJYFCIqrVmUI50EJZHVNg=;
+        b=vnrUFc1uSa9qrOx3hzEATZy62pJrm4M5EFCstDxyOWOUOvF8vXm2jC2l3f99GduyoP
+         xT8RlpybGFmG5XcXfIDYnKhX9vpK2j9AjqtowPW/nRc3K8luZkfnvBi1cP/vJPnVZwIp
+         RW1zS3CxEQWoUqb4NUiSzArVbQKNJGMgWspqE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=JJPT6DlQE/TbGgmW5KxpwXqPwtuUPRhfc40WsGUU5g6h/uyrdbpCDELMr0WPl4goj8
-         GFPMS+dIoV5q5MiqWmqMG4fd40lWvNzOjdI+fqq4RpcRhtU35rbyzfU6lYS+7lQB2/EG
-         V6tNnzLX51SwzGsXkUiCAfMVGbP5ElOXlsd3I=
-Received: by 10.227.20.77 with SMTP id e13mr3534065wbb.12.1279892421663; Fri, 
-	23 Jul 2010 06:40:21 -0700 (PDT)
-Received: by 10.216.177.209 with HTTP; Fri, 23 Jul 2010 06:40:21 -0700 (PDT)
-In-Reply-To: <20100722234256.GA19581@dcvr.yhbt.net>
+        b=q/T+gRZzYj1GJuxTM/Oxaj2AP7Uk3tYxnvaMzIHV7EFcMclf5oxFu89tQRo7PgmLw8
+         Rquo0D8GD7F+Sk6hpz5XkcpTC3JE08vwerlQKSpF5ddeRrVnYd0sPklr3KIPWOAKMjj3
+         PCuaDsXnOAn2GQOPq+ee1qHjoIgmWLtGu1A3M=
+Received: by 10.231.170.3 with SMTP id b3mr3704501ibz.122.1279894236558; Fri, 
+	23 Jul 2010 07:10:36 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Fri, 23 Jul 2010 07:10:36 -0700 (PDT)
+In-Reply-To: <201007231518.31071.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151532>
 
-On Thu, Jul 22, 2010 at 6:42 PM, Eric Wong <normalperson@yhbt.net> wrot=
+On Fri, Jul 23, 2010 at 13:18, Thomas Rast <trast@student.ethz.ch> wrot=
 e:
-> Dan McGee <dpmcgee@gmail.com> wrote:
->> On Tue, Jun 29, 2010 at 9:44 PM, Dan McGee <dpmcgee@gmail.com> wrote=
-:
->> > 'CustomLog' is provided by mod_log_config so we need to include th=
-e module
->> > in our generated config. This was added in d94775e1f9a.
->> >
->> > Signed-off-by: Dan McGee <dpmcgee@gmail.com>
->>
->> I noticed this set of patches didn't go anywhere...at least the firs=
-t
->> two were more bug fixes than improvements so I would have expected
->> them to get into 1.7.2. Did they get lost in the shuffle?
->>
->> 1: http://marc.info/?l=3Dgit&m=3D127786592330110&w=3D2
->> 2: http://marc.info/?l=3Dgit&m=3D127786592030105&w=3D2
->> 3: http://marc.info/?l=3Dgit&m=3D127791591706076&w=3D2
->
-> Hi Dan, can you address Junio's concerns here?
->
-> =C2=A0http://marc.info/?l=3Dgit&m=3D127791382102449&w=3D2
 
-I did already, and got no feedback...
-http://marc.info/?l=3Dgit&m=3D127791591706076&w=3D2
+> doesn't say much about + and the only escaping defined is the usual
+> %xx style. =C2=A0So is there a standard that mandates this, or was it=
+ just
+> a well-meaning but unnecessary backwards incompatible change?
 
--Dan
++ and %20 are as far as I know only interchangable in *query strings*,
+so having to clone 'git://git.gnome.org/gtk%2B' where you could
+previously clone 'git://git.gnome.org/gtk+' is a bug. Git shouldn't be
+changing that + to a %20.
+
+I haven't followed why we need to escape + to %20 at all, even in the
+query string. E.g. curl(1) doesn't do that before sending requests to
+Apache, which can handle either one. The + v.s. %20 duality is always
+handled at the server AFAIK.
