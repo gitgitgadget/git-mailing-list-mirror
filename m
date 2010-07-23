@@ -1,85 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] rebase: protect against diff.renames configuration
-Date: Fri, 23 Jul 2010 14:03:49 -0700
-Message-ID: <7vvd85ewqy.fsf@alter.siamese.dyndns.org>
-References: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org>
- <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net>
- <20100722075133.GA9292@burratino>
- <681325.9577.qm@web30002.mail.mud.yahoo.com>
- <20100723170103.GA2507@burratino> <20100723170613.GF2507@burratino>
- <AANLkTi=j8-YFwOYxcTWw3zqo=353fsB=vkmRttL4U+au@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Do not unquote + into ' ' in URLs
+Date: Fri, 23 Jul 2010 23:23:31 +0200
+Message-ID: <db9c97908966fa332be07b2a9f5215679e35b9e0.1279920066.git.trast@student.ethz.ch>
+References: <AANLkTinsixPihZRtduuB_0puX_ucC0HYqHPU0UJMX2e-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"David D. Kilzer" <ddkilzer@kilzer.net>, git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 23 23:04:15 2010
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, <avarab@gmail.com>, <jstpierre@mecheye.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 23 23:23:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcPPg-00047e-9B
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 23:04:12 +0200
+	id 1OcPiU-0002Ph-Ph
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 23:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757197Ab0GWVEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 17:04:07 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63005 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753679Ab0GWVED (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 17:04:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 001ECC7444;
-	Fri, 23 Jul 2010 17:04:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tzm3Izkjrrkp2b4dySBMe+EcGVU=; b=XMcb4P
-	UXaAEdkGVDsOLSXLdoUqB+OWoBkLM16gytl9WTLpm/mK/CDKRnprPC8s4aI7f99V
-	yvDKPUASD5JCAiffeFFr/wU8CAdyObF4AFe2eA0LsdP+BOID2BaaOtvtQaIgYXgl
-	/vRbqkMwwGtbhdh2MOK6S04Pfs3ds4Pvqr9Uk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fhZVj++NtLDgebrGoNUf87bC+t14Y5gc
-	yigcXN0hoK49kEAcjAL8J/elo15c+wTqPEn/AbgjUSSMXMQIYTsiKDS1QhdDluAb
-	pXlOFkZf4Un2cWrRtTMajpZh8RDi++cAKIuCfHzGyBO9W4OLvH/tfxVXl4F+91SF
-	b6i3k7sUObo=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9E06AC743F;
-	Fri, 23 Jul 2010 17:03:56 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 983BCC743C; Fri, 23 Jul
- 2010 17:03:50 -0400 (EDT)
-In-Reply-To: <AANLkTi=j8-YFwOYxcTWw3zqo=353fsB=vkmRttL4U+au@mail.gmail.com>
- (Sverre Rabbelier's message of "Fri\, 23 Jul 2010 14\:51\:29 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CEB1F07E-969D-11DF-94C1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756033Ab0GWVXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 17:23:33 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:11556 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752269Ab0GWVXc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 17:23:32 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 23 Jul
+ 2010 23:23:31 +0200
+Received: from localhost.localdomain (217.162.250.31) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Fri, 23 Jul
+ 2010 23:23:31 +0200
+X-Mailer: git-send-email 1.7.2.rc3.335.g26d7d
+In-Reply-To: <AANLkTinsixPihZRtduuB_0puX_ucC0HYqHPU0UJMX2e-@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151575>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Since 9d2e942 (decode file:// and ssh:// URLs, 2010-05-23) the URL
+logic unquotes escaped URLs.  For the %2B type of escape, this is
+conformant with RFC 2396.  However, it also unquotes + into a space
+character, which is only appropriate for the query strings in HTTP.
+This notably broke fetching from the gtk+ repository.
 
-> On Fri, Jul 23, 2010 at 12:06, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> The end user configuration for "diff" should not affect the result
->> produced by the higher level command that is related to "diff" only
->> because internally it is implemented in terms of it.
->
-> Almost completely unrelated and perhaps not relevant, I seem to recall
-> that if you set 'ui.color' to 'always' you will get unapplyable
-> patches because 'git format-patch' will include the color in it's
-> output. Perhaps it should --no-color as well, while we're fixing it?
+Remove the corresponding bit of code.
 
-I think that it actually was a mistake for git_diff_basic_config() to call
-git_color_default_config().  Parsing of diff.color.<slot> there is Ok and
-was justified by 9a1805a (add a "basic" diff config callback, 2008-01-04),
-but the change made to the function with 6b2f2d9 (Add color.ui variable
-which globally enables colorization if set, 2008-02-18) was probably a
-screw-up.  The call should instead have gone to diff_ui_config().
+Reported-by: Jasper St. Pierre <jstpierre@mecheye.net>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-I also think format_config() should be changed not to call log_config()
-(we need to move parsing of the format.subjectprefix from the latter to
-the former), and instead call diff_basic_config() directly.
+Jasper St. Pierre wrote:
+> Yep. http://www.ietf.org/rfc/rfc2396.txt defines '+' as a reserved character,
+> but doesn't give a purpose for it. www-form-encoded replaces space with '+'
+> but in a URL it can mean anything it wants.
+
+So let's do this then, instead?
+
+Based on the discussion, I would consider this a bugfix that should go
+in 1.7.2.1.
+
+
+ t/t5601-clone.sh |   10 ++++++++--
+ url.c            |    5 +----
+ 2 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 8abb71a..4431dfd 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -178,8 +178,14 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
+ 
+ test_expect_success 'respect url-encoding of file://' '
+ 	git init x+y &&
+-	test_must_fail git clone "file://$PWD/x+y" xy-url &&
+-	git clone "file://$PWD/x%2By" xy-url
++	git clone "file://$PWD/x+y" xy-url-1 &&
++	git clone "file://$PWD/x%2By" xy-url-2
++'
++
++test_expect_success 'do not query-string-decode + in URLs' '
++	rm -rf x+y &&
++	git init "x y" &&
++	test_must_fail git clone "file://$PWD/x+y" xy-no-plus
+ '
+ 
+ test_expect_success 'do not respect url-encoding of non-url path' '
+diff --git a/url.c b/url.c
+index 2306236..fa4b8d4 100644
+--- a/url.c
++++ b/url.c
+@@ -90,10 +90,7 @@ static char *url_decode_internal(const char **query, const char *stop_at, struct
+ 			}
+ 		}
+ 
+-		if (c == '+')
+-			strbuf_addch(out, ' ');
+-		else
+-			strbuf_addch(out, c);
++		strbuf_addch(out, c);
+ 		q++;
+ 	} while (1);
+ 	*query = q;
+-- 
+1.7.2.rc3.335.g26d7d
