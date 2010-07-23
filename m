@@ -1,104 +1,109 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Do not unquote + into ' ' in URLs
-Date: Fri, 23 Jul 2010 23:23:31 +0200
-Message-ID: <db9c97908966fa332be07b2a9f5215679e35b9e0.1279920066.git.trast@student.ethz.ch>
-References: <AANLkTinsixPihZRtduuB_0puX_ucC0HYqHPU0UJMX2e-@mail.gmail.com>
+From: Eric James Michael Ritz <Eric@cybersprocket.com>
+Subject: Re: Replacing a Remote Branch
+Date: Fri, 23 Jul 2010 16:52:42 -0400
+Organization: Cyber Sprocket Labs
+Message-ID: <4C4A011A.40604@cybersprocket.com>
+References: <4C49F83B.4060903@cybersprocket.com> <201007232248.49520.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>, <avarab@gmail.com>, <jstpierre@mecheye.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 23 23:23:40 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jul 24 00:05:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcPiU-0002Ph-Ph
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 23:23:39 +0200
+	id 1OcQNQ-000112-4T
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 00:05:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756033Ab0GWVXd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 17:23:33 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:11556 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752269Ab0GWVXc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 17:23:32 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 23 Jul
- 2010 23:23:31 +0200
-Received: from localhost.localdomain (217.162.250.31) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Fri, 23 Jul
- 2010 23:23:31 +0200
-X-Mailer: git-send-email 1.7.2.rc3.335.g26d7d
-In-Reply-To: <AANLkTinsixPihZRtduuB_0puX_ucC0HYqHPU0UJMX2e-@mail.gmail.com>
+	id S1757374Ab0GWWFu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 18:05:50 -0400
+Received: from host.cybersprocket.com ([72.52.158.193]:38185 "EHLO
+	host.cybersprocket.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754215Ab0GWWFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 18:05:49 -0400
+X-Greylist: delayed 4384 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Jul 2010 18:05:49 EDT
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=default; d=cybersprocket.com;
+	h=Received:Message-ID:Date:From:Organization:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:X-Enigmail-Version:Content-Type:Content-Transfer-Encoding;
+	b=b9bDMsK8qjDjSrWkmClAScQlIKEiU8NGcGXZAlHjwM0rLQq9nLa3Pi7kQM8Vwa69AWFyDWFrCSS/Y/IYFwjUBzi52hSUgzI6PDwtQib0WWFodaflRecXJx/hNE4MVoUx;
+Received: from 173.221.45.130.nw.nuvox.net ([173.221.45.130] helo=[10.1.10.120])
+	by host.cybersprocket.com with esmtp (Exim 4.69)
+	(envelope-from <Eric@cybersprocket.com>)
+	id 1OcPEM-0003pQ-QJ; Fri, 23 Jul 2010 16:52:30 -0400
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.10) Gecko/20100527 Thunderbird/3.0.5
+In-Reply-To: <201007232248.49520.trast@student.ethz.ch>
+X-Enigmail-Version: 1.0.1
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - host.cybersprocket.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - cybersprocket.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151576>
 
-Since 9d2e942 (decode file:// and ssh:// URLs, 2010-05-23) the URL
-logic unquotes escaped URLs.  For the %2B type of escape, this is
-conformant with RFC 2396.  However, it also unquotes + into a space
-character, which is only appropriate for the query strings in HTTP.
-This notably broke fetching from the gtk+ repository.
-
-Remove the corresponding bit of code.
-
-Reported-by: Jasper St. Pierre <jstpierre@mecheye.net>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-Jasper St. Pierre wrote:
-> Yep. http://www.ietf.org/rfc/rfc2396.txt defines '+' as a reserved character,
-> but doesn't give a purpose for it. www-form-encoded replaces space with '+'
-> but in a URL it can mean anything it wants.
-
-So let's do this then, instead?
-
-Based on the discussion, I would consider this a bugfix that should go
-in 1.7.2.1.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
 
- t/t5601-clone.sh |   10 ++++++++--
- url.c            |    5 +----
- 2 files changed, 9 insertions(+), 6 deletions(-)
+On 07/23/2010 04:48 PM, Thomas Rast wrote:
+> Eric James Michael Ritz wrote:
+>>   2. I realized I need to perform some =E2=80=98destructive=E2=80=99=
+ action like
+>>   =E2=80=98rebase -i=E2=80=99 or amend the last commit to fix a typo=
+ in the message.
+>>
+>>   3. Then I want to push the changed branch as a replacement.
+> [...]
+>>     $ git push origin :foo && git push origin foo
+>>
+>> to replace `foo`.  But is there a shorter way to do this?  I thought
+>> that writing something like
+>>
+>>     $ git push origin +foo:foo
+>>
+>> may have the intended effect, but I still get a rejection due to a
+>> non-fast-forward, so I am likely misunderstanding the purpose of `+`=
+=2E
+>
+> Since + overrides the non-ff check, this means that the remote side
+> has receive.denyNonFastForwards (see man git-config) enabled (or a
+> hook to the same effect).  Deleting and pushing the new branch merely
+> defeats this refusal because it is no longer a branch *update*.
+>
+> You should probably check why and by who receive.denyNonFastForwards
+> was set.  Git itself sets it if you use 'git init --shared', so that
+> may be one reason.
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 8abb71a..4431dfd 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -178,8 +178,14 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
- 
- test_expect_success 'respect url-encoding of file://' '
- 	git init x+y &&
--	test_must_fail git clone "file://$PWD/x+y" xy-url &&
--	git clone "file://$PWD/x%2By" xy-url
-+	git clone "file://$PWD/x+y" xy-url-1 &&
-+	git clone "file://$PWD/x%2By" xy-url-2
-+'
-+
-+test_expect_success 'do not query-string-decode + in URLs' '
-+	rm -rf x+y &&
-+	git init "x y" &&
-+	test_must_fail git clone "file://$PWD/x+y" xy-no-plus
- '
- 
- test_expect_success 'do not respect url-encoding of non-url path' '
-diff --git a/url.c b/url.c
-index 2306236..fa4b8d4 100644
---- a/url.c
-+++ b/url.c
-@@ -90,10 +90,7 @@ static char *url_decode_internal(const char **query, const char *stop_at, struct
- 			}
- 		}
- 
--		if (c == '+')
--			strbuf_addch(out, ' ');
--		else
--			strbuf_addch(out, c);
-+		strbuf_addch(out, c);
- 		q++;
- 	} while (1);
- 	*query = q;
--- 
-1.7.2.rc3.335.g26d7d
+That=E2=80=99s the reason then, `--shared` was used.
+
+> Note that non-ff updates are generally a bad thing for everyone who
+> has work based on the affected branch.
+
+We make it a policy to never base work off individual developer=E2=80=99=
+s
+branches precisely for this reason, because we=E2=80=99re often making
+cleanups via rebase and such.
+
+Thank you for the answer.
+
+- --
+Eric James Michael Ritz
+Cyber Sprocket Labs
+(843) 225-3830
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
+
+iQEcBAEBAgAGBQJMSgEVAAoJEEHUZXw5hMWsu1wIANwTnswKzd0pKub3zms1y2wv
+ouv2TRvxvpQhKvVO2r+CjDohdH2BQQIa2FWa8g/bG7fQVvGby1xQkWNJYxypebrh
+GHHX3Q4uF6mNIqD+yC4AQNQdEywCDXL4lBqh0Q7Bo+6ZGhUtQIEp1vyWHQeHTLuZ
+8NhWd4PwE4z5ssGGKTzzvg2FgkWxtKrNaCVXfPTHpeh51J/Slt0Jfhw/i/zXNlGU
+BN0Jlnavhvr5IDbODCNB96KJQue1xLZv+mNNrINlY+TlHwNVyKlq2ui8zvG0vC0K
+OwwbOh6HlGV1sPReFfbObu6F9oxz6DMcmdHqNtedQPiAmm38EIuFFTa4H1CiYlM=3D
+=3DP2Zr
+-----END PGP SIGNATURE-----
