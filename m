@@ -1,84 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [WIP/RFC 04/13] notes.h/c: Propagate combine_notes_fn return
- value to add_note() and beyond
-Date: Fri, 23 Jul 2010 10:23:44 -0500
-Message-ID: <20100723152344.GA1709@burratino>
-References: <1279880104-29796-1-git-send-email-johan@herland.net>
- <1279880104-29796-5-git-send-email-johan@herland.net>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Fri, 23 Jul 2010 11:19:59 -0400
+Message-ID: <4C49B31F.8000102@xiplink.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Jul 23 17:24:57 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 17:32:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcK7L-0000kT-1J
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 17:24:55 +0200
+	id 1OcKEV-0004i1-8K
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 17:32:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759921Ab0GWPYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 11:24:49 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:59202 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756148Ab0GWPYs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 11:24:48 -0400
-Received: by ewy23 with SMTP id 23so139509ewy.19
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 08:24:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=TjOKUvGmEJ/LCbNW9DsXhgrFlG+5gQzZbgbfuJ4PWSU=;
-        b=QuXMgI0G0oc9Bl4bDczBX7deKdLVDFg47t8XAz1LVoJjnaTHO6G+4v+9UoULdkn3do
-         GfzalLTtKmwI/2ARZhtXZTzirQyGFuwpT5v8zCXjxlANI+f7FcNZlbCn0p0bNAX7T07z
-         9r2L/E8TUKbZxnxQV98HcMrFymrLmojVJzvC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YctbFjVJSixfbqCEV5SZHV4fzL8346hpLjR6GOafsc/J34TMXHm0V1uxef6u8BSr8B
-         +Mw/jkaG7RXolaHttduN39fLUCR/OWtTB9BYcyQ/xqKKnqKiA83G4/6bvD6h/UWVb8+j
-         d1pGKkqOscp8aC9eCp10LiLCDz76hZO43J6+Y=
-Received: by 10.213.32.212 with SMTP id e20mr3308236ebd.80.1279898686886;
-        Fri, 23 Jul 2010 08:24:46 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v59sm541324eeh.16.2010.07.23.08.24.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 23 Jul 2010 08:24:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1279880104-29796-5-git-send-email-johan@herland.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1760861Ab0GWPb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 11:31:27 -0400
+Received: from smtp192.dfw.emailsrvr.com ([67.192.241.192]:58548 "EHLO
+	smtp192.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760753Ab0GWPbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 11:31:25 -0400
+X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 Jul 2010 11:31:25 EDT
+Received: from relay19.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay19.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id A9B5C2748F80;
+	Fri, 23 Jul 2010 11:20:58 -0400 (EDT)
+Received: by relay19.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B2E4F27481DD;
+	Fri, 23 Jul 2010 11:20:56 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
+In-Reply-To: <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151543>
 
-Hi,
+On 10-07-22 03:41 PM, Avery Pennarun wrote:
+> 
+> 1) Sometimes I want to clone only some subdirs of a project
+> 2) Sometimes I don't want the entire history because it's too big.
+> 3) Super huge git repositories start to degrade in performance.
 
-Johan Herland wrote:
+The reason we turned to submodules is precisely to deal with repository size.
+ Our code base encompasses the entire FreeBSD tree plus different versions of
+the Linux kernel, along with various third-party libraries & apps.  You don't
+need everything to build a given product (a FreeBSD product doesn't use any
+Linux kernels, for example) but because all the products share common code we
+need to be able to branch and tag the common code along with the uncommon code.
 
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -574,6 +574,7 @@ static int add(int argc, const char **argv, const char *prefix)
->  	if (is_null_sha1(new_note))
->  		remove_note(t, object);
->  	else
-> +		/* No return value checking; c_n_overwrite always returns 0 */
->  		add_note(t, object, new_note, combine_notes_overwrite);
+So a straight "git clone" that would need to fetch all of FreeBSD plus 4
+different Linux kernels and check all that out is a major problem, especially
+for our automated build system (which could definitely be implemented better,
+but still).  In truth it's the checkout that takes the most time by far,
+though commands like git-status also take inconveniently long.
 
-I suspect something like
+We chose git-submodule over git-subtree mainly because git-submodule lets us
+selectively checkout different parts of our code.  (AFAIK sparse checkouts
+aren't yet an option.)  We didn't really consider git-subtree because it's
+not an official part of git, and we didn't want to have to teach (and nag)
+all our developers to install and maintain it in addition to keeping up with
+git itself.  Besides, git-submodule's collection-of-independent-repos model
+works fairly well in our situation, though the implementation could
+definitely be improved (and Jens's list is a really good start).
 
-	if (add_note(t, object, ...))
-		die("confused: combine_notes_overwrite failed");
+Neither submodule nor subtree really solves our situation, but right now
+git-submodule is the only thing "official" git offers to manage
+loosely-coupled code.  It would be nice to see git-submodule added to the
+toolkit, but it would be even nicer if git had better ways to deal with
+"vast" repositories.
 
-would be less likely to fall out of date. ;-)
+Another tool folks should keep in mind in this discussion is 'repo' which
+Google built for the Android project.  Android's code base is also too vast
+to work well in a single git repository, and I don't think subtrees or
+submodules would be a good match for them either.
 
-This whole series is good stuff.  I look forward to trying it
-out.
-
-Thanks,
-Jonathan
+		M.
