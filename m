@@ -1,80 +1,167 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Do not unquote + into ' ' in URLs
-Date: Fri, 23 Jul 2010 15:26:42 -0700
-Message-ID: <7viq45eswt.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinsixPihZRtduuB_0puX_ucC0HYqHPU0UJMX2e-@mail.gmail.com>
- <db9c97908966fa332be07b2a9f5215679e35b9e0.1279920066.git.trast@student.ethz.ch>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Fri, 23 Jul 2010 18:32:18 -0400
+Message-ID: <AANLkTimSoe9iqu4cJCH1d4rVsWHpFn3+8pbrCxsnVM1D@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 
+	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 
+	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 
+	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
+	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
+	<4C49B0E9.1090300@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, <git@vger.kernel.org>,
-	<avarab@gmail.com>, <jstpierre@mecheye.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sat Jul 24 00:27:16 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Jul 24 00:32:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcQi0-0007x6-Ml
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 00:27:13 +0200
+	id 1OcQnP-0001Ez-73
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 00:32:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515Ab0GWW05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 18:26:57 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43466 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752354Ab0GWW04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 18:26:56 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 28C8CC7E16;
-	Fri, 23 Jul 2010 18:26:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p1f9WZAFaDaLoaS2nvgZzNBR2TE=; b=cSiVf4
-	bkaAvkVaEWL2j7HLoxUKAogcjbpSkoVaxXBmevZwGhL3B7whD9I5UI+AOFyF2yQ5
-	Syrqlx0JIcszw9Rthg0OKoXeejC08YOBE7wJUXqBW8lJv3ZvTQh++fLwQea5sV/V
-	/SKEyroFfBIW+Jv6oh5Cgn2wtLa7HJEVD/yM4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SsV9UOTSKLHek+IRA32MsPqiU9T2nXC9
-	fsLrhp8tpAIJT6Kd9OKUjfVDvEAts6E354i3PjsKxfW4obT0wLFoskfuPwpAmWZ5
-	XYxv2ItrRQsc8x7j2F+VgMBeVxcpgVlSNEhzhzVhYFlE9V0mBXd/8yEwdHi95z26
-	iYBhkMJD5PA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C884BC7E14;
-	Fri, 23 Jul 2010 18:26:49 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DCDA3C7E10; Fri, 23 Jul
- 2010 18:26:43 -0400 (EDT)
-In-Reply-To: <db9c97908966fa332be07b2a9f5215679e35b9e0.1279920066.git.trast@student.ethz.ch> (Thomas Rast's message of "Fri\, 23 Jul 2010 23\:23\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 62F00892-96A9-11DF-9612-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757469Ab0GWWcl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 18:32:41 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:58013 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756524Ab0GWWck convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 18:32:40 -0400
+Received: by wyf19 with SMTP id 19so686541wyf.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 15:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MIjIMP6JKx0WG3BNhm++Bt5Oa6dLZfocZIDcZKsOPqQ=;
+        b=KfUsPZiKBV5drStJ5fFLR2QrDQannWCFNe6NiCjR9UFsM3Pi/9Yg0ySXf11v6XJJ+g
+         cJMz5hr7m8sWBcXyt8DfVsxGenJkyw7xMpqUkab5qfufV8eOSadCO/6Iu9Ftq2Ly+x2Z
+         ETE9r6TC9PMJV4g7U81jcLS17cyPdXi25JhBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=vdPvnU3H7uP5bflKlEdLRzVsy0QTFxvTqkUNq/sO+urV+Ehu9/VFSbafLOxayY6hSL
+         TyQ3OHsbropadZVwhcJglBaYNm5i2GhgUcCP113chzo0KM18ulPxXCh8LdLNNnmKf0sA
+         gAm5TCM7eeVagPYmDAH26sxQtWKJWkmzREq5M=
+Received: by 10.216.187.143 with SMTP id y15mr4148740wem.74.1279924359027; 
+	Fri, 23 Jul 2010 15:32:39 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Fri, 23 Jul 2010 15:32:18 -0700 (PDT)
+In-Reply-To: <4C49B0E9.1090300@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151579>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Fri, Jul 23, 2010 at 11:10 AM, Jens Lehmann <Jens.Lehmann@web.de> wr=
+ote:
+> You forgot what we do as best practice at work:
+>
+> [3] Fork the gem repos on github (or another server reachable by your
+> =A0 =A0co-workers) and use those, so you don't have to change the URL
+> =A0 =A0later:
+>
+> =A0 =A0git://github.com/apenwarrrubygems/gem[1..n]
+>
+> Your problems go away, setup has to be done only once on project
+> start and not for every developer, you can use your own branchnames
+> and you have a staging repo from where you can push patches upstream
+> if necessary.
 
-> Since 9d2e942 (decode file:// and ssh:// URLs, 2010-05-23) the URL
-> logic unquotes escaped URLs.  For the %2B type of escape, this is
-> conformant with RFC 2396.  However, it also unquotes + into a space
-> character, which is only appropriate for the query strings in HTTP.
-> This notably broke fetching from the gtk+ repository.
+Now all your fellow developers have to push their submodule code to a
+single upstream repo?  That's rather centralized and un-git-like.
 
-Wait a minute.
+=46or the rest, Brian Larsen answered this one well, and I agree with h=
+im.
 
-> Based on the discussion, I would consider this a bugfix that should go
-> in 1.7.2.1.
+>> Surely including *repository URLs* inside the *repository content* i=
+s
+>> at least as bad as including branch names. =A0If we're going to do o=
+ne,
+>> we might as well do the other. =A0But it won't help, because the sto=
+red
+>> branch name will probably be 'master', and my personal hacked-up cop=
+y
+>> of gem13 shouldn't be on a branch named master anyway.
+>
+> You sure are aware that having a branch name associated with a
+> submodule checkout is a request repeatedly made?
 
-Some form of this may need to be applied to help the client side, but what
-will happen to
+Of course it is; I requested it myself.  Then, two years later after
+thinking about the problem a lot and writing git-subtree out of
+frustration, I realized that even if this feature existed, it wouldn't
+help at all.
 
-  http-backend.c::get_info_refs()
-   -> http-backend.c::get_parameter()
-     -> http-backend.c::get_parameters()
-       -> url.c::url_decode_parameter_value()
-         -> url.c::url_decode_internal()
+If you use git-submodule, you must push your submodule commits
+separately or the supermodule is broken for everybody but you.  To
+push a submodule, you need a) an upstream to push to and b) a branch
+name.  It's easy to forget to create a branch name, so of course
+people request that feature.
 
-codepath, which is the server-side handing of query strings?
+However, the real problem is "you must push your submodule commits
+separately."  Fix that, and I can guarantee that the request for
+submodule branch naming will disappear.
+
+> That is just one example. Another one is code shared between
+> different repos (think: libraries) where you want to make sure that
+> a bugfix in the library made in project A will make it to the shared
+> code repo and thus doesn't have to be fixed again by projects B to X.
+> This was one of the reasons we preferred submodules over subtrees
+> in our evaluation, because there is no incentive to push fixes inside
+> the subtree back to its own repo like there is when using submodules.
+
+I think you'd like svn; it's pretty cool.  All changes made to a
+project need to get pushed to a central upstream repo so you never
+forget to share them.
+
+>>> rebase and merge needs separate =A0 =A0| rebase and merge works nor=
+mally
+>>> work in submodule currently =A0 =A0 =A0 =A0|
+>>
+>> True.
+>
+> Nope, there is a patch in pu doing
+> that when it is a simple fast forward
+> and giving you advice when both sides
+> are already merged inside the submodule
+> (CCed Heiko, because he is the author
+> of that feature)
+
+=46ast forwards are not merges, and pu is not now.
+
+> It is the /commits/ that have to be
+> done twice, once in the submodule and
+> then in the superproject. (But that is
+> not necessarily bad, imagine having git
+> gui as a submodule: you would be
+> automagically reminded that stuff for
+> git gui should be sent somewhere else
+> than to Junio).
+
+Yup, I agree that requiring a separate commit to the submodule repo is
+not a bad idea.  I always do this anyway even when using git-subtree,
+because I'm thinking ahead to the day when I'll push my submodule
+changes upstream and I want my commit message to make sense.  But
+that's because I think ahead like that.  Having the tool force me to
+do it would be harmless and help people avoid mistakes.
+
+The syntax for it ought to be nice though.  I should be able to do:
+
+    git commit -- path/to/submodule
+
+And have it commit everything in the submodule tree as a new commit in
+the submodule.  I don't want to have to think about cd'ing to
+path/to/submodule just so I can commit the files I changed in there.
+
+Have fun,
+
+Avery
