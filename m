@@ -1,130 +1,80 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 3/3] git-instaweb: Don't assume Apache executable is
-	named apache2
-Date: Fri, 23 Jul 2010 11:22:09 -0700
-Message-ID: <20100723182209.GA19333@dcvr.yhbt.net>
-References: <1277865900-25044-1-git-send-email-dpmcgee@gmail.com> <1277865900-25044-3-git-send-email-dpmcgee@gmail.com> <7v39w48q4a.fsf@alter.siamese.dyndns.org> <AANLkTikYNVLM9MrmL819__Viap7ucvmrs7faeC4tdDmn@mail.gmail.com> <AANLkTimfy0F7x-WZpfJ0J45jUWjb9lrJt99jY0fO6ZzC@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: question (possibly) on git subtree/submodules
+Date: Fri, 23 Jul 2010 11:35:10 -0700
+Message-ID: <4C49E0DE.8050506@gmail.com>
+References: <xotjlj92i9gr.fsf@leonardo.pit.corp.google.com> <4C49C9C6.3080409@gmail.com> <20100723171859.GG2507@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 23 20:22:23 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 20:35:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcMsz-00049I-5z
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 20:22:17 +0200
+	id 1OcN5h-0002Wk-DE
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 20:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752678Ab0GWSWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 14:22:14 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:58132 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753442Ab0GWSWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 14:22:10 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DEA811F541;
-	Fri, 23 Jul 2010 18:22:09 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimfy0F7x-WZpfJ0J45jUWjb9lrJt99jY0fO6ZzC@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752279Ab0GWSfT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 14:35:19 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:34751 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751294Ab0GWSfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 14:35:18 -0400
+Received: by pzk26 with SMTP id 26so189474pzk.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 11:35:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=jnPV0CPeUm/uTlB64xhELAoleSASaFmqb7jlCpxWIvA=;
+        b=KYLWTqkA1YEEgzg1Y1htSW2edd4z80viHJzPXtSIzRvjxmIF750Jf6uCXbIob2NFcw
+         sXSmlrWy3iWDzjl87hWG6hUoKxavygY+GKz1jr7HzWRARuv6Dv9vzCiJxxotQsmka3kW
+         iWfHqhY+pqV6akMzVT4Zv0lNEWBpLI8CfmzkM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=EMRaK2UvGBFWQBpah2S6BwYpAEtEN8otZlog3V/3Br/IQD8yegKNUGozwjrSm1/da7
+         irJqSuqZh98MCjL55c5Okl18Hb7JlaVkKeZMwlAmCFFa3E72liulqIQdcXSPLZ49EwF3
+         b4ZY4jdA9W3D3/qQVPemVhTrBoJgyG37KQj94=
+Received: by 10.114.67.14 with SMTP id p14mr5725069waa.102.1279910118320;
+        Fri, 23 Jul 2010 11:35:18 -0700 (PDT)
+Received: from asus-laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id c24sm844319wam.19.2010.07.23.11.35.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jul 2010 11:35:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.10) Gecko/20100520 SUSE/3.0.5 Thunderbird/3.0.5
+In-Reply-To: <20100723171859.GG2507@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151564>
 
-Dan McGee <dpmcgee@gmail.com> wrote:
-> On Wed, Jun 30, 2010 at 11:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > Dan McGee <dpmcgee@gmail.com> writes:
-> >
-> >> On Arch Linux, we keep the original 'httpd' name for the exectuable and
-> >> don't rename it or the path to the modules.
-> >
-> > Sorry, but I cannot parse the last 6 words here.
+On 23/07/10 10:18, Jonathan Nieder wrote:
+> Chris Packham wrote:
 > 
-> On Arch Linux, the executable for the Apache HTTP server keeps the
-> 'httpd' name and is not named 'apache2'. The path to the server
-> modules also contains 'httpd' rather than 'apache2'.
+>> The short answer is no. Nothing git has currently will let you clone a
+>> subset of files. Shallow clones exist if you want all the code and the
+>> last X changes. The reason for this is git, like other DVCSes, tracks
+>> _changes_ rather than _files_ this is something that took me a while to
+>> get my head around when I was learning git.
+> 
+> Not quite as cut-and-dried as it may sound, I think.  Internally git
+> compresses blobs (and other objects) by comparing them to other ones,
+> but I do not think that is what you are talking about, and I do not
+> see what that has to do with partial clones.  In fact, the main reason
+> I can see that partial clones (in the sense of getting all metadata
+> but not all blobs) are not implemented is that no one has written code
+> for it yet.
+> 
+> Here is a thread on related work[1].  Maybe someone else can find a
+> more pertinent link.
+> 
 
-(I missed this message the first time around since I wasn't Cc-ed).
-
-Thanks Dan,
-
-I've pushed your series of patches up to my "instaweb" branch on
-git://git.bogomips.org/git-svn and reworked the commit message of 3/3
-below:
-
->From 4bdf85995b5d21fdb085a480d529c8da0314189e Mon Sep 17 00:00:00 2001
-From: Dan McGee <dpmcgee@gmail.com>
-Date: Wed, 30 Jun 2010 07:29:08 -0500
-Subject: [PATCH] git-instaweb: Don't assume Apache executable is named apache2
-
-On Arch Linux, the executable for the Apache HTTP server keeps
-the 'httpd' name and is not named 'apache2'. The path to the
-server modules also contains 'httpd' rather than 'apache2'.
-Remove some of these assumptions and add the httpd name in where
-it may be required. Finally, make some slight style adjustments
-to the code we are touching to make it fit the style of the rest
-of the script.
-
-Signed-off-by: Dan McGee <dpmcgee@gmail.com>
-Acked-by: Eric Wong <normalperson@yhbt.net>
----
- git-instaweb.sh |   19 ++++++++++++++-----
- 1 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 1d349b8..b7342e2 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -43,7 +43,8 @@ test -z "$port" && port=1234
- 
- resolve_full_httpd () {
- 	case "$httpd" in
--	*apache2*|*lighttpd*)
-+	*apache2*|*lighttpd*|*httpd*)
-+		# yes, *httpd* covers *lighttpd* above, but it is there for clarity
- 		# ensure that the apache2/lighttpd command ends with "-f"
- 		if ! echo "$httpd" | sane_grep -- '-f *$' >/dev/null 2>&1
- 		then
-@@ -300,7 +301,13 @@ EOF
- }
- 
- apache2_conf () {
--	test -z "$module_path" && module_path=/usr/lib/apache2/modules
-+	if test -z "$module_path"
-+	then
-+		test -d "/usr/lib/httpd/modules" &&
-+			module_path="/usr/lib/httpd/modules"
-+		test -d "/usr/lib/apache2/modules" &&
-+			module_path="/usr/lib/apache2/modules"
-+	fi
- 	bind=
- 	test x"$local" = xtrue && bind='127.0.0.1:'
- 	echo 'text/css css' > "$fqgitdir/mime.types"
-@@ -314,8 +321,10 @@ PidFile "$fqgitdir/pid"
- Listen $bind$port
- EOF
- 
--	for mod in mime dir env log_config; do
--		if test -e $module_path/mod_${mod}.so; then
-+	for mod in mime dir env log_config
-+	do
-+		if test -e $module_path/mod_${mod}.so
-+		then
- 			echo "LoadModule ${mod}_module " \
- 			     "$module_path/mod_${mod}.so" >> "$conf"
- 		fi
-@@ -563,7 +572,7 @@ case "$httpd" in
- *lighttpd*)
- 	lighttpd_conf
- 	;;
--*apache2*)
-+*apache2*|*httpd*)
- 	apache2_conf
- 	;;
- webrick)
--- 
-Eric Wong
+OK I think I must have read to much into the "tracks changes" part,
+thanks for pointing it out.
