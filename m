@@ -1,74 +1,120 @@
-From: Avery Pennarun <apenwarr@gmail.com>
+From: Will Palmer <wmpalmer@gmail.com>
 Subject: Re: rfc - Changing the way gitk and git-gui are managed
-Date: Fri, 23 Jul 2010 02:16:45 -0400
-Message-ID: <AANLkTin9kbMp5nOS=GaM2rX1w+y8vbzYfWunkSSeoPZg@mail.gmail.com>
-References: <7vocdygbw0.fsf@alter.siamese.dyndns.org> <AANLkTimdYfv-Z57iHD+YLfjKi66av5xmaC3JEMRNRw+Y@mail.gmail.com>
+Date: Fri, 23 Jul 2010 07:54:58 +0100
+Message-ID: <1279868098.2846.45.camel@dreddbeard>
+References: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
+Reply-To: wmpalmer@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 23 08:17:17 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 08:55:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcBZM-0003Dz-5D
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 08:17:16 +0200
+	id 1OcCA3-00016b-EZ
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 08:55:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750866Ab0GWGRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 02:17:10 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:47057 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750739Ab0GWGRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 02:17:08 -0400
-Received: by wyf19 with SMTP id 19so1243976wyf.19
-        for <git@vger.kernel.org>; Thu, 22 Jul 2010 23:17:05 -0700 (PDT)
+	id S1751344Ab0GWGzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 02:55:04 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:32961 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750788Ab0GWGzC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 02:55:02 -0400
+Received: by wwj40 with SMTP id 40so4236759wwj.1
+        for <git@vger.kernel.org>; Thu, 22 Jul 2010 23:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=eIatNHdHzf1l2JAD7mf2ZP+2Zen9yn3Qfx7p58Qz2g8=;
-        b=mjHqXoUZbgvVVDQsWcwiYp888FFEu1HS/F2Dsy4hOfHG2zSLOkoho5zImVVn7cxWJn
-         41QHJPtyM/LRmiSh3d2Ou9fV+htW71vJJ6g4dxsN7yugrbmLZtWxsTGV7x9C58JGxIAx
-         Wq6aPh59p77z2EN81U8E7/wagdXK8gBStZU/8=
+        h=domainkey-signature:received:received:subject:from:reply-to:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=9IuJb8C25DV+2fcrujA8BRYxB8mRqe+Ox8I+o/R5ACQ=;
+        b=DaH6pcVTpu9Yp1kWszMPnQ4k+vX4DNDICltP7UaoR7k9pVdgaCZ5W5bZnC34JmJDUb
+         yN7yq/5HSH6el577swhpUYl3RyTAj5S7RbiERGXnWcH51cyCR/uSyFiQwh88VsGD34P9
+         NR2zEHe7D7XfOkMqXPBCLP7HhsiK/NP+S9bhg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=hqDgyBY5l5KCbBtgQ4SvreCZjbJvn2LMcMEGykMVM0X3++J1Fp4scnDeLiQkba6C0N
-         u4HZvt9jIZZlZ5q85qyTvqNFhrOWRucZjRNHC661RfJjVsUBJOBzGzKdQDrWisoxogOl
-         KasPEGqQb5ocGMSTtuGiO/8UZqnAywWYhwFPI=
-Received: by 10.216.237.100 with SMTP id x78mr2903781weq.114.1279865825193; 
-	Thu, 22 Jul 2010 23:17:05 -0700 (PDT)
-Received: by 10.216.235.202 with HTTP; Thu, 22 Jul 2010 23:16:45 -0700 (PDT)
-In-Reply-To: <AANLkTimdYfv-Z57iHD+YLfjKi66av5xmaC3JEMRNRw+Y@mail.gmail.com>
+        h=subject:from:reply-to:to:cc:in-reply-to:references:content-type
+         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=p9CmuzodLdLMMno00P7Rlj5T4aFdMwXMCQikgGBi2BZRPVK3bpe5aZeLIkUSSg5rYI
+         WgAYyCb1tja2xWNwBmCcz4EC29B0Js6uIerSa4KKkQ6J4h67ZLFUJmjO5LhqSntsXRJB
+         Cc6lr63FB4Kuxlh4htdBCozlXjeriCCR48WYU=
+Received: by 10.216.185.72 with SMTP id t50mr2983951wem.77.1279868101221;
+        Thu, 22 Jul 2010 23:55:01 -0700 (PDT)
+Received: from [192.168.0.254] (5acc3a9a.bb.sky.com [90.204.58.154])
+        by mx.google.com with ESMTPS id p82sm4516078weq.3.2010.07.22.23.55.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 22 Jul 2010 23:55:00 -0700 (PDT)
+In-Reply-To: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151505>
 
-On Fri, Jul 23, 2010 at 12:04 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Thu, Jul 22, 2010 at 21:39, Junio C Hamano <gitster@pobox.com> wrote:
->> Somebody off-list suggested removing gitk and git-gui directories from my
->> repository and I've been playing with the idea and kind of like the end
->> result.
->
-> The neighboring thread [0] about git subtree seems highly relevant to
-> this decision. Avery, do you perhaps any additional insights wrt this
-> particular use case?
+On Thu, 2010-07-22 at 19:39 -0700, Junio C Hamano wrote:
+> Somebody off-list suggested removing gitk and git-gui directories from my
+> repository and I've been playing with the idea and kind of like the end
+> result.
+...snip...
+> 
+> I am wondering what people think.
+...snip...
 
-Only this: Junio said that there are no major downsides to this change
-- and given the slow pace of change in gitk/git-gui, this is probably
-true - but are there any *upsides*?  What problem does this solve?
+I really like the idea of using submodules, though only so that they
+will almost certainly get the UI attention they deserve. Indeed, in my
+mind that attention is needed enough that this sort of switch shouldn't
+be made until it's been given for a while.
 
-git-submodule and git-subtree solve different problems, so which one
-is "better" depends on the problem to be solved.  As a
-mostly-just-user of git, whatever is currently being done is super
-convenient and easy for me and I wouldn't ask for any change at all.
-Obviously it might be very different from Junio's point of view :)
+The problem is that, unlike so much of git, submodules make themselves
+known. They're loud, they're in the way, they require management to
+work. Case in point:
+"Switching from 1.7.2 to this tree will of course give you a tree
+without gitk and git-gui (nothing a simple "git submodule init/update"
+cannot fix)"
 
-Have fun,
+So already in order to build a working git again, someone needs to
+manually run some extra commands, which could potentially (but not
+necessarily) download a bunch of objects they already have. Basic
+operations like switching branches, get an extra (and easily overlooked)
+burden, to which there is sometimes no obvious solution Ouch.
 
-Avery
+I've always hated how clunky and non-transparent submodules are. There
+are some serious issues which would need to be worked out in order to
+make them more transparent (not the least of which is "to be
+transparent, where do you put the extra data, and when do you put it
+there / when do you remove it?". I do wish that these issues would get
+resolved, and it's hard to give them the attention they need because [I
+assume, like me] the people who don't like them simply avoid using
+submodules, as "just track everything" just sounds more like the git
+way.
+
+Git is simple. It's easy to understand because of some simple
+assumptions and definitions. Submodules are less-simple. There are a lot
+of edge-cases and a lot of not-so-edge cases which need to be looked out
+for in order to make them sane. Handling the tricky-but-common cases by
+putting it on the user to always hand-hold the VCS is stupid and broken.
+
+What do people really want which a move to submodules would get them?
+  - Sub-Projects can obviously be developed separately (no need to clone
+all of git in order to work on gitk, for example)
+  - Merges that make more sense, since you don't need to pass special
+"subtree" options, all you need to do is update the commit which gitk
+points to. This ignores that merges across the submodule/subtree
+boundary will not work, and similarly changes which span submodules have
+no way of being blamed or sanely merged.
+
+It certainly doesn't help that whenever I think about "how to fix
+submodules", the more I think about them, the less I think they make any
+sense at all. [rant deleted]
+
+Put me down as: I've wanted to use submodules in the past, and I like
+the idea of using them in the future, but I've yet to be at the point
+where I wanted to use submodules "now".
+
+-- 
+-- Will
