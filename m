@@ -1,105 +1,71 @@
-From: Greg Troxel <gdt@ir.bbn.com>
-Subject: Re: rfc - Changing the way gitk and git-gui are managed
-Date: Fri, 23 Jul 2010 15:18:02 -0400
-Message-ID: <rmi1vauyplh.fsf@fnord.ir.bbn.com>
-References: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 5/5] rebase: protect against diff.renames configuration
+Date: Fri, 23 Jul 2010 14:53:46 -0500
+Message-ID: <AANLkTik3uZTmcjv4Jeg7VXbC8Lmai_xjRF80yHfUHxKf@mail.gmail.com>
+References: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org> <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net> 
+	<20100722075133.GA9292@burratino> <681325.9577.qm@web30002.mail.mud.yahoo.com> 
+	<20100723170103.GA2507@burratino> <20100723170613.GF2507@burratino>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 23 21:18:15 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: "David D. Kilzer" <ddkilzer@kilzer.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 21:54:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcNl8-0005sN-0E
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 21:18:14 +0200
+	id 1OcOK2-0007Gs-MZ
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 21:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757148Ab0GWTSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 15:18:07 -0400
-Received: from fnord.ir.bbn.com ([192.1.100.210]:59894 "EHLO fnord.ir.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752279Ab0GWTSF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 15:18:05 -0400
-Received: by fnord.ir.bbn.com (Postfix, from userid 10853)
-	id 9A744528E; Fri, 23 Jul 2010 15:18:02 -0400 (EDT)
-X-Hashcash: 1:20:100723:git@vger.kernel.org::sls14JHXYe6LBqyz:0000000000000000000000000000000000000000001F24
-X-Hashcash: 1:20:100723:gitster@pobox.com::qqmGRl70NmJjSwTQ:000000000000000000000000000000000000000000004w4K
-In-Reply-To: <7vocdygbw0.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Thu, 22 Jul 2010 19:39:11 -0700")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (berkeley-unix)
+	id S1757927Ab0GWTyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 15:54:09 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57088 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758060Ab0GWTyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 15:54:07 -0400
+Received: by iwn7 with SMTP id 7so475040iwn.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 12:54:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=kPdXKt5QMTvgmhtpSx0/plknUjmk4X9YU7CODHTKFk4=;
+        b=vuVEXVE9oN4TN+h10P5xE1FpKnZKhUp9ak1Giuc+Eqx5zexDHX6LW4tFKvhhnD1/zy
+         4qr7JxeuHdV/6PHXSXt9R8JpeE7/VEGxZeVwMnbxrTg0yxilGC7KBu2KYOtqDI0DDBJD
+         /eZkp6Vql4sc1LyrkzliXpAKp+FKiL0zBfVSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ZkqLnRsyf5ZPILAPlRZ4ZJRnlUpnM1GND3VeZNuQYxRgiO58tMTd86CukqDnNBTSA7
+         PfVQ2i5SegFaqCvGTEKc9LvF3F+sBdAz78+64YEm2kStuF74OtqPdLLgcFVISd9LNsVm
+         otAgnNiOGSBwso5rVp232YpyV50mJTHpZ9KNM=
+Received: by 10.231.39.137 with SMTP id g9mr4162651ibe.133.1279914846705; Fri, 
+	23 Jul 2010 12:54:06 -0700 (PDT)
+Received: by 10.231.34.135 with HTTP; Fri, 23 Jul 2010 12:53:46 -0700 (PDT)
+In-Reply-To: <20100723170613.GF2507@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151569>
 
---=-=-=
+Heya,
 
+On Fri, Jul 23, 2010 at 12:06, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> The end user configuration for "diff" should not affect the result
+> produced by the higher level command that is related to "diff" only
+> because internally it is implemented in terms of it.
 
-  The plan (I am not decided to buy into it yet, hence I am sending this
-  rfc) is to:
+Almost completely unrelated and perhaps not relevant, I seem to recall
+that if you set 'ui.color' to 'always' you will get unapplyable
+patches because 'git format-patch' will include the color in it's
+output. Perhaps it should --no-color as well, while we're fixing it?
 
-      - remove gitk-git and git-gui directories;
-      - add modules/gitk and modules/git-gui submodules;
-      - teach the top-level Makefile about the new location of these two
-        packages.
+-- 
+Cheers,
 
-  Switching from 1.7.2 to this tree will of course give you a tree without
-  gitk and git-gui (nothing a simple "git submodule init/update" cannot
-  fix), and switching back from there to 1.7.2 codebase needs manual removal
-  of these two directories that will become leftover directories if you want
-  to keep the superproject directory pristine clean, but other than that, I
-  do not see major downsides.
-
-  I am wondering what people think.  Especially distro people who download
-  and package git may be heavily affected.  I haven't adjusted the RPM spec
-  file or "make dist" target, so I cannot assess the damage to these people
-  myself yet.
-
-(I am perhaps going to be involved in maintaining the git package in pkgsrc.)
-
-In general, the effort to update the package control files is basically
-5 minutes per release (to change version, test, and summarize release
-notes) plus coping with structural changes in how the package builds and
-what it installs.
-
-Perhaps implicit in your mail above:
-
-  create new distribution packages for gitk and git-gui.  These would
-  have their own autoconf setup, and be independent packages, depending
-  on the base git package.
-
-Assuming that:
-
-  From a packager viewpoint this is good.  That would make it easier to
-  have a base git package that doesn't depend on much, and then a gitk
-  package that just has gitk, depending on what it needs to.
-
-  (A problem with git now is that it depends on tcl.  I gather Linux
-  packaging systems tend to build everything with the full set of
-  possible dependencies and then split it into separate binary packages.
-  pkgsrc is more focused on source builds and thus we really don't want
-  to have tcl installed if the user doesn't want the gui, and a side
-  effect of this focus is the lack of support for split packages from
-  one build.)
-
-If you don't mean separate distribution tarballs, then could you explain
-how the released tarballs would change structurally?
-
-
-
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (NetBSD)
-
-iEYEARECAAYFAkxJ6uoACgkQ+vesoDJhHiXiRgCgsmCL8yT/xgpiE5ZZqsI/UnCh
-VXwAoLevetLmd+1iJwoPkBEa6Gd6ZHQh
-=2VzR
------END PGP SIGNATURE-----
---=-=-=--
+Sverre Rabbelier
