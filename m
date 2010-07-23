@@ -1,127 +1,138 @@
-From: Erick Mattos <erick.mattos@gmail.com>
-Subject: Re: [PATCH] t2017: redo physical reflog existance check
-Date: Fri, 23 Jul 2010 12:04:37 -0300
-Message-ID: <AANLkTin76s-ONFuP+OWdxB5LJNf2D1Du+hKxB2s_WhTa@mail.gmail.com>
-References: <1279763190-32757-1-git-send-email-erick.mattos@gmail.com> 
-	<7vlj93h120.fsf@alter.siamese.dyndns.org> <AANLkTilt5gx3Wj4eANfkIFm869Olns1rsMpCS81hS2BV@mail.gmail.com> 
-	<7vsk3bey1e.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Fri, 23 Jul 2010 17:10:33 +0200
+Message-ID: <4C49B0E9.1090300@web.de>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 23 17:05:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= =?ISO-8859-1?Q?_Bjarmason?= 
+	<avarab@gmail.com>, Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 23 17:10:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcJoa-0007FI-Gg
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 17:05:32 +0200
+	id 1OcJtk-0001iX-48
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 17:10:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759478Ab0GWPFA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 11:05:00 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:42484 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756148Ab0GWPE6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 11:04:58 -0400
-Received: by gwb20 with SMTP id 20so681178gwb.19
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 08:04:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=D6/rJW+jHkmSKsuiPJ7qO1911TvX41G+etqciWEHyQk=;
-        b=tk9zCJwfvvSU5vu+0C8qj0Da/6DB2Y7bd3/1TMh05TMk69rDVwbGyVKqkopY/hm/5C
-         oVt74oOv7ZIuBIZEsqmhXhtbv6embQBobHJkCQ/2QqwrueaMbugl73AR3txLJzCksEf8
-         NZiIP4Kr5AALj7YeSMpE4+ejR+k6dIH0lCKSg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=tvnccCJhrXt9mZXOfUNTN06OqrEXpf71EsGdfvdHGBtbTynOLAr8g/IpGYYhc0zBXH
-         xv+jR7U/gUbefsKdD1WEBlj5StBKyDORpPz3WcuAb9N3jwtZ8j2I+lLLUHG66ZFb4y9z
-         642bn3mW4KmrnEJwP02e1oLvTfIbgMRtxP0Z8=
-Received: by 10.150.52.11 with SMTP id z11mr5768323ybz.117.1279897497573; Fri, 
-	23 Jul 2010 08:04:57 -0700 (PDT)
-Received: by 10.231.178.36 with HTTP; Fri, 23 Jul 2010 08:04:37 -0700 (PDT)
-In-Reply-To: <7vsk3bey1e.fsf@alter.siamese.dyndns.org>
+	id S1759835Ab0GWPKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 11:10:38 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:45247 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756148Ab0GWPKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 11:10:36 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate02.web.de (Postfix) with ESMTP id ADBE016CAA327;
+	Fri, 23 Jul 2010 17:10:34 +0200 (CEST)
+Received: from [80.128.110.50] (helo=[192.168.178.29])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #4)
+	id 1OcJtS-0004Zf-00; Fri, 23 Jul 2010 17:10:34 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.7) Gecko/20100713 Thunderbird/3.1.1
+In-Reply-To: <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX199UcQsOlghKFtSjH80JD4Xo4IaPcyGy6z9EBIJ
+	wu4YhnnC3fMfC1ZoKbV3CCbQh7paItYT5aluOSzPTYNZMvAexa
+	SzL8frb4HbXT7embSsqQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151538>
 
-2010/7/22 Junio C Hamano <gitster@pobox.com>:
-> Erick Mattos <erick.mattos@gmail.com> writes:
->
->> To make the new orphan branch ready to have a reflog on that config
->> was as simple as creating a "touch file" for reflog. =C2=A0This is t=
-he goal
->> achieved by code.
->
-> I have to say that you are somewhat confused about the _goal_ then. =C2=
-=A0touch
-> is not a goal, it is means to a goal.
+Am 22.07.2010 21:41, schrieb Avery Pennarun:
+> I create an app named myapp on github:
+> 
+>    git://github.com/apenwarr/myapp
+> 
+> It uses 17 different ruby gems, which I import as subprojects.  I have
+> two choices:
+> 
+> [1] .gitmodules can use absolute paths to the original gem locations:
+> 
+>    git://github.com/rubygems/gem[1..n]
+> 
+> [2] Or else I can fork them all and use relative paths in .gitmodules:
+> 
+>    ../gem[1..n]
+>    translates to --> git://github.com/apenwarr/gem[1..n]
 
-I believe you have understood the whole idea of my previous email even
-though _words_ means a lot to you.  :-1
+You forgot what we do as best practice at work:
 
-I meant that that was the code goal.  It was the implementation
-objective which by itself was the solution chosen for the real
-problem.
+[3] Fork the gem repos on github (or another server reachable by your
+    co-workers) and use those, so you don't have to change the URL
+    later:
 
-> It does not matter how you implement the user visible effect, be it a
-> creation of an empty file, or some other means [*1*]. =C2=A0What matt=
-ers is
-> that the user won't get a reflog for a branch that really didn't get
-> created and must-fail "rev-parse --verify" test checks that.
->
-> Another thing that could matter would be that future actions that wan=
-t to
-> create a reflog for the same branch (perhaps after the user switches =
-to
-> 'master', another attempt is made to create eta with "checkout -b eta=
-") or
-> another branch with a similar or related name (say "eta/real") are no=
-t get
-> broken by whatever you do to implement the "we want to create a reflo=
-g
-> when a ref is actually made but not right now" feature. =C2=A0Perhaps=
- the right
-> way to test that would be to actually try to run such operations and =
-make
-> sure they do not fail.
+    git://github.com/apenwarrrubygems/gem[1..n]
 
-You were cutting off redundancy checks, weren't you?  If there is no
-reflog file (tested by "test -f"), consequently no reflog (tested by
-"rev-parse --verify") and no branch with the chosen name, certainly
-someone can create one the "almost used" name, once there is no any
-difference from a normal situation.
+Your problems go away, setup has to be done only once on project
+start and not for every developer, you can use your own branchnames
+and you have a staging repo from where you can push patches upstream
+if necessary.
 
-> [Footnote]
->
-> *1* For example, you could have implemented the feature by adding a c=
-onfig
-> item in ".git/config: [branch "eta"] need-to-create-reflog", and taug=
-ht
-> refs.c::update_ref() to pay attention to it (I am not saying that it =
-would
-> be a better implementation).
 
-About the late parenthesis: thank God! ;-)
+> Surely including *repository URLs* inside the *repository content* is
+> at least as bad as including branch names.  If we're going to do one,
+> we might as well do the other.  But it won't help, because the stored
+> branch name will probably be 'master', and my personal hacked-up copy
+> of gem13 shouldn't be on a branch named master anyway.
 
-I don't see a need for so much reluctance: "test -f" is not a taboo
-inside a script in t folder and the added tests don't change anything
-about the design and implementation which IMHO is well fit.
+You sure are aware that having a branch name associated with a
+submodule checkout is a request repeatedly made?
 
-With those two patch lines of mine "--orphan with -l and
-core.logAllRefUpdates=3Dfalse" testing script is finished.
 
-=46inally: you are the man in charge so I would really like to enforce
-that if you need me to do anything more I will be _really_ glad to
-help.  I love git and everything good done to it it is done to me too
-as one of its daily user.
+> The *real* need for submodules - the need you can't fix without
+> submodules - has nothing to do with these requirements.  It's about
+> each submodule wanting to have its own lifecycle, owner, changelog,
+> and release process, and - perhaps this is actually the killer
+> requirement - each supermodule wanting to be able to cleanly rewind a
+> submodule if they don't like the new version.
 
-Best regards
+That is just one example. Another one is code shared between
+different repos (think: libraries) where you want to make sure that
+a bugfix in the library made in project A will make it to the shared
+code repo and thus doesn't have to be fixed again by projects B to X.
+This was one of the reasons we preferred submodules over subtrees
+in our evaluation, because there is no incentive to push fixes inside
+the subtree back to its own repo like there is when using submodules.
+
+
+>>> It's very clear that git-submodule's current behaviour totally
+>>> mismatches the entire git philosophy.  That's why it's so impossible
+>>> to make the git-submodule command usable.
+>>
+>> That's very strong accusation.
+> 
+> Agreed... but that doesn't make it wrong :)
+
+But calling a feature "impossible to make ... usable" is an
+interesting thing to say about a feature lots of people are
+using productively in their daily work, no? ;-)
+
+
+>> rebase and merge needs separate    | rebase and merge works normally
+>> work in submodule currently        |
+> 
+> True.
+
+Nope, there is a patch in pu doing
+that when it is a simple fast forward
+and giving you advice when both sides
+are already merged inside the submodule
+(CCed Heiko, because he is the author
+of that feature)
+
+It is the /commits/ that have to be
+done twice, once in the submodule and
+then in the superproject. (But that is
+not necessarily bad, imagine having git
+gui as a submodule: you would be
+automagically reminded that stuff for
+git gui should be sent somewhere else
+than to Junio).
