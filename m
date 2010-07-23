@@ -1,102 +1,100 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: question (possibly) on git subtree/submodules
-Date: Fri, 23 Jul 2010 09:56:38 -0700
-Message-ID: <4C49C9C6.3080409@gmail.com>
-References: <xotjlj92i9gr.fsf@leonardo.pit.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/5] Fix rebase with file move when diff.renames = copies
+Date: Fri, 23 Jul 2010 12:01:03 -0500
+Message-ID: <20100723170103.GA2507@burratino>
+References: <7vwsfb2k3u.fsf@gitster.siamese.dyndns.org>
+ <1279742303-29817-1-git-send-email-ddkilzer@kilzer.net>
+ <20100722075133.GA9292@burratino>
+ <681325.9577.qm@web30002.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Maurizio Vitale <mav@leonardo.pit.corp.google.com>,
-	git@vger.kernel.org
-To: maurizio.vitale@polymath-solutions.com
-X-From: git-owner@vger.kernel.org Fri Jul 23 18:56:56 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: "David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Fri Jul 23 19:02:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcLYK-0002P0-V0
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 18:56:53 +0200
+	id 1OcLdj-0005In-Aq
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 19:02:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756675Ab0GWQ4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 12:56:47 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:38036 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753932Ab0GWQ4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 12:56:46 -0400
-Received: by pxi14 with SMTP id 14so3712936pxi.19
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 09:56:46 -0700 (PDT)
+	id S1760582Ab0GWRCI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 13:02:08 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:63971 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760173Ab0GWRCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 13:02:06 -0400
+Received: by qwh6 with SMTP id 6so3689411qwh.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 10:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=eXTvv7p6MnjcMEprCnmywAONzQEwj5afrpaDjUKkU30=;
-        b=dvAyspQ//TKCJO5hgsBeDCcexBgzAiOfqOZxoJbVRQUNLSCuFJcO/cQO8vvgjswBVa
-         1HrokRIiDxO3N9igxW/JNj7r8p7Yw6PBBEz8jktna/M3CpqiLFybUR/QtXdmTL9oZyJg
-         4wXFdeEy3/bMr71zWJaW30PqP5rc5esqkjvN0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=+QH9TqwhsBTxBuxaL96M2FL8PbF3UhFPzR/iTGA2c8E=;
+        b=ZJqcBGEyamRDUZhmEDGlflexsEE5db14g+zuWSvMtJSmONkb1Y+U/di7l4yWzr6aLh
+         co3/PF6hebiXqMVKnmFHGIcTqXyS74XJXbErYZgIKWsGuTnfywj2QeIJBTRfJOMmsdZA
+         oQbQRs8sS/jmN4YajZsdTV3zIuZsw0zwO+ulM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=D4Piij0ZgucIqHE9Jfgl2c3v8nYdoDQQTLFxFvbyDYEnqYukzhvyZx8oSui9RSI3Cq
-         V+qb2k4LM/wAudWlA+2JvlVG19g0J0W2pCRV3b8j7VEjaz5E+E8LK6XmmUqeZc7+4Qvp
-         As3Rf94aRJeVWfwlRFPsf8/S/9K7NpBAqxvLs=
-Received: by 10.114.120.9 with SMTP id s9mr2560717wac.100.1279904206064;
-        Fri, 23 Jul 2010 09:56:46 -0700 (PDT)
-Received: from asus-laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id k23sm703903waf.17.2010.07.23.09.56.44
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=fI58xMoghXWXRcw+A4Ok55Ge8fE/G1kbZX8qIKdpQFo+/lnvpm84mrt4ierLUpf69v
+         4mcHdY71i/jCU7GahNJO0WH3f/5CwJApshDzceaUxHKUwOR6/wHvL6oPQp8Atv4V/jqi
+         fyiqR0GAAYeeQlonQ6OMyu6JZpH3qKBClYskM=
+Received: by 10.224.48.200 with SMTP id s8mr2869113qaf.168.1279904525555;
+        Fri, 23 Jul 2010 10:02:05 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id j28sm460442qck.11.2010.07.23.10.02.03
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 23 Jul 2010 09:56:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.10) Gecko/20100520 SUSE/3.0.5 Thunderbird/3.0.5
-In-Reply-To: <xotjlj92i9gr.fsf@leonardo.pit.corp.google.com>
+        Fri, 23 Jul 2010 10:02:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <681325.9577.qm@web30002.mail.mud.yahoo.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151549>
 
-Hi,
+David D. Kilzer wrote:
 
-On 23/07/10 07:00, Maurizio Vitale wrote:
-> 
-> I'm new to git and have read the recent thread on subtree support.
-> I'm not sure they (or git submodules) offer what I'm looking for.
-> Here's the scenario:
->        - I have a large monolithic code base, all in my repository (e.g.
->          I don't need to link in external repositories, which is what I
->          understand submodules offer
->        - I'd like to be able to clone only a small fraction of the
->          repository (say an arbitrary directory or even a single file)
->          in order to make small changes
->        - these directories are not known when the full repository is set
->          up.
->        - commits to the part I've checked out should show in the history
->          of any clone that includes the part, up to the full repository
->        - ideally, I should be able to incrementally clone portions (e.g.
->          I've checked out path/dir_A and realize I need to modify
->          path/dir_B as well).
->          these additional clones should be in whatever branch I switched
->          to after the initial checkouts.
-> 
-> Assuming the above makes any sense (in general or in git), is there
-> anything in git that would help me doing what I'm looking for?
-> Thanks,
-> 
->         Maurizio 
+> My original patch in <http://marc.info/?l=3Dgit&m=3D122635667614099&w=
+=3D2> addressed=20
+> this in builtin-apply.c, but Junio didn't like this approach as noted=
+ in=20
+> <http://marc.info/?l=3Dgit&m=3D122636097120953&w=3D2>.
 
-The short answer is no. Nothing git has currently will let you clone a
-subset of files. Shallow clones exist if you want all the code and the
-last X changes. The reason for this is git, like other DVCSes, tracks
-_changes_ rather than _files_ this is something that took me a while to
-get my head around when I was learning git.
+Got it.  This patch just treats the symptoms in my opinion, and if
+you read Junio=E2=80=99s message carefully, I think he was also suggest=
+ing
+that git apply should still be fixed.
 
-The best advice I've seen is to actually take your repository and use
-git filter-branch to create several smaller repositories (or depending
-on your desire for retention of history just create new repos). You can
-then use submodules or subtrees to stitch these back together into a
-super project to which you can add the smaller repositories as needed
-(note: I have never used subtrees so I'm not 100% sure if what I'm
-saying applies to them) .
+Something like this series would fix both.  Please feel free to pick
+it up and take it in whatever direction you like.
 
-We use this model with submodules at $dayjob and it works quite well for us.
+Hope that helps.
+
+Jonathan Nieder (3):
+  t4150 (am): style tweaks
+  t4150 (am): futureproof against failing tests
+  t3400 (rebase): whitespace cleanup
+
+Junio C Hamano (2):
+  Teach "apply --index-info" to handle rename patches
+  rebase: protect against diff.renames configuration
+
+ builtin/apply.c   |    3 +-
+ git-rebase.sh     |    2 +-
+ t/t3400-rebase.sh |  204 ++++++++++++++++++--------------
+ t/t4150-am.sh     |  334 +++++++++++++++++++++++++++++++++++----------=
+-------
+ t/test-lib.sh     |    4 +
+ 5 files changed, 345 insertions(+), 202 deletions(-)
+
+--=20
+1.7.2.rc3
