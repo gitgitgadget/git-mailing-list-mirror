@@ -1,205 +1,171 @@
 From: Johan Herland <johan@herland.net>
-Subject: [WIP/RFC 10/13] builtin/notes.c: Refactor creation of notes commits.
-Date: Fri, 23 Jul 2010 12:15:01 +0200
-Message-ID: <1279880104-29796-11-git-send-email-johan@herland.net>
+Subject: [WIP/RFC 06/13] notes.c: Use two newlines (instead of one) when
+ concatenating notes
+Date: Fri, 23 Jul 2010 12:14:57 +0200
+Message-ID: <1279880104-29796-7-git-send-email-johan@herland.net>
 References: <1279880104-29796-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
 Content-Transfer-Encoding: 7BIT
 Cc: johan@herland.net
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 23 12:16:11 2010
+X-From: git-owner@vger.kernel.org Fri Jul 23 12:16:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcFIX-0001FC-3g
-	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 12:16:10 +0200
+	id 1OcFIV-0001FC-Oa
+	for gcvg-git-2@lo.gmane.org; Fri, 23 Jul 2010 12:16:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756161Ab0GWKP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 06:15:27 -0400
+	id S1756046Ab0GWKPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 06:15:22 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:43952 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755798Ab0GWKPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 06:15:25 -0400
+	id S1755477Ab0GWKPR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 06:15:17 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L6000GAB9TEM390@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Fri, 23 Jul 2010 12:15:14 +0200 (MEST)
+ with ESMTP id <0L6000G9U9TBM390@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Fri, 23 Jul 2010 12:15:11 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 07F591EA552A_C496BB2B	for <git@vger.kernel.org>; Fri,
- 23 Jul 2010 10:15:14 +0000 (GMT)
+ with SMTP id EA1BB1EA5545_C496BAEB	for <git@vger.kernel.org>; Fri,
+ 23 Jul 2010 10:15:10 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id AE9E71EA3705_C496BB0F	for <git@vger.kernel.org>; Fri,
- 23 Jul 2010 10:15:11 +0000 (GMT)
+ with ESMTP id B1D3C1EA3721_C496BAEF	for <git@vger.kernel.org>; Fri,
+ 23 Jul 2010 10:15:10 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0L60005R49T9TN00@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Fri, 23 Jul 2010 12:15:11 +0200 (MEST)
+ git@vger.kernel.org; Fri, 23 Jul 2010 12:15:10 +0200 (MEST)
 X-Mailer: git-send-email 1.7.2.220.gea1d3
 In-reply-to: <1279880104-29796-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151520>
 
-Create new function create_notes_commit() which is slightly more general than
-commit_notes() (accepts multiple commit parents and does not auto-update the
-notes ref). This function will be used by the notes-merge functionality in
-future patches.
+When using combine_notes_concatenate() to concatenate notes, it currently
+ensures exactly one newline character between the given notes. However,
+when using builtin/notes.c:create_note() to concatenate notes (e.g. by
+'git notes append'), it adds a newline character to the trailing newline
+of the preceding notes object, thus resulting in _two_ newlines (aka. a
+blank line) separating contents of the two notes.
 
-Also rewrite builtin/notes.c:commit_notes() to reuse this new function.
+This patch brings combine_notes_concatenate() into consistency with
+builtin/notes.c:create_note(), by ensuring exactly _two_ newline characters
+between concatenated notes.
+
+The patch also changes a few notes-related selftests accordingly.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- builtin.h       |    2 +-
- builtin/notes.c |   28 +++++-----------------------
- notes-merge.c   |   27 +++++++++++++++++++++++++++
- notes-merge.h   |   14 ++++++++++++++
- 4 files changed, 47 insertions(+), 24 deletions(-)
+ notes.c                       |    7 ++++---
+ t/t3301-notes.sh              |    4 ++++
+ t/t3303-notes-subtrees.sh     |    1 +
+ t/t3404-rebase-interactive.sh |    1 +
+ t/t9301-fast-import-notes.sh  |    5 +++++
+ 5 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/builtin.h b/builtin.h
-index ed6ee26..908d850 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -17,7 +17,7 @@ extern void prune_packed_objects(int);
- extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
- 	struct strbuf *out);
- extern int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out);
--extern int commit_notes(struct notes_tree *t, const char *msg);
-+extern void commit_notes(struct notes_tree *t, const char *msg);
+diff --git a/notes.c b/notes.c
+index 4f3d094..28afe2c 100644
+--- a/notes.c
++++ b/notes.c
+@@ -814,16 +814,17 @@ int combine_notes_concatenate(unsigned char *cur_sha1,
+ 		return 0;
+ 	}
  
- struct notes_rewrite_cfg {
- 	struct notes_tree **trees;
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 3a15666..8fcf207 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -288,18 +288,17 @@ static int parse_reedit_arg(const struct option *opt, const char *arg, int unset
- 	return parse_reuse_arg(opt, arg, unset);
- }
+-	/* we will separate the notes by a newline anyway */
++	/* we will separate the notes by two newlines anyway */
+ 	if (cur_msg[cur_len - 1] == '\n')
+ 		cur_len--;
  
--int commit_notes(struct notes_tree *t, const char *msg)
-+void commit_notes(struct notes_tree *t, const char *msg)
- {
--	struct commit_list *parent;
--	unsigned char tree_sha1[20], prev_commit[20], new_commit[20];
- 	struct strbuf buf = STRBUF_INIT;
-+	unsigned char commit_sha1[20];
+ 	/* concatenate cur_msg and new_msg into buf */
+-	buf_len = cur_len + 1 + new_len;
++	buf_len = cur_len + 2 + new_len;
+ 	buf = (char *) xmalloc(buf_len);
+ 	memcpy(buf, cur_msg, cur_len);
+ 	buf[cur_len] = '\n';
+-	memcpy(buf + cur_len + 1, new_msg, new_len);
++	buf[cur_len + 1] = '\n';
++	memcpy(buf + cur_len + 2, new_msg, new_len);
+ 	free(cur_msg);
+ 	free(new_msg);
  
- 	if (!t)
- 		t = &default_notes_tree;
- 	if (!t->initialized || !t->ref || !*t->ref)
- 		die("Cannot commit uninitialized/unreferenced notes tree");
- 	if (!t->dirty)
--		return 0; /* don't have to commit an unchanged tree */
-+		return; /* don't have to commit an unchanged tree */
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 1d82f79..4bf4e52 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -955,6 +955,7 @@ Date:   Thu Apr 7 15:27:13 2005 -0700
  
- 	/* Prepare commit message and reflog message */
- 	strbuf_addstr(&buf, "notes: "); /* commit message starts at index 7 */
-@@ -307,27 +306,10 @@ int commit_notes(struct notes_tree *t, const char *msg)
- 	if (buf.buf[buf.len - 1] != '\n')
- 		strbuf_addch(&buf, '\n'); /* Make sure msg ends with newline */
+ Notes (other):
+     a fresh note
++$whitespace
+     another fresh note
+ EOF
  
--	/* Convert notes tree to tree object */
--	if (write_notes_tree(t, tree_sha1))
--		die("Failed to write current notes tree to database");
--
--	/* Create new commit for the tree object */
--	if (!read_ref(t->ref, prev_commit)) { /* retrieve parent commit */
--		parent = xmalloc(sizeof(*parent));
--		parent->item = lookup_commit(prev_commit);
--		parent->next = NULL;
--	} else {
--		hashclr(prev_commit);
--		parent = NULL;
--	}
--	if (commit_tree(buf.buf + 7, tree_sha1, parent, new_commit, NULL))
--		die("Failed to commit notes tree to database");
--
--	/* Update notes ref with new commit */
--	update_ref(buf.buf, t->ref, new_commit, prev_commit, 0, DIE_ON_ERR);
-+	create_notes_commit(t, NULL, buf.buf + 7, commit_sha1);
-+	update_ref(buf.buf, t->ref, commit_sha1, NULL, 0, DIE_ON_ERR);
+@@ -976,8 +977,11 @@ Date:   Thu Apr 7 15:27:13 2005 -0700
  
- 	strbuf_release(&buf);
--	return 0;
- }
+ Notes (other):
+     a fresh note
++$whitespace
+     another fresh note
++$whitespace
+     append 1
++$whitespace
+     append 2
+ EOF
  
- combine_notes_fn parse_combine_notes_fn(const char *v)
-diff --git a/notes-merge.c b/notes-merge.c
-index 5461827..9a4dc6d 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "commit.h"
-+#include "notes.h"
- #include "notes-merge.h"
+diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
+index d571708..704aee8 100755
+--- a/t/t3303-notes-subtrees.sh
++++ b/t/t3303-notes-subtrees.sh
+@@ -173,6 +173,7 @@ verify_concatenated_notes () {
+ 	while [ $i -gt 0 ]; do
+ 		echo "    commit #$i" &&
+ 		echo "    first note for commit #$i" &&
++		echo "    " &&
+ 		echo "    second note for commit #$i" &&
+ 		i=$(($i-1));
+ 	done > expect &&
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 47ca88f..4b004bc 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -593,6 +593,7 @@ test_expect_success 'rebase -i can copy notes' '
  
- void init_notes_merge_options(struct notes_merge_options *o)
-@@ -16,6 +17,32 @@ static int show(struct notes_merge_options *o, int v)
- #define OUTPUT(o, v, ...) \
- 	do { if (show((o), (v))) { printf(__VA_ARGS__); puts(""); } } while (0)
- 
-+void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
-+			 const char *msg, unsigned char *result_sha1)
-+{
-+	unsigned char tree_sha1[20];
+ cat >expect <<EOF
+ an earlier note
 +
-+	assert(t->initialized);
-+
-+	if (write_notes_tree(t, tree_sha1))
-+		die("Failed to write notes tree to database");
-+
-+	if (!parents) {
-+		/* Deduce parent commit from t->ref */
-+		unsigned char parent_sha1[20];
-+		if (!read_ref(t->ref, parent_sha1)) {
-+			struct commit *parent = lookup_commit(parent_sha1);
-+			if (!parent || parse_commit(parent))
-+				die("Failed to find/parse commit %s", t->ref);
-+			commit_list_insert(parent, &parents);
-+		}
-+		/* else: t->ref points to nothing, assume root/orphan commit */
-+	}
-+
-+	if (commit_tree(msg, tree_sha1, parents, result_sha1, NULL))
-+		die("Failed to commit notes tree to database");
-+}
-+
- int notes_merge(struct notes_merge_options *o,
- 		unsigned char *result_sha1)
- {
-diff --git a/notes-merge.h b/notes-merge.h
-index c4416e1..b570123 100644
---- a/notes-merge.h
-+++ b/notes-merge.h
-@@ -10,6 +10,20 @@ struct notes_merge_options {
- void init_notes_merge_options(struct notes_merge_options *o);
+ a note
+ EOF
  
- /*
-+ * Create new notes commit from the given notes tree
-+ *
-+ * Properties of the created commit:
-+ * - tree: the result of converting t to a tree object with write_notes_tree().
-+ * - parents: the given parents OR (if NULL) the commit referenced by t->ref.
-+ * - author/committer: the default determined by commmit_tree().
-+ * - commit message: msg
-+ *
-+ * The resulting commit SHA1 is stored in result_sha1.
-+ */
-+void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
-+			 const char *msg, unsigned char *result_sha1);
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index a5c99d8..7cf8cd8 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -255,13 +255,18 @@ EOF
+ 
+ INPUT_END
+ 
++whitespace="    "
 +
-+/*
-  * Merge notes from o->remote_ref into o->local_ref
-  *
-  * The commits given by the two refs are merged, producing one of the following
+ cat >expect <<EXPECT_END
+     fourth commit
+     pre-prefix of note for fourth commit
++$whitespace
+     prefix of note for fourth commit
++$whitespace
+     third note for fourth commit
+     third commit
+     prefix of note for third commit
++$whitespace
+     third note for third commit
+     second commit
+     third note for second commit
 -- 
 1.7.2.220.gea1d3
