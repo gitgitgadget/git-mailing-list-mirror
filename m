@@ -1,90 +1,96 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Avery Pennarun's git-subtree?
-Date: Sat, 24 Jul 2010 15:07:13 -0500
-Message-ID: <AANLkTi=Qp5CNCe=V2LCH2_EcTkxSpJ6+EHkk_BmUr9+B@mail.gmail.com>
-References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 
-	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 
-	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 
-	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 
-	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
-	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
-	<4C49B31F.8000102@xiplink.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 0/6] Detailed test coverage reports for Git
+Date: Sat, 24 Jul 2010 20:50:57 +0000
+Message-ID: <1280004663-4887-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Bryan Larsen <bryan.larsen@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 24 22:15:57 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 24 22:51:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ocl8X-0002rj-Kd
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 22:15:57 +0200
+	id 1Oclh8-0007XA-PH
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 22:51:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756030Ab0GXUPn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 16:15:43 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:38200 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755822Ab0GXUPm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jul 2010 16:15:42 -0400
-Received: by gwb20 with SMTP id 20so1072300gwb.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 13:15:42 -0700 (PDT)
+	id S1756496Ab0GXUv3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 16:51:29 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:42551 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756324Ab0GXUv1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jul 2010 16:51:27 -0400
+Received: by eya25 with SMTP id 25so268827eya.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 13:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=JmWwbNrePP4ts2QmQ+qnfkjZ+UePpM+x4XmBfYplAg4=;
-        b=TSPHTCAQLqsap7PZa0LEighKUxnj35xroPLopokaBqi7Tw6fEz+fDuLy86MJ3aLJIk
-         5WY+svnZ02wQPYSx/CD7YtfrHRbvNoTN3MXl9mXt7lOWab4Q1++1tznhaP6+q0m7MTzb
-         fCUunALHdFBisCZHCMMu0nJM/Q/OCm86YHxAE=
+        bh=DWO/jPo9q23n61LvGAzWnog6DxEkm+RnEGU3Qhu8Q3w=;
+        b=XjUdt+8cUnDMYTWVLlexfJSeYJReMTjesp3tmEfCXdAH+NwTGHHLNxOqr+SFQTuEap
+         uIE7VRwHoAa77xHqMD6tsQAZ51Ka8rehWrFn4VCWj3J43mDnwdBNw433GpdZ3bcvLcb5
+         /+QjB77zPwJXjcUyRyJPqk3mPyLIbzSu8PVdo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=sw8Km6RISB2Rtl7/N4hgeRroiEqfkm2yg0A8Nu3PdvLPyIviaD7/0tRYLS0IUignl3
-         bqDV6m5xBpWddvbPzzEeUBVtEalBSbUQHBTZYpvVOmVVFqMFRvsYXZRUPM6Qr2UuWxjd
-         GCDZ2JG62FmZ9E1NHpQcpvvr01uxkn2H8WwN0=
-Received: by 10.150.75.5 with SMTP id x5mr4236713yba.99.1280002053212; Sat, 24 
-	Jul 2010 13:07:33 -0700 (PDT)
-Received: by 10.150.66.12 with HTTP; Sat, 24 Jul 2010 13:07:13 -0700 (PDT)
-In-Reply-To: <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=nMyy95a+H3bhvkzUUypJnGMcBxKJ5O41DUk1KsopeJJ27LLveseTapTx1VJmZ9YVih
+         oRdlVGPz+d13TpeH5Dil91xBOyvxODnXiCYF/S8IV74kTZSbgFuXKb6vm+YGmiybzMF/
+         a5ZOe2NNrT67AJric0CpN6T1gzsxcij0duZvY=
+Received: by 10.213.113.12 with SMTP id y12mr4646976ebp.53.1280004685852;
+        Sat, 24 Jul 2010 13:51:25 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
+        by mx.google.com with ESMTPS id a48sm2701243eei.6.2010.07.24.13.51.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 24 Jul 2010 13:51:24 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151669>
 
-Heya,
+Thomas Rast added initial test coverage support in 901c369af5. Expand
+on that so that coverage is extended to C files in builtin/, xdiff/
+and compat/.
 
-On Fri, Jul 23, 2010 at 17:50, Avery Pennarun <apenwarr@gmail.com> wrot=
-e:
-> IMHO, the correct answer here is to have an inotify-based daemon prod
-> at the .git/index automatically when files get updated, so that git
-> itself doesn't have to stat/readdir through the entire tree in order
-> to do any of its operations. =C2=A0(Windows also has something like i=
-notify
-> that would work.) =C2=A0If you had this, then git
-> status/diff/checkout/commit would be just as fast with zillions of
-> files as with 10 files. =C2=A0Sooner or later, if nobody implements t=
-his, I
-> promise I'll get around to it since inotify is actually easy to code
-> for :)
+In addition I've added support for formatting the coverage reports
+with gcov2perl and Devel::Cover. Here's an example report formatted
+with these tools:
 
-=46rom what I've heard both SVN and Mercurial have something like that
-and it's incredible unstable and icky and nasty and bad and will eat
-your babies. Then again, I don't have any experience with inotify, so
-if you say that it's all good and awesome, who am I to doubt that :).
+    http://v.nix.is/~avar/cover_db_html/coverage.html
 
---=20
-Cheers,
+With it we can see that Git currently has 77.1% test coverage for its
+core C code. It's also possible to dive in on a per-file basis,
+e.g. here you can see how sparse the tests for git-blame's -L option
+are, as I noted in a previous thread (and send partial patches):
 
-Sverre Rabbelier
+    http://v.nix.is/~avar/cover_db_html/builtin-blame-c.html
+
+I didn't yet look at how I could run the test suite so that we also
+get test coverage for our core Perl code. Devel::Cover obviously
+supports that, but it's just a matter of running the tests with the
+right environmental variables, and merging the gcov + Devel::Cover
+reports.
+
+But that's a project for another day.
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (6):
+  gitignore: Ignore files generated by "make coverage"
+  Makefile: Include subdirectories in "make cover" reports
+  Makefile: Split out the untested functions target
+  Makefile: Add coverage-report-cover-db target
+  Makefile: Add coverage-report-cover-db-html target
+  t/README: A new section about test coverage
+
+ .gitignore |   15 +++++++++++++++
+ Makefile   |   16 +++++++++++++++-
+ t/README   |   40 ++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 70 insertions(+), 1 deletions(-)
