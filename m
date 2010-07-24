@@ -1,61 +1,77 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/2] worktree setup: return to original cwd if prefix is 
-	set NULL
-Date: Sat, 24 Jul 2010 01:16:00 +0000
-Message-ID: <AANLkTilTmddAdEtLWvZy1wmB-kRPUL3E54lyKKWwfDqG@mail.gmail.com>
-References: <1279886651-14590-1-git-send-email-pclouds@gmail.com>
-	<AANLkTimkwfetLWynKCGVxMT0ZzHOZQp_iknrohoV8A79@mail.gmail.com>
-	<AANLkTin6xGRz7wFyWtYg4ysPPytEW-uQn8ij1YbjJ_m9@mail.gmail.com>
+From: bill lam <cbill.lam@gmail.com>
+Subject: Re: Replacing a Remote Branch
+Date: Sat, 24 Jul 2010 09:17:52 +0800
+Message-ID: <20100724011752.GA3333@debian.b2j>
+References: <4C49F83B.4060903@cybersprocket.com>
+ <201007232248.49520.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 24 03:16:08 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Eric@cybersprocket.com, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Sat Jul 24 03:18:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcTLU-0001js-A3
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 03:16:08 +0200
+	id 1OcTNU-0002G0-Sc
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 03:18:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757061Ab0GXBQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 21:16:01 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:43522 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756656Ab0GXBQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 21:16:00 -0400
-Received: by iwn7 with SMTP id 7so748181iwn.19
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 18:16:00 -0700 (PDT)
+	id S1757190Ab0GXBSH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 21:18:07 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:51532 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757117Ab0GXBSE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 21:18:04 -0400
+Received: by pvc7 with SMTP id 7so3736525pvc.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 18:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=2mHYWb9m2AlFTS3aBzAVfXs72awupwb5RQKwA2B9YRA=;
-        b=KYaoHv15V8LkQ2GfEo01xrdi+SJfLHO6JMDoQKGqnYF7Yb85y/uEdrLPiEfnl7si+U
-         WHNtxc0seK5dKztpGprqKhFvGkiE9OVNQEvTuF0m3HPcGcPUTYwvZ/JqYVshOmiFjtBv
-         MatsPLRFf6J/GnwDTmKL5o2ViPunEvZ1Dldpo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=jHgnIYAdiFHzrlMXol6ZeJdAVVhSBHjSYwu+nbRxaDI=;
+        b=BHps3yuYCSehZj9Ri6lKSkdk5tNBpxIGK4x139P036h+R1lvl37zyJyt8l2OuOCwqq
+         M/SVD6xCZOV4/u0lUm2Dp9vyDQg5gusqNXi/sn7yPn8oeiztfvAW5tu+aNcu4c5SkIO+
+         /uVOeyZtZuBFG6NxbInPDl50ZOTSgU7ZVWPyc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=YB18Q69Okz24IDudOYTGn1YXfQIzFnN67YYifH/pCYcXozYfts/eRrijkHTuHQUyMY
-         4jDd+wuND5ePVuynn80ZWdYqpEyyD21BG7Z9N1w3hbRqPgdzvZjrXy+qfZpJEmfH4Xkb
-         XQRjtvQIvuxER2lBwL1Ln5VCKxecJ3dB79xrw=
-Received: by 10.231.32.70 with SMTP id b6mr4457038ibd.99.1279934160147; Fri, 
-	23 Jul 2010 18:16:00 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Fri, 23 Jul 2010 18:16:00 -0700 (PDT)
-In-Reply-To: <AANLkTin6xGRz7wFyWtYg4ysPPytEW-uQn8ij1YbjJ_m9@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=fZJ///W2qotxNYq4PsH3DtdNWEohHT1LVdefxUb+rDHk7WaOmMPrOPO0JjCsBbm/vG
+         5F2RQxOSAv7Byn9J3ZaUC8fukA0p24pytbyPNPnscKFPl07ysd2f8hKvH+2B3IOQYzjE
+         kAZ4FFyuFHoCkup4ZH0DmTp0X7c71lQAs7tRU=
+Received: by 10.142.156.14 with SMTP id d14mr5090186wfe.86.1279934284029;
+        Fri, 23 Jul 2010 18:18:04 -0700 (PDT)
+Received: from localhost (n11649174145.netvigator.com [116.49.174.145])
+        by mx.google.com with ESMTPS id k25sm937008rvb.4.2010.07.23.18.18.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jul 2010 18:18:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201007232248.49520.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151594>
 
-On Sat, Jul 24, 2010 at 00:50, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+=D0=9F=D1=82=D0=BD, 23 =D0=98=D1=8E=D0=BB 2010, Thomas Rast =D0=BF=D0=B8=
+=D1=81=D0=B0=D0=BB(=D0=B0):
+> Since + overrides the non-ff check, this means that the remote side
+> has receive.denyNonFastForwards (see man git-config) enabled (or a
+> hook to the same effect).  Deleting and pushing the new branch merely
 
-> I don't want to pollute the repo early. If the test fails, rm would not be run.
+I also scratched my head why push --force failed to push an
+amend/rebase branch to assembla.  IMO it would be nice to mention this
+receive.denyNonFastForwards inside man git-push.
 
-Sure, I'm just asking if there's a reason to run rm in this
-case. Because usually we defer the whole rm to be done inside
-test-lib.sh once the entire test completes.
+--=20
+regards,
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+GPG key 1024D/4434BAB3 2008-08-24
+gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
