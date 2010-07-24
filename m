@@ -1,122 +1,125 @@
-From: skillzero@gmail.com
-Subject: Re: Avery Pennarun's git-subtree?
-Date: Fri, 23 Jul 2010 17:58:31 -0700
-Message-ID: <AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com>
-References: <4C472B48.8050101@gmail.com>
-	<AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com>
-	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com>
-	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com>
-	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com>
-	<4C4778DE.9090905@web.de>
-	<AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com>
-	<m31vavn8la.fsf@localhost.localdomain>
-	<AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
-	<4C49B31F.8000102@xiplink.com>
-	<AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/3] apply: handle traditional patches with spaces in
+ filename
+Date: Fri, 23 Jul 2010 20:06:18 -0500
+Message-ID: <20100724010618.GA13670@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Bryan Larsen <bryan.larsen@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 24 02:58:40 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Guido =?iso-8859-1?Q?G=FCnther?= <agx@sigxcpu.org>,
+	Giuseppe Iuculano <iuculano@debian.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 24 03:08:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcT4Y-0005yn-Gd
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 02:58:38 +0200
+	id 1OcTDf-0008RQ-H1
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 03:08:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756375Ab0GXA6d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 20:58:33 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:36707 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753286Ab0GXA6c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 Jul 2010 20:58:32 -0400
-Received: by gxk23 with SMTP id 23so371507gxk.19
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 17:58:32 -0700 (PDT)
+	id S1756695Ab0GXBH6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 Jul 2010 21:07:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47489 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756656Ab0GXBH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 21:07:57 -0400
+Received: by iwn7 with SMTP id 7so742556iwn.19
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 18:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FTSMhza/a6FtPNGrLz139Lcx2nT6TLrgLXWFI5Eq1vI=;
-        b=lNMhd4mSIuKl/fA1v0QMa6JZmK0GxG0ECs82Bs/wBXGAvsYEOFalXwYF1EMVyKVVSP
-         0fZnNm8eznMylE4yPNfTsOym5Ymv2PGfeiVuYrqNuTc55nM1a3cPT/5FYg8EahMdHAj+
-         t6nrdCUPEBAGkPPKaGU35CIeXWjM2iof66lAo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=HQjaIbKpMCRykxIylKCt0AhVng6l84ZX0f6XznswAV4=;
+        b=PHzDq4lX/lwc7myDkmKHC96A1ioCG16T4m9/s+G6o9xKJV9JZvU3ZSllTbGn20L3O1
+         G7574T6T2D8QI7oHjq/HA3AUNSB4DCrOIz3anCOtrmWQsGPFo/zJfFPXZzH6XSuYpWAZ
+         ApcpbsajNLn6MWHECVuOzczBuV9F/acvHyso8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qtL/kCB9+tKe2b/K2zE8kKe9eyv2xHxmywjQqHBElstPaFnJEWO/6Mj+zIkSirWSk0
-         KTYEssdBfoqTnAbyOICJTZ9qqpVPqH7t+Fq9mXp7kzhv7NZqdFJXas6Vz4KmZL5UyXlh
-         VJUYqdlEIRKI73prVTXX9grJRd2pQpJmN0daU=
-Received: by 10.90.102.4 with SMTP id z4mr3997266agb.86.1279933111900; Fri, 23 
-	Jul 2010 17:58:31 -0700 (PDT)
-Received: by 10.90.177.3 with HTTP; Fri, 23 Jul 2010 17:58:31 -0700 (PDT)
-In-Reply-To: <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=Nwa8bhSjpP0NKA7Fezz+KWlNujA05mUYuion4lm5TM8468/6AzgbVQxGqx5mfF6TTM
+         b4rJH406XMCX9TC36fBvvpefVn/HLTFO/B5n+S4gLnQxDULdE+0VflMBJC45pg6lA/r0
+         3satIkOifefaU1M1g5CiM3pAGRqqCHzsuonu0=
+Received: by 10.231.39.134 with SMTP id g6mr4601224ibe.8.1279933676396;
+        Fri, 23 Jul 2010 18:07:56 -0700 (PDT)
+Received: from burratino ([64.134.164.56])
+        by mx.google.com with ESMTPS id h8sm758352ibk.15.2010.07.23.18.07.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 23 Jul 2010 18:07:55 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151590>
 
-On Fri, Jul 23, 2010 at 3:50 PM, Avery Pennarun <apenwarr@gmail.com> wr=
-ote:
+The goal: let =E2=80=98git apply=E2=80=99 handle such filenames as
+=E2=80=9Cb/debian/licenses/LICENSE.Apache (v2.0)=E2=80=9D in patches pr=
+oduced by
+non-git tools without erroring out.
 
-> Honest question: do you care about the wasted disk space and download
-> time for these extra files? =C2=A0Or just the fact that git gets slow=
- when
-> you have them?
+When we last left our heroes[1] in April:
 
-I have the similar situation to the original poster (huge trees) and
-for me it's all three: disk space, download time, and performance. My
-tree has a few relatively small (< 20 MB) shared directories of common
-code, a few large (2-6 GB) directories of code for OS's, and then
-several medium size (< 500 MB) directories for application code. The
-application developers only care about the app+shared directories (and
-are very annoyed by the massive space and performance impact of the OS
-directories). The firmware-only developers only care about OS+shared
-and are mildly annoyed by the medium space and performance impact of
-the app directories. I work on all of the pieces, but even I would
-prefer to have things separated so when I work on the apps, git
-status/etc doesn't take a big hit for close to a million files in the
-OS directories (particularly when doing git status on Windows). Even
-when using the -uno option to git status, it's still pretty slow (over
-a minute).
+> | The name and last modification time of each file shall be output in
+> | the following format:
+> |
+> | "---[space]%s  %s%s%s", file1, <file1 timestamp>, <file1 frac>, <fi=
+le1 zone>
+> | "+++[space]%s  %s%s%s", file2, <file2 timestamp>, <file2 frac>, <fi=
+le2 zone>
+[...]
+> If this is really describing the format of patches in the wild, that
+> means we should only look for a tab character to terminate the filena=
+me.
+[...]
+> A big downside: this does not cope with copy-and-pasted patches with
+> tabs transformed to spaces.  The example [2] consists mostly of
+> file-creation patches, so we can=E2=80=99t look to the repository for=
+ hints.
+> Maybe the space-plus-date-plus-newline sequence should be used as a
+> delimiter.
 
-git-submodule might be technically possible in this situation, but
-having to commit and push each submodule and then commit and push the
-super module makes it slightly worse than just dealing with the
-space/download/performance issues of one huge repository.
+It turns out that is not so hard.  Maybe it could be rewritten using
+regcomp() and regexec(); if someone wants to do that, I won=E2=80=99t s=
+top
+them. ;-)
 
-git-subtree could also possibly help, but there's still extra work to
-split and merge each repository. And I'm not sure how it handles
-commit IDs across the repositories because I want to be able to say "I
-fixed that bug in shared/code.c in commit abc123" and have both the
-OS+shared and the apps+shared people be able git log abc123 and see
-the same change (and merge/cherry-pick/etc.).
+Patch 1 factors out a function to handle "GNU-format" C-style quoted
+filenames in patches.  The only tool I know of that produces this
+format is git; the discussion in [2] about what characters to escape
+seems to have come to no conclusion.
 
-I think what I want is a way to do a sparse checkout where some sort
-of module is maintained in the git repository (probably just an
-INI-style file with paths) so I can clone directly from the server and
-it figures out the objects I need for the full history of only
-apps+shared (or firmware+shared, etc.) on the server side and only
-sends those objects. I still want to be able to branch, tag, and refer
-to commit IDs. So I only take the space/download/performance hit of
-directories included in the module, but I don't have to manually
-maintain that view of the repository (as I do with git-submodule and
-git-subtree).
+Patch 2 adds some tests for all those weird characters that might
+appear in a filename.  They abuse =E2=80=9Cdiff=E2=80=9D and =E2=80=9Cp=
+r=E2=80=9D; testing on weird
+platforms would be helpful.
 
-The closest thing to that so far for me has been the sparse checkout
-support added in git 1.7 combined with a convenience script I wrote.
-Everyone still has a huge download and .git directory, but at least
-the working copy is limited to the paths specified in the module so
-git status isn't super slow (although just having all those objects in
-the .git directory still slows it down quite a bit).
+Patch 3 adds the logic to search for a date at the end of a filename
+line, for traditional (non --git) patches only.  If no date is found
+at the end, we return to the previous heuristic, except that the only
+accepted filename terminator is a tab.  Whitespace damage is only
+accepted if there is a timestamp at the end of the line.
+
+Thoughts, suggestions, improvements welcome.
+
+Jonathan Nieder (3):
+  apply: Split quoted filename handling into new function
+  tests: Test how well =E2=80=9Cgit apply=E2=80=9D copes with weird fil=
+enames
+  apply: Handle traditional patches with space in filename
+
+ builtin/apply.c                  |  251 ++++++++++++++++++++++++++++++=
+++------
+ t/t4120-apply-popt.sh            |   35 +++++-
+ t/t4135-apply-weird-filenames.sh |  119 ++++++++++++++++++
+ 3 files changed, 363 insertions(+), 42 deletions(-)
+ create mode 100755 t/t4135-apply-weird-filenames.sh
+
+[1] http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/69796=
+9/focus=3D145543
+[2] http://thread.gmane.org/gmane.comp.version-control.git/9813/focus=3D=
+10046
