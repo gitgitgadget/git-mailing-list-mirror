@@ -1,162 +1,130 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [WIP PATCH 13/22] Document line history browser
-Date: Sat, 24 Jul 2010 23:13:45 +0800
-Message-ID: <1279984434-28933-14-git-send-email-struggleyb.nku@gmail.com>
+Subject: [WIP PATCH 14/22] Make rewrite_parents public to other part of git
+Date: Sat, 24 Jul 2010 23:13:46 +0800
+Message-ID: <1279984434-28933-15-git-send-email-struggleyb.nku@gmail.com>
 References: <1279984434-28933-1-git-send-email-struggleyb.nku@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 24 17:15:35 2010
+X-From: git-owner@vger.kernel.org Sat Jul 24 17:15:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcgRr-00020D-G5
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 17:15:35 +0200
+	id 1OcgRr-00020D-Va
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 17:15:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756101Ab0GXPPO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jul 2010 11:15:14 -0400
+	id S1756119Ab0GXPPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jul 2010 11:15:19 -0400
 Received: from mail-pv0-f174.google.com ([74.125.83.174]:64670 "EHLO
 	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755553Ab0GXPPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jul 2010 11:15:11 -0400
+	with ESMTP id S1756084Ab0GXPPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jul 2010 11:15:14 -0400
 Received: by mail-pv0-f174.google.com with SMTP id 7so3930617pvc.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 08:15:11 -0700 (PDT)
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 08:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=Y8q1Urg9nn2tqp/gCB/Rcpx/aGEvYGAxBTInfaeiT0Q=;
-        b=sMG408IBtijUByXFkm6Xyq+5UraR0RW7owHPITInFdb7pfUZ7t70bygkEvqPhWkY1l
-         bcQd9hbNI75+aWbGtGUUM7koXL5+C4bD5qLs2xlB4YY43ja5KoYAgmA+ncTLB6Bl2Sgf
-         LUo+RhQXvQOjRZ84DhV1iu7x9w3nbrXq2ruKI=
+        bh=1FYdO3l1REoUX0CUJYziZaQ4rc5uz+zedt1Qb1B+SLA=;
+        b=iGFNxv8IprhdBx1XL5ZUKlbZiJ7auIyqBqkOAdGsZuFcozvr51MJ92TpYKctKvOjuT
+         cNviZmA+SZqYy5DAi3SPSuKjvobX54ithAPTn+p2IpEwpKsbcOFVr/3OhtuiP7s08N9X
+         aXxxQvZEQEqG3C399GFh3z6FUNXViWCFfmcOE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=MrG4HB4Sf3+tdb3jCBCaWxmHb0iAP/QoU10ogIVPfaqtX5M++mfBLxtnUUnEk2BXfo
-         3D14lWCME4pr3TFIklXUKtbYIWLi7Ganrn0Ua2WYGtFAjaYmoB24GOA1aVRfPLN8oOFS
-         jTZGoJ36kOd1oqrY+KX9TznHxbZFrvODrWR48=
-Received: by 10.142.225.8 with SMTP id x8mr5976028wfg.291.1279984511476;
-        Sat, 24 Jul 2010 08:15:11 -0700 (PDT)
+        b=bLdWHQ8D9RCmn3iT4rXnURlcnHe1aJahox8dg69zuKkDEGaMQnSX4yA7ocaMJsk11k
+         sO8vEu07pw0XYIamjtq11ALAWD8LQ4STv4MFfKordiegnM9kITxVaPG5B0bkTMaiqpSB
+         P5bSJJplZm2BPZe6SDnvbQSncRn9ezwaX0j+Q=
+Received: by 10.142.225.8 with SMTP id x8mr5939210wfg.292.1279984514101;
+        Sat, 24 Jul 2010 08:15:14 -0700 (PDT)
 Received: from localhost.localdomain ([58.68.143.121])
-        by mx.google.com with ESMTPS id w8sm1705169wfd.19.2010.07.24.08.15.08
+        by mx.google.com with ESMTPS id w8sm1705169wfd.19.2010.07.24.08.15.11
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jul 2010 08:15:10 -0700 (PDT)
+        Sat, 24 Jul 2010 08:15:13 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.rc3.80.g6f8ea9.dirty
 In-Reply-To: <1279984434-28933-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151645>
 
-Both 'git log' and 'git blame' support the same format
-of '-L' arguments, so we refactor its description into
-a new file.
+The function rewrite_one is used to rewrite a single
+parent of the current commit, and is used by rewrite_parents
+to rewrite all the parents.
 
-And it is possible to use more than one '-L' option
-for each path.
+Decouple the dependence between them by making rewrite_one
+a callback function that is passed to rewrite_parents. Then
+export rewrite_parents for reuse by the line history browser.
+
+We will use this function in line.c.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- Documentation/blame-options.txt     |   19 +------------------
- Documentation/git-log.txt           |   15 +++++++++++++++
- Documentation/line-range-format.txt |   18 ++++++++++++++++++
- 3 files changed, 34 insertions(+), 18 deletions(-)
- create mode 100644 Documentation/line-range-format.txt
+ revision.c |   13 ++++---------
+ revision.h |   10 ++++++++++
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 16e3c68..3526835 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -13,24 +13,7 @@
- 	Annotate only the given line range.  <start> and <end> can take
- 	one of these forms:
+diff --git a/revision.c b/revision.c
+index 25c9a94..fb08978 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1893,12 +1893,6 @@ int prepare_revision_walk(struct rev_info *revs)
+ 	return 0;
+ }
  
--	- number
--+
--If <start> or <end> is a number, it specifies an
--absolute line number (lines count from 1).
--+
+-enum rewrite_result {
+-	rewrite_one_ok,
+-	rewrite_one_noparents,
+-	rewrite_one_error
+-};
 -
--- /regex/
--+
--This form will use the first line matching the given
--POSIX regex.  If <end> is a regex, it will search
--starting at the line given by <start>.
--+
--
--- +offset or -offset
--+
--This is only valid for <end> and will specify a number
--of lines before or after the line given by <start>.
--+
-+include::line-range-format.txt[]
+ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp)
+ {
+ 	struct commit_list *cache = NULL;
+@@ -1920,12 +1914,13 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
+ 	}
+ }
  
- -l::
- 	Show long rev (Default: off).
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index e970664..6f712e7 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -9,6 +9,7 @@ git-log - Show commit logs
- SYNOPSIS
- --------
- 'git log' [<options>] [<since>..<until>] [[\--] <path>...]
-+'git log' [<options>] -L n,m <path>
+-static int rewrite_parents(struct rev_info *revs, struct commit *commit)
++int rewrite_parents(struct rev_info *revs, struct commit *commit,
++	rewrite_parent_fn_t rewrite_parent)
+ {
+ 	struct commit_list **pp = &commit->parents;
+ 	while (*pp) {
+ 		struct commit_list *parent = *pp;
+-		switch (rewrite_one(revs, &parent->item)) {
++		switch (rewrite_parent(revs, &parent->item)) {
+ 		case rewrite_one_ok:
+ 			break;
+ 		case rewrite_one_noparents:
+@@ -1993,7 +1988,7 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	if (action == commit_show &&
+ 	    !revs->show_all &&
+ 	    revs->prune && revs->dense && want_ancestry(revs)) {
+-		if (rewrite_parents(revs, commit) < 0)
++		if (rewrite_parents(revs, commit, rewrite_one) < 0)
+ 			return commit_error;
+ 	}
+ 	return action;
+diff --git a/revision.h b/revision.h
+index e4b6adf..e625c3d 100644
+--- a/revision.h
++++ b/revision.h
+@@ -200,4 +200,14 @@ enum commit_action {
+ extern enum commit_action get_commit_action(struct rev_info *revs, struct commit *commit);
+ extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
  
- DESCRIPTION
- -----------
-@@ -19,6 +20,9 @@ command to control what is shown and how, and options applicable to
- the 'git diff-*' commands to control how the changes
- each commit introduces are shown.
- 
-+With '-L' option, the command will help to trace the history of user specified
-+line ranges. It can trace multiple ranges coming from multiple files.
++enum rewrite_result {
++	rewrite_one_ok,
++	rewrite_one_noparents,
++	rewrite_one_error
++};
 +
- 
- OPTIONS
- -------
-@@ -63,6 +67,17 @@ OPTIONS
- 	Note that only message is considered, if also a diff is shown
- 	its size is not included.
- 
-+-L <start>,<end>::
-+	The line range.  <start> and <end> can take one of these forms:
++typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);
 +
-+include::line-range-format.txt[]
-+You can also specify this option more than once before each path.
-+
-+
-+--full-line-diff::
-+	Always print the interesting range even if the current commit
-+	does not change any line of the range.
-+
- [\--] <path>...::
- 	Show only commits that affect any of the specified paths. To
- 	prevent confusion with options and branch names, paths may need
-diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
-new file mode 100644
-index 0000000..265bc23
---- /dev/null
-+++ b/Documentation/line-range-format.txt
-@@ -0,0 +1,18 @@
-+- number
-++
-+If <start> or <end> is a number, it specifies an
-+absolute line number (lines count from 1).
-++
-+
-+- /regex/
-++
-+This form will use the first line matching the given
-+POSIX regex.  If <end> is a regex, it will search
-+starting at the line given by <start>.
-++
-+
-+- +offset or -offset
-++
-+This is only valid for <end> and will specify a number
-+of lines before or after the line given by <start>.
-++
++extern int rewrite_parents(struct rev_info *revs, struct commit *commit,
++	rewrite_parent_fn_t rewrite_parent);
+ #endif
 -- 
 1.7.0.2.273.gc2413.dirty
