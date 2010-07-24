@@ -1,153 +1,102 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2] Do not unquote + into ' ' in URLs
-Date: Sat, 24 Jul 2010 16:49:04 +0200
-Message-ID: <ed2d311355fca478f97b82f8d955494509d6b9de.1279982471.git.trast@student.ethz.ch>
-References: <201007240104.25341.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, <avarab@gmail.com>,
-	<jstpierre@mecheye.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 24 16:49:33 2010
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: [WIP PATCH 00/22] Some updates since v3
+Date: Sat, 24 Jul 2010 23:13:32 +0800
+Message-ID: <1279984434-28933-1-git-send-email-struggleyb.nku@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 24 17:14:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ocg2e-0007Et-Qf
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 16:49:33 +0200
+	id 1OcgQt-0001Th-AC
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 17:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754353Ab0GXOt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jul 2010 10:49:28 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:33815 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751155Ab0GXOt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jul 2010 10:49:27 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 24 Jul
- 2010 16:49:24 +0200
-Received: from localhost.localdomain (217.162.250.31) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sat, 24 Jul
- 2010 16:49:03 +0200
-X-Mailer: git-send-email 1.7.2.278.g76edd.dirty
-In-Reply-To: <201007240104.25341.trast@student.ethz.ch>
+	id S1755413Ab0GXPOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 24 Jul 2010 11:14:30 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:58504 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755349Ab0GXPO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jul 2010 11:14:29 -0400
+Received: by pwi5 with SMTP id 5so3932862pwi.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 08:14:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=oWYB3MCPZTIUybeB8w2ThYfwid/qIdpqJHYBYeSVkM8=;
+        b=QbNgwIDe5idYX3DmVwZTwVq4lsYEW4P/Gv0GB6yzrhBs6poxcbr4X+qS4hYz10dyDv
+         oMqNwkm4SIljlf741dhK5V8TIgd3HoRE5KTJi1yRt6bTyxP2GvxTsGyR1Uc/E8fxTo3G
+         cVW/h0CIIzsVwJ+2Z8zVfKHPxKYGmoj1F3xTc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=SGVzY7X9edV0cn0BavfSt13kaxhhMRzof+vOuro9s9H6QKaCStdhy71A8SB94YOLoN
+         PhKTTjK/FWtRenSM0HKYBsX+r1AQjslLQKTKDEaHOwl7fccixIgtLPgj6vn2yfVJdBYL
+         N4yx8Bd9B58irzqSdA1ByuaG52rXi31pfbQPo=
+Received: by 10.142.192.4 with SMTP id p4mr5863541wff.311.1279984468686;
+        Sat, 24 Jul 2010 08:14:28 -0700 (PDT)
+Received: from localhost.localdomain ([58.68.143.121])
+        by mx.google.com with ESMTPS id w8sm1705169wfd.19.2010.07.24.08.14.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 24 Jul 2010 08:14:27 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.rc3.80.g6f8ea9.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151633>
 
-Since 9d2e942 (decode file:// and ssh:// URLs, 2010-05-23) the URL
-logic unquotes escaped URLs.  For the %2B type of escape, this is
-conformant with RFC 2396.  However, it also unquotes + into a space
-character, which is only appropriate for the query strings in HTTP.
-This notably broke fetching from the gtk+ repository.
-
-We cannot just remove the corresponding code since the same
-url_decode_internal() is also used by the HTTP backend to decode query
-parameters.  Introduce a new argument that controls whether the +
-decoding happens, and use it only in the (client-side) url_decode().
-
-Reported-by: Jasper St. Pierre <jstpierre@mecheye.net>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
-
-I wrote:
-> Junio C Hamano wrote:
-> > 
-> >   http-backend.c::get_info_refs()
-> >    -> http-backend.c::get_parameter()
-> >      -> http-backend.c::get_parameters()
-> >        -> url.c::url_decode_parameter_value()
-> >          -> url.c::url_decode_internal()
-> 
-> You're right, I forgot about those.  I imagine it would be one of two
-> cases:
-[...]
-> Shawn, can you help with this?
-
-The third case, of course, is:
-
-* It only uses these functions for parameter decoding, which of course
-  was correct to begin with.
-
-So after hopefully drinking enough coffee, I made this one.  The catch
-is that I'm not entirely clear whether *not* decoding the +
-client-side anywhere in the URL is correct for http:// URLs?  If the
-client decodes and re-encodes the URL, then the + would be turned into
-a %2B on the re-encoding.  Then again maybe UI-facing URLs should
-never have a query part at all?
+Most commit messages issues get fixed in this series. The parent rewriting is still in progress and now part of it can be used very well to prune out uninteresting merges. The '--always-print' option is changed to '--full-line-diff', this option can be used by users to get a more detail line evovlment info. And the senmatic of this option will be changed later in the real v4 version of this series.
+Notice that, this series will break one of test because of '--full-line-diff' refactoring, just ignore it. :)
 
 
- t/t5601-clone.sh |   10 ++++++++--
- url.c            |   11 ++++++-----
- 2 files changed, 14 insertions(+), 7 deletions(-)
+Bo Yang (22):
+  parse-options: enhance STOP_AT_NON_OPTION
+  parse-options: add two helper functions
+  Add the basic data structure for line level history
+  Refactor parse_loc
+  Parse the -L options
+  Export three functions from diff.c
+  Add range clone functions
+  map/take range to the parent of commits
+  Print the line log
+  Hook line history into cmd_log, ensuring a topo-ordered walk
+  Add --full-line-diff option
+  Add tests for line history browser
+  Document line history browser
+  Make rewrite_parents public to other part of git
+  Add parent rewriting to line history browser
+  Add --graph prefix before line history output
+  Add test cases for '--graph' of line level log
+  a fast fix
+  Make graph_next_line external to other part of git
+  some changes
+  commit parents prunning code
+  A merge should not be printed anyway
 
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 8abb71a..4431dfd 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -178,8 +178,14 @@ test_expect_success 'clone respects global branch.autosetuprebase' '
- 
- test_expect_success 'respect url-encoding of file://' '
- 	git init x+y &&
--	test_must_fail git clone "file://$PWD/x+y" xy-url &&
--	git clone "file://$PWD/x%2By" xy-url
-+	git clone "file://$PWD/x+y" xy-url-1 &&
-+	git clone "file://$PWD/x%2By" xy-url-2
-+'
-+
-+test_expect_success 'do not query-string-decode + in URLs' '
-+	rm -rf x+y &&
-+	git init "x y" &&
-+	test_must_fail git clone "file://$PWD/x+y" xy-no-plus
- '
- 
- test_expect_success 'do not respect url-encoding of non-url path' '
-diff --git a/url.c b/url.c
-index 2306236..cd8f74f 100644
---- a/url.c
-+++ b/url.c
-@@ -67,7 +67,8 @@ static int url_decode_char(const char *q)
- 	return val;
- }
- 
--static char *url_decode_internal(const char **query, const char *stop_at, struct strbuf *out)
-+static char *url_decode_internal(const char **query, const char *stop_at,
-+				 struct strbuf *out, int decode_plus)
- {
- 	const char *q = *query;
- 
-@@ -90,7 +91,7 @@ static char *url_decode_internal(const char **query, const char *stop_at, struct
- 			}
- 		}
- 
--		if (c == '+')
-+		if (decode_plus && c == '+')
- 			strbuf_addch(out, ' ');
- 		else
- 			strbuf_addch(out, c);
-@@ -110,17 +111,17 @@ char *url_decode(const char *url)
- 		strbuf_add(&out, url, colon - url);
- 		url = colon;
- 	}
--	return url_decode_internal(&url, NULL, &out);
-+	return url_decode_internal(&url, NULL, &out, 0);
- }
- 
- char *url_decode_parameter_name(const char **query)
- {
- 	struct strbuf out = STRBUF_INIT;
--	return url_decode_internal(query, "&=", &out);
-+	return url_decode_internal(query, "&=", &out, 1);
- }
- 
- char *url_decode_parameter_value(const char **query)
- {
- 	struct strbuf out = STRBUF_INIT;
--	return url_decode_internal(query, "&", &out);
-+	return url_decode_internal(query, "&", &out, 1);
- }
--- 
-1.7.2.278.g76edd.dirty
+ Documentation/blame-options.txt     |   19 +-
+ Documentation/git-log.txt           |   17 +
+ Documentation/line-range-format.txt |   18 +
+ Makefile                            |    2 +
+ builtin/blame.c                     |   89 +--
+ builtin/log.c                       |  111 +++-
+ diff.c                              |    6 +-
+ diff.h                              |   17 +
+ diffcore.h                          |    1 +
+ graph.c                             |   14 +-
+ graph.h                             |   10 +
+ line.c                              | 1542 +++++++++++++++++++++++++++++++++++
+ line.h                              |  141 ++++
+ parse-options.c                     |   22 +-
+ parse-options.h                     |    7 +-
+ revision.c                          |   22 +-
+ revision.h                          |   22 +-
+ t/t4301-log-line-single-history.sh  |  567 +++++++++++++
+ t/t4302-log-line-merge-history.sh   |  163 ++++
+ 19 files changed, 2661 insertions(+), 129 deletions(-)
+ create mode 100644 Documentation/line-range-format.txt
+ create mode 100644 line.c
+ create mode 100644 line.h
+ create mode 100755 t/t4301-log-line-single-history.sh
+ create mode 100755 t/t4302-log-line-merge-history.sh
