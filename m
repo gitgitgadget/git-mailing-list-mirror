@@ -1,100 +1,93 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] Makefile: don't include git version file on 'make clean'
-Date: Sat, 24 Jul 2010 12:36:01 +0000
-Message-ID: <AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com>
-References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: rfc - Changing the way gitk and git-gui are managed
+Date: Sat, 24 Jul 2010 07:54:08 -0500
+Message-ID: <20100724125408.GA17481@burratino>
+References: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
+ <20100724110239.GA13067@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Lynn.Lin@emc.com
-X-From: git-owner@vger.kernel.org Sat Jul 24 14:36:23 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Sat Jul 24 14:55:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ocdxm-0005N3-HC
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 14:36:22 +0200
+	id 1OceGM-0003pu-Sv
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 14:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755578Ab0GXMgF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 08:36:05 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40491 "EHLO
+	id S1753672Ab0GXMzN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 08:55:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49922 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755444Ab0GXMgD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 24 Jul 2010 08:36:03 -0400
-Received: by iwn7 with SMTP id 7so1139190iwn.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 05:36:01 -0700 (PDT)
+	with ESMTP id S1752213Ab0GXMzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jul 2010 08:55:12 -0400
+Received: by iwn7 with SMTP id 7so1151302iwn.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 05:55:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=S3THN2vFMc0AJLluefepEHuo2NqpRtwvlRISs7v3Nec=;
-        b=sLWYphPEuQBS0Fb/BhfXM9Dz99O/bXq2ltSCRiVB326AUNvL5n3yVTh6yrr9fqaXxH
-         7EnKoMrUlbb919e3l72sSAjKQz5w1+hMMU0WPJKlx0dfcaYOuaAZnKnhWpyKZcpu6dqw
-         WxAN/wVaz7RFynhj5zvV49T/9yuOGpDTQ2hhU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=4hZIGXEPG25pl0AOfQ0KWepEJrGXrQYYr2fHoVwgb+o=;
+        b=YwPtt8fOYG7RxLdKTMu4UaE+Su7RjgKku2L7PwQJhG5WsWR/2dUwOgtNmz/DwJTA49
+         Qzw/X9j4jrT9SNyuOE/9fTsB9JXxsFT+dEgeiHJGR3ELA7McBC44l7g5LbNiprkUlUcx
+         LN8ouKCQDn+5TTKtAx441TVCm7iU6GXlSCMV4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mf1M6lmTlzKLoe/61nbJKKx9RddVvRuC4sHX8TEvw+NfeEsl5DzroQawZh0CkjrXat
-         nKpRbNZImXwlFDYgc+Jluebaz2kkCx2S6GcX+rfoGc2bSCHli2GHMEbYu/GZeWXK3Lel
-         tErGTbJjjSyDk3krDt1jiNCw1zo5yxi94iKo0=
-Received: by 10.231.146.196 with SMTP id i4mr4842649ibv.110.1279974961306; 
-	Sat, 24 Jul 2010 05:36:01 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Sat, 24 Jul 2010 05:36:01 -0700 (PDT)
-In-Reply-To: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=IJA/waIyTjWQW3LYv+TCDRtu1ZTjI7Bu4O7CVNvFTDQi4qHUNnLE6SoBoBiRKZok8z
+         WD6dfpxyN4tK4oQYhsDuHnh/k0ZxlHHZORh2BNrPfeU4LaNx+iC89Bgwgpk2/bFXHau1
+         zaoPyLv/g+VIsjnkY3vYeTmWOwETIZ/ZtCEH0=
+Received: by 10.231.183.10 with SMTP id ce10mr5329138ibb.96.1279976111628;
+        Sat, 24 Jul 2010 05:55:11 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id r3sm1326098ibk.19.2010.07.24.05.55.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 24 Jul 2010 05:55:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100724110239.GA13067@vidovic>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151627>
 
-On Sat, Jul 24, 2010 at 03:53,  <Lynn.Lin@emc.com> wrote:
-> From: Lynn Lin <Lynn.Lin@emc.com>
->
-> ---
-> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A04 +++-
-> =C2=A0git-gui/Makefile | =C2=A0 =C2=A04 +++-
-> =C2=A02 files changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index bc3c570..eb28b98 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -238,7 +238,9 @@ all::
->
-> =C2=A0GIT-VERSION-FILE: FORCE
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0@$(SHELL_PATH) ./GIT-VERSION-GEN
-> --include GIT-VERSION-FILE
-> +ifneq "$(MAKECMDGOALS)" "clean"
-> + =C2=A0-include GIT-VERSION-FILE
-> +endif
->
-> =C2=A0uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not')
-> =C2=A0uname_M :=3D $(shell sh -c 'uname -m 2>/dev/null || echo not')
-> diff --git a/git-gui/Makefile b/git-gui/Makefile
-> index 197b55e..91e1ea5 100644
-> --- a/git-gui/Makefile
-> +++ b/git-gui/Makefile
-> @@ -9,7 +9,9 @@ all::
->
-> =C2=A0GIT-VERSION-FILE: FORCE
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0@$(SHELL_PATH) ./GIT-VERSION-GEN
-> --include GIT-VERSION-FILE
-> +ifneq "$(MAKECMDGOALS)" "clean"
-> + =C2=A0-include GIT-VERSION-FILE
-> +endif
->
-> =C2=A0uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not')
-> =C2=A0uname_O :=3D $(shell sh -c 'uname -o 2>/dev/null || echo not')
-> --
-> 1.7.1
+Nicolas Sebrecht wrote:
 
-This patch needs a rationale, why was it needed? The "-include"
-directive will simply ignore files that don't exist (as opposed to
-"include"), so including GIT-VERSION-FILE during "make clean'
-shouldn't be an issue.
+> What is the issue with the current status?
 
-Was it for you? And if so what version of make, what OS etc.
+Here is one:
+
+ $ git log --oneline -SListbox.font -- gitk-git/gitk
+ $ git log --oneline --follow -SListbox.font -- gitk-git/gitk
+ 62ba514 Move gitk to its own subdirectory
+ $ git log --oneline -SListbox.font -- gitk-git/gitk gitk
+ 207ad7b gitk: Set the font for all listbox widgets
+ $
+
+> Going this way, why would we want gitk and git-gui as submodules at a=
+ll?
+
+If we want to stop distributing them completely (though I am not
+convinced that would be a good idea), then submodules would be a
+good stopping point along the way to avoid changing the world too
+much at a time.
+
+git archive hasn=E2=80=99t learned to do recursive archive yet; I think
+the last murmurs of that topic were [1] and [2], though it would
+be simple enough to use "git archive" more than once together
+with "tar rf" to take care of it by hand in this case.
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/107030
+which is a reroll of
+http://thread.gmane.org/gmane.comp.version-control.git/106788/focus=3D1=
+06787
+
+[2] http://thread.gmane.org/gmane.comp.version-control.git/106788/focus=
+=3D106787
