@@ -1,93 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: rfc - Changing the way gitk and git-gui are managed
-Date: Sat, 24 Jul 2010 12:22:46 -0500
-Message-ID: <20100724172246.GA1714@burratino>
-References: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
- <20100724110239.GA13067@vidovic>
- <20100724125408.GA17481@burratino>
- <20100724140054.GB13067@vidovic>
+Date: Sat, 24 Jul 2010 15:18:09 -0400
+Message-ID: <AANLkTi=R2-=TNXyFq4OCo6LsYOMNgVga+=6QrAfCoHRx@mail.gmail.com>
+References: <7vocdygbw0.fsf@alter.siamese.dyndns.org> <20100724110239.GA13067@vidovic> 
+	<20100724125408.GA17481@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Sat Jul 24 19:24:08 2010
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 24 21:18:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OciSD-0002xl-HO
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 19:24:05 +0200
+	id 1OckF6-0005cA-Ug
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 21:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755772Ab0GXRXv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 13:23:51 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:60846 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754718Ab0GXRXu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jul 2010 13:23:50 -0400
-Received: by gyg10 with SMTP id 10so494545gyg.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 10:23:49 -0700 (PDT)
+	id S1756089Ab0GXTSb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 15:18:31 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:40244 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755852Ab0GXTSa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 24 Jul 2010 15:18:30 -0400
+Received: by wyf19 with SMTP id 19so1207488wyf.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 12:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=UCotT+ktbF0lcTU4E7XKi3YjmxOggMjFZZH1124RaiE=;
-        b=qJkCr3QBf1coYpvggOSCfodZyqe+6Fj8S9z/pRfGglBgmIviEOaAx9gGv4kq6/HtFn
-         9ziQSdYNNW5ZDi5+KxxBWItd4B53bE5pRj1lsj3b580Rdf5zWA8U7FIC2Q5zdu1QJs5+
-         3XyIYDPWRAYYgidsNEkcjN6osiu1oSpMw+xXw=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=UpldUFisJ8dFSrBUMycExxZF6svkhfMDUguUWv6yWQA=;
+        b=AIYgklWXR2WE8XIo/V6pMl30fCueZ0ZsRPDEARUCjsc3b4+BlCfyJAsEvGmLEy7Gag
+         FQxtzjCahU4nZbFsM36f+yXqvNrM6omLjlQYXG3H7au/KLFLQISre1rEvLIHIWa5/fum
+         nzgD9HYxM8mwjqYXyT1DC/rgqXTWTK+48ZPSE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=u3+rARaIkBA8Lla1sCoctIql5NR35YB6fgD6xafEEi+5glWToAmj7f/KvShfGrPEwd
-         3rdit9lnXIInorTaXPB+6fIhFqjAMhrxPBGOKa3+zHJ8zNTO3hbNpDMrV/DJFmVRE1wy
-         /U/c6vC5GGBWRB3guGsQXVaArQ8Kpb1VLnQ/Y=
-Received: by 10.150.14.8 with SMTP id 8mr2517580ybn.60.1279992229695;
-        Sat, 24 Jul 2010 10:23:49 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 36sm1837860ybr.20.2010.07.24.10.23.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jul 2010 10:23:49 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100724140054.GB13067@vidovic>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=cl6NV0O9GjdI+2J3gtLOEZLfmDxGytGWr6MWglS7Mn9bmc7/fgjYk3ts/PppISISGv
+         EOHiPGftyq9dAhFnY6ILQmNoyKDBXLgbshctpqYVasLZvETXFUFhN6ARVSV++hdq1njF
+         A+m/bvyq/AzCJNPeGNRy/HoDEfwbwDUS7aYFg=
+Received: by 10.227.136.17 with SMTP id p17mr5214181wbt.54.1279999109155; Sat, 
+	24 Jul 2010 12:18:29 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Sat, 24 Jul 2010 12:18:09 -0700 (PDT)
+In-Reply-To: <20100724125408.GA17481@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151663>
 
-Nicolas Sebrecht wrote:
-> The 24/07/10, Jonathan Nieder wrote:
->> Nicolas Sebrecht wrote:
-
->>> What is the issue with the current status?
->>
->> Here is one:
->>
->>  $ git log --oneline -SListbox.font -- gitk-git/gitk
->>  $ git log --oneline --follow -SListbox.font -- gitk-git/gitk
->>  62ba514 Move gitk to its own subdirectory
->>  $ git log --oneline -SListbox.font -- gitk-git/gitk gitk
->>  207ad7b gitk: Set the font for all listbox widgets
->>  $
+On Sat, Jul 24, 2010 at 8:54 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Nicolas Sebrecht wrote:
+>> What is the issue with the current status?
 >
-> I'm sorry, I don't get your point here.
+> Here is one:
+>
+> =A0$ git log --oneline -SListbox.font -- gitk-git/gitk
+> =A0$ git log --oneline --follow -SListbox.font -- gitk-git/gitk
+> =A062ba514 Move gitk to its own subdirectory
+> =A0$ git log --oneline -SListbox.font -- gitk-git/gitk gitk
+> =A0207ad7b gitk: Set the font for all listbox widgets
+> =A0$
 
-If a person tries to drill into history to figure out the answer to a
-question like "when was that code involving Listbox.font added", it is
-totally counterintuitive how to do that now.
+This is a bug in git log --follow, not a reason to completely redesign =
+the repo.
 
-I run into this with git.git very often (you would think I would
-learn).
+=46WIW, I previously tracked the bug down to the fact that it doesn't
+track file renames that happen during a merge commit, which is what
+subtree merge produces.  I don't have the time or knowledge required
+to fix it.
 
-I don=E2=80=99t have any argument with the rest of what you have said. =
- I
-probably did not make it clear enough that I was not trying to
-advocate for one side, only presenting pertinent information.
+Have fun,
 
-Regards,
-Jonathan
+Avery
