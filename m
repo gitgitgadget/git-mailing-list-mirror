@@ -1,83 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/2] make git installation footprint smaller
-Date: Fri, 23 Jul 2010 21:31:45 -0500
-Message-ID: <20100724023145.GH13670@burratino>
-References: <taBDPvzBKDtgdmYKlcbFJ_fQRnY4jBMR74BF1vetbRU3OZRMPpwtU0wTG1SSa0hFgNsCN5k9Qx8@cipher.nrlssc.navy.mil>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Git workflow with upstream repository
+Date: Fri, 23 Jul 2010 22:39:13 -0400
+Message-ID: <AANLkTi=dgjoa8c=UN1VvMDgo_RAptTr1YFk+n_7M9sdM@mail.gmail.com>
+References: <AANLkTinyUGLMTQ=ruk69pptDUQ3VyaQ7CwtO+QfeJUVC@mail.gmail.com> 
+	<AANLkTik5U0oh8p42hK-871iwnTA5a66Yj-8pU4xSZS40@mail.gmail.com> 
+	<AANLkTi=82NDSfizCCjoJ-Sj05DzwXfa35ro60MiWSQdz@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Sat Jul 24 04:32:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Bradley Wagner <bradley.wagner@hannonhill.com>
+X-From: git-owner@vger.kernel.org Sat Jul 24 04:39:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcUXk-0001Uq-5P
-	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 04:32:52 +0200
+	id 1OcUeR-0002y8-TP
+	for gcvg-git-2@lo.gmane.org; Sat, 24 Jul 2010 04:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755634Ab0GXCcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 Jul 2010 22:32:46 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35396 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755418Ab0GXCcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 Jul 2010 22:32:45 -0400
-Received: by iwn7 with SMTP id 7so801308iwn.19
-        for <git@vger.kernel.org>; Fri, 23 Jul 2010 19:32:45 -0700 (PDT)
+	id S1755709Ab0GXCjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 Jul 2010 22:39:43 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62515 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755477Ab0GXCjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 Jul 2010 22:39:42 -0400
+Received: by wwj40 with SMTP id 40so5259620wwj.1
+        for <git@vger.kernel.org>; Fri, 23 Jul 2010 19:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=taIz/XJ+1nAKFqRStUHvoUn1zoH4WKnbl16lm5fss0w=;
-        b=Y4fq9eX+Sd2uc11KrmSqTc/njG6lqKaUlc+ZeSwuwkND14Y8cddd2Z8fEHGkNpvplp
-         WtJl6oVidgeVjm2yXiQVrfOqSGI4lzms7eATNR/NOl/QB1TbS/3iP6Tcr3BgVLXC9hxi
-         l4LeBc80P7OTNH29c4VORla2nx/bUokVS9jc0=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=9qjXmXIW4x/6LrF++kQdJHLUdASvw7Dt5IHB8AuYfzs=;
+        b=FcBQx4Xvi7vRRcn5N72JOp8V9r6Vz1/4r9PZitJERaLJIEN/YevaijKablvyrG7003
+         m7shSj7BGTmJVH/ESz+KtkaFBzyjfROVrQ+re6rTQiXqlQd8Gx9/S31Q0ApLbz2Dfnuj
+         sSTpgqDVBJkOSCPg5kkadEQCUAcT/RK1tOsP4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=O4MHpi2fFnkj9lpDcge1zJspOEban3JfhjeKJU/e0gFilbZOO3H3KSDnt7WYuFrxKF
-         IhaXpHx2tQO7vIEOFtghGViwSCwkXZCgMoTEoNq+k3J/pMuSiDBORIGdeOjUUfWGeFxk
-         2sL5cdyzLtMOmigBU/jDWxwXBV/gz4YA8Gdy4=
-Received: by 10.231.32.200 with SMTP id e8mr4574922ibd.66.1279938764896;
-        Fri, 23 Jul 2010 19:32:44 -0700 (PDT)
-Received: from burratino ([64.134.164.56])
-        by mx.google.com with ESMTPS id r3sm832312ibk.19.2010.07.23.19.32.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 23 Jul 2010 19:32:44 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <taBDPvzBKDtgdmYKlcbFJ_fQRnY4jBMR74BF1vetbRU3OZRMPpwtU0wTG1SSa0hFgNsCN5k9Qx8@cipher.nrlssc.navy.mil>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=KJPfA8+78GbF6xOQ53YifCaBESrUsqgZgmbaQCWCkuO0NdwQhZMzwCW+I4wsZ6+r7t
+         Mn1xmCAsJYOVI9pcVJE44Lj/Ry3nnSlM0DVMkwheSSsnLwBSZ6biWE8J7p/1XOzUeOzC
+         yeLzcEw37hTI3BiEuszR4ERjm1HbBp9Uzpl4c=
+Received: by 10.227.140.154 with SMTP id i26mr4281813wbu.199.1279939173236; 
+	Fri, 23 Jul 2010 19:39:33 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Fri, 23 Jul 2010 19:39:13 -0700 (PDT)
+In-Reply-To: <AANLkTi=82NDSfizCCjoJ-Sj05DzwXfa35ro60MiWSQdz@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151600>
 
-Brandon Casey wrote:
+On Fri, Jul 23, 2010 at 9:43 PM, Bradley Wagner
+<bradley.wagner@hannonhill.com> wrote:
+> Thanks, I'll check those out! So, I take it there is not a way to get
+> a simple message like what git status tells you when you're local
+> branch is behind the remote branch:
+>
+> "Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded."
 
-> Brandon Casey (2):
->   Makefile: link builtins residing in bin directory to main git binary
->     too
->   Makefile: make hard/symbolic links for non-builtins too
+As far as I know, any given branch can only "track" one particular
+branch, and that message is only generated relative to the branch
+you're tracking.  You can adjust which one you're tracking by editing
+.git/config.
 
-So in the end, the hardlink-forming step has four steps:
+> Is there even a concept of a fast-forward merge when pulling from a
+> remote repo that is not the remote to which your branches are
+> tracking?
 
-1. (if bindir != libexecdir and NO_CROSS_DIRECTORY_HARDLINKS is unset)
-   Files in libexecdir with cousins in bindir are replaced by
-   hardlinks to their cousins. (patch 2)
+Yes.  Tracking branches are really just a notational convenience.  In
+fact, they don't do very much more than generating the above message.
+(The other thing they do is make 'git pull' do something by default
+when you don't give it any other parameters.)
 
-2. Any builtins in bindir are replaced by
-   hardlinks, symlinks, or copies of git.
+You might enjoy this article:
+http://eagain.net/articles/git-for-computer-scientists/
 
-3. Any builtins in libexecdir are replaced by
-   hardlinks, symlinks, or copies of git.
+> Is it possible to rebase based on a branch that is *not* the branch
+> you're currently tracking? Is that what the --onto flag is for?
 
-4. git-remote-{ftp,http, etc} are replaced by
-   hardlinks, symlinks, or of git-remote-http.
+Yes, it's possible.  The question of when you do or don't need the
+--onto option is a little more complex than that, but yes, that's
+what's it's for, more or less.
 
-Looks good to me.
+Have fun,
 
-Thanks for the pleasant read,
-Jonathan
+Avery
