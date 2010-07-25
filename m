@@ -1,79 +1,83 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: rfc - Changing the way gitk and git-gui are managed
-Date: Sun, 25 Jul 2010 00:11:37 -0400
-Message-ID: <AANLkTikkMYY5r4RzBZ-mTBVSXuZfhu8HSZPEbNTGnJ2i@mail.gmail.com>
-References: <7vocdygbw0.fsf@alter.siamese.dyndns.org> <20100724110239.GA13067@vidovic> 
-	<20100724125408.GA17481@burratino> <AANLkTi=R2-=TNXyFq4OCo6LsYOMNgVga+=6QrAfCoHRx@mail.gmail.com> 
-	<20100724193428.GA4491@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: replaced objects and working directory
+Date: Sun, 25 Jul 2010 14:20:45 +1000
+Message-ID: <AANLkTi=3=MX8+U4Oq4q_RACyxFYj-HmBYXFBxxQdFf_e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 06:12:08 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 25 06:21:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcsZI-0004Bk-N4
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 06:12:05 +0200
+	id 1OcsiI-0006Io-Oa
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 06:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751098Ab0GYEL7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 00:11:59 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:62386 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750716Ab0GYEL6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 00:11:58 -0400
-Received: by wyf19 with SMTP id 19so1358915wyf.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 21:11:57 -0700 (PDT)
+	id S1751179Ab0GYEVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jul 2010 00:21:10 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:37327 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893Ab0GYEVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 00:21:05 -0400
+Received: by pvc7 with SMTP id 7so4065807pvc.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 21:21:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/yZk07ahdhlinoh19e2wjU+uwcDlKSG+P5Fu4cs9vnI=;
-        b=U5WLpbyywicDDYbiJ5Ogf8xpwxSMyDn1dogqMLa4zsWmHSnKwnu0IdmZAyeFgPXEFB
-         K+//FjQKzAasb4lj/M90+vHrP6BU4okYvu+k8av5TBSLq2v+5z65hcwYcmIuGzN9lfzG
-         4FRdXvB+ZtFWcyNr6z4SMW0fJbkq5Oz0OJ2Wk=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=vK7uRzgzPPNIj2wFuUzyxwyhjbY5/wt50UjHTWN7jjs=;
+        b=juHEai2AtixdPu2+pCCgf7j723AtOcIjtuYbtj+80YW+oRyANaZdpo9BDLrv9w8SUu
+         3hJsc6B0YaUEFjKCrmnA6Vxeb/K2vXV5c6Q/E2PZofLQaPKP+XF4O55L+wX5spcRzJag
+         /SoiLyuea4veTzm/hevqxfapz1BDT0zYkxNww=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=b/aiL0jnp9fN/ri2Xxd9QwsHHnlijRChgjdy244hxeQuYz03YxNWha06xvy+le+bim
-         podyOrH8rpLP0QR+Cy1FcaeLju0EBaCxVBPjf2grYK6r4xSwcYwAwPWssBEfouumL4FU
-         hc5AXa4A4K2gT1f68Vf63LustCMa18F6gduRk=
-Received: by 10.227.144.4 with SMTP id x4mr5642490wbu.59.1280031117157; Sat, 
-	24 Jul 2010 21:11:57 -0700 (PDT)
-Received: by 10.216.235.202 with HTTP; Sat, 24 Jul 2010 21:11:37 -0700 (PDT)
-In-Reply-To: <20100724193428.GA4491@burratino>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=odMnthAyPOwDocvwW1TD7g2/LR5bf+SVDuUcwKfJO4em39mg3WI5EI2tAr1Lpsxj0V
+         O1f/uKhFaVlcA/21V5ZIA/20tn7cvHqWU45461jGGCBtWoHhB2cCpQlvRcBGiMlpEqxA
+         7EwDDUIWYtvjmfL8jurGMiYL3o+CqclyvV9ps=
+Received: by 10.142.172.1 with SMTP id u1mr6639346wfe.137.1280031665459; Sat, 
+	24 Jul 2010 21:21:05 -0700 (PDT)
+Received: by 10.142.98.1 with HTTP; Sat, 24 Jul 2010 21:20:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151707>
 
-On Sat, Jul 24, 2010 at 3:34 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Avery Pennarun wrote:
->> On Sat, Jul 24, 2010 at 8:54 AM, Jonathan Nieder <jrnieder@gmail.com=
-> wrote:
->
->>> =A0$ git log --oneline -SListbox.font -- gitk-git/gitk
->>> =A0$ git log --oneline --follow -SListbox.font -- gitk-git/gitk
->>> =A062ba514 Move gitk to its own subdirectory
->>> =A0$ git log --oneline -SListbox.font -- gitk-git/gitk gitk
->>> =A0207ad7b gitk: Set the font for all listbox widgets
->>> =A0$
->>
->> This is a bug in git log --follow
->
-> The first one is not.
+Hi,
 
-That one is a bug in history simplification, which has simplified away
-commits that affected files that got renamed into gitk-git/gitk during
-a merge commit.  So the bug is very similar, albeit probably in a
-different place in the code.  (-M doesn't help either.)
+Should worktree (or the index) be aware of replaced objects? It seems
+a bit odd to do "git checkout HEAD^" then "git status" reports
+modification. Maybe "git status" and similar operations should also
+check worktree version against the replaced version, in addition to
+the original version?
 
-Avery
+$ git init
+$ echo 1 > 1
+$ git add 1
+$ SHA1=`git hash-object 1`
+$ git ci -m 1
+$ echo 2 >> 1
+$ git add 1
+$ git ci -m 2
+$ SHA2=`git hash-object 1`
+$ git replace $SHA1 $SHA2
+$ git st
+# On branch master
+nothing to commit (working directory clean)
+$ git co HEAD^
+$ git st
+# Not currently on any branch.
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#       modified:   1
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git di
+diff --git a/1 b/1
+index d00491f..1191247 100644
+-- 
+Duy
