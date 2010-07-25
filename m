@@ -1,77 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-remote-svn: Call for manpower
-Date: Sun, 25 Jul 2010 15:18:50 -0500
-Message-ID: <20100725201850.GA16713@burratino>
-References: <20100725102908.GA2726@kytes>
- <AANLkTinrAAmr17ujD0ubOQQEZsEy=R0k2Q4HV-5WvyrR@mail.gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [BUG] git gui blame: Show History Context [still] broken since 29e5573d
+Date: Sun, 25 Jul 2010 21:19:44 +0100
+Message-ID: <87iq43wbz3.fsf@fox.patthoyts.tk>
+References: <vpqy6e4v1h0.fsf@bauges.imag.fr> <87sk3qrjk3.fsf@fox.patthoyts.tk>
+	<7vtyo4a096.fsf@alter.siamese.dyndns.org>
+	<vpqzkxkorzr.fsf@bauges.imag.fr> <20100722082310.GB13386@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 22:20:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, spearce@spearce.org,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 22:20:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od7gT-0007xQ-Ap
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 22:20:29 +0200
+	id 1Od7ge-000846-3T
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 22:20:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134Ab0GYUUB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 16:20:01 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:51376 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751884Ab0GYUUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 16:20:01 -0400
-Received: by gxk23 with SMTP id 23so639431gxk.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 13:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=TEblvPekGRgsNuBvaGhqneKlNq0pYUm5WCj/CXHJWHw=;
-        b=pc7Xky/xEMhQCbpLsGPtEoNn6l9RLoga6hJgwBfn6362Z+XmnEzmmhFHNuxT4viHXw
-         3M0UDXes2dzp/LihHJQFyLeSyre3jlqqRg6mUME6GRfgBwCggf8zD5Q0WLfLxiBhwhk5
-         /Pl/lBTXqT5yUF6DyHaQCCEZiT/x2DJukTX7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=B3Yc0G3DHU7tYnnvnyOMeJv2qmPlcYylHhxOV54wkBC+OPnInS1wASrIvBoL9TKi+h
-         20QH+53SMfOaUGDsEQVuqXvDuOBVLilXBc6ElUKsYNwvu+VdjupmVHYu2aQjU4f0I7zU
-         sCujsOuNJkG636Tf0V8v+t4BeMZEyYzsks6w4=
-Received: by 10.100.33.14 with SMTP id g14mr6715493ang.180.1280089199997;
-        Sun, 25 Jul 2010 13:19:59 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 14sm5072808ant.1.2010.07.25.13.19.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jul 2010 13:19:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinrAAmr17ujD0ubOQQEZsEy=R0k2Q4HV-5WvyrR@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752390Ab0GYUUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jul 2010 16:20:25 -0400
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:39787 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751884Ab0GYUUG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 16:20:06 -0400
+Received: from [172.23.170.136] (helo=anti-virus01-07)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1Od7fy-00031w-51; Sun, 25 Jul 2010 21:19:58 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1Od7fl-0004i5-PG; Sun, 25 Jul 2010 21:19:45 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id E291322B77; Sun, 25 Jul 2010 21:19:44 +0100 (BST)
+X-Url: http://www.patthoyts.tk/
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+In-Reply-To: <20100722082310.GB13386@burratino> (Jonathan Nieder's message of "Thu\, 22 Jul 2010 03\:23\:10 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151792>
 
-Sverre Rabbelier wrote:
-> On Sun, Jul 25, 2010 at 05:29, Ramkumar Ramachandra <artagnon@gmail.c=
-om> wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> 7. Modifications to svn-fast-import: Sverre, and Jonathan: what's th=
-e
->> =A0 status of this?
+>Matthieu Moy wrote:
 >
-> I assume it's still cooking? Jonathan?
+>> Too late for the 1.7.2, but can we finally get one of these patches
+>> applied? They're both very short and straightforward, and fix an
+>> important feature of git-gui which is basically broken as of now.
+>
+>Maybe some interested person should maintain a temporary fork of
+>git-gui that could be merged in the meantime.  That is what people
+>seem to usually do with submodules in analogous situations.
 
-Yep, cooking.  I was not planning to submit more git fast-import
-patches until the caller is using it, so we can see how well it works
-and not get locked into a wrong interface.  Though I would not
-complain if the fast-import changes happen before then anyway. ;-)
+I pushed git-gui + my patches to git://git.patthoyts.tk/git-gui
+(http://www.patthoyts.tk/gitweb.cgi?p=git-gui;a=summary)
+so if someone wants to pull from that it is Shawn's repository plus 3.
 
-Jonathan
+Alternatively the git-gui patches could be pulled from msysGit which
+has a few in addition to these three.
+
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
