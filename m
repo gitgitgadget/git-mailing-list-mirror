@@ -1,108 +1,143 @@
-From: "Kevin P. Fleming" <kpfleming@digium.com>
-Subject: Re: [PATCH] Makefile: don't include git version file on 'make clean'
-Date: Sun, 25 Jul 2010 10:49:39 +0200
-Organization: Digium, Inc.
-Message-ID: <4C4BFAA3.3050700@digium.com>
-References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com> <AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC/PATCH 0/9] commit: more focused advice in the 
+	no-changes-staged case
+Date: Sun, 25 Jul 2010 08:54:22 +0000
+Message-ID: <AANLkTilnQhsopnuAf0nja8Qq63VrOlt0_uCJrqYv5X-v@mail.gmail.com>
+References: <20100725005443.GA18370@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Lynn.Lin@emc.com, git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 10:49:52 2010
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 10:54:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ocwu7-0000E3-MV
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 10:49:52 +0200
+	id 1Ocwyb-0001x5-3p
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 10:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752331Ab0GYItq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 04:49:46 -0400
-Received: from mail.digium.com ([216.207.245.2]:35904 "EHLO mail.digium.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752077Ab0GYItp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 04:49:45 -0400
-Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
-	by mail.digium.com with esmtp (Exim 4.69)
-	(envelope-from <kpfleming@digium.com>)
-	id 1Ocwty-0004N4-PJ; Sun, 25 Jul 2010 03:49:42 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.hsv.digium.com (Postfix) with ESMTP id B6CCBD8025;
-	Sun, 25 Jul 2010 03:49:42 -0500 (CDT)
-Received: from zimbra.hsv.digium.com ([127.0.0.1])
-	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Fp5CVthAb2z3; Sun, 25 Jul 2010 03:49:42 -0500 (CDT)
-Received: from [192.168.1.43] (195-175.76-83.cust.bluewin.ch [83.76.175.195])
-	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id 3AC15D8023;
-	Sun, 25 Jul 2010 03:49:41 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
-In-Reply-To: <AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
-OpenPGP: id=05FB8DB2
+	id S1752321Ab0GYIyY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 04:54:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:60610 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751504Ab0GYIyX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 04:54:23 -0400
+Received: by iwn7 with SMTP id 7so1777774iwn.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 01:54:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=JVEZwxKhxp5w2kJarQ77K1f1uVhyKXAXHAojbfR5tGs=;
+        b=k2wVZh5/bJOYKjxV12yG1prLy3zUWBkBr9mLHoJhYIXClfvQJ5G7rjiro3Xx4AJW9u
+         F9MN1DBgm8Gaxno6DAuk1/mP4/HTPMzK7CnwKJjxgVP8v5GThmeNY3ygVuN2uX3awvKv
+         PBSaHR0hG/D/GBwBktuRgDFGat6KuiZ9Ti7mw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IVCcvTaxza7iW301tKLbTHY9eoFsoJloRJHI8h1vDqMRInQkjk+E5FWwAnGoRBnXZ6
+         wbELK9rNqM6+87iimtnRCI8oZfr13bZlH9FjdXfGuUAEdHMy5ZsJMttZf6PxPH3U+Waj
+         /xU+a924g8jhz4nt88U6+SSW7HkfIgya+yA4Y=
+Received: by 10.231.170.13 with SMTP id b13mr530383ibz.62.1280048062504; Sun, 
+	25 Jul 2010 01:54:22 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 01:54:22 -0700 (PDT)
+In-Reply-To: <20100725005443.GA18370@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151715>
 
-On 07/24/2010 02:36 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
-> On Sat, Jul 24, 2010 at 03:53,  <Lynn.Lin@emc.com> wrote:
->> From: Lynn Lin <Lynn.Lin@emc.com>
->>
->> ---
->>  Makefile         |    4 +++-
->>  git-gui/Makefile |    4 +++-
->>  2 files changed, 6 insertions(+), 2 deletions(-)
->>
->> diff --git a/Makefile b/Makefile
->> index bc3c570..eb28b98 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -238,7 +238,9 @@ all::
->>
->>  GIT-VERSION-FILE: FORCE
->>        @$(SHELL_PATH) ./GIT-VERSION-GEN
->> --include GIT-VERSION-FILE
->> +ifneq "$(MAKECMDGOALS)" "clean"
->> +  -include GIT-VERSION-FILE
->> +endif
->>
->>  uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not')
->>  uname_M :=3D $(shell sh -c 'uname -m 2>/dev/null || echo not')
->> diff --git a/git-gui/Makefile b/git-gui/Makefile
->> index 197b55e..91e1ea5 100644
->> --- a/git-gui/Makefile
->> +++ b/git-gui/Makefile
->> @@ -9,7 +9,9 @@ all::
->>
->>  GIT-VERSION-FILE: FORCE
->>        @$(SHELL_PATH) ./GIT-VERSION-GEN
->> --include GIT-VERSION-FILE
->> +ifneq "$(MAKECMDGOALS)" "clean"
->> +  -include GIT-VERSION-FILE
->> +endif
->>
->>  uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not')
->>  uname_O :=3D $(shell sh -c 'uname -o 2>/dev/null || echo not')
->> --
->> 1.7.1
->=20
-> This patch needs a rationale, why was it needed? The "-include"
-> directive will simply ignore files that don't exist (as opposed to
-> "include"), so including GIT-VERSION-FILE during "make clean'
-> shouldn't be an issue.
+On Sun, Jul 25, 2010 at 00:54, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Hi,
+>
+> When last seen[1], this series was a single patch in very rough form,
+> but there have been almost no functional changes since then.
+>
+> The patches suppress most output when =E2=80=9Cgit commit=E2=80=9D is=
+ run without
+> stages changed. =C2=A0So instead of
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git commit
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# On branch master
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Changed but not updated:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 (use "git add <file>..." to updat=
+e what will be committed)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 (use "git checkout -- <file>..." =
+to discard changes in working directory)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 modified: =C2=A0 di=
+r1/modified
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Untracked files:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 (use "git add <file>..." to inclu=
+de in what will be committed)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0#
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 actual
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 dir1/untracked
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 dir2/modified
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 dir2/untracked
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 expect
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 output
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0 =C2=A0 untracked
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0no changes added to commit (use "git add" =
+and/or "git commit -a")
+>
+> which may cause a newcomer to panic, you get
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git commit
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0no changes added to commit (use "git add" =
+and/or "git commit -a")
+>
+> which would just cause her to scratch her head or say =E2=80=9Coh, ri=
+ght!=E2=80=9D
+> instead. =C2=A0Hopefully these patches will at least provide a remind=
+er to
+> improve the various "no changes" advice messages.
+>
+> Ideas for future work:
+>
+> =C2=A0- add some tests
+> =C2=A0- give the full traditional output if -a or any paths were pass=
+ed on
+> =C2=A0 the command line.
+>
+> Most of the patches are code clarity improvements which is not
+> strictly related to this topic.
+>
+> Patch 6 cleans up the most obvious script to add tests for this in,
+> though I have not added any tests to it.
+>
+> Patch 8 changes commit --dry-run output in a more modest way, to
+> print the same advice Jeff added to commit proper last month. =C2=A0I
+> suspect this is a good change, but input from people who script
+> around commit --dry-run would be welcome.
+>
+> Patch 9 is the advertised patch. =C2=A0It should be self-explanatory.
+>
+> Thoughts?
 
-Just guessing here, but since GIT-VERSION-FILE has a 'FORCE'
-prerequisite, that means that the operations to generate it will be run
-even for 'make clean', which is not useful for the cleaning operation.
-It's probably not harmful either... but maybe the OP has some more
-significant reason for this patch.
+=46irstly. Acked-by on patches 1-8, they're some much needed
+cleanup. Especially fixing the hairy wt-status.c code and the test
+fixes.
 
---=20
-Kevin P. Fleming
-Digium, Inc. | Director of Software Technologies
-445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
-skype: kpfleming | jabber: kfleming@digium.com
-Check us out at www.digium.com & www.asterisk.org
+I'm not so sure about 9/9. Every time I make this mistake with "git
+commit" I find it helpful to be able to just look up to see what I
+need to stage. But perhaps the wall of text can be confusing to
+newbies, I don't have a strong opinion on whether it should be
+included or not.
+
+As an aside, isn't this sort of thing (i.e. long notices/help
+messages) usually hidden behind advice.* nowadays?
+
+With the stripped down message nothing tells you how to find out what
+to add, which the old message did just by including the "git status"
+output.
+
+Anyway, meh, I don't know :)
