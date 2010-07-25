@@ -1,80 +1,75 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH 2/2] simplify digit_in_number
-Date: Sun, 25 Jul 2010 19:43:18 +0200
-Message-ID: <1280079798-4993-2-git-send-email-ralf.thielow@googlemail.com>
-References: <1280079798-4993-1-git-send-email-ralf.thielow@googlemail.com>
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 25 19:43:46 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v2 0/7] Detailed test coverage reports for Git
+Date: Sun, 25 Jul 2010 17:46:27 +0000
+Message-ID: <AANLkTikHXRJcuv35uFrv_g1umVdUM-QD80brFGj94E3N@mail.gmail.com>
+References: <1280068861-17701-1-git-send-email-avarab@gmail.com>
+	<20100725172012.GC8604@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 19:46:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od5Ek-0006TZ-UR
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 19:43:43 +0200
+	id 1Od5HY-0007uI-Aa
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 19:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068Ab0GYRn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 13:43:27 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45676 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751524Ab0GYRn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 13:43:26 -0400
-Received: by eya25 with SMTP id 25so342059eya.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 10:43:25 -0700 (PDT)
+	id S1752134Ab0GYRqb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 13:46:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55441 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab0GYRqa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 13:46:30 -0400
+Received: by iwn7 with SMTP id 7so2068704iwn.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 10:46:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=NOzt3K0ja8GTGSTI+6ur+vxo9r9y6YqEj5x/KJQJYCQ=;
-        b=JcBE5FOI4j77hstZQcd0pUowHrhZfwGXpfcv0rhvhQFMvn0rxzDx0fPtr9F8hLAO/z
-         TJT+KL75KJpL/DFPfOEnVwTmqDbUV5Ipy4ZgdAnq9vpDhZ7P+hecP3DYe+YK+lqEyIKQ
-         ZM341ACHG3luO61R7GxAS8f+4PU20n0/eTI3s=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xLgGRjef8VrcmMOmowO1J5coIDkbYES0BIZvUEB5MXo=;
+        b=hIu9YyfISRti08mfNM53GEKCLQOYUJGVnMmT236J2UzCrhLZP0neFILAeZIGc0YZpu
+         aVk6VuqtLxF4FF4bzLlLflPkkZxrvzDZn30n7AR0H1nQ3+31GLTygTY5QlYv5yIxel9U
+         BdQyXSCJ6VY1YgEq/63Ymlf0FBHtYcLCABJrs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=sJstO62N2ionY2WkJZzjOjb0737x7tTJcyOnAlBhlSkgBFsbTDfWIOzaU6tWlYnF0Z
-         f2rRJsNneACq79iDI2cDa+qbxRLjJm/4G4i+2GehFAm/zZNdrJrF7bNqc4YpIb5+hBV7
-         rp5M4DnIpMyalF3I6WIZDg9Bcgd1dr1TTUoX4=
-Received: by 10.213.34.140 with SMTP id l12mr5530996ebd.31.1280079805328;
-        Sun, 25 Jul 2010 10:43:25 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-222-159-075.pools.arcor-ip.net [94.222.159.75])
-        by mx.google.com with ESMTPS id a48sm4218558eei.0.2010.07.25.10.43.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jul 2010 10:43:24 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4
-In-Reply-To: <1280079798-4993-1-git-send-email-ralf.thielow@googlemail.com>
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=H6BNO/WF7V2jtxKlwCusQkkctR3zbNy/ypimx5rTZymbJdMuu2H5uEri9twMHaiI3F
+         awzojFTkkJdprK+yPIabmmPaPEfvMRbTetxUhUZRW3ahtj5jJVJCZVflPEQL7xxgoeAw
+         sRPIU2fBjsW/2gSSYQX9ReYocYfBpPAE6S4BY=
+Received: by 10.231.152.210 with SMTP id h18mr7418167ibw.18.1280079987295; 
+	Sun, 25 Jul 2010 10:46:27 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 10:46:27 -0700 (PDT)
+In-Reply-To: <20100725172012.GC8604@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151771>
 
-tree-log: simplify digit_in_number
+On Sun, Jul 25, 2010 at 17:20, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (7):
+>> =C2=A0 gitignore: Ignore files generated by "make coverage"
+>> =C2=A0 Makefile: Include subdirectories in "make cover" reports
+>> =C2=A0 Makefile: Split out the untested functions target
+>> =C2=A0 Makefile: Add coverage-report-cover-db target
+>> =C2=A0 Makefile: Add coverage-report-cover-db-html target
+>> =C2=A0 t/README: A new section about test coverage
+>> =C2=A0 t/README: Add a note about the dangers of coverage chasing
+>
+> With whatever subset of the changes I have hinted at seems
+> suitable,
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Simplify the algorithm to resolve the digits in a number.
-
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
----
- log-tree.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 95a00a4..c2af716 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -254,10 +254,10 @@ static void append_signoff(struct strbuf *sb, const char *signoff)
- 
- static unsigned int digits_in_number(unsigned int number)
- {
--	int digits = 0;
-+	int digits = 1;
- 	while (number /= 10) 
- 		digits++;
--	return digits++;
-+	return digits;
- }
- 
- void get_patch_filename(struct commit *commit, int nr, const char *suffix,
--- 
-1.7.0.4
+All the changes you made look good, I approve of having them squashed
+when this is applied. Thanks.
