@@ -1,135 +1,64 @@
-From: <lynn.lin@emc.com>
-Subject: RE: [PATCH] Makefile: don't include git version file on 'make clean'
-Date: Sun, 25 Jul 2010 08:02:04 -0400
-Message-ID: <7F48A44C0E1FBF48B00D4DA49C85432E54F99B@CORPUSMX100A.corp.emc.com>
-References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com><AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com><4C4BFAA3.3050700@digium.com><7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com><AANLkTilHrEImfhl0YTqj0MgXFTzYmJMJrUTKkflGFwpp@mail.gmail.com><7F48A44C0E1FBF48B00D4DA49C85432E54F99A@CORPUSMX100A.corp.emc.com> <AANLkTilhoF670uZ1WbosZP9TNbXect2A3gELRJL0ZZIn@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] Makefile: don't include git version file on 'make clean'
+Date: Sun, 25 Jul 2010 14:05:44 +0200
+Message-ID: <m2d3ubojfr.fsf@igel.home>
+References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+	<AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com>
+	<4C4BFAA3.3050700@digium.com>
+	<7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com>
+	<AANLkTilHrEImfhl0YTqj0MgXFTzYmJMJrUTKkflGFwpp@mail.gmail.com>
+	<7F48A44C0E1FBF48B00D4DA49C85432E54F99A@CORPUSMX100A.corp.emc.com>
+	<AANLkTilhoF670uZ1WbosZP9TNbXect2A3gELRJL0ZZIn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: <kpfleming@digium.com>, <git@vger.kernel.org>
-To: <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 14:02:31 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: lynn.lin@emc.com, kpfleming@digium.com, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 14:05:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OczuZ-0004TZ-1f
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 14:02:31 +0200
+	id 1Oczxp-0005o7-30
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 14:05:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722Ab0GYMCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 08:02:25 -0400
-Received: from mexforward.lss.emc.com ([128.222.32.20]:24196 "EHLO
-	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752695Ab0GYMCY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 08:02:24 -0400
-Received: from hop04-l1d11-si02.isus.emc.com (HOP04-L1D11-SI02.isus.emc.com [10.254.111.55])
-	by mexforward.lss.emc.com (Switch-3.3.2/Switch-3.1.7) with ESMTP id o6PC2KXU017263
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 25 Jul 2010 08:02:20 -0400
-Received: from mailhub.lss.emc.com (nagas.lss.emc.com [10.254.144.15]) by hop04-l1d11-si02.isus.emc.com (RSA Interceptor); Sun, 25 Jul 2010 08:02:07 -0400
-Received: from corpussmtp3.corp.emc.com (corpussmtp3.corp.emc.com [10.254.169.196])
-	by mailhub.lss.emc.com (Switch-3.4.2/Switch-3.3.2mp) with ESMTP id o6PC27cT028404;
-	Sun, 25 Jul 2010 08:02:07 -0400
-Received: from CORPUSMX100A.corp.emc.com ([128.222.76.57]) by corpussmtp3.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Sun, 25 Jul 2010 08:02:07 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
+	id S1752821Ab0GYMFs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 08:05:48 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:46558 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752701Ab0GYMFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 08:05:47 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id E01771C1562D;
+	Sun, 25 Jul 2010 14:05:45 +0200 (CEST)
+Received: from igel.home (ppp-88-217-114-73.dynamic.mnet-online.de [88.217.114.73])
+	by mail.mnet-online.de (Postfix) with ESMTP id AB4341C00097;
+	Sun, 25 Jul 2010 14:05:45 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 3804BCA297; Sun, 25 Jul 2010 14:05:45 +0200 (CEST)
+X-Yow: My polyvinyl cowboy wallet was made in Hong Kong by Montgomery Clift!
 In-Reply-To: <AANLkTilhoF670uZ1WbosZP9TNbXect2A3gELRJL0ZZIn@mail.gmail.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH] Makefile: don't include git version file on 'make clean'
-Thread-Index: Acsr8E/xXqBc+/waSiyk3IrEprimMQAAGywA
-X-OriginalArrivalTime: 25 Jul 2010 12:02:07.0075 (UTC) FILETIME=[340FBB30:01CB2BF1]
-X-EMM-EM: Active
+	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun, 25 Jul
+ 2010 11:55:39
+	+0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151730>
 
-DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiDDhnZhciBBcm5masO2csOwIEJq
-YXJtYXNvbiBbbWFpbHRvOmF2YXJhYkBnbWFpbC5jb21dIA0KU2VudDogMjAxMOW5tDfmnIgyNeaX
-pSAxOTo1Ng0KVG86IExpbiwgTHlubg0KQ2M6IGtwZmxlbWluZ0BkaWdpdW0uY29tOyBnaXRAdmdl
-ci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogW1BBVENIXSBNYWtlZmlsZTogZG9uJ3QgaW5jbHVk
-ZSBnaXQgdmVyc2lvbiBmaWxlIG9uICdtYWtlIGNsZWFuJw0KDQpPbiBTdW4sIEp1bCAyNSwgMjAx
-MCBhdCAxMTo0NiwgIDxseW5uLmxpbkBlbWMuY29tPiB3cm90ZToNCj4NCj4NCj4gLS0tLS1Pcmln
-aW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogZ2l0LW93bmVyQHZnZXIua2VybmVsLm9yZyBbbWFp
-bHRvOmdpdC1vd25lckB2Z2VyLmtlcm5lbC5vcmddIE9uIEJlaGFsZiBPZiA/dmFyIEFybmZqP3Jl
-IEJqYXJtYXNvbg0KPiBTZW50OiAyMDEw5bm0N+aciDI15pelIDE5OjQyDQo+IFRvOiBMaW4sIEx5
-bm4NCj4gQ2M6IGtwZmxlbWluZ0BkaWdpdW0uY29tOyBnaXRAdmdlci5rZXJuZWwub3JnDQo+IFN1
-YmplY3Q6IFJlOiBbUEFUQ0hdIE1ha2VmaWxlOiBkb24ndCBpbmNsdWRlIGdpdCB2ZXJzaW9uIGZp
-bGUgb24gJ21ha2UgY2xlYW4nDQo+DQo+IE9uIFN1biwgSnVsIDI1LCAyMDEwIGF0IDExOjI4LCDC
-oDxseW5uLmxpbkBlbWMuY29tPiB3cm90ZToNCj4+DQo+Pg0KPj4gLS0tLS1PcmlnaW5hbCBNZXNz
-YWdlLS0tLS0NCj4+IEZyb206IEtldmluIFAuIEZsZW1pbmcgW21haWx0bzprcGZsZW1pbmdAZGln
-aXVtLmNvbV0NCj4+IFNlbnQ6IDIwMTDlubQ35pyIMjXml6UgMTY6NTANCj4+IFRvOiDDhnZhciBB
-cm5masO2csOwIEJqYXJtYXNvbg0KPj4gQ2M6IExpbiwgTHlubjsgZ2l0QHZnZXIua2VybmVsLm9y
-Zw0KPj4gU3ViamVjdDogUmU6IFtQQVRDSF0gTWFrZWZpbGU6IGRvbid0IGluY2x1ZGUgZ2l0IHZl
-cnNpb24gZmlsZSBvbiAnbWFrZSBjbGVhbicNCj4+DQo+PiBPbiAwNy8yNC8yMDEwIDAyOjM2IFBN
-LCDDhnZhciBBcm5masO2csOwIEJqYXJtYXNvbiB3cm90ZToNCj4+PiBPbiBTYXQsIEp1bCAyNCwg
-MjAxMCBhdCAwMzo1MywgwqA8THlubi5MaW5AZW1jLmNvbT4gd3JvdGU6DQo+Pj4+IEZyb206IEx5
-bm4gTGluIDxMeW5uLkxpbkBlbWMuY29tPg0KPj4+Pg0KPj4+PiAtLS0NCj4+Pj4gwqBNYWtlZmls
-ZSDCoCDCoCDCoCDCoCB8IMKgIMKgNCArKystDQo+Pj4+IMKgZ2l0LWd1aS9NYWtlZmlsZSB8IMKg
-IMKgNCArKystDQo+Pj4+IMKgMiBmaWxlcyBjaGFuZ2VkLCA2IGluc2VydGlvbnMoKyksIDIgZGVs
-ZXRpb25zKC0pDQo+Pj4+DQo+Pj4+IGRpZmYgLS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlDQo+
-Pj4+IGluZGV4IGJjM2M1NzAuLmViMjhiOTggMTAwNjQ0DQo+Pj4+IC0tLSBhL01ha2VmaWxlDQo+
-Pj4+ICsrKyBiL01ha2VmaWxlDQo+Pj4+IEBAIC0yMzgsNyArMjM4LDkgQEAgYWxsOjoNCj4+Pj4N
-Cj4+Pj4gwqBHSVQtVkVSU0lPTi1GSUxFOiBGT1JDRQ0KPj4+PiDCoCDCoCDCoCDCoEAkKFNIRUxM
-X1BBVEgpIC4vR0lULVZFUlNJT04tR0VODQo+Pj4+IC0taW5jbHVkZSBHSVQtVkVSU0lPTi1GSUxF
-DQo+Pj4+ICtpZm5lcSAiJChNQUtFQ01ER09BTFMpIiAiY2xlYW4iDQo+Pj4+ICsgwqAtaW5jbHVk
-ZSBHSVQtVkVSU0lPTi1GSUxFDQo+Pj4+ICtlbmRpZg0KPj4+Pg0KPj4+PiDCoHVuYW1lX1MgOj0g
-JChzaGVsbCBzaCAtYyAndW5hbWUgLXMgMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4+PiDC
-oHVuYW1lX00gOj0gJChzaGVsbCBzaCAtYyAndW5hbWUgLW0gMj4vZGV2L251bGwgfHwgZWNobyBu
-b3QnKQ0KPj4+PiBkaWZmIC0tZ2l0IGEvZ2l0LWd1aS9NYWtlZmlsZSBiL2dpdC1ndWkvTWFrZWZp
-bGUNCj4+Pj4gaW5kZXggMTk3YjU1ZS4uOTFlMWVhNSAxMDA2NDQNCj4+Pj4gLS0tIGEvZ2l0LWd1
-aS9NYWtlZmlsZQ0KPj4+PiArKysgYi9naXQtZ3VpL01ha2VmaWxlDQo+Pj4+IEBAIC05LDcgKzks
-OSBAQCBhbGw6Og0KPj4+Pg0KPj4+PiDCoEdJVC1WRVJTSU9OLUZJTEU6IEZPUkNFDQo+Pj4+IMKg
-IMKgIMKgIMKgQCQoU0hFTExfUEFUSCkgLi9HSVQtVkVSU0lPTi1HRU4NCj4+Pj4gLS1pbmNsdWRl
-IEdJVC1WRVJTSU9OLUZJTEUNCj4+Pj4gK2lmbmVxICIkKE1BS0VDTURHT0FMUykiICJjbGVhbiIN
-Cj4+Pj4gKyDCoC1pbmNsdWRlIEdJVC1WRVJTSU9OLUZJTEUNCj4+Pj4gK2VuZGlmDQo+Pj4+DQo+
-Pj4+IMKgdW5hbWVfUyA6PSAkKHNoZWxsIHNoIC1jICd1bmFtZSAtcyAyPi9kZXYvbnVsbCB8fCBl
-Y2hvIG5vdCcpDQo+Pj4+IMKgdW5hbWVfTyA6PSAkKHNoZWxsIHNoIC1jICd1bmFtZSAtbyAyPi9k
-ZXYvbnVsbCB8fCBlY2hvIG5vdCcpDQo+Pj4+IC0tDQo+Pj4+IDEuNy4xDQo+Pj4NCj4+PiBUaGlz
-IHBhdGNoIG5lZWRzIGEgcmF0aW9uYWxlLCB3aHkgd2FzIGl0IG5lZWRlZD8gVGhlICItaW5jbHVk
-ZSINCj4+PiBkaXJlY3RpdmUgd2lsbCBzaW1wbHkgaWdub3JlIGZpbGVzIHRoYXQgZG9uJ3QgZXhp
-c3QgKGFzIG9wcG9zZWQgdG8NCj4+PiAiaW5jbHVkZSIpLCBzbyBpbmNsdWRpbmcgR0lULVZFUlNJ
-T04tRklMRSBkdXJpbmcgIm1ha2UgY2xlYW4nDQo+Pj4gc2hvdWxkbid0IGJlIGFuIGlzc3VlLg0K
-Pj4NCj4+IEp1c3QgZ3Vlc3NpbmcgaGVyZSwgYnV0IHNpbmNlIEdJVC1WRVJTSU9OLUZJTEUgaGFz
-IGEgJ0ZPUkNFJw0KPj4gcHJlcmVxdWlzaXRlLCB0aGF0IG1lYW5zIHRoYXQgdGhlIG9wZXJhdGlv
-bnMgdG8gZ2VuZXJhdGUgaXQgd2lsbCBiZSBydW4NCj4+IGV2ZW4gZm9yICdtYWtlIGNsZWFuJywg
-d2hpY2ggaXMgbm90IHVzZWZ1bCBmb3IgdGhlIGNsZWFuaW5nIG9wZXJhdGlvbi4NCj4+IEl0J3Mg
-cHJvYmFibHkgbm90IGhhcm1mdWwgZWl0aGVyLi4uIGJ1dCBtYXliZSB0aGUgT1AgaGFzIHNvbWUg
-bW9yZQ0KPj4gc2lnbmlmaWNhbnQgcmVhc29uIGZvciB0aGlzIHBhdGNoLg0KPj4NCj4+DQo+DQo+
-PiBZZXMsIHdoZW4gd2UgcnVuICdtYWtlIGNsZWFuJyAsaXQgYWxzbyBnZW5lcmF0ZSB0aGUgZ2l0
-IHZlcnNpb24NCj4+IGZpbGUsdGhlbiByZW1vdmUgaXQgLkl0J3Mgbm90IG5lY2Vzc2FyeSB0byB0
-cmlnZ2VyIHRoZSBvcGVyYXRpb24NCj4+IHdoZW4gcnVuICdtYWtlIGNsZWFuJyBjb21tYW5kDQo+
-DQo+IFN1cmUsIGl0J3Mgbm90IG5lZWRlZC4gQnV0IGl0J3MgT0sgdG8gaGF2ZSBhIGJpdCBvZiBy
-ZWR1bmRhbmN5IGZvcg0KPiBzaW1wbGljaXR5LCB1bmxlc3MgdGhhdCByZWR1bmRhbmN5IGlzIGJy
-ZWFraW5nIHNvbWV0aGluZy4gV2hpY2ggaXMgd2h5DQo+IEkgYXNrZWQgd2hldGhlciBpdCB3YXMg
-YWN0dWFsbHkgY2F1c2luZyBhIHByb2JsZW0gaW4gYW55IGNhc2UuDQo+DQo+IFdpdGggdGhpcyBw
-YXRjaCB3ZSBzdGlsbCBjYWxsIC4vR0lULVZFUlNJT04tR0VOIHRvIG1ha2UgdGhlDQo+IC4vR0lU
-LVZFUlNJT04tRklMRSwgd2UganVzdCBhcmVuJ3QgaW5jbHVkaW5nIGl0IGFueW1vcmUsIGFuZCBp
-dCB3b3VsZA0KPiBzdGlsbCBiZSBpbmNsdWRlZCBvbiAibWFrZSBkaXN0Y2xlYW4iIHNpbmNlIHlv
-dSdyZSBqdXN0IGxvb2tpbmcgYXQNCj4gJChNQUtFQ01ER09BTFMpLg0KDQo+IE5vLGl0IHdvbid0
-IGNhbGwgLi9HSVQtVkVSU0lPTi1HRU4gYXMgaXQgZG9lc24ndCBpbmNsdWRlDQo+IEdFVC1WRVJT
-SU9OLUZJTEUgYW55IG1vcmUuc28gSXQgd29uJ3QgdHJpZ2dlciB0aGUgwqBHSVQtVkVSU0lPTi1G
-SUxFDQo+IHRhcmdldA0KDQpZZXMgaXQgd2lsbC4gVGhlIHZlcnNpb24gZmlsZSBpcyBnZW5lcmF0
-ZWQgYnkgdGhpcyBwYXJ0Og0KDQogICAgR0lULVZFUlNJT04tRklMRTogRk9SQ0UNCiAgICAgICAg
-QCQoU0hFTExfUEFUSCkgLi9HSVQtVkVSU0lPTi1HRU4NCg0KDQpJZiB3ZSBkb24ndCB0cmlnZ2Vy
-IGluY2x1ZGUgLGl0IHdvbid0IGNhbGwgR0lULVZFUlNJT04tRklMRSB0YXJnZXQNCg0KDQoNCkJ1
-dCB5b3UndmUgb25seSB3cmFwcGVkIHRoZSBpbmNsdXNpb24gKmFmdGVyKiB0aGUgZmlsZSBpcyBn
-ZW5lcmF0ZWQgaW4NCmFuIGlmbmVxOg0KDQogICAgK2lmbmVxICIkKE1BS0VDTURHT0FMUykiICJj
-bGVhbiINCiAgICArICAtaW5jbHVkZSBHSVQtVkVSU0lPTi1GSUxFDQogICAgK2VuZGlmDQoNCg0K
-DQoNCg0KTWFrZWZpbGUgdGFyZ2V0cyBhcmVuJ3QgdHJpZ2dlcmVkIGJ5IHRoZSBpbmNsdWRlIGRp
-cmVjdGl2ZS4NCg0KPiBXZSBjYW4gYWxzbyBoYW5kbGUgZGlzdGNsZWFuIHRhcmdldA0KDQpTdXJl
-LCBpdCBjYW4gYmUgbWFkZSB0byB3b3JrLiBCdXQgY2FuIHlvdSB0ZWxsIG15ICp3aHkqIHRoaXMg
-aXMgbmVlZGVkDQooYXNraW5nIGZvciB0aGUgdGhpcmQgdGltZSBub3cpLkknbSBtb3JlIGludGVy
-ZXN0ZWQgaW4gdGhlIG1vdGl2YXRpb24NCnRoYW4gZ2V0dGluZyB0aGlzIHBhcnRpY3VsYXIgcGF0
-Y2ggd29ya2luZy4gSWYgZ2VuZXJhdGluZyBmaWxlcyBsaWtlDQp0aGlzIGR1cmluZyBjbGVhbiBp
-cyBicmVha2luZyBzb21ldGhpbmcgaXQgd291bGQgYmUgZ29vZCB0byBrbm93LCBhcw0Kd2UncmUg
-cHJvYmFibHkgZG9pbmcgaXQgc29tZXdoZXJlIGVsc2UgdG9vLg0KDQoNClNvcnJ5LiBJdCBkb2Vz
-bid0IGJyZWFrIHNvbWV0aGluZy4gVGhlIG1vdGl2YXRpb24gaXMgdGhhdCBpdCdzIHJlZHVuZGFu
-dCBjb2RlDQoNCg0KSWYgaXQncyBqdXN0IE9DRCBhYm91dCBub3QgZG9pbmcgcmVkdW5kYW50IHdv
-cmsgdGhhdCdzIGZpbmUgdG9vLiBCdXQNCml0IHdvdWxkIGJlIGdvb2QgdG8gKmtub3cqLg0KDQpU
-aGFua3MuDQoNCg==
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+
+> Makefile targets aren't triggered by the include directive.
+
+Umm, yes they are, see (make) Remaking Makefiles.
+
+Andreas.
+
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
