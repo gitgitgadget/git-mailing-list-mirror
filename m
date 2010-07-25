@@ -1,81 +1,96 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH] log-tree: simplify digit_in_number
-Date: Sun, 25 Jul 2010 20:31:52 +0200
-Message-ID: <1280082712-5760-1-git-send-email-ralf.thielow@googlemail.com>
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 25 20:32:16 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Patch follow-up conventions (Re: [PATCH] Makefile: don't include
+ git  version file on 'make clean')
+Date: Sun, 25 Jul 2010 13:49:51 -0500
+Message-ID: <20100725184951.GA9636@burratino>
+References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Lynn.Lin@emc.com
+X-From: git-owner@vger.kernel.org Sun Jul 25 20:51:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od5zj-0000di-Eu
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 20:32:15 +0200
+	id 1Od6I9-0000WM-6M
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 20:51:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068Ab0GYScD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 14:32:03 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:51418 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751439Ab0GYScB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 14:32:01 -0400
-Received: by eya25 with SMTP id 25so345888eya.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 11:31:59 -0700 (PDT)
+	id S1752251Ab0GYSu7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 14:50:59 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38926 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950Ab0GYSu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 14:50:59 -0400
+Received: by gyg10 with SMTP id 10so628710gyg.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 11:50:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=NAd+78dFFiZ/rUqgOOzubPV+Wyr35pmW3OahSaesoFw=;
-        b=cosyPAMDpXBThYR3BJ5cJv2q2ifIBjaCl0JfRzhFGuDxlN1awEdaS4qEIP1znkvOeS
-         kKbYDK7wGBHPgaddKwd0h+S+UXYC6ww/Tkah3isQWF/eC/1eM4QyHWsQeXT4gdjmAA6x
-         q0iExxKyEG8e9sK15Q/DL/C/5aiv4pO2wbvFU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=hHEBjgLriclo2rlWtQnKGcNlwNMedRqRCSD0Ow1QNXY=;
+        b=kfT5FfcZ0vB2araxGbOnAOHmNLw8KMA1uqzZTUtu4ZVxwhX2qG+TnHMF4J35OQetR7
+         UpWDhSNruHc274KJVmshhDgQUCu8Xn/6OmynMOHqxqy8mLIkjcEEf0Cexmo6/TEYvwNc
+         v6fM1b8O4kUodvla4j4ZtCFNzILGt0d0UOBlE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=hEW4z7vqrZjn933vAVk+cnZcXSbbwjBcfGvM1HO21l0P1vaw3L2+vGSYogiI/iksoM
-         z2b3o3R2ZwGSawHwNk7CPvRdWByEMCtaLe9HGFXBSrYDihMut2zwlowCbP3v774oqx8s
-         acBOJhXSY/TZPdvxKvEQU+75bWHPOO+udn5uY=
-Received: by 10.213.31.139 with SMTP id y11mr5511874ebc.27.1280082719762;
-        Sun, 25 Jul 2010 11:31:59 -0700 (PDT)
-Received: from localhost.localdomain (dslb-094-222-159-075.pools.arcor-ip.net [94.222.159.75])
-        by mx.google.com with ESMTPS id x54sm4269021eeh.17.2010.07.25.11.31.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jul 2010 11:31:59 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Mvv7wkeHA5MevKH9ETm3le7cd7cMTgshdoKlSBLV0v8iNQNQemUIrutgx4woOyMgTX
+         +7+m7qJl7KriIZ34U1AoFS0XCEeCvQPANLUYFT7fEBvKsI5MtKoWNtzu6NcZDLp4IsmX
+         1VOcvLXT3/baC7FeLb09VjkRo0VKI35Aiynqo=
+Received: by 10.150.52.11 with SMTP id z11mr120755ybz.312.1280083856809;
+        Sun, 25 Jul 2010 11:50:56 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id m12sm4912032ybn.7.2010.07.25.11.50.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jul 2010 11:50:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151777>
 
-Make the algorithm to get the digits of a number
-more easily.
+Hi Lynn,
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
----
- log-tree.c |   10 ++++------
- 1 files changed, 4 insertions(+), 6 deletions(-)
+Lynn Lin wrote:
+> -----Original Message-----
+> From: Jonathan Nieder [mailto:jrnieder@gmail.com]=20
+> Sent: 2010=E5=B9=B47=E6=9C=8824=E6=97=A5 19:52
+> To: Lin, Lynn
+> Subject: Re: [PATCH] Makefile: don't include git version file on 'mak=
+e clean'
+[...]
+> Thanks much ,Jonathan.
+> It's my first time to try submit patch to git project:)
+>=20
+> Do I need to re-submit patch to add more message in commit message ?
 
-diff --git a/log-tree.c b/log-tree.c
-index b46ed3b..c7cfcf4 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -254,12 +254,10 @@ static void append_signoff(struct strbuf *sb, const char *signoff)
- 
- static unsigned int digits_in_number(unsigned int number)
- {
--	unsigned int i = 10, result = 1;
--	while (i <= number) {
--		i *= 10;
--		result++;
--	}
--	return result;
-+	int digits = 1;
-+	while (number /= 10)
-+		digits++;
-+	return digits;
- }
- 
- void get_patch_filename(struct commit *commit, int nr, const char *suffix,
--- 
-1.7.0.4
+No problem; it is always good to see people noticing things that can
+be improved and fixing them. :)
+
+In general the best thing to do (though hard) is to imagine what
+would be most convenient at the receiving end and support that.
+This means:
+
+ - do not resend a whole patch when a small fixup would be easier;
+
+ - if there has been a long discussion, once a patch is ready
+   send a copy with [PATCH v2] in the subject, with a summary
+   of the discussion after the "---" line and cc-ing Junio to let
+   him know it is ready for application.
+
+Another piece of advice: please convince your mailer setup to present
+replies in a more useful form.  That means snipping out any irrelevant
+text and somehow visually distinguishing the text you are quoting from
+your reply, like I have done with "> " above.
+
+Hope that helps,
+Jonathan
