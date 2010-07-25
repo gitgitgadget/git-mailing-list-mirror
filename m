@@ -1,95 +1,89 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2 7/7] t/README: Add a note about the dangers of coverage chasing
-Date: Sun, 25 Jul 2010 14:41:01 +0000
-Message-ID: <1280068861-17701-8-git-send-email-avarab@gmail.com>
-References: <1280068861-17701-1-git-send-email-avarab@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH ab/i18n v2] tests: locate i18n lib&data correctly under --valgrind
+Date: Sun, 25 Jul 2010 16:55:46 +0200
+Message-ID: <06b6dd297e87a92e1c9000f5998e7bc955933235.1280069635.git.trast@student.ethz.ch>
+References: <201007251515.08916.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 25 16:41:39 2010
+X-From: git-owner@vger.kernel.org Sun Jul 25 16:56:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od2OY-0001DE-Fk
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 16:41:38 +0200
+	id 1Od2ck-0007MA-88
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 16:56:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751774Ab0GYOld convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 10:41:33 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:52047 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286Ab0GYOl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 10:41:28 -0400
-Received: by ewy23 with SMTP id 23so602454ewy.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 07:41:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=hofQEzfJzynDjAatPl2c8O+xK/k8b1uvnRxQ8wJRQnQ=;
-        b=PMhTkh4WZHZXs940+Lh8CYQkd0R/2txyvs8+DIaag0uC77gDXxn3QOTax/0TqJsK6d
-         3tCL9gBHOULa/X6JYLNZ3jk1658zit5CCcdEUnjHTY77CQ/KTXmvxkRYEbq6dvIIa762
-         vRWokmh73NSBxehrjfbYbE7ZAqlVTRygO58eY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=Gft0AhQzFlvmTBNyMhhk2bOFX/Q9qYQRteFip4PzgHl/XxO7RL+OkyTf2MeN6GeJ8x
-         OM0fOcRW+brMRo5kVtdFk12vO1zk/DYYFJPznbLBb65OihpZZACOa8NvXQ63l0dbHQNe
-         eQA2H5H9xDsFFgnRkT7s3wN3RYTurym9I/vDY=
-Received: by 10.213.31.148 with SMTP id y20mr5264876ebc.39.1280068886109;
-        Sun, 25 Jul 2010 07:41:26 -0700 (PDT)
-Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
-        by mx.google.com with ESMTPS id x54sm3977142eeh.23.2010.07.25.07.41.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jul 2010 07:41:25 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4
-In-Reply-To: <1280068861-17701-1-git-send-email-avarab@gmail.com>
+	id S1751466Ab0GYO4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jul 2010 10:56:10 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:30266 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750992Ab0GYO4J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 10:56:09 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 25 Jul
+ 2010 16:56:07 +0200
+Received: from localhost.localdomain (217.162.250.31) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sun, 25 Jul
+ 2010 16:55:46 +0200
+X-Mailer: git-send-email 1.7.2.289.g93c76
+In-Reply-To: <201007251515.08916.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151753>
 
-Having no coverage at all is almost always a bad sign, but trying to
-attain 100% coverage everywhere is usually a waste of time. Add a
-paragraph to explain this to future test writers.
+The new t020[01] for gettext support did not find git-sh-i18n and the
+translation data when run under --valgrind: lib-gettext.sh tried to
+locate them under $GIT_EXEC_PATH, which normally is the git build
+directory, but is changed by --valgrind to point to the wrappers.
 
-Inspired-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+Introduce a new variable $GIT_BUILD_DIR which can be used to locate
+data that resides under the build directory, and use that instead.
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- t/README |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
 
-diff --git a/t/README b/t/README
-index 2fa6744..400e2da 100644
---- a/t/README
-+++ b/t/README
-@@ -271,6 +271,15 @@ Do:
-  - Check the test coverage for your tests. See the "Test coverage"
-    below.
-=20
-+   Don't blindly follow test coverage metrics, they're a good way to
-+   spot if you've missed something. If a new function you added
-+   doesn't have any coverage you're probably doing something wrong,
-+   but having 100% coverage doesn't necessarily mean that you tested
-+   everything.
-+
-+   Tests that are likely to smoke out future regressions are better
-+   than tests that just inflate the coverage metrics.
-+
- Don't:
-=20
-  - exit() within a <script> part.
---=20
-1.7.0.4
+This approach fixes both problems in one go.
+
+ t/lib-gettext.sh |    6 +++---
+ t/test-lib.sh    |    1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
+index 831ee38..f0cdd3d 100644
+--- a/t/lib-gettext.sh
++++ b/t/lib-gettext.sh
+@@ -5,11 +5,11 @@
+ 
+ . ./test-lib.sh
+ 
+-GIT_TEXTDOMAINDIR="$GIT_EXEC_PATH/share/locale"
+-GIT_PO_PATH="$GIT_EXEC_PATH/po"
++GIT_TEXTDOMAINDIR="$GIT_BUILD_DIR/share/locale"
++GIT_PO_PATH="$GIT_BUILD_DIR/po"
+ export GIT_TEXTDOMAINDIR GIT_PO_PATH
+ 
+-. "$GIT_EXEC_PATH"/git-sh-i18n
++. "$GIT_BUILD_DIR"/git-sh-i18n
+ 
+ if test_have_prereq GETTEXT
+ then
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 4ae0de8..08e5438 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -768,6 +768,7 @@ else # normal case, use ../bin-wrappers only unless $with_dashes:
+ 		PATH="$TEST_DIRECTORY/..:$PATH"
+ 	fi
+ fi
++GIT_BUILD_DIR=$(pwd)/..
+ GIT_TEMPLATE_DIR=$(pwd)/../templates/blt
+ unset GIT_CONFIG
+ GIT_CONFIG_NOSYSTEM=1
+-- 
+1.7.2.289.g93c76
