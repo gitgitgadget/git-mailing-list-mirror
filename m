@@ -1,100 +1,171 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [WIP/RFC 09/13] git notes merge: Initial implementation handling
- trivial merges only
-Date: Sun, 25 Jul 2010 16:14:31 +0200
-Message-ID: <201007251614.32124.johan@herland.net>
-References: <1279880104-29796-1-git-send-email-johan@herland.net>
- <1279880104-29796-10-git-send-email-johan@herland.net>
- <4C4AA500.7010205@gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v2 0/7] Detailed test coverage reports for Git
+Date: Sun, 25 Jul 2010 14:40:54 +0000
+Message-ID: <1280068861-17701-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 16:14:46 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 25 16:41:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od1yV-0007LX-MF
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 16:14:44 +0200
+	id 1Od2OE-00016w-9E
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 16:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751584Ab0GYOOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 10:14:37 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:58958 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751518Ab0GYOOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 10:14:37 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L6400BEGA89W570@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 25 Jul 2010 16:14:33 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id DBCA61EA550A_C4C46C8B	for <git@vger.kernel.org>; Sun,
- 25 Jul 2010 14:14:32 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id C33EF1EA2E8D_C4C46C8F	for <git@vger.kernel.org>; Sun,
- 25 Jul 2010 14:14:32 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L64005EJA88C010@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Sun, 25 Jul 2010 16:14:32 +0200 (MEST)
-User-Agent: KMail/1.13.5 (Linux/2.6.34-ARCH; KDE/4.4.5; x86_64; ; )
-In-reply-to: <4C4AA500.7010205@gmail.com>
+	id S1750992Ab0GYOlN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 10:41:13 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:49376 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819Ab0GYOlM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 10:41:12 -0400
+Received: by ewy23 with SMTP id 23so602412ewy.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 07:41:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=4KAyWh3nB1101F2yq6Av9L4qSQQUdufYW6w/hQQKjAU=;
+        b=bAWPmpmEu+PZLxixmVaIEmQi/oYtSWBr4HzE5D872TOygMnRipKmHANJt2FMgfguTM
+         TFTJaCNcRQg+Aqom3laO5kZz4obUcwoDL/ZCqpvWcrwPyr73TcN+Eqc61dF9oHVG01TI
+         3C8fsd3dHp6olvgQR5C3IUxyuLrn9j0coQI0k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=tB/swmqdFRUSP1v2zdvxKhl4kHLnHOTSX+mB16UFFfMlwuyKgRqLAnXlcnVsOxon3E
+         VqnBI/mm50Jw7Yyppfpuob0AoW3NMvT+3dGHDRUujQL+g/GbXj/9LA+AXnXqrjDL+r4k
+         uPQwNPoF7344Gvwfnw7G9SjIYynmdOrS/i/7U=
+Received: by 10.213.76.16 with SMTP id a16mr533456ebk.90.1280068870878;
+        Sun, 25 Jul 2010 07:41:10 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
+        by mx.google.com with ESMTPS id x54sm3977142eeh.23.2010.07.25.07.41.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jul 2010 07:41:09 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151745>
 
-On Saturday 24 July 2010, Stephen Boyd wrote:
->   On 07/23/2010 03:15 AM, Johan Herland wrote:
-> > +	if (1<  argc) {
-> > +		error("too many parameters");
-> > +		usage_with_options(git_notes_merge_usage, options);
-> > +	} else if (1>  argc) {
-> > +		error("too few parameters");
-> > +		usage_with_options(git_notes_merge_usage, options);
-> > +	}
-> > +
-> 
-> Looks like it only takes one <notes_ref>. In that case wouldn't it be
-> better to say
-> 
->      if (argc != 1) {
->          error("Must specify a note ref to merge");
->          usage_with_options(git_notes_merge_usage, options)
->      }
+This is v2 of the test coverage series. It addresses all the points
+that were raised for v1. Here's the diffstat against v1:
+   =20
+     .gitignore |   15 +++------------
+     Makefile   |   19 +++++++++----------
+     t/README   |   21 ++++++++++++++++-----
+     3 files changed, 28 insertions(+), 27 deletions(-)
 
-Thanks. I'll squash the following into the next iteration:
+And the diff since v2:
+   =20
+    diff --git a/.gitignore b/.gitignore
+    index e02f1f9..baed247 100644
+    --- a/.gitignore
+    +++ b/.gitignore
+    @@ -207,12 +207,3 @@
+    -/*.gcda
+    -/*.gcno
+    -/*.gcov
+    -/builtin/*.gcda
+    -/builtin/*.gcno
+    -/builtin/*.gcov
+    -/xdiff/*.gcda
+    -/xdiff/*.gcno
+    -/xdiff/*.gcov
+    -/compat/*.gcda
+    -/compat/*.gcno
+    -/compat/*.gcov
+    +*.gcda
+    +*.gcno
+    +*.gcov
+    diff --git a/Makefile b/Makefile
+    index c35c348..b6975aa 100644
+    --- a/Makefile
+    +++ b/Makefile
+    @@ -2282,0 +2283 @@ coverage:
+    +object_dirs :=3D $(sort $(dir $(OBJECTS)))
+    @@ -2284,4 +2285,3 @@ coverage-clean:
+    -	$(RM) *.gcov *.gcda *.gcno
+    -	$(RM) builtin/*.gcov
+    -	$(RM) builtin/*.gcda
+    -	$(RM) builtin/*.gcno
+    +	$(RM) $(addsuffix *.gcov,$(object_dirs))
+    +	$(RM) $(addsuffix *.gcda,$(object_dirs))
+    +	$(RM) $(addsuffix *.gcno,$(object_dirs))
+    @@ -2298,4 +2298,3 @@ coverage-report:
+    -	gcov -b *.c
+    -	gcov -b -o builtin builtin/*.c
+    -	gcov -b -o xdiff xdiff/*.c
+    -	gcov -b -o compat compat/*.c
+    +	for dir in $(object_dirs); do \
+    +		gcov --preserve-paths --branch-probabilities --all-blocks --obje=
+ct-directory=3D$$dir $$dir*.c; \
+    +	done
+    @@ -2303 +2302 @@ coverage-report:
+    -coverage-report-untested-functions:
+    +coverage-untested-functions: coverage-report
+    @@ -2308 +2307 @@ coverage-report-untested-functions:
+    -coverage-report-cover-db:
+    +coverage-report-cover-db: coverage-report
+    diff --git a/t/README b/t/README
+    index 718f35d..400e2da 100644
+    --- a/t/README
+    +++ b/t/README
+    @@ -273,0 +274,9 @@ Do:
+    +   Don't blindly follow test coverage metrics, they're a good way =
+to
+    +   spot if you've missed something. If a new function you added
+    +   doesn't have any coverage you're probably doing something wrong=
+,
+    +   but having 100% coverage doesn't necessarily mean that you test=
+ed
+    +   everything.
+    +
+    +   Tests that are likely to smoke out future regressions are bette=
+r
+    +   than tests that just inflate the coverage metrics.
+    +
+    @@ -518,3 +527,5 @@ Test coverage
+    -You can use the coverage tests to find out if your tests are reall=
+y
+    -testing your code code. To do that, run the coverage target at the
+    -top-level (not in the t/ directory):
+    +You can use the coverage tests to find code paths that are not bei=
+ng
+    +used or properly exercised yet.
+    +
+    +To do that, run the coverage target at the top-level (not in the t=
+/
+    +directory):
+    @@ -532 +543 @@ functions:
+    -    make coverage-report-untested-functions
+    +    make coverage-untested-functions
+    @@ -537 +548 @@ Devel::Cover module. To install it do:
+    -   # On Debian:
+    +   # On Debian or Ubuntu:
+   =20
+I also rewrote some of the commit messages.
+   =20
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (7):
+  gitignore: Ignore files generated by "make coverage"
+  Makefile: Include subdirectories in "make cover" reports
+  Makefile: Split out the untested functions target
+  Makefile: Add coverage-report-cover-db target
+  Makefile: Add coverage-report-cover-db-html target
+  t/README: A new section about test coverage
+  t/README: Add a note about the dangers of coverage chasing
 
-...Johan
-
-diff --git a/builtin/notes.c b/builtin/notes.c
-index f2bc767..ca0e4d9 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -780,11 +780,8 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, options,
- 			     git_notes_merge_usage, 0);
- 
--	if (1 < argc) {
--		error("too many parameters");
--		usage_with_options(git_notes_merge_usage, options);
--	} else if (1 > argc) {
--		error("too few parameters");
-+	if (argc != 1) {
-+		error("Must specify a notes ref to merge");
- 		usage_with_options(git_notes_merge_usage, options);
- 	}
- 
-
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+ .gitignore |    6 ++++++
+ Makefile   |   17 +++++++++++++++--
+ t/README   |   51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 72 insertions(+), 2 deletions(-)
