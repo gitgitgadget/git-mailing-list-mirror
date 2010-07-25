@@ -1,78 +1,95 @@
-From: solsTiCe d'Hiver <solstice.dhiver@gmail.com>
-Subject: [bash-completion] syntax error near unexpected token '<' on line
- 123 in bash_completion.d/git
-Date: Sun, 25 Jul 2010 13:12:00 +0200
-Message-ID: <1280056320.7883.9.camel@soho.example.org>
+From: <lynn.lin@emc.com>
+Subject: RE: [PATCH] Makefile: don't include git version file on 'make clean'
+Date: Sun, 25 Jul 2010 07:28:34 -0400
+Message-ID: <7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com>
+References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com> <AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com> <4C4BFAA3.3050700@digium.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 25 13:12:25 2010
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: <git@vger.kernel.org>
+To: <kpfleming@digium.com>, <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 13:28:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ocz84-00036f-RF
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 13:12:25 +0200
+	id 1OczO4-0000QJ-Ey
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 13:28:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751830Ab0GYLMH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 07:12:07 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:52106 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751286Ab0GYLMF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 07:12:05 -0400
-Received: by wwj40 with SMTP id 40so6005594wwj.1
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 04:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:content-type
-         :date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=nvWEjE3rsVbK17RgrE2+UriI8bRyHaBQH6igde4cBmg=;
-        b=E/RWzB4Uo82U+bp66MqvkzIDhpATd60xc/l2JH1lokaB5mmEMInoFXKS7ujPhFURpj
-         m2I5iM7oQBsEkwyJea2MQ+f25VQOK1D5iBmMdUtY0awDMNccJI6GLCXtRvSsjQYRpT5U
-         RsHh5rJ52thVhMeoocWAA1+h8+QenxhOI89/I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:content-type:date:message-id:mime-version:x-mailer
-         :content-transfer-encoding;
-        b=T/OS1C8h8whg8riB6xjD1rfzdGaama8bBGvVGdKMrRLyJze4eehoppG4b9KFZttfU3
-         iAecjBEzVw4RUkEhUnLXljwDGYkwHNeTYrikmNm1Yqqg9pI/8W3xyh3M+2m+Hk46RZxO
-         Er4nHgEVjItePLcYexpogJO4E3K4wIUV9EPCQ=
-Received: by 10.227.147.82 with SMTP id k18mr5890743wbv.64.1280056322279;
-        Sun, 25 Jul 2010 04:12:02 -0700 (PDT)
-Received: from [192.168.0.50] (ARennes-553-1-38-213.w86-214.abo.wanadoo.fr [86.214.125.213])
-        by mx.google.com with ESMTPS id a20sm337302wba.6.2010.07.25.04.12.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jul 2010 04:12:01 -0700 (PDT)
-X-Mailer: Evolution 2.30.2 
+	id S1752308Ab0GYL2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jul 2010 07:28:51 -0400
+Received: from mexforward.lss.emc.com ([128.222.32.20]:22045 "EHLO
+	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752181Ab0GYL2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 07:28:50 -0400
+Received: from hop04-l1d11-si01.isus.emc.com (HOP04-L1D11-SI01.isus.emc.com [10.254.111.54])
+	by mexforward.lss.emc.com (Switch-3.3.2/Switch-3.1.7) with ESMTP id o6PBSkBm005748
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 25 Jul 2010 07:28:46 -0400
+Received: from mailhub.lss.emc.com (nagas.lss.emc.com [10.254.144.15]) by hop04-l1d11-si01.isus.emc.com (RSA Interceptor); Sun, 25 Jul 2010 07:28:37 -0400
+Received: from corpussmtp5.corp.emc.com (corpussmtp5.corp.emc.com [128.221.166.229])
+	by mailhub.lss.emc.com (Switch-3.4.2/Switch-3.3.2mp) with ESMTP id o6PBSaqq031320;
+	Sun, 25 Jul 2010 07:28:36 -0400
+Received: from CORPUSMX100A.corp.emc.com ([128.222.76.57]) by corpussmtp5.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Sun, 25 Jul 2010 07:28:36 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <4C4BFAA3.3050700@digium.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: [PATCH] Makefile: don't include git version file on 'make clean'
+Thread-Index: Acsr1lhyneXSC5WiTz20AHaMYSh8WgAFdgrw
+X-OriginalArrivalTime: 25 Jul 2010 11:28:36.0488 (UTC) FILETIME=[85A88080:01CB2BEC]
+X-EMM-EM: Active
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151724>
 
-hello,
-I want to report a tiny "bug" (?) and I couldn't find a bug tracker so
-here I am
-
-When I boot my pc, I got an error on my console before gdm kick in to
-launch gnome.
-
-This is an error in /etc/bash_completion.d/git; it says
-syntax error near unexpected token '<' on line 123
-
-I use git 1.7.2 and bash 4.1.007 and the line 123
-of /etc/bash_completion.d/git looks like this
-
-	done < <(git config -z --get-regexp '^(svn-remote\..*\.url|bash
-\.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')
-
-I think that may be there is too much < there.
-
-but strangely if I source manually that file in a bash it works without
-error.
-
-originally reported there: http://bugs.archlinux.org/task/20264
-
-P.S.: I have not subscribed to the ML.
+DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBLZXZpbiBQLiBGbGVtaW5nIFtt
+YWlsdG86a3BmbGVtaW5nQGRpZ2l1bS5jb21dIA0KU2VudDogMjAxMOW5tDfmnIgyNeaXpSAxNjo1
+MA0KVG86IMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uDQpDYzogTGluLCBMeW5uOyBnaXRAdmdl
+ci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogW1BBVENIXSBNYWtlZmlsZTogZG9uJ3QgaW5jbHVk
+ZSBnaXQgdmVyc2lvbiBmaWxlIG9uICdtYWtlIGNsZWFuJw0KDQpPbiAwNy8yNC8yMDEwIDAyOjM2
+IFBNLCDDhnZhciBBcm5masO2csOwIEJqYXJtYXNvbiB3cm90ZToNCj4gT24gU2F0LCBKdWwgMjQs
+IDIwMTAgYXQgMDM6NTMsICA8THlubi5MaW5AZW1jLmNvbT4gd3JvdGU6DQo+PiBGcm9tOiBMeW5u
+IExpbiA8THlubi5MaW5AZW1jLmNvbT4NCj4+DQo+PiAtLS0NCj4+ICBNYWtlZmlsZSAgICAgICAg
+IHwgICAgNCArKystDQo+PiAgZ2l0LWd1aS9NYWtlZmlsZSB8ICAgIDQgKysrLQ0KPj4gIDIgZmls
+ZXMgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYg
+LS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlDQo+PiBpbmRleCBiYzNjNTcwLi5lYjI4Yjk4IDEw
+MDY0NA0KPj4gLS0tIGEvTWFrZWZpbGUNCj4+ICsrKyBiL01ha2VmaWxlDQo+PiBAQCAtMjM4LDcg
+KzIzOCw5IEBAIGFsbDo6DQo+Pg0KPj4gIEdJVC1WRVJTSU9OLUZJTEU6IEZPUkNFDQo+PiAgICAg
+ICAgQCQoU0hFTExfUEFUSCkgLi9HSVQtVkVSU0lPTi1HRU4NCj4+IC0taW5jbHVkZSBHSVQtVkVS
+U0lPTi1GSUxFDQo+PiAraWZuZXEgIiQoTUFLRUNNREdPQUxTKSIgImNsZWFuIg0KPj4gKyAgLWlu
+Y2x1ZGUgR0lULVZFUlNJT04tRklMRQ0KPj4gK2VuZGlmDQo+Pg0KPj4gIHVuYW1lX1MgOj0gJChz
+aGVsbCBzaCAtYyAndW5hbWUgLXMgMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4gIHVuYW1l
+X00gOj0gJChzaGVsbCBzaCAtYyAndW5hbWUgLW0gMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0K
+Pj4gZGlmZiAtLWdpdCBhL2dpdC1ndWkvTWFrZWZpbGUgYi9naXQtZ3VpL01ha2VmaWxlDQo+PiBp
+bmRleCAxOTdiNTVlLi45MWUxZWE1IDEwMDY0NA0KPj4gLS0tIGEvZ2l0LWd1aS9NYWtlZmlsZQ0K
+Pj4gKysrIGIvZ2l0LWd1aS9NYWtlZmlsZQ0KPj4gQEAgLTksNyArOSw5IEBAIGFsbDo6DQo+Pg0K
+Pj4gIEdJVC1WRVJTSU9OLUZJTEU6IEZPUkNFDQo+PiAgICAgICAgQCQoU0hFTExfUEFUSCkgLi9H
+SVQtVkVSU0lPTi1HRU4NCj4+IC0taW5jbHVkZSBHSVQtVkVSU0lPTi1GSUxFDQo+PiAraWZuZXEg
+IiQoTUFLRUNNREdPQUxTKSIgImNsZWFuIg0KPj4gKyAgLWluY2x1ZGUgR0lULVZFUlNJT04tRklM
+RQ0KPj4gK2VuZGlmDQo+Pg0KPj4gIHVuYW1lX1MgOj0gJChzaGVsbCBzaCAtYyAndW5hbWUgLXMg
+Mj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4gIHVuYW1lX08gOj0gJChzaGVsbCBzaCAtYyAn
+dW5hbWUgLW8gMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4gLS0NCj4+IDEuNy4xDQo+IA0K
+PiBUaGlzIHBhdGNoIG5lZWRzIGEgcmF0aW9uYWxlLCB3aHkgd2FzIGl0IG5lZWRlZD8gVGhlICIt
+aW5jbHVkZSINCj4gZGlyZWN0aXZlIHdpbGwgc2ltcGx5IGlnbm9yZSBmaWxlcyB0aGF0IGRvbid0
+IGV4aXN0IChhcyBvcHBvc2VkIHRvDQo+ICJpbmNsdWRlIiksIHNvIGluY2x1ZGluZyBHSVQtVkVS
+U0lPTi1GSUxFIGR1cmluZyAibWFrZSBjbGVhbicNCj4gc2hvdWxkbid0IGJlIGFuIGlzc3VlLg0K
+DQpKdXN0IGd1ZXNzaW5nIGhlcmUsIGJ1dCBzaW5jZSBHSVQtVkVSU0lPTi1GSUxFIGhhcyBhICdG
+T1JDRScNCnByZXJlcXVpc2l0ZSwgdGhhdCBtZWFucyB0aGF0IHRoZSBvcGVyYXRpb25zIHRvIGdl
+bmVyYXRlIGl0IHdpbGwgYmUgcnVuDQpldmVuIGZvciAnbWFrZSBjbGVhbicsIHdoaWNoIGlzIG5v
+dCB1c2VmdWwgZm9yIHRoZSBjbGVhbmluZyBvcGVyYXRpb24uDQpJdCdzIHByb2JhYmx5IG5vdCBo
+YXJtZnVsIGVpdGhlci4uLiBidXQgbWF5YmUgdGhlIE9QIGhhcyBzb21lIG1vcmUNCnNpZ25pZmlj
+YW50IHJlYXNvbiBmb3IgdGhpcyBwYXRjaC4NCg0KDQoNClllcywgd2hlbiB3ZSBydW4gJ21ha2Ug
+Y2xlYW4nICxpdCBhbHNvIGdlbmVyYXRlIHRoZSBnaXQgdmVyc2lvbiBmaWxlLHRoZW4gcmVtb3Zl
+IGl0IC5JdCdzIG5vdCBuZWNlc3NhcnkgdG8gdHJpZ2dlciB0aGUgb3BlcmF0aW9uIHdoZW4gcnVu
+ICdtYWtlIGNsZWFuJyBjb21tYW5kDQoNCkx5bm4NCg0KDQotLSANCktldmluIFAuIEZsZW1pbmcN
+CkRpZ2l1bSwgSW5jLiB8IERpcmVjdG9yIG9mIFNvZnR3YXJlIFRlY2hub2xvZ2llcw0KNDQ1IEph
+biBEYXZpcyBEcml2ZSBOVyAtIEh1bnRzdmlsbGUsIEFMIDM1ODA2IC0gVVNBDQpza3lwZToga3Bm
+bGVtaW5nIHwgamFiYmVyOiBrZmxlbWluZ0BkaWdpdW0uY29tDQpDaGVjayB1cyBvdXQgYXQgd3d3
+LmRpZ2l1bS5jb20gJiB3d3cuYXN0ZXJpc2sub3JnDQoNCg==
