@@ -1,66 +1,188 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [bash-completion] syntax error near unexpected token '<' on line 
-	123 in bash_completion.d/git
-Date: Sun, 25 Jul 2010 11:49:19 +0000
-Message-ID: <AANLkTimYo9itgVrL100mD8sU52h7f2F84PuJtCO3yKsJ@mail.gmail.com>
-References: <1280056320.7883.9.camel@soho.example.org>
+Subject: Re: [PATCH] Makefile: don't include git version file on 'make clean'
+Date: Sun, 25 Jul 2010 11:55:39 +0000
+Message-ID: <AANLkTilhoF670uZ1WbosZP9TNbXect2A3gELRJL0ZZIn@mail.gmail.com>
+References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+	<AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com>
+	<4C4BFAA3.3050700@digium.com>
+	<7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com>
+	<AANLkTilHrEImfhl0YTqj0MgXFTzYmJMJrUTKkflGFwpp@mail.gmail.com>
+	<7F48A44C0E1FBF48B00D4DA49C85432E54F99A@CORPUSMX100A.corp.emc.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Andrew Sayers <andrew-git@pileofstuff.org>
-To: "solsTiCe d'Hiver" <solstice.dhiver@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 13:49:25 2010
+Cc: kpfleming@digium.com, git@vger.kernel.org
+To: lynn.lin@emc.com
+X-From: git-owner@vger.kernel.org Sun Jul 25 13:56:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oczht-0007Xb-CK
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 13:49:25 +0200
+	id 1OczoO-00028A-9h
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 13:56:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751881Ab0GYLtV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 07:49:21 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54295 "EHLO
+	id S1752529Ab0GYLzk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 07:55:40 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39872 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974Ab0GYLtU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 07:49:20 -0400
-Received: by iwn7 with SMTP id 7so1848989iwn.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 04:49:19 -0700 (PDT)
+	with ESMTP id S1751162Ab0GYLzj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 07:55:39 -0400
+Received: by iwn7 with SMTP id 7so1853228iwn.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 04:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=W+czD90a6ra7zy+HaRJhgN9Dus+DGgdvDh60Rt2lud4=;
-        b=I9JVjZiSv+fBXYU5QXKAmxhSfAUheC3ROWUhbjDTf1067xrd8CYelneBdSRuUZkB7F
-         fpJlZ6c5jIqvt+zegNx0hOGl9n925skYzTOZ/e1kX8EkEsFTSVl6m+L00HonTNxUHzgU
-         6kIDMLtQiGpxqi5dosPs/6SQEF0hVXYZyWxfo=
+        bh=a196Yap3IYNz9p+cqmotqUIgUGwpADKjc3URPfxenHM=;
+        b=GerZi9/gkvv9i6QebOJeIYcdkHLa0pwS6Ys1CV/VN+qS0KSk73nyMFUxPSqtI8E2MH
+         dho85N6aFMu36qN0kTZzXNmdTplZ7XTWfEZ1a2nWolWpMVLU6g8KXdOdY9nRTjF3OMfp
+         39kH9nXZgphsrB4OWJbtbf2RMOKUyf8GAMolg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Fu2n/oxjp9geqWUszxIYrDXNG9I+aAn7MAXPEgO1IwsDOOVTsNiqJaJwGoBTxhI6RJ
-         lHXdT7k0qA979/Kix1umIBVGYZwgtpLmsWX1sPcn/kErzshOyn4UvwXTvIy+Cam4KsKZ
-         hAGGKHW9MVuLyTNSiPL4ptUNNgTMTtEsD8ZBY=
-Received: by 10.231.170.79 with SMTP id c15mr6977417ibz.82.1280058559671; Sun, 
-	25 Jul 2010 04:49:19 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 04:49:19 -0700 (PDT)
-In-Reply-To: <1280056320.7883.9.camel@soho.example.org>
+        b=ePiiFCN7ErDZutMLbKkBBnGjH2SszTnm0oU2M0qwaORG8n2298moub2TfQScQidbF7
+         DLRaYz2+2cjQMqrX4Ujy9GECQy58/NRCeYb5VmRxFu27tWLJhDhgNcTNgqY4MCrcU5Cn
+         NVCFnNulOTGA47dnxJCURiZ1BywonUKoG1r8k=
+Received: by 10.231.39.69 with SMTP id f5mr6797888ibe.53.1280058939124; Sun, 
+	25 Jul 2010 04:55:39 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 04:55:39 -0700 (PDT)
+In-Reply-To: <7F48A44C0E1FBF48B00D4DA49C85432E54F99A@CORPUSMX100A.corp.emc.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151728>
 
-On Sun, Jul 25, 2010 at 11:12, solsTiCe d'Hiver
-<solstice.dhiver@gmail.com> wrote:
-
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0done < <(git config -z --get-regexp '^(svn=
--remote\..*\.url|bash
-> \.showupstream)$' 2>/dev/null | tr '\0\n' '\n ')
+On Sun, Jul 25, 2010 at 11:46,  <lynn.lin@emc.com> wrote:
 >
-> I think that may be there is too much < there.
+>
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On=
+ Behalf Of ?var Arnfj?re Bjarmason
+> Sent: 2010=E5=B9=B47=E6=9C=8825=E6=97=A5 19:42
+> To: Lin, Lynn
+> Cc: kpfleming@digium.com; git@vger.kernel.org
+> Subject: Re: [PATCH] Makefile: don't include git version file on 'mak=
+e clean'
+>
+> On Sun, Jul 25, 2010 at 11:28, =C2=A0<lynn.lin@emc.com> wrote:
+>>
+>>
+>> -----Original Message-----
+>> From: Kevin P. Fleming [mailto:kpfleming@digium.com]
+>> Sent: 2010=E5=B9=B47=E6=9C=8825=E6=97=A5 16:50
+>> To: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> Cc: Lin, Lynn; git@vger.kernel.org
+>> Subject: Re: [PATCH] Makefile: don't include git version file on 'ma=
+ke clean'
+>>
+>> On 07/24/2010 02:36 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote=
+:
+>>> On Sat, Jul 24, 2010 at 03:53, =C2=A0<Lynn.Lin@emc.com> wrote:
+>>>> From: Lynn Lin <Lynn.Lin@emc.com>
+>>>>
+>>>> ---
+>>>> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A04 +++-
+>>>> =C2=A0git-gui/Makefile | =C2=A0 =C2=A04 +++-
+>>>> =C2=A02 files changed, 6 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/Makefile b/Makefile
+>>>> index bc3c570..eb28b98 100644
+>>>> --- a/Makefile
+>>>> +++ b/Makefile
+>>>> @@ -238,7 +238,9 @@ all::
+>>>>
+>>>> =C2=A0GIT-VERSION-FILE: FORCE
+>>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0@$(SHELL_PATH) ./GIT-VERSION-GEN
+>>>> --include GIT-VERSION-FILE
+>>>> +ifneq "$(MAKECMDGOALS)" "clean"
+>>>> + =C2=A0-include GIT-VERSION-FILE
+>>>> +endif
+>>>>
+>>>> =C2=A0uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not=
+')
+>>>> =C2=A0uname_M :=3D $(shell sh -c 'uname -m 2>/dev/null || echo not=
+')
+>>>> diff --git a/git-gui/Makefile b/git-gui/Makefile
+>>>> index 197b55e..91e1ea5 100644
+>>>> --- a/git-gui/Makefile
+>>>> +++ b/git-gui/Makefile
+>>>> @@ -9,7 +9,9 @@ all::
+>>>>
+>>>> =C2=A0GIT-VERSION-FILE: FORCE
+>>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0@$(SHELL_PATH) ./GIT-VERSION-GEN
+>>>> --include GIT-VERSION-FILE
+>>>> +ifneq "$(MAKECMDGOALS)" "clean"
+>>>> + =C2=A0-include GIT-VERSION-FILE
+>>>> +endif
+>>>>
+>>>> =C2=A0uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not=
+')
+>>>> =C2=A0uname_O :=3D $(shell sh -c 'uname -o 2>/dev/null || echo not=
+')
+>>>> --
+>>>> 1.7.1
+>>>
+>>> This patch needs a rationale, why was it needed? The "-include"
+>>> directive will simply ignore files that don't exist (as opposed to
+>>> "include"), so including GIT-VERSION-FILE during "make clean'
+>>> shouldn't be an issue.
+>>
+>> Just guessing here, but since GIT-VERSION-FILE has a 'FORCE'
+>> prerequisite, that means that the operations to generate it will be =
+run
+>> even for 'make clean', which is not useful for the cleaning operatio=
+n.
+>> It's probably not harmful either... but maybe the OP has some more
+>> significant reason for this patch.
+>>
+>>
+>
+>> Yes, when we run 'make clean' ,it also generate the git version
+>> file,then remove it .It's not necessary to trigger the operation
+>> when run 'make clean' command
+>
+> Sure, it's not needed. But it's OK to have a bit of redundancy for
+> simplicity, unless that redundancy is breaking something. Which is wh=
+y
+> I asked whether it was actually causing a problem in any case.
+>
+> With this patch we still call ./GIT-VERSION-GEN to make the
+> ./GIT-VERSION-FILE, we just aren't including it anymore, and it would
+> still be included on "make distclean" since you're just looking at
+> $(MAKECMDGOALS).
 
-That's not a syntax error.
+> No,it won't call ./GIT-VERSION-GEN as it doesn't include
+> GET-VERSION-FILE any more.so It won't trigger the =C2=A0GIT-VERSION-F=
+ILE
+> target
 
-CC-ing Andrew Sayers who added this feature.
+Yes it will. The version file is generated by this part:
+
+    GIT-VERSION-FILE: FORCE
+        @$(SHELL_PATH) ./GIT-VERSION-GEN
+
+But you've only wrapped the inclusion *after* the file is generated in
+an ifneq:
+
+    +ifneq "$(MAKECMDGOALS)" "clean"
+    +  -include GIT-VERSION-FILE
+    +endif
+
+Makefile targets aren't triggered by the include directive.
+
+> We can also handle distclean target
+
+Sure, it can be made to work. But can you tell my *why* this is needed
+(asking for the third time now). I'm more interested in the motivation
+than getting this particular patch working. If generating files like
+this during clean is breaking something it would be good to know, as
+we're probably doing it somewhere else too.
+
+If it's just OCD about not doing redundant work that's fine too. But
+it would be good to *know*.
+
+Thanks.
