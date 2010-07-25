@@ -1,95 +1,140 @@
-From: <lynn.lin@emc.com>
-Subject: RE: [PATCH] Makefile: don't include git version file on 'make clean'
-Date: Sun, 25 Jul 2010 07:28:34 -0400
-Message-ID: <7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com>
-References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com> <AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com> <4C4BFAA3.3050700@digium.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] Makefile: don't include git version file on 'make clean'
+Date: Sun, 25 Jul 2010 11:41:30 +0000
+Message-ID: <AANLkTilHrEImfhl0YTqj0MgXFTzYmJMJrUTKkflGFwpp@mail.gmail.com>
+References: <1279943627-11053-1-git-send-email-Lynn.Lin@emc.com>
+	<AANLkTilYXdVI_fqG5ZvPEABTXt7fTps3ZbPiiWgVnDxS@mail.gmail.com>
+	<4C4BFAA3.3050700@digium.com>
+	<7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: <git@vger.kernel.org>
-To: <kpfleming@digium.com>, <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 13:28:58 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kpfleming@digium.com, git@vger.kernel.org
+To: lynn.lin@emc.com
+X-From: git-owner@vger.kernel.org Sun Jul 25 13:41:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OczO4-0000QJ-Ey
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 13:28:56 +0200
+	id 1OczaO-00056X-8t
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 13:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752308Ab0GYL2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 07:28:51 -0400
-Received: from mexforward.lss.emc.com ([128.222.32.20]:22045 "EHLO
-	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752181Ab0GYL2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 07:28:50 -0400
-Received: from hop04-l1d11-si01.isus.emc.com (HOP04-L1D11-SI01.isus.emc.com [10.254.111.54])
-	by mexforward.lss.emc.com (Switch-3.3.2/Switch-3.1.7) with ESMTP id o6PBSkBm005748
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 25 Jul 2010 07:28:46 -0400
-Received: from mailhub.lss.emc.com (nagas.lss.emc.com [10.254.144.15]) by hop04-l1d11-si01.isus.emc.com (RSA Interceptor); Sun, 25 Jul 2010 07:28:37 -0400
-Received: from corpussmtp5.corp.emc.com (corpussmtp5.corp.emc.com [128.221.166.229])
-	by mailhub.lss.emc.com (Switch-3.4.2/Switch-3.3.2mp) with ESMTP id o6PBSaqq031320;
-	Sun, 25 Jul 2010 07:28:36 -0400
-Received: from CORPUSMX100A.corp.emc.com ([128.222.76.57]) by corpussmtp5.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Sun, 25 Jul 2010 07:28:36 -0400
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <4C4BFAA3.3050700@digium.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH] Makefile: don't include git version file on 'make clean'
-Thread-Index: Acsr1lhyneXSC5WiTz20AHaMYSh8WgAFdgrw
-X-OriginalArrivalTime: 25 Jul 2010 11:28:36.0488 (UTC) FILETIME=[85A88080:01CB2BEC]
-X-EMM-EM: Active
+	id S1752529Ab0GYLle convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 07:41:34 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64982 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750974Ab0GYLld convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 07:41:33 -0400
+Received: by iwn7 with SMTP id 7so1844362iwn.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 04:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HXTW8LtCQRz5fkRsXAN8HJ2UrOAHUQO/oiPgzEtBPmk=;
+        b=unN2QVWFNI7TChKO693F8XNsPW7LrVbasaCkrdsrx/DtzJcUAojVQXhPCcj55lP5q1
+         X0XXp93YDn8ilZbFhOTHJ+Ni0SxPNtqdvtXw7eV28GY5gOPaa3yI+IBbQtDpcNST5Y5w
+         GQAF+k1honqspHdvAUVlI4PcBbRfk3EoT5QSI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Gm8SkC28cDG+3KQD3tQ+YvqrExnMOliNowf15MH4eF2eDz0Ea9SQvpqRWgQ9YN6LAy
+         nuY9cTHonOsP26xAsM2A908Je6GPQQXlVmgwelJvlxwFaA0WoD6qbB3D4azaer24ed5S
+         JUawcJrTzRdHqhYH/h4TS3akP3puz7lNTLPdU=
+Received: by 10.231.32.200 with SMTP id e8mr6674712ibd.66.1280058090512; Sun, 
+	25 Jul 2010 04:41:30 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 04:41:30 -0700 (PDT)
+In-Reply-To: <7F48A44C0E1FBF48B00D4DA49C85432E54F998@CORPUSMX100A.corp.emc.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151725>
 
-DQoNCi0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBLZXZpbiBQLiBGbGVtaW5nIFtt
-YWlsdG86a3BmbGVtaW5nQGRpZ2l1bS5jb21dIA0KU2VudDogMjAxMOW5tDfmnIgyNeaXpSAxNjo1
-MA0KVG86IMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uDQpDYzogTGluLCBMeW5uOyBnaXRAdmdl
-ci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogW1BBVENIXSBNYWtlZmlsZTogZG9uJ3QgaW5jbHVk
-ZSBnaXQgdmVyc2lvbiBmaWxlIG9uICdtYWtlIGNsZWFuJw0KDQpPbiAwNy8yNC8yMDEwIDAyOjM2
-IFBNLCDDhnZhciBBcm5masO2csOwIEJqYXJtYXNvbiB3cm90ZToNCj4gT24gU2F0LCBKdWwgMjQs
-IDIwMTAgYXQgMDM6NTMsICA8THlubi5MaW5AZW1jLmNvbT4gd3JvdGU6DQo+PiBGcm9tOiBMeW5u
-IExpbiA8THlubi5MaW5AZW1jLmNvbT4NCj4+DQo+PiAtLS0NCj4+ICBNYWtlZmlsZSAgICAgICAg
-IHwgICAgNCArKystDQo+PiAgZ2l0LWd1aS9NYWtlZmlsZSB8ICAgIDQgKysrLQ0KPj4gIDIgZmls
-ZXMgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYg
-LS1naXQgYS9NYWtlZmlsZSBiL01ha2VmaWxlDQo+PiBpbmRleCBiYzNjNTcwLi5lYjI4Yjk4IDEw
-MDY0NA0KPj4gLS0tIGEvTWFrZWZpbGUNCj4+ICsrKyBiL01ha2VmaWxlDQo+PiBAQCAtMjM4LDcg
-KzIzOCw5IEBAIGFsbDo6DQo+Pg0KPj4gIEdJVC1WRVJTSU9OLUZJTEU6IEZPUkNFDQo+PiAgICAg
-ICAgQCQoU0hFTExfUEFUSCkgLi9HSVQtVkVSU0lPTi1HRU4NCj4+IC0taW5jbHVkZSBHSVQtVkVS
-U0lPTi1GSUxFDQo+PiAraWZuZXEgIiQoTUFLRUNNREdPQUxTKSIgImNsZWFuIg0KPj4gKyAgLWlu
-Y2x1ZGUgR0lULVZFUlNJT04tRklMRQ0KPj4gK2VuZGlmDQo+Pg0KPj4gIHVuYW1lX1MgOj0gJChz
-aGVsbCBzaCAtYyAndW5hbWUgLXMgMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4gIHVuYW1l
-X00gOj0gJChzaGVsbCBzaCAtYyAndW5hbWUgLW0gMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0K
-Pj4gZGlmZiAtLWdpdCBhL2dpdC1ndWkvTWFrZWZpbGUgYi9naXQtZ3VpL01ha2VmaWxlDQo+PiBp
-bmRleCAxOTdiNTVlLi45MWUxZWE1IDEwMDY0NA0KPj4gLS0tIGEvZ2l0LWd1aS9NYWtlZmlsZQ0K
-Pj4gKysrIGIvZ2l0LWd1aS9NYWtlZmlsZQ0KPj4gQEAgLTksNyArOSw5IEBAIGFsbDo6DQo+Pg0K
-Pj4gIEdJVC1WRVJTSU9OLUZJTEU6IEZPUkNFDQo+PiAgICAgICAgQCQoU0hFTExfUEFUSCkgLi9H
-SVQtVkVSU0lPTi1HRU4NCj4+IC0taW5jbHVkZSBHSVQtVkVSU0lPTi1GSUxFDQo+PiAraWZuZXEg
-IiQoTUFLRUNNREdPQUxTKSIgImNsZWFuIg0KPj4gKyAgLWluY2x1ZGUgR0lULVZFUlNJT04tRklM
-RQ0KPj4gK2VuZGlmDQo+Pg0KPj4gIHVuYW1lX1MgOj0gJChzaGVsbCBzaCAtYyAndW5hbWUgLXMg
-Mj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4gIHVuYW1lX08gOj0gJChzaGVsbCBzaCAtYyAn
-dW5hbWUgLW8gMj4vZGV2L251bGwgfHwgZWNobyBub3QnKQ0KPj4gLS0NCj4+IDEuNy4xDQo+IA0K
-PiBUaGlzIHBhdGNoIG5lZWRzIGEgcmF0aW9uYWxlLCB3aHkgd2FzIGl0IG5lZWRlZD8gVGhlICIt
-aW5jbHVkZSINCj4gZGlyZWN0aXZlIHdpbGwgc2ltcGx5IGlnbm9yZSBmaWxlcyB0aGF0IGRvbid0
-IGV4aXN0IChhcyBvcHBvc2VkIHRvDQo+ICJpbmNsdWRlIiksIHNvIGluY2x1ZGluZyBHSVQtVkVS
-U0lPTi1GSUxFIGR1cmluZyAibWFrZSBjbGVhbicNCj4gc2hvdWxkbid0IGJlIGFuIGlzc3VlLg0K
-DQpKdXN0IGd1ZXNzaW5nIGhlcmUsIGJ1dCBzaW5jZSBHSVQtVkVSU0lPTi1GSUxFIGhhcyBhICdG
-T1JDRScNCnByZXJlcXVpc2l0ZSwgdGhhdCBtZWFucyB0aGF0IHRoZSBvcGVyYXRpb25zIHRvIGdl
-bmVyYXRlIGl0IHdpbGwgYmUgcnVuDQpldmVuIGZvciAnbWFrZSBjbGVhbicsIHdoaWNoIGlzIG5v
-dCB1c2VmdWwgZm9yIHRoZSBjbGVhbmluZyBvcGVyYXRpb24uDQpJdCdzIHByb2JhYmx5IG5vdCBo
-YXJtZnVsIGVpdGhlci4uLiBidXQgbWF5YmUgdGhlIE9QIGhhcyBzb21lIG1vcmUNCnNpZ25pZmlj
-YW50IHJlYXNvbiBmb3IgdGhpcyBwYXRjaC4NCg0KDQoNClllcywgd2hlbiB3ZSBydW4gJ21ha2Ug
-Y2xlYW4nICxpdCBhbHNvIGdlbmVyYXRlIHRoZSBnaXQgdmVyc2lvbiBmaWxlLHRoZW4gcmVtb3Zl
-IGl0IC5JdCdzIG5vdCBuZWNlc3NhcnkgdG8gdHJpZ2dlciB0aGUgb3BlcmF0aW9uIHdoZW4gcnVu
-ICdtYWtlIGNsZWFuJyBjb21tYW5kDQoNCkx5bm4NCg0KDQotLSANCktldmluIFAuIEZsZW1pbmcN
-CkRpZ2l1bSwgSW5jLiB8IERpcmVjdG9yIG9mIFNvZnR3YXJlIFRlY2hub2xvZ2llcw0KNDQ1IEph
-biBEYXZpcyBEcml2ZSBOVyAtIEh1bnRzdmlsbGUsIEFMIDM1ODA2IC0gVVNBDQpza3lwZToga3Bm
-bGVtaW5nIHwgamFiYmVyOiBrZmxlbWluZ0BkaWdpdW0uY29tDQpDaGVjayB1cyBvdXQgYXQgd3d3
-LmRpZ2l1bS5jb20gJiB3d3cuYXN0ZXJpc2sub3JnDQoNCg==
+On Sun, Jul 25, 2010 at 11:28,  <lynn.lin@emc.com> wrote:
+>
+>
+> -----Original Message-----
+> From: Kevin P. Fleming [mailto:kpfleming@digium.com]
+> Sent: 2010=E5=B9=B47=E6=9C=8825=E6=97=A5 16:50
+> To: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> Cc: Lin, Lynn; git@vger.kernel.org
+> Subject: Re: [PATCH] Makefile: don't include git version file on 'mak=
+e clean'
+>
+> On 07/24/2010 02:36 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Sat, Jul 24, 2010 at 03:53, =C2=A0<Lynn.Lin@emc.com> wrote:
+>>> From: Lynn Lin <Lynn.Lin@emc.com>
+>>>
+>>> ---
+>>> =C2=A0Makefile =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A04 +++-
+>>> =C2=A0git-gui/Makefile | =C2=A0 =C2=A04 +++-
+>>> =C2=A02 files changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Makefile b/Makefile
+>>> index bc3c570..eb28b98 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -238,7 +238,9 @@ all::
+>>>
+>>> =C2=A0GIT-VERSION-FILE: FORCE
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0@$(SHELL_PATH) ./GIT-VERSION-GEN
+>>> --include GIT-VERSION-FILE
+>>> +ifneq "$(MAKECMDGOALS)" "clean"
+>>> + =C2=A0-include GIT-VERSION-FILE
+>>> +endif
+>>>
+>>> =C2=A0uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not'=
+)
+>>> =C2=A0uname_M :=3D $(shell sh -c 'uname -m 2>/dev/null || echo not'=
+)
+>>> diff --git a/git-gui/Makefile b/git-gui/Makefile
+>>> index 197b55e..91e1ea5 100644
+>>> --- a/git-gui/Makefile
+>>> +++ b/git-gui/Makefile
+>>> @@ -9,7 +9,9 @@ all::
+>>>
+>>> =C2=A0GIT-VERSION-FILE: FORCE
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0@$(SHELL_PATH) ./GIT-VERSION-GEN
+>>> --include GIT-VERSION-FILE
+>>> +ifneq "$(MAKECMDGOALS)" "clean"
+>>> + =C2=A0-include GIT-VERSION-FILE
+>>> +endif
+>>>
+>>> =C2=A0uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not'=
+)
+>>> =C2=A0uname_O :=3D $(shell sh -c 'uname -o 2>/dev/null || echo not'=
+)
+>>> --
+>>> 1.7.1
+>>
+>> This patch needs a rationale, why was it needed? The "-include"
+>> directive will simply ignore files that don't exist (as opposed to
+>> "include"), so including GIT-VERSION-FILE during "make clean'
+>> shouldn't be an issue.
+>
+> Just guessing here, but since GIT-VERSION-FILE has a 'FORCE'
+> prerequisite, that means that the operations to generate it will be r=
+un
+> even for 'make clean', which is not useful for the cleaning operation=
+=2E
+> It's probably not harmful either... but maybe the OP has some more
+> significant reason for this patch.
+>
+>
+
+> Yes, when we run 'make clean' ,it also generate the git version
+> file,then remove it .It's not necessary to trigger the operation
+> when run 'make clean' command
+
+Sure, it's not needed. But it's OK to have a bit of redundancy for
+simplicity, unless that redundancy is breaking something. Which is why
+I asked whether it was actually causing a problem in any case.
+
+With this patch we still call ./GIT-VERSION-GEN to make the
+=2E/GIT-VERSION-FILE, we just aren't including it anymore, and it would
+still be included on "make distclean" since you're just looking at
+$(MAKECMDGOALS).
