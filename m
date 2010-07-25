@@ -1,75 +1,86 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/7] Detailed test coverage reports for Git
-Date: Sun, 25 Jul 2010 17:46:27 +0000
-Message-ID: <AANLkTikHXRJcuv35uFrv_g1umVdUM-QD80brFGj94E3N@mail.gmail.com>
-References: <1280068861-17701-1-git-send-email-avarab@gmail.com>
-	<20100725172012.GC8604@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] log-tree: simplify digit_in_number
+Date: Sun, 25 Jul 2010 12:46:02 -0500
+Message-ID: <20100725174602.GA9146@burratino>
+References: <1280079381-4548-1-git-send-email-ralf.thielow@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 19:46:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ralf Thielow <ralf.thielow@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 19:47:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od5HY-0007uI-Aa
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 19:46:36 +0200
+	id 1Od5IB-00089f-Og
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 19:47:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134Ab0GYRqb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 13:46:31 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:55441 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105Ab0GYRqa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 13:46:30 -0400
-Received: by iwn7 with SMTP id 7so2068704iwn.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 10:46:30 -0700 (PDT)
+	id S1752165Ab0GYRrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 Jul 2010 13:47:10 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:59189 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab0GYRrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 13:47:09 -0400
+Received: by gwb20 with SMTP id 20so1178975gwb.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 10:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xLgGRjef8VrcmMOmowO1J5coIDkbYES0BIZvUEB5MXo=;
-        b=hIu9YyfISRti08mfNM53GEKCLQOYUJGVnMmT236J2UzCrhLZP0neFILAeZIGc0YZpu
-         aVk6VuqtLxF4FF4bzLlLflPkkZxrvzDZn30n7AR0H1nQ3+31GLTygTY5QlYv5yIxel9U
-         BdQyXSCJ6VY1YgEq/63Ymlf0FBHtYcLCABJrs=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=THLqJA4wpaT9YLFrz0ZUbwbtKdFKIGEMZaGrvY+2A0w=;
+        b=rKb9bhj9nF3UtuWB08qXlkGRaf5bqeODf8A5OhRusRXJ7xP53QRWsOsAbBLcslYqUI
+         WjXIMk70TdFBB2hBbuXVZqK4rlsvlTVCfp/emlyFZXgaUaqdPklRNKGVGpSxmxt/UMbY
+         jLl6+tCaV5J9fZrPke5Xwu3sDSEUNCdHa/aXM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=H6BNO/WF7V2jtxKlwCusQkkctR3zbNy/ypimx5rTZymbJdMuu2H5uEri9twMHaiI3F
-         awzojFTkkJdprK+yPIabmmPaPEfvMRbTetxUhUZRW3ahtj5jJVJCZVflPEQL7xxgoeAw
-         sRPIU2fBjsW/2gSSYQX9ReYocYfBpPAE6S4BY=
-Received: by 10.231.152.210 with SMTP id h18mr7418167ibw.18.1280079987295; 
-	Sun, 25 Jul 2010 10:46:27 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 10:46:27 -0700 (PDT)
-In-Reply-To: <20100725172012.GC8604@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=of19SyGE4Y9tiLbYvHX89a/fEcX1haKOKNy+F1BArpEZUO1nVBecGTgw0PMoczCnSH
+         OZHA0F45SWLt9B43fkIwTEi8KfPguuqE4OTWvkXFUVRIFYwPHW/6XPlmFkRbtCR5zxtZ
+         +9tnkAJvg0dmqrsoSrzkKH9cJ4yV4fRq7lC20=
+Received: by 10.100.174.16 with SMTP id w16mr6595771ane.258.1280080028482;
+        Sun, 25 Jul 2010 10:47:08 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id p12sm4842466ane.14.2010.07.25.10.47.07
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jul 2010 10:47:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1280079381-4548-1-git-send-email-ralf.thielow@googlemail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151772>
 
-On Sun, Jul 25, 2010 at 17:20, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (7):
->> =C2=A0 gitignore: Ignore files generated by "make coverage"
->> =C2=A0 Makefile: Include subdirectories in "make cover" reports
->> =C2=A0 Makefile: Split out the untested functions target
->> =C2=A0 Makefile: Add coverage-report-cover-db target
->> =C2=A0 Makefile: Add coverage-report-cover-db-html target
->> =C2=A0 t/README: A new section about test coverage
->> =C2=A0 t/README: Add a note about the dangers of coverage chasing
->
-> With whatever subset of the changes I have hinted at seems
-> suitable,
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Ralf Thielow wrote:
 
-All the changes you made look good, I approve of having them squashed
-when this is applied. Thanks.
+> +++ b/log-tree.c
+> @@ -254,12 +254,10 @@ static void append_signoff(struct strbuf *sb, const char *signoff)
+>  
+>  static unsigned int digits_in_number(unsigned int number)
+>  {
+> -	unsigned int i = 10, result = 1;
+> -	while (i <= number) {
+> -		i *= 10;
+> -		result++;
+> -	}
+> -	return result;
+> +	int digits = 0;
+> +	while (number /= 10) 
+> +		digits++;
+> +	return digits++;
+
+I think you mean "return ++digits;".
+
+But other questions come to mind first:
+
+ - What is the motivation?  How did this come up and what does your change
+   improve?
+
+ - Why rewrite this in one patch, only to rewrite it again?
+
+Hope that helps,
+Jonathan
