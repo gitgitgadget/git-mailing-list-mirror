@@ -1,80 +1,101 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 6/9] t7508 (status): modernize style
-Date: Sun, 25 Jul 2010 08:38:03 +0000
-Message-ID: <AANLkTin_GsqW6JIUqJXkrIQFIRcZXaoCUFm83s3m_LBG@mail.gmail.com>
-References: <20100725005443.GA18370@burratino>
-	<20100725005942.GF18420@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/WIP] git-svn: tweak log format to match "svn log" output
+Date: Sun, 25 Jul 2010 03:37:08 -0500
+Message-ID: <20100725083708.GB22213@burratino>
+References: <20100423134611.GA3440@merkur.sol.de>
+ <20100426132710.GA9930@progeny.tock>
+ <20100427112656.GB16323@merkur.sol.de>
+ <20100725023114.GB18606@burratino>
+ <20100725081057.GA22373@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 10:38:15 2010
+Cc: Jens Seidel <jensseidel@users.sf.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Jul 25 10:38:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ocwis-0004Fu-S1
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 10:38:15 +0200
+	id 1Ocwj0-0004Ij-LU
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 10:38:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751993Ab0GYIiJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 04:38:09 -0400
+	id S1752254Ab0GYIiR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 04:38:17 -0400
 Received: from mail-iw0-f174.google.com ([209.85.214.174]:39029 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751377Ab0GYIiE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 04:38:04 -0400
-Received: by iwn7 with SMTP id 7so1772172iwn.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 01:38:04 -0700 (PDT)
+	with ESMTP id S1752023Ab0GYIiO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 04:38:14 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 7so1772172iwn.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 01:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KFmKaXRScOt5Lg6gsEjJWvDSdl6MimxXRT+rDX2N/x4=;
-        b=esHO0n60GQGQGIMqYuc3kwgk+8JwcccBDzK/h8SWMyBHraSjmRRVfWFRlvjrdXFSI2
-         +njYd6wBNBI2U99ZMt8lPWWDoNKKoRcFFmWANZLuRT1QJDaPtw5r4Os6QFI7qU7m2NEB
-         auBCkR0dYRfUnuciuvU5ab5yC64FpMWJV3R6A=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=lYyrNNf+KfFXYLDb6l/V1bHagNaggzEwRL97+r80Emc=;
+        b=JDz6ODqn2fSMO4/17YSbFflGjh0/mXgLARhGPuk6NlCkJscQUrU6d9IEGK4VM1K+P9
+         MtU+uqKSjLR7AyzC73S2UFBOh8TebHVp45XrZ6IqcAWqbcVm3U0PNJYSoEI8nllDvm1L
+         GPMc66raVUf3XXf27fDvnC0u+GGHu05JtBTcs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Mhg/VTItuHdbK/O6mdrUDBEQKgALbndDXQzQrrFBSc5CHH3Dqm7qVHmrYVGlMdSmpX
-         DW3xQxl3ScTOUyHz3jYTPzbo7AjoRO3zsYSvTs34Mv5LEh/Xt3/wwvXHxBFEDxYOTVMF
-         C9beRSumG7wWRrB6ToxEp8pFgK7H6YvwlEwZo=
-Received: by 10.231.30.129 with SMTP id u1mr6649586ibc.63.1280047083775; Sun, 
-	25 Jul 2010 01:38:03 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 01:38:03 -0700 (PDT)
-In-Reply-To: <20100725005942.GF18420@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=BVBG+XmXJS5O2n/ar5wq9LeTIiD2LrampB7x+84g96qKB6WT8G4w8fmCss4iofpFbG
+         TVE9+pQSiVBfI2RcZBESrv3AKQSlUtl9UTrCW7oWDEx207p2VkW7K3bzJ5sBGu2yGwWB
+         JkEtt35uNcyK+MZSAe+p14Y6mWijCQeCkWiQ0=
+Received: by 10.231.30.136 with SMTP id u8mr1829510ibc.19.1280047091085;
+        Sun, 25 Jul 2010 01:38:11 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id r3sm2292314ibk.1.2010.07.25.01.38.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jul 2010 01:38:10 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100725081057.GA22373@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151712>
 
-On Sun, Jul 25, 2010 at 00:59, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Some cleanups to make this test script easier to read and use,
-> such as:
->
-> =C2=A0- put setup code in test_expect_success scripts to make the
-> =C2=A0 test script easier to scan through;
->
-> =C2=A0- avoid a pipe to test_decode_color that forgets the exit statu=
-s of
-> =C2=A0 "git status", by redirecting to a temporary file (named "actua=
-l")
-> =C2=A0 for that function to consume instead;
->
-> =C2=A0- remove precomputed object IDs;
->
-> =C2=A0- reset configuration after each test, so there is less state
-> =C2=A0 for a reader to keep in mind.
+Eric Wong wrote:
 
-These changes are all good. Well spotted with the test_might_fail()
-additions, adding forgotten &&, and turning the >expect code setup
-into their own tests.
+> @@ -5646,8 +5644,8 @@ sub show_commit_normal {
+> =20
+>  	if ($can_localize) {
+>  		my $d =3D Locale::gettext->domain("subversion");
+> -		$sing_fmt =3D $d->nget(" | %d line", " | %d lines", 1);
+> -		$plur_fmt =3D $d->nget(" | %d line", " | %d lines", 10);
+> +		$sing_fmt =3D $d->nget($sing_fmt, $plur_fmt, 1);
+> +		$plur_fmt =3D $d->nget($sing_fmt, $plur_fmt, 10);
 
-Acked.
+This change gives me pause: wouldn=E2=80=99t it be a problem in
+non-English locales, where $sing_fmt changes before it is
+used to set $plur_fmt?
+
+Of course there is no problem because the code is equivalent to
+
+		$sing_fmt =3D $d->get($sing_fmt);
+		$plur_fmt =3D $d->get($plur_fmt);
+
+(or at least Locale::gettext is advertised to work that way.)
+
+diff --git i/git-svn.perl w/git-svn.perl
+index 5252722..75e7165 100755
+--- i/git-svn.perl
++++ w/git-svn.perl
+@@ -5644,8 +5644,8 @@ sub show_commit_normal {
+=20
+ 	if ($can_localize) {
+ 		my $d =3D Locale::gettext->domain("subversion");
+-		$sing_fmt =3D $d->nget($sing_fmt, $plur_fmt, 1);
+-		$plur_fmt =3D $d->nget($sing_fmt, $plur_fmt, 10);
++		$sing_fmt =3D $d->get($sing_fmt);
++		$plur_fmt =3D $d->get($plur_fmt);
+ 	}
+ 	if (my $l =3D $c->{l}) {
+ 		while ($l->[$#$l] eq "\n" && $#$l > 0
+--=20
