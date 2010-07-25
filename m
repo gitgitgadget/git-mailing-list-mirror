@@ -1,102 +1,79 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH] INSTALL: Add instructions about configuring /etc/xml/catalog on Cygwin for documentation builds.
-Date: Sun, 25 Jul 2010 13:57:35 +1000
-Message-ID: <1280030255-4764-1-git-send-email-jon.seymour@gmail.com>
-Cc: jon.seymour@gmail.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 25 05:58:01 2010
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: rfc - Changing the way gitk and git-gui are managed
+Date: Sun, 25 Jul 2010 00:11:37 -0400
+Message-ID: <AANLkTikkMYY5r4RzBZ-mTBVSXuZfhu8HSZPEbNTGnJ2i@mail.gmail.com>
+References: <7vocdygbw0.fsf@alter.siamese.dyndns.org> <20100724110239.GA13067@vidovic> 
+	<20100724125408.GA17481@burratino> <AANLkTi=R2-=TNXyFq4OCo6LsYOMNgVga+=6QrAfCoHRx@mail.gmail.com> 
+	<20100724193428.GA4491@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 06:12:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcsLg-00015M-S3
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 05:58:01 +0200
+	id 1OcsZI-0004Bk-N4
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 06:12:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751678Ab0GYD5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 Jul 2010 23:57:47 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:59483 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100Ab0GYD5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jul 2010 23:57:46 -0400
-Received: by pvc7 with SMTP id 7so4062764pvc.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 20:57:45 -0700 (PDT)
+	id S1751098Ab0GYEL7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 00:11:59 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62386 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716Ab0GYEL6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 00:11:58 -0400
+Received: by wyf19 with SMTP id 19so1358915wyf.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 21:11:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=2wd52jkFZYrxIcV8WHfM7IkdwuRVzOgVUof5ytH2fsI=;
-        b=iqZYgWGxFdGDGqjaD+vLT/pOhAS1kkcJIMzyBFUEU+esgwxD0lr6dpQoXm9ubXfLcX
-         PDre4voSml3c4pBL/XTy4xn2hK+Y/IyIk8d9gptxBBG79K2iYK9HULZsvgyVFJ07vZrv
-         I9yF/0462fwkbcDBXstwJfCVHYV5IruXjen3c=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/yZk07ahdhlinoh19e2wjU+uwcDlKSG+P5Fu4cs9vnI=;
+        b=U5WLpbyywicDDYbiJ5Ogf8xpwxSMyDn1dogqMLa4zsWmHSnKwnu0IdmZAyeFgPXEFB
+         K+//FjQKzAasb4lj/M90+vHrP6BU4okYvu+k8av5TBSLq2v+5z65hcwYcmIuGzN9lfzG
+         4FRdXvB+ZtFWcyNr6z4SMW0fJbkq5Oz0OJ2Wk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=xtkZs+anSSbnO49qXOveXr6xISfHxoBOXgKsmtcOWY/W5+AZ3Bv3GJAV95l+Cj98L8
-         3mo6j8Y0986SOwHzbgaekHHfZyzrS1DRzFxF0nxoYeANF9gjqwbT3X3cu/r7Z9VIeQT0
-         PW13bidftJyO3EHqd2cWdhOqNB9yYfzuvckGc=
-Received: by 10.114.61.3 with SMTP id j3mr8589216waa.60.1280030265530;
-        Sat, 24 Jul 2010 20:57:45 -0700 (PDT)
-Received: from localhost.localdomain (124-169-0-188.dyn.iinet.net.au [124.169.0.188])
-        by mx.google.com with ESMTPS id c24sm3744652wam.7.2010.07.24.20.57.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jul 2010 20:57:44 -0700 (PDT)
-X-Mailer: git-send-email 1.7.0.4.6.ge3842
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=b/aiL0jnp9fN/ri2Xxd9QwsHHnlijRChgjdy244hxeQuYz03YxNWha06xvy+le+bim
+         podyOrH8rpLP0QR+Cy1FcaeLju0EBaCxVBPjf2grYK6r4xSwcYwAwPWssBEfouumL4FU
+         hc5AXa4A4K2gT1f68Vf63LustCMa18F6gduRk=
+Received: by 10.227.144.4 with SMTP id x4mr5642490wbu.59.1280031117157; Sat, 
+	24 Jul 2010 21:11:57 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Sat, 24 Jul 2010 21:11:37 -0700 (PDT)
+In-Reply-To: <20100724193428.GA4491@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151706>
 
-Without additional configuration steps, the documentation build on Cygwin fails because the XML catalog is missing required rewrites for certain docbook resources.
+On Sat, Jul 24, 2010 at 3:34 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Avery Pennarun wrote:
+>> On Sat, Jul 24, 2010 at 8:54 AM, Jonathan Nieder <jrnieder@gmail.com=
+> wrote:
+>
+>>> =A0$ git log --oneline -SListbox.font -- gitk-git/gitk
+>>> =A0$ git log --oneline --follow -SListbox.font -- gitk-git/gitk
+>>> =A062ba514 Move gitk to its own subdirectory
+>>> =A0$ git log --oneline -SListbox.font -- gitk-git/gitk gitk
+>>> =A0207ad7b gitk: Set the font for all listbox widgets
+>>> =A0$
+>>
+>> This is a bug in git log --follow
+>
+> The first one is not.
 
-This patch documents the required configuration.
+That one is a bug in history simplification, which has simplified away
+commits that affected files that got renamed into gitk-git/gitk during
+a merge commit.  So the bug is very similar, albeit probably in a
+different place in the code.  (-M doesn't help either.)
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- INSTALL |   33 +++++++++++++++++++++++++++++++++
- 1 files changed, 33 insertions(+), 0 deletions(-)
-
-diff --git a/INSTALL b/INSTALL
-index 61086ab..59200b7 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -157,3 +157,36 @@ Issues of note:
-    It has been reported that docbook-xsl version 1.72 and 1.73 are
-    buggy; 1.72 misformats manual pages for callouts, and 1.73 needs
-    the patch in contrib/patches/docbook-xsl-manpages-charmap.patch
-+
-+   Users attempting to build the documentation on Cygwin may need to ensure
-+   that the /etc/xml/catalog file looks something like this:
-+
-+   <?xml version="1.0"?>
-+   <!DOCTYPE catalog PUBLIC
-+      "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN"
-+      "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd"
-+   >
-+   <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-+     <rewriteURI
-+       uriStartString = "http://docbook.sourceforge.net/release/xsl/current"
-+       rewritePrefix = "/usr/share/sgml/docbook/xsl-stylesheets"
-+     />
-+     <rewriteURI
-+       uriStartString="http://www.oasis-open.org/docbook/xml/4.5"
-+       rewritePrefix="/usr/share/sgml/docbook/xml-dtd-4.5"
-+     />
-+  </catalog>
-+
-+  This can be achieved with the following two xmlcatalog commands:
-+
-+  xmlcatalog --noout \
-+     --add rewriteURI \
-+        http://docbook.sourceforge.net/release/xsl/current \
-+        /usr/share/sgml/docbook/xsl-stylesheets \
-+     /etc/xml/catalog
-+
-+  xmlcatalog --noout \
-+     --add rewriteURI \
-+         http://www.oasis-open.org/docbook/xml/4.5/xsl/current \
-+         /usr/share/sgml/docbook/xml-dtd-4.5 \
-+     /etc/xml/catalog
--- 
-1.7.0.4.6.ge3842
+Avery
