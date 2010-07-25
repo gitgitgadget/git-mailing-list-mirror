@@ -1,120 +1,78 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [WIP/RFC 13/13] Documentation: Preliminary docs on 'git notes
- merge'
-Date: Sun, 25 Jul 2010 21:02:52 +0200
-Message-ID: <201007252102.52632.johan@herland.net>
-References: <1279880104-29796-1-git-send-email-johan@herland.net>
- <1279880104-29796-14-git-send-email-johan@herland.net>
- <4C4AA297.4090605@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v2 7/7] t/README: Add a note about the dangers of coverage 
+	chasing
+Date: Sun, 25 Jul 2010 19:27:19 +0000
+Message-ID: <AANLkTilcivnC1ZIZ1vDKmMZwCc7Hdc9gSTNYzQEYM08z@mail.gmail.com>
+References: <1280068861-17701-1-git-send-email-avarab@gmail.com>
+	<1280068861-17701-8-git-send-email-avarab@gmail.com>
+	<20100725160545.GA25169@burratino>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 21:03:01 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 21:27:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od6TT-0005qR-I5
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 21:02:59 +0200
+	id 1Od6r7-000086-OE
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 21:27:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752504Ab0GYTCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 15:02:55 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:42076 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752469Ab0GYTCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 15:02:54 -0400
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L6400A5TNKTWAB0@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 25 Jul 2010 21:02:53 +0200 (MEST)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 2F6251EA554B_C4C8A5DB	for <git@vger.kernel.org>; Sun,
- 25 Jul 2010 19:02:53 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 11DA41EA3FA9_C4C8A5DF	for <git@vger.kernel.org>; Sun,
- 25 Jul 2010 19:02:53 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L640043TNKSK020@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 25 Jul 2010 21:02:53 +0200 (MEST)
-User-Agent: KMail/1.13.5 (Linux/2.6.34-ARCH; KDE/4.4.5; x86_64; ; )
-In-reply-to: <4C4AA297.4090605@gmail.com>
+	id S1751993Ab0GYT1V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 15:27:21 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33692 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751811Ab0GYT1U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 15:27:20 -0400
+Received: by iwn7 with SMTP id 7so2120701iwn.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 12:27:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CbYNg0qR9EGC/HhRmcRROXkjakJ2MBDt892YJetuJP4=;
+        b=VhA6Q19nxBEgWeYVdBeOCPVgBNSF4BRDzcX0KENmrLf894qJy6TCxxWUWSQxqq4MbT
+         kwshC0GInYKGvXmjyrzJf+tgEwgFwzWXcWSaZpyQPsiDbVrdrO0tp+x3Aeeysc7gNHh4
+         j+CYglztd4mVJxGoc/6p3YsO0t+4X86yfLGw4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qDY2WcOtEnitcklGveI3mOXKtSeKZpjqGLqZhkinbw9JzJEKPXlaCT+LGUXlyzb5MP
+         TKmxUKY/OguQ3y2bxF0SCb/a6RGzJHZzz0nlI5g7cUSc5qaNz3PscgwXu6VBQqKFBx6y
+         vUvuOIIgIIxGe7QuGjtRuSqYu2JLY74tNM6j8=
+Received: by 10.231.33.205 with SMTP id i13mr7469325ibd.179.1280086039781; 
+	Sun, 25 Jul 2010 12:27:19 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Sun, 25 Jul 2010 12:27:19 -0700 (PDT)
+In-Reply-To: <20100725160545.GA25169@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151780>
 
-On Saturday 24 July 2010, Stephen Boyd wrote:
->   On 07/23/2010 03:15 AM, Johan Herland wrote:
-> > +-X<strategy>::
-> > +--resolve=<strategy>::
-> > +	When merging notes, resolve notes conflicts using the given
-> > +	strategy. The following strategies are recognized: "manual"
-> > +	(default), "ours", "theirs" and "union". "ours" automatically
-> > +	resolves conflicting notes in favor of the local version (i.e.
-> > +	the current notes ref). "theirs" auto-resolves notes conflicts
-> > +	in favor of the remote version (i.e. the given notes ref being
-> > +	merged into the current notes ref). "union" auto-resolves
-> > +	notes conflicts by concatenating the local and remote versions.
-> > +
-> 
-> We use both "auto-resolves" and "automatically resolves" in this
-> paragraph. Perhaps it's better to use one term throughout?
+On Sun, Jul 25, 2010 at 16:05, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> + =C2=A0 Don't blindly follow test coverage metrics
+>
+> Hmph, that is just common sense,
 
-Agreed. I'll squash the following into the next iteration:
+You'd be surprised at how uncommon it is when people have 98% coverage
+and try to painfully squeeze out that last 2% :)
 
+> while =E2=80=9Cyou should really not be paying any attention to your =
+code
+> while writing tests=E2=80=9D is not. =C2=A0I even prefer the text wit=
+hout this
+> patch applied. =C2=A0So forget I said anything; I can find a way to h=
+int
+> at that in t/README later. :)
 
-...Johan
-
-
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index f4ad4cc..9228349 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -90,8 +90,9 @@ merge::
- 	notes ref (called "remote") since the merge-base (if
- 	any) into the current notes ref (called "local").
- +
--If conflicts arise (and a strategy for auto-resolving conflicting notes
--(see the -X/--resolve option) is not given, the merge fails (TODO).
-+If conflicts arise (and a strategy for automatically resolving
-+conflicting notes (see the -X/--resolve option) is not given,
-+the merge fails (TODO).
- 
- remove::
- 	Remove the notes for a given object (defaults to HEAD).
-@@ -146,12 +147,14 @@ OPTIONS
- --resolve=<strategy>::
- 	When merging notes, resolve notes conflicts using the given
- 	strategy. The following strategies are recognized: "manual"
--	(default), "ours", "theirs" and "union". "ours" automatically
--	resolves conflicting notes in favor of the local version (i.e.
--	the current notes ref). "theirs" auto-resolves notes conflicts
--	in favor of the remote version (i.e. the given notes ref being
--	merged into the current notes ref). "union" auto-resolves
--	notes conflicts by concatenating the local and remote versions.
-+	(default), "ours", "theirs" and "union".
-+	"ours" automatically resolves conflicting notes in favor of the
-+	local version (i.e. the current notes ref).
-+	"theirs" automatically resolves notes conflicts in favor of the
-+	remote version (i.e. the given notes ref being merged into the
-+	current notes ref).
-+	"union" automatically resolves notes conflicts by concatenating
-+	the local and remote versions.
- 
- -q::
- --quiet::
-
-
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+I don't know whether it should be applied. I just wrote a short
+summary in response to the previous commentary.
