@@ -1,58 +1,55 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: Possible bug with `export-subst' attribute
-Date: Sun, 25 Jul 2010 16:09:35 +0300
-Message-ID: <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
-References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH av/i18n 2/2] Make git-sh-i18n executable
+Date: Sun, 25 Jul 2010 15:15:08 +0200
+Message-ID: <201007251515.08916.trast@student.ethz.ch>
+References: <ba054975988a4a799bcd81a74acd865815ae9bf5.1280051448.git.trast@student.ethz.ch> <d890d9ba7d967e6a191cb47194379d8f9ca5cd0d.1280051448.git.trast@student.ethz.ch> <AANLkTimpqw2RirLPDJkAhQIql793nwC9pc0HctIcxKKj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Eli Barzilay <eli@barzilay.org>
-X-From: git-owner@vger.kernel.org Sun Jul 25 15:08:48 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 25 15:15:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od0wg-0005To-NA
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 15:08:47 +0200
+	id 1Od13H-00087e-Ji
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 15:15:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751446Ab0GYNIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 09:08:41 -0400
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:47384 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751150Ab0GYNIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 09:08:40 -0400
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 7EBE98C119;
-	Sun, 25 Jul 2010 16:08:39 +0300 (EEST)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A06EF461393; Sun, 25 Jul 2010 16:08:39 +0300
-Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id DF762158A65;
-	Sun, 25 Jul 2010 16:08:36 +0300 (EEST)
-Content-Disposition: inline
-In-Reply-To: <19531.65276.394443.190317@winooski.ccs.neu.edu>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1751517Ab0GYNPb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 09:15:31 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:59774 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751150Ab0GYNPa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 09:15:30 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 25 Jul
+ 2010 15:15:28 +0200
+Received: from thomas.localnet (217.162.250.31) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sun, 25 Jul
+ 2010 15:15:07 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.93; x86_64; ; )
+In-Reply-To: <AANLkTimpqw2RirLPDJkAhQIql793nwC9pc0HctIcxKKj@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151742>
 
-On Sun, Jul 25, 2010 at 05:08:12AM -0400, Eli Barzilay wrote:
-> I have a file with:
-> 
->   (define archive-id "$Format:%ct|%h|a$")
-> 
-> and an `export-subst' attribute -- and it looks like the "%h" results
-> in a full sha1 instead of the abbreviated one when used with `git
-> archive'.  This is with 1.7..2 -- I'm not sure, but I think that it
-> worked fine with 1.7.1.
- 
-I remember seeing similar stuff. It isn't just archive, I also rember seeing
-commit printing full hashes in that informational line it prints when it has
-made the commit (IIRC, normally that hash is abbrevated).
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+> Why is it including git-sh-i18n.sh? It should only be using the
+> generated SCRIPT_LIB git-sh-i18n file.
+>=20
+> On my system the executable bit of git-sh-i18n.sh has no effect on th=
+e
+> generated git-sh-i18n file:
 
--Ilari
+Hmph, you're right.  I'd have to move it into the SCRIPT_SH category
+instead of SCRIPT_LIB to affect the executable bit.
+
+Back to the drawing board I guess...
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
