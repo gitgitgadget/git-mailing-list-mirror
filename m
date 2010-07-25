@@ -1,125 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Possible bug with `export-subst' attribute
-Date: Sun, 25 Jul 2010 17:15:39 -0500
-Message-ID: <20100725221539.GA21813@burratino>
-References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
- <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
+From: solsTiCe d'Hiver <solstice.dhiver@gmail.com>
+Subject: Re: [bash-completion] syntax error near unexpected token '<' on
+ line 123 in bash_completion.d/git
+Date: Mon, 26 Jul 2010 00:19:28 +0200
+Message-ID: <1280096368.7211.2.camel@soho.example.org>
+References: <1280056320.7883.9.camel@soho.example.org>
+	 <4C4C982C.20904@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org,
-	Will Palmer <wmpalmer@gmail.com>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Mon Jul 26 00:16:55 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Mon Jul 26 00:19:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Od9V7-0003Kj-9s
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 00:16:53 +0200
+	id 1Od9Xn-00046x-9I
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 00:19:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751531Ab0GYWQr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 18:16:47 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33653 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069Ab0GYWQr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 18:16:47 -0400
-Received: by ywh1 with SMTP id 1so254995ywh.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 15:16:46 -0700 (PDT)
+	id S1751556Ab0GYWTe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 18:19:34 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:64717 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751319Ab0GYWTd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 18:19:33 -0400
+Received: by wwj40 with SMTP id 40so6275256wwj.1
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 15:19:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=3g4C7KefpVIy3wPh02tZq+CLWulygQapodNhruHLJWU=;
-        b=QA6uj5DpiNeIDqTq1OpncTxywqBcSencfT3uHZxNRaH7skAcn6bIiCKu0OhS6123eZ
-         bhn/dw6F1qt5uChzrVCk0QX0e7QVBs4GwZbD1eY2W4lqDJkol/JyRBgYKJJNl/VWsyzP
-         +1J4oBonduzDeaHUMSEw1sJyZTDRYTNj+Bhd8=
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=ceMYs0iXkdC0OpBDWWu51nWa2ce+wBrHzkVPeLTI8s4=;
+        b=NGeW6Fmqi45lz6s7/5zcTTGV4VoHS4JoIe/1NRw8jZH5eMO2Dz1wTTcQb9L8drIxeo
+         SziP5ULhlg6quLjxXphgMYMxMHheeCbrHtlDJ4W7sNWwtKCVGltZBI7FXBtUupDqTWSq
+         Z5eWqYtpOQbNRvCdbiTFfPqnCkk9GlDknt0Y0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GQUtmTH6ZHQ3G05yU0xOCciGtrXBm0v1LI6Llk/p9swRItIzVPd+zKrs0wXpDQOUQ2
-         uEGdjN3o1Ckhurg6IoWFwevsTInrpNuIkALwGu4ovkwHXly0e1QAhUO3SFw7de1gOVef
-         EgHajk5JSiFWnKvOkuHtVWnoEQW8QhDrLs/Is=
-Received: by 10.150.31.12 with SMTP id e12mr1733447ybe.79.1280096206212;
-        Sun, 25 Jul 2010 15:16:46 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id m11sm5066163ybn.16.2010.07.25.15.16.44
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=whC0xqd1jCBfi7PdLOOEbuwXa6JeGsqNXF4WuXCAf8Cbg4EML6qKZtfr3HE/sp4qk3
+         bQZz2uyyKns2dg/UaDg/e28mLNdHMpRJP3qkLmhZoEak6eaJN/6SI0T1Ewu8MGEeMCJQ
+         2BK+8l+C9PaOp73lonj1ZeMlivVjoALE3SvFI=
+Received: by 10.227.146.73 with SMTP id g9mr6453157wbv.188.1280096372133;
+        Sun, 25 Jul 2010 15:19:32 -0700 (PDT)
+Received: from [192.168.0.50] (ARennes-553-1-38-213.w86-214.abo.wanadoo.fr [86.214.125.213])
+        by mx.google.com with ESMTPS id g37sm2472386wbg.3.2010.07.25.15.19.29
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 25 Jul 2010 15:16:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sun, 25 Jul 2010 15:19:31 -0700 (PDT)
+In-Reply-To: <4C4C982C.20904@pileofstuff.org>
+X-Mailer: Evolution 2.30.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151796>
 
-Ilari Liusvaara wrote:
+Le dimanche 25 juillet 2010 =C3=A0 21:01 +0100, Andrew Sayers a =C3=A9c=
+rit :=20
+> bash 4.1.5 always prepends "bash: "
+> to such errors for me:
+>=20
+> $ while false ; do echo foo ; done < ;
+> bash: syntax error near unexpected token `;'
+>=20
+bash 4.1.7 does that too here.
 
-> I remember seeing similar stuff. It isn't just archive, I also rember seeing
-> commit printing full hashes in that informational line it prints when it has
-> made the commit (IIRC, normally that hash is abbrevated).
+> If this is the complete error text, then I suspect you may have someh=
+ow
+> got bash completion in a non-bash shell.
+>=20
+the complete message is:
+/etc/bash_completion.d/git: line 123: syntax error near unexpected toke=
+n
+'<'
+/etc/bash_completion.d/git: line 123: done < <(git config -z
+--get-regexp '^(svn-remote\..*\.url|bash > \.showupstream)$' 2>/dev/nul=
+l
+| tr '\0\n' '\n ')
 
-My bad.  Would something like this fix it?
+> Could you add this on line 98 and let me know what it says:
+> echo $BASH_VERSION $BASHOPTS
 
--- 8< --
-Subject: archive, commit: use --abbrev by default again
-
-v1.7.1.1~17^2~3 (pretty: Respect --abbrev option, 2010-05-03) taught
-git log --format=%h to respect the --abbrev option instead of
-always abbreviating, with the side-effect that we have to pay
-attention to the abbrev setting now.
-
-For example, the "git archive" export-subst feature and the
-informational line printed by "git commit" are using unabbreviated
-object names now, the former because full object names are the
-low-level default, the latter because it was first written to imitate
-plumbing.
-
-Fix them.  While at it, remove a similar confusing
-assignment of 0 to rev.abbrev in "git checkout" which had
-no effect.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git i/archive.c w/archive.c
-index d700af3..edd6853 100644
---- i/archive.c
-+++ w/archive.c
-@@ -33,6 +33,7 @@ static void format_subst(const struct commit *commit,
- 	struct strbuf fmt = STRBUF_INIT;
- 	struct pretty_print_context ctx = {0};
- 	ctx.date_mode = DATE_NORMAL;
-+	ctx.abbrev = DEFAULT_ABBREV;
- 
- 	if (src == buf->buf)
- 		to_free = strbuf_detach(buf, NULL);
-diff --git i/builtin/checkout.c w/builtin/checkout.c
-index 1994be9..eef2b48 100644
---- i/builtin/checkout.c
-+++ w/builtin/checkout.c
-@@ -279,7 +279,6 @@ static void show_local_changes(struct object *head)
- 	struct rev_info rev;
- 	/* I think we want full paths, even if we're in a subdirectory. */
- 	init_revisions(&rev, NULL);
--	rev.abbrev = 0;
- 	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
- 	if (diff_setup_done(&rev.diffopt) < 0)
- 		die("diff_setup_done failed");
-diff --git i/builtin/commit.c w/builtin/commit.c
-index a78dbd8..ae4831e 100644
---- i/builtin/commit.c
-+++ w/builtin/commit.c
-@@ -1163,7 +1163,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 	init_revisions(&rev, prefix);
- 	setup_revisions(0, NULL, &rev, NULL);
- 
--	rev.abbrev = 0;
-+	rev.abbrev = DEFAULT_ABBREV;
- 	rev.diff = 1;
- 	rev.diffopt.output_format =
- 		DIFF_FORMAT_SHORTSTAT | DIFF_FORMAT_SUMMARY;
--- 
+When I add the above command at line 98, it shows it is really bash
+running:
+4.1.7(2)-release
+cmdhist:expand_aliases:extglob:extquote:force_fignore:interactive_comme=
+nts:progcomp:promptvars:sourcepath=20
