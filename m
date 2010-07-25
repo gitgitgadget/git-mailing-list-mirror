@@ -1,146 +1,127 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: replaced objects and working directory
-Date: Sun, 25 Jul 2010 01:02:07 -0500
-Message-ID: <20100725060207.GA17601@burratino>
-References: <AANLkTi=3=MX8+U4Oq4q_RACyxFYj-HmBYXFBxxQdFf_e@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH/WIP] git-svn: tweak log format to match "svn log" output
+Date: Sun, 25 Jul 2010 08:10:57 +0000
+Message-ID: <20100725081057.GA22373@dcvr.yhbt.net>
+References: <20100423134611.GA3440@merkur.sol.de> <20100426132710.GA9930@progeny.tock> <20100427112656.GB16323@merkur.sol.de> <20100725023114.GB18606@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 25 08:03:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Jens Seidel <jensseidel@users.sf.net>
+X-From: git-owner@vger.kernel.org Sun Jul 25 10:11:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcuIw-0003dw-12
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 08:03:18 +0200
+	id 1OcwIe-0003rr-9L
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 10:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210Ab0GYGDN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 Jul 2010 02:03:13 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:32873 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750858Ab0GYGDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 Jul 2010 02:03:12 -0400
-Received: by iwn7 with SMTP id 7so1713724iwn.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 23:03:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=bR6fWMfasMF3XFjuSOnq4nSfP9y/yI0bGEU7SEt/EF8=;
-        b=r9I8YBTkRrYz5+Q7C3APC2Czz3E0eonFMVyRh4t4nw82KZdhkNy/XUTGu9o3JfQ9OA
-         Vl7wV1QbQQfFo3uWC264tV3FEwEBTX4RgmMuzzaryCWdS8cSTRq/HkJb3BfsVEV7huTz
-         YfaC5a8CJR1yHKC6EPfQXJ4kNp/tBeD4Ja77k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dZYQRW4XXs3eIVGp38IsAJULcpfw5nRTNuAHkMkG98I01E7bC+Z2+9d52qQr3L2A4C
-         i5HEosGDLnpPnMVMxDMMhjLdHs5lsgdDqqAVz6+ExyLC/VUMjVL1sEA+EJb+2o6J3LBr
-         VHJpzsD5tJeGbVzUR0i8lezU3RK9yVz20ouXs=
-Received: by 10.231.14.137 with SMTP id g9mr6311595iba.183.1280037791520;
-        Sat, 24 Jul 2010 23:03:11 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id 34sm2164662ibi.12.2010.07.24.23.03.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jul 2010 23:03:11 -0700 (PDT)
+	id S1751918Ab0GYILB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 04:11:01 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:53292 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751821Ab0GYIK6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 Jul 2010 04:10:58 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EA5F1F44B;
+	Sun, 25 Jul 2010 08:10:58 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=3=MX8+U4Oq4q_RACyxFYj-HmBYXFBxxQdFf_e@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100725023114.GB18606@burratino>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151709>
 
-Nguyen Thai Ngoc Duy wrote:
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+> From: Jens Seidel <jensseidel@users.sf.net>
+>=20
+> Tweak "git svn log" output to more closely match what svn produces.
+> In particular, if Locale::gettext is available, use that to produce
+> localized output using svn=E2=80=99s translations.
 
-> Should worktree (or the index) be aware of replaced objects?
+<snip>
 
-The following is only about replaced blobs (replaced trees are
-harder to deal with, I think).
+> [jn: made Locale::gettext dependency optional; added a test script]
+>=20
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Jens Seidel wrote at http://bugs.debian.org/578915:
+> >> Jens Seidel wrote:
+>=20
+> > Ah, git svn ignores any locale, this explains the problem.
+> >
+> >>> The dot stands for an ordinal number (e.g. "19." =3D=3D "19th").
+> >>> Second: "line(s)" is not translated. I can workaround by starting=
+ git/svn in an
+> >>> English locale ...
+> >
+> > I tried to fix both.
+> >
+> >>> Third: the git log often contains an addional empty line.
+>
+> > This remains open. Probably that can be solved by setting a git con=
+fig
+> > option and resyncing all git svn history from git.
 
-Two uses to keep in mind:
+Hi Jens, Jonathan,
 
- 1. "git checkout", "git diff", and so on to explore the
-    tweaked history (as you mentioned).
+I just made an additional patch that should solve the problem
+(see my reply to this email).
 
- 2. "git write-tree" as used by filter-branch to set the
-    new history in stone.
+> Sorry to leave this hanging for so long.  I think it is an improvemen=
+t
+> as is, but I have not tested in the following scenarios:
+>=20
+>  - Locale::gettext not available
+>  - subversion not translated
+>  - subversion translated but not to the current language
+>=20
+> And the extra blank line at the end of log messages remains unsolved.
+>=20
+> Thoughts?
 
-1) Currently read-tree does not do anything special with replaced
-blobs; it is up to checkout-index to get the substituted blob object
-and write a different file to disk.  Unfortunately when update-index
-tries to read it back, that means it looks like the file has changed.
+Everything looks reasonable to me.  gettext should just fall back to th=
+e
+original string when a translation is not available.
 
-> Maybe "git status" and similar operations should also
-> check worktree version against the replaced version, in addition to
-> the original version?
+I've squashed the following cleanup on top of Jens' original change:
 
-It might be simpler to check against only the replaced version, like
-this:
-
-| diff --git i/read-cache.c w/read-cache.c
-| index f1f789b..0f031da 100644
-| --- i/read-cache.c
-| +++ w/read-cache.c
-| @@ -93,7 +93,7 @@ static int ce_compare_data(struct cache_entry *ce, struct stat *st)
-|  	if (fd >= 0) {
-|  		unsigned char sha1[20];
-|  		if (!index_fd(sha1, fd, st, 0, OBJ_BLOB, ce->name))
-| -			match = hashcmp(sha1, ce->sha1);
-| +			match = hashcmp(sha1, lookup_replace_object(ce->sha1));
-|  		/* index_fd() closed the file descriptor already */
-|  	}
-|  	return match;
-| @@ -134,7 +134,7 @@ static int ce_compare_gitlink(struct cache_entry *ce)
-|  	 */
-|  	if (resolve_gitlink_ref(ce->name, "HEAD", sha1) < 0)
-|  		return 0;
-| -	return hashcmp(sha1, ce->sha1);
-| +	return hashcmp(sha1, lookup_replace_object(ce->sha1));
-|  }
-|  
-|  static int ce_modified_check_fs(struct cache_entry *ce, struct stat *st)
-| @@ -232,7 +232,7 @@ static int ce_match_stat_basic(struct cache_entry *ce, struct stat *st)
-|  
-|  	/* Racily smudged entry? */
-|  	if (!ce->ce_size) {
-| -		if (!is_empty_blob_sha1(ce->sha1))
-| +		if (!is_empty_blob_sha1(lookup_replace_object(ce->sha1)))
-|  			changed |= DATA_CHANGED;
-|  	}
-|  
-
-The main downside is that if you remove and re-add an index entry,
-this is no longer a no-op.  But I think that getting "update-index
---refresh" to be content should be enough to make exploring the
-alternate objects bearable.
-
-2) write-tree trusts the index as far as blobs go and rewrites all
-the trees itself.  Probably it should dereference replace refs for
-replaced blobs, which would make the "rewriting everything" behavior
-more consistent.
-
-| diff --git i/cache-tree.c w/cache-tree.c
-| index d917437..43d5030 100644
-| --- i/cache-tree.c
-| +++ w/cache-tree.c
-| @@ -324,7 +324,7 @@ static int update_one(struct cache_tree *it,
-|  			mode = S_IFDIR;
-|  		}
-|  		else {
-| -			sha1 = ce->sha1;
-| +			sha1 = lookup_replace_object(ce->sha1);
-|  			mode = ce->ce_mode;
-|  			entlen = pathlen - baselen;
-|  		}
-
-I once had plans for these two tasks and time ran out.  
-http://thread.gmane.org/gmane.comp.version-control.git/139204/focus=139222
-
-Hope that helps,
-Jonathan
+diff --git a/git-svn.perl b/git-svn.perl
+index 55dc50d..5252722 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -5536,14 +5536,12 @@ sub format_svn_date {
+ 	my $gm =3D timelocal(gmtime($t));
+ 	my $sign =3D qw( + + - )[ $t <=3D> $gm ];
+ 	my $gmoff =3D sprintf("%s%02d%02d", $sign, (gmtime(abs($t - $gm)))[2,=
+1]);
+-	my $format;
++	my $format =3D " (%a, %d %b %Y)";
+ 	if ($can_localize) {
+ 		my $d =3D Locale::gettext->domain("subversion");
+-		$format =3D "%Y-%m-%d %H:%M:%S $gmoff" . $d->get(" (%a, %d %b %Y)");
+-	} else {
+-		$format =3D "%Y-%m-%d %H:%M:%S $gmoff (%a, %d %b %Y)";
++		$format =3D $d->get($format);
+ 	}
+-	return strftime($format, localtime($t));
++	return strftime("%Y-%m-%d %H:%M:%S $gmoff$format", localtime($t));
+ }
+=20
+ sub parse_git_date {
+@@ -5646,8 +5644,8 @@ sub show_commit_normal {
+=20
+ 	if ($can_localize) {
+ 		my $d =3D Locale::gettext->domain("subversion");
+-		$sing_fmt =3D $d->nget(" | %d line", " | %d lines", 1);
+-		$plur_fmt =3D $d->nget(" | %d line", " | %d lines", 10);
++		$sing_fmt =3D $d->nget($sing_fmt, $plur_fmt, 1);
++		$plur_fmt =3D $d->nget($sing_fmt, $plur_fmt, 10);
+ 	}
+ 	if (my $l =3D $c->{l}) {
+ 		while ($l->[$#$l] eq "\n" && $#$l > 0
+--=20
+Eric Wong
