@@ -1,139 +1,187 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [RFC/PATCH 0/9] commit: more focused advice in the
- no-changes-staged case
-Date: Sat, 24 Jul 2010 19:54:43 -0500
-Message-ID: <20100725005443.GA18370@burratino>
+Subject: [PATCH 1/9] wt-status: split wt_status_print into digestible pieces
+Date: Sat, 24 Jul 2010 19:56:26 -0500
+Message-ID: <20100725005626.GA18420@burratino>
+References: <20100725005443.GA18370@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>,
 	Thomas Rast <trast@student.ethz.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 25 02:56:04 2010
+X-From: git-owner@vger.kernel.org Sun Jul 25 02:57:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OcpVb-0006ws-Ga
-	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 02:56:03 +0200
+	id 1OcpX5-0007La-RZ
+	for gcvg-git-2@lo.gmane.org; Sun, 25 Jul 2010 02:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753550Ab0GYAzs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 20:55:48 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64855 "EHLO
+	id S1754121Ab0GYA5b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 Jul 2010 20:57:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39820 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753272Ab0GYAzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 Jul 2010 20:55:47 -0400
-Received: by iwn7 with SMTP id 7so1570959iwn.19
-        for <git@vger.kernel.org>; Sat, 24 Jul 2010 17:55:47 -0700 (PDT)
+	with ESMTP id S1753580Ab0GYA5a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 Jul 2010 20:57:30 -0400
+Received: by iwn7 with SMTP id 7so1571709iwn.19
+        for <git@vger.kernel.org>; Sat, 24 Jul 2010 17:57:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=IVPzwifIQR/FUNGTmxsGCD1utX7EYmPCdvLBOxjfGgY=;
-        b=ndhwoF8YMYUzjG+V1Th420oSPDISfwb6iXoSUNJNvRNnwLu0/7Mp23n3AwcY8hcBZO
-         NPtT8I1fxj1v+AhcMt6xzqaW7QNpOxnWBxLaeITZYOKcspAeHuUduhYjaeq89dDFVt/n
-         0dPeUfFlS9sC6MzYxh2QWcoQOvOm1Xm4bhPko=
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vffW427ZXXLo0si6Pzch7XLxBiSsKmkwqqlXgvQjgxY=;
+        b=cz2qj0kRf/BIrDODf8z+JrPUGurDuDJzwe5Wg1XIkXmp2ws92LyQDzktnptchozLoI
+         qcPtjyYZAaBIhgrHtmeiQ9RpuveHzG/3hAglbBQDg5i4LZJcPn5J/FbZmKDpQmg74NfL
+         Poc8IlXMLNGdTEa8SPBVl3E9u1MqubMbDThXE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=u945cDknHT8ikMo+djM41bkv7OIp7rxmJQecodjOXKijaM55CR5vo/BJOJwsAvn9HF
-         0eUMcp0m5XBoyOaPXp3LPmSowYtrCnizrvVfqfEKyMgI0Ty/JR0lr9qZ85p/djVW0I6P
-         YGa78kz0P1STPVDW3eRXdAbqFlDBt95PWvBeY=
-Received: by 10.231.167.67 with SMTP id p3mr6232436iby.20.1280019347127;
-        Sat, 24 Jul 2010 17:55:47 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=N3RhSNlcqym6oQXVmW8UtKnSok4Z9MB+jwAwmjJalMz3az+U7sum+ftaHH2J7Zg8lA
+         VDsbIfzayw39l15wTluE4rxUn6sKbnShKP4Vkkl3SRQCf01Nee92jaTiNvaHn63OVVux
+         EB/S4XSizyBLHiIfgjUyGQirwsh/wy4jhQSnw=
+Received: by 10.231.144.15 with SMTP id x15mr6399996ibu.73.1280019449968;
+        Sat, 24 Jul 2010 17:57:29 -0700 (PDT)
 Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id h8sm1913284ibk.9.2010.07.24.17.55.46
+        by mx.google.com with ESMTPS id h8sm1909362ibk.21.2010.07.24.17.57.29
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 24 Jul 2010 17:55:46 -0700 (PDT)
+        Sat, 24 Jul 2010 17:57:29 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <20100725005443.GA18370@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151693>
 
-Hi,
+The result does not fit on a 24-line terminal yet, but it=E2=80=99s
+getting close.  No functional change intended.
 
-When last seen[1], this series was a single patch in very rough form,
-but there have been almost no functional changes since then.
-
-The patches suppress most output when =E2=80=9Cgit commit=E2=80=9D is r=
-un without
-stages changed.  So instead of
-
-	$ git commit
-	# On branch master
-	# Changed but not updated:
-	#   (use "git add <file>..." to update what will be committed)
-	#   (use "git checkout -- <file>..." to discard changes in working dir=
-ectory)
-	#
-	#	modified:   dir1/modified
-	#
-	# Untracked files:
-	#   (use "git add <file>..." to include in what will be committed)
-	#
-	#	actual
-	#	dir1/untracked
-	#	dir2/modified
-	#	dir2/untracked
-	#	expect
-	#	output
-	#	untracked
-	no changes added to commit (use "git add" and/or "git commit -a")
-
-which may cause a newcomer to panic, you get
-
-	$ git commit
-	no changes added to commit (use "git add" and/or "git commit -a")
-
-which would just cause her to scratch her head or say =E2=80=9Coh, righ=
-t!=E2=80=9D
-instead.  Hopefully these patches will at least provide a reminder to
-improve the various "no changes" advice messages.
-
-Ideas for future work:
-
- - add some tests
- - give the full traditional output if -a or any paths were passed on
-   the command line.
-
-Most of the patches are code clarity improvements which is not
-strictly related to this topic.
-
-Patch 6 cleans up the most obvious script to add tests for this in,
-though I have not added any tests to it.
-
-Patch 8 changes commit --dry-run output in a more modest way, to
-print the same advice Jeff added to commit proper last month.  I
-suspect this is a good change, but input from people who script
-around commit --dry-run would be welcome.
-
-Patch 9 is the advertised patch.  It should be self-explanatory.
-
-Thoughts?
-
-Jonathan Nieder (9):
-  wt-status: split wt_status_print into digestible pieces
-  wt-status: give submodule summary printing its own function
-  commit: split off a function to fetch the default log message
-  commit: encapsulate commit -s handling in its own function
-  commit: split off the piece that writes status
-  t7508 (status): modernize style
-  commit: give empty-commit avoidance code its own function
-  commit --dry-run: give advice on empty amend
-  commit: suppress status summary when no changes staged
-
- builtin/commit.c  |  328 ++++++++------
- t/t7508-status.sh | 1380 ++++++++++++++++++++++++++++-----------------=
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ wt-status.c |   85 ++++++++++++++++++++++++++++++++-------------------=
 --------
- wt-status.c       |  103 +++--
- wt-status.h       |    1 +
- 4 files changed, 989 insertions(+), 823 deletions(-)
+ 1 files changed, 46 insertions(+), 39 deletions(-)
 
-[1] http://thread.gmane.org/gmane.linux.debian.devel.bugs.general/69800=
-1/focus=3D145541
+diff --git a/wt-status.c b/wt-status.c
+index 2f9e33c..b0f17cf 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -604,6 +604,31 @@ static void wt_status_print_verbose(struct wt_stat=
+us *s)
+ 	run_diff_index(&rev, 1);
+ }
+=20
++static void wt_status_print_nochanges(struct wt_status *s)
++{
++	if (s->amend)
++		fprintf(s->fp, "# No changes\n");
++	else if (s->nowarn)
++		; /* nothing */
++	else if (s->workdir_dirty)
++		printf("no changes added to commit%s\n",
++			advice_status_hints
++			? " (use \"git add\" and/or \"git commit -a\")" : "");
++	else if (s->untracked.nr)
++		printf("nothing added to commit but untracked files present%s\n",
++			advice_status_hints
++			? " (use \"git add\" to track)" : "");
++	else if (s->is_initial)
++		printf("nothing to commit%s\n", advice_status_hints
++			? " (create/copy files and use \"git add\" to track)" : "");
++	else if (!s->show_untracked_files)
++		printf("nothing to commit%s\n", advice_status_hints
++			? " (use -u to show untracked files)" : "");
++	else
++		printf("nothing to commit%s\n", advice_status_hints
++			? " (working directory clean)" : "");
++}
++
+ static void wt_status_print_tracking(struct wt_status *s)
+ {
+ 	struct strbuf sb =3D STRBUF_INIT;
+@@ -623,25 +648,28 @@ static void wt_status_print_tracking(struct wt_st=
+atus *s)
+ 	color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+ }
+=20
+-void wt_status_print(struct wt_status *s)
++static void wt_status_print_onbranch(struct wt_status *s)
+ {
+ 	const char *branch_color =3D color(WT_STATUS_HEADER, s);
+-
+-	if (s->branch) {
+-		const char *on_what =3D "On branch ";
+-		const char *branch_name =3D s->branch;
+-		if (!prefixcmp(branch_name, "refs/heads/"))
+-			branch_name +=3D 11;
+-		else if (!strcmp(branch_name, "HEAD")) {
+-			branch_name =3D "";
+-			branch_color =3D color(WT_STATUS_NOBRANCH, s);
+-			on_what =3D "Not currently on any branch.";
+-		}
+-		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
+-		color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
+-		if (!s->is_initial)
+-			wt_status_print_tracking(s);
++	const char *on_what =3D "On branch ";
++	const char *branch_name =3D s->branch;
++	if (!prefixcmp(branch_name, "refs/heads/"))
++		branch_name +=3D 11;
++	else if (!strcmp(branch_name, "HEAD")) {
++		branch_name =3D "";
++		branch_color =3D color(WT_STATUS_NOBRANCH, s);
++		on_what =3D "Not currently on any branch.";
+ 	}
++	color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
++	color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
++	if (!s->is_initial)
++		wt_status_print_tracking(s);
++}
++
++void wt_status_print(struct wt_status *s)
++{
++	if (s->branch)
++		wt_status_print_onbranch(s);
+=20
+ 	if (s->is_initial) {
+ 		color_fprintf_ln(s->fp, color(WT_STATUS_HEADER, s), "#");
+@@ -669,29 +697,8 @@ void wt_status_print(struct wt_status *s)
+=20
+ 	if (s->verbose)
+ 		wt_status_print_verbose(s);
+-	if (!s->commitable) {
+-		if (s->amend)
+-			fprintf(s->fp, "# No changes\n");
+-		else if (s->nowarn)
+-			; /* nothing */
+-		else if (s->workdir_dirty)
+-			printf("no changes added to commit%s\n",
+-				advice_status_hints
+-				? " (use \"git add\" and/or \"git commit -a\")" : "");
+-		else if (s->untracked.nr)
+-			printf("nothing added to commit but untracked files present%s\n",
+-				advice_status_hints
+-				? " (use \"git add\" to track)" : "");
+-		else if (s->is_initial)
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (create/copy files and use \"git add\" to track)" : "");
+-		else if (!s->show_untracked_files)
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (use -u to show untracked files)" : "");
+-		else
+-			printf("nothing to commit%s\n", advice_status_hints
+-				? " (working directory clean)" : "");
+-	}
++	if (!s->commitable)
++		wt_status_print_nochanges(s);
+ }
+=20
+ static void wt_shortstatus_unmerged(int null_termination, struct strin=
+g_list_item *it,
+--=20
+1.7.2.9.ge3789.dirty
