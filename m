@@ -1,119 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Possible bug with `export-subst' attribute
-Date: Mon, 26 Jul 2010 14:04:48 -0500
-Message-ID: <20100726190448.GA32367@burratino>
-References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
- <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
- <20100725221539.GA21813@burratino>
- <7vbp9uaii2.fsf@alter.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 2/1] git svn: remove extraneous newline from log output
+Date: Mon, 26 Jul 2010 12:09:45 -0700
+Message-ID: <20100726190945.GA2727@dcvr.yhbt.net>
+References: <20100423134611.GA3440@merkur.sol.de> <20100426132710.GA9930@progeny.tock> <20100427112656.GB16323@merkur.sol.de> <20100725023114.GB18606@burratino> <20100725081057.GA22373@dcvr.yhbt.net> <20100725081344.GB22373@dcvr.yhbt.net> <20100725173549.GA7930@merkur.sol.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org,
-	Will Palmer <wmpalmer@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 21:06:12 2010
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Jens Seidel <jensseidel@users.sf.net>
+X-From: git-owner@vger.kernel.org Mon Jul 26 21:09:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdT07-0004ny-On
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 21:06:12 +0200
+	id 1OdT3f-0006NC-Fo
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 21:09:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755029Ab0GZTGI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 15:06:08 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33515 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754878Ab0GZTGG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 15:06:06 -0400
-Received: by wwj40 with SMTP id 40so514704wwj.1
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 12:05:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=LJSr5aeh6W0865qAXm9cyq+olxsN5eITZ0CltfrYY7g=;
-        b=FqFaBwmuWNje1bIkBQcmS7Iqw0mFl8UF3g7gEIAfJG2E+1fDYLGDDW88IWkn5h535w
-         Jec+kWUnde2rhvMIP4u03BPrKmAWJd8VBkTnocOHat7xkhKhaZFBj7Fxam3CNBQw18RR
-         zdKtzT486N3A7ndpYJQFEbR7bO6utG8iRn0Ns=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=hXDQGYKGREhz1l/ohzB7DnHzVSxvFlbWBNBQxjeg/ViZxUmFU+uc0rFf9sIcq/f8AA
-         7kzvHD8MHyYeWo8ywjLKnBFvcPTW871rRdPjqIMxqY7wC2EpUruqc09hRmqvUx/iTV/A
-         BUTE291PAA3cEjXajRklC3QKouJ7gmUjfVeqw=
-Received: by 10.227.136.146 with SMTP id r18mr7772014wbt.53.1280171159465;
-        Mon, 26 Jul 2010 12:05:59 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id p52sm2162915weq.20.2010.07.26.12.05.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 26 Jul 2010 12:05:57 -0700 (PDT)
+	id S1754863Ab0GZTJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 15:09:47 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54333 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752235Ab0GZTJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 15:09:46 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id E13E31F509;
+	Mon, 26 Jul 2010 19:09:45 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <7vbp9uaii2.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100725173549.GA7930@merkur.sol.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151885>
 
-Junio C Hamano wrote:
+Jens Seidel <jensseidel@users.sf.net> wrote:
+> Hi Eric,
+> 
+> On Sun, Jul 25, 2010 at 08:13:44AM +0000, Eric Wong wrote:
+> > This is to match the output of "svn log", which does not
+> > add an extra newline before the next log entry.
+> 
+> thanks for the patch but it doesn't work in the general case.
+> 
+> I attached a sample Subversion repository dump where the output of
+> git svn log and svn log still differs by empty lines.
+> 
+> I also noticed the following error:
+> Can't use an undefined value as an ARRAY reference at                                                                                            
+> /usr/lib/git-core/git-svn line 5717, <$fh> line 53.
+> 
+> I'm not sure whether I introduced this error once I patched
+> git-svn ...
+> The affected line is the second one in:
+>            } elsif (/^${esc_color}    (git-svn-id:.+)$/o) {
+>                         if (@{$c->{l}} && $c->{l}->[-1] eq "\n") {
+>                                 pop @{$c->{l}};
+>                         }
+> (is -1 valid?)
 
-> The ones to archive and checkout I understand, but what effect does the
-> one to commit.c::print_summary() have?
+Yes, -1 is valid but $c->{l} may not exist at that point..
 
-Currently commit.c::print_summary() does this:
+But I had forgotten about a similar piece of code in the
+"show_commit_normal" subroutine which does a similar job:
 
-	struct strbuf format = STRBUF_INIT;
-	...
+		while ($l->[$#$l] eq "\n" && $#$l > 0
+		                          && $l->[($#$l - 1)] eq "\n") {
+			pop @$l;
+		}
 
-	strbuf_addstr(&format, "format:%h] %s");
-	[+ other bits for the commit notice]
+This is partially because SVN doesn't enforce a trailing "\n" in
+commit messages (unlike "git commit"), so we always append one
+when we fetch and add "\ngit-svn-id: ...\n".  But then we also
+need to take noMetadata users into account, too.
 
-	rev.abbrev = 0;
-	rev.diff = 1;
-	...
-	get_commit_format(format.buf, &rev)
-	...
+I'll let you ponder issues with this since you appear to care more than
+I do about completely matching SVN output :)
 
-	printf("[%s%s ",
-			[branch name " (root-commit)"]);
 
-	if (!log_tree_commit(&rev, commit)) {
-		...
+For what it's worth, over the years, nobody ever "outed" me as a git-svn
+user in SVN projects when I shared log output.  Some folks worked with
+for years in the same offices and never made indication to knowing I
+used git-svn (even after they started using it themselves).
 
-In other words, it imbues rev with a format including %h and uses that
-to print a commit summary.
-
-That code is as old as builtin commit (v1.5.4-rc0~78^2~30,
-2007-11-08) and was meant to imitate a diff-tree invocation (which
-is plumbing).
-
--- %< --
-Subject: examples/commit: use --abbrev for commit summary
-
-After v1.7.1.1~17^2~3 (pretty: Respect --abbrev option, 2010-05-03),
-plumbing users do not abbreviate %h hashes by default any more.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- If this seems to be a problem elsewhere, we will have to decouple
- the remembered --abbrev setting for %h from that for --raw output.
-
-diff --git i/contrib/examples/git-commit.sh w/contrib/examples/git-commit.sh
-index 5c72f65..23ffb02 100755
---- i/contrib/examples/git-commit.sh
-+++ w/contrib/examples/git-commit.sh
-@@ -631,7 +631,7 @@ then
- 	if test -z "$quiet"
- 	then
- 		commit=`git diff-tree --always --shortstat --pretty="format:%h: %s"\
--		       --summary --root HEAD --`
-+		       --abbrev --summary --root HEAD --`
- 		echo "Created${initial_commit:+ initial} commit $commit"
- 	fi
- fi
 -- 
+Eric Wong
