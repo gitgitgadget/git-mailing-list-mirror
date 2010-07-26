@@ -1,81 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Clarify help message when no remote is specified in fetch/pull.
-Date: Mon, 26 Jul 2010 18:32:09 +0200
-Message-ID: <1280161929-18620-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jul 26 19:07:50 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] config --get --path: check for unset $HOME
+Date: Mon, 26 Jul 2010 12:08:37 -0500
+Message-ID: <20100726170837.GC4399@burratino>
+References: <20100723003456.2976.899.reportbug@dr-wily.mit.edu>
+ <20100723012322.GA27113@burratino>
+ <20100725085939.GA5281@radis.liafa.jussieu.fr>
+ <20100726005111.GA29755@burratino>
+ <20100726140756.GH12476@radis.liafa.jussieu.fr>
+ <20100726150651.GA4021@burratino>
+ <AANLkTimf73aczIILlQ5N_id97kJNmGAUf0QLlMl8my2r@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Julien Cristau <jcristau@debian.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 19:09:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdR9W-0002VX-LH
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 19:07:46 +0200
+	id 1OdRBc-0003J1-Hv
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 19:09:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360Ab0GZRHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 13:07:41 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:35620 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752144Ab0GZRHk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 13:07:40 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6QGUXJe022193
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 26 Jul 2010 18:30:33 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OdQb7-0001Bt-G8; Mon, 26 Jul 2010 18:32:13 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OdQb7-0004rU-Cs; Mon, 26 Jul 2010 18:32:13 +0200
-X-Mailer: git-send-email 1.7.2.19.g9a302.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Jul 2010 18:30:35 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6QGUXJe022193
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280766636.88609@dH/EHs/OQhCbqOWD8ofYlg
+	id S1754281Ab0GZRJw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Jul 2010 13:09:52 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:57599 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752144Ab0GZRJv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 13:09:51 -0400
+Received: by qyk8 with SMTP id 8so2056316qyk.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 10:09:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=DiDL8teSJJMRhQNW3fef/iwA7xVrTAK+/BbVzuJvSdo=;
+        b=Yn/F45X5iwhLVXv3yN5KxpVZ17j4zXXrSROHF7ADmzB9uewksNlQZyctQUaVjVNPyj
+         OvHtmjKGDBVq2dZfu/U/gStFCSBbGn+wVaOPDwKH+KDHW31IbPIrXPhR4EUtLIwLnTTM
+         V99Fe2FM+XMkX87L9OynhYcLkqCNdcM2TX5Fs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Gf+0eOXPx2tPiintMjmtb6blcRpWRz6JKHcPLgbtCCtRFH7bNaIaR0u0xkNGZJPrHp
+         TGMfiCWWNKldNh0ETa/S0NVlyD4EssHhBWnaWDt9JciHUlgawpECLsS+syhPJOlIA3xi
+         DL5SLx4cv3j8poZDPFS5tTc2UTR6mgNsF+n7o=
+Received: by 10.220.62.5 with SMTP id v5mr4328809vch.102.1280164190242;
+        Mon, 26 Jul 2010 10:09:50 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id z2sm878810vcj.42.2010.07.26.10.09.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jul 2010 10:09:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimf73aczIILlQ5N_id97kJNmGAUf0QLlMl8my2r@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151859>
 
-The message is especially confusing when "git fetch" is ran from "git
-pull", for users not aware of "git fetch". The new message makes it clear
-that "fetch" means "fetch new revisions", and gives hint on the solution.
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-We don't add a advice.* configuration option since this message doesn't
-appear in normal use, and shouldn't disturb advanced users.
+> Should we maybe fall back on checking pw_dir in getpwuid() if $HOME i=
+sn't set?
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-I already gave this a try a long time ago:
+Maybe.  Why?  On Unix I suspect it is such a rare case as to not
+justify complicating the rules, but I do not know if it would help on
+other platforms.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/143229/focus=143404
-
-This version should fix the drawbacks mentionned by Junio.
-
- builtin/fetch.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 6eb1dfe..1b67f5f 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -845,7 +845,8 @@ static int fetch_one(struct remote *remote, int argc, const char **argv)
- 	int exit_code;
- 
- 	if (!remote)
--		die("Where do you want to fetch from today?");
-+		die("No remote repository specified.  Please, specify either a URL or a\n"
-+		    "remote name from which new revisions should be fetched.");
- 
- 	transport = transport_get(remote, NULL);
- 	transport_set_verbosity(transport, verbosity, progress);
--- 
-1.7.2.19.g9a302.dirty
+Jonathan
