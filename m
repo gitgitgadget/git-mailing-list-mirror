@@ -1,84 +1,133 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: [bash-completion] syntax error near unexpected token '<' on line
- 123 in bash_completion.d/git
-Date: Mon, 26 Jul 2010 22:39:58 +0100
-Message-ID: <4C4E00AE.7010904@pileofstuff.org>
-References: <1280056320.7883.9.camel@soho.example.org>	 <4C4C982C.20904@pileofstuff.org> <1280096368.7211.2.camel@soho.example.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/24] Documentation: Add variable-substitution script
+Date: Mon, 26 Jul 2010 21:49:36 +0000
+Message-ID: <AANLkTinM8w4MiwdNmiUzLDRvR-NqSxNn0I1avQDt9QtR@mail.gmail.com>
+References: <cover.1280169048.git.trast@student.ethz.ch>
+	<049043aa444288fd9409a3706fe3190fd679cb7d.1280169048.git.trast@student.ethz.ch>
+	<m3wrsikkol.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: solsTiCe d'Hiver <solstice.dhiver@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 23:41:27 2010
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 23:49:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdVQM-00069S-Mw
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 23:41:27 +0200
+	id 1OdVYN-0001Pq-78
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 23:49:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752877Ab0GZVlC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 17:41:02 -0400
-Received: from mtaout03-winn.ispmail.ntl.com ([81.103.221.49]:7917 "EHLO
-	mtaout03-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755088Ab0GZVkG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jul 2010 17:40:06 -0400
-X-Greylist: delayed 92287 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jul 2010 17:40:06 EDT
-Received: from aamtaout04-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout03-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100726214004.PBPR3075.mtaout03-winn.ispmail.ntl.com@aamtaout04-winn.ispmail.ntl.com>;
-          Mon, 26 Jul 2010 22:40:04 +0100
-Received: from [192.168.1.6] (really [80.6.134.127])
-          by aamtaout04-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100726214004.HEQH1593.aamtaout04-winn.ispmail.ntl.com@[192.168.1.6]>;
-          Mon, 26 Jul 2010 22:40:04 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
-In-Reply-To: <1280096368.7211.2.camel@soho.example.org>
-X-Cloudmark-Analysis: v=1.1 cv=DhNl2YeytwJssBBGe49HJX82LNDFEEVkpVB34RXKaPo= c=1 sm=0 a=1U7auHjJ3WkA:10 a=IkcTkHD0fZMA:10 a=KDOwrr1Pt8ZdlByPpjMA:9 a=zbALYNx63po2oTSqKrkA:7 a=N0KweNuqVUpZrg4zPjMlvxT_pFUA:4 a=QEXdDO2ut3YA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754055Ab0GZVti (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 17:49:38 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:49300 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752782Ab0GZVth (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 17:49:37 -0400
+Received: by gwb20 with SMTP id 20so257168gwb.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 14:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=bB3M3Ls7Rkt3j8LTBopb+kJQORHEIjSh8EtOsEbPyic=;
+        b=WJ0qN7gaACdmbsLdxmeanJy3+qVPmEPr5A2VAhnnTm30dBKXm5Diu3lNWgch8nlsT8
+         eQKVCSA927RdG37KquqyumYGQLq1mZSJm6HU0jwJrjgfxAQQFZ9dTajAdwmtIve+bod3
+         FWEVnrqoEk5NLXGhVPI1RqmdNTPIY9HKwL8BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=d8Gejk06OEo0NBnSnxEB6qhym1x67HPMouST5FkxySJdUS3xaqbtskhjSSJmWyUvP2
+         8hyJw3OrnCGrf4XdfAAH6YiV2aGUB2PH0zk+aPZ7b8ZHLkiorx5Ar6mWZJNWYyyS0ZKN
+         WNzUsrj4/W7Kzljyui4nQFFgqMM91Jppz9yr4=
+Received: by 10.150.217.11 with SMTP id p11mr1554139ybg.32.1280180976815; Mon, 
+	26 Jul 2010 14:49:36 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Mon, 26 Jul 2010 14:49:36 -0700 (PDT)
+In-Reply-To: <m3wrsikkol.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151898>
 
-On 25/07/10 23:19, solsTiCe d'Hiver wrote:
-<snip>
-> When I add the above command at line 98, it shows it is really bash
-> running:
-> 4.1.7(2)-release
-> cmdhist:expand_aliases:extglob:extquote:force_fignore:interactive_comments:progcomp:promptvars:sourcepath 
+On Mon, Jul 26, 2010 at 21:17, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Hmm, that's interesting.  It's certainly bash, but I don't see
-"login_shell" in the list, which suggests that something is loading bash
-completion stuff in a non-interactive shell that has no need for it.
-That might increase your your boot time a bit, so you may want to take
-it up with Arch Linux when we've got to the bottom of this.
+Well caught. Those were on me, here's the fixed up version (in my
+branch, which Thomas can pull in to his):
 
-One way I've found to replicate your behaviour is to call bash as sh:
+#!/usr/bin/perl
+use 5.006002;
+use strict;
+use warnings;
+use Getopt::Long;
 
-$ ln -s /bin/bash sh
-$ ./sh -c 'echo $BASH_VERSION'
-4.1.5(1)-release
-$ ./sh contrib/completion/git-completion.bash
-contrib/completion/git-completion.bash: line 123: ...
+Getopt::Long::Configure qw/ pass_through /;
 
-Again, this fits with the theory that some non-interactive shell is
-wrongly loading this stuff.
+my $rc = GetOptions(
+	"varlist=s" => \my $varlist,
+	"input=s"	=> \my $input,
+	"output=s"	=> \my $output,
+);
 
-This time, could you tell me what the following debug messages print:
+if (!$rc or (!-r $varlist or !-r $input)) {
+	print "$0 --varlist=<varlist> --input=<in> --output=<out>\n";
+	exit 1;
+}
 
-echo $BASHOPTS -- $SHELLOPTS -- $POSIXLY_CORRECT
-tr '\0' ' ' < /proc/$$/cmdline ; echo
+my $vars = read_varlist($varlist);
+substitute_variables($vars, $input, $output);
+exit 0;
 
-Could you also have a look at /bin/sh and any other files that might be
-(incorrectly?) symlinked to bash?
+sub read_varlist {
+	my ($file) = @_;
 
-On a wider point, I consider the bash/sh behaviour above to be a bug,
-whether or not it's the cause of this specific problem.  Unless someone
-wants to tell me about git's long-standing policy against it, I'll try
-and find some time to send in a patch warning usefully in this case.
+	open my $fh, "<", $file or die "Can't open $file: $!";
+	my %vars;
 
-	- Andrew
+	my ($v, $last_v);
+	my $in_block = 0;
+	while (<$fh>) {
+		if (/^(\S+)::/) {
+			$v = lc $1;
+			$in_block = 0;
+			push @{$vars{$v}}, $_;
+		} elsif (/^$/ && !$in_block) {
+			if (defined $last_v && !$#{$vars{$last_v}}) {
+				$vars{$last_v} = $vars{$v};
+			}
+			$last_v = $v;
+		} elsif (defined $v) {
+			push @{$vars{$v}}, $_;
+			$in_block = !$in_block if /^--$/;
+		}
+	}
+
+	close $fh or die "Closing $file failed: $!";
+
+	return \%vars
+}
+
+sub substitute_variables {
+	my ($varlist, $in, $out) = @_;
+
+	open my $infh, "<", $in or die "Can't open $in: $!";
+	open my $outfh, ">", $out or die "Can't open $out: $!";
+
+	while (<$infh>) {
+		if (/^\@\@CONFIG\((\S+)\)\@\@$/) {
+			my $v = lc $1;
+			die "Key $v not documented" unless exists $varlist->{$v};
+			print $outfh @{$varlist->{$v}};
+			print $outfh "\n";
+		} else {
+			print $outfh $_;
+		}
+	}
+
+	close $infh or die "Closing $in failed: $!";
+	close $outfh or die "Closing $out failed: $!";
+
+	return;
+}
