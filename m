@@ -1,83 +1,90 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: question (possibly) on git subtree/submodules
-Date: Tue, 27 Jul 2010 05:48:09 -0700 (PDT)
-Message-ID: <m3bp9tks6e.fsf@localhost.localdomain>
-References: <xotjlj92i9gr.fsf@leonardo.pit.corp.google.com>
-	<4C49C9C6.3080409@gmail.com> <loom.20100727T125434-697@post.gmane.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/2] Subtree clone?
+Date: Tue, 27 Jul 2010 06:36:08 +0700
+Message-ID: <1280187370-23675-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex <ajb44.geo@yahoo.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 14:48:20 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 27 15:10:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdjZz-0008Sq-Cg
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 14:48:19 +0200
+	id 1Odjv6-0001QP-F1
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 15:10:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754542Ab0G0MsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 08:48:12 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:44635 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754520Ab0G0MsL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 08:48:11 -0400
-Received: by fxm14 with SMTP id 14so588199fxm.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 05:48:09 -0700 (PDT)
+	id S1753119Ab0G0NKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 09:10:00 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:44938 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751949Ab0G0NJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 09:09:59 -0400
+Received: by pzk26 with SMTP id 26so1338166pzk.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 06:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=SLoPk3rDWaKhUXBbl95g7idoWsS5NMX8i41p+dYWCi8=;
-        b=TI1Z0oDkND2xooFfAv3pURhcfWsScD84dIAy4iQo+PbMIPsjrMXVVfrLzGKLrxHZ7G
-         DidY/XAVf3/ivcPI2Qbp+7bu9DsTEvLdJwbWAKFE/Ud0XUAAi1YjHrfrTFX435P+zMa3
-         PSKPYegbkX2+TQBJde7F8xqiwzkOp2GGT3Dpg=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=2l7xyEmlljtlOnKgKRySOxwSZGRRyU2biZN9TytKN38=;
+        b=rWlAGT+ZJyQ3+t6erRd8eCGPvBgjRPZ91DsCYGjief4T4TPpA/Ndr91QJafxv0uRLD
+         v0VUqK1DnPI0EYDdxkgcCYdX9OgQrJU0Vaa1rSLmpsD+5AAYChvA5pqE/lp57Q066NbP
+         1lAbhyPK1xyKeZZ3I5LQd26IqaFw6qmSuxHcg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=MkPVkGjOrpeNXlqM0rJ+fJEFaNKDbNd56X7yZSqMFK7l3iSsYmXO5Z4AhuZ5ONzb/o
-         J1b0fuj5jy/MKWCiFxWPRypy5Yu5Fv+GIWDsM5NhCxDApt7iuR3xNFzxu0J8/8tGlZnI
-         njuYSnMqkalMUw4oKPst1aocKymcBZVFWEWZU=
-Received: by 10.223.103.80 with SMTP id j16mr7935296fao.100.1280234889709;
-        Tue, 27 Jul 2010 05:48:09 -0700 (PDT)
-Received: from localhost.localdomain (abvi50.neoplus.adsl.tpnet.pl [83.8.206.50])
-        by mx.google.com with ESMTPS id l12sm1889800fan.1.2010.07.27.05.48.08
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=Ssr+QhyFC4TL7/Xck2xQYuUoZEw1Gpk9jeSzxV/xw5Juv/kOdRr1Js8Up0H1hOn7fg
+         ofl6aSZH51vkXbaOWXGcovsTILJgzMyQ7Dj5wQIZwsEs1dK+1+wsb52bK473Xco0+KrS
+         ionjkSHPHh+oplmBWdekgVEqOwFGl1NM9u0u8=
+Received: by 10.114.137.13 with SMTP id k13mr13270863wad.221.1280236198834;
+        Tue, 27 Jul 2010 06:09:58 -0700 (PDT)
+Received: from dektop ([119.12.193.247])
+        by mx.google.com with ESMTPS id n32sm8826428wag.23.2010.07.27.06.09.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 05:48:09 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6RCla7i029375;
-	Tue, 27 Jul 2010 14:47:47 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6RClLfX029371;
-	Tue, 27 Jul 2010 14:47:21 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <loom.20100727T125434-697@post.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Tue, 27 Jul 2010 06:09:57 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Tue, 27 Jul 2010 06:36:17 +0700
+X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151937>
 
-Alex <ajb44.geo@yahoo.com> writes:
+This idea sounds quite nice to me. That is, instead of modifying git
+core to support narrow/partial clone, {upload,fetch}-pack is modified
+to give clients enough objects of so it can reconstruct a valid tree.
+Users are free to do whatever they want on that tree. When they want to
+push changes back, Git client creates proper commit/tree objects and
+push.
 
-> Chris Packham <judge.packham <at> gmail.com> writes:
-> 
-> > The short answer is no. Nothing git has currently will let you clone a
-> > subset of files. 
-> 
-> Isn't that what 'sparse checkout' does?
-> (http://www.kernel.org/pub/software/scm/git/docs/git-read-tree.html#_sparse_checkout)
+The two patches in this series allow git to send objects of a subtree
+to client, or just a barebone subtree without blobs. The client can
+rewrite commits and throw the old commits.
 
-No, 'sparse checkout' is only about checkout, i.e. the working area.
-You still have all objects in repository, only part of tree (part of
-project / repository) is not checked out, not present on disk as
-files.
+I don't want to add much computation to server side, subtree looks
+like a good fit (i.e. simply prefixcmp). Sparse checkout can then be
+used to shape worktree if subtree is not good enough.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+All the hard work is at client side, and git-subtree is a good
+candidate. Well, the idea is inspired by recent discussions of
+git-subtree vs git-submodule anyway.
+
+Lazy clone does something similar. However lazy clone requires
+connectivity to upstream. Lazy clone also exposes a security issue,
+allowing client to get any object it wants.
+
+Comments?
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  upload-pack: support subtree packing
+  fetch-pack: support --subtree and --commit-subtree options
+
+ builtin/fetch-pack.c |   15 +++++++++++++++
+ upload-pack.c        |   31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 45 insertions(+), 1 deletions(-)
