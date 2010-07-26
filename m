@@ -1,71 +1,69 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] config --get --path: check for unset $HOME
-Date: Mon, 26 Jul 2010 16:35:56 +0000
-Message-ID: <AANLkTimf73aczIILlQ5N_id97kJNmGAUf0QLlMl8my2r@mail.gmail.com>
-References: <20100723003456.2976.899.reportbug@dr-wily.mit.edu>
-	<20100723012322.GA27113@burratino>
-	<20100725085939.GA5281@radis.liafa.jussieu.fr>
-	<20100726005111.GA29755@burratino>
-	<20100726140756.GH12476@radis.liafa.jussieu.fr>
-	<20100726150651.GA4021@burratino>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Mon, 26 Jul 2010 12:37:00 -0400
+Message-ID: <4C4DB9AC.9000306@xiplink.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 	<4C49B31F.8000102@xiplink.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> 	<AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com> <AANLkTimLayG_HFxGdq+Tt8hU_MApBpSdHHiYPxcakpRJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Julien Cristau <jcristau@debian.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 18:36:14 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: skillzero@gmail.com, Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 18:37:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdQew-0006VC-Po
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:36:11 +0200
+	id 1OdQfy-0006tv-Qh
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:37:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148Ab0GZQgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 12:36:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:37804 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753751Ab0GZQgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 12:36:01 -0400
-Received: by iwn7 with SMTP id 7so2918832iwn.19
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 09:36:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JEmE6KQSbaKU+V1XQtjYg3H4XQAA4LQcnw2Tt8UBhr0=;
-        b=ehGMG02bHw6NNqce2fQoVzq/B6J9k01lwRu2t2M7gH60JiHEn7Fkvpymawyb5dkR5e
-         WPzy8oJMc6ss5Kakzk+idWLCtis/WTh8MmqRVc370cgU5yIhvjYU5dJrR8f2dtCo15bF
-         SYVrmAALSiFUerAXSOe6RmCtH4kTb3VUvLuW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZD8Qo1wlTeFJjEEC3rn9Y4WcS1ClD/Z32LAikfJ8NRfB6OFFwgf0jqnmD5tYGQku2Q
-         3axo8fu5omUwsKT9XP+P2DzXXspK53mC4krffae1HB2pwhXPPomSskrmVmUSf5xsch9k
-         W3uOjRaGyvBtm15ZXDWeI8Pv6/TNRYwxejmLM=
-Received: by 10.231.32.198 with SMTP id e6mr8853188ibd.86.1280162156528; Mon, 
-	26 Jul 2010 09:35:56 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Mon, 26 Jul 2010 09:35:56 -0700 (PDT)
-In-Reply-To: <20100726150651.GA4021@burratino>
+	id S1754187Ab0GZQhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 12:37:08 -0400
+Received: from smtp112.dfw.emailsrvr.com ([67.192.241.112]:38327 "EHLO
+	smtp112.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752485Ab0GZQhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 12:37:07 -0400
+Received: from relay11.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay11.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id F013A17FB08;
+	Mon, 26 Jul 2010 12:37:04 -0400 (EDT)
+Received: by relay11.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B0BBC180D0C;
+	Mon, 26 Jul 2010 12:37:00 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
+In-Reply-To: <AANLkTimLayG_HFxGdq+Tt8hU_MApBpSdHHiYPxcakpRJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151855>
 
-T24gTW9uLCBKdWwgMjYsIDIwMTAgYXQgMTU6MDYsIEpvbmF0aGFuIE5pZWRlciA8anJuaWVkZXJA
-Z21haWwuY29tPiB3cm90ZToKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHNpemVfdCB1c2VybmFt
-ZV9sZW4gPSBmaXJzdF9zbGFzaCAtIHVzZXJuYW1lOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-aWYgKHVzZXJuYW1lX2xlbiA9PSAwKSB7Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqBjb25zdCBjaGFyICpob21lID0gZ2V0ZW52KCJIT01FIik7Cj4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoIWhvbWUpCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBnb3RvIHJldHVybl9udWxsOwo+IMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgc3RyYnVmX2FkZCgmdXNlcl9wYXRoLCBob21lLCBzdHJsZW4o
-aG9tZSkpOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfSBlbHNlIHsKPiDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoHN0cnVjdCBwYXNzd2QgKnB3ID0gZ2V0cHdfc3RyKHVzZXJu
-YW1lLCB1c2VybmFtZV9sZW4pOwoKU2hvdWxkIHdlIG1heWJlIGZhbGwgYmFjayBvbiBjaGVja2lu
-ZyBwd19kaXIgaW4gZ2V0cHd1aWQoKSBpZiAkSE9NRSBpc24ndCBzZXQ/Cg==
+On 10-07-23 09:20 PM, Avery Pennarun wrote:
+> 
+> I'm pushing extra hard on this because I believe there are lots of
+> opportunities to just improve git performance on huge repositories.
+> And if the only *real* reason people need to split repositories is
+> that performance goes down, then that's fixable, and you may need
+> neither git-submodule nor git-subtree.
+
+I think I should mention one aspect of what we're doing, which is that a lot
+of our submodules are based on external code, and that we occasionally need
+to modify or customize some of that code.  So it's quite nice for us to
+maintain private git mirrors of the external repos, with our own private
+branches that contain our modifications.  Although we want to get much of our
+changes incorporated into the upstream code bases, upstream release cycles
+are rarely in sync with ours.
+
+So it's very convenient for use to have our external-code modifications
+contained in private branches in our private mirrors, and to rebase those
+branches to keep up with upstream releases.  We also often use these private
+branches to maintain the code that integrates the external code bases into
+our overall build system.
+
+I mention this purely because this pattern is so convenient that I don't want
+to see it get lost in whatever may arise from this discussion.
+
+		M.
