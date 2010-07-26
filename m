@@ -1,68 +1,78 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git: please refuse push containing commits marked for
- autosquash by default
-Date: Mon, 26 Jul 2010 11:50:27 -0400
-Message-ID: <20100726155027.GB18762@coredump.intra.peff.net>
-References: <20100716123715.16356.65888.reportbug@richter>
- <20100716190432.GA16371@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Merge commit before branch tip
+Date: Mon, 26 Jul 2010 11:06:20 -0500
+Message-ID: <20100726160620.GA4399@burratino>
+References: <AANLkTikp5dHz97qp3pf+DE-wABNVYTGAQ+h30D9Fa04c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Simon Richter <sjr@debian.org>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 17:50:36 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Bradley Wagner <bradley.wagner@hannonhill.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 18:07:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdPwq-0003c9-3H
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 17:50:36 +0200
+	id 1OdQDR-0003Fb-Je
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960Ab0GZPua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 11:50:30 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:46082 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752485Ab0GZPu3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 11:50:29 -0400
-Received: (qmail 8943 invoked by uid 111); 26 Jul 2010 15:50:28 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO coredump.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) ESMTPSA; Mon, 26 Jul 2010 15:50:28 +0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jul 2010 11:50:27 -0400
+	id S1753678Ab0GZQHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 12:07:37 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:65184 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750933Ab0GZQHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 12:07:37 -0400
+Received: by wwj40 with SMTP id 40so329287wwj.1
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 09:07:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=4baxlryh742BRCR0XnDEsLjm8lFWzgosr+sRhD/GsG0=;
+        b=BkUUhtriH0KQxLm4CbM0oeQ59XSvbkCZ7Mf9x2GIR53S8jd/84/KQ1kZxy6b0csRbq
+         Sv+tPDBpC6O4s/X0eB1XvnM3pGs6TCxjDawofOOe4Xznkn0tnKy+l4cO5cvfM1kqDEqO
+         0hIMdh6QFA18j46bZFuZuPs+mOG0yHDKV50xM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fmqa40JNkDBJ52MOXYva0VQbrHBGm4oXjBqmzVojhImCVW6D5cRyvFp/AvkhP5mq+s
+         bSm7mTHX6MV9gIaVPn6PBX4S35eDtHME6bakHX94klnEmdprcbUcHWf1RMfYUbu+YeNO
+         EXbF6sgDqajfmXh6/2OEea+UeicOAnAatUuXE=
+Received: by 10.227.156.11 with SMTP id u11mr7534422wbw.146.1280160455806;
+        Mon, 26 Jul 2010 09:07:35 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id l55sm2028072weq.17.2010.07.26.09.07.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jul 2010 09:07:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100716190432.GA16371@burratino>
+In-Reply-To: <AANLkTikp5dHz97qp3pf+DE-wABNVYTGAQ+h30D9Fa04c@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151851>
 
-On Fri, Jul 16, 2010 at 02:04:32PM -0500, Jonathan Nieder wrote:
+Hi Bradley,
 
-> > When using the --autosquash feature, quite a number of temporary commits
-> > are created that should never be pushed anywhere. It might be a good
-> > idea to have an option to refuse to transfer commits whose messages
-> > start with "fixup!" or "squash!", both on the server and client side.
-> 
-> At first glance this looks very useful, as an optional hook rather
-> than on by default[1].
+Bradley Wagner wrote:
 
-Yeah, from my cursory look, this really seems like policy that should be
-going in a hook.
+> I realize this is not a best practice but is it possible to merge a
+> branch but at a point before the branch tip?
 
-> Sending side: there is no pre-push hook yet, but there was some work
-> towards that about a year and a half ago[2].  Maybe someone interested
-> could revive the topic or figure out what remains to be done.
+I do not even think it is not a best practice.  You can do
 
-If somebody is interested in that, they should read this related thread:
+  $ git fetch --all
+  $ git merge origin/master~1
 
-  http://thread.gmane.org/gmane.comp.version-control.git/128273
+and git will happily create a merge with message
 
-which talks about a "pre-push" hook that could interactively confirm
-push of specific refs. So ideally any pre-push hook interface would not
-just be "do the push or not" but would actually be able to munge the
-list of commits to push.
+  Merge remote branch 'origin/master' (early part)
 
--Peff
+(See the "SPECIFYING REVISIONS" section of git-rev-parse(1)
+for more examples.)
+
+Hope that helps,
+Jonathan
