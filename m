@@ -1,96 +1,71 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: Re: git pull question
-Date: Mon, 26 Jul 2010 13:21:01 +0930
-Message-ID: <AANLkTikpspDiUf==vCUiBqnQKFgcbag8XXaNYK3COjQu@mail.gmail.com>
-References: <AANLkTimHg2wtNj2BmJKJfoisoqNEExC=jNU5wB95Bsre@mail.gmail.com>
-	<AANLkTi=wXGBMUekUhtHS1KCOhjgac3ET8rmSCwUPHzQ3@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: Julio Lajara <ju2wheels@gmail.com>
+Subject: Potential bug in gitweb 1.7.2
+Date: Mon, 26 Jul 2010 00:55:06 -0400
+Message-ID: <4C4D152A.7050505@gmail.com>
+Reply-To: julio.lajara@alum.rpi.edu
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Bradley Wagner <bradley.wagner@hannonhill.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 05:51:12 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 26 06:55:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdEic-0005bt-Bw
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 05:51:10 +0200
+	id 1OdFih-0005Le-Ls
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 06:55:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753471Ab0GZDvF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 25 Jul 2010 23:51:05 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:47611 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753373Ab0GZDvE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 25 Jul 2010 23:51:04 -0400
-Received: by qwh6 with SMTP id 6so4796203qwh.19
-        for <git@vger.kernel.org>; Sun, 25 Jul 2010 20:51:01 -0700 (PDT)
+	id S1752875Ab0GZEzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 00:55:12 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:62017 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751045Ab0GZEzK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 00:55:10 -0400
+Received: by qyk7 with SMTP id 7so1668650qyk.19
+        for <git@vger.kernel.org>; Sun, 25 Jul 2010 21:55:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=g3Lr1rjU7lT1fcduuviSnLc/s0Yqiixe1dtsICWxmno=;
-        b=ebopJnHxrjDErJ02WhcTCXlXXfpcQHrnjdofEfLvPSXTFdpIBowKpIjpFFOWtpRyKr
-         NfJz9Uz2/QSABaWdTYi4aBVZm4raH+R/TDcGjkToPMvQYGn9b+yMozb6Lys3YdN/2xDO
-         KZVPz2A0Y3ReM/NintMTdF5Rzwfa4wk3Vxdcc=
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=tg9uGP5rvYLJeE4hlLrrdV/w8sEbijkYNPKQazgouUo=;
+        b=GffQhQIZ0lUyS5bQX3wXUNlBuWvoQcQwe+y65gqCNP1jxYOdBpgRBhDLHSRDpSGo3h
+         bIaENZbSamypk6YFmKwUvZoCa/DrBBq0RyBcAiNI1Rp/psLMKC5xVSt0GxT5xbT2Xbxb
+         85SNQMKKmbfOETpRqISm23bj+swSf2ESAb0AI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=xG36Y+6LH5OVH5agEADfPsRhB6eO39AZQpSu2K6nePSidi2V9AcJAs1ldL05wNrJCZ
-         OFkF3GD2f9Qo9TlCBbILYNFGLDRcd1XjWJAAUbjfKr3ZyrC+LQpB8OQYfVKiCjoIeNE0
-         8Ro/p4be3oOTgUkVqelpKmgKoQWJXvTIOcc5A=
-Received: by 10.224.78.68 with SMTP id j4mr5542687qak.231.1280116261817; Sun, 
-	25 Jul 2010 20:51:01 -0700 (PDT)
-Received: by 10.229.227.12 with HTTP; Sun, 25 Jul 2010 20:51:01 -0700 (PDT)
-In-Reply-To: <AANLkTi=wXGBMUekUhtHS1KCOhjgac3ET8rmSCwUPHzQ3@mail.gmail.com>
+        h=message-id:date:from:reply-to:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=LNAlFyXa4Vnrw+U7yKIL9fEcBbQlA0rVzxnKbzDS8x5WCT1tqViN831XHPo039EP6p
+         OD5Os52lQ0LWxCHfPMC7MMRAl6S5mM6+VPmwhzeZ/PSYiqx+QQHtPOpzPeInuFc/TG8e
+         ifVJz2kH/o0znfjGrRHRorTpxCWiQiZBFBn/c=
+Received: by 10.224.44.194 with SMTP id b2mr5322422qaf.29.1280120109239;
+        Sun, 25 Jul 2010 21:55:09 -0700 (PDT)
+Received: from [192.168.1.100] (c-76-28-16-43.hsd1.ct.comcast.net [76.28.16.43])
+        by mx.google.com with ESMTPS id h41sm3678821qcz.37.2010.07.25.21.55.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 25 Jul 2010 21:55:08 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.10) Gecko/20100527 Thunderbird/3.0.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151804>
 
-On Mon, Jul 26, 2010 at 1:13 PM, Bradley Wagner
-<bradley.wagner@hannonhill.com> wrote:
->> ...
->> $ git checkout master
->> $ git pull origin refs/heads/brA:brA
->>
->> The pull here seems to update both the current branch as well as brA=
-?
->> Is this intentional?
->
-> I believe this is intentional.
->
-> A git pull always pulls into (at least) the currently checked out
-> branch, in your case "master". By adding the <dst> param after the
-> colon in the <refspec> you're saying to go ahead and fast-forward
-> merge the local branch called "brA" if possible.
+Hi all, I recently had git/gitweb (1.7.0.4) setup on my Ubuntu 10.04 box 
+and decided to add ppa:git-core/ppa to get up to 1.7.2. After I did so, 
+my previously working gitweb stopped functioning and only shows a blank 
+page. Im using apache/cgi and the following error is what I found in my 
+apache error log:
 
-Okay.
+[Sat Jul 24 23:11:41 2010] [error] [client 192.168.1.100] Can't call 
+method "http" on an undefined value at /usr/share/gitweb/index.cgi line 
+3401., referer: http://192.168.1.142/gitweb/
 
 
-> However, I'm not entirely clear myself on the meaning of this note in
-> the documentation:
->
-> Note
-> You never do your own development on branches that appear on the righ=
-t
-> hand side of a <refspec> colon on Pull: lines; they are to be updated
-> by git fetch. If you intend to do development derived from a remote
-> branch B, have a Pull: line to track it (i.e. =A0Pull: B:remote-B), a=
-nd
-> have a separate branch my-B to do your development on top of it. The
-> latter is created by git branch my-B remote-B (or its equivalent git
-> checkout -b my-B remote-B). Run git fetch to keep track of the
-> progress of the remote side, and when you see something new on the
-> remote branch, merge it into your development branch with git pull .
-> remote-B, while you are on my-B branch.
+ From the latest source:
+cat -n gitweb.perl | grep 3401
+   3401        if (defined $cgi->http('HTTP_ACCEPT') &&
 
-Yes, I was wondering about this ... I can't see any downside
-
-
-Geoff.
+Thanks,
