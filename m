@@ -1,71 +1,79 @@
-From: Julien Cristau <jcristau@debian.org>
-Subject: Re: [PATCH] config --get --path: check for unset $HOME
-Date: Mon, 26 Jul 2010 17:33:10 +0200
-Message-ID: <20100726153310.GK12476@radis.liafa.jussieu.fr>
-References: <20100723003456.2976.899.reportbug@dr-wily.mit.edu>
- <20100723012322.GA27113@burratino>
- <20100725085939.GA5281@radis.liafa.jussieu.fr>
- <20100726005111.GA29755@burratino>
- <20100726140756.GH12476@radis.liafa.jussieu.fr>
- <20100726150651.GA4021@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: URL decoding changed semantics of + in URLs
+Date: Mon, 26 Jul 2010 11:40:42 -0400
+Message-ID: <20100726154041.GA18762@coredump.intra.peff.net>
+References: <201007231518.31071.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 17:39:44 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, jstpierre@mecheye.net
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jul 26 17:40:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdPmI-0007AE-Iq
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 17:39:42 +0200
+	id 1OdPnQ-0007fa-Mc
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 17:40:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350Ab0GZPji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 11:39:38 -0400
-Received: from coloquinte.cristau.org ([91.121.16.100]:39689 "EHLO
-	coloquinte.cristau.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753070Ab0GZPjh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 11:39:37 -0400
-X-Greylist: delayed 382 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jul 2010 11:39:37 EDT
-Received: from radis.liafa.jussieu.fr (did75-9-82-229-149-154.fbx.proxad.net [82.229.149.154])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by coloquinte.cristau.org (Postfix) with ESMTPSA id 36E97B9BD;
-	Mon, 26 Jul 2010 17:33:12 +0200 (CEST)
-Received: from julien by radis.liafa.jussieu.fr with local (Exim 4.72)
-	(envelope-from <julien@radis.liafa.jussieu.fr>)
-	id 1OdPfy-00066e-M2; Mon, 26 Jul 2010 17:33:10 +0200
+	id S1754826Ab0GZPkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 11:40:46 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:42343 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753070Ab0GZPkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 11:40:46 -0400
+Received: (qmail 8835 invoked by uid 111); 26 Jul 2010 15:40:44 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO coredump.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) ESMTPSA; Mon, 26 Jul 2010 15:40:44 +0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Jul 2010 11:40:42 -0400
 Content-Disposition: inline
-In-Reply-To: <20100726150651.GA4021@burratino>
-X-Operating-System: Linux 2.6.32-5-amd64 x86_64
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201007231518.31071.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151849>
 
-On Mon, Jul 26, 2010 at 10:06:51 -0500, Jonathan Nieder wrote:
+On Fri, Jul 23, 2010 at 03:18:30PM +0200, Thomas Rast wrote:
 
-> If $HOME is unset (as in some automated build situations),
-> currently
+> As pointed out by Jasper St. Pierre on #git, it is no longer possible
+> to clone
 > 
-> 	git config --path path.home "~"
-> 	git config --path --get path.home
+>   git://git.gnome.org/gtk+
 > 
-> segfaults.  Error out with
+> because your 9d2e942 (decode file:// and ssh:// URLs, 2010-05-23)
+> decodes + characters in URLs to spaces in the http style.  It was
+> later fixed by ce83eda (url.c: "<scheme>://" part at the beginning
+> should not be URL decoded, 2010-06-23) but the later part of the url
+> still decodes + as space.
 > 
-> 	Failed to expand user dir in: '~/'
+> The tests that go along with the commit make it clear that it was an
+> intended change.  But the interesting thing is, I cannot find any
+> reference in any RFC that + must have this meaning.  In particular,
 > 
-> instead.
+>   http://www.ietf.org/rfc/rfc2396.txt
 > 
-> Reported-by: Julien Cristau <jcristau@debian.org>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> doesn't say much about + and the only escaping defined is the usual
+> %xx style.  So is there a standard that mandates this, or was it just
+> a well-meaning but unnecessary backwards incompatible change?
 
-Tested-by: Julien Cristau <jcristau@debian.org>
+Sorry for the slow reply. I am in the middle of moving and just got a
+usable machine running.
 
-Thanks!
+I think it is well-meaning but unnecessary. That is, I think %-decoding
+is probably still a good idea, and I just dragged '+'-decoding along out
+of cluelessness. I thought I cross-checked with what curl was doing to
+http URLs, but now I can't even get it to do anything but pass the path
+component literally to the webserver. So I'm really not sure what I
+tested before.
 
-Cheers,
-Julien
+As Jasper noted, "+" is a reserved character, which means "gtk+"
+probably _should_ be escaped. But clearly it doesn't happen in practice,
+and I am more interested in not breaking current use than in nitpicking
+with a standard.
+
+So I agree with the spirit of your patches, and reading over your v2, it
+looks fine to me, but I didn't do any extensive testing.
+
+-Peff
