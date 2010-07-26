@@ -1,76 +1,108 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git pull (Re: need advice on usage patterns)
-Date: Mon, 26 Jul 2010 09:16:27 +0200
-Message-ID: <201007260916.27306.trast@student.ethz.ch>
-References: <AANLkTi=g2YNQtiH7+xzqWeoOV6p5r+Nwtt2kkCd3u6JN@mail.gmail.com> <20100726033634.GA30877@burratino>
+From: SungHyun Nam <goweol@gmail.com>
+Subject: Re: git bundle bug?
+Date: Mon, 26 Jul 2010 16:25:48 +0900
+Message-ID: <4C4D387C.8040200@gmail.com>
+References: <i2jaue$f7a$1@dough.gmane.org> <AANLkTincXfdZehvVjVjtfvbuM-Jim5Tvtm9Yy=s8-fMR@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Geoff Russell <geoffrey.russell@gmail.com>, <git@vger.kernel.org>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 09:16:34 2010
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 09:26:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdHvN-0002s9-SC
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 09:16:34 +0200
+	id 1OdI4c-0006xA-TJ
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 09:26:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753463Ab0GZHQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 03:16:28 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:33448 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752816Ab0GZHQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 03:16:27 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 26 Jul
- 2010 09:16:25 +0200
-Received: from thomas.localnet (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 26 Jul
- 2010 09:16:25 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.31.12-0.2-desktop; KDE/4.4.93; x86_64; ; )
-In-Reply-To: <20100726033634.GA30877@burratino>
+	id S1753772Ab0GZHZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 03:25:55 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:54250 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753762Ab0GZHZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 03:25:54 -0400
+Received: by pzk26 with SMTP id 26so875541pzk.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 00:25:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=PPu000OMgT0T2cKvkzv23guxMcw7dBZyCzWgZBUHvjQ=;
+        b=CNN7ydm307zPuoBiop3KW7k6+2o2GTo9h7CV4Hd0Xw6KNAZ4XuuxjR+MnUHAKtQAUO
+         8+hyIzToYqD9sQuL+6AhTGhFFsbi2Ap6nx+4HNDpZ3NG10tEHtCxpGQq4tV9rUv8WV2v
+         0dWY9gIoXMDPfx3eL2OoZ4aiR2da4fstCAJ/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=fWiipzNIdnMVoskIKtsbJID90ioW9lkbaio20icQZIZDpSXAojVYj1Deh4gKmm/FGa
+         d+2lC4gDUFpOR1rdpliCgXqzfvkL1BHoVj4RCL5oAqGXe1QMREnv61++twngTwC9NB4j
+         FbkLCitJL/nveT8p24KVcGSASFGPjEM9YJv+8=
+Received: by 10.115.15.18 with SMTP id s18mr10644537wai.5.1280129153487;
+        Mon, 26 Jul 2010 00:25:53 -0700 (PDT)
+Received: from [210.181.13.12] ([210.181.13.12])
+        by mx.google.com with ESMTPS id x9sm6114490waj.3.2010.07.26.00.25.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 26 Jul 2010 00:25:52 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; ko; rv:1.9.1.11) Gecko/20100711 Thunderbird/3.0.6
+In-Reply-To: <AANLkTincXfdZehvVjVjtfvbuM-Jim5Tvtm9Yy=s8-fMR@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151813>
 
-Jonathan Nieder wrote:
-> +Incorporates changes from a remote repository into the current
-> +branch.  In its default mode, a `git pull` is shorthand for
-> +`git fetch` followed by `git merge FETCH_HEAD`.
+Avery Pennarun wrote:
+> On Mon, Jul 26, 2010 at 2:45 AM, SungHyun Nam<goweol@gmail.com>  wrote:
+>> In a current 'git' source tree, next command does not includes
+>> refs/tags/v1.7.2.
+>>     $ git bundle create ~/git.bundle v1.7.1..master
+>>
+>> After applying the git.bundle, now 'git version' does not
+>> show 1.7.2, but...
+>>     $ git version
+>>     git version 1.7.1.772.g64fdc
+>
+> 'git bundle' only includes the tags that you specifically tell it to.
+> It's kind of like 'git push' that way.  If you do:
+>
+>     git tag -s mytag
+>     git push origin master
+>
+> You don't expect origin to contain 'mytag' just because you pushed 'master'.
+>
+>> I hope the 'git bundle' includes all the tags when I use 'master'
+>> or 'HEAD'.
+>>
+>> Well, I could use v1.7.1..v1.7.2.  But want to use simple script like:
+>>     $ git bundle create ~/git.bundle lastbundle..master
+>>     $ git tag -f lastbundle master
+>
+> That kind of magic would require 'git bundle' to look at all your tags
+> and see which ones lie in the range lastbundle..master.  And even that
+> isn't perfect, since you might have added a new tag that points before
+> lastbundle but was added *after* lastbundle.  So every bundle you
+> created would need to include *all* your previous tags.
+>
+> Nevertheless, if you wanted to create a bundle that includes *all*
+> your tags, but not any of the objects leading up to lastbundle, this
+> works:
+>
+>     git bundle create ~/git.bundle --tags lastbundle..master
 
-In my ears, "a `git pull` is..." sounds weird.  I would remove the
-'a'.  But maybe it's just my non-native English hard(ly) at work...
+It worked fine with:
+     git pull ~/git.bundle --tags master:master
 
-> -*Warning*: Running 'git pull' (actually, the underlying 'git merge')
-> -with uncommitted changes is discouraged: while possible, it leaves you
-> -in a state that is hard to back out of in the case of a conflict.
-[...]
-> +See linkgit:git-merge[1] for details, including how conflicts
-> +are presented and handled.  To cancel a conflicting merge,
-> +use `git reset --merge`.
-> +
-> +If any of the remote changes overlap with local uncommitted changes,
-> +the merge will be automatically cancelled and the work tree untouched.
-> +It is generally best to get any local changes in working order before
-> +pulling or stash them away with linkgit:git-stash[1].
+> Note however that it will include tags even if they *aren't* part of
+> master.  That is, if you have tags pointing at branch 'next', all the
+> objects for those tags will *also* be included.
+>
+> Have fun,
+>
+> Avery
 
-There's a slight risk with it because people might read this version
-of the manpage online and then conclude that it is safe to try a merge
-with uncommitted changes, only to find that their git-reset doesn't
-support --merge yet.  Or worse, verify that their git-reset has
---merge by a quick test (1b5b465 is in 1.6.2) but then find that it
-does not help with backing out of a merge (e11d7b5 is only in 1.7.0!).
-
-Then again, who reads these manpages anyway?  And we shouldn't let old
-versions get in the way of having consistent and up-to-date docs.  So,
-
-Acked-by: Thomas Rast <trast@student.ethz.ch>
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks,
+namsh
