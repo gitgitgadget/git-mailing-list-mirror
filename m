@@ -1,86 +1,91 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: URL decoding changed semantics of + in URLs
-Date: Mon, 26 Jul 2010 17:57:48 +0000
-Message-ID: <AANLkTikmFVHeMVEgj_G5h8VMNaw0zIm0Ol-vC1ffc45v@mail.gmail.com>
-References: <201007231518.31071.trast@student.ethz.ch>
-	<20100726154041.GA18762@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	jstpierre@mecheye.net
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 26 19:58:00 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [RFC PATCH 0/2] Allow detached forms (--option arg) for git log options.
+Date: Mon, 26 Jul 2010 20:14:36 +0200
+Message-ID: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 26 20:15:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdRw6-0007px-KQ
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 19:57:58 +0200
+	id 1OdSCY-0005tX-B3
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 20:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754937Ab0GZR5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 13:57:50 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:58229 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754920Ab0GZR5t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 13:57:49 -0400
-Received: by gyg10 with SMTP id 10so926142gyg.19
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 10:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=t6yZIgrhmGkXgUS8f0EYwJVWAA/cOM/l6V0y0h3tT4s=;
-        b=ehKuKOU2LbtBWACc1R5/NijHhNSP8/74skrgJflSpw+82OXmJc73ZDQ6aTpLAFx/9v
-         t3kFjQyYnd92VS5Wi0mJN1SCDStOl5CwyN5ud4gwqxz57YIyQrqg1xCwB+A00mdVh4jC
-         weXpBjSSGJNWEdRRmOahJG3NZmPdj9YZwRZWo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=upOS8kfMFF/gUgg67cGGrIm2FIuIgKcTBTDnhUe/NEXyki4l2u5UkZED3TiQ7fJ1x3
-         9O/OsLMTu+59MHR8jSsUxxVGOuZVhTYEco0xL6TTL0pcHdvAau/rUM2Z7CBiW/ht5uy5
-         AHOrlgxxskEig/ydLtySSBla4CaJ2b2qPMJ3Q=
-Received: by 10.101.144.11 with SMTP id w11mr8193103ann.236.1280167068424; 
-	Mon, 26 Jul 2010 10:57:48 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Mon, 26 Jul 2010 10:57:48 -0700 (PDT)
-In-Reply-To: <20100726154041.GA18762@coredump.intra.peff.net>
+	id S1754859Ab0GZSOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 14:14:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36342 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754712Ab0GZSOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 14:14:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6QID0ax008909
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 26 Jul 2010 20:13:00 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OdSCH-0002HU-3d; Mon, 26 Jul 2010 20:14:41 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OdSCH-00086y-2K; Mon, 26 Jul 2010 20:14:41 +0200
+X-Mailer: git-send-email 1.7.2.23.g58c3b.dirty
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Jul 2010 20:13:00 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o6QID0ax008909
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1280772785.25541@ETJXr94nXp0zhUoattCb6g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151866>
 
-On Mon, Jul 26, 2010 at 15:40, Jeff King <peff@peff.net> wrote:
+Hi,
 
-> As Jasper noted, "+" is a reserved character, which means "gtk+"
-> probably _should_ be escaped. But clearly it doesn't happen in practice,
-> and I am more interested in not breaking current use than in nitpicking
-> with a standard.
+This has been bothering me for a while: many commands accept detached
+form (like "git commit -m message" instead of "git commit -mmessage"),
+but others don't, in particular, git log options like
 
-Reserved characters only have to be escaped in certain contexts, from
-RFC 2396:
+git log -S<string>
+git log --grep=<string>
 
-   Many URI include components consisting of or delimited by, certain
-   special characters.  These characters are called "reserved", since
-   their usage within the URI component is limited to their reserved
-   purpose.  If the data for a URI component would conflict with the
-   reserved purpose, then the conflicting data must be escaped before
-   forming the URI.
+do not accept spaces.
 
-      reserved    = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+" |
-                    "$" | ","
+This small patch serie is a very early RFC: it implements the feature
+for just two options. There are at least 4 ways towards a real
+implementations:
 
-E.g. @ is special in the hostname part (http://user@example.org), but
-writing http://example.org/Git@Big%20companies:%20A%20Study is just
-fine.
+1) nobody except me likes the feature, drop the RFC.
 
-Which is why curl passes it along literally, it *can* escape them, and
-real webservers like Apache handle reserved characters equivalently
-(in their unreserved contexts) whether they're escaped or not, but the
-git-daemon at git.gnome.org evidently doesn't implement RFC 2396
-carefully enough.
+2) Implement the same for other options. That's very repetitive (for
+   each option, there are two ifs: a prefixcmp and a strcmp), I don't
+   like it much.
 
-So we shouldn't escape + for backwards compatibility and because it's
-not necessary, but we should probably also fix git-daemon to accept
-both forms if that hasn't been done already.
+3) Write a function or macro that accepts both variants, and use it
+   everywhere.
+
+4) use parse-option for "git log" options and then get the feature for
+   free.
+
+Hence my question: is there any reason why "git log" hasn't been
+migrated to parse-option? Or is it only that nobody did it yet?
+
+What do you think?
+
+Thanks,
+
+Matthieu Moy (2):
+  Allow "git log --grep foo" as synonym for "git log --grep=foo".
+  Allow "git log -S string" as synonym for "git log -Sstring".
+
+ diff.c     |    5 +++++
+ revision.c |    4 ++++
+ 2 files changed, 9 insertions(+), 0 deletions(-)
+
+-- 
+1.7.2.23.g58c3b.dirty
