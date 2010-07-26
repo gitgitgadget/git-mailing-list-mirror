@@ -1,94 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 06/13] Dump the revprops at the start of every revision
-Date: Mon, 26 Jul 2010 23:23:27 +0530
-Message-ID: <20100726175325.GN17468@kytes>
-References: <1278461693-3828-1-git-send-email-artagnon@gmail.com>
- <1278461693-3828-7-git-send-email-artagnon@gmail.com>
- <20100707190434.GA2732@burratino>
- <20100721185513.GB23839@kytes>
- <1280153007.2404.65.camel@edith>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Mon, 26 Jul 2010 10:48:54 -0700
+Message-ID: <AANLkTi=XrAwSe9Lfr8FDT00VS5+PZDx3pvh6+hC8wy2Z@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 
+	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 
+	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 
+	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
+	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
+	<4C49B31F.8000102@xiplink.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> 
+	<AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com> 
+	<AANLkTimLayG_HFxGdq+Tt8hU_MApBpSdHHiYPxcakpRJ@mail.gmail.com> 
+	<4C4DB9AC.9000306@xiplink.com> <AANLkTimQywtn-0Fcr-ceLeHGeSBNROt+T=K+TowF_u5h@mail.gmail.com> 
+	<4C4DC799.6070702@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, avarb@gmail.com,
-	Daniel Shahaf <d.s@daniel.shahaf.name>,
-	Bert Huijben <rhuijben@collab.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>, dev@subversion.apache.org
-To: Julian Foad <julian.foad@wandisco.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 19:55:26 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Avery Pennarun <apenwarr@gmail.com>, skillzero@gmail.com,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Bryan Larsen <bryan.larsen@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 19:56:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdRtd-0006dm-Un
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 19:55:26 +0200
+	id 1OdRv3-0007MR-G3
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 19:56:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142Ab0GZRzT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 13:55:19 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:44515 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751416Ab0GZRzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 13:55:17 -0400
-Received: by pwi5 with SMTP id 5so171866pwi.19
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 10:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=p/NTSzsZ3MQ7C44GUahpNFhKfK6rLFP31gEuNxRDsFs=;
-        b=sUoJ3d+1k93pjYePHmT5PYcr9prj2IJlQwXShDeBcg9uebmajZPVyOgST/q32WDSVg
-         8V4ABTKrLVhxUl9dEyGo+jFkvakiNbgALLHkotXxexLCc77b5IVlR2lo5Oa6YbltZwcR
-         DVpDoi+iJcD0Bu9M5TWFd19uiVVNIDtFmJn7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FwUkFFzdR+5t5Ik5KHCchhZi4GcMPAV+3XVZ1Pkw9UnIt8KiiocDZ26zhxsrjY1yPc
-         2TH+gLB1f1J4u7On2JmnSHJHTwn7gEUCmvx6krsNw/X7DICGp1BOaVw2CTqzPDjewQdy
-         Ege2I2dp2qmpF8YQRC3AJF8xgTweHWB5BMLwY=
-Received: by 10.114.173.5 with SMTP id v5mr12121198wae.79.1280166917494;
-        Mon, 26 Jul 2010 10:55:17 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id d35sm7076610waa.21.2010.07.26.10.55.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 26 Jul 2010 10:55:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1280153007.2404.65.camel@edith>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754701Ab0GZR4s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Jul 2010 13:56:48 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:50979 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754109Ab0GZR4s convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 13:56:48 -0400
+Received: from mail-yx0-f174.google.com (mail-yx0-f174.google.com [209.85.213.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o6QHuToi013523
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 26 Jul 2010 10:56:29 -0700
+Received: by yxg6 with SMTP id 6so162830yxg.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 10:56:24 -0700 (PDT)
+Received: by 10.150.227.14 with SMTP id z14mr312517ybg.19.1280166555280; Mon, 
+	26 Jul 2010 10:49:15 -0700 (PDT)
+Received: by 10.151.142.21 with HTTP; Mon, 26 Jul 2010 10:48:54 -0700 (PDT)
+In-Reply-To: <4C4DC799.6070702@gmail.com>
+X-Spam-Status: No, hits=-2.953 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151864>
 
-Hi Julian,
+On Mon, Jul 26, 2010 at 10:36 AM, Bryan Larsen <bryan.larsen@gmail.com>=
+ wrote:
+>
+> To me, that's what git-subtree is: an internal private mirror of an e=
+xternal
+> repo. =A0 Using git submodule moves that into a separately managed re=
+po, which
+> is just unnecessary hassle. =A0Why maintain repo called "clone of lib=
+rary X
+> for project A" when you can just stick it inside of project A without=
+ any
+> downsides?
 
-Julian Foad writes:
-> On Thu, 2010-07-22, Ramkumar Ramachandra wrote:
-> > Jonathan Nieder writes:
-> [...]
-> > > > +			/* Output name length, then name. */
-> > > > +			svn_stringbuf_appendcstr(*strbuf,
-> > > > +						 apr_psprintf(pool, "K %" APR_SSIZE_T_FMT "\n",
-> > > > +							      keylen));
-> > > > +
-> > > > +			svn_stringbuf_appendbytes(*strbuf, (const char *) key, keylen);
-> > > 
-> > > Is the cast needed?  (The answer might be "yes" if this code is meant
-> > > to be usable with C++ compilers.)
-> > 
-> > These casts are all over in the source tree, so I'm guessing the
-> > answer is "yes".
-> 
-> Actually no - Subversion C code is not intended to be compilable as C++
-> and that cast is not needed.  (Other casts that you see in Subversion
-> code are for different situations.)
+Without any downsides?
 
-Thanks for pointing that out. I'll fix them in my future commits.
+What about merging? What about complex history? IOW, what about
+_anything_ but a few extra one-liner patches?
 
--- Ram
+Background: the only time I ever used CVS modules, we had submodules
+for things like gcc, binutils, etc. And maintained them separately
+from upstream for _years_. Not with some simple one-liner fixes, but
+with big fundamental changes that couldn't be sent upstream (and
+wouldn't have been accepted anyway) etc.
+
+THAT is the problem space. Not "just a mirror of another project".
+
+                   Linus
