@@ -1,73 +1,72 @@
-From: Eugene Sajine <euguess@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Merge commit before branch tip
-Date: Mon, 26 Jul 2010 12:08:44 -0400
-Message-ID: <AANLkTi=dOpWKAg9vH6sR2Xdi1XitD6vOx6Pd8Nt3A2bJ@mail.gmail.com>
+Date: Mon, 26 Jul 2010 18:15:02 +0200
+Message-ID: <vpqy6cyw77d.fsf@bauges.imag.fr>
 References: <AANLkTikp5dHz97qp3pf+DE-wABNVYTGAQ+h30D9Fa04c@mail.gmail.com>
+	<20100726160620.GA4399@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Bradley Wagner <bradley.wagner@hannonhill.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 18:08:51 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Bradley Wagner <bradley.wagner@hannonhill.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 18:15:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdQEV-0003Yd-69
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:08:51 +0200
+	id 1OdQKh-0006RD-KK
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753866Ab0GZQIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 12:08:46 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:39071 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753298Ab0GZQIp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 12:08:45 -0400
-Received: by qyk8 with SMTP id 8so2017577qyk.19
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 09:08:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=8/UMf1zorDUQQ9NWkgEhpViYivBAvaruYUMvbRmMi3s=;
-        b=YLF7OYoj6u1I5cQrjm4rC/Tf09mNW/3FRVaLcr6PcFf5RLsq1cOYbzgzwQzU2BNKUX
-         XjkizYzKbR8xh1bgckGidqo5GWSLu9SSDXpnQ/UcF67kASBEFrpaaZeoyqv+SKvY+UUq
-         D30fG0VGtDpSbmSKiI4Jhmwj3yayIIclDmYZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=CDL54QuXB7UotqEr35mn5uo1rFgHZFjcGlrQDYkRufOUsTdkeiiFY/OdS9Ki5xqZ1O
-         OzuYXrniNbFm2DxRKI4m+s4ZFGPnKQpgrQuREx4XOTQR9EAhqB+WCCZABfBPGiLs6PUm
-         ck3Rox41jm053OQuI+7uRMWIz2lYRARLXZoqM=
-Received: by 10.224.36.209 with SMTP id u17mr6323107qad.225.1280160525048; 
-	Mon, 26 Jul 2010 09:08:45 -0700 (PDT)
-Received: by 10.229.226.195 with HTTP; Mon, 26 Jul 2010 09:08:44 -0700 (PDT)
-In-Reply-To: <AANLkTikp5dHz97qp3pf+DE-wABNVYTGAQ+h30D9Fa04c@mail.gmail.com>
+	id S1753405Ab0GZQPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 12:15:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51236 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752624Ab0GZQPH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 12:15:07 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6QGDMNh019114
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 26 Jul 2010 18:13:24 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OdQKU-0000xT-8b; Mon, 26 Jul 2010 18:15:02 +0200
+In-Reply-To: <20100726160620.GA4399@burratino> (Jonathan Nieder's message of "Mon\, 26 Jul 2010 11\:06\:20 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 26 Jul 2010 18:13:24 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o6QGDMNh019114
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1280765604.37444@SInE0ZyBUJKOYknHaBB00w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151853>
 
-On Mon, Jul 26, 2010 at 11:38 AM, Bradley Wagner
-<bradley.wagner@hannonhill.com> wrote:
-> I realize this is not a best practice but is it possible to merge a
-> branch but at a point before the branch tip?
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Hi Bradley,
 >
-> This came up recently for us. There are 9 new commits in our stable
-> branch that need to be merged back into "master". However, there is 1
-> commit (the branch tip) that we're not all that happy with and don't
-> want to merge into the "master".
+> Bradley Wagner wrote:
 >
-> Ideally, I'd like them to show up as a merge rather than a cherry-pick
-> basically as if I'd done the merge before that latest commit was made.
+>> I realize this is not a best practice but is it possible to merge a
+>> branch but at a point before the branch tip?
+>
+> I do not even think it is not a best practice.  You can do
+>
+>   $ git fetch --all
+>   $ git merge origin/master~1
 
-Isn't the following giving you what you need?
+... or whatever commit identifier indeed:
 
-$ git co master
-$ git merge stable~1
+   $ git merge 64fdc08da
 
-?
+is fine too, but you have to find out the 64fdc08da part (using git
+log for example).
 
-Thanks,
-Eugene
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
