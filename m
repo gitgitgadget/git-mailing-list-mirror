@@ -1,101 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git pull (Re: need advice on usage patterns)
-Date: Mon, 26 Jul 2010 15:06:13 -0500
-Message-ID: <20100726200613.GB1451@burratino>
-References: <AANLkTi=g2YNQtiH7+xzqWeoOV6p5r+Nwtt2kkCd3u6JN@mail.gmail.com>
- <20100726033634.GA30877@burratino>
- <201007260916.27306.trast@student.ethz.ch>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 1/24] Documentation: Move variables from config.txt to 
+	separate file
+Date: Mon, 26 Jul 2010 20:18:00 +0000
+Message-ID: <AANLkTikANkubcJ2x5lDLKsKSiOAfMC1QaIoaTaEotN_l@mail.gmail.com>
+References: <cover.1280169048.git.trast@student.ethz.ch>
+	<75c9db91f5ab43ebb60cace0d20389462a2ab02c.1280169048.git.trast@student.ethz.ch>
+	<20100726193841.GB1043@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Geoff Russell <geoffrey.russell@gmail.com>, git@vger.kernel.org,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jul 26 22:07:29 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 22:18:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdTxP-0005kF-6S
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 22:07:27 +0200
+	id 1OdU7l-0001wa-4s
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 22:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754914Ab0GZUHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 16:07:22 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59197 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752517Ab0GZUHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 16:07:21 -0400
-Received: by vws3 with SMTP id 3so2766629vws.19
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 13:07:21 -0700 (PDT)
+	id S1754843Ab0GZUSD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Jul 2010 16:18:03 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:35092 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751847Ab0GZUSB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 26 Jul 2010 16:18:01 -0400
+Received: by iwn7 with SMTP id 7so3009377iwn.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 13:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=PECDIKmJc2jOo107ZNbWLca58itkmOuJiab2q+puXKg=;
-        b=WuXrCT1fP7VCDYUY1gmvarw0/1ehQ7+pFQsKHNvmt6wJk0Aj5JzZbLGK8lY3BfH22Q
-         xcd37p5L1Xbvy8aRy1wYJdD8nqRW1IKaGvF30gk9FQAkKqm4S1AB37IgvgVN/gyQusY5
-         BAuO70RTdxKwjbHwWmWvXos7SWQ5cjgj41D9Q=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HQHiWDDlPgIWGVJ90CIzT+IEGBoQ9ywjSkn4/5vGMuw=;
+        b=CbHxrXhSlbcYpmcfZrbXPJA1KerVsVft08uOhyq3mUkLjHJFeyjKKuNltfSwd6sPIh
+         5Ct+wb7A3qjMQWfl+RKNk9LNDD4VyHXidL5egcsTeIr9BOx/dH3T4Wb3GmchiypLgWMT
+         u6WW71ZBBm7qI1DilNlch01WyM2qp23dihb30=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YjzZVolWaDWk1givk3HElTODuwB0Hw9WyIJA257GWquKRzCq5OlCD9KqKnhdVwcl0v
-         3x8czZuPi4ndMKp8jDHv2NSDnhjVp/klRGPQlm7O6fErDcQY01GoNqhBZZnw5boSRB0f
-         BbmWh82u1WMT/pud6fgtgK7Npwwcvv3qoiVpM=
-Received: by 10.220.121.233 with SMTP id i41mr4501453vcr.3.1280174841214;
-        Mon, 26 Jul 2010 13:07:21 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v11sm2058320vbb.11.2010.07.26.13.07.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 26 Jul 2010 13:07:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201007260916.27306.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=a9qeGgB0NUgmopstLtkxWA9F3niSDESQtsZE+vpUC2RjCpnc2HzBxDJJa9cBGUbtdm
+         yrfDaarBEPumAUwQfK0SLXHhNLVAw+FdSLlKMKJLp3Z09YR43ODYh0UqlI4m20pz54yZ
+         u5Ip0qCs3hYldwoDJX5e+2dnpZ0XtB3CVS3qw=
+Received: by 10.231.184.156 with SMTP id ck28mr8316908ibb.168.1280175480348; 
+	Mon, 26 Jul 2010 13:18:00 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Mon, 26 Jul 2010 13:18:00 -0700 (PDT)
+In-Reply-To: <20100726193841.GB1043@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151891>
 
-Thomas Rast wrote:
+On Mon, Jul 26, 2010 at 19:38, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Thomas Rast wrote:
+>
+>> =C2=A0Documentation/config-vars.txt | 1691 +++++++++++++++++++++++++=
++++++++++++++++
+>> =C2=A0Documentation/config.txt =C2=A0 =C2=A0 =C2=A0| 1693 +---------=
+-------------------------------
+>
+> Scary. =C2=A0Does -B -M -C -C -C make it any better?
 
-> In my ears, "a `git pull` is..." sounds weird.  I would remove the
-> 'a'.
+It makes it even scarier:
 
-Good idea.
-
-> Jonathan Nieder wrote:
-
->> -*Warning*: Running 'git pull' (actually, the underlying 'git merge')
->> -with uncommitted changes is discouraged: while possible, it leaves you
->> -in a state that is hard to back out of in the case of a conflict.
->[...]
->> +See linkgit:git-merge[1] for details, including how conflicts
->> +are presented and handled.  To cancel a conflicting merge,
->> +use `git reset --merge`.
-[...]
->                       Or worse, verify that their git-reset has
-> --merge by a quick test (1b5b465 is in 1.6.2) but then find that it
-> does not help with backing out of a merge (e11d7b5 is only in 1.7.0!).
-> 
-> Then again, who reads these manpages anyway?  And we shouldn't let old
-> versions get in the way of having consistent and up-to-date docs.  So,
-
-Agh, surely we can do better.  Maybe:
-
-	See linkgit:git-merge[1] for details, including how conflicts
-	are presented and handled.
-
-	ifdef::stalenotes[]
-	In git 1.7.0 or later, to cancel a conflicting merge, use
-	`git reset --merge`.
-	*Warning*: In older versions of git, running 'git pull'
-	with uncommited changes is discouraged: while possible,
-	it leaves you in a state that may be hard to back out of
-	in the case of a conflict.
-	else::stalenotes[]
-	To cancel a conflicting merge, use `git reset --merge`.
-	endif::stalenotes[]
-
-with the appropriate corresponding change to todo:dodoc.sh.
+ Documentation/{config.txt =3D> config-vars.txt} |  223 ++--
+ Documentation/config.txt                      | 1923 ++---------------=
+--------
