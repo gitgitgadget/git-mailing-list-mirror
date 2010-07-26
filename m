@@ -1,97 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] Document ls-files -t as semi-obsolete.
-Date: Mon, 26 Jul 2010 18:39:51 +0200
-Message-ID: <1280162391-18701-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Jul 26 18:40:52 2010
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Mon, 26 Jul 2010 09:41:42 -0700
+Message-ID: <AANLkTimQywtn-0Fcr-ceLeHGeSBNROt+T=K+TowF_u5h@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com> <AANLkTilivtS4TccZXHz2N_n_2RpY6q_5sw7zwdWKdnYE@mail.gmail.com> 
+	<AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> 
+	<AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> 
+	<AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> 
+	<4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
+	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
+	<4C49B31F.8000102@xiplink.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> 
+	<AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com> 
+	<AANLkTimLayG_HFxGdq+Tt8hU_MApBpSdHHiYPxcakpRJ@mail.gmail.com> 
+	<4C4DB9AC.9000306@xiplink.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Avery Pennarun <apenwarr@gmail.com>, skillzero@gmail.com,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Jul 26 18:42:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdQjT-0008Co-R8
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:40:52 +0200
+	id 1OdQkq-0000LB-4f
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 18:42:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754248Ab0GZQkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 Jul 2010 12:40:46 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:54308 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753184Ab0GZQkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 Jul 2010 12:40:46 -0400
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 Jul 2010 12:40:45 EDT
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6QGTrtH010198
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 26 Jul 2010 18:29:53 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OdQib-0001LV-Qb; Mon, 26 Jul 2010 18:39:57 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OdQib-0004tl-P2; Mon, 26 Jul 2010 18:39:57 +0200
-X-Mailer: git-send-email 1.7.2.19.g9a302.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 26 Jul 2010 18:29:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6QGTrtH010198
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280766596.03484@2tAwEx4COEetKYsSnze63Q
+	id S1754260Ab0GZQmK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Jul 2010 12:42:10 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:34880 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753184Ab0GZQmJ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 12:42:09 -0400
+Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o6QGg774002509
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 26 Jul 2010 09:42:08 -0700
+Received: by gxk23 with SMTP id 23so898467gxk.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 09:42:02 -0700 (PDT)
+Received: by 10.151.6.5 with SMTP id j5mr8985829ybi.235.1280162522207; Mon, 26 
+	Jul 2010 09:42:02 -0700 (PDT)
+Received: by 10.151.142.21 with HTTP; Mon, 26 Jul 2010 09:41:42 -0700 (PDT)
+In-Reply-To: <4C4DB9AC.9000306@xiplink.com>
+X-Spam-Status: No, hits=-2.954 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151857>
 
-The behavior of "git ls-files -t" is very misleading (see
-http://thread.gmane.org/gmane.comp.version-control.git/126516 and
-http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
-for examples of mislead users) and badly documented, hence we point the
-users to superior alternatives.
+On Mon, Jul 26, 2010 at 9:37 AM, Marc Branchaud <marcnarc@xiplink.com> =
+wrote:
+>
+> I think I should mention one aspect of what we're doing, which is tha=
+t a lot
+> of our submodules are based on external code, and that we occasionall=
+y need
+> to modify or customize some of that code. =A0So it's quite nice for u=
+s to
+> maintain private git mirrors of the external repos, with our own priv=
+ate
+> branches that contain our modifications. =A0Although we want to get m=
+uch of our
+> changes incorporated into the upstream code bases, upstream release c=
+ycles
+> are rarely in sync with ours.
 
-The feature is marked as "semi-obsolete" but not "scheduled for removal"
-since it's a plumbing command, scripts might use it, and Git testsuite
-already uses it to test the state of the index.
+THIS.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Resurecting a very old patch:
+This is why I always thought that submodules absolutely have to be
+commits, not trees. It's why the git submodule data structures are
+done the way they are. Anything that makes the submodule just a tree
+is fundamentally broken, I think.
 
-http://thread.gmane.org/gmane.comp.version-control.git/144874
+That said, I'm not competent to comment on the actual user interface
+issues. I can well believe that git-subtree has a nicer interface.
 
-The earlier concerns were:
-
-1) There are valid uses for "git ls-files -t" and
-2) If documentation is bad, then it should be improved.
-
-This version should adress 1) by mitigating the wording (deprecated ->
-semi-deprecated, "almost always"). To answer 2), I don't think
-spending energy documenting a feature that almost nobody uses is worth
-it. At least, I'm not going to do it, and since nothing happened for
-months, I guess no one else will.
-
- Documentation/git-ls-files.txt |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 3521637..2cc3243 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -106,6 +106,12 @@ OPTIONS
- 	with `-s` or `-u` options does not make any sense.
- 
- -t::
-+	This feature is semi-deprecated. For scripting purpose,
-+	linkgit:git-status[1] `--porcelain` is almost always a
-+	superior alternative, and users should look at
-+	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
-+	`--name-status` for more user-friendly alternatives.
-+
- 	Identify the file status with the following tags (followed by
- 	a space) at the start of each line:
- 	H::	cached
--- 
-1.7.2.19.g9a302.dirty
+             Linus
