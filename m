@@ -1,96 +1,90 @@
-From: "Jasper St. Pierre" <jstpierre@mecheye.net>
-Subject: Re: URL decoding changed semantics of + in URLs
-Date: Mon, 26 Jul 2010 14:22:42 -0400
-Message-ID: <AANLkTimRrpiv7cu=j598K3x4h3UGW7-Hik6-6jA8R_5J@mail.gmail.com>
-References: <201007231518.31071.trast@student.ethz.ch> <20100726154041.GA18762@coredump.intra.peff.net> 
-	<AANLkTikmFVHeMVEgj_G5h8VMNaw0zIm0Ol-vC1ffc45v@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH 0/2] Submodules: Add the new config option "ignore"
+Date: Mon, 26 Jul 2010 20:26:07 +0200
+Message-ID: <4C4DD33F.4020104@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Thomas Rast <trast@student.ethz.ch>,
-	git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 26 20:23:20 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 26 20:26:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdSKZ-0001CR-9t
-	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 20:23:15 +0200
+	id 1OdSNh-0002hY-MY
+	for gcvg-git-2@lo.gmane.org; Mon, 26 Jul 2010 20:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809Ab0GZSXG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 26 Jul 2010 14:23:06 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58555 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526Ab0GZSXF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 26 Jul 2010 14:23:05 -0400
-Received: by wyf19 with SMTP id 19so2380364wyf.19
-        for <git@vger.kernel.org>; Mon, 26 Jul 2010 11:23:02 -0700 (PDT)
-Received: by 10.216.235.106 with SMTP id t84mr7799814weq.46.1280168582296; 
-	Mon, 26 Jul 2010 11:23:02 -0700 (PDT)
-Received: by 10.216.79.68 with HTTP; Mon, 26 Jul 2010 11:22:42 -0700 (PDT)
-In-Reply-To: <AANLkTikmFVHeMVEgj_G5h8VMNaw0zIm0Ol-vC1ffc45v@mail.gmail.com>
+	id S1754743Ab0GZS0W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 Jul 2010 14:26:22 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:55541 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754566Ab0GZS0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 Jul 2010 14:26:20 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 29F6C164F51AB;
+	Mon, 26 Jul 2010 20:26:19 +0200 (CEST)
+Received: from [80.128.109.213] (helo=[192.168.178.29])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1OdSNW-0008Jp-00; Mon, 26 Jul 2010 20:26:19 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.7) Gecko/20100713 Thunderbird/3.1.1
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+KW6Jmr5VIAOvSEICyizkp2/0W8/5N7FhRA0/2
+	lmnAhjH5v+IHB+qBme1SyaIexSanUUTCPuXQEoTHzIZbvlZLDV
+	uXCN26917gBBQ4l2dJ3Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151870>
 
-Where is '+' used in the URL context? I don't see that it's a
-replacement for '+'
-aside from formencoded, which is from CGI, not HTTP or the URI spec.
+These two patches are extremly useful for those users who chose submodules
+because they wanted to reduce the time it takes for "git status" and "git
+diff" to recurse through the whole work tree by putting sometimes large
+amounts of files into submodules, which weren't scanned in the past.
 
-I also can't access something called "test 2.txt" from Apache with
-"http://localhost/test+2.txt", so I don't think it's unescaping the '+'=
-=2E
+Since 1.7.0 "git status" and "git diff" recurse through submodule work
+trees, which has a - sometimes drastic - performance impact when large
+submodules are present. Using the "ignore=dirty" config option restores
+the former behaviour.
 
-I don't think we should do anything about the '+' case, except where us=
-ed in
-formencoded parameters (aka the "query string"), where it is used.
+This option can be set in the .gitmodules file or in .git/config, any
+settings found in the latter override those from .gitmodules. This
+enables the distribution of a default setting for this option by simply
+committing a modified .gitmodules file without each developer having to
+call "git submodule sync". When using "git status" or "git diff" with
+"--ignore-submodules=none" option the default behavior of scanning all
+submodules work trees can be restored temporarily.
 
-On Mon, Jul 26, 2010 at 1:57 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Jul 26, 2010 at 15:40, Jeff King <peff@peff.net> wrote:
->
->> As Jasper noted, "+" is a reserved character, which means "gtk+"
->> probably _should_ be escaped. But clearly it doesn't happen in pract=
-ice,
->> and I am more interested in not breaking current use than in nitpick=
-ing
->> with a standard.
->
-> Reserved characters only have to be escaped in certain contexts, from
-> RFC 2396:
->
-> =A0 Many URI include components consisting of or delimited by, certai=
-n
-> =A0 special characters. =A0These characters are called "reserved", si=
-nce
-> =A0 their usage within the URI component is limited to their reserved
-> =A0 purpose. =A0If the data for a URI component would conflict with t=
-he
-> =A0 reserved purpose, then the conflicting data must be escaped befor=
-e
-> =A0 forming the URI.
->
-> =A0 =A0 =A0reserved =A0 =A0=3D ";" | "/" | "?" | ":" | "@" | "&" | "=3D=
-" | "+" |
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"$" | ","
->
-> E.g. @ is special in the hostname part (http://user@example.org), but
-> writing http://example.org/Git@Big%20companies:%20A%20Study is just
-> fine.
->
-> Which is why curl passes it along literally, it *can* escape them, an=
-d
-> real webservers like Apache handle reserved characters equivalently
-> (in their unreserved contexts) whether they're escaped or not, but th=
-e
-> git-daemon at git.gnome.org evidently doesn't implement RFC 2396
-> carefully enough.
->
-> So we shouldn't escape + for backwards compatibility and because it's
-> not necessary, but we should probably also fix git-daemon to accept
-> both forms if that hasn't been done already.
->
+
+Comments?
+
+
+Jens Lehmann (2):
+  Submodules: Add the new "ignore" config option for diff and status
+  Submodules: Use "ignore" settings from .gitmodules too for diff and
+    status
+
+ Documentation/config.txt       |   13 ++++
+ Documentation/diff-options.txt |    6 ++-
+ Documentation/git-status.txt   |    6 ++-
+ Documentation/gitmodules.txt   |   15 ++++
+ builtin/commit.c               |    2 +
+ builtin/diff-files.c           |    2 +
+ builtin/diff-index.c           |    2 +
+ builtin/diff-tree.c            |    2 +
+ builtin/diff.c                 |    2 +
+ diff-lib.c                     |   15 +++--
+ diff.c                         |   35 ++++++++--
+ diff.h                         |    1 +
+ submodule.c                    |   63 ++++++++++++++++-
+ submodule.h                    |    4 +
+ t/t4027-diff-submodule.sh      |  139 ++++++++++++++++++++++++++++++++++++
+ t/t7508-status.sh              |  154 ++++++++++++++++++++++++++++++++++++++-
+ wt-status.c                    |    8 ++-
+ 17 files changed, 449 insertions(+), 20 deletions(-)
+
+-- 
+1.7.2.223.g830604.dirty
