@@ -1,70 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: rfc - Changing the way gitk and git-gui are managed
-Date: Tue, 27 Jul 2010 01:46:38 -0400
-Message-ID: <20100727054638.GA6662@coredump.intra.peff.net>
-References: <7vocdygbw0.fsf@alter.siamese.dyndns.org>
- <AANLkTimdYfv-Z57iHD+YLfjKi66av5xmaC3JEMRNRw+Y@mail.gmail.com>
- <AANLkTin9kbMp5nOS=GaM2rX1w+y8vbzYfWunkSSeoPZg@mail.gmail.com>
- <20100727053040.GA6014@coredump.intra.peff.net>
- <AANLkTin+jUB85Zua7TP_dmdU9QSEiAuTDZhPQQ7hQTP-@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH 2/2] Allow "git log -S string" as synonym for "git log 
+	-Sstring".
+Date: Tue, 27 Jul 2010 01:42:03 -0500
+Message-ID: <AANLkTik-5FVwrFz+5hzqT4_u7MLOPg352+G3XoDcgdKs@mail.gmail.com>
+References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr> 
+	<1280168078-31147-3-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 07:46:52 2010
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 27 08:42:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odd03-0001SS-5r
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 07:46:47 +0200
+	id 1Oddrz-00020Q-Aa
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 08:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725Ab0G0Fqm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 01:46:42 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52161 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751460Ab0G0Fql (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 01:46:41 -0400
-Received: (qmail 13739 invoked by uid 111); 27 Jul 2010 05:46:40 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO coredump.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) ESMTPSA; Tue, 27 Jul 2010 05:46:40 +0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 27 Jul 2010 01:46:38 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTin+jUB85Zua7TP_dmdU9QSEiAuTDZhPQQ7hQTP-@mail.gmail.com>
+	id S1753270Ab0G0Gm0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 02:42:26 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:49687 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750963Ab0G0GmZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 02:42:25 -0400
+Received: by yxg6 with SMTP id 6so369041yxg.19
+        for <git@vger.kernel.org>; Mon, 26 Jul 2010 23:42:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CRiHdWRFLIlkDGMuOLbE8K+1Ah0eeoeAdLKFajsWuDM=;
+        b=AEq4BDk+A7J6GPNS7b+oqpJ2qPk0AJHPY37ve41dgNMsOcdL4FIR5tMJd5QbH3kSen
+         5x7qO2Y6YYGHhjAm0ZmghnfCEqr/5RfTICAMzpmsV2ZvgBksOKVnpFR1kHPSkjW0Wdjp
+         DDzvtV93Hx0Ur3l4WOZcU8/zHVpsEx+sjMWic=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=IKsswrlQ3EYrkgyR1dsI+kaohuuqiD1aDR4tHOxfL3dxpWIO8EPNsznTbymcn/Q6/X
+         LAqd+/sLkQ2J1cFYf4VgAl9gVWpcDhl4S8PWMhrMju5FiwpVCglC8jQ6x+iBu4UO8CfP
+         oZKKJQWb1dpM1B7rDzyi/zo/VE+DqikPxeC8g=
+Received: by 10.151.132.9 with SMTP id j9mr2623449ybn.403.1280212944338; Mon, 
+	26 Jul 2010 23:42:24 -0700 (PDT)
+Received: by 10.150.66.12 with HTTP; Mon, 26 Jul 2010 23:42:03 -0700 (PDT)
+In-Reply-To: <1280168078-31147-3-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151914>
 
-On Tue, Jul 27, 2010 at 01:42:39AM -0400, Avery Pennarun wrote:
+Heya,
 
-> On Tue, Jul 27, 2010 at 1:30 AM, Jeff King <peff@peff.net> wrote:
-> > On Fri, Jul 23, 2010 at 02:16:45AM -0400, Avery Pennarun wrote:
-> >> Only this: Junio said that there are no major downsides to this ch=
-ange
-> >> - and given the slow pace of change in gitk/git-gui, this is proba=
-bly
-> >> true - but are there any *upsides*? =C2=A0What problem does this s=
-olve?
-> >
-> > One minor complaint with the current setup is that browsing the his=
-tory
-> > with path limiting is unintuitive. You can't do "gitk gitk" in the
-> > gitk-git directory. You must instead do "cd .. && gitk -- gitk".
->=20
-> Arguably this would be an encouragement to fix the path limiting code=
-,
-> in a similar way that people expect switching to a submodule setup to
-> encourage people to fix submodules :)
+On Mon, Jul 26, 2010 at 13:14, Matthieu Moy <Matthieu.Moy@imag.fr> wrot=
+e:
+>
 
-Heh. Somewhat true. My multi-file --follow code actually handles "git
-log --follow gitk-git", but it does look awful in gitk. And that is not
-likely to be fixed soon, as --follow and things like parent rewriting
-simply don't work together at this point.
+> + =C2=A0 =C2=A0 =C2=A0 else if (!strcmp(arg, "-S")) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 options->pickaxe =3D=
+ optarg;
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 2;
+> + =C2=A0 =C2=A0 =C2=A0 }
 
--Peff
+TYVM.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
