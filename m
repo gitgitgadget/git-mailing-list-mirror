@@ -1,116 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] checkout, commit: remove confusing assignments to
- rev.abbrev
-Date: Tue, 27 Jul 2010 16:09:08 -0500
-Message-ID: <20100727210908.GA11317@burratino>
-References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
- <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
- <20100725221539.GA21813@burratino>
- <7vbp9uaii2.fsf@alter.siamese.dyndns.org>
- <20100726190448.GA32367@burratino>
- <7vzkxc7rpn.fsf@alter.siamese.dyndns.org>
- <20100727182942.GB5578@burratino>
- <20100727183706.GD5578@burratino>
- <1280261936.4462.6.camel@walleee>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:10:28 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v3] Document ls-files -t as semi-obsolete.
+Date: Tue, 27 Jul 2010 23:11:13 +0200
+Message-ID: <1280265073-23037-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqaapcy6xq.fsf@bauges.imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:12:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrPw-0006KK-0d
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:10:28 +0200
+	id 1OdrRv-0007At-Ul
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:12:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708Ab0G0VKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 17:10:23 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:49340 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590Ab0G0VKW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:10:22 -0400
-Received: by eya25 with SMTP id 25so844079eya.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:10:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=gnOLt0mJUOybi/KpuGuN62xP93IcjxKwLJ2e6S2TP+c=;
-        b=oQW+f85yzA1rH+3hTb5xay+eKY5yJuUdY78RrcZuhn3UykP9JueSEpdsrJVEzpMmQJ
-         RwPhVfk1O67Rq96QkWPuu8o349BqW6dygH4B+NhMzwgEYNvLYvJJUW4GlGMyRIOY2k+j
-         4f/334ELbYCYcKgP1TwBTSAcwfDVb65qyHl0Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=U7TnsEqKqYvagpRRvAVl5plN9OhP+ILRdu8lmHaDeWgbk6BJlMJ2lEayw8buiposoB
-         65aHGVm7aqVS6q7PvOnB2sbU6+WVvuMZUobrPpMzJrbrWcF01a/CNVMC1sy/smfjX12T
-         Lp5N4V2b1z08cMEs5194rsBL0sQkSJ4OHnoF4=
-Received: by 10.213.28.141 with SMTP id m13mr7747272ebc.25.1280265020781;
-        Tue, 27 Jul 2010 14:10:20 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id a48sm8245585eei.19.2010.07.27.14.10.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 14:10:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1280261936.4462.6.camel@walleee>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753107Ab0G0VM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 17:12:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:32949 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751330Ab0G0VM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:12:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6RL9chS024677
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 27 Jul 2010 23:09:38 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OdrQo-0001xL-NA; Tue, 27 Jul 2010 23:11:22 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OdrQo-000609-KK; Tue, 27 Jul 2010 23:11:22 +0200
+X-Mailer: git-send-email 1.7.2.25.g50ec3
+In-Reply-To: <vpqaapcy6xq.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Jul 2010 23:09:38 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o6RL9chS024677
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1280869780.24408@LGG6ieHoA6HDeP7SW/0big
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151989>
 
-Will Palmer wrote:
+The behavior of "git ls-files -t" is very misleading (see
+http://thread.gmane.org/gmane.comp.version-control.git/126516 and
+http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
+for examples of mislead users) and badly documented, hence we point the
+users to superior alternatives.
 
-> the purpose of the patch was to respect --abbrev instead of always
-> abbreviating to a minimum of 7 characters. /Not/ to respect abbrev
-> "instead of always abbreviating".
+The feature is marked as "semi-obsolete" but not "scheduled for removal"
+since it's a plumbing command, scripts might use it, and Git testsuite
+already uses it to test the state of the index.
 
-Sure, though it had that added effect.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Should fix the formatting issue.
 
-One goal of that series was to be able to write formats like this:
+Finally, I also added a mention of diff-tree --name-status too.
 
-	%C(commit)commit %H%Creset
-	%M(Merge: %p
-	)Author: %an <%ae>
-	Date:   %ad
+ Documentation/git-ls-files.txt |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
 
-	%w(0,4,4)%B
-
-to replicate the effect of --format=medium.  With diff-tree (and
-rev-list before v1.7.0.6~1^2) that is not possible if %p abbreviates
-by default.
-
-Of course, v1.7.0.6~1^2 illustrates that no one seems to have been
-relying on the format of Merge: lines, anyway, so I am not saying that
-to make diff-tree --format=medium abbreviate by default would be a bad
-change.
-
-> Perhaps armed with that phrasing, a
-> more general solution, such as equating "0" with "DEFAULT_ABBREV" rather
-> than "no abbrev", could be applied?
-
-Maybe.  If so, one would have to deal with the other callers that
-explicitly set abbrev to 0.
-
- probably just confusing no-ops:
-
- - bisect.c::bisect_rev_setup
- - bisect.c::show_diff_tree (to imitate diff-tree: probably a no-op
-   because there is no setup_revisions call)
-
- means FULL_SHA1:
-
- - diff-files.c::cmd_diff_files
- - diff-index.c::cmd_diff_index
- - diff-tree.c:cmd_diff_tree
- - revision.c::handle_revision_opt
-
-Hope that helps,
-Jonathan
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 3521637..710e87a 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -106,8 +106,16 @@ OPTIONS
+ 	with `-s` or `-u` options does not make any sense.
+ 
+ -t::
+-	Identify the file status with the following tags (followed by
+-	a space) at the start of each line:
++	This feature is semi-deprecated. For scripting purpose,
++	linkgit:git-status[1] `--porcelain` and
++	linkgit:git-diff-tree[1] `--name-status` are almost always
++	superior alternatives, and users should look at
++	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
++	`--name-status` for more user-friendly alternatives.
+++
++This option identifies the file status with the following tags (followed by
++a space) at the start of each line:
++
+ 	H::	cached
+ 	S::	skip-worktree
+ 	M::	unmerged
+-- 
+1.7.2.25.g50ec3
