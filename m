@@ -1,80 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/4] tests: implicitly skip SYMLINKS tests using
- <prereq>
-Date: Tue, 27 Jul 2010 16:17:37 -0500
-Message-ID: <20100727211737.GA11768@burratino>
-References: <1280265254-19642-1-git-send-email-avarab@gmail.com>
- <1280265254-19642-2-git-send-email-avarab@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:18:59 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/4] Allow detached form for git diff --stat-name-width and --stat-width.
+Date: Tue, 27 Jul 2010 23:21:57 +0200
+Message-ID: <1280265719-30968-3-git-send-email-Matthieu.Moy@imag.fr>
+References: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:22:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrYB-0001Bt-D2
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:18:59 +0200
+	id 1Odrbl-0002ZA-NZ
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752077Ab0G0VSy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:18:54 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:62729 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750964Ab0G0VSx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:18:53 -0400
-Received: by ewy23 with SMTP id 23so1485595ewy.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:18:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=dziVnCCgCfmTJqF2dEp8JZpwqs3g7X8vi1XmYRiXNks=;
-        b=UcmQRJQEOU/3NNLszsN7/8OtWM4/lK7Z9g8LvWLYmXvw28fPEjYAlN/FnmLlKIDXir
-         zL7l1y5JWVwVxiHFxzt1VtQjfr2dFv9VNH2npDUZDJutsReu5DJRVpmtLlRbfbXrQt4b
-         V/vjMNXwqc+bS69OXqtHLsgrarDQv1H++/sDQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=jhn5htmDN+IOBIBZxu+IC4fBA5xNY7OBZnMTgDVgQX1ehk39njAS83tCQf/WBPLWgo
-         hQsUpSK4JmpVS8blqg1gJUlfOrFMun7y1m5GL2XaBrt92S4ysAJRDsr149+VSLFfKJJQ
-         JDuXwuJ7imAN2E2y421/VEPlWBziYsrzRM57Q=
-Received: by 10.213.19.211 with SMTP id c19mr7485386ebb.93.1280265532393;
-        Tue, 27 Jul 2010 14:18:52 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id v59sm8257034eeh.22.2010.07.27.14.18.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 14:18:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1280265254-19642-2-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752059Ab0G0VWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 17:22:37 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:42512 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750964Ab0G0VWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:22:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6RLKJR1026592
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 27 Jul 2010 23:20:19 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Odrb9-00025k-1z; Tue, 27 Jul 2010 23:22:03 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Odrb9-00084p-0m; Tue, 27 Jul 2010 23:22:03 +0200
+X-Mailer: git-send-email 1.7.2.25.g9ebe3
+In-Reply-To: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Jul 2010 23:20:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o6RLKJR1026592
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1280870419.48985@GP4ES0p3B7fV4dza7r/ZLw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152000>
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-> +++ b/t/t4004-diff-rename-symlink.sh
-> @@ -40,8 +34,9 @@ test_expect_success \
->  # rezrov and nitfol are rename/copy of frotz and bozbar should be
->  # a new creation.
-> =20
-> -GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >current
-> -cat >expected <<\EOF
-> +test_expect_success SYMLINKS 'setup diff output' "
-> +    GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >curren=
-t
-> +    cat >expected <<\EOF
->  diff --git a/bozbar b/bozbar
->  new file mode 120000
->  --- /dev/null
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ diff.c |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
 
-Probably belongs in a separate patch.  More importantly, it is missing
-&&-chaining (not a regression, but it is best to set a good example).
+diff --git a/diff.c b/diff.c
+index 41b39be..c8ee603 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3044,6 +3044,7 @@ int diff_opt_parse(struct diff_options *options, const char **argv, int ac)
+ 	else if (!strcmp(arg, "-s"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+ 	else if (!prefixcmp(arg, "--stat")) {
++		argcount = 1;
+ 		char *end;
+ 		int width = options->stat_width;
+ 		int name_width = options->stat_name_width;
+@@ -3052,8 +3053,20 @@ int diff_opt_parse(struct diff_options *options, const char **argv, int ac)
+ 
+ 		switch (*arg) {
+ 		case '-':
++			if (!strcmp(arg, "-width")) {
++				if (!argv[1])
++					die("Option `--stat-width' requires a value");
++				width = strtoul(argv[1], &end, 10);
++				argcount = 2;
++			}
+ 			if (!prefixcmp(arg, "-width="))
+ 				width = strtoul(arg + 7, &end, 10);
++			else if (!strcmp(arg, "-name-width")) {
++				if (!argv[1])
++					die("Option `--stat-name-width' requires a value");
++				name_width = strtoul(argv[1], &end, 10);
++				argcount = 2;
++			}				
+ 			else if (!prefixcmp(arg, "-name-width="))
+ 				name_width = strtoul(arg + 12, &end, 10);
+ 			break;
+@@ -3069,6 +3082,7 @@ int diff_opt_parse(struct diff_options *options, const char **argv, int ac)
+ 		options->output_format |= DIFF_FORMAT_DIFFSTAT;
+ 		options->stat_name_width = name_width;
+ 		options->stat_width = width;
++		return argcount;
+ 	}
+ 
+ 	/* renames options */
+-- 
+1.7.2.25.g9ebe3
