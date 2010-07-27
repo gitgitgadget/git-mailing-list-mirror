@@ -1,103 +1,171 @@
 From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Configurable callbacks for missing objects (we Re: upload-pack:
-	support subtree packing)
-Date: Tue, 27 Jul 2010 14:51:27 -0400
-Message-ID: <20100727185127.GD25124@worldvisions.ca>
-References: <1280187370-23675-1-git-send-email-pclouds@gmail.com> <1280187370-23675-2-git-send-email-pclouds@gmail.com> <20100727144605.GA25268@spearce.org>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Tue, 27 Jul 2010 15:15:08 -0400
+Message-ID: <AANLkTi=6SDQ2A0Zxf8DiSSNzSfUS43M7wmCkKKraOd8w@mail.gmail.com>
+References: <4C472B48.8050101@gmail.com> <4C49B31F.8000102@xiplink.com> 
+	<AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> 
+	<201007261051.41663.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 27 20:51:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 21:15:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdpFE-0002hE-5u
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 20:51:16 +0200
+	id 1Odpcm-0004Pb-Ht
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 21:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210Ab0G0SvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 14:51:11 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61385 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750996Ab0G0SvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 14:51:09 -0400
-Received: by iwn7 with SMTP id 7so3932204iwn.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 11:51:09 -0700 (PDT)
+	id S1751230Ab0G0TPb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 15:15:31 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:44069 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750980Ab0G0TPa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 15:15:30 -0400
+Received: by wyf19 with SMTP id 19so3410910wyf.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 12:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=qM1Nq9ax34ZcR9cu3zESMqjZ98Uc4zXSJy786PStYn0=;
-        b=NMcXMv0zjE9Hb5c7DpmL6C8zongFiepQcY663Bn3s4FL9vDpeIO8X8V04eB9fEJ9gP
-         EkhDCeWKF6Ad6WhG59rLjHTVnYbf6gvXuTVaj8HQ0gmLAXoTaEfQWAr03cv8IVnv9O7m
-         uqu19aFdEH8XFKbbhk47BShr/3Lg3cTWimnw0=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Myv/vN74ZRtS/t9YfHkjNtZbfm/PRfxyA9V719Sta+k=;
+        b=J80CF+yEdbkeCWcK0CS6d06dkkZU939cbd1ljXOVrdI5GmgpahUMNQWoQGaBAxWKHo
+         5tmOMla9HEwNs9hcVE5CgjsS+szxHhVKjzyRnAs3yfn/0rruKI6C5HJ2EITx+WDrVbxA
+         mpDN8NXjZcW06Gn/877agASkDyFgpAyMjq7BI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=BqJXYW0j6Gz7U9ljbqzh7SAH08kd9Nh55beNcjK2jJQTN9bW5yLAgTYjTc9iTnvAIP
-         dj8e/oEaAyQzEbnYFTUVIhhsAoGyePaNI3TC8JoyTP6QMuh/OCcq3I+KIW4yeMo+R5vJ
-         nu9VUGZFH5lyo0WmvXhsZtXJ2HZz6N2r1oKJo=
-Received: by 10.231.149.3 with SMTP id r3mr10598806ibv.109.1280256668439;
-        Tue, 27 Jul 2010 11:51:08 -0700 (PDT)
-Received: from afterlife.apenwarr.local ([66.51.252.152])
-        by mx.google.com with ESMTPS id r3sm5042746ibk.7.2010.07.27.11.51.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 11:51:07 -0700 (PDT)
-Received: from apenwarr by afterlife.apenwarr.local with local (Exim 4.69)
-	(envelope-from <apenwarr@afterlife.apenwarr.local>)
-	id 1OdpFP-0006Xv-I1; Tue, 27 Jul 2010 14:51:27 -0400
-Content-Disposition: inline
-In-Reply-To: <20100727144605.GA25268@spearce.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ls44IiCnmfj7IcZEX1TsCv+OTdSgutMQCJSUcftSlAAT9Bs4xg9tzFffGKyWM6EPuX
+         NLPrTQwjynhdTeA1vrO+iE8/K1pv4vIcP6FWWQ3pR3/80tO/kQfHeJsmyWcLmPYpTI6z
+         9MRIn1y2ixpCveta6a4Si33/gpjqrPpGOVuhg=
+Received: by 10.216.165.201 with SMTP id e51mr9372958wel.89.1280258128208; 
+	Tue, 27 Jul 2010 12:15:28 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Tue, 27 Jul 2010 12:15:08 -0700 (PDT)
+In-Reply-To: <201007261051.41663.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151975>
 
-On Tue, Jul 27, 2010 at 07:46:05AM -0700, Shawn O. Pearce wrote:
+On Mon, Jul 26, 2010 at 4:51 AM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> On Sat, 24 Jul 2010 00:50, Avery Pennarun wrote:
+>> My bup project (http://github.com/apenwarr/bup) is all about huge
+>> repositories. =A0It handles repositories with hundreds of gigabytes,=
+ and
+>> trees containing millions of files (entire filesystems), quite nicel=
+y.
+>> =A0Of course, it's not a version control system, so it won't solve y=
+our
+>> problems. =A0It's just evidence that large repositories are actually
+>> quite manageable without changing the fundamentals of git.
+>
+> There is also git-bigfiles project, although it is more about large
+> [binary] files than large repositories per se (many files, long histo=
+ry).
 
-> But I disagree with the client rewriting the commits in order to
-> work with them locally.  Doing so means you can't take a commit
-> from your team's issue tracker and look it up.  And any commit
-> you create can't be pushed back to the server without rewriting.
-> Its messy for the end-user to work with.
+Right.  git-bigfiles is valuable, but it's valuable with or without
+submodules.  (If you have large blobs, submodules won't save you.)
 
-Yeah, that doesn't sound ideal.  And I wrote git-subtree, which does exactly
-that, so I should know :)
+bup happens to have its own way of dealing with large files too, but
+it may not be applicable to git.  It does result in lots and lots of
+smaller objects, though, which is why I know git repositories are
+fundamentally capable of handling lots and lots of smaller objects :)
 
-> I would prefer doing something more like what we do with shallow
-> on the client side.  Record in a magic file the path(s) that we
-> did actually obtain.  During fsck, rev-list, or read-tree the
-> client skips over any paths that don't match that file's listing.
-> Then we can keep the same commit SHA-1s, but we won't complain that
-> there are objects missing.
+> Note that with 'bup' you might not see problems with large repositori=
+es
+> because it does not examine code paths that are slow in large reposit=
+ories
+> (gc, log, path-delimited log).
 
-Disclaimer: I've never looked at any of the fetch code.
+gc is a huge problem.  bup avoids it entirely (it foregoes delta
+compression); git gc fails completely on such large repositories (100+
+GB).  There's no reason this has to be true forever, but yes, to
+support really big repos, git gc would need to be improved somewhat.
+=46or most reasonably sane repos (a few GB) you can get reasonable
+performance by just making your biggest packfiles .keep so they don't
+keep getting repacked all the time.
 
-But I've been thinking that a really elegant way to solve the problem could
-be to have a user-configurable "get the missing objects" callback.  If any
-part of git that *needs* an object can't find it, it calls this callback to
-go try to retrieve it (either just that one object, or it can request to
-download the object recursively, ie. everything it points to).
+Compared to that, log feels like not a problem at all :)  At least
+performance-wise.  The thing that sucks about log using git-subtree,
+of course, is that you get all these log messages from multiple
+projects jammed together into a single repo, which is rarely what you
+want, even if it's fast.  I think the "best" solution is a single repo
+with all your objects, but still keeping the histories of each
+submodule separate.
 
-Then shallow clones could just auto-fill themselves if you really need a
-prior version, for example.
+>> IMHO, the correct answer here is to have an inotify-based daemon pro=
+d
+>> at the .git/index automatically when files get updated, so that git
+>> itself doesn't have to stat/readdir through the entire tree in order
+>> to do any of its operations. =A0(Windows also has something like ino=
+tify
+>> that would work.) =A0If you had this, then git
+>> status/diff/checkout/commit would be just as fast with zillions of
+>> files as with 10 files. =A0Sooner or later, if nobody implements thi=
+s, I
+>> promise I'll get around to it since inotify is actually easy to code
+>> for :)
+>
+> IIUC the problem is that inotify is not automatically recursive, so
+> daemon would have to take care of adding inotify trigger to each newl=
+y
+> created subdirectory.
 
-It's also conceivable that we could limit this just to blobs: downloading
-the complete set of commit objects, and probably even the complete set of
-tree objects, is probably not that expensive.  And that would allow someone
-to do virtually all operations (other than three-way merges to resolve blob
-conflicts) without having the entire repo.
+Yeah, the inotify API is kind of gross that way.  But it can be done,
+and people do.  (eg. the beagle project)
 
-I say it could be user-configurable because that's where you could plugin a
-gittorrent, or a tool that just tries fetching from a series of repositories in
-turn, etc.
+>> Also note that the only reason submodules are faster here is that
+>> they're ignoring possibly important changes. =A0Notably, when you do
+>> 'git status' from the top level, it won't warn you if you have any
+>> not-yet-committed files in any of your submodules. =A0Personally, I
+>> consider that to be really important information, but to obtain it
+>> would make 'git status' take just as long as without submodules, so
+>> you wouldn't get any benefit. =A0(I think nowadays there's a way to =
+get
+>> this recursive status information if you want it, but it'll be slow =
+of
+>> course.)
+>
+> Errr... didn't it got improved in recent git? =A0I think git-status n=
+ow
+> includes information about submodules if configured so / unless confi=
+gured
+> otherwise. =A0Isn't it?
+
+Yes, but you're still left with the choice between slow (checks all
+files in all submodules) and not slow (might miss stuff).  This isn't
+a submodule question, really, it's an overall performance question
+with huge checkouts with or without submodules.
+
+>>> We chose git-submodule over git-subtree mainly because git-submodul=
+e lets us
+>>> selectively checkout different parts of our code. =A0(AFAIK sparse =
+checkouts
+>>> aren't yet an option.)
+>
+> Sparse checkouts are here, IIRC, but they do not solve problem of dis=
+k
+> space (they are still in repository, even if not checked out), and sp=
+eed
+> (they still need to be fetched, even if not checked out).
+
+Hmm, don't mix bandwidth usage (and thus the slowness of fetch) with
+slowness during everyday usage.  I don't mind a slow fetch now and
+then, but 'git status' should be fast. AFAIK, sparse checkouts
+*should* make git status faster.  If they don't, it's probably just a
+bug.
 
 Have fun,
 
