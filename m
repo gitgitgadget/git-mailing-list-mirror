@@ -1,174 +1,210 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Avery Pennarun <apenwarr@gmail.com>
 Subject: Re: Avery Pennarun's git-subtree?
-Date: Tue, 27 Jul 2010 13:25:15 -0700
-Message-ID: <7vaapc7jv8.fsf@alter.siamese.dyndns.org>
-References: <4C4778DE.9090905@web.de>
- <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com>
- <m31vavn8la.fsf@localhost.localdomain>
- <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com>
- <4C49B31F.8000102@xiplink.com>
- <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com>
- <AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com>
- <AANLkTimLayG_HFxGdq+Tt8hU_MApBpSdHHiYPxcakpRJ@mail.gmail.com>
- <4C4DB9AC.9000306@xiplink.com>
- <AANLkTimQywtn-0Fcr-ceLeHGeSBNROt+T=K+TowF_u5h@mail.gmail.com>
- <20100727182841.GA25124@worldvisions.ca>
+Date: Tue, 27 Jul 2010 16:57:24 -0400
+Message-ID: <AANLkTim0A0MAmpgAiaYSgYO=YbZ2gc4Upx3MQQopx6DG@mail.gmail.com>
+References: <4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> 
+	<m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> 
+	<4C49B31F.8000102@xiplink.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> 
+	<AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com> 
+	<AANLkTimLayG_HFxGdq+Tt8hU_MApBpSdHHiYPxcakpRJ@mail.gmail.com> 
+	<4C4DB9AC.9000306@xiplink.com> <AANLkTimQywtn-0Fcr-ceLeHGeSBNROt+T=K+TowF_u5h@mail.gmail.com> 
+	<20100727182841.GA25124@worldvisions.ca> <7vaapc7jv8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Marc Branchaud <marcnarc@xiplink.com>, skillzero@gmail.com,
 	Jakub Narebski <jnareb@gmail.com>,
 	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
 	Bryan Larsen <bryan.larsen@gmail.com>,
 	git <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 22:26:12 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 22:57:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odqj5-00035I-31
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 22:26:11 +0200
+	id 1OdrDk-0000rb-Qa
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 22:57:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751853Ab0G0U0F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 16:26:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60211 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751335Ab0G0U0D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 16:26:03 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 16825C86E9;
-	Tue, 27 Jul 2010 16:25:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=1CBGvUKgpZLL
-	oQ972vGXrdi+rks=; b=DSDh1RK1jDqNLNb4+FIdAKHEFRPQj73XFUu4qyi6iDkC
-	3ucpnoqEQNdWjHEKAgrgsQB12cufISnuUsPSBTMySEGLA5zCKe+EsDlYJu/2Zp7B
-	YFiXVB4JLsSwX4BxPq/k/9Q0bM7kAElABZejPTEZpRqvBRZYB9aob1vwE2a0yqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=AFtz7i
-	x4eOqCGo1DCpgPjNaF6eVubmWqOodJ9W7z9BoXKAtWJzBzf+gUH4vp6NrSefTxRE
-	85leHlC4MIEwiTH0n4RW+VDB3ZXZEEzRoKfYyXcCJQQedsghRk+jzhwF5rWYXFQW
-	yJ70lto9wGPBFeEhC3fRa0GKdpIgxcBO8wXoM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 23C4BC86DC;
-	Tue, 27 Jul 2010 16:25:39 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 878A4C86C9; Tue, 27 Jul
- 2010 16:25:17 -0400 (EDT)
-In-Reply-To: <20100727182841.GA25124@worldvisions.ca> (Avery Pennarun's
- message of "Tue\, 27 Jul 2010 14\:28\:41 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1EECB69C-99BD-11DF-A710-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753150Ab0G0U5q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 16:57:46 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:55368 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752377Ab0G0U5p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 16:57:45 -0400
+Received: by wyf19 with SMTP id 19so3513711wyf.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 13:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sPTjlsHp1KkaEf8sEASUBVQino6F6Je8bHN56Le1qU4=;
+        b=G39DzCM1oO3GkGjJ+U/fEJhtgsciXyns8VWs15GBYj/O+hCF5+wpawWoGpvTMhw4cR
+         DEpq5E5jMSLM6LFpDf6CyUXrITQ3pzMNpVk/Jnv1UsRDyiIokq/FjtODyik4WrCs67Z1
+         Y6rzndM+D07/JvfvhPQWz5aBbZ9RNKjzpAIL8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=HFIdtW59adr9OruQhPWt7ws+QhUPV+lAWEBO3FdYxXTeXSb657EIkofUuxOUCO4vGG
+         8/wMoVyokBYyUPO7i14UuKHuMGbNREXcovpG+2YCoUbJ0PLZc+s0GtldEe4ZxuPRhe1H
+         7CCjW69s9z+R4tI3ZYFNtJC2c9Ba5XnciM+oA=
+Received: by 10.227.156.200 with SMTP id y8mr9415467wbw.120.1280264264207; 
+	Tue, 27 Jul 2010 13:57:44 -0700 (PDT)
+Received: by 10.216.235.202 with HTTP; Tue, 27 Jul 2010 13:57:24 -0700 (PDT)
+In-Reply-To: <7vaapc7jv8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151985>
 
-Avery Pennarun <apenwarr@gmail.com> writes:
-
-> On Mon, Jul 26, 2010 at 09:41:42AM -0700, Linus Torvalds wrote:
+On Tue, Jul 27, 2010 at 4:25 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Avery Pennarun <apenwarr@gmail.com> writes:
+>> I agree completely. =A0The major failing of git-subtree is that it u=
+ses
+>> tree->tree links instead of tree->commit links.
+>>
+>> This was necessary only because git fundamentally *mistreats* tree->=
+commit
+>> links: it refuses to push or fetch through them automatically.
 >
->> On Mon, Jul 26, 2010 at 9:37 AM, Marc Branchaud <marcnarc@xiplink.co=
-m> wrote:
->> >
->> > I think I should mention one aspect of what we're doing, which is =
-that a lot
->> > of our submodules are based on external code, and that we occasion=
-ally need
->> > to modify or customize some of that code. =C2=A0So it's quite nice=
- for us to
->> > maintain private git mirrors of the external repos, with our own p=
-rivate
->> > branches that contain our modifications. =C2=A0Although we want to=
- get much of our
->> > changes incorporated into the upstream code bases, upstream releas=
-e cycles
->> > are rarely in sync with ours.
->>=20
->> THIS.
->>=20
->> This is why I always thought that submodules absolutely have to be
->> commits, not trees. It's why the git submodule data structures are
->> done the way they are. Anything that makes the submodule just a tree
->> is fundamentally broken, I think.
+> I do not think that is so "fundamental" as you seem to think.
 >
-> I agree completely.  The major failing of git-subtree is that it uses
-> tree->tree links instead of tree->commit links.
->
-> This was necessary only because git fundamentally *mistreats* tree->c=
-ommit
-> links: it refuses to push or fetch through them automatically.
+> Isn't it just the matter of how the default UI of object transfer com=
+mands
+> (like push and fetch) are set up?
 
-I do not think that is so "fundamental" as you seem to think.
+Well, I call it fundamental because there's currently no way to get
+the git UI to do otherwise.  It's not really just a "default."  To
+depend on this changing would have prevented me from writing
+git-subtree, which is why I didn't depend on it.  However, I agree
+that it's fixable.
 
-Isn't it just the matter of how the default UI of object transfer comma=
-nds
-(like push and fetch) are set up?
+Note that the way git treats a checked-out submodule (as you describe
+below) is also very fundamental to how this works.  git-subtree
+wouldn't have the usability that it does if 'git checkout branchname'
+didn't work perfectly will all the subtrees, which it currently does,
+but which it wouldn't if I had relied on tree->commit links.
 
-Admittedly, the way the default UI is set up is to strongly favor the
-early design decision we made back when Linus did his initial "gitlink"
-implementation, which is "separate project lives in a separate reposito=
-ry,
-and not having to check out any subproject should be the norm for using=
- a
-superproject". =20
+> Some "recursive" operations have been added to commands for which it =
+makes
+> sense (e.g. "clone --recursive") by people who cared enough. =A0Even =
+though
+> there are a few other commands that shouldn't ever learn the recursiv=
+e
+> mode (e.g. "commit --recursive -m $msg" would not make sense), there =
+still
+> are some commands where a similar "--recursive" option would make sen=
+se
+> but haven't learned it (e.g. "push --recursive").
 
-Some "recursive" operations have been added to commands for which it ma=
-kes
-sense (e.g. "clone --recursive") by people who cared enough.  Even thou=
-gh
-there are a few other commands that shouldn't ever learn the recursive
-mode (e.g. "commit --recursive -m $msg" would not make sense), there st=
-ill
-are some commands where a similar "--recursive" option would make sense
-but haven't learned it (e.g. "push --recursive").
+One problem with this line of reasoning is that "--recursive" is
+always an option.  But if submodules are ever to be easy to use, I
+think it should be the default (or settable as a default using git
+config).  This would take us a *long* way towards usability (of
+course, in addition to adding the missing features, as you mention).
 
-I also consider it merely a lack of UI enhancement that you have to clo=
-ne
-the submodule again (or cannot switch to a clean slate very easily) whe=
-n
-switching between revisions of superproject before and after you add a
-submodule, and nothing fundamental. =20
+Also, I haven't tried it, but I think 'git gc' will prune away objects
+if the only reference to them is a 'commit' link from a tree.  This
+would be undesirable too.
 
-When switching back in history to lose a recent submodule, the user
-experience should be like switching to a revision that didn't have a
-directory.  You shouldn't be able to lose your change in that directory=
-,
-but if the directory is clean, you should be able to lose it.  And when
-you switch to a more recent revision that has the submodule, you should=
- be
-able to get it back (again, if you have a precious file there, the
-checkout should barf).
+> I also consider it merely a lack of UI enhancement that you have to c=
+lone
+> the submodule again (or cannot switch to a clean slate very easily) w=
+hen
+> switching between revisions of superproject before and after you add =
+a
+> submodule, and nothing fundamental.
 
-We have added support for having "gitdir: $dir" in a regular file .git
-exactly because we wanted to be able to stash away the submodule's .git
-directory somewhere inside .git (e.g. .git/modules/<submodulename>) in =
-the
-superproject when we do that kind of branch switching, so that we can g=
-et
-it back when switching back to a revision with the submodule without
-having to re-clone (also this presumably would help when you move the
-submodule in the superproject tree), but there haven't been further wor=
-k
-to make use of this in "git submodule update" (it probably needs to sta=
-rt
-by teaching "git clone" how to make use of "gitdir: $dir", if anybody i=
-s
-interested).
+I mostly agree with this.  There is one problem I don't know how to
+solve with this idea, though: what happens when commit A adds a
+submodule in modules/mod1, commit B removes it, and then commit C
+re-adds the same submodules in modules/mod1-again?  Will it reuse the
+same submodule .git directory or a new one?  Share objects or not?
+Share branch names or not?  Share .git/config or not?
 
-By the way, I also do not think it is such a bad thing that git-subtree
-does not bind commit into its superproject tree while it is working
-"natively" (in a "git-subtree" workflow), but allows users to easily sp=
-lit
-the history into an exportable shape to upstreams of its submodules whe=
-n
-such an operqation is needed.  If you rarely push back to upstreams but
-constantly consume their changes, that sounds like a reasonable way to =
-go.
+Unless you have some kind of "unique id" scheme for submodules, this
+gets impossible to handle correctly.  And the git objects themselves
+(trees that link to commits) have nowhere to put such things.
+
+By comparison, simply putting all the stuff related to all the
+submodules into the supermodule's repo creates none of these confusing
+problems.  You could even still choose not to checkout individual
+submodules' trees if you wanted.
+
+> When switching back in history to lose a recent submodule, the user
+> experience should be like switching to a revision that didn't have a
+> directory. =A0You shouldn't be able to lose your change in that direc=
+tory,
+> but if the directory is clean, you should be able to lose it. =A0And =
+when
+> you switch to a more recent revision that has the submodule, you shou=
+ld be
+> able to get it back (again, if you have a precious file there, the
+> checkout should barf).
+
+It sounds like you're proposing that we delete the entire submodule's
+directory hierarchy when the submodule commit link goes away.  Note
+that this isn't what happens in the non-submodule case: all the *.o
+files, for example, in a deleted subdirectory are not automatically
+deleted by git.  And I think this is the behaviour we should expect.
+
+With that in mind, the situations where checkout barfs because of a
+"precious" file should be the same as they are in normal git: it
+should only be a problem if the files in question differ between the
+originally-checked-out tree and the newly-checked-out tree.
+
+Apologies if that's what you meant in the first place.
+
+> We have added support for having "gitdir: $dir" in a regular file .gi=
+t
+> exactly because we wanted to be able to stash away the submodule's .g=
+it
+> directory somewhere inside .git (e.g. .git/modules/<submodulename>) i=
+n the
+> superproject when we do that kind of branch switching, so that we can=
+ get
+> it back when switching back to a revision with the submodule without
+> having to re-clone (also this presumably would help when you move the
+> submodule in the superproject tree), but there haven't been further w=
+ork
+> to make use of this in "git submodule update" (it probably needs to s=
+tart
+> by teaching "git clone" how to make use of "gitdir: $dir", if anybody=
+ is
+> interested).
+
+I guess the real question is: just how much of a "real" repository do
+we want a submodule to act like?
+
+Thoughts:
+
+- object store: I think this should just always be shared with the
+superproject.  There's no reason to separate them that I can see.
+
+- branches: should be a way to simply not worry about branches and
+just use what's in the superproject.  Other people seem to want to be
+able to have a set of branches/tags for their submodule.
+
+- .git/config: entirely shared?  entirely separate?
+
+- remotes: I would want my submodules to never do their own
+pushing/pulling, and leave that to the supermodule; other people seem
+to disagree.
+
+=46or the particular model I'm proposing, I'm just not sure that *any*
+of the features of a separate repo are warranted... and having them
+adds a lot of complication.  (In the most basic level, you suddenly
+need to track .git directories as submodules are added/deleted/moved
+around when you checkout different revisions of the superproject, and
+there seems to be no way to do that elegantly.)
+
+Have fun,
+
+Avery
