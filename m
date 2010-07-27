@@ -1,130 +1,106 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Avery Pennarun's git-subtree?
-Date: Tue, 27 Jul 2010 14:36:58 -0400
-Message-ID: <20100727183658.GB25124@worldvisions.ca>
-References: <4C472B48.8050101@gmail.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> <AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com> <201007261056.58985.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 2/3] checkout, commit: remove confusing assignments to
+ rev.abbrev
+Date: Tue, 27 Jul 2010 13:37:07 -0500
+Message-ID: <20100727183706.GD5578@burratino>
+References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
+ <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
+ <20100725221539.GA21813@burratino>
+ <7vbp9uaii2.fsf@alter.siamese.dyndns.org>
+ <20100726190448.GA32367@burratino>
+ <7vzkxc7rpn.fsf@alter.siamese.dyndns.org>
+ <20100727182942.GB5578@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: skillzero@gmail.com, Marc Branchaud <marcnarc@xiplink.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Bryan Larsen <bryan.larsen@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 20:37:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org,
+	Will Palmer <wmpalmer@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 20:38:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odp1O-0004aD-Tj
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 20:36:59 +0200
+	id 1Odp2p-0005EZ-I1
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 20:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518Ab0G0Sgy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 14:36:54 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:38201 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753380Ab0G0Sgx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 14:36:53 -0400
-Received: by gyg10 with SMTP id 10so1354323gyg.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 11:36:52 -0700 (PDT)
+	id S1753470Ab0G0SiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 14:38:22 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46727 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753388Ab0G0SiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 14:38:21 -0400
+Received: by wyf19 with SMTP id 19so3372421wyf.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 11:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=coyOmbFwvO6RsUmFWtXOCt29DirALJdlVm/N40C6FLU=;
-        b=C2/zbAPH8pzFDietqX5majlogDK3wV47V/OsfRVelpSEb3n9/0dNkrq+Icj6yAmdQb
-         RAgVbzQ9m94D0O73XX79+3nWxzOq/xxarkJKyhSCrUOblJS7hgfiHyuAM9Eb2ySztQ+f
-         fcyAvJmbORvO7jplmQulwBEao0lROFi5CNRpk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=e7QXuFXzRSBKktIGckgonRKshJ26CvkPvXi4eF+XZqE=;
+        b=v25jF6QA1AgwqO9mLbOM1MkKjfEmS8Qox7xZdt0NjwFwr1xl84MI0NyhRQ2HZjnkoC
+         +sA/fYdMBpuUmcFVZAPyPmJYaRoJXppjIReYrawoLfRv4jKL58j5wVYXjc+rNIrA8LSd
+         7bzyx+ay1yLKKNAr21nxUk687D+hafTK2CkrQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ZHp6rhW3OECMMVoEJveX+tqxXZAZPpKF7EurLXQMsMJDNoj2r5Alt41YLe9e5tHJ32
-         Br0sqex3Vl6G6I6q0wiPZgcfgud1HLW+uIs8PNGrqOAOmwqD2VEtBQwAoaMzMeY2f8Gk
-         UYkY0MfJBmr8h4OJTB4jqeB3akmGjxah28Pu4=
-Received: by 10.90.86.17 with SMTP id j17mr6994391agb.206.1280255801177;
-        Tue, 27 Jul 2010 11:36:41 -0700 (PDT)
-Received: from afterlife.apenwarr.local ([66.51.252.152])
-        by mx.google.com with ESMTPS id h8sm5032690ibk.9.2010.07.27.11.36.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 11:36:39 -0700 (PDT)
-Received: from apenwarr by afterlife.apenwarr.local with local (Exim 4.69)
-	(envelope-from <apenwarr@afterlife.apenwarr.local>)
-	id 1Odp1O-0006Xd-Ep; Tue, 27 Jul 2010 14:36:58 -0400
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tfLxpLRuvUG3p+5rvSIobqxUkMutDeh4yzhFMfEigs/uJHozcbb6/wXMBBkxcvMxRO
+         HU35eGmbawTGbwPdmRMhFugFskEHzrRzKRvDjjj1VhbddKIXxHE7J3HiPFisBx8JnG/h
+         uONr5VbaDXPioNgGIgNtZOTZ1VQP4iYws3Djo=
+Received: by 10.227.127.82 with SMTP id f18mr9218538wbs.185.1280255899479;
+        Tue, 27 Jul 2010 11:38:19 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id a1sm4483107wbb.20.2010.07.27.11.38.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 11:38:15 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <201007261056.58985.jnareb@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20100727182942.GB5578@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151971>
 
-On Mon, Jul 26, 2010 at 10:56:58AM +0200, Jakub Narebski wrote:
-> On Sat, Jul 24, 2010, skillzero@gmail.com napisa=C5=82:
-> > git-submodule might be technically possible in this situation, but
-> > having to commit and push each submodule and then commit and push t=
-he
-> > super module makes it slightly worse than just dealing with the
-> > space/download/performance issues of one huge repository.
->=20
-> But this is just a matter for improving UI for dealing with submodule=
-s,
-> isn't it.   For example having "git commit --recursive" would help
-> with 'having to commit each submodule', though how you would write co=
-mmit
-> messages then: perhaps supermodule commit message could be by default
-> composed out of submodules commits (if any).  "git push --recursive"
-> (or some support for push in "git remote") would help with 'having to
-> push each submodule'.
+Since they do not precede setup_revisions, these assignments of 0 to
+rev.abbrev have no effect.
 
-=46or "recursive" commit, for my own workflow, I would rather have it w=
-ork
-like this: from the toplevel, I can 'git commit' any set of files, as l=
-ong
-as they all fall inside a particular submodule.  That is, if I do
+v1.7.1.1~17^2~3 (2010-05-03) taught the log --format=%h machinery
+to respect --abbrev instead of always abbreviating, so we have to pay
+attention to the abbrev setting now.
 
-	git commit mod1/*.c mod2/*.c
-=09
-it should reject it (with a helpful message), because the commit would =
-cross
-submodule boundaries.  But if I do
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ builtin/checkout.c |    1 -
+ builtin/commit.c   |    1 -
+ 2 files changed, 0 insertions(+), 2 deletions(-)
 
-	git commit mod1/*.c
-=09
-I think it should create a new commit in mod1, leave my superproject
-pointing at that new commit, and stop (ie. without the superproject hav=
-ing
-committed the new commit pointer).
-
-Why?  Because my normal workflow is:
-
-  - make a bunch of superproject/submodule changes until they work.
-  - commit the submodule changes with a submodule-relevant message
-  - commit the superproject change with a supermodule-relevant message
- =20
-I wouldn't want to share commit messages between the two, so actually h=
-aving
-a single commit process be "recursive" would not do me any good.
-
-However, pushing is a separate issue entirely.  Having push be recursiv=
-e
-would be easy, but it doesn't solve the *real* problem with pushing: gi=
-t
-doesn't know what branch to push to in the submodule, and the submodule=
- most
-likely isn't pointing at a pushable repo at all, even if the supermodul=
-e is.=20
-This is why I keep coming back to the idea that I really want to push a=
-ll
-the submodule objects into the superproject's repo.
-
-Have fun,
-
-Avery
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 1994be9..eef2b48 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -279,7 +279,6 @@ static void show_local_changes(struct object *head)
+ 	struct rev_info rev;
+ 	/* I think we want full paths, even if we're in a subdirectory. */
+ 	init_revisions(&rev, NULL);
+-	rev.abbrev = 0;
+ 	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
+ 	if (diff_setup_done(&rev.diffopt) < 0)
+ 		die("diff_setup_done failed");
+diff --git a/builtin/commit.c b/builtin/commit.c
+index a78dbd8..279cfc1 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1163,7 +1163,6 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
+ 	init_revisions(&rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 
+-	rev.abbrev = 0;
+ 	rev.diff = 1;
+ 	rev.diffopt.output_format =
+ 		DIFF_FORMAT_SHORTSTAT | DIFF_FORMAT_SUMMARY;
+-- 
+1.7.2.21.g04ff
