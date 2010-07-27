@@ -1,247 +1,247 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/4] Allow detached form (e.g. "-S foo" instead of "-Sfoo") for diff options
-Date: Tue, 27 Jul 2010 23:21:56 +0200
-Message-ID: <1280265719-30968-2-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 3/4] Allow detached form (e.g. "git log --grep foo") in log options.
+Date: Tue, 27 Jul 2010 23:21:58 +0200
+Message-ID: <1280265719-30968-4-git-send-email-Matthieu.Moy@imag.fr>
 References: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:23:25 2010
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:25:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrcR-0002qX-V9
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:23:24 +0200
+	id 1Odrep-0003h5-3e
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:25:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753053Ab0G0VXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 17:23:19 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42533 "EHLO rominette.imag.fr"
+	id S1751886Ab0G0VZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 17:25:46 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:53108 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752680Ab0G0VXS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:23:18 -0400
+	id S1751027Ab0G0VZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:25:45 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6RLKI5B026590
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6RLBtPD006277
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Jul 2010 23:20:18 +0200
+	Tue, 27 Jul 2010 23:11:55 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1Odrb8-00025h-HW; Tue, 27 Jul 2010 23:22:02 +0200
+	id 1Odrb9-00025o-IT; Tue, 27 Jul 2010 23:22:03 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1Odrb8-00084m-GO; Tue, 27 Jul 2010 23:22:02 +0200
+	id 1Odrb9-00084s-HA; Tue, 27 Jul 2010 23:22:03 +0200
 X-Mailer: git-send-email 1.7.2.25.g9ebe3
 In-Reply-To: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Jul 2010 23:20:19 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 27 Jul 2010 23:11:55 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6RLKI5B026590
+X-MailScanner-ID: o6RLBtPD006277
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280870419.48513@nVd/ihogZCr42veF27+LXw
+MailScanner-NULL-Check: 1280869919.13411@b6alnhskG5U2vxU3T+KCVQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152003>
 
-This patch does not handle --stat-name-width and --stat-width, which are
-special-cases where IF_LONG_OPT do not apply. They are handled in a
-separate patch to ease review.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- diff.c                       |   61 +++++++++++++++++++++++++++++++-----------
- diff.h                       |   15 ++++++++++
- t/t4013-diff-various.sh      |    1 +
- t/t4013/diff.log_-S_F_master |    7 +++++
- t/t4202-log.sh               |    5 +++
- 5 files changed, 73 insertions(+), 16 deletions(-)
- create mode 100644 t/t4013/diff.log_-S_F_master
+ revision.c     |   86 ++++++++++++++++++++++++++++++++++---------------------
+ t/t4202-log.sh |    7 ++++
+ 2 files changed, 60 insertions(+), 33 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 17873f3..41b39be 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2990,9 +2990,23 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
- 
- static int diff_scoreopt_parse(const char *opt);
- 
--int diff_opt_parse(struct diff_options *options, const char **av, int ac)
-+int diff_opt_parse(struct diff_options *options, const char **argv, int ac)
+diff --git a/revision.c b/revision.c
+index 7e82efd..5d62340 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1148,6 +1148,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 			       int *unkc, const char **unkv)
  {
--	const char *arg = av[0];
-+	const char *arg = argv[0];
+ 	const char *arg = argv[0];
 +	const char *optarg;
 +	int argcount;
-+
-+#define IF_SHORT_OPT(optname)			\
-+	((!strcmp(arg, "-" #optname)		\
-+	  && (argv[1] || (die("Option `" #optname "' requires a value"), 1),	\
-+	      optarg   = argv[1],	       		\
-+	      argcount = 2,			\
-+	      1)) ||				\
-+	 (!prefixcmp(arg, "-" #optname)		\
-+	  && (optarg = arg + strlen("-" #optname),	\
-+	      argcount = 1,			\
-+	       1)))
-+
  
- 	/* Output format options */
- 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch"))
-@@ -3149,10 +3163,11 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	/* pseudo revision arguments */
+ 	if (!strcmp(arg, "--all") || !strcmp(arg, "--branches") ||
+@@ -1160,11 +1162,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		return 1;
+ 	}
+ 
+-	if (!prefixcmp(arg, "--max-count=")) {
+-		revs->max_count = atoi(arg + 12);
++	if (IF_LONG_OPT(max-count)) {
++		revs->max_count = atoi(optarg);
+ 		revs->no_walk = 0;
+-	} else if (!prefixcmp(arg, "--skip=")) {
+-		revs->skip_count = atoi(arg + 7);
++		return argcount;
++	} else if (IF_LONG_OPT(skip)) {
++		revs->skip_count = atoi(optarg);
++		return argcount;
+ 	} else if ((*arg == '-') && isdigit(arg[1])) {
+ 	/* accept -<digit>, like traditional "head" */
+ 		revs->max_count = atoi(arg + 1);
+@@ -1178,18 +1182,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!prefixcmp(arg, "-n")) {
+ 		revs->max_count = atoi(arg + 2);
+ 		revs->no_walk = 0;
+-	} else if (!prefixcmp(arg, "--max-age=")) {
+-		revs->max_age = atoi(arg + 10);
+-	} else if (!prefixcmp(arg, "--since=")) {
+-		revs->max_age = approxidate(arg + 8);
+-	} else if (!prefixcmp(arg, "--after=")) {
+-		revs->max_age = approxidate(arg + 8);
+-	} else if (!prefixcmp(arg, "--min-age=")) {
+-		revs->min_age = atoi(arg + 10);
+-	} else if (!prefixcmp(arg, "--before=")) {
+-		revs->min_age = approxidate(arg + 9);
+-	} else if (!prefixcmp(arg, "--until=")) {
+-		revs->min_age = approxidate(arg + 8);
++	} else if (IF_LONG_OPT(max-age)) {
++		revs->max_age = atoi(optarg);
++		return argcount;
++	} else if (IF_LONG_OPT(since)) {
++		revs->max_age = approxidate(optarg);
++		return argcount;
++	} else if (IF_LONG_OPT(after)) {
++		revs->max_age = approxidate(optarg);
++		return argcount;
++	} else if (IF_LONG_OPT(min-age)) {
++		revs->min_age = atoi(optarg);
++		return argcount;
++	} else if (IF_LONG_OPT(before)) {
++		revs->min_age = approxidate(optarg);
++		return argcount;
++	} else if (IF_LONG_OPT(until)) {
++		revs->min_age = approxidate(optarg);
++		return argcount;
+ 	} else if (!strcmp(arg, "--first-parent")) {
+ 		revs->first_parent_only = 1;
+ 	} else if (!strcmp(arg, "--ancestry-path")) {
+@@ -1295,27 +1305,32 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->pretty_given = 1;
+ 		get_commit_format(arg+8, revs);
+ 	} else if (!prefixcmp(arg, "--pretty=") || !prefixcmp(arg, "--format=")) {
++		/*
++		 * Detached form ("--pretty X" as opposed to "--pretty=X")
++		 * not allowed, since the argument is optional.
++		 */
+ 		revs->verbose_header = 1;
+ 		revs->pretty_given = 1;
+ 		get_commit_format(arg+9, revs);
+ 	} else if (!strcmp(arg, "--show-notes")) {
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
+-	} else if (!prefixcmp(arg, "--show-notes=")) {
++	} else if (IF_LONG_OPT(show-notes)) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		revs->show_notes = 1;
+ 		revs->show_notes_given = 1;
+ 		if (!revs->notes_opt.extra_notes_refs)
+ 			revs->notes_opt.extra_notes_refs = xcalloc(1, sizeof(struct string_list));
+-		if (!prefixcmp(arg+13, "refs/"))
++		if (!prefixcmp(optarg, "refs/"))
+ 			/* happy */;
+-		else if (!prefixcmp(arg+13, "notes/"))
++		else if (!prefixcmp(optarg, "notes/"))
+ 			strbuf_addstr(&buf, "refs/");
  		else
- 			die("bad --word-diff argument: %s", type);
+ 			strbuf_addstr(&buf, "refs/notes/");
+-		strbuf_addstr(&buf, arg+13);
++		strbuf_addstr(&buf, optarg);
+ 		string_list_append(revs->notes_opt.extra_notes_refs,
+ 				   strbuf_detach(&buf, NULL));
++		return argcount;
+ 	} else if (!strcmp(arg, "--no-notes")) {
+ 		revs->show_notes = 0;
+ 		revs->show_notes_given = 1;
+@@ -1343,12 +1358,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->abbrev = 0;
+ 	} else if (!strcmp(arg, "--abbrev")) {
+ 		revs->abbrev = DEFAULT_ABBREV;
+-	} else if (!prefixcmp(arg, "--abbrev=")) {
+-		revs->abbrev = strtoul(arg + 9, NULL, 10);
++	} else if (IF_LONG_OPT(abbrev)) {
++		revs->abbrev = strtoul(optarg, NULL, 10);
+ 		if (revs->abbrev < MINIMUM_ABBREV)
+ 			revs->abbrev = MINIMUM_ABBREV;
+ 		else if (revs->abbrev > 40)
+ 			revs->abbrev = 40;
++		return argcount;
+ 	} else if (!strcmp(arg, "--abbrev-commit")) {
+ 		revs->abbrev_commit = 1;
+ 	} else if (!strcmp(arg, "--full-diff")) {
+@@ -1359,21 +1375,25 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 	} else if (!strcmp(arg, "--relative-date")) {
+ 		revs->date_mode = DATE_RELATIVE;
+ 		revs->date_mode_explicit = 1;
+-	} else if (!strncmp(arg, "--date=", 7)) {
+-		revs->date_mode = parse_date_format(arg + 7);
++	} else if (IF_LONG_OPT(date)) {
++		revs->date_mode = parse_date_format(optarg);
+ 		revs->date_mode_explicit = 1;
++		return argcount;
+ 	} else if (!strcmp(arg, "--log-size")) {
+ 		revs->show_log_size = 1;
  	}
--	else if (!prefixcmp(arg, "--word-diff-regex=")) {
-+	else if (IF_LONG_OPT(word-diff-regex)) {
- 		if (options->word_diff == DIFF_WORDS_NONE)
- 			options->word_diff = DIFF_WORDS_PLAIN;
--		options->word_regex = arg + 18;
-+		options->word_regex = optarg;
+ 	/*
+ 	 * Grepping the commit log
+ 	 */
+-	else if (!prefixcmp(arg, "--author=")) {
+-		add_header_grep(revs, GREP_HEADER_AUTHOR, arg+9);
+-	} else if (!prefixcmp(arg, "--committer=")) {
+-		add_header_grep(revs, GREP_HEADER_COMMITTER, arg+12);
+-	} else if (!prefixcmp(arg, "--grep=")) {
+-		add_message_grep(revs, arg+7);
++	else if (IF_LONG_OPT(author)) {
++		add_header_grep(revs, GREP_HEADER_AUTHOR, optarg);
 +		return argcount;
- 	}
- 	else if (!strcmp(arg, "--exit-code"))
- 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
-@@ -3180,18 +3195,28 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
- 		options->line_termination = 0;
-+	else if (!strcmp(arg, "-l")) {
-+		options->rename_limit = strtoul(optarg, NULL, 10);
-+		return 2;
-+	}
- 	else if (!prefixcmp(arg, "-l"))
- 		options->rename_limit = strtoul(arg+2, NULL, 10);
--	else if (!prefixcmp(arg, "-S"))
--		options->pickaxe = arg + 2;
-+	else if (IF_SHORT_OPT(S)) {
-+		options->pickaxe = optarg;
++	} else if (IF_LONG_OPT(committer)) {
++		add_header_grep(revs, GREP_HEADER_COMMITTER, optarg);
 +		return argcount;
-+	}
- 	else if (!strcmp(arg, "--pickaxe-all"))
- 		options->pickaxe_opts = DIFF_PICKAXE_ALL;
- 	else if (!strcmp(arg, "--pickaxe-regex"))
- 		options->pickaxe_opts = DIFF_PICKAXE_REGEX;
--	else if (!prefixcmp(arg, "-O"))
--		options->orderfile = arg + 2;
--	else if (!prefixcmp(arg, "--diff-filter="))
--		options->filter = arg + 14;
-+	else if (IF_SHORT_OPT(O)) {
-+		options->orderfile = optarg;
++	} else if (IF_LONG_OPT(grep)) {
++		add_message_grep(revs, optarg);
 +		return argcount;
-+	}
-+	else if (IF_LONG_OPT(diff-filter)) {
-+		options->filter = optarg;
+ 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
+ 		revs->grep_filter.regflags |= REG_EXTENDED;
+ 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
+@@ -1382,12 +1402,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->grep_filter.fixed = 1;
+ 	} else if (!strcmp(arg, "--all-match")) {
+ 		revs->grep_filter.all_match = 1;
+-	} else if (!prefixcmp(arg, "--encoding=")) {
+-		arg += 11;
++	} else if (IF_LONG_OPT(encoding)) {
+ 		if (strcmp(arg, "none"))
+-			git_log_output_encoding = xstrdup(arg);
++			git_log_output_encoding = xstrdup(optarg);
+ 		else
+ 			git_log_output_encoding = "";
 +		return argcount;
-+	}
- 	else if (!strcmp(arg, "--abbrev"))
- 		options->abbrev = DEFAULT_ABBREV;
- 	else if (!prefixcmp(arg, "--abbrev=")) {
-@@ -3201,20 +3226,24 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else if (40 < options->abbrev)
- 			options->abbrev = 40;
- 	}
--	else if (!prefixcmp(arg, "--src-prefix="))
--		options->a_prefix = arg + 13;
--	else if (!prefixcmp(arg, "--dst-prefix="))
--		options->b_prefix = arg + 13;
-+	else if (IF_LONG_OPT(src-prefix)) {
-+		options->a_prefix = optarg;
-+		return argcount;
-+	}
-+	else if (IF_LONG_OPT(dst-prefix)) {
-+		options->b_prefix = optarg;
-+	}
- 	else if (!strcmp(arg, "--no-prefix"))
- 		options->a_prefix = options->b_prefix = "";
- 	else if (opt_arg(arg, '\0', "inter-hunk-context",
- 			 &options->interhunkcontext))
- 		;
--	else if (!prefixcmp(arg, "--output=")) {
--		options->file = fopen(arg + strlen("--output="), "w");
-+	else if (IF_LONG_OPT(output)) {
-+		options->file = fopen(optarg, "w");
- 		if (!options->file)
- 			die_errno("Could not open '%s'", arg + strlen("--output="));
- 		options->close_file = 1;
-+		return argcount;
- 	} else
- 		return 0;
- 	return 1;
-diff --git a/diff.h b/diff.h
-index 063d10a..ca1a693 100644
---- a/diff.h
-+++ b/diff.h
-@@ -214,6 +214,21 @@ extern void diff_unmerge(struct diff_options *,
- #define DIFF_SETUP_USE_CACHE		2
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
-+/*
-+ * Poor man's alternative to parse-option, only meant to be used in
-+ * handle_revision_opt and  diff_opt_parse.
-+ */
-+#define IF_LONG_OPT(optname)					\
-+	((!strcmp(arg, "--" #optname)				\
-+	  && (argv[1] || (die("Option `" #optname "' requires a value"), 1), \
-+	      optarg   = argv[1],	       			\
-+	      argcount = 2,					\
-+	      1)) ||						\
-+	 (!prefixcmp(arg, "--" #optname "=")			\
-+	  && (optarg = arg + strlen("--" #optname "="),		\
-+	      argcount = 1,					\
-+	      1)))
-+
- extern int git_diff_basic_config(const char *var, const char *value, void *cb);
- extern int git_diff_ui_config(const char *var, const char *value, void *cb);
- extern int diff_use_color_default;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index dae6358..8036e00 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -208,6 +208,7 @@ log -p --first-parent master
- log -m -p --first-parent master
- log -m -p master
- log -SF master
-+log -S F master
- log -SF -p master
- log --decorate --all
- log --decorate=full --all
-diff --git a/t/t4013/diff.log_-S_F_master b/t/t4013/diff.log_-S_F_master
-new file mode 100644
-index 0000000..978d2b4
---- /dev/null
-+++ b/t/t4013/diff.log_-S_F_master
-@@ -0,0 +1,7 @@
-+$ git log -S F master
-+commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:02:00 2006 +0000
-+
-+    Third
-+$
+ 	} else if (!strcmp(arg, "--reverse")) {
+ 		revs->reverse ^= 1;
+ 	} else if (!strcmp(arg, "--children")) {
 diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 2230e60..3352935 100755
+index 3352935..f912589 100755
 --- a/t/t4202-log.sh
 +++ b/t/t4202-log.sh
-@@ -101,11 +101,16 @@ test_expect_success 'oneline' '
- test_expect_success 'diff-filter=A' '
- 
- 	actual=$(git log --pretty="format:%s" --diff-filter=A HEAD) &&
-+	actual_detached=$(git log --pretty="format:%s" --diff-filter A HEAD) &&
- 	expect=$(echo fifth ; echo fourth ; echo third ; echo initial) &&
- 	test "$actual" = "$expect" || {
- 		echo Oops
- 		echo "Actual: $actual"
- 		false
-+	} &&
-+	test "$actual" = "$actual_detached" || {
-+		echo Oops. Detached form broken
-+		echo "Actual_detached: $actual_detached"
- 	}
- 
+@@ -208,6 +208,13 @@ test_expect_success 'log --grep' '
+ 	test_cmp expect actual
  '
+ 
++test_expect_success 'log --grep option parsing' '
++	echo second >expect &&
++	git log -1 --pretty="tformat:%s" --grep sec >actual &&
++	test_cmp expect actual &&
++	test_must_fail git log -1 --pretty="tformat:%s" --grep
++'
++
+ test_expect_success 'log -i --grep' '
+ 	echo Second >expect &&
+ 	git log -1 --pretty="tformat:%s" -i --grep=sec >actual &&
 -- 
 1.7.2.25.g9ebe3
