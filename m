@@ -1,106 +1,137 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/3] checkout, commit: remove confusing assignments to
- rev.abbrev
-Date: Tue, 27 Jul 2010 13:37:07 -0500
-Message-ID: <20100727183706.GD5578@burratino>
-References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
- <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
- <20100725221539.GA21813@burratino>
- <7vbp9uaii2.fsf@alter.siamese.dyndns.org>
- <20100726190448.GA32367@burratino>
- <7vzkxc7rpn.fsf@alter.siamese.dyndns.org>
- <20100727182942.GB5578@burratino>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Avery Pennarun's git-subtree?
+Date: Tue, 27 Jul 2010 14:40:47 -0400
+Message-ID: <20100727184047.GC25124@worldvisions.ca>
+References: <AANLkTinl1SB1x1bEObLIo-LWjvxM-Yf1PfdUp4DNJda3@mail.gmail.com> <AANLkTikl2zKcie3YGhBHrGbYbX3yB9QCtuJTKjsAfK07@mail.gmail.com> <AANLkTimiROxqf7KcRKTZvMvsFdd4w3jK_GLeZR8n7tdA@mail.gmail.com> <4C4778DE.9090905@web.de> <AANLkTim9nfRGjhpn2Mj-1GntLsDX7xeyL2pegB84aZX8@mail.gmail.com> <m31vavn8la.fsf@localhost.localdomain> <AANLkTimOb2VjYI21wQsC64lm4HsVPwpRWd1twIUBnbJ3@mail.gmail.com> <4C49B0E9.1090300@web.de> <AANLkTimSoe9iqu4cJCH1d4rVsWHpFn3+8pbrCxsnVM1D@mail.gmail.com> <4C4C9743.9080902@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org,
-	Will Palmer <wmpalmer@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 20:38:28 2010
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Bryan Larsen <bryan.larsen@gmail.com>,
+	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Jul 27 20:40:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odp2p-0005EZ-I1
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 20:38:27 +0200
+	id 1Odp4u-000601-6U
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 20:40:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753470Ab0G0SiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 14:38:22 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46727 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753388Ab0G0SiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 14:38:21 -0400
-Received: by wyf19 with SMTP id 19so3372421wyf.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 11:38:20 -0700 (PDT)
+	id S1753368Ab0G0Skb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 14:40:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52530 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751893Ab0G0Ska (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 14:40:30 -0400
+Received: by iwn7 with SMTP id 7so3927209iwn.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 11:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=e7QXuFXzRSBKktIGckgonRKshJ26CvkPvXi4eF+XZqE=;
-        b=v25jF6QA1AgwqO9mLbOM1MkKjfEmS8Qox7xZdt0NjwFwr1xl84MI0NyhRQ2HZjnkoC
-         +sA/fYdMBpuUmcFVZAPyPmJYaRoJXppjIReYrawoLfRv4jKL58j5wVYXjc+rNIrA8LSd
-         7bzyx+ay1yLKKNAr21nxUk687D+hafTK2CkrQ=
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Octe/Vzl/7ok72czVvWSjZ5rMX593LjaraixsN8MzOo=;
+        b=Wgz64hn8gUfQbNDn3kKfLQrT2uATPD2KGk2Xmg8sy0qJyq9YvvIffE6am1JAL6jbq8
+         G++n/vTiy1+9hM/55ZkWv1JDaW6nJqFCZejqXsaAByFz9teyHYmLW7ungmhIbef8zxE0
+         KnfcPwmOUv4I9cbIUEapsS2zXmk6xIDK8tmx4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=tfLxpLRuvUG3p+5rvSIobqxUkMutDeh4yzhFMfEigs/uJHozcbb6/wXMBBkxcvMxRO
-         HU35eGmbawTGbwPdmRMhFugFskEHzrRzKRvDjjj1VhbddKIXxHE7J3HiPFisBx8JnG/h
-         uONr5VbaDXPioNgGIgNtZOTZ1VQP4iYws3Djo=
-Received: by 10.227.127.82 with SMTP id f18mr9218538wbs.185.1280255899479;
-        Tue, 27 Jul 2010 11:38:19 -0700 (PDT)
-Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
-        by mx.google.com with ESMTPS id a1sm4483107wbb.20.2010.07.27.11.38.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 11:38:15 -0700 (PDT)
+        b=ktWJeoUb8nnfZ21lIGBrtEw4p/UE2RmEi/8ybsVxZ30KcYkMDOFP6IEeNstG871LD+
+         6ROutzdwuMAkYWfOFLV1ofEg4TaPBAIzlnue5RyRbuomfMKfkKAFRvH1TolUjPQMWZ0i
+         faVZk7LzA8HQcvEnZXCTITPBT+4Zho0Tscq2o=
+Received: by 10.231.183.10 with SMTP id ce10mr10594243ibb.96.1280256030016;
+        Tue, 27 Jul 2010 11:40:30 -0700 (PDT)
+Received: from afterlife.apenwarr.local ([66.51.252.152])
+        by mx.google.com with ESMTPS id h8sm5031519ibk.15.2010.07.27.11.40.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 11:40:28 -0700 (PDT)
+Received: from apenwarr by afterlife.apenwarr.local with local (Exim 4.69)
+	(envelope-from <apenwarr@afterlife.apenwarr.local>)
+	id 1Odp55-0006Xk-S7; Tue, 27 Jul 2010 14:40:47 -0400
 Content-Disposition: inline
-In-Reply-To: <20100727182942.GB5578@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <4C4C9743.9080902@web.de>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151972>
 
-Since they do not precede setup_revisions, these assignments of 0 to
-rev.abbrev have no effect.
+On Sun, Jul 25, 2010 at 09:57:55PM +0200, Jens Lehmann wrote:
 
-v1.7.1.1~17^2~3 (2010-05-03) taught the log --format=%h machinery
-to respect --abbrev instead of always abbreviating, so we have to pay
-attention to the abbrev setting now.
+> Am 24.07.2010 00:32, schrieb Avery Pennarun:
+> > On Fri, Jul 23, 2010 at 11:10 AM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> >> You forgot what we do as best practice at work:
+> >>
+> >> [3] Fork the gem repos on github (or another server reachable by your
+> >>    co-workers) and use those, so you don't have to change the URL
+> >>    later:
+> >>
+> >>    git://github.com/apenwarrrubygems/gem[1..n]
+> >>
+> >> Your problems go away, setup has to be done only once on project
+> >> start and not for every developer, you can use your own branchnames
+> >> and you have a staging repo from where you can push patches upstream
+> >> if necessary.
+> > 
+> > Now all your fellow developers have to push their submodule code to a
+> > single upstream repo?  That's rather centralized and un-git-like.
+> 
+> But isn't that exactly the same thing you would have to do for your
+> superproject too to be able to push your changes for your fellows?
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin/checkout.c |    1 -
- builtin/commit.c   |    1 -
- 2 files changed, 0 insertions(+), 2 deletions(-)
+No.  On github, only I can push to my superproject's history, and yet
+everyone can still pull from me.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1994be9..eef2b48 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -279,7 +279,6 @@ static void show_local_changes(struct object *head)
- 	struct rev_info rev;
- 	/* I think we want full paths, even if we're in a subdirectory. */
- 	init_revisions(&rev, NULL);
--	rev.abbrev = 0;
- 	rev.diffopt.output_format |= DIFF_FORMAT_NAME_STATUS;
- 	if (diff_setup_done(&rev.diffopt) < 0)
- 		die("diff_setup_done failed");
-diff --git a/builtin/commit.c b/builtin/commit.c
-index a78dbd8..279cfc1 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1163,7 +1163,6 @@ static void print_summary(const char *prefix, const unsigned char *sha1)
- 	init_revisions(&rev, prefix);
- 	setup_revisions(0, NULL, &rev, NULL);
- 
--	rev.abbrev = 0;
- 	rev.diff = 1;
- 	rev.diffopt.output_format =
- 		DIFF_FORMAT_SHORTSTAT | DIFF_FORMAT_SUMMARY;
--- 
-1.7.2.21.g04ff
+With what you're proposing, for all my submodules, we can't each have our
+own project; we all have to push to the shared one.
+
+(Just to be clear: I don't want to fork *every submodule by hand every
+time*.  I just want *my* stuff to be in *my* repo.  The easiest way to do
+this would be to have all my changes in a single repo, ie. my fork of the
+superproject.)
+
+> >> It is the /commits/ that have to be
+> >> done twice, once in the submodule and
+> >> then in the superproject. (But that is
+> >> not necessarily bad, imagine having git
+> >> gui as a submodule: you would be
+> >> automagically reminded that stuff for
+> >> git gui should be sent somewhere else
+> >> than to Junio).
+> > 
+> > Yup, I agree that requiring a separate commit to the submodule repo is
+> > not a bad idea.  I always do this anyway even when using git-subtree,
+> > because I'm thinking ahead to the day when I'll push my submodule
+> > changes upstream and I want my commit message to make sense.  But
+> > that's because I think ahead like that.  Having the tool force me to
+> > do it would be harmless and help people avoid mistakes.
+> 
+> And submodules force you to do that.
+
+Yes.  This is a limitation of submodules, but not one that bothers me.  And
+it encourages good behaviour.
+
+> > The syntax for it ought to be nice though.  I should be able to do:
+> > 
+> >     git commit -- path/to/submodule
+> > 
+> > And have it commit everything in the submodule tree as a new commit in
+> > the submodule.  I don't want to have to think about cd'ing to
+> > path/to/submodule just so I can commit the files I changed in there.
+> 
+> Yes, that would be a nice feature (assuming you have a branch in the
+> submodule to commit these changes to ;-).
+
+No, I explicitly *don't* want to have to have a branch in the submodule;
+that's too much extra thinking at that stage.
+
+Have fun,
+
+Avery
