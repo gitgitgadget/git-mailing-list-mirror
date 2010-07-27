@@ -1,108 +1,95 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: [PATCH v2] Document ls-files -t as semi-obsolete.
-Date: Tue, 27 Jul 2010 21:07:49 +0200
-Message-ID: <201007272107.50204.barra_cuda@katamail.com>
-References: <1280162391-18701-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Tong Sun <suntong@cpan.org>
+Subject: Re: Recommended work flow with git to send in patches
+Date: Tue, 27 Jul 2010 15:48:37 -0400
+Message-ID: <AANLkTi=psuiq-GP9zV=pY6swNAUF-MwJt6COrNDVDLqu@mail.gmail.com>
+References: <AANLkTiksAOpFG3vGVGcbeZ0NcpQ5FbDjnZ7yDxUsAY_r@mail.gmail.com>
+	<m3y6cwkew7.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 27 21:15:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 21:48:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odpd3-0004Xi-PM
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 21:15:54 +0200
+	id 1Odq8r-0002Xv-7F
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 21:48:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308Ab0G0TPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 15:15:48 -0400
-Received: from smtp183-pc.aruba.it ([62.149.157.183]:54172 "HELO
-	smtp2-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1750858Ab0G0TPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 15:15:48 -0400
-Received: (qmail 17584 invoked by uid 89); 27 Jul 2010 19:15:39 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2-pc.ad.aruba.it
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=6.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.5
-Received: from unknown (HELO darkstar.localnet) (barra?cuda@katamail.com@78.134.118.169)
-  by smtp2-pc.ad.aruba.it with SMTP; 27 Jul 2010 19:15:38 -0000
-User-Agent: KMail/1.13.5 (Linux/2.6.34.1-mike-1mike; KDE/4.4.5; i686; ; )
-In-Reply-To: <1280162391-18701-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1751447Ab0G0Tsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 15:48:39 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:38620 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751331Ab0G0Tsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 15:48:38 -0400
+Received: by pzk26 with SMTP id 26so1537086pzk.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 12:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        bh=kJ5YK6GidZThCbUIUfKHYUUaj+kdxu1o9dt4kXAb5Wc=;
+        b=Job2de8BRdkuPTYQs9wUs8f0kmeoQw/3llvD5oHQ/Tr95I16FHAuJ10aiT0ddl2dJd
+         rsWYQaA9OyoXr5pjCXXO8a9xGfKm6OJjUQcX5xJABQ8A7WKR0M96jt2s/fk83Xx+oyzX
+         ad8G3naA+6ZFkW4+irbw407bWdPknSIq5DLvE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=RQfZgHEvRWep9s19DLx79QbEJ/5/zcuSjiYd5qg/P486wHSM2f3pX963cjE5CgkyzB
+         beR9mKwvVv4kKEY7t+8w/tQNEQqmgvx5eTEr3vBufgwKTCEXVQX7BvTbgM32P3NOlEtU
+         Qa4UlqVX75QI6bB7HzMiYNjMFT3uDvFMOVZds=
+Received: by 10.114.109.14 with SMTP id h14mr11343123wac.4.1280260117796; Tue, 
+	27 Jul 2010 12:48:37 -0700 (PDT)
+Received: by 10.114.130.11 with HTTP; Tue, 27 Jul 2010 12:48:37 -0700 (PDT)
+In-Reply-To: <m3y6cwkew7.fsf@localhost.localdomain>
+X-Google-Sender-Auth: I9NmpZZzjnS299iT0UuWDs3FBJ4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151977>
 
-On Monday 26 July 2010, Matthieu Moy wrote:
->  Documentation/git-ls-files.txt |    6 ++++++
->  1 files changed, 6 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-> index 3521637..2cc3243 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -106,6 +106,12 @@ OPTIONS
->  	with `-s` or `-u` options does not make any sense.
->  
->  -t::
-> +	This feature is semi-deprecated. For scripting purpose,
-> +	linkgit:git-status[1] `--porcelain` is almost always a
-> +	superior alternative, and users should look at
-> +	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
-> +	`--name-status` for more user-friendly alternatives.
-> +
->  	Identify the file status with the following tags (followed by
->  	a space) at the start of each line:
->  	H::	cached
+On Tue, Jul 27, 2010 at 1:35 PM, Jakub Narebski <jnareb@gmail.com> wrote:
 
-I think this breaks formatting. Shouldn't it be more like the following?
-(I.e. with a single '+' before "Identify...").
+> Doesn't GRML have web page / wiki page for developers?
 
-And maybe rephrase the line
-"Identify the file status with the following tags (followed by
-a space) at the start of each line"
-into
-"This option identifies..."
-just to set apart "semi-deprecation" and "explanation" of the option.
+Yes, http://grml.org/git/, but it is kind of reference book style,
+doesn't cover much on the work flow, especially on the topic of
+no-writing-privilege user contributing back.
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 3521637..ef84d41 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -106,15 +106,21 @@ OPTIONS
- 	with `-s` or `-u` options does not make any sense.
- 
- -t::
--	Identify the file status with the following tags (followed by
--	a space) at the start of each line:
--	H::	cached
--	S::	skip-worktree
--	M::	unmerged
--	R::	removed/deleted
--	C::	modified/changed
--	K::	to be killed
--	?::	other
-+	This feature is semi-deprecated. For scripting purpose,
-+	linkgit:git-status[1] `--porcelain` is almost always a
-+	superior alternative, and users should look at
-+	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
-+	`--name-status` for more user-friendly alternatives.
-++
-+Identify the file status with the following tags (followed by
-+a space) at the start of each line:
-+H::	cached
-+S::	skip-worktree
-+M::	unmerged
-+R::	removed/deleted
-+C::	modified/changed
-+K::	to be killed
-+?::	other
- 
- -v::
- 	Similar to `-t`, but use lowercase letters for files
+>> - do initial git pull into grml-debootstrap
+>>
+>>   git pull git://git.grml.org/grml-debootstrap master
+>
+> Why not git-clone (possibly shallow, if you are working on one-shot
+> patch or patch series)?
+
+Ok, to explain it, I have to touch upon my "life long story" of using
+git. Long story short on this, the recommended work flow that I
+searched and found from the Inet was to do 'git clone' from web then
+'git clone' a local working copy. Here is my trying log:
+
+# Download the latest version of the repository without downloading all the
+history, using "shallow checkouts".
+
+  git clone --depth 1 git://git.grml.org/grml-debootstrap.git
+
+create working repo:
+
+  $ git-clone --depth 1 grml-debootstrap grml-debootstrap.working
+  Initialized empty Git repository in
+/export/repositories/gitwork/grml/grml-debootstrap.working/.git/
+  fatal: attempt to fetch/clone from a shallow repository
+  ^^^^^^^^^^^^^^^
+
+Seeing that fatal error, and not knowing where to get help from, I
+just gave up the 'git clone' approach. Please be specific (with git
+commands), how would I use 'git clone' for working on one-shot patch
+or patch series.
+
+Got to run, will comment on the rest later.
+
+thanks
