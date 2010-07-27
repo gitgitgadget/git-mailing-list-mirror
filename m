@@ -1,82 +1,93 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC PATCH 1/2] Allow "git log --grep foo" as synonym for "git 
-	log --grep=foo".
-Date: Tue, 27 Jul 2010 13:46:46 +0000
-Message-ID: <AANLkTilUTblhzPKiIsugHMDeK-W4gL4eUyyP6KSZbIb5@mail.gmail.com>
-References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1280168078-31147-2-git-send-email-Matthieu.Moy@imag.fr>
-	<AANLkTim1S_IYbPArQqX91OOPtoh2-rIWmTRon50_j2p3@mail.gmail.com>
-	<vpqsk355ea6.fsf@bauges.imag.fr>
-	<AANLkTikcKd4nEZuot5fyZyiLqwAWl4gQyqtNg2512SKM@mail.gmail.com>
-	<vpqmxtd3vj7.fsf@bauges.imag.fr>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: RFC: Sparse checkout improvements (was: Re: question (possibly) on
+ git subtree/submodules)
+Date: Tue, 27 Jul 2010 10:24:13 -0400
+Message-ID: <4C4EEC0D.2070105@xiplink.com>
+References: <xotjlj92i9gr.fsf@leonardo.pit.corp.google.com>	<4C49C9C6.3080409@gmail.com> <loom.20100727T125434-697@post.gmane.org> <m3bp9tks6e.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 27 15:46:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Alex <ajb44.geo@yahoo.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 16:24:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdkUe-0002Ss-O7
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 15:46:53 +0200
+	id 1Odl4q-0002Zp-2u
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 16:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661Ab0G0Nqr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 09:46:47 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:43430 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751811Ab0G0Nqq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 09:46:46 -0400
-Received: by pzk26 with SMTP id 26so1353180pzk.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 06:46:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=c4w/Lgwx/Dw2IctLYhcbymL6Huzhe/2rmYAdPrAGI58=;
-        b=JXeoOxnIMHG/T/t1gR0uf4bfKoyguDXH6jQg2RX2fpd1FBtrdJdCFAg92FFzoaaV7h
-         Rfn49maNRqpCTCaU4nUAwjwtar2yyg4C21ye5g7P9WuQdRHPJuWciK3j9cYKpCgLh7Fm
-         9dd1tbfD1PhPYTLnzLyFJXpdYwshEechZrZws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TAbNqwRwkd0sEZ93SROSWNh3VyZ76xcxICq4U3Wcg458OKQT1IWz4ikSJRMlPfWfsg
-         fjXbgpaMscRmT2yPYuAhvGHs4QqGPxQ7ZBjfOR/bvgl0lSRPbR2P5Iwihfa3AsSlCu4i
-         ch3A+6RaNlaDz5X7C7J8FdJ3ngcYY3xWuYNkw=
-Received: by 10.114.172.2 with SMTP id u2mr13123092wae.198.1280238406243; Tue, 
-	27 Jul 2010 06:46:46 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Tue, 27 Jul 2010 06:46:46 -0700 (PDT)
-In-Reply-To: <vpqmxtd3vj7.fsf@bauges.imag.fr>
+	id S1754668Ab0G0OYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 10:24:09 -0400
+Received: from smtp152.dfw.emailsrvr.com ([67.192.241.152]:35133 "EHLO
+	smtp152.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753835Ab0G0OYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 10:24:08 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp5.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTP id E0CAF58480;
+	Tue, 27 Jul 2010 10:24:06 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: from [192.168.1.136] (unknown [208.85.112.101])
+	(Authenticated sender: mbranchaud@xiplink.com)
+	by smtp5.relay.dfw1a.emailsrvr.com (SMTP Server) with ESMTPSA id C9B9E58477;
+	Tue, 27 Jul 2010 10:24:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
+In-Reply-To: <m3bp9tks6e.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151944>
 
-On Tue, Jul 27, 2010 at 13:26, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
->
->> On Tue, Jul 27, 2010 at 11:56, Matthieu Moy
->> <Matthieu.Moy@grenoble-inp.fr> wrote:
->>>
->>> Sure, that's why the patch is just an RFC. I wanted to start the
->>> discussion before diving into the repetitive task or migration to
->>> parse-option for others, and I picked --grep and -S because they're
->>> the ones which annoys me the most.
+On 10-07-27 08:48 AM, Jakub Narebski wrote:
+> Alex <ajb44.geo@yahoo.com> writes:
+> 
+>> Chris Packham <judge.packham <at> gmail.com> writes:
 >>
->> Ah, there was nothing to indicate that,
->
-> Except if you read carefully ;-)
->
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> This small patch serie is a very early RFC: it implements the featur=
-e
->> for just two options.
+>>> The short answer is no. Nothing git has currently will let you clone a
+>>> subset of files. 
+>>
+>> Isn't that what 'sparse checkout' does?
+>> (http://www.kernel.org/pub/software/scm/git/docs/git-read-tree.html#_sparse_checkout)
+> 
+> No, 'sparse checkout' is only about checkout, i.e. the working area.
+> You still have all objects in repository, only part of tree (part of
+> project / repository) is not checked out, not present on disk as
+> files.
 
-Ah, missed that. Sorry for the noise.
+There's no such thing as a "sparse fetch" but you can do something like
+
+	git clone -n git://there/foo.git
+	cd foo
+
+then
+
+	git checkout origin/<branch> -- <paths...>
+
+or
+	git config core.sparseCheckout true
+	[ Add paths to .git/info/sparse-checkout ]
+	git checkout <branch>
+
+
+but it's fairly inconvenient for day-to-day work.  Also, putting a
+.git/info/sparse-checkout file in a public repo seems of limited use.
+
+So IMHO the current sparse-checkout feature is pretty bare-bones and could
+use some meat.  Here's some thoughts:
+
+* What's missing is a way to define named collections of paths
+("sparse-sets?") in .git/info/sparse-checkout, so that you can conveniently
+checkout a particular subset of the working directory.  It would also be nice
+to switch between different sparse-sets.
+
+* It would also be good to have a way for a repo to define a default
+sparse-set, so that a clone would only checkout that default.
+
+* I also think that core.sparseCheckout should be true by default, and git
+should impose no sparseness if .git/info/sparse-checkout is missing or empty.
+
+Comments?
+
+		M.
