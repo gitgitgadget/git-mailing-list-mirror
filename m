@@ -1,72 +1,85 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: object/pack size x5 larger than a fresh clone?
-Date: Tue, 27 Jul 2010 10:03:17 -0700
-Message-ID: <20100727170317.GC25268@spearce.org>
-References: <AANLkTimL+wfu+yMPutq2VHD6vO2AtaF_7FpWt8aZPm1c@mail.gmail.com> <4C4D42BA.6070900@op5.se> <AANLkTimLAROADKgWvEXa9QyyDGbWQGP+9BdbcN4fMHJ0@mail.gmail.com> <7v7hkg982j.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Recommended work flow with git to send in patches
+Date: Tue, 27 Jul 2010 10:11:38 -0700 (PDT)
+Message-ID: <m339v4luk2.fsf@localhost.localdomain>
+References: <AANLkTiksAOpFG3vGVGcbeZ0NcpQ5FbDjnZ7yDxUsAY_r@mail.gmail.com>
+	<20100727153901.GA5351@kytes>
+	<AANLkTinEQKuxHD6MbXq43E=AWymebvoWXM5v2Tm6vejw@mail.gmail.com>
+	<20100727164500.GD5351@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Hin-Tak Leung <hintak.leung@gmail.com>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 19:03:27 2010
+Cc: Tong Sun <suntong@cpan.org>, git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 19:11:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdnYt-0005Ec-BM
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 19:03:27 +0200
+	id 1Odngx-0001mq-MI
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 19:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751564Ab0G0RDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 13:03:22 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:50135 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751457Ab0G0RDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 13:03:21 -0400
-Received: by pzk26 with SMTP id 26so1462197pzk.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 10:03:21 -0700 (PDT)
-Received: by 10.142.148.2 with SMTP id v2mr10694910wfd.114.1280250200967;
-        Tue, 27 Jul 2010 10:03:20 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id t11sm5884105wfc.16.2010.07.27.10.03.18
+	id S1752365Ab0G0RLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 13:11:41 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51805 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752142Ab0G0RLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 13:11:41 -0400
+Received: by fxm14 with SMTP id 14so772577fxm.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 10:11:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=JqtNm+qFPwr31pppf76syZA7nLiDMrN7pKVA9pr1INk=;
+        b=MHLYmODyhZc9uBA4ORKH8Kqgs4JHu7ZpudDaCtEp8q/dW0F0kZPGuvV5OLqpU+5i11
+         3rmqqFdlyZl1x4AbQJVZl2Tez6sacVEjU9q/j6Wd3Lai6axHHze5GmAeOusUQfJlmSg4
+         jQH9Nh2iByvfiK1jt4gqJsI1vBSk4u63Gf+xc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Z6a/39oWGFF3Dl9hJxsHyylMORWgSSY8iv+d3XNBuyyzX1VNGeAehRzlKloeWb2/m7
+         CBomwrBlSZDX62EJLQAIUs0n5+1oX/leUy0dP6RpoFopGbuWuXtE0MKz8/hPkALxCReo
+         tt84hIMbgbdpeqXTCzrfjDrc0ziWe+MPVRJmY=
+Received: by 10.223.111.206 with SMTP id t14mr8411874fap.32.1280250698392;
+        Tue, 27 Jul 2010 10:11:38 -0700 (PDT)
+Received: from localhost.localdomain (abvi50.neoplus.adsl.tpnet.pl [83.8.206.50])
+        by mx.google.com with ESMTPS id c5sm2060555fac.19.2010.07.27.10.11.33
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 10:03:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v7hkg982j.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+        Tue, 27 Jul 2010 10:11:38 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6RHAuHZ000300;
+	Tue, 27 Jul 2010 19:11:06 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6RHAcS7032757;
+	Tue, 27 Jul 2010 19:10:38 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20100727164500.GD5351@kytes>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151959>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Hin-Tak Leung <hintak.leung@gmail.com> writes:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> Tong Sun writes:
+> > Thanks a lot for the comment.
+> > 
+> > Could you elaborate it a bit with actual commands, starting from 'git
+> > pull git://remote/project master' please?
 > 
-> > So I guess these *.idx without a corresponding *.pack are safe to
-> > delete? But git gc or one of the other house keeping commands should
-> > get rid of them though, I think.
-> 
-> I agree.  I think the dumb transports like http:// grab *.idx files
-> without downloading corresponding *.pack files when they encounter an
-> object that is not found loose in the originating repository to see which
-> packfile to fetch, but after they are done (or when they are interrupted,
-> for that matter), these *.idx files may not be getting garbage-collected.
-> 
-> And they should be, perhaps with or without some grace period (I don't
-> know which offhand---I didn't think this through).
+> $ git symbolic-ref HEAD refs/heads/rollout
+> $ rm .git/index # Git recreates it automatically anyway
+> $ git add LICENSE
+> $ git commit -m "Add LICENSE" # root commit
+> $ # git add ... git commit cycle
 
-We should GC these, but only after a grace period.
-
-Long ago when I used dumb http it really helped to have the *.idx
-files cached.  If the upstream only did an incremental repack holding
-onto the *.idx files locally meant I didn't need to redownload
-them in order to rule-out those packs as onces interesting for the
-current fetch.
-
-Maybe we just prune those during git fetch if they don't have a
-local *.pack and they don't match a pack listed by the remote's
-objects/info/packs file?
+Ramkumar, in git 1.7.2 you can simply use "git checkout --orphan newbranch".
 
 -- 
-Shawn.
+Jakub Narebski
+Poland
+ShadeHawk on #git
