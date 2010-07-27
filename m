@@ -1,70 +1,77 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: Re: [PATCH] Fix git rebase --continue to work with touched files
-Date: Tue, 27 Jul 2010 14:29:24 -0700 (PDT)
-Message-ID: <783007.41425.qm@web30007.mail.mud.yahoo.com>
-References: <1280225198-4539-1-git-send-email-ddkilzer@kilzer.net> <201007272153.36646.j6t@kdbg.org>
-Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:29:32 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/4] Allow detached forms (--option arg) for git log and friends
+Date: Tue, 27 Jul 2010 23:21:55 +0200
+Message-ID: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:31:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdriN-0005IE-6w
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:29:31 +0200
+	id 1OdrkL-0006CN-2X
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:31:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750985Ab0G0V30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 17:29:26 -0400
-Received: from web30007.mail.mud.yahoo.com ([209.191.69.24]:30073 "HELO
-	web30007.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750795Ab0G0V30 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 17:29:26 -0400
-Received: (qmail 42732 invoked by uid 60001); 27 Jul 2010 21:29:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1280266164; bh=lWQtdhcRJVaTmXzeuqLw4SS7o+TP6TUwiuTlCKagl2o=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=PJRB2FEUCXKUARfilL/ZuyGanyJCbwqeY+zorRe3OGGuk0ldaXtxnQDNB0pofHTJjfkDkdFzjP6dQ2I0ensozH6bcbezTlqG1+8YUDC2d4Us4sTN7xp0TheWp7swh32M0AKcchCnATNeVU5OTAaP3DhXaTTmUeAUEdYuYzltca8=
-X-YMail-OSG: pB0zMZUVM1kCCNFGomTG8uMb_KaQZRnAMIAREH7jyfuGelA
- f3jvoezpBw5ilii1G9YJfUEuww4hSefiEoBUt2sYyEl8a1a96ftfdZ3.md4z
- uJayW.UwMA72B6ayWO8_D9pVK2UDxau3skJIWUFVRNQwzj1_G_yqzbJQgHEw
- OSz2z3Hn0ciNprkY5EmdUVHrxhxKElgJOuawTi7I0Z4g7evbrhKVk1zyizDv
- Q19fsabWh.AZo.JZ3fywY1wpWQTfwSkJL1ZidlIIc1Vs8WthoebEcliPW_Iq
- ScPl4SuC7PsmF_qxyI1n0SPzj_i0f0ICztDpD.CA-
-Received: from [17.202.32.26] by web30007.mail.mud.yahoo.com via HTTP; Tue, 27 Jul 2010 14:29:24 PDT
-X-RocketYMMF: ddkilzer
-X-Mailer: YahooMailRC/420.4 YahooMailWebService/0.8.105.277674
-In-Reply-To: <201007272153.36646.j6t@kdbg.org>
+	id S1752637Ab0G0Vb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 17:31:28 -0400
+Received: from imag.imag.fr ([129.88.30.1]:50281 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752388Ab0G0Vb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:31:27 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o6RLM2iB003213
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 27 Jul 2010 23:22:02 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Odrb8-00025e-08; Tue, 27 Jul 2010 23:22:02 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Odrb7-00084j-VF; Tue, 27 Jul 2010 23:22:01 +0200
+X-Mailer: git-send-email 1.7.2.25.g9ebe3
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 27 Jul 2010 23:22:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152005>
 
-On Tue, July 27, 2010 at 12:53:36 PM, Johannes Sixt wrote:
- 
-> On Dienstag, 27. Juli 2010, David D. Kilzer wrote:
-> > +test_expect_success  'rebase --continue works with touched file' '
-> > +     count=1
-> > +    while test "$count" -le 4
-> >  +    do
-> > +        git branch  topic$count topic &&
-> > +         test_must_fail git rebase --onto master master topic$count &&
-> >  +        echo "Resolved" >F2 &&
-> >  +        git add F2 &&
-> >  +        touch F1 &&
-> >  +        git rebase --continue || exit  1
-> 
-> exit from a test is a big no-no. But I think you can reproduce the  issue 
-> reliably and get rid of the entire loop if you use test-chmtime  instead of 
-> touch:
-> 
->         test-chmtime  =-60 F1 &&
-> 
-> i.e. set the modification time back one  minute.
+After discssion on the early RFC, I decided that a migration to
+parse-option would be too much work given my git time budget and the
+expected benefits. I'm accomplishing the same goal with very simple
+macros, and one can now do e.g.
 
+  git log -S foo
+  git log --grep bar
 
-That works great!  Thanks!
+Options with optional arguments do not accept this form.
 
-Dave
+To ease review, I'm splitting the serie into 4 batches of applications
+of the same pattern.
+
+Matthieu Moy (4):
+  Allow detached form (e.g. "-S foo" instead of "-Sfoo") for diff
+    options
+  Allow detached form for git diff --stat-name-width and --stat-width.
+  Allow detached form (e.g. "git log --grep foo") in log options.
+  Allow detached form for --glob, --branches, --tags and --remote.
+
+ diff.c                       |   75 +++++++++++++++++++++------
+ diff.h                       |   15 +++++
+ revision.c                   |  117 +++++++++++++++++++++++++++---------------
+ t/t4013-diff-various.sh      |    1 +
+ t/t4013/diff.log_-S_F_master |    7 +++
+ t/t4202-log.sh               |   12 ++++
+ t/t6018-rev-list-glob.sh     |    6 ++
+ 7 files changed, 176 insertions(+), 57 deletions(-)
+ create mode 100644 t/t4013/diff.log_-S_F_master
+
+-- 
+1.7.2.25.g9ebe3
