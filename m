@@ -1,74 +1,103 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC PATCH 1/2] Allow "git log --grep foo" as synonym for "git  log --grep=foo".
-Date: Tue, 27 Jul 2010 10:45:53 +0200
-Message-ID: <vpqbp9t9uta.fsf@bauges.imag.fr>
-References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1280168078-31147-2-git-send-email-Matthieu.Moy@imag.fr>
-	<AANLkTikGPMDvxQKjpKOBge8UwrC_GuC36_=C_tYR_ngr@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv3] Updated patch series for providing mechanism to list  available repositories
+Date: Tue, 27 Jul 2010 02:02:38 -0700 (PDT)
+Message-ID: <m3sk35l2n6.fsf@localhost.localdomain>
+References: <1279725355-23016-1-git-send-email-gdb@mit.edu>
+	<AANLkTin+EMYHrr11Dba9Mob+b_Dar_cedWmTsDF=AHFt@mail.gmail.com>
+	<AANLkTilSqePFPkteFd7DBgmdhqJHfUDuW_qhkbWVVb3Y@mail.gmail.com>
+	<AANLkTikG0e5dtGgMe03s=PpG793B-MkrGjdGa0LuZ5zH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 10:46:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Junio Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Jul 27 11:02:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odfnf-0007Ts-E3
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 10:46:11 +0200
+	id 1Odg3l-0005PJ-AK
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 11:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755912Ab0G0IqA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 04:46:00 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38833 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755654Ab0G0Ip7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 04:45:59 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6R8ZlT6017821
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Jul 2010 10:35:47 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OdfnN-0001k3-VQ; Tue, 27 Jul 2010 10:45:54 +0200
-In-Reply-To: <AANLkTikGPMDvxQKjpKOBge8UwrC_GuC36_=C_tYR_ngr@mail.gmail.com> (Sverre Rabbelier's message of "Tue\, 27 Jul 2010 01\:43\:22 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 27 Jul 2010 10:35:47 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6R8ZlT6017821
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1280824551.21146@NjEabima1zarDB8YhpnpLg
+	id S1754553Ab0G0JCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 05:02:43 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:35774 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753811Ab0G0JCm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 05:02:42 -0400
+Received: by bwz1 with SMTP id 1so3180893bwz.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 02:02:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=Y/NrmiukWl3jfO8T5OpBQTiw2XddQgh+WUxSzmvEXQ4=;
+        b=wWUc28CGJBukLEdXlKXflhhZWwD+cKKlutwQSSFKCxW1HBXSqO+MjLNiR2Bv87mW1b
+         QZd+COXbI5MUbzvYaXK+SNZW/k2/ydChCSIjm6syDYg6fmqgNYbTLXUvjXXbzPO7UDcR
+         eqKL/FKyI0AzNdYQCBLt+QRIxXcmNrz3ztHWA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=W6YDFzpbknoA+Ye/+v6/VvLusB/WA9isNru8wPY83oc0QUfS4iskrh2U1w3Fi/CSL9
+         x9u8oVcJRlyrFWl+BdMIMjpo6QS7p2/HMR+Mr2bdtbKSuMr7XLnJhpjkiBE3pKcruYMS
+         9fHQFUPCrAatgsMgJsPPzjJbbBT6kbEqhKDh0=
+Received: by 10.204.83.167 with SMTP id f39mr6229360bkl.151.1280221360719;
+        Tue, 27 Jul 2010 02:02:40 -0700 (PDT)
+Received: from localhost.localdomain (abwn25.neoplus.adsl.tpnet.pl [83.8.237.25])
+        by mx.google.com with ESMTPS id 24sm3610944bkr.7.2010.07.27.02.02.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 02:02:38 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o6R91kvC026364;
+	Tue, 27 Jul 2010 11:01:52 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o6R91JHp026353;
+	Tue, 27 Jul 2010 11:01:19 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTikG0e5dtGgMe03s=PpG793B-MkrGjdGa0LuZ5zH@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151920>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Greg Brockman <gdb@MIT.EDU> writes:
 
-> Heya,
+> > It would probably help if you re-send the entire thing again.
 >
-> On Mon, Jul 26, 2010 at 13:14, Matthieu Moy <Matthieu.Moy@imag.fr> wr=
-ote:
->> + =A0 =A0 =A0 } else if (!strcmp(arg, "--grep")) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 add_message_grep(revs, optarg);
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return 2;
+> Ok, will do so shortly.
+> 
+> > It also seems to have an unaddressed comment
+> > (<7vlj96m4mc.fsf@alter.siamese.dyndns.org> from Junio).
 >
-> This one makes a little less sense since to me '--flag' are always
-> booleans, whereas '-m' can take an argument (such as '-m' from 'git
-> commit'.
+> Yep, my patch series actually does incorporate that comment.  I didn't
+> respond to that explicitly because I didn't want to spam the list, but
+> in the future I'll be sure to respond to comments... I can imagine it
+> makes things much easier for
+> people-who-are-not-the-one-writing-the-patch to follow.
 
-Try this:
+There are two possible solutions to providing comments about patch (I
+think they are covered in Documentation/SubmittingPatches).
 
-  git commit --message foo
+First is reply to email like you would usually do, and below some
+delimiter, e.g. the "scissors" line i.e. '-- >8 --' put the patch
+itself.  You might need to start it with 'Subject:' line if the title
+of the patch is different from the subject of email.
 
-=2E.. it works. Parse-options allows it, but handwritten option parsing
-for git log doesn't.
+Second, which I think would be more appropriate in your situation, is
+to put comments about patch, for example how you did address the
+comments, and/or how the patch changed from previous version in the
+area between '---' delimiter line, and diffstat.  See for example
+http://permalink.gmane.org/gmane.comp.version-control.git/151703
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+HTH
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
