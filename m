@@ -1,108 +1,80 @@
-From: Hin-Tak Leung <hintak.leung@gmail.com>
-Subject: Re: object/pack size x5 larger than a fresh clone?
-Date: Tue, 27 Jul 2010 22:15:31 +0100
-Message-ID: <AANLkTikDGzc5d=1w43eJFyO4JdcHEqYYaEm=1P-LpqCj@mail.gmail.com>
-References: <AANLkTimL+wfu+yMPutq2VHD6vO2AtaF_7FpWt8aZPm1c@mail.gmail.com>
-	<4C4D42BA.6070900@op5.se>
-	<AANLkTimLAROADKgWvEXa9QyyDGbWQGP+9BdbcN4fMHJ0@mail.gmail.com>
-	<7v7hkg982j.fsf@alter.siamese.dyndns.org>
-	<20100727170317.GC25268@spearce.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4] tests: implicitly skip SYMLINKS tests using
+ <prereq>
+Date: Tue, 27 Jul 2010 16:17:37 -0500
+Message-ID: <20100727211737.GA11768@burratino>
+References: <1280265254-19642-1-git-send-email-avarab@gmail.com>
+ <1280265254-19642-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:15:40 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:18:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrUw-0008Hi-Rt
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:15:39 +0200
+	id 1OdrYB-0001Bt-D2
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753349Ab0G0VPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 17:15:34 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:65162 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753306Ab0G0VPd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:15:33 -0400
-Received: by wwj40 with SMTP id 40so1738869wwj.1
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:15:32 -0700 (PDT)
+	id S1752077Ab0G0VSy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:18:54 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:62729 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750964Ab0G0VSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:18:53 -0400
+Received: by ewy23 with SMTP id 23so1485595ewy.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=tJVvIacUcGqx37p8+isXOpaitjDRRVmRL3deago/BOE=;
-        b=BKVrmSI7SqS8XxwEdm7P3lWwsljc+oScvQOIS0hOmbE8NZaA/829UXThIH9vRNAzmC
-         8GFKhh4LA3Dcm1Yk26ZtgLUTJc3y/muZ0D2mUE1i2kXxkl2t2fNXoyIB3t1mHzYHxzwJ
-         xfZEftldPhTpVXDr58eCP1PQMCEx5mYy19Rec=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=dziVnCCgCfmTJqF2dEp8JZpwqs3g7X8vi1XmYRiXNks=;
+        b=UcmQRJQEOU/3NNLszsN7/8OtWM4/lK7Z9g8LvWLYmXvw28fPEjYAlN/FnmLlKIDXir
+         zL7l1y5JWVwVxiHFxzt1VtQjfr2dFv9VNH2npDUZDJutsReu5DJRVpmtLlRbfbXrQt4b
+         V/vjMNXwqc+bS69OXqtHLsgrarDQv1H++/sDQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=f0ghUSIPGrZt5N/aTS/9fO78d8A5MAVeUUNtw1CkJEPRYIeioC38U9Giiz/3ch0gTm
-         DT3AkYXMKN1cNwDAjZkspw1Cnf4Rijkfbk+achzDbm1jUF+dDqyBG4jjgUjWwyp9Fu6t
-         gkCtAVuhKYB607M7Zt2ajIjVkiCs/V15iRl+Q=
-Received: by 10.216.165.132 with SMTP id e4mr9574358wel.86.1280265331953; Tue, 
-	27 Jul 2010 14:15:31 -0700 (PDT)
-Received: by 10.216.166.15 with HTTP; Tue, 27 Jul 2010 14:15:31 -0700 (PDT)
-In-Reply-To: <20100727170317.GC25268@spearce.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=jhn5htmDN+IOBIBZxu+IC4fBA5xNY7OBZnMTgDVgQX1ehk39njAS83tCQf/WBPLWgo
+         hQsUpSK4JmpVS8blqg1gJUlfOrFMun7y1m5GL2XaBrt92S4ysAJRDsr149+VSLFfKJJQ
+         JDuXwuJ7imAN2E2y421/VEPlWBziYsrzRM57Q=
+Received: by 10.213.19.211 with SMTP id c19mr7485386ebb.93.1280265532393;
+        Tue, 27 Jul 2010 14:18:52 -0700 (PDT)
+Received: from burratino (c-98-212-3-231.hsd1.il.comcast.net [98.212.3.231])
+        by mx.google.com with ESMTPS id v59sm8257034eeh.22.2010.07.27.14.18.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 14:18:51 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1280265254-19642-2-git-send-email-avarab@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151999>
 
-On 7/27/10, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
->> Hin-Tak Leung <hintak.leung@gmail.com> writes:
->>
->> > So I guess these *.idx without a corresponding *.pack are safe to
->> > delete? But git gc or one of the other house keeping commands should
->> > get rid of them though, I think.
->>
->> I agree.  I think the dumb transports like http:// grab *.idx files
->> without downloading corresponding *.pack files when they encounter an
->> object that is not found loose in the originating repository to see which
->> packfile to fetch, but after they are done (or when they are interrupted,
->> for that matter), these *.idx files may not be getting garbage-collected.
->>
->> And they should be, perhaps with or without some grace period (I don't
->> know which offhand---I didn't think this through).
->
-> We should GC these, but only after a grace period.
->
-> Long ago when I used dumb http it really helped to have the *.idx
-> files cached.  If the upstream only did an incremental repack holding
-> onto the *.idx files locally meant I didn't need to redownload
-> them in order to rule-out those packs as onces interesting for the
-> current fetch.
->
-> Maybe we just prune those during git fetch if they don't have a
-> local *.pack and they don't match a pack listed by the remote's
-> objects/info/packs file?
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-Okay, so they are left-overs from using http:// for fetching but
-serves a useful purpose for a limited period. The usual gc --prune
-defaults to 2 weeks, is that good enough? Or should there be a longer
-grace period?
+> +++ b/t/t4004-diff-rename-symlink.sh
+> @@ -40,8 +34,9 @@ test_expect_success \
+>  # rezrov and nitfol are rename/copy of frotz and bozbar should be
+>  # a new creation.
+> =20
+> -GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >current
+> -cat >expected <<\EOF
+> +test_expect_success SYMLINKS 'setup diff output' "
+> +    GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >curren=
+t
+> +    cat >expected <<\EOF
+>  diff --git a/bozbar b/bozbar
+>  new file mode 120000
+>  --- /dev/null
 
-I only switch over to git:// these last few days after it failing to
-fetch for two weeks and it looks like only I have this problem and
-around the web, failure-to-fetch seems to indicate an http proxy
-problem.
-
-FWIW, my left-over files seems to co-incide with the 2-3 week snapshot
-release schedule of  wine. I don't know if any of you is familiar with
-wine, but only one person (AJ) has commit rights and he reviews all
-patches and does a periodic push, usually just before or after a
-snapshot release but occasionally more frequent. My left-overs seems
-to co-incide with the first fetch after such a push. My most recent
-"permanent" fetch failure is due to the long-awaited wine 1.2 release,
-I think.
-
-Thanks for all the insights, and I hope a future git release will
-prune some of these left-over files after a period.
-
-Hin-Tak
+Probably belongs in a separate patch.  More importantly, it is missing
+&&-chaining (not a regression, but it is best to set a good example).
