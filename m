@@ -1,94 +1,66 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/2] upload-pack: support subtree packing
-Date: Tue, 27 Jul 2010 07:46:05 -0700
-Message-ID: <20100727144605.GA25268@spearce.org>
-References: <1280187370-23675-1-git-send-email-pclouds@gmail.com> <1280187370-23675-2-git-send-email-pclouds@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [RFC PATCH 0/2] Allow detached forms (--option arg) for git
+ log options.
+Date: Tue, 27 Jul 2010 16:46:39 +0200
+Message-ID: <20100727144639.GU2504@madism.org>
+References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr>
+ <20100726193109.GA1043@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 16:46:16 2010
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 27 16:46:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdlQ8-0004XR-Jt
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 16:46:16 +0200
+	id 1OdlQe-0004iW-Cj
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 16:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756301Ab0G0OqK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 10:46:10 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:61897 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756088Ab0G0OqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 10:46:09 -0400
-Received: by pwi5 with SMTP id 5so467371pwi.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 07:46:08 -0700 (PDT)
-Received: by 10.142.144.16 with SMTP id r16mr10474826wfd.34.1280241968530;
-        Tue, 27 Jul 2010 07:46:08 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id 33sm5741562wfg.21.2010.07.27.07.46.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 07:46:07 -0700 (PDT)
+	id S1756306Ab0G0Oqo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 10:46:44 -0400
+Received: from pan.madism.org ([88.191.52.104]:33070 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756146Ab0G0Oqm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 10:46:42 -0400
+Received: from madism.org (unknown [94.228.180.170])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id 2A30D4E954;
+	Tue, 27 Jul 2010 16:46:41 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id D54A61D8; Tue, 27 Jul 2010 16:46:39 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1280187370-23675-2-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+In-Reply-To: <20100726193109.GA1043@burratino>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151946>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> wrote:
-> This patch adds a new capability "subtree", which supports two new
-> requests "subtree" and "commit-subtree".
+On Mon, Jul 26, 2010 at 02:31:09PM -0500, Jonathan Nieder wrote:
+> Hi Matthieu,
 >=20
-> "subtree" asks upload-pack to create a pack that contains only blobs
-> from the given tree prefix (and necessary commits/trees to reach
-> those blobs).
+> Matthieu Moy wrote:
 >=20
-> "commit-tree" asks upload-pack to create a pack that contains trees o=
-f
-> the given prefix (and necessary commits/trees to reach those trees)
+> >                    is there any reason why "git log" hasn't been
+> > migrated to parse-option? Or is it only that nobody did it yet?
 >=20
-> With "subtree" request, Git client may then rewrite commits to create
-> a valid commit tree again, so that users can work on it independently=
-=2E
-> When users want to push from such a tree, "commit-tree" may then be
-> used to re-match what users have and what is in upstream, recreate
-> proper push commits.
+> Please go ahead. :)
 
-I disagree with a lot of this... but the idea is quite cool.
+I started it in the past, but never went around to actually do it.
 
-I like the "subtree" command, being able to clone down only part of
-the repository is a nice feature, and the implementation of subtree
-seems simple enough for the server.  It only has to emit some of
-the paths, but the entire commit DAG.  This is pretty simple to
-implement server side and is very lightweight.
-
-
-But I disagree with the client rewriting the commits in order to
-work with them locally.  Doing so means you can't take a commit
-from your team's issue tracker and look it up.  And any commit
-you create can't be pushed back to the server without rewriting.
-Its messy for the end-user to work with.
-
-I would prefer doing something more like what we do with shallow
-on the client side.  Record in a magic file the path(s) that we
-did actually obtain.  During fsck, rev-list, or read-tree the
-client skips over any paths that don't match that file's listing.
-Then we can keep the same commit SHA-1s, but we won't complain that
-there are objects missing.
-
-The downside is, a lot of the client code is impacted, and that
-is why nobody has done it yet.  Tools like rebase or cherry-pick
-start to behave funny.  What does it mean to rebase or cherry-pick
-a commit that has deltas outside of the area you don't have cloned?
-It probably should abort and refuse to execute.  But `git show`
-should still work, which implies you need a way to toggle the
-diff code to either skip or fail on deltas outside of the shallow
-path space.
-=20
+I started to get rid of most of the bitfields to use explicit or-ed
+fields, but stopped at that, I don't even remember if those patches got
+merged or not.
 --=20
-Shawn.
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@d=
+ebian.org
+OOO                                                http://www.madism.or=
+g
