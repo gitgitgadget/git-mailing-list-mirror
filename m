@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 2/4] t/t5800-remote-helpers.sh: Skip with prereq on python <2.4
-Date: Tue, 27 Jul 2010 21:14:12 +0000
-Message-ID: <1280265254-19642-4-git-send-email-avarab@gmail.com>
+Subject: [PATCH 3/4] t/t7800-difftool.sh: Skip with prereq on no PERL
+Date: Tue, 27 Jul 2010 21:14:13 +0000
+Message-ID: <1280265254-19642-5-git-send-email-avarab@gmail.com>
 References: <1280265254-19642-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,133 +17,269 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrUE-0007yl-3I
+	id 1OdrUE-0007yl-Jr
 	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:14:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753200Ab0G0VOq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:14:46 -0400
+	id S1753243Ab0G0VOs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:14:48 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:42099 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753133Ab0G0VOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:14:45 -0400
+	with ESMTP id S1753197Ab0G0VOr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:14:47 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 1so3597805bwz.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:14:44 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:14:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=UTfZLNK4upUcRt5F750YKNJXxPeQZdwNw9xFwxbJwBM=;
-        b=rMpYKZj72NeW5WxcxFFtk8FaDB1nr1DtDsseJVq/c1/OvUQp9MxqDFMo9Gk5awA5dU
-         kMQ+DknzlhHy4276/ushPsnbQfQ1VZ16+E4m42hFHxRj8iha5Yl6Asz5WC0vCWEJMcXP
-         xxJ7kCc71qp0YvsDlT1Xc7CphpD3TOSaEJXHI=
+        bh=PQZskgJ8dlpQwXIEPrLo/qFg+vNtc9Q4Rf7K8EK3J3w=;
+        b=wOV7RJ7uFd+MUwyrKtzM3/mXV33RRoCVQW664V3N4rHNVX3T6UE46r13DEyM5G76Yx
+         wUQAc6wxbJEMTkQZuqTcw7CGaOnnT7s1OySaAg+QiaV/aA/O415EiT3VPTx2s9lmGz1z
+         hPOzrq4tGrnmy7GRM2kYiZncbc0ASOziOPXKE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=sbjcH8dgELIAOg3GBM2KPWILrp01iSPjw5EnSJOGP/4mHAepYqdjxemqy0ub6OcLC9
-         9+5mi8wT/Gzua4xmWGKdwYkW+1sGImQ171pWtDrq8aT4mYzfkJdJwhkUYVMGrQMaj2Q3
-         NjIvJNaoXe7vbdFI5tjlSZ0nYqBEXoV+m1W9M=
-Received: by 10.204.100.132 with SMTP id y4mr7030277bkn.117.1280265283338;
-        Tue, 27 Jul 2010 14:14:43 -0700 (PDT)
+        b=yAv1GAttb+k7pHP833ITwZTFgsxmSBLCrNBq0Rzv5V5tRFdXdfi7e8Aqvwv31KaySq
+         dLO0JdPYSZimHiM3B+op7mZnJ7l1kgKN2U5q+YqMG02zVIyL9qhaJ76YsSGux8+hUBjg
+         R6BnTlDJeEQKogAXXPBrAZDrWmPzJe2p+1Vq8=
+Received: by 10.204.178.68 with SMTP id bl4mr7119176bkb.119.1280265286213;
+        Tue, 27 Jul 2010 14:14:46 -0700 (PDT)
 Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
-        by mx.google.com with ESMTPS id y2sm4172562bkx.20.2010.07.27.14.14.40
+        by mx.google.com with ESMTPS id y2sm4172562bkx.20.2010.07.27.14.14.44
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 14:14:41 -0700 (PDT)
+        Tue, 27 Jul 2010 14:14:44 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.4
 In-Reply-To: <1280265254-19642-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151994>
 
-Change the t/t5800-remote-helpers.sh test to skip with the the
-three-arg prereq form of test_expect_success instead of bailing out.
+Change t/t7800-difftool.sh to to skip with the the three-arg prereq
+form of test_expect_success instead of bailing out.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- t/t5800-remote-helpers.sh |   24 +++++++++++-------------
- 1 files changed, 11 insertions(+), 13 deletions(-)
+ t/t7800-difftool.sh |   49 ++++++++++++++++++++++---------------------=
+------
+ 1 files changed, 22 insertions(+), 27 deletions(-)
 
-diff --git a/t/t5800-remote-helpers.sh b/t/t5800-remote-helpers.sh
-index 637d8e9..1fb6380 100755
---- a/t/t5800-remote-helpers.sh
-+++ b/t/t5800-remote-helpers.sh
-@@ -13,13 +13,11 @@ if sys.hexversion < 0x02040000:
-     sys.exit(1)
- '
- then
--	:
--else
--	skip_all=3D'skipping git remote-testgit tests: requires Python 2.4 or=
- newer'
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 196827e..58dc6f6 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -10,11 +10,6 @@ Testing basic diff tool invocation
+=20
+ . ./test-lib.sh
+=20
+-if ! test_have_prereq PERL; then
+-	skip_all=3D'skipping difftool tests, perl not available'
 -	test_done
-+    # Requires Python 2.4 or newer
-+	test_set_prereq PYTHON_24
- fi
-=20
--test_expect_success 'setup repository' '
-+test_expect_success PYTHON_24 'setup repository' '
- 	git init --bare server/.git &&
- 	git clone server public &&
- 	(cd public &&
-@@ -29,34 +27,34 @@ test_expect_success 'setup repository' '
- 	 git push origin master)
+-fi
+-
+ LF=3D'
  '
 =20
--test_expect_success 'cloning from local repo' '
-+test_expect_success PYTHON_24 'cloning from local repo' '
- 	git clone "testgit::${PWD}/server" localclone &&
- 	test_cmp public/file localclone/file
+@@ -50,7 +45,7 @@ prompt_given()
+ }
+=20
+ # Create a file on master and change it on branch
+-test_expect_success 'setup' '
++test_expect_success PERL 'setup' '
+ 	echo master >file &&
+ 	git add file &&
+ 	git commit -m "added file" &&
+@@ -62,7 +57,7 @@ test_expect_success 'setup' '
  '
 =20
--test_expect_success 'cloning from remote repo' '
-+test_expect_success PYTHON_24 'cloning from remote repo' '
- 	git clone "testgit::file://${PWD}/server" clone &&
- 	test_cmp public/file clone/file
+ # Configure a custom difftool.<tool>.cmd and use it
+-test_expect_success 'custom commands' '
++test_expect_success PERL 'custom commands' '
+ 	restore_test_defaults &&
+ 	git config difftool.test-tool.cmd "cat \$REMOTE" &&
+=20
+@@ -75,13 +70,13 @@ test_expect_success 'custom commands' '
  '
 =20
--test_expect_success 'create new commit on remote' '
-+test_expect_success PYTHON_24 'create new commit on remote' '
- 	(cd public &&
- 	 echo content >>file &&
- 	 git commit -a -m two &&
- 	 git push)
+ # Ensures that git-difftool ignores bogus --tool values
+-test_expect_success 'difftool ignores bad --tool values' '
++test_expect_success PERL 'difftool ignores bad --tool values' '
+ 	diff=3D$(git difftool --no-prompt --tool=3Dbad-tool branch)
+ 	test "$?" =3D 1 &&
+ 	test "$diff" =3D ""
  '
 =20
--test_expect_success 'pulling from local repo' '
-+test_expect_success PYTHON_24 'pulling from local repo' '
- 	(cd localclone && git pull) &&
- 	test_cmp public/file localclone/file
+-test_expect_success 'difftool honors --gui' '
++test_expect_success PERL 'difftool honors --gui' '
+ 	git config merge.tool bogus-tool &&
+ 	git config diff.tool bogus-tool &&
+ 	git config diff.guitool test-tool &&
+@@ -92,7 +87,7 @@ test_expect_success 'difftool honors --gui' '
+ 	restore_test_defaults
  '
 =20
--test_expect_success 'pulling from remote remote' '
-+test_expect_success PYTHON_24 'pulling from remote remote' '
- 	(cd clone && git pull) &&
- 	test_cmp public/file clone/file
+-test_expect_success 'difftool --gui works without configured diff.guit=
+ool' '
++test_expect_success PERL 'difftool --gui works without configured diff=
+=2Eguitool' '
+ 	git config diff.tool test-tool &&
+=20
+ 	diff=3D$(git difftool --no-prompt --gui branch) &&
+@@ -102,7 +97,7 @@ test_expect_success 'difftool --gui works without co=
+nfigured diff.guitool' '
  '
 =20
--test_expect_success 'pushing to local repo' '
-+test_expect_success PYTHON_24 'pushing to local repo' '
- 	(cd localclone &&
- 	echo content >>file &&
- 	git commit -a -m three &&
-@@ -65,12 +63,12 @@ test_expect_success 'pushing to local repo' '
- 	test $HEAD =3D $(git --git-dir=3Dserver/.git rev-parse --verify HEAD)
+ # Specify the diff tool using $GIT_DIFF_TOOL
+-test_expect_success 'GIT_DIFF_TOOL variable' '
++test_expect_success PERL 'GIT_DIFF_TOOL variable' '
+ 	git config --unset diff.tool
+ 	GIT_DIFF_TOOL=3Dtest-tool &&
+ 	export GIT_DIFF_TOOL &&
+@@ -115,7 +110,7 @@ test_expect_success 'GIT_DIFF_TOOL variable' '
+=20
+ # Test the $GIT_*_TOOL variables and ensure
+ # that $GIT_DIFF_TOOL always wins unless --tool is specified
+-test_expect_success 'GIT_DIFF_TOOL overrides' '
++test_expect_success PERL 'GIT_DIFF_TOOL overrides' '
+ 	git config diff.tool bogus-tool &&
+ 	git config merge.tool bogus-tool &&
+=20
+@@ -136,7 +131,7 @@ test_expect_success 'GIT_DIFF_TOOL overrides' '
+=20
+ # Test that we don't have to pass --no-prompt to difftool
+ # when $GIT_DIFFTOOL_NO_PROMPT is true
+-test_expect_success 'GIT_DIFFTOOL_NO_PROMPT variable' '
++test_expect_success PERL 'GIT_DIFFTOOL_NO_PROMPT variable' '
+ 	GIT_DIFFTOOL_NO_PROMPT=3Dtrue &&
+ 	export GIT_DIFFTOOL_NO_PROMPT &&
+=20
+@@ -148,7 +143,7 @@ test_expect_success 'GIT_DIFFTOOL_NO_PROMPT variabl=
+e' '
+=20
+ # git-difftool supports the difftool.prompt variable.
+ # Test that GIT_DIFFTOOL_PROMPT can override difftool.prompt =3D false
+-test_expect_success 'GIT_DIFFTOOL_PROMPT variable' '
++test_expect_success PERL 'GIT_DIFFTOOL_PROMPT variable' '
+ 	git config difftool.prompt false &&
+ 	GIT_DIFFTOOL_PROMPT=3Dtrue &&
+ 	export GIT_DIFFTOOL_PROMPT &&
+@@ -160,7 +155,7 @@ test_expect_success 'GIT_DIFFTOOL_PROMPT variable' =
+'
  '
 =20
--test_expect_success 'synch with changes from localclone' '
-+test_expect_success PYTHON_24 'synch with changes from localclone' '
- 	(cd clone &&
- 	 git pull)
+ # Test that we don't have to pass --no-prompt when difftool.prompt is =
+false
+-test_expect_success 'difftool.prompt config variable is false' '
++test_expect_success PERL 'difftool.prompt config variable is false' '
+ 	git config difftool.prompt false &&
+=20
+ 	diff=3D$(git difftool branch) &&
+@@ -170,7 +165,7 @@ test_expect_success 'difftool.prompt config variabl=
+e is false' '
  '
 =20
--test_expect_success 'pushing remote local repo' '
-+test_expect_success PYTHON_24 'pushing remote local repo' '
- 	(cd clone &&
- 	echo content >>file &&
- 	git commit -a -m four &&
+ # Test that we don't have to pass --no-prompt when mergetool.prompt is=
+ false
+-test_expect_success 'difftool merge.prompt =3D false' '
++test_expect_success PERL 'difftool merge.prompt =3D false' '
+ 	git config --unset difftool.prompt
+ 	git config mergetool.prompt false &&
+=20
+@@ -181,7 +176,7 @@ test_expect_success 'difftool merge.prompt =3D fals=
+e' '
+ '
+=20
+ # Test that the -y flag can override difftool.prompt =3D true
+-test_expect_success 'difftool.prompt can overridden with -y' '
++test_expect_success PERL 'difftool.prompt can overridden with -y' '
+ 	git config difftool.prompt true &&
+=20
+ 	diff=3D$(git difftool -y branch) &&
+@@ -191,7 +186,7 @@ test_expect_success 'difftool.prompt can overridden=
+ with -y' '
+ '
+=20
+ # Test that the --prompt flag can override difftool.prompt =3D false
+-test_expect_success 'difftool.prompt can overridden with --prompt' '
++test_expect_success PERL 'difftool.prompt can overridden with --prompt=
+' '
+ 	git config difftool.prompt false &&
+=20
+ 	prompt=3D$(echo | git difftool --prompt branch | tail -1) &&
+@@ -201,7 +196,7 @@ test_expect_success 'difftool.prompt can overridden=
+ with --prompt' '
+ '
+=20
+ # Test that the last flag passed on the command-line wins
+-test_expect_success 'difftool last flag wins' '
++test_expect_success PERL 'difftool last flag wins' '
+ 	diff=3D$(git difftool --prompt --no-prompt branch) &&
+ 	test "$diff" =3D "branch" &&
+=20
+@@ -215,7 +210,7 @@ test_expect_success 'difftool last flag wins' '
+=20
+ # git-difftool falls back to git-mergetool config variables
+ # so test that behavior here
+-test_expect_success 'difftool + mergetool config variables' '
++test_expect_success PERL 'difftool + mergetool config variables' '
+ 	remove_config_vars
+ 	git config merge.tool test-tool &&
+ 	git config mergetool.test-tool.cmd "cat \$LOCAL" &&
+@@ -233,7 +228,7 @@ test_expect_success 'difftool + mergetool config va=
+riables' '
+ 	restore_test_defaults
+ '
+=20
+-test_expect_success 'difftool.<tool>.path' '
++test_expect_success PERL 'difftool.<tool>.path' '
+ 	git config difftool.tkdiff.path echo &&
+ 	diff=3D$(git difftool --tool=3Dtkdiff --no-prompt branch) &&
+ 	git config --unset difftool.tkdiff.path &&
+@@ -243,32 +238,32 @@ test_expect_success 'difftool.<tool>.path' '
+ 	restore_test_defaults
+ '
+=20
+-test_expect_success 'difftool --extcmd=3Dcat' '
++test_expect_success PERL 'difftool --extcmd=3Dcat' '
+ 	diff=3D$(git difftool --no-prompt --extcmd=3Dcat branch) &&
+ 	test "$diff" =3D branch"$LF"master
+ '
+=20
+-test_expect_success 'difftool --extcmd cat' '
++test_expect_success PERL 'difftool --extcmd cat' '
+ 	diff=3D$(git difftool --no-prompt --extcmd cat branch) &&
+ 	test "$diff" =3D branch"$LF"master
+ '
+=20
+-test_expect_success 'difftool -x cat' '
++test_expect_success PERL 'difftool -x cat' '
+ 	diff=3D$(git difftool --no-prompt -x cat branch) &&
+ 	test "$diff" =3D branch"$LF"master
+ '
+=20
+-test_expect_success 'difftool --extcmd echo arg1' '
++test_expect_success PERL 'difftool --extcmd echo arg1' '
+ 	diff=3D$(git difftool --no-prompt --extcmd sh\ -c\ \"echo\ \$1\" bran=
+ch)
+ 	test "$diff" =3D file
+ '
+=20
+-test_expect_success 'difftool --extcmd cat arg1' '
++test_expect_success PERL 'difftool --extcmd cat arg1' '
+ 	diff=3D$(git difftool --no-prompt --extcmd sh\ -c\ \"cat\ \$1\" branc=
+h)
+ 	test "$diff" =3D master
+ '
+=20
+-test_expect_success 'difftool --extcmd cat arg2' '
++test_expect_success PERL 'difftool --extcmd cat arg2' '
+ 	diff=3D$(git difftool --no-prompt --extcmd sh\ -c\ \"cat\ \$2\" branc=
+h)
+ 	test "$diff" =3D branch
+ '
 --=20
 1.7.0.4
