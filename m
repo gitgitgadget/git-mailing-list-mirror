@@ -1,54 +1,67 @@
-From: Bradley Wagner <bradley.wagner@hannonhill.com>
-Subject: Pushing a new branch to a remote and tracking it
-Date: Tue, 27 Jul 2010 18:12:09 -0400
-Message-ID: <AANLkTikxmhndNqGDpwfBm41OuaPvnB=2xqp6gkYOTQiF@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 1/4] t: implicitly skip SYMLINKS tests using <prereq>
+Date: Tue, 27 Jul 2010 17:23:43 -0500
+Message-ID: <AANLkTi=kHk8bZijni-S1jJ-rz1R9Z1LrRffc7qNM1RYv@mail.gmail.com>
+References: <1280265254-19642-1-git-send-email-avarab@gmail.com> 
+	<1280265254-19642-3-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 28 00:12:35 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 00:24:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdsO1-0004lV-2T
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 00:12:33 +0200
+	id 1OdsZL-0000ch-Oi
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 00:24:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751335Ab0G0WML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 18:12:11 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:44339 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751269Ab0G0WMK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 18:12:10 -0400
-Received: by pwi5 with SMTP id 5so648489pwi.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 15:12:09 -0700 (PDT)
-Received: by 10.142.156.14 with SMTP id d14mr10969559wfe.248.1280268729485; 
-	Tue, 27 Jul 2010 15:12:09 -0700 (PDT)
-Received: by 10.142.98.16 with HTTP; Tue, 27 Jul 2010 15:12:09 -0700 (PDT)
+	id S1751545Ab0G0WYH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 18:24:07 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:58661 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985Ab0G0WYF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 18:24:05 -0400
+Received: by gyg10 with SMTP id 10so1448614gyg.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 15:24:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=A8Ywc8xr7fwgwUwEbTWJSSxd2IXF8TPsS8rWKGN4+OA=;
+        b=lrmU1B22owKv+8+XA/DOeeJB8mgxuXsaijWBwdXADvShA8FTG3SySzOSvxXC5gNabe
+         ZTmnGn8/6GBaBqXBMsES2RhG6p4QdD+QA9NFPtXrJhxaLiSoQ4xKZYn3hoFF7zobtR/P
+         z5kXWb/G8Y7h1O/3yGY6/cTQD8yaS5cXDcMnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=WzSPbMudeLA2CjfzLeZrLaelZlcAnLmOacRqLIWE2BEzzUvlVkJkQUaI7T6g/wW084
+         Xyhy69PIpK9zjuRfl2oLsUuU0OHc6PrzHwXKsOihncwxVJWFsES1flji+nZytLpGXwil
+         oVaSvMXS0K+Pjv69CFdiPDERMo3ptN5+mLHQ0=
+Received: by 10.151.130.17 with SMTP id h17mr6886488ybn.426.1280269443154; 
+	Tue, 27 Jul 2010 15:24:03 -0700 (PDT)
+Received: by 10.150.66.12 with HTTP; Tue, 27 Jul 2010 15:23:43 -0700 (PDT)
+In-Reply-To: <1280265254-19642-3-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152009>
 
-Is there a more elegant way to: 1) create a branch, 2) push it to a
-remote and 3) continue to track it.
+Heya,
 
-I noticed that:
+On Tue, Jul 27, 2010 at 16:14, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> Now we get an indication of how many tests that need symlinks are
+> being skipped on platforms that don't support them.
 
-git branch <branchname> HEAD
-git checkout <branchname>
-git push origin <branchname>
+Nice!
 
-does not link the local branch to the remote.
+--=20
+Cheers,
 
-I've seen other people do:
-
-git push origin origin:refs/heads/<branchname>
-git fetch origin
-git branch -r (verify that the branch is there)
-git checkout <branchname> -b origin/<branchname>
-
-but it seems kind of the reverse of what I would expect to do. I know
-I could also do the first thing and then delete/re-checkout the branch
-with tracking.
+Sverre Rabbelier
