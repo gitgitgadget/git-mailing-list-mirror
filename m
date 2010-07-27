@@ -1,93 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v3] Document ls-files -t as semi-obsolete.
-Date: Tue, 27 Jul 2010 23:11:13 +0200
-Message-ID: <1280265073-23037-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqaapcy6xq.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:12:33 2010
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 0/4] Skip tests using 3-arg test_*
+Date: Tue, 27 Jul 2010 21:14:09 +0000
+Message-ID: <1280265254-19642-1-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:14:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrRv-0007At-Ul
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:12:32 +0200
+	id 1OdrTq-0007qP-TA
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753107Ab0G0VM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 17:12:27 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:32949 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751330Ab0G0VM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:12:26 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6RL9chS024677
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Jul 2010 23:09:38 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OdrQo-0001xL-NA; Tue, 27 Jul 2010 23:11:22 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OdrQo-000609-KK; Tue, 27 Jul 2010 23:11:22 +0200
-X-Mailer: git-send-email 1.7.2.25.g50ec3
-In-Reply-To: <vpqaapcy6xq.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 27 Jul 2010 23:09:38 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6RL9chS024677
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280869780.24408@LGG6ieHoA6HDeP7SW/0big
+	id S1752019Ab0G0VO0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:14:26 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42099 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308Ab0G0VOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:14:25 -0400
+Received: by bwz1 with SMTP id 1so3597805bwz.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=TKNsGvUNjLLz8gkfk2R22qQgvKXwvejV8rC5w/vaK9s=;
+        b=Zqo+6pajFkq416ZM+hfURbW1JeB8fvZjw/VFrsTAGFPn0kkRsVukdM/qPxrxvWTc/O
+         urlzrotR3f376OxP40Vw28IIYtDKiDoP1wCqsuIaEBmDD8jWq2mQWPru2FOy0l454nXi
+         B+Ds6YTy/nkjdgLd9n5fpr3WUMVlFUZYVRuw8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=EQSyDgtLVaVf3nTAlZLHJCQe+JMJ1kMt+WKagSEVYQOiekyzT4uhd1TURIJu2cbjKR
+         griVDVzRPEPyMLEth0INF4xaNVIDcux5hUxwUpJaYMIG3kbVpyLdLCcbIhA3NvMZJZCB
+         gQ3x+dDwDK4T5hEZl7y9beRS/rQ48B3OoyyLM=
+Received: by 10.204.143.138 with SMTP id v10mr5073934bku.133.1280265264114;
+        Tue, 27 Jul 2010 14:14:24 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
+        by mx.google.com with ESMTPS id y2sm4172562bkx.20.2010.07.27.14.14.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 14:14:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151990>
 
-The behavior of "git ls-files -t" is very misleading (see
-http://thread.gmane.org/gmane.comp.version-control.git/126516 and
-http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
-for examples of mislead users) and badly documented, hence we point the
-users to superior alternatives.
+This is a cleanup of the test code that I had on my TODO. We should be
+using the 3-arg form of test_* instead of skip_all + test_done to skip
+tests.
 
-The feature is marked as "semi-obsolete" but not "scheduled for removal"
-since it's a plumbing command, scripts might use it, and Git testsuite
-already uses it to test the state of the index.
+This doesn't cover all the cases that were using skip_all=3D*. The
+remaining ones were too hairy to trivially convert, so I've left them
+alone for now.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Should fix the formatting issue.
+This also includes a documentation patch to t/README describing how
+we'd like tests to be skipped.
 
-Finally, I also added a mention of diff-tree --name-status too.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
+  tests: implicitly skip SYMLINKS tests using <prereq>
+  t/t5800-remote-helpers.sh: Skip with prereq on python <2.4
+  t/t7800-difftool.sh: Skip with prereq on no PERL
+  t/README: Update "Skipping tests" to align with best practices
 
- Documentation/git-ls-files.txt |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 3521637..710e87a 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -106,8 +106,16 @@ OPTIONS
- 	with `-s` or `-u` options does not make any sense.
- 
- -t::
--	Identify the file status with the following tags (followed by
--	a space) at the start of each line:
-+	This feature is semi-deprecated. For scripting purpose,
-+	linkgit:git-status[1] `--porcelain` and
-+	linkgit:git-diff-tree[1] `--name-status` are almost always
-+	superior alternatives, and users should look at
-+	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
-+	`--name-status` for more user-friendly alternatives.
-++
-+This option identifies the file status with the following tags (followed by
-+a space) at the start of each line:
-+
- 	H::	cached
- 	S::	skip-worktree
- 	M::	unmerged
--- 
-1.7.2.25.g50ec3
+ t/README                          |   21 +++++++++++++--
+ t/t2007-checkout-symlink.sh       |   14 +++-------
+ t/t4004-diff-rename-symlink.sh    |   18 +++++--------
+ t/t4011-diff-symlink.sh           |   18 ++++---------
+ t/t4023-diff-rename-typechange.sh |   14 +++-------
+ t/t4114-apply-typechange.sh       |   28 ++++++++-------------
+ t/t4115-apply-symlink.sh          |   12 ++-------
+ t/t4122-apply-symlink-inside.sh   |   12 ++-------
+ t/t5522-pull-symlink.sh           |   14 +++-------
+ t/t5800-remote-helpers.sh         |   24 ++++++++----------
+ t/t6035-merge-dir-to-symlink.sh   |   20 +++++----------
+ t/t7800-difftool.sh               |   49 ++++++++++++++++-------------=
+-------
+ 12 files changed, 100 insertions(+), 144 deletions(-)
