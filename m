@@ -1,64 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] hash: Remove useless init_hash()
-Date: Tue, 27 Jul 2010 08:55:46 -0700
-Message-ID: <AANLkTikjDCookAhrku=kGZsKw+moqVXu5517bO3n1pSp@mail.gmail.com>
-References: <1280208970-23394-1-git-send-email-bebarino@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Recommended work flow with git to send in patches
+Date: Tue, 27 Jul 2010 22:15:02 +0530
+Message-ID: <20100727164500.GD5351@kytes>
+References: <AANLkTiksAOpFG3vGVGcbeZ0NcpQ5FbDjnZ7yDxUsAY_r@mail.gmail.com>
+ <20100727153901.GA5351@kytes>
+ <AANLkTinEQKuxHD6MbXq43E=AWymebvoWXM5v2Tm6vejw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 27 17:56:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tong Sun <suntong@cpan.org>
+X-From: git-owner@vger.kernel.org Tue Jul 27 18:46:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdmWT-0003Pc-Qq
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 17:56:54 +0200
+	id 1OdnIs-0003on-W5
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 18:46:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574Ab0G0P4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 11:56:48 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:47982 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751361Ab0G0P4r (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 11:56:47 -0400
-Received: from mail-yx0-f174.google.com (mail-yx0-f174.google.com [209.85.213.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o6RFuBfm008873
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Tue, 27 Jul 2010 08:56:17 -0700
-Received: by yxg6 with SMTP id 6so534810yxg.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 08:56:06 -0700 (PDT)
-Received: by 10.150.66.14 with SMTP id o14mr11341086yba.125.1280246166336; 
-	Tue, 27 Jul 2010 08:56:06 -0700 (PDT)
-Received: by 10.231.157.204 with HTTP; Tue, 27 Jul 2010 08:55:46 -0700 (PDT)
-In-Reply-To: <1280208970-23394-1-git-send-email-bebarino@gmail.com>
-X-Spam-Status: No, hits=-4.95 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1751772Ab0G0Qqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 12:46:49 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:60089 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751281Ab0G0Qqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 12:46:48 -0400
+Received: by pwi5 with SMTP id 5so534965pwi.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 09:46:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=O4oNbBBrrlOPZxVCDu1uwr12YeHCIi+CflhZn5/P1dc=;
+        b=KWIqIRO9Hy6Ex9mT6kecGDyksl000gBVPLOnxgCWevN/sWh4ENmdiSzWZqMDuqdkvc
+         cj48Nz9v1Ka4jUp0YI7avSQWY1bnr8GTknvfdsZLRdC5dG+RmXSBrbbdlaHXPRJ0mvGc
+         uuQI+DIm4u3GfiSYHm2Hs6Q6Tehv/qaKLRu2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=mDGc5yl/9ZwdjqCu+F/7X1wgvGMyMN2EqRs8e4/rdyzHKc/JOvOACyFK8C0vpn8L6F
+         Au94kwhqPQuhBN4qSJrrbkXJ22/OZpLfawtbdemtSokMQC+Zkg2L1DEp4bvZenfTHqhX
+         wH0jemt29TTyeIJtmJqm1XUXWxYZuGdoUAOwQ=
+Received: by 10.115.107.7 with SMTP id j7mr13896351wam.107.1280249207822;
+        Tue, 27 Jul 2010 09:46:47 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id c24sm9172917wam.7.2010.07.27.09.46.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 09:46:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinEQKuxHD6MbXq43E=AWymebvoWXM5v2Tm6vejw@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151954>
 
-On Mon, Jul 26, 2010 at 10:36 PM, Stephen Boyd <bebarino@gmail.com> wrote:
->
-> init_hash() is essentially a memset() so just use that.
+Hi Tong,
 
-I disagree.
+Tong Sun writes:
+> Thanks a lot for the comment.
+> 
+> Could you elaborate it a bit with actual commands, starting from 'git
+> pull git://remote/project master' please?
 
-Yes, technically right now the initialization just zeroes out all the
-fields, and memset() does the same. But there is no advantage to using
-memset(), since init_hash() will create the same or better code, and
-using init_hash() is way more readable.
+$ git symbolic-ref HEAD refs/heads/rollout
+$ rm .git/index # Git recreates it automatically anyway
+$ git add LICENSE
+$ git commit -m "Add LICENSE" # root commit
+$ # git add ... git commit cycle
 
-Also, it's not at all the case that init_hash() is always going to be
-a memset(). Imagine a threaded hash-table with a lock associated with
-it or something. Now, admittedly that's not necessarily something we'd
-ever do in git, but I still think it's simply a good idea to have a
-clear "initialize this" routine, rather than depending on the fact
-that zeroing it out is sufficient.
-
-                    Linus
+-- Ram
