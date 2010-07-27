@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 1/4] tests: implicitly skip SYMLINKS tests using <prereq>
-Date: Tue, 27 Jul 2010 21:14:10 +0000
-Message-ID: <1280265254-19642-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH 1/4] t: implicitly skip SYMLINKS tests using <prereq>
+Date: Tue, 27 Jul 2010 21:14:11 +0000
+Message-ID: <1280265254-19642-3-git-send-email-avarab@gmail.com>
 References: <1280265254-19642-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,52 +11,52 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:14:43 2010
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:14:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdrU0-0007sc-4N
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:14:40 +0200
+	id 1OdrU5-0007uo-Dp
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:14:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526Ab0G0VOa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:14:30 -0400
+	id S1753179Ab0G0VOk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 17:14:40 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:42099 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751308Ab0G0VO3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:14:29 -0400
+	with ESMTP id S1753133Ab0G0VOj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 17:14:39 -0400
 Received: by mail-bw0-f46.google.com with SMTP id 1so3597805bwz.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:14:27 -0700 (PDT)
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 14:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
         bh=d/g4nF+Yy+y31vpixGZrwe5rYbx/ZNl8ldHPCzoACj0=;
-        b=vA2uVMQ3MhjcKC1tCR8TmG8fiNfopbJCSlL4EzOGUjhpLIWXmT306oBHkGTRI63oBN
-         gm0vVkVqv6ArB7CqZsvwXXonwa3C7vxwPgDHhAMJFdswY73oJ05k/vp2kEzruhUrpVMo
-         gehnq5p+TybTPK1TyNZvCYHdEurKEtRuewXMQ=
+        b=Q8yiHLnxP/KHFmkVK9m4i5tlhaukgDxyAI1rF/9x96xgriluNJOz7vEFLl+N5ZruSK
+         D+ENWbICEVvRlbTv5x7KNi+eKCEy73Q2kKlsuG9JJP4qwGwP2lK43gPtjo8r8e/cjPGB
+         ELqj9D4glT7LhBbx9XPcZPgN6hGTRstxHU7c8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=QM8uYpqfIqfMn0t8tp6jOFimZhc3jCWD+2tq2pTBYQDPsywPZ/3wZI9xoRO2SbHdDv
-         0dj6P4WgOMxko2f3XAh8vDUL7HBtL6KOEe9F0gqtjUIvQCt3+cgCDWPwgNIUAKmpg2Jx
-         xabYx1AIbTJ+EqSl3XuEYlLS2t5chMpOvHV3Q=
-Received: by 10.204.133.91 with SMTP id e27mr4535692bkt.197.1280265267801;
-        Tue, 27 Jul 2010 14:14:27 -0700 (PDT)
+        b=iMZ4q9Tx0KBUB8CFebTuFrL1gOZwuWIzVLn2FzTecbNmhrqCQ8t+ITYuaQ4Nht/4PF
+         lavWqbSzOb1Qz/XF8kMyL7ZRs/mLhBpaecsr4aAMpSVLhi6YdSpRd1ldSQ2VPImERZ/S
+         CfFNnxyKHuKnJ/Nokv/nd3m9tJIuPeHtOz6aw=
+Received: by 10.204.85.89 with SMTP id n25mr7169328bkl.105.1280265278162;
+        Tue, 27 Jul 2010 14:14:38 -0700 (PDT)
 Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
-        by mx.google.com with ESMTPS id y2sm4172562bkx.20.2010.07.27.14.14.25
+        by mx.google.com with ESMTPS id y2sm4172562bkx.20.2010.07.27.14.14.35
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 27 Jul 2010 14:14:26 -0700 (PDT)
+        Tue, 27 Jul 2010 14:14:36 -0700 (PDT)
 X-Mailer: git-send-email 1.7.0.4
 In-Reply-To: <1280265254-19642-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/151992>
 
 Change the tests that skipped due to unavailable SYMLINKS support to
 use the three-arg prereq form of test_expect_success.
