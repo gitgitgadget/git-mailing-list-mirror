@@ -1,247 +1,70 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 3/4] Allow detached form (e.g. "git log --grep foo") in log options.
-Date: Tue, 27 Jul 2010 23:21:58 +0200
-Message-ID: <1280265719-30968-4-git-send-email-Matthieu.Moy@imag.fr>
-References: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jul 27 23:25:53 2010
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: Re: [PATCH] Fix git rebase --continue to work with touched files
+Date: Tue, 27 Jul 2010 14:29:24 -0700 (PDT)
+Message-ID: <783007.41425.qm@web30007.mail.mud.yahoo.com>
+References: <1280225198-4539-1-git-send-email-ddkilzer@kilzer.net> <201007272153.36646.j6t@kdbg.org>
+Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jul 27 23:29:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odrep-0003h5-3e
-	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:25:51 +0200
+	id 1OdriN-0005IE-6w
+	for gcvg-git-2@lo.gmane.org; Tue, 27 Jul 2010 23:29:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751886Ab0G0VZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 17:25:46 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:53108 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751027Ab0G0VZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 17:25:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6RLBtPD006277
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 27 Jul 2010 23:11:55 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Odrb9-00025o-IT; Tue, 27 Jul 2010 23:22:03 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Odrb9-00084s-HA; Tue, 27 Jul 2010 23:22:03 +0200
-X-Mailer: git-send-email 1.7.2.25.g9ebe3
-In-Reply-To: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 27 Jul 2010 23:11:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6RLBtPD006277
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280869919.13411@b6alnhskG5U2vxU3T+KCVQ
+	id S1750985Ab0G0V30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 17:29:26 -0400
+Received: from web30007.mail.mud.yahoo.com ([209.191.69.24]:30073 "HELO
+	web30007.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750795Ab0G0V30 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 17:29:26 -0400
+Received: (qmail 42732 invoked by uid 60001); 27 Jul 2010 21:29:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1280266164; bh=lWQtdhcRJVaTmXzeuqLw4SS7o+TP6TUwiuTlCKagl2o=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=PJRB2FEUCXKUARfilL/ZuyGanyJCbwqeY+zorRe3OGGuk0ldaXtxnQDNB0pofHTJjfkDkdFzjP6dQ2I0ensozH6bcbezTlqG1+8YUDC2d4Us4sTN7xp0TheWp7swh32M0AKcchCnATNeVU5OTAaP3DhXaTTmUeAUEdYuYzltca8=
+X-YMail-OSG: pB0zMZUVM1kCCNFGomTG8uMb_KaQZRnAMIAREH7jyfuGelA
+ f3jvoezpBw5ilii1G9YJfUEuww4hSefiEoBUt2sYyEl8a1a96ftfdZ3.md4z
+ uJayW.UwMA72B6ayWO8_D9pVK2UDxau3skJIWUFVRNQwzj1_G_yqzbJQgHEw
+ OSz2z3Hn0ciNprkY5EmdUVHrxhxKElgJOuawTi7I0Z4g7evbrhKVk1zyizDv
+ Q19fsabWh.AZo.JZ3fywY1wpWQTfwSkJL1ZidlIIc1Vs8WthoebEcliPW_Iq
+ ScPl4SuC7PsmF_qxyI1n0SPzj_i0f0ICztDpD.CA-
+Received: from [17.202.32.26] by web30007.mail.mud.yahoo.com via HTTP; Tue, 27 Jul 2010 14:29:24 PDT
+X-RocketYMMF: ddkilzer
+X-Mailer: YahooMailRC/420.4 YahooMailWebService/0.8.105.277674
+In-Reply-To: <201007272153.36646.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152004>
+
+On Tue, July 27, 2010 at 12:53:36 PM, Johannes Sixt wrote:
+ 
+> On Dienstag, 27. Juli 2010, David D. Kilzer wrote:
+> > +test_expect_success  'rebase --continue works with touched file' '
+> > +     count=1
+> > +    while test "$count" -le 4
+> >  +    do
+> > +        git branch  topic$count topic &&
+> > +         test_must_fail git rebase --onto master master topic$count &&
+> >  +        echo "Resolved" >F2 &&
+> >  +        git add F2 &&
+> >  +        touch F1 &&
+> >  +        git rebase --continue || exit  1
+> 
+> exit from a test is a big no-no. But I think you can reproduce the  issue 
+> reliably and get rid of the entire loop if you use test-chmtime  instead of 
+> touch:
+> 
+>         test-chmtime  =-60 F1 &&
+> 
+> i.e. set the modification time back one  minute.
 
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- revision.c     |   86 ++++++++++++++++++++++++++++++++++---------------------
- t/t4202-log.sh |    7 ++++
- 2 files changed, 60 insertions(+), 33 deletions(-)
+That works great!  Thanks!
 
-diff --git a/revision.c b/revision.c
-index 7e82efd..5d62340 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1148,6 +1148,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 			       int *unkc, const char **unkv)
- {
- 	const char *arg = argv[0];
-+	const char *optarg;
-+	int argcount;
- 
- 	/* pseudo revision arguments */
- 	if (!strcmp(arg, "--all") || !strcmp(arg, "--branches") ||
-@@ -1160,11 +1162,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		return 1;
- 	}
- 
--	if (!prefixcmp(arg, "--max-count=")) {
--		revs->max_count = atoi(arg + 12);
-+	if (IF_LONG_OPT(max-count)) {
-+		revs->max_count = atoi(optarg);
- 		revs->no_walk = 0;
--	} else if (!prefixcmp(arg, "--skip=")) {
--		revs->skip_count = atoi(arg + 7);
-+		return argcount;
-+	} else if (IF_LONG_OPT(skip)) {
-+		revs->skip_count = atoi(optarg);
-+		return argcount;
- 	} else if ((*arg == '-') && isdigit(arg[1])) {
- 	/* accept -<digit>, like traditional "head" */
- 		revs->max_count = atoi(arg + 1);
-@@ -1178,18 +1182,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!prefixcmp(arg, "-n")) {
- 		revs->max_count = atoi(arg + 2);
- 		revs->no_walk = 0;
--	} else if (!prefixcmp(arg, "--max-age=")) {
--		revs->max_age = atoi(arg + 10);
--	} else if (!prefixcmp(arg, "--since=")) {
--		revs->max_age = approxidate(arg + 8);
--	} else if (!prefixcmp(arg, "--after=")) {
--		revs->max_age = approxidate(arg + 8);
--	} else if (!prefixcmp(arg, "--min-age=")) {
--		revs->min_age = atoi(arg + 10);
--	} else if (!prefixcmp(arg, "--before=")) {
--		revs->min_age = approxidate(arg + 9);
--	} else if (!prefixcmp(arg, "--until=")) {
--		revs->min_age = approxidate(arg + 8);
-+	} else if (IF_LONG_OPT(max-age)) {
-+		revs->max_age = atoi(optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(since)) {
-+		revs->max_age = approxidate(optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(after)) {
-+		revs->max_age = approxidate(optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(min-age)) {
-+		revs->min_age = atoi(optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(before)) {
-+		revs->min_age = approxidate(optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(until)) {
-+		revs->min_age = approxidate(optarg);
-+		return argcount;
- 	} else if (!strcmp(arg, "--first-parent")) {
- 		revs->first_parent_only = 1;
- 	} else if (!strcmp(arg, "--ancestry-path")) {
-@@ -1295,27 +1305,32 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+8, revs);
- 	} else if (!prefixcmp(arg, "--pretty=") || !prefixcmp(arg, "--format=")) {
-+		/*
-+		 * Detached form ("--pretty X" as opposed to "--pretty=X")
-+		 * not allowed, since the argument is optional.
-+		 */
- 		revs->verbose_header = 1;
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+9, revs);
- 	} else if (!strcmp(arg, "--show-notes")) {
- 		revs->show_notes = 1;
- 		revs->show_notes_given = 1;
--	} else if (!prefixcmp(arg, "--show-notes=")) {
-+	} else if (IF_LONG_OPT(show-notes)) {
- 		struct strbuf buf = STRBUF_INIT;
- 		revs->show_notes = 1;
- 		revs->show_notes_given = 1;
- 		if (!revs->notes_opt.extra_notes_refs)
- 			revs->notes_opt.extra_notes_refs = xcalloc(1, sizeof(struct string_list));
--		if (!prefixcmp(arg+13, "refs/"))
-+		if (!prefixcmp(optarg, "refs/"))
- 			/* happy */;
--		else if (!prefixcmp(arg+13, "notes/"))
-+		else if (!prefixcmp(optarg, "notes/"))
- 			strbuf_addstr(&buf, "refs/");
- 		else
- 			strbuf_addstr(&buf, "refs/notes/");
--		strbuf_addstr(&buf, arg+13);
-+		strbuf_addstr(&buf, optarg);
- 		string_list_append(revs->notes_opt.extra_notes_refs,
- 				   strbuf_detach(&buf, NULL));
-+		return argcount;
- 	} else if (!strcmp(arg, "--no-notes")) {
- 		revs->show_notes = 0;
- 		revs->show_notes_given = 1;
-@@ -1343,12 +1358,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->abbrev = 0;
- 	} else if (!strcmp(arg, "--abbrev")) {
- 		revs->abbrev = DEFAULT_ABBREV;
--	} else if (!prefixcmp(arg, "--abbrev=")) {
--		revs->abbrev = strtoul(arg + 9, NULL, 10);
-+	} else if (IF_LONG_OPT(abbrev)) {
-+		revs->abbrev = strtoul(optarg, NULL, 10);
- 		if (revs->abbrev < MINIMUM_ABBREV)
- 			revs->abbrev = MINIMUM_ABBREV;
- 		else if (revs->abbrev > 40)
- 			revs->abbrev = 40;
-+		return argcount;
- 	} else if (!strcmp(arg, "--abbrev-commit")) {
- 		revs->abbrev_commit = 1;
- 	} else if (!strcmp(arg, "--full-diff")) {
-@@ -1359,21 +1375,25 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--relative-date")) {
- 		revs->date_mode = DATE_RELATIVE;
- 		revs->date_mode_explicit = 1;
--	} else if (!strncmp(arg, "--date=", 7)) {
--		revs->date_mode = parse_date_format(arg + 7);
-+	} else if (IF_LONG_OPT(date)) {
-+		revs->date_mode = parse_date_format(optarg);
- 		revs->date_mode_explicit = 1;
-+		return argcount;
- 	} else if (!strcmp(arg, "--log-size")) {
- 		revs->show_log_size = 1;
- 	}
- 	/*
- 	 * Grepping the commit log
- 	 */
--	else if (!prefixcmp(arg, "--author=")) {
--		add_header_grep(revs, GREP_HEADER_AUTHOR, arg+9);
--	} else if (!prefixcmp(arg, "--committer=")) {
--		add_header_grep(revs, GREP_HEADER_COMMITTER, arg+12);
--	} else if (!prefixcmp(arg, "--grep=")) {
--		add_message_grep(revs, arg+7);
-+	else if (IF_LONG_OPT(author)) {
-+		add_header_grep(revs, GREP_HEADER_AUTHOR, optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(committer)) {
-+		add_header_grep(revs, GREP_HEADER_COMMITTER, optarg);
-+		return argcount;
-+	} else if (IF_LONG_OPT(grep)) {
-+		add_message_grep(revs, optarg);
-+		return argcount;
- 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
- 		revs->grep_filter.regflags |= REG_EXTENDED;
- 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
-@@ -1382,12 +1402,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->grep_filter.fixed = 1;
- 	} else if (!strcmp(arg, "--all-match")) {
- 		revs->grep_filter.all_match = 1;
--	} else if (!prefixcmp(arg, "--encoding=")) {
--		arg += 11;
-+	} else if (IF_LONG_OPT(encoding)) {
- 		if (strcmp(arg, "none"))
--			git_log_output_encoding = xstrdup(arg);
-+			git_log_output_encoding = xstrdup(optarg);
- 		else
- 			git_log_output_encoding = "";
-+		return argcount;
- 	} else if (!strcmp(arg, "--reverse")) {
- 		revs->reverse ^= 1;
- 	} else if (!strcmp(arg, "--children")) {
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 3352935..f912589 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -208,6 +208,13 @@ test_expect_success 'log --grep' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log --grep option parsing' '
-+	echo second >expect &&
-+	git log -1 --pretty="tformat:%s" --grep sec >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git log -1 --pretty="tformat:%s" --grep
-+'
-+
- test_expect_success 'log -i --grep' '
- 	echo Second >expect &&
- 	git log -1 --pretty="tformat:%s" -i --grep=sec >actual &&
--- 
-1.7.2.25.g9ebe3
+Dave
