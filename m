@@ -1,135 +1,162 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] upload-pack: remove unused "create_full_pack" code in do_rev_list
-Date: Wed, 28 Jul 2010 16:39:10 +0700
-Message-ID: <1280309950-5597-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v2 2/5] t/t4004-diff-rename-symlink.sh: use three-arg <prereq>
+Date: Wed, 28 Jul 2010 10:34:56 +0000
+Message-ID: <1280313299-721-3-git-send-email-avarab@gmail.com>
+References: <1280313299-721-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 12:20:53 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 28 12:35:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe3kq-0000DE-P5
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 12:20:53 +0200
+	id 1Oe3z6-0006o8-IF
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 12:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754678Ab0G1KUq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 06:20:46 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:47784 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753806Ab0G1KUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 06:20:45 -0400
-Received: by pzk26 with SMTP id 26so1743085pzk.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 03:20:44 -0700 (PDT)
+	id S1754771Ab0G1Kfb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 06:35:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:38090 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754729Ab0G1Kf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 06:35:29 -0400
+Received: by bwz1 with SMTP id 1so3850010bwz.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 03:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=B9ibh61sRTw9U1mYL0PScVGqwVkrbmOBNDyHvnnLll4=;
-        b=r4uzvTjW7/tJGiF0zErWEALbDQqhHr2WICCdTj2j8WuKu1BAAtGIY0I7w+NRfIbHtg
-         FmMUAAZ1ECSuw86VwAMoa8/DkaBCQjFqnv9PLe5VccBcalyUyTtw3wKZX9+toqtUcJBX
-         igjogQxuwAy/Txr+aT7PB+urQWx6kEFdwbd4Y=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=MVEt4DtbEY5FhVAY9lSussqOUj1ODGdQ47ny8T06Hi8=;
+        b=nhw67BHHq4qyW0jmS1fbIfhDlbbwb+78dqNithDvuEDxCsCJm5OqsiZ7hp27XxrlJ1
+         6g+k5bynP11ephKpij9PJc+r8G6Nl5y3raELhv4nYqn+GX5jtlP65+GFGTQjHzZeX2WV
+         LTPo4I3tgELo+z0yqNvdcZKTbsmGNVdqNktcg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=mdvDvGwsMZaHuX0MN0ZLwZlYRF9YiOLQ3G5ejpY3eSAPLKfCNjEL7fDO4v1GHm6d2n
-         DQ2C/ufAXO8PyXDyTFRCssCjuxqBE5J3K0XXcAoNX1TZr0cmU71ckphwPf5NYWGJQfuZ
-         ZfpO7bK3zF503vaQwYK0k1BANPaF8cdY0S60g=
-Received: by 10.114.112.3 with SMTP id k3mr14899990wac.199.1280312444433;
-        Wed, 28 Jul 2010 03:20:44 -0700 (PDT)
-Received: from dektop ([121.91.36.254])
-        by mx.google.com with ESMTPS id c10sm10853829wam.1.2010.07.28.03.20.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Jul 2010 03:20:43 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Wed, 28 Jul 2010 16:39:11 +0700
-X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=bIiTPcrNvigVax0Geb6IIsGzYDKRazpFWmwmUgnKRSHU/8n3dlF9gaM9PhcjiimWyk
+         3xb4WHRThLyiORiNVb69r5f4U30+He5jaoVw9LQG/afBCgKpPhmOmn7XfC6odCDyYd/I
+         Q2Dgnz/y5PPMrxZGXot6kxBNYIudfs8h/yB8Q=
+Received: by 10.204.136.71 with SMTP id q7mr7690671bkt.111.1280313321052;
+        Wed, 28 Jul 2010 03:35:21 -0700 (PDT)
+Received: from localhost.localdomain (dslb-088-067-237-210.pools.arcor-ip.net [88.67.237.210])
+        by mx.google.com with ESMTPS id g11sm4661233bkw.22.2010.07.28.03.35.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 28 Jul 2010 03:35:20 -0700 (PDT)
+X-Mailer: git-send-email 1.7.0.4
+In-Reply-To: <1280313299-721-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152071>
 
-A bit of history in chronological order, the newest at bottom:
+Change the tests that skipped due to unavailable SYMLINKS support to
+use the three-arg prereq form of test_expect_success.
 
-- 80ccaa7 (upload-pack: Move the revision walker into a separate functi=
-on.)
-   do_rev_list was introduced with create_full_pack argument
+This is like the "tests: implicitly skip SYMLINKS tests using
+<prereq>" change, but I needed to create an additional test for some
+setup code. It's in a separate change as suggested by Jonathan Nieder
+for ease of reviewing.
 
-- 21edd3f (upload-pack: Run rev-list in an asynchronous function.)
-   do_rev_list was now called by start_async, create_full_pack was
-   passed by rev_list.data
+    Date: Tue, 27 Jul 2010 16:17:37 -0500
+    From: Jonathan Nieder <jrnieder@gmail.com>
+    Message-ID: <20100727211737.GA11768@burratino>
+    In-Reply-To: <1280265254-19642-2-git-send-email-avarab@gmail.com>
+    Subject: Re: [PATCH 1/4] tests: implicitly skip SYMLINKS tests usin=
+g <prereq>
 
-- f0cea83 (Shift object enumeration out of upload-pack)
-   rev_list.data was now zero permanently. Creating full pack was
-   done by passing --all to pack-objects
+    =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-- ae6a560 (run-command: support custom fd-set in async)
-   rev_list.data =3D 0 was found out redudant and got rid of.
+    > +++ b/t/t4004-diff-rename-symlink.sh
+    > @@ -40,8 +34,9 @@ test_expect_success \
+    >  # rezrov and nitfol are rename/copy of frotz and bozbar should b=
+e
+    >  # a new creation.
+    >
+    > -GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >curren=
+t
+    > -cat >expected <<\EOF
+    > +test_expect_success SYMLINKS 'setup diff output' "
+    > +    GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >cu=
+rrent
+    > +    cat >expected <<\EOF
+    >  diff --git a/bozbar b/bozbar
+    >  new file mode 120000
+    >  --- /dev/null
 
-Get rid of the code as well, for less headache while reading do_rev_lis=
-t.
+    Probably belongs in a separate patch.  More importantly, it is miss=
+ing
+    &&-chaining (not a regression, but it is best to set a good example=
+).
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 ---
- upload-pack.c |   29 ++++++++++++-----------------
- 1 files changed, 12 insertions(+), 17 deletions(-)
+ t/t4004-diff-rename-symlink.sh |   18 +++++++-----------
+ 1 files changed, 7 insertions(+), 11 deletions(-)
 
-diff --git a/upload-pack.c b/upload-pack.c
-index dc464d7..8f4c718 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -105,7 +105,7 @@ static void show_edge(struct commit *commit)
- 	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
- }
+diff --git a/t/t4004-diff-rename-symlink.sh b/t/t4004-diff-rename-symli=
+nk.sh
+index 1a09e8d..92a65f4 100755
+--- a/t/t4004-diff-rename-symlink.sh
++++ b/t/t4004-diff-rename-symlink.sh
+@@ -12,13 +12,7 @@ by an edit for them.
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/diff-lib.sh
 =20
--static int do_rev_list(int in, int out, void *create_full_pack)
-+static int do_rev_list(int in, int out, void *user_data)
- {
- 	int i;
- 	struct rev_info revs;
-@@ -118,23 +118,18 @@ static int do_rev_list(int in, int out, void *cre=
-ate_full_pack)
- 	if (use_thin_pack)
- 		revs.edge_hint =3D 1;
+-if ! test_have_prereq SYMLINKS
+-then
+-	skip_all=3D'Symbolic links not supported, skipping tests.'
+-	test_done
+-fi
+-
+-test_expect_success \
++test_expect_success SYMLINKS \
+     'prepare reference tree' \
+     'echo xyzzy | tr -d '\\\\'012 >yomin &&
+      ln -s xyzzy frotz &&
+@@ -26,7 +20,7 @@ test_expect_success \
+     tree=3D$(git write-tree) &&
+     echo $tree'
 =20
--	if (create_full_pack) {
--		const char *args[] =3D {"rev-list", "--all", NULL};
--		setup_revisions(2, args, &revs, NULL);
--	} else {
--		for (i =3D 0; i < want_obj.nr; i++) {
--			struct object *o =3D want_obj.objects[i].item;
--			/* why??? */
--			o->flags &=3D ~UNINTERESTING;
--			add_pending_object(&revs, o, NULL);
--		}
--		for (i =3D 0; i < have_obj.nr; i++) {
--			struct object *o =3D have_obj.objects[i].item;
--			o->flags |=3D UNINTERESTING;
--			add_pending_object(&revs, o, NULL);
--		}
--		setup_revisions(0, NULL, &revs, NULL);
-+	for (i =3D 0; i < want_obj.nr; i++) {
-+		struct object *o =3D want_obj.objects[i].item;
-+		/* why??? */
-+		o->flags &=3D ~UNINTERESTING;
-+		add_pending_object(&revs, o, NULL);
-+	}
-+	for (i =3D 0; i < have_obj.nr; i++) {
-+		struct object *o =3D have_obj.objects[i].item;
-+		o->flags |=3D UNINTERESTING;
-+		add_pending_object(&revs, o, NULL);
- 	}
-+	setup_revisions(0, NULL, &revs, NULL);
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	mark_edges_uninteresting(revs.commits, &revs, show_edge);
+-test_expect_success \
++test_expect_success SYMLINKS \
+     'prepare work tree' \
+     'mv frotz rezrov &&
+      rm -f yomin &&
+@@ -40,8 +34,9 @@ test_expect_success \
+ # rezrov and nitfol are rename/copy of frotz and bozbar should be
+ # a new creation.
+=20
+-GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >current
+-cat >expected <<\EOF
++test_expect_success SYMLINKS 'setup diff output' "
++    GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >current =
+&&
++    cat >expected <<\EOF
+ diff --git a/bozbar b/bozbar
+ new file mode 120000
+ --- /dev/null
+@@ -65,8 +60,9 @@ deleted file mode 100644
+ -xyzzy
+ \ No newline at end of file
+ EOF
++"
+=20
+-test_expect_success \
++test_expect_success SYMLINKS \
+     'validate diff output' \
+     'compare_diff_patch current expected'
+=20
 --=20
-1.7.1.rc1.69.g24c2f7
+1.7.0.4
