@@ -1,84 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] checkout, commit: remove confusing assignments to
- rev.abbrev
-Date: Wed, 28 Jul 2010 10:23:03 -0700
-Message-ID: <7vhbjj5xmw.fsf@alter.siamese.dyndns.org>
-References: <19531.65276.394443.190317@winooski.ccs.neu.edu>
- <20100725130935.GA22083@LK-Perkele-V2.elisa-laajakaista.fi>
- <20100725221539.GA21813@burratino> <7vbp9uaii2.fsf@alter.siamese.dyndns.org>
- <20100726190448.GA32367@burratino> <7vzkxc7rpn.fsf@alter.siamese.dyndns.org>
- <20100727182942.GB5578@burratino> <20100727183706.GD5578@burratino>
- <1280261936.4462.6.camel@walleee> <20100727210908.GA11317@burratino>
- <1280311304.2378.64.camel@wpalmer.simply-domain>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] SubmittingPatches: Clarify the Signed-off-by rules
+Date: Wed, 28 Jul 2010 19:23:25 +0200
+Message-ID: <AANLkTi=wT_-1dq-TEb=XNLnh9BM_q4krArwfR8NV+eSk@mail.gmail.com>
+References: <1280326379-10257-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Eli Barzilay <eli@barzilay.org>, git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 19:23:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 19:23:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeALn-0002jS-6D
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 19:23:27 +0200
+	id 1OeAM8-0002yk-KK
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 19:23:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755591Ab0G1RXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 13:23:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43567 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755296Ab0G1RXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 13:23:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A2ED9C8C2A;
-	Wed, 28 Jul 2010 13:23:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=i46knOUC7J9gCIv4644AINs7If0=; b=AGzrf6T5d1d9fOvel2Ph9hy
-	eH2jCmOxjEybBWuntaTHXSsgBxDji2jFwpyMUCyM6On7mfshal/BuL7nbmXV/17N
-	f+SkOJzCf0j268+W+qmEfJUPj5q5YxY2lqpwItHwFsNscv4hCoLINYvd5fSop3U3
-	3n3m5D4rJFILCOdV+OOQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=uilVu5SgdBYjBIb4f5x/BSrOckdhlHCQUZny3uFd7BjpNBt6x
-	N/EgGO0rOex2i+NmGJ7OeVlt8yD1Z2iIpn2jmaffjRt+1c3cnquEwvQZTGaK+eoG
-	/tWPIhqOsbmGXEwIqAY6n4nLTaZwfIk+/6sQ7fEz/okSfyZlfrm+pe3MPY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A959C8C27;
-	Wed, 28 Jul 2010 13:23:12 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2BD62C8C26; Wed, 28 Jul
- 2010 13:23:05 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CC83F586-9A6C-11DF-BF5C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755899Ab0G1RXc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 13:23:32 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:45173 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753089Ab0G1RX2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 13:23:28 -0400
+Received: by gwb20 with SMTP id 20so1012417gwb.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 10:23:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RcWifHflzYumya5T7nNxu3oIlgMmYfaBepQp4B5Rudk=;
+        b=Tj3oXze6yDRFcajEwEIlgVAerqo2BWNnecn107i1I0M+HZG2+qtQ2UTgdyXnavjRnP
+         /NlGtaY8x8efxubvqSzy5SnHGgwT4vPnseNO20GAShXpjYP+5AFpxKCcVqwxyJV0Dh2R
+         kuzAUPxhyfwmTBPDZWLi3fFDd7mfFy7+V5Er4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AYFY0ho1wG2OFrNMLRiCCrVpoXNE49ewAcrq+hDuDEGTN52W1JkzOYmTFPzkNAxo9e
+         klU7lyNDqc3vHbYAeSRXY5LBlbPehgSEYgiCLSpZ9HvH60Nk+sY3X1ECEmn301Z/NroL
+         uCmTpa1t1Cy348jcTt/Zm61NDTTpwgpZXtLXs=
+Received: by 10.151.138.13 with SMTP id q13mr10109109ybn.189.1280337805520; 
+	Wed, 28 Jul 2010 10:23:25 -0700 (PDT)
+Received: by 10.231.162.10 with HTTP; Wed, 28 Jul 2010 10:23:25 -0700 (PDT)
+In-Reply-To: <1280326379-10257-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152105>
 
-Will Palmer <wmpalmer@gmail.com> writes:
-
-> Here's what I propose:
->  - #define NO_ABBREV 40
->  - replace all instances of revs->abbrev = 40 and revs->abbrev = 0 with
-> revs->abbrev = NO_ABBREV
+On Wed, Jul 28, 2010 at 16:12, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> The wording of the Signed-off-by rules could be read as stating that
+> S-O-B should only be added when the submitter considered the patch
+> ready for inclusion in git.git.
 >
-> That will at least make it explicit and consistent.
+> We also want Signed-off-by to be used for e.g. RFC patches, in case
+> someone wants to dig an old patch out of the archive and improve
+> it. Change the wording to recommend a Signed-off-by for all submitted
+> patches.
+>
+> The problem with the wording came up in the "[PATCH/RFC] Hacky versio=
+n
+> of a glob() driven config include" thread[1]. Bert Wesarg suggested[2=
+]
+> that it be removed to avoid confusion, which this change implements.
+>
 
-That is a good idea.  I think abbrev == 0 in the early days used to mean
-"use the compiled-in default, whatever it is" but somehow some codepaths
-mistakenly used it to mean "please do not abbreviate" (my fault).
+Thanks for resurrecting this.
 
-> ... And an
-> undefined value should (I think obviously) be interpreted as
-> DEFAULT_ABBREV, since that's what the word "DEFAULT" actually comes
-> from.
+Acked-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-We would probably need to be a bit careful here.  By default plumbing
-commands do not abbreviate, while we do want the default abbreviation
-in our Porcelains.
+> =C2=A01. <1273180440-8641-1-git-send-email-avarab@gmail.com>
+> =C2=A02. <AANLkTimziTKL13VKIOcaS1TX1F_xvTVjH8Q398Yx36Us@mail.gmail.co=
+m>
+>
+> Suggested-by: Bert Wesarg <bert.wesarg@googlemail.com>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+> ---
+> =C2=A0Documentation/SubmittingPatches | =C2=A0 =C2=A08 +++-----
+> =C2=A01 files changed, 3 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/SubmittingPatches b/Documentation/Submitti=
+ngPatches
+> index 099b238..ece3c77 100644
+> --- a/Documentation/SubmittingPatches
+> +++ b/Documentation/SubmittingPatches
+> @@ -14,11 +14,9 @@ Checklist (and a short version for the impatient):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0not "ch=
+anged" or "changes".
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- includes mot=
+ivation for the change, and contrasts
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0its imp=
+lementation with previous behaviour
+> - =C2=A0 =C2=A0 =C2=A0 - if you want your work included in git.git, a=
+dd a
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 "Signed-off-by: Your Name <you@example.=
+com>" line to the
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 commit message (or just use the option =
+"-s" when
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 committing) to confirm that you agree t=
+o the Developer's
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 Certificate of Origin
+> + =C2=A0 =C2=A0 =C2=A0 - add a "Signed-off-by: Your Name <you@example=
+=2Ecom>" line to the
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 commit message (or just use the option =
+"-s" when committing)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 to confirm that you agree to the Develo=
+per's Certificate of Origin
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0- make sure that you have tests for the bu=
+g you are fixing
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0- make sure that the test suite passes aft=
+er your commit
+>
+> --
+> 1.7.0.4
+>
+>
