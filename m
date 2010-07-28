@@ -1,72 +1,91 @@
-From: Jan Dittmer <jdi@l4x.org>
-Subject: git and binary files
-Date: Wed, 28 Jul 2010 16:17:06 +0200
-Message-ID: <AANLkTikceXUDDDcisnJRzg_i8mbi0TGwGiE5znAaK2aM@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] rebase -i: add run command to launch a shell command
+Date: Wed, 28 Jul 2010 16:26:54 +0200
+Message-ID: <vpq1van3cnl.fsf@bauges.imag.fr>
+References: <1280323784-27462-1-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTinvVFvu7WvwrRC0sg8vhoepFXKewmuTr7S94LWk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 28 16:17:20 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Wed Jul 28 16:27:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe7Rc-0001AY-2Z
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 16:17:16 +0200
+	id 1Oe7b7-0006kP-Ri
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 16:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752421Ab0G1ORL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 10:17:11 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:41723 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307Ab0G1ORH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 10:17:07 -0400
-Received: by pwi5 with SMTP id 5so891540pwi.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 07:17:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=p4V135nfXdj/0p9lCKiK/3PMVtKESm1eNmmtoNXtjes=;
-        b=wTmKiJKinZFKo0+hQuczsBCKgs2r00HEs/nCJu6Xt3ORW1jdtJrhf6s8ErZyAM93mQ
-         opgb0jrOMn3e/lgc0aCQA+lp6IM+uzU4N+ELq3tSipcR9dCHIF0uzQA74+shd0AM1H62
-         hV9i7/AdqBsBJsn3LgclK+tjDcMnuT/k9KOrM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=OSz7pxYg4GG3JjcFSJjlJbQgmqzW6Oon6P9x4LOcSbTplPTS/AHCctTmjwzyrAQ3ww
-         JOYGCoeSiHeAbOBHsfUPdxCZmCNHqMKsja4UUpZqmA3JrenApPDZ1fsZGWualm+H4a/t
-         f9Lvh+Vei6Nf6bJqqtGWUjsBQX0/7oiTAN83k=
-Received: by 10.114.73.12 with SMTP id v12mr15297196waa.61.1280326627398; Wed, 
-	28 Jul 2010 07:17:07 -0700 (PDT)
-Received: by 10.42.3.84 with HTTP; Wed, 28 Jul 2010 07:17:06 -0700 (PDT)
-X-Google-Sender-Auth: 3jKSNtOr-E8AjMh-3jjGdr2Q-BA
+	id S1754492Ab0G1O07 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 10:26:59 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:41245 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751225Ab0G1O06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 10:26:58 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6SEP8mk008361
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 28 Jul 2010 16:25:08 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oe7aw-00048b-Mg; Wed, 28 Jul 2010 16:26:54 +0200
+In-Reply-To: <AANLkTinvVFvu7WvwrRC0sg8vhoepFXKewmuTr7S94LWk@mail.gmail.com>
+ ("Santi =?iso-8859-1?Q?B=E9jar=22's?= message of "Wed\, 28 Jul 2010
+ 16\:12\:36 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 28 Jul 2010 16:25:09 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o6SEP8mk008361
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1280931910.58211@XAbnap6EGkZK0ScXmqqWdg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152092>
 
-Hi,
+Santi B=E9jar <santi@agolina.net> writes:
 
-I'm using git to keep track of directories full of jpegs and movies
-(19 GB .git directory, 5825 files, 18+ GB).
+> $ git run HEAD^4.. command arguments
+>
+> (I'm not quite sure about the syntax). Something like "git bisect run=
+"
+> but for all the commits in the range.
+>
+>  I know you said "given points in history", maybe each approach is
+> useful for each use case.
 
-I now that this is also possible with rsync and friends, but I like
-to have full version control and history, so please no discussion
-about that.
+Yes, I think both approaches make sense.
 
-The problem I'm facing is, that 'git status' is very
-very slow. They seem to read through every file in the directory
-tree. Is it possible to tell git to just use mtime/size information for
-an initial guess? I already tried to turn of rename detection with
-diff.renames=false, but still the problem remains.
+The cool thing with my version is that you're already in an
+interactive rebase, which means:
 
-Any hint? git version is 1.7.1.
+* You can re-order commits, rebase them on upstream branch, and check
+  the result in one pass.
 
-Thanks,
+* You're ready to ammend commits if they need fixing.
 
-Jan
+Also, you may not need to re-check everything for each commit. You may
+want a todo-list like this
 
--- 
-Jan Dittmer <jdi@l4x.org>
+pick deadbee log.c: do something
+run make
+pick c0ffeee Documentation for something
+run make doc
+
+or whatever. Note also that this "git run" can easily be implemented
+on top of my patch:
+
+GIT_EDITOR=3D"sed -i 's/^[^#].*/\0\nrun make/'" git rebase -i
+
+we can also imagine a "git rebase -i --run=3Dcmd" that would prepare a
+todo-list with "run cmd" after each pick line.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
