@@ -1,119 +1,90 @@
 From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: Avery Pennarun's git-subtree?
-Date: Wed, 28 Jul 2010 09:36:34 -0400
-Message-ID: <4C503262.80702@xiplink.com>
-References: <4C472B48.8050101@gmail.com> <AANLkTi=LHYDhY=424YZpO3yGqGGsxpY2Sj8=ULNKvAQX@mail.gmail.com> <AANLkTinhd2DYh7WXzMvhMkqp98fYtTWWuQi0RSL9Rome@mail.gmail.com> <201007261056.58985.jnareb@gmail.com> <20100727183658.GB25124@worldvisions.ca>
+Subject: Re: RFC: Sparse checkout improvements
+Date: Wed, 28 Jul 2010 09:42:20 -0400
+Message-ID: <4C5033BC.5020002@xiplink.com>
+References: <xotjlj92i9gr.fsf@leonardo.pit.corp.google.com>	<4C49C9C6.3080409@gmail.com>	<loom.20100727T125434-697@post.gmane.org>	<m3bp9tks6e.fsf@localhost.localdomain>	<4C4EEC0D.2070105@xiplink.com> <AANLkTimJpmGqOogQ1HtN0zu0=tPK0C0kQuEkg4PeOqUh@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, skillzero@gmail.com,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Bryan Larsen <bryan.larsen@gmail.com>,
-	git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 15:36:26 2010
+Cc: Jakub Narebski <jnareb@gmail.com>, Alex <ajb44.geo@yahoo.com>,
+	git@vger.kernel.org
+To: skillzero@gmail.com
+X-From: git-owner@vger.kernel.org Wed Jul 28 15:42:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe6o5-0004gC-Ma
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 15:36:26 +0200
+	id 1Oe6tg-0007bI-Bm
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 15:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886Ab0G1NgU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 09:36:20 -0400
-Received: from smtp172.iad.emailsrvr.com ([207.97.245.172]:59125 "EHLO
-	smtp172.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752715Ab0G1NgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 09:36:20 -0400
-Received: from relay7.relay.iad.mlsrvr.com (localhost [127.0.0.1])
-	by relay7.relay.iad.mlsrvr.com (SMTP Server) with ESMTP id 100961DEC6E;
-	Wed, 28 Jul 2010 09:36:19 -0400 (EDT)
-Received: by relay7.relay.iad.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 8804D1DEC3F;
-	Wed, 28 Jul 2010 09:36:18 -0400 (EDT)
+	id S1753746Ab0G1NmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 09:42:08 -0400
+Received: from smtp182.dfw.emailsrvr.com ([67.192.241.182]:39518 "EHLO
+	smtp182.dfw.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751894Ab0G1NmF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 09:42:05 -0400
+Received: from relay18.relay.dfw.mlsrvr.com (localhost [127.0.0.1])
+	by relay18.relay.dfw.mlsrvr.com (SMTP Server) with ESMTP id 5E8D516F1D3E;
+	Wed, 28 Jul 2010 09:42:04 -0400 (EDT)
+Received: by relay18.relay.dfw.mlsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B81A916F1D3C;
+	Wed, 28 Jul 2010 09:42:03 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100713 Thunderbird/3.0.6
-In-Reply-To: <20100727183658.GB25124@worldvisions.ca>
+In-Reply-To: <AANLkTimJpmGqOogQ1HtN0zu0=tPK0C0kQuEkg4PeOqUh@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152086>
 
-On 10-07-27 02:36 PM, Avery Pennarun wrote:
+On 10-07-27 12:55 PM, skillzero@gmail.com wrote:
+> On Tue, Jul 27, 2010 at 7:24 AM, Marc Branchaud <marcnarc@xiplink.com> wrote:
 > 
-> For "recursive" commit, for my own workflow, I would rather have it work
-> like this: from the toplevel, I can 'git commit' any set of files, as long
-> as they all fall inside a particular submodule.  That is, if I do
+>> * What's missing is a way to define named collections of paths
+>> ("sparse-sets?") in .git/info/sparse-checkout, so that you can conveniently
+>> checkout a particular subset of the working directory.  It would also be nice
+>> to switch between different sparse-sets.
 > 
-> 	git commit mod1/*.c mod2/*.c
-> 	
-> it should reject it (with a helpful message), because the commit would cross
-> submodule boundaries.  But if I do
+> I pasted in a script I wrote to work with the sparse checkout feature.
+> I'm not a scripting expert so it probably doesn't things incorrectly.
+> It lets you create "modules" by adding sections to .gitmodules file at
+> the root of the repository (or a file you specify). You can list them,
+> switch/checkout between them, or reset back to normal:
+
+That script looks like a great proof-of-concept.  I haven't tried it out yet,
+but it seems to work along the lines of what I was thinking about.
+
+I'd like to see most of this functionality folded into the standard git
+commands, and maybe a new git-sparse command for managing sparse sets.
+
+> [module "MyApp1"]
+> 	<path1>
+> 	<path2>
 > 
-> 	git commit mod1/*.c
-> 	
-> I think it should create a new commit in mod1, leave my superproject
-> pointing at that new commit, and stop (ie. without the superproject having
-> committed the new commit pointer).
-
-I think that makes perfect sense.  I'd also want the updated pointer to be
-unstaged.
-
-> Why?  Because my normal workflow is:
+> $ git module list
+> MyApp1
 > 
->   - make a bunch of superproject/submodule changes until they work.
->   - commit the submodule changes with a submodule-relevant message
->   - commit the superproject change with a supermodule-relevant message
->   
-> I wouldn't want to share commit messages between the two, so actually having
-> a single commit process be "recursive" would not do me any good.
+> $ git module checkout MyApp1
+> 
+> $ git module reset
+> 
+>> * It would also be good to have a way for a repo to define a default
+>> sparse-set, so that a clone would only checkout that default.
+> 
+> Yes, this would be nice. Ideally what I would like is for there to be
+> a clone option to specify a "module" (what I've been calling sparse
+> sets). A first step could just clone the full repository with -n then
+> do 'git module checkout <module>' (what my other scripts do to prepare
+> archives).
 
-That's the workflow I'd like to follow as well.
+I'd really prefer to see it as a configuration option for the remote
+repository.  Let the remote tell me what the initial sparse set should be.
 
-In terms of achieving this workflow with submodules and branching, what's
-required is that branching in the superproject takes the submodules off of
-the detached HEAD and onto something that won't get automatically
-garbage-collected in a few weeks.
+> Ideally, it would do some work on the server side to only
+> send the objects needed for paths specified by the sparse set (but
+> still allow me to commit and later push changes back).
 
-That could be done simply by applying the superproject's branch to all the
-submodules.  A command like
-
-	superproject/$ git branch foo origin/master
-
-would create the submodule branches on the commits identified for the
-submodules in the superproject's origin/master commit.  To make that work
-smoothly I think requires all the submodules' .git directories, so the branch
-name can be recorded in all of them.
-
-And so I think that either "git fetch" has to recursively obtain (and update)
-all submodule repos, or there needs to be some kind of on-demand retrieval
-mechanism.  Other ideas for grand-unified object stores (which I haven't been
-following too closely) could work as well.
-
-So with unified branching and available .git directories, I think a recursive
-checkout is doable and makes sense.  I'd still like to control which
-submodules a checkout might recurse through, but I think the sparse-checkout
-system is the way to handle that.
-
-I also suspect that non-fast-forward submodule merges could be workable,
-where regular merges are performed individually in the submodules before
-merging in the superproject.
-
-One final, somewhat orthogonal thought:  I think that "git commit
-submodule-dir" should require -f if the remote associated with the submodule
-doesn't have the commit ID you're trying to commit.
-
-> However, pushing is a separate issue entirely.  Having push be recursive
-> would be easy, but it doesn't solve the *real* problem with pushing: git
-> doesn't know what branch to push to in the submodule, and the submodule most
-> likely isn't pointing at a pushable repo at all, even if the supermodule is. 
-> This is why I keep coming back to the idea that I really want to push all
-> the submodule objects into the superproject's repo.
-
-I agree that recursive pushing doesn't make much sense, so there's no need to
-try to implement it.  I think having "git commit" reject unpushed submodule
-updates in the superproject goes a long way to alleviating misordered pushing.
+I'm less interested in sparse fetching, so I'll stay out of that side of the
+conversation.
 
 		M.
