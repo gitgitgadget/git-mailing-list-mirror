@@ -1,76 +1,77 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: finding if a commit is needed
-Date: Wed, 28 Jul 2010 18:23:38 +0930
-Message-ID: <AANLkTin4o=uNBFELYMb8TDA=taGJyqpLvgxZcPFr+Pq+@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: Mihamina Rakotomandimby <mihamina@gulfsat.mg>
+Subject: removing very old commits (including initial)
+Date: Wed, 28 Jul 2010 11:53:09 +0300
+Organization: GULFSAT
+Message-ID: <20100728115309.08ed6fdd@packard.rktmb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 28 10:53:45 2010
+X-From: git-owner@vger.kernel.org Wed Jul 28 10:59:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe2OW-00059Y-Rm
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 10:53:45 +0200
+	id 1Oe2U6-0007oi-OX
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 10:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754246Ab0G1Ixk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 04:53:40 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:61964 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752811Ab0G1Ixj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 04:53:39 -0400
-Received: by pwi5 with SMTP id 5so782993pwi.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 01:53:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to:date
-         :message-id:subject:from:to:content-type;
-        bh=zFvic5ObjaBtEVVWiPNo5OOkEu6W+fCZeKGF3kBm9DU=;
-        b=JzpCSwDvEUlTMvkzgbpQ/9CZpUkTYJ94xI/U2JMycHxRaA5fB1qpF+fDJKk4Jc6/f/
-         7CLagQfSfYPEzp9zabFbaUHMwjMtnzghxVkT9ktT8nIvKIf6LcdBLv4RfFAUIcZMkIzb
-         k3+/KgPsbgqxKFIkIVN8ElgDCSUFpC6EUhlEk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:date:message-id:subject:from:to:content-type;
-        b=Jb6TeEyY9YxC4A+4q9JDrKOAsnCzGsL/2ILl5KgEE7SuYH38FzeOiaMwAQD4ddjyYA
-         S8AzHi+YBvVpztHCOl5aVYOr+yOAD/hXx5wOBuslgoRmU+VycCochMw+NktUuW3DlZbk
-         RMepyaj0ZvJxrXrkIIY+O+mG40Ud3XtauBvPA=
-Received: by 10.142.132.12 with SMTP id f12mr8143354wfd.281.1280307218725; 
-	Wed, 28 Jul 2010 01:53:38 -0700 (PDT)
-Received: by 10.143.9.14 with HTTP; Wed, 28 Jul 2010 01:53:38 -0700 (PDT)
+	id S1754433Ab0G1I7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 04:59:25 -0400
+Received: from smtp-out.malagasy.com ([41.204.104.33]:46725 "EHLO
+	smtp-out.malagasy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754324Ab0G1I7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 04:59:24 -0400
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Wed, 28 Jul 2010 04:59:24 EDT
+Received: from smtp-2.blueline.mg (unknown [41.204.104.56])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by smtp-out.malagasy.com (Postfix) with ESMTPS id BB0708C829
+	for <git@vger.kernel.org>; Wed, 28 Jul 2010 11:53:16 +0300 (EAT)
+Received: from localhost (spamassassin.malagasy.com [41.204.104.47])
+	by smtp-2.blueline.mg (Postfix) with ESMTP id 9CA21600AC
+	for <git@vger.kernel.org>; Wed, 28 Jul 2010 11:53:16 +0300 (EAT)
+X-Virus-Scanned: par antivirus.malagasy.com
+X-Spam-Flag: NO
+X-Spam-Score: -2.602
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.602 required=7 tests=[AWL=-0.003, BAYES_00=-2.599]
+Received: from smtp-2.blueline.mg ([41.204.104.56])
+	by localhost (spamassassin.malagasy.com [41.204.104.47]) (amavisd-new, port 10024)
+	with ESMTP id 0l6ePT-lFOQk for <git@vger.kernel.org>;
+	Wed, 28 Jul 2010 11:53:09 +0300 (EAT)
+Received: from packard.rktmb.org (static-104-10.blueline.mg [41.204.104.10])
+	by smtp-2.blueline.mg (Postfix) with ESMTP id 9A56D6010D
+	for <git@vger.kernel.org>; Wed, 28 Jul 2010 11:53:09 +0300 (EAT)
+X-Mailer: Claws Mail 3.7.4 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152059>
 
-We have an interface which "rolls back" commits to a previous time in
-a set of data files using read-tree.
+Manao ahoana, Hello, Bonjour,
 
-Works great ... but sometimes there are files which have
-been changed in the working tree which cause read-tree to fail.
-The files should have been committed but weren't.
-"git read-tree -i" isn't appropriate because
-we want to commit these files before the read-tree rolls
-them back ... because they are changes which might be
-resurrected and we don't want to lose them altogether.
+I work on a personnal project that become a little bit bigger over the
+time.
+Initially, it was a single file one, and that file contained database
+credentials.
+Later, I splat the project and put the credentials in another untracked
+file (.gitignore).
+When I want to publish this project, the history contains the initial
+file, with the credentials. I dont want to publish that.
 
-So ...
+It's not a problem to definitely wipe the "single file" part of history
+of this project, but interesting to keep the history after the
+split&untracking.
 
-       git commit -a -m "something" && git read-tree ...
+How to?
+Publishing will be through gitweb.
 
-Doesn't work when there are no files which need committing ...
+Misaotra, Thanks, Merci.
 
-       git commit -a -m "something" || git read-tree ...
+-- 
 
-Doesn't work when there are.
-
-Is there something which can test whether a commit is needed?
-
-I define "needed" as meaning when git commit -a would make a non-identical
-commit.
-
-Many thanks,
-Geoff.
+       Architecte Informatique chez Blueline/Gulfsat:
+    Administration Systeme, Recherche & Developpement
+                                    +261 34 56 000 19
