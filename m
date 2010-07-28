@@ -1,70 +1,68 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: inotify daemon speedup for git [POC/HACK]
-Date: Tue, 27 Jul 2010 18:58:31 -0500
-Message-ID: <AANLkTi=6pPrQkEozTR6OXuO6C4kGk61ExTWiLD6vQ1Mp@mail.gmail.com>
-References: <20100727122018.GA26780@pvv.org>
+Date: Tue, 27 Jul 2010 17:00:09 -0700
+Message-ID: <20100728000009.GE25268@spearce.org>
+References: <20100727122018.GA26780@pvv.org> <AANLkTinuU6b1vmRFuBrA4Tc5H6gmC5cMP3Pa8EYz-8JE@mail.gmail.com> <9E67A084-4EDB-4CCB-A771-11B97107F4EF@gmail.com> <AANLkTi=oA33M4DmS5FyDx7Wn1DFrUGcmhSYkvcSYMc2r@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Avery Pennarun <apenwarr@gmail.com>
-To: Finn Arne Gangstad <finnag@pvv.org>
-X-From: git-owner@vger.kernel.org Wed Jul 28 01:58:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Joshua Juran <jjuran@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 02:00:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Odu2z-0001CM-GZ
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 01:58:57 +0200
+	id 1Odu4I-0001bD-Td
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 02:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458Ab0G0X6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 Jul 2010 19:58:52 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37672 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751383Ab0G0X6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 Jul 2010 19:58:51 -0400
-Received: by ywh1 with SMTP id 1so661718ywh.19
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 16:58:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=N/Kun4Q1vJje7Tbw8ExMza1FgYjZ+Nmyv3zSFKFXahU=;
-        b=G1YCN/xbFsQva8x2x0xDrzEaG9tVSuJwKSxoC5fQryFvQgSJvS7NFjnZELigUyxpKr
-         lFE1NT3GrZzdi6pZ/SznWJNy5A8bPUwcoVPewJISSsHKfTrQxwObZkVLwwdKuslUPjII
-         mQPy6w7OHJaUR5Cg0fxLwnzZgpgJnJQ1cL9vo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=OYBotHbpwnKY6sv1hAEtASH/mqyN/8irAhoPXnx08h3iePUN7BAiNnUxNJm9WV2pCc
-         J0dgcvejS6+NXuSvVFBCdGnRJ295y0OKtAfVmHejTYXMpTmCnTAbGtqLzD6WjbJMZ6oR
-         hj4KkLLn27uq8gQeyaendF6+CpvRKN1oVZbIU=
-Received: by 10.151.139.16 with SMTP id r16mr11663935ybn.168.1280275131076; 
-	Tue, 27 Jul 2010 16:58:51 -0700 (PDT)
-Received: by 10.150.66.12 with HTTP; Tue, 27 Jul 2010 16:58:31 -0700 (PDT)
-In-Reply-To: <20100727122018.GA26780@pvv.org>
+	id S1751830Ab0G1AAO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 Jul 2010 20:00:14 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:36377 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751015Ab0G1AAM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 Jul 2010 20:00:12 -0400
+Received: by pxi14 with SMTP id 14so677390pxi.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 17:00:12 -0700 (PDT)
+Received: by 10.114.92.20 with SMTP id p20mr5135462wab.65.1280275212047;
+        Tue, 27 Jul 2010 17:00:12 -0700 (PDT)
+Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
+        by mx.google.com with ESMTPS id x9sm9854728waj.3.2010.07.27.17.00.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 27 Jul 2010 17:00:11 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=oA33M4DmS5FyDx7Wn1DFrUGcmhSYkvcSYMc2r@mail.gmail.com>
+User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152019>
 
-Heya,
+Avery Pennarun <apenwarr@gmail.com> wrote:
+> 
+> While we're here, it's probably worth mentioning that git's index file
+> format (which stores a sequential list of full paths in alphabetical
+> order, instead of an actual hierarchy) does become a bottleneck when
+> you actually have a huge number of files in your repo (like literally
+> a million).  You can't actually binary search through the index!  The
+> current implementation of submodules allows you to dodge that
+> scalability problem since you end up with multiple smaller index
+> files.  Anyway, that's fixable too.
 
-On Tue, Jul 27, 2010 at 07:20, Finn Arne Gangstad <finnag@pvv.org> wrote:
-> There is one minor nit: The speedup gain is zero :) git still
-> traverses all directories to look for .gitignore files, which seems to
-> totally kill the optimisation.
+Yes.
 
-This is very true. In my experience with ginormous trees even if you
-'git update-index --assume-unchanged' every file and directory it's
-still unbearably slow due to the .gitignore files. Any solution that
-aims to solve this problem should also address the .gitignore file
-problem. Note: a safe assumption here is that to solve the problem it
-needs to work if there are more .gitignore files than regular files
-:).
+More than once I've been tempted to rewrite the on-disk (and I guess
+in-memory) format of the index.  And then I remember how painful that
+stuff is in either C git.git or JGit, and I back away slowly.  :-)
+
+Ideally the index is organized the same way the trees are, but
+you still can't do a really good binary search because of the
+ass-backwards name sorting rule for trees.  But for performance
+reasons you still want to keep the entire index in a single file,
+an index per directory (aka SVN/CVS) is too slow for the common
+case of <30k files.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Shawn.
