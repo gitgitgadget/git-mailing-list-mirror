@@ -1,47 +1,76 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: [PATCHv4 0/3] Updated patch series for providing mechanism to list available repositories
-Date: Wed, 28 Jul 2010 00:43:01 -0700
-Message-ID: <1280302984-1752-1-git-send-email-gdb@mit.edu>
-To: jrnieder@gmail.com, j.sixt@viscovery.net, avarab@gmail.com,
-	gitster@pobox.com, git@vger.kernel.org, gdb@mit.edu
-X-From: git-owner@vger.kernel.org Wed Jul 28 09:43:48 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/4] Allow detached form (e.g. "-S foo" instead of "-Sfoo") for diff options
+Date: Wed, 28 Jul 2010 09:38:45 +0200
+Message-ID: <vpqr5ioukca.fsf@bauges.imag.fr>
+References: <1280265719-30968-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1280265719-30968-2-git-send-email-Matthieu.Moy@imag.fr>
+	<20100727213750.GB11768@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 09:44:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe1Il-000114-Fp
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 09:43:43 +0200
+	id 1Oe1JN-0001Jk-Rq
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 09:44:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886Ab0G1Hnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 03:43:35 -0400
-Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:64238 "EHLO
-	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752421Ab0G1Hnf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 03:43:35 -0400
-X-AuditID: 12074423-b7cb4ae000000a9b-67-4c4fdfa8a508
-Received: from mailhub-auth-2.mit.edu (MAILHUB-AUTH-2.MIT.EDU [18.7.62.36])
-	by dmz-mailsec-scanner-6.mit.edu (Symantec Brightmail Gateway) with SMTP id A0.23.02715.8AFDF4C4; Wed, 28 Jul 2010 03:43:36 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o6S7hWBR023787;
-	Wed, 28 Jul 2010 03:43:32 -0400
-Received: from localhost (76-191-199-59.dsl.dynamic.sonic.net [76.191.199.59])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6S7hSEq020108;
-	Wed, 28 Jul 2010 03:43:31 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0.4
-X-Brightmail-Tracker: AAAAARVg644=
+	id S1754234Ab0G1Hn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 03:43:58 -0400
+Received: from imag.imag.fr ([129.88.30.1]:51021 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754141Ab0G1Hn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 03:43:57 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o6S7cjhc004389
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 28 Jul 2010 09:38:45 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oe1Dx-0006fb-H6; Wed, 28 Jul 2010 09:38:45 +0200
+In-Reply-To: <20100727213750.GB11768@burratino> (Jonathan Nieder's message of "Tue\, 27 Jul 2010 16\:37\:50 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 28 Jul 2010 09:38:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152051>
 
-This revised patch series should address all comments given thus far.
-The specific changes made between v3 and v4 are documented in the
-patch emails.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks,
+> Matthieu Moy wrote:
+>
+>> +++ b/diff.c
+>> @@ -2990,9 +2990,23 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
+> [...]
+>> +#define IF_SHORT_OPT(optname)			\
+>> +	((!strcmp(arg, "-" #optname)		\
+>> +	  && (argv[1] || (die("Option `" #optname "' requires a value"), 1),	\
+>> +	      optarg   = argv[1],	       		\
+>> +	      argcount = 2,			\
+>> +	      1)) ||				\
+>> +	 (!prefixcmp(arg, "-" #optname)		\
+>> +	  && (optarg = arg + strlen("-" #optname),	\
+>> +	      argcount = 1,			\
+>> +	       1)))
+>> +
+>
+> Why not something like this?
+>
+> 	static inline int short_opt(char opt, const char *arg,
+> 					const char *argv, const char **optarg)
 
-Greg
+Sounds nice too. I'll do that in the next round.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
