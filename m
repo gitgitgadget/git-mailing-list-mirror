@@ -1,222 +1,165 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] git-gui: use textconv filter for diff and blame
-Date: Wed, 28 Jul 2010 14:23:50 +0200
-Message-ID: <1280319830-20483-1-git-send-email-Matthieu.Moy@imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 3/4 v2] Allow detached form (e.g. "git log --grep foo") in 
+	log options.
+Date: Wed, 28 Jul 2010 12:56:49 +0000
+Message-ID: <AANLkTi=TRzn-QWduEYH7qO-4=a-nGqCGSMkZCGn2iB=W@mail.gmail.com>
+References: <vpqr5ioukca.fsf@bauges.imag.fr>
+	<1280310062-16793-3-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTikzL-sgysKD+0CZ100xHWZro=-hDgDgUL2Pb3yw@mail.gmail.com>
+	<vpq8w4vhmkj.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Clemens Buchacher <drizzd@aon.at>,
-	=?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 28 14:24:26 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 28 14:57:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe5gL-0003Ir-Qe
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 14:24:22 +0200
+	id 1Oe6C3-0002Ew-FN
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 14:57:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754763Ab0G1MYQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 08:24:16 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35116 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754702Ab0G1MYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 08:24:15 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6SCE06b008427
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 28 Jul 2010 14:14:00 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Oe5gA-0002MK-AH; Wed, 28 Jul 2010 14:24:10 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Oe5gA-0005Kx-9C; Wed, 28 Jul 2010 14:24:10 +0200
-X-Mailer: git-send-email 1.7.2.25.g9ebe3
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 28 Jul 2010 14:14:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6SCE06b008427
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280924040.66009@19M96nsHdxrPOwdFtWkvbA
+	id S1751772Ab0G1M4v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 08:56:51 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46342 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751158Ab0G1M4u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 08:56:50 -0400
+Received: by iwn7 with SMTP id 7so4819955iwn.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 05:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Mko1dMS+sWkQAf5w3BItTkyoj//91yQy/zJDdsykB2U=;
+        b=mj9QzRjfGzrugr5nliqON8Rwx/3H+sI9yXWm4Zhp/JVX0V8cwheGCWO3XG0+R5j3Ig
+         oGP/c39VsDANwPhK2j34x7ofcNR6eRK/LYPT2mQv/yRzadEOsuXNkqyFzNox0guYpL2E
+         eys0ggqx5FvR2J2OOSQqExxmd5ZNYM2ie8uoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SvcbaGZFiphpr+mc/fpl8PhNX/4/dAStVk/8jmolKS/LMNU3mnbD5xBrAUnXzZuXEC
+         P+pvhr+o5OsPBCP+fK2LuQZZnDB48NJF/OwcVJmRpIMXZFdw6goa1a4+R39/B/3UOu8R
+         ZtAIT7czqSl65MqX1B7Xf1p5GaLLYW5bQ9PsM=
+Received: by 10.231.191.6 with SMTP id dk6mr12059472ibb.51.1280321809936; Wed, 
+	28 Jul 2010 05:56:49 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 28 Jul 2010 05:56:49 -0700 (PDT)
+In-Reply-To: <vpq8w4vhmkj.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152080>
 
-=46rom: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
+On Wed, Jul 28, 2010 at 11:29, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Wed, Jul 28, 2010 at 09:41, Matthieu Moy <Matthieu.Moy@imag.fr> w=
+rote:
+>>
+>> Here's a better commit message, the subject was >50 chars> (see
+>> Documentation/SubmittingPatches):
+>
+> I don't see a mention of 50 chars there. Conventions usually limit
+> lines to <80 chars (sometimes 72), and my subject line is 64
+> chars-wide if you don't count [PATCH], which won't end up in git.git.
 
-Create a checkbox "Use Textconv For Diffs and Blame" in git-gui options=
-=2E
-If checked and if the driver for the concerned file exists, git-gui cal=
-ls diff
-and blame with --textconv option
+Hrm, I thought it was explicitly mentioned there, but it says:
 
-Signed-off-by: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
+	- the first line of the commit message should be a short
+	  description and should skip the full stop
 
-This patch was originally written by Cl=C3=A9ment Poulain (a student of
-mine), it was not mergeable at the time it was sent, since it relied
-on a patch serie introducing "git cat-file --textconv". Now that this
-cat-file --textconv is in a git release (1.7.2), I guess it's time to
-get this merged into git-gui.
+Since your patch subject had a full stop I thought I'd mention it.
 
-I did review and test the patch, but I'm mostly useless in TCL, so I
-may have missed the obvious. That said, the patch is relatively simple
-and looks OK.
+DISCUSSION in git-commit(1) and gittutorial(7) mention 50 characters
+explicitly though, and a lot of tools that present commits in short
+form use that as a soft limit, e.g. gitweb and github.
 
- git-gui/git-gui.sh     |   28 +++++++++++++++++++++++++++-
- git-gui/lib/blame.tcl  |   21 +++++++++++++++++++--
- git-gui/lib/diff.tcl   |    5 ++++-
- git-gui/lib/option.tcl |    1 +
- 4 files changed, 51 insertions(+), 4 deletions(-)
+I'll submit a patch to SubmittingPatches citing the 50 char soft
+limit.
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 7d54511..59edf39 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -269,6 +269,17 @@ proc is_config_true {name} {
- 	}
- }
-=20
-+proc is_config_false {name} {
-+	global repo_config
-+	if {[catch {set v $repo_config($name)}]} {
-+		return 0
-+	} elseif {$v eq {false} || $v eq {0} || $v eq {no}} {
-+		return 1
-+	} else {
-+		return 0
-+	}
-+}
-+
- proc get_config {name} {
- 	global repo_config
- 	if {[catch {set v $repo_config($name)}]} {
-@@ -782,6 +793,7 @@ set default_config(user.email) {}
-=20
- set default_config(gui.encoding) [encoding system]
- set default_config(gui.matchtrackingbranch) false
-+set default_config(gui.textconv) true
- set default_config(gui.pruneduringfetch) false
- set default_config(gui.trustmtime) false
- set default_config(gui.fastcopyblame) false
-@@ -3405,6 +3417,19 @@ lappend diff_actions [list $ctxmsm entryconf [$c=
-txmsm index last] -state]
- $ctxmsm add separator
- create_common_diff_popup $ctxmsm
-=20
-+proc has_textconv {path} {
-+	if {[is_config_false gui.textconv]} {
-+		return 0
-+	}
-+	set filter [gitattr $path diff set]
-+	set textconv [get_config [join [list diff $filter textconv] .]]
-+	if {$filter ne {set} && $textconv ne {}} {
-+		return 1
-+	} else {
-+		return 0
-+	}
-+}
-+
- proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
- 	global current_diff_path file_states
- 	set ::cursorX $x
-@@ -3440,7 +3465,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y}=
- {
- 			|| {__} eq $state
- 			|| {_O} eq $state
- 			|| {_T} eq $state
--			|| {T_} eq $state} {
-+			|| {T_} eq $state
-+			|| [has_textconv $current_diff_path]} {
- 			set s disabled
- 		} else {
- 			set s normal
-diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
-index 786b50b..ead68fd 100644
---- a/git-gui/lib/blame.tcl
-+++ b/git-gui/lib/blame.tcl
-@@ -449,11 +449,28 @@ method _load {jump} {
-=20
- 	$status show [mc "Reading %s..." "$commit:[escape_path $path]"]
- 	$w_path conf -text [escape_path $path]
-+
-+	set do_textconv 0
-+	if {![is_config_false gui.textconv] && [git-version >=3D 1.7.2]} {
-+		set filter [gitattr $path diff set]
-+		set textconv [get_config [join [list diff $filter textconv] .]]
-+		if {$filter ne {set} && $textconv ne {}} {
-+			set do_textconv 1
-+		}
-+	}
- 	if {$commit eq {}} {
--		set fd [open $path r]
-+		if {$do_textconv ne 0} {
-+			set fd [open "|$textconv $path" r]
-+		} else {
-+			set fd [open $path r]
-+		}
- 		fconfigure $fd -eofchar {}
- 	} else {
--		set fd [git_read cat-file blob "$commit:$path"]
-+		if {$do_textconv ne 0} {
-+			set fd [git_read cat-file --textconv "$commit:$path"]
-+		} else {
-+			set fd [git_read cat-file blob "$commit:$path"]
-+		}
- 	}
- 	fconfigure $fd \
- 		-blocking 0 \
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index ec8c11e..c628750 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -55,7 +55,7 @@ proc handle_empty_diff {} {
-=20
- 	set path $current_diff_path
- 	set s $file_states($path)
--	if {[lindex $s 0] ne {_M}} return
-+	if {[lindex $s 0] ne {_M} || [has_textconv $path]} return
-=20
- 	# Prevent infinite rescan loops
- 	incr diff_empty_count
-@@ -280,6 +280,9 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 			lappend cmd diff-files
- 		}
- 	}
-+	if {![is_config_false gui.textconv] && [git-version >=3D 1.6.1]} {
-+		lappend cmd --textconv
-+	}
-=20
- 	if {[string match {160000 *} [lindex $s 2]]
- 	 || [string match {160000 *} [lindex $s 3]]} {
-diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
-index d4c5e45..3807c8d 100644
---- a/git-gui/lib/option.tcl
-+++ b/git-gui/lib/option.tcl
-@@ -148,6 +148,7 @@ proc do_options {} {
- 		{b gui.trustmtime  {mc "Trust File Modification Timestamps"}}
- 		{b gui.pruneduringfetch {mc "Prune Tracking Branches During Fetch"}}
- 		{b gui.matchtrackingbranch {mc "Match Tracking Branches"}}
-+		{b gui.textconv {mc "Use Textconv For Diffs and Blames"}}
- 		{b gui.fastcopyblame {mc "Blame Copy Only On Changed Files"}}
- 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy=
- On"}}
- 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (day=
-s)"}}
---=20
-1.7.2.25.g9ebe3
+>>> +test_expect_success 'log --grep option parsing' '
+>>> + =C2=A0 =C2=A0 =C2=A0 echo second >expect &&
+>>> + =C2=A0 =C2=A0 =C2=A0 git log -1 --pretty=3D"tformat:%s" --grep se=
+c >actual &&
+>>> + =C2=A0 =C2=A0 =C2=A0 test_cmp expect actual &&
+>>> + =C2=A0 =C2=A0 =C2=A0 test_must_fail git log -1 --pretty=3D"tforma=
+t:%s" --grep
+>>> +'
+>>
+>> There's a lot of behavior change in this series, but only two small
+>> tests that I can see.
+>
+> 4, not 2.
+
+I only saw two test_expect_success additions in your v2 series, maybe
+I missed one.
+
+>> It would be easy to change the parsing code back without triggering
+>> a regression test.
+>
+> I've introduced a test for each pattern, but deliberately did not do
+> exhaustive testing: I'm testing the patterns, not the way they are
+> applied. In the same way, I don't think there's a testcase for each
+> use of parse-option in the testsuite.
+
+Not for everything it seems, but the coverage is pretty good:
+
+    http://v.nix.is/~avar/cover_db_html/parse-options-c.html
+    http://v.nix.is/~avar/cover_db_html/test-parse-options-c.html
+
+Anyway. Regression tests can be added later, and I think this series
+is good enough for inclusion as-is. But option parsing has been a
+moving target in Git for a while now, and it's quite likely that this
+code will get rewritten down the line to use a new library that can
+parse all of Git's option syntax.
+
+More tests coverage would be valuable for catching regressions in such
+future rewrites. In general that's the main value, not making sure
+*your* code works, but that someone else doesn't break it.
+
+Anyway, here's how you can easily get almost complete coverage at
+almost no cost for this series, first make a t/lib-log.sh like this:
+
+    #!/bin/sh
+
+    log_expect_success() {
+        desc=3D$1
+        text=3D$2
+        test_expect_success "Phony test with attached options: $1" "$2"
+        mocked=3D$(echo "$2" | sed -r 's/([A-Za-z-]+)=3D/\1 /')
+        test_expect_success "Phony test with detached options: $1" "$mo=
+cked"
+    }
+
+Then just change the t4*log*.sh tests that aren't doing setup work
+(like git init) to use it:
+
+    diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-for=
+mats.sh
+    index cb9f2bd..7ccc4bb 100755
+    --- a/t/t4205-log-pretty-formats.sh
+    +++ b/t/t4205-log-pretty-formats.sh
+    @@ -20 +20 @@ test_expect_success 'set up basic repos' '
+    -test_expect_success 'alias builtin format' '
+    +log_expect_success 'alias builtin format' '
+
+We'll be running tests twice, but it'll catch these at least:
+
+    $ ack -h -i '(--[a-z-]+=3D)' --output '$1' t4*log*.sh | sort | uniq
+    --abbrev=3D
+    --author=3D
+    --color=3D
+    --decorate=3D
+    --diff-filter=3D
+    --format=3D
+    --grep=3D
+    --pretty=3D
+
+I can submit something like that later if I get around to it, or you
+can include it in your series if you want.
