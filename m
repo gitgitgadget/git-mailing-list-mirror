@@ -1,124 +1,112 @@
-From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@MIT.EDU>
-Subject: [PATCH] gitweb: move highlight config out of guess_file_syntax()
-Date: Wed, 28 Jul 2010 14:40:53 -0400
-Message-ID: <1280342453-13938-1-git-send-email-asedeno@mit.edu>
-References: <201007262245.35518.jnareb@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] SubmittingPatches: Cite the 50 char subject limit
+Date: Wed, 28 Jul 2010 19:25:58 +0000
+Message-ID: <AANLkTimieHJaw1UmKtQvS4=2i8TrmR5A5zFO13NaNBo=@mail.gmail.com>
+References: <1280326285-10203-1-git-send-email-avarab@gmail.com>
+	<7vzkxb4j1v.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 20:41:03 2010
+X-From: git-owner@vger.kernel.org Wed Jul 28 21:26:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeBYt-0007gF-CI
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 20:41:03 +0200
+	id 1OeCGc-0001nj-AE
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 21:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756116Ab0G1Sk5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 14:40:57 -0400
-Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:46612 "EHLO
-	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751303Ab0G1Sk4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 14:40:56 -0400
-X-AuditID: 1209190d-b7c82ae000000a16-c5-4c5079b9ee75
-Received: from mailhub-auth-1.mit.edu (MAILHUB-AUTH-1.MIT.EDU [18.9.21.35])
-	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id 84.3F.02582.9B9705C4; Wed, 28 Jul 2010 14:40:57 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o6SIesPd003157;
-	Wed, 28 Jul 2010 14:40:54 -0400
-Received: from localhost (LOSTWOODS.MIT.EDU [18.238.0.156])
-	(authenticated bits=0)
-        (User authenticated as asedeno@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6SIerm4028547;
-	Wed, 28 Jul 2010 14:40:54 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <201007262245.35518.jnareb@gmail.com>
-X-Brightmail-Tracker: AAAAARVhw+4=
+	id S1752280Ab0G1T0H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 15:26:07 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:47351 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752154Ab0G1T0F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 15:26:05 -0400
+Received: by gyg10 with SMTP id 10so1828018gyg.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 12:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hGbxcYNQtZpmYSzpYqQE0wHzTSsBOp3vhqbNKJY0tDI=;
+        b=ha1KaaYmWsdgeGVi4RJlxlVWjbf8MK/g8mwTz1JYTVrf1wBNLzu+hN2zqOrA0+LHlh
+         KvIqpgU2t/Iu0/uyc+IsCfQlJ2CZ8B/mPzK11VVsojOPBv1SyWbbCsGVCbfx+6JqPYUh
+         imoN239C42OZMfSk4yZKMKBsht8mJMf730Utc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fvdPEs46gRXalbV3SlAgY5PmvwYF2got7HwdsQOLhtSteSDaymU9dlU9tN2HdfaHda
+         29PbBIwMDKZkPCqwqE+YagoC82pcwF8CL8FsTF00cU4u6hgKDeJyM6M+yvhA/jktawl1
+         o5MmfkmubgQPWRorVPEr286XR49og/j6gcJZU=
+Received: by 10.150.93.13 with SMTP id q13mr3104736ybb.339.1280345158829; Wed, 
+	28 Jul 2010 12:25:58 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 28 Jul 2010 12:25:58 -0700 (PDT)
+In-Reply-To: <7vzkxb4j1v.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152114>
 
-Move highlight config out of guess_file_syntax() so that it can be
-extended/overridden by system/user configuration.
+On Wed, Jul 28, 2010 at 17:23, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> Change the SubmittingPatches recommendations to mention the 50
+>> character soft limit on patch subject lines. 50 characters is the so=
+ft
+>> limit mentioned in git-commit(1) and gittutorial(7), it's also the
+>> point at which Gitweb, GitHub and various other Git front ends start
+>> abbreviating the commit message.
+>
+> Hmph, we probably would want to do s/50 character/&s/ in the two manu=
+al
+> pages.
 
-Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
-Acked-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   47 +++++++++++++++++++++++---------------------=
----
- 1 files changed, 23 insertions(+), 24 deletions(-)
+I'm not sure if "with a single short (less than 50 character) line" is
+is grammatically correct with "characters", since "characters line"
+wouldn't make sense.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index cedc357..e0e9532 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -232,6 +232,29 @@ our %avatar_size =3D (
- # Leave it undefined (or set to 'undef') to turn off load checking.
- our $maxload =3D 300;
-=20
-+# configuration for 'highlight' (http://www.andre-simon.de/)
-+# match by basename
-+our %highlight_basename =3D (
-+	#'Program' =3D> 'py',
-+	#'Library' =3D> 'py',
-+	'SConstruct' =3D> 'py', # SCons equivalent of Makefile
-+	'Makefile' =3D> 'make',
-+);
-+# match by extension
-+our %highlight_ext =3D (
-+	# main extensions, defining name of syntax;
-+	# see files in /usr/share/highlight/langDefs/ directory
-+	map { $_ =3D> $_ }
-+		qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tc=
-l),
-+	# alternate extensions, see /etc/highlight/filetypes.conf
-+	'h' =3D> 'c',
-+	map { $_ =3D> 'cpp' } qw(cxx c++ cc),
-+	map { $_ =3D> 'php' } qw(php3 php4),
-+	map { $_ =3D> 'pl'  } qw(perl pm), # perhaps also 'cgi'
-+	'mak' =3D> 'make',
-+	map { $_ =3D> 'xml' } qw(xhtml html htm),
-+);
-+
- # You define site-wide feature defaults here; override them with
- # $GITWEB_CONFIG as necessary.
- our %feature =3D (
-@@ -3316,30 +3339,6 @@ sub blob_contenttype {
- sub guess_file_syntax {
- 	my ($highlight, $mimetype, $file_name) =3D @_;
- 	return undef unless ($highlight && defined $file_name);
--
--	# configuration for 'highlight' (http://www.andre-simon.de/)
--	# match by basename
--	my %highlight_basename =3D (
--		#'Program' =3D> 'py',
--		#'Library' =3D> 'py',
--		'SConstruct' =3D> 'py', # SCons equivalent of Makefile
--		'Makefile' =3D> 'make',
--	);
--	# match by extension
--	my %highlight_ext =3D (
--		# main extensions, defining name of syntax;
--		# see files in /usr/share/highlight/langDefs/ directory
--		map { $_ =3D> $_ }
--			qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec t=
-cl),
--		# alternate extensions, see /etc/highlight/filetypes.conf
--		'h' =3D> 'c',
--		map { $_ =3D> 'cpp' } qw(cxx c++ cc),
--		map { $_ =3D> 'php' } qw(php3 php4),
--		map { $_ =3D> 'pl'  } qw(perl pm), # perhaps also 'cgi'
--		'mak' =3D> 'make',
--		map { $_ =3D> 'xml' } qw(xhtml html htm),
--	);
--
- 	my $basename =3D basename($file_name, '.in');
- 	return $highlight_basename{$basename}
- 		if exists $highlight_basename{$basename};
---=20
-1.7.1
+On the other hand that sentence violates the rule that when you put
+something in parens your sentence should still make sense with
+s/[()]//g, "a single short less than 50 character line" is pushing it.
+
+I do not think if anybody is ready to stand behind the specific
+> number "50", and we can bikeshed about it separately.
+>
+> The spirit of having a soft limit is twofold:
+>
+> =C2=A0- It should fit on "git log --oneline" comfortably;
+>
+> =C2=A0- If your change is too complex to be summarized in such a shor=
+t
+> =C2=A0 sentence, you probably are doing too many things in one commit=
+=2E
+>
+> The first does not justify "50" any better than other arbitrary limit=
+, but
+> with things like --graph and --source, anything longer makes the resu=
+lting
+> output very close to the edge of an 80-column terminal.
+>
+> The second does not justify "50" either, as your language may be verb=
+ose
+> or terse (e.g. Japanese can cram far more information in a 140-char t=
+weet
+> than somebody writing in English), but it is a more important one bet=
+ween
+> the two rationales above.
+
+Right, 50 characters isn't magical. But I find it to be a really good
+indicator that I'm going over the limit.
+
+When I want to write something that's 60 characters or more that's
+usually a sign that I should simplify the subject and just write a
+more detailed body.
+
+50 also fits neatly into interfaces where you want the summary and 2-3
+other things on the page. Like in the Gitweb or Github interfaces.
