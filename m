@@ -1,97 +1,81 @@
-From: Bradley Wagner <bradley.wagner@hannonhill.com>
-Subject: Re: Possible feature request for merge and pull
-Date: Wed, 28 Jul 2010 16:55:03 -0400
-Message-ID: <AANLkTimXe1SYiVONTnN_4e1ieAKNHgKwJ7fBOYjL-CUE@mail.gmail.com>
-References: <AANLkTim6JAPrSVaSaGZ72xtfFnUUcYeWT8vpL3rYuwki@mail.gmail.com>
-	<AANLkTinRvq71GS5WVdWs9zP5QSJ=TjCWBgTfRGn2Qub0@mail.gmail.com>
-	<AANLkTikA2jWu76aPUNG+B7Nwc9eDzoU93VcGvUFWR0Ri@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Submodules: Use "ignore" settings from .gitmodules
+ too for diff and status
+Date: Wed, 28 Jul 2010 14:35:01 -0700
+Message-ID: <7vhbjjware.fsf@alter.siamese.dyndns.org>
+References: <4C4DD33F.4020104@web.de> <4C4DD3CF.9070906@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 22:55:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 28 23:35:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeDeh-0003go-NC
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 22:55:12 +0200
+	id 1OeEHX-0003ay-B2
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 23:35:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118Ab0G1UzG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 16:55:06 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:43054 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756000Ab0G1UzF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 16:55:05 -0400
-Received: by pzk26 with SMTP id 26so2009323pzk.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 13:55:03 -0700 (PDT)
-Received: by 10.142.191.14 with SMTP id o14mr6557070wff.208.1280350503340; 
-	Wed, 28 Jul 2010 13:55:03 -0700 (PDT)
-Received: by 10.229.236.2 with HTTP; Wed, 28 Jul 2010 13:55:03 -0700 (PDT)
-In-Reply-To: <AANLkTikA2jWu76aPUNG+B7Nwc9eDzoU93VcGvUFWR0Ri@mail.gmail.com>
+	id S1754857Ab0G1VfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 17:35:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63409 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752659Ab0G1VfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 17:35:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A35D1C8FBC;
+	Wed, 28 Jul 2010 17:35:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oPdcY1P9ZaljdtiNewjyPoTsvyQ=; b=wAwEt5
+	+E1zcL3iTiuhp4OSUlYJPD9nKoq6nWZ0lG8JSwqTx2Mq9bQjK7Fg7JLutG5OddVw
+	s/vqDoPehE+miwBn2Ma2OIsXhhFwINAdA87qHsP0tlOyQybzhNkQTXLyx5Q9Ynwj
+	pd8bxHKS+KD/dHhgHQr2tt1LfWpQX/UkHWnmc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cbEhKm1gED+CgoIdtOmmebVGIYkaFnaU
+	xIbNOdJ0w5iSvTGJ+X1QgjnuEQLvmVKojw7IQhoyytLIdloKDb0H+pCe6UxjvLZw
+	SX55NvblLyKSy5Hvg+1ZdFLeTS/zC5cEsBrFysUjKWqWeG7+IflQ8drjLAFD3gac
+	BgLAxmYKso4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 716C7C8FB9;
+	Wed, 28 Jul 2010 17:35:06 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B7B20C8FB7; Wed, 28 Jul
+ 2010 17:35:02 -0400 (EDT)
+In-Reply-To: <4C4DD3CF.9070906@web.de> (Jens Lehmann's message of "Mon\, 26
+ Jul 2010 20\:28\:31 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FD421D92-9A8F-11DF-88F1-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152121>
 
-Avery,
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-On Wed, Jul 28, 2010 at 4:49 PM, Avery Pennarun <apenwarr@gmail.com> wr=
-ote:
-> On Wed, Jul 28, 2010 at 3:34 AM, =C6var Arnfj=F6r=F0 Bjarmason
-> <avarab@gmail.com> wrote:
->> On Wed, Jul 28, 2010 at 01:24, Bradley Wagner
->> <bradley.wagner@hannonhill.com> wrote:
->>> I would love to be able to use the -m flag and --log together with =
-git
->>> merge and pull to be able to create a custom commit message but als=
-o
->>> include one-line summaries of each of the commits being merged/pull=
-ed.
->>
->> This sort of thing has vaguely come up before, and it was mentioned
->> that you can just use a small script that calls git-filter-branch or
->> git-rebase -i.
->>
->> It's easy to rewrite the commits you just pulled, having some featur=
-e
->> that e.g. adds a custom message to the beginning of each of them wou=
-ld
->> just impose an artificial limitation and overlap with existing (and
->> more powerful) functionality.
->
-> If I understand correctly, the request is not to rewrite the pulled
-> commits, but just to produce a nice message in the newly-created merg=
-e
-> commit.
+> The .gitmodules file is parsed for "submodule.<name>.ignore" entries
+> before looking for them in .git/config. Thus settings found in .git/config
+> will override those from .gitmodules,...
 
-Yes, that's correct.
+Hmph.
 
-> It sounds like --log and -m are currently incompatible, in that -m
-> overrides --log, and that's not the desired behaviour.
+The value of "submodule.<name>.path" does not have to be "<name>".  There
+seems to be a bit of confusion here.
 
-Correct, I can't remember which overrides which but basically it's as
-if you just used one of them. Also, git pull doesn't appear to take a
--m flag at all.
+I thought that [PATCH 1/2] used the path to the submodule, not its name,
+as the key.  Even though the patch to Documentation/config.txt talks about
+"submodule.<submodulename>.ignore", what the code actually seems to do in
+set-from-submodule-config is to use path.  
 
->=A0Bradley: this
-> is probably a relatively easy fix to make, in case you're looking to
-> get into some git hacking. :)
+But this patch seems to key off of <name>.
 
-Nice, I may check that out.
+I suspect that it would make more sense to use <name> so that once the
+user configures ignore in .git/config, it will persist across moving of
+the submodule in the superproject tree.
 
->
-> Have fun,
->
-> Avery
->
-
-
-
---=20
-Hannon Hill - Put Us to the Test
-bradley.wagner@hannonhill.com | http://www.hannonhill.com
+In either case, we would want to be consistent between the two, no?
