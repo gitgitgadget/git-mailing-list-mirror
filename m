@@ -1,93 +1,179 @@
-From: =?UTF-8?q?Tor=20Arne=20Vestb=C3=B8?= <tor.arne.vestbo@nokia.com>
-Subject: [PATCH] require_work_tree: Look for top-level instead of is-inside-work-tree
-Date: Wed, 28 Jul 2010 18:47:04 +0200
-Message-ID: <1280335624-90132-1-git-send-email-tor.arne.vestbo@nokia.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Recommended work flow with git to send in patches
+Date: Wed, 28 Jul 2010 18:49:45 +0200
+Message-ID: <201007281849.47989.jnareb@gmail.com>
+References: <AANLkTiksAOpFG3vGVGcbeZ0NcpQ5FbDjnZ7yDxUsAY_r@mail.gmail.com> <m3y6cwkew7.fsf@localhost.localdomain> <AANLkTi=psuiq-GP9zV=pY6swNAUF-MwJt6COrNDVDLqu@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: trast@student.ethz.ch,
-	=?UTF-8?q?Tor=20Arne=20Vestb=C3=B8?= <tor.arne.vestbo@nokia.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 28 18:47:52 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tong Sun <suntong@cpan.org>
+X-From: git-owner@vger.kernel.org Wed Jul 28 18:50:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe9nL-00038o-4o
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 18:47:51 +0200
+	id 1Oe9pZ-0004GG-SG
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 18:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755608Ab0G1Qrq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 12:47:46 -0400
-Received: from smtp.nokia.com ([192.100.122.233]:32813 "EHLO
-	mgw-mx06.nokia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753315Ab0G1Qrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 12:47:45 -0400
-Received: from vaebh105.NOE.Nokia.com (vaebh105.europe.nokia.com [10.160.244.31])
-	by mgw-mx06.nokia.com (Switch-3.3.3/Switch-3.3.3) with ESMTP id o6SGlGao008783;
-	Wed, 28 Jul 2010 19:47:39 +0300
-Received: from esebh102.NOE.Nokia.com ([172.21.138.183]) by vaebh105.NOE.Nokia.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 28 Jul 2010 19:47:34 +0300
-Received: from mgw-da02.ext.nokia.com ([147.243.128.26]) by esebh102.NOE.Nokia.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 28 Jul 2010 19:47:33 +0300
-Received: from whopper.europe.nokia.com (olwst90128.europe.nokia.com [172.24.90.128])
-	by mgw-da02.ext.nokia.com (Switch-3.3.3/Switch-3.3.3) with ESMTP id o6SGlS7B020871;
-	Wed, 28 Jul 2010 19:47:29 +0300
-X-Mailer: git-send-email 1.7.2.19.g48995
-X-OriginalArrivalTime: 28 Jul 2010 16:47:33.0684 (UTC) FILETIME=[938E1F40:01CB2E74]
-X-Nokia-AV: Clean
+	id S1755798Ab0G1QuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 12:50:05 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62627 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755691Ab0G1QuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 12:50:00 -0400
+Received: by fxm14 with SMTP id 14so1384494fxm.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 09:49:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=+ePObehL9VRNjwSsp1hYUBHEbbPaiBFpP/q19eMN/nc=;
+        b=i3DAIAMBHr5qTXHMhLRngHs1kbL0Ujytx4kLX0o+0Dio2eddSnGeQVGNAJ7w2/4F8x
+         S81PNLbR51uG4O0XQc3qW3Gdl151KjEqHSNLZ+tYHOSZMX+LEVp90aFYkMQH/wiBNtSp
+         Z8/042DVvumsTc4Im7Li2bM0J1od6RMS9ldgA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=vlmPKBJ7OxuQOPHl8Hd6lv5/ysGsoI+nClEfhobsYXn3Ys4D/4d6IfnH3bzo9Rhwgs
+         5E0C6IUBSPnVOZmvqG80t84shRO3MTcvBzCXuKMfm/kqXHJgZ+FUYz7BPQePesZe/0l5
+         acuWOZ+gTarEFJBSg9I43u6OGCPEhXPFFNvnI=
+Received: by 10.223.105.14 with SMTP id r14mr10313595fao.33.1280335799191;
+        Wed, 28 Jul 2010 09:49:59 -0700 (PDT)
+Received: from [192.168.1.13] (abvz244.neoplus.adsl.tpnet.pl [83.8.223.244])
+        by mx.google.com with ESMTPS id b9sm2679747faq.31.2010.07.28.09.49.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 28 Jul 2010 09:49:57 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTi=psuiq-GP9zV=pY6swNAUF-MwJt6COrNDVDLqu@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152102>
 
-The documentation describes require_work_tree as guarding against
-bare repositories, and that's also the way it's used from porcelain
-such as git-rebase. When implemented using --is-inside-work-tree
-the samantics change, causing git-rebase to fail if run from outside
-GIT_WORK_TREE, even if GIT_WORK_TREE is valid.
+On Tue, Jul 27, 2010, Tong Sun wrote:
+> On Tue, Jul 27, 2010 at 1:35 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> 
+> > Doesn't GRML have web page / wiki page for developers?
+> 
+> Yes, http://grml.org/git/, but it is kind of reference book style,
+> doesn't cover much on the work flow, especially on the topic of
+> no-writing-privilege user contributing back.
 
-Signed-off-by: Tor Arne Vestb=C3=B8 <tor.arne.vestbo@nokia.com>
----
- git-sh-setup.sh     |    2 +-
- t/t1501-worktree.sh |    9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
+You could point lack of information for "leaf" contributors to them...
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 6131670..f8e4428 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -141,7 +141,7 @@ cd_to_toplevel () {
- }
-=20
- require_work_tree () {
--	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" =3D true ||
-+	test -n "$(git rev-parse --show-toplevel 2>/dev/null)" ||
- 	die "fatal: $0 cannot be used without a working tree."
- }
-=20
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index bd8b607..45b09e7 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -114,6 +114,15 @@ test_expect_success 'repo finds its work tree from=
- work tree, too' '
- 	 test sub/dir/tracked =3D "$(git ls-files)")
- '
-=20
-+test_expect_success 'require_work_tree finds work tree' '
-+	(cd repo.git/work &&
-+	. "$(git --exec-path)"/git-sh-setup &&
-+	cd .. &&
-+	require_work_tree &&
-+	cd .. &&
-+	require_work_tree)
-+'
-+
- test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE'=
- '
- 	(cd repo.git/work/sub/dir &&
- 	GIT_DIR=3D../../.. GIT_WORK_TREE=3D../.. GIT_PAGER=3D \
---=20
-1.7.2.19.g48995
+> > > - do initial git pull into grml-debootstrap
+> > >
+> > >   git pull git://git.grml.org/grml-debootstrap master
+> >
+> > Why not git-clone (possibly shallow, if you are working on one-shot
+> > patch or patch series)?
+> 
+> Ok, to explain it, I have to touch upon my "life long story" of using
+> git. Long story short on this, the recommended work flow that I
+> searched and found from the Inet was to do 'git clone' from web then
+> 'git clone' a local working copy. Here is my trying log:
+> 
+> # Download the latest version of the repository without downloading all the
+> history, using "shallow checkouts".
+> 
+>   git clone --depth 1 git://git.grml.org/grml-debootstrap.git
+
+O.K.
+ 
+> create working repo:
+> 
+>   $ git-clone --depth 1 grml-debootstrap grml-debootstrap.working
+>   Initialized empty Git repository in
+> /export/repositories/gitwork/grml/grml-debootstrap.working/.git/
+>   fatal: attempt to fetch/clone from a shallow repository
+>   ^^^^^^^^^^^^^^^
+> 
+> Seeing that fatal error, and not knowing where to get help from, I
+> just gave up the 'git clone' approach. Please be specific (with git
+> commands), how would I use 'git clone' for working on one-shot patch
+> or patch series.
+
+I don't understand this second step.  Why do you want this second clone?
+It is totally unnecessary.  The clone you make is working repository
+you can make your contributions in.
+
+In short, the workflow should look like this (I use here grml as example,
+but in practice I used git repository as I know it is fairly small, so
+the numbers, SHA-1 identifiers and branches won't match)
+
+  $ cd <somewhere>
+  $ git clone --depth 1 git://git.grml.org/grml-debootstrap.git
+  Initialized empty Git repository in <somwehere>/grml-debootstrap/.git/
+  [...]
+  $ cd grml-debootstrap
+  $ git branch -a
+  * master
+    remotes/origin/HEAD -> origin/master
+    remotes/origin/master
+  [...]
+
+Now you have two choices: you can work on 'master' branch (reasonable
+if you want to do only single thing), or you can create your own branch
+(one branch for one independent unrelated feature).  Let's create new
+branch off 'origin' == 'origin/master' == 'remotes/origin/master'
+
+  $ git checkout -b t/my-working-branch origin
+  Branch t/my-working-branch set up to track remote branch master from origin.
+  Switched to a new branch 't/my-working-branch'
+
+We could first setup git in such way, that it sets up to track upstream
+via rebasing rather than via merge (using `branch.autosetuprebase` config
+variable), but let's not complicate matters.
+
+Now you work on branch
+
+  [edit, edit, edit]
+  [commit or commit --amend]
+  [repeat as necessary]
+  
+Now, after some time you feel that your changes are ready for sending.
+First, download any new changes, if any.
+
+  $ git fetch
+
+Then use interactive rebase to both update your changes to apply to most
+recent upstream code, and also reorder and edit your patches (e.g. fix
+typo in commit message, move fix commit and squash it with fixed commit,
+etc.)
+
+  $ git rebase --interactive origin
+  [...]
+  Successfully rebased and updated refs/heads/t/my-working-branch.
+
+Then you need to generate patches.  If its more of them, I found it good
+idea to save them in separate subdirectory, but it might be not necessary
+for you
+
+  $ git format-patch --cover-letter origin..
+
+There are some situations where you don't need cover letter, e.g. if you
+are sending single patch, but they are quite useful especially with longer
+series.
+
+  [edit '0000-cover-letter.patch' at least]
+  [add comments to individual patches, if necessary]
+
+Then you can either use your email client, or just
+
+  $ git send-email --dry-run *.patch
+
+(Here you see why saving patch series to separate subdirectory by
+using '-o' option makes it easy to pick up relevant patches... ;-))
+
+HTH
+-- 
+Jakub Narebski
+Poland
