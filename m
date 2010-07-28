@@ -1,131 +1,83 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: [PATCH v2] Fix git rebase --continue to work with touched files
-Date: Wed, 28 Jul 2010 01:20:16 -0700
-Message-ID: <1280305216-59263-1-git-send-email-ddkilzer@kilzer.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"David D. Kilzer" <ddkilzer@kilzer.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 28 10:20:41 2010
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: inotify daemon speedup for git [POC/HACK]
+Date: Wed, 28 Jul 2010 18:20:55 +1000
+Message-ID: <AANLkTimqBSTRzcU++jW6izMgeA=HB00wBXQVHuSsn1oR@mail.gmail.com>
+References: <20100727122018.GA26780@pvv.org>
+	<AANLkTinuU6b1vmRFuBrA4Tc5H6gmC5cMP3Pa8EYz-8JE@mail.gmail.com>
+	<9E67A084-4EDB-4CCB-A771-11B97107F4EF@gmail.com>
+	<AANLkTi=oA33M4DmS5FyDx7Wn1DFrUGcmhSYkvcSYMc2r@mail.gmail.com>
+	<20100728000009.GE25268@spearce.org>
+	<AANLkTimkLrTwavErFkyaUTSVU-2s3me5f+cyqNFp7n+D@mail.gmail.com>
+	<52EDBD9A-2961-4F66-88B3-07BF873FA994@gmail.com>
+	<AANLkTi=TQnyATgJ0LSdR3qeeCVAgu+wOFcHmHUBguPiV@mail.gmail.com>
+	<AANLkTinabaO3csi3TBRJKPTZ1zVGgK8-ijs6h1YUkT-n@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Joshua Juran <jjuran@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	git <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 10:21:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe1sW-0007WC-L3
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 10:20:40 +0200
+	id 1Oe1sx-0007iY-NR
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 10:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754065Ab0G1IUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 04:20:35 -0400
-Received: from mail-out4.apple.com ([17.254.13.23]:53388 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752804Ab0G1IUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 04:20:31 -0400
-Received: from relay15.apple.com (relay15.apple.com [17.128.113.54])
-	by mail-out4.apple.com (Postfix) with ESMTP id 25542A5BA9D5;
-	Wed, 28 Jul 2010 01:20:31 -0700 (PDT)
-X-AuditID: 11807136-b7cc9ae000004162-b7-4c4fe84fd1e7
-Received: from ddkilzer.apple.com (ddkilzer.apple.com [17.202.32.26])
-	by relay15.apple.com (Apple SCV relay) with SMTP id 03.26.16738.F48EF4C4; Wed, 28 Jul 2010 01:20:31 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.25.gd0768
-X-Brightmail-Tracker: AAAAAQAAAZE=
+	id S1753419Ab0G1IU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 04:20:59 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:44404 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752771Ab0G1IU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 04:20:56 -0400
+Received: by qyk8 with SMTP id 8so3350618qyk.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 01:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=qZFQAkSYx2dRN8u0yy0CoE3anHc9TUwvtBLF3RyOGpw=;
+        b=s9YiFO62ABjh5//pu71q2oK5NXu2DubfiFtOT3JUHreoL71plpY6YvM6t7u5yMSDad
+         cMuUhw7YyRUoZlucBboIq6a+cAEH4wpmSvjttXLpwGXMMw+EYSPsnzjKORyL8Q6AhznT
+         3cCYHpbc1JR0UofhFgZd9VmX6hzYd0o/sF4+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=dNeIWD6kvUPK4isXcEmz5TQ765pz0NxZSOmil4AY6lln3djnJCdguuIlzKIxQZmW5K
+         VRLD3VtJaMutiRf8DLOAq7xaQ4oStKWa0yz7eJP/DiCjI6GeiPwIFgHja8lEQkAHWFcp
+         dtfr4xebXnss5wmfxe1Z8h7yT4+Q6jBVzvc9Y=
+Received: by 10.224.45.147 with SMTP id e19mr592259qaf.64.1280305255822; Wed, 
+	28 Jul 2010 01:20:55 -0700 (PDT)
+Received: by 10.220.101.201 with HTTP; Wed, 28 Jul 2010 01:20:55 -0700 (PDT)
+In-Reply-To: <AANLkTinabaO3csi3TBRJKPTZ1zVGgK8-ijs6h1YUkT-n@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152057>
 
-When performing a non-interactive rebase, sometimes
-"git rebase --continue" will fail if an unmodified file is
-touched in the working directory:
+On Wed, Jul 28, 2010 at 4:03 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> Heya,
+>
+> On Tue, Jul 27, 2010 at 20:31, Avery Pennarun <apenwarr@gmail.com> wrote:
+>> That's what made me think that
+>> sqlite might be a sensible choice, since it's already a database :)
+>
+> Sounds very sensible to me, especially the fact that (if it is indeed
+> fast enough, which I can't imagine it not being) it would make
+> development so much easier. At least, I think that having sqlite deal
+> with backwards comparability of your schema is easier than having to
+> manually do that? Also, sqlite is known to scale, is exactly one file
+> worth of dependency, what's not to love (other than having to support
+> upgrading to 'index vSqlite').
 
-    You must edit all merge conflicts and then
-    mark them as resolved using git add
-
-This is caused by "git diff-files" reporting a difference
-between the index and the filesystem:
-
-    :100644 100644 d00491...... 000000...... M	file
-
-The fix is to run "git update-index --refresh" before
-"git diff-files" as is done in git-rebase--interactive.
-
-Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
-Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
-Changes since v1:
-- Updated test script based on list feedback.  Thanks!
-  * Replaced while loop in original test with test-chmtime.
-  * Switched to use test_commit.
-- Added test case for the same issue in git-rebase--interactive
-  that was already fixed, and verified that the test breaks when
-  the fix is removed.
-
- git-rebase.sh              |    1 +
- t/t3418-rebase-continue.sh |   43 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 0 deletions(-)
- create mode 100755 t/t3418-rebase-continue.sh
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index ab4afa7..2d88742 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -208,6 +208,7 @@ do
- 		test -d "$dotest" -o -d "$GIT_DIR"/rebase-apply ||
- 			die "No rebase in progress?"
- 
-+		git update-index --ignore-submodules --refresh &&
- 		git diff-files --quiet --ignore-submodules || {
- 			echo "You must edit all merge conflicts and then"
- 			echo "mark them as resolved using git add"
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-new file mode 100755
-index 0000000..3b0d273
---- /dev/null
-+++ b/t/t3418-rebase-continue.sh
-@@ -0,0 +1,43 @@
-+#!/bin/sh
-+
-+test_description='git rebase --continue tests'
-+
-+. ./test-lib.sh
-+
-+. "$TEST_DIRECTORY"/lib-rebase.sh
-+
-+set_fake_editor
-+
-+test_expect_success 'setup' '
-+	test_commit "commit-new-file-F1" F1 1 &&
-+	test_commit "commit-new-file-F2" F2 2 &&
-+
-+	git checkout -b topic HEAD^ &&
-+	test_commit "commit-new-file-F2-on-topic-branch" F2 22 &&
-+
-+	git checkout master
-+'
-+
-+test_expect_success 'interactive rebase --continue works with touched file' '
-+	rm -fr .git/rebase-* &&
-+	git reset --hard &&
-+	git checkout master &&
-+
-+	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
-+	test-chmtime =-60 F1 &&
-+	git rebase --continue
-+'
-+
-+test_expect_success 'non-interactive rebase --continue works with touched file' '
-+	rm -fr .git/rebase-* &&
-+	git reset --hard &&
-+	git checkout master &&
-+
-+	test_must_fail git rebase --onto master master topic &&
-+	echo "Resolved" >F2 &&
-+	git add F2 &&
-+	test-chmtime =-60 F1 &&
-+	git rebase --continue
-+'
-+
-+test_done
+Even more sensible to replace all pack index with a single database.
+But then we could as well drop git object store in favor of Fossil (OK
+I'm going to far).
 -- 
-1.7.2.25.gd0768
+Duy
