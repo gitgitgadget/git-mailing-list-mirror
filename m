@@ -1,114 +1,80 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: inotify daemon speedup for git [POC/HACK]
-Date: Tue, 27 Jul 2010 21:31:38 -0400
-Message-ID: <AANLkTi=TQnyATgJ0LSdR3qeeCVAgu+wOFcHmHUBguPiV@mail.gmail.com>
-References: <20100727122018.GA26780@pvv.org> <AANLkTinuU6b1vmRFuBrA4Tc5H6gmC5cMP3Pa8EYz-8JE@mail.gmail.com> 
-	<9E67A084-4EDB-4CCB-A771-11B97107F4EF@gmail.com> <AANLkTi=oA33M4DmS5FyDx7Wn1DFrUGcmhSYkvcSYMc2r@mail.gmail.com> 
-	<20100728000009.GE25268@spearce.org> <AANLkTimkLrTwavErFkyaUTSVU-2s3me5f+cyqNFp7n+D@mail.gmail.com> 
-	<52EDBD9A-2961-4F66-88B3-07BF873FA994@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: Configurable callbacks for missing objects (we Re: upload-pack: 
+	support subtree packing)
+Date: Tue, 27 Jul 2010 19:53:59 -0600
+Message-ID: <AANLkTimrp4z0n75Zq7BtTvdWz6nzK3M4J9ohdbE6X3t3@mail.gmail.com>
+References: <1280187370-23675-1-git-send-email-pclouds@gmail.com>
+	<1280187370-23675-2-git-send-email-pclouds@gmail.com>
+	<20100727144605.GA25268@spearce.org>
+	<20100727185127.GD25124@worldvisions.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
-To: Joshua Juran <jjuran@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 03:32:08 2010
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 03:54:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OdvV9-0001ek-Br
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 03:32:07 +0200
+	id 1Odvqc-0007Q4-3V
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 03:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978Ab0G1BcE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 21:32:04 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43989 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752449Ab0G1BcB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 21:32:01 -0400
-Received: by wwj40 with SMTP id 40so1915777wwj.1
-        for <git@vger.kernel.org>; Tue, 27 Jul 2010 18:32:00 -0700 (PDT)
+	id S1751879Ab0G1ByM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 Jul 2010 21:54:12 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:61190 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751439Ab0G1ByJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 27 Jul 2010 21:54:09 -0400
+Received: by qyk8 with SMTP id 8so3145463qyk.19
+        for <git@vger.kernel.org>; Tue, 27 Jul 2010 18:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=PVpTz7DVns6e8fJJQewGJkmsDnDVrJzro2TMjSmTPuo=;
-        b=PwnNs/OXRCuMrSsoQ+8a8FLopqtW6Ph3uE411dbPnO16QlmaDE/Lcavo5+OTbqQDlG
-         HTUmWws/zhTKC9t9byat5o72dl0aVoLGT0EKxqkk5SMyztQ0Rfld0i5ZkZkhN4Fzc6Ab
-         G7EmumekEOQGt4nsmTZO1qp7DGz9Ce2ITF8VU=
+        bh=eIJCRpXF7/fhqa1R+OByF0rGe+/ECD/QMxxu4124Xrc=;
+        b=Vaxugi8FypE4okIBbguIEkG+qa+PdCuIq8DdyY4sVSagCsFQ79/kqvkA9b8atuET05
+         DZHjyqOIHGgRbP3c41EpVt7AzYnz8Wa5huX3KzTuYZprTuneWaN5XbJJYcsvGjdu3tqS
+         7Sgi1ODcvXCroSGxDY2vfNSp1EKTEnyPqLkMw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=Bm5edEPHmqew56GZqPBYBHQAqR/vNpY9mRKPatysbDnq0MqNE+KHiUSH+Xu7p0W8vD
-         xlCtuFK6sSsJ+zHlrfbu0RGc3K3q9Im0dfVwOMMugoXN/3cWcpBjuYbOBlNjcHre2jjM
-         K6p0QzNAuUjZrSxscRJyiOrLzNsJcTvQ8mG+o=
-Received: by 10.227.129.149 with SMTP id o21mr9731959wbs.176.1280280718243; 
-	Tue, 27 Jul 2010 18:31:58 -0700 (PDT)
-Received: by 10.216.235.202 with HTTP; Tue, 27 Jul 2010 18:31:38 -0700 (PDT)
-In-Reply-To: <52EDBD9A-2961-4F66-88B3-07BF873FA994@gmail.com>
+        b=x9fTC4F/PCuCRGpbBciYKOnqmtoOb98fHqtnly8CzfwCqmX0/Pa5zvyLR+XfIJV8IP
+         wrgfl+yoIstn/W583toFwGjBHsmhCzAieJpw7us4g+pv3aq/R3lFNgzQSsCXggj4WNHP
+         GzBDiKZiilM9obQ80D4Wz6i/qNDj7ao+qLdqM=
+Received: by 10.220.187.5 with SMTP id cu5mr3634350vcb.0.1280282039347; Tue, 
+	27 Jul 2010 18:53:59 -0700 (PDT)
+Received: by 10.220.97.15 with HTTP; Tue, 27 Jul 2010 18:53:59 -0700 (PDT)
+In-Reply-To: <20100727185127.GD25124@worldvisions.ca>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152029>
 
-On Tue, Jul 27, 2010 at 9:14 PM, Joshua Juran <jjuran@gmail.com> wrote:
-> Okay, I have an idea. =A0If I understand correctly, the index is a fl=
-at
-> database of records including a pathname and several fixed-length fie=
-lds.
-> =A0Since the records are not fixed-length, only sequential search is =
-possible,
-> even though the records are sorted by pathname.
+2010/7/27 Avery Pennarun <apenwarr@gmail.com>:
+> But I've been thinking that a really elegant way to solve the problem=
+ could
+> be to have a user-configurable "get the missing objects" callback. =C2=
+=A0If any
+> part of git that *needs* an object can't find it, it calls this callb=
+ack to
+> go try to retrieve it (either just that one object, or it can request=
+ to
+> download the object recursively, ie. everything it points to).
 >
-> Here's the idea: =A0Divide the database into blocks. =A0Each block co=
-ntains a
-> block header and the records belonging to a single directory. =A0The =
-block
-> header contains the length of the block and also the offset to the ne=
-xt
-> block, in bytes. =A0In addition to a record for each indexed file in =
-a
-> directory, a directory's block also contains records for subdirectori=
-es. The
-> mode flags in a record indicate the record type. =A0Directory records=
- contain
-> an offset in bytes to the block for that directory (in place of the S=
-HA-1
-> hash). =A0The block list is preceded by a file header, which includes=
- the
-> offset in bytes of the root block. =A0All offsets are from the beginn=
-ing of
-> the file.
->
-> Instead of having to search among every file in the repository, the s=
-earch
-> space now includes only the immediate descendants of each directory i=
-n the
-> target file's path. =A0If a directory is modified then it can either =
-be
-> rewritten in place (if there's sufficient room) or appended to the en=
-d of
-> the file (requiring the old and new sequentially preceding blocks and=
- the
-> parent directory's block to update their offsets).
+> Then shallow clones could just auto-fill themselves if you really nee=
+d a
+> prior version, for example.
 
-Yeah, that's pretty much what bup's current format does, minus
-appending rewritten dirs at the end when files are added.  I've
-thought of that, but sooner or later, the file would need to be
-rewritten anyway, and then you end up with odd performance
-characteristics where the file expands in random ways and then shrinks
-again when you decide it's gotten too big.  And if you do try to reuse
-empty blocks - which should mostly avoid the endless growth problem -
-you basically just have a database, including fragmentation problems
-and multi-user concerns and all.  That's what made me think that
-sqlite might be a sensible choice, since it's already a database :)
-
-But maybe there's some simpler way.
-
-Have fun,
-
-Avery
+What counts as "needing" an object?  Does 'git log -Sfoo' or 'git log
+--stat' need all missing blobs?  I'd personally dislike having such
+commands automatically result in huge downloads, but I'd probably
+dislike the automatic downloading in general so perhaps I'm just a
+misfit for the lazy clone usecase.  It's still an interesting question
+though -- what counts as needed?
