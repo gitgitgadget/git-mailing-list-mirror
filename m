@@ -1,91 +1,108 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v4] Document ls-files -t as semi-obsolete.
-Date: Wed, 28 Jul 2010 09:24:27 +0200
-Message-ID: <1280301867-20516-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <20100728040047.GA17614@coredump.intra.peff.net>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 28 09:25:12 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] t/t6035-merge-dir-to-symlink.sh: Remove TODO on passing 
+	test
+Date: Wed, 28 Jul 2010 07:31:28 +0000
+Message-ID: <AANLkTi=VBsjHJxogMiD-R+wFj6W3q2JevdfrXHWqAdKE@mail.gmail.com>
+References: <1280249698-11001-1-git-send-email-avarab@gmail.com>
+	<AANLkTikZO=RENz9HnHsiPoAv+fSz03p-zZPMepcX=KKK@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 09:31:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe10p-0000aB-Fm
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 09:25:12 +0200
+	id 1Oe171-0003bj-0z
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 09:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753714Ab0G1HZB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 03:25:01 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:56109 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750746Ab0G1HZA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 03:25:00 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6S7EKj6024475
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 28 Jul 2010 09:14:23 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Oe10A-0006G0-DE; Wed, 28 Jul 2010 09:24:30 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Oe10A-0005LV-Ar; Wed, 28 Jul 2010 09:24:30 +0200
-X-Mailer: git-send-email 1.7.2.25.g9ebe3
-In-Reply-To: <20100728040047.GA17614@coredump.intra.peff.net>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 28 Jul 2010 09:14:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6S7EKj6024475
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280906064.2249@NueOqk6nZ5fdUSWLoigr9w
+	id S1752771Ab0G1Hba convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 03:31:30 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44122 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173Ab0G1Hb3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 03:31:29 -0400
+Received: by iwn7 with SMTP id 7so4573324iwn.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 00:31:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kssAH77DXDvuPlYvf5k34xIZfcjllmvWnQ6B018+Nh0=;
+        b=Erhc8ojJO4rLw+nLcuRtjznOBU+L1zPHR7VXOulU6CeAwLsN+XdMIcxbrKWaEZOqAD
+         Oo0GmhYSvr50bp7gfevMbkIUECdwjzGnUF3LeBl+VO+CtFj15T+PsljsQf7C0DDgZLeF
+         EFOyU/qzYoHPLYgElyc/njGUyNe54VByc1igQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tjPvcJboV54yk7wqXni9+PLXvN6N4wxzyRz+IY0DC6UWPuhUhxJC+peC/UE/b5SWMq
+         kuRwFPIJGqlyd3ql1wP1MffZz04MorqyIKVJE8a8n/u3jtPhOvBAzi68IitPep8tGqY0
+         ZYNUQYGSJUzDngIJ5y32oSrxDynMtR65/jk14=
+Received: by 10.231.30.136 with SMTP id u8mr6698272ibc.19.1280302288527; Wed, 
+	28 Jul 2010 00:31:28 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 28 Jul 2010 00:31:28 -0700 (PDT)
+In-Reply-To: <AANLkTikZO=RENz9HnHsiPoAv+fSz03p-zZPMepcX=KKK@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152046>
 
-The behavior of "git ls-files -t" is very misleading (see
-http://thread.gmane.org/gmane.comp.version-control.git/126516 and
-http://thread.gmane.org/gmane.comp.version-control.git/144394/focus=144397
-for examples of mislead users) and badly documented, hence we point the
-users to superior alternatives.
+On Tue, Jul 27, 2010 at 23:08, Elijah Newren <newren@gmail.com> wrote:
+> Hi,
+>
+> On Tue, Jul 27, 2010 at 10:54 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarma=
+son
+> <avarab@gmail.com> wrote:
+>> Various merge-recursive cases were fixed in "merge-recursive: Fix D/=
+=46
+>> conflicts" by Elijah Newren. Some tests were changed from
+>> test_expect_failure to test_expect_success, but one fell through the
+>> cracks.
+>>
+>> Change that test to use test_expect_success.
+>
+> Weird, I know I tested all of these individually and worked to make
+> sure they all passed; I have no idea how I would have forgotten to
+> update this particular test.
 
-The feature is marked as "semi-obsolete" but not "scheduled for removal"
-since it's a plumbing command, scripts might use it, and Git testsuite
-already uses it to test the state of the index.
+It still passes, but nothing flags unexpectedly passing TODO tests if
+you use "make test", but if you use "prove" they're spotted.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Just s/diff-tree/diff-files/ (thanks to Peff for the correction) compared to v3.
+On pu:
 
- Documentation/git-ls-files.txt |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
+    v t (pu) $ prove ./t6035-merge-dir-to-symlink.sh
+    ./t6035-merge-dir-to-symlink.sh .. ok
+    All tests successful.
 
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 3521637..bd919f2 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -106,8 +106,16 @@ OPTIONS
- 	with `-s` or `-u` options does not make any sense.
- 
- -t::
--	Identify the file status with the following tags (followed by
--	a space) at the start of each line:
-+	This feature is semi-deprecated. For scripting purpose,
-+	linkgit:git-status[1] `--porcelain` and
-+	linkgit:git-diff-files[1] `--name-status` are almost always
-+	superior alternatives, and users should look at
-+	linkgit:git-status[1] `--short` or linkgit:git-diff[1]
-+	`--name-status` for more user-friendly alternatives.
-++
-+This option identifies the file status with the following tags (followed by
-+a space) at the start of each line:
-+
- 	H::	cached
- 	S::	skip-worktree
- 	M::	unmerged
--- 
-1.7.2.25.g9ebe3
+    Test Summary Report
+    -------------------
+    ./t6035-merge-dir-to-symlink.sh (Wstat: 0 Tests: 16 Failed: 0)
+      TODO passed:   8
+    Files=3D1, Tests=3D16,  1 wallclock secs ( 0.03 usr  0.01 sys +  0.=
+10
+cusr  0.53 csys =3D  0.67 CPU)
+    Result: PASS
+
+With this patch:
+
+    v t (merge-dir-to-symlink-todo-test) $ prove ./t6035-merge-dir-to-s=
+ymlink.sh
+    ./t6035-merge-dir-to-symlink.sh .. ok
+    All tests successful.
+    Files=3D1, Tests=3D16,  1 wallclock secs ( 0.03 usr  0.02 sys +  0.=
+13
+cusr  0.53 csys =3D  0.71 CPU)
+    Result: PASS
+
+The default harness / aggregate-resaults *could* be fixed to deal with
+it, but I haven't been motivated to do so since prove just works :)
+
+> Anyway, thanks for cleaning up after me. =C2=A0:-)
+
+No problem.
