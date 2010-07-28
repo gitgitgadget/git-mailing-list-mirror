@@ -1,81 +1,65 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH] hash: Remove useless init_hash()
-Date: Wed, 28 Jul 2010 00:33:55 -0700
-Message-ID: <4C4FDD63.9050303@gmail.com>
-References: <1280208970-23394-1-git-send-email-bebarino@gmail.com>	<m3fwz5kykn.fsf@localhost.localdomain>	<AANLkTimrKzDOlJzGpzaHWF24lwfr67bmh8RrKj6uMYWB@mail.gmail.com>	<20100727194946.GA11682@coredump.intra.peff.net> <AANLkTikHLZlBQW8DSZrxeA-RDOh2Iy6hc0p821tDQoN8@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Possible feature request for merge and pull
+Date: Wed, 28 Jul 2010 07:34:54 +0000
+Message-ID: <AANLkTinRvq71GS5WVdWs9zP5QSJ=TjCWBgTfRGn2Qub0@mail.gmail.com>
+References: <AANLkTim6JAPrSVaSaGZ72xtfFnUUcYeWT8vpL3rYuwki@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 28 09:34:17 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Bradley Wagner <bradley.wagner@hannonhill.com>
+X-From: git-owner@vger.kernel.org Wed Jul 28 09:35:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oe19Z-000560-8s
-	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 09:34:13 +0200
+	id 1Oe1AK-0005aI-NE
+	for gcvg-git-2@lo.gmane.org; Wed, 28 Jul 2010 09:35:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141Ab0G1HeI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 03:34:08 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:63442 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754086Ab0G1HeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 03:34:04 -0400
-Received: by pvc7 with SMTP id 7so767519pvc.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 00:34:02 -0700 (PDT)
+	id S1754150Ab0G1Hez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 Jul 2010 03:34:55 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39713 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753762Ab0G1Hey (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 03:34:54 -0400
+Received: by iwn7 with SMTP id 7so4575495iwn.19
+        for <git@vger.kernel.org>; Wed, 28 Jul 2010 00:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=f1H/lhZiXHlUQysoZBhxzDH3QZo92Rf9JvBbTPvXIsw=;
-        b=eLEanL++F6Oggl8WHtqTPmSs0hWA1pTP+VmSNjbh2wqZxiy5scXZJU29cxkGVz/tum
-         S4TX9jz9zPTPgYGdco0Jtopgklt144QQMZ4EKX9zqS11RBw1BWcGk3rn+FG9yssMcDrc
-         TZFfbWJLqioMThvSrwr1GivYlN3DMOLq4F6aE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=jowvqK3ua1ZzQBzgjmXWVLO6UoRddYysYIeZ+zIdUZI=;
+        b=pgoMiofr7cUmavmHqvbHtu3XLtJHpl58zTdgJ1phlRpaCgOmA/X14HlkPwTwDqSxUc
+         snXOjLZM0CHT9TtfxtAjigj28fvoyBw935cEObVcYT7xukyRbs/urWobQ98UIcZz3v+4
+         Sz5waBy6BYoEBeoOsCiGBtwtNOHV/Uh0MI7Cc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=QCraOBIzcIAT/LLG+/bFt2Lskjo+aiIK9bZDab9V+GgD5wF7IsKNjNm14dPDMw2OZg
-         s5eFPFbwWJXEogTV8NQmGrDjgzybHs9StJMw6nJLrRnazAV0rJ1k6J1+BC/m6n/zzlP8
-         buRsrUJSdsPTNERzOO4QnfX1kh1yfo9v0ZlPA=
-Received: by 10.142.185.15 with SMTP id i15mr1881892wff.10.1280302442174;
-        Wed, 28 Jul 2010 00:34:02 -0700 (PDT)
-Received: from [192.168.1.101] ([75.85.182.25])
-        by mx.google.com with ESMTPS id z1sm6719568wfd.15.2010.07.28.00.33.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Jul 2010 00:34:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.4) Gecko/20100713 Thunderbird/3.1
-In-Reply-To: <AANLkTikHLZlBQW8DSZrxeA-RDOh2Iy6hc0p821tDQoN8@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Dz3isEPPjWYA4v8CvfWGYqTKfDtpC5E7IEamYFoBWxy+bDal5oBNMyUqjbTW5sOtWD
+         GW6RmR+iimRwKmfXRv65oD+yJJ6O8lw2Sc6KQ2cxLlk1KCYAJ0F+BTu6HaHaz19fbjMn
+         g2kMkzT+aCynbEK0tZc+xjvQ/yRmoG1SrQsLQ=
+Received: by 10.231.146.196 with SMTP id i4mr10656369ibv.110.1280302494308; 
+	Wed, 28 Jul 2010 00:34:54 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 28 Jul 2010 00:34:54 -0700 (PDT)
+In-Reply-To: <AANLkTim6JAPrSVaSaGZ72xtfFnUUcYeWT8vpL3rYuwki@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152048>
 
-  On 07/27/2010 12:58 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
->
->> That being said, I agree with the comments that removing init_hash
->> actually makes the code _less_ readable. You could just replace thes=
-e
->> three lines with a memset, but why? It's just code churn.
-> Yeah, and for the record it also missed this part in hash.c:
->
->      void free_hash(struct hash_table *table)
->      {
->      	free(table->array);
->      	table->array =3D NULL;
->      	table->size =3D 0;
->      	table->nr =3D 0;
->      }
->
-> Have fun everyone :)
+On Wed, Jul 28, 2010 at 01:24, Bradley Wagner
+<bradley.wagner@hannonhill.com> wrote:
+> I would love to be able to use the -m flag and --log together with git
+> merge and pull to be able to create a custom commit message but also
+> include one-line summaries of each of the commits being merged/pulled.
 
-Ok, seems like nobody thinks this is a good idea so I'm fine with dropp=
-ing it. The minimal savings (if at all) doesn't seem worth the code chu=
-rn. One less patch in the queue ;-)
+This sort of thing has vaguely come up before, and it was mentioned
+that you can just use a small script that calls git-filter-branch or
+git-rebase -i.
+
+It's easy to rewrite the commits you just pulled, having some feature
+that e.g. adds a custom message to the beginning of each of them would
+just impose an artificial limitation and overlap with existing (and
+more powerful) functionality.
