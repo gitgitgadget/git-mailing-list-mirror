@@ -1,98 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH 0/2] Allow detached forms (--option arg) for git log options.
-Date: Thu, 29 Jul 2010 11:16:42 +0200
-Message-ID: <201007291116.44859.jnareb@gmail.com>
-References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr> <m37hkhklll.fsf@localhost.localdomain> <20100728130610.GG6895@madism.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Sparse clones (Was: Re: [PATCH 1/2] upload-pack: support subtree 
+	packing)
+Date: Thu, 29 Jul 2010 20:29:32 +1000
+Message-ID: <AANLkTi=-+9TbR7=McSsh55gdzfKEsdqcao67kf0yFxsr@mail.gmail.com>
+References: <AANLkTikJhSVJw2hXkp0j6XA+k-J-AtSYzKWumjnqqsgz@mail.gmail.com>
+	<AANLkTikvhi-Bm-eV9ZfjoZdugRpiCwg8n-TQ4oOVvC=G@mail.gmail.com>
+	<AANLkTikoOL0jYi4kD0L1uLU=UCmG9p0Rc3VLOU-djQnY@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Jul 29 11:17:47 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git <git@vger.kernel.org>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 29 12:29:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OePFF-0006fe-0n
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 11:17:41 +0200
+	id 1OeQMt-0004vQ-H0
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 12:29:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660Ab0G2JRf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 05:17:35 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:65429 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755584Ab0G2JRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 05:17:34 -0400
-Received: by fxm14 with SMTP id 14so68160fxm.19
-        for <git@vger.kernel.org>; Thu, 29 Jul 2010 02:17:33 -0700 (PDT)
+	id S1756583Ab0G2K3e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 06:29:34 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:43292 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756342Ab0G2K3d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 06:29:33 -0400
+Received: by vws3 with SMTP id 3so147028vws.19
+        for <git@vger.kernel.org>; Thu, 29 Jul 2010 03:29:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=VXUW4I8Oi7oC2HLhr9WhlKod3d2dOCzBU3mYC6aMEEY=;
-        b=XScU3mVTgy2Z5A/A+nvk8pPazRnZBv0IsIUWyha88w6pyrQ21tD7m9pMBFBO8Kn2hp
-         Qnhb6wj6+NQVlq8fhDTIEkjp1OvjNXbnEtvULFqotm2M7FX0bPtajxps/KVrs0iMRsjx
-         sN164Nlqc9M0hCQzOamvL4l+lEWK4qDhrWLB4=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aWOfCZDKZea+B8I3zukiVg8gFLwdRYGSRBjT2whCaxU=;
+        b=hV38uCo5Cezikqbuo2dQOzd+bCMllBVEnlvrWNxdSr0OksL5nWOTMtJOEChqiNatjk
+         vC4oShanx7e5QvX67NOP+2SexNdvtWSVhWjAp6HeiU8rPi8/LRq12nySNG2MQ0rmTNcg
+         MbtRkHRUrdyFjBKORv8eB/19gJyQaj+sy9aZM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=smVI2e9osskMJtx5l7Rg6x/jWoe6DQFNgzSSz5J/ygydYNUBll1FT+5VHrK+GC3VDL
-         EjMKKznp0bbdsFASVxMd5hjZmaQ7W+NmAPWX/2N51WQKnu9gdf0+GzvPDaPASbjnbgJR
-         D2Gw10xTir8hlDn+8vh1P7cF1ZiYRiBpV7Jyc=
-Received: by 10.223.115.201 with SMTP id j9mr11380342faq.48.1280395053528;
-        Thu, 29 Jul 2010 02:17:33 -0700 (PDT)
-Received: from [192.168.1.13] (abve207.neoplus.adsl.tpnet.pl [83.8.202.207])
-        by mx.google.com with ESMTPS id l12sm226708fan.1.2010.07.29.02.17.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 29 Jul 2010 02:17:31 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100728130610.GG6895@madism.org>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZnyjyjGakuAU+Fu2YuBpqMwNn2YMP24dWhZOpQGa3ahSE2ug4S4WkYTohKz8lTWssY
+         38TsSLO4oELxz9Y3Mf6U4s19UKt9xN0WxJBSz2EvmCvet+lcv9TVzmXHCxpJ2Vpn7ER1
+         TLIl1UCUMf/wU70Y41Tlc1UYIhdwui/3tvnQo=
+Received: by 10.220.49.204 with SMTP id w12mr7114365vcf.243.1280399372407; 
+	Thu, 29 Jul 2010 03:29:32 -0700 (PDT)
+Received: by 10.220.101.201 with HTTP; Thu, 29 Jul 2010 03:29:32 -0700 (PDT)
+In-Reply-To: <AANLkTikoOL0jYi4kD0L1uLU=UCmG9p0Rc3VLOU-djQnY@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152171>
 
-On Wed, 28 Jul 2010, Pierre Habouzit wrote:
+On Wed, Jul 28, 2010 at 1:59 PM, Elijah Newren <newren@gmail.com> wrote=
+:
+>> Revision walking is not the only gate to access objects. Others like
+>> diff machinery needs also be taught about rev-list limits.
+>
+> Right, good point. =C2=A0Are there others than the diff machinery (an=
+d the
+> fsck special case) that you know of?
 
-> you cannot take the address of a bit portably in C, so you can't let
-> parseopt set/clear bits through bitfields (as in unsigned field : 1 in a
-> struct in C I mean).
-> 
-> So to use parseopt OPTION_BIT feature, you have to convert them to C
-> flags as in "unsigned flags" and explicit masks defines/enums.
-> 
-> IOW:
-> 
->     struct foo {
->        unsigned bar : 1,
-> 		...
-> 		  baz : 1;
->     };
-> 
-> Must be converted into:
-> 
->     struct foo {
->     #define FOO_FLAG_BAR (1U <<  1)
->     ...
->     #define FOO_FLAG_BAZ (1U << 18)
->       unsigned flags;
->     }
-> 
-> so that you can use parseopt.  that's what I meant.
-> 
-> 
-> This was done for the rev-list parsing stuff e.g.
+A lot (just found out as I was pushing subtree clone as far as I
+could). For merging, you can hardly limit sha1 access. When writing
+tree, git's particularly paranoid and check for sha1 existence
+(has_sha1_file and assert_sha1_type). You can find that has_sha1_file
+is used in many places, not just commit/write-tree.
 
-e.g. what?
-
--- 
-Jakub Narebski
-Poland
+Narrow/Sparse/Subtree/Lazy/Whatever-it-is clone will have hard time..
+Oh.. the lazy one does not.
+--=20
+Duy
