@@ -1,76 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4 v2] Allow detached form (e.g. "-S foo" instead of
- "-Sfoo") for diff options
-Date: Thu, 29 Jul 2010 09:54:25 -0700
-Message-ID: <7vvd7yteim.fsf@alter.siamese.dyndns.org>
-References: <vpqr5ioukca.fsf@bauges.imag.fr>
- <1280310062-16793-1-git-send-email-Matthieu.Moy@imag.fr>
- <20100729020031.GI29156@dert.cs.uchicago.edu>
- <vpqeiemoivf.fsf@bauges.imag.fr>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What is the scenario for a commit with 3 or more parents
+Date: Thu, 29 Jul 2010 12:55:18 -0500
+Message-ID: <AANLkTik-wOB-iEGK8EnW1Rdk9wwc1E86tYoBU26WepYJ@mail.gmail.com>
+References: <AANLkTikMRa_LrD2fU9Piv3GW2H0r7Jf_9s5iM0wc9t6s@mail.gmail.com> 
+	<20100729021946.GG25268@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 29 18:54:40 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Bradley Wagner <bradley.wagner@hannonhill.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jul 29 19:55:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeWNT-0005HT-Qe
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 18:54:40 +0200
+	id 1OeXKc-0004bV-6d
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 19:55:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758043Ab0G2Qyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 12:54:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44123 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754761Ab0G2Qye (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 12:54:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89206C9DF6;
-	Thu, 29 Jul 2010 12:54:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gx8gsIz6ZEASZ69zfA0QZp2ZsXE=; b=HVxXK1
-	BHAnTmnc2hRQjpiLMyy6hlhkUXdJBJzcVM9bWpSqzVYsIoSyQqYC/MRll6xCj9L3
-	3wgFeJaNTenlG4xl642RyPcWJgXwxSbo3p4Y5Q2VsZ3DltaYOeben0qvqXTMEtSU
-	UPIDYHx8Ig1hgq9uJ0MsZX6Hmy4ee8J2JE6sI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g07pBhJPeUZQ+HrllN1likGvrRKA8grK
-	i9wP7QcXe8a5FoiEor+Ef0G8W3/btfc7dOuyCbyBC348V2qvnsjuCf7140/JyAqs
-	MjiNV6g21VFP7aj/nCzBHryJBpLqKHGVEvyR25+T72pU6oJTCkHE4wN8yX8JJAxW
-	Jrax7/k3FC0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52AC2C9DF3;
-	Thu, 29 Jul 2010 12:54:30 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9780EC9DF2; Thu, 29 Jul
- 2010 12:54:26 -0400 (EDT)
-In-Reply-To: <vpqeiemoivf.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Thu\, 29 Jul 2010 09\:19\:16 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F48EFC54-9B31-11DF-BF07-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752368Ab0G2Rzk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 13:55:40 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:59497 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751999Ab0G2Rzj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 13:55:39 -0400
+Received: by ywh1 with SMTP id 1so205415ywh.19
+        for <git@vger.kernel.org>; Thu, 29 Jul 2010 10:55:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PTco5il5/zDzDYke/QnMlmIxOwmpItyDIyHc/c/dJT8=;
+        b=Fv6BZdbOwaBCvRkX1+bsMa9KCrSS5qIeBah8S+hxcRpy6xpoMS2XZxe7j151XxAdfT
+         FNx4UgC3f354sCcUSVNtwYUgMBOk6MVUBEFQoH5emugNk05tuALFZgoKbTVY13qN3/tj
+         0Ath/eKLugrZWs7PxFLdwdDmpUs5iPjJdaQJ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=gcy+/n/YkFB1vXWSDeqIvpz9XqL0Vfj/ogNecfc32rXvWOaymvW6SKeO3j9mGVRTcv
+         fhTgmGFM5dXGVDUmPbol1UfBJq/eGFEGu/nVSsPQ3+rat0FMMnL9jMwVUG9ttB7qlvLq
+         yIQhS0s2bS/UbkS48n96VfNv147ZwbQ9RTmAI=
+Received: by 10.150.170.15 with SMTP id s15mr1504892ybe.400.1280426138209; 
+	Thu, 29 Jul 2010 10:55:38 -0700 (PDT)
+Received: by 10.150.66.12 with HTTP; Thu, 29 Jul 2010 10:55:18 -0700 (PDT)
+In-Reply-To: <20100729021946.GG25268@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152189>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Heya,
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->>
->> You left out the crucial "false"! :)
->
-> Oups, right.
->
->> Below is an add-on patch to use a more readable style.
->
-> I was mimicking the style right above, but that makes sense to
-> clean-up while we're there, yes. I'll squash your change in the next
-> serie.
+On Wed, Jul 28, 2010 at 21:19, Shawn O. Pearce <spearce@spearce.org> wr=
+ote:
+> Yes. =C2=A0Its called an octopus merge. =C2=A0It happpens sometimes w=
+hen
+> merging 2 or more otherwise fairly isolated changes in a single
+> shot. =C2=A0E.g. `git merge feature-a feature-b thing-c`.
 
-Thanks both; I've also seen Jonathan's --stat-* rewrite and agree with
-him.  Looking forward to see a re-roll.
+Do we have an explanation anywhere as to when one would use a octopus m=
+erge?
+
+--=20
+Cheers,
+
+Sverre Rabbelier
