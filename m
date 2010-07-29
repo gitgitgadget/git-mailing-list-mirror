@@ -1,84 +1,100 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 0/5 v3] log and diff: accept detached forms (--option value)
-Date: Thu, 29 Jul 2010 10:20:24 +0200
-Message-ID: <1280391629-30017-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 5/5] log: parse detached option for --glob
+Date: Thu, 29 Jul 2010 10:20:29 +0200
+Message-ID: <1280391629-30017-6-git-send-email-Matthieu.Moy@imag.fr>
+References: <1280391629-30017-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 29 10:21:37 2010
+X-From: git-owner@vger.kernel.org Thu Jul 29 10:24:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeOMy-0004hy-6C
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 10:21:36 +0200
+	id 1OeOPZ-0005u7-Mj
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 10:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754440Ab0G2IVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 04:21:32 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57831 "EHLO rominette.imag.fr"
+	id S1754312Ab0G2IYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 04:24:12 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64563 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754391Ab0G2IV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 04:21:29 -0400
+	id S1751052Ab0G2IYL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 04:24:11 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6T8IgjX022195
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o6T8KbqJ018975
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Jul 2010 10:18:42 +0200
+	Thu, 29 Jul 2010 10:20:37 +0200 (CEST)
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1OeOLu-0004Mt-Nl; Thu, 29 Jul 2010 10:20:30 +0200
+	id 1OeOM0-0004OD-VX; Thu, 29 Jul 2010 10:20:37 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1OeOLu-0004IA-KC; Thu, 29 Jul 2010 10:20:30 +0200
+	id 1OeOM0-0004IP-UL; Thu, 29 Jul 2010 10:20:36 +0200
 X-Mailer: git-send-email 1.7.2.21.ge9796
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Jul 2010 10:18:42 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6T8IgjX022195
+In-Reply-To: <1280391629-30017-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 29 Jul 2010 10:20:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280996323.72515@rsJo9e+uGB4AcFBsLw8/Og
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152166>
 
-Since last version :
 
-* I had missed several optional arguments, for which detached form
-  should not be allowed (otherwise, --option --other-option is
-  ambiguous). In most cases, my changes were harmless since the code
-  had already checked for the parameterless form before reaching mine,
-  but that was definitely bad anyway.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ revision.c               |    7 +++++--
+ t/t6018-rev-list-glob.sh |    6 ++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
-* One missing "return optarg;" (that even Jonathan had missed ;-) )
-
-* One more test for "git log -S" failure (no argument to -S)
-
-* Refactoring by Jonathan Nieder for --stat-*
-
-* Rewording of commit messages.
-
-Jonathan Nieder (1):
-  diff: split off a function for --stat-* option parsing
-
-Matthieu Moy (4):
-  diff: parse detached options like -S foo
-  diff: parse detached options --stat-width n, --stat-name-width n
-  log: parse detached options like git log --grep foo
-  log: parse detached option for --glob
-
- diff.c                       |  167 +++++++++++++++++++++++++++++++-----------
- diff.h                       |    7 ++
- revision.c                   |   79 +++++++++++++-------
- t/t4013-diff-various.sh      |    5 +
- t/t4013/diff.log_-S_F_master |    7 ++
- t/t4202-log.sh               |   19 +++--
- t/t6018-rev-list-glob.sh     |    6 ++
- 7 files changed, 211 insertions(+), 79 deletions(-)
- create mode 100644 t/t4013/diff.log_-S_F_master
-
+diff --git a/revision.c b/revision.c
+index 7006340..188fa21 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1484,6 +1484,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ {
+ 	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0;
+ 	const char **prune_data = NULL;
++	const char *optarg;
++	int argcount;
+ 
+ 	/* First, search for "--" */
+ 	seen_dashdash = 0;
+@@ -1530,10 +1532,11 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 				handle_refs(revs, flags, for_each_remote_ref);
+ 				continue;
+ 			}
+-			if (!prefixcmp(arg, "--glob=")) {
++			if ((argcount = diff_long_opt("glob", argv + i, &optarg))) {
++				i += argcount - 1;
+ 				struct all_refs_cb cb;
+ 				init_all_refs_cb(&cb, revs, flags);
+-				for_each_glob_ref(handle_one_ref, arg + 7, &cb);
++				for_each_glob_ref(handle_one_ref, optarg, &cb);
+ 				continue;
+ 			}
+ 			if (!prefixcmp(arg, "--branches=")) {
+diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
+index 58428d9..fb8291c 100755
+--- a/t/t6018-rev-list-glob.sh
++++ b/t/t6018-rev-list-glob.sh
+@@ -123,6 +123,12 @@ test_expect_success 'rev-list --glob=refs/heads/subspace/*' '
+ 
+ '
+ 
++test_expect_success 'rev-list --glob refs/heads/subspace/*' '
++
++	compare rev-list "subspace/one subspace/two" "--glob refs/heads/subspace/*"
++
++'
++
+ test_expect_success 'rev-list --glob=heads/subspace/*' '
+ 
+ 	compare rev-list "subspace/one subspace/two" "--glob=heads/subspace/*"
 -- 
 1.7.2.21.ge9796
