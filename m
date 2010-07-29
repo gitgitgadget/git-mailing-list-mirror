@@ -1,73 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/3] contrib/svn-fe: Add the svn-fe target to .gitignore
-Date: Thu, 29 Jul 2010 11:06:20 +0530
-Message-ID: <1280381780-6265-4-git-send-email-artagnon@gmail.com>
-References: <1280381780-6265-1-git-send-email-artagnon@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 29 07:38:59 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/4 v2] Allow detached form (e.g. "-S foo" instead of "-Sfoo") for diff options
+Date: Thu, 29 Jul 2010 09:19:16 +0200
+Message-ID: <vpqeiemoivf.fsf@bauges.imag.fr>
+References: <vpqr5ioukca.fsf@bauges.imag.fr>
+	<1280310062-16793-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20100729020031.GI29156@dert.cs.uchicago.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 29 09:19:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeLpa-0006l2-Qg
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 07:38:59 +0200
+	id 1OeNPD-0004qw-8Q
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 09:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753945Ab0G2Fi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 01:38:29 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61688 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753715Ab0G2FiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 01:38:18 -0400
-Received: by mail-iw0-f174.google.com with SMTP id 7so232148iwn.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 22:38:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=rKlVRSKVxPlKOqhzMNhDUH1I2TGGm19QPRRWDLkngaM=;
-        b=DTX+j2jKTzF4Yf+hphQ4oVBeCqTK4Lq6oB0yKNfXmmP8s2nGs412qGDsvig38S3r2r
-         f4M0IjekyqHKKPukiPJ6QpdeEB+kHgVjSxR3Jkl4p1PWMMuK2La0PMEjipu6xoL8uaVc
-         frR1wWjQMgOlrm3cH1+B00sDM+b4RJP3GEg2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=NGY5lXHE1XvNJsNLpRF9eQ9ONYAnQgaGyKU26vqzcbSS2Ip5SWh7Oar/3ocYm3jN40
-         Vr8IGp52cN37wMj23TnmCYAhDhNLB5jTMOwF+6Ug4pK/xHcEfK/Xnbti2uU91D+gGaTo
-         dEnv6o8X6+FzrEOvfTJbiK5y7Jj5ODNfCN3XY=
-Received: by 10.231.187.194 with SMTP id cx2mr12241412ibb.165.1280381898087;
-        Wed, 28 Jul 2010 22:38:18 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id h8sm442940ibk.3.2010.07.28.22.38.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 28 Jul 2010 22:38:17 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1280381780-6265-1-git-send-email-artagnon@gmail.com>
+	id S1753089Ab0G2HTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 03:19:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51538 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752699Ab0G2HTo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 03:19:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6T794wR012810
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 29 Jul 2010 09:09:04 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OeNOe-0003c1-RY; Thu, 29 Jul 2010 09:19:16 +0200
+In-Reply-To: <20100729020031.GI29156@dert.cs.uchicago.edu> (Jonathan Nieder's message of "Wed\, 28 Jul 2010 21\:00\:31 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 29 Jul 2010 09:09:04 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o6T794wR012810
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1280992146.34705@YTOvMZfe9em3Fu5SgltLEg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152163>
 
-Add the svn-fe target to .gitignroe.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- contrib/svn-fe/.gitignore |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+>> +	} &&
+>> +	test "$actual" = "$actual_detached" || {
+>> +		echo Oops. Detached form broken
+>> +		echo "Actual_detached: $actual_detached"
+>>  	}
+>
+> You left out the crucial "false"! :)
 
-diff --git a/contrib/svn-fe/.gitignore b/contrib/svn-fe/.gitignore
-index 27a33b6..02a7791 100644
---- a/contrib/svn-fe/.gitignore
-+++ b/contrib/svn-fe/.gitignore
-@@ -1,3 +1,4 @@
- /*.xml
- /*.1
- /*.html
-+/svn-fe
+Oups, right.
+
+> Below is an add-on patch to use a more readable style.
+
+I was mimicking the style right above, but that makes sense to
+clean-up while we're there, yes. I'll squash your change in the next
+serie.
+
 -- 
-1.7.1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
