@@ -1,153 +1,65 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: Re: [PATCHv4 1/3] Allow creation of arbitrary git-shell commands
-Date: Wed, 28 Jul 2010 17:31:01 -0700
-Message-ID: <AANLkTim=iJUCZW+9Ttssnp=NpOpeQEhXsumCPw=HykX=@mail.gmail.com>
-References: <1280302984-1752-1-git-send-email-gdb@mit.edu>
-	<1280302984-1752-2-git-send-email-gdb@mit.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv3] Updated patch series for providing mechanism to list
+	available repositories
+Date: Wed, 28 Jul 2010 19:33:42 -0500
+Message-ID: <20100729003342.GC29156@dert.cs.uchicago.edu>
+References: <AANLkTikqA3kNif+7Bi+=xkJ2FgCFAsfCj0N5dft5pnFR@mail.gmail.com> <201007270916.59210.j.sixt@viscovery.net> <20100727174105.GA5578@burratino> <AANLkTikr5jjZJa2irLb2rNew8ngJcv3rhcFV+pNRpRrw@mail.gmail.com> <20100728003336.GA2248@dert.cs.uchicago.edu> <AANLkTik1D45_cHPapbmMMys-V544ssCyoxrs5Fxck7oP@mail.gmail.com> <20100728064251.GB743@dert.cs.uchicago.edu> <1280358894.31999.9.camel@balanced-tree> <20100728235249.GA29156@dert.cs.uchicago.edu> <AANLkTikaBoMOEGvLU8FL4Cvw4zBecXytvAnAYTS9GBa3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: jrnieder@gmail.com, j.sixt@viscovery.net, avarab@gmail.com,
-	gitster@pobox.com, git@vger.kernel.org, gdb@mit.edu
-X-From: git-owner@vger.kernel.org Thu Jul 29 02:31:19 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Anders Kaseorg <andersk@mit.edu>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Thu Jul 29 02:33:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeH1l-0002EI-Jk
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 02:31:13 +0200
+	id 1OeH4G-0003Xo-Lh
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 02:33:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751377Ab0G2AbJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 20:31:09 -0400
-Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:45778 "EHLO
-	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750889Ab0G2AbG (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 20:31:06 -0400
-X-AuditID: 12074422-b7bb6ae0000009fa-35-4c50cbc9cd3d
-Received: from mailhub-auth-4.mit.edu (MAILHUB-AUTH-4.MIT.EDU [18.7.62.39])
-	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id DA.B1.02554.9CBC05C4; Wed, 28 Jul 2010 20:31:05 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o6T0V325020672
-	for <git@vger.kernel.org>; Wed, 28 Jul 2010 20:31:03 -0400
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o6T0V2mB017386
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 28 Jul 2010 20:31:03 -0400 (EDT)
-Received: by iwn7 with SMTP id 7so5110258iwn.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 17:31:01 -0700 (PDT)
-Received: by 10.231.15.68 with SMTP id j4mr12935448iba.184.1280363461858; Wed, 
-	28 Jul 2010 17:31:01 -0700 (PDT)
-Received: by 10.231.144.140 with HTTP; Wed, 28 Jul 2010 17:31:01 -0700 (PDT)
-In-Reply-To: <1280302984-1752-2-git-send-email-gdb@mit.edu>
-X-Brightmail-Tracker: AAAAAxVg7SYVYaj1FWG7PA==
+	id S1751417Ab0G2Ado convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 20:33:44 -0400
+Received: from camembert.cs.uchicago.edu ([128.135.164.153]:34741 "EHLO
+	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889Ab0G2Adn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 20:33:43 -0400
+Received: from dert.cs.uchicago.edu (dert.cs.uchicago.edu [128.135.11.157])
+	by smtp.cs.uchicago.edu (Postfix) with ESMTP id AE848A1FC;
+	Wed, 28 Jul 2010 19:33:42 -0500 (CDT)
+Received: by dert.cs.uchicago.edu (Postfix, from userid 10442)
+	id 79BA49A182; Wed, 28 Jul 2010 19:33:42 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikaBoMOEGvLU8FL4Cvw4zBecXytvAnAYTS9GBa3@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152134>
 
-This provides a mechanism for the server to expose custom
-functionality to clients.  My particular use case is that I would like
-a way of discovering all repositories available for cloning.  A
-client that clones via
+Greg Brockman wrote:
 
-  git clone user@example.com
+> (Incidentally, I just noticed a segfault with
+>=20
+> $ unset HOME
+> $ su git -m -c "git-receive-pack '~'"
+>=20
+> that's probably worth fixing... if people don't think this is too
+> pedantic of a case to fix, I'll submit a patch for it in a later
+> series [I think the segfault comes from path.c:expand_user_path].)
 
-can invoke a command by
+Here=E2=80=99s a patch to save you time. :)
 
-  ssh user@example.com $command
+http://git.kernel.org/?p=3Dgit/git.git;a=3Dcommitdiff;h=3D79bf149
 
-Signed-off-by: Greg Brockman <gdb@mit.edu>
----
- shell.c |   44 ++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 42 insertions(+), 2 deletions(-)
+> Anyway, i'll revise my first patch to use HOME rather than getpw*.
 
-As discussed on-list, it should be fine to trust the value of HOME.
-This patch differs from the previous only in the implementation of
-cd_to_homedir.
+=46rom the getpwnam(3) man page it looks like that is best practice,
+anyway.
 
-diff --git a/shell.c b/shell.c
-index e4864e0..1e6077d 100644
---- a/shell.c
-+++ b/shell.c
-@@ -3,6 +3,8 @@
- #include "exec_cmd.h"
- #include "strbuf.h"
-
-+#define COMMAND_DIR "git-shell-commands"
-+
- static int do_generic_cmd(const char *me, char *arg)
- {
- 	const char *my_argv[4];
-@@ -33,6 +35,29 @@ static int do_cvs_cmd(const char *me, char *arg)
- 	return execv_git_cmd(cvsserver_argv);
- }
-
-+static int is_valid_cmd_name(const char *cmd)
-+{
-+	/* Test command contains no . or / characters */
-+	return cmd[strcspn(cmd, "./")] == '\0';
-+}
-+
-+static char *make_cmd(const char *prog)
-+{
-+	char *prefix = xmalloc((strlen(prog) + strlen(COMMAND_DIR) + 2));
-+	strcpy(prefix, COMMAND_DIR);
-+	strcat(prefix, "/");
-+	strcat(prefix, prog);
-+	return prefix;
-+}
-+
-+static void cd_to_homedir(void)
-+{
-+	char *home = getenv("HOME");
-+	if (!home)
-+		die("could not determine user's home directory; HOME is unset");
-+	if (chdir(home) == -1)
-+		die("could not chdir to user's home directory");
-+}
-
- static struct commands {
- 	const char *name;
-@@ -48,6 +73,7 @@ static struct commands {
- int main(int argc, char **argv)
- {
- 	char *prog;
-+	const char **user_argv;
- 	struct commands *cmd;
- 	int devnull_fd;
-
-@@ -76,7 +102,7 @@ int main(int argc, char **argv)
- 	else if (argc != 3 || strcmp(argv[1], "-c"))
- 		die("What do you think I am? A shell?");
-
--	prog = argv[2];
-+	prog = xstrdup(argv[2]);
- 	if (!strncmp(prog, "git", 3) && isspace(prog[3]))
- 		/* Accept "git foo" as if the caller said "git-foo". */
- 		prog[3] = '-';
-@@ -99,5 +125,19 @@ int main(int argc, char **argv)
- 		}
- 		exit(cmd->exec(cmd->name, arg));
- 	}
--	die("unrecognized command '%s'", prog);
-+
-+	cd_to_homedir();
-+	if (split_cmdline(prog, &user_argv) != -1) {
-+		if (is_valid_cmd_name(user_argv[0])) {
-+			prog = make_cmd(user_argv[0]);
-+			user_argv[0] = prog;
-+			execv(user_argv[0], (char *const *) user_argv);
-+		}
-+		free(prog);
-+		free(user_argv);
-+		die("unrecognized command '%s'", argv[2]);
-+	} else {
-+		free(prog);
-+		die("invalid command format '%s'", argv[2]);
-+	}
- }
--- 
-1.7.0.4
+Cheers,
+Jonathan
