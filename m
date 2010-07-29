@@ -1,282 +1,84 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/5] diff: parse detached options like -S foo
-Date: Thu, 29 Jul 2010 10:20:25 +0200
-Message-ID: <1280391629-30017-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <1280391629-30017-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 0/5 v3] log and diff: accept detached forms (--option value)
+Date: Thu, 29 Jul 2010 10:20:24 +0200
+Message-ID: <1280391629-30017-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Jul 29 10:21:22 2010
+X-From: git-owner@vger.kernel.org Thu Jul 29 10:21:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeOMi-0004cg-SG
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 10:21:21 +0200
+	id 1OeOMy-0004hy-6C
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 10:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754327Ab0G2IVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 04:21:15 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46055 "EHLO shiva.imag.fr"
+	id S1754440Ab0G2IVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 04:21:32 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:57831 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754255Ab0G2IVM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 04:21:12 -0400
+	id S1754391Ab0G2IV3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 04:21:29 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o6T8AILB029263
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6T8IgjX022195
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 29 Jul 2010 10:10:18 +0200
+	Thu, 29 Jul 2010 10:18:42 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1OeOLv-0004Mw-B7; Thu, 29 Jul 2010 10:20:31 +0200
+	id 1OeOLu-0004Mt-Nl; Thu, 29 Jul 2010 10:20:30 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1OeOLv-0004ID-9x; Thu, 29 Jul 2010 10:20:31 +0200
+	id 1OeOLu-0004IA-KC; Thu, 29 Jul 2010 10:20:30 +0200
 X-Mailer: git-send-email 1.7.2.21.ge9796
-In-Reply-To: <1280391629-30017-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 29 Jul 2010 10:10:19 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 29 Jul 2010 10:18:42 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6T8AILB029263
+X-MailScanner-ID: o6T8IgjX022195
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1280995820.92405@g3ilwGNe9NC7L2ll4b2NzA
+MailScanner-NULL-Check: 1280996323.72515@rsJo9e+uGB4AcFBsLw8/Og
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152165>
 
-Change the option parsing logic in revision.c to accept detached forms
-like `-S foo' in addition to `-Sfoo'. The rest of git already accepted
-this form, but revision.c still used its own option parsing.
+Since last version :
 
-This patch does not handle --stat-name-width and --stat-width, which are
-special-cases where diff_long_opt do not apply. They are handled in a
-separate patch to ease review.
+* I had missed several optional arguments, for which detached form
+  should not be allowed (otherwise, --option --other-option is
+  ambiguous). In most cases, my changes were harmless since the code
+  had already checked for the parameterless form before reaching mine,
+  but that was definitely bad anyway.
 
-Original patch by Matthieu Moy, plus refactoring by Jonathan Nieder.
+* One missing "return optarg;" (that even Jonathan had missed ;-) )
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- diff.c                       |   87 ++++++++++++++++++++++++++++++++++--------
- diff.h                       |    7 +++
- t/t4013-diff-various.sh      |    5 ++
- t/t4013/diff.log_-S_F_master |    7 +++
- t/t4202-log.sh               |   12 ++---
- 5 files changed, 95 insertions(+), 23 deletions(-)
+* One more test for "git log -S" failure (no argument to -S)
+
+* Refactoring by Jonathan Nieder for --stat-*
+
+* Rewording of commit messages.
+
+Jonathan Nieder (1):
+  diff: split off a function for --stat-* option parsing
+
+Matthieu Moy (4):
+  diff: parse detached options like -S foo
+  diff: parse detached options --stat-width n, --stat-name-width n
+  log: parse detached options like git log --grep foo
+  log: parse detached option for --glob
+
+ diff.c                       |  167 +++++++++++++++++++++++++++++++-----------
+ diff.h                       |    7 ++
+ revision.c                   |   79 +++++++++++++-------
+ t/t4013-diff-various.sh      |    5 +
+ t/t4013/diff.log_-S_F_master |    7 ++
+ t/t4202-log.sh               |   19 +++--
+ t/t6018-rev-list-glob.sh     |    6 ++
+ 7 files changed, 211 insertions(+), 79 deletions(-)
  create mode 100644 t/t4013/diff.log_-S_F_master
 
-diff --git a/diff.c b/diff.c
-index 17873f3..d89ea20 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2990,9 +2990,50 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
- 
- static int diff_scoreopt_parse(const char *opt);
- 
-+static inline int short_opt(char opt, const char **argv,
-+			    const char **optarg)
-+{
-+	const char *arg = argv[0];
-+	if (arg[0] != '-' || arg[1] != opt)
-+		return 0;
-+	if (arg[2] != '\0') {
-+		*optarg = arg + strlen("-c");
-+		return 1;
-+	}
-+	if (!argv[1])
-+		die("Option '%c' requires a value", opt);
-+	*optarg = argv[1];
-+	return 2;
-+}
-+
-+int diff_long_opt(const char *opt, const char **argv,
-+		  const char **optarg)
-+{
-+	const char *arg = argv[0];
-+	if (arg[0] != '-' || arg[1] != '-')
-+		return 0;
-+	arg += strlen("--");
-+	if (prefixcmp(arg, opt))
-+		return 0;
-+	arg += strlen(opt);
-+	if (*arg == '=') { /* Sticky form: --option=value */
-+		*optarg = arg + 1;
-+		return 1;
-+	}
-+	if (*arg != '\0')
-+		return 0;
-+	/* detached form: --option value */
-+	if (!argv[1])
-+		die("Option '--%s' requires a value", opt);
-+	*optarg = argv[1];
-+	return 2;
-+}
-+
- int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- {
- 	const char *arg = av[0];
-+	const char *optarg;
-+	int argcount;
- 
- 	/* Output format options */
- 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch"))
-@@ -3149,10 +3190,11 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else
- 			die("bad --word-diff argument: %s", type);
- 	}
--	else if (!prefixcmp(arg, "--word-diff-regex=")) {
-+	else if ((argcount = diff_long_opt("word-diff-regex", av, &optarg))) {
- 		if (options->word_diff == DIFF_WORDS_NONE)
- 			options->word_diff = DIFF_WORDS_PLAIN;
--		options->word_regex = arg + 18;
-+		options->word_regex = optarg;
-+		return argcount;
- 	}
- 	else if (!strcmp(arg, "--exit-code"))
- 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
-@@ -3180,18 +3222,26 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
- 		options->line_termination = 0;
--	else if (!prefixcmp(arg, "-l"))
--		options->rename_limit = strtoul(arg+2, NULL, 10);
--	else if (!prefixcmp(arg, "-S"))
--		options->pickaxe = arg + 2;
-+	else if ((argcount = short_opt('l', av, &optarg))) {
-+		options->rename_limit = strtoul(optarg, NULL, 10);
-+		return argcount;
-+	}
-+	else if ((argcount = short_opt('S', av, &optarg))) {
-+		options->pickaxe = optarg;
-+		return argcount;
-+	}
- 	else if (!strcmp(arg, "--pickaxe-all"))
- 		options->pickaxe_opts = DIFF_PICKAXE_ALL;
- 	else if (!strcmp(arg, "--pickaxe-regex"))
- 		options->pickaxe_opts = DIFF_PICKAXE_REGEX;
--	else if (!prefixcmp(arg, "-O"))
--		options->orderfile = arg + 2;
--	else if (!prefixcmp(arg, "--diff-filter="))
--		options->filter = arg + 14;
-+	else if ((argcount = short_opt('O', av, &optarg))) {
-+		options->orderfile = optarg;
-+		return argcount;
-+	}
-+	else if ((argcount = diff_long_opt("diff-filter", av, &optarg))) {
-+		options->filter = optarg;
-+		return argcount;
-+	}
- 	else if (!strcmp(arg, "--abbrev"))
- 		options->abbrev = DEFAULT_ABBREV;
- 	else if (!prefixcmp(arg, "--abbrev=")) {
-@@ -3201,20 +3251,25 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else if (40 < options->abbrev)
- 			options->abbrev = 40;
- 	}
--	else if (!prefixcmp(arg, "--src-prefix="))
--		options->a_prefix = arg + 13;
--	else if (!prefixcmp(arg, "--dst-prefix="))
--		options->b_prefix = arg + 13;
-+	else if ((argcount = diff_long_opt("src-prefix", av, &optarg))) {
-+		options->a_prefix = optarg;
-+		return argcount;
-+	}
-+	else if ((argcount = diff_long_opt("dst-prefix", av, &optarg))) {
-+		options->b_prefix = optarg;
-+		return argcount;
-+	}
- 	else if (!strcmp(arg, "--no-prefix"))
- 		options->a_prefix = options->b_prefix = "";
- 	else if (opt_arg(arg, '\0', "inter-hunk-context",
- 			 &options->interhunkcontext))
- 		;
--	else if (!prefixcmp(arg, "--output=")) {
--		options->file = fopen(arg + strlen("--output="), "w");
-+	else if ((argcount = diff_long_opt("output", av, &optarg))) {
-+		options->file = fopen(optarg, "w");
- 		if (!options->file)
- 			die_errno("Could not open '%s'", arg + strlen("--output="));
- 		options->close_file = 1;
-+		return argcount;
- 	} else
- 		return 0;
- 	return 1;
-diff --git a/diff.h b/diff.h
-index 063d10a..3b11732 100644
---- a/diff.h
-+++ b/diff.h
-@@ -214,6 +214,13 @@ extern void diff_unmerge(struct diff_options *,
- #define DIFF_SETUP_USE_CACHE		2
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
-+/*
-+ * Poor man's alternative to parse-option, to allow both sticky form
-+ * (--option=value) and detached form (--option value).
-+ */
-+extern int diff_long_opt(const char *opt, const char **argv,
-+			 const char **optarg);
-+
- extern int git_diff_basic_config(const char *var, const char *value, void *cb);
- extern int git_diff_ui_config(const char *var, const char *value, void *cb);
- extern int diff_use_color_default;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index dae6358..19857f4 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -208,6 +208,7 @@ log -p --first-parent master
- log -m -p --first-parent master
- log -m -p master
- log -SF master
-+log -S F master
- log -SF -p master
- log --decorate --all
- log --decorate=full --all
-@@ -282,4 +283,8 @@ diff master master^ side
- diff --dirstat master~1 master~2
- EOF
- 
-+test_expect_success 'log -S requires an argument' '
-+	test_must_fail git log -S
-+'
-+
- test_done
-diff --git a/t/t4013/diff.log_-S_F_master b/t/t4013/diff.log_-S_F_master
-new file mode 100644
-index 0000000..978d2b4
---- /dev/null
-+++ b/t/t4013/diff.log_-S_F_master
-@@ -0,0 +1,7 @@
-+$ git log -S F master
-+commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:02:00 2006 +0000
-+
-+    Third
-+$
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 2230e60..36870c5 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -100,13 +100,11 @@ test_expect_success 'oneline' '
- 
- test_expect_success 'diff-filter=A' '
- 
--	actual=$(git log --pretty="format:%s" --diff-filter=A HEAD) &&
--	expect=$(echo fifth ; echo fourth ; echo third ; echo initial) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
--	}
-+	git log --pretty="format:%s" --diff-filter=A HEAD > actual &&
-+	git log --pretty="format:%s" --diff-filter A HEAD > actual-detached &&
-+	printf "fifth\nfourth\nthird\ninitial" > expect &&
-+	test_cmp expect actual &&
-+	test_cmp expect actual-detached
- 
- '
- 
 -- 
 1.7.2.21.ge9796
