@@ -1,66 +1,133 @@
-From: solsTiCe d'Hiver <solstice.dhiver@gmail.com>
-Subject: Re: [PATCH] bash-completion: Print a useful error when called in a
- non-bash shell
-Date: Thu, 29 Jul 2010 21:05:07 +0200
-Message-ID: <1280430307.2228.5.camel@soho.example.org>
-References: <4C50B005.1030004@pileofstuff.org>
-	 <7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What is the scenario for a commit with 3 or more parents
+Date: Thu, 29 Jul 2010 13:12:33 -0700
+Message-ID: <7vzkxarqry.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikMRa_LrD2fU9Piv3GW2H0r7Jf_9s5iM0wc9t6s@mail.gmail.com>
+ <20100729021946.GG25268@spearce.org>
+ <AANLkTik-wOB-iEGK8EnW1Rdk9wwc1E86tYoBU26WepYJ@mail.gmail.com>
+ <C77AA970-4288-487F-9568-E86CF776FCED@gmail.com>
+ <AANLkTikpLHdMzbpix8jnyS6YwSkgie=Ts44AJP5dA4=T@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Andrew Sayers <andrew-git@pileofstuff.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 29 21:05:30 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joshua Juran <jjuran@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Bradley Wagner <bradley.wagner@hannonhill.com>,
+	git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 29 22:12:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeYQ2-0006jb-As
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 21:05:26 +0200
+	id 1OeZTL-0006pz-1o
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 22:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757039Ab0G2TFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 15:05:18 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40792 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755118Ab0G2TFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 15:05:17 -0400
-Received: by wyb39 with SMTP id 39so433689wyb.19
-        for <git@vger.kernel.org>; Thu, 29 Jul 2010 12:05:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=DguP9VkHRLJHXWSrszKmKoIEt9PyexPjfuoSt3UXy/w=;
-        b=DX3WTrwNPuZfphFZNE7ythSHqeBcAZzOIDI7WTYN7zRIZXQps+1lUd+j5BGBc29JpN
-         oIRvR1WHT8Wv7Ga9ePDofjpDPn/sBNYcL8a48czaV5i/WiqymBzrgdrTrahuglwDP9Js
-         nTN+0P5VCGfN1kuYuciCIKgfmrvP6TdfGiZe0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Jgm1x3Au6MLB890obmzwBNp8Gv9q9hhoUvv1+bcR8r0PE8xLGV9O4ad2ZQVe+396/D
-         JbmR3yc5g+xdm7U0nZWEDKaYSSzH6Zd69wtYfqCaz4dcUkJYLTGmLxW9oSt7slF6teSF
-         wC/MgUq6d/Pi9Y/qfyJzVPrebFZUr96uq9ORo=
-Received: by 10.227.22.33 with SMTP id l33mr609954wbb.101.1280430316079;
-        Thu, 29 Jul 2010 12:05:16 -0700 (PDT)
-Received: from [192.168.0.50] (ARennes-553-1-80-200.w81-250.abo.wanadoo.fr [81.250.251.200])
-        by mx.google.com with ESMTPS id e31sm1079636wbe.11.2010.07.29.12.05.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 29 Jul 2010 12:05:09 -0700 (PDT)
-In-Reply-To: <7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.30.2 
+	id S1753279Ab0G2UMt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 16:12:49 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59001 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751316Ab0G2UMs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 16:12:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0F602C9F65;
+	Thu, 29 Jul 2010 16:12:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=TR3hHA306d82
+	6NOZyK+vdvHxrl4=; b=DoP+dngmn16b93qKkgpPz5Ay7427IDGIWCcHbSklvzS5
+	l/UEQpW/RlAP5kFGL/bFx4c5/+wZnqcOZb5ojxWauxZJAipq3O9bA9MeatvOvGRT
+	KP+tl3+tqPOqrFz/hsOXpcwRqwD2cJ5eqh2zQr9NTjpfmcAvlWTZqKDFo9XQJcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WKqsKC
+	nYOEKC9KHY1uXEZELqWB5EQunutqQDx76Iph3dQ9XzuYn/eBbp8DMLr82MwN+VgI
+	g4SZHRF1HQwZbQbTakpax0B96UYKN9Csf14bZ26X8zUZHEugX3TKTnieb1FBEfGc
+	okweRSI1af/HkcYRwcttyeyvnA209YYkT3vYk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A8EC8C9F5C;
+	Thu, 29 Jul 2010 16:12:41 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 77679C9F5B; Thu, 29 Jul
+ 2010 16:12:35 -0400 (EDT)
+In-Reply-To: <AANLkTikpLHdMzbpix8jnyS6YwSkgie=Ts44AJP5dA4=T@mail.gmail.com>
+ (Sverre Rabbelier's message of "Thu\, 29 Jul 2010 13\:22\:01 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A45AE81C-9B4D-11DF-9627-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152195>
 
-I must re-emphasize that the bug was an archlinux bug in /etc/profile.
-http://bugs.archlinux.org/task/20288
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-Having said that, I don't see why you're trying to do anything about
-that.
-If I were you, I wouldn't bother to try to print any message at all.
+> Heya,
+>
+> On Thu, Jul 29, 2010 at 13:10, Joshua Juran <jjuran@gmail.com> wrote:
+>> How about if you had two (or more) components with a shared protocol=
+, and
+>> you updated each to speak a new (and incompatible) protocol. =C2=A0T=
+he changes to
+>> each component might be done in separate topic branches, but you'd w=
+ant to
+>> merge them all at once.
+>>
+>> $ git checkout master
+>> $ git merge client-v2 server-v2
+>
+> Very nice example, but do we have it _documented_ anywhere? If not, i=
+t
+> would be great if you could add that somewhere :)
+
+Please don't.
+
+I actually do not think the "client-server" is a good example from
+software engineering point-of-view, as it means that everybody talks
+version 1 before that merge and everybody talks version 2 after that
+merge, i.e. you have a flag day event.
+
+Think for 5 seconds how one would have tested client-v2 topic alone in
+isolation.
+
+The only transition plan that works in real life is for the updated cli=
+ent
+to talk fine with a server without version 2 support, while being prepa=
+red
+to talk the newer protocol if the server supports it.  The server side
+needs to be arranged in a similar way.
+
+If that is how these topics were developed, you should be able to merge
+client-v2 topic and then server-v2 topic, or in the other order, withou=
+t
+breaking anything on the master branch.
+
+The original idea of Octopus was that, when
+
+ (1) you have many topics that are not inter-related; _and_
+
+ (2) merging all of them in any random order wouldn't have made any
+     difference in the resulting history, either in the end result nor =
+in
+     any of the intermediate steps,
+
+it is not worth to serialize the merge order and create extra merge
+commits.
+
+I think we tend to discourage the use of Octopus these days, as people =
+are
+fallible.  When topics that they originally thought are independent tur=
+n
+out to have funny interactions among each other, having an Octopus merg=
+e
+across them tends to make bisection much less efficient in order to fin=
+d
+the real culprit in the history when you find something is broken.
+
+Compared to that downside, it is not worth to use an Octopus, only to h=
+ave
+a smaller number of merge commits and a cool-looking lantern-shaped mer=
+ge
+commit in the history.
