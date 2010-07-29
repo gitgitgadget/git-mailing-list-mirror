@@ -1,51 +1,331 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 4/4 v2] Allow detached form for --glob, --branches,
-	--tags and --remote.
-Date: Wed, 28 Jul 2010 21:48:34 -0500
-Message-ID: <20100729024834.GN29156@dert.cs.uchicago.edu>
-References: <vpqr5ioukca.fsf@bauges.imag.fr> <1280310062-16793-4-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Jul 2010, #05; Wed, 28)
+Date: Wed, 28 Jul 2010 21:00:16 -0700
+Message-ID: <7vvd7zuecv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 29 04:48:42 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 29 06:00:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeJAm-0004ny-KC
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 04:48:40 +0200
+	id 1OeKIJ-0006uv-62
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 06:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886Ab0G2Csg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 Jul 2010 22:48:36 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.164.153]:57440 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751194Ab0G2Csf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 Jul 2010 22:48:35 -0400
-Received: from dert.cs.uchicago.edu (dert.cs.uchicago.edu [128.135.11.157])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 6506BA1F4;
-	Wed, 28 Jul 2010 21:48:35 -0500 (CDT)
-Received: by dert.cs.uchicago.edu (Postfix, from userid 10442)
-	id 2F9AF9A185; Wed, 28 Jul 2010 21:48:35 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <1280310062-16793-4-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1750763Ab0G2EAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 00:00:24 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41833 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735Ab0G2EAX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 00:00:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 468B9C98AA;
+	Thu, 29 Jul 2010 00:00:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=3Iru
+	hhP2ycPxKcM6hDsyv6BU0rE=; b=iGDRgrIsZe4nZxeHsQZT1MpUjl1vMJA1er6U
+	CdQMMAXRFL5o+ej8QlknjBxlbdYckmRn1xvITIgyts+M22lutST+VkZDpHlrDx9P
+	+gjDLKqKfIyhjs4pNevP8kAEECC0AH0u2rAwrnd1DSwEX0upG7DfbRBK5JSYgu/6
+	xRyqQj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=Sz9
+	98FcV64WfdKQwwDp5VpJdT0BmB5KAUwP0ivv3l7VwIbv7qmQXv2+nrGRg144EOeQ
+	jPXMK1ouPqO6bM5ZhfqYL04QMMn6bQcSzj+HRw+CCxXNyzqXE/pxY1BYFZcP0xne
+	d2eci91n8yfKJMCEp3U/FHJum4WeMZO7OqILf5/M=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 339CDC98A8;
+	Thu, 29 Jul 2010 00:00:20 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 116B2C98A6; Thu, 29 Jul
+ 2010 00:00:17 -0400 (EDT)
+X-master-at: 61bf126ecb24977b883079942b71ff96174c19fb
+X-next-at: 75e8ac1bc0d18c1f8ca82f22ec04c8407298f41f
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CE1FE608-9AC5-11DF-9661-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152155>
 
-Matthieu Moy wrote:
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the integration branches, but I am
+still holding onto them.
 
-> -			if (!prefixcmp(arg, "--branches=")) {
-> +			if ((argcount = diff_long_opt("branches", argv + i, &optarg))) {
-> +				i += argcount - 1;
->  				struct all_refs_cb cb;
+Now that the latest feature release 1.7.2 is out, we should rewind and
+rebuild 'next' and start cooking new topics.
 
-As before: is this the right change where the argument is
-optional?
+--------------------------------------------------
+[New Topics]
 
-Thanks for a pleasant read.
-Jonathan
+* ab/test-coverage (2010-07-26) 8 commits
+ - Makefile: make gcov invocation configurable
+ - t/README: Add a note about the dangers of coverage chasing
+ - t/README: A new section about test coverage
+ - Makefile: Add cover_db_html target
+ - Makefile: Add cover_db target
+ - Makefile: Split out the untested functions target
+ - Makefile: Include subdirectories in "make cover" reports
+ - gitignore: Ignore files generated by "make coverage"
+
+* ab/test-no-skip (2010-07-28) 5 commits
+ - t/README: Update "Skipping tests" to align with best practices
+ - t/t7800-difftool.sh: Skip with prereq on no PERL
+ - t/t5800-remote-helpers.sh: Skip with prereq on python <2.4
+ - t/t4004-diff-rename-symlink.sh: use three-arg <prereq>
+ - tests: implicitly skip SYMLINKS tests using <prereq>
+
+* bc/use-more-hardlinks-in-install (2010-07-23) 2 commits
+ - Makefile: make hard/symbolic links for non-builtins too
+ - Makefile: link builtins residing in bin directory to main git binary too
+
+* cc/find-commit-subject (2010-07-22) 6 commits
+ - blame: use find_commit_subject() instead of custom code
+ - merge-recursive: use find_commit_subject() instead of custom code
+ - bisect: use find_commit_subject() instead of custom code
+ - revert: rename variables related to subject in get_message()
+ - revert: refactor code to find commit subject in find_commit_subject()
+ - revert: fix off by one read when searching the end of a commit subject
+
+* gb/shell-ext (2010-07-28) 3 commits
+ - Add sample commands for git-shell
+ - Add interactive mode to git-shell for user-friendliness
+ - Allow creation of arbitrary git-shell commands
+
+* jc/log-grep (2010-07-19) 1 commit
+ - git log: add -G<regexp> that greps in the patch text
+
+* jh/clean-exclude (2010-07-20) 2 commits
+ - Add test for git clean -e.
+ - Add -e/--exclude to git-clean.
+
+* jh/use-test-must-fail (2010-07-20) 1 commit
+ - Convert "! git" to "test_must_fail git"
+
+* jn/apply-filename-with-sp (2010-07-23) 4 commits
+ - apply: Handle traditional patches with space in filename
+ - t4135 (apply): use expand instead of pr for portability
+ - tests: Test how well "git apply" copes with weird filenames
+ - apply: Split quoted filename handling into new function
+
+* jn/fix-abbrev (2010-07-27) 3 commits
+ - examples/commit: use --abbrev for commit summary
+ - checkout, commit: remove confusing assignments to rev.abbrev
+ - archive: abbreviate substituted commit ids again
+
+* jn/maint-setup-fix (2010-07-24) 10 commits
+ - setup: split off a function to handle ordinary .git directories
+ - Revert "rehabilitate 'git index-pack' inside the object store"
+ - setup: do not forget working dir from subdir of gitdir
+ - setup: split off get_device_or_die helper
+ - setup: split off a function to handle hitting ceiling in repo search
+ - setup: split off code to handle stumbling upon a repository
+ - setup: split off a function to checks working dir for .git file
+ - setup: split off $GIT_DIR-set case from setup_git_directory_gently
+ - tests: try git apply from subdir of toplevel
+ - t1501 (rev-parse): clarify
+
+* jn/rebase-rename-am (2008-11-10) 5 commits
+ - rebase: protect against diff.renames configuration
+ - t3400 (rebase): whitespace cleanup
+ - Teach "apply --index-info" to handle rename patches
+ - t4150 (am): futureproof against failing tests
+ - t4150 (am): style fix
+
+* ml/rebase-x-strategy (2010-07-29) 1 commit
+ - rebase: support -X to pass through strategy options
+
+* mm/shortopt-detached (2010-07-28) 4 commits
+ - Allow detached form for --glob, --branches, --tags and --remote.
+ - Allow detached form (e.g. "git log --grep foo") in log options.
+ - Allow detached form for git diff --stat-name-width and --stat-width.
+ - Allow detached form (e.g. "-S foo" instead of "-Sfoo") for diff options
+
+* nd/fix-sparse-checkout (2010-07-26) 3 commits
+ - Mark new entries skip-worktree appropriately
+ - unpack-trees.c: Do not check ce_stage in will_have_skip_worktree()
+ - Fix sparse checkout not removing files from index
+
+* tr/ab-i18n-fix (2010-07-25) 1 commit
+ - tests: locate i18n lib&data correctly under --valgrind
+ (this branch uses ab/i18n.)
+
+* tr/maint-no-unquote-plus (2010-07-24) 1 commit
+ - Do not unquote + into ' ' in URLs
+
+* tr/xsize-bits (2010-07-28) 1 commit
+ - xsize_t: check whether we lose bits
+
+* vs/doc-spell (2010-07-20) 1 commit
+ - Documentation: spelling fixes
+
+--------------------------------------------------
+[Stalled -- would discard unless there are some movements soon]
+
+* by/log-range-diff (2010-07-12) 18 commits
+ . Minimum fix to make by/log-range-diff topic at least compile
+ . add test cases for '--graph' of line level log
+ . line.c output the '--graph' padding before each line
+ . add parent rewrite feature to line level log
+ . make rewrite_parents an external function
+ . some document update
+ . add two test cases
+ . add --always-print option
+ . map/print ranges along traversing the history topologically
+ . print the line log
+ . map/take range to parent
+ . add range clone functions
+ . export three functions from diff.c
+ . parse the -L options
+ . refactor parse_loc
+ . add the basic data structure for line level history
+ . parse-options: add two helper functions
+ . parse-options: stop when encounter a non-option
+
+Perhaps a re-roll is coming?  I suspect that we would have some overlaps
+to mm/shortopt-detached topic.
+
+* ps/gitweb-soc (2010-06-02) 2 commits
+  (merged to 'next' on 2010-06-13 at 92245ae)
+ + git-instaweb: Add option to reuse previous config file
+ + Makefile: Use $(sharedir)/gitweb for target 'install-gitweb'
+
+If we are going to have a configuration variable to control this, I
+strongly suspect that --reuse-config should be renamed so that the
+variable can be named more sanely and in line with whatever option
+that replaces it.
+
+No responses; I think we will eventually want to have a configuration to
+always enable the new option, so the renaming of the command line option
+is inevitable.  I plan to kick this out of 'next' once the upcoming
+release is out, and expect a re-roll with configuration variable.
+
+* js/rebase-origin-x (2010-02-05) 1 commit
+ - [RFC w/o test and incomplete] rebase: add -x option to record original commit name
+
+I retract my objection against the idea of -x; needs polishing before
+moving forward.
+
+No responses; I plan to drop this entirely after the upcoming release
+without prejudice.
+
+* zl/mailinfo-recode-patch (2010-06-14) 2 commits
+ - add --recode-patch option to git-am
+ - add --recode-patch option to git-mailinfo
+
+I recall there was another round of re-roll planned for this one.
+
+* jk/tag-contains (2010-07-05) 4 commits
+ - Why is "git tag --contains" so slow?
+ - default core.clockskew variable to one day
+ - limit "contains" traversals based on commit timestamp
+ - tag: speed up --contains calculation
+
+--------------------------------------------------
+[Cooking]
+
+* ab/report-corrupt-object-with-type (2010-06-10) 1 commit
+ - sha1_file: Show the the type and path to corrupt objects
+
+* cc/revert (2010-07-21) 5 commits
+ - t3508: add check_head_differs_from() helper function and use it
+ - revert: improve success message by adding abbreviated commit sha1
+ - revert: don't print "Finished one cherry-pick." if commit failed
+ - revert: refactor commit code into a new run_git_commit() function
+ - revert: report success when using option --strategy
+
+* en/fast-export-fix (2010-07-17) 2 commits
+ - fast-export: Add a --full-tree option
+ - fast-export: Fix dropping of files with --import-marks and path limiting
+
+* jn/parse-date-basic (2010-07-15) 1 commit
+ - Export parse_date_basic() to convert a date string to timestamp
+ (this branch is used by rr/svn-export.)
+
+* kf/post-receive-sample-hook (2010-07-16) 1 commit
+ - post-receive-email: optional message line count limit
+
+* tr/rfc-reset-doc (2010-07-18) 5 commits
+ - Documentation/reset: move "undo permanently" example behind "make topic"
+ - Documentation/reset: reorder examples to match description
+ - Documentation/reset: promote 'examples' one section up
+ - Documentation/reset: separate options by mode
+ - Documentation/git-reset: reorder modes for soft-mixed-hard progression
+
+* rr/svn-export (2010-07-15) 8 commits
+ - Add SVN dump parser
+ - Add infrastructure to write revisions in fast-export format
+ - Add stream helper library
+ - Add string-specific memory pool
+ - vcs-svn: treap_search should return NULL for missing items
+ - Add treap implementation
+ - Add memory pool library
+ - Introduce vcs-svn lib
+ (this branch uses jn/parse-date-basic.)
+
+* hv/autosquash-config (2010-07-14) 1 commit
+ - add configuration variable for --autosquash option of interactive rebase
+
+* jh/graph-next-line (2010-07-13) 2 commits
+ - Enable custom schemes for column colors in the graph API
+ - Make graph_next_line() available in the graph.h API
+
+* ar/string-list-foreach (2010-07-03) 2 commits
+ - Convert the users of for_each_string_list to for_each_string_list_item macro
+ - Add a for_each_string_list_item macro
+ (this branch is used by tf/string-list-init.)
+
+* il/rfc-remote-fd-ext (2010-07-19) 3 commits
+ - gitignore: Ignore the new /git-remote-{ext,fd} helpers
+ - New remote helper: git-remote-ext
+ - New remote helper git-remote-fd
+
+* gp/pack-refs-remove-empty-dirs (2010-07-06) 1 commit
+  (merged to 'next' on 2010-07-14 at 7d25131)
+ + pack-refs: remove newly empty directories
+
+* hv/submodule-find-ff-merge (2010-07-07) 3 commits
+ - Implement automatic fast-forward merge for submodules
+ - setup_revisions(): Allow walking history in a submodule
+ - Teach ref iteration module about submodules
+
+* jn/fast-import-subtree (2010-06-30) 1 commit
+ - Teach fast-import to import subtrees named by tree id
+
+* sg/rerere-gc-old-still-used (2010-07-13) 2 commits
+ - rerere: fix overeager gc
+ - mingw_utime(): handle NULL times parameter
+
+* tf/string-list-init (2010-07-04) 1 commit
+ - string_list: Add STRING_LIST_INIT macro and make use of it.
+ (this branch uses ar/string-list-foreach.)
+
+* en/d-f-conflict-fix (2010-07-27) 7 commits
+  (merged to 'next' on 2010-07-28 at 75e8ac1)
+ + t/t6035-merge-dir-to-symlink.sh: Remove TODO on passing test
+  (merged to 'next' on 2010-07-14 at 2b2a810)
+ + fast-import: Improve robustness when D->F changes provided in wrong order
+ + fast-export: Fix output order of D/F changes
+ + merge_recursive: Fix renames across paths below D/F conflicts
+ + merge-recursive: Fix D/F conflicts
+ + Add a rename + D/F conflict testcase
+ + Add additional testcases for D/F conflicts
+
+* ab/i18n (2010-07-19) 2 commits
+ - tests: rename test to work around GNU gettext bug
+ - Add infrastructure for translating Git with gettext
+ (this branch is used by tr/ab-i18n-fix.)
+
+* tc/checkout-B (2010-06-24) 3 commits
+ - builtin/checkout: learn -B
+ - builtin/checkout: reword hint for -b
+ - add tests for checkout -b
+
+* eb/double-convert-before-merge (2010-07-02) 3 commits
+ - Don't expand CRLFs when normalizing text during merge
+ - Try normalizing files to avoid delete/modify conflicts when merging
+ - Avoid conflicts when merging branches with mixed normalization
