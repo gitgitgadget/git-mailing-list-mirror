@@ -1,77 +1,159 @@
-From: Andrew Sayers <andrew-git@pileofstuff.org>
-Subject: Re: [PATCH] bash-completion: Print a useful error when called in
- a non-bash shell
-Date: Thu, 29 Jul 2010 22:29:36 +0100
-Message-ID: <4C51F2C0.8090101@pileofstuff.org>
-References: <4C50B005.1030004@pileofstuff.org> <7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [RFH] Spurious failures of t0025.[34]
+Date: Thu, 29 Jul 2010 23:40:01 +0200
+Message-ID: <201007292340.01836.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	solsTiCe d'Hiver <solstice.dhiver@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 29 23:30:14 2010
+Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 29 23:40:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oeag7-0001TP-99
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 23:30:11 +0200
+	id 1OeaqD-0006ir-BT
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 23:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754676Ab0G2V37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 17:29:59 -0400
-Received: from mtaout02-winn.ispmail.ntl.com ([81.103.221.48]:24974 "EHLO
-	mtaout02-winn.ispmail.ntl.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753391Ab0G2V37 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 17:29:59 -0400
-Received: from aamtaout03-winn.ispmail.ntl.com ([81.103.221.35])
-          by mtaout02-winn.ispmail.ntl.com
-          (InterMail vM.7.08.04.00 201-2186-134-20080326) with ESMTP
-          id <20100729212947.TPVG3192.mtaout02-winn.ispmail.ntl.com@aamtaout03-winn.ispmail.ntl.com>;
-          Thu, 29 Jul 2010 22:29:47 +0100
-Received: from [192.168.1.6] (really [80.6.134.127])
-          by aamtaout03-winn.ispmail.ntl.com
-          (InterMail vG.2.02.00.01 201-2161-120-102-20060912) with ESMTP
-          id <20100729212947.WTFH1598.aamtaout03-winn.ispmail.ntl.com@[192.168.1.6]>;
-          Thu, 29 Jul 2010 22:29:47 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100528 Thunderbird/3.0.5
-In-Reply-To: <7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
-X-Cloudmark-Analysis: v=1.1 cv=3ENABmdyEd/Fm7fR7+mZIuMDn6+IErAeEhlfWBImZFk= c=1 sm=0 a=CVPIxC1EwrEA:10 a=8nJEP1OIZ-IA:10 a=jLEn85lTOr5PXNF6ARkA:9 a=99fgamdeKU6tsiZIKZoA:7 a=KBucLPJZgtlGXHMMdiCNlNTwWIgA:4 a=wPNLvfGTeEIA:10 a=HpAAvcLHHh0Zw7uRqdWCyQ==:117
+	id S1754807Ab0G2Vk2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 17:40:28 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:43102 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754665Ab0G2VkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 17:40:25 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 29 Jul
+ 2010 23:40:23 +0200
+Received: from thomas.site (84.74.100.241) by CAS12.d.ethz.ch (172.31.38.212)
+ with Microsoft SMTP Server (TLS) id 14.0.702.0; Thu, 29 Jul 2010 23:40:02
+ +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152201>
 
-On 29/07/10 17:25, Junio C Hamano wrote:
-> 
-> I do agree that there need to be a way to find that information for the
-> end users, especially for those who just use binary-packaged git given by
-> their distros, but this codepath is _not_ the place to do it.
-> 
-> How about replacing these with something simple like:
-> 
->     echo >&2 "You are not running full 'bash'; exiting." ; exit 127
+Hi *
 
-I take your point that this is not the place to advertise the mailing
-list, although I prefer to include instructions in error messages.
-Would you be amenable in principle to creating something like `man
-git-bug`?  A quick search doesn't turn up any documents specifically
-about bug fixing/reporting, and a man page was the first place I thought
-to look.  I'll happily withdraw this patch until I can have a crack at
-such a page.
+I have another hard-to-explain test failure under --valgrind.  I hope
+it's not yet another bug buried deep in valgrind itself...
 
->> +	BASH_VERSION: {$BASH_VERSION}
->> +	BASHOPTS: {$BASHOPTS}
->> +	SHELLOPTS: {$SHELLOPTS}
->> +	POSIXLY_CORRECT: {$POSIXLY_CORRECT}
->> +EOF
->> +	echo -n "	command line: {"
->> +	tr '\0' ' ' < /proc/$$/cmdline
-> 
-> This looks like a Linux-ism to me.
+Doing the following on current next (v1.7.2.1-230-g75e8ac1) stops
+after a number of iterations, usually within 5 minutes:
 
-Caught red-flippered :)  I'll use `ps` next time.
+  while GIT_SKIP_TESTS="t0025.[5-9] t0025.??" \
+      ./t0025-crlf-auto.sh --valgrind --root=/dev/shm --tee -i
+  do
+    :
+  done
 
-	- Andrew
+I can reproduce this both on the machine I use for valgrinding, and my
+work laptop, and they're quite different:
+
+  openSuSE 11.3, 2.6.34, gcc 4.5.0, glibc 2.11.2
+  RHEL 5.4, 2.6.18, gcc 4.1.2, glibc 2.5
+
+I ordinarily run a bleeding edge valgrind on both (calls itself
+3.6.0SVN) because of the env handling bug from last month, but I also
+tried with valgrind 3.5.0 on the RHEL box, same problem.
+
+It seems random whether it stops at test 3 or 4, but #4 seems more
+frequent.  These tests read
+
+  test_expect_success 'crlf=true causes a CRLF file to be normalized' '
+
+          # Backwards compatibility check
+          rm -f .gitattributes tmp one two three &&
+          echo "two crlf" > .gitattributes &&
+          git read-tree --reset -u HEAD &&
+
+          # Note, "normalized" means that git will normalize it if added
+          has_cr two &&
+          twodiff=`git diff two` &&
+          test -n "$twodiff"
+  '
+
+  test_expect_success 'text=true causes a CRLF file to be normalized' '
+
+          rm -f .gitattributes tmp one two three &&
+          echo "two text" > .gitattributes &&
+          git read-tree --reset -u HEAD &&
+
+          # Note, "normalized" means that git will normalize it if added
+          has_cr two &&
+          twodiff=`git diff two` &&
+          test -n "$twodiff"
+  '
+
+I tried patching them in this way:
+
+---- 8< ----
+diff --git i/t/t0025-crlf-auto.sh w/t/t0025-crlf-auto.sh
+index f5f67a6..d7424c9 100755
+--- i/t/t0025-crlf-auto.sh
++++ w/t/t0025-crlf-auto.sh
+@@ -48,8 +48,7 @@ test_expect_success 'crlf=true causes a CRLF file to be normalized' '
+ 
+ 	# Note, "normalized" means that git will normalize it if added
+ 	has_cr two &&
+-	twodiff=`git diff two` &&
+-	test -n "$twodiff"
++	test_must_fail git diff --exit-code two
+ '
+ 
+ test_expect_success 'text=true causes a CRLF file to be normalized' '
+@@ -60,8 +59,7 @@ test_expect_success 'text=true causes a CRLF file to be normalized' '
+ 
+ 	# Note, "normalized" means that git will normalize it if added
+ 	has_cr two &&
+-	twodiff=`git diff two` &&
+-	test -n "$twodiff"
++	test_must_fail git diff --exit-code two
+ '
+ 
+ test_expect_success 'eol=crlf gives a normalized file CRLFs with autocrlf=false' '
+---- >8 ----
+
+Unless I'm too tired, these should be equivalent.  I gained no extra
+information by doing so; it just stops at a random iteration with an
+empty diff.  Maybe it shifts the weight slightly towards #3 failing,
+but that could just as well be the placebo effect, I have not done any
+statistics.  It looks like
+
+  expecting success: 
+
+          rm -f .gitattributes tmp one two three &&
+          echo "two text" > .gitattributes &&
+          git read-tree --reset -u HEAD &&
+
+          # Note, "normalized" means that git will normalize it if added
+          has_cr two &&
+          xxd two &&
+          test_must_fail git diff --exit-code two
+
+  0000000: 490d 0a61 6d0d 0a76 6572 790d 0a76 6572  I..am..very..ver
+  0000010: 790d 0a66 696e 650d 0a74 6861 6e6b 0d0a  y..fine..thank..
+  0000020: 796f 750d 0a                             you..
+  not ok - 4 text=true causes a CRLF file to be normalized
+  #
+  #
+  #               rm -f .gitattributes tmp one two three &&
+  #               echo "two text" > .gitattributes &&
+  #               git read-tree --reset -u HEAD &&
+  #
+  #               # Note, "normalized" means that git will normalize it if added
+  #               has_cr two &&
+  #               xxd two &&
+  #               test_must_fail git diff --exit-code two
+  #
+
+I.e., nothing out of the ordinary except that the diff is empty.
+
+So... does anyone have any ideas what to test next?  Or what might
+cause this?
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
