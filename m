@@ -1,78 +1,94 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What is the scenario for a commit with 3 or more parents
-Date: Thu, 29 Jul 2010 13:22:01 -0500
-Message-ID: <AANLkTikpLHdMzbpix8jnyS6YwSkgie=Ts44AJP5dA4=T@mail.gmail.com>
-References: <AANLkTikMRa_LrD2fU9Piv3GW2H0r7Jf_9s5iM0wc9t6s@mail.gmail.com> 
-	<20100729021946.GG25268@spearce.org> <AANLkTik-wOB-iEGK8EnW1Rdk9wwc1E86tYoBU26WepYJ@mail.gmail.com> 
-	<C77AA970-4288-487F-9568-E86CF776FCED@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [RFC PATCH 0/2] Allow detached forms (--option arg) for git
+ log options.
+Date: Thu, 29 Jul 2010 20:33:10 +0200
+Message-ID: <20100729183310.GA3891@madism.org>
+References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr>
+ <m37hkhklll.fsf@localhost.localdomain>
+ <20100728130610.GG6895@madism.org>
+ <201007291116.44859.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Bradley Wagner <bradley.wagner@hannonhill.com>,
-	git@vger.kernel.org
-To: Joshua Juran <jjuran@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 29 20:22:28 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 29 20:33:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeXkR-0001tn-GB
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 20:22:27 +0200
+	id 1OeXuz-0007KD-UP
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 20:33:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410Ab0G2SWW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 14:22:22 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:53552 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142Ab0G2SWV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 14:22:21 -0400
-Received: by gxk23 with SMTP id 23so239502gxk.19
-        for <git@vger.kernel.org>; Thu, 29 Jul 2010 11:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QULQmH4zFucxlyEX3ywVkCf5moFwsLXReim2cai9qPk=;
-        b=OHKFAdpJhPm/F/A7WpM8mtt3975nuBiVZRPGEbtG1K21VgY9SalR2AULSqQa9J49ut
-         UiLoGUIfu9WjPY06v+QPv14E7s3mG3akm7/99DlvGgYkaUYAruKM4TEzobESuUX9BrBU
-         6fB7KC73oU4r+ENgqY2BDyaRISfCp/BgzkSnk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=mIk/frX9VcPd1VrsQAsKak9SaOAsq4rhtxAkT/WAVyOuyYI0DjKoNUtC2vBr8KWTVZ
-         LxBcJl+zbUqfL3WIaTdUvANdglNZdW3AiwF3PeXQH7BVdMRDew7wHCt2Xnk5dB578OkG
-         Hj9fVB+Etn9xFsKPBC5d/R6Py0ybUB9VAE2dg=
-Received: by 10.150.175.17 with SMTP id x17mr1531546ybe.300.1280427741171; 
-	Thu, 29 Jul 2010 11:22:21 -0700 (PDT)
-Received: by 10.150.66.12 with HTTP; Thu, 29 Jul 2010 11:22:01 -0700 (PDT)
-In-Reply-To: <C77AA970-4288-487F-9568-E86CF776FCED@gmail.com>
+	id S1756476Ab0G2SdO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 14:33:14 -0400
+Received: from pan.madism.org ([88.191.52.104]:46439 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756399Ab0G2SdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 14:33:13 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
+	by hermes.madism.org (Postfix) with ESMTPS id B598E4FCE1;
+	Thu, 29 Jul 2010 20:33:11 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id A633668A; Thu, 29 Jul 2010 20:33:10 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <201007291116.44859.jnareb@gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152193>
 
-Heya,
+On Thu, Jul 29, 2010 at 11:16:42AM +0200, Jakub Narebski wrote:
+> On Wed, 28 Jul 2010, Pierre Habouzit wrote:
+>=20
+> > you cannot take the address of a bit portably in C, so you can't le=
+t
+> > parseopt set/clear bits through bitfields (as in unsigned field : 1=
+ in a
+> > struct in C I mean).
+> >=20
+> > So to use parseopt OPTION_BIT feature, you have to convert them to =
+C
+> > flags as in "unsigned flags" and explicit masks defines/enums.
+> >=20
+> > IOW:
+> >=20
+> >     struct foo {
+> >        unsigned bar : 1,
+> > 		...
+> > 		  baz : 1;
+> >     };
+> >=20
+> > Must be converted into:
+> >=20
+> >     struct foo {
+> >     #define FOO_FLAG_BAR (1U <<  1)
+> >     ...
+> >     #define FOO_FLAG_BAZ (1U << 18)
+> >       unsigned flags;
+> >     }
+> >=20
+> > so that you can use parseopt.  that's what I meant.
+> >=20
+> >=20
+> > This was done for the rev-list parsing stuff e.g.
+>=20
+> e.g. what?
 
-On Thu, Jul 29, 2010 at 13:10, Joshua Juran <jjuran@gmail.com> wrote:
-> How about if you had two (or more) components with a shared protocol,=
- and
-> you updated each to speak a new (and incompatible) protocol. =C2=A0Th=
-e changes to
-> each component might be done in separate topic branches, but you'd wa=
-nt to
-> merge them all at once.
->
-> $ git checkout master
-> $ git merge client-v2 server-v2
-
-Very nice example, but do we have it _documented_ anywhere? If not, it
-would be great if you could add that somewhere :)
+err no, not rev-list, diff options: struct diff_options::flags and the
+DIFF_OPT_* defines
 
 --=20
-Cheers,
-
-Sverre Rabbelier
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@d=
+ebian.org
+OOO                                                http://www.madism.or=
+g
