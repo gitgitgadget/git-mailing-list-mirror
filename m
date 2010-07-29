@@ -1,127 +1,114 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2 2/5] t/t4004-diff-rename-symlink.sh: use three-arg 
-	<prereq>
-Date: Thu, 29 Jul 2010 01:56:50 +0000
-Message-ID: <AANLkTinFMjH6LfDXjCp9XGVEuQF9ZKrL0i8t-p8hmzJ-@mail.gmail.com>
-References: <1280313299-721-1-git-send-email-avarab@gmail.com>
-	<1280313299-721-3-git-send-email-avarab@gmail.com>
-	<20100729010903.GF29156@dert.cs.uchicago.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4 v2] Allow detached form (e.g. "-S foo" instead of
+	"-Sfoo") for diff options
+Date: Wed, 28 Jul 2010 21:00:31 -0500
+Message-ID: <20100729020031.GI29156@dert.cs.uchicago.edu>
+References: <vpqr5ioukca.fsf@bauges.imag.fr> <1280310062-16793-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 29 03:57:09 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 29 04:00:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeIMu-0000Vy-Jc
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 03:57:08 +0200
+	id 1OeIQI-0001LH-Ab
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 04:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751550Ab0G2B4y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 21:56:54 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58790 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222Ab0G2B4x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 Jul 2010 21:56:53 -0400
-Received: by fxm14 with SMTP id 14so15729fxm.19
-        for <git@vger.kernel.org>; Wed, 28 Jul 2010 18:56:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AN+66woXhyngX4vm86JFu/enysVyYBcLG8pZ9GObqZE=;
-        b=en3OCelLOXX1pTtK4BHh7Y6UsK7qitTW+gjvns5v1GlTRxrTmPR789M0Q2MQiVF/wH
-         KzJCFdMzNocL8mbvUQkeKOFQLbczlbXBDOYzoXo7UgUTlbOsi8xyJqbcitEfTAWjURBr
-         wS1doMSHep9RUUJ/anhmSb5s1l6+bR3yUN8b8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xxKSOySLAENaJoQwBjSk0SxEcF57aC5M/BqmVGKZ01z5T1hecOXcDeV7EzNIVr3Z06
-         O3Y/fqMZzYCQStTIONmUi/GTxv39eqOTJ8W2Wry2N0FwYk0RdyvUmSalbqDr1Yb0v0O6
-         SVTgduwJs41sVMHTXr1+Bxv0boldhyhOWdzW8=
-Received: by 10.223.111.200 with SMTP id t8mr10938022fap.31.1280368610153; 
-	Wed, 28 Jul 2010 18:56:50 -0700 (PDT)
-Received: by 10.223.126.131 with HTTP; Wed, 28 Jul 2010 18:56:50 -0700 (PDT)
-In-Reply-To: <20100729010903.GF29156@dert.cs.uchicago.edu>
+	id S1752256Ab0G2CAd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 Jul 2010 22:00:33 -0400
+Received: from camembert.cs.uchicago.edu ([128.135.164.153]:49218 "EHLO
+	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751728Ab0G2CAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 Jul 2010 22:00:33 -0400
+Received: from dert.cs.uchicago.edu (dert.cs.uchicago.edu [128.135.11.157])
+	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 50913A1B8;
+	Wed, 28 Jul 2010 21:00:32 -0500 (CDT)
+Received: by dert.cs.uchicago.edu (Postfix, from userid 10442)
+	id 1ACD220DBC; Wed, 28 Jul 2010 21:00:31 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <1280310062-16793-1-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152146>
 
-On Thu, Jul 29, 2010 at 01:09, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> Change the tests that skipped due to unavailable SYMLINKS support to
->> use the three-arg prereq form of test_expect_success.
->>
->> This is like the "tests: implicitly skip SYMLINKS tests using
->> <prereq>" change, but I needed to create an additional test for some
->> setup code. It's in a separate change as suggested by Jonathan Niede=
-r
->> for ease of reviewing.
->
-> Hmm, I still don=E2=80=99t understand this. =C2=A0Do you mean that th=
-ere is
-> some setup that needs to be run before these commands, and so
-> the patch fails if that change is not included?
->
-> Or is it a matter of "while at it, fix this other problem
-> I noticed" (which would be fine, but it is clearer to
-> present it as such if so)?
+Matthieu Moy wrote:
 
-The setup code needs to be inside a test so that it'll only run if we
-have SYMLINKS support.
+>  5 files changed, 90 insertions(+), 16 deletions(-)
+>  create mode 100644 t/t4013/diff.log_-S_F_master
 
-I could also have done:
+Well, I like it, though I=E2=80=99m obviously biased.
 
-    if test_have_prereq PERL
-    then
-        ..setup code..
-    fi
+> --- /dev/null
+> +++ b/t/t4013/diff.log_-S_F_master
+> @@ -0,0 +1,7 @@
+> +$ git log -S F master
+> +commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
 
-But setup code should be inside tests, so that we'll get failure
-reporting.
+Note to self: a nice mini-series might be to blur these out.
 
->> diff --git a/t/t4004-diff-rename-symlink.sh b/t/t4004-diff-rename-sy=
-mlink.sh
->> index 1a09e8d..92a65f4 100755
->> --- a/t/t4004-diff-rename-symlink.sh
->> +++ b/t/t4004-diff-rename-symlink.sh
->> @@ -40,8 +34,9 @@ test_expect_success \
->> =C2=A0# rezrov and nitfol are rename/copy of frotz and bozbar should=
- be
->> =C2=A0# a new creation.
->>
->> -GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $tree >current
->> -cat >expected <<\EOF
->> +test_expect_success SYMLINKS 'setup diff output' "
->> + =C2=A0 =C2=A0GIT_DIFF_OPTS=3D--unified=3D0 git diff-index -M -p $t=
-ree >current &&
->> + =C2=A0 =C2=A0cat >expected <<\EOF
->> =C2=A0diff --git a/bozbar b/bozbar
->> =C2=A0new file mode 120000
->> =C2=A0--- /dev/null
->> @@ -65,8 +60,9 @@ deleted file mode 100644
->> =C2=A0-xyzzy
->> =C2=A0\ No newline at end of file
->> =C2=A0EOF
->> +"
->
-> Tip for the future: if you use 'straight quotes', then readers
-> can avoid carefully scanning through for $ and similar oddities
-> (and the test script presented with the "expecting success:"
-> prompt will use the friendlier $tree instead of 76c98ds89).
+> +++ b/t/t4202-log.sh
+> @@ -101,11 +101,16 @@ test_expect_success 'oneline' '
+>  test_expect_success 'diff-filter=3DA' '
+> =20
+>  	actual=3D$(git log --pretty=3D"format:%s" --diff-filter=3DA HEAD) &=
+&
+> +	actual_detached=3D$(git log --pretty=3D"format:%s" --diff-filter A =
+HEAD) &&
+>  	expect=3D$(echo fifth ; echo fourth ; echo third ; echo initial) &&
+>  	test "$actual" =3D "$expect" || {
+>  		echo Oops
+>  		echo "Actual: $actual"
+>  		false
+> +	} &&
+> +	test "$actual" =3D "$actual_detached" || {
+> +		echo Oops. Detached form broken
+> +		echo "Actual_detached: $actual_detached"
+>  	}
 
-Ah, thanks.
+You left out the crucial "false"! :)
 
-> The patch looks good; my only remaining concern is the log
-> message as mentioned above.
+Below is an add-on patch to use a more readable style.  With
+or without that change:
 
-Hopefully that's cleared up now.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 3352935..36870c5 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -100,18 +100,11 @@ test_expect_success 'oneline' '
+=20
+ test_expect_success 'diff-filter=3DA' '
+=20
+-	actual=3D$(git log --pretty=3D"format:%s" --diff-filter=3DA HEAD) &&
+-	actual_detached=3D$(git log --pretty=3D"format:%s" --diff-filter A HE=
+AD) &&
+-	expect=3D$(echo fifth ; echo fourth ; echo third ; echo initial) &&
+-	test "$actual" =3D "$expect" || {
+-		echo Oops
+-		echo "Actual: $actual"
+-		false
+-	} &&
+-	test "$actual" =3D "$actual_detached" || {
+-		echo Oops. Detached form broken
+-		echo "Actual_detached: $actual_detached"
+-	}
++	git log --pretty=3D"format:%s" --diff-filter=3DA HEAD > actual &&
++	git log --pretty=3D"format:%s" --diff-filter A HEAD > actual-detached=
+ &&
++	printf "fifth\nfourth\nthird\ninitial" > expect &&
++	test_cmp expect actual &&
++	test_cmp expect actual-detached
+=20
+ '
+=20
+--=20
