@@ -1,94 +1,66 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [RFC PATCH 0/2] Allow detached forms (--option arg) for git
- log options.
-Date: Thu, 29 Jul 2010 20:33:10 +0200
-Message-ID: <20100729183310.GA3891@madism.org>
-References: <1280168078-31147-1-git-send-email-Matthieu.Moy@imag.fr>
- <m37hkhklll.fsf@localhost.localdomain>
- <20100728130610.GG6895@madism.org>
- <201007291116.44859.jnareb@gmail.com>
+From: solsTiCe d'Hiver <solstice.dhiver@gmail.com>
+Subject: Re: [PATCH] bash-completion: Print a useful error when called in a
+ non-bash shell
+Date: Thu, 29 Jul 2010 21:05:07 +0200
+Message-ID: <1280430307.2228.5.camel@soho.example.org>
+References: <4C50B005.1030004@pileofstuff.org>
+	 <7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 29 20:33:26 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 29 21:05:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeXuz-0007KD-UP
-	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 20:33:22 +0200
+	id 1OeYQ2-0006jb-As
+	for gcvg-git-2@lo.gmane.org; Thu, 29 Jul 2010 21:05:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756476Ab0G2SdO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 14:33:14 -0400
-Received: from pan.madism.org ([88.191.52.104]:46439 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756399Ab0G2SdN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 14:33:13 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (verified OK))
-	by hermes.madism.org (Postfix) with ESMTPS id B598E4FCE1;
-	Thu, 29 Jul 2010 20:33:11 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A633668A; Thu, 29 Jul 2010 20:33:10 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <201007291116.44859.jnareb@gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757039Ab0G2TFS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 15:05:18 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:40792 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755118Ab0G2TFR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 15:05:17 -0400
+Received: by wyb39 with SMTP id 39so433689wyb.19
+        for <git@vger.kernel.org>; Thu, 29 Jul 2010 12:05:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=DguP9VkHRLJHXWSrszKmKoIEt9PyexPjfuoSt3UXy/w=;
+        b=DX3WTrwNPuZfphFZNE7ythSHqeBcAZzOIDI7WTYN7zRIZXQps+1lUd+j5BGBc29JpN
+         oIRvR1WHT8Wv7Ga9ePDofjpDPn/sBNYcL8a48czaV5i/WiqymBzrgdrTrahuglwDP9Js
+         nTN+0P5VCGfN1kuYuciCIKgfmrvP6TdfGiZe0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=Jgm1x3Au6MLB890obmzwBNp8Gv9q9hhoUvv1+bcR8r0PE8xLGV9O4ad2ZQVe+396/D
+         JbmR3yc5g+xdm7U0nZWEDKaYSSzH6Zd69wtYfqCaz4dcUkJYLTGmLxW9oSt7slF6teSF
+         wC/MgUq6d/Pi9Y/qfyJzVPrebFZUr96uq9ORo=
+Received: by 10.227.22.33 with SMTP id l33mr609954wbb.101.1280430316079;
+        Thu, 29 Jul 2010 12:05:16 -0700 (PDT)
+Received: from [192.168.0.50] (ARennes-553-1-80-200.w81-250.abo.wanadoo.fr [81.250.251.200])
+        by mx.google.com with ESMTPS id e31sm1079636wbe.11.2010.07.29.12.05.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 29 Jul 2010 12:05:09 -0700 (PDT)
+In-Reply-To: <7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.30.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152194>
 
-On Thu, Jul 29, 2010 at 11:16:42AM +0200, Jakub Narebski wrote:
-> On Wed, 28 Jul 2010, Pierre Habouzit wrote:
->=20
-> > you cannot take the address of a bit portably in C, so you can't le=
-t
-> > parseopt set/clear bits through bitfields (as in unsigned field : 1=
- in a
-> > struct in C I mean).
-> >=20
-> > So to use parseopt OPTION_BIT feature, you have to convert them to =
-C
-> > flags as in "unsigned flags" and explicit masks defines/enums.
-> >=20
-> > IOW:
-> >=20
-> >     struct foo {
-> >        unsigned bar : 1,
-> > 		...
-> > 		  baz : 1;
-> >     };
-> >=20
-> > Must be converted into:
-> >=20
-> >     struct foo {
-> >     #define FOO_FLAG_BAR (1U <<  1)
-> >     ...
-> >     #define FOO_FLAG_BAZ (1U << 18)
-> >       unsigned flags;
-> >     }
-> >=20
-> > so that you can use parseopt.  that's what I meant.
-> >=20
-> >=20
-> > This was done for the rev-list parsing stuff e.g.
->=20
-> e.g. what?
+I must re-emphasize that the bug was an archlinux bug in /etc/profile.
+http://bugs.archlinux.org/task/20288
 
-err no, not rev-list, diff options: struct diff_options::flags and the
-DIFF_OPT_* defines
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+Having said that, I don't see why you're trying to do anything about
+that.
+If I were you, I wouldn't bother to try to print any message at all.
