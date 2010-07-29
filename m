@@ -1,161 +1,89 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH/RFC] tests: WIP Infrastructure for Git smoke testing
-Date: Fri, 30 Jul 2010 00:15:56 +0200
-Message-ID: <201007300015.57045.trast@student.ethz.ch>
-References: <1280438455-16255-1-git-send-email-avarab@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] bash-completion: Print a useful error when called in a 
+	non-bash shell
+Date: Thu, 29 Jul 2010 22:16:15 +0000
+Message-ID: <AANLkTikxNe-+tjHkxCk-FtRxLpeyRkx-Wx109iuE+6fL@mail.gmail.com>
+References: <4C50B005.1030004@pileofstuff.org>
+	<7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
+	<4C51F2C0.8090101@pileofstuff.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 30 00:16:08 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"solsTiCe d'Hiver" <solstice.dhiver@gmail.com>
+To: Andrew Sayers <andrew-git@pileofstuff.org>
+X-From: git-owner@vger.kernel.org Fri Jul 30 00:16:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OebOZ-000890-3R
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 00:16:07 +0200
+	id 1OebOo-0008Gw-CH
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 00:16:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755046Ab0G2WQA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 18:16:00 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:27477 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754641Ab0G2WP7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 18:15:59 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 30 Jul
- 2010 00:15:58 +0200
-Received: from thomas.site (84.74.100.241) by CAS20.d.ethz.ch (172.31.51.110)
- with Microsoft SMTP Server (TLS) id 14.0.702.0; Fri, 30 Jul 2010 00:15:57
- +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <1280438455-16255-1-git-send-email-avarab@gmail.com>
+	id S1755148Ab0G2WQR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 18:16:17 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:54623 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754851Ab0G2WQQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 18:16:16 -0400
+Received: by iwn7 with SMTP id 7so654299iwn.19
+        for <git@vger.kernel.org>; Thu, 29 Jul 2010 15:16:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=roPmWSq8bCCXATuups1zzXhB9w1yEMC9bm8cRLisyWo=;
+        b=lQqn3SNEuioYDMD/sriaSgH0a8b7e3OfoLtcw6LLzJH1wPW/e7TJO6u+1jHFP4Dqx/
+         +opi66mzmUINVSCLg08BEU6/HKlsf56S03pDDHyz4R4rdZbZnFe8SF3SjP0v7a4WuaUM
+         i11pXUmmeRG4okvmftmxRC3xSCfne8CQRVLtc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tee99RJe9Lz/j3R6rcLJvmyzv23hzBZXjmfZ59edi7kPmA+aZ7hSUD2ACggcBtMoUJ
+         bWe4RREkwCPTckdRXfAWzV+IbK5XltRDWot22moEe9YYfGO7RWLv1Aw3X2zhTToZ3IQH
+         KIxDJ1swJN2R10ThClFyf4gUdFwfEWrTWmJSY=
+Received: by 10.231.191.6 with SMTP id dk6mr812766ibb.51.1280441775816; Thu, 
+	29 Jul 2010 15:16:15 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Thu, 29 Jul 2010 15:16:15 -0700 (PDT)
+In-Reply-To: <4C51F2C0.8090101@pileofstuff.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152205>
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
->=20
-> Currently we only notice bugs in the test suite when it's run
-> manually. Bugs in Git that only occur on obscure platforms or setups
-> that the core developers aren't using may thus go unnoticed until the
-> bug makes it into a release.
+On Thu, Jul 29, 2010 at 21:29, Andrew Sayers <andrew-git@pileofstuff.or=
+g> wrote:
 
-BTW, below is the script I have devised to automatically run the tests
-under valgrind and then bisect any offenders.  (It keeps exposing odd
-test failures and stealing my time tracking them down...)
+> On 29/07/10 17:25, Junio C Hamano wrote:
+>> This looks like a Linux-ism to me.
+>
+> Caught red-flippered :) =C2=A0I'll use `ps` next time.
 
-It gives fairly good results, but since it's also rather kludgy I want
-to test and improve it a bit more before shooting for contrib (if
-anything).
+That's also probably hard to get right on all the mutually
+incompatible *nix ps(1) implementations out there.
 
-Note that running this will take on the order of hours at least.
+As for this patch in general, I think solving this issue in Git's
+bash-completion code isn't the right thing to do, I think the right
+thing is to just ignore it and no nothing.
 
----- 8< ----
-#!/bin/sh
+Any given *nix distribution will include lots of non-POSIX and
+shell-specific initialization files throughout the system. Trying to
+detect if the shell is running in POSIX compatibility mode in each of
+these is going to be redundant and bug-prone.
 
-MAILTO=3Dtr@thomasrast.ch
+Instead the user should make sure that he's invoking the shell in
+non-POSIX mode before evaluating non-POSIX code.
 
-branch=3D"${1:-next}"
-logfile=3D"$(pwd)/bisection-log-$$"
+Maybe this is a bigger potential problem than it seems, but it seems
+like just a one-off error in Arch Linux. I'd be surprised if it didn't
+also break dozens of other packages in Arch which included bash
+extensions.
 
-export DIFF=3Ddiff # stupid bug
-
-die () {
-	(echo "Error message: $*"; echo '-----'; cat "$logfile") |
-	mail -s "Testing $branch: die() called!" "$MAILTO"
-	echo "fatal: $*" >&2
-	exit 1
-}
-
-git fetch origin 2>&1 | tee "$logfile" || die "fetch failed"
-
-# test if we've already done this
-test "$(git rev-parse last_known_good_$branch)" =3D "$(git rev-parse or=
-igin/$branch)" && exit
-
-git checkout -f origin/"$branch" 2>&1 | tee "$logfile" || die "checkout=
- failed (can't happen)"
-
-results=3D"test-results.$(git describe)"
-mkdir "$results"
-
-make -j12 2>&1 | tee -a "$logfile" || die "initial compilation failed?"
-make -k -j8 test 2>&1 | tee -a "$logfile"
-
-if [ ! -d t/"test-results" ]; then
-    mail -s "Valgrind-tested $branch: all good!" "$MAILTO" < "$logfile"
-    git tag -f last_known_good_$branch origin/$branch
-    rm "$logfile"
-    exit
-fi
-
-cd t/
-cp -a test-results "$results"
-( cd $results && perl -i -ne 'print unless /^=3D=3D.*execve/i' *.out )
-failing_normally=3D$(cd "$results" && grep -L '^0$' *.exit)
-failing_valgrind=3D$(cd "$results" && grep -lE '^=3D=3D[0-9]+=3D=3D' *.=
-out)
-cd ..
-
-echo "failed (normal):" $failing_normally | tee -a "$logfile"
-echo "failed (valgrind):" $failing_valgrind | tee -a "$logfile"
-
-if [ -z "$failing_normally" -a -z "$failing_valgrind" ]; then
-    mail -s "Valgrind-tested $branch: all good!" "$MAILTO" < "$logfile"
-    git tag -f last_known_good_$branch origin/$branch
-    rm "$logfile"
-    exit
-fi
-
-mail -s "Valgrind-testing $branch: starting test bisection" "$MAILTO" <=
- "$logfile"
-
-for test_out in $failing_valgrind; do
-    test=3D"${test_out%.out}"
-    echo "bisecting valgrind-failing test $test"
-    git bisect start > t/"$results"/$test.bisect 2>&1
-    git bisect good last_known_good_pu last_known_good_next 2>&1 | tee =
-t/"$results"/$test.bisect
-    git bisect bad origin/$branch 2>&1 | tee -a t/"$results"/$test.bise=
-ct
-    git bisect run sh -c "test ! -f t/$test.sh || { make -j12 && cd t &=
-& ./$test.sh --valgrind --tee -i && ! grep -E '^=3D=3D[0-9]+=3D=3D' tes=
-t-results/$test.out | grep -vi execve; }" 2>&1 | tee -a t/"$results"/$t=
-est.bisect
-    git bisect log 2>&1 | tee -a t/"$results"/$test.bisect
-    git bisect reset
-    mail -s "Bisection results for $test (valgrind)" "$MAILTO" < t/"$re=
-sults"/$test.bisect
-done
-
-for test_out in $failing_normally; do
-    test=3D"${test_out%.exit}"
-    case "$failing_valgrind" in
-	*$test.out*)
-	    continue
-	    ;;
-    esac
-    echo "bisecting failing test $test"
-    git bisect start 2>&1 | tee t/"$results"/$test.bisect 2>&1
-    git bisect good last_known_good_pu last_known_good_pu 2>&1 | tee -a=
- t/"$results"/$test.bisect 2>&1
-    git bisect bad origin/$branch 2>&1 | tee -a t/"$results"/$test.bise=
-ct 2>&1
-    git bisect run sh -c "test ! -f t/$test.sh || { make -j12 && cd t &=
-& ./$test.sh --tee -i; }" 2>&1 | tee -a t/"$results"/$test.bisect 2>&1
-    git bisect log | tee -a t/"$results"/$test.bisect
-    git bisect reset
-    mail -s "Bisection results for $test" "$MAILTO" < t/"$results"/$tes=
-t.bisect
-done
-
-rm "$logfile"
----- >8 ----
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+This is not a nack, if you want to pursue this and try to emit a
+friendlier error message that's great. But maybe it's a bit *too* much
+effort on our part.
