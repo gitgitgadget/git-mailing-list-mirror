@@ -1,76 +1,70 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: [PATCH] checkout: add a test for creating a new branch with regexp as a starting point
-Date: Fri, 30 Jul 2010 02:01:11 +0400
-Message-ID: <20100729220111.GA28176@wo.int.altlinux.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC] tests: WIP Infrastructure for Git smoke testing
+Date: Fri, 30 Jul 2010 00:11:50 +0200
+Message-ID: <201007300011.50330.trast@student.ethz.ch>
+References: <1280438455-16255-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 30 00:10:19 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 00:11:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OebIx-0004wB-9x
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 00:10:19 +0200
+	id 1OebKX-0005rz-Id
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 00:11:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754483Ab0G2WKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 Jul 2010 18:10:12 -0400
-Received: from vint.altlinux.org ([194.107.17.35]:51680 "EHLO
-	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753920Ab0G2WKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 18:10:11 -0400
-X-Greylist: delayed 539 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Jul 2010 18:10:11 EDT
-Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
-	by vint.altlinux.org (Postfix) with ESMTP id 6A1DD3F80005
-	for <git@vger.kernel.org>; Thu, 29 Jul 2010 22:01:11 +0000 (UTC)
-Received: by wo.int.altlinux.org (Postfix, from userid 508)
-	id 52B143F48760; Fri, 30 Jul 2010 02:01:11 +0400 (MSD)
-Content-Disposition: inline
+	id S1754573Ab0G2WLx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 18:11:53 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:40740 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752868Ab0G2WLw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 18:11:52 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 30 Jul
+ 2010 00:11:51 +0200
+Received: from thomas.site (84.74.100.241) by CAS22.d.ethz.ch (172.31.51.112)
+ with Microsoft SMTP Server (TLS) id 14.0.702.0; Fri, 30 Jul 2010 00:11:50
+ +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <1280438455-16255-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152203>
 
-Reported-by: Ivan Zakharyaschev <imz@altlinux.org>
-Signed-off-by: Dmitry V. Levin <ldv@altlinux.org>
----
+=C6var Arnfj=F6r=F0 Bjarmason wrote:
+>   - Is this worthwhile. Are there developers / packagers / other
+>     interested parties here who'd be interested in actually running
+>     smoke testers? It should be really easy to set one up.
 
-This is just a regression test for the bug.
+I'm all for it!
 
- t/t2018-checkout-new-branch-by-regexp.sh |   22 ++++++++++++++++++++++
- 1 files changed, 22 insertions(+), 0 deletions(-)
- create mode 100755 t/t2018-checkout-new-branch-by-regexp.sh
+I think I could put a cronjob on a RHEL5.4 machine, and regularly run
+it on my own openSuSE 11.3 install.
 
-diff --git a/t/t2018-checkout-new-branch-by-regexp.sh b/t/t2018-checkout-new-branch-by-regexp.sh
-new file mode 100755
-index 0000000..78e54c5
---- /dev/null
-+++ b/t/t2018-checkout-new-branch-by-regexp.sh
-@@ -0,0 +1,22 @@
-+#!/bin/sh
-+
-+test_description='checkout -b new_branch :/regexp'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo a > a &&
-+	git add a &&
-+	test_tick &&
-+	git commit -m first &&
-+	echo b > b &&
-+	git add b &&
-+	test_tick &&
-+	git commit -m second
-+'
-+
-+test_expect_success checkout '
-+	git checkout -b new_branch :/first
-+'
-+
-+test_done
+> Tarball contents:
+>=20
+>     $ tar xzvf git-smoke.tar.gz
+>     t0004-unwritable.sh
+>     t0001-init.sh
+>     t0002-gitfile.sh
+>     t0005-signals.sh
+>     t0000-basic.sh
+>     t0003-attributes.sh
+>     t0006-date.sh
+>     meta.yml
 
--- 
-ldv
+That's the only thing I found confusing about this: why are they named
+as if they were shellscripts?
+
+Also, installing TAP::Harness::Archive was a bit hairy but that's
+CPAN's fault...
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
