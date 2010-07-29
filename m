@@ -1,89 +1,60 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] bash-completion: Print a useful error when called in a 
-	non-bash shell
-Date: Thu, 29 Jul 2010 22:16:15 +0000
-Message-ID: <AANLkTikxNe-+tjHkxCk-FtRxLpeyRkx-Wx109iuE+6fL@mail.gmail.com>
-References: <4C50B005.1030004@pileofstuff.org>
-	<7v4ofiuuf7.fsf@alter.siamese.dyndns.org>
-	<4C51F2C0.8090101@pileofstuff.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] Remove useless temporary integer in builtin/push.c
+Date: Fri, 30 Jul 2010 00:21:33 +0200
+Message-ID: <201007300021.34061.trast@student.ethz.ch>
+References: <70ee84752cb7db08c65c608a12ed321dd2c26830.1280419073.git.jaredhance@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"solsTiCe d'Hiver" <solstice.dhiver@gmail.com>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Fri Jul 30 00:16:23 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 00:21:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OebOo-0008Gw-CH
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 00:16:22 +0200
+	id 1OebU9-0002cP-At
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 00:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755148Ab0G2WQR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 18:16:17 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54623 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754851Ab0G2WQQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 29 Jul 2010 18:16:16 -0400
-Received: by iwn7 with SMTP id 7so654299iwn.19
-        for <git@vger.kernel.org>; Thu, 29 Jul 2010 15:16:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=roPmWSq8bCCXATuups1zzXhB9w1yEMC9bm8cRLisyWo=;
-        b=lQqn3SNEuioYDMD/sriaSgH0a8b7e3OfoLtcw6LLzJH1wPW/e7TJO6u+1jHFP4Dqx/
-         +opi66mzmUINVSCLg08BEU6/HKlsf56S03pDDHyz4R4rdZbZnFe8SF3SjP0v7a4WuaUM
-         i11pXUmmeRG4okvmftmxRC3xSCfne8CQRVLtc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tee99RJe9Lz/j3R6rcLJvmyzv23hzBZXjmfZ59edi7kPmA+aZ7hSUD2ACggcBtMoUJ
-         bWe4RREkwCPTckdRXfAWzV+IbK5XltRDWot22moEe9YYfGO7RWLv1Aw3X2zhTToZ3IQH
-         KIxDJ1swJN2R10ThClFyf4gUdFwfEWrTWmJSY=
-Received: by 10.231.191.6 with SMTP id dk6mr812766ibb.51.1280441775816; Thu, 
-	29 Jul 2010 15:16:15 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Thu, 29 Jul 2010 15:16:15 -0700 (PDT)
-In-Reply-To: <4C51F2C0.8090101@pileofstuff.org>
+	id S1756694Ab0G2WVh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 Jul 2010 18:21:37 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:40854 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756600Ab0G2WVg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 18:21:36 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 30 Jul
+ 2010 00:21:35 +0200
+Received: from thomas.site (84.74.100.241) by CAS22.d.ethz.ch (172.31.51.112)
+ with Microsoft SMTP Server (TLS) id 14.0.702.0; Fri, 30 Jul 2010 00:21:35
+ +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <70ee84752cb7db08c65c608a12ed321dd2c26830.1280419073.git.jaredhance@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152206>
 
-On Thu, Jul 29, 2010 at 21:29, Andrew Sayers <andrew-git@pileofstuff.or=
-g> wrote:
+Jared Hance wrote:
+> Creating a variable nr here to use throughout the function only to change
+> refspec_nr to nr at the end, having not used refspec_nr the entire time,
+> is rather pointless. Instead, simply increment refspec_nr.
+> 
+> Signed-off-by: Jared Hance <jaredhance@gmail.com>
+[...]
+> -	int nr = refspec_nr + 1;
+> -	refspec = xrealloc(refspec, nr * sizeof(char *));
+> -	refspec[nr-1] = ref;
+> -	refspec_nr = nr;
+> +	refspec_nr++;
+> +	refspec = xrealloc(refspec, refspec_nr * sizeof(char *));
+> +	refspec[refspec_nr-1] = ref;
 
-> On 29/07/10 17:25, Junio C Hamano wrote:
->> This looks like a Linux-ism to me.
->
-> Caught red-flippered :) =C2=A0I'll use `ps` next time.
+While you're already here, you could switch to ALLOC_GROW instead to
+avoid the n**2 behaviour of xrealloc...
 
-That's also probably hard to get right on all the mutually
-incompatible *nix ps(1) implementations out there.
-
-As for this patch in general, I think solving this issue in Git's
-bash-completion code isn't the right thing to do, I think the right
-thing is to just ignore it and no nothing.
-
-Any given *nix distribution will include lots of non-POSIX and
-shell-specific initialization files throughout the system. Trying to
-detect if the shell is running in POSIX compatibility mode in each of
-these is going to be redundant and bug-prone.
-
-Instead the user should make sure that he's invoking the shell in
-non-POSIX mode before evaluating non-POSIX code.
-
-Maybe this is a bigger potential problem than it seems, but it seems
-like just a one-off error in Arch Linux. I'd be surprised if it didn't
-also break dozens of other packages in Arch which included bash
-extensions.
-
-This is not a nack, if you want to pursue this and try to emit a
-friendlier error message that's great. But maybe it's a bit *too* much
-effort on our part.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
