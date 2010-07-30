@@ -1,97 +1,103 @@
-From: =?UTF-8?B?VG9yIEFybmUgVmVzdGLDuA==?= <tor.arne.vestbo@nokia.com>
-Subject: Re: [PATCH] require_work_tree: Look for top-level instead of is-inside-work-tree
-Date: Fri, 30 Jul 2010 13:04:30 +0200
-Message-ID: <4C52B1BE.8020804@nokia.com>
-References: <1280335624-90132-1-git-send-email-tor.arne.vestbo@nokia.com> <7v4ofjw6t6.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] checkout: add a test for creating a new branch with 
+	regexp as a starting point
+Date: Fri, 30 Jul 2010 11:54:00 +0000
+Message-ID: <AANLkTikan0hnUa-p-U1dfRKq+bORmrn7A3YTPOPe2N_k@mail.gmail.com>
+References: <20100729220111.GA28176@wo.int.altlinux.org>
+	<201007300136.13501.trast@student.ethz.ch>
+	<AANLkTi=Qf1OUmjkpL-6e8gT8MU9G=m37sxrdAoyj5=R0@mail.gmail.com>
+	<20100730084428.GA9577@wo.int.altlinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, trast@student.ethz.ch
-To: ext Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 30 13:43:03 2010
+Cc: git@vger.kernel.org
+To: "Dmitry V. Levin" <ldv@altlinux.org>
+X-From: git-owner@vger.kernel.org Fri Jul 30 13:54:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OenzS-0002fG-Vi
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 13:43:03 +0200
+	id 1OeoAD-0007qK-E8
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 13:54:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932163Ab0G3Lm4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 07:42:56 -0400
-Received: from mgw-sa02.nokia.com ([147.243.1.48]:28461 "EHLO
-	mgw-sa02.nokia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932157Ab0G3Lm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 07:42:56 -0400
-X-Greylist: delayed 2239 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Jul 2010 07:42:55 EDT
-Received: from [172.24.90.128] (olwst90128.europe.nokia.com [172.24.90.128])
-	by mgw-sa02.nokia.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o6UB1rA7008991;
-	Fri, 30 Jul 2010 14:01:54 +0300
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.11) Gecko/20100711 Lightning/1.0b1 Thunderbird/3.0.6
-In-Reply-To: <7v4ofjw6t6.fsf@alter.siamese.dyndns.org>
-X-Nokia-AV: Clean
+	id S932178Ab0G3LyE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 07:54:04 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:42094 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932088Ab0G3LyB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jul 2010 07:54:01 -0400
+Received: by ywh1 with SMTP id 1so574326ywh.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 04:54:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=K6k/Fxj3MRrlj/6OjJhZfaSfYE18O9fmCOkjUgZHPRM=;
+        b=bsw3ycF+I3oTL9v7XNmx4rEeD1GmAeeaZPBSInXO92CbIUPvgUwC6PMFlZ7kRTrQLf
+         lxuoSzurHSC2m9Pf8W/t0kG1IiHFimXJiDlyEb9hZS7hAcuysIIMMa3Jegyll3gB9EZo
+         20hVAiYScDo6X2njMsf7GHcSrRtkyONjNbc3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=GJ9YwmSsDuSXyuXz2xUHduNeYSToXvxfksjns+bWbxNFWv1CT9HVn+tV3glc0PcWhI
+         W75daYvN7qf6ugieZpuJWd34pQ9iPLJBZF+PXiVN1yqSJnUB0Ao6ZTWxBkVlPIjiAlc2
+         3rwxzZObXgwmp77IV/fO52YPHzbW9YBd1l0Ug=
+Received: by 10.150.73.9 with SMTP id v9mr3008846yba.119.1280490840687; Fri, 
+	30 Jul 2010 04:54:00 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Fri, 30 Jul 2010 04:54:00 -0700 (PDT)
+In-Reply-To: <20100730084428.GA9577@wo.int.altlinux.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152241>
 
-Hey, and thanks for your feedback Junio!
-
-On 29.07.10 01.00, ext Junio C Hamano wrote:
-> Tor Arne Vestb=C3=B8 <tor.arne.vestbo@nokia.com> writes:
+On Fri, Jul 30, 2010 at 08:44, Dmitry V. Levin <ldv@altlinux.org> wrote=
+:
+> On Thu, Jul 29, 2010 at 11:07:20PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
+>> On Thu, Jul 29, 2010 at 22:01, Dmitry V. Levin wrote:
+> [...]
+>> > +test_expect_success setup '
+>> > + =C2=A0 =C2=A0 =C2=A0 echo a > a &&
+>> > + =C2=A0 =C2=A0 =C2=A0 git add a &&
+>> > + =C2=A0 =C2=A0 =C2=A0 test_tick &&
+>> > + =C2=A0 =C2=A0 =C2=A0 git commit -m first &&
+>> > + =C2=A0 =C2=A0 =C2=A0 echo b > b &&
+>> > + =C2=A0 =C2=A0 =C2=A0 git add b &&
+>> > + =C2=A0 =C2=A0 =C2=A0 test_tick &&
+>> > + =C2=A0 =C2=A0 =C2=A0 git commit -m second
+>> > +'
+>>
+>> This should use test_commit (see t/README), but...
 >
->  > The documentation describes require_work_tree as guarding against
->  > bare repositories, and that's also the way it's used from porcelai=
-n
->  > such as git-rebase. When implemented using --is-inside-work-tree
->  > the samantics change, causing git-rebase to fail if run from outsi=
-de
->  > GIT_WORK_TREE, even if GIT_WORK_TREE is valid.
->  >
->  > Signed-off-by: Tor Arne Vestb=C3=B8 <tor.arne.vestbo@nokia.com>
->  > ---
+> The peculiarity of this bug makes it impossible, because test_commit(=
+)
+> also creates a tag which spoils test conditions.
+
+I didn't know that. It'd be good if the commit message or a comment
+indicated that. And actually, we should probably have a
+test_commit_notag() then.
+
+>> > +test_expect_success checkout '
+>> > + =C2=A0 =C2=A0 =C2=A0 git checkout -b new_branch :/first
+>> > +'
+>> > +
+>> > +test_done
+>>
+>> ...it looks like this can just be added to the end of
+>> t2018-checkout-branch.sh instead of creating a new test. Creating a
+>> new file just for a single test for such a simple feature is a bit o=
+f
+>> an overkill.
 >
-> The "requirement" is that we _have_ work tree somewhere that we can
-> cd-to-toplevel to if we wanted to, not that we _are_ already in the w=
-ork
-> tree. I can buy that rationale.
+> Well, I see no t2018-checkout-branch.sh yet. =C2=A0What file do you s=
+uggest
+> appending?
 
-Right. You put it much nicer than me :)
-
-> However, I notice that "git bisect", "git mergetool" and "git submodu=
-le"
-> do not seem to do cd_to_topleve immediately after require_work_tree. =
-The
-> last one has cd_to_toplevel in later parts of the codepath, presumabl=
-y so
-> that it can collect paths relative to the subdirectory in the work tr=
-ee.
-> I wonder if all of them actually need to be run from inside a work tr=
-ee?
-> Don't they need a separate "git rev-parse --is-inside-work-tree || di=
-e"
-> check after require_work_tree (or perhaps cd_to_toplevel) if we apply=
- this
-> patch?
-
-I think if we have a work tree somewhere, we can at least do "git=20
-rev-parse --is-inside-work-tree || cd_to_toplevel" instead of dying,=20
-unless there's some danger to that (the user running a command from=20
-outside GIT_WORK_TREE but expecting GIT_WORK_TREE to not be touched).
-
-=46or "git bisect" and "git submodule" running them in a sub-directory =
-of=20
-the work tree complains about needing to be run from the top-level, so =
-I=20
-assume we can do an unconditional cd_to_toplevel after the=20
-require_work_tree?
-
-=46or "git mergetool" we should probably do it conditionally only if th=
-e=20
-user is not inside a work tree already, so that the behavior of running=
-=20
-the tool in a sub-directory is not changed.
-
-Tor Arne
+Ah, t2018-checkout-branch.sh only exists on the pu branch, not
+master/next. It's probably worthwhile to patch it anyway rather than
+adding a new one.
