@@ -1,62 +1,103 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] tests: WIP Infrastructure for Git smoke testing
-Date: Fri, 30 Jul 2010 08:34:43 -0400
-Message-ID: <20100730123443.GA11936@coredump.intra.peff.net>
-References: <1280438455-16255-1-git-send-email-avarab@gmail.com>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: [msysGit] git rev-parse broken on Git for Windows
+Date: Fri, 30 Jul 2010 08:26:45 -0600
+Message-ID: <4C52E125.1020004@workspacewhiz.com>
+References: <4C526260.6000104@workspacewhiz.com> <alpine.DEB.1.00.1007301022310.2983@bonsai2> <201007301102.15274.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Ralphson <mike.ralphson@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 30 14:34:57 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Giuseppe Scrivano <gscrivano@gnu.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	msysgit@googlegroups.com
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Jul 30 16:26:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oeonh-0003P3-9d
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 14:34:57 +0200
+	id 1OeqY2-0003lE-NV
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 16:26:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756665Ab0G3Mew convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 08:34:52 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40127 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003Ab0G3Mev (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 08:34:51 -0400
-Received: (qmail 2036 invoked by uid 111); 30 Jul 2010 12:34:49 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO coredump.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) ESMTPSA; Fri, 30 Jul 2010 12:34:49 +0000
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jul 2010 08:34:43 -0400
-Content-Disposition: inline
-In-Reply-To: <1280438455-16255-1-git-send-email-avarab@gmail.com>
+	id S932202Ab0G3O0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 10:26:49 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:60151 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932176Ab0G3O0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 10:26:48 -0400
+Received: (qmail 958 invoked by uid 399); 30 Jul 2010 08:26:46 -0600
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@69.98.154.160)
+  by hsmail.qwknetllc.com with ESMTPAM; 30 Jul 2010 08:26:46 -0600
+X-Originating-IP: 69.98.154.160
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.7) Gecko/20100713 Lightning/1.0b2 Thunderbird/3.1.1
+In-Reply-To: <201007301102.15274.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152243>
 
-On Thu, Jul 29, 2010 at 09:20:55PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
+  ----- Original Message -----
+From: Thomas Rast
+Date: 7/30/2010 3:02 AM
+> Johannes Schindelin wrote:
+>> On Thu, 29 Jul 2010, Joshua Jensen wrote:
+>>>   9c7304e3e39ed397b3cc6566573333e2698a52b4 (print the usage string on stdout
+>>> instead of stderr) and then 47e9cd28f8a404a0d6293935252ddca5fc243931
+>>> (parseopt: wrap rev-parse --parseopt usage for eval consumption) break the
+>>> following line from the manual and 'git subtree' on msysGit:
+>>>
+>>> eval $(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)
+>> Both commits are from Junio's 'next' branch. I Cc:ed the authors of both
+>> commits.
+> Can you elaborate on "break"?
+>
+> Because as you can see in git-sh-setup.sh, the "official" user of
+> parseopt does
+>
+> 	eval "$(
+> 		echo "$OPTIONS_SPEC" |
+> 			git rev-parse --parseopt $parseopt_extra -- "$@" ||
+> 		echo exit $?
+> 	)"
+>
+> So AFAICS they only differ in the quoting.  And the latter works.
+Here is the output from Git Bash:
 
->   - Is this worthwhile. Are there developers / packagers / other
->     interested parties here who'd be interested in actually running
->     smoke testers? It should be really easy to set one up.
+$ git subtree
+C:\Program Files (x86)\Git/libexec/git-core/git-subtree: eval: line 31: 
+syntax error near unexpected token `<'
+C:\Program Files (x86)\Git/libexec/git-core/git-subtree: eval: line 31: 
+`cat <<\EOF usage: git subtree add --prefix=<prefix> <commit
+ > or: git subtree merge --prefix=<prefix> <commit> or: git subtree pull 
+--prefix=<prefix> <repository> <refspec...> or: git subtree
+push --prefix=<prefix> <repository> <refspec...> or: git subtree split 
+--prefix=<prefix> <commit...> -h, --help show the help -q qui
+et -d show debug messages -P, --prefix ... the name of the subdir to 
+split out -m, --message ... use the given message as the commit
+  message for the merge commit options for 'split' --annotate ... add a 
+prefix to commit message of new commits -b, --branch ... crea
+te a new branch from the split subtree --ignore-joins ignore prior 
+--rejoin commits --onto ... try connecting new tree to an existin
+g one --rejoin merge the new branch back into HEAD options for 'add', 
+'merge', 'pull' and 'push' --squash merge subtree changes as a
+  single commit EOF exit 129'
+Usage: git subtree
 
-A few of us were running automated build/tests for a while. Check out:
+The example from the git rev-parse documentation fails in the same way:
 
-  http://repo.or.cz/w/git/gitbuild.git
+eval `echo "$OPTS_SPEC" | git rev-parse --parseopt $parseopt_extra -- 
+"$@" || echo exit $?`
 
-especially:
+What does work is the example you gave with the quotes:
 
-  http://repo.or.cz/w/git/gitbuild.git/tree/platform
+eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt $parseopt_extra -- 
+"$@" || echo exit $?)"
 
-Unfortunately the SunOS and FreeBSD machines I tested on went away, so =
-I
-am not actually running anything automated anymore. Mike Ralphson was
-testing on AIX, but seems to have stopped, as well.
+I can live with modifying 'git subtree' in this manner, but something 
+about one or both of those rev-parse commits cause the non-quoted 
+version $(echo...) version in git subtree and the `echo...` version to 
+break.
 
-I think these days Junio runs the test suite through a couple of VMs,
-but I don't know exactly which platforms, or how often he does so.
-
--Peff
+Josh
