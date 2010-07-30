@@ -1,122 +1,181 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: use textconv filter for diff and blame
-Date: Fri, 30 Jul 2010 01:22:05 +0100
-Message-ID: <871valstsi.fsf@fox.patthoyts.tk>
-References: <1280319830-20483-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] Fix sparse checkout not removing files from index
+Date: Thu, 29 Jul 2010 20:35:34 -0500
+Message-ID: <20100730013534.GB2182@burratino>
+References: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Clemens Buchacher <drizzd@aon.at>,
-	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 30 02:22:51 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 03:37:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OedND-00009L-5u
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 02:22:51 +0200
+	id 1OeeX0-0007Hd-UT
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 03:37:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758246Ab0G3AWZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 20:22:25 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:48766 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758192Ab0G3AWO convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 20:22:14 -0400
-Received: from [172.23.170.146] (helo=anti-virus03-09)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1OedMY-0006C3-9h; Fri, 30 Jul 2010 01:22:10 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1OedMU-0004G9-Co; Fri, 30 Jul 2010 01:22:06 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id C9336208E4; Fri, 30 Jul 2010 01:22:05 +0100 (BST)
-X-Url: http://www.patthoyts.tk/
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-In-Reply-To: <1280319830-20483-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu Moy's message of "Wed\, 28 Jul 2010 14\:23\:50 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+	id S1758242Ab0G3Bgs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 21:36:48 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:56098 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755565Ab0G3Bgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 21:36:47 -0400
+Received: by gwb20 with SMTP id 20so406734gwb.19
+        for <git@vger.kernel.org>; Thu, 29 Jul 2010 18:36:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=a4awu3Cc1jGJ2mZcRMdy7W/5xfq0BFo+1vpc8NycJvU=;
+        b=kxgr8dL1wcovvf6pQNiTPYtGPDUf+QJSGIueD/hdsRLa6DvxWO51AaQCkza88KecBH
+         wLM3AY0RoQEd3Juqt8SRA00tgjqX/SDuMVE+kFxwsfxv2Vh7OuQVTPT/73/Lhh3smp4y
+         50o8VBYZL/avQwyupbeUU8w6KvDdWX/HKsgI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=x/IU8utm/jtI6bSyKvt5TXHozuIZTWaB2Y6XWAP+M6HY/e/c5N1JP2iWKjeVeo0hBB
+         iakK5+zFCfG7Os/bLQRads63BLg8dGFQol/I36WKrqHl6o/oZ5x1l1ijiFOF8n8/bXj0
+         i8S3IDAvevbsC6kUxQEn7uVcipKLj1M74Jjmc=
+Received: by 10.150.202.9 with SMTP id z9mr2174384ybf.211.1280453806180;
+        Thu, 29 Jul 2010 18:36:46 -0700 (PDT)
+Received: from burratino ([64.107.0.124])
+        by mx.google.com with ESMTPS id u42sm1593550yba.0.2010.07.29.18.36.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 29 Jul 2010 18:36:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152214>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
->From: Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr>
->
->Create a checkbox "Use Textconv For Diffs and Blame" in git-gui option=
-s.
->If checked and if the driver for the concerned file exists, git-gui ca=
-lls diff
->and blame with --textconv option
->
->Signed-off-by: Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr>
->Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
->Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
->Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->---
->
->This patch was originally written by Cl=E9ment Poulain (a student of
->mine), it was not mergeable at the time it was sent, since it relied
->on a patch serie introducing "git cat-file --textconv". Now that this
->cat-file --textconv is in a git release (1.7.2), I guess it's time to
->get this merged into git-gui.
->
->I did review and test the patch, but I'm mostly useless in TCL, so I
->may have missed the obvious. That said, the patch is relatively simple
->and looks OK.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-This looks generally fine but can you suggest some test that I can use
-to ensure it is actually doing something. I tried committing some test
-files containing cyrillic characters but I see no difference between
-using an unpatched git-gui and your patched version with git 1.7.2
+The log message left me confused.  Let=E2=80=99s see if the code is eas=
+ier.
 
->diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
->index 786b50b..ead68fd 100644
->--- a/git-gui/lib/blame.tcl
->+++ b/git-gui/lib/blame.tcl
->@@ -449,11 +449,28 @@ method _load {jump} {
->=20
-> 	$status show [mc "Reading %s..." "$commit:[escape_path $path]"]
-> 	$w_path conf -text [escape_path $path]
->+
->+	set do_textconv 0
->+	if {![is_config_false gui.textconv] && [git-version >=3D 1.7.2]} {
->+		set filter [gitattr $path diff set]
->+		set textconv [get_config [join [list diff $filter textconv] .]]
->+		if {$filter ne {set} && $textconv ne {}} {
->+			set do_textconv 1
->+		}
->+	}
-> 	if {$commit eq {}} {
->-		set fd [open $path r]
->+		if {$do_textconv ne 0} {
->+			set fd [open "|$textconv $path" r]
+> +++ b/cache.h
+> @@ -179,8 +179,7 @@ struct cache_entry {
+>  #define CE_UNHASHED  (0x200000)
+>  #define CE_CONFLICTED (0x800000)
+> =20
+> -/* Only remove in work directory, not index */
+> -#define CE_WT_REMOVE (0x400000)
+> +#define CE_WT_REMOVE (0x400000) /* remove in work directory */
 
-This is better written as
-  set fd [open |[list $textconv $path] r]
-in case there are spaces in either of the two components.
+Before[1], CE_REMOVE was used by read-tree et al in core to represent
+something to be removed from the index file and work tree (e.g., when
+switching branches).
 
->+		} else {
->+			set fd [open $path r]
->+		}
-> 		fconfigure $fd -eofchar {}
-> 	} else {
->-		set fd [git_read cat-file blob "$commit:$path"]
->+		if {$do_textconv ne 0} {
->+			set fd [git_read cat-file --textconv "$commit:$path"]
->+		} else {
->+			set fd [git_read cat-file blob "$commit:$path"]
->+		}
-> 	}
-> 	fconfigure $fd \
-> 		-blocking 0 \
+In the new order, one uses CE_REMOVE|CE_WT_REMOVE for that, right?
+
+> +++ b/t/t1011-read-tree-sparse-checkout.sh
+> @@ -147,4 +147,11 @@ test_expect_success 'read-tree adds to worktree,=
+ dirty case' '
+>  	grep -q dirty sub/added
+>  '
+> =20
+> +test_expect_success 'read-tree --reset removes outside worktree' '
+> +	echo init.t > .git/info/sparse-checkout &&
+> +	git checkout -f top &&
+> +	git reset --hard removed &&
+> +	test -z "$(git ls-files sub/added)"
+> +'
+> +
+
+Using reset --hard to remove a file outside the sparse checkout.
+A sane, simple test; thanks.  (Nitpick: I would have used
+
+	>empty &&
+	git ls-files sub/added >output &&
+	test_cmp empty output
+
+even though that does not produce any more helpful output in this
+case.)
+
+> +++ b/unpack-trees.c
+> @@ -53,6 +53,9 @@ static void add_entry(struct unpack_trees_options *=
+o, struct cache_entry *ce,
+> =20
+>  	clear |=3D CE_HASHED | CE_UNHASHED;
+> =20
+> +	if (set & CE_REMOVE)
+> +		set |=3D CE_WT_REMOVE;
+> +
+
+A bridge between the old and new worlds.
+
+I would have added CE_WT_REMOVE to callers instead (they all pass
+constants more or less), but I suppose this way makes the patch
+shorter.
+
+[...]
+> @@ -84,7 +87,7 @@ static int check_updates(struct unpack_trees_option=
+s *o)
+>  	if (o->update && o->verbose_update) {
+>  		for (total =3D cnt =3D 0; cnt < index->cache_nr; cnt++) {
+>  			struct cache_entry *ce =3D index->cache[cnt];
+> -			if (ce->ce_flags & (CE_UPDATE | CE_REMOVE | CE_WT_REMOVE))
+> +			if (ce->ce_flags & (CE_UPDATE | CE_WT_REMOVE))
+
+Only entries marked CE_WT_REMOVE will be touched by read-tree -u.
+
+> @@ -104,12 +107,6 @@ static int check_updates(struct unpack_trees_opt=
+ions *o)
+>  				unlink_entry(ce);
+>  			continue;
+>  		}
+> -
+> -		if (ce->ce_flags & CE_REMOVE) {
+[...]
+
+and the CE_WT_REMOVE case takes care of that.  Makes sense.
+
+> @@ -799,10 +796,15 @@ int unpack_trees(unsigned len, struct tree_desc=
+ *t, struct unpack_trees_options
+>  			/*
+>  			 * Merge strategies may set CE_UPDATE|CE_REMOVE outside checkout
+>  			 * area as a result of ce_skip_worktree() shortcuts in
+> -			 * verify_absent() and verify_uptodate(). Clear them.
+> +			 * verify_absent() and verify_uptodate().
+> +			 * Make sure they don't modify worktree.
+>  			 */
+> -			if (ce_skip_worktree(ce))
+> -				ce->ce_flags &=3D ~(CE_UPDATE | CE_REMOVE);
+> +			if (ce_skip_worktree(ce)) {
+> +				ce->ce_flags &=3D ~CE_UPDATE;
+> +
+> +				if (ce->ce_flags & CE_REMOVE)
+> +					ce->ce_flags &=3D ~CE_WT_REMOVE;
+> +			}
+>  			else
+>  				empty_worktree =3D 0;
+
+Ah, and at last we come to the fix. :)
+
+This is a little tricky: the CE_WT_REMOVE case (without CE_REMOVE)
+represents a narrowing of the checkout and should be preserved,
+while CE_WT_REMOVE|CE_REMOVE represents a removed index entry and
+should be changed to just CE_REMOVE.
+
+But it is a clear improvement over the code from before and should
+behave as advertised now.  So aside from the log message,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+[1] v1.6.6.1~23^2~1 (Make on-disk index representation separate from
+in-core one, 2008-01-14) and v0.99~295 (git-read-tree: remove deleted
+files in the working directory, 2005-06-09).
