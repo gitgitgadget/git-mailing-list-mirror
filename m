@@ -1,102 +1,91 @@
-From: "Dmitry V. Levin" <ldv@altlinux.org>
-Subject: Re: [PATCH] checkout: add a test for creating a new branch with regexp as a starting point
-Date: Fri, 30 Jul 2010 12:44:28 +0400
-Message-ID: <20100730084428.GA9577@wo.int.altlinux.org>
-References: <20100729220111.GA28176@wo.int.altlinux.org> <AANLkTi=Qf1OUmjkpL-6e8gT8MU9G=m37sxrdAoyj5=R0@mail.gmail.com> <201007300136.13501.trast@student.ethz.ch> <20100729220111.GA28176@wo.int.altlinux.org> <AANLkTi=Qf1OUmjkpL-6e8gT8MU9G=m37sxrdAoyj5=R0@mail.gmail.com>
+From: Stefan Bienert <bienert@zbh.uni-hamburg.de>
+Subject: pre-commit hook and Aspell
+Date: Fri, 30 Jul 2010 10:51:28 +0200
+Message-ID: <4C529290.7040509@zbh.uni-hamburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="2fHTh5uZTiUOsy+g"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 30 10:44:35 2010
+X-From: git-owner@vger.kernel.org Fri Jul 30 11:01:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OelCl-0007Dv-8x
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 10:44:35 +0200
+	id 1OelSx-0008LT-Nj
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 11:01:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755736Ab0G3Iob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 04:44:31 -0400
-Received: from vint.altlinux.org ([194.107.17.35]:50851 "EHLO
-	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755380Ab0G3Ioa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 04:44:30 -0400
-Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
-	by vint.altlinux.org (Postfix) with ESMTP id CDCCD3F80005
-	for <git@vger.kernel.org>; Fri, 30 Jul 2010 08:44:28 +0000 (UTC)
-Received: by wo.int.altlinux.org (Postfix, from userid 508)
-	id A860C3F48760; Fri, 30 Jul 2010 12:44:28 +0400 (MSD)
-Content-Disposition: inline
-In-Reply-To: <201007300136.13501.trast@student.ethz.ch> <AANLkTi=Qf1OUmjkpL-6e8gT8MU9G=m37sxrdAoyj5=R0@mail.gmail.com>
-X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
+	id S1755987Ab0G3JBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 05:01:14 -0400
+Received: from mailhost.uni-hamburg.de ([134.100.32.155]:58742 "EHLO
+	mailhost.uni-hamburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754432Ab0G3JBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 05:01:13 -0400
+X-Greylist: delayed 580 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 Jul 2010 05:01:13 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mailhost.uni-hamburg.de (Postfix) with ESMTP id 7268390F66
+	for <git@vger.kernel.org>; Fri, 30 Jul 2010 10:51:32 +0200 (CEST)
+X-Virus-Scanned: by University of Hamburg (RRZ/mailhost)
+Received: from mailhost.uni-hamburg.de ([127.0.0.1])
+	by localhost (mailhost.uni-hamburg.de [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id TK3ZeDb+Li6d for <git@vger.kernel.org>;
+	Fri, 30 Jul 2010 10:51:32 +0200 (CEST)
+Received: from wendelstein.zbh.uni-hamburg.de (wendelstein.zbh.uni-hamburg.de [134.100.209.3])
+	by mailhost.uni-hamburg.de (Postfix) with ESMTP id 5E8C090126
+	for <git@vger.kernel.org>; Fri, 30 Jul 2010 10:51:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by wendelstein.zbh.uni-hamburg.de (Postfix) with ESMTP id 4506020101
+	for <git@vger.kernel.org>; Fri, 30 Jul 2010 10:51:32 +0200 (CEST)
+Received: from wendelstein.zbh.uni-hamburg.de ([127.0.0.1])
+ by localhost (wendelstein [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 30117-01 for <git@vger.kernel.org>; Fri, 30 Jul 2010 10:51:28 +0200 (CEST)
+Received: from [134.100.209.86] (worms.zbh.uni-hamburg.de [134.100.209.86])
+	by wendelstein.zbh.uni-hamburg.de (Postfix) with ESMTP id C7D13164B50
+	for <git@vger.kernel.org>; Fri, 30 Jul 2010 10:51:28 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100228)
+X-Enigmail-Version: 0.96.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152233>
 
+Hi gits,
 
---2fHTh5uZTiUOsy+g
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+as instructed by the wiki, I just sent an request to the list without
+being subscribed...
 
-On Thu, Jul 29, 2010 at 11:07:20PM +0000, =C6var Arnfj=F6r=F0 Bjarmason wro=
-te:
-> On Thu, Jul 29, 2010 at 22:01, Dmitry V. Levin wrote:
-[...]
-> > +test_expect_success setup '
-> > + =A0 =A0 =A0 echo a > a &&
-> > + =A0 =A0 =A0 git add a &&
-> > + =A0 =A0 =A0 test_tick &&
-> > + =A0 =A0 =A0 git commit -m first &&
-> > + =A0 =A0 =A0 echo b > b &&
-> > + =A0 =A0 =A0 git add b &&
-> > + =A0 =A0 =A0 test_tick &&
-> > + =A0 =A0 =A0 git commit -m second
-> > +'
->=20
-> This should use test_commit (see t/README), but...
+I'm trying to setup a hook for my project which forces me to check the
+spelling of text (here: TeX) files, whenever they change. As
+spellchecker I use Aspell, which is giving me a headache at the moment.
+The problem is: Running the pre-commit script in the shell works,
+started as hook does not.
 
-The peculiarity of this bug makes it impossible, because test_commit()
-also creates a tag which spoils test conditions.
+Here is my script (cut down to a minimalist version resembling the problem):
 
-> > +test_expect_success checkout '
-> > + =A0 =A0 =A0 git checkout -b new_branch :/first
-> > +'
-> > +
-> > +test_done
->=20
-> ...it looks like this can just be added to the end of
-> t2018-checkout-branch.sh instead of creating a new test. Creating a
-> new file just for a single test for such a simple feature is a bit of
-> an overkill.
+# SNIP
+#!/bin/sh
 
-Well, I see no t2018-checkout-branch.sh yet.  What file do you suggest
-appending?
+for my_p in $(git status --porcelain | awk '{ if ($0 ~ /\.(tex|sty)$/) {
+print $2 } }')
+do
+    aspell -c -l en_GB -p $(pwd)/${my_cdup}share/dict/aspell.corb.pws
+$my_p || exit 1
+done
+# SNAP
 
-On Fri, Jul 30, 2010 at 01:36:13AM +0200, Thomas Rast wrote:
-> It should also use test_expect_failure unless you expect to have a fix
-> soon, otherwise it would stop the test suite from running through.
+regards,
 
-Of course I'd like to have this bug fixed, but OK, let it be
-test_expect_failure() for now.
+Stefan
 
+-- 
+Stefan Bienert
+Zentrum fuer Bioinformatik
+Universitaet Hamburg
+Bundesstrasse 43
+20146 Hamburg
+Germany
 
---=20
-ldv
-
---2fHTh5uZTiUOsy+g
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkxSkOwACgkQfKvmrJ41Nh53jQCfWvXu5pWwrADZN7NHIADxwAch
-lHcAn24RvZMIhKv1LoEaysQzVYhXetAv
-=kbC2
------END PGP SIGNATURE-----
-
---2fHTh5uZTiUOsy+g--
+Email: bienert@zbh.uni-hamburg.de
+Phone:  +49 (40) 42838 7345
+Fax:    +49 (40) 42838 7332
