@@ -1,68 +1,49 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [msysGit] git rev-parse broken on Git for Windows
-Date: Fri, 30 Jul 2010 09:44:20 -0700
-Message-ID: <7vd3u4rkbf.fsf@alter.siamese.dyndns.org>
-References: <4C526260.6000104@workspacewhiz.com>
- <201007301102.15274.trast@student.ethz.ch>
- <4C52E125.1020004@workspacewhiz.com>
- <201007301643.50730.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: pre-commit hook and Aspell
+Date: Fri, 30 Jul 2010 14:21:16 -0400
+Message-ID: <20100730182116.GA18544@coredump.intra.peff.net>
+References: <4C529290.7040509@zbh.uni-hamburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Giuseppe Scrivano <gscrivano@gnu.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	<msysgit@googlegroups.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jul 30 18:44:47 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Stefan Bienert <bienert@zbh.uni-hamburg.de>
+X-From: git-owner@vger.kernel.org Fri Jul 30 20:21:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeshR-0006XP-ND
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 18:44:46 +0200
+	id 1OeuDN-0005sI-Uz
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 20:21:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572Ab0G3Qol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 12:44:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56500 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016Ab0G3Qok (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 12:44:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3B83C920D;
-	Fri, 30 Jul 2010 12:44:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=ZqKALg5Cqkh2RjUNPKcPQ6f0x8k=; b=tAdSjCF1pXAshgc/o4mrKMZ
-	AZHMrbT+sU7nc+H71QaKHJ4xwWmfWcJOEHku3DnG8RH/RJ2jl2NP66Mgk1HL9LhI
-	dg1Mlij8SmSxULYyTsr5sx1milS+JGAlx7mJxWDnSzNCMyzAP8tBC2RQs2xaDjA+
-	bmzVJh2q6D1bINxNghBU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=Vse+qAH+mylh8ikkZjlR8Sy1Nnoya4NWTNaig24Jey9J3b5ne
-	0ianBLcg7fzO4WRQKpfHiqVg7OSHVrwdBqEJ2yCjCWj5fmPjN247azr8GNEYu6ec
-	RSZAqP4vss1RFrb/GBNPI+AzoaedEriPIEuFqivXSEroxloIqz2HXe1VdY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1BD60C9207;
-	Fri, 30 Jul 2010 12:44:32 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 237E9C91FD; Fri, 30 Jul
- 2010 12:44:22 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BA651086-9BF9-11DF-8F6D-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1760037Ab0G3SV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 14:21:29 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40933 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760019Ab0G3SVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 14:21:22 -0400
+Received: (qmail 3433 invoked by uid 111); 30 Jul 2010 18:21:20 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO coredump.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) ESMTPSA; Fri, 30 Jul 2010 18:21:20 +0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jul 2010 14:21:16 -0400
+Content-Disposition: inline
+In-Reply-To: <4C529290.7040509@zbh.uni-hamburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152253>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On Fri, Jul 30, 2010 at 10:51:28AM +0200, Stefan Bienert wrote:
 
-> ...  I'll also
-> follow up with a doc patch for git-rev-parse.  Luckily there are no
-> users in git outside of tests and git-sh-setup, so there are no bugs.
+> I'm trying to setup a hook for my project which forces me to check the
+> spelling of text (here: TeX) files, whenever they change. As
+> spellchecker I use Aspell, which is giving me a headache at the moment.
+> The problem is: Running the pre-commit script in the shell works,
+> started as hook does not.
 
-Thanks.
+Hooks run without stdio connected to the tty. Have you tried doing
+"aspell </dev/tty >/dev/tty" in your hook?
+
+-Peff
