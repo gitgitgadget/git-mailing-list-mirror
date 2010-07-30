@@ -1,84 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] rebase -i: add run command to launch a shell command
-Date: Fri, 30 Jul 2010 12:04:24 +0200
-Message-ID: <vpq1valffpz.fsf@bauges.imag.fr>
-References: <1280323784-27462-1-git-send-email-Matthieu.Moy@imag.fr>
-	<AANLkTinvVFvu7WvwrRC0sg8vhoepFXKewmuTr7S94LWk@mail.gmail.com>
-	<vpq1van3cnl.fsf@bauges.imag.fr>
+From: Geoff Russell <geoffrey.russell@gmail.com>
+Subject: Re: finding if a commit is needed
+Date: Fri, 30 Jul 2010 19:46:54 +0930
+Message-ID: <AANLkTinvLVJbnZ4ZnrszV1taDUS3B-0aWYoD1Q5UyFtA@mail.gmail.com>
+References: <AANLkTin4o=uNBFELYMb8TDA=taGJyqpLvgxZcPFr+Pq+@mail.gmail.com>
+	<20100729000647.GB29156@dert.cs.uchicago.edu>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Santi =?iso-8859-1?Q?B=E9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Fri Jul 30 12:09:21 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 12:17:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OemWj-0001qH-Ft
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 12:09:17 +0200
+	id 1OemeK-0005dg-PI
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 12:17:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755895Ab0G3KJK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 06:09:10 -0400
-Received: from imag.imag.fr ([129.88.30.1]:52400 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753340Ab0G3KJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 06:09:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o6UA4P8x000675
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 30 Jul 2010 12:04:25 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OemS0-0002Zh-U0; Fri, 30 Jul 2010 12:04:24 +0200
-In-Reply-To: <vpq1van3cnl.fsf@bauges.imag.fr> (Matthieu Moy's message of "Wed\, 28 Jul 2010 16\:26\:54 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 30 Jul 2010 12:04:25 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1756046Ab0G3KQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 06:16:56 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:42853 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753412Ab0G3KQz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 06:16:55 -0400
+Received: by gwb20 with SMTP id 20so571753gwb.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 03:16:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=wJORXdPm1M4eBSt+4sQ9PIXvmhgXT8LwGF1W5tiLDk0=;
+        b=R1IjW+eVltFhMYST37Ggf4zmuH7RVEYk/GRxbhQ+4zPod3W5O1OV8d6G4j6yk4QIEr
+         sqMkzddE0NKEOdNdwhBcCwCkWhpt8woq3U1QWM+Tr/we/T9ZlJmQl+NDH5h0gXXXG9GJ
+         ZvNyRns0w7N9VEm1/1oMZxh2Ije29Kwo5siKA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type;
+        b=TT7QUZ82zCJPtZ9BVsnv0jJF1oV7ZmbwmyTXvltNsgGn753rS5ldqgle65G/jJwJYm
+         mzKPzM+nurnWOyxlKLT/C8tN2yvlO9cK4684v78luCogF0XYTgHzJIYOYagZJBsu6JRY
+         QuGcoDOGH2GmjjKTqj3cAuEaNwTR7ve4EYPlY=
+Received: by 10.151.5.12 with SMTP id h12mr2871143ybi.73.1280485014780; Fri, 
+	30 Jul 2010 03:16:54 -0700 (PDT)
+Received: by 10.229.227.12 with HTTP; Fri, 30 Jul 2010 03:16:54 -0700 (PDT)
+In-Reply-To: <20100729000647.GB29156@dert.cs.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152236>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-
-> Santi B=E9jar <santi@agolina.net> writes:
+On Thu, Jul 29, 2010 at 9:36 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Geoff Russell wrote:
 >
->> $ git run HEAD^4.. command arguments
+>> Is there something which can test whether a commit is needed?
 >>
->> (I'm not quite sure about the syntax). Something like "git bisect ru=
-n"
->> but for all the commits in the range.
->>
->>  I know you said "given points in history", maybe each approach is
->> useful for each use case.
+>> I define "needed" as meaning when git commit -a would make a non-identical
+>> commit.
 >
-> Yes, I think both approaches make sense.
+> Maybe "git diff --exit-code HEAD"?
 
-I started playing with the patch, and I'm already starting to love
-it ;-). For example
+Thanks ... "git diff --quiet || echo differences"
 
-pick <commit1>
-fixup <commit4>
-run make
-pick <commit2>
-pick <commit3>
-=2E..
+Cheers,
+Geoff.
 
-Just does "the right thing": it checks that the fixup doesn't break
-the commit (which is really not only a new state, but also a new
-patch, so it can really break), but doesn't spend too much time
-re-checking <commit2> and <commit3> (which are new states, but much
-more trustworthy than the fixup since the patches are really the
-same. I may check them later, but don't want to lose time with them
-while hacking).
+>
+> Regards,
+> Jonathan
+>
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+
+-- 
+6 Fifth Ave,
+St Morris, S.A. 5068
+Australia
+Ph: 041 8805 184 / 08 8332 5069
+http://perfidy.com.au
