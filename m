@@ -1,103 +1,95 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: [msysGit] git rev-parse broken on Git for Windows
-Date: Fri, 30 Jul 2010 08:26:45 -0600
-Message-ID: <4C52E125.1020004@workspacewhiz.com>
-References: <4C526260.6000104@workspacewhiz.com> <alpine.DEB.1.00.1007301022310.2983@bonsai2> <201007301102.15274.trast@student.ethz.ch>
+Date: Fri, 30 Jul 2010 16:43:50 +0200
+Message-ID: <201007301643.50730.trast@student.ethz.ch>
+References: <4C526260.6000104@workspacewhiz.com> <201007301102.15274.trast@student.ethz.ch> <4C52E125.1020004@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Giuseppe Scrivano <gscrivano@gnu.org>,
 	"git@vger.kernel.org" <git@vger.kernel.org>,
-	msysgit@googlegroups.com
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jul 30 16:26:55 2010
+	<msysgit@googlegroups.com>
+To: Joshua Jensen <jjensen@workspacewhiz.com>,
+	Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 16:44:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeqY2-0003lE-NV
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 16:26:55 +0200
+	id 1Oeqot-00052E-Of
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 16:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932202Ab0G3O0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 10:26:49 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:60151 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932176Ab0G3O0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 10:26:48 -0400
-Received: (qmail 958 invoked by uid 399); 30 Jul 2010 08:26:46 -0600
-Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@69.98.154.160)
-  by hsmail.qwknetllc.com with ESMTPAM; 30 Jul 2010 08:26:46 -0600
-X-Originating-IP: 69.98.154.160
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.7) Gecko/20100713 Lightning/1.0b2 Thunderbird/3.1.1
-In-Reply-To: <201007301102.15274.trast@student.ethz.ch>
+	id S1756148Ab0G3OoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 10:44:15 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:15166 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752139Ab0G3OoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 10:44:14 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 30 Jul
+ 2010 16:44:12 +0200
+Received: from thomas.site (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Fri, 30 Jul
+ 2010 16:43:50 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <4C52E125.1020004@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152244>
 
-  ----- Original Message -----
-From: Thomas Rast
-Date: 7/30/2010 3:02 AM
-> Johannes Schindelin wrote:
->> On Thu, 29 Jul 2010, Joshua Jensen wrote:
->>>   9c7304e3e39ed397b3cc6566573333e2698a52b4 (print the usage string on stdout
->>> instead of stderr) and then 47e9cd28f8a404a0d6293935252ddca5fc243931
->>> (parseopt: wrap rev-parse --parseopt usage for eval consumption) break the
->>> following line from the manual and 'git subtree' on msysGit:
->>>
->>> eval $(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)
->> Both commits are from Junio's 'next' branch. I Cc:ed the authors of both
->> commits.
-> Can you elaborate on "break"?
->
-> Because as you can see in git-sh-setup.sh, the "official" user of
-> parseopt does
->
-> 	eval "$(
-> 		echo "$OPTIONS_SPEC" |
-> 			git rev-parse --parseopt $parseopt_extra -- "$@" ||
-> 		echo exit $?
-> 	)"
->
-> So AFAICS they only differ in the quoting.  And the latter works.
-Here is the output from Git Bash:
+Joshua Jensen wrote:
+> Thomas Rast wrote:
+> > Johannes Schindelin wrote:
+> >>> eval $(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@" || echo exit $?)
+> > Can you elaborate on "break"?
+> >
+> > Because as you can see in git-sh-setup.sh, the "official" user of
+> > parseopt does
+> >
+> > 	eval "$(
+> > 		echo "$OPTIONS_SPEC" |
+> > 			git rev-parse --parseopt $parseopt_extra -- "$@" ||
+> > 		echo exit $?
+> > 	)"
+> >
+> > So AFAICS they only differ in the quoting.  And the latter works.
+> Here is the output from Git Bash:
+> 
+> $ git subtree
+> C:\Program Files (x86)\Git/libexec/git-core/git-subtree: eval: line 31: 
+> syntax error near unexpected token `<'
+[...]
+> The example from the git rev-parse documentation fails in the same way:
+> 
+> eval `echo "$OPTS_SPEC" | git rev-parse --parseopt $parseopt_extra -- 
+> "$@" || echo exit $?`
 
-$ git subtree
-C:\Program Files (x86)\Git/libexec/git-core/git-subtree: eval: line 31: 
-syntax error near unexpected token `<'
-C:\Program Files (x86)\Git/libexec/git-core/git-subtree: eval: line 31: 
-`cat <<\EOF usage: git subtree add --prefix=<prefix> <commit
- > or: git subtree merge --prefix=<prefix> <commit> or: git subtree pull 
---prefix=<prefix> <repository> <refspec...> or: git subtree
-push --prefix=<prefix> <repository> <refspec...> or: git subtree split 
---prefix=<prefix> <commit...> -h, --help show the help -q qui
-et -d show debug messages -P, --prefix ... the name of the subdir to 
-split out -m, --message ... use the given message as the commit
-  message for the merge commit options for 'split' --annotate ... add a 
-prefix to commit message of new commits -b, --branch ... crea
-te a new branch from the split subtree --ignore-joins ignore prior 
---rejoin commits --onto ... try connecting new tree to an existin
-g one --rejoin merge the new branch back into HEAD options for 'add', 
-'merge', 'pull' and 'push' --squash merge subtree changes as a
-  single commit EOF exit 129'
-Usage: git subtree
+Oh, sorry that I was so dense in the first reply.  Of course the
+quoting is the problem.  When unquoted, the shell first splits along
+whitespace and then eval reassembles with *one space* between each
+pair of words.  The change just exacerbated the issue; there are other
+ways to trigger bad behaviour if the eval uses an unquoted --parseopt:
 
-The example from the git rev-parse documentation fails in the same way:
+  # what you saw
+  $ echo eval $( (echo 'description'; echo --; echo "s,long= foo") | git rev-parse --parseopt -- --help || echo exit $?)
+  eval cat <<\EOF usage: description -s, --long ... foo EOF exit 129
 
-eval `echo "$OPTS_SPEC" | git rev-parse --parseopt $parseopt_extra -- 
-"$@" || echo exit $?`
+  # newlines are clobbered
+  $ echo eval $( (echo 'description'; echo --; echo "s,long= foo") | git rev-parse --parseopt -- --long="$(printf 'argument\nwith\nnewlines')" || echo exit $?)
+  eval set -- -s 'argument with newlines' --
 
-What does work is the example you gave with the quotes:
+  # consecutive spaces are also clobbered
+  echo eval $( (echo 'description'; echo --; echo "s,long= foo") | git rev-parse --parseopt -- --long="three   spaces" || echo exit $?)
+  eval set -- -s 'three spaces' --
 
-eval "$(echo "$OPTS_SPEC" | git rev-parse --parseopt $parseopt_extra -- 
-"$@" || echo exit $?)"
+So I'm afraid Avery will have to fix this in git-subtree.  I'll also
+follow up with a doc patch for git-rev-parse.  Luckily there are no
+users in git outside of tests and git-sh-setup, so there are no bugs.
 
-I can live with modifying 'git subtree' in this manner, but something 
-about one or both of those rev-parse commits cause the non-quoted 
-version $(echo...) version in git subtree and the `echo...` version to 
-break.
-
-Josh
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
