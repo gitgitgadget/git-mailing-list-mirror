@@ -1,97 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: "clean" filter breaks git-svn
-Date: Fri, 30 Jul 2010 15:31:11 -0500
-Message-ID: <20100730203111.GD2448@burratino>
+Date: Fri, 30 Jul 2010 14:21:33 -0700
+Message-ID: <7vwrscpswy.fsf@alter.siamese.dyndns.org>
 References: <AANLkTikp6PgHyj2ujbuD52884ny88hMyxR1CpsbNAVCJ@mail.gmail.com>
+ <20100730203111.GD2448@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matt Wozniski <godlygeek@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 30 22:32:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Matt Wozniski <godlygeek@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 23:21:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OewFv-0001fr-17
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 22:32:35 +0200
+	id 1Oex1b-0002Kf-0T
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 23:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754669Ab0G3Uc3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 16:32:29 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:59908 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751570Ab0G3Uc2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 16:32:28 -0400
-Received: by qwh6 with SMTP id 6so372278qwh.19
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 13:32:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=wlQqF5zWXZvVc7gIjgmui/JR5cI5ZoxTCYhWoXSazhQ=;
-        b=UqGTklfE1DivuEEc5X85or7p/k2djpwTiwuRGBHHg4GqtL6Yz/alCmA8TCbHRUZQGB
-         I78UfhYKmrHmGFwXhhlciztoV5vtSHSDgoUaaDgYzLm7LmxIo6Zl+H0UGyfpXk1LqugC
-         o1+TRB7x5BllO/TxLddjCp+zYle++rind0zFQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=aOKJItEtC3x4nke/8r9vO2iW03pvv3AjkYYTvRHt8XVl3VFUdVHPRU51ryRRjE9g/K
-         mj9IL9GqgSdDSnghHu0nYvUTOWo1HwS4dlENnkyjgB+tWxhYBcZX8Eyfu8CPElsPOq0b
-         Nlz7o7Q1fKuKaK+UMZGT0fxgwYFCg/KbSBC6o=
-Received: by 10.220.187.5 with SMTP id cu5mr2037918vcb.0.1280521947028;
-        Fri, 30 Jul 2010 13:32:27 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id v11sm1430806vbb.12.2010.07.30.13.32.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Jul 2010 13:32:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikp6PgHyj2ujbuD52884ny88hMyxR1CpsbNAVCJ@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754911Ab0G3VVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 17:21:45 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754564Ab0G3VVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 17:21:44 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C810C7F78;
+	Fri, 30 Jul 2010 17:21:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s3trVwWs5Fv/iRfdpQIZ7Ljq86w=; b=N8poKa
+	CwrUb1+TwvMFOqqWRHcagc3XDDaYPy3+dXyjXpBOKvQIVQjDAd83991DEL56yM+g
+	rKLDtHH5giMKuQnOMm0aS967ErW3fEku9CRyeHvgCnoz9KxPjq8z/RXjmc3KZ1vF
+	Mm+Hbz8zIxqC8pekYxqbNraP3H3Sz2+lDvw4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=jKs5P8HlW1c1ZfJhvcXxjfZBmZ2uPL+w
+	SiTk/7PJTV7x6tfM6bon/0l63QMvBcwiivpqpJz0LQrPbipQEB7eY6qSfXS4CjX7
+	jX5Agv+Hu3ajEOamsDM+uasKOxMKyE7ofUpDzKLgMId0F9qAH35QSHm+fyqaB75d
+	su4idpy0Qd4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05116C7F77;
+	Fri, 30 Jul 2010 17:21:39 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CF85C7F76; Fri, 30 Jul
+ 2010 17:21:35 -0400 (EDT)
+In-Reply-To: <20100730203111.GD2448@burratino> (Jonathan Nieder's message of
+ "Fri\, 30 Jul 2010 15\:31\:11 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 70CF2D90-9C20-11DF-B2A2-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152267>
 
-Hi Matt,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Matt Wozniski wrote:
+> Interesting.  Yeah, that sounds like a bug.
+>
+> I am not convinced cleaning fetched files is the right thing to do in
+> the first place (why not just trust the SVN repo?),...
 
->                                              When trying to fetch
-> commits A and B from the SVN repos, it will fetch A, and then clean(A=
-)
-> is committed to my repository.  Then when it tries to fetch B, it is
-> horribly confused - it complains of a checksum mismatch, since the
-> md5sums of the files in A in the SVN repos don't match up with the
-> md5sums of the files in the clean(A) commit in git land.
+My knee-jerk reaction was that it isn't even about _trusting_, but
+mirroring what happened on the other side of the world faithfully.
 
-Interesting.  Yeah, that sounds like a bug.
-
-I am not convinced cleaning fetched files is the right thing to do in
-the first place (why not just trust the SVN repo?), but I assume
-people with workflows involving such filters could make a better call.
-
-> Is this a
-> known problem?
-
-There is no test for it in git.git, so in that sense no.
-
->                                    Could git-svn be made to accept th=
-e
-> md5sum of *either* A or clean(A) instead?
-
-I don=E2=80=99t think that would be right.  It=E2=80=99s not just the m=
-d5sums not
-matching that is the problem; it is that in these situations git-svn
-and the SVN server do not agree about the file=E2=80=99s current conten=
-t.
-
-Once the code makes the semantics clear, I assume it should Just
-Work=E2=84=A2.
-
-Good luck,
-Jonathan
+If you clean what you got from the other side, and then build on top of
+that result, how are you supposed to send your contributions back to the
+other side which does not have the same clean-up?
