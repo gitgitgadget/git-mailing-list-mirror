@@ -1,83 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Git CVS Import Questions
-Date: Fri, 30 Jul 2010 15:17:06 -0500
-Message-ID: <20100730201706.GC2448@burratino>
-References: <AANLkTin_d_wKxyJDMbjz4vFacr6GNYzE_aUGi2vbXW3V@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: When to use test_commit (Re: [PATCH] checkout: add a test for 
+	creating a new branch with regexp as a starting point)
+Date: Fri, 30 Jul 2010 20:20:40 +0000
+Message-ID: <AANLkTimeQA2_fQ_f2pQchbo1coj3=mV9TRPnbET8SQ4F@mail.gmail.com>
+References: <20100729220111.GA28176@wo.int.altlinux.org>
+	<201007300136.13501.trast@student.ethz.ch>
+	<AANLkTi=Qf1OUmjkpL-6e8gT8MU9G=m37sxrdAoyj5=R0@mail.gmail.com>
+	<20100730084428.GA9577@wo.int.altlinux.org>
+	<AANLkTikan0hnUa-p-U1dfRKq+bORmrn7A3YTPOPe2N_k@mail.gmail.com>
+	<20100730191357.GA2448@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Samir Faci <samir@esamir.com>
-X-From: git-owner@vger.kernel.org Fri Jul 30 22:18:31 2010
+Cc: "Dmitry V. Levin" <ldv@altlinux.org>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 22:20:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oew2J-0002yg-2k
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 22:18:31 +0200
+	id 1Oew4X-00040l-Oa
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 22:20:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760716Ab0G3USY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 16:18:24 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:34719 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754693Ab0G3USX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 16:18:23 -0400
-Received: by qyk7 with SMTP id 7so4169604qyk.19
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 13:18:22 -0700 (PDT)
+	id S1760759Ab0G3UUn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 16:20:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:59051 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754693Ab0G3UUm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jul 2010 16:20:42 -0400
+Received: by iwn7 with SMTP id 7so1617890iwn.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 13:20:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=oJ+bYsiK+eYz4bOOM/gRf8pwyX7/0yhHQgPy0JmJTMs=;
-        b=Rh0aoyArZLSz96QhxnwMggYANJ7VlWxdvmOd/wNEWevGvfRTtm/9K0BcsA502Jj6xs
-         lbCt6JL0gqmzZ4lugHBUhqwtpOVt1qHhBaOmGCocsI63qdco3F8xNfJjk6ksouM9VD+3
-         OE3vSoRNbez+QeriKMcOsH7uo2zeAhLexfM+s=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OCjfPt5A3MtuWip4Li2DiPXxhOLQy38xWdkNQD9v7jI=;
+        b=Ecy5MXFhGqdxrOvKTbP7MCAtCb3NWpD6MT/B7Ew7uNCycnqo5wEZHPCy0CcklQezNM
+         7gkOMlXj9EKLUxNtId3WR1HKuA9/nQgIt7KzIms4JSqplBDauRtxR9RAm5OhwN9fwLx6
+         aOH8ew+/W9+rVt2u7/XF1ntxf+HIvArJvVNgM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=dHXIZsvjfsEFwyoG9tqLGH58Z8eBnBFi5d8dU8ctqqtD/noVNVtXDzC59bwoCLM880
-         hCaPXLTQ3xzNrYjQAeO3kK6tQhdQji6T55s1adxes5byCBeU2ykvbj0nNvQgUvtebAUS
-         Fc0Lfn9zgeordL/0JDeBrC+URmBK8IyE1lxl4=
-Received: by 10.224.66.130 with SMTP id n2mr327539qai.334.1280521101958;
-        Fri, 30 Jul 2010 13:18:21 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id g33sm3016135qcq.28.2010.07.30.13.18.20
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Jul 2010 13:18:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTin_d_wKxyJDMbjz4vFacr6GNYzE_aUGi2vbXW3V@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WY4aRo+8B2TuIHeYk59E4XyGwij4JFGbRNgpE1Acp7hkLbqZVgarCFTXBOZi0CFHZf
+         BJ1k85ER2+cqdZFHloaCobg9xdhzo7C99qiZiRaK2xXqcGYUwHyU2atjNKwYqZAJkpwO
+         E+qnWyJDRFcb1DB2HOKMHosXv82BrJtSkBGEc=
+Received: by 10.231.157.207 with SMTP id c15mr2265680ibx.143.1280521241171; 
+	Fri, 30 Jul 2010 13:20:41 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Fri, 30 Jul 2010 13:20:40 -0700 (PDT)
+In-Reply-To: <20100730191357.GA2448@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152265>
 
-Hi Samir,
+On Fri, Jul 30, 2010 at 19:13, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> And actually, we should probably have a
+>> test_commit_notag() then.
+>
+> I don=E2=80=99t know. =C2=A0What=E2=80=99s so bad about using "git co=
+mmit" directly?
 
-Samir Faci wrote:
+Nothing, it's just easier to write and read the tests when we have and
+use functions for these common operations.
 
-> mkdir bar; git cvsimport -v Foo/Bar   which checks out the history of
-> module Bar into the current directory (in this case bar)
->=20
-> now... if I do this again in another directory
->=20
-> mkdir bar2; git cvsimport -v Foo/Bar  which repeats the same process
-> the hashes don't match up.
+> I often find myself using "git commit" in tests because test_commit
+> imposes all the usual restrictions for a ref name on the commit
+> message. =C2=A0I would happily use an abbreviation for
+>
+> =C2=A0test_tick &&
+> =C2=A0git commit -m "something" &&
+> =C2=A0git tag something-else
+>
+> if available because I don=E2=80=99t like typing, but would that help=
+ the
+> reader and test runner any?
 
-Maybe the dates are different?  I would suggest comparing the result of
-=E2=80=9Cgit fast-export HEAD=E2=80=9D from each.
-
-> Now, correct me if I'm wrong.. but I thought the hashes were generate=
-d
-> based on the content of the diff.
-
-Close, but not quite.  This might help: http://progit.org/book/ch9-2.ht=
-ml
-
-Have fun,
-Jonathan
+Maybe just introduce a fourth argument to test_commit, to make it
+<message> [<file> [<contents> [<tagname>]] instead of <message>
+[<file> [<contents>]] ?
