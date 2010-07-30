@@ -1,70 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "clean" filter breaks git-svn
-Date: Fri, 30 Jul 2010 14:21:33 -0700
-Message-ID: <7vwrscpswy.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikp6PgHyj2ujbuD52884ny88hMyxR1CpsbNAVCJ@mail.gmail.com>
- <20100730203111.GD2448@burratino>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] ls-files: learn a debugging dump format
+Date: Sat, 31 Jul 2010 00:35:59 +0200
+Message-ID: <0792cec2ca5e15ef34375eadc4007203db93d9e6.1280529198.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matt Wozniski <godlygeek@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 30 23:21:51 2010
+Content-Type: text/plain
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jul 31 00:36:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oex1b-0002Kf-0T
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 23:21:51 +0200
+	id 1OeyBj-0002H7-0M
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 00:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754911Ab0G3VVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 17:21:45 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54673 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754564Ab0G3VVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 17:21:44 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C810C7F78;
-	Fri, 30 Jul 2010 17:21:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s3trVwWs5Fv/iRfdpQIZ7Ljq86w=; b=N8poKa
-	CwrUb1+TwvMFOqqWRHcagc3XDDaYPy3+dXyjXpBOKvQIVQjDAd83991DEL56yM+g
-	rKLDtHH5giMKuQnOMm0aS967ErW3fEku9CRyeHvgCnoz9KxPjq8z/RXjmc3KZ1vF
-	Mm+Hbz8zIxqC8pekYxqbNraP3H3Sz2+lDvw4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jKs5P8HlW1c1ZfJhvcXxjfZBmZ2uPL+w
-	SiTk/7PJTV7x6tfM6bon/0l63QMvBcwiivpqpJz0LQrPbipQEB7eY6qSfXS4CjX7
-	jX5Agv+Hu3ajEOamsDM+uasKOxMKyE7ofUpDzKLgMId0F9qAH35QSHm+fyqaB75d
-	su4idpy0Qd4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 05116C7F77;
-	Fri, 30 Jul 2010 17:21:39 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4CF85C7F76; Fri, 30 Jul
- 2010 17:21:35 -0400 (EDT)
-In-Reply-To: <20100730203111.GD2448@burratino> (Jonathan Nieder's message of
- "Fri\, 30 Jul 2010 15\:31\:11 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 70CF2D90-9C20-11DF-B2A2-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755192Ab0G3WgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 18:36:04 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:48234 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751570Ab0G3WgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 18:36:03 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 31 Jul
+ 2010 00:36:00 +0200
+Received: from localhost.localdomain (217.162.250.31) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sat, 31 Jul
+ 2010 00:36:00 +0200
+X-Mailer: git-send-email 1.7.2.1.342.g676a4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152268>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Teach git-ls-files a new option --debug that just tacks all available
+data from the cache onto each file's line.
 
-> Interesting.  Yeah, that sounds like a bug.
->
-> I am not convinced cleaning fetched files is the right thing to do in
-> the first place (why not just trust the SVN repo?),...
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
 
-My knee-jerk reaction was that it isn't even about _trusting_, but
-mirroring what happened on the other side of the world faithfully.
+I made this while trying to find a pattern in the failures of t0025.
+Unless I missed something, there's really no other way to get at this
+data, so it might be a useful feature in general.
 
-If you clean what you got from the other side, and then build on top of
-that result, how are you supposed to send your contributions back to the
-other side which does not have the same clean-up?
+
+ Documentation/git-ls-files.txt |    6 ++++++
+ builtin/ls-files.c             |    9 +++++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 3521637..235cae7 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -132,6 +132,12 @@ OPTIONS
+ 	lines, show only a partial prefix.
+ 	Non default number of digits can be specified with --abbrev=<n>.
+ 
++--debug::
++	After each line that describes a file, add more data about its
++	cache entry.  This is intended to show as much information as
++	possible for manual inspection; the exact format may change at
++	any time.
++
+ \--::
+ 	Do not interpret any more arguments as options.
+ 
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 1b9b8a8..cc202c5 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -25,6 +25,7 @@
+ static int show_killed;
+ static int show_valid_bit;
+ static int line_terminator = '\n';
++static int debug_mode;
+ 
+ static const char *prefix;
+ static int max_prefix_len;
+@@ -162,6 +163,13 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
+ 		       ce_stage(ce));
+ 	}
+ 	write_name(ce->name, ce_namelen(ce));
++	if (debug_mode) {
++		printf("  ctime: %d:%d\n", ce->ce_ctime.sec, ce->ce_ctime.nsec);
++		printf("  mtime: %d:%d\n", ce->ce_mtime.sec, ce->ce_mtime.nsec);
++		printf("  dev: %d\tino: %d\n", ce->ce_dev, ce->ce_ino);
++		printf("  uid: %d\tgid: %d\n", ce->ce_uid, ce->ce_gid);
++		printf("  size: %d\tflags: %x\n", ce->ce_size, ce->ce_flags);
++	}
+ }
+ 
+ static int show_one_ru(struct string_list_item *item, void *cbdata)
+@@ -519,6 +527,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
+ 		OPT_STRING(0, "with-tree", &with_tree, "tree-ish",
+ 			"pretend that paths removed since <tree-ish> are still present"),
+ 		OPT__ABBREV(&abbrev),
++		OPT_BOOLEAN(0, "debug", &debug_mode, "show debugging data"),
+ 		OPT_END()
+ 	};
+ 
+-- 
+1.7.2.1.342.g676a4
