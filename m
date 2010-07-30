@@ -1,61 +1,71 @@
-From: Dobes Vandermeer <dobesv@gmail.com>
-Subject: Git bash completion and special characters (particularly #)
-Date: Fri, 30 Jul 2010 11:54:53 -0700
-Message-ID: <AANLkTi=+HhRUJ2wGc4nUZ7pVbnKa+A3pq4tNXx0dBpn_@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [GSoC update extra!] git-remote-svn: Week 13
+Date: Sat, 31 Jul 2010 00:31:27 +0530
+Message-ID: <20100730190124.GA2995@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 30 20:55:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 30 21:03:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oeuk9-0000Oh-VK
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 20:55:42 +0200
+	id 1OeurX-0004wg-OD
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 21:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760265Ab0G3SzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 14:55:18 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:47616 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759192Ab0G3SzO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 14:55:14 -0400
-Received: by vws3 with SMTP id 3so1617894vws.19
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 11:55:13 -0700 (PDT)
+	id S1760371Ab0G3TDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 15:03:11 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:63833 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760392Ab0G3TDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 15:03:07 -0400
+Received: by pxi14 with SMTP id 14so658945pxi.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 12:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=Y+ANvEzlLCCbRqKIe9t9rrNKKC1tOh+S2mtmanQTxII=;
-        b=iqtlf5JXsMUev5LlwycngqT7zP88fzwbHCf47+IE2KdOhmPTZIwVDm0HyCsQU6s/yZ
-         MI4TNyJsKr5yRDI6rmflZMxRjf+bAWfsemCNzFufqy+a1MfP4cdJ8NR8VJmSJmp7nBMT
-         AdqB4nBYpJU8D+V0OQ+0s2aQ0/9WOPfoeDa6U=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=BAviygljVrmUxZF2Dk/AIA8YjHvuVDpdvxj8alCE/vU=;
+        b=n2xCcy1k8NzAiJHSzET/enbOAkb/dmfOCRh4DkuDgLGwV4oQG5gwPA/PSXBo8GRaEi
+         n48wEp6IU+cxgjzXLHanMDjqrdLIdfhAnPDiHJantFdzhR8utn5L0ZKqyiFwiB1uWAyn
+         NGTT94aFlQB+/TucISFiE9F9HQgwjGmfeCn9g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=BFV5WgIveqwsauVEgDL0cVA1givNwrM70u6duOuUa+FQBQXuycWpx4uLPUyIUQOMxJ
-         sgHABukrfRvLiH0QDwcXQinUciC+li9gmqcho3I2jMIeF23koftl/JcAOZel1Ejswjex
-         zaDdVihdpQwXkXGyOAmRXyf0MLbVvlTQZSwXo=
-Received: by 10.220.168.213 with SMTP id v21mr1328880vcy.274.1280516113432; 
-	Fri, 30 Jul 2010 11:55:13 -0700 (PDT)
-Received: by 10.220.85.70 with HTTP; Fri, 30 Jul 2010 11:54:53 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=TUCx5T/4zp86rMk3F7uh7M1+6f3cR9CRNoCoqs6WkFODtbDXyN45c4bO79BM1DDczg
+         OKQ88/HI2YMzTLI9Y+eU/efT5TKUmshbvPjaqYTf6M8Ae+Gs6pinrWIoTCzZY8u7mE6f
+         bgKCoHnHVX51+XLbymbCK+6ENKf28gsYg508c=
+Received: by 10.142.177.4 with SMTP id z4mr2138380wfe.280.1280516586653;
+        Fri, 30 Jul 2010 12:03:06 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id x18sm2909243wfd.20.2010.07.30.12.03.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jul 2010 12:03:05 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152260>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152261>
 
-Git bash completion is great, but we always have special characters in
-our branches - particularly we name the branch after the trac ticket
-#, like "#1234-foo".
+Hi,
 
-Git's branch completion mechanism doesn't quote the branch name in
-this case, so the branch name and anything after it is commented out.
+I just got a proof-of-concept loader for Subversion working. It just
+about works for a very small reduced case. I'll still have to hammer
+it into shape for to handle various cases [1]. In the meantime, we
+also have to start working on doing the inverse of what
+svn-dump-fast-export does: convert a Git fast-export stream to a
+Subversion dumpfile.
 
-Any idea how hard it would be to wrap the branch name in quotes
-(possibly only when there's characters requiring quoting in the branch
-name) ?
+David: Can you estimate how challenging the task is going to be?
 
-Thanks,
+[1]: I'm working on it directly in trunk. You can find the latest code
+in subversion/svnrdump in the Subversion trunk.
 
-Dobes
+-- Ram
