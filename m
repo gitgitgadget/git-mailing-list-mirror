@@ -1,78 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: t4111 fails under valgrind
-Date: Fri, 30 Jul 2010 13:31:22 -0500
-Message-ID: <20100730183122.GA7578@dert.cs.uchicago.edu>
-References: <201007301218.52437.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (Jul 2010, #05; Wed, 28)
+Date: Fri, 30 Jul 2010 14:37:09 -0400
+Message-ID: <20100730183709.GC18544@coredump.intra.peff.net>
+References: <7vvd7zuecv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jul 30 20:32:11 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 20:37:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeuNM-0003VD-Ev
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 20:32:08 +0200
+	id 1OeuSh-0006Zf-Mc
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 20:37:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933281Ab0G3Sbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 14:31:35 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.164.153]:60462 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933269Ab0G3SbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 14:31:23 -0400
-Received: from dert.cs.uchicago.edu (dert.cs.uchicago.edu [128.135.11.157])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id BA7BEA21F;
-	Fri, 30 Jul 2010 13:31:22 -0500 (CDT)
-Received: by dert.cs.uchicago.edu (Postfix, from userid 10442)
-	id 64B3D882; Fri, 30 Jul 2010 13:31:22 -0500 (CDT)
+	id S933274Ab0G3ShU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 14:37:20 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47968 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933270Ab0G3ShQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 14:37:16 -0400
+Received: (qmail 3658 invoked by uid 111); 30 Jul 2010 18:37:14 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO coredump.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with (AES128-SHA encrypted) ESMTPSA; Fri, 30 Jul 2010 18:37:14 +0000
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 30 Jul 2010 14:37:09 -0400
 Content-Disposition: inline
-In-Reply-To: <201007301218.52437.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <7vvd7zuecv.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152257>
 
-Thomas Rast wrote:
+On Wed, Jul 28, 2010 at 09:00:16PM -0700, Junio C Hamano wrote:
 
->   error: sub/dir/file: does not match index
->   error: sub/dir/file: does not match index
->   error: sub/dir/file: does not match index
->   not ok - 5 apply --index from subdir of toplevel
+> --------------------------------------------------
+> [Stalled -- would discard unless there are some movements soon]
+> [...]
+> * jk/tag-contains (2010-07-05) 4 commits
+>  - Why is "git tag --contains" so slow?
+>  - default core.clockskew variable to one day
+>  - limit "contains" traversals based on commit timestamp
+>  - tag: speed up --contains calculation
 
-Thanks for reporting.  Does this patch work for you?
+What do we want to do with this?
 
--- 8< --
-Subject: t4111 (apply): refresh index before applying patches to it
+The first patch by itself produces a pretty big speedup for Ted's case,
+and does not impact correctness.  However, it does do a mindless
+depth-first search, so there are cases where it can be slower than the
+current code (basically, if you never have to go to the roots for your
+tagset, then my code will be slower, as it will almost certainly go to
+the roots, but it will do so only one time for the whole set, instead of
+potentially once per tag).
 
-"git apply", like most plumbing, does not automatically refresh the
-index file even if it is only stat-dirty.  So unless the two "cp"
-commands in reset_preimage() for a given file happen to have the same
-time stamp, there will be a spurious
+The second patch by itself is harmless, as the user has to turn it
+on explicitly. And the amount of code is quite small, so even if most
+people don't use it, I don't think it is a problem.
 
-	error: sub/dir/file: does not match index
+The third one is where we start defaulting things to "assume no more
+than 1 day of clock skew by default", which can cause incorrect answers
+in the face of skew.
 
-Refresh the index to eliminate this timing dependency.  Noticed by
-running the test with --valgrind (which slows things down a lot).
+The fourth is just an illustrative patch for per-repo skew detection.
 
-Reported-by: Thomas Rast <trast@student.ethz.ch>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/t/t4111-apply-subdir.sh b/t/t4111-apply-subdir.sh
-index 57cae50..a52d94a 100755
---- a/t/t4111-apply-subdir.sh
-+++ b/t/t4111-apply-subdir.sh
-@@ -36,7 +36,8 @@ test_expect_success 'setup: subdir' '
- 		cp "$2" file &&
- 		cp "$2" sub/dir/file &&
- 		cp "$2" sub/dir/b/file &&
--		cp "$2" objects/file
-+		cp "$2" objects/file &&
-+		test_might_fail git update-index --refresh -q
- 	}
- '
- 
--- 
+So if the tradeoff for patch 1 is acceptable, we can merge the first
+two. If the tradeoff in patch 3 is acceptable, then we can merge up to
+patch 3. The fourth one should be thrown out either way. I can work up a
+"detect clock skew on clone and gc" patch based on it if we want to go
+that way.
+
+-Peff
