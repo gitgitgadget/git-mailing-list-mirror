@@ -1,103 +1,75 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] ls-files: learn a debugging dump format
-Date: Sat, 31 Jul 2010 00:35:59 +0200
-Message-ID: <0792cec2ca5e15ef34375eadc4007203db93d9e6.1280529198.git.trast@student.ethz.ch>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC v2 0/2] Smoke testing for Git
+Date: Fri, 30 Jul 2010 22:43:25 +0000
+Message-ID: <1280529807-23677-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 31 00:36:24 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 31 00:43:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OeyBj-0002H7-0M
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 00:36:23 +0200
+	id 1OeyIt-000545-36
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 00:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755192Ab0G3WgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 18:36:04 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:48234 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751570Ab0G3WgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 18:36:03 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 31 Jul
- 2010 00:36:00 +0200
-Received: from localhost.localdomain (217.162.250.31) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sat, 31 Jul
- 2010 00:36:00 +0200
-X-Mailer: git-send-email 1.7.2.1.342.g676a4
+	id S1756780Ab0G3Wnl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 18:43:41 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50558 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755197Ab0G3Wnk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 18:43:40 -0400
+Received: by wyb39 with SMTP id 39so1657591wyb.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 15:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=9duMB/yMQdnX/lXQDjyBN2D6ldP9Qr8Lpw5LY1hYoPA=;
+        b=IbbrB78IztTYAy50SBuOz587scfeO1CsGM5j5Jq5mj3gIDwnbFdgrcQrBk0nocUa+9
+         nqUF7r4R798tVBgHg0Mep50xTKymHJMcg1cEKpK15+4sm2aV39n/DUcDDQBmO7xvmRz1
+         JCk+2SZsJ4SNqnLQvrQUSaQ/ZRUW+Hmj6ObKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=eitL3gpLlVVK9LujJOuMPrwPYt+0TTj5lEfsKzrk/5yvbxicLH6D3XLUBVOnKqstx8
+         f0YC/GEAWVrjFQDsyyVENbDPGqE3G9xUojb0GobnKkLdxGJ3tI3o3mHnYi+kVSftFNmM
+         XKPpr5MHoUoV+ke1sNvjqT8fNpW8wd/HUOTJs=
+Received: by 10.227.129.136 with SMTP id o8mr2056336wbs.174.1280529818628;
+        Fri, 30 Jul 2010 15:43:38 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id i25sm2309162wbi.22.2010.07.30.15.43.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jul 2010 15:43:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152269>
 
-Teach git-ls-files a new option --debug that just tacks all available
-data from the cache onto each file's line.
+This is v2 of the smoke testing RFC. It solves the TODO issues noted
+in v1 of the RFC. There's now a smoke testing infrastructure for Git
+at http://smoke.git.nix.is/, and this patch adds bits to git to
+interoperate with it.
 
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+There's a lot more info in the first patch, and t/README documentation
+in the second one.
 
-I made this while trying to find a pattern in the failures of t0025.
-Unless I missed something, there's really no other way to get at this
-data, so it might be a useful feature in general.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (2):
+  tests: Infrastructure for Git smoke testing
+  t/README: Document the Smoke testing
 
-
- Documentation/git-ls-files.txt |    6 ++++++
- builtin/ls-files.c             |    9 +++++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 3521637..235cae7 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -132,6 +132,12 @@ OPTIONS
- 	lines, show only a partial prefix.
- 	Non default number of digits can be specified with --abbrev=<n>.
- 
-+--debug::
-+	After each line that describes a file, add more data about its
-+	cache entry.  This is intended to show as much information as
-+	possible for manual inspection; the exact format may change at
-+	any time.
-+
- \--::
- 	Do not interpret any more arguments as options.
- 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 1b9b8a8..cc202c5 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -25,6 +25,7 @@
- static int show_killed;
- static int show_valid_bit;
- static int line_terminator = '\n';
-+static int debug_mode;
- 
- static const char *prefix;
- static int max_prefix_len;
-@@ -162,6 +163,13 @@ static void show_ce_entry(const char *tag, struct cache_entry *ce)
- 		       ce_stage(ce));
- 	}
- 	write_name(ce->name, ce_namelen(ce));
-+	if (debug_mode) {
-+		printf("  ctime: %d:%d\n", ce->ce_ctime.sec, ce->ce_ctime.nsec);
-+		printf("  mtime: %d:%d\n", ce->ce_mtime.sec, ce->ce_mtime.nsec);
-+		printf("  dev: %d\tino: %d\n", ce->ce_dev, ce->ce_ino);
-+		printf("  uid: %d\tgid: %d\n", ce->ce_uid, ce->ce_gid);
-+		printf("  size: %d\tflags: %x\n", ce->ce_size, ce->ce_flags);
-+	}
- }
- 
- static int show_one_ru(struct string_list_item *item, void *cbdata)
-@@ -519,6 +527,7 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 		OPT_STRING(0, "with-tree", &with_tree, "tree-ish",
- 			"pretend that paths removed since <tree-ish> are still present"),
- 		OPT__ABBREV(&abbrev),
-+		OPT_BOOLEAN(0, "debug", &debug_mode, "show debugging data"),
- 		OPT_END()
- 	};
- 
--- 
-1.7.2.1.342.g676a4
+ t/Makefile |   35 ++++++++++++++++++++++++++++++-
+ t/README   |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ t/harness  |   21 +++++++++++++++++++
+ 3 files changed, 121 insertions(+), 1 deletions(-)
+ create mode 100755 t/harness
