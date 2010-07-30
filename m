@@ -1,101 +1,122 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Making error messages stand out (Re: [RFC/PATCH 0/9] commit: more
- focused advice in the no-changes-staged case)
-Date: Thu, 29 Jul 2010 18:51:51 -0500
-Message-ID: <20100729235151.GB6623@burratino>
-References: <20100725005443.GA18370@burratino>
- <AANLkTilnQhsopnuAf0nja8Qq63VrOlt0_uCJrqYv5X-v@mail.gmail.com>
- <201007251122.41166.trast@student.ethz.ch>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: use textconv filter for diff and blame
+Date: Fri, 30 Jul 2010 01:22:05 +0100
+Message-ID: <871valstsi.fsf@fox.patthoyts.tk>
+References: <1280319830-20483-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Jul 30 01:53:10 2010
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Clemens Buchacher <drizzd@aon.at>,
+	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 30 02:22:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OecuU-00073s-1s
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 01:53:10 +0200
+	id 1OedND-00009L-5u
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 02:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755070Ab0G2XxE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 19:53:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61434 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752760Ab0G2XxC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 Jul 2010 19:53:02 -0400
-Received: by iwn7 with SMTP id 7so738292iwn.19
-        for <git@vger.kernel.org>; Thu, 29 Jul 2010 16:53:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=eGKvx4BQ8uFciZswStsEY14rPJUtVI45ny9wIhIQqtE=;
-        b=Xx25Z56G+jxhEVTF9v3nZy0+9Qy8EMtrscDLJePh/kgv8iNFpyOCDNKuvCoAQXnzqJ
-         A0kNz7TamIiAeEQEUF+qRULadWKd//+PAxIO+np4IbL4de45XbLONXTla+itk7B/lvcf
-         ROWPxeCkpyubLV8IGk99GZRqqbccSjjjipOJA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=xkWgcU5H+2UQAo5DlgBHcQSs6anEvU1BKtOH+DV6dmG+fcFYbxGyQfpa4F5SJ8EvCa
-         bjbkSSg3SiW7jSSAJCDzJZuFpJhLyCJqpQ+8gitPixTFICyOw0RIWmJn3wfnLqi8IL3b
-         G2k/BbS8tN+yq2MkF28WDanKu08k4wd5MKhIQ=
-Received: by 10.231.36.69 with SMTP id s5mr852376ibd.58.1280447581264;
-        Thu, 29 Jul 2010 16:53:01 -0700 (PDT)
-Received: from burratino ([205.197.14.202])
-        by mx.google.com with ESMTPS id h8sm1276892ibk.15.2010.07.29.16.53.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 29 Jul 2010 16:53:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201007251122.41166.trast@student.ethz.ch>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758246Ab0G3AWZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 29 Jul 2010 20:22:25 -0400
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:48766 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758192Ab0G3AWO convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 Jul 2010 20:22:14 -0400
+Received: from [172.23.170.146] (helo=anti-virus03-09)
+	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1OedMY-0006C3-9h; Fri, 30 Jul 2010 01:22:10 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1OedMU-0004G9-Co; Fri, 30 Jul 2010 01:22:06 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id C9336208E4; Fri, 30 Jul 2010 01:22:05 +0100 (BST)
+X-Url: http://www.patthoyts.tk/
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+In-Reply-To: <1280319830-20483-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu Moy's message of "Wed\, 28 Jul 2010 14\:23\:50 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152213>
 
-Thomas Rast wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
->   git://repo.or.cz/git/trast.git t/color-porcelain-message-output
+>From: Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr>
+>
+>Create a checkbox "Use Textconv For Diffs and Blame" in git-gui option=
+s.
+>If checked and if the driver for the concerned file exists, git-gui ca=
+lls diff
+>and blame with --textconv option
+>
+>Signed-off-by: Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr>
+>Signed-off-by: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+>Signed-off-by: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
+>Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>---
+>
+>This patch was originally written by Cl=E9ment Poulain (a student of
+>mine), it was not mergeable at the time it was sent, since it relied
+>on a patch serie introducing "git cat-file --textconv". Now that this
+>cat-file --textconv is in a git release (1.7.2), I guess it's time to
+>get this merged into git-gui.
+>
+>I did review and test the patch, but I'm mostly useless in TCL, so I
+>may have missed the obvious. That said, the patch is relatively simple
+>and looks OK.
 
-My first thought was "that=E2=80=99s a horrible idea; red text is so ha=
-rd to
-read".  My second thought: "oh, maybe it=E2=80=99s not so bad because i=
-t=E2=80=99s
-bold".  Now I am starting to worry about the sort of distraction that
-can sometimes follow from too much formatting (e.g., with certain
-syntax highlighting engines).
+This looks generally fine but can you suggest some test that I can use
+to ensure it is actually doing something. I tried committing some test
+files containing cyrillic characters but I see no difference between
+using an unpatched git-gui and your patched version with git 1.7.2
 
-A little bold text here and there (maybe to highlight the heading
-strings like "fatal" and "hint") would be very useful, certainly.  To
-deal with messages like
+>diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
+>index 786b50b..ead68fd 100644
+>--- a/git-gui/lib/blame.tcl
+>+++ b/git-gui/lib/blame.tcl
+>@@ -449,11 +449,28 @@ method _load {jump} {
+>=20
+> 	$status show [mc "Reading %s..." "$commit:[escape_path $path]"]
+> 	$w_path conf -text [escape_path $path]
+>+
+>+	set do_textconv 0
+>+	if {![is_config_false gui.textconv] && [git-version >=3D 1.7.2]} {
+>+		set filter [gitattr $path diff set]
+>+		set textconv [get_config [join [list diff $filter textconv] .]]
+>+		if {$filter ne {set} && $textconv ne {}} {
+>+			set do_textconv 1
+>+		}
+>+	}
+> 	if {$commit eq {}} {
+>-		set fd [open $path r]
+>+		if {$do_textconv ne 0} {
+>+			set fd [open "|$textconv $path" r]
 
-  Recorded resolution for 'dir/a'.
-  [detached HEAD aa9ae6b] related change                          (1)
-   1 files changed, 1 insertions(+), 1 deletions(-)
-  Automatic cherry-pick failed.  After resolving the conflicts,
-  mark the corrected paths with 'git add <paths>', and
-  run 'git rebase --continue'
-  Recorded preimage for 'dir/a'
-  Could not apply 649420f... second                               (2)
-=20
-though, I find the best solution is to use short, formulaic messages:
+This is better written as
+  set fd [open |[list $textconv $path] r]
+in case there are spaces in either of the two components.
 
-  ...
-  Recorded resolution for 'dir/a'.
-  [detached HEAD aa9ae6b] related change
-   1 files changed, 1 insertions(+), 1 deletions(-)
-  fatal: could not apply 649420f... second
-  hint: after resolving the conflicts, mark the corrected paths
-  hint: with 'git add <paths>' and run 'git rebase --continue'
-
-I do realize this is not a very useful thing to say without attaching
-a patch. ;-)
+>+		} else {
+>+			set fd [open $path r]
+>+		}
+> 		fconfigure $fd -eofchar {}
+> 	} else {
+>-		set fd [git_read cat-file blob "$commit:$path"]
+>+		if {$do_textconv ne 0} {
+>+			set fd [git_read cat-file --textconv "$commit:$path"]
+>+		} else {
+>+			set fd [git_read cat-file blob "$commit:$path"]
+>+		}
+> 	}
+> 	fconfigure $fd \
+> 		-blocking 0 \
