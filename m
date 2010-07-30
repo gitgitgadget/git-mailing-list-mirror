@@ -1,72 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] git-gui: use textconv filter for diff and blame
-Date: Fri, 30 Jul 2010 08:56:37 +0200
-Message-ID: <vpq8w4tpie2.fsf@bauges.imag.fr>
-References: <1280319830-20483-1-git-send-email-Matthieu.Moy@imag.fr>
-	<871valstsi.fsf@fox.patthoyts.tk>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git svn: add an option to recode pathnames
+Date: Fri, 30 Jul 2010 07:59:21 +0000
+Message-ID: <20100730075921.GA9596@dcvr.yhbt.net>
+References: <ylnfxcfdeyq.fsf@tmsoft-ltd.kiev.ua> <20090729185919.GA13518@dcvr.yhbt.net> <4C523935.5070504@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Clemens Buchacher <drizzd@aon.at>,
-	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Jul 30 08:57:04 2010
+Cc: Dmitry Statyvka <dstatyvka@tmsoft-ltd.kiev.ua>, git@vger.kernel.org
+To: Robert Pollak <robert.pollak@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 30 09:59:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OejWf-0007ev-Rb
-	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 08:57:02 +0200
+	id 1OekV5-0006nI-ST
+	for gcvg-git-2@lo.gmane.org; Fri, 30 Jul 2010 09:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430Ab0G3G4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 02:56:54 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59994 "EHLO rominette.imag.fr"
+	id S1753588Ab0G3H7X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 03:59:23 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:54615 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751634Ab0G3G4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 02:56:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o6U6sl9W025061
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 30 Jul 2010 08:54:49 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OejWI-00085m-CS; Fri, 30 Jul 2010 08:56:38 +0200
-In-Reply-To: <871valstsi.fsf@fox.patthoyts.tk> (Pat Thoyts's message of "Fri\, 30 Jul 2010 01\:22\:05 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 30 Jul 2010 08:54:50 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o6U6sl9W025061
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1281077692.71616@cxc/iBFOW4W8Z8zGS61LrA
+	id S1751303Ab0G3H7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 03:59:22 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C93C91F505;
+	Fri, 30 Jul 2010 07:59:21 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <4C523935.5070504@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152222>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+Robert Pollak <robert.pollak@gmail.com> wrote:
+> Introduce a new option 'svn.pathnameencoding' that instructs git svn to
+> recode pathnames to a given encoding.  It can be used by windows users
+> and by those who work in non-utf8 locales to avoid corrupted file names
+> with non-ascii characters.
+> 
+> Signed-off-by: Dmitry Statyvka <dstatyvka@tmsoft-ltd.kiev.ua>
+> [robert.pollak@gmail.com: renamed the option and added manpage documentation]
+> Signed-off-by: Robert Pollak <robert.pollak@gmail.com>
+> ---
+> 
+> Hello Eric,
+> 
+> since the patch is useful to me, I have made the requested option name
+> change and added some manpage documentation. Please consider applying the
+> patch or give me additional feedback.
 
-> This looks generally fine but can you suggest some test that I can use
-> to ensure it is actually doing something. I tried committing some test
-> files containing cyrillic characters but I see no difference between
-> using an unpatched git-gui and your patched version with git 1.7.2
+Thanks Robert!
 
-textconv has not much to do with encoding. It's a way to tell git the
-name of a command that converts a file into plain text. Typical usages
-would be to use odt2txt, catdoc/antiword, or meta-information
-extraction (like exiftags).
+It looks alright to me and I've acked and pushed it out to
+git://git.bogomips.org/git-svn (crediting Dmitry as the author)
 
-Have a look here:
+If it's not too much trouble, having a test case to ensure it stays
+working with future changes would be nice.
 
-  https://git.wiki.kernel.org/index.php/Textconv
+> This is the first patch I submit on this list, so I hope it's ok.
 
+For addendum changes, the standard we seem to have adopted is
+first initials above the Signed-off/Acked-by lines:
+
+>From 3713e2226bcda64513efd537f370ce4d7f767a1e Mon Sep 17 00:00:00 2001
+From: Dmitry Statyvka <dstatyvka@tmsoft-ltd.kiev.ua>
+Date: Fri, 30 Jul 2010 04:30:13 +0200
+Subject: [PATCH] git svn: add an option to recode pathnames
+
+Introduce a new option 'svn.pathnameencoding' that instructs git svn to
+recode pathnames to a given encoding.  It can be used by windows users
+and by those who work in non-utf8 locales to avoid corrupted file names
+with non-ascii characters.
+
+[rp: renamed the option and added manpage documentation]
+
+Signed-off-by: Dmitry Statyvka <dstatyvka@tmsoft-ltd.kiev.ua>
+Signed-off-by: Robert Pollak <robert.pollak@gmail.com>
+Acked-by: Eric Wong <normalperson@yhbt.net>
+---
+<snip>
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Eric Wong
