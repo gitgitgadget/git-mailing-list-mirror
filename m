@@ -1,83 +1,85 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/3] unpack-trees.c: Do not check ce_stage in 
-	will_have_skip_worktree()
-Date: Sat, 31 Jul 2010 13:12:59 +1000
-Message-ID: <AANLkTi=K1Q+BkMvTPxKCo_VFgWY-ZLRznFcBEN2qQ3Yk@mail.gmail.com>
+Subject: Re: [PATCH 3/3] Mark new entries skip-worktree appropriately
+Date: Sat, 31 Jul 2010 13:13:32 +1000
+Message-ID: <AANLkTikhXy1KjA5=SJ9ZwS_XtV99aHPkeo3XoPXqxeKh@mail.gmail.com>
 References: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
-	<1280135310-2347-2-git-send-email-pclouds@gmail.com>
-	<20100731021144.GA906@burratino>
+	<1280135310-2347-3-git-send-email-pclouds@gmail.com>
+	<20100731023219.GB906@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 31 05:13:23 2010
+X-From: git-owner@vger.kernel.org Sat Jul 31 05:13:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Of2Vm-0000Jw-Fz
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 05:13:22 +0200
+	id 1Of2W5-0000Pt-PA
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 05:13:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab0GaDND convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 23:13:03 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:42556 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922Ab0GaDNB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 Jul 2010 23:13:01 -0400
-Received: by wyb39 with SMTP id 39so1776364wyb.19
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 20:13:00 -0700 (PDT)
+	id S1753789Ab0GaDNg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 23:13:36 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:50971 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097Ab0GaDNf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 Jul 2010 23:13:35 -0400
+Received: by wwj40 with SMTP id 40so2196082wwj.1
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 20:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=gPb8IPRSuXWSEJQ4wF5T40PYKtecZEc8/Ahcpe4Bg7s=;
-        b=PahNUGfkgvKwU8Q0QSPWPt1E/ItrdApeGETl9lsjf7kwlNPcFGznyn8nBRkt6YlMOD
-         nR0hZx2J1oyZx13Bttyat94Tju4UsE6AXCiYwMVhy8QjoCyGyjzfFmMCz64xwOhNgYXp
-         lOH3JLOYsSCFoH7xb8l5/VPtr+umgEA52TLqQ=
+        bh=zrFOQyaetsUfMdJVRmtJia1HjY3vbMre93VPm6zRHk4=;
+        b=f2k0ZvUVSK65XRPm+XZTFmRMEVTltKZnXTUeqbm1WvcOkDkFLLx5ZFjeuwZIaP33aU
+         ea0/AgsojHRF4PCClM/SA70y2h5VhWBLVHZj5YH+w8pMp69ijdUKDU5XzJ99eEGIrKXX
+         PF35AemX2sTET4kheUeCWSLk/zKiwW5rduwB4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=pmlTzoVefzPbW8g6ft/F3SvYDPHVZr2RyXyl2TYpqKG9euKJXfNEuBSZ605C3yGWwG
-         C7ZVEKh4hyFQltcXu4MBg4DUVUrFc7Uer8EqA2btEwAXbyxYIkmr2eS9/NO9RLXJCLOk
-         tONkKDlNFu8IjLAMb158UDLAbDVjmUc2b4MpE=
-Received: by 10.216.231.26 with SMTP id k26mr2492845weq.3.1280545979915; Fri, 
-	30 Jul 2010 20:12:59 -0700 (PDT)
-Received: by 10.216.173.199 with HTTP; Fri, 30 Jul 2010 20:12:59 -0700 (PDT)
-In-Reply-To: <20100731021144.GA906@burratino>
+        b=qWOwYy1h9o+G1rqJXcMoS24CmFlgg8cjWdPEB0UIzl+M3ZhHSaJU02WfdjaZVsYudC
+         h798zaDJktK8JwanAXGYRJOoBpGFOZ4sWKKicPm0TEqGLDhxUpC0BrAfkQlZCyRTorVo
+         w5rKgqgObN6L4Ccf9zkPq4Rjc3MX6D8RJbeM8=
+Received: by 10.216.185.72 with SMTP id t50mr2414677wem.77.1280546013353; Fri, 
+	30 Jul 2010 20:13:33 -0700 (PDT)
+Received: by 10.216.173.199 with HTTP; Fri, 30 Jul 2010 20:13:32 -0700 (PDT)
+In-Reply-To: <20100731023219.GB906@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152294>
 
 2010/7/31 Jonathan Nieder <jrnieder@gmail.com>:
 > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
->> The idea of sparse checkout is conflicted entries should always stay
->> in worktree, regardless $GIT_DIR/info/sparse-checkout. Therefore,
->> ce_stage(ce) usually means no CE_SKIP_WORKTREE. This is true when al=
-l
->> entries have been merged into the index, and identical staged entrie=
-s
->> collapsed.
+>> Sparse checkout updates worktree based on the old and new
+>> skip-worktree status when $GIT_DIR/info/sparse-checkout changes:
 >>
->> However, will_have_skip_worktree() since f1f523e (unpack-trees():
->> ignore worktree check outside checkout area) is also used earlier in
->> verify_* functions, when entries have not been merged to index yet
->> and ce_stage() may not be zero. Checking ce_stage() then can make
->> unnecessary verification on entries outside checkout area and error =
-out.
+>> old =3D ce_skip_worktree(ce); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 // =
+current skip-worktree
+>> new =3D will_have_skip_work_tree(ce); =C2=A0 // from $GIT..sparse-ch=
+eckout
+>> if (old && !new) add_file_back(ce); =C2=A0 // shrink checkout area
+>> if (!old && new) remove_file_out(ce); [1] // enlarge checkout area
+>>
+>> New entries after merging will always have skip-worktree unset
+>> (i.e. old =3D 0). If those files are filtered out by
+>> $GIT_DIR/info/sparse-checkout (i.e. new !=3D 0), then case [1] will
+>> happen. But there is nothing to remove because they're new.
 >
-> s/make/provoke/?
+> When using unpack_trees to add a new file, there is no in-file
+> index entry to grab the previous skip worktree bit from. =C2=A0If it
+> is outside the checkout area, we should pretend it was skipped before=
+,
+> too; otherwise a checkout can cause a file on disk whose name
+> coincides with a newly added outside-worktree file to be deleted.
 >
-> So: conflicts from unmerged index entries are supposed to be kept in
-> the work tree; but unpack_trees() is checking too early and seeing
-> conflicts where there are none. =C2=A0Do I understand correctly?
+> Do I understand correctly?
 
-Correct.
+Yes.
 --=20
 Duy
