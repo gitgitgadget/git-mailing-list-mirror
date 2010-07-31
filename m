@@ -1,83 +1,54 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: noob user, want checkins to all be forced to LF terminated
- lines
-Date: Sat, 31 Jul 2010 15:38:20 -0500
-Message-ID: <20100731203820.GA1773@burratino>
-References: <i308gl$v6p$1@dough.gmane.org>
- <20100731044957.GA8920@burratino>
- <i30bg7$50k$1@dough.gmane.org>
- <20100731054437.GD14425@burratino>
- <i30g2s$dpt$1@dough.gmane.org>
+From: Walter Bright <boost@digitalmars.com>
+Subject: Re: noob user, want checkins to all be forced to LF terminated lines
+Date: Sat, 31 Jul 2010 13:51:15 -0700
+Organization: Digital Mars
+Message-ID: <i322ca$niu$1@dough.gmane.org>
+References: <i308gl$v6p$1@dough.gmane.org> <20100731044957.GA8920@burratino> <i30bg7$50k$1@dough.gmane.org> <20100731054437.GD14425@burratino> <i30g2s$dpt$1@dough.gmane.org> <20100731203820.GA1773@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Walter Bright <boost@digitalmars.com>
-X-From: git-owner@vger.kernel.org Sat Jul 31 22:39:40 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 31 22:51:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OfIqJ-00052X-Sb
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 22:39:40 +0200
+	id 1OfJ22-0001FZ-EQ
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 22:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754539Ab0GaUjf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jul 2010 16:39:35 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:49849 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752540Ab0GaUje (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jul 2010 16:39:34 -0400
-Received: by yxg6 with SMTP id 6so962536yxg.19
-        for <git@vger.kernel.org>; Sat, 31 Jul 2010 13:39:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=4gX37GpN6OgZJ7geygPuITEjMMc+25m7uY8IaKuUmsc=;
-        b=bCwthU/SpRY85OKDXC0Gk3fGS/ZP+Cj6UYThErG7P4FP1BZK952h2A7whUU8bY/eL8
-         hbGS32k6vKnvIpBJ0ist6iR3MyC+uexMe9lHe87PLNWiTUOKi0lrGtGXqOc9gEaWc3CG
-         Kiateu4g1bvIuKugRM7Zmsn82s2/rvAeaappg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=VvY+Um7t+HOzI6/W5a8yZgdefKR8Do2mp7gJuMj0OUwfvPFqSGeOQZVSeMRSkuAMUQ
-         9ZepuZnMjEchlWMPseg1OnxcAFVUXB3rohyTqWgcUpVVfZYCZRyv3bKf+OxzC73gVb3Q
-         3WJStkIgQYDGqobPuyYGww6jeJam/Fgt7r6pk=
-Received: by 10.101.69.4 with SMTP id w4mr4237205ank.5.1280608773308;
-        Sat, 31 Jul 2010 13:39:33 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id c19sm6213294ana.2.2010.07.31.13.39.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 31 Jul 2010 13:39:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <i30g2s$dpt$1@dough.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756470Ab0GaUvi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 Jul 2010 16:51:38 -0400
+Received: from lo.gmane.org ([80.91.229.12]:32958 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756146Ab0GaUve (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jul 2010 16:51:34 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OfJ1m-0001Au-Rf
+	for git@vger.kernel.org; Sat, 31 Jul 2010 22:51:30 +0200
+Received: from c-24-16-56-60.hsd1.wa.comcast.net ([24.16.56.60])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 31 Jul 2010 22:51:30 +0200
+Received: from boost by c-24-16-56-60.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 31 Jul 2010 22:51:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c-24-16-56-60.hsd1.wa.comcast.net
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20100731203820.GA1773@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152338>
 
-Walter Bright wrote:
+Jonathan Nieder wrote:
+> Anyway, feel free to ignore this advice.  "cp -a" works fine already
+> and is sometimes just the right thing to do.
 
-> Why would "git clone" even exist if copying the directory works?
-
-As Ilari said, it works remotely.  It=E2=80=99s even faster than just c=
-opying
-the directory (since it has to do less reading), and it only copies
-the repository, not the work tree or .git/config, which may or may not
-be what you want.
-
-More importantly, the reason I mentioned it was this: if you clone
-to make your first backup, you are more likely (when appropriate) to
-use "git fetch" instead of rsync to update the backup afterwards.
-And for that operation, "git fetch" is much more efficient.
-
-Anyway, feel free to ignore this advice.  "cp -a" works fine already
-and is sometimes just the right thing to do.
-
-Jonathan
+Thanks for the info. I am so thoroughly fed up with applications that store 
+their data in ways that cannot be backed up / restored with straightforward file 
+tree copying. I don't know why anyone else puts up with that, either.
