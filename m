@@ -1,69 +1,70 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 1/3] Fix sparse checkout not removing files from index
-Date: Sat, 31 Jul 2010 13:28:01 +1000
-Message-ID: <AANLkTi=n-LYGiYw=g4QsO=9GtvzHc8Vn=m99pcDR5r00@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] Mark new entries skip-worktree appropriately
+Date: Fri, 30 Jul 2010 22:29:02 -0500
+Message-ID: <20100731032902.GA1607@burratino>
 References: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
-	<20100730013534.GB2182@burratino>
-	<AANLkTi=3pX=k=Pf5SnWt8s=hbvwAXcZdmcqP_+kgCyE5@mail.gmail.com>
-	<20100730195022.GB2448@burratino>
-	<20100731010439.GB5817@burratino>
+ <1280135310-2347-3-git-send-email-pclouds@gmail.com>
+ <20100731023219.GB906@burratino>
+ <AANLkTikhXy1KjA5=SJ9ZwS_XtV99aHPkeo3XoPXqxeKh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 31 05:28:15 2010
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 31 05:30:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Of2kA-0004g9-NW
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 05:28:15 +0200
+	id 1Of2mE-0005Cs-IM
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 05:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754653Ab0GaD2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 23:28:08 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:54657 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754626Ab0GaD2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 23:28:04 -0400
-Received: by wwj40 with SMTP id 40so2201575wwj.1
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 20:28:03 -0700 (PDT)
+	id S1754626Ab0GaDaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 23:30:16 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45553 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754336Ab0GaDaP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 23:30:15 -0400
+Received: by iwn7 with SMTP id 7so1953352iwn.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 20:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Hvq19ZTfwGxy9aS23M1wTPslalvGuuttyXfriSwbYzA=;
-        b=gax1F9eld0lqaLDebDn/UkVQLtm50KPMBg9JMDmVbIlQblFntr9iViHVOLDoUUhi0L
-         QoT2kFANAYPMS6+IGS4fHCFU+K0wUBeCjuGf9Dj2+QDsREUzXeM0uQ/DrE0RzfOQYQ6c
-         BvEUihZThOcMmQ48e9KGsSi/jeKm1M8GNGOQY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=1aMLLSkGUBtBzw0RAxMShjx339zjnoMRPTw0FD5jdUc=;
+        b=DCDz+FBb9VWYv3WaQthJfgvgNFKOeVnVMgTKpCmkPzdoQYJdxccX7LCags6T4JwVh2
+         57PwyqHTdnP79cY51mJDQOyU3dZGmGJhc/ybaZ5ZlcHDzFWF7OrmwIh3qhW1iOagA1+p
+         5OZar0wIGVgxboaPSsty37atrfhL3PEQ2Q3LA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=npCmz4kRY5rRyM7fjqbFehgxzhmCTfcN0yp/48wkjDQBAQjHJwYphkIfrK/qKSqBBu
-         WQda6PDrAuqr4SgqmBRtcFYz1S5A/UFBT3/LJmw+7HyL/HYSGdBzOlHnAA19FbHyj7fF
-         aUjoxXORycPGCjto4igPd6ssrb+VT031bW3YM=
-Received: by 10.216.0.85 with SMTP id 63mr352593wea.29.1280546881282; Fri, 30 
-	Jul 2010 20:28:01 -0700 (PDT)
-Received: by 10.216.173.199 with HTTP; Fri, 30 Jul 2010 20:28:01 -0700 (PDT)
-In-Reply-To: <20100731010439.GB5817@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=DIvC15REQeSN5s7E2fwR/MFC2aHva9xUmwuIa5+gyjR+cq9hNLEJyGSyC/+LckOikx
+         usoHKjggefPxzfshYVcLLeYNOsxk7gEUoulZw+xpMsJg6/+ZzIdtkpzT8gL87vnskyvS
+         z5KMowiu/NW9E3LMxX976SaEUt0SJsucuGITI=
+Received: by 10.231.191.74 with SMTP id dl10mr2716624ibb.157.1280547014421;
+        Fri, 30 Jul 2010 20:30:14 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id e8sm2594810ibb.2.2010.07.30.20.30.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jul 2010 20:30:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikhXy1KjA5=SJ9ZwS_XtV99aHPkeo3XoPXqxeKh@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152296>
 
-On Sat, Jul 31, 2010 at 11:04 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Jonathan Nieder wrote:
->
->> What happens if an index entry is removed at the same time as the
->> checkout is narrowed?
->
-> Hm, maybe something like this would help.
+Nguyen Thai Ngoc Duy wrote:
+> 2010/7/31 Jonathan Nieder <jrnieder@gmail.com>:
 
-Or maybe we should move the CE_UPDATE/CE_WT_REMOVE removal code into
-apply_sparse_checkout(). That function knows when checkout area is
-narrowed and CE_WT_REMOVE should not be removed in that case,
-regardless CE_REMOVE|CE_WT_REMOVE combination.
--- 
-Duy
+>> Do I understand correctly?
+>
+> Yes.
+
+Ah, good.
+
+This is fun code to play with.  Thanks for putting it together.
