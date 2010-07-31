@@ -1,99 +1,132 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/3] Mark new entries skip-worktree appropriately
-Date: Fri, 30 Jul 2010 21:32:20 -0500
-Message-ID: <20100731023219.GB906@burratino>
-References: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
- <1280135310-2347-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH/RFC] gitweb: allow configurations that change with each
+ request
+Date: Fri, 30 Jul 2010 22:01:59 -0500
+Message-ID: <20100731030159.GD906@burratino>
+References: <4C4D152A.7050505@gmail.com>
+ <AANLkTinAO8R6mg967XeqFgMHInT4pMlxODz29Jovfki1@mail.gmail.com>
+ <4C4D932A.1010101@gmail.com>
+ <201007261623.05850.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 31 04:33:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: julio.lajara@alum.rpi.edu,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Anders Kaseorg <andersk@mit.edu>, git@vger.kernel.org,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 31 05:03:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Of1tO-0006TP-2o
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 04:33:42 +0200
+	id 1Of2M2-0005vo-4u
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 05:03:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754611Ab0GaCdh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 22:33:37 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64494 "EHLO
+	id S1753259Ab0GaDDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 23:03:12 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:62832 "EHLO
 	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536Ab0GaCdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 22:33:36 -0400
-Received: by yxg6 with SMTP id 6so853184yxg.19
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 19:33:35 -0700 (PDT)
+	with ESMTP id S1751940Ab0GaDDL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 23:03:11 -0400
+Received: by yxg6 with SMTP id 6so856922yxg.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 20:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=geCPOqKRe3yGZxsL97cYLBYtjSbew6YA1nTmhob419I=;
-        b=LxitvJQINPs4WWOUi4I++yaUXj+g6dbDDjf5RefDr/bf6xTGLu2nATxepy8zH2hKma
-         010KlhZOm6BnFXwjwY8zBcoT2KKT7+LsRkVIX7Crkcy7mhhPsqxGW31V1GSQsb6+NNE/
-         mQYTQ4+pzkfDLV0eaFp6tz49AwgAPFUwWNlIU=
+         :in-reply-to:user-agent;
+        bh=qqnYHbjz/CwfMQEcbYemvz4VwPXAI1grbNvuYkjN23Y=;
+        b=UpBiwG6Je3evGsOvA2E+DBnDEHKH3FWxsXq2f0CGWxgW7iBI68UQtyv1J69fz4Slav
+         KpMauQv3E9HtNpa/GHOgh4J4CLZzSynJwSFI1MBl4EUto4C7c9U9yFzEYuTNUSHOq5ce
+         kT3NnxbQEFiXFvv07btSpaAa1zzFw1aOKqdJA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Dbwcm0FmHtuwRVQrbBw8DjiIkvcSC76bQqWa6iuq7pxOYTCXeyY7B/UDuJ9T1Q/FEl
-         P1UA+QZENISRWaMZSAuNaFbortFNViGtW+MEGng8pMfvjTk1lCurVMQ2wpkRZYLvdJIS
-         3dGQMF7X4SxASZvV354EAPKuKBree9glPY69E=
-Received: by 10.151.77.8 with SMTP id e8mr4179211ybl.224.1280543615569;
-        Fri, 30 Jul 2010 19:33:35 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Ar2lX36SYmUCrSlaM9tOARXxXdipZmIR1nVGJnHyikltM6Dw12P7auhQLT7M6qf1jP
+         HRtUZ1/A5HLzXxMiT9EJH7nau5N/Nq0mk5vvyDRQPL40p9ec60FfGlVxBGC0n1bVApun
+         hPH1ovNc/XQCZkfq242wUO6wB1d5kUWwj7dmk=
+Received: by 10.150.242.24 with SMTP id p24mr4007485ybh.380.1280545390533;
+        Fri, 30 Jul 2010 20:03:10 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id x3sm1538493ybl.22.2010.07.30.19.33.34
+        by mx.google.com with ESMTPS id 36sm1566564ybr.20.2010.07.30.20.03.08
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 30 Jul 2010 19:33:34 -0700 (PDT)
+        Fri, 30 Jul 2010 20:03:09 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1280135310-2347-3-git-send-email-pclouds@gmail.com>
+In-Reply-To: <201007261623.05850.jnareb@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152292>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+gitolite's contrib/gitweb/gitweb.conf includes:
 
-> Sparse checkout updates worktree based on the old and new
-> skip-worktree status when $GIT_DIR/info/sparse-checkout changes:
->=20
-> old =3D ce_skip_worktree(ce);           // current skip-worktree
-> new =3D will_have_skip_work_tree(ce);   // from $GIT..sparse-checkout
-> if (old && !new) add_file_back(ce);   // shrink checkout area
-> if (!old && new) remove_file_out(ce); [1] // enlarge checkout area
->=20
-> New entries after merging will always have skip-worktree unset
-> (i.e. old =3D 0). If those files are filtered out by
-> $GIT_DIR/info/sparse-checkout (i.e. new !=3D 0), then case [1] will
-> happen. But there is nothing to remove because they're new.
+	$ENV{GL_USER} = $cgi->remote_user || "gitweb";
 
-When using unpack_trees to add a new file, there is no in-file
-index entry to grab the previous skip worktree bit from.  If it
-is outside the checkout area, we should pretend it was skipped before,
-too; otherwise a checkout can cause a file on disk whose name
-coincides with a newly added outside-worktree file to be deleted.
+which is useful for setups where a user has to be authenticated
+to access certain repos.  Perhaps other typical configurations
+change per session in other ways, too.
 
-Do I understand correctly?
+v1.7.2-rc2~6 (gitweb: Move evaluate_gitweb_config out of run_request,
+2010-07-05) broke such configurations for a speedup, by loading
+the configuration once per FastCGI process.
 
-> +++ b/unpack-trees.c
-> @@ -1091,6 +1091,8 @@ static int merged_entry(struct cache_entry *mer=
-ge, struct cache_entry *old,
->  	if (!old) {
->  		if (verify_absent(merge, "overwritten", o))
->  			return -1;
-> +		if (!o->skip_sparse_checkout && will_have_skip_worktree(merge, o))
-> +			update |=3D CE_SKIP_WORKTREE;
->  		invalidate_ce_path(merge, o);
->  	} else if (!(old->ce_flags & CE_CONFLICTED)) {
->  		/*
+Probably in the end there should be a way to specify in the
+configuration whether a particular installation wants the speedup or
+the flexibility.  But for now it is easier to just undo the relevant
+change.
 
-Looks sane.
+This partially reverts commit 869d58813b24c74e84c9388041eafcef40cb51e4.
 
-Thanks for the fixes,
-Jonathan
+Reported-by: Julio Lajara <julio.lajara@alum.rpi.edu>
+Analysis-by: Jakub Narebski <jnareb@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Jakub Narebski wrote:
+
+> I wonder if it would be possible to 
+> re-enable this feature (which I think is needed to be able to use
+> $cgi->remote_user) but without having all pay the [slight] performance
+> penalty of including (and I think parsing) config file once per each
+> request.
+
+I dunno.  Maybe this would be a good place to start.
+
+ gitweb/gitweb.perl |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index e0e9532..300c4b1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1060,8 +1060,12 @@ sub run_request {
+ 	reset_timer();
+ 
+ 	evaluate_uri();
++	evaluate_gitweb_config();
+ 	check_loadavg();
+ 
++	# $projectroot and $projects_list might be set in gitweb config file
++	$projects_list ||= $projectroot;
++
+ 	evaluate_query_params();
+ 	evaluate_path_info();
+ 	evaluate_and_validate_params();
+@@ -1109,12 +1113,8 @@ sub evaluate_argv {
+ 
+ sub run {
+ 	evaluate_argv();
+-	evaluate_gitweb_config();
+ 	evaluate_git_version();
+ 
+-	# $projectroot and $projects_list might be set in gitweb config file
+-	$projects_list ||= $projectroot;
+-
+ 	$pre_listen_hook->()
+ 		if $pre_listen_hook;
+ 
+-- 
+1.7.2.1.544.ga752d.dirty
