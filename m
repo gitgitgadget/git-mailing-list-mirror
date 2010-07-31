@@ -1,64 +1,75 @@
-From: Benson Margulies <bimargulies@gmail.com>
-Subject: On MacOS, 1.7.2, git svn clone seems to fail silently
-Date: Fri, 30 Jul 2010 21:05:14 -0400
-Message-ID: <AANLkTimxqC3oax=Q0EppAb-Q7AzHshRkV=H=6dJDNhqY@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] Fix sparse checkout not removing files from index
+Date: Fri, 30 Jul 2010 20:04:40 -0500
+Message-ID: <20100731010439.GB5817@burratino>
+References: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
+ <20100730013534.GB2182@burratino>
+ <AANLkTi=3pX=k=Pf5SnWt8s=hbvwAXcZdmcqP_+kgCyE5@mail.gmail.com>
+ <20100730195022.GB2448@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 31 03:05:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 31 03:06:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Of0Vv-0005te-TA
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 03:05:24 +0200
+	id 1Of0WY-00067s-IU
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 03:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366Ab0GaBFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 21:05:17 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:44814 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750970Ab0GaBFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 21:05:16 -0400
-Received: by wwj40 with SMTP id 40so2141825wwj.1
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 18:05:14 -0700 (PDT)
+	id S1751102Ab0GaBF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 21:05:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64587 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750767Ab0GaBF5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 21:05:57 -0400
+Received: by iwn7 with SMTP id 7so1853795iwn.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 18:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=omMOc/1EU+U20LJgjS8KSbnOwtpGur2NP/8/1m1VkCE=;
-        b=YPGLGsiDHUjs0XYJuyJRobQt1YxPEjYSjTW/FoOslEcwapYnmHr1NWS36wH9p0jIBm
-         pjY3KRPF4fldeRwK+D6S8ygJlz9TNmXOsc+Arb8KHZGj0xAfjbTMqoiCcoNBzqvQpboO
-         oICW3SnJ/+4+6nviGWknKO4NVcq7VMOrp4oH8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=jUzhuJCKwl0QK778Nf7f2mdo0+NCM0GnugcaYIlvLKk=;
+        b=oHNWiKiU9fPrtwLLUe6suy1X1KOoB2tjOsX+WvvckzajdfF0CVEYuj7MzGZS6NSJ8m
+         NZKJkTW9l3IcDifzbe+p0sc80QjpVpvBxyhiLABeTx5ItPKSm6pCgAk3jAPbXjPBAyCr
+         DXnzPvfDyGp6wRUKetg9lZplgq9w53Fww75hg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=tM9yYQzq8xGh91jyAwaee+PwTmVL3eT/FFevERcShY8lugahxhaBZx2767rT/3XjOX
-         8kPXOStXdRgRjkLAsUJ4oVeUZi6yWHMN7hTPCi/BRbA1CakG1THZ6REQRysf+9PLVnBk
-         jhfExPw1YgSFkTT80/4wFp7zN5Nrr/awaTLxA=
-Received: by 10.216.234.11 with SMTP id r11mr267324weq.85.1280538314685; Fri, 
-	30 Jul 2010 18:05:14 -0700 (PDT)
-Received: by 10.216.155.17 with HTTP; Fri, 30 Jul 2010 18:05:14 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=JWzX6n0BHZD59pIKU3WYiFrgSPfJovUomyeC3S0kxspNIeU4qEk4UVk/QF1dwpBDd7
+         Db8cfuAnjEoUfErS7Mud+VxRhGLUgR89H5cFIZ6qREvKtTHnw95nbXuDu5hYTVBb+UB5
+         7cq+5DGjdqpATYUmH1sAQYsaiHU2bFZp+4L/A=
+Received: by 10.231.35.199 with SMTP id q7mr2636296ibd.47.1280538355855;
+        Fri, 30 Jul 2010 18:05:55 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm2461337ibk.21.2010.07.30.18.05.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jul 2010 18:05:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100730195022.GB2448@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152278>
 
-git svn clone -s https://gate.svn.sourceforge.net/svnroot/gate
+Jonathan Nieder wrote:
 
-This worked with a previous version of git, I am sorry to report that
-I don't know which one.
+> What happens if an index entry is removed at the same time as the
+> checkout is narrowed?
 
-When I run it with GIT_TRACE=2, the trace ends with:
+Hm, maybe something like this would help.
 
-tace: built-in: git 'config' 'svn-remote.svn.branches-maxRev' '12912'
-trace: built-in: git 'config' 'svn-remote.svn.tags-maxRev' '12912'
-trace: built-in: git 'config' 'svn-remote.svn.branches-maxRev' '12912'
-trace: built-in: git 'config' 'svn-remote.svn.tags-maxRev' '12912' trace:
-built-in: git 'gc' '--auto'
+Jonathan Nieder (2):
+  t1011 (sparse checkout): style nitpicks
+  read-tree -m -u: always remove relevant files when narrowing checkout
 
-I get none of the usual 'checked through' output, either.
-
-that's all. No errors, no messages. No branches, no contents. Just the
-wind whistling through the bytes.
+ cache.h                              |    3 +-
+ t/t1011-read-tree-sparse-checkout.sh |  129 +++++++++++++++++++++-------------
+ unpack-trees.c                       |   42 +++--------
+ 3 files changed, 94 insertions(+), 80 deletions(-)
