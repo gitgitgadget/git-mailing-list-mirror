@@ -1,64 +1,99 @@
-From: Benson Margulies <bimargulies@gmail.com>
-Subject: Re: On MacOS, 1.7.2, git svn clone seems to fail silently
-Date: Fri, 30 Jul 2010 22:32:23 -0400
-Message-ID: <AANLkTikwi=hwqoEsJ-VQvMh7Z8h-WvjwrxgS05sc6-wz@mail.gmail.com>
-References: <AANLkTimxqC3oax=Q0EppAb-Q7AzHshRkV=H=6dJDNhqY@mail.gmail.com>
-	<20100731013509.GG5817@burratino>
-	<AANLkTikwTqQpVO5SMUgqPr04=kAh570zT_RWdxjipid9@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] Mark new entries skip-worktree appropriately
+Date: Fri, 30 Jul 2010 21:32:20 -0500
+Message-ID: <20100731023219.GB906@burratino>
+References: <1280135310-2347-1-git-send-email-pclouds@gmail.com>
+ <1280135310-2347-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 31 04:32:31 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 31 04:33:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Of1sE-00069A-NW
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 04:32:31 +0200
+	id 1Of1tO-0006TP-2o
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 04:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569Ab0GaCcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 22:32:25 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40778 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536Ab0GaCcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 22:32:24 -0400
-Received: by wyb39 with SMTP id 39so1762063wyb.19
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 19:32:23 -0700 (PDT)
+	id S1754611Ab0GaCdh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 Jul 2010 22:33:37 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:64494 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754536Ab0GaCdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 22:33:36 -0400
+Received: by yxg6 with SMTP id 6so853184yxg.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 19:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type;
-        bh=7KreEKtXNYa0Q6h3IJf+CrO6ELyDsh0Iu2pt6XAK2kQ=;
-        b=F+D8FjIGzcE8GeyBkuljyc9ra+FOqKf8VbqEIeYiMBzfI5Iii3G2dXpp6Qw7cZQ1Hx
-         O6LRc47xgQoFirks+GQzgpbWW9WKj5BgJmdwYRffqhPg8viO6in6qy6NeGGY9PAZ5Cox
-         0U4+NvBVRH7p1Mn/JjPtOqkAJ0ATy6umfa2i8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=geCPOqKRe3yGZxsL97cYLBYtjSbew6YA1nTmhob419I=;
+        b=LxitvJQINPs4WWOUi4I++yaUXj+g6dbDDjf5RefDr/bf6xTGLu2nATxepy8zH2hKma
+         010KlhZOm6BnFXwjwY8zBcoT2KKT7+LsRkVIX7Crkcy7mhhPsqxGW31V1GSQsb6+NNE/
+         mQYTQ4+pzkfDLV0eaFp6tz49AwgAPFUwWNlIU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=Gi7/dUXlQqLc80rUwmoCK+//Y0LIwt/MxCc6poXJ2aRSP8Ugw3r9Z8zojFlnv8WLGe
-         Z69rSM6CD9RJuiKuMzP9zWg0Osp+EGEcbC+U3ciFwl9B7np3zjVRUwk0H3it0KRf5bNb
-         W8kPcQypz8TyZzK/mya95v5SDMM7nd6+QHwvc=
-Received: by 10.216.203.71 with SMTP id e49mr2411303weo.60.1280543543168; Fri, 
-	30 Jul 2010 19:32:23 -0700 (PDT)
-Received: by 10.216.155.17 with HTTP; Fri, 30 Jul 2010 19:32:23 -0700 (PDT)
-In-Reply-To: <AANLkTikwTqQpVO5SMUgqPr04=kAh570zT_RWdxjipid9@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Dbwcm0FmHtuwRVQrbBw8DjiIkvcSC76bQqWa6iuq7pxOYTCXeyY7B/UDuJ9T1Q/FEl
+         P1UA+QZENISRWaMZSAuNaFbortFNViGtW+MEGng8pMfvjTk1lCurVMQ2wpkRZYLvdJIS
+         3dGQMF7X4SxASZvV354EAPKuKBree9glPY69E=
+Received: by 10.151.77.8 with SMTP id e8mr4179211ybl.224.1280543615569;
+        Fri, 30 Jul 2010 19:33:35 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id x3sm1538493ybl.22.2010.07.30.19.33.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 30 Jul 2010 19:33:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1280135310-2347-3-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152291>
 
-Hello everyone.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-There's a problem here, but not even remotely (pardon) the one I thought it was.
+> Sparse checkout updates worktree based on the old and new
+> skip-worktree status when $GIT_DIR/info/sparse-checkout changes:
+>=20
+> old =3D ce_skip_worktree(ce);           // current skip-worktree
+> new =3D will_have_skip_work_tree(ce);   // from $GIT..sparse-checkout
+> if (old && !new) add_file_back(ce);   // shrink checkout area
+> if (!old && new) remove_file_out(ce); [1] // enlarge checkout area
+>=20
+> New entries after merging will always have skip-worktree unset
+> (i.e. old =3D 0). If those files are filtered out by
+> $GIT_DIR/info/sparse-checkout (i.e. new !=3D 0), then case [1] will
+> happen. But there is nothing to remove because they're new.
 
-The right URL in this case with -s is
-https://gate.svn.sourceforge.net/svnroot/gate/gate.
+When using unpack_trees to add a new file, there is no in-file
+index entry to grab the previous skip worktree bit from.  If it
+is outside the checkout area, we should pretend it was skipped before,
+too; otherwise a checkout can cause a file on disk whose name
+coincides with a newly added outside-worktree file to be deleted.
 
-Note the extra /gate on the end.
+Do I understand correctly?
 
-It would be nice if this was diagnosed in fashion ("Dear user. That
-doesn't look like a stdlayout svn directory) but the injury is mos def
-self-inflicted.
+> +++ b/unpack-trees.c
+> @@ -1091,6 +1091,8 @@ static int merged_entry(struct cache_entry *mer=
+ge, struct cache_entry *old,
+>  	if (!old) {
+>  		if (verify_absent(merge, "overwritten", o))
+>  			return -1;
+> +		if (!o->skip_sparse_checkout && will_have_skip_worktree(merge, o))
+> +			update |=3D CE_SKIP_WORKTREE;
+>  		invalidate_ce_path(merge, o);
+>  	} else if (!(old->ce_flags & CE_CONFLICTED)) {
+>  		/*
+
+Looks sane.
+
+Thanks for the fixes,
+Jonathan
