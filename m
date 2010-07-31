@@ -1,61 +1,64 @@
-From: Bryan Donlan <bdonlan@gmail.com>
+From: Benson Margulies <bimargulies@gmail.com>
 Subject: Re: On MacOS, 1.7.2, git svn clone seems to fail silently
-Date: Fri, 30 Jul 2010 22:30:52 -0400
-Message-ID: <AANLkTi=p92653sWGS4WDgpnXYD90_2-xLLJTTEMLsfvk@mail.gmail.com>
-References: <AANLkTimxqC3oax=Q0EppAb-Q7AzHshRkV=H=6dJDNhqY@mail.gmail.com> 
-	<20100731013509.GG5817@burratino> <AANLkTikwTqQpVO5SMUgqPr04=kAh570zT_RWdxjipid9@mail.gmail.com>
+Date: Fri, 30 Jul 2010 22:32:23 -0400
+Message-ID: <AANLkTikwi=hwqoEsJ-VQvMh7Z8h-WvjwrxgS05sc6-wz@mail.gmail.com>
+References: <AANLkTimxqC3oax=Q0EppAb-Q7AzHshRkV=H=6dJDNhqY@mail.gmail.com>
+	<20100731013509.GG5817@burratino>
+	<AANLkTikwTqQpVO5SMUgqPr04=kAh570zT_RWdxjipid9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Benson Margulies <bimargulies@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 31 04:31:21 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 31 04:32:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Of1r6-0005n5-Ll
-	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 04:31:20 +0200
+	id 1Of1sE-00069A-NW
+	for gcvg-git-2@lo.gmane.org; Sat, 31 Jul 2010 04:32:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475Ab0GaCbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 Jul 2010 22:31:15 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:60709 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753717Ab0GaCbP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 Jul 2010 22:31:15 -0400
-Received: by wwj40 with SMTP id 40so2179685wwj.1
-        for <git@vger.kernel.org>; Fri, 30 Jul 2010 19:31:13 -0700 (PDT)
+	id S1754569Ab0GaCcZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 Jul 2010 22:32:25 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:40778 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754536Ab0GaCcY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 Jul 2010 22:32:24 -0400
+Received: by wyb39 with SMTP id 39so1762063wyb.19
+        for <git@vger.kernel.org>; Fri, 30 Jul 2010 19:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=oJJzN4CZaOldl4mJ5T4cvwbj/I8NNsIO8L3Mk+OKXa8=;
-        b=WCEPeOIdye7Io22yb8YTV5+Lfl3WMHfs/KehaUF6U3fZqylBduUm2oLct1Ifl9w2Dh
-         Ysg7TdqZ48iNUkItya39B58Q+pOgxBMrvNQV3OZcNfWYN/glwAJqF2mfD5yGJlzgIqr6
-         ZepXYHkQVvYkH7fhPWVUq5NI2zXQXDt6lPa54=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type;
+        bh=7KreEKtXNYa0Q6h3IJf+CrO6ELyDsh0Iu2pt6XAK2kQ=;
+        b=F+D8FjIGzcE8GeyBkuljyc9ra+FOqKf8VbqEIeYiMBzfI5Iii3G2dXpp6Qw7cZQ1Hx
+         O6LRc47xgQoFirks+GQzgpbWW9WKj5BgJmdwYRffqhPg8viO6in6qy6NeGGY9PAZ5Cox
+         0U4+NvBVRH7p1Mn/JjPtOqkAJ0ATy6umfa2i8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=tsP8Y6Svb4/Ycj2A0XQZQakiVI8AGxcV3OOGzHPsZ2vPly4O/bTRq8j4ZEgb2/ueaH
-         v5YdLkp8FpLxhDBcwKAwzlIb2RrAqLomyjhKdh46rnx61qgrp8TVvb8pPCzZAUevBi61
-         VxycbIGedSTvE3IKvpjPgsWsHLhGN/yX2DOOw=
-Received: by 10.216.144.22 with SMTP id m22mr334329wej.0.1280543473774; Fri, 
-	30 Jul 2010 19:31:13 -0700 (PDT)
-Received: by 10.216.187.13 with HTTP; Fri, 30 Jul 2010 19:30:52 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=Gi7/dUXlQqLc80rUwmoCK+//Y0LIwt/MxCc6poXJ2aRSP8Ugw3r9Z8zojFlnv8WLGe
+         Z69rSM6CD9RJuiKuMzP9zWg0Osp+EGEcbC+U3ciFwl9B7np3zjVRUwk0H3it0KRf5bNb
+         W8kPcQypz8TyZzK/mya95v5SDMM7nd6+QHwvc=
+Received: by 10.216.203.71 with SMTP id e49mr2411303weo.60.1280543543168; Fri, 
+	30 Jul 2010 19:32:23 -0700 (PDT)
+Received: by 10.216.155.17 with HTTP; Fri, 30 Jul 2010 19:32:23 -0700 (PDT)
 In-Reply-To: <AANLkTikwTqQpVO5SMUgqPr04=kAh570zT_RWdxjipid9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152290>
 
-On Fri, Jul 30, 2010 at 22:28, Benson Margulies <bimargulies@gmail.com> wrote:
-> $? -> 0
->
-> The numbers in tags-maxRev don't go up with each 'fetch'.
+Hello everyone.
 
-Are you fetching to an already-existing repo? If you are, and it fails
-relatively quickly, it'd be helpful if you could upload the repo
-somewhere, so people can quickly test things (when I reproduced the
-bug on Linux on a new clone, it took tens of minutes before failing).
+There's a problem here, but not even remotely (pardon) the one I thought it was.
+
+The right URL in this case with -s is
+https://gate.svn.sourceforge.net/svnroot/gate/gate.
+
+Note the extra /gate on the end.
+
+It would be nice if this was diagnosed in fashion ("Dear user. That
+doesn't look like a stdlayout svn directory) but the injury is mos def
+self-inflicted.
