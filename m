@@ -1,98 +1,211 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 16/16] do not use thin packs and subtree together (just a bad feeling about this)
-Date: Sat, 31 Jul 2010 23:18:25 +0700
-Message-ID: <1280593105-22015-17-git-send-email-pclouds@gmail.com>
-References: <1280593105-22015-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC v2] Documentation: =?utf-8?Q?fl?=
+	=?utf-8?B?ZXNoIG91dCDigJxnaXQgcHVsbOKAnQ==?= description
+Date: Sat, 31 Jul 2010 21:54:39 -0500
+Message-ID: <20100801025439.GA9592@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitser@pobox.com>,
+	Geoff Russell <geoffrey.russell@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 01 04:39:59 2010
+X-From: git-owner@vger.kernel.org Sun Aug 01 04:56:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OfOT0-0003Ct-JS
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Aug 2010 04:39:58 +0200
+	id 1OfOiW-0006hE-V7
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Aug 2010 04:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755553Ab0HACjy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jul 2010 22:39:54 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:49942 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753090Ab0HACjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jul 2010 22:39:53 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 26so976843pzk.19
-        for <git@vger.kernel.org>; Sat, 31 Jul 2010 19:39:53 -0700 (PDT)
+	id S1755647Ab0HACzz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jul 2010 22:55:55 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37056 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755600Ab0HACzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jul 2010 22:55:54 -0400
+Received: by iwn7 with SMTP id 7so2792209iwn.19
+        for <git@vger.kernel.org>; Sat, 31 Jul 2010 19:55:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=DOlz8TBooSZeLMx7XdzO6JGF2YAbKwBqZRKqSDZya4M=;
-        b=J/Dz16nXLbKrtJ6sV5aPpdoNzLHujZa+guWg1zGHqwhW4I5FZuk15E0GO1H3kSVOqH
-         4eMANGtJ4veq2AgPCrjhJnj4fG2/eayUoSUXz4zJgSUNNtLQnlu755son2QJTBWgb1CZ
-         Nt0LrY82Kgek/wZlQtmahpzkd5XRwDMH7/D48=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=1WKTPuEBF5gOIf3urJbS0EV7/fWalzL6No+q/vg4Qwo=;
+        b=QTyXu4e51QdxC4h+h1mTPq6asYXiCTe/kLozxQ/pXUlgAx8RnxPVEDBjPo1uF4oHYp
+         5ck51Aut9jYjIjrVkTyun3xziFxK8STLbL38d2q+guZffJ8Sa8QTUlSyE3krppbyPLnE
+         LHrfuWOX2J0LlmjXsNkcPEhySmtm3Zhxlxs7Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=sgjFFzratnmdlGivoDvlPctLhd86Xj1SAQO3AfRYtSidz9stKmjy+wvMCUKrA8yFw9
-         sWx2SXzlTmqbxV4GDtWxrqsCiYAvrC2zzs/1FZ6qJi934dxJx0bJU6aG7ZDj0PD3HiPq
-         EyAit6cEaTLn7pzV2kAYaWotGN0s1RzMOjmG4=
-Received: by 10.115.77.17 with SMTP id e17mr4827112wal.108.1280630393122;
-        Sat, 31 Jul 2010 19:39:53 -0700 (PDT)
-Received: from dektop ([119.12.238.118])
-        by mx.google.com with ESMTPS id q6sm7705851waj.10.2010.07.31.19.39.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 31 Jul 2010 19:39:52 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Sat, 31 Jul 2010 23:20:45 +0700
-X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
-In-Reply-To: <1280593105-22015-1-git-send-email-pclouds@gmail.com>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=cKf1poXVrRKf+02KuAHIyxpAOCwfMH45HamHLWENfkO5FZMbFg5WNPl0WZyqYx5taG
+         T8Bt6iQ3Lxb2PDPd+ZLpSeuJBGpqQFWFkd3Gu+OWvCaUx6F8Xz3SAhE0/4LGzH5uYWvC
+         Y4QtQs564/bbIfn3p+Cy7awMA5sU3ctUoiIv0=
+Received: by 10.231.157.195 with SMTP id c3mr4224971ibx.155.1280631353015;
+        Sat, 31 Jul 2010 19:55:53 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm3780896ibk.3.2010.07.31.19.55.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 31 Jul 2010 19:55:52 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152364>
 
+The current description in the pull man page does not say much more
+than that =E2=80=9Cgit pull=E2=80=9D is fetch + merge.  Though that is =
+all a person
+needs to know in the end, it would be useful to summarize a bit about
+what those commands do for new readers.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Most of this description is taken from the =E2=80=9Cgit merge=E2=80=9D =
+docs.
+
+Now that we explain how to back out of a failed merge (reset --merge),
+we can tone down the warning against that a bit.
+
+Except, as Thomas noticed, there=E2=80=99s a risk with that because peo=
+ple
+might read this version of the manpage online and then conclude that
+it is safe to try a merge with uncommitted changes, only to find that
+their =E2=80=9Cgit reset=E2=80=9D doesn't support --merge yet.  Or wors=
+e, verify that
+their git-reset has --merge by a quick test (1b5b465 is in 1.6.2) but
+then find that it does not help with backing out of a merge (e11d7b5
+is only in 1.7.0!).  For the master copy of the documentation on
+kernel.org (but not the historical versions) we should keep the
+warning.
+
+So abuse the staledocs[] macro (currently used to suppress the Note in
+git.html about previous versions of documentation) to distinguish
+these cases.
+
+Noticed-by: Geoff Russell <geoffrey.russell@gmail.com>
+Improved-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Improved-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/send-pack.c |    2 ++
- upload-pack.c       |    3 +++
- 2 files changed, 5 insertions(+), 0 deletions(-)
+Changes since v1[1]:
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 481602d..fb1ad2b 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -53,6 +53,8 @@ static int pack_objects(int fd, struct ref *refs, str=
-uct extra_have_objects *ext
- 	int i;
+ - remove a stray article
+ - stop lying in the synopsis
+ - use an ifdef to allow the warning about situations that may be diffi=
+cult to
+   recover from to be kept when building the "universal" docs that shou=
+ld
+   apply to git versions before 1.7, too.
+
+Junio: ideally for this to work, git-pull.html would need to get the
+same special treatment as git.html gets.  Does that seem doable?  Is
+Meta/dodoc.sh still the script to do it?
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/151799/focus=
+=3D151801
+
+ Documentation/git-pull.txt |   70 ++++++++++++++++++++++++++++++++++++=
++-------
+ 1 files changed, 59 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index ab4de10..54e9619 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -8,29 +8,77 @@ git-pull - Fetch from and merge with another reposito=
+ry or a local branch
 =20
- 	i =3D 4;
-+	if (core_subtree)
-+		args->use_thin_pack =3D 0;
- 	if (args->use_thin_pack)
- 		argv[i++] =3D "--thin";
- 	if (args->use_ofs_delta)
-diff --git a/upload-pack.c b/upload-pack.c
-index 9b6710a..c65a3cb 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -581,6 +581,9 @@ static void receive_needs(void)
- 	if (!use_sideband && daemon_mode)
- 		no_progress =3D 1;
+ SYNOPSIS
+ --------
+-'git pull' <options> <repository> <refspec>...
++'git pull' [options] [<repository> [<refspec>...]]
 =20
-+	if (core_subtree)
-+		use_thin_pack =3D 0;
+=20
+ DESCRIPTION
+ -----------
+-Runs 'git fetch' with the given parameters, and calls 'git merge'
+-to merge the retrieved head(s) into the current branch.
+-With `--rebase`, calls 'git rebase' instead of 'git merge'.
+=20
+-Note that you can use `.` (current directory) as the
+-<repository> to pull from the local repository -- this is useful
+-when merging local branches into the current branch.
++Incorporates changes from a remote repository into the current
++branch.  In its default mode, `git pull` is shorthand for
++`git fetch` followed by `git merge FETCH_HEAD`.
+=20
+-Also note that options meant for 'git pull' itself and underlying
+-'git merge' must be given before the options meant for 'git fetch'.
++More precisely, 'git pull' runs 'git fetch' with the given
++parameters and calls 'git merge' to merge the retrieved branch
++heads into the current branch.
++With `--rebase`, it runs 'git rebase' instead of 'git merge'.
+=20
+-*Warning*: Running 'git pull' (actually, the underlying 'git merge')
++<repository> should be the name of a remote repository as
++passed to linkgit:git-fetch[1].  <refspec> can name an
++arbitrary remote ref (for example, the name of a tag) or even
++a collection of refs with corresponding remote tracking branches
++(e.g., refs/heads/*:refs/remotes/origin/*), but usually it is
++the name of a branch in the remote repository.
 +
- 	if (depth =3D=3D 0 && shallows.nr =3D=3D 0)
- 		return;
- 	if (depth > 0) {
++Default values for <repository> and <branch> are read from the
++"remote" and "merge" configuration for the current branch
++as set by linkgit:git-branch[1] `--track`.
++
++Assume the following history exists and the current branch is
++"`master`":
++
++------------
++          A---B---C master on origin
++         /
++    D---E---F---G master
++------------
++
++Then "`git pull`" will fetch and replay the changes from the remote
++`master` branch since it diverged from the local `master` (i.e., `E`)
++until its current commit (`C`) on top of `master` and record the
++result in a new commit along with the names of the two parent commits
++and a log message from the user describing the changes.
++
++------------
++          A---B---C remotes/origin/master
++         /         \
++    D---E---F---G---H master
++------------
++
++See linkgit:git-merge[1] for details, including how conflicts
++are presented and handled.
++ifndef::stalenotes[]
++To cancel a conflicting merge, use `git reset --merge`.
++endif::stalenotes[]
++ifdef::stalenotes[]
++
++In git 1.7.0 or later, to cancel a conflicting merge, use
++`git reset --merge`.  *Warning*: In older versions of git, running 'gi=
+t pull'
+ with uncommitted changes is discouraged: while possible, it leaves you
+-in a state that is hard to back out of in the case of a conflict.
++in a state that may be hard to back out of in the case of a conflict.
++endif::stalenotes[]
++
++If any of the remote changes overlap with local uncommitted changes,
++the merge will be automatically cancelled and the work tree untouched.
++It is generally best to get any local changes in working order before
++pulling or stash them away with linkgit:git-stash[1].
+=20
+ OPTIONS
+ -------
+=20
++Options meant for 'git pull' itself and the underlying 'git merge'
++must be given before the options meant for 'git fetch'.
++
+ -q::
+ --quiet::
+ 	This is passed to both underlying git-fetch to squelch reporting of
 --=20
-1.7.1.rc1.69.g24c2f7
+1.7.2.1.544.ga752d.dirty
