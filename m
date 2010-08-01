@@ -1,62 +1,65 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC v2] Documentation: =?utf-8?Q?fl?=
-	=?utf-8?B?ZXNoIG91dCDigJxnaXQgcHVsbOKAnQ==?= description
-Date: Sat, 31 Jul 2010 21:54:39 -0500
-Message-ID: <20100801025439.GA9592@burratino>
+Subject: [PATCH/RFC v2 resend] =?utf-8?Q?Documentat?=
+	=?utf-8?B?aW9uOiBmbGVzaCBvdXQg4oCcZ2l0IHB1bGzigJ0=?= description
+Date: Sat, 31 Jul 2010 22:03:21 -0500
+Message-ID: <20100801030321.GA9671@burratino>
+References: <20100801025439.GA9592@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
 	Thomas Rast <trast@student.ethz.ch>,
-	Junio C Hamano <gitser@pobox.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Geoff Russell <geoffrey.russell@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 01 04:56:02 2010
+X-From: git-owner@vger.kernel.org Sun Aug 01 05:05:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OfOiW-0006hE-V7
-	for gcvg-git-2@lo.gmane.org; Sun, 01 Aug 2010 04:56:01 +0200
+	id 1OfOrC-0000zN-Bf
+	for gcvg-git-2@lo.gmane.org; Sun, 01 Aug 2010 05:04:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755647Ab0HACzz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jul 2010 22:55:55 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:37056 "EHLO
+	id S1755235Ab0HADEn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 Jul 2010 23:04:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57290 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755600Ab0HACzy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 Jul 2010 22:55:54 -0400
-Received: by iwn7 with SMTP id 7so2792209iwn.19
-        for <git@vger.kernel.org>; Sat, 31 Jul 2010 19:55:53 -0700 (PDT)
+	with ESMTP id S1754794Ab0HADEm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 Jul 2010 23:04:42 -0400
+Received: by iwn7 with SMTP id 7so2796693iwn.19
+        for <git@vger.kernel.org>; Sat, 31 Jul 2010 20:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition
-         :content-transfer-encoding:user-agent;
-        bh=1WKTPuEBF5gOIf3urJbS0EV7/fWalzL6No+q/vg4Qwo=;
-        b=QTyXu4e51QdxC4h+h1mTPq6asYXiCTe/kLozxQ/pXUlgAx8RnxPVEDBjPo1uF4oHYp
-         5ck51Aut9jYjIjrVkTyun3xziFxK8STLbL38d2q+guZffJ8Sa8QTUlSyE3krppbyPLnE
-         LHrfuWOX2J0LlmjXsNkcPEhySmtm3Zhxlxs7Y=
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=c2zM+3I5A8vrzrRD+0wIif+PXDmNrLCNx2VJDfvsENQ=;
+        b=QzWGIquglsm7j/CoUrLcI3U8b8AJpEcgPaPaGi5lNG/pWNkTj+j/MRgFT9w6ZdGvH9
+         NZkwYGBEFoOodKw4ZmH/wnvKtiTwS9JOw2wYfahjVwmq43YQfV0zpwNrnKjRXGunIA78
+         i4P5CCG9SZmi8M3fdjwpQ02K7nhlPTTv/N6Ag=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:content-transfer-encoding:user-agent;
-        b=cKf1poXVrRKf+02KuAHIyxpAOCwfMH45HamHLWENfkO5FZMbFg5WNPl0WZyqYx5taG
-         T8Bt6iQ3Lxb2PDPd+ZLpSeuJBGpqQFWFkd3Gu+OWvCaUx6F8Xz3SAhE0/4LGzH5uYWvC
-         Y4QtQs564/bbIfn3p+Cy7awMA5sU3ctUoiIv0=
-Received: by 10.231.157.195 with SMTP id c3mr4224971ibx.155.1280631353015;
-        Sat, 31 Jul 2010 19:55:53 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=eHqbL7kTlt1Q1F364MVHHg03p926BBjr9lqz0NxTdQ/CvG/HNZ8bzh8kmQHOAaLsnm
+         7eARu7X8AhAFwrfCHT3Gmw5BHE3LtsYu9QnqJSoJ39fcFTIxrlxmfl6BIVs2XdAy8aoV
+         buaxZ5Sy72+0hne7UtRyMDOOrD/PQM0xhDpXw=
+Received: by 10.231.193.11 with SMTP id ds11mr4173033ibb.192.1280631881853;
+        Sat, 31 Jul 2010 20:04:41 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id h8sm3780896ibk.3.2010.07.31.19.55.52
+        by mx.google.com with ESMTPS id n20sm3787976ibe.5.2010.07.31.20.04.40
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 31 Jul 2010 19:55:52 -0700 (PDT)
+        Sat, 31 Jul 2010 20:04:40 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <20100801025439.GA9592@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152366>
 
 The current description in the pull man page does not say much more
 than that =E2=80=9Cgit pull=E2=80=9D is fetch + merge.  Though that is =
@@ -91,6 +94,8 @@ Improved-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Improved-by: Thomas Rast <trast@student.ethz.ch>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
+[misspelled an email address.  sorry for the noise!]
+
 Changes since v1[1]:
 
  - remove a stray article
