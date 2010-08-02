@@ -1,116 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 05/16] Hook up replace-object to allow bulk commit
- replacement
-Date: Mon, 02 Aug 2010 12:58:23 -0700
-Message-ID: <7v8w4olrc0.fsf@alter.siamese.dyndns.org>
-References: <1280593105-22015-1-git-send-email-pclouds@gmail.com>
- <1280593105-22015-6-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: jk/tag-contains (Re: What's cooking in git.git (Jul 2010, #05;
+ Wed, 28))
+Date: Mon, 2 Aug 2010 15:02:09 -0500
+Message-ID: <20100802200209.GD2180@burratino>
+References: <7vvd7zuecv.fsf@alter.siamese.dyndns.org>
+ <20100730183709.GC18544@coredump.intra.peff.net>
+ <20100731060703.GA21207@burratino>
+ <20100731123328.GA5273@coredump.intra.peff.net>
+ <7vocdlpsmw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 21:58:58 2010
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 22:03:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og19y-0005lI-22
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 21:58:54 +0200
+	id 1Og1Ef-0000L7-9s
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 22:03:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754948Ab0HBT6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 15:58:34 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35350 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754925Ab0HBT6c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 15:58:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B3D01CA1B1;
-	Mon,  2 Aug 2010 15:58:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NwZJ2LqoWABnhjxgA4ufJxhEJM4=; b=aGpsEc
-	IwwnxGBePMA28sUH3k46+kta/vs1INsAthCodKFZa4nedZDwV9MICLOeQnwizOY8
-	A2lAR1NAgGSWrsxpsJ93RAkRD5WgN86nIHzodVWWi8YR2sxDexaeCG+3E8CyOvmD
-	t+NDLBRRaRC0ZPzOFFzaFFa7dbPnWi+ekcenk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=g8iZ0jdG7yxfSY33dUDroHo1OFCJKjtg
-	MCr9ZDuxkoN6KAyZwYdcU2eV0Pp+mTKIGg/55fOOuRuT+pmXEKuj+lYzJVjpIzqx
-	dQUGeID72KQy4O/XyDFsziJdblw78xrFvpviW+vJqsV3U+z80TUYwBwd9+xo/ylq
-	oxiCAaZj0NA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9209FCA1B0;
-	Mon,  2 Aug 2010 15:58:28 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AF90ACA1AC; Mon,  2 Aug
- 2010 15:58:25 -0400 (EDT)
-In-Reply-To: <1280593105-22015-6-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Sat\, 31 Jul
- 2010 23\:18\:14 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 51869A2A-9E70-11DF-8AF2-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755145Ab0HBUDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 16:03:39 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:43320 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754767Ab0HBUDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 16:03:38 -0400
+Received: by yxg6 with SMTP id 6so1386071yxg.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 13:03:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=cNgd7lF3pm9TwxCqAcG6Mo797CSVXk3u77ZUTzqJ6DQ=;
+        b=OWoVt+gCBGC+ddvOkS5JS0618Ywb9WvmYnNnBjkJDv+fl0XhgZvPDeuSN9bPj42Sk7
+         OTHvUAnrMAQiZX1U9jPidyp7F6Z8DrE5Idx9TED+W37bSnhg9tFTuys7AFM86ZqLSroC
+         XK8HXgkVUfM0LVsyjywBv+bTYEUz8/FgbemSU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Z+HCwfSaMxAs3ykJ2FYOfMCeUAEXTflBkrdlNRpM0kV7g9+XeWgIcDPwpZOYxwipCT
+         Pp22gwNuMtIUvUWZipWM9V+Wz2ybEg8gQfsbUlwRYNGbVkcxVpI9F0kT5Bk4yjf0hS61
+         AO+jIo3coZ7IG79jQwg0JpNY+3fg2tuFFe2fU=
+Received: by 10.90.71.2 with SMTP id t2mr1421701aga.26.1280779409818;
+        Mon, 02 Aug 2010 13:03:29 -0700 (PDT)
+Received: from burratino ([64.107.3.126])
+        by mx.google.com with ESMTPS id g31sm5788183ibh.4.2010.08.02.13.03.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 02 Aug 2010 13:03:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vocdlpsmw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152448>
 
-I really do not like the use of "replace" for the purpose of narrow
-clones.  While "replace" is about fixing a mistake by tweaking trees, a
-desire to have a narrow clone at this moment is _not_ a mistake.  You may
-want to have wider or full clone of the project tomorrow.  You may want to
-push the result of committing on top of such a narrowed clone back to a
-full repository.  My gut feeling is that that use of "replace" to stub out
-the objects that you do not currently have would make it a nightmare when
-you would want to widen (especially to widen over the wire while pushing
-into a full repository on the other end), although I haven't looked at all
-the patches in the series.
+Junio C Hamano wrote:
 
-Can you back up a bit and give us a high-level overview of how various
-operations in a narrowed clone should work, and how you achieve that
-design goal?
+> You need to be careful here, though.  What if you pulled from somebody
+> whose clock is set grossly in the future?
 
-Let's take an example of starting from git.git and narrow-clone only its
-Documentation/ (as you seem to have used as a guinea-pig) subdirectory.
-For the sake of simplicity, let's say the upstream project has only one
-commit.
+We could check for that and give relevant advice:
 
-One plausible approach would be to have the commit, its top level tree
-object, its Documentation/ tree object and all the blobs below that level,
-while other blobs and trees that are reachable from the top level tree
-object are left missing, but somehow are marked so that fsck would think
-they are OK to be missing.  Your worktree would obviously be narrowed to
-the same Documentation/ area, and unlike the narrow checkout codepath, you
-do not widen on demand (unless you automatically fetch missing parts of
-the tree, which I do not think you should do by default to help people who
-work while at 30,000ft).  Instead, any operation that tries to modify
-outside the "subtree" area should fail.
+ fatal: committer date <date> precedes parent date <date>
+ hint: It looks like you are trying to commit on top of a commit
+ hint: from 5 years into the future.
+ hint: Use "git rebase -f" to rewrite the commit with a more
+ hint: sensible date, and please, fix your clocks!
 
-When you build a commit that represents a Documentation patch on top of
-such a narrowed clone, because you have a full tree of Documentation/
-area, you can come up with the updated tree object for that part of the
-project.  If "subtree" mode (aka narrowed clone) rejects operation outside
-the cloned area, your commit is guaranteed to touch only Documentation/
-area and nothing outside.  You therefore should be able to compute the
-tree object for the whole repository (i.e. all the other entries in the
-top level tree object should be the same as those from HEAD).
+> I wonder if we can make fsck to notice a commit with a wrong timestamp
+> (i.e. older than some of its parents) and make a note of it (hopefully
+> they are miniscule minority)---then during the revision traversal when we
+> hit such a commit, we perhaps ignore its timestamp (pretending as if its
+> timestamp is one of its children or parent---I haven't thought about the
+> details, but the note fsck leaves can record what adjusted timestamp
+> should be used) to fix the issue?
 
-Because the index is a flat structure, you would need to fudge the entries
-that are missing-but-OK in there somehow, _and_ you would need to be able
-to recompute the tree after updating Documentation/ area.  E.g. you may
-know ppc/ is tree db31c066 but may not know that it has three blobs
-underneath it nor what their object names are, so your index operating in
-this mode would need to record (ppc -> db31c066) mapping in order to be
-able to recreate the tree object out of it.
-
-Using cache-tree data structure might help in doing this.  It so far has
-been an optimization (i.e. when it says it has an up-to-date information,
-it does, but if it doesn't you can always recompute what is needed from
-the flat index entries), but I would imagine that you can add an "out of
-cloned area" bit to cache-tree entries, and mark a subtree that represents
-missing parts (e.g. 'ppc/') as such---anything that tries to invalidate
-such a cache-tree entry would be an error anyway, and when you need to
-write the index out as a tree, such cache-tree entries that record the
-trees outside your cloned area can be reused, no?
+Thanks --- at first glance, this idea would seem to allow much faster
+revision limiting.
