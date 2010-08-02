@@ -1,92 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: allow configurations that change with each request
-Date: Mon, 2 Aug 2010 23:25:22 +0200
-Message-ID: <201008022325.23670.jnareb@gmail.com>
-References: <4C4D152A.7050505@gmail.com> <201008022135.58287.jnareb@gmail.com> <20100802210121.GA3072@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5 v4] log: parse detached options like git log --grep
+ foo
+Date: Mon, 02 Aug 2010 14:28:31 -0700
+Message-ID: <7vsk2wk8lc.fsf@alter.siamese.dyndns.org>
+References: <vpq7hkdml22.fsf@bauges.imag.fr>
+ <1280478669-22973-4-git-send-email-Matthieu.Moy@imag.fr>
+ <7vvd7tlzfu.fsf@alter.siamese.dyndns.org> <vpqtyncdeuc.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Julio Lajara <julio.lajara@alum.rpi.edu>,
-	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Anders Kaseorg <andersk@mit.edu>, git@vger.kernel.org,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 23:25:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 02 23:28:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og2WA-0005xZ-P6
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 23:25:55 +0200
+	id 1Og2Yx-0007LP-3N
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 23:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755376Ab0HBVZt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 17:25:49 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62855 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755049Ab0HBVZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 17:25:48 -0400
-Received: by fxm14 with SMTP id 14so1802731fxm.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 14:25:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=yVqdzSdUSrDd6ok6cMcsn/cmAbgruWzSlj8cAoct3Mo=;
-        b=Wu0d6dFcZm58ytizkqg511DItyRQGJracWxyrk5aFV4t6WU2OWVzalyQ3vXEFdviFs
-         8OsOFWup/FHvXoG2fIh62eybkEh4j4pGqAY8b+84j9GKVqnUP54jvfOdsL6BVGfdKNbI
-         eYzkyLq9U55sD0O2TPDiiXMScMCMHMgFm5TI0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=VRKswiv9j0SQywM+jruDCsAKUIcwmSK2QH0T33Jawj6++FHiWumIdaNZhlX0EFldFZ
-         dfIYJPo55IrkHYX6MftQdmp/ffL+KU8KAx0G1VLETvjGxEiKGnExnwSQ4Uxg0UGCthc4
-         E7m5FrckdyMGIxeRO08aeZdIhr+NoPH2uzbcU=
-Received: by 10.223.103.72 with SMTP id j8mr6497115fao.4.1280784347241;
-        Mon, 02 Aug 2010 14:25:47 -0700 (PDT)
-Received: from [192.168.1.13] (aeho67.neoplus.adsl.tpnet.pl [79.186.196.67])
-        by mx.google.com with ESMTPS id y2sm2193678fau.12.2010.08.02.14.25.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Aug 2010 14:25:36 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100802210121.GA3072@burratino>
-Content-Disposition: inline
+	id S1755376Ab0HBV2k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 17:28:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52927 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752541Ab0HBV2j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 17:28:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CA243CAE33;
+	Mon,  2 Aug 2010 17:28:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s0JcfgppfLvfpVhu5XDmdw5XYa0=; b=KUrYW6
+	z82REUJiVt9UhpCRG8nWBRI2vQFs81BunSWRe8ndGVPrtxYOMHVod6Y4ZvT2psZS
+	S9ZGx6AjzGrjeR/Nt3sJhrORwLJra1Ychi+8tNYv0vgPmap7TsAGwGR20XQ5a953
+	uAt/VF48UH44y14pYttGBgS+Mqo1O5Z225LV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=c/M2jjRf16mNy9HHxymI74DdJRiKD8mx
+	NX5SidMWkn4NF61J+MDcpI0vHO8xOl9FlvHHlli45RInl6dlAFLlEgjpQVkXzmam
+	aHsVSZZvKYcJgkdLrQBwkWdxBuRn1kqy4cYrz+iYogvRzSvBBRsG6fC/UsOQLkfJ
+	ir9c4zGr9vU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A721FCAE2F;
+	Mon,  2 Aug 2010 17:28:35 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EB2DDCAE2E; Mon,  2 Aug
+ 2010 17:28:32 -0400 (EDT)
+In-Reply-To: <vpqtyncdeuc.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Mon\, 02 Aug 2010 20\:55\:23 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E86663B0-9E7C-11DF-864B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152464>
 
-Jonathan Nieder wrote:
-> Jakub Narebski wrote:
-> 
-> > One solution I can think of (still backwards incompatibile) would be to
-> > provide $per_request_config variable, which would hold anonymous sub
-> > with parts of config that need to be done per request (this should work
-> > with global variables (our), but I think it wouldn't work with lexical
-> > variables (my)).  For example gitolite's contrib/gitweb/gitweb.conf would
-> > then include:
-> > 
-> >   $per_request_config = sub {
-> >   	$ENV{GL_USER} = $cgi->remote_user || "gitweb";
-> >   }
-> 
-> How would that interact with caching?  i.e., how would whatever caching
-> engine is used learn that $cgi->remote_user is part of the key needed to
-> uniquely determine a response?
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Well, obviously caching itself, including generating cache key, would be
-done per-request.  It is only *initializing* cache (i.e. require + 
-+ $cache->new()) that should be done once per run and not once per 
-request.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> The patch overall looks good, and this comments illustrates the issue
+>> rather well.  When the user wants to use "--longopt val" syntax, s/he
+>> needs to know that "--longopt" will always take a value.  Arguably
+>> majority of options that can take value will, but like "--stat X,Y" this
+>> leaves things inconsistent.  Without "--longopt value" patch there won't
+>> be such an inconsistency, but I think this patch series is lessor of two
+>> evils.
+>
+> ... especially when parse-option already does this:
+>
+> git commit --message foo   => works
+> git gc --prune 'last week' => doesn't
+>
+> Just like most GNU tools:
+>
+> grep --regexp foo => works
+> grep --color auto => doesn't
 
-But nevermind, this might be not much of a problem.  I'll start with
-cache re-initialized on each request for start.
+Hmm.
 
--- 
-Jakub Narebski
-Poland
+Are you hinting that we should keep "you can say '-Ofoo' and '-O foo'"
+bits but we should drop "you can also say '--opt=foo' and '--opt foo' as
+long as --opt always takes an argument"?
+
+I actually think that may make sense.
+
+>> Don't you by the way regret the naming of the parsing function by now?
+>> There is nothing "diff" about it anymore.
+>
+> Right. I'll rename them to "parse_long_opt".
+
+Thanks.
