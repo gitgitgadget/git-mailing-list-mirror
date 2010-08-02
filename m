@@ -1,87 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5] t1011 (sparse checkout): style nitpicks
-Date: Mon, 02 Aug 2010 10:31:05 -0700
-Message-ID: <7viq3sncpy.fsf@alter.siamese.dyndns.org>
-References: <1280556869-707-1-git-send-email-pclouds@gmail.com>
- <1280556869-707-2-git-send-email-pclouds@gmail.com>
- <7vmxt5lyjh.fsf@alter.siamese.dyndns.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: URL substitution and config file precedence
+Date: Mon, 2 Aug 2010 19:38:53 +0200
+Message-ID: <20100802173853.GB5325@fishbowl.rw.madduck.net>
+References: <20100802153720.GA28481@fishbowl.rw.madduck.net>
+ <AANLkTikdyNjcgZpY=BPjkieacDXHPvp0he77VJZCMLpw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 19:31:26 2010
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Aug 02 19:39:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OfyrB-0005HP-VM
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 19:31:22 +0200
+	id 1Ofyyl-00014J-1t
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 19:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751720Ab0HBRbR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 13:31:17 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55623 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330Ab0HBRbQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 13:31:16 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 57E23CA9AC;
-	Mon,  2 Aug 2010 13:31:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/fCK4KVE3xjC
-	KZkug+DnA7r/pCw=; b=UkMPb9qRnNJs7kb/F2KaMUBW90oVgeZZSd9x4NToaB13
-	DL5QpJDqz7Jzad2oFYqzIrDEQBP+JZXhsO6m9Ka11k/9+QZgJG5FwXoe1MVnG+Uy
-	E53qdZyfefInybR7VhFznDX9kqO24flNcZZchXXr5+p35F9WVqUajmCGC7yQ0yA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=CoEB04
-	aM3o+HftGI++/wlGQUzZcMtcoVDODXAKRsrve6GlOZS0nDAHQs/hZznIem7dX77r
-	Q9gfYm2HtLQUs1bUPiWxMIMaSH9uQa95JgTbSZKYhyqtfGza4+wxZmHGIxY0oMct
-	5tiXrAQcpxWkbsOPtqxCH3c3TxNIdE6KoHKYA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 97B2DCA9A8;
-	Mon,  2 Aug 2010 13:31:10 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C383FCA9A7; Mon,  2 Aug
- 2010 13:31:06 -0400 (EDT)
-In-Reply-To: <7vmxt5lyjh.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 02 Aug 2010 10\:22\:42 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BDAE4C1C-9E5B-11DF-BD61-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752054Ab0HBRjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 13:39:05 -0400
+Received: from clegg.madduck.net ([193.242.105.96]:51930 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750988Ab0HBRjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 13:39:04 -0400
+Received: from fishbowl.rw.madduck.net (lapse.rw.madduck.net [IPv6:2001:1620:f03::1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTPS id DF8CC1D409D;
+	Mon,  2 Aug 2010 19:38:53 +0200 (CEST)
+Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
+	id 685801FF98; Mon,  2 Aug 2010 19:38:53 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikdyNjcgZpY=BPjkieacDXHPvp0he77VJZCMLpw@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.35-rc6-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96.1 at clegg
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152428>
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> From: Jonathan Nieder <jrnieder@gmail.com>
->>
->> Tweak the rest of the script to more closely follow the test
->> style guide.  Guarding setup commands with test_expect_success
->> makes it easy to see the scope in which some particular data is
->> used; removal of whitespace after >redirection operators is just
->> for consistency.
->>
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->
-> What happened to the 'test -z "$(cmd)" discards exit status from cmd'=
- part
-> of Jonathan's patch?
+--24zk1gE8NUlDmwG9
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Sorry, I was confused.
+also sprach =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> [2010.08.02.18=
+05 +0200]:
+> I don't know, but it usually helps if you add the person who added
+> the feature to the CC-list.
 
-Please disregard the above; it took me a while to realize that this
-5-patch series is a re-roll of what I queued, which in turn Jonathan's
-nitpick is based on, and you took the advice while redoing 2/5.
+Yeah, I didn't check. Does anyone happen to know who that was,
+saving me the excursion into the history? I don't have Git cloned on
+this laptop and I am on a really bad link. :(
 
-Thanks.
+Thanks,
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"da haben wir es also: eine kirchliche ordnung mit priesterschaft,
+ theologie, kultus, sakrament;
+ kurz, alles das, was jesus von nazareth bek=E4mpft hatte..."
+                                                 - friedrich nietzsche
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--24zk1gE8NUlDmwG9
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEAREDAAYFAkxXAq0ACgkQIgvIgzMMSnWC6wCfUBUtbvgRkp9/V77qirvq2IHj
+njwAniPVRu82/AQdCvqXIB+fLwk4q1aq
+=bIrG
+-----END PGP SIGNATURE-----
+
+--24zk1gE8NUlDmwG9--
