@@ -1,101 +1,98 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] push: mention "git pull" in error message for non-fast forwards
-Date: Mon, 02 Aug 2010 21:52:16 +0200
-Message-ID: <vpqfwywdc7j.fsf@bauges.imag.fr>
-References: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20100802191211.GA2180@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 21:53:23 2010
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: [PATCH] Fix git svn dcommit to work with touched files
+Date: Mon,  2 Aug 2010 12:58:19 -0700
+Message-ID: <1280779099-29742-1-git-send-email-ddkilzer@kilzer.net>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	"David D. Kilzer" <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 02 21:58:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og14c-0002dK-9d
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 21:53:22 +0200
+	id 1Og19h-0005bv-Cu
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 21:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754686Ab0HBTxR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 15:53:17 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40665 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753495Ab0HBTxQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 15:53:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o72JoF5G014405
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 2 Aug 2010 21:50:15 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Og13Z-000229-5c; Mon, 02 Aug 2010 21:52:17 +0200
-In-Reply-To: <20100802191211.GA2180@burratino> (Jonathan Nieder's message of "Mon\, 2 Aug 2010 14\:12\:49 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 02 Aug 2010 21:50:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o72JoF5G014405
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1281383417.18503@DGdutSRbjA9dW2ES5T6p0Q
+	id S1754955Ab0HBT6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 15:58:35 -0400
+Received: from mail-out.apple.com ([17.254.13.22]:59786 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754926Ab0HBT6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 15:58:32 -0400
+Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
+	by mail-out3.apple.com (Postfix) with ESMTP id EFE4DA12191A;
+	Mon,  2 Aug 2010 12:58:31 -0700 (PDT)
+X-AuditID: 11807130-b7ca5ae000007de4-85-4c5723674d7f
+Received: from ddkilzer.apple.com (ddkilzer.apple.com [17.202.32.26])
+	by relay11.apple.com (Apple SCV relay) with SMTP id 43.94.32228.763275C4; Mon,  2 Aug 2010 12:58:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.9.g74fb9
+X-Brightmail-Tracker: AAAAAQAAAZE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152446>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+The dcommit command fails if an otherwise unmodified file has
+been touched in the working directory:
 
-> This reminds me: sometimes people blindly =E2=80=9Cgit pull=E2=80=9D =
-a rebased history
-> just to avoid a non-fast-forward push, and it irks me to no end.  So =
-if
-> I were running the world, the output would be:
->
->  error: rejected non-fast-forward push to '<url>'
->  hint: To prevent you from losing history, non-fast-forward updates a=
-re
->  hint: rejected by default.
->  hint: See the 'Note about fast-forwards' section of 'git push --help=
-'
->  hint: for details.
+    Cannot dcommit with a dirty index.  Commit your changes
+    first, or stash them with `git stash'.
 
-If you were running the world, you'd still need to add stg like
+This happens because "git diff-index" reports a difference
+between the index and the filesystem:
 
-   YES, I DO MEAN IT, RTFM BEFORE ANYTHING ELSE, AND DON'T COMPLAIN
-   BEFORE YOU REACH THE END OF THE MANPAGE.
+    :100644 100644 d00491...... 000000...... M      file
 
-or so, at least if your friends look like my students ;-)
+The fix is to run "git update-index --refresh" before
+"git diff-index" as is done in git-rebase and
+git-rebase--interactive before "git diff-files".
 
-> and the relevant section of the manual would explain that
->
->  1. if upstream is ahead of you, you may want to "git pull"
->
-> but
->
->  2. if upstream rebased, you may want to "git pull --rebase", and
->     yell at upstream a little while at it.
->
-> and
->
->  3. if the history you are pushing to is both (1) known to be unstabl=
-e
->     and (2) wrong, you can override it with
->     "git push <remote> +<refspec>".  Be sure to make sure the
->     =E2=80=9C[receive] denyNonFastForwards=E2=80=9D setting is unset =
-correctly in this
->     case.
+This changes dcommit to display a list of modified files before
+exiting.
 
-It's not that far from what the manpage says indeed (it talks about
---force instead of +<refspec>, and mentions both pull and pull
---rebase). But when the user reached the point where (s)he's wiling to
-read the doc and finds it interesting, then (s)he'll also read about
-advice.pushNonFastForward and get rid of the whole (now useless)
-message ;-).
+Also add a similar test case for "git svn rebase".
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
+---
+ git-svn.perl             |    1 +
+ t/t9100-git-svn-basic.sh |   11 +++++++++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index c416358..b8a98d4 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -494,6 +494,7 @@ sub cmd_set_tree {
+ 
+ sub cmd_dcommit {
+ 	my $head = shift;
++	command_noisy(qw/update-index --refresh/);
+ 	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
+ 		'Cannot dcommit with a dirty index.  Commit your changes first, '
+ 		. "or stash them with `git stash'.\n";
+diff --git a/t/t9100-git-svn-basic.sh b/t/t9100-git-svn-basic.sh
+index 13766ab..d5adae6 100755
+--- a/t/t9100-git-svn-basic.sh
++++ b/t/t9100-git-svn-basic.sh
+@@ -271,6 +271,17 @@ test_expect_success 'able to dcommit to a subdirectory' "
+ 	test -z \"\`git diff refs/heads/my-bar refs/remotes/bar\`\"
+ 	"
+ 
++test_expect_success 'dcommit should not fail with a touched file' '
++	test_commit "commit-new-file-foo2" foo2 &&
++	test-chmtime =-60 foo &&
++	git svn dcommit
++'
++
++test_expect_success 'rebase should not fail with a touched file' '
++	test-chmtime =-60 foo &&
++	git svn rebase
++'
++
+ test_expect_success 'able to set-tree to a subdirectory' "
+ 	echo cba > d &&
+ 	git update-index d &&
+-- 
+1.7.2.1.9.g74fb9
