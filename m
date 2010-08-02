@@ -1,128 +1,70 @@
-From: "Kevin P. Fleming" <kpfleming@digium.com>
-Subject: [PATCH] post-receive-email: ensure sent messages are not empty
-Date: Mon,  2 Aug 2010 15:28:47 -0500
-Message-ID: <1280780927-29006-1-git-send-email-kpfleming@digium.com>
-Cc: "Kevin P. Fleming" <kpfleming@digium.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 02 22:29:03 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 2/2] t/README: Document the Smoke testing
+Date: Mon, 2 Aug 2010 15:54:41 -0500
+Message-ID: <AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com>
+References: <1280780684-26344-1-git-send-email-avarab@gmail.com> 
+	<1280780684-26344-3-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 22:55:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og1d8-00055M-JM
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 22:29:02 +0200
+	id 1Og22S-0000kW-E9
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 22:55:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755283Ab0HBU2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 16:28:55 -0400
-Received: from mail.digium.com ([216.207.245.2]:48944 "EHLO mail.digium.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755281Ab0HBU2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 16:28:54 -0400
-Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
-	by mail.digium.com with esmtp (Exim 4.69)
-	(envelope-from <kpfleming@digium.com>)
-	id 1Og1cz-0002QL-EM
-	for git@vger.kernel.org; Mon, 02 Aug 2010 15:28:53 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by zimbra.hsv.digium.com (Postfix) with ESMTP id 5E5651A2015
-	for <git@vger.kernel.org>; Mon,  2 Aug 2010 15:28:53 -0500 (CDT)
-Received: from zimbra.hsv.digium.com ([127.0.0.1])
-	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id QrpDTZh2H9dN; Mon,  2 Aug 2010 15:28:52 -0500 (CDT)
-Received: from kildare (unknown [10.24.250.46])
-	by zimbra.hsv.digium.com (Postfix) with ESMTPS id EFD6E1A2010;
-	Mon,  2 Aug 2010 15:28:52 -0500 (CDT)
-Received: from kpfleming by kildare with local (Exim 4.71)
-	(envelope-from <kpfleming@digium.com>)
-	id 1Og1cy-0007Yt-JH; Mon, 02 Aug 2010 15:28:52 -0500
-X-Mailer: git-send-email 1.7.2
+	id S1754194Ab0HBUzE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 16:55:04 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50789 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751512Ab0HBUzC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 16:55:02 -0400
+Received: by gxk23 with SMTP id 23so1403084gxk.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 13:55:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HAdygVB/ps+0+LlzeIn4zvyJDzrSP85CMPBeP/RR71Q=;
+        b=QWFtmbLJFaHelQYE7jZAVOHmY6qxf71dIlOBlqaGfmxAWtW37hKflB1AFzKXhog5iq
+         /w5E+Rk80X5j3CFbav048Bp0dASF1485SSb1gFsXPny59gf3oNZXfvIcqe2+fKfJ3mCt
+         sNB+6rtL2RaL5ieTRI3hxGyu/MrDGMikq7mG4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=NI0qeNGKMwjYf+i8IgiaGmzXJtFRfLSnLeJtTJZbB3NLe70tdASc2466/vHPlGwQsP
+         zIYhvsONILRCKvyd1WK/U+uuo/EJzUuVM5n85MtWr377Rj6VEEYk2EzHP5suaxxyslRG
+         M7cp+mmfe9WcLSaPVTbz8a1aHAmhJL3dISmhY=
+Received: by 10.150.63.14 with SMTP id l14mr7768922yba.155.1280782501156; Mon, 
+	02 Aug 2010 13:55:01 -0700 (PDT)
+Received: by 10.150.66.12 with HTTP; Mon, 2 Aug 2010 13:54:41 -0700 (PDT)
+In-Reply-To: <1280780684-26344-3-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152456>
 
-Changes the logic in the script to determine whether an email message
-will be sent before invoking the send_mail() function; otherwise, if
-the logic determines that a message will not be sent, send_mail() will
-cause an empty email to be sent.
+Heya,
 
-Signed-off-by: Kevin P. Fleming <kpfleming@digium.com>
----
- contrib/hooks/post-receive-email |   42 +++++++++++++++++++++++++------------
- 1 files changed, 28 insertions(+), 14 deletions(-)
+On Mon, Aug 2, 2010 at 15:24, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> Git now has a smoke testing service at http://smoke.git.nix.is that
+> anyone can send reports to. Change the t/README file to mention this.
 
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 30ae63d..b595452 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -66,19 +66,10 @@
- # ---------------------------- Functions
- 
- #
--# Top level email generation function.  This decides what type of update
--# this is and calls the appropriate body-generation routine after outputting
--# the common header
-+# Function to prepare for email generation. This decides what type
-+# of update this is and whether an email should even be generated.
- #
--# Note this function doesn't actually generate any email output, that is
--# taken care of by the functions it calls:
--#  - generate_email_header
--#  - generate_create_XXXX_email
--#  - generate_update_XXXX_email
--#  - generate_delete_XXXX_email
--#  - generate_email_footer
--#
--generate_email()
-+prep_for_email()
- {
- 	# --- Arguments
- 	oldrev=$(git rev-parse $1)
-@@ -171,7 +162,28 @@ generate_email()
- 		echo >&2 "*** for $refname update $oldrev->$newrev"
- 		exit 0
- 	fi
-+}
- 
-+#
-+# Top level email generation function.  This calls the appropriate
-+# body-generation routine after outputting the common header.
-+#
-+# Note this function doesn't actually generate any email output, that is
-+# taken care of by the functions it calls:
-+#  - generate_email_header
-+#  - generate_create_XXXX_email
-+#  - generate_update_XXXX_email
-+#  - generate_delete_XXXX_email
-+#  - generate_email_footer
-+#
-+# Note also that this function cannot 'exit' from the script; when this
-+# function is running (in hook script mode), the send_mail() function
-+# is already executing in another process, connected via a pipe, and
-+# if this function exits without, whatever has been generated to that
-+# point will be sent as an email... even if nothing has been generated.
-+#
-+generate_email()
-+{
- 	# Email parameters
- 	# The email subject will contain the best description of the ref
- 	# that we can build from the parameters
-@@ -687,10 +699,12 @@ if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
- 	# Output to the terminal in command line mode - if someone wanted to
- 	# resend an email; they could redirect the output to sendmail
- 	# themselves
--	PAGER= generate_email $2 $3 $1
-+	prep_for_email $2 $3 $1
-+	PAGER= generate_email
- else
- 	while read oldrev newrev refname
- 	do
--		generate_email $oldrev $newrev $refname | send_mail
-+		prep_for_email $oldrev $newrev $refname
-+		generate_email | send_mail
- 	done
- fi
--- 
-1.7.2
+Can't we run this somewhere a little less "shabby"? I'd hate to
+introduce Yet Another Official Git Site (I'm really glad for example
+that the Git Wiki is now on kernel.org). Is it not possible to move
+this to git-scm.com, kernel.org, or something like that?
+
+--=20
+Cheers,
+
+Sverre Rabbelier
