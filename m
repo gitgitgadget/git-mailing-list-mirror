@@ -1,71 +1,65 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: Re: [PATCH] rebase -i: add exec command to launch a shell command
-Date: Mon, 2 Aug 2010 08:30:01 -0400
-Message-ID: <20100802123001.GA3500@localhost.localdomain>
-References: <vpqwrs9nxi5.fsf@bauges.imag.fr>
- <1280743433-27803-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH/RFC v2] Documentation: flesh out 
+ =?utf-8?q?=E2=80=9Cgit_pull=E2=80=9D?= description
+Date: Mon, 2 Aug 2010 14:34:13 +0200
+Message-ID: <201008021434.13748.trast@student.ethz.ch>
+References: <20100801025439.GA9592@burratino> <7vbp9lprcs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 02 14:30:19 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Geoff Russell <geoffrey.russell@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 14:34:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ofu9q-0007iQ-L3
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 14:30:18 +0200
+	id 1OfuDl-0000yd-IP
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 14:34:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753486Ab0HBMaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 08:30:09 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:54957 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752969Ab0HBMaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 08:30:08 -0400
-Received: by qyk7 with SMTP id 7so5335933qyk.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 05:30:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Bgy0PDBj3oIfej72PtjXMtQ2oEv5dFNhIIdhuSTsJL4=;
-        b=hPuEtnE+gHQK7Mv7JdhxeeBQ19u1JxKYC2KY7KU+9Ak6yGrv3wkDDHdGZc1lEJ2Gpn
-         3hO6ek+lqumXwPh6FTB6IlaVCvf1qhHINzk04fe4VdudeoOUXwEl14AMG5evwlr2fvze
-         tHHb8GZKwpCWzoxF6nbEBPriddUtuulkTwJdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RgAIQinT7vmcIZQJeKYC43Kyhc9SpEqG00UuBfmQNosP5iLH306QuasCD+OQVR1sg4
-         LX263fkG8/keI1U6Q/lIZu/5EVadVbyDa2/6GORjy9zh2tjrBc+PzeIVlb1Hn0akTl+a
-         wQ4FBmIDgwP7iOeK5m49KBM96oNImNWzljkMY=
-Received: by 10.220.75.200 with SMTP id z8mr4183401vcj.57.1280752207284;
-        Mon, 02 Aug 2010 05:30:07 -0700 (PDT)
-Received: from localhost.localdomain (cpe-174-101-209-27.cinci.res.rr.com [174.101.209.27])
-        by mx.google.com with ESMTPS id v11sm6065674vbb.1.2010.08.02.05.30.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Aug 2010 05:30:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1280743433-27803-1-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.20 (2009-12-10)
+	id S1752690Ab0HBMeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 08:34:16 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:54494 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751527Ab0HBMeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 08:34:15 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 2 Aug
+ 2010 14:34:14 +0200
+Received: from thomas.site (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 2 Aug
+ 2010 14:34:14 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <7vbp9lprcs.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152407>
 
-On Mon, Aug 02, 2010 at 12:03:53PM +0200, Matthieu Moy wrote:
-> The shell command is ran (in the directory where the rebase was started
-> by the user)
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> > Junio: ideally for this to work, git-pull.html would need to get the
+> > same special treatment as git.html gets.  Does that seem doable?  Is
+> > Meta/dodoc.sh still the script to do it?
+> 
+> I am a bit reluctant to see stalenotes[] being abused; that ugly hack is
+> in effect _only_ while k.org documentation is being built to hang the "You
+> are reading the latest dev version, newer than anything released" sign on
+> the front door.
+> 
+> People with older git have documentation shipped with their versions, no?
 
-I disagree with how intuitive this behavior is. "rebase" is a
-repository level command - It modifies the objects in the repository.
-As a side effect, the working tree attached to a (non-bare) repository
-is changed, even outside of where the rebase was ran.
+The problem is that google invariably turns up the 'master' docs at
+k.org when you look for a git commmand (and that we point people to
+them all the time on #git).  Hence I suggested not outright removing
+this safety warning from the docs that even people running 1.5.x will
+read.
 
-Since the rebase affects the entire repository, I think it makes sense
-for the commands to be run out of the repository root.
-
-Perhaps a command-line option for toggling this behavior would be a
-good compromise.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
