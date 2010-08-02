@@ -1,109 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Back-dating commits--way back--for constitution.git
-Date: Mon, 02 Aug 2010 14:48:32 -0700 (PDT)
-Message-ID: <m3hbjcptyr.fsf@localhost.localdomain>
-References: <i372v0$3np$1@dough.gmane.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] t/README: Document the Smoke testing
+Date: Mon, 2 Aug 2010 22:00:26 +0000
+Message-ID: <AANLkTi=EuTD0M3eNo+PXW7Z2Ra2yzf-i+L4DFQVg8JZ7@mail.gmail.com>
+References: <1280780684-26344-1-git-send-email-avarab@gmail.com>
+	<1280780684-26344-3-git-send-email-avarab@gmail.com>
+	<AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com>
+	<4C5732CE.10906@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Joel C. Salomon" <joelcsalomon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 23:48:41 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: gitzilla@gmail.com
+X-From: git-owner@vger.kernel.org Tue Aug 03 00:00:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og2sC-0006kd-Od
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 23:48:41 +0200
+	id 1Og33j-0003NR-Ia
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:00:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753527Ab0HBVsf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 17:48:35 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59221 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330Ab0HBVse convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 17:48:34 -0400
-Received: by fxm14 with SMTP id 14so1806942fxm.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 14:48:33 -0700 (PDT)
+	id S1754526Ab0HBWA3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 18:00:29 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44646 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752934Ab0HBWA2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 18:00:28 -0400
+Received: by iwn7 with SMTP id 7so4450499iwn.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 15:00:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=u1lSFXsQuu6NIz7L2aFG6hFhO2ZnJepEnK4EwlGxPjk=;
-        b=XbP77UNuDowdzdLtQgXQsLkToApYU/hV7fsiOr6lWANkDVwZZeHnB1NHIiIhRisgVr
-         0m3E/ZD2p/KGGrkRvErFAFJiPLIhfBViLeaWLwQcLyY4oqVMRyiDndE+oxsv+MaHoHYL
-         1JYuVJslPFcPu6YqvQd7T254hmF2GmPftnzFQ=
+        bh=1/J8p9u7XFgBxpE+2lKu3pMp/jNO5N9x8aTAaSA0AFs=;
+        b=UuxLUvYMvEVsAdp1WiPvCwtdbP7hdH47v//2sSFRVAMz/nrE6X5DJBGlCzmFTNv/pr
+         Od3pnFKiW6w2zRK/Cx2ZZWyhozy0Ugt+jXmALNzmGEb4XCxdu3v86JPXHrkPFi5vL48W
+         +XBMP55/U0n681vuDDhCTR6KBAJgJql0Aw14A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=UuGmP/gZAqz/w2cKdWGjRa01MR11cTZiG6SRGE/CgE7ZI3MlmOUfTOL7x/DXyOGMiS
-         pDBlL53h77rq7q2LgZQVKH1+29GXa748bgbwFxU1FNdw5XfSK380s5a7gkpUj/GnxxUG
-         8mNu0U/RIq61rVJ34KXo7ayzcd/fVYpwU4Zck=
-Received: by 10.223.106.202 with SMTP id y10mr6518455fao.2.1280785713414;
-        Mon, 02 Aug 2010 14:48:33 -0700 (PDT)
-Received: from localhost.localdomain (abws244.neoplus.adsl.tpnet.pl [83.8.242.244])
-        by mx.google.com with ESMTPS id q17sm2196957faa.45.2010.08.02.14.48.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 02 Aug 2010 14:48:32 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o72Lm8Jw021549;
-	Mon, 2 Aug 2010 23:48:18 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o72Llv5d021542;
-	Mon, 2 Aug 2010 23:47:57 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <i372v0$3np$1@dough.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ohkr+OwK3lxL//MgibXABv0PX32EGLqgWjRV9OSXTrj+wKTsi0l6qS1d/eoiytEdtC
+         Odc7s2NwTQQR44RKuox7XfzJDLaaPifocxPiigMg9sol1k+LhdQHpB6VHJ/b9p7/X7C8
+         C1nCSubpZGzFlcqINfc2MUzaoKbT6ICYWnp9g=
+Received: by 10.231.13.130 with SMTP id c2mr2531593iba.24.1280786427089; Mon, 
+	02 Aug 2010 15:00:27 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Mon, 2 Aug 2010 15:00:26 -0700 (PDT)
+In-Reply-To: <4C5732CE.10906@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152467>
 
-"Joel C. Salomon" <joelcsalomon@gmail.com> writes:
+On Mon, Aug 2, 2010 at 21:04, A Large Angry SCM <gitzilla@gmail.com> wr=
+ote:
+> On 08/02/2010 04:54 PM, Sverre Rabbelier wrote:
+>>
+>> Heya,
+>>
+>> On Mon, Aug 2, 2010 at 15:24, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+<avarab@gmail.com>
+>> =C2=A0wrote:
+>>>
+>>> Git now has a smoke testing service at http://smoke.git.nix.is that
+>>> anyone can send reports to. Change the t/README file to mention thi=
+s.
+>>
+>> Can't we run this somewhere a little less "shabby"? I'd hate to
+>> introduce Yet Another Official Git Site (I'm really glad for example
+>> that the Git Wiki is now on kernel.org). Is it not possible to move
+>> this to git-scm.com, kernel.org, or something like that?
 
-> I'd figured to play with Git in an unusual way: to create a repositor=
-y
-> for the U.S. Constitution where amendments are presented as patches.
-> E.g., instead of the First Amendment being placed at the end (as is
-> usual) I'm putting it in Article 1, Section 9 (Limitations of Congres=
-s).
->  Proposed amendments get branches, which get merged in later.
->=20
-> But I'm trying to get the dates right, and I'm missing something.  Fo=
-r
-> example, I made the initial commit with the line
->=20
-> 	$ git commit --author=3D"The Philadelphia Convention <>" \
-> 	 --date=3D"Mon, 17 Sep 1787 12:00:00 EST"
->=20
-> but that's not actually setting the commit date to 1787.
->=20
-> Am I doing something wrong, or is Git (quite reasonably) unable to
-> accept commit dates that far in the past?
+Do you not like the domain, that the domain's A record points to a
+Linode box, or both?
 
-Git encodes author and commit (and tagger) time using Unix epoch
-(POSIX epoch) plus timezone.  As Shawn and =C6var wrote on 32-bit
-systems time_t can cover a range of about 136 years in total around
-January 1, 1970, which means that the maximum representable time on
-32-bit system is 2038-01-19 (the year 2038 problem), but what is more
-important to you is that minimum representable time is 1901-12-13.
-1787 is too old for 32-bit time_t.
+I don't mind where a smoke server gets hosted, I just want it to be
+there. But someone's going to have to host it and maintain it.
 
-The headers inside commit (and tag) objects are stored in text form,
-so they are not limited to 32-bit value.  You would have to use system
-that has 64-bit time_t, or patch git.
+Unless someone else wants to do that it's going to have to either be
+at a box I control, or someone else will need to give me shell access.
 
-64-bit time_t would be enough for everyone (sic!).
+Of course just changing the domain would be trivial, just a matter of
+someone setting up an A record somewhere, or delegating a zone to me.
 
-References:
------------
-http://en.wikipedia.org/wiki/Unix_epoch
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+An alternative would be to change how this works, e.g. making
+submissions go by E-Mail to a public list, or having smokers push them
+to public Git repositories which would be registered somewhere.
+
+But that'd require more development and setup work. The current system
+isn't optimal, but it works. It can always me moved somewhere else
+later if smoke testing for Git takes off.
+
+> And what's on the site tells us almost nothing about the tested syste=
+ms.
+
+Can you be more specific? What information do you find lacking at
+http://smoke.git.nix.is/app/projects/smoke_reports/1 ?
