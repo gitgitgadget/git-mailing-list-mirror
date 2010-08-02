@@ -1,73 +1,75 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/2] t/README: Document the Smoke testing
-Date: Mon, 2 Aug 2010 17:47:53 -0500
-Message-ID: <AANLkTi=QxWzYG0Pv2Cc=rmTB1vECWCdh=W=_8vsRsfnC@mail.gmail.com>
-References: <1280780684-26344-1-git-send-email-avarab@gmail.com> 
-	<1280780684-26344-3-git-send-email-avarab@gmail.com> <AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com> 
-	<4C5732CE.10906@gmail.com> <AANLkTi=EuTD0M3eNo+PXW7Z2Ra2yzf-i+L4DFQVg8JZ7@mail.gmail.com> 
-	<7v39uwk52s.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 00/16] Subtree clone proof of concept
+Date: Tue, 3 Aug 2010 08:55:51 +1000
+Message-ID: <AANLkTi=309R5e9TOGSRrtqe5u_5p5U2Xk7oHzez5+oOp@mail.gmail.com>
+References: <1280593105-22015-1-git-send-email-pclouds@gmail.com>
+	<AANLkTims5Xq67QXaE54bCTHP-BZSNRVsJnUKM6YJjt2G@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	gitzilla@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 00:48:19 2010
+Cc: git <git@vger.kernel.org>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 03 00:56:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og3nu-0007qo-RO
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:48:19 +0200
+	id 1Og3vK-0001dm-UW
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:55:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754075Ab0HBWsO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 18:48:14 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:54146 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959Ab0HBWsN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 18:48:13 -0400
-Received: by gxk23 with SMTP id 23so1427480gxk.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 15:48:13 -0700 (PDT)
+	id S1754473Ab0HBWzx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 18:55:53 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43402 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754396Ab0HBWzx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 18:55:53 -0400
+Received: by wyb39 with SMTP id 39so3794935wyb.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 15:55:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=nY68ao+qofg1c+XbqWVmD60uFlzNOpe3/pcwG3AS2Wg=;
-        b=V1gKKpCqHdkoaxzGhmp9StLI4X8fZVUZPtDjNSmzQ/2e+PMVq7x8rLD7ZzwH4WyL3L
-         pkVLVexNQGu38YBiKtXFQNpxW7OJ5w1gtA//nAV3jPFJRthraSs4yqzoJdHUuY5pQ2jQ
-         neSDUOlAvfWwkH+Aiu+X0zmrGxOqheMykdDJw=
+        bh=Lv2ln4r+wV9zWdXkj++XrZOVvyCGDf4fjAVmsVqBhJo=;
+        b=h/9IAszuxwX3K748hAV8L39G8xgfCjvm8tnRUzonYkbgkiRLdCRdsOkU7dpJgbdRRi
+         1pGPASmPASoTDXQdNbdciTJAqyWl8oQ+0+OIgX2Q6ZtMMb8samC49RsSvbBfAywJG8My
+         6iY1u7qrtxydYczBQKwtmRpmB+ZhlLwE6yZ0k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=b+6ySAnAXqPjtvX7tJon2EpJrCBIHxVjVOlwe8F/rO7nd+dGFc7ivG8my+sEUTkjPY
-         lYS2t/7XftTvw8IBODTSwwn8XsmQZrGhxmW+TeOJB95hK7nioI+QN7hIPgk4dxVKGd/j
-         DeZ3LPV994kFGYzmD46U+GNUju9+0cWPatOqI=
-Received: by 10.151.63.23 with SMTP id q23mr7873776ybk.133.1280789293173; Mon, 
-	02 Aug 2010 15:48:13 -0700 (PDT)
-Received: by 10.150.66.12 with HTTP; Mon, 2 Aug 2010 15:47:53 -0700 (PDT)
-In-Reply-To: <7v39uwk52s.fsf@alter.siamese.dyndns.org>
+        b=MjoyjhXgRrn/TVAynvvBFlPpfMn1LJ9Zi3oRR2oIrxJIXoGKT3qug6nHVgwc3Q2zN9
+         sllALG/3oHfMMrS5w28y0Ju1nF5o0bAfE1jUNjlRQUI5Skf5fflUU35pfAJaczMN9jgZ
+         SgRiPGhYyXMgeBhfn9WV62+YfmoVFQ8e5YAHI=
+Received: by 10.216.0.82 with SMTP id 60mr5520wea.13.1280789751868; Mon, 02 
+	Aug 2010 15:55:51 -0700 (PDT)
+Received: by 10.216.173.199 with HTTP; Mon, 2 Aug 2010 15:55:51 -0700 (PDT)
+In-Reply-To: <AANLkTims5Xq67QXaE54bCTHP-BZSNRVsJnUKM6YJjt2G@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152482>
 
-Heya,
+2010/8/2 Elijah Newren <newren@gmail.com>:
+>> haven't tested it further. Space consumption is 24MB (58MB for full
+>> repo). =C2=A0Not really impressive, but if one truely cares about di=
+sk
+>> space, he/she should also use shallow clone.
+>
+> 58 MB for full repo? =C2=A0What are you counting? =C2=A0For me, I get=
+ 25M:
 
-On Mon, Aug 2, 2010 at 17:44, Junio C Hamano <gitster@pobox.com> wrote:
-> "shabby" is not a good word to describe a service somebody volunteere=
-d to
-> maintain for the public good. =C2=A0Be civil, please.
+My number 24MB was incorrect because process_tree() leaked too many
+blobs. It should have been 16MB. Anyway I have updated my series and
+put it here (to spam git mailing less)
 
-That's why I quoted it, I didn't mean to put =C3=86var's work down and =
-I
-think he understood what I meant, judging from his reply. On that
-note, thanks =C3=86var for reading what I meant, not what I said :).
+http://repo.or.cz/w/git/pclouds.git/shortlog/refs/heads/subtree
+(caveat: constantly rebased tree)
 
+if you still want to play with it. For number lovers, fetching only
+Documentation from linux-2.6.git took 94MB (full repo 366MB). Yeah
+Documentation was an easy target.
 --=20
-Cheers,
-
-Sverre Rabbelier
+Duy
