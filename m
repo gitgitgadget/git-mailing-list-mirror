@@ -1,107 +1,110 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH RFC] parse_object: pass on the original sha1, not the 
-	replaced one
-Date: Mon, 2 Aug 2010 19:31:23 +1000
-Message-ID: <AANLkTin0eymuYFv_6hamDuan0TELogtCyW3Xwjm=pAwH@mail.gmail.com>
-References: <1280579802-8606-1-git-send-email-pclouds@gmail.com>
-	<201008020942.58137.chriscool@tuxfamily.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] rebase -i: add run command to launch a shell command
+Date: Mon, 02 Aug 2010 12:02:10 +0200
+Message-ID: <vpqwrs9nxi5.fsf@bauges.imag.fr>
+References: <1280323784-27462-1-git-send-email-Matthieu.Moy@imag.fr>
+	<4C52E6E1.20101@xiplink.com> <vpqd3u53sd2.fsf@bauges.imag.fr>
+	<AANLkTikMW=ueQXfjpXk8G2FLRN55j1aJsnNz2w19BmkH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Aug 02 11:31:34 2010
+Cc: Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 12:06:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OfrMq-0002WH-5a
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 11:31:32 +0200
+	id 1OfruE-0000MK-Fo
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 12:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343Ab0HBJb0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 05:31:26 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:48410 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753095Ab0HBJbZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 05:31:25 -0400
-Received: by wwj40 with SMTP id 40so3630149wwj.1
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 02:31:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4ByK4PjmQhWaNJGkLHrp8qjfa274ngDhZeFvDbFpOQw=;
-        b=PjFMSgTYKYsHO349KQGdugsV3qGOkQdgsDJbWiT2IWi+QyIdaDuVE0ixdE/Cf5PXNR
-         cXI0b5YOxO++00KncnIUI4DzbkyJ+wCMXkfwKgrzYAcCiOUR/8WKThg7bQbeBXR2EB2L
-         zgJkemGnRk6EN1gbitp29F8T+gTB2iBvYtfAo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ouiNQBROYE5dNPgf6UNZ+ehX/KdktMPltdTuU2bK0i62DzdQS0Fo+Z40UIAco8L0WY
-         sb6BJ8fW57R6e05/ya+JNRo4L9zvXyb1f3PwA4rTaurk8HtnmC9ymemYkgm0xk8qsK/e
-         jFPhebhMj+MI5Q3bgy8w1wsKdeWl9E1/TXXu4=
-Received: by 10.216.21.204 with SMTP id r54mr4624170wer.95.1280741483855; Mon, 
-	02 Aug 2010 02:31:23 -0700 (PDT)
-Received: by 10.216.173.199 with HTTP; Mon, 2 Aug 2010 02:31:23 -0700 (PDT)
-In-Reply-To: <201008020942.58137.chriscool@tuxfamily.org>
+	id S1751486Ab0HBKCS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 06:02:18 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41390 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751142Ab0HBKCR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 06:02:17 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o729pkAJ011653
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 Aug 2010 11:51:46 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OfrqV-00042v-1M; Mon, 02 Aug 2010 12:02:11 +0200
+In-Reply-To: <AANLkTikMW=ueQXfjpXk8G2FLRN55j1aJsnNz2w19BmkH@mail.gmail.com>
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Sat\, 31
+ Jul 2010 13\:56\:09 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 02 Aug 2010 11:51:46 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o729pkAJ011653
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1281347509.6701@9vEH1YV3AzIRMpeFm/3oDA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152401>
 
-2010/8/2 Christian Couder <chriscool@tuxfamily.org>:
-> On Saturday 31 July 2010 14:36:42 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8D=
-c Duy wrote:
->> Commit 0e87c36 (object: call "check_sha1_signature" with the
->> replacement sha1) did this. I'm not sure if it's should be done this
->> way.
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+
+> On Fri, Jul 30, 2010 at 15:24, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Marc Branchaud <marcnarc@xiplink.com> writes:
 >>
->> With "repl" as the first argument to parse_object_buffer, the return=
-ed
->> obj pointer will have the replaced SHA1 in obj->sha1, not the origin=
-al
->> one. I sort of expect that, no matter the object is replaced,
->> obj->sha1 should stay the same.
+>>>> The name of the command may be subject to discussions. I've chosen
+>>>> "run", but maybe "shell" would be OK too. In both cases, it doesn'=
+t
+>>>> allow the one-letter version since both "r" and "s" are already us=
+ed.
+>>>
+>>> "exec" with one-letter "x"?
 >>
->> This was observed by replacing commit tip. git log would show the
->> replaced sha1, not the original one.
+>> Thanks, that sounds good, yes. Any other thought?
 >
-> I am not sure I understand what you are saying. Do you mean that git =
-log
-> should show the original sha1 but the content of the replacement comm=
-it,
-> instead of both the sha1 and the content of the replacement commit?
+> I like "exec".
 
-"original sha1, but the content of replacement commit", yes. Isn't
-that the intention of git-replace?
+Yes, it's the best proposal IMHO. "x" is very often associated to
+"execute", and I'd rather keep away from punctuation/shift combo.
+There have been discussions in the past about giving "!" a semantics
+(like "fixup!" for a variant of "fixup"). Let's keep this as an option
+for the future by not using ! now.
 
-> I just tested your patch and indeed with it it seems to me that the r=
-esult
-> shown by git log is not consistent, as for example the commit message=
- is the
-> one of the replacement commit but the commit sha1 is the one of the o=
-riginal
-> commit.
+> I think the docs need to elaborate on the environment the "exec"
+> command gets executed in, what's its current working directory for
+> instance? Wherever I happened to run git-rebase from? the project
+> root?
 
-The consistency is already there. Suppose I want to replace commit A
-with B. Depends on what function I call to fetch "A", I get different
-object->sha1. (the content is always from B though).
+That's a good question. My original patch was running the command from
+the toplevel, which is the natural way to implement it. I've changed
+my mind to execute the command from the place where "git rebase -i"
+was started (which means this has to be memorized in a temporary file
+to be persistant accross "git rebase --continue"). I think this makes
+more sense for the user, and I've actually already been biten by the
+old behavior, running "rebase -i" from a doc/ subdirectory, and
+wondering why my "exec make" was rebuilding the code itself.
 
-With parse_object(A), I get an object pointer whose sha1 is B.
+This comes with at least one drawback: if directory from which the
+rebase was started didn't exist in the past, then we can't do a simple
+"cd" to it. My implementation re-creates the directory temporarily, so
+that the command can run, and cleans it up afterwards. The only really
+problematic case is when the directory can not be created (like
+directory/file conflict). It this case, the command is not ran, and
+the script exits.
 
-With  lookup_commit(A), I get an object pointer whose sha1 is A.
+> your if ! eval .. error message also exits with 0, surely that should
+> exit with 1?
 
-> Could you explain why you need the object returned by parse_object_bu=
-ffer to
-> not have the replacement SHA1 in obj->sha1 when it is parsing the buf=
-fer from
-> the replacement object?
+I'm now exiting with the same status as the command itself in case of
+failure.
 
-As I said above, it's inconsistent. I'm not saying my way is correct.
-Just wondering.
+New version follows. It should hopefully look more like a real patch
+than an RFC now.
+
 --=20
-Duy
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
