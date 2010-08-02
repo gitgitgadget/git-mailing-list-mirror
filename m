@@ -1,93 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5 v4] log: parse detached options like git log --grep
- foo
-Date: Mon, 02 Aug 2010 10:03:17 -0700
-Message-ID: <7vvd7tlzfu.fsf@alter.siamese.dyndns.org>
-References: <vpq7hkdml22.fsf@bauges.imag.fr>
- <1280478669-22973-4-git-send-email-Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH 1/5] t1011 (sparse checkout): style nitpicks
+Date: Mon, 02 Aug 2010 10:22:42 -0700
+Message-ID: <7vmxt5lyjh.fsf@alter.siamese.dyndns.org>
+References: <1280556869-707-1-git-send-email-pclouds@gmail.com>
+ <1280556869-707-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 02 19:03:31 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 19:23:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OfyQE-0006Ap-4j
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 19:03:30 +0200
+	id 1Ofyj6-0000Dt-Gi
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 19:23:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752000Ab0HBRDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 13:03:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50309 "EHLO
+	id S1752102Ab0HBRWz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 13:22:55 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34873 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751401Ab0HBRDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 13:03:24 -0400
+	with ESMTP id S1751921Ab0HBRWy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 13:22:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C5451CA5FF;
-	Mon,  2 Aug 2010 13:03:23 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 65064CA893;
+	Mon,  2 Aug 2010 13:22:51 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RDUmmtHHiDLoRUieWgFZ0D55+Q4=; b=r5G2y3
-	6GlkF+c/uzQa9pi5hSpDDGiXFuooiiksTh4aRxIf1a6QpJf5VKY4GY0kDM8wDTf1
-	jB9kfkV/a2T3okKLda+807dL8LGcqaxFtT1SQ8e8fJEzR2rzy78ImOcSZASWyV3o
-	nakRQrb6+De4wVCB0UCzh74P7JaC8PjbAfw4U=
+	:content-type:content-transfer-encoding; s=sasl; bh=8efx3/xBiAVm
+	ed7KH+U/P6KA6SE=; b=AlaDDCmd8xPCtx881oaQHWy/B3kmeP6EE0zSnjK5UNaq
+	vo1BY9tW2SfhqBQLfwjUzx6QYPmSaPeh79YxBTIYAbVA6CIdONJhQSgO5bHshcX6
+	r1BBf6yig293XI3Enk+8P2X5TvOZhFqi+J1mu9BbxfQKDBn4O9t9GUftLyOKer8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VP7YM7yT1/OWRH2sZKKNdXXwOugwclvM
-	A6D1cHs87VmTyujCJz3dRbxfQuledYZ+B34sq0Nhf2VahfJPJnQSo/fDwJeplE6S
-	RiWbuDWh+uNzdRfip4RWLGIjCqjTuUX6iYK5cnQ6XIFNhlQEIH7AvFxgHRVt+h+K
-	hNMJLN/NzRI=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Dbq6Qm
+	NvaIMQSUr02uAZQjyjVXhoC5mDm+3/eo343VFhWzU1tZNscTzZqIDxOGzzQzZO6L
+	X2DQtaGmlh1Ijz2pIDOVylxnuxrQ9F9smGrXba8iLklU/pP7Q3aR3dxxUcFV03X+
+	Hhth4c05663Bsci8U4DP82P52j0jbY/hxjNFk=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 95738CA5FB;
-	Mon,  2 Aug 2010 13:03:21 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 18D89CA890;
+	Mon,  2 Aug 2010 13:22:48 -0400 (EDT)
 Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D9FF0CA5FA; Mon,  2 Aug
- 2010 13:03:18 -0400 (EDT)
-In-Reply-To: <1280478669-22973-4-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Fri\, 30 Jul 2010 10\:31\:08 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 26277CA88D; Mon,  2 Aug
+ 2010 13:22:43 -0400 (EDT)
+In-Reply-To: <1280556869-707-2-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Sat\, 31 Jul
+ 2010 13\:14\:25 +0700")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DADFC9AE-9E57-11DF-A723-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 9227D73A-9E5A-11DF-B14F-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152426>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
->  revision.c     |   74 ++++++++++++++++++++++++++++++++++---------------------
->  t/t4202-log.sh |    7 +++++
->  2 files changed, 53 insertions(+), 28 deletions(-)
+> From: Jonathan Nieder <jrnieder@gmail.com>
 >
-> diff --git a/revision.c b/revision.c
-> index 7e82efd..359b1a1 100644
-> --- a/revision.c
-> +++ b/revision.c
-> ...
-> @@ -1295,6 +1305,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
->  		revs->pretty_given = 1;
->  		get_commit_format(arg+8, revs);
->  	} else if (!prefixcmp(arg, "--pretty=") || !prefixcmp(arg, "--format=")) {
-> +		/*
-> +		 * Detached form ("--pretty X" as opposed to "--pretty=X")
-> +		 * not allowed, since the argument is optional.
-> +		 */
->  		revs->verbose_header = 1;
->  		revs->pretty_given = 1;
->  		get_commit_format(arg+9, revs);
+> Tweak the rest of the script to more closely follow the test
+> style guide.  Guarding setup commands with test_expect_success
+> makes it easy to see the scope in which some particular data is
+> used; removal of whitespace after >redirection operators is just
+> for consistency.
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 
-The patch overall looks good, and this comments illustrates the issue
-rather well.  When the user wants to use "--longopt val" syntax, s/he
-needs to know that "--longopt" will always take a value.  Arguably
-majority of options that can take value will, but like "--stat X,Y" this
-leaves things inconsistent.  Without "--longopt value" patch there won't
-be such an inconsistency, but I think this patch series is lessor of two
-evils.
-
-Don't you by the way regret the naming of the parsing function by now?
-There is nothing "diff" about it anymore.
+What happened to the 'test -z "$(cmd)" discards exit status from cmd' p=
+art
+of Jonathan's patch?
