@@ -1,87 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC v2] Documentation: flesh out  =?utf-8?B?4oCcZ2l0?=
- =?utf-8?B?IHB1bGzigJ0=?= description
-Date: Mon, 02 Aug 2010 06:30:39 -0700
-Message-ID: <7v7hk9p2f4.fsf@alter.siamese.dyndns.org>
-References: <20100801025439.GA9592@burratino>
- <7vbp9lprcs.fsf@alter.siamese.dyndns.org>
- <201008021434.13748.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, <git@vger.kernel.org>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Geoff Russell <geoffrey.russell@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Aug 02 15:31:02 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] push: mention "git pull" in error message for non-fast forwards
+Date: Mon,  2 Aug 2010 15:42:44 +0200
+Message-ID: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Aug 02 15:47:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ofv6b-00012A-IE
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 15:31:01 +0200
+	id 1OfvMU-0008QM-Kq
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 15:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839Ab0HBNay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 09:30:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39206 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521Ab0HBNax (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 09:30:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78BD9CA493;
-	Mon,  2 Aug 2010 09:30:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NmDubOilCqgBFXghVcXKV1WeM6w=; b=yPbgkf
-	UEpocBiAtz9LR1ARZDcvhK5mPjB4JZHGZ9bXi7mFfFu6Zl2uapc3KXHPHJrDszN6
-	NXKPoACbZgIErhBC42lk6i2Vj3HiNIQR68sQfnIXPmnV3m3G4Ee5IMyciR/qqO0o
-	S3NDbWhFsNpWEKf64cj/FEK1Zu5smPZuLieME=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eS5roA+glpIjxZlTkhu+yOBrdLnFlD/c
-	V2HOaGBIfpGBEpq41vXwPZH2lSkFQ4cEksZSV11Fn4ztIVhgWhXVR0zkI3UtheGx
-	6kOS4wwb6RqwBzezEXvu4OyJWK1VUSvkNPnMBITSqCGpjpy854DeV56fzQxwNBlJ
-	bAWARPpJwro=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 23B88CA48F;
-	Mon,  2 Aug 2010 09:30:47 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 253A4CA489; Mon,  2 Aug
- 2010 09:30:41 -0400 (EDT)
-In-Reply-To: <201008021434.13748.trast@student.ethz.ch> (Thomas Rast's
- message of "Mon\, 2 Aug 2010 14\:34\:13 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 289E3DE2-9E3A-11DF-B007-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753079Ab0HBNrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 09:47:20 -0400
+Received: from imag.imag.fr ([129.88.30.1]:52383 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752555Ab0HBNrU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 09:47:20 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o72Dgn89005348
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 2 Aug 2010 15:42:50 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OfvI1-0006tV-Q6; Mon, 02 Aug 2010 15:42:49 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OfvI1-00012q-OG; Mon, 02 Aug 2010 15:42:49 +0200
+X-Mailer: git-send-email 1.7.2.1.28.g41d92
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 02 Aug 2010 15:42:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152410>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+The message remains fuzzy to include "git pull", "git pull --rebase" and
+others, but directs the user to the simplest solution in the vast
+majority of cases.
 
-> Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->> 
->> > Junio: ideally for this to work, git-pull.html would need to get the
->> > same special treatment as git.html gets.  Does that seem doable?  Is
->> > Meta/dodoc.sh still the script to do it?
->> 
->> I am a bit reluctant to see stalenotes[] being abused; that ugly hack is
->> in effect _only_ while k.org documentation is being built to hang the "You
->> are reading the latest dev version, newer than anything released" sign on
->> the front door.
->> 
->> People with older git have documentation shipped with their versions, no?
->
-> The problem is that google invariably turns up the 'master' docs at
-> k.org when you look for a git commmand (and that we point people to
-> them all the time on #git).  Hence I suggested not outright removing
-> this safety warning from the docs that even people running 1.5.x will
-> read.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+When the message was added, it was decided explicitely not to say
+explicitely "use git pull", first because there are other ways to
+merge, and then to encourage the users to read the docs.
 
-I think the longer "In git 1.7.0 or later" with "Warning: in olden days"
-can appear in everybody's version without causing any harm.  That way, it
-is shown even to somebody who came to docs/v1.7.3/git-pull.html at k.org
-from sideways.
+After a few months of teaching newbies/students to use Git, the
+question "it doesn't want to push, what shall I do" still comes in the
+top questions asked. Each time I've been asked, the newbie's face was
+enlightened by hearing just the word "pull".
+
+So I guess those few extra characters in the error message would save
+me a lot of time ;-).
+
+ builtin/push.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/push.c b/builtin/push.c
+index f4358b9..69bc2f2 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -130,8 +130,8 @@ static int push_with_options(struct transport *transport, int flags)
+ 
+ 	if (nonfastforward && advice_push_nonfastforward) {
+ 		fprintf(stderr, "To prevent you from losing history, non-fast-forward updates were rejected\n"
+-				"Merge the remote changes before pushing again.  See the 'Note about\n"
+-				"fast-forwards' section of 'git push --help' for details.\n");
++				"Merge the remote changes (e.g. 'git pull') before pushing again.  See the\n"
++				"'Note about fast-forwards' section of 'git push --help' for details.\n");
+ 	}
+ 
+ 	return 1;
+-- 
+1.7.2.1.28.g41d92
