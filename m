@@ -1,65 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Back-dating commits--way back--for constitution.git
-Date: Mon, 02 Aug 2010 15:47:10 -0700
-Message-ID: <7vy6coiqdt.fsf@alter.siamese.dyndns.org>
-References: <i372v0$3np$1@dough.gmane.org>
- <m3hbjcptyr.fsf@localhost.localdomain>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 2/2] t/README: Document the Smoke testing
+Date: Mon, 2 Aug 2010 17:47:53 -0500
+Message-ID: <AANLkTi=QxWzYG0Pv2Cc=rmTB1vECWCdh=W=_8vsRsfnC@mail.gmail.com>
+References: <1280780684-26344-1-git-send-email-avarab@gmail.com> 
+	<1280780684-26344-3-git-send-email-avarab@gmail.com> <AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com> 
+	<4C5732CE.10906@gmail.com> <AANLkTi=EuTD0M3eNo+PXW7Z2Ra2yzf-i+L4DFQVg8JZ7@mail.gmail.com> 
+	<7v39uwk52s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Joel C. Salomon" <joelcsalomon@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 00:47:45 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	gitzilla@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 03 00:48:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og3nK-0007fJ-PS
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:47:43 +0200
+	id 1Og3nu-0007qo-RO
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754348Ab0HBWr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 18:47:28 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57655 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754053Ab0HBWrS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 18:47:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 88DB2C998B;
-	Mon,  2 Aug 2010 18:47:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FGoynyaKQ/jMgHowa8xnYwB8gRQ=; b=u7ly/D
-	dA4rTTSu4MS0s0Q3sSB/lkVMYxZ0o0MRasj55/WG2T9zSI4sjZqp9VNjNSuJu2TL
-	EWgh9pEL0dGGMWHgMMH69+PDzE3HujqT6v2Gpy9grsVHbIghvgLFU7hgQfOFfAwm
-	nZMy02e8kFvGfAiO0p+2En2IJ3hsfM5CNuPBc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=cysHj0RF6y+4D4+Z7DT2Vz7ivKJmJZ3W
-	OheklANfHjCGmvrkLzdhZsKxGB31OEqkR2VuFJ1fpJawysRMXNdmWDklutH3cslI
-	kUMRClhEy58sd/VZ4J+oWPeOxa/MWomu5qC8D9sjt7ljeyHfwlJuoUXeuYl1GSG6
-	PMT6qm52b3o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DE42C9989;
-	Mon,  2 Aug 2010 18:47:15 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 89C22C9983; Mon,  2 Aug
- 2010 18:47:11 -0400 (EDT)
-In-Reply-To: <m3hbjcptyr.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Mon\, 02 Aug 2010 14\:48\:32 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E584530E-9E87-11DF-8A91-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754075Ab0HBWsO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 18:48:14 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:54146 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959Ab0HBWsN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 18:48:13 -0400
+Received: by gxk23 with SMTP id 23so1427480gxk.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 15:48:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nY68ao+qofg1c+XbqWVmD60uFlzNOpe3/pcwG3AS2Wg=;
+        b=V1gKKpCqHdkoaxzGhmp9StLI4X8fZVUZPtDjNSmzQ/2e+PMVq7x8rLD7ZzwH4WyL3L
+         pkVLVexNQGu38YBiKtXFQNpxW7OJ5w1gtA//nAV3jPFJRthraSs4yqzoJdHUuY5pQ2jQ
+         neSDUOlAvfWwkH+Aiu+X0zmrGxOqheMykdDJw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=b+6ySAnAXqPjtvX7tJon2EpJrCBIHxVjVOlwe8F/rO7nd+dGFc7ivG8my+sEUTkjPY
+         lYS2t/7XftTvw8IBODTSwwn8XsmQZrGhxmW+TeOJB95hK7nioI+QN7hIPgk4dxVKGd/j
+         DeZ3LPV994kFGYzmD46U+GNUju9+0cWPatOqI=
+Received: by 10.151.63.23 with SMTP id q23mr7873776ybk.133.1280789293173; Mon, 
+	02 Aug 2010 15:48:13 -0700 (PDT)
+Received: by 10.150.66.12 with HTTP; Mon, 2 Aug 2010 15:47:53 -0700 (PDT)
+In-Reply-To: <7v39uwk52s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152481>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Heya,
 
-> The headers inside commit (and tag) objects are stored in text form,
-> so they are not limited to 32-bit value.  You would have to use system
-> that has 64-bit time_t, or patch git.
+On Mon, Aug 2, 2010 at 17:44, Junio C Hamano <gitster@pobox.com> wrote:
+> "shabby" is not a good word to describe a service somebody volunteere=
+d to
+> maintain for the public good. =C2=A0Be civil, please.
 
-I thought the internal representation of our time was "unsigned long", no?
-How can you represent anything before Unix epoch?
+That's why I quoted it, I didn't mean to put =C3=86var's work down and =
+I
+think he understood what I meant, judging from his reply. On that
+note, thanks =C3=86var for reading what I meant, not what I said :).
+
+--=20
+Cheers,
+
+Sverre Rabbelier
