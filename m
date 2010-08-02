@@ -1,111 +1,176 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] push: mention "git pull" in error message for non-fast
- forwards
-Date: Mon, 2 Aug 2010 14:12:49 -0500
-Message-ID: <20100802191211.GA2180@burratino>
-References: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] gitweb: allow configurations that change with each request
+Date: Mon, 2 Aug 2010 21:35:57 +0200
+Message-ID: <201008022135.58287.jnareb@gmail.com>
+References: <4C4D152A.7050505@gmail.com> <201007261623.05850.jnareb@gmail.com> <20100731030159.GD906@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 02 21:14:24 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Julio Lajara <julio.lajara@alum.rpi.edu>,
+	"=?iso-8859-1?q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>,
+	Anders Kaseorg <andersk@mit.edu>, git@vger.kernel.org,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 21:36:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og0Sn-0007Vt-3w
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 21:14:17 +0200
+	id 1Og0o4-0001H2-Lr
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 21:36:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232Ab0HBTOM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 15:14:12 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:33936 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355Ab0HBTOM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 15:14:12 -0400
-Received: by wwj40 with SMTP id 40so4251095wwj.1
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 12:14:10 -0700 (PDT)
+	id S1754611Ab0HBTgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 15:36:09 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63478 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754356Ab0HBTgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 15:36:08 -0400
+Received: by bwz1 with SMTP id 1so1608115bwz.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 12:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=9S+i28doIJk4wMK4qa5uP9GIgIRYmteVL9z3lMUrt+U=;
-        b=IJyHCaSr+A0fiqVWMlNbDLVTwpfT9pL4ImEq2yGijFNtdgDOjEYczy3qpXsG+yNwpg
-         +M8tsTSL/XB9OFrU3k+3dxHllgsZt7XynloZpTO/faS1xUhWT6rDjUAHsy+BHtYevQQx
-         tsJproWoIDU6m5vdelx3USRHzeYSpzq93xL2I=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=9Mr81LNpTd6V8RqMfDD900RZgHemluseaZJdupLtxso=;
+        b=UoswAjfzPfFoiJIehsnT7cFD06mXIqpf3h0utjtNiJ1DtaxhcAAIuiMSguf8Rp4+wP
+         6OSchWLgGuHpy48V4ngmEoFeJrDSUhv5hjkoNeBJUIs/7D7kKDQYgJbsAZ47cfsnAcch
+         AXlHrJ+D0UhrlwU1m3zYPcgJNttlcvtW3eIHg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=okttIXaA3/oYnX6IspsCNweXAlP8a6fzp49mymS+Ry+w95x0qDhu8qTKwwRRi+sNbG
-         78lJjm3/uffS0roYjrqeksqgTwi6zfnhfqvngwtoV8L71JcB4Uj0Yv7ZB5A3B2fzsn1/
-         uh9kswLoSaMLAIDCrwKvmmG1LpvPoSPmvuVPQ=
-Received: by 10.227.157.17 with SMTP id z17mr5125908wbw.122.1280776450733;
-        Mon, 02 Aug 2010 12:14:10 -0700 (PDT)
-Received: from burratino ([64.107.3.126])
-        by mx.google.com with ESMTPS id b18sm5256165wbb.13.2010.08.02.12.14.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Aug 2010 12:14:09 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=w8BGdCowDJ+IL6NncLW3Ipm5p3hemCmRhup1eAXrTczzmc5fyX69UIk3AyXrzUD6m/
+         LA+ITrJpmUS1Qc0SqAfp9YDkrsctpSgAM9XWSo5zCTl7Dayxl0UFIKrTavig8fcuECa5
+         SjwNTG+W0vTIQrqAZ6nrEjGpZkdjFoGEp8/nM=
+Received: by 10.204.0.83 with SMTP id 19mr4497475bka.67.1280777766554;
+        Mon, 02 Aug 2010 12:36:06 -0700 (PDT)
+Received: from [192.168.1.13] (aeho67.neoplus.adsl.tpnet.pl [79.186.196.67])
+        by mx.google.com with ESMTPS id y2sm4364791bkx.8.2010.08.02.12.36.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Aug 2010 12:36:04 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20100731030159.GD906@burratino>
 Content-Disposition: inline
-In-Reply-To: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152442>
 
-Hi Matthieu,
+On Sat, 31 Jul 2010, Jonathan Nieder wrote:
 
-Matthieu Moy wrote:
+> gitolite's contrib/gitweb/gitweb.conf includes:
+> 
+> 	$ENV{GL_USER} = $cgi->remote_user || "gitweb";
+> 
+> which is useful for setups where a user has to be authenticated
+> to access certain repos.  Perhaps other typical configurations
+> change per session in other ways, too.
+> 
+> v1.7.2-rc2~6 (gitweb: Move evaluate_gitweb_config out of run_request,
+> 2010-07-05) broke such configurations for a speedup, by loading
+> the configuration once per FastCGI process.
+> 
+> Probably in the end there should be a way to specify in the
+> configuration whether a particular installation wants the speedup or
+> the flexibility.  But for now it is easier to just undo the relevant
+> change.
+> 
+> This partially reverts commit 869d58813b24c74e84c9388041eafcef40cb51e4.
 
-> +++ b/builtin/push.c
-> @@ -130,8 +130,8 @@ static int push_with_options(struct transport *tr=
-ansport, int flags)
-> =20
->  	if (nonfastforward && advice_push_nonfastforward) {
->  		fprintf(stderr, "To prevent you from losing history, non-fast-forw=
-ard updates were rejected\n"
-> -				"Merge the remote changes before pushing again.  See the 'Note a=
-bout\n"
-> -				"fast-forwards' section of 'git push --help' for details.\n");
-> +				"Merge the remote changes (e.g. 'git pull') before pushing again=
-=2E  See the\n"
-> +				"'Note about fast-forwards' section of 'git push --help' for det=
-ails.\n");
+Why only *partially* reverts...
 
-Your change is good.
+...ah, I see, I did "while at it" change fixing timer and number of git
+commands info for persistent environments (i.e. gitweb run as FastCGI
+script).
+ 
+> Reported-by: Julio Lajara <julio.lajara@alum.rpi.edu>
+> Analysis-by: Jakub Narebski <jnareb@gmail.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-This reminds me: sometimes people blindly =E2=80=9Cgit pull=E2=80=9D a =
-rebased history
-just to avoid a non-fast-forward push, and it irks me to no end.  So if
-I were running the world, the output would be:
+Reluctantly-acked-by: Jakub Narebski <jnareb@gmail.com>
 
- error: rejected non-fast-forward push to '<url>'
- hint: To prevent you from losing history, non-fast-forward updates are
- hint: rejected by default.
- hint: See the 'Note about fast-forwards' section of 'git push --help'
- hint: for details.
+> ---
+> Jakub Narebski wrote:
+> 
+> > I wonder if it would be possible to 
+> > re-enable this feature (which I think is needed to be able to use
+> > $cgi->remote_user) but without having all pay the [slight] performance
+> > penalty of including (and I think parsing) config file once per each
+> > request.
+> 
+> I dunno.  Maybe this would be a good place to start.
 
-and the relevant section of the manual would explain that
+Currently this is non-issue; the eventual performance penalty is I guess
+very small.
 
- 1. if upstream is ahead of you, you may want to "git pull"
+The problem would be with adding caching support to gitweb.  While
+default GitwebCache::* caching engine should have low startup cost, 
+the CHI generic caching interface that one might want to use instead
+uses Moose (Mouse with Any::Moose?) for OOP, which imposes some startup
+cost.  One enables and configures output caching in gitweb config, so
+if gitweb config would be read once per run then cache interface could
+be started once per run, not once per request.
+ 
+Nevertheless this change is backwards incompatibile change, and should
+probably wait for 1.7.3 (pity that 1.7.2 was so recently released).
 
-but
 
- 2. if upstream rebased, you may want to "git pull --rebase", and
-    yell at upstream a little while at it.
+One solution I can think of (still backwards incompatibile) would be to
+provide $per_request_config variable, which would hold anonymous sub
+with parts of config that need to be done per request (this should work
+with global variables (our), but I think it wouldn't work with lexical
+variables (my)).  For example gitolite's contrib/gitweb/gitweb.conf would
+then include:
 
-and
+  $per_request_config = sub {
+  	$ENV{GL_USER} = $cgi->remote_user || "gitweb";
+  }
 
- 3. if the history you are pushing to is both (1) known to be unstable
-    and (2) wrong, you can override it with
-    "git push <remote> +<refspec>".  Be sure to make sure the
-    =E2=80=9C[receive] denyNonFastForwards=E2=80=9D setting is unset co=
-rrectly in this
-    case.
+What do you think about it?
 
-Jonathan
+>  gitweb/gitweb.perl |    8 ++++----
+>  1 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index e0e9532..300c4b1 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1060,8 +1060,12 @@ sub run_request {
+>  	reset_timer();
+>  
+>  	evaluate_uri();
+> +	evaluate_gitweb_config();
+>  	check_loadavg();
+>  
+> +	# $projectroot and $projects_list might be set in gitweb config file
+> +	$projects_list ||= $projectroot;
+> +
+>  	evaluate_query_params();
+>  	evaluate_path_info();
+>  	evaluate_and_validate_params();
+> @@ -1109,12 +1113,8 @@ sub evaluate_argv {
+>  
+>  sub run {
+>  	evaluate_argv();
+> -	evaluate_gitweb_config();
+>  	evaluate_git_version();
+>  
+> -	# $projectroot and $projects_list might be set in gitweb config file
+> -	$projects_list ||= $projectroot;
+> -
+>  	$pre_listen_hook->()
+>  		if $pre_listen_hook;
+>  
+
+That reminds me: '$projects_list ||= $projectroot;' line should be put,
+I think, inside evaluate_gitweb_config().  But that of course should not
+be done in this patch.
+
+-- 
+Jakub Narebski
+Poland
