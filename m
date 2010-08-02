@@ -1,83 +1,73 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] t/README: Document the Smoke testing
-Date: Mon, 2 Aug 2010 22:32:36 +0000
-Message-ID: <AANLkTimv7XKoTG1y=5RcUGmCmwpqyj=xVmT78F1OxNsw@mail.gmail.com>
-References: <1280780684-26344-1-git-send-email-avarab@gmail.com>
-	<1280780684-26344-3-git-send-email-avarab@gmail.com>
-	<AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com>
-	<4C5732CE.10906@gmail.com>
-	<AANLkTi=EuTD0M3eNo+PXW7Z2Ra2yzf-i+L4DFQVg8JZ7@mail.gmail.com>
-	<20100802221328.GA3826@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: jk/tag-contains
+Date: Mon, 02 Aug 2010 15:38:41 -0700
+Message-ID: <7vbp9kk5ce.fsf@alter.siamese.dyndns.org>
+References: <7vvd7zuecv.fsf@alter.siamese.dyndns.org>
+ <20100730183709.GC18544@coredump.intra.peff.net>
+ <20100731060703.GA21207@burratino>
+ <20100731123328.GA5273@coredump.intra.peff.net>
+ <7vocdlpsmw.fsf@alter.siamese.dyndns.org> <20100802200209.GD2180@burratino>
+ <vpqk4o8bwwd.fsf@bauges.imag.fr> <20100802201920.GE2180@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitzilla@gmail.com, Sverre Rabbelier <srabbelier@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 00:32:45 2010
+X-From: git-owner@vger.kernel.org Tue Aug 03 00:39:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og3Yp-0001Nz-Lu
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:32:43 +0200
+	id 1Og3eu-00042X-JB
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 00:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754125Ab0HBWci convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 18:32:38 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42371 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753097Ab0HBWch convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 18:32:37 -0400
-Received: by iwn7 with SMTP id 7so4475259iwn.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 15:32:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SvJ7bATWsF3vcWfP9tha/j89uqxMVcAfkPpHTnYgLyM=;
-        b=oqrXcOnu75ghpqn6Cb7O/fDjPpPOtpscT42Q8d4X+arvXepEAVv8xLxgkBX6tzyIb1
-         hm38E4eyPq1I9nY2R2amEUAzcwrL0N41rGV8fG5dHdm/wbWnYVmOSPaitX9dZ8I7BYB0
-         S71S6TUNmuQYTSmw9JqXUg/LCC/WIdaqqVSyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OZ3BfQw++qg8yfApi889LFO/VfV3GXdWaiKlbseQaE0Spaoe8rbM2O2ZE/PjeDU+c7
-         GcG2PJxqK2Mh9+HALhL5shgNR9gEMAkehFsFaESUqKxxycYWpAs6cnF05ddT3E6WSMot
-         KHubuTauDSi6vc3LAVefM7WHnN2M23Kh9Xk6g=
-Received: by 10.231.160.17 with SMTP id l17mr7516605ibx.102.1280788356596; 
-	Mon, 02 Aug 2010 15:32:36 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Mon, 2 Aug 2010 15:32:36 -0700 (PDT)
-In-Reply-To: <20100802221328.GA3826@burratino>
+	id S1753344Ab0HBWi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 18:38:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64759 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752046Ab0HBWiz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 18:38:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EF210C981C;
+	Mon,  2 Aug 2010 18:38:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=shIMWyR+xGzNwl2i8XEPW0wD+pQ=; b=O3JYTT
+	RmFZUAXnjROUJqy4jBAhgOBHmUoUEGN4mDqoe4xH0Z89WPGMneCP9UiOBpQ6R4Kf
+	guG/xzyVBq5qfuLk+vpNyuT5ZjG5OVS3atYnuR4eTGHQTQ/JuxaXzUQRG701S1sM
+	54Ko5GiXU+O6QmZjx4u0sthNiGVjL43tu3YNc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XAwSDGSrsJ4uadbSYYwOXIfhQ/+7b9Ln
+	vEkVyYKWHMncdBUC80m/QKBekcTy0gldLKpqpwuRAsV/C4GEp7x+ZC+5BWDdsnp6
+	kDDSvIqc6fwXdVadz/MglIccM1WWrZEsf9BvKOTHv6NUCE2mRxITF4oPFryDX0QU
+	kHeLiH29tnc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 83DC4C9816;
+	Mon,  2 Aug 2010 18:38:48 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7BAE3C9808; Mon,  2 Aug
+ 2010 18:38:43 -0400 (EDT)
+In-Reply-To: <20100802201920.GE2180@burratino> (Jonathan Nieder's message of
+ "Mon\, 2 Aug 2010 15\:19\:20 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B77382B0-9E86-11DF-8D4B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152477>
 
-On Mon, Aug 2, 2010 at 22:13, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Mon, Aug 2, 2010 at 21:04, A Large Angry SCM <gitzilla@gmail.com>=
- wrote:
->
->>> And what's on the site tells us almost nothing about the tested sys=
-tems.
->>
->> Can you be more specific? What information do you find lacking at
->> http://smoke.git.nix.is/app/projects/smoke_reports/1 ?
->
-> Operating system (i.e., distro). =C2=A0Precise CPU architecture. =C2=A0=
-Number of
-> CPUs. =C2=A0Available memory. Configuration used to build git.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-That'd be nice. We could detect that and include it later in
-extra_properties in t/harness. It'd need some fancy detection code
-though.
+> I would like it to still be possible to publically acknowledge a
+> mistake, make people rewrite their history to remove it, and move on.
 
-> Which tests were skipped and which had expected failures.
+While I wish the world were that simple, I do not think that is viable.
+You may not have any control over your upstream (not to mention the
+possibility that the upstream might even be a foreign SCM).
 
-That's actually already there.
+So I'd prefer to see us prepared to be lenient with what we accept from
+outside world.
