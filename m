@@ -1,90 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] require_work_tree: Look for top-level instead of is-inside-work-tree
-Date: Mon, 02 Aug 2010 16:37:51 +0200
-Message-ID: <4C56D83F.3050507@drmicha.warpmail.net>
-References: <1280335624-90132-1-git-send-email-tor.arne.vestbo@nokia.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [RFC/PATCH] rebase -i: add run command to launch a shell command
+Date: Mon, 02 Aug 2010 17:04:08 +0200
+Message-ID: <4C56DE68.7010906@gnu.org>
+References: <1280323784-27462-1-git-send-email-Matthieu.Moy@imag.fr>	<4C52E6E1.20101@xiplink.com> <vpqd3u53sd2.fsf@bauges.imag.fr>	<AANLkTikMW=ueQXfjpXk8G2FLRN55j1aJsnNz2w19BmkH@mail.gmail.com> <vpqwrs9nxi5.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, trast@student.ethz.ch,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?VG9yIEFybmUgVmVzdGLDuA==?= <tor.arne.vestbo@nokia.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 16:37:49 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 02 17:04:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ofw9E-00076Z-9T
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 16:37:48 +0200
+	id 1OfwYr-0002w2-Kc
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 17:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178Ab0HBOhm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 10:37:42 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40771 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751077Ab0HBOhm (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Aug 2010 10:37:42 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 82B6C182220;
-	Mon,  2 Aug 2010 10:37:41 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Mon, 02 Aug 2010 10:37:41 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=0/IO6bkHWkVBVMWkZB6DG9dx0FE=; b=o0UR11hwlG6zpp2T1Wv+NpHbSsxHyqM9RJUX4eGwP874qFtlGW5HHyux4G4gBIMdXQbVaOtt1lm17RU6OcfKEEa2X7HheX9Hytm2fVw2DhqJUKEfIx4ykiaETMCWhgC6fmnVqZTMhhUcL9PyPbjpo571AUKCCrvjW9wejERzHRU=
-X-Sasl-enc: CT3Cz12S41jDoIw8UZ4IdE8t1WMNvBUkWHnCVIgazupt 1280759861
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E6F6A4E2F85;
-	Mon,  2 Aug 2010 10:37:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8pre) Gecko/20100714 Lightning/1.0b2pre Lanikai/3.1.2pre
-In-Reply-To: <1280335624-90132-1-git-send-email-tor.arne.vestbo@nokia.com>
+	id S1752129Ab0HBPEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 11:04:15 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:35049 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611Ab0HBPEO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 11:04:14 -0400
+Received: by qyk11 with SMTP id 11so46048qyk.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 08:04:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=FcPCNyFeFhRLmonYoeDnJDVIY0Ovw2ip9hif/7i2cEU=;
+        b=fdYrWcCY2d1tnFN3VjFIkuBNFMAsZWvXcEMa7yGKxzRsXrzHpvdWC26VwXlFt43++3
+         O6RtEiFnGiQ12zug5D1pB5ZkCuI0LPy4rc9T9GSUhMXfQLsS1W+uzsfAEJqMrkb7wybU
+         /4vV54Pi6SDDpHy2JPg6ngG/LgSBT1dr/0wI4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=t8rE2WpIuaACNnlIzryxSh72qsgKYrIuBHN5NkF88vCBw3FwBy1KnQiyM3UZNuJOn4
+         Qu2QyJkoVGmpiyT9YAbs5f1ZCoR3rxSVp7IQPft9I2o0yvrW+ijbFuzLSi6CB8oy0jMP
+         iljruuRY5UnY9LRauIzXOY9T8ohSvXhXGcA28=
+Received: by 10.224.79.170 with SMTP id p42mr1789593qak.81.1280761453516;
+        Mon, 02 Aug 2010 08:04:13 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
+        by mx.google.com with ESMTPS id t24sm159572qcs.35.2010.08.02.08.04.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Aug 2010 08:04:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100621 Fedora/3.0.5-1.fc13 Lightning/1.0b2pre Thunderbird/3.0.5
+In-Reply-To: <vpqwrs9nxi5.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152412>
 
-Tor Arne Vestb=C3=B8 venit, vidit, dixit 28.07.2010 18:47:
-> The documentation describes require_work_tree as guarding against
-> bare repositories, and that's also the way it's used from porcelain
-> such as git-rebase. When implemented using --is-inside-work-tree
-> the samantics change, causing git-rebase to fail if run from outside
-> GIT_WORK_TREE, even if GIT_WORK_TREE is valid.
->=20
-> Signed-off-by: Tor Arne Vestb=C3=B8 <tor.arne.vestbo@nokia.com>
-> ---
->  git-sh-setup.sh     |    2 +-
->  t/t1501-worktree.sh |    9 +++++++++
->  2 files changed, 10 insertions(+), 1 deletions(-)
->=20
-> diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> index 6131670..f8e4428 100644
-> --- a/git-sh-setup.sh
-> +++ b/git-sh-setup.sh
-> @@ -141,7 +141,7 @@ cd_to_toplevel () {
->  }
-> =20
->  require_work_tree () {
-> -	test "$(git rev-parse --is-inside-work-tree 2>/dev/null)" =3D true =
-||
-> +	test -n "$(git rev-parse --show-toplevel 2>/dev/null)" ||
->  	die "fatal: $0 cannot be used without a working tree."
->  }
-> =20
+On 08/02/2010 12:02 PM, Matthieu Moy wrote:
+> I think this makes more sense for the user, and I've actually already
+> been biten by the old behavior, running "rebase -i" from a doc/
+> subdirectory, and wondering why my "exec make" was rebuilding the
+> code itself.
 
-An alternative which does not change the established behavior of
-require_work_tree would be changing the order of require_work_tree and
-cd_to_top_level in the callers where possible along the lines of
+I think it's a matter of habits, and I would surely be bitten more by 
+the opposite problem: when I'm usually ready to rebase and test I'm 
+likely to be in src/ (for packages that have one such directory) or tests/.
 
-http://mid.gmane.org/96abf622ca2cf92998ce4ed393ccaa75d95dd9a8.127911202=
-5.git.git@drmicha.warpmail.net
+cd to the top-level repository is a logical choice since rebase is a 
+repository-wide command (even though the particular set of commits might 
+touch only a part of it).  It is easier to implement, does not have any 
+problem with conflicts or otherwise with deletion, and easier to 
+document as well.
 
-which got lost somehow. (The other callers, as mentioned by Junio, woul=
-d
-need to be changed differently, e.g. by moving cd_to... earlier.)
+If you decide to go with the other choice, however, I would _strongly_ 
+suggest failing if the directory not exists.  After all most of the time 
+the command ("make" for example) will be pretty unlikely to succeed.
 
-Another problem I noticed back then (I was away since) was that a
-relative GIT_WORK_TREE is left in place after a cd_to_top_level and
-messes things up completely - it does not seem to be relative to
-GIT_DIR. So, there seems to be more to fix in this area.
-
-Cheers,
-Michael
+Paolo
