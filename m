@@ -1,149 +1,128 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH 2/2] t/README: Document the Smoke testing
-Date: Mon,  2 Aug 2010 20:24:44 +0000
-Message-ID: <1280780684-26344-3-git-send-email-avarab@gmail.com>
-References: <1280780684-26344-1-git-send-email-avarab@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
+From: "Kevin P. Fleming" <kpfleming@digium.com>
+Subject: [PATCH] post-receive-email: ensure sent messages are not empty
+Date: Mon,  2 Aug 2010 15:28:47 -0500
+Message-ID: <1280780927-29006-1-git-send-email-kpfleming@digium.com>
+Cc: "Kevin P. Fleming" <kpfleming@digium.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 02 22:25:20 2010
+X-From: git-owner@vger.kernel.org Mon Aug 02 22:29:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og1ZU-000317-LJ
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 22:25:17 +0200
+	id 1Og1d8-00055M-JM
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 22:29:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755255Ab0HBUZJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 16:25:09 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:47650 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755223Ab0HBUZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 16:25:05 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 39so3672287wyb.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 13:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=55Puk0GE3fGkWBKEhV8oEs020XA4trKCDMUHs97iA/Y=;
-        b=FJLrLea69xycHyqRy7/S5AoMuZCkdB62FZQ1KOj3SI3JhWkrONeFpq/+QNofpuQkKK
-         CHudR1N48y6hfiNUtFb64tbwJWx+zEVmPDIxadeiJcn/3ki8PkWA/fDFT0nD98DzXdAd
-         5QRhFxuw1JWi6ONvah/TZyjBhRtwu6Q2jRN3s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=YSYuHKx7W8pS6yqy4+jgqeh3bx0gVJnhN1Tk35QXLOrNl2bLOYDHdiK3t+Tl9MPpLt
-         STIXQJJOrZ3ofJjuOObkTXc2S3m6O9GCpwjj8Vqvzk9XSlpSBlJK83W4YFalu3Cl77D6
-         5zq2RpAOtvWdmVF3XiJwDasHMI3xrO1UXAKS0=
-Received: by 10.227.2.209 with SMTP id 17mr5463748wbk.72.1280780704793;
-        Mon, 02 Aug 2010 13:25:04 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id 2sm3109811wey.0.2010.08.02.13.25.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Aug 2010 13:25:03 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <1280780684-26344-1-git-send-email-avarab@gmail.com>
+	id S1755283Ab0HBU2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Aug 2010 16:28:55 -0400
+Received: from mail.digium.com ([216.207.245.2]:48944 "EHLO mail.digium.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755281Ab0HBU2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 16:28:54 -0400
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <kpfleming@digium.com>)
+	id 1Og1cz-0002QL-EM
+	for git@vger.kernel.org; Mon, 02 Aug 2010 15:28:53 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id 5E5651A2015
+	for <git@vger.kernel.org>; Mon,  2 Aug 2010 15:28:53 -0500 (CDT)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id QrpDTZh2H9dN; Mon,  2 Aug 2010 15:28:52 -0500 (CDT)
+Received: from kildare (unknown [10.24.250.46])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPS id EFD6E1A2010;
+	Mon,  2 Aug 2010 15:28:52 -0500 (CDT)
+Received: from kpfleming by kildare with local (Exim 4.71)
+	(envelope-from <kpfleming@digium.com>)
+	id 1Og1cy-0007Yt-JH; Mon, 02 Aug 2010 15:28:52 -0500
+X-Mailer: git-send-email 1.7.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152455>
 
-Git now has a smoke testing service at http://smoke.git.nix.is that
-anyone can send reports to. Change the t/README file to mention this.
+Changes the logic in the script to determine whether an email message
+will be sent before invoking the send_mail() function; otherwise, if
+the logic determines that a message will not be sent, send_mail() will
+cause an empty email to be sent.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+Signed-off-by: Kevin P. Fleming <kpfleming@digium.com>
 ---
- t/README |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 66 insertions(+), 0 deletions(-)
+ contrib/hooks/post-receive-email |   42 +++++++++++++++++++++++++------------
+ 1 files changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/t/README b/t/README
-index e957d4f..69af05f 100644
---- a/t/README
-+++ b/t/README
-@@ -574,3 +574,69 @@ Then, at the top-level:
- That'll generate a detailed cover report in the "cover_db_html"
- directory, which you can then copy to a webserver, or inspect locally
- in a browser.
-+
-+Smoke testing
-+-------------
-+
-+The Git test suite has support for smoke testing. Smoke testing is
-+when you submit the results of a test run to a central server for
-+analysis and aggregation.
-+
-+Running a smoke tester is an easy and valuable way of contributing to
-+Git development, particularly if you have access to an uncommon OS on
-+obscure hardware.
-+
-+After building Git you can generate a smoke report like this in the
-+"t" directory:
-+
-+    make clean smoke
-+
-+You can also pass arguments via the environment. This should make it
-+faster:
-+
-+    GIT_TEST_OPTS=3D'--root=3D/dev/shm' TEST_JOBS=3D10 make clean smok=
-e
-+
-+The "smoke" target will run the Git test suite with Perl's
-+"TAP::Harness" module, and package up the results in a .tar.gz archive
-+with "TAP::Harness::Archive". The former is included with Perl v5.10.1
-+or later, but you'll need to install the latter from the CPAN. See the
-+"Test coverage" section above for how you might do that.
-+
-+Once the "smoke" target finishes you'll see a message like this:
-+
-+    TAP Archive created at <path to git>/t/test-results/git-smoke.tar.=
-gz
-+
-+To upload the smoke report you need to have curl(1) installed, then
-+do:
-+
-+    make smoke_report
-+
-+To upload the report anonymously. Hopefully that'll return something
-+like "Reported #7 added.".
-+
-+If you're going to be uploading reports frequently please request a
-+user account by E-Mailing gitsmoke@v.nix.is. Once you have a username
-+and password you'll be able to do:
-+
-+    SMOKE_USERNAME=3D<username> SMOKE_PASSWORD=3D<password> make smoke=
-_report
-+
-+Once the report is uploaded it'll be made available at
-+http://smoke.git.nix.is, here's an overview of Recent Smoke Reports
-+for Git:
-+
-+    http://smoke.git.nix.is/app/projects/smoke_reports/1
-+
-+The reports will also be mirrored to GitHub every few hours:
-+
-+    http://github.com/gitsmoke/smoke-reports
-+
-+The Smolder SQLite database is also mirrored and made available for
-+download:
-+
-+    http://github.com/gitsmoke/smoke-database
-+
-+Note that the database includes hashed (with crypt()) user passwords
-+and E-Mail addresses. Don't use a valuable password for the smoke
-+service if you have an account, or an E-Mail address you don't want to
-+be publicly known. The user accounts are just meant to be convenient
-+labels, they're not meant to be secure.
---=20
-1.7.1
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 30ae63d..b595452 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -66,19 +66,10 @@
+ # ---------------------------- Functions
+ 
+ #
+-# Top level email generation function.  This decides what type of update
+-# this is and calls the appropriate body-generation routine after outputting
+-# the common header
++# Function to prepare for email generation. This decides what type
++# of update this is and whether an email should even be generated.
+ #
+-# Note this function doesn't actually generate any email output, that is
+-# taken care of by the functions it calls:
+-#  - generate_email_header
+-#  - generate_create_XXXX_email
+-#  - generate_update_XXXX_email
+-#  - generate_delete_XXXX_email
+-#  - generate_email_footer
+-#
+-generate_email()
++prep_for_email()
+ {
+ 	# --- Arguments
+ 	oldrev=$(git rev-parse $1)
+@@ -171,7 +162,28 @@ generate_email()
+ 		echo >&2 "*** for $refname update $oldrev->$newrev"
+ 		exit 0
+ 	fi
++}
+ 
++#
++# Top level email generation function.  This calls the appropriate
++# body-generation routine after outputting the common header.
++#
++# Note this function doesn't actually generate any email output, that is
++# taken care of by the functions it calls:
++#  - generate_email_header
++#  - generate_create_XXXX_email
++#  - generate_update_XXXX_email
++#  - generate_delete_XXXX_email
++#  - generate_email_footer
++#
++# Note also that this function cannot 'exit' from the script; when this
++# function is running (in hook script mode), the send_mail() function
++# is already executing in another process, connected via a pipe, and
++# if this function exits without, whatever has been generated to that
++# point will be sent as an email... even if nothing has been generated.
++#
++generate_email()
++{
+ 	# Email parameters
+ 	# The email subject will contain the best description of the ref
+ 	# that we can build from the parameters
+@@ -687,10 +699,12 @@ if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
+ 	# Output to the terminal in command line mode - if someone wanted to
+ 	# resend an email; they could redirect the output to sendmail
+ 	# themselves
+-	PAGER= generate_email $2 $3 $1
++	prep_for_email $2 $3 $1
++	PAGER= generate_email
+ else
+ 	while read oldrev newrev refname
+ 	do
+-		generate_email $oldrev $newrev $refname | send_mail
++		prep_for_email $oldrev $newrev $refname
++		generate_email | send_mail
+ 	done
+ fi
+-- 
+1.7.2
