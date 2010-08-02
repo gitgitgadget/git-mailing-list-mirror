@@ -1,80 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: allow configurations that change with each
- request
-Date: Mon, 2 Aug 2010 16:01:57 -0500
-Message-ID: <20100802210121.GA3072@burratino>
-References: <4C4D152A.7050505@gmail.com>
- <201007261623.05850.jnareb@gmail.com>
- <20100731030159.GD906@burratino>
- <201008022135.58287.jnareb@gmail.com>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [PATCH 2/2] t/README: Document the Smoke testing
+Date: Mon, 02 Aug 2010 17:04:14 -0400
+Message-ID: <4C5732CE.10906@gmail.com>
+References: <1280780684-26344-1-git-send-email-avarab@gmail.com> 	<1280780684-26344-3-git-send-email-avarab@gmail.com> <AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julio Lajara <julio.lajara@alum.rpi.edu>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Anders Kaseorg <andersk@mit.edu>, git@vger.kernel.org,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 02 23:03:29 2010
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 02 23:04:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Og2AR-0004RX-UB
-	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 23:03:28 +0200
+	id 1Og2BO-0004uG-OY
+	for gcvg-git-2@lo.gmane.org; Mon, 02 Aug 2010 23:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733Ab0HBVDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Aug 2010 17:03:22 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:50371 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751178Ab0HBVDV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Aug 2010 17:03:21 -0400
-Received: by wyb39 with SMTP id 39so3709083wyb.19
-        for <git@vger.kernel.org>; Mon, 02 Aug 2010 14:03:20 -0700 (PDT)
+	id S1753344Ab0HBVEW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Aug 2010 17:04:22 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:51150 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751452Ab0HBVEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Aug 2010 17:04:21 -0400
+Received: by vws3 with SMTP id 3so2383469vws.19
+        for <git@vger.kernel.org>; Mon, 02 Aug 2010 14:04:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=zrL4fNHM8AwM4h0DSN/qfkZaeytLxWB2aMWXbjFbUZU=;
-        b=aEAFbKeuaiOsKwdImtIgHven7GXW/FguXr7l4TQwr79C7Zhwtwmn67IeJSxvozzToS
-         57lRtgkwM2u1WaB1oFn3llbInqeLBrm5HKHXbb2xCCl4PHWskVA2nY1WaGNEzr22MQe5
-         B8Rsmr6thObMDpPJTyCSbrzN+nOtbARk5Po+I=
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=91hkaf1K7/AbX5ctjJrlN7EIBmCXhZonojRonqTTPoI=;
+        b=ftwJThJyvc2SFj910Q/Is3IAr5aQDiZNizwa27mgJofyLLhenFE/OragYiEfs9Fk9j
+         Tba0Vo57S5KnIPCetghZP6uVNfeajRRo+vR6aN5u0Oaw6jcglalRMaBBx4Wok0inCSsy
+         iq5zAByhLod++HBxJ/9xd84cUMaVBQe1kv7Yg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Vrwd7QJkBvJRen1NngVTJHhX5XTlL/2+TgvuxYGFCQT/mORAlFoR8i0sjh2tb+mEow
-         zETH9ixjysk2GUt4wqKMUfkgyrOFQwHGuzAdBbV2JKDM96lbNHcwgs/NyED9I0dQcPiP
-         ofZ0aBwMm6UuWcKfpm8Xt8/rjnBMMvnvgkasQ=
-Received: by 10.227.156.143 with SMTP id x15mr4924004wbw.39.1280783000002;
-        Mon, 02 Aug 2010 14:03:20 -0700 (PDT)
-Received: from burratino ([66.99.2.25])
-        by mx.google.com with ESMTPS id u32sm3138176weq.11.2010.08.02.14.03.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 02 Aug 2010 14:03:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201008022135.58287.jnareb@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=diW+Ct0uo9MUsSMexsgggyDE5GbXwbk7S3Z909sLKWGrsyMI/P/gjumrkmovbr4elb
+         HBrSdQDkeX7Jh67QDKc3JNAtH6DarkBC8FypL6AcTavVJjdKC176bFpz0RkISiZImFnJ
+         Yscocvdqc5QO1fqq/zQRs+aA9ny4Xut/1xfks=
+Received: by 10.220.89.68 with SMTP id d4mr4607129vcm.98.1280783060549;
+        Mon, 02 Aug 2010 14:04:20 -0700 (PDT)
+Received: from [192.168.1.5] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
+        by mx.google.com with ESMTPS id y25sm6376602vbw.6.2010.08.02.14.04.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 02 Aug 2010 14:04:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100620 Icedove/3.0.5
+In-Reply-To: <AANLkTim2EY7AACe=UzbG-k7oteV6UMmfPAQMEOFn0iZ7@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152459>
 
-Jakub Narebski wrote:
+On 08/02/2010 04:54 PM, Sverre Rabbelier wrote:
+> Heya,
+>
+> On Mon, Aug 2, 2010 at 15:24, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason<=
+avarab@gmail.com>  wrote:
+>> Git now has a smoke testing service at http://smoke.git.nix.is that
+>> anyone can send reports to. Change the t/README file to mention this=
+=2E
+>
+> Can't we run this somewhere a little less "shabby"? I'd hate to
+> introduce Yet Another Official Git Site (I'm really glad for example
+> that the Git Wiki is now on kernel.org). Is it not possible to move
+> this to git-scm.com, kernel.org, or something like that?
+>
 
-> One solution I can think of (still backwards incompatibile) would be to
-> provide $per_request_config variable, which would hold anonymous sub
-> with parts of config that need to be done per request (this should work
-> with global variables (our), but I think it wouldn't work with lexical
-> variables (my)).  For example gitolite's contrib/gitweb/gitweb.conf would
-> then include:
-> 
->   $per_request_config = sub {
->   	$ENV{GL_USER} = $cgi->remote_user || "gitweb";
->   }
-
-How would that interact with caching?  i.e., how would whatever caching
-engine is used learn that $cgi->remote_user is part of the key needed to
-uniquely determine a response?
+And what's on the site tells us almost nothing about the tested systems=
+=2E
