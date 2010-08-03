@@ -1,68 +1,106 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: Re: CGIT 0.8.3.1 "chokes" on some bare repos
-Date: Tue, 3 Aug 2010 18:49:07 +0200
-Message-ID: <AANLkTimEbrapnihtp=6J5KTn67WqQk+726a3uCZaLwum@mail.gmail.com>
-References: <AANLkTikcnv2dzY25dSgvKoTfLJ416gcaeDZA5HGa_tue@mail.gmail.com>
-	<AANLkTinab6BkUqZnUE3yxmgY_lKyp0TbYUPYbKkoUKMA@mail.gmail.com>
-	<AANLkTi==+q28cS7ssz-E3vQ7xqoQxBM4Tj1Jf_SvuK0G@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/5 v4] log: parse detached options like git log --grep
+ foo
+Date: Tue, 03 Aug 2010 10:16:34 -0700
+Message-ID: <7vlj8nipl9.fsf@alter.siamese.dyndns.org>
+References: <vpq7hkdml22.fsf@bauges.imag.fr>
+ <1280478669-22973-4-git-send-email-Matthieu.Moy@imag.fr>
+ <7vvd7tlzfu.fsf@alter.siamese.dyndns.org> <vpqtyncdeuc.fsf@bauges.imag.fr>
+ <7vsk2wk8lc.fsf@alter.siamese.dyndns.org> <vpq8w4ob3yz.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 18:49:17 2010
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 03 19:16:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgKg0-0008SN-Rb
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 18:49:17 +0200
+	id 1OgL6g-0004Ti-E8
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 19:16:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932399Ab0HCQtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Aug 2010 12:49:10 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37647 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932396Ab0HCQtJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 12:49:09 -0400
-Received: by fxm14 with SMTP id 14so2074792fxm.19
-        for <git@vger.kernel.org>; Tue, 03 Aug 2010 09:49:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Y8mNRqLXD/ywG8+IjE9aV3Ir4FUeBDw3/K6/pTLYgoA=;
-        b=GO+JhgppdwcNzmELebjj1YBiRgtPDYAZfN5ugpQQQNPE2mCt+SQSLsXq+ruT95TDJ8
-         CQQdABQyM6UkJF1bl4Iv0mc9Iz2rQrDDMQtVPhqx3U4LTqoeMQyfd3QJFMgkTpZ4xN0H
-         GNyOXRPSgnKDCIQQLMJtX+9zOZeDz5rmgiE/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=c9Vbaxegu9/FPZh7SqglNuAmaGCHmGTOMgRQJUXy1LvvPgbEhThpicPpKOjJiy2fjw
-         VycuuGrJn31nxW5G5I3qtKKlYCZduJWS2Et53Jt1gji+34IROUKWxRCcr2jSQMdIPxS3
-         I38oR4sbgmeM1w+AtyT5lDb2t/SD/EDU1hN58=
-Received: by 10.239.174.74 with SMTP id i10mr421144hbf.32.1280854147820; Tue, 
-	03 Aug 2010 09:49:07 -0700 (PDT)
-Received: by 10.239.165.79 with HTTP; Tue, 3 Aug 2010 09:49:07 -0700 (PDT)
-In-Reply-To: <AANLkTi==+q28cS7ssz-E3vQ7xqoQxBM4Tj1Jf_SvuK0G@mail.gmail.com>
+	id S1757225Ab0HCRQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 13:16:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60368 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757212Ab0HCRQn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 13:16:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2DE62CA4F6;
+	Tue,  3 Aug 2010 13:16:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c8I67y+MsH1EkACFCFFG0D7npnQ=; b=cb82ao
+	sSl7NvGzzPmNi24eiURda9vKcD5GkTa4bQlQZr+1DZJ6fVt1/e5gZ0nRKDa1qxrT
+	bdkWkJr0rmMHAIdy3DDQVCSJ9iCyxlB9vipRqJA9wq761MDL0ZouCcmDBRsCu7bG
+	VmeoEXa+tq9eusMXmkBXwmyg6q8+pjuWobo/o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aVt++tH3NRcmtwMKUBKewVkmsV9SLxT3
+	V1EjTleWfaKRZS3OFEKMsf3DzWRgJmUIpUnoTuWttpgJsyg+xDfn6sXgZxleYUg6
+	WWV3skF4TneL0uw60FS8Du8rG/pKns21ZU5k9YppmiOvEor1JUaux5zPzrkRsZU6
+	gI97j3OfaF8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04A66CA4F5;
+	Tue,  3 Aug 2010 13:16:40 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E7BC3CA4F3; Tue,  3 Aug
+ 2010 13:16:36 -0400 (EDT)
+In-Reply-To: <vpq8w4ob3yz.fsf@bauges.imag.fr> (Matthieu Moy's message of
+ "Tue\, 03 Aug 2010 08\:33\:08 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E12BCBF2-9F22-11DF-9B54-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152527>
 
-On Tue, Aug 3, 2010 at 17:57, Eugene Sajine <euguess@gmail.com> wrote:
-> Everything works extremely well with an exception of few repositories
-> that when opened are not showing the tags or last commits.
-> I.e. when I'm looking at the source of the page i see that the HTML is
-> not fully generated.
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-This sounds like a premature exit() - does `git for-each-ref
---format="%(refname)" | xargs -L 1 git rev-parse --verify` produce any
-errormessages?
+>>> ... especially when parse-option already does this:
+>>>
+>>> git commit --message foo   => works
+>>> git gc --prune 'last week' => doesn't
+>>>
+>>> Just like most GNU tools:
+>>>
+>>> grep --regexp foo => works
+>>> grep --color auto => doesn't
+>>
+>> Hmm.
+>>
+>> Are you hinting that we should keep "you can say '-Ofoo' and '-O foo'"
+>> bits but we should drop "you can also say '--opt=foo' and '--opt foo' as
+>> long as --opt always takes an argument"?
+>>
+>> I actually think that may make sense.
+>
+> I'm not sure I parsed your sentence correctly, but if I did, then no,
+> I don't think we should drop separate forms when --opt always takes an
+> argument, just the opposite.
 
-Also: if you could provide me with a clone-url for one of the
-troublesome repositories, I can try to debug the issue.
+What I meant was somewhat different.  I agree that we _could_ take
+separate "--opt <string>" form when --opt is known to always take an
+argument without ambiguity (the same goes for "-O <string>").
 
---
-larsh
+But I thought you were suggesting to accept:
+
+    -O<string>
+    -O <string>
+    --opt=<string>
+
+but never take:
+
+    --opt <string> (even when --opt always takes an argument)
+
+because that would further reduce one source of potential confusion
+(i.e. the user needs to remember if --opt always takes an argument or
+not).  I thought you mentioned that neither parse-options nor GNU tools
+take "--prune last", "--color auto" as a good supporting argument for
+this---the users won't miss the "--opt <string>" feature because that is
+not a common practice.
+
+And I was agreeing to that.
