@@ -1,67 +1,64 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [GSoC update] git-remote-svn: Week 14
-Date: Tue, 3 Aug 2010 18:23:54 +0530
-Message-ID: <20100803125352.GA17010@kytes>
+From: liran ritkop <liran.ritkop@gmail.com>
+Subject: git and touch screen
+Date: Tue, 3 Aug 2010 06:06:30 -0700 (PDT)
+Message-ID: <1280840790848-5368237.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Aug 03 14:56:58 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 03 15:06:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgH36-0000pn-BD
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 14:56:52 +0200
+	id 1OgHCX-00066Q-C3
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 15:06:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756253Ab0HCM4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Aug 2010 08:56:47 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:55961 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756198Ab0HCM4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 08:56:46 -0400
-Received: by pxi14 with SMTP id 14so1620536pxi.19
-        for <git@vger.kernel.org>; Tue, 03 Aug 2010 05:56:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=yrL5f1bhgv97JVvJ4W4NpdYNlD5hy377qEetYNjxOOE=;
-        b=Kf6hcyTNAdNznL3ZYRSgRMlZgjMcByITggPq2rW0o0wTN9IhhHbDqlKXfS9RiIDHeO
-         TUaraxBMkqKVCJpriuA0NF4c6LC44gnSE45B3g6gQk9/Xx/7e8gLhqSmbHn6QpLzpoFQ
-         mGMX61QhPk0DmTE6vQbdrbJhsTYKwfZdTAIhc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=ORWxakINpboW5OJA1kqdn4sH6fQJO2A0+nQqbbu+Uq5BFIgKudj3V7OXHQumVcKLV8
-         ViCLK9MpS4Z0pCsNqtMBhqBYbTL6QE4Hp5C97WLIfaJlKZJQngBBRqvopCbhJf58Agfh
-         xV2REurhYapyYhCDapup4KkpzOShe8F7Yj1lg=
-Received: by 10.143.20.10 with SMTP id x10mr6374642wfi.342.1280840205691;
-        Tue, 03 Aug 2010 05:56:45 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 23sm9135174wfa.22.2010.08.03.05.56.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Aug 2010 05:56:44 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755809Ab0HCNGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 09:06:32 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:35882 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754421Ab0HCNGb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 09:06:31 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <liran.ritkop@gmail.com>)
+	id 1OgHCQ-00088N-Rb
+	for git@vger.kernel.org; Tue, 03 Aug 2010 06:06:30 -0700
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152510>
 
-Hi,
 
-I'm happy to report that the flesh and blood of the `svnrdump load`
-implementation is done and merged in with tests. Unfortunately, it's
-still buggy and doesn't handle some cases- fortunately, this is minor
-and shouldn't take me too long to fix up. Collge is eating into my
-hacking time, and I don't think I'll be able to do much else before
-the SoC officially ends in a couple of weeks. I'll post a full report
-then, but if there's anything urgent that I can do before then, do let
-me know.
+Hi all
+I am using linux davinci (33bd223c). my embedded card is da830 and i have a
+touch screen on it - TS2046.
+I found a driver on the net - (two files - TS2046.c TS2046.h ,  and some
+changes to the config and makefile). I know that the board is connected to
+the touch screen via spi. to be accurate - SPI1. Despite all of this, i dont
+have in the /arch/arm/mach-davinci/board-da830-evm.c the structs that
+include the spi and the touch screen. i saw in the internet something like
+that, that i think that need to be added to this code source:
 
-Thanks for reading.
+static struct spi_board_info da8xx_spi_board_info1[] = {
+    [0] = {
+        .modalias = "tsc2046_ts",
+        .platform_data = &tsc2046IPWR_place_holder,
+        .controller_data = &tsc2046IPWR_spi_cfg,
+        .mode = SPI_MODE_0,
+        .irq = 0,
+        .max_speed_hz = 2 * 1000 * 1000  ,
+        .bus_num = 1,
+        .chip_select = 2,
+    },
+};
 
--- Ram
+
+Altough, my guess is, that that code is from montavista, and i use git.
+someone, please help..
+-- 
+View this message in context: http://git.661346.n2.nabble.com/git-and-touch-screen-tp5368237p5368237.html
+Sent from the git mailing list archive at Nabble.com.
