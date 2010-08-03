@@ -1,80 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: support -X to pass through strategy options
-Date: Tue, 03 Aug 2010 16:07:43 -0700
-Message-ID: <7vaap3i9c0.fsf@alter.siamese.dyndns.org>
-References: <80763c667fa4685d2b6451838c0f1809e86fe07e.1280354419.git.trast@student.ethz.ch> <7vd3u6uv41.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>,
-	Mike Lundy <mike@fluffypenguin.org>
-X-From: git-owner@vger.kernel.org Wed Aug 04 01:08:01 2010
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: [PATCH] git-svn: URL-decode the left-hand side of an svn refspec
+Date: Tue,  3 Aug 2010 19:21:25 -0400
+Message-ID: <1280877685-4928-1-git-send-email-stevenrwalter@gmail.com>
+Cc: Steven Walter <swalter@lpdev.prtdev.lexmark.com>
+To: git@vger.kernel.org, normalperson@yhbt.net
+X-From: git-owner@vger.kernel.org Wed Aug 04 01:21:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgQaW-0004MP-HW
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 01:08:00 +0200
+	id 1OgQnw-0000OK-1w
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 01:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757919Ab0HCXHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Aug 2010 19:07:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63650 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756225Ab0HCXHy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 19:07:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 23655CA72F;
-	Tue,  3 Aug 2010 19:07:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=/yHuEZzkNNNtTpp36pWpKfajOPo=; b=g9u2lPf4COkuAGZIUhm49PR
-	uRdr3B6jNidkQSJudpb3caw0nPZvQ96yAVHrg+AnKnBrshG4IkN4KZYzxtcCfU9d
-	Ocm//zbW4F5yt7mz5pYWazv5mLV8Efg/u5h1clyeB3IYlNeDV1c7ygkBSh3n+Wx9
-	cN+dbBLTAA/2FsL3GW3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=wErTmEKEXK/OyzvaPUyJwl5kYnvAwDKuZWy5d5rKoz5LcSTGa
-	AF3t6j2LWEQUTbB8dBzBM+sgO8axzGLfQY9qqI0Wg1kJJfP0uq+laKHAqNS7/CZa
-	XwtN/lauYp/T6VFesMy/ClPwEoukEXQ9r96OffKtXXcnP/w+eX/dTjsWE0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3EA2CA72E;
-	Tue,  3 Aug 2010 19:07:48 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2173BCA724; Tue,  3 Aug
- 2010 19:07:44 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EF2F4D9C-9F53-11DF-8572-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757660Ab0HCXVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 19:21:35 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33191 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757548Ab0HCXVe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 19:21:34 -0400
+Received: by iwn7 with SMTP id 7so5521228iwn.19
+        for <git@vger.kernel.org>; Tue, 03 Aug 2010 16:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=HUKbMO85bp+uSqTPv/Dv4kJ4leRtGR7twbozF4dTJgU=;
+        b=o/PB839yR9/l1H2whNr6J161ss76SxLZrJPhkBMvdw7dHxqNsyqTQdImgrIGaJD8Xi
+         IMB4kULYGbYzfAedbQ74bun2hI3u4NtDjJ5Wtgbn7TYLWjx1XcKcf3klf5cjTz+KfC27
+         29RG1zoEuw7O0pIxbvXIK14sRXSyC0SPrTxd8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=K5H1VtqQSvTJkWSoRhCe27eiYpy+BKTCpl8Pr4pch0GadiAnNnWC9n6PVfWAOKCTAn
+         L8ZWYYbgo4bHZfDiXb80/2f3wkZoWSx5mb5vF3jdXxl6fh77LhIPRKVyjdI0lFZYnVHR
+         7bsuXa6eTTcj/X5kPMVHmtvIulRxyv/Y0EVSE=
+Received: by 10.231.177.25 with SMTP id bg25mr9107125ibb.154.1280877692974;
+        Tue, 03 Aug 2010 16:21:32 -0700 (PDT)
+Received: from brock (adsl-147-26-48.bgk.bellsouth.net [72.147.26.48])
+        by mx.google.com with ESMTPS id n20sm7109845ibe.17.2010.08.03.16.21.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Aug 2010 16:21:31 -0700 (PDT)
+Received: from srwalter by brock with local (Exim 4.71)
+	(envelope-from <srwalter@dervierte>)
+	id 1OgQnY-0001IC-QU; Tue, 03 Aug 2010 19:21:28 -0400
+X-Mailer: git-send-email 1.7.0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152548>
 
-Junio C Hamano <gitster@pobox.com> writes:
+From: Steven Walter <swalter@lpdev.prtdev.lexmark.com>
 
-> Looks good; thanks both.
+This change allows git-svn to handle an URL with colons in the path
+---
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I spoke too fast.  You would need something like this on top to avoid
-confusing certain implementations of "expr" (e.g. FreeBSD 8.0).
-
- git-rebase.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase.sh b/git-rebase.sh
-index b1743ea..7d1c5c3 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -302,9 +302,9 @@ do
- 			newopt="$2"
- 			shift ;;
- 		*,--strategy-option=*)
--			newopt="$(expr "$1" : '--strategy-option=\(.*\)')" ;;
-+			newopt="$(expr " $1" : ' --strategy-option=\(.*\)')" ;;
- 		*,-X*)
--			newopt="$(expr "$1" : '-X\(.*\)')" ;;
-+			newopt="$(expr " $1" : ' -X\(.*\)')" ;;
- 		1,*)
- 			usage ;;
- 		esac
+diff --git a/git-svn.perl b/git-svn.perl
+index af70353..5d08dc6 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1812,6 +1812,8 @@ sub read_all_remotes {
+ 			die("svn-remote.$remote: remote ref '$remote_ref' "
+ 			    . "must start with 'refs/'\n")
+ 				unless $remote_ref =~ m{^refs/};
++                        # local_ref is an URL, so url-decode it
++                        $local_ref =~ s/\%([A-Fa-f0-9]{2})/pack('C', hex($1))/seg;
+ 			$r->{$remote}->{fetch}->{$local_ref} = $remote_ref;
+ 			$r->{$remote}->{svm} = {} if $use_svm_props;
+ 		} elsif (m!^(.+)\.usesvmprops=\s*(.*)\s*$!) {
+-- 
+1.7.0.3.gaa64d.dirty
