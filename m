@@ -1,87 +1,122 @@
-From: Benjamin Kramer <benny.kra@googlemail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [RFC/PATCH] git-compat-util.h: Don't define NORETURN under __clang__
-Date: Tue, 3 Aug 2010 15:35:51 +0200
-Message-ID: <C210797E-AE95-4074-AADE-CD2B518D8202@gmail.com>
+Date: Tue, 03 Aug 2010 15:35:47 +0200
+Message-ID: <vpq62zr24zw.fsf@bauges.imag.fr>
 References: <1280840883-24540-1-git-send-email-avarab@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 15:40:19 2010
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 03 15:40:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgHj4-0006CX-Jo
+	id 1OgHj4-0006CX-4H
 	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 15:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756461Ab0HCNf7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 09:35:59 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56366 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756433Ab0HCNf6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Aug 2010 09:35:58 -0400
-Received: by fxm14 with SMTP id 14so1981686fxm.19
-        for <git@vger.kernel.org>; Tue, 03 Aug 2010 06:35:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=eH0qEDMSSIC3rYL0jRpB8YET4s5mexSCom+KecGqTQw=;
-        b=pJcJZ0pKj2unRLR9oy0XSnPc8kcDTq0Y0ZxFlP9Pn0Yj/JS+Q7T6FHK/jLtksPW2pS
-         W+feHO5SmPNJW2vPLU6/FvKtUeaa9HUXygDW8NnQnEJ8tH6mn6Lk1kaQd1o2TTnIjA0c
-         l3ufN8uKOb7CC5gNoaAMY+PoWC9arMCO7OnK8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=Vtnxz2V2R8UjRvHYJwnOJ2ag7ZRpWJTKIKFBAhx/C5OOqFPtrrgzvlEuYcg6Qi/34h
-         Lan+UfQhR6IjnLOteltaKalid0ttu2b3bwV38+Dxozw+8au2T7g/7svOi2bccAFOt/ml
-         EJSDNZV/NQN1ODq9S9DJYrvbEFaTrq2WjkKT8=
-Received: by 10.223.125.196 with SMTP id z4mr7285158far.80.1280842557001;
-        Tue, 03 Aug 2010 06:35:57 -0700 (PDT)
-Received: from [192.168.1.24] (p50923316.dip.t-dialin.net [80.146.51.22])
-        by mx.google.com with ESMTPS id e22sm153353faa.2.2010.08.03.06.35.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Aug 2010 06:35:54 -0700 (PDT)
+	id S1756379Ab0HCNfy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 09:35:54 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:44068 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752952Ab0HCNfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 09:35:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o73DXiNj001132
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 3 Aug 2010 15:33:44 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OgHem-000292-2O; Tue, 03 Aug 2010 15:35:48 +0200
 In-Reply-To: <1280840883-24540-1-git-send-email-avarab@gmail.com>
-X-Mailer: Apple Mail (2.1081)
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue\,  3
+ Aug 2010 13\:08\:03 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Aug 2010 15:33:44 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o73DXiNj001132
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1281447227.53458@2x4AmAkgqkKpRdkptuGHaA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152520>
 
-
-On 03.08.2010, at 15:08, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+=C6var Arnfj=F6r=F0 Bjarmason venit, vidit, dixit 03.08.2010 15:08:
 
 > clang version 1.0 on Debian testing x86_64 defines __GNUC__, but barf=
 s
 > on `void __attribute__((__noreturn__))'. E.g.:
-
-This is a bug in clang 1.0 that was fixed in the llvm 2.7/clang 1.5 tim=
-eframe, it didn't
-recognize attributes on function pointers properly. clang tries to be a=
-s compatible with GCC as
-possible so it obviously has to define __GNUC__ ;)
-
 >=20
->    usage.c:56:1: error: function declared 'noreturn' should not retur=
-n [-Winvalid-noreturn]
->    }
->    ^
->    1 diagnostic generated.
->    make: *** [usage.o] Error 1
+>     usage.c:56:1: error: function declared 'noreturn' should not retu=
+rn [-Winvalid-noreturn]
+>     }
+>     ^
+>     1 diagnostic generated.
+>     make: *** [usage.o] Error 1
 
-It's a "warning which defaults to an error" you can pacify it by passin=
-g -Winvalid-noreturn or
-=10-Wno-invalid-noreturn.
+It doesn't mean that it's not accepting __noreturn__, it means it was
+not smart enough to check that the function do not return.
 
-I oppose adding workarounds for obsolete versions of clang, Debian shou=
-ld upgrade their packages to
-a more recent release. clang 1.0 had all kinds of weird bugs and should=
-n't be used anymore.
+In my git, usage.c:56: leads me to this function:
+
+void usagef(const char *err, ...)
+{
+	va_list params;
+
+	va_start(params, err);
+	usage_routine(err, params);
+	va_end(params);
+}
+
+The absence of return comes from usage_routine, which is a pointer to
+function, and it seems your version of clang doesn't handle
+__noreturn__ pointers to functions properly.
+
+On my box:
+
+git$ make -B CC=3Dclang V=3Dyes usage.o                                =
+                                                                       =
+=20
+clang -o usage.o -c   -g -Wall -Werror -I.  -DHAVE_PATHS_H -DSHA1_HEADE=
+R=3D'<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS  usage.c
+git$ clang --version
+clang version 1.1 (branches/release_27)
+Target: i386-pc-linux-gnu
+Thread model: posix
+
+so, more recent clang do not seem to have this issue.
+
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 02a73ee..c651cb7 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -183,7 +183,10 @@ extern char *gitbasename(char *);
+>  #define is_dir_sep(c) ((c) =3D=3D '/')
+>  #endif
+> =20
+> -#ifdef __GNUC__
+> +#ifdef __clang__
+> +#define NORETURN
+> +#define NORETURN_PTR __attribute__((__noreturn__))
+> +#elif __GNUC__
+
+If you go for something like this, you should check the version of
+clang, and special-case only version < 1.1.
+
+But I'm not sure special-casing old version of a young compiler really
+makes sense. We're only talking about warnings here, so I'd say you
+should either upgrade clang or remove -Werror from your CFLAGS.
+
+(other than that, it's cool to see someone testing another
+compiler ;-) )
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
