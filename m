@@ -1,157 +1,75 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Re: CGIT 0.8.3.1 "chokes" on some bare repos
-Date: Tue, 3 Aug 2010 15:34:37 -0400
-Message-ID: <AANLkTi=Ho=ZiOpMszSEWTjY=PKg9AHp9wY-jxcd3H_jG@mail.gmail.com>
-References: <90e6ba53a8a0a88e46048cee6566@google.com>
-	<AANLkTinDPa7ngcTEfYC8k2O3hwkYszEUsb3pZqnuOSo2@mail.gmail.com>
-	<AANLkTindiOoy-4W5DJ9AGa8q29Tsm9P8K_4TEgRfmJW=@mail.gmail.com>
-	<AANLkTin6+X=nTTqLG=xCYDSPKWX3CVPTxAhzDM9uKMW5@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 4/5 v4] log: parse detached options like git log --grep foo
+Date: Tue, 03 Aug 2010 21:52:05 +0200
+Message-ID: <vpq39uvzd7e.fsf@bauges.imag.fr>
+References: <vpq7hkdml22.fsf@bauges.imag.fr>
+	<1280478669-22973-4-git-send-email-Matthieu.Moy@imag.fr>
+	<7vvd7tlzfu.fsf@alter.siamese.dyndns.org>
+	<vpqtyncdeuc.fsf@bauges.imag.fr>
+	<7vsk2wk8lc.fsf@alter.siamese.dyndns.org>
+	<vpq8w4ob3yz.fsf@bauges.imag.fr>
+	<7vlj8nipl9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 21:34:47 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 03 21:57:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgNG9-0005Mn-K5
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 21:34:45 +0200
+	id 1OgNcW-00088J-Fn
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 21:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756860Ab0HCTej convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 15:34:39 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:49465 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756607Ab0HCTei convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Aug 2010 15:34:38 -0400
-Received: by qyk7 with SMTP id 7so469275qyk.19
-        for <git@vger.kernel.org>; Tue, 03 Aug 2010 12:34:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7y9Eoz1C8kyZh9hdK/LrIuWdzd+jKbHn/ADF5NwJ+VM=;
-        b=toDIqELzSy5rG963haGQNutGQPTsiVXgdYUJqGTjNuSJrpH0JCyxG3kD367d8fZoKK
-         KeoFRC5ZymH1WSU8u+cV8x51+hVGbbCDpH36i8UixdonmXKaF/Yu0uNLLHCzF+iCCKMq
-         AY7fIpXWR3AIVyKcfAWwh1uJIeYv/hVkdCcQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UkOMQlV3hoEb3XYYA91YvbTH9OpWfe3g4Dp5aK2lLmNsb1cUjhdXmsx0tQrZcAdEKI
-         0O0rIQ4+5bkD6aDOv3Ypi72loat7M8avNvjvwhJrfSRK6rl3y8x9MoFO89X4+C5Q4eUU
-         FjZwIxjSAQBdAcg54dsOGAVu0PfYTjcOVGFks=
-Received: by 10.229.184.149 with SMTP id ck21mr1478094qcb.160.1280864077362; 
-	Tue, 03 Aug 2010 12:34:37 -0700 (PDT)
-Received: by 10.229.48.205 with HTTP; Tue, 3 Aug 2010 12:34:37 -0700 (PDT)
-In-Reply-To: <AANLkTin6+X=nTTqLG=xCYDSPKWX3CVPTxAhzDM9uKMW5@mail.gmail.com>
+	id S1757516Ab0HCT5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 15:57:47 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:56918 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756973Ab0HCT5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 15:57:46 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o73Jfbgk027840
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 3 Aug 2010 21:41:39 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OgNWw-0005UD-6u; Tue, 03 Aug 2010 21:52:06 +0200
+In-Reply-To: <7vlj8nipl9.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 03 Aug 2010 10\:16\:34 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 03 Aug 2010 21:41:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o73Jfbgk027840
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1281469301.74166@4SmGVfNSCQ5mjX4abhTlew
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152536>
 
-On Tue, Aug 3, 2010 at 2:47 PM, Lars Hjemli <hjemli@gmail.com> wrote:
-> On Tue, Aug 3, 2010 at 20:19, Eugene Sajine <euguess@gmail.com> wrote=
-:
->> I have disabled cache: i have nocache=3D1 (we are working without ca=
-che
->> yet, =C2=A0cache-size set to 0, but for the experiment i commented t=
-his
->> out)
->
-> Good
->
->> We are using scan mode as we have central folder to store our repos.
->> So I switched off the scanmode by commenting the scan-url out from
->> cgitrc
->
-> Then you'll have to add the repo.* settings to cgitrc by hand, or els=
-e...
->
->> Now when i'm trying to generate the html for the repo in question i
->> get html where it says "no repositories found".
->
-> This is expected.
->
->
->> The command is like this:
->> $ PATH_INFO=3D/home/users/gitrepouser/repos/subfolder/repo.git
->> ./cgit.cgi 1>cgit.html 2>cgit.log
->
-> Add this to your cgitrc:
->
-> repo.url=3Dfoo
-> repo.path=3D/home/users/gitrepouser/repos/subfolder/repo.git
->
-> Then run `PATH_INFO=3Dfoo ./cgit.cgi 1>cgit.html 2>cgit.log`
->
-> --
-> larsh
->
+Junio C Hamano <gitster@pobox.com> writes:
 
-Touchdown!;)
+> But I thought you were suggesting to [...] never take:
+>
+>     --opt <string> (even when --opt always takes an argument)
+>
+> because that would further reduce one source of potential confusion
+> (i.e. the user needs to remember if --opt always takes an argument or
+> not).  I thought you mentioned that neither parse-options nor GNU tools
+> take "--prune last",
 
-It segfaults:
+No, I said the opposite: both do.
 
-GNU gdb Red Hat Linux (6.3.0.0-1.159.el4rh)
-Copyright 2004 Free Software Foundation, Inc.
-GDB is free software, covered by the GNU General Public License, and yo=
-u are
-welcome to change it and/or distribute copies of it under certain condi=
-tions.
-Type "show copying" to see the conditions.
-There is absolutely no warranty for GDB.  Type "show warranty" for deta=
-ils.
-This GDB was configured as "i386-redhat-linux-gnu"...Using host
-libthread_db library "/lib/tls/libthread_db.so.1".
+> "--color auto" as a good supporting argument for this
 
-Core was generated by `./cgit.cgi'.
-Program terminated with signal 11, Segmentation fault.
-Reading symbols from /usr/lib/libz.so.1...done.
-Loaded symbols for /usr/lib/libz.so.1
-Reading symbols from /lib/libcrypto.so.4...done.
-Loaded symbols for /lib/libcrypto.so.4
-Reading symbols from /lib/tls/libc.so.6...done.
-Loaded symbols for /lib/tls/libc.so.6
-Reading symbols from /usr/lib/libgssapi_krb5.so.2...done.
-Loaded symbols for /usr/lib/libgssapi_krb5.so.2
-Reading symbols from /usr/lib/libkrb5.so.3...done.
-Loaded symbols for /usr/lib/libkrb5.so.3
-Reading symbols from /lib/libcom_err.so.2...done.
-Loaded symbols for /lib/libcom_err.so.2
-Reading symbols from /usr/lib/libk5crypto.so.3...done.
-Loaded symbols for /usr/lib/libk5crypto.so.3
-Reading symbols from /lib/libresolv.so.2...done.
-Loaded symbols for /lib/libresolv.so.2
-Reading symbols from /lib/libdl.so.2...done.
-Loaded symbols for /lib/libdl.so.2
-Reading symbols from /lib/ld-linux.so.2...done.
-Loaded symbols for /lib/ld-linux.so.2
-#0  0x080538fa in cmp_tag_age (a=3D0x8bcc760, b=3D0x8bcc764) at ui-refs=
-=2Ec:52
-52      ui-refs.c: No such file or directory.
-        in ui-refs.c
-(gdb) where
-#0  0x080538fa in cmp_tag_age (a=3D0x8bcc760, b=3D0x8bcc764) at ui-refs=
-=2Ec:52
-#1  0x0040eb45 in msort_with_tmp () from /lib/tls/libc.so.6
-#2  0x0040ea1d in msort_with_tmp () from /lib/tls/libc.so.6
-#3  0x0040ea1d in msort_with_tmp () from /lib/tls/libc.so.6
-#4  0x0040ea1d in msort_with_tmp () from /lib/tls/libc.so.6
-#5  0x0040ea1d in msort_with_tmp () from /lib/tls/libc.so.6
-#6  0x0040ecdc in qsort () from /lib/tls/libc.so.6
-#7  0x08053f8b in cgit_print_tags (maxcount=3D10) at ui-refs.c:217
-#8  0x08058189 in cgit_print_summary () at ui-summary.c:56
-#9  0x0804da70 in summary_fn (ctx=3D0x80e44a0) at cmd.c:119
-#10 0x0804cc6d in process_request (cbdata=3D0x80e44a0) at cgit.c:431
-#11 0x0804ae31 in cache_process (size=3D0, path=3D0x80a2e24
-"../cgit/cache", key=3D0x8ba6028 "foo", ttl=3D5, fn=3D0x804cb28
-<process_request>, cbdata=3D0x80e44a0) at cache.c:322
-#12 0x0804d81e in main (argc=3D1, argv=3D0xbfffa2b4) at cgit.c:712
+"grep --color auto" is refused because the "auto" part is optional.
+But both "grep --regex foo" and "grep --regexp=foo" are accepted. Same
+for "git commit --message=foo" and "git commit --message foo".
 
-Thanks,
-Eugene
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
