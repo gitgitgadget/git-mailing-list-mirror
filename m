@@ -1,78 +1,90 @@
-From: Brad King <brad.king@kitware.com>
-Subject: [PATCH] Documentation: cite git-am from git-apply
-Date: Tue,  3 Aug 2010 14:41:50 -0400
-Message-ID: <1280860910-6867-1-git-send-email-brad.king@kitware.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 03 20:42:01 2010
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: Re: Re: CGIT 0.8.3.1 "chokes" on some bare repos
+Date: Tue, 3 Aug 2010 20:47:30 +0200
+Message-ID: <AANLkTin6+X=nTTqLG=xCYDSPKWX3CVPTxAhzDM9uKMW5@mail.gmail.com>
+References: <90e6ba53a8a0a88e46048cee6566@google.com>
+	<AANLkTinDPa7ngcTEfYC8k2O3hwkYszEUsb3pZqnuOSo2@mail.gmail.com>
+	<AANLkTindiOoy-4W5DJ9AGa8q29Tsm9P8K_4TEgRfmJW=@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 03 20:47:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgMR3-0004as-5A
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 20:41:57 +0200
+	id 1OgMWZ-0007Tg-N0
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 20:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757524Ab0HCSlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Aug 2010 14:41:52 -0400
-Received: from public.kitware.com ([66.194.253.19]:38675 "EHLO
-	public.kitware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756886Ab0HCSlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 14:41:51 -0400
-Received: by public.kitware.com (Postfix, from userid 5001)
-	id BBBC1195D4; Tue,  3 Aug 2010 14:41:50 -0400 (EDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on public.kitware.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
-	FH_DATE_PAST_20XX autolearn=no version=3.2.5
-Received: from vesper (vesper.kitwarein.com [192.168.1.207])
-	by public.kitware.com (Postfix) with ESMTP id 3DA89195D4;
-	Tue,  3 Aug 2010 14:41:50 -0400 (EDT)
-Received: by vesper (Postfix, from userid 1000)
-	id 37ACF4925; Tue,  3 Aug 2010 14:41:50 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1
+	id S1757582Ab0HCSre convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 14:47:34 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63334 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757577Ab0HCSrb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Aug 2010 14:47:31 -0400
+Received: by fxm14 with SMTP id 14so2118726fxm.19
+        for <git@vger.kernel.org>; Tue, 03 Aug 2010 11:47:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YiPcHuPiHlRnUHmWx2WXUBEg1qgirW1iu89D6hxALVM=;
+        b=FdXgDCq4710fKKDS+XS/+Le7jZA7uGf5K62uLvcPkKtfmVVBxXnK5+FR00i09h4Ne6
+         T6VThbUNcf1IAVYthKYEwyGpuVLTg5Jj5ThUhs2zxENJv08GAKmDg02qGVdEquQNFvS7
+         /dJHKLatRJnPe0pC2KUqQ6LyMLO4JKdiuxoXA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=FCe1WjiKCvNWa34sF6Vb7ou7PDo6B+999xHThb0ACpbVgwgFiCupNl4URY+yUFlR/u
+         KAGLAf6mtwQFEyD9fATMxMppvauz9UBzEeBV+LvBDpz3MeqVbKxyE3sfn/GgqTqgwrGY
+         50MLk4li9/NeT522V9eRgiJRsX6zL+zG6hGzY=
+Received: by 10.239.188.67 with SMTP id o3mr406026hbh.17.1280861250250; Tue, 
+	03 Aug 2010 11:47:30 -0700 (PDT)
+Received: by 10.239.165.79 with HTTP; Tue, 3 Aug 2010 11:47:30 -0700 (PDT)
+In-Reply-To: <AANLkTindiOoy-4W5DJ9AGa8q29Tsm9P8K_4TEgRfmJW=@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152534>
 
-Users reading git-apply documentation may also be interested in git-am,
-especially after receiving an email created with git-format-patch.  The
-documentation for git-am already references git-apply.  Add the reverse.
+On Tue, Aug 3, 2010 at 20:19, Eugene Sajine <euguess@gmail.com> wrote:
+> I have disabled cache: i have nocache=3D1 (we are working without cac=
+he
+> yet, =C2=A0cache-size set to 0, but for the experiment i commented th=
+is
+> out)
 
-Signed-off-by: Brad King <brad.king@kitware.com>
----
- Documentation/git-apply.txt |   10 ++++++++++
- 1 files changed, 10 insertions(+), 0 deletions(-)
+Good
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 8463439..4a74b23 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -26,6 +26,10 @@ with the `--cache` option the patch is only applied to the index.
- Without these options, the command applies the patch only to files,
- and does not require them to be in a git repository.
- 
-+This command applies the patch but does not create a commit.  Use
-+linkgit:git-am[1] to create commits from patches generated by
-+linkgit:git-format-patch[1] and/or received by email.
-+
- OPTIONS
- -------
- <patch>...::
-@@ -242,6 +246,12 @@ If `--index` is not specified, then the submodule commits in the patch
- are ignored and only the absence or presence of the corresponding
- subdirectory is checked and (if possible) updated.
- 
-+
-+SEE ALSO
-+--------
-+linkgit:git-am[1].
-+
-+
- Author
- ------
- Written by Linus Torvalds <torvalds@osdl.org>
--- 
-1.7.1
+> We are using scan mode as we have central folder to store our repos.
+> So I switched off the scanmode by commenting the scan-url out from
+> cgitrc
+
+Then you'll have to add the repo.* settings to cgitrc by hand, or else.=
+=2E.
+
+> Now when i'm trying to generate the html for the repo in question i
+> get html where it says "no repositories found".
+
+This is expected.
+
+
+> The command is like this:
+> $ PATH_INFO=3D/home/users/gitrepouser/repos/subfolder/repo.git
+> ./cgit.cgi 1>cgit.html 2>cgit.log
+
+Add this to your cgitrc:
+
+repo.url=3Dfoo
+repo.path=3D/home/users/gitrepouser/repos/subfolder/repo.git
+
+Then run `PATH_INFO=3Dfoo ./cgit.cgi 1>cgit.html 2>cgit.log`
+
+--
+larsh
