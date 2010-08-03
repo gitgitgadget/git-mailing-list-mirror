@@ -1,122 +1,72 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] git-compat-util.h: Don't define NORETURN under __clang__
-Date: Tue, 03 Aug 2010 15:35:47 +0200
-Message-ID: <vpq62zr24zw.fsf@bauges.imag.fr>
-References: <1280840883-24540-1-git-send-email-avarab@gmail.com>
+From: "Kevin P. Fleming" <kpfleming@digium.com>
+Subject: Re: [PATCH] post-receive-email: remove spurious commas in email subject.
+Date: Tue, 03 Aug 2010 08:50:16 -0500
+Organization: Digium, Inc.
+Message-ID: <4C581E98.6090504@digium.com>
+References: <1280841049-19091-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 15:40:20 2010
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 03 15:50:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgHj4-0006CX-4H
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 15:40:14 +0200
+	id 1OgHsw-00035L-32
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 15:50:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756379Ab0HCNfy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 09:35:54 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44068 "EHLO rominette.imag.fr"
+	id S1756663Ab0HCNuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 09:50:21 -0400
+Received: from mail.digium.com ([216.207.245.2]:52279 "EHLO mail.digium.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752952Ab0HCNfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 09:35:53 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o73DXiNj001132
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 3 Aug 2010 15:33:44 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OgHem-000292-2O; Tue, 03 Aug 2010 15:35:48 +0200
-In-Reply-To: <1280840883-24540-1-git-send-email-avarab@gmail.com>
- (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue\,  3
- Aug 2010 13\:08\:03 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Aug 2010 15:33:44 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o73DXiNj001132
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1281447227.53458@2x4AmAkgqkKpRdkptuGHaA
+	id S1751453Ab0HCNuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 09:50:19 -0400
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <kpfleming@digium.com>)
+	id 1OgHsn-0002Il-PQ; Tue, 03 Aug 2010 08:50:17 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id B2966D8025;
+	Tue,  3 Aug 2010 08:50:17 -0500 (CDT)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VtaTTK63gwXi; Tue,  3 Aug 2010 08:50:17 -0500 (CDT)
+Received: from [172.19.1.105] (173-24-201-108.client.mchsi.com [173.24.201.108])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id 24FA5D8023;
+	Tue,  3 Aug 2010 08:50:17 -0500 (CDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100713 Thunderbird/3.0.6
+In-Reply-To: <1280841049-19091-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Enigmail-Version: 1.0.1
+OpenPGP: id=05FB8DB2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152521>
 
-=C6var Arnfj=F6r=F0 Bjarmason venit, vidit, dixit 03.08.2010 15:08:
+On 08/03/2010 08:10 AM, Matthieu Moy wrote:
+> The previous form produced subjects like
+> 
+>   [SCM] project.git branch, foo, updated. ...
+> 
+> The new one will produce the lighter
+> 
+>   [SCM] project.git branch foo updated. ...
+> 
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> I am the only one bothered by these extra commas in email subject? If
+> so, I can live with it, but I thought I'd give it a try ;-).
 
-> clang version 1.0 on Debian testing x86_64 defines __GNUC__, but barf=
-s
-> on `void __attribute__((__noreturn__))'. E.g.:
->=20
->     usage.c:56:1: error: function declared 'noreturn' should not retu=
-rn [-Winvalid-noreturn]
->     }
->     ^
->     1 diagnostic generated.
->     make: *** [usage.o] Error 1
+No, I've removed them in our local copy as well, but never bothered to
+send the changes to the list :-)
 
-It doesn't mean that it's not accepting __noreturn__, it means it was
-not smart enough to check that the function do not return.
-
-In my git, usage.c:56: leads me to this function:
-
-void usagef(const char *err, ...)
-{
-	va_list params;
-
-	va_start(params, err);
-	usage_routine(err, params);
-	va_end(params);
-}
-
-The absence of return comes from usage_routine, which is a pointer to
-function, and it seems your version of clang doesn't handle
-__noreturn__ pointers to functions properly.
-
-On my box:
-
-git$ make -B CC=3Dclang V=3Dyes usage.o                                =
-                                                                       =
-=20
-clang -o usage.o -c   -g -Wall -Werror -I.  -DHAVE_PATHS_H -DSHA1_HEADE=
-R=3D'<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS  usage.c
-git$ clang --version
-clang version 1.1 (branches/release_27)
-Target: i386-pc-linux-gnu
-Thread model: posix
-
-so, more recent clang do not seem to have this issue.
-
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 02a73ee..c651cb7 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -183,7 +183,10 @@ extern char *gitbasename(char *);
->  #define is_dir_sep(c) ((c) =3D=3D '/')
->  #endif
-> =20
-> -#ifdef __GNUC__
-> +#ifdef __clang__
-> +#define NORETURN
-> +#define NORETURN_PTR __attribute__((__noreturn__))
-> +#elif __GNUC__
-
-If you go for something like this, you should check the version of
-clang, and special-case only version < 1.1.
-
-But I'm not sure special-casing old version of a young compiler really
-makes sense. We're only talking about warnings here, so I'd say you
-should either upgrade clang or remove -Werror from your CFLAGS.
-
-(other than that, it's cool to see someone testing another
-compiler ;-) )
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-- 
+Kevin P. Fleming
+Digium, Inc. | Director of Software Technologies
+445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
+skype: kpfleming | jabber: kfleming@digium.com
+Check us out at www.digium.com & www.asterisk.org
