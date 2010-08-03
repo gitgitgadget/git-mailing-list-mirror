@@ -1,218 +1,102 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb not friendly to firefox revived
-Date: Tue, 3 Aug 2010 23:50:38 +0200
-Message-ID: <201008032350.40117.jnareb@gmail.com>
-References: <20100801195138.GA1980@pengutronix.de> <m3lj8qozan.fsf@localhost.localdomain> <20100803210730.GA1254@pengutronix.de>
+Subject: Re: git instaweb + webrick does not work
+Date: Tue, 03 Aug 2010 15:07:48 -0700 (PDT)
+Message-ID: <m34ofbpcyr.fsf@localhost.localdomain>
+References: <1272BF62-A0C8-4940-9472-E46C05BF1723@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kernel@pengutronix.de,
-	Stephen Boyd <bebarino@gmail.com>
-To: "Uwe =?utf-8?q?Kleine-K=C3=B6nig?=" <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Tue Aug 03 23:50:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Mike Dalessio <mike@csa.net>
+To: Michael Dippery <mdippery@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 04 00:07:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgPNU-00035j-6E
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 23:50:28 +0200
+	id 1OgPeP-0005LS-Ao
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 00:07:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757547Ab0HCVuW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 17:50:22 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:39588 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757266Ab0HCVuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 17:50:21 -0400
-Received: by bwz1 with SMTP id 1so2123916bwz.19
-        for <git@vger.kernel.org>; Tue, 03 Aug 2010 14:50:19 -0700 (PDT)
+	id S932801Ab0HCWHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 18:07:51 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36181 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932556Ab0HCWHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 18:07:50 -0400
+Received: by fxm14 with SMTP id 14so2169150fxm.19
+        for <git@vger.kernel.org>; Tue, 03 Aug 2010 15:07:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pFZHQY9/phSF01ijEnLL8WgvwMBURNstIDiOKyqUyXk=;
-        b=JYuukvy7lwtRUB0wMk4haHYKdicxnafI/ojh2H57MopaG0o0O9pF1JTBZ6QGcCPH39
-         TKRk6oE7rJa66hswTdZY17MHEFVG46LIp+6rNW6MMbovKOuRO3wwfOnexyJsZevBV5/3
-         THQxYRK23PDgnn1IRIv9K/BuP6DZcSNLm3Udw=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=LOLcF6FdcHgipSrjChljoFf0jj4I/daHwdQZGEHR0ds=;
+        b=ZQjM3tj31g2N3RHQBIhpVNChr+QIrmlnYc0ffiEIh8pqxW8E+cblXYwvbjWYEO9wxZ
+         H2RO3XMJvU1UjxWMvkhopWfx1rsbagTL7UPfy5ASi5TAwXWGrpcZv2xC0vfnsiY+vIO1
+         up/1+/UcWO28a35RDsx3TMqUfZxt6+X/TJTlc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=YayLaCAA8KuqkCbjq6S065CWd2oPAb4XDFPSrzF3BcZStrMLcfpShKwSy9IWbroE7x
-         SujissF1dlQgvoS09fvZBcVLbmSo1hM+D09uQA5AKXJe0SYvfnO507wGr8m40SF6aDkG
-         uP+p4my+jRDlaNsx3pJIR3ly9GyVhdHXkHPaQ=
-Received: by 10.204.175.9 with SMTP id v9mr5718031bkz.13.1280872219681;
-        Tue, 03 Aug 2010 14:50:19 -0700 (PDT)
-Received: from [192.168.1.13] (abwi87.neoplus.adsl.tpnet.pl [83.8.232.87])
-        by mx.google.com with ESMTPS id o20sm5366841bkw.15.2010.08.03.14.50.16
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=edpsLnokaEIOPeUCbmsl+0ZbHKyrFoE9SD69vdOyqOs9+AYZixn5NiWxguXU/5t1rs
+         bxb/4NEuortQFM77YlEox14Q/+ewa60EJe9cWgw9JZ3WnC7fCd4buCRd+tMrPt+1IY8z
+         PulcDviBRVrfJN4sDb1pD0TgMg4wB8WBuAnJk=
+Received: by 10.223.113.135 with SMTP id a7mr7999686faq.40.1280873269556;
+        Tue, 03 Aug 2010 15:07:49 -0700 (PDT)
+Received: from localhost.localdomain (abwi87.neoplus.adsl.tpnet.pl [83.8.232.87])
+        by mx.google.com with ESMTPS id b36sm2700403faq.11.2010.08.03.15.07.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 03 Aug 2010 14:50:18 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20100803210730.GA1254@pengutronix.de>
-Content-Disposition: inline
+        Tue, 03 Aug 2010 15:07:48 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o73M7msE006620;
+	Wed, 4 Aug 2010 00:07:53 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o73M7PNd006615;
+	Wed, 4 Aug 2010 00:07:25 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1272BF62-A0C8-4940-9472-E46C05BF1723@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152544>
 
-On Tue, Aug 03, 2010, Uwe Kleine-K=C3=B6nig wrote:
-> On Sun, Aug 01, 2010 at 01:26:16PM -0700, Jakub Narebski wrote:
-> > Uwe Kleine-K=C3=B6nig  <u.kleine-koenig@pengutronix.de> writes:
-> >=20
-> > > Hello,
-> > >=20
-> > > gitweb (at least) doesn't quote author names enough.
-> > >=20
-> > > Firefox barfs for me at looking at
-> > >=20
-> > > 	http://git.pengutronix.de/?p=3Dukl/linux-2.6.git;a=3Dshortlog;h=3D=
-v2.6.16.10
-> > >=20
-> > > with an error:
-> > >=20
-> > > 	XML Parsing Error: not well-formed Location:
-> > > http://git.pengutronix.de/?p=3Dukl/linux-2.6.git;a=3Dshortlog;h=3D=
-v2.6.16.10
-> > > Line Number 112, Column 81:
-> > > <td class=3D"author"><a title=3D"Search for commits authored by Y=
-OSHIFUJI Hideaki / ?$B5HF#1QL@?(B" class=3D"list" href=3D"/?p=3Dukl/lin=
-ux-2.6.git;a=3Dsearch;h=3Dv2.6.16.10;s=3DYOSHIFUJI+Hideaki+/+%1B%24B5HF=
-%231QL@%1B(B;st=3Dauthor"><span title=3D"YOSHIFUJI Hideaki / ?$B5HF#1QL=
-@?(B">YOSHIFUJI Hideaki...  </span></a></td><td><a class=3D"list subjec=
-t" title=3D"[PATCH] IPV6: XFRM: Fix decoding session with preceding ext=
-ension header(s)." href=3D"/?p=3Dukl/linux-2.6.git;a=3Dcommit;h=3Dfa39d=
-f2ff7f6102f1f37d3cf1f68243534d56253">[PATCH] IPV6: XFRM: Fix decoding s=
-ession with preceding... </a></td>
-> > > -----------------------------------------------------------------=
----------------^
-> > >=20
-> > > This is with git 1.7.1 and Iceweasel (aka. Firefox) 3.5.10.
-> > >=20
-> > > Making
-> > >=20
-> > > 	title=3D>"Search for commits $performed by $author"
-> > >=20
-> > > in line 1694 of Debian's /usr/lib/cgi-bin/gitweb.cgi from the git=
- 1.7.1
-> > > package read
-> > >=20
-> > > 	title=3D>esc_html("Search for commits $performed by $author")
-> > >=20
-> > > this problem goes away.  (Still my browser barfs when clicking at=
- the name.)
-> > >=20
-> > > I'm not sure if this is the right way to fix this and I'm too tir=
-ed now
-> > > to do a complete patch, so I let this for someone else.
-> >=20
-> > Actually gitweb leaves quoting of tag attributes to CGI module:
-> >=20
-> >   return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash=
-,
-> >                                 searchtext=3D>$author, searchtype=3D=
->$searchtype),
-> >                   -class =3D> "list",
-> >                   -title =3D> "Search for commits $performed by $au=
-thor"},
-> >                  $displaytext);
-> >=20
-> > I am worrying (perhaps unnecessary) that using esc_html would resul=
-t
-> > in double escaping.  But it looks like the problem is with Unicode,
-> > so perhaps using
-> >=20
-> >   	title =3D> to_utf8("Search for commits $performed by $author")
-> >=20
-> > in place of
-> >=20
-> >   	title=3D>esc_html("Search for commits $performed by $author")
-> >=20
-> > would be a better fix?  Does this fix work for you?
->
-> No, this doesn't help.  Firefox still barfs with to_utf8.
->=20
-> With esc_html the code generated is:
->=20
-> <a title=3D"Search for commits authored by YOSHIFUJI Hideaki / <span =
-class=3D"cntrl">\e</span>$B5HF#1QL@<span class=3D"cntrl">\e</span>(B" c=
-lass=3D"list" href=3D"/?p=3D.git;a=3Dsearch;h=3Df66ab685594d49e570b2176=
-cfa20b03360e9a6e9;s=3DYOSHIFUJI+Hideaki+/+%1B%24B5HF%231QL@%1B(B;st=3Da=
-uthor"><span title=3D"YOSHIFUJI Hideaki / ?$B5HF#1QL@?(B">YOSHIFUJI Hid=
-eaki...  </span></a>
+Michael Dippery <mdippery@gmail.com> writes:
 
-As you can see the HTML code generated with esc_html solution is way wr=
-ong
-because of embedded '<span class=3D"cntrl">\e</span>' as you see _witho=
-ut_
-'"' being escaped, so HTML is wrong.
+> I'm trying to use `git instaweb` with Ruby's webrick (which I have
+> installed) on Mac OS X, but every time I fire up it up via `git
+> instaweb --httpd=webrick`, I get the following error:
+> 
+> "webrick not found. Install webrick or use --httpd to specify
+> another httpd daemon."
+> 
+> I _do_ have webrick. Asking around a bit, I was told the the problem
+> may have been introduced in commit be5347b. Is this so? If not, any
+> other ideas on what may be causing the problem?
+> 
+> I'm using Git v1.7.2.1 on Mac OS X 10.6.
 
-Nevertheless it shows what's the problem.  Somehow (perhaps wrong
-encoding, perhaps screw up with quoted-printable and git-am, perhaps
-copy'n' paste included ANSII color codes from terminal, perhaps somethi=
-ng
-different altogether) you got control characters (\e =3D ESC) in $autho=
-r.
-In strict XHTML mode (with 'application/xml
+To be more exact commit be5347b (git-instaweb: Put httpd logs in a
+"$httpd_only" subdirectory, 2010-05-28) by Pavan Kumar Sunkara added
+resolve_full_httpd before running *_config (webrick_config in this
+case).  But resolve_full_httpd() beside setting $httpd_only needed
+later for functionality provided by this commit, does also setting
+$full_httpd and checking if given web server can be run.
 
-Please try the following patch
+The `webrick' support in git-instaweb is peculiar in that webrick_conf
+creates 'webrick' shell script in "$GIT_DIR/gitweb/".  The code that
+checks if web server is available in resolve_full_httpd() searches
+also in "$GIT_DIR/gitweb/"... but it is run before webrick_conf
+function in git-instaweb has a chance to generate 'webrick' script.
 
--- >8 --
-=46rom: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Harden format_search_author()
+The solution would be to either split resolve_full_httpd() into one
+function generating $httpd and $httpd_only, and second function
+generating $full_httpd and checing for web server existence, or create
+a separate check for 'webrick'.
 
-Protect format_search_author against control characters in $author.
-While at it simplify it a bit, and use spaces for align.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.perl |   29 ++++++++++++++---------------
- 1 files changed, 14 insertions(+), 15 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8b02767..ea9c09c 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1856,23 +1856,22 @@ sub format_search_author {
- 	my ($author, $searchtype, $displaytext) =3D @_;
- 	my $have_search =3D gitweb_check_feature('search');
-=20
--	if ($have_search) {
--		my $performed =3D "";
--		if ($searchtype eq 'author') {
--			$performed =3D "authored";
--		} elsif ($searchtype eq 'committer') {
--			$performed =3D "committed";
--		}
--
--		return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash,
--				searchtext=3D>$author,
--				searchtype=3D>$searchtype), class=3D>"list",
--				title=3D>"Search for commits $performed by $author"},
--				$displaytext);
-+	return $displaytext unless ($have_search);
-=20
--	} else {
--		return $displaytext;
-+	my $performed =3D "";
-+	if ($searchtype eq 'author') {
-+		$performed =3D "authored";
-+	} elsif ($searchtype eq 'committer') {
-+		$performed =3D "committed";
- 	}
-+
-+	my $title =3D to_utf8("Search for commits $performed by $author");
-+	$title =3D~ s/[[:cntrl:]]/?/g;
-+
-+	return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash,
-+	                              searchtext=3D>$author, searchtype=3D>$s=
-earchtype),
-+	                -class=3D>"list", -title=3D>$title},
-+	               $displaytext);
- }
-=20
- # format the author name of the given commit with the given tag
---=20
-1.7.2.1
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
