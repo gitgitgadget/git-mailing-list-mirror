@@ -1,103 +1,78 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Re: CGIT 0.8.3.1 "chokes" on some bare repos
-Date: Tue, 3 Aug 2010 14:19:23 -0400
-Message-ID: <AANLkTindiOoy-4W5DJ9AGa8q29Tsm9P8K_4TEgRfmJW=@mail.gmail.com>
-References: <90e6ba53a8a0a88e46048cee6566@google.com>
-	<AANLkTinDPa7ngcTEfYC8k2O3hwkYszEUsb3pZqnuOSo2@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 20:19:31 2010
+From: Brad King <brad.king@kitware.com>
+Subject: [PATCH] Documentation: cite git-am from git-apply
+Date: Tue,  3 Aug 2010 14:41:50 -0400
+Message-ID: <1280860910-6867-1-git-send-email-brad.king@kitware.com>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 03 20:42:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgM5L-00021J-5O
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 20:19:31 +0200
+	id 1OgMR3-0004as-5A
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 20:41:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757392Ab0HCSTZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 14:19:25 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:61490 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754421Ab0HCSTY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Aug 2010 14:19:24 -0400
-Received: by qyk7 with SMTP id 7so397001qyk.19
-        for <git@vger.kernel.org>; Tue, 03 Aug 2010 11:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4G2ceNV4jukzewcpBvTDmk7qCRdftmxtQEG+olKYlrc=;
-        b=nExKjkyq4VFcQYceLY8px7OlUjjiQJRpr+ZeoZPa7HNszRZi0A4/b8v2bWpxcaBLP+
-         TSh++Nk0pRfq2mOV7hBGhJcX6jehPYRQEjyLC7ApwCMXGJ+NtJvVagtJjRSkN/FPLSLw
-         8MUX3Eg9C96DyakE6B2+UhhNCw7hPTK4mu0Dw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dDxdQPgv0lu6z6rvi8oUSa/uJBuzqzfONR3Urtv4ZkPQiONmgt3g14I2cxifLzRRoH
-         khaTVZ2pOEkh7/KF6d52pb0YIwNyMk8VAqpSs5B85sWPXqrOC8H/fe2uB47F+InzOqJ8
-         vKyhbB8l8bpduBiEZ6Y3d+F5yolvG1aiPGQZE=
-Received: by 10.224.2.147 with SMTP id 19mr3005338qaj.60.1280859563997; Tue, 
-	03 Aug 2010 11:19:23 -0700 (PDT)
-Received: by 10.229.48.205 with HTTP; Tue, 3 Aug 2010 11:19:23 -0700 (PDT)
-In-Reply-To: <AANLkTinDPa7ngcTEfYC8k2O3hwkYszEUsb3pZqnuOSo2@mail.gmail.com>
+	id S1757524Ab0HCSlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Aug 2010 14:41:52 -0400
+Received: from public.kitware.com ([66.194.253.19]:38675 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756886Ab0HCSlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 14:41:51 -0400
+Received: by public.kitware.com (Postfix, from userid 5001)
+	id BBBC1195D4; Tue,  3 Aug 2010 14:41:50 -0400 (EDT)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on public.kitware.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00,
+	FH_DATE_PAST_20XX autolearn=no version=3.2.5
+Received: from vesper (vesper.kitwarein.com [192.168.1.207])
+	by public.kitware.com (Postfix) with ESMTP id 3DA89195D4;
+	Tue,  3 Aug 2010 14:41:50 -0400 (EDT)
+Received: by vesper (Postfix, from userid 1000)
+	id 37ACF4925; Tue,  3 Aug 2010 14:41:50 -0400 (EDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152533>
 
-On Tue, Aug 3, 2010 at 1:49 PM, Lars Hjemli <hjemli@gmail.com> wrote:
-> On Tue, Aug 3, 2010 at 19:10, =C2=A0<Euguess@gmail.com> wrote:
->> The command you provided is not giving any error messages in one of =
-the
->> repositories which shows incorrectly.
->>
->> As for URL - unfortunately it cannot be done as all the code is on c=
-losed
->> LAN
->
-> Ok. Try the following:
->
-> 1) make sure caching is disabled in /etc/cgitrc (nocache=3D1)
-> 2) find the repo.url setting for the troublesome repo in /etc/cgitrc
-> 3) run `PATH_INFO=3D$BAD_REPO_URL /path/to/cgit.cgi 1>cgit.html 2>cgi=
-t.log`
-> 4) check if cgit.html is ok - if so, your problem is probably due to
-> stale cache entries which could be caused by permission problems or
-> stale *.lock files in /var/cache/cgit
-> 5) check cgit.log for any errormessage - if there's errors but they
-> don't make any sense to you, try repeating step 3 but run cgit under
-> either strace or gdb.
-> 6) please report the results of this experiment ;)
->
-> --
-> larsh
->
+Users reading git-apply documentation may also be interested in git-am,
+especially after receiving an email created with git-format-patch.  The
+documentation for git-am already references git-apply.  Add the reverse.
 
-I have disabled cache: i have nocache=3D1 (we are working without cache
-yet,  cache-size set to 0, but for the experiment i commented this
-out)
-We are using scan mode as we have central folder to store our repos.
-So I switched off the scanmode by commenting the scan-url out from
-cgitrc
+Signed-off-by: Brad King <brad.king@kitware.com>
+---
+ Documentation/git-apply.txt |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
 
-Now when i'm trying to generate the html for the repo in question i
-get html where it says "no repositories found". It is obviously not
-picking up the PATH_INFO
-
-The command is like this:
-$ PATH_INFO=3D/home/users/gitrepouser/repos/subfolder/repo.git
-=2E/cgit.cgi 1>cgit.html 2>cgit.log
-
-Usually, we are scanning the folder /home/users/gitrepouser/repos/
-cgit.log is empty so far
-
-
-Thanks,
-Eugene
+diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
+index 8463439..4a74b23 100644
+--- a/Documentation/git-apply.txt
++++ b/Documentation/git-apply.txt
+@@ -26,6 +26,10 @@ with the `--cache` option the patch is only applied to the index.
+ Without these options, the command applies the patch only to files,
+ and does not require them to be in a git repository.
+ 
++This command applies the patch but does not create a commit.  Use
++linkgit:git-am[1] to create commits from patches generated by
++linkgit:git-format-patch[1] and/or received by email.
++
+ OPTIONS
+ -------
+ <patch>...::
+@@ -242,6 +246,12 @@ If `--index` is not specified, then the submodule commits in the patch
+ are ignored and only the absence or presence of the corresponding
+ subdirectory is checked and (if possible) updated.
+ 
++
++SEE ALSO
++--------
++linkgit:git-am[1].
++
++
+ Author
+ ------
+ Written by Linus Torvalds <torvalds@osdl.org>
+-- 
+1.7.1
