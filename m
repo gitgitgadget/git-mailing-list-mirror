@@ -1,90 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] rebase -i: add run command to launch a shell command
-Date: Tue, 03 Aug 2010 08:37:02 +0200
-Message-ID: <vpq4ofcb3sh.fsf@bauges.imag.fr>
-References: <1280323784-27462-1-git-send-email-Matthieu.Moy@imag.fr>
-	<4C52E6E1.20101@xiplink.com> <vpqd3u53sd2.fsf@bauges.imag.fr>
-	<AANLkTikMW=ueQXfjpXk8G2FLRN55j1aJsnNz2w19BmkH@mail.gmail.com>
-	<vpqwrs9nxi5.fsf@bauges.imag.fr>
-	<7vwrs8k978.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Back-dating commits--way back--for constitution.git
+Date: Tue, 3 Aug 2010 09:39:08 +0200
+Message-ID: <201008030939.09999.jnareb@gmail.com>
+References: <i372v0$3np$1@dough.gmane.org> <m3hbjcptyr.fsf@localhost.localdomain> <7vy6coiqdt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Joel C. Salomon" <joelcsalomon@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 03 08:37:39 2010
+X-From: git-owner@vger.kernel.org Tue Aug 03 09:39:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgB87-0002T6-C1
-	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 08:37:39 +0200
+	id 1OgC5W-0002pM-OF
+	for gcvg-git-2@lo.gmane.org; Tue, 03 Aug 2010 09:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755302Ab0HCGhe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Aug 2010 02:37:34 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42949 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755173Ab0HCGhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Aug 2010 02:37:33 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o736Yxtd012248
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 3 Aug 2010 08:34:59 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OgB7X-00063B-3A; Tue, 03 Aug 2010 08:37:03 +0200
-In-Reply-To: <7vwrs8k978.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 02 Aug 2010 14\:15\:23 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 03 Aug 2010 08:35:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o736Yxtd012248
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1281422100.80007@k9wKrMxKk0s3c9ZtbH5qIQ
+	id S1752651Ab0HCHi5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 3 Aug 2010 03:38:57 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57659 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694Ab0HCHi4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Aug 2010 03:38:56 -0400
+Received: by fxm14 with SMTP id 14so1878658fxm.19
+        for <git@vger.kernel.org>; Tue, 03 Aug 2010 00:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=YAhm1gOEZcw0RWmypyBlva4uuYyE5YpCLatHNtBWPzA=;
+        b=mNZiFQsSqJUMeq5rG1B5WKT0VU04/W92lJ6ColDYZzCx3z+IwnWYxBZbBxmoWYxJ/L
+         jKOzwA5t0+yAzCW9k6aipuqt/U7iVCtG4B7ClzcFgrFEOgpIbxYUWU5m7gBULA0U7HVl
+         jNVRGJtMBbqJ7DNwoZNqOatTgorHCoDrdS10U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=nqldWSeh+Q7/qsJ48bgIf+Y1BrrwAQP8ZRYflLRkwFARHdKRCLulGHDWbsJ+6jHiz8
+         yDkJh2ho5criQiA1wvIU74jLPw2BOW8pIubvL4UDv0AmV2D5i5HZS8ROgeK39XiPpbhu
+         39XAb4SD6yGBXe17TnrVFSwQ9pRAcfK2V6N7E=
+Received: by 10.223.119.136 with SMTP id z8mr6842158faq.63.1280821135263;
+        Tue, 03 Aug 2010 00:38:55 -0700 (PDT)
+Received: from [192.168.1.13] (abws244.neoplus.adsl.tpnet.pl [83.8.242.244])
+        by mx.google.com with ESMTPS id q17sm2356005faa.45.2010.08.03.00.38.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 03 Aug 2010 00:38:54 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vy6coiqdt.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152489>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dnia wtorek 3. sierpnia 2010 00:47, Junio C Hamano napisa=B3:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+> > The headers inside commit (and tag) objects are stored in text form=
+,
+> > so they are not limited to 32-bit value.  You would have to use sys=
+tem
+> > that has 64-bit time_t, or patch git.
+>=20
+> I thought the internal representation of our time was "unsigned long"=
+, no?
+> How can you represent anything before Unix epoch?
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> That's a good question. My original patch was running the command from
->> the toplevel, which is the natural way to implement it. I've changed
->> my mind to execute the command from the place where "git rebase -i"
->> was started (which means this has to be memorized in a temporary file
->> to be persistant accross "git rebase --continue"). I think this makes
->> more sense for the user, and I've actually already been biten by the
->> old behavior, running "rebase -i" from a doc/ subdirectory, and
->> wondering why my "exec make" was rebuilding the code itself.
->>
->> This comes with at least one drawback: if directory from which the
->> rebase was started didn't exist in the past, then we can't do a simple
->> "cd" to it. My implementation re-creates the directory temporarily, so
->> that the command can run, and cleans it up afterwards. The only really
->> problematic case is when the directory can not be created (like
->> directory/file conflict). It this case, the command is not ran, and
->> the script exits.
->
-> Sorry to join the discussion after you have already coded it, but I don't
-> think running the external command at a random subdirectory that the
-> operation happened to have started makes much sense, as rebase is a
-> tree-wide operation.  The user if s/he so chooses can chdir down (if the
-> directory still exists in the revision in question) in the script, but I
-> think the built-in behaviour should be to just run it from the toplevel.
+time_t is signed long.  Besides, git uses textual representation, its
+just a matter of putting minus sign.  We can always fall back to
+low level git-hash-object.
 
-I'm waiting for other people's opinion, since I'm still not 100%
-convinced, but this seems to reflect the majority's opinion.
+I'm just not sure if 'git commit' can work with dates prior to Unix
+epoch.  I guess that git has some sanity checks that flies in the face
+of such ab)use of git.
 
-And the simplicity of the code also is an argument: even if the "I'm
-too lazy to code it" is not applicable anymore, the simplest version
-will also be the simplest to maintain.
+Refrences:
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+[1] time(p) manpage
+[2] http://en.wikipedia.org/wiki/Unix_epoch#Representing_the_number
+[3] http://en.wikipedia.org/wiki/Time_t
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+Jakub Narebski
+Poland
