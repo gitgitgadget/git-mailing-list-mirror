@@ -1,63 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rev-list: accept --format without argument
-Date: Wed, 04 Aug 2010 11:14:22 -0700
-Message-ID: <7vk4o6fdoh.fsf@alter.siamese.dyndns.org>
-References: <1280310120-16852-1-git-send-email-Matthieu.Moy@imag.fr>
- <7vlj8v7ftw.fsf@alter.siamese.dyndns.org> <vpqy6cvwovv.fsf@bauges.imag.fr>
- <vpqocdiltck.fsf@bauges.imag.fr>
+From: =?UTF-8?B?RsO8emVzaSBab2x0w6Fu?= <zfuzesi@eaglet.hu>
+Subject: Re: [PATCH] submodule: show_submodule_summary: preserve diff queue
+Date: Wed, 4 Aug 2010 20:15:42 +0200
+Message-ID: <AANLkTi=VPO-KLpA3SnKTxMbSBv3XeMMKjJr6oXNAr-vD@mail.gmail.com>
+References: <1280933106-7016-1-git-send-email-zfuzesi@eaglet.hu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 04 20:14:37 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 04 20:15:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgiU7-0005pN-Ib
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 20:14:35 +0200
+	id 1OgiVI-0006RE-7K
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 20:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756909Ab0HDSOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 14:14:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49012 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717Ab0HDSOa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 14:14:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F1D58CA019;
-	Wed,  4 Aug 2010 14:14:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=78o2pVqeV8P+K1Ql7XMhtleT6DA=; b=VbSwJX
-	d3HUkNs+zneCe2YPnNf8JxwFOrgeNS1dNMWDwocSl4JPPFZ2uzV/df5D2cMreuEA
-	9hqswFXHYVZo5KKvXy5t7Y+5mCltZwVukVhYFLRM1ZpxNpXg7ZCCjWzpL5TuNhlW
-	jWMn/iusOJ6LJsZhvecqkq5BdNLaApD5XQ30Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UbLn14RB0JZHvqDXcgaDlGSLJ+BxPTvz
-	nNUUe/uzBZIYAIlD6kOdcXml/aWjjM3XnuupS+2PmqAkij3ybMdQTiCd/Xfa5ep4
-	w/8lRSh6zmKxWCcKzXsM8DLOafC7dPScazLk7gZWQ7UY7TY6gv3x84qNNmUC6jgS
-	J4w56uhk+7k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9DD3CA017;
-	Wed,  4 Aug 2010 14:14:26 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 23FD6CA012; Wed,  4 Aug
- 2010 14:14:23 -0400 (EDT)
-In-Reply-To: <vpqocdiltck.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed\, 04 Aug 2010 09\:39\:23 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1DF6EFE0-9FF4-11DF-BD58-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756972Ab0HDSPo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 14:15:44 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61349 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751717Ab0HDSPn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 14:15:43 -0400
+Received: by gwb20 with SMTP id 20so2098830gwb.19
+        for <git@vger.kernel.org>; Wed, 04 Aug 2010 11:15:42 -0700 (PDT)
+Received: by 10.150.69.34 with SMTP id r34mr10807688yba.385.1280945742628; 
+	Wed, 04 Aug 2010 11:15:42 -0700 (PDT)
+Received: by 10.231.185.92 with HTTP; Wed, 4 Aug 2010 11:15:42 -0700 (PDT)
+In-Reply-To: <1280933106-7016-1-git-send-email-zfuzesi@eaglet.hu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152591>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+2010/8/4 Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>:
+> git-diff with --submodule option stopped printing diff lines after a =
+submodule
+> change, because show_submodule_summary reset diff queue.
+> ---
+> =C2=A0submodule.c | =C2=A0 =C2=A09 +++++++++
+> =C2=A01 files changed, 9 insertions(+), 0 deletions(-)
+>
+> diff --git a/submodule.c b/submodule.c
+> index 61cb6e2..5b57536 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -46,6 +46,12 @@ done:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;
+> =C2=A0}
+>
+> +static void diff_q_copy(struct diff_queue_struct *dst,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 struct diff_queue_struct *src)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 memcpy(dst, src, sizeof(struct diff_queue_stru=
+ct));
+> +}
+> +
+> =C2=A0void handle_ignore_submodules_arg(struct diff_options *diffopt,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *arg)
+> =C2=A0{
+> @@ -71,6 +77,7 @@ void show_submodule_summary(FILE *f, const char *pa=
+th,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct strbuf sb =3D STRBUF_INIT;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0static const char *format =3D " =C2=A0%m %=
+s";
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int fast_forward =3D 0, fast_backward =3D =
+0;
+> + =C2=A0 =C2=A0 =C2=A0 struct diff_queue_struct diff_q_backup;
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (is_null_sha1(two))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0message =3D "(=
+submodule deleted)";
+> @@ -83,6 +90,7 @@ void show_submodule_summary(FILE *f, const char *pa=
+th,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0message =3D "(=
+commits not present)";
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!message) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 diff_q_copy(&diff_=
+q_backup, &diff_queued_diff);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0init_revisions=
+(&rev, NULL);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0setup_revision=
+s(0, NULL, &rev, NULL);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rev.left_right=
+ =3D 1;
+> @@ -146,6 +154,7 @@ void show_submodule_summary(FILE *f, const char *=
+path,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0clear_commit_m=
+arks(left, ~0);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0clear_commit_m=
+arks(right, ~0);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 diff_q_copy(&diff_=
+queued_diff, &diff_q_backup);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0strbuf_release(&sb);
+> =C2=A0}
+> --
+> 1.7.2.1.22.ge7bdd
+>
+>
 
-> Any other thought on this?
-
-Not really, at least from me.
+hi, commit ee38d823f74bd8872c1e793f98a5b5523ee04646 makes my patch unne=
+cessary.
