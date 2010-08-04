@@ -1,120 +1,64 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git instaweb + webrick does not work
-Date: Wed, 4 Aug 2010 10:25:45 +0000
-Message-ID: <20100804102545.GA32128@dcvr.yhbt.net>
-References: <1272BF62-A0C8-4940-9472-E46C05BF1723@gmail.com> <m34ofbpcyr.fsf@localhost.localdomain>
+From: Holger Hellmuth <hellmuth@ira.uka.de>
+Subject: Re: Inspecting a corrupt git object
+Date: Wed, 04 Aug 2010 13:11:31 +0200
+Message-ID: <4C594AE3.4000708@ira.uka.de>
+References: <20100804092530.GA30070@jpl.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Dippery <mdippery@gmail.com>, git@vger.kernel.org,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Mike Dalessio <mike@csa.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 04 12:25:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 04 13:29:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgbAa-0005qV-0D
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 12:25:56 +0200
+	id 1Ogc9u-00082f-7o
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 13:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932313Ab0HDKZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 06:25:48 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:34306 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932295Ab0HDKZq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 06:25:46 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B46C1F761;
-	Wed,  4 Aug 2010 10:25:46 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <m34ofbpcyr.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1757404Ab0HDL3K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 07:29:10 -0400
+Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:49805 "EHLO
+	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932638Ab0HDL3J (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 07:29:09 -0400
+X-Greylist: delayed 1115 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Aug 2010 07:29:09 EDT
+Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
+	by iramx2.ira.uni-karlsruhe.de with esmtps port 25 
+	id 1Ogbre-0005gP-QK
+	for <git@vger.kernel.org>; Wed, 04 Aug 2010 13:10:31 +0200
+Received: from i20smtp.iaks.uni-karlsruhe.de ([141.3.32.226])
+	by irams1.ira.uni-karlsruhe.de with esmtps port 25 
+	for <git@vger.kernel.org>
+	id 1Ogbre-0000eR-KZ; Wed, 04 Aug 2010 13:10:26 +0200
+Received: from throatwobbler.iaks.uka.de ([172.16.22.120])
+	by i20smtp.iaks.uni-karlsruhe.de with esmtp (Exim 4.50)
+	id 1Ogbsh-00006H-HX
+	for git@vger.kernel.org; Wed, 04 Aug 2010 13:11:31 +0200
+User-Agent: Thunderbird 2.0.0.24 (X11/20100302)
+In-Reply-To: <20100804092530.GA30070@jpl.local>
+X-ATIS-AV: ClamAV (irams1.ira.uni-karlsruhe.de)
+X-ATIS-AV: ClamAV (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-AV: Kaspersky (iramx2.ira.uni-karlsruhe.de)
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1280920232.028611000
+X-ATIS-Timestamp: iramx2.ira.uni-karlsruhe.de 1280921348.078808000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152573>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Michael Dippery <mdippery@gmail.com> writes:
-> > I _do_ have webrick. Asking around a bit, I was told the the problem
-> > may have been introduced in commit be5347b. Is this so? If not, any
-> > other ideas on what may be causing the problem?
-> 
-> To be more exact commit be5347b (git-instaweb: Put httpd logs in a
-> "$httpd_only" subdirectory, 2010-05-28) by Pavan Kumar Sunkara added
-> resolve_full_httpd before running *_config (webrick_config in this
-> case).  But resolve_full_httpd() beside setting $httpd_only needed
-> later for functionality provided by this commit, does also setting
-> $full_httpd and checking if given web server can be run.
-> 
-> The `webrick' support in git-instaweb is peculiar in that webrick_conf
-> creates 'webrick' shell script in "$GIT_DIR/gitweb/".  The code that
-> checks if web server is available in resolve_full_httpd() searches
-> also in "$GIT_DIR/gitweb/"... but it is run before webrick_conf
-> function in git-instaweb has a chance to generate 'webrick' script.
+Magnus B=E4ck schrieb:
+> Any other ideas why we would see such a difference? Hardware
+> malfunction or memory corruption I guess, but something else?
+> I can supply the actual object files if necessary.
+>=20
 
-I wouldn't mind making it more like what we do with plackup and
-having a single Ruby script, eventually.
+I checked with a repository here and all objects seem to start with 78
+01. That means it is a common prefix. Ergo no malicious tampering, as
+that would make only sense if the contents of the blob had changed.
 
-> The solution would be to either split resolve_full_httpd() into one
-> function generating $httpd and $httpd_only, and second function
-> generating $full_httpd and checing for web server existence, or create
-> a separate check for 'webrick'.
+So a random hardware or software malfunction is left as explanation IMH=
+O
 
-I just split out the check and started modelling things after the code
-for plackup.  Unfortunately, I haven't had any luck getting gitweb.cgi
-to respect $GITWEB_CONFIG environment with webrick so the following
-patch just ensures webrick is properly started, not useful.
-
-Unfortunately I'm barely awake now, but I'll revisit this in ~16 hours
-if nobody beats me to it.
-
->From 70b1773fc0bcb550788b26f2fda6ad6423960115 Mon Sep 17 00:00:00 2001
-From: Eric Wong <normalperson@yhbt.net>
-Date: Wed, 4 Aug 2010 09:51:25 +0000
-Subject: [PATCH] instaweb: fix webrick server startup
-
-This has been broken since commit be5347b
-("httpd logs in a "$httpd_only" subdirectory")
-
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- git-instaweb.sh |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index b7342e2..1282395 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -57,6 +57,13 @@ resolve_full_httpd () {
- 		httpd_only="${httpd%% *}" # cut on first space
- 		return
- 		;;
-+	*webrick*)
-+		# server is started by running via generated gitweb.rb in
-+		# $fqgitdir/gitweb
-+		full_httpd="$fqgitdir/gitweb/webrick.sh"
-+		httpd_only="${httpd%% *}" # cut on first space
-+		return
-+		;;
- 	esac
- 
- 	httpd_only="$(echo $httpd | cut -f1 -d' ')"
-@@ -209,11 +216,11 @@ EOF
- 	# which assumes _ruby_ is in the user's $PATH. that's _one_
- 	# portable way to run ruby, which could be installed anywhere,
- 	# really.
--	cat >"$fqgitdir/gitweb/$httpd" <<EOF
-+	cat >"$fqgitdir/gitweb/$httpd.sh" <<EOF
- #!/bin/sh
- exec ruby "$fqgitdir/gitweb/$httpd.rb" \$*
- EOF
--	chmod +x "$fqgitdir/gitweb/$httpd"
-+	chmod +x "$fqgitdir/gitweb/$httpd.sh"
- 
- 	cat >"$conf" <<EOF
- :Port: $port
--- 
-Eric Wong
+Holger
