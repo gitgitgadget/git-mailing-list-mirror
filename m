@@ -1,91 +1,147 @@
-From: Daniel Johnson <computerdruid@gmail.com>
-Subject: [PATCH/RFC] fetch: allow command line --tags to override config
-Date: Wed,  4 Aug 2010 14:56:42 -0400
-Message-ID: <1280948202-17385-1-git-send-email-ComputerDruid@gmail.com>
-Cc: Daniel Johnson <ComputerDruid@gmail.com>,
-	=?UTF-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 04 20:57:49 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Back-dating commits--way back--for constitution.git
+Date: Wed, 4 Aug 2010 19:07:06 +0000
+Message-ID: <AANLkTimRPnjeWQ7gXt90Kwx-fxQ_gwCd3vaKLY5-oPAu@mail.gmail.com>
+References: <i372v0$3np$1@dough.gmane.org>
+	<AANLkTik2B8pGo8uR4yxV3nz-Nx6dcU+fiO8GWgv9-VtW@mail.gmail.com>
+	<4C599781.2020603@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Joel C. Salomon" <joelcsalomon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 04 21:07:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ogj9u-0003P7-Nr
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 20:57:47 +0200
+	id 1OgjJB-0004Ou-9G
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 21:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756564Ab0HDS5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 14:57:41 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:46068 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751245Ab0HDS5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 14:57:40 -0400
-Received: by vws3 with SMTP id 3so4341997vws.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 11:57:39 -0700 (PDT)
+	id S933459Ab0HDTHN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 15:07:13 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:56271 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933597Ab0HDTHK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 15:07:10 -0400
+Received: by gyg10 with SMTP id 10so2115246gyg.19
+        for <git@vger.kernel.org>; Wed, 04 Aug 2010 12:07:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=ADKWOl5paNFm1TRLI4OA8EJXr7h+vDurlHp5bwx439U=;
-        b=vlR3l8zgc2kgJUWZjBR7mCmIOj/hg8unCgW7VYTUxBxY6EbjotaENVBCgaV0k6qV5D
-         O1fPyiGGhF618db77e3RhDKKNYzUTvnGNMAkDCW0xHETvDrv/TWYg5fHvN01HMPMmjG6
-         GH2Suq/WM7Vwt4gVg6b2ANcjRG5yoAQI+vwFs=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bs/mF5a5tNWrpDJkvEAlLxsd1y3Hq7kgGA+1HRQnxJM=;
+        b=C8WaX6QzKXTvZ2sW2uJcTONPdoD3XkQuTlMGh3rRGBKukBbBw2UMDW+BnU1vgJtKEo
+         ijavZrVyYN1zTSGVz/8Dyfi+e3rHWUjVHgkWbb07o8zRt01EIrWZ/ju4U8Dw6D3E9uS0
+         NrDALOQSVIau6maOMl+G5Xa6hQM4c4xcLYMX8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=MIkU0xppFB57tBZC2ltXldH1e4v2FNeAG0qOSzEi65AUAzhwpBxTFFozLixlQpat8J
-         tbFL5pFNPVPqTljObnkGgJiB5jsKsE1Cld/UGONSphIcEcXwU8Z1aJwrp6/KbpIc4wao
-         c9gqCMrzWVKKJdvo5CJ1OICkS8S70n1Au3JX4=
-Received: by 10.220.123.226 with SMTP id q34mr4820938vcr.97.1280948259195;
-        Wed, 04 Aug 2010 11:57:39 -0700 (PDT)
-Received: from ComputerDruid@gmail.com ([151.188.213.237])
-        by mx.google.com with ESMTPS id k30sm7766487vbl.19.2010.08.04.11.57.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 04 Aug 2010 11:57:38 -0700 (PDT)
-Received: by ComputerDruid@gmail.com (sSMTP sendmail emulation); Wed, 04 Aug 2010 14:57:43 -0400
-X-Mailer: git-send-email 1.7.2
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=WzOYFV4oRjcSCwgDtQrsI0vHzNzOgrLZYHNhoBffVSEMrkzVHNSBTJ2/YTrTqbtXZV
+         XOn80fpTfa4ULbCfNdc3FLhn67isCD8pVBigduIRr1vEgUubMEPDWi+k7AW+ySp1dtxA
+         WpgnQx1cG6OwqxWLFmVrPlmvc+EZNZNG9KaWY=
+Received: by 10.231.183.81 with SMTP id cf17mr10783042ibb.32.1280948828710; 
+	Wed, 04 Aug 2010 12:07:08 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Wed, 4 Aug 2010 12:07:06 -0700 (PDT)
+In-Reply-To: <4C599781.2020603@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152594>
 
-Originally, if remote.<name>.tagopt was set, the --tags and option would
-have no effect when given to git fetch. So if
-tagopt="--no-tags"
+On Wed, Aug 4, 2010 at 16:38, Joel C. Salomon <joelcsalomon@gmail.com> =
+wrote:
+> On 08/02/2010 05:25 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Mon, Aug 2, 2010 at 18:32, Joel C. Salomon <joelcsalomon@gmail.co=
+m> wrote:
+>>> I'd figured to play with Git in an unusual way: to create a reposit=
+ory
+>>> for the U.S. Constitution where amendments are presented as patches=
+=2E
+>>> E.g., instead of the First Amendment being placed at the end (as is
+>>> usual) I'm putting it in Article 1, Section 9 (Limitations of Congr=
+ess).
+>>> Proposed amendments get branches, which get merged in later.
+>>
+>> I'd like to ask where this project is being hosted. I've wanted to
+>> play with importing law into Git, and it would be interesting to
+>> follow this project.
+>
+> It's local to my machine for now, especially since I can't (yet?) get
+> the dates right. Also, I'm rebasing as I tweak the TeX code.
+>
+> Law-into-RCS has been on my mind since I learned out what RCSs are fo=
+r.
+> =C2=A0Read any bill that the US Congress passes: there's an intro, a =
+whole
+> lot of boilerplate, and then:
+>
+> SEC. 101. EXTENSION OF CHIP.
+>
+> =C2=A0 =C2=A0Section 2104(a) (42 U.S.C. 1397dd(a)) is amended--
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1) in paragraph (10), by st=
+riking ``and'' at the end;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(2) by amending paragraph (1=
+1), by striking ``each of
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fiscal years 2008 and 2009'' and inserting=
+ ``fiscal year
+> =C2=A0 =C2=A0 =C2=A0 =C2=A02008''; and
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(3) by adding at the end the=
+ following new paragraphs:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(12) for fiscal year 2009,=
+ $10,562,000,000;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(13) for fiscal year 2010,=
+ $12,520,000,000;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(14) for fiscal year 2011,=
+ $13,459,000,000;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(15) for fiscal year 2012,=
+ $14,982,000,000; and
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(16) for fiscal year 2013,=
+ for purposes of making 2 semi-
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0annual allotments--
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+``(A) $3,000,000,000 for the period beginning on
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0October 1, 201=
+2, and ending on March 31, 2013, and
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+``(B) $3,000,000,000 for the period beginning on
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0April 1, 2013,=
+ and ending on September 30, 2013.''.
+>
+> SEC. 102. ALLOTMENTS FOR STATES AND TERRITORIES FOR FISCAL YEARS 2009
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0THROUGH 2013.
+>
+> =C2=A0 =C2=A0Section 2104 (42 U.S.C. 1397dd) is amended--
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1) in subsection (b)(1), by=
+ striking ``subsection (d)''
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0and inserting ``subsections (d) and (m)'';
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(2) in subsection (c)(1), by=
+ striking ``subsection (d)''
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0and inserting ``subsections (d) and (m)(4)=
+''; and
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(3) by adding at the end the=
+ following new subsection:
+> ....
+>
+> Sure looks like a patch series to me.
 
-	git fetch --tags
+Yeah, I think every legal system has their own ad-hoc patch convention
+like that. It can be really hard to figure it all out. Parsing that is
+non-trivial, but being able to generate diffs based on that would be a
+very valuable resource.
 
-would not actually fetch tags.
+>> There's some Icelandic law currently enacted that hasn't been change=
+d
+>> since the 1200s. Getting that into Git would be interesting.
+>
+> Extremely.
+>
+> I'll put my Constitution project up on GitHub in a few days. =C2=A0Ju=
+st note
+> that I *will* rebase and publish.
 
-This patch changes this behavior to only follow what is written in the
-config if there is no option passed by the command line.
-
-Signed-off-by: Daniel Johnson <ComputerDruid@gmail.com>
----
- builtin/fetch.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 1b67f5f..7a53144 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -675,10 +675,12 @@ static int do_fetch(struct transport *transport,
- 
- 	for_each_ref(add_existing, &existing_refs);
- 
--	if (transport->remote->fetch_tags == 2 && tags != TAGS_UNSET)
--		tags = TAGS_SET;
--	if (transport->remote->fetch_tags == -1)
--		tags = TAGS_UNSET;
-+	if (tags == TAGS_DEFAULT) {
-+		if (transport->remote->fetch_tags == 2)
-+			tags = TAGS_SET;
-+		if (transport->remote->fetch_tags == -1)
-+			tags = TAGS_UNSET;
-+	}
- 
- 	if (!transport->get_refs_list || !transport->fetch)
- 		die("Don't know how to fetch from %s", transport->url);
--- 
-1.7.2
+Great.
