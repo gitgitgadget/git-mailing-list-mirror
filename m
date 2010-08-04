@@ -1,72 +1,74 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: How to create branches above master
-Date: Wed, 4 Aug 2010 08:07:56 +0000
-Message-ID: <AANLkTik-qw3bFHWLwMnqJuzgu=HHSRiiVRBW2nfjRTy3@mail.gmail.com>
-References: <29342864.post@talk.nabble.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: URL-decode the left-hand side of an svn
+	refspec
+Date: Wed, 4 Aug 2010 08:38:40 +0000
+Message-ID: <20100804083840.GA19367@dcvr.yhbt.net>
+References: <1280877685-4928-1-git-send-email-stevenrwalter@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Bharani Prasad <bharaniprasadvs@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 04 10:08:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Steven Walter <swalter@lpdev.prtdev.lexmark.com>
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 04 10:38:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgZ1F-0006o5-PU
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 10:08:10 +0200
+	id 1OgZUv-0005o1-SE
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 10:38:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756254Ab0HDIH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 04:07:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35743 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755754Ab0HDIH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 04:07:57 -0400
-Received: by iwn7 with SMTP id 7so5951343iwn.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 01:07:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=S9IiV//nnrD4xdlHkVQ+8SMcOXf1agvLXqAnl4bI73U=;
-        b=maAWGEqviQFL/+7jd5yLtfNujBwYzChuwAmR3JvM9hKNWd9GFwgMaD/G8VjPPuS7FN
-         pPKiNgL0dREq/gW9F5B4x3dzhX7lT6Xj9mEST/72A9uRepXBL2JGr/WYrLUTStYJGvlf
-         TnTdZCwjkCled64uBk6QVv4nX3QwnggN6caXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=YqGqLFwPznBUMiNGTINVfgpgJ87+1wDJq+nxt0grsyfP9sOGF9NFTCUrzjThMme02b
-         ASL73dU1W9SZhqQyfsSEs/9DpcOlJEIvwNATr8YEzKjyI8PAaWg6vZUI+LjwCdD1ps+h
-         1SHBiOz7WDf3dDIXelTfYlNjFDSnve/SH/j/0=
-Received: by 10.231.171.3 with SMTP id f3mr10057036ibz.145.1280909276730; Wed, 
-	04 Aug 2010 01:07:56 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Wed, 4 Aug 2010 01:07:56 -0700 (PDT)
-In-Reply-To: <29342864.post@talk.nabble.com>
+	id S1756254Ab0HDIio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Aug 2010 04:38:44 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:43697 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755496Ab0HDIin (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 04:38:43 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id B22261F503;
+	Wed,  4 Aug 2010 08:38:40 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1280877685-4928-1-git-send-email-stevenrwalter@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152566>
 
-On Wed, Aug 4, 2010 at 07:22, Bharani Prasad <bharaniprasadvs@gmail.com> wrote:
-> I am using git-repository along with gerrit server for code review, I want
-> to create branches called "Integration" branch & "Release" branch
+Steven Walter <stevenrwalter@gmail.com> wrote:
+> From: Steven Walter <swalter@lpdev.prtdev.lexmark.com>
+> 
+> This change allows git-svn to handle an URL with colons in the path
+> ---
+>  git-svn.perl |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
 
-What's stopping you? See git-checkout(1) for how to create branches.
+Thanks Steven.
 
-> I got different projects which I need to integrate in "integrate" branch and
-> give it to testing and once the bugs are fixed it should go to "release"
-> branch.
+Since git-svn already has a uri_decode() function, we should use that.
+The decoding should apply to the local portion of branches/tags globs,
+too.  Does the following work for you?
 
-See git-merge(1) et al for how to merge branches.
-
-> Please do help me with this issue, as it is critical...
-
-Please ask more specific questions if you'd like useful answers.
-
-> And also can you suggest me what can I use for Continuous build system in
-> Linux Fedora
-
-Buildbot? Any of the intersection between Google's results for
-"continuous integration" and "git". They're all good.
+diff --git a/git-svn.perl b/git-svn.perl
+index 8d2ef3d..34884b8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1820,6 +1820,7 @@ sub read_all_remotes {
+ 			die("svn-remote.$remote: remote ref '$remote_ref' "
+ 			    . "must start with 'refs/'\n")
+ 				unless $remote_ref =~ m{^refs/};
++			$local_ref = uri_decode($local_ref);
+ 			$r->{$remote}->{fetch}->{$local_ref} = $remote_ref;
+ 			$r->{$remote}->{svm} = {} if $use_svm_props;
+ 		} elsif (m!^(.+)\.usesvmprops=\s*(.*)\s*$!) {
+@@ -1832,6 +1833,7 @@ sub read_all_remotes {
+ 			die("svn-remote.$remote: remote ref '$remote_ref' ($t) "
+ 			    . "must start with 'refs/'\n")
+ 				unless $remote_ref =~ m{^refs/};
++			$local_ref = uri_decode($local_ref);
+ 			my $rs = {
+ 			    t => $t,
+ 			    remote => $remote,
+-- 
+Eric Wong
