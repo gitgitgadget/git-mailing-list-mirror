@@ -1,155 +1,82 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: git merge - "both added" conflict resolution
-Date: Wed, 4 Aug 2010 19:29:21 -0400
-Message-ID: <AANLkTi=dScNMsf4XZ+sS8R+424fESyOr6wYO4WamAutj@mail.gmail.com>
-References: <AANLkTi=Hp6DsE75XbgehS2bucp-M9NXmGgYbvw0kp6j8@mail.gmail.com>
-	<20100804205916.GC2920@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] stash: It looks like a stash, but doesn't quack
+ like a stash...
+Date: Wed, 04 Aug 2010 16:31:37 -0700
+Message-ID: <7v1vaeeyzq.fsf@alter.siamese.dyndns.org>
+References: <1280831775-30759-1-git-send-email-jon.seymour@gmail.com>
+ <1280831775-30759-2-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 01:29:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, ams@toroid.org
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 01:32:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgnOp-0000E2-Na
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 01:29:28 +0200
+	id 1OgnRa-00018b-4Z
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 01:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759450Ab0HDX3X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 19:29:23 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:39928 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757837Ab0HDX3V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 19:29:21 -0400
-Received: by qwh6 with SMTP id 6so3463387qwh.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 16:29:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3jSorItg0affVJ/cnZ15pG0gDT6da7EKq+Xrpdq7HZs=;
-        b=xK01Q2cHIa7P8i/DVRIeHBX38Cd1sf0D1bngTYqz7tOKBbQ9HRpQ2zWrNa1MWMFahf
-         AEVTyRVU3b2M/IB29uiOmwC2eFIolnNJVJLjDLbfbFTWMwhOh1mNA9gQVRbeyKCjt21L
-         vgWBoKDrj4oRZllVnhdi0JpuDnE6kQsMRMBs4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VBrXgtIR0DajLeKHqDZ/MA6s5lILr4vn4uCBL0XrB3Ajo87VHKnWmXLpS9+ZBBMcZG
-         kPWPX89HKFA9CGYbqrW3Q6nl0PE9OmIEynLU4CqIfKDAhz8rGCjfnWragfQRBpBWStx9
-         Pk47KdgZBo+O0xoBC+w/6eFGWCnmpN4FW+C1U=
-Received: by 10.229.106.17 with SMTP id v17mr2823864qco.261.1280964561099; 
-	Wed, 04 Aug 2010 16:29:21 -0700 (PDT)
-Received: by 10.229.48.205 with HTTP; Wed, 4 Aug 2010 16:29:21 -0700 (PDT)
-In-Reply-To: <20100804205916.GC2920@burratino>
+	id S1759463Ab0HDXcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Aug 2010 19:32:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55513 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756404Ab0HDXcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 19:32:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E79AA516;
+	Wed,  4 Aug 2010 19:32:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gfSQw7rFAhyuHnXM3Qrp+IyckhU=; b=xFHWjM
+	PSiES2HqKvRt4bJzbsIWBjEHfzaM0IXsZEuUH2e+lHZnH/gr3HcxDiF/HB6qo2Im
+	C06BlDleYm0uWRSuMp6DwiCcZboMRj5GhKcMrzMUY8eyzMCOrPFYJRtVjhvyIFLn
+	ZB/SyfANM7WMdVB7p8n0UtoXPT90xJLLtzanc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xcFQXvJicvmas1ro8FRFApqpBRgOrnCM
+	MhQe9EmEc73sFTGql79wbBpVGPgVxVVGZzx6ksdl0Hb+XN4qKIF+hH6ujxgbcro+
+	cAtxlc9upuoVCVoSfghN/o/mxjtVy3kmDLJOE/4CW87jgLkJXYiIAQ16BIcSI2fh
+	HxYu/bDo0Nk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 25A57507;
+	Wed,  4 Aug 2010 19:31:57 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A4C14F4; Wed,  4 Aug
+ 2010 19:31:39 -0400 (EDT)
+In-Reply-To: <1280831775-30759-2-git-send-email-jon.seymour@gmail.com> (Jon
+ Seymour's message of "Tue\,  3 Aug 2010 20\:36\:13 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 791D3114-A020-11DF-8FBD-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152610>
 
-On Wed, Aug 4, 2010 at 4:59 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Hi Eugene,
+Jon Seymour <jon.seymour@gmail.com> writes:
+
+> In particular, a stash created with git stash create cannot be used as
+> an argument to git stash branch because of two separate reasons.
 >
-> Eugene Sajine wrote:
+> 1. a pre-condition assumes that there is always a stash on the stack when git stash branch is called,
+> which is not necessarily true
 >
-> [in an add/add conflict]
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 when i resolve the conflict the b=
-uild.xml returns to its
->> last committed state of dest repo, so git cannot determine any
->> changes.
->> Therefore, i cannot execute git add for this file and i cannot commi=
-t
->> my merge results
->
-> Could you explain further (preferrably with a simple example
-> transcript)? =C2=A0I would think that after an add/add conflict,
-> a simple "git add" would mark the file resolved and allow
-> committing.
->
+> 2. the cleanup code assumes the specified stash is a stash reference, rather than an arbitrary commit.
 
-Let's say in a source repository i have a master branch with few
-coomits and only two files file1.java and build.xml
-build.xml is as simple as few lines one of which is
-=2E..
-<property name=3DprojectName value=3DprojectOne/>
-=2E..
-In the second *unrelated* repository which is the destination for
-merge I have a master branch with two files: file2.java and build.xml
-this build.xml is absolutely identical with an exception of the
-projectName property
-=2E..
-<property name=3DprojectName value=3DprojectTwo/>
-=2E..
+Hmm, I don't use the command myself so I ended up reading the description
+of "stash branch".  To me it is clear that it wants to use a stash entry,
+not just an arbitrary stash-looking commit, from "... then drops the
+<stash>".
 
-I'm doing
-$ cd projecttwo (I'm in master branch)
-$ git add remote temp ../projectone
-$ git fetch temp
-$ git merge temp/master
+So I wouldn't call these tests "expect-failure"; rather, I would suggest
+swapping the order of patches so that they test the new feature that
+allows "git stash branch" to take an arbitrary stash-looking commit.
 
-here i'm getting a conflict in build.xml.
-file1.java is succesfully staged for commit
+The documentation also needs to be updated to make the "then drops" part
+conditional (perhaps "then drops...if the stash was on the list").
 
-=46or build.xml git status gives me
-=2E..
-both added: build.xml
-=2E..
-
-Now i have to resolve the conflict on build.xml and as I'm merging two
-projects into one it is obvious that the resolution of the conflict is
-to leave the original version of build.xml
-
-So, I'm removing all conflict markers and removing the incoming line
-with the property value=3DprojectOne leaving it as projectTwo.
-This effectively means that there is no changes in build.xml for git.
-And I'm stuck because i cannot add file, that is not changed and
-cannot commit merge results as it is a partial commit.
-
-Is that better;)?
-
-Interesting enough this worked OK on git version 1.6.4.msysgit.0
-But giving me headache in git 1.7.0.5 on Linux
-
-Below is command sequence which is supposed to reflect everything above
-
-mkdir test3
-mkdir test4
-cd test3/
-git init
-echo file content> file1.java
-git add .
-git commit -am "initial commit"
-echo "<property name=3Dprojectname value=3Dtest3/>" > build.xml
-git add .
-git commit -am "add build.xml"
-echo "more content" >> file1.java
-git commit -am "some change"
-cd ../test4
-git init
-echo file content> file2.java
-git add .
-git commit -am "initial commit"
-echo "<property name=3Dprojectname value=3Dtest4/>" > build.xml
-git add .
-git commit -am "add build.xml"
-echo "more content" >> file2.java
-git commit -am "another change"
-git remote add temp ../test3
-git fetch temp
-git merge temp/master
-git status
-vi build.xml
-git status
-git add build.xml
-git st
-git commit -am "merging"
-
-
-Thanks,
-Eugene
+Are there any other stash subcommand that ought to be able to act on a
+stash-looking commit but doesn't, or is "branch" the only one?
