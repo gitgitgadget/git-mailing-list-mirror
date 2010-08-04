@@ -1,112 +1,102 @@
-From: "Michael \"Ray\" Rehbein" <mrrehbein@gmail.com>
-Subject: Suggestions on how to reorganize and split up a monolithic 
-	repository?
-Date: Wed, 4 Aug 2010 14:08:23 -0500
-Message-ID: <AANLkTikFrj6tyHfmZ8k-gmR+gAFyEGv+X+0x849eEaEP@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tests: A new test prereq for testing chmod -w as root
+Date: Wed, 04 Aug 2010 12:13:05 -0700
+Message-ID: <7veieefaym.fsf@alter.siamese.dyndns.org>
+References: <1280934026-25658-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 04 21:08:33 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 04 21:13:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgjKL-0005FG-4j
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 21:08:33 +0200
+	id 1OgjOx-0007Qu-Pk
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 21:13:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933370Ab0HDTI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 15:08:26 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35450 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933120Ab0HDTIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 15:08:25 -0400
-Received: by vws3 with SMTP id 3so4350461vws.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 12:08:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=iSMu8x1KytHkcWqqRK2T6/RncjXBJTy04b8X3ea5op4=;
-        b=SWo/7W88Asm4OabcgWd5uM5UxUKKs1PoOOZfHJA7Ys1hn9VOHxkxphKZ4GSo5vjjUF
-         5hPKmM85I+WLLr7SLzRYYP1kVto//ZpDHhjDw1oSQF48kIzn+alEfV+OihfG5l7VctnQ
-         2cZvPtsTNeWcv3CIXl6NBMAj1OBAOFrotO69A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=R8Vii+sksJK2tG0o/j/s+zdhy0U9S6H+bE1KxnnNH+qgdO3yQB0beH66tEvKkM4nwD
-         ZVVYJTDxQ9zAiU5gSmFr0Po8C0xKOCe0ddh+QokfbYoQ7HXz3nKU6ehIVZiTrwG50RCI
-         F8uoGk+Nr2203+iiTKMBs6YM+Mgb0k3hgEjag=
-Received: by 10.220.158.9 with SMTP id d9mr6579469vcx.33.1280948904407; Wed, 
-	04 Aug 2010 12:08:24 -0700 (PDT)
-Received: by 10.220.76.83 with HTTP; Wed, 4 Aug 2010 12:08:23 -0700 (PDT)
+	id S932725Ab0HDTNO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 15:13:14 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57616 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757165Ab0HDTNN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 15:13:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5CC3DCA940;
+	Wed,  4 Aug 2010 15:13:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=WwO8WPWPN1OG
+	S9oVWo2O1hEQZio=; b=GZkIDjInE1nIob3fNkHLve0SLl/Sk+gNT7r7vglO4bi8
+	6Pt6P0eCTNjCTSWWEB3B8dFWj0mxzsqKk9k41T/YCUTeNRvynYVrPVUhMXuOcg5f
+	UvuXZCLmykgsdtoUTMg8R5w1XHT2+4gjTUH2Yfe1uTar4xO3kadH+Lo3gQvef10=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=esfvCT
+	tGRs1lrtChoHgbFkB5+NkctRgxYY437AD7KI27NOB6cTF1vq6ZFz1Qc01o46NjHZ
+	VL5pIItDLUN/VJ9pdAoYomwzIwJXVEQYeJbfdvMkZhcm03q3o6Ps2j7TwcdZXsN6
+	bovSrkdEXMhBgcRslOumR2zZxXMErgouFV1Xs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 399A8CA93E;
+	Wed,  4 Aug 2010 15:13:10 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7B984CA939; Wed,  4 Aug
+ 2010 15:13:07 -0400 (EDT)
+In-Reply-To: <1280934026-25658-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed\,  4 Aug
+ 2010 15\:00\:26 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 521484A6-9FFC-11DF-8A7E-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152596>
 
-Currently we have everything in one repository for our website, and
-are looking into splitting it up. The scale of one repository looks
-like it will be getting out of hand down the road.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-General layout at the moment:
+> Some tests depend on not being able to read files after chmod -w. Thi=
+s
+> doesn't work when running the tests as root.
 
-repos.git/Site1
-repos.git/Site2
-repos.git/Library/Ours
-repos.git/Library/3rdParty1
-repos.git/Library/3rdParty2
-repos.git/UnitTests/Ours
-repos.git/UnitTests/3rdParty1
-repos.git/UnitTests/3rdParty2
+Obviously you meant s/read/write/ or "chmod -r" ;-)
 
-Goals in splitting it up:
-- Allow each site to have a collection of libraries that are known to
-be working for it.  Sometimes an update to shared library to fix site1
-will break site2.
-- Allow a site to have only the needed libraries, to avoid bloating
-the site, and help in identifying unused code.
+We discussed this prerequisite in the past as "SANITY", in the dual sen=
+se
+that (1) nobody sane should be running tests as root and (2) for root m=
+any
+normal assumptions programs make do not hold.  If we throw out the form=
+er
+by saying that it is safe to run tests under fakeroot, we would need
+something like this patch to cover the latter.  The patch is a step in =
+the
+right direction.
 
-One plan we started to go with was:
+Having said that.
 
-Site1.git/
-Site1.git/Library/Ours - submodule link to OurLib.git/Library/Ours
-Site1.git/Library/3rdParty1 - submodule link to
-3rdParty1Lib.git/Library/3rdParty1
+I wonder if we want to be so specific, as your patch does, to single ou=
+t
+"you can write even to a-w file" aspect of rootness, or just want to co=
+ver
+the rootness more broadly so that other rooty conditions like "if you c=
+an
+read even an a-r file, then the assumptions the test makes will not hol=
+d"
+and "if you can kill other's processes, ...ditto..." can also be covere=
+d
+with a single prerequisite token.
 
-OurLib.git/Library/Ours
-OurLib.git/UnitTests/Ours
-OurLib.git/Library/3rdParty1 - submodule link to
-3rdParty1Lib.git/Library/3rdParty1
+Also I think there was a discussion and proposed patch to support more
+than one prerequisite tokens, concatenated with "," or something, like:
 
-3rdParty1Lib.git/Library/3rdParty1
-3rdParty1Lib.git/UnitTests/3rdParty1
+    test_expect_success POSIXPERM,SANITY 'notice unwritable repo' '
+        ... test that depends on posixperm and not running
+        ... as root comes here
+    '
 
-But found out that git submodule doesn't actually allow mapping a
-section of a git repository, so changed it to:
+so that you don't have to invent permutations of prerequisite tokens.
 
-Site1.git/
-Site1.git/Library/Ours - symlink to submodule/OurLib/Library/Ours
-Site1.git/Library/3rdParty1 - symlink to
-submodule/3rdParty1Lib/Library/3rdParty1
-Site1.git/submodule/OurLib - submodule OurLib.git
-Site1.git/submodule/3rdParty1Lib - submodule 3rdParty1Lib.git
-
-OurLib.git/Library/Ours
-OurLib.git/UnitTests/Ours
-OurLib.git/Library/3rdParty1 - symlink to
-submodule/3rdParty1Lib/Library/3rdParty1
-OurLib.git/submodule/3rdParty1Lib - submodule 3rdParty1Lib.git
-
-3rdParty1Lib.git/Library/3rdParty1
-3rdParty1Lib.git/UnitTests/3rdParty1
-
-The 3rd Party Lib is not all 3rd party anymore, as we have tweaked it
-to fit better in our setup.  Additionally, the 3rd party library
-didn't come with unit tests.  One of the unit tests we wrote for our
-use of the 3rd party ended up with a use of our library.  Putting a
-submodule of OurLib into 3rdParty1Lib would create recursive
-submodules, which is not something we want.
-
-Is there a better way to organize this?
+Thanks.
