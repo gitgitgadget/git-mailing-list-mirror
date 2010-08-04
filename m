@@ -1,109 +1,77 @@
-From: =?UTF-8?B?RsO8emVzaSBab2x0w6Fu?= <zfuzesi@eaglet.hu>
-Subject: Re: [PATCH] submodule: show_submodule_summary: preserve diff queue
-Date: Wed, 4 Aug 2010 20:15:42 +0200
-Message-ID: <AANLkTi=VPO-KLpA3SnKTxMbSBv3XeMMKjJr6oXNAr-vD@mail.gmail.com>
-References: <1280933106-7016-1-git-send-email-zfuzesi@eaglet.hu>
+From: Ivan Kanis <expire-by-2010-08-09@kanis.fr>
+Subject: Re: Git server eats all memory
+Date: Wed, 04 Aug 2010 19:50:46 +0200
+Message-ID: <87iq3qgtc9.fsf@kanis.fr>
+References: <wesfwyupgrg.fsf@kanis.fr> <vpqwrs6fk46.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 04 20:15:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 04 20:24:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgiVI-0006RE-7K
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 20:15:48 +0200
+	id 1Ogidi-00037K-SV
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 20:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756972Ab0HDSPo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 14:15:44 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61349 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751717Ab0HDSPn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 14:15:43 -0400
-Received: by gwb20 with SMTP id 20so2098830gwb.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 11:15:42 -0700 (PDT)
-Received: by 10.150.69.34 with SMTP id r34mr10807688yba.385.1280945742628; 
-	Wed, 04 Aug 2010 11:15:42 -0700 (PDT)
-Received: by 10.231.185.92 with HTTP; Wed, 4 Aug 2010 11:15:42 -0700 (PDT)
-In-Reply-To: <1280933106-7016-1-git-send-email-zfuzesi@eaglet.hu>
+	id S1758009Ab0HDSU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Aug 2010 14:20:28 -0400
+Received: from kanis.fr ([75.127.73.245]:4056 "EHLO kanis.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757946Ab0HDSUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 14:20:25 -0400
+X-Greylist: delayed 1775 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Aug 2010 14:20:25 EDT
+Received: from [89.83.137.164] (helo=tao)
+	by kanis.fr with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <expire-by-2010-08-09@kanis.fr>)
+	id 1Ogi76-0005hI-JF; Wed, 04 Aug 2010 13:50:48 -0400
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAAB5QTFRF
+ IBkXUxMTOCwoTC4qcUY8iFxQmmper31txpaJ/v/8aKZ1oAAAAcVJREFUOMt100tu2zAQAFDCXnUZ
+ oAcIqG68LZULVLQBbwuSiffm6AIRRyeotAySJoVu2+FPpJWWC3/4NKOZocSW/yxWfnJ2+Bdwzhj7
+ 8gleWVy7DXC2rkMNr2V/zRbghXIwthf3VbIA9Ffc71vZCSFyCEsBggtNS8ludwvfmhYA0Vn9o4DP
+ zMWxR7+cPWzAYFzwM0ModtdmcDbDS6i/hT7L+RZof5yCXGrYe5jn2YO6BYMjgY+51tCIAqHgBLwR
+ pwLnGuRjAKyBJkuN4yd4U92uCY1vUr2D/c5b8DuxyQwfOHUeaLqDJhnkkuGXbB56h2C1IVBdgncc
+ bBi6feroa9B6jUDojnQPQKupbyXyeeCE1oT7Oqrt+SnfY3mkiyGA/3AmD3H5g32CcBx6hY8pRkwJ
+ 9PpcjRGobUfprFnhAa1vepwcgMOhwG+pdSgKHFU9HAvoAH6XUl7lDUCCq5Qb6GMbVm3Aj++qDYCt
+ wdBc/YHgOFCmS3mjDMRcSE2qY4E3Q3PVIQRQmeodNH4QEbRUFZzW+VotzwX4yTcRTySOML1qjcE5
+ hTirVqDHkMAP0PjAywp3d18JZtqzvr9zDYD+GaSKtE6Zlr/DLPNFmOcvBAAAAABJRU5ErkJggg==
+In-Reply-To: <vpqwrs6fk46.fsf@bauges.imag.fr> (Matthieu Moy's message of "Wed,
+	04 Aug 2010 17:55:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152592>
 
-2010/8/4 Zolt=C3=A1n F=C3=BCzesi <zfuzesi@eaglet.hu>:
-> git-diff with --submodule option stopped printing diff lines after a =
-submodule
-> change, because show_submodule_summary reset diff queue.
-> ---
-> =C2=A0submodule.c | =C2=A0 =C2=A09 +++++++++
-> =C2=A01 files changed, 9 insertions(+), 0 deletions(-)
->
-> diff --git a/submodule.c b/submodule.c
-> index 61cb6e2..5b57536 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -46,6 +46,12 @@ done:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;
-> =C2=A0}
->
-> +static void diff_q_copy(struct diff_queue_struct *dst,
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 struct diff_queue_struct *src)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 memcpy(dst, src, sizeof(struct diff_queue_stru=
-ct));
-> +}
-> +
-> =C2=A0void handle_ignore_submodules_arg(struct diff_options *diffopt,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *arg)
-> =C2=A0{
-> @@ -71,6 +77,7 @@ void show_submodule_summary(FILE *f, const char *pa=
-th,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct strbuf sb =3D STRBUF_INIT;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0static const char *format =3D " =C2=A0%m %=
-s";
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int fast_forward =3D 0, fast_backward =3D =
-0;
-> + =C2=A0 =C2=A0 =C2=A0 struct diff_queue_struct diff_q_backup;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (is_null_sha1(two))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0message =3D "(=
-submodule deleted)";
-> @@ -83,6 +90,7 @@ void show_submodule_summary(FILE *f, const char *pa=
-th,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0message =3D "(=
-commits not present)";
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!message) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 diff_q_copy(&diff_=
-q_backup, &diff_queued_diff);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0init_revisions=
-(&rev, NULL);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0setup_revision=
-s(0, NULL, &rev, NULL);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rev.left_right=
- =3D 1;
-> @@ -146,6 +154,7 @@ void show_submodule_summary(FILE *f, const char *=
-path,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0clear_commit_m=
-arks(left, ~0);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0clear_commit_m=
-arks(right, ~0);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 diff_q_copy(&diff_=
-queued_diff, &diff_q_backup);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0strbuf_release(&sb);
-> =C2=A0}
-> --
-> 1.7.2.1.22.ge7bdd
->
->
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
 
-hi, commit ee38d823f74bd8872c1e793f98a5b5523ee04646 makes my patch unne=
-cessary.
+> The standard followup question in your case is: is the repository
+> fully packed on the server? If not, maybe "git gc" or "git gc
+> --aggressive" (expansive, but a one-time operation) could help.
+
+Hi Mathieu,
+
+I'll give it a shot when I get back to work.
+
+I have done the following:
+
+git repack -adf --window=100 --depth=20 --window-memory=50m
+
+It greatly helps the compression stage that used up all the memory. The
+problem is in the next phase when receiving objects. It is a bit strange
+as receiving objects should not take up any memory on the server.
+
+Take care,
+-- 
+Ivan Kanis
+http://kanis.fr
+
+Email is a wonderful thing for people whose role in life is to be on
+top of things. But not for me; my role is to be on the bottom of
+things. What I do takes long hours of studying and uninterruptible
+concentration.
+    -- Donald Knuth                                                 
