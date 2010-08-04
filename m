@@ -1,130 +1,97 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] tests: A new test prereq for testing chmod -w as root
-Date: Wed, 4 Aug 2010 20:30:28 +0000
-Message-ID: <AANLkTikgVF5JGi2Aacpsv=KE5uXGuzmyEVXgVPrTfkdh@mail.gmail.com>
+Date: Wed, 4 Aug 2010 15:40:15 -0500
+Message-ID: <20100804204015.GA2920@burratino>
 References: <1280934026-25658-1-git-send-email-avarab@gmail.com>
-	<7veieefaym.fsf@alter.siamese.dyndns.org>
+ <7veieefaym.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 04 22:30:37 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 04 22:41:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ogkbk-0000FN-UJ
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 22:30:37 +0200
+	id 1OgkmW-0007Qt-Ok
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 22:41:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934744Ab0HDUac convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 16:30:32 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:58914 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934605Ab0HDUaa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 16:30:30 -0400
-Received: by gxk23 with SMTP id 23so2156346gxk.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 13:30:29 -0700 (PDT)
+	id S934753Ab0HDUlj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 16:41:39 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53700 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934762Ab0HDUlh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 16:41:37 -0400
+Received: by vws3 with SMTP id 3so4451844vws.19
+        for <git@vger.kernel.org>; Wed, 04 Aug 2010 13:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vqdcworioNLP2Mob3JWJ3cTZPF/qU619ALlTCvxNTVU=;
-        b=rrJTBX1FLZ3M4ijgAeCkBnav8+j7vzSLNtpsWhrj0yQ4sgRDajFS9/UWc6GWpphqlD
-         W+isbaAev6JLX4w2Gv4b1CxsM7HYw5RJhc+HS+v4ISZfDonP1UoDWrv+FwUyBfEeu36x
-         aXOvjyq3ufag0ZeRD3bpNuoF41SgZbY4z+Ti4=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=H1Gyfg04hL3GHdp9cMw4GTfGeReFWbJN4eAlc+i8y+Q=;
+        b=mHc76DJ4BJspYEXeYfHgwDpFju4HJ+n5lf/HZr0uoo6UrtMgCM3PzWAqQ6Zawoqhfg
+         PoXi+TOrQUk81sKE/xQFAnJ8SpzwFT5tzLm64cAyFGEGqhl42afGeuUzSpqrEz+Vpg4G
+         fWeWsrFci/zTG+SGVKnbEi4htMEnyJPdwPbMU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=otZc8CH4kGtu6RPsRurJ8EpBCwi4LU2VAno+37ffXe/H6WFUQ1bUn+6R/h5aOqhgAW
-         +O6jjN3NjxJ9z//0URhnpPZwwNStM0OLKLfhMXDzmrtw0q0gdkYyJ+fKE3FythNAoOcO
-         dteX6eUe3EeebL9saCiD0iMSgVPfzvH3N4qMw=
-Received: by 10.231.19.6 with SMTP id y6mr10645927iba.16.1280953829174; Wed, 
-	04 Aug 2010 13:30:29 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Wed, 4 Aug 2010 13:30:28 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=ktxswwjPt0R1xN35JmajvlpjjuudYlGJzX4Tf88XUsaIIRwaPWKErD2RXd9andhdL/
+         rxVgWaGW42FzofY7oXIV+VXWqNiJ66x40yQ+8gtS/r0Wus7GAe4sAbXYXpM6z3X+uRpW
+         ZuWcyL9r4Hs1sJ4PHQoVh7VnUHLhWPYFpdRQc=
+Received: by 10.220.166.71 with SMTP id l7mr6559985vcy.149.1280954495448;
+        Wed, 04 Aug 2010 13:41:35 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id k30sm7836410vbl.19.2010.08.04.13.41.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 04 Aug 2010 13:41:34 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <7veieefaym.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152602>
 
-On Wed, Aug 4, 2010 at 19:13, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
+Hi =C3=86var,
+
+Junio C Hamano wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
 >> Some tests depend on not being able to read files after chmod -w. Th=
 is
 >> doesn't work when running the tests as root.
 >
 > Obviously you meant s/read/write/ or "chmod -r" ;-)
-
-Yeah. I'll fix that in a future submission. Pending the question of
-whether there's any interest.
-
-> We discussed this prerequisite in the past as "SANITY", in the dual s=
-ense
-> that (1) nobody sane should be running tests as root and (2) for root=
- many
-> normal assumptions programs make do not hold. =C2=A0If we throw out t=
-he former
-> by saying that it is safe to run tests under fakeroot, we would need
-> something like this patch to cover the latter. =C2=A0The patch is a s=
-tep in the
-> right direction.
-
-I sometimes run stuff like this as root, although obviously not often
-enough to have bumped into this before with Git. But sometimes you
-don't care about user seperation, e.g. inside a virtual machine.
-
-When I bumped into this I was writing a script to run in cron that
-would build and install pu daily in /usr/local if tests passed. Since
-I needed root to install there I was running the whole script as root,
-it was easier than giving the script permission to sudo or granularly
-adjusting the permissions of /usr/local.
-
-In any case, seemingly randomly breaking if the tests are run as root
-is a bad thing which should be fixed.
-
-> I wonder if we want to be so specific, as your patch does, to single =
-out
-> "you can write even to a-w file" aspect of rootness, or just want to =
-cover
-> the rootness more broadly so that other rooty conditions like "if you=
- can
-> read even an a-r file, then the assumptions the test makes will not h=
-old"
-> and "if you can kill other's processes, ...ditto..." can also be cove=
-red
-> with a single prerequisite token.
-
-Well, in practice it was the one and only thing that broke under
-root. And it's something that can be compartmentalized easily and
-tested for without cheating and checking if UID =3D=3D 0.
-
+>=20
+> We discussed this prerequisite in the past as "SANITY"
+[...]
 > Also I think there was a discussion and proposed patch to support mor=
 e
-> than one prerequisite tokens, concatenated with "," or something, lik=
-e:
->
-> =C2=A0 =C2=A0test_expect_success POSIXPERM,SANITY 'notice unwritable =
-repo' '
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0... test that depends on posixperm and not=
- running
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0... as root comes here
-> =C2=A0 =C2=A0'
->
-> so that you don't have to invent permutations of prerequisite tokens.
+> than one prerequisite tokens, concatenated with "," or something
 
-I almost implemented something like that when rolling this series. Do
-you happen to have the Message-ID of the thread or some pertinent
-search keywords? Maybe I'll resurrect it. We're using that sort of
-thing in a couple of places.
+Thanks for picking up this topic.  Here=E2=80=99s some related work:
 
-I didn't implement it because I was worried about handling the 'FOO &&
-BAR' and 'FOO || BAR' cases, and combinations thereof. That's probably
-overthinking it though, AND-ing them together seems to be good enough,
-and simple to do.
+ - Incomplete series using space-separated test prerequisites:
+   http://thread.gmane.org/gmane.comp.version-control.git/145427
+
+ - Why that series is incomplete:
+   http://bugs.debian.org/cgi-bin/bugreport.cgi?msg=3D104;bug=3D579273
+
+ - Comma-separated test prerequisites:
+   http://thread.gmane.org/gmane.comp.version-control.git/116729/focus=3D=
+118434
+
+ - Earlier.
+   http://thread.gmane.org/gmane.comp.version-control.git/116729/focus=3D=
+118385
+
+>     test_expect_success POSIXPERM,SANITY
+
+Last time I looked, IFS=3D, as used by Hannes looked like a sane
+approach.  I noticed too late and did not follow up; sorry about that.
