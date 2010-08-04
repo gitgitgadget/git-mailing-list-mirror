@@ -1,147 +1,112 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Back-dating commits--way back--for constitution.git
-Date: Wed, 4 Aug 2010 19:07:06 +0000
-Message-ID: <AANLkTimRPnjeWQ7gXt90Kwx-fxQ_gwCd3vaKLY5-oPAu@mail.gmail.com>
-References: <i372v0$3np$1@dough.gmane.org>
-	<AANLkTik2B8pGo8uR4yxV3nz-Nx6dcU+fiO8GWgv9-VtW@mail.gmail.com>
-	<4C599781.2020603@gmail.com>
+From: "Michael \"Ray\" Rehbein" <mrrehbein@gmail.com>
+Subject: Suggestions on how to reorganize and split up a monolithic 
+	repository?
+Date: Wed, 4 Aug 2010 14:08:23 -0500
+Message-ID: <AANLkTikFrj6tyHfmZ8k-gmR+gAFyEGv+X+0x849eEaEP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Joel C. Salomon" <joelcsalomon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 04 21:07:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 04 21:08:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgjJB-0004Ou-9G
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 21:07:21 +0200
+	id 1OgjKL-0005FG-4j
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 21:08:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933459Ab0HDTHN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 15:07:13 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:56271 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933597Ab0HDTHK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Aug 2010 15:07:10 -0400
-Received: by gyg10 with SMTP id 10so2115246gyg.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 12:07:09 -0700 (PDT)
+	id S933370Ab0HDTI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Aug 2010 15:08:26 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35450 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933120Ab0HDTIZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 15:08:25 -0400
+Received: by vws3 with SMTP id 3so4350461vws.19
+        for <git@vger.kernel.org>; Wed, 04 Aug 2010 12:08:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bs/mF5a5tNWrpDJkvEAlLxsd1y3Hq7kgGA+1HRQnxJM=;
-        b=C8WaX6QzKXTvZ2sW2uJcTONPdoD3XkQuTlMGh3rRGBKukBbBw2UMDW+BnU1vgJtKEo
-         ijavZrVyYN1zTSGVz/8Dyfi+e3rHWUjVHgkWbb07o8zRt01EIrWZ/ju4U8Dw6D3E9uS0
-         NrDALOQSVIau6maOMl+G5Xa6hQM4c4xcLYMX8=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=iSMu8x1KytHkcWqqRK2T6/RncjXBJTy04b8X3ea5op4=;
+        b=SWo/7W88Asm4OabcgWd5uM5UxUKKs1PoOOZfHJA7Ys1hn9VOHxkxphKZ4GSo5vjjUF
+         5hPKmM85I+WLLr7SLzRYYP1kVto//ZpDHhjDw1oSQF48kIzn+alEfV+OihfG5l7VctnQ
+         2cZvPtsTNeWcv3CIXl6NBMAj1OBAOFrotO69A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=WzOYFV4oRjcSCwgDtQrsI0vHzNzOgrLZYHNhoBffVSEMrkzVHNSBTJ2/YTrTqbtXZV
-         XOn80fpTfa4ULbCfNdc3FLhn67isCD8pVBigduIRr1vEgUubMEPDWi+k7AW+ySp1dtxA
-         WpgnQx1cG6OwqxWLFmVrPlmvc+EZNZNG9KaWY=
-Received: by 10.231.183.81 with SMTP id cf17mr10783042ibb.32.1280948828710; 
-	Wed, 04 Aug 2010 12:07:08 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Wed, 4 Aug 2010 12:07:06 -0700 (PDT)
-In-Reply-To: <4C599781.2020603@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=R8Vii+sksJK2tG0o/j/s+zdhy0U9S6H+bE1KxnnNH+qgdO3yQB0beH66tEvKkM4nwD
+         ZVVYJTDxQ9zAiU5gSmFr0Po8C0xKOCe0ddh+QokfbYoQ7HXz3nKU6ehIVZiTrwG50RCI
+         F8uoGk+Nr2203+iiTKMBs6YM+Mgb0k3hgEjag=
+Received: by 10.220.158.9 with SMTP id d9mr6579469vcx.33.1280948904407; Wed, 
+	04 Aug 2010 12:08:24 -0700 (PDT)
+Received: by 10.220.76.83 with HTTP; Wed, 4 Aug 2010 12:08:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152595>
 
-On Wed, Aug 4, 2010 at 16:38, Joel C. Salomon <joelcsalomon@gmail.com> =
-wrote:
-> On 08/02/2010 05:25 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Mon, Aug 2, 2010 at 18:32, Joel C. Salomon <joelcsalomon@gmail.co=
-m> wrote:
->>> I'd figured to play with Git in an unusual way: to create a reposit=
-ory
->>> for the U.S. Constitution where amendments are presented as patches=
-=2E
->>> E.g., instead of the First Amendment being placed at the end (as is
->>> usual) I'm putting it in Article 1, Section 9 (Limitations of Congr=
-ess).
->>> Proposed amendments get branches, which get merged in later.
->>
->> I'd like to ask where this project is being hosted. I've wanted to
->> play with importing law into Git, and it would be interesting to
->> follow this project.
->
-> It's local to my machine for now, especially since I can't (yet?) get
-> the dates right. Also, I'm rebasing as I tweak the TeX code.
->
-> Law-into-RCS has been on my mind since I learned out what RCSs are fo=
-r.
-> =C2=A0Read any bill that the US Congress passes: there's an intro, a =
-whole
-> lot of boilerplate, and then:
->
-> SEC. 101. EXTENSION OF CHIP.
->
-> =C2=A0 =C2=A0Section 2104(a) (42 U.S.C. 1397dd(a)) is amended--
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1) in paragraph (10), by st=
-riking ``and'' at the end;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(2) by amending paragraph (1=
-1), by striking ``each of
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fiscal years 2008 and 2009'' and inserting=
- ``fiscal year
-> =C2=A0 =C2=A0 =C2=A0 =C2=A02008''; and
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(3) by adding at the end the=
- following new paragraphs:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(12) for fiscal year 2009,=
- $10,562,000,000;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(13) for fiscal year 2010,=
- $12,520,000,000;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(14) for fiscal year 2011,=
- $13,459,000,000;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(15) for fiscal year 2012,=
- $14,982,000,000; and
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0``(16) for fiscal year 2013,=
- for purposes of making 2 semi-
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0annual allotments--
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-``(A) $3,000,000,000 for the period beginning on
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0October 1, 201=
-2, and ending on March 31, 2013, and
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-``(B) $3,000,000,000 for the period beginning on
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0April 1, 2013,=
- and ending on September 30, 2013.''.
->
-> SEC. 102. ALLOTMENTS FOR STATES AND TERRITORIES FOR FISCAL YEARS 2009
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0THROUGH 2013.
->
-> =C2=A0 =C2=A0Section 2104 (42 U.S.C. 1397dd) is amended--
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(1) in subsection (b)(1), by=
- striking ``subsection (d)''
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0and inserting ``subsections (d) and (m)'';
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(2) in subsection (c)(1), by=
- striking ``subsection (d)''
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0and inserting ``subsections (d) and (m)(4)=
-''; and
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(3) by adding at the end the=
- following new subsection:
-> ....
->
-> Sure looks like a patch series to me.
+Currently we have everything in one repository for our website, and
+are looking into splitting it up. The scale of one repository looks
+like it will be getting out of hand down the road.
 
-Yeah, I think every legal system has their own ad-hoc patch convention
-like that. It can be really hard to figure it all out. Parsing that is
-non-trivial, but being able to generate diffs based on that would be a
-very valuable resource.
+General layout at the moment:
 
->> There's some Icelandic law currently enacted that hasn't been change=
-d
->> since the 1200s. Getting that into Git would be interesting.
->
-> Extremely.
->
-> I'll put my Constitution project up on GitHub in a few days. =C2=A0Ju=
-st note
-> that I *will* rebase and publish.
+repos.git/Site1
+repos.git/Site2
+repos.git/Library/Ours
+repos.git/Library/3rdParty1
+repos.git/Library/3rdParty2
+repos.git/UnitTests/Ours
+repos.git/UnitTests/3rdParty1
+repos.git/UnitTests/3rdParty2
 
-Great.
+Goals in splitting it up:
+- Allow each site to have a collection of libraries that are known to
+be working for it.  Sometimes an update to shared library to fix site1
+will break site2.
+- Allow a site to have only the needed libraries, to avoid bloating
+the site, and help in identifying unused code.
+
+One plan we started to go with was:
+
+Site1.git/
+Site1.git/Library/Ours - submodule link to OurLib.git/Library/Ours
+Site1.git/Library/3rdParty1 - submodule link to
+3rdParty1Lib.git/Library/3rdParty1
+
+OurLib.git/Library/Ours
+OurLib.git/UnitTests/Ours
+OurLib.git/Library/3rdParty1 - submodule link to
+3rdParty1Lib.git/Library/3rdParty1
+
+3rdParty1Lib.git/Library/3rdParty1
+3rdParty1Lib.git/UnitTests/3rdParty1
+
+But found out that git submodule doesn't actually allow mapping a
+section of a git repository, so changed it to:
+
+Site1.git/
+Site1.git/Library/Ours - symlink to submodule/OurLib/Library/Ours
+Site1.git/Library/3rdParty1 - symlink to
+submodule/3rdParty1Lib/Library/3rdParty1
+Site1.git/submodule/OurLib - submodule OurLib.git
+Site1.git/submodule/3rdParty1Lib - submodule 3rdParty1Lib.git
+
+OurLib.git/Library/Ours
+OurLib.git/UnitTests/Ours
+OurLib.git/Library/3rdParty1 - symlink to
+submodule/3rdParty1Lib/Library/3rdParty1
+OurLib.git/submodule/3rdParty1Lib - submodule 3rdParty1Lib.git
+
+3rdParty1Lib.git/Library/3rdParty1
+3rdParty1Lib.git/UnitTests/3rdParty1
+
+The 3rd Party Lib is not all 3rd party anymore, as we have tweaked it
+to fit better in our setup.  Additionally, the 3rd party library
+didn't come with unit tests.  One of the unit tests we wrote for our
+use of the 3rd party ended up with a use of our library.  Putting a
+submodule of OurLib into 3rdParty1Lib would create recursive
+submodules, which is not something we want.
+
+Is there a better way to organize this?
