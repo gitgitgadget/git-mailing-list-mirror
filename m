@@ -1,77 +1,91 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Re: Inspecting a corrupt git object
-Date: Wed, 4 Aug 2010 15:09:57 +0200
-Message-ID: <20100804130957.GB1537@jpl.local>
-References: <20100804092530.GA30070@jpl.local> <i3bd0r$g2l$1@dough.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alejandro Riveira =?iso-8859-1?Q?Fern=E1ndez?= 
-	<ariveira@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 04 15:10:07 2010
+From: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
+Subject: [PATCH] submodule: show_submodule_summary: preserve diff queue
+Date: Wed,  4 Aug 2010 16:45:06 +0200
+Message-ID: <1280933106-7016-1-git-send-email-zfuzesi@eaglet.hu>
+Cc: =?UTF-8?q?Zolt=C3=A1n=20F=C3=BCzesi?= <zfuzesi@eaglet.hu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 04 16:50:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgdjT-0006Q8-49
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 15:10:07 +0200
+	id 1OgfIQ-0003ML-QT
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 16:50:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932751Ab0HDNKA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 09:10:00 -0400
-Received: from smtprelay-b11.telenor.se ([62.127.194.20]:46297 "EHLO
-	smtprelay-b11.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932476Ab0HDNJ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 09:09:59 -0400
-Received: from ipb3.telenor.se (ipb3.telenor.se [195.54.127.166])
-	by smtprelay-b11.telenor.se (Postfix) with ESMTP id 98D1EEA5CE
-	for <git@vger.kernel.org>; Wed,  4 Aug 2010 15:09:58 +0200 (CEST)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: At01AEoDWUxT46eEPGdsb2JhbACHZ5g5DAEBAQE1LcNShTsE
-X-IronPort-AV: E=Sophos;i="4.55,315,1278280800"; 
-   d="scan'208";a="556943167"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb3.telenor.se with ESMTP; 04 Aug 2010 15:09:58 +0200
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id 13284422BF; Wed,  4 Aug 2010 15:09:57 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <i3bd0r$g2l$1@dough.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S932703Ab0HDOuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Aug 2010 10:50:10 -0400
+Received: from mail.icell.hu ([80.99.238.252]:50363 "EHLO icell.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757728Ab0HDOuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 10:50:09 -0400
+X-Greylist: delayed 463 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Aug 2010 10:50:08 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by icell.hu (Postfix) with ESMTP id AD1E9B52;
+	Wed,  4 Aug 2010 16:42:23 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at mail.icell.hu
+Received: from icell.hu ([127.0.0.1])
+	by localhost (mail.icell.hu [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id OfdowXIMnRBc; Wed,  4 Aug 2010 16:42:23 +0200 (CEST)
+Received: from source.ifleet (unknown [10.1.1.250])
+	by icell.hu (Postfix) with ESMTP id 98D8D760;
+	Wed,  4 Aug 2010 16:42:23 +0200 (CEST)
+Received: from fuge by source.ifleet with local (Exim 4.69)
+	(envelope-from <zoltan.fuzesi@icell.hu>)
+	id 1OgfDP-0001ph-UY; Wed, 04 Aug 2010 16:45:07 +0200
+X-Mailer: git-send-email 1.7.2.1.22.ge7bdd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152581>
 
-On Wednesday, August 04, 2010 at 11:48 CEST,
-     Alejandro Riveira Fern=E1ndez <ariveira@gmail.com> wrote:
+git-diff with --submodule option stopped printing diff lines after a submodule
+change, because show_submodule_summary reset diff queue.
+---
+ submodule.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
 
-> On Wed, 04 Aug 2010 11:25:30 +0200, Magnus B=E4ck wrote:
->
-> > From what I gather from the community book and Pro Git, a git objec=
-t
-> > file is a deflated representation of the object type as a string,
-> > the payload size, a null byte, and the payload. Is there a standard
-> > tool for inflating the file back so that I can inspect what the
-> > actual difference between these two are? Short of writing a tool
-> > utilizing zlib, at least.
->
->  Maybe
->
->  git cat-file -p <sha1>
->
->  ?
-
-Sorry, I should've been more clear here. I know about cat-file's
-pretty-printing abilities, but I just wanted to inflate the loose
-object data and see *exactly* where the differing byte ended up.
-
---=20
-Magnus B=E4ck                      Opinions are my own and do not neces=
-sarily
-SW Configuration Manager         represent the ones of my employer, etc=
-=2E
-Sony Ericsson
+diff --git a/submodule.c b/submodule.c
+index 61cb6e2..5b57536 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -46,6 +46,12 @@ done:
+ 	return ret;
+ }
+ 
++static void diff_q_copy(struct diff_queue_struct *dst,
++			struct diff_queue_struct *src)
++{
++	memcpy(dst, src, sizeof(struct diff_queue_struct));
++}
++
+ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 				  const char *arg)
+ {
+@@ -71,6 +77,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	static const char *format = "  %m %s";
+ 	int fast_forward = 0, fast_backward = 0;
++	struct diff_queue_struct diff_q_backup;
+ 
+ 	if (is_null_sha1(two))
+ 		message = "(submodule deleted)";
+@@ -83,6 +90,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		message = "(commits not present)";
+ 
+ 	if (!message) {
++		diff_q_copy(&diff_q_backup, &diff_queued_diff);
+ 		init_revisions(&rev, NULL);
+ 		setup_revisions(0, NULL, &rev, NULL);
+ 		rev.left_right = 1;
+@@ -146,6 +154,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		}
+ 		clear_commit_marks(left, ~0);
+ 		clear_commit_marks(right, ~0);
++		diff_q_copy(&diff_queued_diff, &diff_q_backup);
+ 	}
+ 	strbuf_release(&sb);
+ }
+-- 
+1.7.2.1.22.ge7bdd
