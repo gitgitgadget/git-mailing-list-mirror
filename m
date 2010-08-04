@@ -1,111 +1,102 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH RFC] parse_object: pass on the original sha1, not the replaced one
-Date: Wed, 4 Aug 2010 14:57:31 +0200
-Message-ID: <201008041457.31975.chriscool@tuxfamily.org>
-References: <1280579802-8606-1-git-send-email-pclouds@gmail.com> <201008041358.13081.chriscool@tuxfamily.org> <AANLkTimPQcZN-ASP+N+h9GaOSkgbnyNxiSktL+z-nBRu@mail.gmail.com>
+From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
+Subject: Re: Inspecting a corrupt git object
+Date: Wed, 4 Aug 2010 15:02:29 +0200
+Message-ID: <20100804130229.GA1537@jpl.local>
+References: <20100804092530.GA30070@jpl.local> <201008041148.49668.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 04 14:57:49 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Aug 04 15:02:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgdXX-0000D6-Mg
-	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 14:57:48 +0200
+	id 1OgdcF-0002Yc-Mq
+	for gcvg-git-2@lo.gmane.org; Wed, 04 Aug 2010 15:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932769Ab0HDM5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 08:57:41 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:41647 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932738Ab0HDM5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 08:57:40 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D141E818043;
-	Wed,  4 Aug 2010 14:57:33 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-23-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <AANLkTimPQcZN-ASP+N+h9GaOSkgbnyNxiSktL+z-nBRu@mail.gmail.com>
+	id S932654Ab0HDNCd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 09:02:33 -0400
+Received: from smtprelay-b12.telenor.se ([62.127.194.21]:60301 "EHLO
+	smtprelay-b12.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932628Ab0HDNCc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 09:02:32 -0400
+Received: from ipb2.telenor.se (ipb2.telenor.se [195.54.127.165])
+	by smtprelay-b12.telenor.se (Postfix) with ESMTP id 52CC2EA73B
+	for <git@vger.kernel.org>; Wed,  4 Aug 2010 15:02:31 +0200 (CEST)
+X-SMTPAUTH-B2: [b627879]
+X-SENDER-IP: [83.227.167.132]
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: At01AB8CWUxT46eEPGdsb2JhbACHZ5g5DAEBAQE1LcMrhTsE
+X-IronPort-AV: E=Sophos;i="4.55,315,1278280800"; 
+   d="scan'208";a="113582454"
+Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
+  by ipb2.telenor.se with ESMTP; 04 Aug 2010 15:02:30 +0200
+Received: by elwood.jpl.local (Postfix, from userid 1000)
+	id C12F6422BF; Wed,  4 Aug 2010 15:02:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <201008041148.49668.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152579>
 
-On Wednesday 04 August 2010 14:42:50 Nguyen Thai Ngoc Duy wrote:
-> On Wed, Aug 4, 2010 at 9:58 PM, Christian Couder
-> 
-> <chriscool@tuxfamily.org> wrote:
-> >> > I will
-> >> > try to have a deeper look at that, but it would help if you could give
-> >> > an example of a command that triggers this behavior.
-> >> 
-> >> The following patch add "sha1" command. These commands give different
-> >> sha1:
-> >> 
-> >> git sha1 `git rev-parse HEAD` `git rev-parse HEAD^` A
-> >> git sha1 `git rev-parse HEAD` `git rev-parse HEAD^` B
-> > 
-> > Yes, but that does not mean that the content of the object returned by
-> > lookup_commit(A) is not the content of A.
-> > 
-> > Or do you have an example where the content of the object returned by
-> > lookup_commit(A) is not the content of A?
-> 
-> Both return the content of B. I modified my patch a bit to also show
-> the content, ((struct commit*)obj)->buffer.
+On Wednesday, August 04, 2010 at 11:48 CEST,
+     Thomas Rast <trast@student.ethz.ch> wrote:
 
-I also modified your patch but I don't get any content shown when using 
-lookup_commit()
+> Magnus B=E4ck wrote:
+>
+> > From what I gather from the community book and Pro Git, a git objec=
+t
+> > file is a deflated representation of the object type as a string,
+> > the payload size, a null byte, and the payload. Is there a standard
+> > tool for inflating the file back so that I can inspect what the
+> > actual difference between these two are? Short of writing a tool
+> > utilizing zlib, at least.
+>=20
+> I'm sure it's a one-liner in almost any scripting language, e.g. you
+> can use
+>=20
+>   python -c 'import sys,zlib; sys.stdout.write(zlib.decompress(open(s=
+ys.argv[1]).read()))'
+>=20
+> with a filename argument if you have Python at hand.
 
-I use:
+That worked fine, thanks. Apparently this difference in the second byte
+of the compressed data makes no difference for the end result -- the tw=
+o
+inflated files are identical.
 
-diff --git a/builtin/sha1.c b/builtin/sha1.c
-new file mode 100644
-index 0000000..8e081b2
---- /dev/null
-+++ b/builtin/sha1.c
-@@ -0,0 +1,27 @@
-+#include "cache.h"
-+#include "commit.h"
-+
-+int cmd_sha1(int argc, char **argv)
-+{
-+       unsigned char old[20];
-+       unsigned char new[20];
-+       struct object *obj;
-+
-+       get_sha1_hex(argv[1], old);
-+       get_sha1_hex(argv[2], new);
-+       printf("old  = %s\nnew  = %s\n", argv[1], argv[2]);
-+       replace_pair(old, new);
-+       if (argv[3][0] == 'A')
-+              obj = parse_object(old);
-+       else {
-+              struct commit *com = lookup_commit(old);
-+              if (com->buffer)
-+                      printf("commit buffer:\n%s", com->buffer);
-+              else
-+                      printf("no commit buffer\n");
-+              obj = (struct object *)com;
-+       }
-+
-+       printf("sha1 = %s\n", sha1_to_hex(obj->sha1));
-+       return 0;
-+}
+Interestingly, just as we were about to transplant the loose object fro=
+m
+my working repository to the server where "git gc" failed and the objec=
+t
+was seemingly corrupt, the person doing the actual work (I don't have
+access to the server) ran "git gc" to find the id of the bad object, an=
+d
+suddenly it completed without errors. The object in question had now
+been included in a packfile, and upon unpacking that packfile to inspec=
+t
+the object it was identical to the file I had, i.e. the new loose objec=
+t
+was different from the original loose object. I had expected a loose
+object -> packfile -> loose object cycle to not change anything.
+Everything seems to be back to normal now, which is good, but I prefer
+I understand why things get fixed.
 
-and I get:
+We did have some initial problems with reaching the per-process limit
+for open files (as no repack had been done for an extended time and 500=
+0
+packfiles were lingering), but it seems weird for such a problem to be
+related to the possible corruptness of a single tree object.
 
-$ git sha1 `git rev-parse HEAD` `git rev-parse HEAD^` B
-old  = 5b4585a035e2ba61573273dacc6d17d7e8fcbc7d
-new  = c9b402bd93105f80f3c5d67ecfccc8ba36810613
-no commit buffer
-sha1 = 5b4585a035e2ba61573273dacc6d17d7e8fcbc7d
-
-Could you show what code you use?
-
-Thanks,
-Christian.
+--=20
+Magnus B=E4ck                      Opinions are my own and do not neces=
+sarily
+SW Configuration Manager         represent the ones of my employer, etc=
+=2E
+Sony Ericsson
