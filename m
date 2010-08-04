@@ -1,82 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/3] stash: It looks like a stash, but doesn't quack
- like a stash...
-Date: Wed, 04 Aug 2010 16:31:37 -0700
-Message-ID: <7v1vaeeyzq.fsf@alter.siamese.dyndns.org>
-References: <1280831775-30759-1-git-send-email-jon.seymour@gmail.com>
- <1280831775-30759-2-git-send-email-jon.seymour@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git merge - "both added" conflict resolution
+Date: Wed, 4 Aug 2010 18:36:52 -0500
+Message-ID: <20100804233652.GB3595@burratino>
+References: <AANLkTi=Hp6DsE75XbgehS2bucp-M9NXmGgYbvw0kp6j8@mail.gmail.com>
+ <20100804205916.GC2920@burratino>
+ <AANLkTi=dScNMsf4XZ+sS8R+424fESyOr6wYO4WamAutj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, ams@toroid.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 01:32:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 01:38:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgnRa-00018b-4Z
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 01:32:18 +0200
+	id 1OgnXO-0003KR-6X
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 01:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759463Ab0HDXcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Aug 2010 19:32:13 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55513 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756404Ab0HDXcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Aug 2010 19:32:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E79AA516;
-	Wed,  4 Aug 2010 19:32:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gfSQw7rFAhyuHnXM3Qrp+IyckhU=; b=xFHWjM
-	PSiES2HqKvRt4bJzbsIWBjEHfzaM0IXsZEuUH2e+lHZnH/gr3HcxDiF/HB6qo2Im
-	C06BlDleYm0uWRSuMp6DwiCcZboMRj5GhKcMrzMUY8eyzMCOrPFYJRtVjhvyIFLn
-	ZB/SyfANM7WMdVB7p8n0UtoXPT90xJLLtzanc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xcFQXvJicvmas1ro8FRFApqpBRgOrnCM
-	MhQe9EmEc73sFTGql79wbBpVGPgVxVVGZzx6ksdl0Hb+XN4qKIF+hH6ujxgbcro+
-	cAtxlc9upuoVCVoSfghN/o/mxjtVy3kmDLJOE/4CW87jgLkJXYiIAQ16BIcSI2fh
-	HxYu/bDo0Nk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 25A57507;
-	Wed,  4 Aug 2010 19:31:57 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0A4C14F4; Wed,  4 Aug
- 2010 19:31:39 -0400 (EDT)
-In-Reply-To: <1280831775-30759-2-git-send-email-jon.seymour@gmail.com> (Jon
- Seymour's message of "Tue\,  3 Aug 2010 20\:36\:13 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 791D3114-A020-11DF-8FBD-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757602Ab0HDXiN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Aug 2010 19:38:13 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:45316 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752288Ab0HDXiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Aug 2010 19:38:12 -0400
+Received: by vws3 with SMTP id 3so4621845vws.19
+        for <git@vger.kernel.org>; Wed, 04 Aug 2010 16:38:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=cj1F8V05w6RaYNFZegGo6QNzkJNOXse3NnhaG+RBqiY=;
+        b=dr5yXu9YG003eg3wntb2nnv3inB8MJb0aHqvpSBv39kJdZWGPnPaLgspfBoxcFTl+V
+         /pI0ZNxPNFEhhpK8WkBiP+Nt1CBtz9Mbb4+S+XGXD/NdgE0OB/7klngzsdfLGBQ/6Pbs
+         mBPrGdGbu+PFpoxQfsH5kTT6wb4BjPnfCB1IU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=bi4FPEry2e0rfvyq6ftxpL0FDHjVk/OIIHNVGsm2VLp871gOh/Sg/qnqTNC5Jq4qEM
+         sRvBUB4z7wW3JZFXn7XTiTIxDHo3gJ2K5UmZAjS8JeNniBJ9aE+KbUVTcrMa/Ip6xoju
+         MTww4WaT2shMVlOIbpJTdr2myckBlD4BSKctA=
+Received: by 10.220.62.136 with SMTP id x8mr6781203vch.10.1280965091095;
+        Wed, 04 Aug 2010 16:38:11 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id v11sm7950324vbb.11.2010.08.04.16.38.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 04 Aug 2010 16:38:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=dScNMsf4XZ+sS8R+424fESyOr6wYO4WamAutj@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152611>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+Eugene Sajine wrote:
 
-> In particular, a stash created with git stash create cannot be used as
-> an argument to git stash branch because of two separate reasons.
->
-> 1. a pre-condition assumes that there is always a stash on the stack when git stash branch is called,
-> which is not necessarily true
->
-> 2. the cleanup code assumes the specified stash is a stash reference, rather than an arbitrary commit.
+> So, I'm removing all conflict markers and removing the incoming line
+> with the property value=3DprojectOne leaving it as projectTwo.
+> This effectively means that there is no changes in build.xml for git.
+> And I'm stuck because i cannot add file, that is not changed
 
-Hmm, I don't use the command myself so I ended up reading the description
-of "stash branch".  To me it is clear that it wants to use a stash entry,
-not just an arbitrary stash-looking commit, from "... then drops the
-<stash>".
-
-So I wouldn't call these tests "expect-failure"; rather, I would suggest
-swapping the order of patches so that they test the new feature that
-allows "git stash branch" to take an arbitrary stash-looking commit.
-
-The documentation also needs to be updated to make the "then drops" part
-conditional (perhaps "then drops...if the stash was on the list").
-
-Are there any other stash subcommand that ought to be able to act on a
-stash-looking commit but doesn't, or is "branch" the only one?
+Sorry I wasn=E2=80=99t clear before.  Could you give output from attemp=
+ting
+to add the file?  It is supposed to work.
