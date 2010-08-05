@@ -1,206 +1,146 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 4/5] log: parse separate options like git log --grep foo
-Date: Thu,  5 Aug 2010 10:22:55 +0200
-Message-ID: <1280996576-1165-4-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 2/5] diff: split off a function for --stat-* option parsing
+Date: Thu,  5 Aug 2010 10:22:53 +0200
+Message-ID: <1280996576-1165-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <vpqmxt14gjt.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 05 10:23:25 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 10:23:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgvjS-0005yS-7t
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 10:23:18 +0200
+	id 1Ogvji-0006Af-GC
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 10:23:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759936Ab0HEIXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 04:23:15 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38117 "EHLO shiva.imag.fr"
+	id S1759965Ab0HEIX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 04:23:26 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49622 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759883Ab0HEIXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 04:23:13 -0400
+	id S1759941Ab0HEIXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 04:23:20 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o758CTTW031530
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o758KpAu014314
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Aug 2010 10:12:29 +0200
+	Thu, 5 Aug 2010 10:20:51 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1OgvjC-0005XH-5N; Thu, 05 Aug 2010 10:23:02 +0200
+	id 1OgvjA-0005XB-Or; Thu, 05 Aug 2010 10:23:00 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1OgvjC-0000JX-48; Thu, 05 Aug 2010 10:23:02 +0200
+	id 1OgvjA-0000JR-NU; Thu, 05 Aug 2010 10:23:00 +0200
 X-Mailer: git-send-email 1.7.2.1.30.g18195
 In-Reply-To: <vpqmxt14gjt.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Aug 2010 10:12:29 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Aug 2010 10:20:51 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o758CTTW031530
+X-MailScanner-ID: o758KpAu014314
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1281600751.52925@gJwYxOjRjCOkWloh0W0k+g
+MailScanner-NULL-Check: 1281601253.58247@fvUNVaRIUDYioBBiT2DG0A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152623>
 
+From: Jonathan Nieder <jrnieder@gmail.com>
 
+As an optimization, the diff_opt_parse() switchboard has
+a single case for all the --stat-* options.  Split it
+off into a separate function so we can enhance it
+without bringing code dangerously close to the right
+margin.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- revision.c     |   74 ++++++++++++++++++++++++++++++++++---------------------
- t/t4202-log.sh |    7 +++++
- 2 files changed, 53 insertions(+), 28 deletions(-)
+ diff.c |   62 +++++++++++++++++++++++++++++++++++---------------------------
+ 1 files changed, 35 insertions(+), 27 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 7e82efd..489a3c2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1148,6 +1148,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 			       int *unkc, const char **unkv)
- {
- 	const char *arg = argv[0];
-+	const char *optarg;
-+	int argcount;
+diff --git a/diff.c b/diff.c
+index bc8fa8e..a08a56a 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3029,6 +3029,38 @@ int parse_long_opt(const char *opt, const char **argv,
+ 	return 2;
+ }
  
- 	/* pseudo revision arguments */
- 	if (!strcmp(arg, "--all") || !strcmp(arg, "--branches") ||
-@@ -1160,11 +1162,13 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		return 1;
- 	}
- 
--	if (!prefixcmp(arg, "--max-count=")) {
--		revs->max_count = atoi(arg + 12);
-+	if ((argcount = parse_long_opt("max-count", argv, &optarg))) {
-+		revs->max_count = atoi(optarg);
- 		revs->no_walk = 0;
--	} else if (!prefixcmp(arg, "--skip=")) {
--		revs->skip_count = atoi(arg + 7);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("skip", argv, &optarg))) {
-+		revs->skip_count = atoi(optarg);
-+		return argcount;
- 	} else if ((*arg == '-') && isdigit(arg[1])) {
- 	/* accept -<digit>, like traditional "head" */
- 		revs->max_count = atoi(arg + 1);
-@@ -1178,18 +1182,24 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!prefixcmp(arg, "-n")) {
- 		revs->max_count = atoi(arg + 2);
- 		revs->no_walk = 0;
--	} else if (!prefixcmp(arg, "--max-age=")) {
--		revs->max_age = atoi(arg + 10);
--	} else if (!prefixcmp(arg, "--since=")) {
--		revs->max_age = approxidate(arg + 8);
--	} else if (!prefixcmp(arg, "--after=")) {
--		revs->max_age = approxidate(arg + 8);
--	} else if (!prefixcmp(arg, "--min-age=")) {
--		revs->min_age = atoi(arg + 10);
--	} else if (!prefixcmp(arg, "--before=")) {
--		revs->min_age = approxidate(arg + 9);
--	} else if (!prefixcmp(arg, "--until=")) {
--		revs->min_age = approxidate(arg + 8);
-+	} else if ((argcount = parse_long_opt("max-age", argv, &optarg))) {
-+		revs->max_age = atoi(optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("since", argv, &optarg))) {
-+		revs->max_age = approxidate(optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("after", argv, &optarg))) {
-+		revs->max_age = approxidate(optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("min-age", argv, &optarg))) {
-+		revs->min_age = atoi(optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("before", argv, &optarg))) {
-+		revs->min_age = approxidate(optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("until", argv, &optarg))) {
-+		revs->min_age = approxidate(optarg);
-+		return argcount;
- 	} else if (!strcmp(arg, "--first-parent")) {
- 		revs->first_parent_only = 1;
- 	} else if (!strcmp(arg, "--ancestry-path")) {
-@@ -1295,6 +1305,10 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+8, revs);
- 	} else if (!prefixcmp(arg, "--pretty=") || !prefixcmp(arg, "--format=")) {
-+		/*
-+		 * Detached form ("--pretty X" as opposed to "--pretty=X")
-+		 * not allowed, since the argument is optional.
-+		 */
- 		revs->verbose_header = 1;
- 		revs->pretty_given = 1;
- 		get_commit_format(arg+9, revs);
-@@ -1359,21 +1373,25 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 	} else if (!strcmp(arg, "--relative-date")) {
- 		revs->date_mode = DATE_RELATIVE;
- 		revs->date_mode_explicit = 1;
--	} else if (!strncmp(arg, "--date=", 7)) {
--		revs->date_mode = parse_date_format(arg + 7);
-+	} else if ((argcount = parse_long_opt("date", argv, &optarg))) {
-+		revs->date_mode = parse_date_format(optarg);
- 		revs->date_mode_explicit = 1;
-+		return argcount;
- 	} else if (!strcmp(arg, "--log-size")) {
- 		revs->show_log_size = 1;
- 	}
- 	/*
- 	 * Grepping the commit log
- 	 */
--	else if (!prefixcmp(arg, "--author=")) {
--		add_header_grep(revs, GREP_HEADER_AUTHOR, arg+9);
--	} else if (!prefixcmp(arg, "--committer=")) {
--		add_header_grep(revs, GREP_HEADER_COMMITTER, arg+12);
--	} else if (!prefixcmp(arg, "--grep=")) {
--		add_message_grep(revs, arg+7);
-+	else if ((argcount = parse_long_opt("author", argv, &optarg))) {
-+		add_header_grep(revs, GREP_HEADER_AUTHOR, optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("committer", argv, &optarg))) {
-+		add_header_grep(revs, GREP_HEADER_COMMITTER, optarg);
-+		return argcount;
-+	} else if ((argcount = parse_long_opt("grep", argv, &optarg))) {
-+		add_message_grep(revs, optarg);
-+		return argcount;
- 	} else if (!strcmp(arg, "--extended-regexp") || !strcmp(arg, "-E")) {
- 		revs->grep_filter.regflags |= REG_EXTENDED;
- 	} else if (!strcmp(arg, "--regexp-ignore-case") || !strcmp(arg, "-i")) {
-@@ -1382,12 +1400,12 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->grep_filter.fixed = 1;
- 	} else if (!strcmp(arg, "--all-match")) {
- 		revs->grep_filter.all_match = 1;
--	} else if (!prefixcmp(arg, "--encoding=")) {
--		arg += 11;
--		if (strcmp(arg, "none"))
--			git_log_output_encoding = xstrdup(arg);
-+	} else if ((argcount = parse_long_opt("encoding", argv, &optarg))) {
-+		if (strcmp(optarg, "none"))
-+			git_log_output_encoding = xstrdup(optarg);
- 		else
- 			git_log_output_encoding = "";
-+		return argcount;
- 	} else if (!strcmp(arg, "--reverse")) {
- 		revs->reverse ^= 1;
- 	} else if (!strcmp(arg, "--children")) {
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index c1abd31..95ac3f8 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -201,6 +201,13 @@ test_expect_success 'log --grep' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'log --grep option parsing' '
-+	echo second >expect &&
-+	git log -1 --pretty="tformat:%s" --grep sec >actual &&
-+	test_cmp expect actual &&
-+	test_must_fail git log -1 --pretty="tformat:%s" --grep
-+'
++static int stat_opt(struct diff_options *options, const char **av)
++{
++	const char *arg = av[0];
++	char *end;
++	int width = options->stat_width;
++	int name_width = options->stat_name_width;
 +
- test_expect_success 'log -i --grep' '
- 	echo Second >expect &&
- 	git log -1 --pretty="tformat:%s" -i --grep=sec >actual &&
++	arg += strlen("--stat");
++	end = (char *)arg;
++
++	switch (*arg) {
++	case '-':
++		if (!prefixcmp(arg, "-width="))
++			width = strtoul(arg + 7, &end, 10);
++		else if (!prefixcmp(arg, "-name-width="))
++			name_width = strtoul(arg + 12, &end, 10);
++		break;
++	case '=':
++		width = strtoul(arg+1, &end, 10);
++		if (*end == ',')
++			name_width = strtoul(end+1, &end, 10);
++	}
++
++	/* Important! This checks all the error cases! */
++	if (*end)
++		return 0;
++	options->output_format |= DIFF_FORMAT_DIFFSTAT;
++	options->stat_name_width = name_width;
++	options->stat_width = width;
++	return 1;
++}
++
+ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ {
+ 	const char *arg = av[0];
+@@ -3070,33 +3102,9 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		options->output_format |= DIFF_FORMAT_NAME_STATUS;
+ 	else if (!strcmp(arg, "-s"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
+-	else if (!prefixcmp(arg, "--stat")) {
+-		char *end;
+-		int width = options->stat_width;
+-		int name_width = options->stat_name_width;
+-		arg += 6;
+-		end = (char *)arg;
+-
+-		switch (*arg) {
+-		case '-':
+-			if (!prefixcmp(arg, "-width="))
+-				width = strtoul(arg + 7, &end, 10);
+-			else if (!prefixcmp(arg, "-name-width="))
+-				name_width = strtoul(arg + 12, &end, 10);
+-			break;
+-		case '=':
+-			width = strtoul(arg+1, &end, 10);
+-			if (*end == ',')
+-				name_width = strtoul(end+1, &end, 10);
+-		}
+-
+-		/* Important! This checks all the error cases! */
+-		if (*end)
+-			return 0;
+-		options->output_format |= DIFF_FORMAT_DIFFSTAT;
+-		options->stat_name_width = name_width;
+-		options->stat_width = width;
+-	}
++	else if (!prefixcmp(arg, "--stat"))
++		/* --stat, --stat-width, or --stat-name-width */
++		return stat_opt(options, av);
+ 
+ 	/* renames options */
+ 	else if (!prefixcmp(arg, "-B")) {
 -- 
 1.7.2.1.30.g18195
