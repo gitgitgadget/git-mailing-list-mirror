@@ -1,87 +1,185 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [RFC/PATCH 0/3] instaweb: fix and improve WEBrick support
-Date: Thu, 5 Aug 2010 09:14:12 +0000
-Message-ID: <20100805091412.GA20998@dcvr.yhbt.net>
-References: <1272BF62-A0C8-4940-9472-E46C05BF1723@gmail.com> <m34ofbpcyr.fsf@localhost.localdomain> <20100804102545.GA32128@dcvr.yhbt.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/2] Submodules: Add the new config option "ignore"
+Date: Thu, 5 Aug 2010 11:21:36 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1008051025451.2983@bonsai2>
+References: <4C4DD33F.4020104@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Dippery <mdippery@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Mike Dalessio <mike@csa.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 05 11:14:21 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Aug 05 11:21:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgwWq-0001dQ-VO
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 11:14:21 +0200
+	id 1Ogwe9-0006yU-1C
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 11:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755113Ab0HEJOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 05:14:16 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:56826 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752808Ab0HEJOO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 05:14:14 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C99FC1F4E1;
-	Thu,  5 Aug 2010 09:14:12 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20100804102545.GA32128@dcvr.yhbt.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1758870Ab0HEJVr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 05:21:47 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:56802 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1756839Ab0HEJVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 05:21:44 -0400
+Received: (qmail invoked by alias); 05 Aug 2010 09:21:42 -0000
+Received: from pD9EB21D2.dip0.t-ipconnect.de (EHLO noname) [217.235.33.210]
+  by mail.gmx.net (mp026) with SMTP; 05 Aug 2010 11:21:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18CfsILPW8C5pQGfHwKosvdngSiqr4X0q0b9YtCjX
+	iswGcYAhQQ61Lh
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <4C4DD33F.4020104@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152627>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Jakub Narebski <jnareb@gmail.com> wrote:
-> > Michael Dippery <mdippery@gmail.com> writes:
-> > > I _do_ have webrick. Asking around a bit, I was told the the problem
-> > > may have been introduced in commit be5347b. Is this so? If not, any
-> > > other ideas on what may be causing the problem?
-> > 
-> > To be more exact commit be5347b (git-instaweb: Put httpd logs in a
-> > "$httpd_only" subdirectory, 2010-05-28) by Pavan Kumar Sunkara added
-> > resolve_full_httpd before running *_config (webrick_config in this
-> > case).  But resolve_full_httpd() beside setting $httpd_only needed
-> > later for functionality provided by this commit, does also setting
-> > $full_httpd and checking if given web server can be run.
-> > 
-> I wouldn't mind making it more like what we do with plackup and
-> having a single Ruby script, eventually.
+Hi,
 
-Done in 2/3 of my instaweb patch series.
-3/3 also adds logging support to WEBrick so it should support
-everything other web servers support.
+On Mon, 26 Jul 2010, Jens Lehmann wrote:
 
-> > The solution would be to either split resolve_full_httpd() into one
-> > function generating $httpd and $httpd_only, and second function
-> > generating $full_httpd and checing for web server existence, or create
-> > a separate check for 'webrick'.
+> These two patches are extremly useful for those users who chose 
+> submodules because they wanted to reduce the time it takes for "git 
+> status" and "git diff" to recurse through the whole work tree by putting 
+> sometimes large amounts of files into submodules, which weren't scanned 
+> in the past.
 > 
-> I just split out the check and started modelling things after the code
-> for plackup.  Unfortunately, I haven't had any luck getting gitweb.cgi
-> to respect $GITWEB_CONFIG environment with webrick so the following
-> patch just ensures webrick is properly started, not useful.
+> Since 1.7.0 "git status" and "git diff" recurse through submodule work 
+> trees, which has a - sometimes drastic - performance impact when large 
+> submodules are present. Using the "ignore=dirty" config option restores 
+> the former behaviour.
+> 
+> This option can be set in the .gitmodules file or in .git/config, any 
+> settings found in the latter override those from .gitmodules. This 
+> enables the distribution of a default setting for this option by simply 
+> committing a modified .gitmodules file without each developer having to 
+> call "git submodule sync". When using "git status" or "git diff" with 
+> "--ignore-submodules=none" option the default behavior of scanning all 
+> submodules work trees can be restored temporarily.
 
-I had to use the undocumented :CGIInterpreter option of WEBrick
-along with a shell script wrapper to pass environment variables.
+This is incredibly useful stuff. Indeed, the time for one "git status" 
+went down from > 50 sec to < 2 sec again in my project. (I have the 
+impression that it still does a little too much, but I will have to have 
+some time for strace()ing to find out for real.) Therefore, I applied it 
+to 4msysgit.git's 'devel' branch.
 
-CGI support in WEBrick is implemented strangely: it executes a new Ruby
-interpreter after forking (but before executing the actual gitweb.cgi).
-Thus I couldn't just neuter the "ENV.delete" method in the webrick.rb
-file as the child process would just restore the default behavior.
+However, one thing is inconvenient: there are config options per 
+submodule, but no single option to just turn the behavior back to before. 
+I know the reasoning behind showing dirty submodules, so I am fine with 
+that feature being opt-out, but for my real world scenario, it just slows 
+me down, so I _need_ to turn it off.
 
-Pushed out to the "webrick" branch of git://git.bogomips.org/git-svn
+To put my money where my mouth is (since I need it myself, I also pushed 
+it to 4msysgit.git's 'devel' branch):
 
-Eric Wong (3):
-      instaweb: fix WEBrick server support
-      instaweb: minimize moving parts for WEBrick
-      instaweb: add access+error logging for WEBrick
+-- snipsnap --
+From f7b1e98a0d850e5b1bc56a825fcfe5c87076dfa9 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 5 Aug 2010 10:49:55 +0200
+Subject: [PATCH] Add the 'diff.ignoreSubmodules' config setting
 
+When you have a lot of submodules checked out, the time penalty to check
+for dirty submodules can easily imply a multiplication of the total time
+by the factor 20. This makes the difference between almost instantaneous
+(< 2 seconds) and unbearably slow (> 50 seconds) here, since the disk
+caches are constantly overloaded.
+
+To this end, the submodule.*.ignore config option was introduced, but it
+is per-submodule.
+
+This commit introduces a global config setting to set a default
+(porcelain) value for the --ignore-submodules option, keeping the
+default at 'none'. It can be overridden by the submodule.*.ignore
+setting and by the --ignore-submodules option.
+
+Incidentally, this commit fixes an issue with the overriding logic:
+multiple --ignore-submodules options would not clear the previously
+set flags.
+
+While at it, fix a typo in the documentation for submodule.*.ignore.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Documentation/config.txt |    7 ++++++-
+ diff.c                   |    6 +++++-
+ submodule.c              |    4 ++++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 5594ce0..8384d12 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -832,6 +832,11 @@ diff.renames::
+ 	will enable basic rename detection.  If set to "copies" or
+ 	"copy", it will detect copies, as well.
+ 
++diff.ignoreSubmodules::
++	Sets the default value of --ignore-submodules. Note that this
++	affects only 'git diff' Porcelain, and not lower level 'diff'
++	commands such as 'git diff-files'.
++
+ diff.suppressBlankEmpty::
+ 	A boolean to inhibit the standard behavior of printing a space
+ 	before each empty output line. Defaults to false.
+@@ -1769,7 +1774,7 @@ submodule.<submodulename>.ignore::
+ 	submodules that have untracked files in their work tree as changed.
+ 	This setting overrides any setting made in .gitmodules for this submodule,
+ 	both settings can be overriden on the command line by using the
+-	"--ignore-submodule" option.
++	"--ignore-submodules" option.
+ 
+ tar.umask::
+ 	This variable can be used to restrict the permission bits of
+diff --git a/diff.c b/diff.c
+index 8206047..1ddfdfb 100644
+--- a/diff.c
++++ b/diff.c
+@@ -31,6 +31,7 @@ static const char *external_diff_cmd_cfg;
+ int diff_auto_refresh_index = 1;
+ static int diff_mnemonic_prefix;
+ static int diff_no_prefix;
++static struct diff_options default_diff_options;
+ 
+ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+@@ -107,6 +108,9 @@ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ 	if (!strcmp(var, "diff.wordregex"))
+ 		return git_config_string(&diff_word_regex_cfg, var, value);
+ 
++	if (!strcmp(var, "diff.ignoresubmodules"))
++		handle_ignore_submodules_arg(&default_diff_options, value);
++
+ 	return git_diff_basic_config(var, value, cb);
+ }
+ 
+@@ -2816,7 +2820,7 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
+ 
+ void diff_setup(struct diff_options *options)
+ {
+-	memset(options, 0, sizeof(*options));
++	memcpy(options, &default_diff_options, sizeof(*options));
+ 	memset(&diff_queued_diff, 0, sizeof(diff_queued_diff));
+ 
+ 	options->file = stdout;
+diff --git a/submodule.c b/submodule.c
+index 1bcb0e9..75f3368 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -110,6 +110,10 @@ int parse_submodule_config_option(const char *var, const char *value)
+ void handle_ignore_submodules_arg(struct diff_options *diffopt,
+ 				  const char *arg)
+ {
++	DIFF_OPT_CLR(diffopt, IGNORE_SUBMODULES);
++	DIFF_OPT_CLR(diffopt, IGNORE_UNTRACKED_IN_SUBMODULES);
++	DIFF_OPT_CLR(diffopt, IGNORE_DIRTY_SUBMODULES);
++
+ 	if (!strcmp(arg, "all"))
+ 		DIFF_OPT_SET(diffopt, IGNORE_SUBMODULES);
+ 	else if (!strcmp(arg, "untracked"))
 -- 
-Eric Wong
+1.7.2.1.2240.gde5dd
