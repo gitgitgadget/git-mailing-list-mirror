@@ -1,55 +1,60 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 2/2] test-lib: user-friendly alternatives to test [!] [-d|-f]
-Date: Thu,  5 Aug 2010 18:54:41 +0200
-Message-ID: <1281027281-21055-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqfwytnh0m.fsf@bauges.imag.fr>
+Subject: [PATCH v2] test-lib: user-friendly alternatives to test [!] [-d|-f]
+Date: Thu,  5 Aug 2010 19:03:51 +0200
+Message-ID: <1281027831-22739-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1281027281-21055-2-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 05 19:00:12 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 19:06:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh3ne-0008Fd-OU
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 19:00:11 +0200
+	id 1Oh3ti-0006Zn-9W
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 19:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933807Ab0HEQ7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 12:59:46 -0400
-Received: from imag.imag.fr ([129.88.30.1]:59458 "EHLO imag.imag.fr"
+	id S933434Ab0HERGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 13:06:18 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:51545 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933796Ab0HEQ7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 12:59:43 -0400
+	id S1750881Ab0HERGQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 13:06:16 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o75Gsrwc008951
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o75H20ZX000612
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Aug 2010 18:54:54 +0200 (CEST)
+	Thu, 5 Aug 2010 19:02:00 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1Oh3iX-00058G-Kq; Thu, 05 Aug 2010 18:54:53 +0200
+	id 1Oh3rX-0005EC-L9; Thu, 05 Aug 2010 19:04:11 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1Oh3iX-0005UG-Jc; Thu, 05 Aug 2010 18:54:53 +0200
+	id 1Oh3rX-0005vY-JM; Thu, 05 Aug 2010 19:04:11 +0200
 X-Mailer: git-send-email 1.7.2.1.30.g18195
-In-Reply-To: <vpqfwytnh0m.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 05 Aug 2010 18:54:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+In-Reply-To: <1281027281-21055-2-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Aug 2010 19:02:01 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o75H20ZX000612
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1281632522.00432@CUsuC+dYmYcdlN78j5b3ew
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152692>
 
 The helper functions are implemented, documented, and used in a few
 places to validate them, but not everywhere to avoid useless code churn.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
+Sooooory, the first version was plain broken (the tests did not even
+pass anymore), forget it. This should be better.
+
  t/README                      |    8 ++++++++
  t/t3404-rebase-interactive.sh |   18 +++++++++---------
  t/t3407-rebase-abort.sh       |    6 +++---
@@ -132,7 +137,7 @@ index bba220a..50787c2 100755
  '
  
 diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index 2999e78..a1615b8 100755
+index 2999e78..0ca81fe 100755
 --- a/t/t3407-rebase-abort.sh
 +++ b/t/t3407-rebase-abort.sh
 @@ -38,7 +38,7 @@ testrebase() {
@@ -140,7 +145,7 @@ index 2999e78..a1615b8 100755
  		git reset --hard pre-rebase &&
  		test_must_fail git rebase$type master &&
 -		test -d "$dotest" &&
-+		test_dir_must_not_exist "$dotest" &&
++		test_dir_must_exist "$dotest" &&
  		git rebase --abort &&
  		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
  		test ! -d "$dotest"
@@ -149,7 +154,7 @@ index 2999e78..a1615b8 100755
  		git reset --hard pre-rebase &&
  		test_must_fail git rebase$type master &&
 -		test -d "$dotest" &&
-+		test_dir_must_not_exist "$dotest" &&
++		test_dir_must_exist "$dotest" &&
  		test_must_fail git rebase --skip &&
  		test $(git rev-parse HEAD) = $(git rev-parse master) &&
  		git rebase --abort &&
@@ -158,12 +163,12 @@ index 2999e78..a1615b8 100755
  		git reset --hard pre-rebase &&
  		test_must_fail git rebase$type master &&
 -		test -d "$dotest" &&
-+		test_dir_must_not_exist "$dotest" &&
++		test_dir_must_exist "$dotest" &&
  		echo c > a &&
  		echo d >> a &&
  		git add a &&
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index e8f21d5..3701f2d 100644
+index e8f21d5..694bbe8 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
 @@ -541,6 +541,38 @@ test_external_without_stderr () {
@@ -174,31 +179,31 @@ index e8f21d5..3701f2d 100644
 +# The commands test the existence or non-existance of $1. $2 can be
 +# given to provide a more precise diagnosis.
 +test_file_must_exist () {
-+    if ! [ -f "$1" ]; then
-+	echo "file $1 doesn't exist. $*"
-+	false
-+    fi
++	if ! [ -f "$1" ]; then
++		echo "file $1 doesn't exist. $*"
++		false
++	fi
 +}
 +
 +test_file_must_not_exist () {
-+    if [ -f "$1" ]; then
-+	echo "file $1 exists. $*"
-+	false
-+    fi
++	if [ -f "$1" ]; then
++		echo "file $1 exists. $*"
++		false
++	fi
 +}
 +
 +test_dir_must_exist () {
-+    if ! [ -d "$1" ]; then
-+	echo "directory $1 doesn't exist. $*"
-+	false
-+    fi
++	if ! [ -d "$1" ]; then
++		echo "directory $1 doesn't exist. $*"
++		false
++	fi
 +}
 +
-+test_file_must_not_exist () {
-+    if [ -d "$1" ]; then
-+	echo "directory $1 exists. $*"
-+	false
-+    fi
++test_dir_must_not_exist () {
++	if [ -d "$1" ]; then
++		echo "directory $1 exists. $*"
++		false
++	fi
 +}
 +
 +
