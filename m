@@ -1,126 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG/TEST] show breakage of status for copy+conflict
-Date: Thu, 5 Aug 2010 07:55:13 -0500
-Message-ID: <20100805125513.GB23334@burratino>
-References: <1280960393-17256-1-git-send-email-wmpalmer@gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 07/12] ll-merge: make flag easier to populate
+Date: Thu, 5 Aug 2010 15:05:31 +0200
+Message-ID: <AANLkTinz2hbbYcq=cQ=wmkK+Kg5W6Xf4r8yjYp1211ZU@mail.gmail.com>
+References: <cover.1278093311.git.eyvind.bernhardsen@gmail.com>
+	<20100804031935.GA19699@burratino>
+	<20100804032338.GF19699@burratino>
+	<7vocdifdrk.fsf@alter.siamese.dyndns.org>
+	<20100805110822.GB13779@burratino>
+	<20100805111738.GI13779@burratino>
+	<AANLkTi=9GwZgiQHpBLN_L14==Pir0Gs=DosZHF4wg9zi@mail.gmail.com>
+	<20100805121658.GA23334@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 14:56:47 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Finn Arne Gangstad <finnag@pvv.org>,
+	"git@vger.kernel.org List" <git@vger.kernel.org>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 15:05:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh005-0004d4-E4
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 14:56:45 +0200
+	id 1Oh08h-0004n6-O8
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 15:05:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760317Ab0HEM4f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 08:56:35 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52135 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760276Ab0HEM4d (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 08:56:33 -0400
-Received: by iwn33 with SMTP id 33so176177iwn.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 05:56:32 -0700 (PDT)
+	id S1759232Ab0HENFe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 09:05:34 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:48342 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754219Ab0HENFc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 09:05:32 -0400
+Received: by yxg6 with SMTP id 6so2475789yxg.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 06:05:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=sBmCKS9WzzsIBpnTeJg55kn9ewnUT+hJoNnbTyqLbJk=;
-        b=mZ9oAy3DuaNVYiclLkrBTE7iMpWrBSr0fUfSDCKA7S6Mqys/nEXgHnTBziy6zSBDwK
-         d1ZPhfp1ASU2JfPpW4KtsCKjtf72ENiVnNL97BVVMlm9etq6BYM15YOUBP77qiOFRcAy
-         f1gjdLrHTpl0THWn51lid2MPdrPJT/jMoEuiI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gxsVn+Gt4MCJOClezfNppakqfs3L0HEPm9lhvQdoGT8=;
+        b=wxMG+5eI3cHMTxJ9lqLKgjo3gwytNKMi/lg3OTzbkysDO6WgYxKGQmc8BJt9ARVd7G
+         OmYGcrwr5mAMo0D1fbhyjRat5LVMvhdzR3mCPGxN5czxBDUlzGBm7uFZF1mTta28egM0
+         Ode6WV95IasUiXB0s5nZkVXkUkeuoNpo8prps=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=JiewyRHIfDLahS32uud8Brk5Ck+EYMQ8vkT9kgFRR3cQZYoRO1O3GWI99t6GfG3AEM
-         T6IJWBqUoFpkzL2KJUh0ESZKxh09gjOBk03bqb/QrQgxO+mD3Gtih7JMDV+0WUwuQlii
-         KXZPC2JMyqTCCmEg+f5Yjm9BvAoZmewCCScjc=
-Received: by 10.231.59.13 with SMTP id j13mr12201046ibh.77.1281012992613;
-        Thu, 05 Aug 2010 05:56:32 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id n20sm117835ibe.11.2010.08.05.05.56.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 05:56:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1280960393-17256-1-git-send-email-wmpalmer@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=iPr+WiCMHhfACq50JJITT+y/5m1TDjvSwHlBJxtpGX7R3xn4E96sVB1Vbh0hiZF0f8
+         9MjLKLqRoQFiKHjaGRVNa4LEB51pv/Ar6MJL+epz6eOr5IIb0FjrKtBNzsF7V+HEJ57X
+         SkZc6KzQbTlliAQry6dTVU8JjQ5gbBe+4Wcow=
+Received: by 10.100.96.14 with SMTP id t14mr11857566anb.155.1281013531575; 
+	Thu, 05 Aug 2010 06:05:31 -0700 (PDT)
+Received: by 10.231.146.131 with HTTP; Thu, 5 Aug 2010 06:05:31 -0700 (PDT)
+In-Reply-To: <20100805121658.GA23334@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152654>
 
-Will Palmer wrote:
+On Thu, Aug 5, 2010 at 14:16, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> Bert Wesarg wrote:
+>> On Thu, Aug 5, 2010 at 13:17, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+>
+>>> +static inline int ll_opt_favor(int flag)
+>>> +{
+>>> + =C2=A0 =C2=A0 =C2=A0 return (flag & LL_OPT_FAVOR_MASK) >> LL_OPT_=
+=46AVOR_SHIFT;
+>>> +}
+>>> +
+>>> +static inline int create_ll_flag(int favor)
+>>> +{
+>>> + =C2=A0 =C2=A0 =C2=A0 return ((favor << LL_OPT_FAVOR_SHIFT) & LL_O=
+PT_FAVOR_MASK);
+>>> +}
+>>> +
+> [...]
+>> Or flavor_to_ll_flag()
+>> and ll_flag_to_flavor().
+>
+> Sounds reasonable. =C2=A0(Well, except this is =E2=80=9Cfavor=E2=80=9D=
+ as in =E2=80=9Cfavor our
+> side=E2=80=9D or =E2=80=9Cfavor their side=E2=80=9D rather than =E2=80=
+=9Cflavor of the month=E2=80=9D.) =C2=A0Patch?
 
-> I noticed during a rebase that a conflicted file was not showing up
-> under the "both changed:" line, and was instead showing up as the
-> original name of a rename.
-> This was because the file had conflicts, and so was not in the index
-> (or at least, not in stage 0, if I have my terminology correct), whil=
-e
-> another, very similar (both based on the same template) file had been
-> added as part of the same change on my side.
+Sorry for this typo. Do you really want a squash patch for this renamin=
+g?
 
-Hmm, so:
+Bert
 
-   3
-  /
- 1 --- 2
-
-
-1: file A with content A
-
-2: file A with content A',
-        B with content A
-
-3: file A with content A''
-
-where the changes A->A' and A->A'' conflict.
-
-And behind the scenes:
-
-There is only one merge-base, so merge_recursive has nothing to
-contribute.  It=E2=80=99s all merge_trees()=E2=80=99s bag;
-
-merge_trees() does unpack_trees() before anything else, which could
-care less about rename detection;
-
-Then it tries get_renames(), which figures out what happened;
-
-Then process_renames(), which realizes there is nothing to do to fix
-this up and reports CONFLICT (content);
-
-And "Automatic merge failed", without any more advice to describe what
-happened.
-
-Caller tries "git status".
-
-$ git ls-files --stage --abbrev
-100644 aed72d7 1        A
-100644 0abac9e 2        A
-100644 a5f0d50 3        A
-100644 aed72d7 0        B
-$ git diff-index --cached HEAD --abbrev
-:100644 000000 aed72d7... 0000000... U  A
-:000000 100644 0000000... aed72d7... A  B
-$ git diff-index -M --cached HEAD --abbrev
-:100644 100644 aed72d7... aed72d7... R100       A       B
-
-"git status -s" prints the right output.  So wt_status_collect() seems
-to have collected the right information somehow.
-
-> I don't really have the time right now to look for exactly what cause=
-s
-> this bug, so I'm hoping that posting a demonstration of it will get
-> someone else to fix it for me.
-
-No ideas at the moment; sorry.
-
-Jonathan
+>
