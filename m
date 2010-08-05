@@ -1,132 +1,70 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v2 2/3] stash: Allow git stash branch to process commits 
-	that look like stashes but are not stash references.
-Date: Thu, 5 Aug 2010 17:50:12 +1000
-Message-ID: <AANLkTi=FbF3X83uLjBDoCYUCuig3udTzZCXuE=1_w-Ld@mail.gmail.com>
-References: <1280831775-30759-1-git-send-email-jon.seymour@gmail.com>
-	<1280831775-30759-3-git-send-email-jon.seymour@gmail.com>
-	<7vwrs6djie.fsf@alter.siamese.dyndns.org>
-	<AANLkTikA0_Og4bzB8AHo3s2cLCvf6pc9=wC4w_8emuxU@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: What's cooking in git.git (Aug 2010, #01; Wed, 4)
+Date: Thu, 05 Aug 2010 10:20:06 +0200
+Message-ID: <vpqmxt14gjt.fsf@bauges.imag.fr>
+References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 09:50:23 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 10:20:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgvDZ-00078i-IA
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 09:50:21 +0200
+	id 1Ogvgb-0003X3-VM
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 10:20:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759849Ab0HEHuQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 03:50:16 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:64929 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758296Ab0HEHuO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 03:50:14 -0400
-Received: by qwh6 with SMTP id 6so3702177qwh.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 00:50:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QmzFrrM7femeHpK2WvgjPkaCGp/y11Y0RDSgZX8jx/A=;
-        b=sj9rZBq55wjHVH1VulAKHfL+luLQFOgJseSYxnlFGjcZPj7XRSaeH5T2SSnfFSl77i
-         5/nWQwan6m1aSXu5SaX0O8+THmWcjJC1mt1JFw5Chd7CAIXahKyoDMIL+H+0FEE2WlXW
-         L/+XKW0/RBrqyBpSFtUX0SnYIVpy/h2PVSf5g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uxVlOjwME8Qb0VY/oWtg44aIywDw1iNlehY8DjDbnIycI8D8JeOwqmcnoeErlxXDCZ
-         jA8Wh2n7ha56N6Kd0lZJpWhJ8XehEp7oBF6ASrCLIFFbDuWcg9N7xCkuoRsIkWmwlDn/
-         GzXAFQxfL5ndjNeq7BzEMxg1CUMM06uo9oQvE=
-Received: by 10.229.131.160 with SMTP id x32mr3116185qcs.203.1280994612998; 
-	Thu, 05 Aug 2010 00:50:12 -0700 (PDT)
-Received: by 10.229.222.13 with HTTP; Thu, 5 Aug 2010 00:50:12 -0700 (PDT)
-In-Reply-To: <AANLkTikA0_Og4bzB8AHo3s2cLCvf6pc9=wC4w_8emuxU@mail.gmail.com>
+	id S1759920Ab0HEIUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 04:20:17 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:49532 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754858Ab0HEIUO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 04:20:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o758HvhM013672
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Aug 2010 10:17:57 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OgvgM-0005UU-T6; Thu, 05 Aug 2010 10:20:06 +0200
+In-Reply-To: <7v62zqf23s.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 04 Aug 2010 15\:24\:23 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Aug 2010 10:17:57 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o758HvhM013672
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1281601078.08035@f1RqS650589piuAAssFuNA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152620>
 
-One question about test patches. Are you ok with test_expect_failure
-tests that document the expected failure of a feature yet to be
-developed, followed by the feature, followed by the patch that makes
-the tests into test_expect_success tests, or would you prefer to see
-the pre- and post- test patches rolled into a single test that is
-delivered after the feature patch?
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Thu, Aug 5, 2010 at 3:23 PM, Jon Seymour <jon.seymour@gmail.com> wro=
-te:
-> Junio,
->
-> Thanks for the feedback. I'll rework along the lines you suggest. If
-> it makes sense to make the other stash commands tolerant of non-stash
-> entry references I'll add tests, support and documentation for that.
->
-> jon.
->
-> On Thu, August 2010 at 9:51 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->> Jon =C2=A0Seymour <jon.seymour@gmail.com> writes:
->>
->>> This patch allows git stash branch to work with stash-like commits =
-created by git stash create.
->>>
->>> Two changes were required:
->>>
->>> * relax the pre-condition so that a stash stack is required if and =
-only if a stash argument is not specified
->>> * don't attempt to drop a stash argument that doesn't look like a s=
-tash reference.
->>>
->>>
->>> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
->>
->> Please wrap very long lines.
->>
->>> diff --git a/git-stash.sh b/git-stash.sh
->>> index 1d95447..432ddae 100755
->>> --- a/git-stash.sh
->>> +++ b/git-stash.sh
->>> @@ -225,6 +225,12 @@ show_stash () {
->>> =C2=A0 =C2=A0 =C2=A0 git diff $flags $b_commit $w_commit
->>> =C2=A0}
->>>
->>> +if_stash_ref() {
->>> + =C2=A0 =C2=A0 ref=3D"$1"
->>> + =C2=A0 =C2=A0 shift
->>> + =C2=A0 =C2=A0 test "${ref#stash}" =3D "${ref}" -a "${ref#$ref_sta=
-sh}" =3D "${ref}" || "$@"
->>> +}
->>
->> The interface to this function looks a rather bad taste to me; would=
-n't it
->> look more natural if the callers can say:
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0if stash_ref $it
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0do this
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
->>
->> Your criteria used here is that the given parameter does not begin w=
-ith
->> "stash" nor "refs/stash". =C2=A0If it begins with either of these tw=
-o strings,
->> the "test" fails and "$@" is run. =C2=A0Wouldn't this produce a fals=
-e hit if
->> you kept a handcrafted stash-looking commit with a tag "stash-42" or
->> something?
->>
->> It may make more sense to give "stash drop" an option to be silent i=
-f
->> the given parameter is not on the list to begin with, perhaps?
->>
->>
->
+> * mm/shortopt-detached (2010-07-30) 5 commits
+>  - log: parse detached option for --glob
+>  - log: parse detached options like git log --grep foo
+>  - diff: parse detached options --stat-width n, --stat-name-width n
+>  - diff: split off a function for --stat-* option parsing
+>  - diff: parse detached options like -S foo
+
+I'm pretty sure I had send a new version of this one, but judging from
+the mailing list's archive, I guess I mis-sent it and it never went
+through ;-).
+
+Here's a new one, with very minor revisions :
+
+* diff_long_opt renamed to parse_long_opt
+
+* Use the same wording as api-parse-options.txt : separate/sticked
+  forms (essentially in commit messages and comments).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
