@@ -1,120 +1,83 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH v2 2/3] stash: Allow git stash branch to process commits 
-	that look like stashes but are not stash references.
-Date: Thu, 5 Aug 2010 15:23:19 +1000
-Message-ID: <AANLkTikA0_Og4bzB8AHo3s2cLCvf6pc9=wC4w_8emuxU@mail.gmail.com>
-References: <1280831775-30759-1-git-send-email-jon.seymour@gmail.com>
-	<1280831775-30759-3-git-send-email-jon.seymour@gmail.com>
-	<7vwrs6djie.fsf@alter.siamese.dyndns.org>
+From: Ivan Kanis <expire-by-2010-08-10@kanis.fr>
+Subject: Re: Git server eats all memory
+Date: Thu, 05 Aug 2010 08:33:02 +0200
+Message-ID: <87ocdhlgbl.fsf@kanis.fr>
+References: <wesfwyupgrg.fsf@kanis.fr>
+	<AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ams@toroid.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 07:23:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 08:33:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgsvO-0003I3-7T
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 07:23:26 +0200
+	id 1Ogu0y-0008BO-Rh
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 08:33:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756442Ab0HEFXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 01:23:21 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:45845 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751719Ab0HEFXU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 01:23:20 -0400
-Received: by qyk7 with SMTP id 7so2428837qyk.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 22:23:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SgT1hc+BNw4OsN68slHy8S0IrvA4cJIHbTPj4dmLV3g=;
-        b=SbQjdMPaqlnkmpAXmTWvNjTcGalscaAgp6jqkdZxnJ4WngH4ew+Jvh5+uIIFJu574M
-         PkG0vXDfxo2FhitvmHoeMf5tyrg5YsX1MfV+8GfDpxf0RRksvXr3xFKA5AVMVEx26EZd
-         Tqspsj2YcU6EEuNpfqtYAGDd+jK2OhE/lLbzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AazG/JL0+q4k9q8X96eH6wH86x8mU08/EZ/aG6wJCeheMlCNzMyUTAE+yjNBHu/Hmz
-         8rMbzHnjaBX74mhVGra6/LEDDvwc6khuu1VzBWBzu9pxXjGa/0As5j67EY2XLhSukfIz
-         fLTTLCEZ4nSoSCcCOzheXIiTAAk9lQOxtOYYQ=
-Received: by 10.229.127.148 with SMTP id g20mr2986334qcs.221.1280985799409; 
-	Wed, 04 Aug 2010 22:23:19 -0700 (PDT)
-Received: by 10.229.222.13 with HTTP; Wed, 4 Aug 2010 22:23:19 -0700 (PDT)
-In-Reply-To: <7vwrs6djie.fsf@alter.siamese.dyndns.org>
+	id S1759702Ab0HEGdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 02:33:09 -0400
+Received: from kanis.fr ([75.127.73.245]:1618 "EHLO kanis.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758286Ab0HEGdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 02:33:07 -0400
+Received: from [89.83.137.164] (helo=tao)
+	by kanis.fr with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <expire-by-2010-08-10@kanis.fr>)
+	id 1Ogu0m-0007G3-Na; Thu, 05 Aug 2010 02:33:05 -0400
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAAB5QTFRF
+ IBkXUxMTOCwoTC4qcUY8iFxQmmper31txpaJ/v/8aKZ1oAAAAcVJREFUOMt100tu2zAQAFDCXnUZ
+ oAcIqG68LZULVLQBbwuSiffm6AIRRyeotAySJoVu2+FPpJWWC3/4NKOZocSW/yxWfnJ2+Bdwzhj7
+ 8gleWVy7DXC2rkMNr2V/zRbghXIwthf3VbIA9Ffc71vZCSFyCEsBggtNS8ludwvfmhYA0Vn9o4DP
+ zMWxR7+cPWzAYFzwM0ModtdmcDbDS6i/hT7L+RZof5yCXGrYe5jn2YO6BYMjgY+51tCIAqHgBLwR
+ pwLnGuRjAKyBJkuN4yd4U92uCY1vUr2D/c5b8DuxyQwfOHUeaLqDJhnkkuGXbB56h2C1IVBdgncc
+ bBi6feroa9B6jUDojnQPQKupbyXyeeCE1oT7Oqrt+SnfY3mkiyGA/3AmD3H5g32CcBx6hY8pRkwJ
+ 9PpcjRGobUfprFnhAa1vepwcgMOhwG+pdSgKHFU9HAvoAH6XUl7lDUCCq5Qb6GMbVm3Aj++qDYCt
+ wdBc/YHgOFCmS3mjDMRcSE2qY4E3Q3PVIQRQmeodNH4QEbRUFZzW+VotzwX4yTcRTySOML1qjcE5
+ hTirVqDHkMAP0PjAywp3d18JZtqzvr9zDYD+GaSKtE6Zlr/DLPNFmOcvBAAAAABJRU5ErkJggg==
+In-Reply-To: <AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
+	(Avery Pennarun's message of "Wed, 4 Aug 2010 16:12:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152616>
 
-Junio,
+Avery Pennarun <apenwarr@gmail.com> wrote:
 
-Thanks for the feedback. I'll rework along the lines you suggest. If
-it makes sense to make the other stash commands tolerant of non-stash
-entry references I'll add tests, support and documentation for that.
+> On Wed, Aug 4, 2010 at 10:57 AM, Ivan Kanis
 
-jon.
+>> I am having problem with memory ballooning when receiving object
+>> from the server. The amount of memory used on the server seems to be same
+>> size as the object received.
 
-On Thu, August 2010 at 9:51 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Jon  Seymour <jon.seymour@gmail.com> writes:
->
->> This patch allows git stash branch to work with stash-like commits c=
-reated by git stash create.
->>
->> Two changes were required:
->>
->> * relax the pre-condition so that a stash stack is required if and o=
-nly if a stash argument is not specified
->> * don't attempt to drop a stash argument that doesn't look like a st=
-ash reference.
->>
->>
->> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
->
-> Please wrap very long lines.
->
->> diff --git a/git-stash.sh b/git-stash.sh
->> index 1d95447..432ddae 100755
->> --- a/git-stash.sh
->> +++ b/git-stash.sh
->> @@ -225,6 +225,12 @@ show_stash () {
->> =C2=A0 =C2=A0 =C2=A0 git diff $flags $b_commit $w_commit
->> =C2=A0}
->>
->> +if_stash_ref() {
->> + =C2=A0 =C2=A0 ref=3D"$1"
->> + =C2=A0 =C2=A0 shift
->> + =C2=A0 =C2=A0 test "${ref#stash}" =3D "${ref}" -a "${ref#$ref_stas=
-h}" =3D "${ref}" || "$@"
->> +}
->
-> The interface to this function looks a rather bad taste to me; wouldn=
-'t it
-> look more natural if the callers can say:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if stash_ref $it
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0do this
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
->
-> Your criteria used here is that the given parameter does not begin wi=
-th
-> "stash" nor "refs/stash". =C2=A0If it begins with either of these two=
- strings,
-> the "test" fails and "$@" is run. =C2=A0Wouldn't this produce a false=
- hit if
-> you kept a handcrafted stash-looking commit with a tag "stash-42" or
-> something?
->
-> It may make more sense to give "stash drop" an option to be silent if
-> the given parameter is not on the list to begin with, perhaps?
->
->
+> Git works fine with huge repositories; it does not work fine at all
+> with very large individual objects in a repository, and it does what
+> you're experiencing.
+
+Hello Avery,
+
+The largest object is 120M. I didn't describe the problem very
+accurately. The memory consumed is the *sum* of the objects
+downloaded. 
+
+For example, a repository of 4G consumes 4G of memory at the end of the
+receiving objects phase. What is very interesting is the total of
+objects downloaded is the same as the memory consumed. That makes me
+think there is a link somewhere. Surely it shouldn't consume that much
+memory.
+
+I am ready to do whatever to diagnose the problem. I know C pretty well
+and am ready to look into it but I am not sure where to start.
+
+Take care,
+-- 
+Ivan Kanis
+http://kanis.fr
+
+Seriousness is the only refuge of the shallow.
+    -- Oscar Wilde 
