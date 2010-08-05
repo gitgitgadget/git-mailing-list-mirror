@@ -1,73 +1,107 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Massive repository corruptions
-Date: Thu, 5 Aug 2010 22:42:07 +0200
-Message-ID: <20100805204206.GD2630@nibiru.local>
-References: <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local> <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com> <20100713102245.GE29392@nibiru.local> <AANLkTimYeKr0asVE9mo8VcQEp5kdC18Wk5ykY9OFwixN@mail.gmail.com> <20100714132224.GF29392@nibiru.local> <20100805173156.GB2630@nibiru.local> <AANLkTikFypx3e-=+8J2925A++_jY-aJCDYHHw6dry5s6@mail.gmail.com> <20100805201026.GC2630@nibiru.local> <AANLkTi=5HVQ2kSEt7O+OXdMRtvy8amufpFKgRpj2VLEy@mail.gmail.com>
-Reply-To: weigelt@metux.de
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: jk/tag-contains: stalled
+Date: Thu, 05 Aug 2010 13:53:05 -0700
+Message-ID: <7vd3twdbny.fsf@alter.siamese.dyndns.org>
+References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
+ <20100805001629.GC2901@thunk.org> <7vsk2tdnv5.fsf@alter.siamese.dyndns.org>
+ <7vhbj9dm6h.fsf@alter.siamese.dyndns.org> <20100805173635.GA15760@sigill>
+ <7vy6ckdhhu.fsf@alter.siamese.dyndns.org> <20100805190653.GA2942@sigill>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 05 22:49:51 2010
+Cc: Ted Ts'o <tytso@mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 05 22:53:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh7Ns-0007em-HS
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 22:49:48 +0200
+	id 1Oh7Rb-0000xr-2d
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 22:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933030Ab0HEUtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 16:49:39 -0400
-Received: from caprica.metux.de ([82.165.128.25]:52562 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932849Ab0HEUth (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 16:49:37 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o75Kn1DO015812
-	for <git@vger.kernel.org>; Thu, 5 Aug 2010 22:49:02 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o75KmjIN015804
-	for git@vger.kernel.org; Thu, 5 Aug 2010 22:48:45 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o75Kg7OU003063
-	for git@vger.kernel.org; Thu, 5 Aug 2010 22:42:07 +0200
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=5HVQ2kSEt7O+OXdMRtvy8amufpFKgRpj2VLEy@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S934177Ab0HEUxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 16:53:19 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39276 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934167Ab0HEUxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 16:53:17 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E71ACAE0B;
+	Thu,  5 Aug 2010 16:53:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=vsyVRzAHsV99VfR2GSeSthtUCUM=; b=HDjz+m
+	XdAslF1oPi5nhnTCWIXKNCz+AAr3ye+LAX7M1nSrKeD/Dqh1y8LpBBZLtDy8YCp8
+	ubZDmVMbtzeWlhOBPVrTpJqxY8k2cxAqpC+PHipUNdHTQXm2CxBNOYZfH/0Pndij
+	6n0Z76kdRQ5uby8V8CZfip+PmHJ5schCAWQ1Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Qb2HZo9yNcihpFA4Ftzv/dgE/ViOPBw9
+	vMtjflfruvU6X5yNt5/MeVi7KGV0vF7Twlt2Uc15IH9hSNKHjXG+KAdhVTTlkiyJ
+	Odkwefk1PrHSE4zuS62139hVHHt7l5Tl9WEeiUytyrcAxue6NXyzu1Zd91K2+ELY
+	sPqxJSk6nas=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3AABACAE0A;
+	Thu,  5 Aug 2010 16:53:11 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CB11CAE09; Thu,  5 Aug
+ 2010 16:53:07 -0400 (EDT)
+In-Reply-To: <20100805190653.GA2942@sigill> (Jeff King's message of "Thu\, 5
+ Aug 2010 15\:06\:54 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 755F36A4-A0D3-11DF-91FB-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152714>
 
-* Jussi Sirpoma <jussi.sirpoma@sks.fi> wrote:
+Jeff King <peff@peff.net> writes:
 
-> Sorry not really. Maybe compiling kernel with lots of jobs would reveal some
-> problems?
+> Oops, thanks, I had forgotten that the marks needed to be addressed.
+> Should I be introducing new flags? We have 27 flag bits, but I would
+> hate to waste 2 of them.
 
-okay, I'll have a try :)
+In the longer term it would be not just nice but necessary for us to come
+up with a scheme where different codepaths can "allocate bits from object
+flags", without having to fear stepping on each other's toes.  Some
+possible approaches off the top of my head are:
 
-BTW: I'm currently recreating one of the broken repos (mozilla,
-which might be large enough for stresstest ;-)) by adding and
-fetching the remotes step by step. Reposity size now about 250M
-(reduced the packsize to 32M, since this already helped on some
-other repos) - yet no breaks occoured.
+ - Extend "struct object" by another uint64_t to give it 64 more bits?
+   That would make the minimum object size from 24 bytes to 32 bytes and
+   during a pack-object session we would keep a lot of objects (not just
+   commits but trees and blobs) in core, so we probably would not want to
+   do this.
 
-Let's see where it goes ...
+ - Extend "struct commit" by another uint32_t?  Currently a "struct
+   commit" is 72 bytes on x86_64 (there is an unfortunate 4-byte padding
+   gap between indegree and date), and 48 bytes on i386 and this would
+   enlarge the latter to 52 bytes (this comes free on 64-bit archs).
 
+   As we need a lot more bits on commits than on other objects
+   (e.g. left-right do not need to be placed on trees or blobs), this
+   approach might be more space efficient.
 
-cu
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
+ - Use one bit in the current flags section to signal "extended flag bits
+   present on this object", and have a separate hashtable for minority
+   objects that have that bit set?  This would work only for flag bits
+   that are rarely used (otherwise the secondary hashtable will be full of
+   objects and per-object overhead will kill us).
 
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+ - Migrate some users of flag bits that only mark small miniroty of
+   commits to use dedicated hashtable to free their bits [*1*].  I don't
+   know if there are candidates for doing this offhand.  Just uttering it
+   as an idea.
+
+Independent of this issue, I suspect that we might want to fold
+object.used into the general set of flags---it is only used by fsck as far
+as I remember.
+
+[Footnote]
+
+*1* Also we would want to do something similar to the commit.util field so
+that more than one utility libraries can attach their own stuff to each
+commit.  It _might_ make sense to instead get rid of commit.util and
+migrate the users to a separate "one object hash per one type of info",
+though.  In any case it is a separate topic.
