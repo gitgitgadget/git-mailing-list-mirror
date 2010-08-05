@@ -1,163 +1,118 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v4 18/18] Document line history browser
-Date: Fri,  6 Aug 2010 00:11:57 +0800
-Message-ID: <1281024717-7855-19-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v4 13/18] Make graph_next_line external to other part of git
+Date: Fri,  6 Aug 2010 00:11:52 +0800
+Message-ID: <1281024717-7855-14-git-send-email-struggleyb.nku@gmail.com>
 References: <1281024717-7855-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: trast@student.ethz.ch, Jens.Lehmann@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 05 18:14:26 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 18:14:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh35L-0001XF-J5
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 18:14:23 +0200
+	id 1Oh35J-0001XF-1T
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 18:14:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760088Ab0HEQNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 12:13:46 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:55715 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756360Ab0HEQNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 12:13:43 -0400
-Received: by pzk26 with SMTP id 26so2533960pzk.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 09:13:43 -0700 (PDT)
+	id S933630Ab0HEQN2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 12:13:28 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:59045 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933595Ab0HEQNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 12:13:23 -0400
+Received: by mail-px0-f174.google.com with SMTP id 14so2531057pxi.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 09:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=iBR2PF7QRmE/t/PtqWhr+2IJFgsOKJf5OY3tWzqV5Vg=;
-        b=kZOmxFHJEuJ+djowJFsf/UP0lcRSgIWvRwr4i6awL3ddXatwoui4Us9T1Z9i82WoTK
-         n+pItmK+YQ09PBn2YGKE3oOdaTXSibXlEA67FhsYyLNgDrX7fwLkgHIYhENDXR3j3MzZ
-         ZD3NKT475Ax2j0FM1t+e1Y5HjLXqSw8N6pPtU=
+        bh=0WFRTHBy38IYhbnSr8pc+XtL4qntS7ti6nM/YuOOyUE=;
+        b=DpHu/X6mtgQ0vd8lzOachm11MbYPLTp8R/c/n6OEAXmsJKZy3zuc9gJDhO0nTCV6+w
+         wfNIbxR1BXzn128vQ/OqpDYtWDAi9JoSy/M6D8oTHSAv3CtfQYkkDWTuHY1Ipo4f7cRl
+         Lueq/aikLrDh8BMAgyaAwTd8wG5bB17aSXry8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nM3vWKPwAkORDdxWm7id7D+3dhUv98lhJoVezep2tmzdJUHiqWgQNglaok6v/VJgA4
-         4ZktnK3IbhXnTBSNYRbAcoMtNPQsRQeghKNiZs8UwWdNPkSOBbJSbR/4er2gWqgW6efG
-         bBkwdoyXR7jcLdXDeW4ftQ7fX6uvCJoWFH6qI=
-Received: by 10.142.103.14 with SMTP id a14mr28488wfc.245.1281024823165;
-        Thu, 05 Aug 2010 09:13:43 -0700 (PDT)
+        b=qLnKoD1hhG5T/WtDJ/mhHGOEsNfBticSS2U3+u+qDmBTiHdRbn/6gP5nlmZDKpoOk3
+         ++lL6JT8hmGpIkJVW5dUEGsl9D+3R9pfoIYyvR9gAf4mQlOlSifgJ8DZE6DLJyfuKx9b
+         VV1Dd+4I3qw6jYIkif5qNlHq7Fs0O7Te3FfPE=
+Received: by 10.142.134.12 with SMTP id h12mr5070077wfd.185.1281024802954;
+        Thu, 05 Aug 2010 09:13:22 -0700 (PDT)
 Received: from localhost.localdomain ([222.35.120.192])
-        by mx.google.com with ESMTPS id w8sm343653wfd.19.2010.08.05.09.13.39
+        by mx.google.com with ESMTPS id w8sm343653wfd.19.2010.08.05.09.13.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 09:13:42 -0700 (PDT)
+        Thu, 05 Aug 2010 09:13:22 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.20.g388bbb
 In-Reply-To: <1281024717-7855-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152679>
 
-Both 'git log' and 'git blame' support the same format
-of '-L' arguments, so we refactor its description into
-a new file.
-
-And it is possible to use more than one '-L' option
-for each path.
+We will use it in line level log output.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- Documentation/blame-options.txt     |   19 +------------------
- Documentation/git-log.txt           |   15 +++++++++++++++
- Documentation/line-range-format.txt |   18 ++++++++++++++++++
- 3 files changed, 34 insertions(+), 18 deletions(-)
- create mode 100644 Documentation/line-range-format.txt
+ graph.c |   14 +-------------
+ graph.h |   10 ++++++++++
+ 2 files changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 16e3c68..3526835 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -13,24 +13,7 @@
- 	Annotate only the given line range.  <start> and <end> can take
- 	one of these forms:
- 
--	- number
--+
--If <start> or <end> is a number, it specifies an
--absolute line number (lines count from 1).
--+
+diff --git a/graph.c b/graph.c
+index ac7c605..824e055 100644
+--- a/graph.c
++++ b/graph.c
+@@ -4,21 +4,9 @@
+ #include "graph.h"
+ #include "diff.h"
+ #include "revision.h"
 -
--- /regex/
--+
--This form will use the first line matching the given
--POSIX regex.  If <end> is a regex, it will search
--starting at the line given by <start>.
--+
+ /* Internal API */
+ 
+ /*
+- * Output the next line for a graph.
+- * This formats the next graph line into the specified strbuf.  It is not
+- * terminated with a newline.
+- *
+- * Returns 1 if the line includes the current commit, and 0 otherwise.
+- * graph_next_line() will return 1 exactly once for each time
+- * graph_update() is called.
+- */
+-static int graph_next_line(struct git_graph *graph, struct strbuf *sb);
 -
--- +offset or -offset
--+
--This is only valid for <end> and will specify a number
--of lines before or after the line given by <start>.
--+
-+include::line-range-format.txt[]
+-/*
+  * Output a padding line in the graph.
+  * This is similar to graph_next_line().  However, it is guaranteed to
+  * never print the current commit line.  Instead, if the commit line is
+@@ -1143,7 +1131,7 @@ static void graph_output_collapsing_line(struct git_graph *graph, struct strbuf
+ 		graph_update_state(graph, GRAPH_PADDING);
+ }
  
- -l::
- 	Show long rev (Default: off).
-diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-index e970664..6f712e7 100644
---- a/Documentation/git-log.txt
-+++ b/Documentation/git-log.txt
-@@ -9,6 +9,7 @@ git-log - Show commit logs
- SYNOPSIS
- --------
- 'git log' [<options>] [<since>..<until>] [[\--] <path>...]
-+'git log' [<options>] -L n,m <path>
+-static int graph_next_line(struct git_graph *graph, struct strbuf *sb)
++int graph_next_line(struct git_graph *graph, struct strbuf *sb)
+ {
+ 	switch (graph->state) {
+ 	case GRAPH_PADDING:
+diff --git a/graph.h b/graph.h
+index b82ae87..5b3f059 100644
+--- a/graph.h
++++ b/graph.h
+@@ -32,6 +32,16 @@ void graph_update(struct git_graph *graph, struct commit *commit);
+  */
+ int graph_is_commit_finished(struct git_graph const *graph);
  
- DESCRIPTION
- -----------
-@@ -19,6 +20,9 @@ command to control what is shown and how, and options applicable to
- the 'git diff-*' commands to control how the changes
- each commit introduces are shown.
++/*
++ * Output the next line for a graph.
++ * This formats the next graph line into the specified strbuf.  It is not
++ * terminated with a newline.
++ *
++ * Returns 1 if the line includes the current commit, and 0 otherwise.
++ * graph_next_line() will return 1 exactly once for each time
++ * graph_update() is called.
++ */
++int graph_next_line(struct git_graph *graph, struct strbuf *sb);
  
-+With '-L' option, the command will help to trace the history of user specified
-+line ranges. It can trace multiple ranges coming from multiple files.
-+
- 
- OPTIONS
- -------
-@@ -63,6 +67,17 @@ OPTIONS
- 	Note that only message is considered, if also a diff is shown
- 	its size is not included.
- 
-+-L <start>,<end>::
-+	The line range.  <start> and <end> can take one of these forms:
-+
-+include::line-range-format.txt[]
-+You can also specify this option more than once before each path.
-+
-+
-+--full-line-diff::
-+	Always print the interesting range even if the current commit
-+	does not change any line of the range.
-+
- [\--] <path>...::
- 	Show only commits that affect any of the specified paths. To
- 	prevent confusion with options and branch names, paths may need
-diff --git a/Documentation/line-range-format.txt b/Documentation/line-range-format.txt
-new file mode 100644
-index 0000000..265bc23
---- /dev/null
-+++ b/Documentation/line-range-format.txt
-@@ -0,0 +1,18 @@
-+- number
-++
-+If <start> or <end> is a number, it specifies an
-+absolute line number (lines count from 1).
-++
-+
-+- /regex/
-++
-+This form will use the first line matching the given
-+POSIX regex.  If <end> is a regex, it will search
-+starting at the line given by <start>.
-++
-+
-+- +offset or -offset
-++
-+This is only valid for <end> and will specify a number
-+of lines before or after the line given by <start>.
-++
+ /*
+  * graph_show_*: helper functions for printing to stdout
 -- 
 1.7.2.20.g388bbb
