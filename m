@@ -1,80 +1,66 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Back-dating commits--way back--for constitution.git
-Date: Thu, 5 Aug 2010 17:10:27 -0500
-Message-ID: <AANLkTimdZrdLFEit7ecXkEcGdfevbvp2TU1ekHddUHwf@mail.gmail.com>
-References: <i372v0$3np$1@dough.gmane.org> <AANLkTik2B8pGo8uR4yxV3nz-Nx6dcU+fiO8GWgv9-VtW@mail.gmail.com> 
-	<4C599781.2020603@gmail.com> <4C5B2F2E.4050709@gmail.com> 
-	<AANLkTikWc0rKV9rQsLfmZvhdqAuvATmbur2ZqQ4Xu7uo@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Joel C. Salomon" <joelcsalomon@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 00:10:55 2010
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: [GSoC update extra!] git-remote-svn: Week 13
+Date: Fri, 6 Aug 2010 08:15:26 +1000
+Message-ID: <70D9930D-DDB6-493D-9936-21E9CD4426A2@cordelta.com>
+References: <20100730190124.GA2995@kytes> <0C6B8C5E-15BA-43AD-B2F2-914F39EA6046@cordelta.com> <AANLkTi==fm8kxoB9aPYJNqBO=O9ALq-1qTzQj9RSXYBN@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1078)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 06 00:15:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh8eM-0002EY-Bo
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 00:10:54 +0200
+	id 1Oh8ix-00042k-2Q
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 00:15:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932918Ab0HEWKt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 18:10:49 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:42304 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758881Ab0HEWKr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 18:10:47 -0400
-Received: by ywh1 with SMTP id 1so2645910ywh.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 15:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=YQXCDZqGsX9U5TvLGwekhX9w0iiIqU/XgTLP8fSaxC4=;
-        b=c8ueNC5+2ZsXi05PGl1ifjs+L4kRmyWeIg1cfRuGjdVJm2zd2TnoyqSy6oBY7PYH56
-         Ss2vkyS1JoQTrqNCWburCMkw5jAHaMJyJrLoODAxyQQvDBbstl0OQRslmHTssvqmYx7r
-         pBQiGabvMgPfz1rH1gkj5m2KbKAnse0wxmkIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=pR0buWjLhK8RZ6u+JRom6PjtflnODj2j33PSkAbduPc1ZV420txAKm6Y7PqC6oRJ9R
-         +ik0P2qpOOseOigHCnCqEtkM96d9jqLKkekdMdC62G81/cC/THyM6j7ut0dnSUTYDcwz
-         7kOElf2uPq/iQv/tvOfTjZQQRp2yH2i48MAUA=
-Received: by 10.150.47.33 with SMTP id u33mr12931851ybu.184.1281046247219; 
-	Thu, 05 Aug 2010 15:10:47 -0700 (PDT)
-Received: by 10.150.93.6 with HTTP; Thu, 5 Aug 2010 15:10:27 -0700 (PDT)
-In-Reply-To: <AANLkTikWc0rKV9rQsLfmZvhdqAuvATmbur2ZqQ4Xu7uo@mail.gmail.com>
+	id S1758537Ab0HEWPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 18:15:34 -0400
+Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:61223
+	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756150Ab0HEWPd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 18:15:33 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEADrVWkzLWHsF/2dsb2JhbACgQHG+RYhNhToE
+X-IronPort-AV: E=Sophos;i="4.55,324,1278252000"; 
+   d="scan'208";a="216831462"
+Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
+  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 06 Aug 2010 08:15:29 +1000
+Received: (qmail 25432 invoked from network); 6 Aug 2010 08:15:28 +1000
+Received: from d110-33-90-139.mit3.act.optusnet.com.au (HELO ?192.168.1.2?) (110.33.90.139)
+  by node2.alpha.aussiehq.net.au with SMTP; 6 Aug 2010 08:15:27 +1000
+In-Reply-To: <AANLkTi==fm8kxoB9aPYJNqBO=O9ALq-1qTzQj9RSXYBN@mail.gmail.com>
+X-Mailer: Apple Mail (2.1078)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152728>
 
-Heya,
+Hi,
 
-On Thu, Aug 5, 2010 at 16:58, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
-> On 32bit:
->
-> commit 826a4f7721fe1c3963a733ecbc5422f05925af5d
-> Author: The Philadelphia Convention <>
-> Date: =C2=A0 Wed Dec 31 19:59:59 1969 -0400
->
-> On 64bit:
->
-> commit 826a4f7721fe1c3963a733ecbc5422f05925af5d
-> Author: The Philadelphia Convention <>
-> Date: =C2=A0 Mon Sep 17 13:00:00 1787 -0400
->
-> It would be useful to turn that into a TODO test for Git.
+>> The reason being that going from git to subversion there is a
+>> general increase in redundant data.
+> 
+> I don't understand?
 
-That's bad, if we can't store a particular date we should do something
-about it, not just silently underflow.
+The primary issue is a blob may be repeated in a non-copy operation,
+requiring its content to be described again. This sort of operation only
+happens 20% of the time with the ASF repository. We would have to
+either write out the content again or compute a new delta depending
+on the target version of the svn dump stream.
 
---=20
-Cheers,
+>> On the other hand, to produce an svn dump stream we may need
+>> to repeat elements encountered earlier in the fast-export stream.
+> 
+> What do you mean with this?
 
-Sverre Rabbelier
+See above, there was some redundancy in my post.
+
+--
+David Barr.
