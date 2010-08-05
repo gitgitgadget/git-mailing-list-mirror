@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 03/12] t6038 (merge.renormalize): check that it can be
- turned off
-Date: Thu, 5 Aug 2010 06:13:04 -0500
-Message-ID: <20100805111304.GE13779@burratino>
+Subject: [PATCH 04/12] merge-trees: push choice to renormalize away from
+ low level
+Date: Thu, 5 Aug 2010 06:13:49 -0500
+Message-ID: <20100805111349.GF13779@burratino>
 References: <cover.1278093311.git.eyvind.bernhardsen@gmail.com>
  <20100804031935.GA19699@burratino>
  <20100804032338.GF19699@burratino>
@@ -15,45 +15,45 @@ Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
 	Finn Arne Gangstad <finnag@pvv.org>,
 	"git@vger.kernel.org List" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 13:14:48 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 13:15:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgyPL-0001Q8-Qj
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 13:14:44 +0200
+	id 1OgyPs-0001u4-FH
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 13:15:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760158Ab0HELOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 07:14:30 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36394 "EHLO
+	id S1760110Ab0HELPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 07:15:11 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:59891 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760143Ab0HELO2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 07:14:28 -0400
-Received: by iwn33 with SMTP id 33so81021iwn.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 04:14:27 -0700 (PDT)
+	with ESMTP id S1757203Ab0HELPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 07:15:08 -0400
+Received: by iwn33 with SMTP id 33so81609iwn.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 04:15:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=ix4xeaEfG6jkfYOd+Hs3e8QWVH5qirkT4aEi91zxCtc=;
-        b=p1ot4+He1xzqahHpwOzn2xnZR3jrKTkGJmQatTlbXJROBQ62zxktXRFIqQ8GbwKiCh
-         a6bdouLIktxybUtpMeBhKx1hBDyy3O1GqhS2jwsnImaC9poBpBx6wpXZhvE3IigQLogO
-         F5mfsSmcd5rgqvDY7D2DUh3DdKVv+50oQ3Hi4=
+        bh=WRbY0fgLPsliEBKdnYXbH+X45IhkewE0AvNwhXHFPAM=;
+        b=JJoXxYY5HVp+lDd2YuKXWP1pIgyqzgyU+vvRJrwn0cnTvbUl+Qh2OdUsRiGBYcq7uK
+         4ObcJf+T8STXZV16+FXC5DFCvm6iuZwN4iPUxaKWZHN42EmTrTH0qO9M5ZxQTF9EoKNG
+         d8TOIJrWa+Jsgs0L8Yp9i8gEe9mMRLGaC3rsk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=nWldFJI+9yrBrDIRgzgjNLxDym3/1D+l4eRMo7nKf//Adr/p57Rm9p8SWF6hRtiBWP
-         HJPKKzXXDn1QqvdnBQnceYbR5mRuPyvGSfFPQko1vxBrMRKCv/jm/qyX8GaoO98emk5j
-         vTeTYyuKnczlpbZeGXR2zgWhkE6X3qDTSAhbU=
-Received: by 10.231.194.219 with SMTP id dz27mr11911872ibb.104.1281006867163;
-        Thu, 05 Aug 2010 04:14:27 -0700 (PDT)
+        b=bu07qlV54Q+AqvXeLZTd+zv6tYqErNJlOcjKM5qA4Jc8EL5PZ24t3myNKd3G4Sfmmv
+         FC6zQunzBUrl9KS/NKkPvbvSXLU1rj2WEyIX8epbB0/Qxs4xViqjzT7eLP2MEvZd2kKy
+         Pm1Ga7G9vMMO/bv0bAOyRaYcWNyngnVY7Z4FY=
+Received: by 10.231.144.75 with SMTP id y11mr12263355ibu.15.1281006908143;
+        Thu, 05 Aug 2010 04:15:08 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id n20sm49430ibe.5.2010.08.05.04.14.26
+        by mx.google.com with ESMTPS id e8sm51507ibb.2.2010.08.05.04.15.07
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 04:14:26 -0700 (PDT)
+        Thu, 05 Aug 2010 04:15:07 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100805110822.GB13779@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -61,126 +61,69 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152636>
 
-An unusual sort of person (not me) may even enjoy the conflicts
-from line-ending changes.  But more importantly, it is useful to
-document that behavior so we can more easily notice if it changes
-in an uncontrolled way while no one is watching.
+The merge machinery decides whether to resmudge and clean relevant
+entries based on the global merge_renormalize setting, which is set by
+"git merge" based on its configuration (and left alone by other
+commands).
+
+A nicer interface would make that decision a parameter to merge_trees
+so callers would pass in a choice made on a call-by-call basis.
+Start by making blob_unchanged stop examining the merge_renormalize
+global.
+
+In other words, this change is a trivial no-op, but it brings us
+closer to something good.
 
 Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- t/t6038-merge-text-auto.sh |   50 +++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 49 insertions(+), 1 deletions(-)
+Unchanged from v1.
 
-diff --git a/t/t6038-merge-text-auto.sh b/t/t6038-merge-text-auto.sh
-index a7ea4b6..52d0dc4 100755
---- a/t/t6038-merge-text-auto.sh
-+++ b/t/t6038-merge-text-auto.sh
-@@ -15,7 +15,6 @@ test_description='CRLF merge conflict across text=auto change
- . ./test-lib.sh
+ merge-recursive.c |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 5ad8fc9..2b55fc2 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1074,7 +1074,7 @@ static int read_sha1_strbuf(const unsigned char *sha1, struct strbuf *dst)
  
- test_expect_success setup '
--	git config merge.renormalize true &&
- 	git config core.autocrlf false &&
+ static int blob_unchanged(const unsigned char *o_sha,
+ 			  const unsigned char *a_sha,
+-			  const char *path)
++			  int renormalize, const char *path)
+ {
+ 	struct strbuf o = STRBUF_INIT;
+ 	struct strbuf a = STRBUF_INIT;
+@@ -1082,7 +1082,7 @@ static int blob_unchanged(const unsigned char *o_sha,
  
- 	echo first line | append_cr >file &&
-@@ -59,12 +58,19 @@ test_expect_success setup '
- 	git checkout master
- '
+ 	if (sha_eq(o_sha, a_sha))
+ 		return 1;
+-	if (!merge_renormalize)
++	if (!renormalize)
+ 		return 0;
  
-+test_expect_success 'set up fuzz_conflict() helper' '
-+	fuzz_conflict() {
-+		sed -e "s/^\([<>=]......\) .*/\1/" "$@"
-+	}
-+'
-+
- test_expect_success 'Merge after setting text=auto' '
- 	cat <<-\EOF >expected &&
- 	first line
- 	same line
- 	EOF
- 
-+	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	rm -f .gitattributes &&
- 	git reset --hard a &&
-@@ -78,6 +84,7 @@ test_expect_success 'Merge addition of text=auto' '
- 	same line
- 	EOF
- 
-+	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	rm -f .gitattributes &&
- 	git reset --hard b &&
-@@ -85,12 +92,51 @@ test_expect_success 'Merge addition of text=auto' '
- 	test_cmp expected file
- '
- 
-+test_expect_success 'Detect CRLF/LF conflict after setting text=auto' '
-+	q_to_cr <<-\EOF >expected &&
-+	<<<<<<<
-+	first line
-+	same line
-+	=======
-+	first lineQ
-+	same lineQ
-+	>>>>>>>
-+	EOF
-+
-+	git config merge.renormalize false &&
-+	rm -f .gitattributes &&
-+	git reset --hard a &&
-+	test_must_fail git merge b &&
-+	fuzz_conflict file >file.fuzzy &&
-+	test_cmp expected file.fuzzy
-+'
-+
-+test_expect_success 'Detect LF/CRLF conflict from addition of text=auto' '
-+	q_to_cr <<-\EOF >expected &&
-+	<<<<<<<
-+	first lineQ
-+	same lineQ
-+	=======
-+	first line
-+	same line
-+	>>>>>>>
-+	EOF
-+
-+	git config merge.renormalize false &&
-+	rm -f .gitattributes &&
-+	git reset --hard b &&
-+	test_must_fail git merge a &&
-+	fuzz_conflict file >file.fuzzy &&
-+	test_cmp expected file.fuzzy
-+'
-+
- test_expect_failure 'checkout -m after setting text=auto' '
- 	cat <<-\EOF >expected &&
- 	first line
- 	same line
- 	EOF
- 
-+	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	rm -f .gitattributes &&
- 	git reset --hard initial &&
-@@ -105,6 +151,7 @@ test_expect_failure 'checkout -m addition of text=auto' '
- 	same line
- 	EOF
- 
-+	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	rm -f .gitattributes file &&
- 	git reset --hard initial &&
-@@ -119,6 +166,7 @@ test_expect_failure 'cherry-pick patch from after text=auto was added' '
- 	same line
- 	EOF
- 
-+	git config merge.renormalize true &&
- 	git rm -fr . &&
- 	git reset --hard b &&
- 	test_must_fail git cherry-pick a >err 2>&1 &&
+ 	assert(o_sha && a_sha);
+@@ -1112,6 +1112,7 @@ static int process_entry(struct merge_options *o,
+ 	print_index_entry("\tpath: ", entry);
+ 	*/
+ 	int clean_merge = 1;
++	int normalize = merge_renormalize;
+ 	unsigned o_mode = entry->stages[1].mode;
+ 	unsigned a_mode = entry->stages[2].mode;
+ 	unsigned b_mode = entry->stages[3].mode;
+@@ -1122,8 +1123,8 @@ static int process_entry(struct merge_options *o,
+ 	if (o_sha && (!a_sha || !b_sha)) {
+ 		/* Case A: Deleted in one */
+ 		if ((!a_sha && !b_sha) ||
+-		    (!b_sha && blob_unchanged(o_sha, a_sha, path)) ||
+-		    (!a_sha && blob_unchanged(o_sha, b_sha, path))) {
++		    (!b_sha && blob_unchanged(o_sha, a_sha, normalize, path)) ||
++		    (!a_sha && blob_unchanged(o_sha, b_sha, normalize, path))) {
+ 			/* Deleted in both or deleted in one and
+ 			 * unchanged in the other */
+ 			if (a_sha)
 -- 
 1.7.2.1.544.ga752d.dirty
