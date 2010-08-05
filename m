@@ -1,95 +1,68 @@
 From: Jared Hance <jaredhance@gmail.com>
-Subject: Re: [RFC] struct *_struct
-Date: Thu, 5 Aug 2010 18:43:21 -0400
-Message-ID: <20100805224321.GA22430@localhost.localdomain>
-References: <20100804150843.GA2762@localhost.localdomain>
- <7vaap2fafm.fsf@alter.siamese.dyndns.org>
- <AANLkTin_6gaYF++N2GBgDsedfo7mY7yG5H99=-DxCa5E@mail.gmail.com>
+Subject: Re: Git server eats all memory
+Date: Thu, 5 Aug 2010 18:45:22 -0400
+Message-ID: <20100805224521.GB22430@localhost.localdomain>
+References: <wesfwyupgrg.fsf@kanis.fr>
+ <AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
+ <87ocdhlgbl.fsf@kanis.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 06 00:43:38 2010
+X-From: git-owner@vger.kernel.org Fri Aug 06 00:46:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh99y-0007cs-Uy
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 00:43:35 +0200
+	id 1Oh9Cj-00009y-4Q
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 00:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934723Ab0HEWnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 18:43:32 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:38618 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934675Ab0HEWn0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 18:43:26 -0400
-Received: by vws3 with SMTP id 3so5582520vws.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 15:43:25 -0700 (PDT)
+	id S1758974Ab0HEWpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 18:45:52 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:46205 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933003Ab0HEWp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 18:45:27 -0400
+Received: by qwh6 with SMTP id 6so4411729qwh.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 15:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=gQ7NzWKaqMqXqEtxgo5ujJ/Q3Qjz1lH1FL/jbYSUaos=;
-        b=lDDUY2HETyc9PCT3OxFN0ksR/GDqokVt5MSQG6r0nKFRq9fjQphCnChf50jwuFeAhx
-         6tKiyydztyUpmSRdnAqsEsQXlRn9NhmtX5dQksygDND+GUffnQJHdxS7dR61OKrKmNm6
-         ZGRg/lv8F02gzAVoplbqWu9myV6V99O9Oj8yQ=
+        bh=z4g5nQVmiwazoVAExJ1oWtRhkLwMf8LoQ4vfSYZgx3g=;
+        b=sJCoOUfd3Q3SM8nyXcgqWUelQKOBhCoRts4QBwH90zSsEvfwA3rumb/HwTNB4kdLtB
+         NukrhOERTmNUlkHxjkGj3l2HuAhaJQLgFdGe3NXBM6IreXagjFAXotPE00L1Fo9u/f7/
+         7a1HL9ck2gdmfDInQHmhEek04ohBXjmRlTAF0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=EgeVQfOsPapAZRh3XIfKWZucZWvKVcFRv8mGAJ+8MOlWLOO5/xPtsIhcVGlApYrQ0m
-         r3DhCVZX8ejgwPY9cHq/3L9UJfWP1sWzNLUZR1WmYYo5Ci1w3lWL6Qpyi70Gu5NVskdc
-         AXnIrhiM/F4MrJVSyo2/1jVaMtyL7mbWhkiQg=
-Received: by 10.220.88.152 with SMTP id a24mr7656041vcm.269.1281048205285;
-        Thu, 05 Aug 2010 15:43:25 -0700 (PDT)
+        b=khnEqi14qEqh0XVZ05txcuGzFmev5gq1MqRVNvziS3oCPDFovG9h9pqIb69XNKBZ+f
+         Zj2hk9nDsEm3zZuYsQ8tBtq1S7kIZwNy+TCRNW/y3TTdRyIJTwapIVcWTIyixZCCX3q3
+         irsnB1XG6DSUnW4i2cCVYCy2/ZhUVj//Nw9yg=
+Received: by 10.224.27.3 with SMTP id g3mr5282604qac.229.1281048326414;
+        Thu, 05 Aug 2010 15:45:26 -0700 (PDT)
 Received: from localhost.localdomain (cpe-174-101-209-27.cinci.res.rr.com [174.101.209.27])
-        by mx.google.com with ESMTPS id v11sm433431vbb.13.2010.08.05.15.43.23
+        by mx.google.com with ESMTPS id r1sm828959qcq.46.2010.08.05.15.45.24
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 15:43:24 -0700 (PDT)
+        Thu, 05 Aug 2010 15:45:25 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTin_6gaYF++N2GBgDsedfo7mY7yG5H99=-DxCa5E@mail.gmail.com>
+In-Reply-To: <87ocdhlgbl.fsf@kanis.fr>
 User-Agent: Mutt/1.5.20 (2009-12-10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152735>
 
-On Thu, Aug 05, 2010 at 11:20:14AM -0500, Michael Witten wrote:
-> On Wed, Aug 4, 2010 at 14:24, Junio C Hamano <gitster@pobox.com> wrote:
-> > I hate... "typedef foo struct foo"
-> 
-> How come?
+On Thu, Aug 05, 2010 at 08:33:02AM +0200, Ivan Kanis wrote:
+> I am ready to do whatever to diagnose the problem. I know C pretty well
+> and am ready to look into it but I am not sure where to start.
 
-In my opinion, it creates ambiguity. If I have
-    
-    typedef struct foo foo;
+It sounds like Git is reading each object into memory to send it to
+the client, but doesn't remember to free the memory at the end of
+sending the object, so it remains as a memory leak.
 
-And I have "foo" used in a code snippet, it is much less easier to see
-if foo is being used in the type context or if its an instance, since
-I like to do
-
-    struct foo foo;
-
-which reads much less well as:
-
-    foo foo;
-
-
-Its also much less easier to grep though to find all the places the
-type is used. If I do
-
-    $ git grep "foo"
-
-I will end up with the instances and the struct type. whereas I can do
-
-    $ git grep "struct foo"
-
-to find (most|all) of the types, depending on whether the code uses
-decent practices (there shouldn't be a second space between struct and
-foo, or a newline between them).
-
-I could also use a similar regular expression to find all the
-instances (ie, all the instances of foo that aren't prefixed with
-struct).
+I would look in the code for malloc calls that don't have a free call,
+or spots where free calls might not be hit.
