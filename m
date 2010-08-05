@@ -1,75 +1,116 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [BUG] git gui blame  fails for multi-word textconv filter
-Date: Thu, 05 Aug 2010 11:59:50 +0200
-Message-ID: <vpqlj8l2xd5.fsf@bauges.imag.fr>
-References: <20100804192525.GA13086@landau.phys.spbu.ru>
-	<4C59FBD5.5090209@ensimag.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>,
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] git-gui: Use shell to launch textconv filter in "blame"
+Date: Thu,  5 Aug 2010 12:05:22 +0200
+Message-ID: <1281002722-3042-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqlj8l2xd5.fsf@bauges.imag.fr>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
 	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 05 12:03:58 2010
+	Kirill Smelkov <kirr@landau.phys.spbu.ru>,
+	=?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
+	<clement.poulain@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 05 12:06:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgxIs-0002DN-D5
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 12:03:58 +0200
+	id 1OgxLf-0004LE-49
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 12:06:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760055Ab0HEKDx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 06:03:53 -0400
-Received: from imag.imag.fr ([129.88.30.1]:56533 "EHLO imag.imag.fr"
+	id S1760063Ab0HEKGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 06:06:46 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36053 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752574Ab0HEKDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 06:03:52 -0400
+	id S1755601Ab0HEKGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 06:06:44 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o759xpvo014008
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o75A3LH4002827
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Aug 2010 11:59:51 +0200 (CEST)
+	Thu, 5 Aug 2010 12:03:21 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OgxEs-0007nN-VI; Thu, 05 Aug 2010 11:59:50 +0200
-In-Reply-To: <4C59FBD5.5090209@ensimag.imag.fr> (=?iso-8859-1?Q?=22Cl=E9me?=
- =?iso-8859-1?Q?nt?= Poulain"'s message of "Thu\, 05 Aug 2010 01\:46\:29
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 05 Aug 2010 11:59:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OgxKN-0007uE-Ig; Thu, 05 Aug 2010 12:05:31 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OgxKN-0000nh-HH; Thu, 05 Aug 2010 12:05:31 +0200
+X-Mailer: git-send-email 1.7.2.1.30.g18195
+In-Reply-To: <vpqlj8l2xd5.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Aug 2010 12:03:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o75A3LH4002827
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1281607406.92744@Tnn2XgjXpZdHZfmHOcVKgA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152630>
 
-Cl=E9ment Poulain <clement.poulain@ensimag.imag.fr> writes:
+This allows one to use textconv commands with arguments.
 
-> I wonder if spaces can be the reason of this. Looks like Tcl is
-> looking for an executable called "run-mailcap --action=3Dcat", and
-> doesn't distinguish path from options.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ git-gui/Makefile      |    1 +
+ git-gui/git-gui.sh    |    6 ++++++
+ git-gui/lib/blame.tcl |    4 +++-
+ 3 files changed, 10 insertions(+), 1 deletions(-)
 
-Yes, and it does this because we asked it to do so. Whitespace
-interpretation is done by the shell, and there's no shell involved
-here.
-
-> I do not have much experience with Tcl, so I can't figure out how to
-> solve that. Some help would be appreciate :-)
-
-Patch follows. It just runs the textconv using a shell, which does
-whitespace interpretation (and more if needed). Tested with
-
-textconv=3Dodt2txt --width=3D40
-
-and a file containing whitespaces.
-
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index 197b55e..e22ba5c 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -215,6 +215,7 @@ endif
+ $(GITGUI_MAIN): git-gui.sh GIT-VERSION-FILE GIT-GUI-VARS
+ 	$(QUIET_GEN)rm -f $@ $@+ && \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++		-e 's|@@SHELL_PATH@@|$(SHELL_PATH_SQ)|' \
+ 		-e '1,30s|^ argv0=$$0| argv0=$(GITGUI_SCRIPT)|' \
+ 		-e '1,30s|^ exec wish | exec '\''$(TCLTK_PATH_SED)'\'' |' \
+ 		-e 's/@@GITGUI_VERSION@@/$(GITGUI_VERSION)/g' \
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index bb10489..9049abf 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -128,6 +128,7 @@ set _githtmldir {}
+ set _reponame {}
+ set _iscygwin {}
+ set _search_path {}
++set _shellpath {@@SHELL_PATH@@}
+ 
+ set _trace [lsearch -exact $argv --trace]
+ if {$_trace >= 0} {
+@@ -137,6 +138,11 @@ if {$_trace >= 0} {
+ 	set _trace 0
+ }
+ 
++proc shellpath {} {
++	global _shellpath
++	return $_shellpath
++}
++
+ proc appname {} {
+ 	global _appname
+ 	return $_appname
+diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
+index 2137ec9..77656d3 100644
+--- a/git-gui/lib/blame.tcl
++++ b/git-gui/lib/blame.tcl
+@@ -460,7 +460,9 @@ method _load {jump} {
+ 	}
+ 	if {$commit eq {}} {
+ 		if {$do_textconv ne 0} {
+-			set fd [open |[list $textconv $path] r]
++			# Run textconv with sh -c "..." to allow it to
++			# contain command + arguments.
++			set fd [open |[list [shellpath] -c "$textconv \"\$0\"" $path] r]
+ 		} else {
+ 			set fd [open $path r]
+ 		}
+-- 
+1.7.2.1.30.g18195
