@@ -1,52 +1,83 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: jk/tag-contains: stalled
-Date: Thu, 5 Aug 2010 23:38:16 +0200
-Message-ID: <201008052338.16668.trast@student.ethz.ch>
-References: <7v62zqf23s.fsf@alter.siamese.dyndns.org> <20100805190653.GA2942@sigill> <7vd3twdbny.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Back-dating commits--way back--for constitution.git
+Date: Thu, 5 Aug 2010 21:58:36 +0000
+Message-ID: <AANLkTikWc0rKV9rQsLfmZvhdqAuvATmbur2ZqQ4Xu7uo@mail.gmail.com>
+References: <i372v0$3np$1@dough.gmane.org>
+	<AANLkTik2B8pGo8uR4yxV3nz-Nx6dcU+fiO8GWgv9-VtW@mail.gmail.com>
+	<4C599781.2020603@gmail.com>
+	<4C5B2F2E.4050709@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Ted Ts'o <tytso@mit.edu>,
-	<git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 23:38:41 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Joel C. Salomon" <joelcsalomon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 23:58:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh894-0004jL-NY
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 23:38:35 +0200
+	id 1Oh8SY-0004Gp-IA
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 23:58:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934043Ab0HEViU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 17:38:20 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:35955 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932693Ab0HEViT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 17:38:19 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 5 Aug
- 2010 23:38:18 +0200
-Received: from thomas.site (84.74.100.241) by CAS22.d.ethz.ch (172.31.51.112)
- with Microsoft SMTP Server (TLS) id 14.0.702.0; Thu, 5 Aug 2010 23:38:18
- +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <7vd3twdbny.fsf@alter.siamese.dyndns.org>
+	id S1758370Ab0HEV6i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 17:58:38 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55953 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756979Ab0HEV6h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 17:58:37 -0400
+Received: by iwn33 with SMTP id 33so517603iwn.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 14:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FEbJ9H3ucce9tzJVv3CammypgjDUAvJPSn75P1Zs3i0=;
+        b=rOaBT6qKMhStF9I4O/cLE4pbrwwA+XiEUrw+yTMf0PrlmlKwj1wExYIZJEGQ+g9hSc
+         eqFoBhbbvO6HUGJHJx5RzXJGPtdCRIFWzSxUGj0rB4QiNcI7jteC8QwVp7f3yp58+ltI
+         kVG2bl8T2peaS8fNNclt0QlMTxTtiJWcgATp0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VEB9HuSOU2RPOdUIJ8EdvL3uZiLwPviA7bZBkatEyaOAzqlNic43v0EkQsQYasfO+F
+         cakgoqk19lbVKSaPKYXqJMd1/uYGm3Bhj5atUWtuIA0++M8QM3k8LM7eAsH77mro7GPv
+         D9NeHMCUSeBlI8h3ZNVogGo6KDBIvVRfzzp6Y=
+Received: by 10.231.31.71 with SMTP id x7mr4668150ibc.33.1281045516452; Thu, 
+	05 Aug 2010 14:58:36 -0700 (PDT)
+Received: by 10.231.166.79 with HTTP; Thu, 5 Aug 2010 14:58:36 -0700 (PDT)
+In-Reply-To: <4C5B2F2E.4050709@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152725>
 
-Junio C Hamano wrote:
-> *1* Also we would want to do something similar to the commit.util field so
-> that more than one utility libraries can attach their own stuff to each
-> commit.  It _might_ make sense to instead get rid of commit.util and
-> migrate the users to a separate "one object hash per one type of info",
-> though.  In any case it is a separate topic.
+On Thu, Aug 5, 2010 at 21:37, Joel C. Salomon <joelcsalomon@gmail.com> =
+wrote:
+> On 08/04/2010 12:38 PM, Joel C. Salomon wrote:
+>> I'll put my Constitution project up on GitHub in a few days. =C2=A0J=
+ust note
+>> that I *will* rebase and publish.
+>
+> It's up, at <http://github.com/jcsalomon/constitution>, with one comm=
+it.
+> =C2=A0(No amendments yet.)
+>
+> I'm curious to find out if folks with 64-bit time_t get the correct
+> author and commit times.
 
-I thought this already existed in decorate.c?
+On 32bit:
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+commit 826a4f7721fe1c3963a733ecbc5422f05925af5d
+Author: The Philadelphia Convention <>
+Date:   Wed Dec 31 19:59:59 1969 -0400
+
+On 64bit:
+
+commit 826a4f7721fe1c3963a733ecbc5422f05925af5d
+Author: The Philadelphia Convention <>
+Date:   Mon Sep 17 13:00:00 1787 -0400
+
+It would be useful to turn that into a TODO test for Git.
