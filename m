@@ -1,83 +1,91 @@
-From: Ivan Kanis <expire-by-2010-08-10@kanis.fr>
-Subject: Re: Git server eats all memory
-Date: Thu, 05 Aug 2010 08:33:02 +0200
-Message-ID: <87ocdhlgbl.fsf@kanis.fr>
-References: <wesfwyupgrg.fsf@kanis.fr>
-	<AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: URL-decode the left-hand side of an svn
+	refspec
+Date: Thu, 5 Aug 2010 06:40:55 +0000
+Message-ID: <20100805064055.GA4319@dcvr.yhbt.net>
+References: <1280877685-4928-1-git-send-email-stevenrwalter@gmail.com> <20100804083840.GA19367@dcvr.yhbt.net> <AANLkTi=5qEhYABJv8CBxXwOY-UKkRc05bO=kKYkborKq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 08:33:18 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Steven Walter <stevenrwalter@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 08:41:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ogu0y-0008BO-Rh
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 08:33:17 +0200
+	id 1Ogu8V-0002cO-2h
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 08:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759702Ab0HEGdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 02:33:09 -0400
-Received: from kanis.fr ([75.127.73.245]:1618 "EHLO kanis.fr"
+	id S1758808Ab0HEGk6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 02:40:58 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:48463 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758286Ab0HEGdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 02:33:07 -0400
-Received: from [89.83.137.164] (helo=tao)
-	by kanis.fr with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <expire-by-2010-08-10@kanis.fr>)
-	id 1Ogu0m-0007G3-Na; Thu, 05 Aug 2010 02:33:05 -0400
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAAB5QTFRF
- IBkXUxMTOCwoTC4qcUY8iFxQmmper31txpaJ/v/8aKZ1oAAAAcVJREFUOMt100tu2zAQAFDCXnUZ
- oAcIqG68LZULVLQBbwuSiffm6AIRRyeotAySJoVu2+FPpJWWC3/4NKOZocSW/yxWfnJ2+Bdwzhj7
- 8gleWVy7DXC2rkMNr2V/zRbghXIwthf3VbIA9Ffc71vZCSFyCEsBggtNS8ludwvfmhYA0Vn9o4DP
- zMWxR7+cPWzAYFzwM0ModtdmcDbDS6i/hT7L+RZof5yCXGrYe5jn2YO6BYMjgY+51tCIAqHgBLwR
- pwLnGuRjAKyBJkuN4yd4U92uCY1vUr2D/c5b8DuxyQwfOHUeaLqDJhnkkuGXbB56h2C1IVBdgncc
- bBi6feroa9B6jUDojnQPQKupbyXyeeCE1oT7Oqrt+SnfY3mkiyGA/3AmD3H5g32CcBx6hY8pRkwJ
- 9PpcjRGobUfprFnhAa1vepwcgMOhwG+pdSgKHFU9HAvoAH6XUl7lDUCCq5Qb6GMbVm3Aj++qDYCt
- wdBc/YHgOFCmS3mjDMRcSE2qY4E3Q3PVIQRQmeodNH4QEbRUFZzW+VotzwX4yTcRTySOML1qjcE5
- hTirVqDHkMAP0PjAywp3d18JZtqzvr9zDYD+GaSKtE6Zlr/DLPNFmOcvBAAAAABJRU5ErkJggg==
-In-Reply-To: <AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
-	(Avery Pennarun's message of "Wed, 4 Aug 2010 16:12:17 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1756669Ab0HEGk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 02:40:57 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF8D71F4E1;
+	Thu,  5 Aug 2010 06:40:55 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=5qEhYABJv8CBxXwOY-UKkRc05bO=kKYkborKq@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152617>
 
-Avery Pennarun <apenwarr@gmail.com> wrote:
+Steven Walter <stevenrwalter@gmail.com> wrote:
+> On Wed, Aug 4, 2010 at 4:38 AM, Eric Wong <normalperson@yhbt.net> wro=
+te:
+> > Thanks Steven.
+> >
+> > Since git-svn already has a uri_decode() function, we should use th=
+at.
+> > The decoding should apply to the local portion of branches/tags glo=
+bs,
+> > too. =A0Does the following work for you?
+<snip>
+> Yes, this works.  Thanks!
 
-> On Wed, Aug 4, 2010 at 10:57 AM, Ivan Kanis
+Thanks Steven, I've pushed the following out for Junio at
+git://git.bogomips.org/git-svn
 
->> I am having problem with memory ballooning when receiving object
->> from the server. The amount of memory used on the server seems to be same
->> size as the object received.
+=46rom 46cb16fb599451f417e7cd668e77866f5aa03fc0 Mon Sep 17 00:00:00 200=
+1
+=46rom: Steven Walter <swalter@lpdev.prtdev.lexmark.com>
+Date: Tue, 3 Aug 2010 19:21:25 -0400
+Subject: [PATCH] git svn: URL-decode left-hand side of svn refspec
 
-> Git works fine with huge repositories; it does not work fine at all
-> with very large individual objects in a repository, and it does what
-> you're experiencing.
+This change allows git-svn to handle an URL with colons in the path
 
-Hello Avery,
+[ew: rewritten to use uri_decode() function]
 
-The largest object is 120M. I didn't describe the problem very
-accurately. The memory consumed is the *sum* of the objects
-downloaded. 
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
+ git-svn.perl |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-For example, a repository of 4G consumes 4G of memory at the end of the
-receiving objects phase. What is very interesting is the total of
-objects downloaded is the same as the memory consumed. That makes me
-think there is a link somewhere. Surely it shouldn't consume that much
-memory.
-
-I am ready to do whatever to diagnose the problem. I know C pretty well
-and am ready to look into it but I am not sure where to start.
-
-Take care,
--- 
-Ivan Kanis
-http://kanis.fr
-
-Seriousness is the only refuge of the shallow.
-    -- Oscar Wilde 
+diff --git a/git-svn.perl b/git-svn.perl
+index 8d2ef3d..34884b8 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1820,6 +1820,7 @@ sub read_all_remotes {
+ 			die("svn-remote.$remote: remote ref '$remote_ref' "
+ 			    . "must start with 'refs/'\n")
+ 				unless $remote_ref =3D~ m{^refs/};
++			$local_ref =3D uri_decode($local_ref);
+ 			$r->{$remote}->{fetch}->{$local_ref} =3D $remote_ref;
+ 			$r->{$remote}->{svm} =3D {} if $use_svm_props;
+ 		} elsif (m!^(.+)\.usesvmprops=3D\s*(.*)\s*$!) {
+@@ -1832,6 +1833,7 @@ sub read_all_remotes {
+ 			die("svn-remote.$remote: remote ref '$remote_ref' ($t) "
+ 			    . "must start with 'refs/'\n")
+ 				unless $remote_ref =3D~ m{^refs/};
++			$local_ref =3D uri_decode($local_ref);
+ 			my $rs =3D {
+ 			    t =3D> $t,
+ 			    remote =3D> $remote,
+--=20
+Eric Wong
