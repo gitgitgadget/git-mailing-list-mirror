@@ -1,69 +1,220 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] pretty-options.txt: match --format's documentation with implementation.
-Date: Thu,  5 Aug 2010 15:08:05 +0200
-Message-ID: <1281013685-29950-1-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH] rebase -i: add exec command to launch a shell command
+Date: Thu,  5 Aug 2010 15:00:17 +0200
+Message-ID: <1281013217-29577-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 05 15:08:47 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 15:09:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh0Bi-0008QM-Kn
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 15:08:46 +0200
+	id 1Oh0CA-0000W6-BF
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 15:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760201Ab0HENIl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 09:08:41 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:56946 "EHLO rominette.imag.fr"
+	id S1760286Ab0HENJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 09:09:08 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51761 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754219Ab0HENIk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 09:08:40 -0400
+	id S1760212Ab0HENJH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 09:09:07 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o75D5uX0011943
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o75CnjQX017102
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Aug 2010 15:05:56 +0200
+	Thu, 5 Aug 2010 14:49:45 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1Oh0B4-0001cl-Am; Thu, 05 Aug 2010 15:08:06 +0200
+	id 1Oh03X-0001UQ-0Q; Thu, 05 Aug 2010 15:00:19 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1Oh0B4-0007nf-9Y; Thu, 05 Aug 2010 15:08:06 +0200
+	id 1Oh03W-0007hh-TI; Thu, 05 Aug 2010 15:00:18 +0200
 X-Mailer: git-send-email 1.7.2.1.30.g18195
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Aug 2010 15:05:56 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Aug 2010 14:49:45 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o75D5uX0011943
+X-MailScanner-ID: o75CnjQX017102
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1281618360.32464@9WssorfO9rRqmHkzBCtrBA
+MailScanner-NULL-Check: 1281617387.4069@aHIRMykv9h2/IbJt7kHznA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152656>
 
+The typical usage pattern would be to run a test (or simply a compilation
+command) at given points in history.
+
+The shell command is ran (from the worktree root), and the rebase is
+stopped when the command fails, to give the user an opportunity to fix
+the problem before continuing with "git rebase --continue".
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
-Simple alternative to my other patch, which matched the implementation
-with the doc. Shouldn't be controversial ...
 
- Documentation/pretty-options.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+So, back to the "run from tree root", but that't now properly
+documented and tested.
 
-diff --git a/Documentation/pretty-options.txt b/Documentation/pretty-options.txt
-index d78e121..9b6f389 100644
---- a/Documentation/pretty-options.txt
-+++ b/Documentation/pretty-options.txt
-@@ -1,5 +1,5 @@
- --pretty[='<format>']::
----format[='<format>']::
-+--format='<format>'::
+One notable difference with my first version is that the command is
+ran in a subshell, defaulting to $SHELL (typically for users like me
+with $SHELL=zsh who may want to take advantage of their shell's
+advanced features)
+
+ Documentation/git-rebase.txt  |   24 +++++++++++++++++++
+ git-rebase--interactive.sh    |   20 ++++++++++++++++
+ t/lib-rebase.sh               |    2 +
+ t/t3404-rebase-interactive.sh |   50 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 96 insertions(+), 0 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index be23ad2..4bd4b66 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -459,6 +459,30 @@ sure that the current HEAD is "B", and call
+ $ git rebase -i -p --onto Q O
+ -----------------------------
  
- 	Pretty-print the contents of the commit logs in a given format,
- 	where '<format>' can be one of 'oneline', 'short', 'medium',
++Reordering and editing commits usually creates untested intermediate
++steps.  You may want to check that your history editing did not break
++anything by running a test, or at least recompiling at intermediate
++points in history by using the "exec" command (shortcut "x").  You may
++do so by creating a todo list like this one:
++
++-------------------------------------------
++pick deadbee Implement feature XXX
++fixup f1a5c00 Fix to feature XXX
++exec make
++pick c0ffeee The oneline of the next commit
++edit deadbab The oneline of the commit after
++exec cd subdir; make test
++...
++-------------------------------------------
++
++The interactive rebase will stop when a command fails (i.e. exits with
++non-0 status) to give you an opportunity to fix the problem. You can
++continue with `git rebase --continue`.
++
++The "exec" command launches the command in a shell (the one specified
++in `$SHELL`, or the default shell if `$SHELL` is not set), so you can
++use usual shell commands like "cd". The command is run from the
++root of the working tree.
+ 
+ SPLITTING COMMITS
+ -----------------
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index b94c2a0..33d3087 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -537,6 +537,25 @@ do_next () {
+ 		esac
+ 		record_in_rewritten $sha1
+ 		;;
++	x|"exec")
++		read -r command rest < "$TODO"
++		mark_action_done
++		printf 'Executing: %s\n' "$rest"
++		# "exec" command doesn't take a sha1 in the todo-list.
++		# => can't just use $sha1 here.
++		git rev-parse --verify HEAD > "$DOTEST"/stopped-sha
++		${SHELL:-@SHELL_PATH@} -c "$rest" # Actual execution
++		status=$?
++		if test "$status" -ne 0
++		then
++			warn "Execution failed: $rest"
++			warn "You can fix the problem, and then run"
++			warn
++			warn "	git rebase --continue"
++			warn
++			exit "$status"
++		fi
++		;;
+ 	*)
+ 		warn "Unknown command: $command $sha1 $rest"
+ 		if git rev-parse --verify -q "$sha1" >/dev/null
+@@ -957,6 +976,7 @@ first and then run 'git rebase --continue' again."
+ #  e, edit = use commit, but stop for amending
+ #  s, squash = use commit, but meld into previous commit
+ #  f, fixup = like "squash", but discard this commit's log message
++#  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
+ #
+ # If you remove a line here THAT COMMIT WILL BE LOST.
+ # However, if you remove everything, the rebase will be aborted.
+diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+index 6aefe27..6ccf797 100644
+--- a/t/lib-rebase.sh
++++ b/t/lib-rebase.sh
+@@ -47,6 +47,8 @@ for line in $FAKE_LINES; do
+ 	case $line in
+ 	squash|fixup|edit|reword)
+ 		action="$line";;
++	exec*)
++		echo "$line" | sed 's/_/ /g' >> "$1";;
+ 	"#")
+ 		echo '# comment' >> "$1";;
+ 	">")
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 9f03ce6..3b07850 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -64,6 +64,56 @@ test_expect_success 'setup' '
+ 	done
+ '
+ 
++# debugging-friendly alternatives to "test -f" and "test ! -f"
++file_must_exist () {
++    if ! [ -f "$1" ]; then
++	echo "file $1 not created."
++	false
++    fi
++}
++
++file_must_not_exist () {
++    if [ -f "$1" ]; then
++	echo "file $1 created while it shouldn't have. $2"
++	false
++    fi
++}
++
++test_expect_success 'rebase -i with the exec command' '
++	git checkout master &&
++	FAKE_LINES="1 exec_touch_touch-one 2 exec_touch_touch-two exec_false exec_touch_touch-three 3 4
++		exec_touch_\"touch-file__name_with_spaces\";_touch_touch-after-semicolon 5" \
++		test_must_fail git rebase -i A &&
++	file_must_exist touch-one &&
++	file_must_exist touch-two &&
++	file_must_not_exist touch-three "(Should have stopped before)" &&
++	test $(git rev-parse C) = $(git rev-parse HEAD) || {
++		echo "Stopped at wrong revision:"
++		echo "($(git describe --tags HEAD) instead of C)"
++		false
++	} &&
++	git rebase --continue &&
++	file_must_exist touch-three &&
++	file_must_exist "touch-file  name with spaces" &&
++	file_must_exist touch-after-semicolon &&
++	test $(git rev-parse master) = $(git rev-parse HEAD) || {
++		echo "Stopped at wrong revision:"
++		echo "($(git describe --tags HEAD) instead of master)"
++		false
++	} &&
++	rm -f touch-*
++'
++
++test_expect_success 'rebase -i with the exec command runs from tree root' '
++	git checkout master &&
++	mkdir subdir && cd subdir &&
++	FAKE_LINES="1 exec_touch_touch-subdir" \
++		git rebase -i HEAD^ &&
++	cd .. &&
++	file_must_exist touch-subdir &&
++	rm -fr subdir
++'
++
+ test_expect_success 'no changes are a nop' '
+ 	git checkout branch2 &&
+ 	git rebase -i F &&
 -- 
 1.7.2.1.30.g18195
