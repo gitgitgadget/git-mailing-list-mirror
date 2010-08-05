@@ -1,175 +1,216 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH v4 10/18] Hook line history into cmd_log, ensuring a topo-ordered walk
-Date: Fri,  6 Aug 2010 00:11:49 +0800
-Message-ID: <1281024717-7855-11-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH v4 15/18] Add --graph prefix before line history output
+Date: Fri,  6 Aug 2010 00:11:54 +0800
+Message-ID: <1281024717-7855-16-git-send-email-struggleyb.nku@gmail.com>
 References: <1281024717-7855-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: trast@student.ethz.ch, Jens.Lehmann@web.de
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 05 18:14:23 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 18:14:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh35H-0001XF-Jm
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 18:14:19 +0200
+	id 1Oh35K-0001XF-4w
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 18:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933588Ab0HEQNP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 12:13:15 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:57614 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933449Ab0HEQNL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 12:13:11 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 26so2533376pzk.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 09:13:11 -0700 (PDT)
+	id S1759876Ab0HEQNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 12:13:36 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:59045 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933639Ab0HEQNb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 12:13:31 -0400
+Received: by mail-px0-f174.google.com with SMTP id 14so2531057pxi.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 09:13:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=83l7/C+8J3ArRGKooN01dyRwS5/+plV/FcUvWKlNtLc=;
-        b=odsgAUrpsBJ8pAcMPidFUsNHLxI89NcL+C+dwEzQ0pAa/17pBPqb3U9D8HXL+H+++P
-         6Q6Y+27+k922H8sIqasVBRZq3TTckFntyWReAlYWvH2f05STTJmZpvHse4FyAB2rx9TK
-         c8K+7BlwWlrA4vpO5gOwLFj/jPFb5vAXVtJWc=
+        bh=DP2pJJY8qQYPbzCs8o7mfPaWCR1JtaArI9JfSmZH8VI=;
+        b=MlytXQhi3D39MTCgPhcr2rhcSOh8/dEHCqN/oldxe8qwZVtJBfLkQUgfheGgYmaM4z
+         PHYqpIrOiHOxvbHdz8eWeNp6ze6E1cAi3Ym+6pq/RiWOrhkKJnsh19WWsrWucTOndvD+
+         VaMEPJRNxd9y9/BMO5yN7gJzJ3zo5aEhTwf6o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=SErJqGc8iUkrYmUJC+299supReUNJ9UkxrRA7jDtYbyi0wQdgPOD7PKRffEx4UlwqX
-         Tprn3n8A6AK4AQqar/ybDt4dG+3XB0vh120/U340iyV19NDXDXz6X8HuGJ+ZktJl9Ebn
-         4JXqx/nDzNOPCvLkhYQN4JlGbessMH4DPmI+E=
-Received: by 10.142.156.14 with SMTP id d14mr9360139wfe.2.1281024791438;
-        Thu, 05 Aug 2010 09:13:11 -0700 (PDT)
+        b=wSUCBDF8Saq7LLF4zIqZnndEoth8oc5mjAbIsuYLQzXcjDm15RtkDXVB2i3+R01Hk4
+         25ad7fQR96iZY1sWKgyDDQiP21QI7AjZ5rFDUumMTSBJWxreDCA2MTlf3xbH/OTa5gVF
+         mpQzqLNelGWioX41vIbA2fALcC0JcuATN69AM=
+Received: by 10.142.178.12 with SMTP id a12mr3362036wff.146.1281024811427;
+        Thu, 05 Aug 2010 09:13:31 -0700 (PDT)
 Received: from localhost.localdomain ([222.35.120.192])
-        by mx.google.com with ESMTPS id w8sm343653wfd.19.2010.08.05.09.13.08
+        by mx.google.com with ESMTPS id w8sm343653wfd.19.2010.08.05.09.13.27
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 09:13:10 -0700 (PDT)
+        Thu, 05 Aug 2010 09:13:30 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.20.g388bbb
 In-Reply-To: <1281024717-7855-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152676>
 
-To correctly track the line ranges over several branches,
-we must make sure that we have processed all children before
-reaching the commit itself.
-
-Thus we introduce a first pass in cmd_line_log that runs
-prepare_revision_walk to achieve the topological ordering.
+Makes the line level log output look good when used
+with the '--graph' option.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- builtin/log.c |    5 ++++-
- line.c        |   54 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- line.h        |    2 ++
- revision.c    |    6 ++++++
- 4 files changed, 66 insertions(+), 1 deletions(-)
+ line.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 48 insertions(+), 18 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 84d781e..0aa982b 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -616,7 +616,10 @@ int cmd_log(int argc, const char **argv, const char *prefix)
- 	memset(&opt, 0, sizeof(opt));
- 	opt.def = "HEAD";
- 	cmd_log_init(argc, argv, prefix, &rev, &opt);
--	return cmd_log_walk(&rev);
-+	if (rev.line_level_traverse)
-+		return cmd_line_log_walk(&rev);
-+	else
-+		return cmd_log_walk(&rev);
- }
- 
- /* format-patch */
 diff --git a/line.c b/line.c
-index bd63d99..c17659a 100644
+index 2e513da..7d80da8 100644
 --- a/line.c
 +++ b/line.c
-@@ -1232,3 +1232,57 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+@@ -1125,6 +1125,13 @@ static void flush_lines(struct diff_options *opt, const char **ptr, const char *
+ 	const char *p = *ptr;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	const char *reset;
++	char *line_prefix = "";
++	struct strbuf *msgbuf;
++
++	if (opt && opt->output_prefix) {
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++		line_prefix = msgbuf->buf;
++	}
+ 
+ 	if (*color)
+ 		reset = diff_get_color_opt(opt, DIFF_RESET);
+@@ -1147,7 +1154,7 @@ static void flush_lines(struct diff_options *opt, const char **ptr, const char *
+ 
+ 	while (*ptr < end && *lno <= elno) {
+ 		if (**ptr == '\n') {
+-			fprintf(opt->file, "%s", buf.buf);
++			fprintf(opt->file, "%s%s", line_prefix, buf.buf);
+ 			if (*ptr - p) {
+ 				fwrite(p, *ptr - p, 1, opt->file);
+ 			}
+@@ -1158,7 +1165,7 @@ static void flush_lines(struct diff_options *opt, const char **ptr, const char *
+ 		(*ptr)++;
  	}
- }
+ 	if (*lno <= elno) {
+-		fprintf(opt->file, "%s", buf.buf);
++		fprintf(opt->file, "%s%s", line_prefix, buf.buf);
+ 		if (*ptr - p) {
+ 			fwrite(p, *ptr - p, 1, opt->file);
+ 		}
+@@ -1201,8 +1208,15 @@ static void diff_flush_chunks(struct diff_options *opt, struct line_chunk *chunk
+ 	struct diff_line_range *range = chunk->range;
+ 	const char *set = diff_get_color_opt(opt, DIFF_FRAGINFO);
+ 	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
++	char *line_prefix = "";
++	struct strbuf *msgbuf;
+ 	int i;
  
-+int cmd_line_log_walk(struct rev_info *rev)
-+{
-+	struct commit *commit;
-+	struct commit_list *list = NULL;
-+	struct diff_line_range *r = NULL;
-+
-+	if (prepare_revision_walk(rev))
-+		die("revision walk prepare failed");
-+
-+	list = rev->commits;
-+	if (list) {
-+		list->item->object.flags |= RANGE_UPDATE;
-+		list = list->next;
-+	}
-+	/* Clear the flags */
-+	while (list) {
-+		list->item->object.flags &= ~(RANGE_UPDATE | EVIL_MERGE | NEED_PRINT);
-+		list = list->next;
++	if (opt && opt->output_prefix) {
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++		line_prefix = msgbuf->buf;
 +	}
 +
-+	list = rev->commits;
-+	while (list) {
-+		struct commit_list *need_free = list;
-+		commit = list->item;
-+
-+		if (commit->object.flags & RANGE_UPDATE) {
-+			assign_parents_range(rev, commit);
-+		}
-+
-+		if (commit->object.flags & NEED_PRINT) {
-+			line_log_flush(rev, commit);
-+		}
-+
-+		r = lookup_line_range(rev, commit);
-+		if (r) {
-+			cleanup(r);
-+			r = NULL;
-+			add_line_range(rev, commit, r);
-+		}
-+
-+		r = lookup_decoration(&rev->nontrivial_merge, &commit->object);
-+		if (r) {
-+			cleanup(r);
-+			r = NULL;
-+			add_decoration(&rev->nontrivial_merge, &commit->object, r);
-+		}
-+
-+		list = list->next;
-+		free(need_free);
-+	}
-+
-+	return 0;
-+}
-+
-diff --git a/line.h b/line.h
-index 7563536..3f5c827 100644
---- a/line.h
-+++ b/line.h
-@@ -134,4 +134,6 @@ extern struct diff_line_range *lookup_line_range(struct rev_info *revs,
- const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
- 		void *data, long lines, long begin, long *ret);
+ 	for (i = 0; i < range->nr; i++) {
+ 		struct range *r = range->ranges + i;
+ 		long lenp = r->pend - r->pstart + 1, pstart = r->pstart;
+@@ -1210,8 +1224,8 @@ static void diff_flush_chunks(struct diff_options *opt, struct line_chunk *chunk
+ 		if (pstart == 0)
+ 			lenp = 0;
  
-+extern int cmd_line_log_walk(struct rev_info *rev);
-+
- #endif
-diff --git a/revision.c b/revision.c
-index 7e82efd..25c9a94 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1637,6 +1637,12 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 	if (revs->combine_merges)
- 		revs->ignore_merges = 0;
- 	revs->diffopt.abbrev = revs->abbrev;
-+
-+	if (revs->line_level_traverse) {
-+		revs->limited = 1;
-+		revs->topo_order = 1;
-+	}
-+
- 	if (diff_setup_done(&revs->diffopt) < 0)
- 		die("diff_setup_done failed");
+-		fprintf(opt->file, "%s@@ -%ld,%ld +%ld,%ld @@%s\n",
+-			set, pstart, lenp, r->start, len, reset);
++		fprintf(opt->file, "%s%s@@ -%ld,%ld +%ld,%ld @@%s\n",
++			line_prefix, set, pstart, lenp, r->start, len, reset);
  
+ 		diff_flush_range(opt, chunk, r);
+ 	}
+@@ -1230,6 +1244,13 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
+ 	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
+ 	struct line_chunk chunk;
+ 	int must_show_header;
++	char *line_prefix = "";
++	struct strbuf *msgbuf;
++
++	if (opt && opt->output_prefix) {
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++		line_prefix = msgbuf->buf;
++	}
+ 
+ 	/*
+ 	 * the ranges that touch no different file, in this case
+@@ -1264,21 +1285,26 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
+ 	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
+ 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
+ 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
+-	strbuf_addf(&header, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
++	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix,
++			set, a_one, b_two, reset);
+ 	if (lbl[0][0] == '/') {
+-		strbuf_addf(&header, "%snew file mode %06o%s\n", set, two->mode, reset);
++		strbuf_addf(&header, "%s%snew file mode %06o%s\n",
++			line_prefix, set, two->mode, reset);
+ 	} else if (lbl[1][0] == '/') {
+-		strbuf_addf(&header, "%sdeleted file mode %06o%s\n", set, one->mode, reset);
++		strbuf_addf(&header, "%s%sdeleted file mode %06o%s\n",
++			line_prefix, set, one->mode, reset);
+ 	} else if (one->mode != two->mode) {
+-			strbuf_addf(&header, "%sold mode %06o%s\n", set, one->mode, reset);
+-			strbuf_addf(&header, "%snew mode %06o%s\n", set, two->mode, reset);
++			strbuf_addf(&header, "%s%sold mode %06o%s\n",
++				line_prefix, set, one->mode, reset);
++			strbuf_addf(&header, "%s%snew mode %06o%s\n",
++				line_prefix, set, two->mode, reset);
+ 	}
+ 
+ 	fprintf(opt->file, "%s%s", header.buf, meta.buf);
+ 	strbuf_release(&meta);
+ 	strbuf_release(&header);
+-	fprintf(opt->file, "%s--- %s%s\n", set, lbl[0], reset);
+-	fprintf(opt->file, "%s+++ %s%s\n", set, lbl[1], reset);
++	fprintf(opt->file, "%s%s--- %s%s\n", line_prefix, set, lbl[0], reset);
++	fprintf(opt->file, "%s%s+++ %s%s\n", line_prefix, set, lbl[1], reset);
+ 	free((void *)a_one);
+ 	free((void *)b_two);
+ 
+@@ -1331,12 +1357,13 @@ static void flush_nontrivial_merge(struct rev_info *rev, struct diff_line_range
+ 				meta, range->spec->path, reset);
+ 			for (; i < range->nr; i++) {
+ 				struct range *r = range->ranges + i;
+-				fprintf(opt->file, "%s@@ %ld,%ld @@%s\n", frag, r->start,
++				fprintf(opt->file, "%s%s@@ %ld,%ld @@%s\n",
++					line_prefix, frag, r->start,
+ 					r->end - r->start + 1, reset);
+ 				flush_lines(opt, &ptr, end, r->start, r->end,
+ 					&lno, new, ' ');
+ 			}
+-			fprintf(opt->file, "\n");
++			fprintf(opt->file, "%s\n", line_prefix);
+ 		}
+ 		range = range->next;
+ 	}
+@@ -1348,6 +1375,8 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ 	struct diff_line_range *nontrivial = lookup_decoration(&rev->nontrivial_merge, &c->object);
+ 	struct log_info log;
+ 	struct diff_options *opt = &rev->diffopt;
++	char *line_prefix = "";
++	struct strbuf *msgbuf;
+ 
+ 	if (range == NULL || ! (c->object.flags & NONTRIVIAL_MERGE ||
+ 							c->object.flags & NEED_PRINT))
+@@ -1360,11 +1389,12 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ 	rev->loginfo = &log;
+ 	show_log(rev);
+ 	rev->loginfo = NULL;
+-	/*
+-	 * Add a new line after each commit message, of course we should
+-	 * add --graph alignment later when the patches comes to master.
+-	 */
+-	fprintf(rev->diffopt.file, "\n");
++
++	if (opt && opt->output_prefix) {
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++		line_prefix = msgbuf->buf;
++	}
++	fprintf(rev->diffopt.file, "%s\n", line_prefix);
+ 
+ 	if (c->object.flags & NONTRIVIAL_MERGE)
+ 		flush_nontrivial_merge(rev, nontrivial);
 -- 
 1.7.2.20.g388bbb
