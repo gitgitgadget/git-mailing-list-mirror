@@ -1,286 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/5] diff: parse separate options like -S foo
-Date: Thu,  5 Aug 2010 10:22:52 +0200
-Message-ID: <1280996576-1165-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqmxt14gjt.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 05 10:23:37 2010
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [RFC/PATCH 0/3] instaweb: fix and improve WEBrick support
+Date: Thu, 5 Aug 2010 09:14:12 +0000
+Message-ID: <20100805091412.GA20998@dcvr.yhbt.net>
+References: <1272BF62-A0C8-4940-9472-E46C05BF1723@gmail.com> <m34ofbpcyr.fsf@localhost.localdomain> <20100804102545.GA32128@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Dippery <mdippery@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	Mike Dalessio <mike@csa.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 05 11:14:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ogvjh-0006Af-Vb
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 10:23:34 +0200
+	id 1OgwWq-0001dQ-VO
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 11:14:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759967Ab0HEIX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 04:23:27 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38124 "EHLO shiva.imag.fr"
+	id S1755113Ab0HEJOQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 05:14:16 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:56826 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759940Ab0HEIXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 04:23:20 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o758CQgb031524
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Aug 2010 10:12:26 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OgvjA-0005X8-2s; Thu, 05 Aug 2010 10:23:00 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OgvjA-0000JO-0E; Thu, 05 Aug 2010 10:23:00 +0200
-X-Mailer: git-send-email 1.7.2.1.30.g18195
-In-Reply-To: <vpqmxt14gjt.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Aug 2010 10:12:27 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o758CQgb031524
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1281600749.08617@thigsREW1i6DYF7koNutcA
+	id S1752808Ab0HEJOO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 05:14:14 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C99FC1F4E1;
+	Thu,  5 Aug 2010 09:14:12 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <20100804102545.GA32128@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152626>
 
-Change the option parsing logic in revision.c to accept separate forms
-like `-S foo' in addition to `-Sfoo'. The rest of git already accepted
-this form, but revision.c still used its own option parsing.
+Eric Wong <normalperson@yhbt.net> wrote:
+> Jakub Narebski <jnareb@gmail.com> wrote:
+> > Michael Dippery <mdippery@gmail.com> writes:
+> > > I _do_ have webrick. Asking around a bit, I was told the the problem
+> > > may have been introduced in commit be5347b. Is this so? If not, any
+> > > other ideas on what may be causing the problem?
+> > 
+> > To be more exact commit be5347b (git-instaweb: Put httpd logs in a
+> > "$httpd_only" subdirectory, 2010-05-28) by Pavan Kumar Sunkara added
+> > resolve_full_httpd before running *_config (webrick_config in this
+> > case).  But resolve_full_httpd() beside setting $httpd_only needed
+> > later for functionality provided by this commit, does also setting
+> > $full_httpd and checking if given web server can be run.
+> > 
+> I wouldn't mind making it more like what we do with plackup and
+> having a single Ruby script, eventually.
 
-Short options affected are -S<string>, -l<num> and -O<orderfile>, for
-which an empty string wouldn't make sense, hence -<option> <arg> isn't
-ambiguous.
+Done in 2/3 of my instaweb patch series.
+3/3 also adds logging support to WEBrick so it should support
+everything other web servers support.
 
-This patch does not handle --stat-name-width and --stat-width, which are
-special-cases where diff_long_opt do not apply. They are handled in a
-separate patch to ease review.
+> > The solution would be to either split resolve_full_httpd() into one
+> > function generating $httpd and $httpd_only, and second function
+> > generating $full_httpd and checing for web server existence, or create
+> > a separate check for 'webrick'.
+> 
+> I just split out the check and started modelling things after the code
+> for plackup.  Unfortunately, I haven't had any luck getting gitweb.cgi
+> to respect $GITWEB_CONFIG environment with webrick so the following
+> patch just ensures webrick is properly started, not useful.
 
-Original patch by Matthieu Moy, plus refactoring by Jonathan Nieder.
+I had to use the undocumented :CGIInterpreter option of WEBrick
+along with a shell script wrapper to pass environment variables.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- diff.c                       |   87 ++++++++++++++++++++++++++++++++++--------
- diff.h                       |    7 +++
- t/t4013-diff-various.sh      |    5 ++
- t/t4013/diff.log_-S_F_master |    7 +++
- t/t4202-log.sh               |   12 ++---
- 5 files changed, 95 insertions(+), 23 deletions(-)
- create mode 100644 t/t4013/diff.log_-S_F_master
+CGI support in WEBrick is implemented strangely: it executes a new Ruby
+interpreter after forking (but before executing the actual gitweb.cgi).
+Thus I couldn't just neuter the "ENV.delete" method in the webrick.rb
+file as the child process would just restore the default behavior.
 
-diff --git a/diff.c b/diff.c
-index 17873f3..bc8fa8e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2990,9 +2990,50 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
- 
- static int diff_scoreopt_parse(const char *opt);
- 
-+static inline int short_opt(char opt, const char **argv,
-+			    const char **optarg)
-+{
-+	const char *arg = argv[0];
-+	if (arg[0] != '-' || arg[1] != opt)
-+		return 0;
-+	if (arg[2] != '\0') {
-+		*optarg = arg + 2;
-+		return 1;
-+	}
-+	if (!argv[1])
-+		die("Option '%c' requires a value", opt);
-+	*optarg = argv[1];
-+	return 2;
-+}
-+
-+int parse_long_opt(const char *opt, const char **argv,
-+		   const char **optarg)
-+{
-+	const char *arg = argv[0];
-+	if (arg[0] != '-' || arg[1] != '-')
-+		return 0;
-+	arg += strlen("--");
-+	if (prefixcmp(arg, opt))
-+		return 0;
-+	arg += strlen(opt);
-+	if (*arg == '=') { /* sticked form: --option=value */
-+		*optarg = arg + 1;
-+		return 1;
-+	}
-+	if (*arg != '\0')
-+		return 0;
-+	/* separate form: --option value */
-+	if (!argv[1])
-+		die("Option '--%s' requires a value", opt);
-+	*optarg = argv[1];
-+	return 2;
-+}
-+
- int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- {
- 	const char *arg = av[0];
-+	const char *optarg;
-+	int argcount;
- 
- 	/* Output format options */
- 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch"))
-@@ -3149,10 +3190,11 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else
- 			die("bad --word-diff argument: %s", type);
- 	}
--	else if (!prefixcmp(arg, "--word-diff-regex=")) {
-+	else if ((argcount = parse_long_opt("word-diff-regex", av, &optarg))) {
- 		if (options->word_diff == DIFF_WORDS_NONE)
- 			options->word_diff = DIFF_WORDS_PLAIN;
--		options->word_regex = arg + 18;
-+		options->word_regex = optarg;
-+		return argcount;
- 	}
- 	else if (!strcmp(arg, "--exit-code"))
- 		DIFF_OPT_SET(options, EXIT_WITH_STATUS);
-@@ -3180,18 +3222,26 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	/* misc options */
- 	else if (!strcmp(arg, "-z"))
- 		options->line_termination = 0;
--	else if (!prefixcmp(arg, "-l"))
--		options->rename_limit = strtoul(arg+2, NULL, 10);
--	else if (!prefixcmp(arg, "-S"))
--		options->pickaxe = arg + 2;
-+	else if ((argcount = short_opt('l', av, &optarg))) {
-+		options->rename_limit = strtoul(optarg, NULL, 10);
-+		return argcount;
-+	}
-+	else if ((argcount = short_opt('S', av, &optarg))) {
-+		options->pickaxe = optarg;
-+		return argcount;
-+	}
- 	else if (!strcmp(arg, "--pickaxe-all"))
- 		options->pickaxe_opts = DIFF_PICKAXE_ALL;
- 	else if (!strcmp(arg, "--pickaxe-regex"))
- 		options->pickaxe_opts = DIFF_PICKAXE_REGEX;
--	else if (!prefixcmp(arg, "-O"))
--		options->orderfile = arg + 2;
--	else if (!prefixcmp(arg, "--diff-filter="))
--		options->filter = arg + 14;
-+	else if ((argcount = short_opt('O', av, &optarg))) {
-+		options->orderfile = optarg;
-+		return argcount;
-+	}
-+	else if ((argcount = parse_long_opt("diff-filter", av, &optarg))) {
-+		options->filter = optarg;
-+		return argcount;
-+	}
- 	else if (!strcmp(arg, "--abbrev"))
- 		options->abbrev = DEFAULT_ABBREV;
- 	else if (!prefixcmp(arg, "--abbrev=")) {
-@@ -3201,20 +3251,25 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		else if (40 < options->abbrev)
- 			options->abbrev = 40;
- 	}
--	else if (!prefixcmp(arg, "--src-prefix="))
--		options->a_prefix = arg + 13;
--	else if (!prefixcmp(arg, "--dst-prefix="))
--		options->b_prefix = arg + 13;
-+	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
-+		options->a_prefix = optarg;
-+		return argcount;
-+	}
-+	else if ((argcount = parse_long_opt("dst-prefix", av, &optarg))) {
-+		options->b_prefix = optarg;
-+		return argcount;
-+	}
- 	else if (!strcmp(arg, "--no-prefix"))
- 		options->a_prefix = options->b_prefix = "";
- 	else if (opt_arg(arg, '\0', "inter-hunk-context",
- 			 &options->interhunkcontext))
- 		;
--	else if (!prefixcmp(arg, "--output=")) {
--		options->file = fopen(arg + strlen("--output="), "w");
-+	else if ((argcount = parse_long_opt("output", av, &optarg))) {
-+		options->file = fopen(optarg, "w");
- 		if (!options->file)
- 			die_errno("Could not open '%s'", arg + strlen("--output="));
- 		options->close_file = 1;
-+		return argcount;
- 	} else
- 		return 0;
- 	return 1;
-diff --git a/diff.h b/diff.h
-index 063d10a..2b94ad6 100644
---- a/diff.h
-+++ b/diff.h
-@@ -214,6 +214,13 @@ extern void diff_unmerge(struct diff_options *,
- #define DIFF_SETUP_USE_CACHE		2
- #define DIFF_SETUP_USE_SIZE_CACHE	4
- 
-+/*
-+ * Poor man's alternative to parse-option, to allow both sticked form
-+ * (--option=value) and separate form (--option value).
-+ */
-+extern int parse_long_opt(const char *opt, const char **argv,
-+			 const char **optarg);
-+
- extern int git_diff_basic_config(const char *var, const char *value, void *cb);
- extern int git_diff_ui_config(const char *var, const char *value, void *cb);
- extern int diff_use_color_default;
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index dae6358..19857f4 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -208,6 +208,7 @@ log -p --first-parent master
- log -m -p --first-parent master
- log -m -p master
- log -SF master
-+log -S F master
- log -SF -p master
- log --decorate --all
- log --decorate=full --all
-@@ -282,4 +283,8 @@ diff master master^ side
- diff --dirstat master~1 master~2
- EOF
- 
-+test_expect_success 'log -S requires an argument' '
-+	test_must_fail git log -S
-+'
-+
- test_done
-diff --git a/t/t4013/diff.log_-S_F_master b/t/t4013/diff.log_-S_F_master
-new file mode 100644
-index 0000000..978d2b4
---- /dev/null
-+++ b/t/t4013/diff.log_-S_F_master
-@@ -0,0 +1,7 @@
-+$ git log -S F master
-+commit 9a6d4949b6b76956d9d5e26f2791ec2ceff5fdc0
-+Author: A U Thor <author@example.com>
-+Date:   Mon Jun 26 00:02:00 2006 +0000
-+
-+    Third
-+$
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 2230e60..c1abd31 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -100,13 +100,11 @@ test_expect_success 'oneline' '
- 
- test_expect_success 'diff-filter=A' '
- 
--	actual=$(git log --pretty="format:%s" --diff-filter=A HEAD) &&
--	expect=$(echo fifth ; echo fourth ; echo third ; echo initial) &&
--	test "$actual" = "$expect" || {
--		echo Oops
--		echo "Actual: $actual"
--		false
--	}
-+	git log --pretty="format:%s" --diff-filter=A HEAD > actual &&
-+	git log --pretty="format:%s" --diff-filter A HEAD > actual-separate &&
-+	printf "fifth\nfourth\nthird\ninitial" > expect &&
-+	test_cmp expect actual &&
-+	test_cmp expect actual-separate
- 
- '
- 
+Pushed out to the "webrick" branch of git://git.bogomips.org/git-svn
+
+Eric Wong (3):
+      instaweb: fix WEBrick server support
+      instaweb: minimize moving parts for WEBrick
+      instaweb: add access+error logging for WEBrick
+
 -- 
-1.7.2.1.30.g18195
+Eric Wong
