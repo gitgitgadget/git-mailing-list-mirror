@@ -1,69 +1,61 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Massive repository corruptions
-Date: Thu, 5 Aug 2010 22:10:27 +0200
-Message-ID: <20100805201026.GC2630@nibiru.local>
-References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local> <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com> <20100713102245.GE29392@nibiru.local> <AANLkTimYeKr0asVE9mo8VcQEp5kdC18Wk5ykY9OFwixN@mail.gmail.com> <20100714132224.GF29392@nibiru.local> <20100805173156.GB2630@nibiru.local> <AANLkTikFypx3e-=+8J2925A++_jY-aJCDYHHw6dry5s6@mail.gmail.com>
-Reply-To: weigelt@metux.de
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: jk/tag-contains: stalled
+Date: Thu, 5 Aug 2010 16:36:33 -0400
+Message-ID: <20100805203633.GL2901@thunk.org>
+References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
+ <20100805001629.GC2901@thunk.org>
+ <7vsk2tdnv5.fsf@alter.siamese.dyndns.org>
+ <7vhbj9dm6h.fsf@alter.siamese.dyndns.org>
+ <20100805173635.GA15760@sigill>
+ <7vy6ckdhhu.fsf@alter.siamese.dyndns.org>
+ <20100805190653.GA2942@sigill>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 05 22:18:51 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 05 22:37:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh6tu-0001nW-27
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 22:18:50 +0200
+	id 1Oh7BV-0001lt-Kl
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 22:37:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934029Ab0HEUSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 16:18:40 -0400
-Received: from caprica.metux.de ([82.165.128.25]:47862 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S933589Ab0HEUSg (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 16:18:36 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o75KI1F7015075
-	for <git@vger.kernel.org>; Thu, 5 Aug 2010 22:18:02 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o75KHCIg015056
-	for git@vger.kernel.org; Thu, 5 Aug 2010 22:17:12 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o75KARGS017335
-	for git@vger.kernel.org; Thu, 5 Aug 2010 22:10:27 +0200
+	id S1759299Ab0HEUgk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 16:36:40 -0400
+Received: from thunk.org ([69.25.196.29]:41053 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933205Ab0HEUgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 16:36:38 -0400
+Received: from root (helo=tytso-glaptop)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1Oh7B5-00054j-Gv; Thu, 05 Aug 2010 16:36:35 -0400
+Received: from tytso by tytso-glaptop with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1Oh7B3-00039W-QR; Thu, 05 Aug 2010 16:36:33 -0400
 Content-Disposition: inline
-In-Reply-To: <AANLkTikFypx3e-=+8J2925A++_jY-aJCDYHHw6dry5s6@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+In-Reply-To: <20100805190653.GA2942@sigill>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152712>
 
-* Jussi Sirpoma <jussi.sirpoma@gmail.com> wrote:
+On Thu, Aug 05, 2010 at 03:06:54PM -0400, Jeff King wrote:
+> But my intent was to have a generic contains function. I was planning on
+> applying this to "git branch --contains", as well, but my initial
+> approach wasn't really any faster than the current code (probably
+> because the number of branches tends to be small compared to the number
+> of tags).
 
-> I once had a difficult to trace memory problem on a box when one of the last
-> memory banks
-> was bad. It was only used during high load situations while compiling the
-> kernel or something
-> similar. The problem was finally pinpointed by memtest86 which stresses all
-> memory.
+At work we have some 100 topics branches per kernel revision, and I
+have a repository with 332 branches in it at the moment.  So there may
+very well be repo's where git branch --contains might be faster with
+your approach.
 
-hmm, you know some way to do a memory-stresstest w/o rebooting ?
-
-
-cu
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+							- Ted
