@@ -1,79 +1,70 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Cooking of the ab/i18n series
-Date: Thu, 5 Aug 2010 21:09:52 +0000
-Message-ID: <AANLkTi=bnDgUsnBCv5493sH9eY5hg0S2YPywKba9jD20@mail.gmail.com>
+From: "Dmitry V. Levin" <ldv@altlinux.org>
+Subject: Re: jc/sha1-name-find-fix
+Date: Fri, 6 Aug 2010 01:12:23 +0400
+Message-ID: <20100805211223.GA12207@wo.int.altlinux.org>
+References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 23:10:27 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 05 23:12:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh7hp-0000l5-R3
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 23:10:26 +0200
+	id 1Oh7jw-0001ns-6s
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 23:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934093Ab0HEVJ5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 17:09:57 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33778 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932534Ab0HEVJz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 17:09:55 -0400
-Received: by iwn33 with SMTP id 33so476448iwn.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 14:09:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=GNhAt6omapaaDMg08N+3dkDADgIEXS+cErEIfP4A8gg=;
-        b=dSE9D5sLkbvMZCqK0gJcPzVDK2KFS078ZZnM2C2xrKDwFI0T5Zk5FaZIRoxeFPkNVh
-         O/d6MMCsqgFVr4N9qQ1BlkL9ngD31MlysYi02juN3tSKtc7V7UTnUdFr1fdwPszTYH3a
-         4WVcOSMfdNKl+8VQ1Q7bXfuP+0NjaWenBqQ4c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=MtqT3+MPdLXcZN9uHSume2/LR2qarHdBytqgSXdXaldOMQW4bjELlu+vbjQJkVkEJr
-         3LOU3hhCpdUqxK8cBLueUze4ypbx28H5vvqRXWqEG4QqZjMxbHVWbZfzfUmAw2vr23zN
-         PjNwS/aTI0skAUeeqILzaHtHZ2lS5gXk0mz0g=
-Received: by 10.231.39.201 with SMTP id h9mr12070959ibe.118.1281042592950; 
-	Thu, 05 Aug 2010 14:09:52 -0700 (PDT)
-Received: by 10.231.166.79 with HTTP; Thu, 5 Aug 2010 14:09:52 -0700 (PDT)
+	id S934352Ab0HEVM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 17:12:26 -0400
+Received: from vint.altlinux.org ([194.107.17.35]:60418 "EHLO
+	vint.altlinux.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933017Ab0HEVMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 17:12:24 -0400
+Received: from wo.int.altlinux.org (wo.int.altlinux.org [192.168.1.4])
+	by vint.altlinux.org (Postfix) with ESMTP id 86C763F80032
+	for <git@vger.kernel.org>; Thu,  5 Aug 2010 21:12:23 +0000 (UTC)
+Received: by wo.int.altlinux.org (Postfix, from userid 508)
+	id 7C6F2519000D; Fri,  6 Aug 2010 01:12:23 +0400 (MSD)
+Content-Disposition: inline
+In-Reply-To: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
+X-fingerprint: FE4C 93AB E19A 2E4C CB5D  3E4E 7CAB E6AC 9E35 361E
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152719>
 
-On Wed, Aug 4, 2010 at 22:24, Junio C Hamano <gitster@pobox.com> wrote:
 
-Since we're asking about the status of series...
+--5mCyUwZo2JvN/JJP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> * tr/ab-i18n-fix (2010-07-25) 1 commit
-> =C2=A0- tests: locate i18n lib&data correctly under --valgrind
-> =C2=A0(this branch uses ab/i18n.)
+On Wed, Aug 04, 2010 at 03:24:23PM -0700, Junio C Hamano wrote:
+[...]
+> [New Topics]
+>=20
+> * jc/sha1-name-find-fix (2010-08-02) 1 commit
+>  - sha1_name.c: fix parsing of ":/token" syntax
 
-> * ab/i18n (2010-07-19) 2 commits
-> =C2=A0- tests: rename test to work around GNU gettext bug
-> =C2=A0- Add infrastructure for translating Git with gettext
-> =C2=A0(this branch is used by tr/ab-i18n-fix.)
+Thank you for the fix.  BTW, it applies to maint with no regressions.
 
-Do you have any plans for when to merge the i18n series?
 
-It's been cooking for a while now, and it'll need a lot of follow-up
-work (gettextizing) once it gets merged.
+--=20
+ldv
 
-I don't have infinite time to do that, so sooner rather than later
-would be better if we're going to e.g. have a fully localized Git 1.8.
+--5mCyUwZo2JvN/JJP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-I haven't been sending these follow up patches due to the reasons I
-already cited. They're pretty much guaranteed to conflict with other
-things in-flight.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-If you're not comfortable with merging it soon for whatever reason
-then perhaps I could submit something to add a no-op N_() macro to Git
-in the interim. Then we could just do s/N_/_/ on the source tree once
-the real series gets merged.
+iEYEARECAAYFAkxbKTcACgkQfKvmrJ41Nh6DwgCgsetuEAXeuG9tE8q1TdpyfhmF
+yiQAoK+FydlY6Inv4OIHbmP8ugJASyHq
+=W6UT
+-----END PGP SIGNATURE-----
+
+--5mCyUwZo2JvN/JJP--
