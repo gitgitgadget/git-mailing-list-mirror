@@ -1,78 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase -i: add exec command to launch a shell command
-Date: Thu, 05 Aug 2010 13:16:25 -0700
-Message-ID: <7vpqxwddd2.fsf@alter.siamese.dyndns.org>
-References: <1281013217-29577-1-git-send-email-Matthieu.Moy@imag.fr>
- <AANLkTinWvJvNOj6Ga7LgTMmEF37GbZN=hQBFJz4EBry5@mail.gmail.com>
- <vpqfwytnh0m.fsf@bauges.imag.fr>
- <AANLkTi=P4iinacNXgPN8ZCtjiggBEj-OzF8TkKG5pZgU@mail.gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Massive repository corruptions
+Date: Thu, 5 Aug 2010 22:10:27 +0200
+Message-ID: <20100805201026.GC2630@nibiru.local>
+References: <20100713015600.GA29392@nibiru.local> <AANLkTilXQ3VgPjihf0pjt4QPN-nCjwAWyHwoosLMeRpH@mail.gmail.com> <20100713050350.GB29392@nibiru.local> <AANLkTimQPv5MhLo4wwVTt2LiaWxqWwoYykEbz3wBS-OY@mail.gmail.com> <20100713102245.GE29392@nibiru.local> <AANLkTimYeKr0asVE9mo8VcQEp5kdC18Wk5ykY9OFwixN@mail.gmail.com> <20100714132224.GF29392@nibiru.local> <20100805173156.GB2630@nibiru.local> <AANLkTikFypx3e-=+8J2925A++_jY-aJCDYHHw6dry5s6@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 22:16:56 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 05 22:18:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh6s1-0000qe-DY
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 22:16:53 +0200
+	id 1Oh6tu-0001nW-27
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 22:18:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933545Ab0HEUQh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 16:16:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65126 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933391Ab0HEUQg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 16:16:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C8A4FCA83F;
-	Thu,  5 Aug 2010 16:16:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=GuTbUk6QBvZ5
-	lqUBE7XsshGfYJA=; b=WptTOqKYYbqBT1ZbR/X1U6d01O0G0PtKqWpKxUpmXFzW
-	COuS2J0H+Y/N69EtkZsz1KXbEFB12+Dft6MiXFLAYZw/vgwfSLydSPgZ3qyDtQ1w
-	1lQ4hTHdvD/8/LRSu2rN83Vx5GqKdfYZq7TWGcZCsHvutd1VfjLA0I/JS1mtOow=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=NlvCul
-	AIuiNMvyTVYjxXOf5walopSNR1azHLkGCOAL3dgEF7mdF5Y6gZDqiTYvZFrmkUbV
-	9qsuXyQv7L38GsllWUt0KO0WzPerYA9KES5vKotDgboKt0jMx32tME2cZQMvDDVR
-	7vaC20yik69dNFlCRf+vvKwiXHR1hEKnyZ1qM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 82CE4CA83D;
-	Thu,  5 Aug 2010 16:16:31 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8956CA837; Thu,  5 Aug
- 2010 16:16:26 -0400 (EDT)
-In-Reply-To: <AANLkTi=P4iinacNXgPN8ZCtjiggBEj-OzF8TkKG5pZgU@mail.gmail.com>
- (Jacob Helwig's message of "Thu\, 5 Aug 2010 11\:37\:40 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 563EF49E-A0CE-11DF-B3E3-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934029Ab0HEUSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 16:18:40 -0400
+Received: from caprica.metux.de ([82.165.128.25]:47862 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S933589Ab0HEUSg (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 16:18:36 -0400
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o75KI1F7015075
+	for <git@vger.kernel.org>; Thu, 5 Aug 2010 22:18:02 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o75KHCIg015056
+	for git@vger.kernel.org; Thu, 5 Aug 2010 22:17:12 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o75KARGS017335
+	for git@vger.kernel.org; Thu, 5 Aug 2010 22:10:27 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTikFypx3e-=+8J2925A++_jY-aJCDYHHw6dry5s6@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152711>
 
-Jacob Helwig <jacob.helwig@gmail.com> writes:
+* Jussi Sirpoma <jussi.sirpoma@gmail.com> wrote:
 
-> On Thu, Aug 5, 2010 at 09:47, Matthieu Moy <Matthieu.Moy@grenoble-inp=
-=2Efr> wrote:
->> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
->>
->>>> +in `$SHELL`, or the default shell if `$SHELL` is not set), so you=
- can
->>>> +use usual shell commands like "cd". The command is run from the
->>>
->>> I think that needs a definite article: ".. use the usual ..".
->> ...
-> You could probably just drop "usual" entirely: ..., so you can use
-> shell commands like "cd".
+> I once had a difficult to trace memory problem on a box when one of the last
+> memory banks
+> was bad. It was only used during high load situations while compiling the
+> kernel or something
+> similar. The problem was finally pinpointed by memtest86 which stresses all
+> memory.
 
-Sounds sane.  Will do, unless a native speaker stops me from doing so.
+hmm, you know some way to do a memory-stresstest w/o rebooting ?
+
+
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
