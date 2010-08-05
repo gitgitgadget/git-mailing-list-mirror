@@ -1,60 +1,58 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 08/12] ll-merge: let caller decide whether to renormalize
-Date: Thu, 5 Aug 2010 06:24:58 -0500
-Message-ID: <20100805112458.GJ13779@burratino>
+Subject: [PATCH 09/12] t4200 (rerere): modernize style
+Date: Thu, 5 Aug 2010 06:25:34 -0500
+Message-ID: <20100805112534.GK13779@burratino>
 References: <cover.1278093311.git.eyvind.bernhardsen@gmail.com>
  <20100804031935.GA19699@burratino>
  <20100804032338.GF19699@burratino>
  <7vocdifdrk.fsf@alter.siamese.dyndns.org>
  <20100805110822.GB13779@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Finn Arne Gangstad <finnag@pvv.org>,
 	"git@vger.kernel.org List" <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 13:26:30 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 13:27:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ogyai-0003w1-5p
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 13:26:28 +0200
+	id 1OgybR-0004da-Sf
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 13:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759040Ab0HEL0X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 07:26:23 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52453 "EHLO
+	id S1759048Ab0HEL1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 07:27:07 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47851 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758883Ab0HEL0W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 07:26:22 -0400
-Received: by iwn33 with SMTP id 33so91619iwn.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 04:26:21 -0700 (PDT)
+	with ESMTP id S1755060Ab0HEL1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 07:27:03 -0400
+Received: by iwn33 with SMTP id 33so92243iwn.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 04:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=BtwQrwBrrlFSIHMhhMMj0TGqE7mAjV+Afb1I6hKAcLg=;
-        b=fbiKvO10ZUVxGmtqm4dyKZnyo7DTKsMDhU9JwEuhlZW9E64paHmsDoZc5LVjcMKmuU
-         pbXllRsJ2+9DsrLxrONQcKf1cN2wRfk+ICcKGgtqk2IM9jRA0jO0TFVBIlAx8DbZQLht
-         yyB1z9iqIBxICP+X/JLrlTlsgzwGIKtWCeQcM=
+         :in-reply-to:user-agent;
+        bh=zpGpYRm4/ud6l9kkExrw5OpTFiKSZpyp/dbXQbeCUmg=;
+        b=CXTypzcphjTs/QGku4iENmwzlZp40FWOE/c+6HXLG87wSkRx46rI7B5zYlSTSZCgNM
+         eKyVHXdIoztCiEIGTWHrsjtrL2kCZP4FL6DnqkZ2Th7rgBr1XGKu7M/aApCgQQPOe5Ey
+         7mr2JK0UMOXCUVyZKdUzJ14Zi7WcVE/SCHERg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=O8BHy4LZ/VOLutFUTJWK5xMGo+iNVQXH19ZVnq/CPmKmlMcyC3fCPnuK5r2vXTo3Jv
-         yx+2KdKbme87km6qVK4pzVeoj/DdFjL8lMw9FBqVEuXlaLDEpSBU/nabmT6hswhrOU18
-         3mwSzvLKGv72RFHojnNuRjqrl+u2rV7QtDPws=
-Received: by 10.231.15.70 with SMTP id j6mr11772437iba.12.1281007576941;
-        Thu, 05 Aug 2010 04:26:16 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=cMXyjUZoccUzasDGBXQPhwLQOxCvG+M3Ss3GcJwJKWFNTw69RvguN+qOY69HUrIfC4
+         IbHrYnhNpZgmZo/CqwNn37lSVOne2Hgm4c3WNygSmItmCRZ2JJTSkzjsmNV/vAQW1TwR
+         YDcfji89kLtU8T4atbJtawEtrNVle8IQkm2y4=
+Received: by 10.231.174.206 with SMTP id u14mr12162537ibz.103.1281007622716;
+        Thu, 05 Aug 2010 04:27:02 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r3sm60625ibk.1.2010.08.05.04.26.15
+        by mx.google.com with ESMTPS id 34sm56918ibi.12.2010.08.05.04.27.01
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 04:26:16 -0700 (PDT)
+        Thu, 05 Aug 2010 04:27:02 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100805110822.GB13779@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -62,175 +60,451 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152641>
 
-Add a =E2=80=9Crenormalize=E2=80=9D bit to the ll-merge options word so=
- callers can
-decide on a case-by-case basis whether the merge is likely to have
-overlapped with a change in smudge/clean rules.
+Guard all test code with test_expect_success to make the
+script easier to follow.  While at it, pick some other nits:
 
-This reveals a few commands that have not been taking that situation
-into account, though it does not fix them.
+ - use test_tick (more than we have to, to be realistic);
 
-No functional change intended.
+ - 'single quotes' and \escaped HERE documents where possible
+   simplify review for escaping problems;
 
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Improved-by: Junio C Hamano <gitster@pobox.com>
+ - omit whitespace after >redirection operators for
+   consistency with other tests;
+
+ - use "update-index --refresh" instead of testing that
+   "ls-files -u" output is empty, since the former produces
+   nicer output on failure;
+
+ - compare to expected nonempty "ls-files -u" output instead
+   of counting lines when it is expected to be nonempty.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Uses the flag word now.
+ t/t4200-rerere.sh |  303 +++++++++++++++++++++++++++++++----------------------
+ 1 files changed, 179 insertions(+), 124 deletions(-)
 
-The new option is not exposed through =E2=80=9Cgit merge-file=E2=80=9D,=
- just like
-the virtual-ancestor option isn=E2=80=99t, but that is only from lazine=
-ss.
-Exposing it would make tests this easier, too.
-
-Some worries:
-
- - "checkout -m" does not do convert_to_worktree() but it should;
- - "rerere forget" has not been introduced to the wonderful world
-   of smudge filters, either.
-
- builtin/checkout.c |    4 ++++
- ll-merge.c         |    6 +++---
- ll-merge.h         |    1 +
- merge-recursive.c  |    1 +
- rerere.c           |   15 ++++++++++-----
- 5 files changed, 19 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 1994be9..a0c00d3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -150,6 +150,10 @@ static int checkout_merged(int pos, struct checkou=
-t *state)
- 	read_mmblob(&ours, active_cache[pos+1]->sha1);
- 	read_mmblob(&theirs, active_cache[pos+2]->sha1);
-=20
-+	/*
-+	 * NEEDSWORK: re-create conflicts from merges with
-+	 * merge.renormalize set, too
-+	 */
- 	status =3D ll_merge(&result_buf, path, &ancestor, "base",
- 			  &ours, "ours", &theirs, "theirs", 0);
- 	free(ancestor.ptr);
-diff --git a/ll-merge.c b/ll-merge.c
-index 290f764..6bb3095 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -99,8 +99,8 @@ static int ll_union_merge(const struct ll_merge_drive=
-r *drv_unused,
- 			  int flag, int marker_size)
- {
- 	/* Use union favor */
--	flag =3D (flag & LL_OPT_VIRTUAL_ANCESTOR) |
--	       create_ll_flag(XDL_MERGE_FAVOR_UNION);
-+	flag &=3D ~LL_OPT_FAVOR_MASK;
-+	flag |=3D create_ll_flag(XDL_MERGE_FAVOR_UNION);
- 	return ll_xdl_merge(drv_unused, result, path_unused,
- 			    orig, NULL, src1, NULL, src2, NULL,
- 			    flag, marker_size);
-@@ -345,7 +345,7 @@ int ll_merge(mmbuffer_t *result_buf,
- 	const struct ll_merge_driver *driver;
- 	int virtual_ancestor =3D flag & LL_OPT_VIRTUAL_ANCESTOR;
-=20
--	if (merge_renormalize) {
-+	if (flag & LL_OPT_RENORMALIZE) {
- 		normalize_file(ancestor, path);
- 		normalize_file(ours, path);
- 		normalize_file(theirs, path);
-diff --git a/ll-merge.h b/ll-merge.h
-index 5990271..ff7ca87 100644
---- a/ll-merge.h
-+++ b/ll-merge.h
-@@ -8,6 +8,7 @@
- #define LL_OPT_VIRTUAL_ANCESTOR	(1 << 0)
- #define LL_OPT_FAVOR_MASK	((1 << 1) | (1 << 2))
- #define LL_OPT_FAVOR_SHIFT 1
-+#define LL_OPT_RENORMALIZE	(1 << 3)
-=20
- static inline int ll_opt_favor(int flag)
- {
-diff --git a/merge-recursive.c b/merge-recursive.c
-index c0c9f0c..23f7a4d 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -648,6 +648,7 @@ static int merge_3way(struct merge_options *o,
- 	merge_status =3D ll_merge(result_buf, a->path, &orig, base_name,
- 				&src1, name1, &src2, name2,
- 				((o->call_depth ? LL_OPT_VIRTUAL_ANCESTOR : 0) |
-+				 (o->renormalize ? LL_OPT_RENORMALIZE : 0) |
- 				 create_ll_flag(favor)));
-=20
- 	free(name1);
-diff --git a/rerere.c b/rerere.c
-index 2197890..9dd4c7e 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -319,6 +319,10 @@ static int handle_cache(const char *path, unsigned=
- char *sha1, const char *outpu
- 		if (!mmfile[i].ptr && !mmfile[i].size)
- 			mmfile[i].ptr =3D xstrdup("");
- 	}
-+	/*
-+	 * NEEDSWORK: handle conflicts from merges with
-+	 * merge.renormalize set, too
-+	 */
- 	ll_merge(&result, path, &mmfile[0], NULL,
- 		 &mmfile[1], "ours",
- 		 &mmfile[2], "theirs", 0);
-@@ -361,7 +365,7 @@ static int find_conflict(struct string_list *confli=
-ct)
- 	return 0;
- }
-=20
--static int merge(const char *name, const char *path)
-+static int merge(const char *name, int renormalize, const char *path)
- {
- 	int ret;
- 	mmfile_t cur =3D {NULL, 0}, base =3D {NULL, 0}, other =3D {NULL, 0};
-@@ -376,7 +380,8 @@ static int merge(const char *name, const char *path=
-)
- 		ret =3D 1;
- 		goto out;
- 	}
--	ret =3D ll_merge(&result, path, &base, NULL, &cur, "", &other, "", 0)=
-;
-+	ret =3D ll_merge(&result, path, &base, NULL, &cur, "", &other, "",
-+			renormalize ? LL_OPT_RENORMALIZE : 0);
- 	if (!ret) {
- 		FILE *f =3D fopen(path, "w");
- 		if (!f)
-@@ -424,7 +429,7 @@ static int update_paths(struct string_list *update)
- 	return status;
- }
-=20
--static int do_plain_rerere(struct string_list *rr, int fd)
-+static int do_plain_rerere(struct string_list *rr, int fd, int renorma=
-lize)
- {
- 	struct string_list conflict =3D { NULL, 0, 0, 1 };
- 	struct string_list update =3D { NULL, 0, 0, 1 };
-@@ -469,7 +474,7 @@ static int do_plain_rerere(struct string_list *rr, =
-int fd)
- 		const char *name =3D (const char *)rr->items[i].util;
-=20
- 		if (has_rerere_resolution(name)) {
--			if (!merge(name, path)) {
-+			if (!merge(name, renormalize, path)) {
- 				if (rerere_autoupdate)
- 					string_list_insert(path, &update);
- 				fprintf(stderr,
-@@ -553,7 +558,7 @@ int rerere(int flags)
- 	fd =3D setup_rerere(&merge_rr, flags);
- 	if (fd < 0)
- 		return 0;
--	return do_plain_rerere(&merge_rr, fd);
-+	return do_plain_rerere(&merge_rr, fd, merge_renormalize);
- }
-=20
- static int rerere_forget_one_path(const char *path, struct string_list=
- *rr)
---=20
+diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
+index 70856d0..3ed4d1a 100755
+--- a/t/t4200-rerere.sh
++++ b/t/t4200-rerere.sh
+@@ -4,237 +4,292 @@
+ #
+ 
+ test_description='git rerere
++
++! [fifth] version1
++ ! [first] first
++  ! [fourth] version1
++   ! [master] initial
++    ! [second] prefer first over second
++     ! [third] version2
++------
++     + [third] version2
+++      [fifth] version1
++  +    [fourth] version1
+++ +  + [third^] third
++    -  [second] prefer first over second
++ +  +  [first] first
++    +  [second^] second
++++++++ [master] initial
+ '
+ 
+ . ./test-lib.sh
+ 
+-test_expect_success 'setup' "
+-	cat > a1 <<- EOF &&
++test_expect_success 'setup' '
++	cat >a1 <<-\EOF &&
+ 	Some title
+ 	==========
+-	Whether 'tis nobler in the mind to suffer
++	Whether '\''tis nobler in the mind to suffer
+ 	The slings and arrows of outrageous fortune,
+ 	Or to take arms against a sea of troubles,
+ 	And by opposing end them? To die: to sleep;
+ 	No more; and by a sleep to say we end
+ 	The heart-ache and the thousand natural shocks
+-	That flesh is heir to, 'tis a consummation
+-	Devoutly to be wish'd.
++	That flesh is heir to, '\''tis a consummation
++	Devoutly to be wish'\''d.
+ 	EOF
+ 
+ 	git add a1 &&
++	test_tick &&
+ 	git commit -q -a -m initial &&
+ 
+-	git checkout -b first &&
+-	cat >> a1 <<- EOF &&
++	cat >>a1 <<-\EOF &&
+ 	Some title
+ 	==========
+ 	To die, to sleep;
+-	To sleep: perchance to dream: ay, there's the rub;
++	To sleep: perchance to dream: ay, there'\''s the rub;
+ 	For in that sleep of death what dreams may come
+ 	When we have shuffled off this mortal coil,
+-	Must give us pause: there's the respect
++	Must give us pause: there'\''s the respect
+ 	That makes calamity of so long life;
+ 	EOF
++
++	git checkout -b first &&
++	test_tick &&
+ 	git commit -q -a -m first &&
+ 
+ 	git checkout -b second master &&
+ 	git show first:a1 |
+-	sed -e 's/To die, t/To die! T/' -e 's/Some title/Some Title/' > a1 &&
+-	echo '* END *' >>a1 &&
++	sed -e "s/To die, t/To die! T/" -e "s/Some title/Some Title/" >a1 &&
++	echo "* END *" >>a1 &&
++	test_tick &&
+ 	git commit -q -a -m second
+-"
++'
+ 
+ test_expect_success 'nothing recorded without rerere' '
+-	(rm -rf .git/rr-cache; git config rerere.enabled false) &&
++	rm -rf .git/rr-cache &&
++	git config rerere.enabled false &&
+ 	test_must_fail git merge first &&
+ 	! test -d .git/rr-cache
+ '
+ 
+-# activate rerere, old style
+-test_expect_success 'conflicting merge' '
++test_expect_success 'activate rerere, old style (conflicting merge)' '
+ 	git reset --hard &&
+ 	mkdir .git/rr-cache &&
+-	git config --unset rerere.enabled &&
+-	test_must_fail git merge first
+-'
++	test_might_fail git config --unset rerere.enabled &&
++	test_must_fail git merge first &&
+ 
+-sha1=$(perl -pe 's/	.*//' .git/MERGE_RR)
+-rr=.git/rr-cache/$sha1
+-test_expect_success 'recorded preimage' "grep ^=======$ $rr/preimage"
++	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
++	rr=.git/rr-cache/$sha1 &&
++	grep "^=======\$" $rr/preimage &&
++	! test -f $rr/postimage &&
++	! test -f $rr/thisimage
++'
+ 
+ test_expect_success 'rerere.enabled works, too' '
+ 	rm -rf .git/rr-cache &&
+ 	git config rerere.enabled true &&
+ 	git reset --hard &&
+ 	test_must_fail git merge first &&
++
++	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
++	rr=.git/rr-cache/$sha1 &&
+ 	grep ^=======$ $rr/preimage
+ '
+ 
+-test_expect_success 'no postimage or thisimage yet' \
+-	"test ! -f $rr/postimage -a ! -f $rr/thisimage"
++test_expect_success 'set up rr-cache' '
++	rm -rf .git/rr-cache &&
++	git config rerere.enabled true &&
++	git reset --hard &&
++	test_must_fail git merge first &&
++	sha1=$(perl -pe "s/	.*//" .git/MERGE_RR) &&
++	rr=.git/rr-cache/$sha1
++'
+ 
+-test_expect_success 'preimage has right number of lines' '
++test_expect_success 'rr-cache looks sane' '
++	# no postimage or thisimage yet
++	! test -f $rr/postimage &&
++	! test -f $rr/thisimage &&
+ 
++	# preimage has right number of lines
+ 	cnt=$(sed -ne "/^<<<<<<</,/^>>>>>>>/p" $rr/preimage | wc -l) &&
++	echo $cnt &&
+ 	test $cnt = 13
+-
+ '
+ 
+-git show first:a1 > a1
+-
+-cat > expect << EOF
+---- a/a1
+-+++ b/a1
+-@@ -1,4 +1,4 @@
+--Some Title
+-+Some title
+- ==========
+- Whether 'tis nobler in the mind to suffer
+- The slings and arrows of outrageous fortune,
+-@@ -8,21 +8,11 @@
+- The heart-ache and the thousand natural shocks
+- That flesh is heir to, 'tis a consummation
+- Devoutly to be wish'd.
+--<<<<<<<
+--Some Title
+--==========
+--To die! To sleep;
+--=======
+- Some title
+- ==========
+- To die, to sleep;
+-->>>>>>>
+- To sleep: perchance to dream: ay, there's the rub;
+- For in that sleep of death what dreams may come
+- When we have shuffled off this mortal coil,
+- Must give us pause: there's the respect
+- That makes calamity of so long life;
+--<<<<<<<
+--=======
+--* END *
+-->>>>>>>
+-EOF
+-git rerere diff > out
+-
+-test_expect_success 'rerere diff' 'test_cmp expect out'
+-
+-cat > expect << EOF
+-a1
+-EOF
+-
+-git rerere status > out
++test_expect_success 'rerere diff' '
++	git show first:a1 >a1 &&
++	cat >expect <<-\EOF &&
++	--- a/a1
++	+++ b/a1
++	@@ -1,4 +1,4 @@
++	-Some Title
++	+Some title
++	 ==========
++	 Whether '\''tis nobler in the mind to suffer
++	 The slings and arrows of outrageous fortune,
++	@@ -8,21 +8,11 @@
++	 The heart-ache and the thousand natural shocks
++	 That flesh is heir to, '\''tis a consummation
++	 Devoutly to be wish'\''d.
++	-<<<<<<<
++	-Some Title
++	-==========
++	-To die! To sleep;
++	-=======
++	 Some title
++	 ==========
++	 To die, to sleep;
++	->>>>>>>
++	 To sleep: perchance to dream: ay, there'\''s the rub;
++	 For in that sleep of death what dreams may come
++	 When we have shuffled off this mortal coil,
++	 Must give us pause: there'\''s the respect
++	 That makes calamity of so long life;
++	-<<<<<<<
++	-=======
++	-* END *
++	->>>>>>>
++	EOF
++	git rerere diff >out &&
++	test_cmp expect out
++'
+ 
+-test_expect_success 'rerere status' 'test_cmp expect out'
++test_expect_success 'rerere status' '
++	echo a1 >expect &&
++	git rerere status >out &&
++	test_cmp expect out
++'
+ 
+-test_expect_success 'commit succeeds' \
+-	"git commit -q -a -m 'prefer first over second'"
++test_expect_success 'first postimage wins' '
++	git show first:a1 | sed "s/To die: t/To die! T/" >expect &&
+ 
+-test_expect_success 'recorded postimage' "test -f $rr/postimage"
++	git commit -q -a -m "prefer first over second" &&
++	test -f $rr/postimage &&
+ 
+-test_expect_success 'another conflicting merge' '
+ 	git checkout -b third master &&
+-	git show second^:a1 | sed "s/To die: t/To die! T/" > a1 &&
++	git show second^:a1 | sed "s/To die: t/To die! T/" >a1 &&
+ 	git commit -q -a -m third &&
+-	test_must_fail git pull . first
+-'
+-
+-git show first:a1 | sed 's/To die: t/To die! T/' > expect
+-test_expect_success 'rerere kicked in' "! grep ^=======$ a1"
+-
+-test_expect_success 'rerere prefers first change' 'test_cmp a1 expect'
+-
+-rm $rr/postimage
+-echo "$sha1	a1" | perl -pe 'y/\012/\000/' > .git/MERGE_RR
+-
+-test_expect_success 'rerere clear' 'git rerere clear'
+-
+-test_expect_success 'clear removed the directory' "test ! -d $rr"
+ 
+-mkdir $rr
+-echo Hello > $rr/preimage
+-echo World > $rr/postimage
+-
+-sha2=4000000000000000000000000000000000000000
+-rr2=.git/rr-cache/$sha2
+-mkdir $rr2
+-echo Hello > $rr2/preimage
++	test_must_fail git pull . first &&
++	# rerere kicked in
++	! grep "^=======\$" a1 &&
++	test_cmp expect a1
++'
+ 
+-almost_15_days_ago=$((60-15*86400))
+-just_over_15_days_ago=$((-1-15*86400))
+-almost_60_days_ago=$((60-60*86400))
+-just_over_60_days_ago=$((-1-60*86400))
++test_expect_success 'rerere clear' '
++	rm $rr/postimage &&
++	echo "$sha1	a1" | perl -pe "y/\012/\000/" >.git/MERGE_RR &&
++	git rerere clear &&
++	! test -d $rr
++'
+ 
+-test-chmtime =$almost_60_days_ago $rr/preimage
+-test-chmtime =$almost_15_days_ago $rr2/preimage
++test_expect_success 'set up for garbage collection tests' '
++	mkdir -p $rr &&
++	echo Hello >$rr/preimage &&
++	echo World >$rr/postimage &&
+ 
+-test_expect_success 'garbage collection (part1)' 'git rerere gc'
++	sha2=4000000000000000000000000000000000000000 &&
++	rr2=.git/rr-cache/$sha2 &&
++	mkdir $rr2 &&
++	echo Hello >$rr2/preimage &&
+ 
+-test_expect_success 'young records still live' \
+-	"test -f $rr/preimage && test -f $rr2/preimage"
++	almost_15_days_ago=$((60-15*86400)) &&
++	just_over_15_days_ago=$((-1-15*86400)) &&
++	almost_60_days_ago=$((60-60*86400)) &&
++	just_over_60_days_ago=$((-1-60*86400)) &&
+ 
+-test-chmtime =$just_over_60_days_ago $rr/preimage
+-test-chmtime =$just_over_15_days_ago $rr2/preimage
++	test-chmtime =$almost_60_days_ago $rr/preimage &&
++	test-chmtime =$almost_15_days_ago $rr2/preimage
++'
+ 
+-test_expect_success 'garbage collection (part2)' 'git rerere gc'
++test_expect_success 'garbage collection preserves young records' '
++	git rerere gc &&
++	test -f $rr/preimage &&
++	test -f $rr2/preimage
++'
+ 
+-test_expect_success 'old records rest in peace' \
+-	"test ! -f $rr/preimage && test ! -f $rr2/preimage"
++test_expect_success 'old records rest in peace' '
++	test-chmtime =$just_over_60_days_ago $rr/preimage &&
++	test-chmtime =$just_over_15_days_ago $rr2/preimage &&
++	git rerere gc &&
++	! test -f $rr/preimage &&
++	! test -f $rr2/preimage
++'
+ 
+-test_expect_success 'file2 added differently in two branches' '
++test_expect_success 'setup: file2 added differently in two branches' '
+ 	git reset --hard &&
++
+ 	git checkout -b fourth &&
+-	echo Hallo > file2 &&
++	echo Hallo >file2 &&
+ 	git add file2 &&
++	test_tick &&
+ 	git commit -m version1 &&
++
+ 	git checkout third &&
+-	echo Bello > file2 &&
++	echo Bello >file2 &&
+ 	git add file2 &&
++	test_tick &&
+ 	git commit -m version2 &&
++
+ 	test_must_fail git merge fourth &&
+-	echo Cello > file2 &&
++	echo Cello >file2 &&
+ 	git add file2 &&
+ 	git commit -m resolution
+ '
+ 
+ test_expect_success 'resolution was recorded properly' '
++	echo Cello >expected &&
++
+ 	git reset --hard HEAD~2 &&
+ 	git checkout -b fifth &&
+-	echo Hallo > file3 &&
++
++	echo Hallo >file3 &&
+ 	git add file3 &&
++	test_tick &&
+ 	git commit -m version1 &&
++
+ 	git checkout third &&
+-	echo Bello > file3 &&
++	echo Bello >file3 &&
+ 	git add file3 &&
++	test_tick &&
+ 	git commit -m version2 &&
+ 	git tag version2 &&
++
+ 	test_must_fail git merge fifth &&
+-	test Cello = "$(cat file3)" &&
+-	test 0 != $(git ls-files -u | wc -l)
++	test_cmp expected file3 &&
++	test_must_fail git update-index --refresh
+ '
+ 
+ test_expect_success 'rerere.autoupdate' '
+-	git config rerere.autoupdate true
++	git config rerere.autoupdate true &&
+ 	git reset --hard &&
+ 	git checkout version2 &&
+ 	test_must_fail git merge fifth &&
+-	test 0 = $(git ls-files -u | wc -l)
++	git update-index --refresh
+ '
+ 
+ test_expect_success 'merge --rerere-autoupdate' '
+-	git config --unset rerere.autoupdate
++	test_might_fail git config --unset rerere.autoupdate &&
+ 	git reset --hard &&
+ 	git checkout version2 &&
+ 	test_must_fail git merge --rerere-autoupdate fifth &&
+-	test 0 = $(git ls-files -u | wc -l)
++	git update-index --refresh
+ '
+ 
+ test_expect_success 'merge --no-rerere-autoupdate' '
+-	git config rerere.autoupdate true
++	headblob=$(git rev-parse version2:file3) &&
++	mergeblob=$(git rev-parse fifth:file3) &&
++	cat >expected <<-EOF &&
++	100644 $headblob 2	file3
++	100644 $mergeblob 3	file3
++	EOF
++
++	git config rerere.autoupdate true &&
+ 	git reset --hard &&
+ 	git checkout version2 &&
+ 	test_must_fail git merge --no-rerere-autoupdate fifth &&
+-	test 2 = $(git ls-files -u | wc -l)
++	git ls-files -u >actual &&
++	test_cmp expected actual
+ '
+ 
+ test_done
+-- 
 1.7.2.1.544.ga752d.dirty
