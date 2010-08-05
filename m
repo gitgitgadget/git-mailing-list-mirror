@@ -1,69 +1,132 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: tc/checkout-B
-Date: Thu, 5 Aug 2010 01:53:12 -0500
-Message-ID: <20100805065312.GB5318@burratino>
-References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH v2 2/3] stash: Allow git stash branch to process commits 
+	that look like stashes but are not stash references.
+Date: Thu, 5 Aug 2010 17:50:12 +1000
+Message-ID: <AANLkTi=FbF3X83uLjBDoCYUCuig3udTzZCXuE=1_w-Ld@mail.gmail.com>
+References: <1280831775-30759-1-git-send-email-jon.seymour@gmail.com>
+	<1280831775-30759-3-git-send-email-jon.seymour@gmail.com>
+	<7vwrs6djie.fsf@alter.siamese.dyndns.org>
+	<AANLkTikA0_Og4bzB8AHo3s2cLCvf6pc9=wC4w_8emuxU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 08:54:40 2010
+X-From: git-owner@vger.kernel.org Thu Aug 05 09:50:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OguLg-00083l-DC
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 08:54:40 +0200
+	id 1OgvDZ-00078i-IA
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 09:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759697Ab0HEGyd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 02:54:33 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61993 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759640Ab0HEGyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 02:54:32 -0400
-Received: by gwb20 with SMTP id 20so2337259gwb.19
-        for <git@vger.kernel.org>; Wed, 04 Aug 2010 23:54:31 -0700 (PDT)
+	id S1759849Ab0HEHuQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 03:50:16 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:64929 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758296Ab0HEHuO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 03:50:14 -0400
+Received: by qwh6 with SMTP id 6so3702177qwh.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 00:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=UGYc60DnKx0PrVmB64vXy+GFqj4wul1Fi3PHMmHCKP0=;
-        b=L6pZcPf8QO3aL1wjpb+meXNlh7ZxA2MSa0yyTQBbhPx5K19MteQOIlbO+bdmlBciYi
-         O1ssmuY/NGXSAX8BL2AM8QJ1+nRK04oBx7KrMqkI9qFJLkwWd50T353NeD7B+kUtFngF
-         t4KWg3ipPwKLEH6jAcoZRYLubLTWExQaiiPgQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QmzFrrM7femeHpK2WvgjPkaCGp/y11Y0RDSgZX8jx/A=;
+        b=sj9rZBq55wjHVH1VulAKHfL+luLQFOgJseSYxnlFGjcZPj7XRSaeH5T2SSnfFSl77i
+         5/nWQwan6m1aSXu5SaX0O8+THmWcjJC1mt1JFw5Chd7CAIXahKyoDMIL+H+0FEE2WlXW
+         L/+XKW0/RBrqyBpSFtUX0SnYIVpy/h2PVSf5g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=I9B2IU2tgHA4BOShHv+k35Enkn+xL4y/NKFwrxdAZar0dGDlaTHsSbgEjocLsv1ea1
-         L7HMOWuOe4Nv+hytQtmY8YEWFbNc5wkHYkP6WeuXabJZ6ZiWlArSujobMOzwoyCKD5Cx
-         uKBtM12RD3Jtx6Tq1vKD7T/ROMFrureTJG3ek=
-Received: by 10.100.248.16 with SMTP id v16mr1721756anh.42.1280991270273;
-        Wed, 04 Aug 2010 23:54:30 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t24sm15133053ano.32.2010.08.04.23.54.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 04 Aug 2010 23:54:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uxVlOjwME8Qb0VY/oWtg44aIywDw1iNlehY8DjDbnIycI8D8JeOwqmcnoeErlxXDCZ
+         jA8Wh2n7ha56N6Kd0lZJpWhJ8XehEp7oBF6ASrCLIFFbDuWcg9N7xCkuoRsIkWmwlDn/
+         GzXAFQxfL5ndjNeq7BzEMxg1CUMM06uo9oQvE=
+Received: by 10.229.131.160 with SMTP id x32mr3116185qcs.203.1280994612998; 
+	Thu, 05 Aug 2010 00:50:12 -0700 (PDT)
+Received: by 10.229.222.13 with HTTP; Thu, 5 Aug 2010 00:50:12 -0700 (PDT)
+In-Reply-To: <AANLkTikA0_Og4bzB8AHo3s2cLCvf6pc9=wC4w_8emuxU@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152619>
 
-Junio C Hamano wrote:
+One question about test patches. Are you ok with test_expect_failure
+tests that document the expected failure of a feature yet to be
+developed, followed by the feature, followed by the patch that makes
+the tests into test_expect_success tests, or would you prefer to see
+the pre- and post- test patches rolled into a single test that is
+delivered after the feature patch?
 
-> * tc/checkout-B (2010-06-24) 3 commits
->  - builtin/checkout: learn -B
->  - builtin/checkout: reword hint for -b
->  - add tests for checkout -b
-
-I keep on trying to use this option and then remembering it wasn=E2=80=99=
-t merged
-yet.  So for what it=E2=80=99s worth, I like it.
+On Thu, Aug 5, 2010 at 3:23 PM, Jon Seymour <jon.seymour@gmail.com> wro=
+te:
+> Junio,
+>
+> Thanks for the feedback. I'll rework along the lines you suggest. If
+> it makes sense to make the other stash commands tolerant of non-stash
+> entry references I'll add tests, support and documentation for that.
+>
+> jon.
+>
+> On Thu, August 2010 at 9:51 AM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>> Jon =C2=A0Seymour <jon.seymour@gmail.com> writes:
+>>
+>>> This patch allows git stash branch to work with stash-like commits =
+created by git stash create.
+>>>
+>>> Two changes were required:
+>>>
+>>> * relax the pre-condition so that a stash stack is required if and =
+only if a stash argument is not specified
+>>> * don't attempt to drop a stash argument that doesn't look like a s=
+tash reference.
+>>>
+>>>
+>>> Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+>>
+>> Please wrap very long lines.
+>>
+>>> diff --git a/git-stash.sh b/git-stash.sh
+>>> index 1d95447..432ddae 100755
+>>> --- a/git-stash.sh
+>>> +++ b/git-stash.sh
+>>> @@ -225,6 +225,12 @@ show_stash () {
+>>> =C2=A0 =C2=A0 =C2=A0 git diff $flags $b_commit $w_commit
+>>> =C2=A0}
+>>>
+>>> +if_stash_ref() {
+>>> + =C2=A0 =C2=A0 ref=3D"$1"
+>>> + =C2=A0 =C2=A0 shift
+>>> + =C2=A0 =C2=A0 test "${ref#stash}" =3D "${ref}" -a "${ref#$ref_sta=
+sh}" =3D "${ref}" || "$@"
+>>> +}
+>>
+>> The interface to this function looks a rather bad taste to me; would=
+n't it
+>> look more natural if the callers can say:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if stash_ref $it
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0do this
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
+>>
+>> Your criteria used here is that the given parameter does not begin w=
+ith
+>> "stash" nor "refs/stash". =C2=A0If it begins with either of these tw=
+o strings,
+>> the "test" fails and "$@" is run. =C2=A0Wouldn't this produce a fals=
+e hit if
+>> you kept a handcrafted stash-looking commit with a tag "stash-42" or
+>> something?
+>>
+>> It may make more sense to give "stash drop" an option to be silent i=
+f
+>> the given parameter is not on the list to begin with, perhaps?
+>>
+>>
+>
