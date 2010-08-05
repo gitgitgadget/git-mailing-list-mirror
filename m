@@ -1,214 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v2] test-lib: user-friendly alternatives to test [!] [-d|-f]
-Date: Thu,  5 Aug 2010 19:03:51 +0200
-Message-ID: <1281027831-22739-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <1281027281-21055-2-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: jk/tag-contains: stalled
+Date: Thu, 05 Aug 2010 10:05:58 -0700
+Message-ID: <7vhbj9dm6h.fsf@alter.siamese.dyndns.org>
+References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
+ <20100805001629.GC2901@thunk.org> <7vsk2tdnv5.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ted Ts'o <tytso@mit.edu>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Thu Aug 05 19:06:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh3ti-0006Zn-9W
+	id 1Oh3th-0006Zn-OD
 	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 19:06:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933434Ab0HERGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 13:06:18 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:51545 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750881Ab0HERGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 13:06:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o75H20ZX000612
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 5 Aug 2010 19:02:00 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Oh3rX-0005EC-L9; Thu, 05 Aug 2010 19:04:11 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Oh3rX-0005vY-JM; Thu, 05 Aug 2010 19:04:11 +0200
-X-Mailer: git-send-email 1.7.2.1.30.g18195
-In-Reply-To: <1281027281-21055-2-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 05 Aug 2010 19:02:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o75H20ZX000612
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1281632522.00432@CUsuC+dYmYcdlN78j5b3ew
+	id S933330Ab0HERGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 13:06:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63193 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750881Ab0HERGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 13:06:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F22CACADAD;
+	Thu,  5 Aug 2010 13:06:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VXfD6itZhWde8+mFst7uQJY1+r0=; b=RQBVbK
+	nlyYvtvzdTtIKQ5itynvXIY+py5QYbo6cE+pbYmPDMG80j0cEYnlOa2Q3Z+hox/j
+	W9fPrDcuVd5EZrLdDIuERXW1uxj/7fh8ra88X+rnPN9HePpWZWPslZoZL1CSirw9
+	rlUitZTwqnr6Xolvt1OgfG7FXnMmInhrJZzmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=prjfPk0rJuRiurH+KBTha6ZIHUNeeR6g
+	h/1bXB5Bx/RseE0adDBPmK9ooh/QrzVq8ZL80vYo9DR6EfDPMlh0/11wW5iKLwXh
+	O6zD2E2w0X5A/RMgoj5vI2kfxyMObcxr+hSgcqAML1MVfAwjIEJzobU9Y5O+7pVY
+	ZdijEO3VZyE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CABB4CADAB;
+	Thu,  5 Aug 2010 13:06:04 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E3A46CADAA; Thu,  5 Aug
+ 2010 13:06:00 -0400 (EDT)
+In-Reply-To: <7vsk2tdnv5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu\, 05 Aug 2010 09\:29\:34 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BB660792-A0B3-11DF-8F99-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152693>
 
-The helper functions are implemented, documented, and used in a few
-places to validate them, but not everywhere to avoid useless code churn.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Sooooory, the first version was plain broken (the tests did not even
-pass anymore), forget it. This should be better.
+> Ted Ts'o <tytso@mit.edu> writes:
+>
+>> On Wed, Aug 04, 2010 at 03:24:23PM -0700, Junio C Hamano wrote:
+>>> 
+>>> * jk/tag-contains (2010-07-05) 4 commits
+>>>  - Why is "git tag --contains" so slow?
+>>>  - default core.clockskew variable to one day
+>>>  - limit "contains" traversals based on commit timestamp
+>>>  - tag: speed up --contains calculation
+>>
+>> What needs to be fixed up before this effort can graduate?  I find the
+>> fixups here to be really helpful, even without the automated skew
+>> detection that has been proposed.  And even if we fix the root problem
+>> with some new all-singing pack format, I suspect that may be a ways
+>> out, so it would be nice if these patches could get included for now....
+>
+> I agree in principle; the log messages need to be cleaned up first
+> at the least, though.
 
- t/README                      |    8 ++++++++
- t/t3404-rebase-interactive.sh |   18 +++++++++---------
- t/t3407-rebase-abort.sh       |    6 +++---
- t/test-lib.sh                 |   32 ++++++++++++++++++++++++++++++++
- 4 files changed, 52 insertions(+), 12 deletions(-)
+To reduce the risk of double-work, I need to clarify.
 
-diff --git a/t/README b/t/README
-index 0d1183c..be760b9 100644
---- a/t/README
-+++ b/t/README
-@@ -467,6 +467,14 @@ library for your script to use.
-    <expected> file.  This behaves like "cmp" but produces more
-    helpful output when the test is run with "-v" option.
- 
-+ - test_file_must_exist <file> [<diagnosis>]
-+   test_file_must_not_exist <file> [<diagnosis>]
-+   test_dir_must_exist <dir> [<diagnosis>]
-+   test_dir_must_not_exist <dir> [<diagnosis>]
-+
-+   check whether a file/directory exists or doesn't. <diagnosis> will
-+   be displayed if the test fails.
-+
-  - test_when_finished <script>
- 
-    Prepend <script> to a list of commands to run to clean up
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index bba220a..50787c2 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -69,18 +69,18 @@ test_expect_success 'rebase -i with the exec command' '
- 	FAKE_LINES="1 exec_touch_touch-one 2 exec_touch_touch-two exec_false exec_touch_touch-three 3 4
- 		exec_touch_\"touch-file__name_with_spaces\";_touch_touch-after-semicolon 5" \
- 		test_must_fail git rebase -i A &&
--	test -f touch-one &&
--	test -f touch-two &&
--	! test -f touch-three &&
-+	test_file_must_exist touch-one &&
-+	test_file_must_exist touch-two &&
-+	test_file_must_not_exist touch-three "(Rebase should have stopped before)" &&
- 	test $(git rev-parse C) = $(git rev-parse HEAD) || {
- 		echo "Stopped at wrong revision:"
- 		echo "($(git describe --tags HEAD) instead of C)"
- 		false
- 	} &&
- 	git rebase --continue &&
--	test -f touch-three &&
--	test -f "touch-file  name with spaces" &&
--	test -f touch-after-semicolon &&
-+	test_file_must_exist touch-three &&
-+	test_file_must_exist "touch-file  name with spaces" &&
-+	test_file_must_exist touch-after-semicolon &&
- 	test $(git rev-parse master) = $(git rev-parse HEAD) || {
- 		echo "Stopped at wrong revision:"
- 		echo "($(git describe --tags HEAD) instead of master)"
-@@ -95,7 +95,7 @@ test_expect_success 'rebase -i with the exec command runs from tree root' '
- 	FAKE_LINES="1 exec_touch_touch-subdir" \
- 		git rebase -i HEAD^ &&
- 	cd .. &&
--	test -f touch-subdir &&
-+	test_file_must_exist touch-subdir &&
- 	rm -fr subdir
- '
- 
-@@ -178,7 +178,7 @@ test_expect_success 'abort' '
- 	git rebase --abort &&
- 	test $(git rev-parse new-branch1) = $(git rev-parse HEAD) &&
- 	test "$(git symbolic-ref -q HEAD)" = "refs/heads/branch1" &&
--	! test -d .git/rebase-merge
-+	test_dir_must_not_exist .git/rebase-merge
- '
- 
- test_expect_success 'abort with error when new base cannot be checked out' '
-@@ -187,7 +187,7 @@ test_expect_success 'abort with error when new base cannot be checked out' '
- 	test_must_fail git rebase -i master > output 2>&1 &&
- 	grep "Untracked working tree file .file1. would be overwritten" \
- 		output &&
--	! test -d .git/rebase-merge &&
-+	test_dir_must_not_exist .git/rebase-merge &&
- 	git reset --hard HEAD^
- '
- 
-diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index 2999e78..0ca81fe 100755
---- a/t/t3407-rebase-abort.sh
-+++ b/t/t3407-rebase-abort.sh
-@@ -38,7 +38,7 @@ testrebase() {
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
- 		test_must_fail git rebase$type master &&
--		test -d "$dotest" &&
-+		test_dir_must_exist "$dotest" &&
- 		git rebase --abort &&
- 		test $(git rev-parse to-rebase) = $(git rev-parse pre-rebase) &&
- 		test ! -d "$dotest"
-@@ -49,7 +49,7 @@ testrebase() {
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
- 		test_must_fail git rebase$type master &&
--		test -d "$dotest" &&
-+		test_dir_must_exist "$dotest" &&
- 		test_must_fail git rebase --skip &&
- 		test $(git rev-parse HEAD) = $(git rev-parse master) &&
- 		git rebase --abort &&
-@@ -62,7 +62,7 @@ testrebase() {
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
- 		test_must_fail git rebase$type master &&
--		test -d "$dotest" &&
-+		test_dir_must_exist "$dotest" &&
- 		echo c > a &&
- 		echo d >> a &&
- 		git add a &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index e8f21d5..694bbe8 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -541,6 +541,38 @@ test_external_without_stderr () {
- 	fi
- }
- 
-+# debugging-friendly alternatives to "test [!] [-f|-d]"
-+# The commands test the existence or non-existance of $1. $2 can be
-+# given to provide a more precise diagnosis.
-+test_file_must_exist () {
-+	if ! [ -f "$1" ]; then
-+		echo "file $1 doesn't exist. $*"
-+		false
-+	fi
-+}
-+
-+test_file_must_not_exist () {
-+	if [ -f "$1" ]; then
-+		echo "file $1 exists. $*"
-+		false
-+	fi
-+}
-+
-+test_dir_must_exist () {
-+	if ! [ -d "$1" ]; then
-+		echo "directory $1 doesn't exist. $*"
-+		false
-+	fi
-+}
-+
-+test_dir_must_not_exist () {
-+	if [ -d "$1" ]; then
-+		echo "directory $1 exists. $*"
-+		false
-+	fi
-+}
-+
-+
- # This is not among top-level (test_expect_success | test_expect_failure)
- # but is a prefix that can be used in the test script, like:
- #
--- 
-1.7.2.1.30.g18195
+I meant to say that I can find enough material, especially what Peff
+wrote, in the discussion that followed in the thread to do the clean-up
+myself.  No need to resend by anybody unless there are material
+differences from what have been discussed so far that need to be
+incorporated in the final series.
