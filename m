@@ -1,94 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 07/12] ll-merge: make flag easier to populate
-Date: Thu, 5 Aug 2010 07:16:58 -0500
-Message-ID: <20100805121658.GA23334@burratino>
-References: <cover.1278093311.git.eyvind.bernhardsen@gmail.com>
- <20100804031935.GA19699@burratino>
- <20100804032338.GF19699@burratino>
- <7vocdifdrk.fsf@alter.siamese.dyndns.org>
- <20100805110822.GB13779@burratino>
- <20100805111738.GI13779@burratino>
- <AANLkTi=9GwZgiQHpBLN_L14==Pir0Gs=DosZHF4wg9zi@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/5] diff: parse separate options like -S foo
+Date: Thu, 05 Aug 2010 14:24:13 +0200
+Message-ID: <vpqfwytxn6a.fsf@bauges.imag.fr>
+References: <vpqmxt14gjt.fsf@bauges.imag.fr>
+	<1280996576-1165-1-git-send-email-Matthieu.Moy@imag.fr>
+	<m3zkx1ntkk.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Finn Arne Gangstad <finnag@pvv.org>,
-	"git@vger.kernel.org List" <git@vger.kernel.org>,
-	Avery Pennarun <apenwarr@gmail.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 05 14:18:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 05 14:24:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OgzOz-0000cn-OU
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 14:18:26 +0200
+	id 1OgzVG-0008U1-Rl
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 14:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760168Ab0HEMSV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 08:18:21 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33955 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759181Ab0HEMSU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 08:18:20 -0400
-Received: by iwn33 with SMTP id 33so141032iwn.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 05:18:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=fVGpXRp0PNlwNZB1wJkJHmbrgUVbBkKSI2r4qKjc3uI=;
-        b=nLS8AZxFPxVhtHhBokziwnyC982QEqIg6H/f3wxrQ/DpoU6D5Oiw8qGhcSjxlbgGc3
-         DRUPHMRXw7yqAWo0+yIcRCC8bhyQnzPCn1Ik69YYyLBcKX1Z6/K+wTKByByp6783TF3A
-         fcHzp8NrOk/TE3QqzoBVP0V0H1N5p2OfAFUJY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=CSJCB0sSSGSPGLhn8b+N2QvrH8al7hcqiV3gpYZu0736LnKqczKDgYhJuq0rRqmFgp
-         AUYDqMADu5qXylqVuoYEic1V5tyRe1AAJm7CUkf9OZ2nBDdZl9qkmyhb2sartCAvA8d0
-         zmhOnMLAJnxx1extksoaqHIog8QtXBBgIvkSA=
-Received: by 10.231.146.129 with SMTP id h1mr11525905ibv.181.1281010698789;
-        Thu, 05 Aug 2010 05:18:18 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id h8sm92390ibk.9.2010.08.05.05.18.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 05:18:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=9GwZgiQHpBLN_L14==Pir0Gs=DosZHF4wg9zi@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1760250Ab0HEMYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 08:24:50 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52029 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755733Ab0HEMYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 08:24:49 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o75CDdAw004446
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 5 Aug 2010 14:13:39 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OgzUb-00013F-Fw; Thu, 05 Aug 2010 14:24:13 +0200
+In-Reply-To: <m3zkx1ntkk.fsf@localhost.localdomain> (Jakub Narebski's message of "Thu\, 05 Aug 2010 05\:16\:38 -0700 \(PDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 05 Aug 2010 14:13:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o75CDdAw004446
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1281615221.75869@cYHKzWHzGEWGZhVXq1ak4w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152652>
 
-Bert Wesarg wrote:
-> On Thu, Aug 5, 2010 at 13:17, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
->> +static inline int ll_opt_favor(int flag)
->> +{
->> + =C2=A0 =C2=A0 =C2=A0 return (flag & LL_OPT_FAVOR_MASK) >> LL_OPT_F=
-AVOR_SHIFT;
->> +}
->> +
->> +static inline int create_ll_flag(int favor)
->> +{
->> + =C2=A0 =C2=A0 =C2=A0 return ((favor << LL_OPT_FAVOR_SHIFT) & LL_OP=
-T_FAVOR_MASK);
->> +}
->> +
-[...]
-> Or flavor_to_ll_flag()
-> and ll_flag_to_flavor().
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> +static inline int short_opt(char opt, const char **argv,
+>> +			    const char **optarg)
+> [...]
+>> +int parse_long_opt(const char *opt, const char **argv,
+>> +		   const char **optarg)
+>
+> Just a nitpick question: why it is 'parse_long_opt' but just
+> 'short_opt'?
 
-Sounds reasonable.  (Well, except this is =E2=80=9Cfavor=E2=80=9D as in=
- =E2=80=9Cfavor our
-side=E2=80=9D or =E2=80=9Cfavor their side=E2=80=9D rather than =E2=80=9C=
-flavor of the month=E2=80=9D.)  Patch?
+I initially made *_long_opt prefixed with something (diff_ in my first
+version) because it's global, while short_opt is static.
+parse_short_opt is already taken in parse-option.c, so I'd rather
+avoid re-using it (it's static there, so technically, we can,
+but ...).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
