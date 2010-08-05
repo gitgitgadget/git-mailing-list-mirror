@@ -1,85 +1,107 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: [PATCH] rebase -i: add exec command to launch a shell command
-Date: Thu, 5 Aug 2010 11:37:40 -0700
-Message-ID: <AANLkTi=P4iinacNXgPN8ZCtjiggBEj-OzF8TkKG5pZgU@mail.gmail.com>
-References: <1281013217-29577-1-git-send-email-Matthieu.Moy@imag.fr> 
-	<AANLkTinWvJvNOj6Ga7LgTMmEF37GbZN=hQBFJz4EBry5@mail.gmail.com> 
-	<vpqfwytnh0m.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: jk/tag-contains: stalled
+Date: Thu, 05 Aug 2010 11:47:09 -0700
+Message-ID: <7vy6ckdhhu.fsf@alter.siamese.dyndns.org>
+References: <7v62zqf23s.fsf@alter.siamese.dyndns.org>
+ <20100805001629.GC2901@thunk.org> <7vsk2tdnv5.fsf@alter.siamese.dyndns.org>
+ <7vhbj9dm6h.fsf@alter.siamese.dyndns.org> <20100805173635.GA15760@sigill>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Aug 05 20:38:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ted Ts'o <tytso@mit.edu>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Aug 05 20:47:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oh5Ka-0001Gl-3f
-	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 20:38:16 +0200
+	id 1Oh5TT-0006Db-SB
+	for gcvg-git-2@lo.gmane.org; Thu, 05 Aug 2010 20:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758656Ab0HESiF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 14:38:05 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55357 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758123Ab0HESiD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Aug 2010 14:38:03 -0400
-Received: by wyb39 with SMTP id 39so6944099wyb.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 11:38:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=4v3fY0sjVuBtAZHl1U5fviN0KiGVXC7Usew8i90tqMQ=;
-        b=N4J1ueKfbwsJSMpUK+gHAhYVX+J38ODh5USoF31A7FmWmLuCEBmpaLV9joKJH7cest
-         gSMPrfA76SdFLviUfvKlMYePLDmDAgzDqkZPj8V04ply8zf0GdwckJD+1lN8HPLVk5Zn
-         qN13pWuZdCoYG8q0wA1O+IRKdTeFPlsTab5lY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=UGZjhMUyHGMH3uEgQDlIBjCg17k6HgirTU4SLEIf0/3GPx0bpNjG0le3Q861OTSAIA
-         BS5mTG81VI34pSsFDHze0hveK1qGhUrZYPRsqRJyZfYK2XAMX9nNezUw1CGI8u+MMv5Y
-         BzXOWjKL3Zaj+C00QRotp6KPfhoFrFvzcSWRk=
-Received: by 10.216.11.131 with SMTP id 3mr3928162wex.92.1281033480123; Thu, 
-	05 Aug 2010 11:38:00 -0700 (PDT)
-Received: by 10.216.151.25 with HTTP; Thu, 5 Aug 2010 11:37:40 -0700 (PDT)
-In-Reply-To: <vpqfwytnh0m.fsf@bauges.imag.fr>
+	id S1757293Ab0HESrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 14:47:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45182 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754773Ab0HESrV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 14:47:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71FDACBAC4;
+	Thu,  5 Aug 2010 14:47:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KFQH2R6vj8JDvRWNuCQQiS31vXQ=; b=S/woNH
+	C2WYDFgPvJsv1ARGIlQjY/mGblsq4oKKMiTMq8ALwAExpymwhyOUXmNIWmP4lj+K
+	vOiuiY/4HG4GYlX/nDIdkLQ0rF7iQh5126BQVL8n0ha2ClhYxLp4Tcv3wZK9SO8v
+	XDGGKZwdExPut/vGyWeTrS9dhEbetTn9v6cX8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t3PKk0FHNvW49ycK4Om1PqZ82jiBRy5P
+	6Dz/67LeYtstnzBUVANsHNeswvMStdeACH4jPHba5T+eGhk9v4APbQuco64zDe5s
+	he8dwoxtNmZ+eizfG33ZCvZHMWteNaRENtkLhn+mEf+eDBHiVS73VbyrpaQqmj6/
+	FCIes9qL9T8=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3B99ECBAC3;
+	Thu,  5 Aug 2010 14:47:15 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D7E4CBAC2; Thu,  5 Aug
+ 2010 14:47:11 -0400 (EDT)
+In-Reply-To: <20100805173635.GA15760@sigill> (Jeff King's message of "Thu\, 5
+ Aug 2010 13\:36\:36 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DDA5CED8-A0C1-11DF-8D63-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152701>
 
-On Thu, Aug 5, 2010 at 09:47, Matthieu Moy <Matthieu.Moy@grenoble-inp.f=
-r> wrote:
-> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
+
+> On Thu, Aug 05, 2010 at 10:05:58AM -0700, Junio C Hamano wrote:
 >
->>> +in `$SHELL`, or the default shell if `$SHELL` is not set), so you =
-can
->>> +use usual shell commands like "cd". The command is run from the
->>
->> I think that needs a definite article: ".. use the usual ..".
+>> >>> * jk/tag-contains (2010-07-05) 4 commits
+>> >>>  - Why is "git tag --contains" so slow?
+>> >>>  - default core.clockskew variable to one day
+>> >>>  - limit "contains" traversals based on commit timestamp
+>> >>>  - tag: speed up --contains calculation
+>> [...]
+>> > I agree in principle; the log messages need to be cleaned up first
+>> > at the least, though.
+>> 
+>> To reduce the risk of double-work, I need to clarify.
+>> 
+>> I meant to say that I can find enough material, especially what Peff
+>> wrote, in the discussion that followed in the thread to do the clean-up
+>> myself.  No need to resend by anybody unless there are material
+>> differences from what have been discussed so far that need to be
+>> incorporated in the final series.
 >
-> I don't think so, especially with a plural "commands" after.
-> Googlefight agrees with me ("use the usual commands" =3D> 350 results=
-,
-> "use usual commands" =3D> 4900), but that's not a proof. Perhaps a
-> native speaker could help?
->
+> The only bad log message should be the final one, which should be
+> dropped anyway. I would recommend just merging the first two for now,
+> and Ted can tweak his core.clockskew manually.
 
-You could probably just drop "usual" entirely: ..., so you can use
-shell commands like "cd".
+After re-reviewing the one that is queued, the use of TMP_MARK smelled
+somewhat bad to me.  It is named TMP_ exactly because it is meant to be
+used in a closed callpath---you can use it but you are supposed to clean
+it before you return the control to the caller, so that the caller can
+rely on TMP_MARK absent from any objects.
 
-I'm not sure that "usual" really adds anything there, and might
-actually be confusing.  Does it mean that "unusual" ones won't work?
-What are "unusual" ones?
+Use of UNINTERESTING is similarly not kosher if this were to be used in
+larger context outside of "do 'tags --contains' and exit".  You noted
+these two points in your original RFC patch.
 
-Possibly make 'like "cd"', parenthetical to further show that it's an
-example, and not saying that only commands along the lines of "cd"
-will work?  ..., so you can use shell commands (for example: cd).
+Besides, "contains()" is too generic a name to live in commit.h.
 
--Jacob
+My gut feeling is that it is probably Ok if contains() and its recursive
+helper are moved to builtin/tag.c and are made static, to make it clear
+that this should not be reused outside the current context as a generic
+"contains" function.  It would probably help to have a comment at the end
+of list_tags() to say that TMP_MARK _ought_ to be cleaned before leaving
+the function but we don't do that because we know it is the last function
+in the callchain before we exit.
+
+By the way, I wonder why pop_most_recent_commit() with a commit_list,
+which is the usual revision traversal ingredient for doing something like
+this, was not used in the patch, though.  Is it because depth-first was
+necessary?
