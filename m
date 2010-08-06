@@ -1,131 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Bizarro race conditions in the Git Makefile
-Date: Fri, 6 Aug 2010 16:14:07 -0500
-Message-ID: <20100806211407.GB6495@burratino>
-References: <AANLkTim2NMi3Vf-EGbFwy370q-YseQoGj=QLGMAq6N=B@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 0/3] tests: Better prerequisite handling & documentation
+Date: Fri,  6 Aug 2010 21:19:22 +0000
+Message-ID: <1281129565-26124-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 23:15:44 2010
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 06 23:19:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhUGV-0003ml-VU
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 23:15:44 +0200
+	id 1OhUKT-0005P2-9P
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 23:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964970Ab0HFVPj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 17:15:39 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56245 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964832Ab0HFVPh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 17:15:37 -0400
-Received: by vws3 with SMTP id 3so6548338vws.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 14:15:36 -0700 (PDT)
+	id S1762069Ab0HFVTm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 17:19:42 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:51612 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403Ab0HFVTl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 17:19:41 -0400
+Received: by wyb39 with SMTP id 39so8201142wyb.19
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 14:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=qIl283CufOo9rugvhpHezDUpLEkTnfYr1SDYGY+R8aU=;
-        b=xB9JbADOYZq8Mgyrapydyj0rBIefhz3JoRnLOchfG6TQKSTUuCAspec0t4XGjyH6bo
-         PjfP1sZzV4qXQz3icRiYQI88FONxjoQltFUI3P2gTD3nEkhx0owPn1e+2fVGQCUr0wu9
-         98irvMiPFWZ3+oR7emLGdvGXpDZ2GWn/tKA0Q=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=vVn7LGQrYmV+UMHCdDrtV44JepFV/H4TZy3OYuDFa74=;
+        b=C8BMYFLNxkRe+ES91Jvtv0eTE64NG7MbJn+zIEahON7Z5oBGV5OH9pILgdiuff1ooE
+         AGiJTqKTMxpgEyCgJlk/vBb1dbFrciX9Q8rWjBZtCDDyslAP/h/6Id66xSgfHe0Q3WEd
+         KKbvZYBN12hMSeqK7TLat5JuUbaTn99g+ZGek=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=MhWqLbSAoFec1yqySCdFKjVaLQrwEfdLNEGtjJfgMuviU/Ulwq8zMli6IqeA6nANXC
-         SpfUl4TwsY3QCY57uSoo0WabbbSCzk+rZPHZVRqB85lN2N9xgT4nRHskk7GBr9DEu+KG
-         uCaOfAurYyFw3Q7MhFIBYWXyIAsfugnS1YTUk=
-Received: by 10.220.161.201 with SMTP id s9mr8615384vcx.137.1281129336661;
-        Fri, 06 Aug 2010 14:15:36 -0700 (PDT)
-Received: from burratino ([66.99.1.133])
-        by mx.google.com with ESMTPS id i17sm760407vcr.3.2010.08.06.14.15.33
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=wkEjSVTJBeNI0vJhGCnDSYAVzpb9xHSdKY6PR8gDBXfCy90FAmC+B1ANOwNq5mgMv4
+         6+Yp4mwEEMvnSklpbIitCgw2KC+koIbC5DOqfGoU3fJQOMwIozNFKQ4KyITdl539yZP2
+         MFk/GMvy+dq1XZCz3nKipaY34HbIfo4sDFjr0=
+Received: by 10.216.10.5 with SMTP id 5mr11052148weu.81.1281129579790;
+        Fri, 06 Aug 2010 14:19:39 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id k7sm1167559wej.2.2010.08.06.14.19.37
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 14:15:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim2NMi3Vf-EGbFwy370q-YseQoGj=QLGMAq6N=B@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Fri, 06 Aug 2010 14:19:38 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152814>
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
+There were some useful nuggets in the "Tests in Cygwin" thread from
+May last year that I've dug out and improved. This series adds support
+for multiple test prerequisite, and improves the t/README
+documentation by adding a "Prerequisites" section.
 
-> Those interested in
-> poking their eyes can try:
->
->     while nice -n 30 make -j 15 clean all CFLAGS=3D-O0 CC=3Dgcc; do 1=
-; done
+There's also a small fix to the raw test output.
 
-You are asking make to simultaneously build and unbuild everything.
-It does not really surprise me that it gets confused.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
+  test-lib: Add support for multiple test prerequisites
+  test-lib: Print missing prerequisites in test output
+  t/README: Document the predefined test prerequisites
 
-Does
-
- while
-	nice -n 30 make -j 15 clean CFLAGS=3D-O0 CC=3Dgcc &&
-	nice -n 30 make -j 15 all CFLAGS=3D-O0 CC=3Dgcc
- do
-	:
- done
-
-behave better?
-
->     Writing perl.mak for Git
->     Writing perl.mak for Git
->     rename MakeMaker.tmp =3D> perl.mak: No such file or directory at
-
-Maybe something like the following is needed to protect against
-interrupted builds (not the problem you reported, but this reminds
-me).
-
-diff --git a/perl/Makefile b/perl/Makefile
-index 4ab21d6..eef7ee5 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -22,20 +22,21 @@ clean:
- ifdef NO_PERL_MAKEMAKER
- instdir_SQ =3D $(subst ','\'',$(prefix)/lib)
- $(makfile): ../GIT-CFLAGS Makefile
--	echo all: private-Error.pm Git.pm > $@
--	echo '	mkdir -p blib/lib' >> $@
--	echo '	$(RM) blib/lib/Git.pm; cp Git.pm blib/lib/' >> $@
--	echo '	$(RM) blib/lib/Error.pm' >> $@
-+	echo all: private-Error.pm Git.pm > $@+
-+	echo '	mkdir -p blib/lib' >> $@+
-+	echo '	$(RM) blib/lib/Git.pm; cp Git.pm blib/lib/' >> $@+
-+	echo '	$(RM) blib/lib/Error.pm' >> $@+
- 	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
--	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@
--	echo install: >> $@
--	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)"' >> $@
--	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Git.pm"; cp Git.pm "$$(DESTDIR=
-)$(instdir_SQ)"' >> $@
--	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
-+	echo '	cp private-Error.pm blib/lib/Error.pm' >> $@+
-+	echo install: >> $@+
-+	echo '	mkdir -p "$$(DESTDIR)$(instdir_SQ)"' >> $@+
-+	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Git.pm"; cp Git.pm "$$(DESTDIR=
-)$(instdir_SQ)"' >> $@+
-+	echo '	$(RM) "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@+
- 	'$(PERL_PATH_SQ)' -MError -e 'exit($$Error::VERSION < 0.15009)' || \
--	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@
--	echo instlibdir: >> $@
--	echo '	echo $(instdir_SQ)' >> $@
-+	echo '	cp private-Error.pm "$$(DESTDIR)$(instdir_SQ)/Error.pm"' >> $@=
-+
-+	echo instlibdir: >> $@+
-+	echo '	echo $(instdir_SQ)' >> $@+
-+	mv $@+ $@
- else
- $(makfile): Makefile.PL ../GIT-CFLAGS
- 	$(PERL_PATH) $< PREFIX=3D'$(prefix_SQ)'
---=20
+ t/README         |   51 ++++++++++++++++++++++++++++++++++++++++++++++=
+-----
+ t/t0000-basic.sh |   17 +++++++++++++++++
+ t/test-lib.sh    |   22 +++++++++++++++-------
+ 3 files changed, 78 insertions(+), 12 deletions(-)
