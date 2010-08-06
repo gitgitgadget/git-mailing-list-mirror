@@ -1,99 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Back-dating commits--way back--for constitution.git
-Date: Fri, 06 Aug 2010 01:18:05 -0700 (PDT)
-Message-ID: <m3vd7ooeru.fsf@localhost.localdomain>
-References: <i372v0$3np$1@dough.gmane.org>
-	<AANLkTik2B8pGo8uR4yxV3nz-Nx6dcU+fiO8GWgv9-VtW@mail.gmail.com>
-	<4C599781.2020603@gmail.com> <4C5B2F2E.4050709@gmail.com>
-	<AANLkTikWc0rKV9rQsLfmZvhdqAuvATmbur2ZqQ4Xu7uo@mail.gmail.com>
-	<AANLkTimdZrdLFEit7ecXkEcGdfevbvp2TU1ekHddUHwf@mail.gmail.com>
+From: PCMan <pcman.tw@gmail.com>
+Subject: Re: How to replace master branch of a repo with that of another 
+	totally unrelated repo?
+Date: Fri, 6 Aug 2010 16:21:02 +0800
+Message-ID: <AANLkTikxzUAVpsA8DtOM+1_u54xb5S91GV+3PAi52GLD@mail.gmail.com>
+References: <AANLkTiksJd-VfiP2Wzz-FsZoJk8djWyuxgweQpy6WaPB@mail.gmail.com>
+	<20100806080720.GB31901@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	"Joel C. Salomon" <joelcsalomon@gmail.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 10:18:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 06 10:21:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhI8B-0003mv-0e
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 10:18:19 +0200
+	id 1OhIAz-0004w3-8m
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 10:21:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935438Ab0HFISN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 04:18:13 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63639 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933008Ab0HFISK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 04:18:10 -0400
-Received: by fxm14 with SMTP id 14so3629710fxm.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 01:18:09 -0700 (PDT)
+	id S934070Ab0HFIVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Aug 2010 04:21:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:58506 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932936Ab0HFIVE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 04:21:04 -0400
+Received: by wwj40 with SMTP id 40so8760018wwj.1
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 01:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=4Q4xNZTOsXpVYnQlAj/QLxS4h1WAiWvUUTgp8ktCEG0=;
-        b=PDpqlTPSWH1jwIknmMp6hyrOd0Dy+OCCuFRgcx54lqbQL049Ibzl+N6WvuCfhq3cW9
-         83M9x+w6RrcrcmtJY/z3MIFansR6sgJ8970fj4WCUPrqO1GbotM9HhHOWKPOJfK3xEcc
-         Z8Ye5h3HD9NwlYny803UXRvwUcHUkxBuH+AnI=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=8+1L0CjVQ/rKlyPtLjRhUVRwZgGQe6fi3YKbcwgP3SE=;
+        b=YkmvZjdvxigXjoOCKJws2mkBOiuLDXloj1NxPnzAtlRY8Cf1+k+JgIRB6b7Bd19riK
+         6UKbamkCrLbe7bdVUkPfszOau2XbW5jRCsl7EI3iRTrWLU9vQpWr6rHEy77b5ZyBG5ej
+         mb+NTdA7JhfZ4vddD76cLfnB6KFFFL4ktJ/vU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=Af3zf/KTAq0FKSxFy6eTWqGAWem+6tq+M440G2OjPRaoZ5/dcWIlYjdJV7dAyAGqpC
-         2YrFI2afMJ1Dq53BzSLoVCurX9YUe/vshPzKI+w3POeYG5sGxmiZBes8+f0WvfivYWYn
-         /Put/o6oFaGxak9f+WJqdE9azp2ZmNmwgatP8=
-Received: by 10.223.120.82 with SMTP id c18mr12278068far.69.1281082688826;
-        Fri, 06 Aug 2010 01:18:08 -0700 (PDT)
-Received: from localhost.localdomain (abvc105.neoplus.adsl.tpnet.pl [83.8.200.105])
-        by mx.google.com with ESMTPS id l12sm504012fan.25.2010.08.06.01.18.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 01:18:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o75Mof2h007707;
-	Fri, 6 Aug 2010 00:50:46 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o75MoUvX007703;
-	Fri, 6 Aug 2010 00:50:31 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTimdZrdLFEit7ecXkEcGdfevbvp2TU1ekHddUHwf@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=jw/GBsNGpcIDh98nSOZ54dlY/1VlWuJ+/BVeQg1Q36EFnv7QhQw5i3Crg99P3oaZtK
+         NsQdmj4mK9hUa4OacM+9q6du1eA+fqlldwaprwlMCCEU9FyRYi9RCf/U9CfBJaVeQA57
+         YM6DegNkT71zQ2RB4aWMURyksq/p+StvA4RCk=
+Received: by 10.227.69.202 with SMTP id a10mr9817862wbj.81.1281082862747; Fri, 
+	06 Aug 2010 01:21:02 -0700 (PDT)
+Received: by 10.216.61.12 with HTTP; Fri, 6 Aug 2010 01:21:02 -0700 (PDT)
+In-Reply-To: <20100806080720.GB31901@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152771>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
-> On Thu, Aug 5, 2010 at 16:58, =C6var Arnfj=F6r=F0 Bjarmason <avarab@g=
-mail.com> wrote:
-> > On 32bit:
-> >
-> > commit 826a4f7721fe1c3963a733ecbc5422f05925af5d
-> > Author: The Philadelphia Convention <>
-> > Date: =A0 Wed Dec 31 19:59:59 1969 -0400
-> >
-> > On 64bit:
-> >
-> > commit 826a4f7721fe1c3963a733ecbc5422f05925af5d
-> > Author: The Philadelphia Convention <>
-> > Date: =A0 Mon Sep 17 13:00:00 1787 -0400
-> >
-> > It would be useful to turn that into a TODO test for Git.
->=20
-> That's bad, if we can't store a particular date we should do somethin=
-g
-> about it, not just silently underflow.
+Thank you for the detailed answer! It's really useful.
 
-We can *store* it without problems, the problem is with
-*interpretation* by porcelain (and some plumbing).
+Now I fetch the new source code to a new branch.
+Later I plan to replace master with merge --ours when it's ready.
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thanks
+
+On Fri, Aug 6, 2010 at 4:07 PM, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Hi,
+>
+> PCMan writes:
+>> I want to rewrite a program totally from scratch rather than branching
+>> from current one.
+>> So I created a new repo for it and do the development there.
+>> Now it's finished and I want to replace the old program with it.
+>> Is it possible to replace the master branch of the old repo with the
+>> code in this new repo?
+>> I want to move the old code to a separate branch for backup, and
+>> replace the master branch with the master branch of the new repo.
+>> Since git rm -r * than git add all new files will lost history of new
+>> repo, it's not an option.
+>> The old repo is a public online repo used by multiple users. So just
+>> renaming the repo won't work since the users who pull code from the
+>> old repo will get troubles.
+>> What's the best strategy for smooth migration in this case?
+>> I'm not able to find the answer on Google.
+>
+> In your old repository:
+> $ git checkout master # Switch to branch master
+> $ git checkout -b backup # Create a branch backup of master
+> $ git remote add new <new_repository_url> # "new" is the name of the remote
+> $ git fetch new # Fetch all the objects from the remote "new"
+> $ git checkout master # Get ready to rewrite master
+> $ git reset --hard new/master # Use `reset --hard` with extreme caution
+> $ git checkout backup # Your backup is safe here
+> $ # Done!
+>
+> -- Ram
+>
