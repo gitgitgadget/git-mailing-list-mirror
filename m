@@ -1,108 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Decompressing a tree to a location other than the working directory
-Date: Fri, 06 Aug 2010 12:58:47 -0700 (PDT)
-Message-ID: <m3mxszo6na.fsf@localhost.localdomain>
-References: <AANLkTi=RjcQ_-PNUt781jhYEA-8krqXpdHRenVyR_Rc4@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] notes: allow --dry-run for -n and --verbose for -v
+Date: Fri, 06 Aug 2010 22:28:09 +0200
+Message-ID: <4C5C7059.10203@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Joshua Shrader <jshrader83@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 21:58:57 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 06 22:28:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhT4C-0005O4-Lg
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 21:58:57 +0200
+	id 1OhTWi-0000bA-7K
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 22:28:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753643Ab0HFT6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 15:58:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50708 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754724Ab0HFT6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 15:58:50 -0400
-Received: by fxm14 with SMTP id 14so4089600fxm.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 12:58:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=MhkPrArA5pNWqwUewuQ4uvjZT0M0TWfdne4Plk2cWGE=;
-        b=ShoXVn+KAyMd7GMscIRhq85E7KN2MT2GcHjx1VeFq7oDgE+jGYi2nxgxRi0pM7PuK/
-         k8lpEG81EKDaap1QF4vfxX3eIh0wiBCw0icnrKK+SlYDQ8Wg67s1INE12n6O7Cvwy1WM
-         Xv6MKm6iNUGpM8J868mEWBOSWiZ1YluRf9XpI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=JLttCtIhpLCI2Af2x3lmRjAH9ViBV7n50DK57pSCNAzAAw2vGIpCuHxfaaQyeZWH4J
-         jcIbSPj+K3ZMgpCjh6U4d5eHtkcImnAi16rIXM7uhuOkrrnmfWscByNP8ej2PYBGTuNp
-         yu4wM925CD7F0Eax9VTuV7BNpGaUPWioe3v4U=
-Received: by 10.223.103.134 with SMTP id k6mr13456477fao.5.1281124728961;
-        Fri, 06 Aug 2010 12:58:48 -0700 (PDT)
-Received: from localhost.localdomain (abvu86.neoplus.adsl.tpnet.pl [83.8.218.86])
-        by mx.google.com with ESMTPS id b36sm753443faq.11.2010.08.06.12.58.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 12:58:47 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o76JwTUZ027173;
-	Fri, 6 Aug 2010 21:58:35 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o76JwIkM027163;
-	Fri, 6 Aug 2010 21:58:18 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTi=RjcQ_-PNUt781jhYEA-8krqXpdHRenVyR_Rc4@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1762019Ab0HFU2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Aug 2010 16:28:21 -0400
+Received: from india601.server4you.de ([85.25.151.105]:52180 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752473Ab0HFU2T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 16:28:19 -0400
+Received: from [10.0.1.100] (p57B7F69B.dip.t-dialin.net [87.183.246.155])
+	by india601.server4you.de (Postfix) with ESMTPSA id E67072F8126;
+	Fri,  6 Aug 2010 22:28:17 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152809>
 
-Joshua Shrader <jshrader83@gmail.com> writes:
+For consistency with other git commands, let the prune subcommand of
+git notes accept the long options --dry-run and --verbose for the
+respective short ones -n and -v.
 
-> git checkout allows one to checkout a particular version of a certain
-> path in the working directory.  Are there accessible plumbing commands
-> that can be used to accomplish the same thing, but change the target
-> directory.  For example, if I wanted to checkout a certain path, but
-> wanted to check it out somewhere external to my working directory /
-> repository?
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ Documentation/git-notes.txt |    2 ++
+ builtin/notes.c             |    5 +++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-Porcelain way: check out first example in git-archive(1) manpage
-
-  EXAMPLES
-  ========
-
-  git archive --format=tar --prefix=junk/ HEAD | (cd /var/tmp/ && tar xf -)
-
-       Create a tar archive that contains the contents of the latest commit
-       on the current branch, and extract it in the /var/tmp/junk directory.
-
-Plumbing way: after preparing index (it can be separate file than .git/index),
-use "git checkout-index" as desceived in second example on manpage:
-
-  EXAMPLES
-  ========
-
-
-  Using `git checkout-index` to "export an entire tree"
-
-        The  prefix  ability  basically  makes  it trivial to use git check-
-        out-index as an "export as tree" function.  Just  read  the  desired
-        tree into the index, and do:
-
-          $ git checkout-index --prefix=git-export-dir/ -a
-
-        `git checkout-index` will "export" the index into the specified direc-
-        tory.
-
-        The final "/" is important. The exported name is literally just pre-
-        fixed  with  the  specified string
-
-
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index 5540af5..2981d8c 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -129,10 +129,12 @@ OPTIONS
+ 	is taken to be in `refs/notes/` if it is not qualified.
+ 
+ -n::
++--dry-run::
+ 	Do not remove anything; just report the object names whose notes
+ 	would be removed.
+ 
+ -v::
++--verbose::
+ 	Report all object names whose notes are removed.
+ 
+ 
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 190005f..fbc347c 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -798,8 +798,9 @@ static int prune(int argc, const char **argv, const char *prefix)
+ 	struct notes_tree *t;
+ 	int show_only = 0, verbose = 0;
+ 	struct option options[] = {
+-		OPT_BOOLEAN('n', NULL, &show_only, "do not remove, show only"),
+-		OPT_BOOLEAN('v', NULL, &verbose, "report pruned notes"),
++		OPT_BOOLEAN('n', "dry-run", &show_only,
++			    "do not remove, show only"),
++		OPT_BOOLEAN('v', "verbose", &verbose, "report pruned notes"),
+ 		OPT_END()
+ 	};
+ 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1.7.2
