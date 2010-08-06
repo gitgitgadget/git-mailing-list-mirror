@@ -1,171 +1,83 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: [RFC] struct *_struct
-Date: Thu, 05 Aug 2010 20:57:13 -0700 (PDT)
-Message-ID: <4c5b8819.4f3fdc0a.14ad.22b1@mx.google.com>
-References: <20100804150843.GA2762@localhost.localdomain>
-	<7vaap2fafm.fsf@alter.siamese.dyndns.org>
-	<AANLkTin_6gaYF++N2GBgDsedfo7mY7yG5H99=-DxCa5E@mail.gmail.com>
-	<20100805224321.GA22430@localhost.localdomain>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH jn/paginate-fix 0/12] Re: git --paginate: do not commit 
+	pager choice too early
+Date: Fri, 6 Aug 2010 14:26:52 +1000
+Message-ID: <AANLkTincgypcb3Bq8KpFXv9guBO+xQKJ-TkuGEpk9W62@mail.gmail.com>
+References: <20100626192203.GA19973@burratino>
+	<7vpqzacs3h.fsf@alter.siamese.dyndns.org>
+	<7v630hyf5r.fsf@alter.siamese.dyndns.org>
+	<20100806023529.GB22369@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jared Hance <jaredhance@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 05:57:29 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 06 06:27:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhE3g-0000bA-G6
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 05:57:24 +0200
+	id 1OhEWJ-00007R-N1
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 06:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933721Ab0HFD5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 23:57:17 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59125 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933532Ab0HFD5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 23:57:15 -0400
-Received: by vws3 with SMTP id 3so5764727vws.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 20:57:14 -0700 (PDT)
+	id S932190Ab0HFE0z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 00:26:55 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:54181 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753081Ab0HFE0y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 00:26:54 -0400
+Received: by yxg6 with SMTP id 6so2726743yxg.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 21:26:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:subject:from
-         :to:cc:in-reply-to:references:mime-version:content-type;
-        bh=Ycp4b4Csfmc/bdIkupTQWMgzxLsJQqrH0BQdUzcBTtk=;
-        b=eMp5C7LoglQO76vkGgfE420AjHRjAoJW0qkFPa7HgZ/FPJBHjdHxi3wCDjEHFgljyd
-         JsrppLZVotvVfbxGVeaIFYP/Pgb3Jbd+jnqMlZRQkkz/Q8cO1NdMNb33W2SEbErD2419
-         uOZALG13Q5ETyLIh6LYu+ELe7OuqpIvvmItqg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TUYIAvxpGI6nypm7o+SE8Aik5HL49PPbo04Ve0/+IZw=;
+        b=WAYbfT/A0ZjXiKTuO+Ri2jjG6VOiArBJxiMmVavmt+t0Qx/8zmLObyD16FMiPsZm17
+         gcGzVw0iw3MUWx1cRlRlOV79lmqnFmCsbAIYl058VHUBnmg8yQH2iI/6bFs0hgrZYj03
+         MaaX7+GR34MZhoObM4yOB+ujAM7sNgU9AH174=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:subject:from:to:cc:in-reply-to:references
-         :mime-version:content-type;
-        b=wnVlHICAtrv45UpbmIPFZYU3q0mgFai8A1ltSMMyAsdyhazWHFT0uzjU8toP0dqtXF
-         x+896uKiAUpQuHNb+KYaZ4Kdccinvn2N/LfZQ3++E7mnjbiGVhF0rAV2aq/aLQi/0KbV
-         qiSYVW05MJeTZWqQVXFRYRtoPSjwmQsyQiys4=
-Received: by 10.220.98.193 with SMTP id r1mr7920449vcn.89.1281067034636;
-        Thu, 05 Aug 2010 20:57:14 -0700 (PDT)
-Received: from gmail.com (load-me-in-a-browser-if-this-tor-node-is-causing-you-grief.riseup.net [77.109.139.87])
-        by mx.google.com with ESMTPS id a15sm428738vci.9.2010.08.05.20.57.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 20:57:13 -0700 (PDT)
-In-Reply-To: <20100805224321.GA22430@localhost.localdomain>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=temVg9Xgq0283aReF8SSE7gw72IXLi52Zw10O8TiZUFwhTD4rHqWHDGYdzt/48YIod
+         lZNnXK2envBswdrlmhvEtyszEfT5p/NaFNJ7YUrTY71nrkw5BgJQvb/LarYPcx5SUx7q
+         qi5WPoqWlkzAmRdl+5t3I9t7ms786pIwqHDR0=
+Received: by 10.150.53.21 with SMTP id b21mr13517438yba.353.1281068812747; 
+	Thu, 05 Aug 2010 21:26:52 -0700 (PDT)
+Received: by 10.151.26.12 with HTTP; Thu, 5 Aug 2010 21:26:52 -0700 (PDT)
+In-Reply-To: <20100806023529.GB22369@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152763>
 
-On Wed, Aug 4, 2010 at 14:24, Junio C Hamano <gitster@pobox.com> wrote:
->>> I hate... "typedef foo struct foo"
-
-On Thu, Aug 05, 2010 at 11:20:14AM -0500, Michael Witten wrote:
->> How come?
-
-On Thu, Aug 5, 2010 at 17:43, Jared Hance <jaredhance@gmail.com> wrote:
-> In my opinion, it creates ambiguity. If I have
+2010/8/6 Jonathan Nieder <jrnieder@gmail.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (12):
+> =C2=A0git wrapper: introduce startup_info struct
+> =C2=A0setup: remember whether repository was found
+> =C2=A0git wrapper: allow setup_git_directory_gently() be called earli=
+er
+> =C2=A0shortlog: run setup_git_directory_gently() sooner
+> =C2=A0grep: run setup_git_directory_gently() sooner
+> =C2=A0apply: run setup_git_directory_gently() sooner
+> =C2=A0bundle: run setup_git_directory_gently() sooner
+> =C2=A0config: run setup_git_directory_gently() sooner
+> =C2=A0index-pack: run setup_git_directory_gently() sooner
+> =C2=A0ls-remote: run setup_git_directory_gently() sooner
+> =C2=A0var: run setup_git_directory_gently() sooner
+> =C2=A0merge-file: run setup_git_directory_gently() sooner
 >
->    typedef struct foo foo;
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/144000/foc=
+us=3D144110
 >
-> And I have "foo" used in a code snippet, it is much less easier to see
-> if foo is being used in the type context or if its an instance, since
-> I like to do
->
->    struct foo foo;
->
-> which reads much less well as:
->
->    foo foo;
->
->
-> Its also much less easier to grep though to find all the places the
-> type is used. If I do
->
->    $ git grep "foo"
->
-> I will end up with the instances and the struct type. whereas I can do
->
->    $ git grep "struct foo"
->
-> to find (most|all) of the types, depending on whether the code uses
-> decent practices (there shouldn't be a second space between struct and
-> foo, or a newline between them).
->
-> I could also use a similar regular expression to find all the
-> instances (ie, all the instances of foo that aren't prefixed with
-> struct).
 
-Those are valid points, but I'm not sure they have a practical basis;
-your problems are largely solved by capitalization conventions
-(which essentially provide shorter replacements for `struct '):
-
-    typedef struct { /* ... */ } Foo;
-    Foo foo;
-
-Unfortunately, such conventions don't enjoy the benefit of semantic
-protection. However, language-aware source navigation tools (like ctags)
-should be able to solve that problem and are probably more efficient
-in navigation time than grepping.
-
-Moreover, the form:
-
-    foo foo;
-
-is probably not that problematic in practice; it's presence is likely
-to be short lived for 2 reasons:
-
-    * Subjectively : everyone thinks it looks awful.
-    * Objectively  : It's technically constrained.
-
-The typedef declaration:
-
-    typedef /*type*/ foo;
-
-introduces the typedef name `foo' into the `ordinary identifier'
-name space; consequently, the declaration:
-
-    foo foo;
-
-cannot even occur in the same scope as the typdef, and when
-it does occur in an inner scope, it hides the original typdef
-name `foo' for all subsequent inner scopes:
-
-    typedef struct {char x;} foo;
-
-    foo foo;         // error: attempt to redeclare `foo'.
-    foo a;
-
-    int main()
-    {
-
-      foo foo;       // OK; hide typedef name with variable `foo'
-      foo b;         // error: `foo' is not a type.
-
-      {
-
-        foo c;       // error: `foo' is not a type.
-
-        typedef struct {char x;} foo;   // OK; hide variable `foo'
-
-        foo foo;     // error: attempt to redeclare `foo'
-        foo d;
-
-        d = a;       // error: anonymous structs are always different types.
-
-        {
-          foo foo;   // OK; hide typedef name with variable `foo'
-          d = foo;   // OK; same type
-          foo e;     // error: `foo' is not a type.
-        }
-
-        {
-          foo foo;   // OK; hide typedef name with variable `foo'
-          d = foo;   // OK; same type
-          foo f;     // error: `foo' is not a type.
-        }
-
-      }
-
-    }
-
-Sincerely,
-Michael Witten
+I was waiting for jn/maint-setup-fix to graduate before pushing out
+some more patches then I got side tracked by the subtree clone.
+Anyway, thanks!
+--=20
+Duy
