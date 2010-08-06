@@ -1,62 +1,73 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Back-dating commits--way back--for constitution.git
-Date: Fri, 6 Aug 2010 09:01:41 -0500
-Message-ID: <AANLkTi=VUULkuhinLD_fztq5NiWCq+g+rm=KGQppXr2h@mail.gmail.com>
-References: <i372v0$3np$1@dough.gmane.org> <AANLkTik2B8pGo8uR4yxV3nz-Nx6dcU+fiO8GWgv9-VtW@mail.gmail.com> 
-	<4C599781.2020603@gmail.com> <4C5B2F2E.4050709@gmail.com> 
-	<AANLkTikWc0rKV9rQsLfmZvhdqAuvATmbur2ZqQ4Xu7uo@mail.gmail.com> 
-	<AANLkTimdZrdLFEit7ecXkEcGdfevbvp2TU1ekHddUHwf@mail.gmail.com> 
-	<m3vd7ooeru.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	"Joel C. Salomon" <joelcsalomon@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 16:02:21 2010
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCH 0/2] Fix spurious conflicts with pull --rebase
+Date: Fri,  6 Aug 2010 08:05:01 -0600
+Message-ID: <1281103503-27515-1-git-send-email-newren@gmail.com>
+Cc: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>,
+	gitster@pobox.com, Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 06 16:03:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhNV5-000198-VU
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 16:02:20 +0200
+	id 1OhNWE-0001tW-Tb
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 16:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757385Ab0HFOCP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 10:02:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48535 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757058Ab0HFOCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 10:02:12 -0400
-Received: by fxm14 with SMTP id 14so3886792fxm.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 07:02:11 -0700 (PDT)
+	id S1756966Ab0HFOD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Aug 2010 10:03:26 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:33173 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756922Ab0HFODZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 10:03:25 -0400
+Received: by wyb39 with SMTP id 39so7779343wyb.19
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 07:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=VH95jJV9q34wQ0TzwEIqVA5gZhIei8zKUTVjXMQLEqA=;
-        b=SKyxSrZmpfj4r834eHT0IHNSI9Ie7wPaflXHWg5aHWXv+H8towLIc1lSo/qEqCYEps
-         cIc27v5j/Pza0lE9nkgaUT3KdH5golJaeU4/A+hbfrVU99cuXp5e5akSvhjegvi5Eld4
-         crZOpfbh6BJ2r4EodbZLzvR2y+e4MYJt3PRYE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=eZXjB5xiMaH2YUQKOIpLi+XN1Cfls9JIttkbN4W94TE=;
+        b=SG5Jdl4PJ0RQTS6y1DcWjVuC+8728niC942nhneJpoOJ5Qn54rjFTPiUtPNjiwLLa2
+         hgzL2JHIQb1i2j9j0bPTP+IZBoxEnX/hWTJJotWE2xTo/sJYyLTjr1V8EVJnlyLUgq7D
+         2wLDGmCv0TfA8rVlBjFt31VAT9vXDbT29Um4k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Kc15mxuNv0LEYeMBgXhTWwU+njlmw2sbbmnZO3KJQ4OHlsLbXGnPg0EdSUsrk4t74n
-         baxdrIr6P8F1ae1GP46xqY1YQJjDoiuELaOGffR43tqo9fJyxKTtv9MKJiLfcePCsOqM
-         AoaW4ILCGynH9571/KWXvgTepSLgan8jJjbOw=
-Received: by 10.239.144.140 with SMTP id o12mr539890hba.119.1281103331208; 
-	Fri, 06 Aug 2010 07:02:11 -0700 (PDT)
-Received: by 10.239.157.68 with HTTP; Fri, 6 Aug 2010 07:01:41 -0700 (PDT)
-In-Reply-To: <m3vd7ooeru.fsf@localhost.localdomain>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=GzkEX+nTCJc2Cfi5r3Zr8Ci0Hihgfj4cczQj4PPlutfZoPgx8KZIm+8b72G5I0HFRj
+         rbj360jyfsrpEbLQzz4aAHGJ/L4VF6IiC8TjMuIQ+AGflInT9IFYP/oM3uNyslKfSDE8
+         f0/OJ3wBQ7ADvXQm8LI4m6RGyppOMr8NLu63s=
+Received: by 10.216.164.21 with SMTP id b21mr955813wel.28.1281103403353;
+        Fri, 06 Aug 2010 07:03:23 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
+        by mx.google.com with ESMTPS id o84sm867954wej.13.2010.08.06.07.03.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 06 Aug 2010 07:03:21 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152782>
 
-On Fri, Aug 6, 2010 at 03:18, Jakub Narebski <jnareb@gmail.com> wrote:
-> the problem is with *interpretation* by
-> porcelain (and some plumbing).
+This patch series fixes git pull --rebase failing to detect if "local"
+patches are already upstream in cases where the upstream repository is
+not itself rebased.  Also in the non-rebased upstream case, this
+series avoids checking/applying more patches than needed (i.e. avoids
+having rebase work on commits which are already reachable from
+upstream).
 
-The problem is that git was written with leaky abstractions.
+It would be nice to make 'git pull --rebase' able to detect if patches
+being applied are already part of upstream in cases where the upstream
+repository has been rebased.  As far as I can tell, that would require
+changes to format-patch to allow it to be told what 'upstream' is, and
+some changes to git-pull.sh/git-rebase.sh to pass it this information.
+
+Elijah Newren (2):
+  t5520-pull: Add testcases showing spurious conflicts from git pull
+    --rebase
+  pull --rebase: Avoid spurious conflicts and reapplying unnecessary
+    patches
+
+ git-pull.sh     |   34 ++++++++++++++++++++-----------
+ t/t5520-pull.sh |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 81 insertions(+), 12 deletions(-)
