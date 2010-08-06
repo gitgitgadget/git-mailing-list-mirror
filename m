@@ -1,64 +1,63 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH v2 0/2] Submodules: Add the new config option "ignore"
-Date: Fri, 06 Aug 2010 01:51:28 +0200
-Message-ID: <4C5B4E80.1070102@web.de>
-References: <4C4DD33F.4020104@web.de> <4C4DD3CF.9070906@web.de> <7vhbjjware.fsf@alter.siamese.dyndns.org> <4C5B3D36.1060902@web.de> <7vvd7obpy5.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Git server eats all memory
+Date: Fri, 6 Aug 2010 11:37:42 +1000
+Message-ID: <AANLkTikt7LuhxHhOqPm2P-2hzXP54YThX5FRxF4yCFZu@mail.gmail.com>
+References: <wesfwyupgrg.fsf@kanis.fr>
+	<AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
+	<87ocdhlgbl.fsf@kanis.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 01:51:39 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Avery Pennarun <apenwarr@gmail.com>, git <git@vger.kernel.org>
+To: Ivan Kanis <expire-by-2010-08-10@kanis.fr>
+X-From: git-owner@vger.kernel.org Fri Aug 06 03:37:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhADq-00060D-Sk
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 01:51:39 +0200
+	id 1OhBsd-0006GI-WC
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 03:37:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759248Ab0HEXvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Aug 2010 19:51:31 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:36658 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758862Ab0HEXva (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 19:51:30 -0400
-Received: from smtp01.web.de  ( [172.20.0.243])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 35EEB15CFDDE2;
-	Fri,  6 Aug 2010 01:51:29 +0200 (CEST)
-Received: from [80.128.118.249] (helo=[192.168.178.29])
-	by smtp01.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1OhADh-0002wu-00; Fri, 06 Aug 2010 01:51:29 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.7) Gecko/20100713 Thunderbird/3.1.1
-In-Reply-To: <7vvd7obpy5.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/YK2GghrfHTG8rI4RullpLKxL5zQEvFbMwNUZ2
-	2KwjUbq+VJ5YSF3k7W5FPl8COlSKGhn0jg40xYvx+f4Nb2u0Jv
-	CxvYPeqxCPjxlVVssHqg==
+	id S934351Ab0HFBhp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 21:37:45 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:37686 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933217Ab0HFBhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 21:37:43 -0400
+Received: by wyb39 with SMTP id 39so7280211wyb.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 18:37:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=J04JzKyKd3bT/hr+8wNQPbuEdn6sPCVQILMGeVBPWJ0=;
+        b=vhCPIuKm5MThZKO4BqklvecLDajWmteti7R8gghWpYGyE3ZH7Exq1ETY+t/5N0PNGP
+         GdZA0Zi2Epd/Yv2yQy6hs07dFdz8kkab8b9UVwPQ7tSjCRANOobDa6fZ+0Zs6uK/mlW6
+         oMg5R7wEzvmwoHCNmGl11Qa/5DOXlpe3Wc918=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=skKcWluB0eFsknBuIVs1c7B3sdmP+8W2iOswdGrxc2cSRumYiGliI4KSohOp/1KiUh
+         GPXDzV6lDTNxP1jn+CpFp64D3uKawoXa21fIpp9Ogc0VKbC4AQ87ZHmbxhwLcWZ3VMBR
+         DahgESvPahQ22O42zXSGFQB7dxFOLDc7bW+1o=
+Received: by 10.216.167.145 with SMTP id i17mr293517wel.41.1281058662651; Thu, 
+	05 Aug 2010 18:37:42 -0700 (PDT)
+Received: by 10.216.173.199 with HTTP; Thu, 5 Aug 2010 18:37:42 -0700 (PDT)
+In-Reply-To: <87ocdhlgbl.fsf@kanis.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152742>
 
-Am 06.08.2010 01:27, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Am 28.07.2010 23:35, schrieb Junio C Hamano:
->>> The value of "submodule.<name>.path" does not have to be "<name>".  There
->>> seems to be a bit of confusion here.
->>
->> Thanks for clearing up my confusion, this is v2 of this patch using the
->> path configured for the submodule instead of its name.
-> 
-> Hmph, I thought that it would make more sense to use <name> so that once
-> the user configures ignore in .git/config, it will persist across moving
-> of the submodule in the superproject tree.  I wonder what others would
-> think.
+On Thu, Aug 5, 2010 at 4:33 PM, Ivan Kanis
+<expire-by-2010-08-10@kanis.fr> wrote:
+> I am ready to do whatever to diagnose the problem. I know C pretty well
+> and am ready to look into it but I am not sure where to start.
 
-I think that is just what this patch does, it uses the
-"config_name_for_path" string_list to get the submodules <name> for the
-path to then look up what is configured for the "ignore" option under
-that <name>. So the "ignore" option should survive renames, no? Or did
-I manage to confuse myself again?
+Try "git pack-objects --all --stdout > /dev/null" on the repo on
+server to see if it uses the same amount of memory you saw in cloning.
+You can then try debugging that command if it does.
+-- 
+Duy
