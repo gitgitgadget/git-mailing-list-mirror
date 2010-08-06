@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 04/12] shortlog: run setup_git_directory_gently() sooner
-Date: Thu, 5 Aug 2010 22:01:37 -0500
-Message-ID: <20100806030135.GH22369@burratino>
+Subject: [PATCH 05/12] grep: run setup_git_directory_gently() sooner
+Date: Thu, 5 Aug 2010 22:06:39 -0500
+Message-ID: <20100806030637.GI22369@burratino>
 References: <20100626192203.GA19973@burratino>
  <7vpqzacs3h.fsf@alter.siamese.dyndns.org>
  <7v630hyf5r.fsf@alter.siamese.dyndns.org>
@@ -13,46 +13,46 @@ Cc: git@vger.kernel.org,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 05:03:21 2010
+X-From: git-owner@vger.kernel.org Fri Aug 06 05:08:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhDDM-0004Vp-SK
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 05:03:21 +0200
+	id 1OhDIG-0005jz-Ox
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 05:08:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935308Ab0HFDDE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 23:03:04 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61390 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935307Ab0HFDDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 23:03:01 -0400
-Received: by yxg6 with SMTP id 6so2713036yxg.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 20:03:00 -0700 (PDT)
+	id S1758844Ab0HFDIK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 23:08:10 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:43586 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754201Ab0HFDIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 23:08:06 -0400
+Received: by gxk23 with SMTP id 23so2715868gxk.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 20:08:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=zG0Qqk6X56uWmWMpbmwiS6K4oa5h8RPhXJUuM8nqoBg=;
-        b=iT7t/H2jJ3H6nmU+qjZNR9W9JJwMZlbP3sGVycPWxx8YyKrqMfttKXml2cdB1w5wnL
-         hyc9NUUZKKFBIftuT78E85ZCMKqTmKDoZFgYUKNWL1x0OzKPpFFVd9Ua8HNXqwobA1MU
-         zA+wfwIkqjVZXeonuxifaiKJpSq2uKSVB/zbg=
+        bh=B3oa6qBAv3HJHOo/LOmG9/Fn75p1N03o2Xgv3+ZtmCw=;
+        b=sEE80f+avAZWpx9ximq0GnFD5uls8IbksOXBzQ75mOXlKLYj/q3xH3B3p0uWSqHusf
+         XUsDWOB0VPeDJryzyibmmsaJwuc7UYGDYoHDyeZH+/4GMygpbwn8lu8kKoMVYIcoezlQ
+         V32W2yI+lNIG9lByMCi043zFvli3QUZpfxhHo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=d56jnKubVQ1T6LsENKWqx1nGoDGd8ZbztNIWqQU8KNGNcHLuUqtwt6RMhIF0YeQk1S
-         jxJToBt2BBbTff8C8jGGJF4c6TG6rLMImnL3kVNdJ99Sia8nqljUkTtAWSaM4iIOLrzS
-         gkus0H4p0NBatx2LhPKJJjczn2xyJEGSEoU2o=
-Received: by 10.150.195.12 with SMTP id s12mr4980115ybf.414.1281063780879;
-        Thu, 05 Aug 2010 20:03:00 -0700 (PDT)
+        b=Zt8ruHvqovFG0qoyMI7HYZDrFtgyzvg85GKh20ZyFPGHnMbI+AAmSvN+0rCSCkg0YS
+         fcn/4+Hn8RQ9494st5VNopVt4aiBc+Ru0Y9kRwbN3uLIXgqC6Tq73jBumZBnzn3Qf8wi
+         boTZvFmEVmsMb6Qs+al6yaA/6Z0pM4Mnbe1Io=
+Received: by 10.150.74.16 with SMTP id w16mr13364266yba.138.1281064085853;
+        Thu, 05 Aug 2010 20:08:05 -0700 (PDT)
 Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id x3sm2925856ybl.22.2010.08.05.20.02.59
+        by mx.google.com with ESMTPS id u41sm930879yba.10.2010.08.05.20.08.04
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 20:03:00 -0700 (PDT)
+        Thu, 05 Aug 2010 20:08:05 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100806023529.GB22369@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -60,92 +60,109 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152750>
 
 =46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
 
-shortlog already runs a repository search unconditionally;
-running such a search earlier is not very risky.
+git grep already runs a repository search unconditionally,
+even when the --no-index option is supplied; running such a
+search earlier is not very risky.
 
-Without this change, the =E2=80=9C[pager] shortlog=E2=80=9D configurati=
-on
-is not respected at all: =E2=80=9Cgit shortlog=E2=80=9D unconditionally=
- paginates.
-
-The tests are a bit slow.  Running the full battery like this
-for all built-in commands would be counterproductive; the intent is
-rather to test shortlog as a representative example command using
-=2E.._gently().
+Just like with shortlog, without this change, the
+=E2=80=9C[pager] grep=E2=80=9D configuration is not respected at all.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Clarified commit message; simplified diff by keeping the nongit
-variable; added tests.
+Aside from rewriting the commit message and adding tests, this
+drops the interesting
 
- builtin/shortlog.c |    3 +--
- git.c              |    2 +-
- t/t7006-pager.sh   |    9 +++++++++
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ -		/* die the same way as if we did it at the beginning */
+ -		setup_git_directory();
+ +		die("No git repository found");
 
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 5089502..36cb24b 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -249,7 +249,7 @@ int cmd_shortlog(int argc, const char **argv, const=
- char *prefix)
- {
- 	static struct shortlog log;
- 	static struct rev_info rev;
--	int nongit;
-+	int nongit =3D !startup_info->have_repository;
-=20
- 	static const struct option options[] =3D {
- 		OPT_BOOLEAN('n', "numbered", &log.sort_by_number,
-@@ -265,7 +265,6 @@ int cmd_shortlog(int argc, const char **argv, const=
- char *prefix)
-=20
- 	struct parse_opt_ctx_t ctx;
+hunk.  That change might be a good idea but it does not fit the
+theme of this chapter.
+
+ builtin/grep.c   |    6 ++----
+ git.c            |    2 +-
+ t/t7006-pager.sh |   13 +++++++++++++
+ 3 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index d0a73da..cd44926 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -791,7 +791,7 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 	const char **paths =3D NULL;
+ 	int i;
+ 	int dummy;
+-	int nongit =3D 0, use_index =3D 1;
++	int use_index =3D 1;
+ 	struct option options[] =3D {
+ 		OPT_BOOLEAN(0, "cached", &cached,
+ 			"search in index instead of in the work tree"),
+@@ -879,8 +879,6 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 		OPT_END()
+ 	};
 =20
 -	prefix =3D setup_git_directory_gently(&nongit);
- 	git_config(git_default_config, NULL);
- 	shortlog_init(&log);
- 	init_revisions(&rev, prefix);
+-
+ 	/*
+ 	 * 'git grep -h', unlike 'git grep -h <pattern>', is a request
+ 	 * to show usage information and exit.
+@@ -925,7 +923,7 @@ int cmd_grep(int argc, const char **argv, const cha=
+r *prefix)
+ 			     PARSE_OPT_STOP_AT_NON_OPTION |
+ 			     PARSE_OPT_NO_INTERNAL_HELP);
+=20
+-	if (use_index && nongit)
++	if (use_index && !startup_info->have_repository)
+ 		/* die the same way as if we did it at the beginning */
+ 		setup_git_directory();
+=20
 diff --git a/git.c b/git.c
-index c46c996..b821058 100644
+index b821058..0240179 100644
 --- a/git.c
 +++ b/git.c
-@@ -384,7 +384,7 @@ static void handle_internal_command(int argc, const=
+@@ -336,7 +336,7 @@ static void handle_internal_command(int argc, const=
  char **argv)
- 		{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
- 		{ "rm", cmd_rm, RUN_SETUP },
- 		{ "send-pack", cmd_send_pack, RUN_SETUP },
--		{ "shortlog", cmd_shortlog, USE_PAGER },
-+		{ "shortlog", cmd_shortlog, RUN_SETUP_GENTLY | USE_PAGER },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
- 		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "fsck-objects", cmd_fsck, RUN_SETUP },
+ 		{ "gc", cmd_gc, RUN_SETUP },
+ 		{ "get-tar-commit-id", cmd_get_tar_commit_id },
+-		{ "grep", cmd_grep, USE_PAGER },
++		{ "grep", cmd_grep, RUN_SETUP_GENTLY | USE_PAGER },
+ 		{ "hash-object", cmd_hash_object },
+ 		{ "help", cmd_help },
+ 		{ "index-pack", cmd_index_pack },
 diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index 9215c2f..084dfdb 100755
+index 084dfdb..fd7f77b 100755
 --- a/t/t7006-pager.sh
 +++ b/t/t7006-pager.sh
-@@ -377,4 +377,13 @@ test_GIT_PAGER_overrides  expect_success test_must=
-_fail 'git -p'
+@@ -105,6 +105,19 @@ test_expect_success TTY 'no pager with --no-pager'=
+ '
+ 	! test -e paginated.out
+ '
 =20
- test_doesnt_paginate      expect_failure test_must_fail 'git -p nonsen=
-se'
-=20
-+test_pager_choices                       'git shortlog'
-+test_expect_success 'setup: configure shortlog not to paginate' '
-+	git config pager.shortlog false
-+'
-+test_doesnt_paginate      expect_success 'git shortlog'
-+test_no_local_config_subdir expect_success 'git shortlog'
-+test_default_pager        expect_success 'git -p shortlog'
-+test_core_pager_subdir    expect_success 'git -p shortlog'
++test_expect_success TTY 'configuration can disable pager' '
++	rm -f paginated.out &&
++	test_might_fail git config --unset pager.grep &&
++	test_terminal git grep initial &&
++	test -e paginated.out &&
 +
- test_done
++	rm -f paginated.out &&
++	git config pager.grep false &&
++	test_when_finished "git config --unset pager.grep" &&
++	test_terminal git grep initial &&
++	! test -e paginated.out
++'
++
+ # A colored commit log will begin with an appropriate ANSI escape
+ # for the first color; the text "commit" comes later.
+ colorful() {
 --=20
 1.7.2.1.544.ga752d.dirty
