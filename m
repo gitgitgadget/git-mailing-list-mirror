@@ -1,129 +1,128 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/2] t5520-pull: Add testcases showing spurious conflicts from git pull --rebase
-Date: Fri,  6 Aug 2010 08:05:02 -0600
-Message-ID: <1281103503-27515-2-git-send-email-newren@gmail.com>
-References: <1281103503-27515-1-git-send-email-newren@gmail.com>
-Cc: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>,
-	gitster@pobox.com, Elijah Newren <newren@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 06 16:03:43 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Cooking of the ab/i18n series
+Date: Fri, 6 Aug 2010 14:03:54 +0000
+Message-ID: <AANLkTimooDYBW3N0qV4G2JKSvcdWiCVRj3WjuoO+CJ54@mail.gmail.com>
+References: <AANLkTi=bnDgUsnBCv5493sH9eY5hg0S2YPywKba9jD20@mail.gmail.com>
+	<7vzkx0bt4w.fsf@alter.siamese.dyndns.org>
+	<AANLkTim1G=wjAgts_BvjwU8_B1wqrUEQHWbP_MY=cJa9@mail.gmail.com>
+	<7vmxszamwd.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 06 16:04:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhNWR-00022O-9k
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 16:03:43 +0200
+	id 1OhNWk-0002GI-AM
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 16:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757186Ab0HFODc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 10:03:32 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:59052 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756922Ab0HFOD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 10:03:27 -0400
-Received: by wwj40 with SMTP id 40so9083219wwj.1
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 07:03:26 -0700 (PDT)
+	id S1757299Ab0HFOD6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 10:03:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42782 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756953Ab0HFOD4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 10:03:56 -0400
+Received: by iwn33 with SMTP id 33so1350003iwn.19
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 07:03:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=Arq3e6W5d/P3rHbBCxms/+sah/X8O2VYUjXCmi9F100=;
-        b=Fkskx6A77TAvGfuQahuf10GBpo05ThpjWWBGrkZWLD1fRZYOQPRrTIfyPwWUopQqsM
-         grI4tGEWrUs4dwGk5vNUfLODZDe1OQ7buRyBp0Yllf5qu3dyp3BrTvAjsdsbQeSJkzlP
-         GH6m2FnqSVA9m6JjjxtzPSX9t6VepDwTUayhw=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gqOQXqLlYej/Jki6XD9kKyYDikgDMorf6gNuWe6nlaI=;
+        b=J89Xbb+J9ZtbAlfq43VUjxRnD/Vr0fhlSqN9EURh3xDGwHiOqeWzGpZMJrU2OyGMYg
+         eHqzHMsFxS59ip4MPHSibydMCZilGl6WPc7eaF15Zey7e8xHK7dYWvFgSRfFANp0H3tt
+         uE/M/ogR2t31x4qGUQvEObdTb6i2w+203m6pk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=P2BIBTsK8tuC9KTvRuX/hNmBODq8QNb9LJYRIpSefsfy7WM5Z8laiYzIaN4Yi01awq
-         VUthV9bEPziNmv+MWwpAiiO6XhDy3mjmGU286J+zzVrOGlJ1OShEEQyNeJaKU+s72V6u
-         6R5vpdP3x5dDDri6CV2SPldMbQevfTTQqPeG4=
-Received: by 10.227.147.204 with SMTP id m12mr10725817wbv.131.1281103406432;
-        Fri, 06 Aug 2010 07:03:26 -0700 (PDT)
-Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id o84sm867954wej.13.2010.08.06.07.03.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 07:03:25 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.1
-In-Reply-To: <1281103503-27515-1-git-send-email-newren@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NKwNeT1ctqBntD4rQ9KDZ/PfPCCXJk1U4JK4jVyz3nKCwi2kqG9hqSfcQEU8tok/pb
+         8rpE675UNvGT7kerXmY/AprsBCxhCIkiZEurUuwbYsMwzc3CLqcXLUWBG1GynIAaTnJ7
+         u5Rx1afkk67L3Ncx/9QLPQZD+bGhTxWyaFUNQ=
+Received: by 10.231.157.207 with SMTP id c15mr14077192ibx.143.1281103435061; 
+	Fri, 06 Aug 2010 07:03:55 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Fri, 6 Aug 2010 07:03:54 -0700 (PDT)
+In-Reply-To: <7vmxszamwd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152785>
 
+On Fri, Aug 6, 2010 at 13:30, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Thu, Aug 5, 2010 at 22:18, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>>>
+>>> When people see the benefit of doing so. =C2=A0I currently do not s=
+ee much need
+>>> for it myself but I am a minority ;-).
+>>
+>> That's news to me. I'd assumed that it was mostly on track, i.e. tha=
+t
+>> it would get merged down after cooking for a while in pu.
+>>
+>> However, if it's a matter of gathering popular support maybe I shoul=
+d
+>> change my strategy a bit.
+>
+> The "popular support" needs to be qualified. =C2=A0If you ask any ran=
+dom person
+> "Is it a good thing if software package X supports i18n?", the answer
+> would always be "yes"; popular support in that sense doesn't mean muc=
+h.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t5520-pull.sh |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 59 insertions(+), 0 deletions(-)
+I was thinking about support from the core contributors, which'd have
+to deal with gettext in the long term in one way or another.
 
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 319e389..8f76829 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -160,4 +160,63 @@ test_expect_success 'pull --rebase works on branch yet to be born' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'setup for detecting upstreamed changes' '
-+	mkdir src &&
-+	(cd src &&
-+	 git init &&
-+	 for i in $(seq 1 10); do echo $i; done > stuff &&
-+	 git add stuff &&
-+	 git commit -m "Initial revision"
-+	) &&
-+	git clone src dst &&
-+	(cd src &&
-+	 sed -i s/5/43/ stuff &&
-+	 git commit -a -m "5->43" &&
-+	 sed -i s/6/42/ stuff &&
-+	 git commit -a -m "Make it bigger" &&
-+	 correct=$(git rev-parse HEAD)
-+	) &&
-+	(cd dst &&
-+	 sed -i s/5/43/ stuff &&
-+	 git commit -a -m "Independent discovery of 5->43"
-+	)
-+'
-+
-+test_expect_failure 'git pull --rebase detects upstreamed changes' '
-+	(cd dst &&
-+	 git pull --rebase &&
-+	 test -z "$(git ls-files -u)"
-+	)
-+'
-+
-+test_expect_success 'setup for avoiding reapplying old patches' '
-+	(cd dst &&
-+	 (git rebase --abort || true) &&
-+	 git reset --hard origin/master
-+	) &&
-+	git clone --bare src src-replace.git &&
-+	rm -rf src &&
-+	mv src-replace.git src &&
-+	(cd dst &&
-+	 sed -i s/2/22/ stuff &&
-+	 git commit -a -m "Change 2" &&
-+	 sed -i s/3/33/ stuff &&
-+	 git commit -a -m "Change 3" &&
-+	 sed -i s/4/44/ stuff &&
-+	 git commit -a -m "Chagne 4" &&
-+	 git push &&
-+
-+	 sed -i s/44/55/ stuff &&
-+	 git commit --amend -a -m "Change 4" &&
-+	 test_must_fail git push
-+	)
-+'
-+
-+test_expect_failure 'git pull --rebase does not reapply old patches' '
-+	(cd dst &&
-+	 (git pull --rebase || true) &&
-+	 test 3 != $(find .git/rebase-apply -name "000*" | wc -l)
-+	)
-+'
-+
- test_done
--- 
-1.7.1.1
+> I am more worried about unintended consequence of this particular
+> execution. =C2=A0For example, I would want to be absolutely sure that=
+ we won't
+> break plumbing output in 'next' and the proposed mechanism helps othe=
+rs
+> avoid breaking things by mistake.
+
+I'm also worried about that, and I have some plans to deal with it
+after the merge.
+
+The first and most obvious one is that the list will be reviewing
+gettexizing patches as they go through. A patch which changes some
+plumbing format would be called out, but not one that just changes the
+UI messsage of e.g. "git init".
+
+There's also more that can be done, e.g. altering the test-lib.sh so
+that you can set an environment variable that causes it not to reset
+LC_ALL to C. Then run the tests and see if anything breaks.
+
+I was going to run a smoker with that setup on some of the major
+languages if gettext and smoke support was accepted.
+
+>> The follow-up work I was referring to was the project we'll need to
+>> undertake once it's merged to convert "foo" to _("foo") as
+>> appropriate.
+>
+> That is one good example. =C2=A0Perhaps we can get a list of messages=
+ that we
+> can place in Documentation/ area (e.g. "'Not up-to-date' - this messa=
+ge is
+> given when you have local changes in a file in the working tree; give=
+n by
+> command X, Y and Z") out of that effort for free? =C2=A0Perhaps such =
+a list can
+> help us verify that i18n does not break plumbing output (because the =
+list
+> does not contain plumbing messages)?
+
+We'd get this sort of list out of "TRANSLATORS:" comments for
+free. They're automatically extracted and presented to translators and
+others with the xgettext program.
+
+Maintaining a list of messages in Documentation/ somewhere that's
+bound to get out of date with the source code doesn't make sense given
+the TRANSLATORS support.
