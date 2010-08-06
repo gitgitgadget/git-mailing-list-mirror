@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 3/3] t/README: Document the predefined test prerequisites
-Date: Fri,  6 Aug 2010 21:19:25 +0000
-Message-ID: <1281129565-26124-4-git-send-email-avarab@gmail.com>
+Subject: [PATCH 1/3] test-lib: Add support for multiple test prerequisites
+Date: Fri,  6 Aug 2010 21:19:23 +0000
+Message-ID: <1281129565-26124-2-git-send-email-avarab@gmail.com>
 References: <1281129565-26124-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,61 +12,60 @@ Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 06 23:20:20 2010
+X-From: git-owner@vger.kernel.org Fri Aug 06 23:20:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhUKv-0005ak-BH
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 23:20:17 +0200
+	id 1OhUKt-0005ak-Uv
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 23:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964821Ab0HFVUB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 17:20:01 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:51612 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751461Ab0HFVT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 17:19:56 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 39so8201142wyb.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 14:19:55 -0700 (PDT)
+	id S1762081Ab0HFVTy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 17:19:54 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:55329 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762067Ab0HFVTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 17:19:52 -0400
+Received: by wwf26 with SMTP id 26so271861wwf.1
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 14:19:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=kXlEIDNfYio3wPq84tkkPQ4WivcKDghn6R0yyO7pQJg=;
-        b=EHYKo3pc8HyTYKTcm8ERhAv8lPEaf3ELdLB5uAlN2lT9P0RsWhxM0GMedyVmWSBkBQ
-         eJ3e9IGhD/poxGFj6s7jI8tx23Iu9ATTTKGUN1k+er4A7DDJLuPybFqwDii5hf4B/vba
-         YuvvWTtZSnpC3I7gCpr9FTT5KI+uCHdHRizUw=
+        bh=gk6pF6sjlPfqidLh+NqJGnHbm5fnI7uE8TkRg8fqmNA=;
+        b=gl3ctn7sSNJHCbbVO37H7CgNHeOOWkeFNI9t0GuAcLe0tmqFobSfHCaKfMBCLDxECk
+         iXTOg1qlYFQ61Z1dOFGauYxn5nJnDd3snM+I/VrbZwcLCFJPWlpVIvShXGZHECH5666e
+         i4dJy8Ul4Iwviy2iFt2LS5ZMFjZNud2x1VKjg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=lqPuOxDxzPClInJIRsu5GcGcLNUrmgpYpkblO+lli3ZEbRwVGR5mQfgNpVFYmzTfuJ
-         bmf41tMTR74/aC8gQlipUkZsewc+qJzUoGrEmYMNe1MWmFYJwfQLy9RcUtcobGI3OIJr
-         erNCKve8yImkY/jdT4q4P/62FFADMAxtrGjr0=
-Received: by 10.227.157.198 with SMTP id c6mr10919675wbx.144.1281129595093;
-        Fri, 06 Aug 2010 14:19:55 -0700 (PDT)
+        b=a/MJ9PS32RD/QoDSm3mpZ3R7WXJYqRYhp5fcANo8vxr1k7AnrocO9zG6xP/0ntueBu
+         VOHyGJnjLwnuS821L8geMtGoxnp102o/gHOmvEVRB3dJQQkqwmiMZ86hr++t6poj6CNq
+         aBvpKPgJr97adRcsVj0GHXQdpcAGlEsXCaUJw=
+Received: by 10.216.160.15 with SMTP id t15mr11106308wek.75.1281129590818;
+        Fri, 06 Aug 2010 14:19:50 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id k7sm1167559wej.2.2010.08.06.14.19.53
+        by mx.google.com with ESMTPS id k7sm1167559wej.2.2010.08.06.14.19.49
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 14:19:54 -0700 (PDT)
+        Fri, 06 Aug 2010 14:19:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1
 In-Reply-To: <1281129565-26124-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152816>
 
-The README for the test library suggested that you grep the
-test-lib.sh for test_set_prereq to see what the preset prerequisites
-were.
+Change the test_have_prereq function in test-lib.sh to support a
+comma-separated list of prerequisites. This is useful for tests that
+need e.g. both POSIXPERM and SANITY.
 
-Remove that bit, and write a section explaining all the preset
-prerequisites. Most of the text was lifted from from Junio C Hamano
-and Johannes Sixt, See the "Tests in Cygwin" thread in May 2009 for
-the originals:
+The implementation was stolen from Junio C Hamano and Johannes Sixt,
+the tests and documentation were not. See the "Tests in Cygwin" thread
+in May 2009 for the originals:
 
     http://thread.gmane.org/gmane.comp.version-control.git/116729/focus=
 =3D118385
@@ -76,71 +75,91 @@ the originals:
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- t/README |   45 ++++++++++++++++++++++++++++++++++++++++-----
- 1 files changed, 40 insertions(+), 5 deletions(-)
+ t/README         |    6 ++++++
+ t/t0000-basic.sh |   17 +++++++++++++++++
+ t/test-lib.sh    |   20 ++++++++++++++------
+ 3 files changed, 37 insertions(+), 6 deletions(-)
 
 diff --git a/t/README b/t/README
-index d07b67a..dc07939 100644
+index 0d1183c..d07b67a 100644
 --- a/t/README
 +++ b/t/README
-@@ -410,11 +410,12 @@ library for your script to use.
-  - test_set_prereq SOME_PREREQ
+@@ -350,6 +350,12 @@ library for your script to use.
+ 	test_expect_success TTY 'git --paginate rev-list uses a pager' \
+ 	    ' ... '
 =20
-    Set a test prerequisite to be used later with test_have_prereq. The
--   test-lib will set some prerequisites for you, e.g. PERL and PYTHON
--   which are derived from ./GIT-BUILD-OPTIONS (grep test_set_prereq
--   test-lib.sh for more). Others you can set yourself and use later
--   with either test_have_prereq directly, or the three argument
--   invocation of test_expect_success and test_expect_failure.
-+   test-lib will set some prerequisites for you, see the
-+   "Prerequisites" section below for a full list of these.
++   You can also supply a comma-separated list of prerequisites, in the
++   rare case where your test depends on more than one:
 +
-+   Others you can set yourself and use later with either
-+   test_have_prereq directly, or the three argument invocation of
-+   test_expect_success and test_expect_failure.
++	test_expect_success PERL,PYTHON 'yo dawg' \
++	    ' test $(perl -E 'print eval "1 +" . qx[python -c "print 2"]') =3D=
+=3D "4" '
++
+  - test_expect_failure [<prereq>] <message> <script>
 =20
-  - test_have_prereq SOME PREREQ
+    This is NOT the opposite of test_expect_success, but is used
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index f2c7336..2887677 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -73,6 +73,23 @@ then
+ 	exit 1
+ fi
 =20
-@@ -487,6 +488,40 @@ library for your script to use.
- 		...
- 	'
++test_set_prereq HAVETHIS
++haveit=3Dno
++test_expect_success HAVETHIS,HAVEIT 'test runs if prerequisites are sa=
+tisfied' '
++    test_have_prereq HAVEIT &&
++    test_have_prereq HAVETHIS &&
++    haveit=3Dyes
++'
++donthaveit=3Dyes
++test_expect_success HAVEIT,DONTHAVEIT 'unmet prerequisites causes test=
+ to be skipped' '
++    donthaveit=3Dno
++'
++if test $haveit$donthaveit !=3D yesyes
++then
++	say "bug in test framework: multiple prerequisite tags do not work re=
+liably"
++	exit 1
++fi
++
+ clean=3Dno
+ test_expect_success 'tests clean up after themselves' '
+     test_when_finished clean=3Dyes
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e8f21d5..8701923 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -327,12 +327,20 @@ test_set_prereq () {
+ satisfied=3D" "
 =20
-+Prerequisites
-+-------------
-+
-+These are the prerequisites that the test library predefines with
-+test_have_prereq.
-+
-+See the prereq argument to the test_* functions in the "Test harness
-+library" section above and the "test_have_prereq" function for how to
-+use these, and "test_set_prereq" for how to define your own.
-+
-+ - PERL & PYTHON
-+
-+   Git wasn't compiled with NO_PERL=3DYesPlease or
-+   NO_PYTHON=3DYesPlease. Wrap any tests that need Perl or Python in
-+   these.
-+
-+ - POSIXPERM
-+
-+   The filesystem supports POSIX style permission bits.
-+
-+ - BSLASHPSPEC
-+
-+   Backslashes in pathspec are not directory separators. This is not
-+   set on Windows. See 6fd1106a for details.
-+
-+ - EXECKEEPSPID
-+
-+   The process retains the same pid across exec(2). See fb9a2bea for
-+   details.
-+
-+ - SYMLINKS
-+
-+   The filesystem we're on supports symbolic links. E.g. a FAT
-+   filesystem doesn't support these. See 704a3143 for details.
+ test_have_prereq () {
+-	case $satisfied in
+-	*" $1 "*)
+-		: yes, have it ;;
+-	*)
+-		! : nope ;;
+-	esac
++	# prerequisites can be concatenated with ','
++	save_IFS=3D$IFS
++	IFS=3D,
++	set -- $*
++	IFS=3D$save_IFS
++	for prerequisite
++	do
++		case $satisfied in
++		*" $prerequisite "*)
++			: yes, have it ;;
++		*)
++			! : nope ;;
++		esac
++	done
+ }
 =20
- Tips for Writing Tests
- ----------------------
+ # You are not expected to call test_ok_ and test_failure_ directly, us=
+e
 --=20
 1.7.1
