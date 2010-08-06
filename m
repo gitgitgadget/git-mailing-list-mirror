@@ -1,164 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] test-lib: user-friendly alternatives to test [!]
- [-d|-f]
-Date: Fri, 6 Aug 2010 17:57:05 -0500
-Message-ID: <20100806225705.GA2534@burratino>
-References: <1281027281-21055-2-git-send-email-Matthieu.Moy@imag.fr>
- <1281027831-22739-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Cooking of the ab/i18n series
+Date: Fri, 06 Aug 2010 16:01:45 -0700
+Message-ID: <7viq3n73c6.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=bnDgUsnBCv5493sH9eY5hg0S2YPywKba9jD20@mail.gmail.com>
+ <7vzkx0bt4w.fsf@alter.siamese.dyndns.org>
+ <AANLkTim1G=wjAgts_BvjwU8_B1wqrUEQHWbP_MY=cJa9@mail.gmail.com>
+ <7vmxszamwd.fsf@alter.siamese.dyndns.org>
+ <AANLkTimooDYBW3N0qV4G2JKSvcdWiCVRj3WjuoO+CJ54@mail.gmail.com>
+ <7viq3nagje.fsf@alter.siamese.dyndns.org>
+ <AANLkTimJCgZ8kU0Nrm6Zi-PXSgT96bFfTi0oaaX2t-6v@mail.gmail.com>
+ <AANLkTik1KVpb25nuwSFA2z4ezRJKWdTwRrS_KXzwM+2D@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat Aug 07 00:58:36 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 07 01:02:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhVs3-00070J-Oe
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 00:58:36 +0200
+	id 1OhVvX-0008Mc-IW
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 01:02:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965201Ab0HFW6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 18:58:31 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:60623 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964904Ab0HFW63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 18:58:29 -0400
-Received: by qyk7 with SMTP id 7so4314715qyk.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 15:58:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=/Te4qpC/6RwYL4NCY+vqqCEk5r95cVQ0oHj0+cOW7XQ=;
-        b=onO1AeHwbVYbCEsDTnKOJ2EA+0HTP2KaNrYz5gOJtexGkQ+gk8ItdZe1A+jzZEb0QW
-         dQT4haiok7rQ9H9fstTwAX8oUlK2yAFKYNRaeLQvB/nWQu8zdEEdKm0QL6nWubse/E1v
-         JQv47UWGs/14sn1YmcM/1cMpixatSFr9nXHlY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=c9S6fkHBFSnjUn9wU+OmCaUg7FPp57fiz4IFinoh5LDed5s1ShzQpEd1Wg9fsL+A4E
-         9FaPGj+V2z5fobdbcOuo7GfSQ7TjX1GHgbhJHeEpiJhv53jRcvM6OCn+BmJFV0Cp8H+z
-         VT4h+1IaleacBwi8iEVWuWQEp7xx2VXzLjeHY=
-Received: by 10.220.127.4 with SMTP id e4mr8730347vcs.95.1281135508983;
-        Fri, 06 Aug 2010 15:58:28 -0700 (PDT)
-Received: from burratino ([64.134.175.203])
-        by mx.google.com with ESMTPS id e1sm804401vch.20.2010.08.06.15.58.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 15:58:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1281027831-22739-1-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S965199Ab0HFXCG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 19:02:06 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40794 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964904Ab0HFXCE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 19:02:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0DEF5CB4A0;
+	Fri,  6 Aug 2010 19:02:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=KDBccMa4Bj7t
+	PRd1KUBTAA8p5VA=; b=EcG+YmfH6IjaA3zHuAGklHfaYfp/eN31wJ6Mpd4pODFy
+	rH7M1I9cQN5wlhlgeIs81MMTJ+DYKi84XLDRtNzIGMfs/lPUV8PItv8QK30KgGI1
+	ha3J5S/lx1pG7G5rY0pV0h9eJj/9PYX3DdoSCadRI7QTVvzGMESQEzP+/4imFAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lYIjpN
+	Erbfry7i18cp866m4XJbODALxvKORIusKWT84qfvHQoV2r24MP7Utvyso0P2AgLw
+	NRhElvvwNMPrlWePf/oLKhNhG4am/wcCsaQHU29RZVgmCIshx6kXcIoVzS52XiA7
+	TZqmS77zv/Ld3xqJ7ynrgNw0x8W3a76IrZSYc=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F2DF1CB49A;
+	Fri,  6 Aug 2010 19:01:53 -0400 (EDT)
+Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC763CB496; Fri,  6 Aug
+ 2010 19:01:48 -0400 (EDT)
+In-Reply-To: <AANLkTik1KVpb25nuwSFA2z4ezRJKWdTwRrS_KXzwM+2D@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri\, 6 Aug
+ 2010 19\:28\:19 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9A7E5C54-A1AE-11DF-82B7-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152824>
 
-Matthieu Moy wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> The helper functions are implemented, documented, and used in a few
-> places to validate them
+> My mental plan for this series has basically been as follows:
+>
+>   1. Get it to a state where it can cook in pu [You Are Here]
+>
+>   2. After it's been there for a while get it to master
+>
+>   3. Once it's there for a while and we're sure the new dependency /
+>      code doesn't harm some more obscure systems..
+>
+>   4. Start submitting patches to the main porcelain $(grep
+>      'mainporcelain common' command-list.txt) to make the most common
+>      user-visible messages translatable.
+>
+>   5. Recruit translators to translate the strings in #4. Send
+>      translations in as patches adding/altering the *.po files.
 
-When I first read this, I thought you were saying these helpers
-already existed.  This is where the rationale goes, anyway, so maybe:
+Matches my expectations modulo s/master/next/.  The stuff parked in 'pu=
+'
+was primarily because most of the work to get to this point was done
+during the pre-release freeze for 1.7.2 and I didn't want to get
+distracted, while I obviously did not lose patches.
 
-	Add new test_file_must_not_exist et al helpers for
-	use by tests to more loudly diagnose failures that
-	manifest themselves by the existence or nonexistence
-	of a file or directory.
+> Now, your main concern is that this doesn't break plumbing output....
 
-	So now you can use
+That's not 'main'.
 
-		test_file_must_exist foo "so there"
+'Breaking plumbing' is merely an example of a larger 'main concern' whi=
+ch
+is 'unintended consequences'.
 
-	from your test, and when it fails due to foo being
-	absent or being a symlink instead, instead of silence
-	you will get (if debugging with "-v") the helpful message
-
-		file foo does not exist. so there.
-
-> +++ b/t/README
-> @@ -467,6 +467,14 @@ library for your script to use.
->     <expected> file.  This behaves like "cmp" but produces more
->     helpful output when the test is run with "-v" option.
->  
-> + - test_file_must_exist <file> [<diagnosis>]
-> +   test_file_must_not_exist <file> [<diagnosis>]
-> +   test_dir_must_exist <dir> [<diagnosis>]
-> +   test_dir_must_not_exist <dir> [<diagnosis>]
-> +
-> +   check whether a file/directory exists or doesn't. <diagnosis> will
-> +   be displayed if the test fails.
-
-Maybe:
-
-	- test_file_exists <name> [<diagnosis>]
-	- test_dir_exists <name> [<diagnosis>]
-
-	  Check that <name> exists and is a file or directory,
-	  printing a diagnostic if it does not.  The <diagnosis>
-	  if present will be used to give some added context to
-	  the diagnostic.
-
-	- test_does_not_exist <name> [<diagnosis>]
-
-	  Check that <name> does not exist, printing a
-	  diagnostic if it does.  The <diagnosis> will be
-	  printed on failure as added context if present.
-
-I think the ..._must_exist names put the emphasis in the
-wrong place, and they look funny in "if" statements.
-
-> +++ b/t/t3404-rebase-interactive.sh
-> +++ b/t/t3407-rebase-abort.sh
-[examples]
-
-Makes sense.
-
-> +++ b/t/test-lib.sh
-> @@ -541,6 +541,38 @@ test_external_without_stderr () {
->  	fi
->  }
->  
-> +# debugging-friendly alternatives to "test [!] [-f|-d]"
-> +# The commands test the existence or non-existance of $1. $2 can be
-> +# given to provide a more precise diagnosis.
-> +test_file_must_exist () {
-> +	if ! [ -f "$1" ]; then
-> +		echo "file $1 doesn't exist. $*"
-> +		false
-> +	fi
-> +}
-
-Style nitpick: if statementss in the test-lib have tended to look like
-
- if [ foo ]
- then
-	bar
- fi
-
-so far.  Here the whole function is a glorified "test -f", so I wonder
-if
-
-	[ -f "$1" ] ||
-	{
-		echo >&2 "file $1 doesn't exist. $*"
-		false
-	}
-
-would not be clearer.  I dunno.
-
-> +test_file_must_not_exist () {
-> +	if [ -f "$1" ]; then
-> +		echo "file $1 exists. $*"
-> +		false
-> +	fi
-> +}
-
-What should happen if $1 exists and is not a file?
-
-I have often run into silent test failures of the sort your patch
-is designed to avoid.  Thanks for tackling it.
+And please don't ask me to enumerate them exhaustively.  By definition
+'unintended consequences' cannot be enumerated.  They are discovered ov=
+er
+time either by code inspection, by people guinea-pigging a version outs=
+ide
+'master', and by careful thinking.
