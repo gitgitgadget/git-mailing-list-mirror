@@ -1,76 +1,122 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Decompressing a tree to a location other than the working
- directory
-Date: Fri, 6 Aug 2010 13:43:45 -0500
-Message-ID: <20100806184345.GB2985@burratino>
-References: <AANLkTi=RjcQ_-PNUt781jhYEA-8krqXpdHRenVyR_Rc4@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Cooking of the ab/i18n series
+Date: Fri, 6 Aug 2010 19:28:19 +0000
+Message-ID: <AANLkTik1KVpb25nuwSFA2z4ezRJKWdTwRrS_KXzwM+2D@mail.gmail.com>
+References: <AANLkTi=bnDgUsnBCv5493sH9eY5hg0S2YPywKba9jD20@mail.gmail.com>
+	<7vzkx0bt4w.fsf@alter.siamese.dyndns.org>
+	<AANLkTim1G=wjAgts_BvjwU8_B1wqrUEQHWbP_MY=cJa9@mail.gmail.com>
+	<7vmxszamwd.fsf@alter.siamese.dyndns.org>
+	<AANLkTimooDYBW3N0qV4G2JKSvcdWiCVRj3WjuoO+CJ54@mail.gmail.com>
+	<7viq3nagje.fsf@alter.siamese.dyndns.org>
+	<AANLkTimJCgZ8kU0Nrm6Zi-PXSgT96bFfTi0oaaX2t-6v@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Joshua Shrader <jshrader83@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 20:45:24 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 06 21:31:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhRv1-0001Fo-9P
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 20:45:23 +0200
+	id 1OhSdJ-0001dO-HG
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 21:31:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933330Ab0HFSpP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 14:45:15 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:51265 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759375Ab0HFSpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 14:45:11 -0400
-Received: by eya25 with SMTP id 25so2901129eya.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 11:45:10 -0700 (PDT)
+	id S935810Ab0HFTbG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 15:31:06 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:53479 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935831Ab0HFT2U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 15:28:20 -0400
+Received: by gxk23 with SMTP id 23so2973862gxk.19
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 12:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=muF5tJcLNsE4eLmHpdQbZpfsWDgol4lWFoWMWxSzITs=;
-        b=Z/lBmQjUR4QUZteTPv9/ByZGpcKsYDPwfA4pQKuqjx6tD6HHtI5DDsrHmejMbi9uVD
-         GUjAeLFO/kjaUUEtErA490RyOwWsHYTlY5hg6q1rCbQ39uBXGSHOAw1ZMWmZTWGZa9t7
-         mBeJan0aVcb3zBCwE3xpTwPKqFz/ER6u2cRmQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pWwyvhvXaHo3DkEfkfO6xPEmAYZUSb6V0Rh8vLyypnc=;
+        b=W6F/4MgU+j7fSw430/2Gvcdd8wavlSlA0rIaBl6dylbZOz00ddbLhnUnQiV7VLnnmE
+         k+owWRSRGliXP3WsMZI4PR+9DKsFqrN1sz56RR7qlFXVJYeziY604iXf9vMgWOJn5PyI
+         polNnkY/ocDq6sAL7m95USgUa6wuY17pD5VNM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=rl3DmmG8r4foA/Yi7uzGemuEZyny2thBo8rNemUwnF7m5Gj5COpJafCQmPo4Q1vKQq
-         2emEXFXicJ5hZ6oukh6wTIi18+zt4MRI4JeLRv15hvqUFdISIE1+KYEZEx5HFoMgD/jx
-         iQkirZpUeFXi6aKJR8s8n9NTBoiAwv1JDgdr8=
-Received: by 10.213.20.10 with SMTP id d10mr9088447ebb.92.1281120310063;
-        Fri, 06 Aug 2010 11:45:10 -0700 (PDT)
-Received: from burratino ([66.99.1.133])
-        by mx.google.com with ESMTPS id a48sm2789688eei.1.2010.08.06.11.45.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 11:45:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=RjcQ_-PNUt781jhYEA-8krqXpdHRenVyR_Rc4@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PZz0mIofOj9D4xQgUsDzfDbIKuesOAfcUVoWKpifGuFJOt4nCuvqv/QUQ6DGX8qUIK
+         AdsmrzUG0wQ7v+M9BuA6MhaykaZherGDN13Ys6koNyIJIn5IO+spLHGoIcvqdcgrVjBW
+         M2ABpD+i//lI4uzhVhlc/7FsbJU/kpsXLHRaU=
+Received: by 10.101.20.3 with SMTP id x3mr2001095ani.116.1281122899828; Fri, 
+	06 Aug 2010 12:28:19 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Fri, 6 Aug 2010 12:28:19 -0700 (PDT)
+In-Reply-To: <AANLkTimJCgZ8kU0Nrm6Zi-PXSgT96bFfTi0oaaX2t-6v@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152803>
 
-Joshua Shrader wrote:
+On Fri, Aug 6, 2010 at 17:01, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> On Fri, Aug 6, 2010 at 15:48, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> [...]
 
-> git checkout allows one to checkout a particular version of a certain
-> path in the working directory.  Are there accessible plumbing command=
-s
-> that can be used to accomplish the same thing, but change the target
-> directory.
+I don't mean to bombard you with E-Mails, but hopefully this one is a
+bit more to the point.
 
-I don=E2=80=99t know if it is plumbing, but "git archive" is very usefu=
-l for
-that.
+As I'm sure you've gathered by now I'm keen to get this into Git. I'm
+also fully prepared to address any specific concerns about the series
+before it gets merged.
 
- $ git archive HEAD^:Documentation | (cd elsewhere && tar xf -)
+However, and maybe I'm just dense, I can't really see some unambiguous
+things about the series that I could improve from your comments. So
+let's try to clear them up, shall we?
 
-Hope that helps,
-Jonathan
+My mental plan for this series has basically been as follows:
+
+  1. Get it to a state where it can cook in pu [You Are Here]
+
+  2. After it's been there for a while get it to master
+
+  3. Once it's there for a while and we're sure the new dependency /
+     code doesn't harm some more obscure systems..
+
+  4. Start submitting patches to the main porcelain $(grep
+     'mainporcelain common' command-list.txt) to make the most common
+     user-visible messages translatable.
+
+  5. Recruit translators to translate the strings in #4. Send
+     translations in as patches adding/altering the *.po files.
+
+While doing #4 and #5 I planned to write some new
+documentation. E.g. a quick guide for Git hackers showing how you can
+add strings that are properly i18n-able. And for #5 an equivalent
+thing for non-techie translators showing what the need to translate,
+how to submit translations etc.
+
+Now, your main concern is that this doesn't break plumbing output. My
+plan for that was to just leave it for later. As long as I'm not
+altering something in 'mainporcelain common' I'm not going to break
+the plumbing.
+
+I think I can read between the lines that you're uneasy about this
+approach. But I'm not sure how else to handle it.
+
+One thing that could perhaps help things in the long run would be to
+explicitly mark plumbing messages as not for translation. E.g. with a
+"commit" -> P_("commit") macro.
+
+That'd also give us something like the Documentation/ page you
+suggest, but with only the plumbing messages extracted on a per-tool
+basis (using the gettext tools). That'd probably make for a useful API
+reference.
+
+To sum it up. I'm happy to amend something in the 5-point plan above,
+or to write new code to make the gettext series more acceptable. I
+just don't see what that something is.
+
+In any case, thanks for all the work you and others have put into
+getting the series into the state it's in today. I really appreciate it=
+=2E
