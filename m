@@ -1,119 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 11/12] var: run setup_git_directory_gently() sooner
-Date: Thu, 5 Aug 2010 22:21:40 -0500
-Message-ID: <20100806032139.GO22369@burratino>
-References: <20100626192203.GA19973@burratino>
- <7vpqzacs3h.fsf@alter.siamese.dyndns.org>
- <7v630hyf5r.fsf@alter.siamese.dyndns.org>
- <20100806023529.GB22369@burratino>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: BUG! missing .idx causes .pack to be removed
+Date: Fri, 6 Aug 2010 11:24:43 +0800
+Message-ID: <AANLkTi=bjM7rGSXv0eB5+6VEX=wY84upkzDcBJ6C9KdK@mail.gmail.com>
+References: <20100805170137.GA2630@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 05:23:10 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: weigelt@metux.de
+X-From: git-owner@vger.kernel.org Fri Aug 06 05:24:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhDWX-00016t-Pj
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 05:23:10 +0200
+	id 1OhDYB-0001TE-G1
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 05:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932534Ab0HFDXE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Aug 2010 23:23:04 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:51757 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759148Ab0HFDXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Aug 2010 23:23:02 -0400
-Received: by gxk23 with SMTP id 23so2718288gxk.19
-        for <git@vger.kernel.org>; Thu, 05 Aug 2010 20:23:01 -0700 (PDT)
+	id S932814Ab0HFDYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Aug 2010 23:24:47 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51225 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759148Ab0HFDYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Aug 2010 23:24:45 -0400
+Received: by iwn33 with SMTP id 33so823438iwn.19
+        for <git@vger.kernel.org>; Thu, 05 Aug 2010 20:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=/oz6dgIqPFhSY3oUHTiZZNPU5EcLDZioImv2f9QmWCU=;
-        b=RJNZmwCICDQ38c1IgwNkk2s5r0RI8Zyy1LyuNsar+RYlsvzW1FhUuPP9CMJK6uuL/+
-         5krpxtoK35qqdUVJ7jS7gB63O5mDQSuCpOYv9BLWQE85Kucs7WYMlKbAzkGVzuPLiFLe
-         Nnqw1V4ZMPAXrkikLKX4sJ4izp5jo/7QUin14=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=CED9aYMETQQcMJL2kDhpPXa2ptZkER+q6MNGmQbBELU=;
+        b=d4d51Dh3ZnY2EwsGAhBaWC+pq6nsFJk2OQfHuIoeRHfQczAInYJxBGgwyX9aqKWO8g
+         RU3oDxGNpLUwvw8aojHJr0aBFXL3mLH3NQkJdIjRTbap+FMMlqvSNkxycxuQs6a84nH1
+         UJkNgwy9XhPu9teNrRiJxymTPG1modHFT5eck=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=m8EVkk1fHtI6uEU2/RpvJ8E7s6Wv5d/Za127aN9/H44DuylgpiB155dDQHf4DK1oHY
-         +0dQ/rBsgenWhaUZyVJEGaz5e3u4mKWxrJSVgrW4NT7jjznw4kpXKOnv/cQKXjkj8Boy
-         F5zbUynV4mpaHMYy5Lq3TbTMIJwx3qS+/6YMA=
-Received: by 10.100.167.2 with SMTP id p2mr13015075ane.148.1281064981636;
-        Thu, 05 Aug 2010 20:23:01 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id r7sm1295514anb.35.2010.08.05.20.22.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 05 Aug 2010 20:23:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100806023529.GB22369@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=r2LKl6J4MraIGfw68Ax8s51w2o7NFLZXZTuz4XS5Qzd2XzrXFfKL6eTI54qfdBeeN/
+         vUg4gwZEc4X/rViAYUZISz6RbEg4H8Ajh+BKYnUyFgSMUXPTjfR3u2JS93iumGnum2C5
+         b29SM6nA5ZuwV80a5pzFmPpdYbaEKSWiUu+10=
+Received: by 10.231.162.13 with SMTP id t13mr5197710ibx.160.1281065083703; 
+	Thu, 05 Aug 2010 20:24:43 -0700 (PDT)
+Received: by 10.231.158.141 with HTTP; Thu, 5 Aug 2010 20:24:43 -0700 (PDT)
+In-Reply-To: <20100805170137.GA2630@nibiru.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152757>
 
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+Hi,
 
-Part of a campaign to make repository-local configuration
-available early (simplifying the startup sequence for
-built-in commands).
+On Fri, Aug 6, 2010 at 1:01 AM, Enrico Weigelt <weigelt@metux.de> wrote:
+> while doing some experiments I've removed the *.idx files and
+> ran git-repack - that complained about missing objects and removed
+> all *.pack files !
+>
+> I'm sure that's a bug - an ugly one ;-o
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-snuck in a little vertical compression while at it ;-)
+IIRC, a .pack file is useless without its corresponding .idx file. So
+the removal of a .pack file makes sense here - to me, at least.
 
- builtin/var.c |    9 ++-------
- git.c         |    2 +-
- 2 files changed, 3 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/var.c b/builtin/var.c
-index 70fdb4d..0744bb8 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -74,14 +74,9 @@ static int show_config(const char *var, const char *=
-value, void *cb)
-=20
- int cmd_var(int argc, const char **argv, const char *prefix)
- {
--	const char *val;
--	int nongit;
--	if (argc !=3D 2) {
-+	const char *val =3D NULL;
-+	if (argc !=3D 2)
- 		usage(var_usage);
--	}
--
--	setup_git_directory_gently(&nongit);
--	val =3D NULL;
-=20
- 	if (strcmp(argv[1], "-l") =3D=3D 0) {
- 		git_config(show_config, NULL);
-diff --git a/git.c b/git.c
-index 63630e7..84bef76 100644
---- a/git.c
-+++ b/git.c
-@@ -398,7 +398,7 @@ static void handle_internal_command(int argc, const=
- char **argv)
- 		{ "update-ref", cmd_update_ref, RUN_SETUP },
- 		{ "update-server-info", cmd_update_server_info, RUN_SETUP },
- 		{ "upload-archive", cmd_upload_archive },
--		{ "var", cmd_var },
-+		{ "var", cmd_var, RUN_SETUP_GENTLY },
- 		{ "verify-tag", cmd_verify_tag, RUN_SETUP },
- 		{ "version", cmd_version },
- 		{ "whatchanged", cmd_whatchanged, RUN_SETUP | USE_PAGER },
---=20
-1.7.2.1.544.ga752d.dirty
+-- 
+Cheers,
+Ray Chuan
