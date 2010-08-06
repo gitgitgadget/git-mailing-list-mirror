@@ -1,93 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/18] Add the basic data structure for line level
- history
-Date: Fri, 06 Aug 2010 12:42:47 -0700
-Message-ID: <7vvd7n7cjs.fsf@alter.siamese.dyndns.org>
-References: <1281024717-7855-1-git-send-email-struggleyb.nku@gmail.com>
- <1281024717-7855-4-git-send-email-struggleyb.nku@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Bizarro race conditions in the Git Makefile
+Date: Fri, 6 Aug 2010 19:44:57 +0000
+Message-ID: <AANLkTim2NMi3Vf-EGbFwy370q-YseQoGj=QLGMAq6N=B@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, trast@student.ethz.ch, Jens.Lehmann@web.de
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 06 21:43:11 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 06 21:45:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhSos-00073Y-TO
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 21:43:07 +0200
+	id 1OhSqp-0007tK-D4
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 21:45:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935298Ab0HFTnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 15:43:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:32812 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935135Ab0HFTm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 15:42:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E999CBC27;
-	Fri,  6 Aug 2010 15:42:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=nCzcljLnkVCgcOeZIS5EV2wif9Y=; b=nFeUNnWwHo/G92IdgesM2Pl
-	XjdXlkabR+X2z1ER1mWtIwUIpcpWY3HPI1xoUShspWut0G2kBCn0oAhUrsbkkPzm
-	DkuxBXQPsItHYhkXBVYem5F6vaomU0wn+DWg6Dgv4ZbprEdtH4ynlYiKEdbGVWe7
-	eZY2w8M1n+bvP+MYdk8A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=ATD+HU3INinKZ6CNMKTdRWNy/WjkEPH6Kf7HR0oghaHv3jaVu
-	mra1o4gplHGoziIZRAZG+8lY8OtIYmWTHI1YzcZe34yg5DKu56eXqkNtu4fRrHr4
-	T9WldlkaTd9AcQFjkrQ8k3GG4E5BUnZawWpUqOTyppjTlkjgGCaZ5ZM3Ic=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BED0ACBC25;
-	Fri,  6 Aug 2010 15:42:53 -0400 (EDT)
-Received: from pobox.com (unknown [69.181.135.33]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A5676CBC24; Fri,  6 Aug
- 2010 15:42:48 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CDFC046C-A192-11DF-9CC6-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1761950Ab0HFTo7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 15:44:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44460 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969Ab0HFTo5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 15:44:57 -0400
+Received: by iwn33 with SMTP id 33so1539684iwn.19
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 12:44:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=8rHCwH7g982DHb/V6RJ7nLudtZOSZDUhSMUyzeDf9mQ=;
+        b=HSgWrQ7zMsF+cvuLPTCAbDfIjwhMoZYEjcdbFuFIS3z9FMT5emBELdh+TokAovYIBD
+         udxz/Uze9yZZ9spZP6GbNCLdETPjslaI7PpT9tEM/1wl9qJf331xtLEEkNX7no9Ea01U
+         Wx0708SyGLTfP2NegRZlUEBXcJVQcyM5J/UsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=rj8UWqvPkeu0Y2OJwFJScNV+zhSBSSPqRmPdSwQaavX5RNqgcsvsdYCzo7JkEF/C4N
+         +DOZ5OsuBIwB32tQTSL+FbXS7uzcA51aJqtTd/A+XC8MIdylPcDUUgYt7ugPqgnTvwZQ
+         QODclcRoXOCIS5TPF/9+Dv6FVdV4mbL5z0tOA=
+Received: by 10.231.167.196 with SMTP id r4mr14498053iby.29.1281123897045; 
+	Fri, 06 Aug 2010 12:44:57 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Fri, 6 Aug 2010 12:44:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152807>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+   "Doctor, when I poke my eye like this it hurts"
+   -"So don't do that then"
 
-> diff --git a/diffcore.h b/diffcore.h
-> index 491bea0..13d8e93 100644
-> --- a/diffcore.h
-> +++ b/diffcore.h
-> @@ -23,6 +23,7 @@
->  #define MINIMUM_BREAK_SIZE     400 /* do not break a file smaller than this */
->  
->  struct userdiff_driver;
-> +struct diff_options;
+If you run the Git Makefile (with GNU Make 3.81) in parallel for long
+enough you'll get some interesting breakages. Those interested in
+poking their eyes can try:
 
-Hmm...  I do not see anything you added to this header file that needs
-such a forward declaration.  Other files you added that include diffcore.h
-may want to have that declaration, but I do not think this header file does.
+    while nice -n 30 make -j 15 clean all CFLAGS=3D-O0 CC=3Dgcc; do 1; =
+done
 
->  
->  struct diff_filespec {
->  	unsigned char sha1[20];
+These suggest that we have some bugs in our Makefile dependencies, but
+since I haven't found what they are I'm just going to post the
+symptoms.
 
-> diff --git a/line.h b/line.h
-> new file mode 100644
-> index 0000000..caf84c7
-> --- /dev/null
-> +++ b/line.h
-> @@ -0,0 +1,128 @@
-> ...
-> +struct print_range {
-> +	int start, end;
-> +	int pstart, pend;
+The first example is the generation of the perl.mak from the
+top-level. It seems that if you run make with -j $n the perl.mak will
+get generated $n times:
 
-Please describe what these fields mean.
+        LINK git-fast-import
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+        LINK git-imap-send
+    Writing perl.mak for Git
+        LINK git-shell
+        LINK git-show-index
+        LINK git-upload-pack
+    Writing perl.mak for Git
+    [...]
 
-> +struct range {
+This can lead to an error where they trip over each other:
 
-Isn't "range" too generic a term?  Unless you make this as a static
-declaration only visible to functions where "range" can only mean "line
-ranges" in their context, that is.
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+        AR libgit.a
+        AR xdiff/lib.a
+        LINK git-fast-import
+        LINK git-imap-send
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+    rename MakeMaker.tmp =3D> perl.mak: No such file or directory at
+/usr/share/perl/5.10/ExtUtils/MakeMaker.pm line 1004.
+    make[2]: perl.mak: No such file or directory
+    make[2]: *** No rule to make target `perl.mak'.  Stop.
+    make[1]: *** [instlibdir] Error 2
+    make: *** [git-svn] Error 2
+    make: *** Waiting for unfinished jobs....
+    make[2]: perl.mak: No such file or directory
+    make[2]: *** No rule to make target `perl.mak'.  Stop.
+    make[1]: *** [instlibdir] Error 2
+    make: *** [git-relink] Error 2
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+    Writing perl.mak for Git
+
+Here one make job seemingly had its MakeMaker.tmp file usurped by
+another job.
+
+Here's another one, it seems that the builtin/help.o dependency on
+common-cmds.h is broken:
+
+        CC builtin/help.o
+        [...]
+        CC builtin/ls-remote.o
+    builtin/help.c:9:25: error: common-cmds.h: No such file or director=
+y
+    builtin/help.c: In function =E2=80=98list_common_cmds_help=E2=80=99=
+:
+    builtin/help.c:278: error: =E2=80=98common_cmds=E2=80=99 undeclared=
+ (first use in
+this function)
+    builtin/help.c:278: error: (Each undeclared identifier is reported =
+only once
+    builtin/help.c:278: error: for each function it appears in.)
+
+Which is odd, because this seems OK:
+
+    builtin/help.o: common-cmds.h
+    builtin/help.s builtin/help.o: EXTRA_CPPFLAGS =3D \
+        '-DGIT_HTML_PATH=3D"$(htmldir_SQ)"' \
+        '-DGIT_MAN_PATH=3D"$(mandir_SQ)"' \
+        '-DGIT_INFO_PATH=3D"$(infodir_SQ)"'
+
+A vaguely recall having run into some other make error, but I can't
+reproduce it now. I'll keep poking my eye and reporting results to the
+list.
