@@ -1,174 +1,129 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 2/2] pull --rebase: Avoid spurious conflicts and reapplying unnecessary patches
-Date: Fri,  6 Aug 2010 08:05:03 -0600
-Message-ID: <1281103503-27515-3-git-send-email-newren@gmail.com>
+Subject: [PATCH 1/2] t5520-pull: Add testcases showing spurious conflicts from git pull --rebase
+Date: Fri,  6 Aug 2010 08:05:02 -0600
+Message-ID: <1281103503-27515-2-git-send-email-newren@gmail.com>
 References: <1281103503-27515-1-git-send-email-newren@gmail.com>
 Cc: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>,
 	gitster@pobox.com, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 06 16:03:44 2010
+X-From: git-owner@vger.kernel.org Fri Aug 06 16:03:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhNWR-00022O-PK
-	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 16:03:44 +0200
+	id 1OhNWR-00022O-9k
+	for gcvg-git-2@lo.gmane.org; Fri, 06 Aug 2010 16:03:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757211Ab0HFODd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 10:03:33 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:42294 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757058Ab0HFODb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Aug 2010 10:03:31 -0400
-Received: by eya25 with SMTP id 25so2768976eya.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 07:03:29 -0700 (PDT)
+	id S1757186Ab0HFODc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Aug 2010 10:03:32 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:59052 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756922Ab0HFOD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 10:03:27 -0400
+Received: by wwj40 with SMTP id 40so9083219wwj.1
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 07:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=OtOi9ISo5pF0s5Un4Sr4qGX5N5uP0YnAwWksm7OV/co=;
-        b=wtMvBC9tXU5XaHqWw/s9sYU/MVjlTH4dmoKS3NrmAdM0a7Kaxhogn4i3+ZGwUa/kPu
-         lHk9YjcMPyYEIBgEpw3fQeZ3s//6iE+XGkZJNw35gTnfH6WbLGcjeBPFAohBRHlOOuXd
-         PA7bl+Y37MZ1d3/JR7nMJYDi9VAtvv/pGcVqc=
+        bh=Arq3e6W5d/P3rHbBCxms/+sah/X8O2VYUjXCmi9F100=;
+        b=Fkskx6A77TAvGfuQahuf10GBpo05ThpjWWBGrkZWLD1fRZYOQPRrTIfyPwWUopQqsM
+         grI4tGEWrUs4dwGk5vNUfLODZDe1OQ7buRyBp0Yllf5qu3dyp3BrTvAjsdsbQeSJkzlP
+         GH6m2FnqSVA9m6JjjxtzPSX9t6VepDwTUayhw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=SfKP7SUFGYnFdX5yRfS61jiPXWSh7yeQpI8w2jJqCizuOgDEIAf2LtM2aulOYDTquv
-         siwzrVvPN7FbTuIfowBPXo8jb+paOdhBXDftUcIewGv/FPY3WYoabBwDm1qa3n9JGebO
-         Jmihya1ItQp/lCr2unqrBitsDIMDEqhcA/a1E=
-Received: by 10.216.35.65 with SMTP id t43mr945812wea.34.1281103409420;
-        Fri, 06 Aug 2010 07:03:29 -0700 (PDT)
+        b=P2BIBTsK8tuC9KTvRuX/hNmBODq8QNb9LJYRIpSefsfy7WM5Z8laiYzIaN4Yi01awq
+         VUthV9bEPziNmv+MWwpAiiO6XhDy3mjmGU286J+zzVrOGlJ1OShEEQyNeJaKU+s72V6u
+         6R5vpdP3x5dDDri6CV2SPldMbQevfTTQqPeG4=
+Received: by 10.227.147.204 with SMTP id m12mr10725817wbv.131.1281103406432;
+        Fri, 06 Aug 2010 07:03:26 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id o84sm867954wej.13.2010.08.06.07.03.26
+        by mx.google.com with ESMTPS id o84sm867954wej.13.2010.08.06.07.03.23
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 06 Aug 2010 07:03:28 -0700 (PDT)
+        Fri, 06 Aug 2010 07:03:25 -0700 (PDT)
 X-Mailer: git-send-email 1.7.1.1
 In-Reply-To: <1281103503-27515-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152784>
 
-Prior to c85c79279df2c8a583d95449d1029baba41f8660, pull --rebase would run
-  git rebase $merge_head
-which resulted in a call to
-  git format-patch ... --ignore-if-in-upstream $merge_head..$cur_branch
-
-This had two nice qualities when upstream isn't rebased: (1) "only" the
-patches in $merge_head..$cur_branch would be applied, and (2) patches
-could be dropped/ignored if they had already been applied.  But this did
-not work well when upstream is rebased, since in that case
-$merge_head..$cur_branch refers to too many commits that would need to be
-reapplied, and could result in intentionally dropped commits being
-reintroduced.
-
-So the algorithm was changed.  Defining $old_remote_ref to be the most
-recent entry in the reflog for @upstream that is an ancestor of
-$cur_branch, pull --rebase was changed (over time) to run
-  git rebase --onto $merge_head $old_remote_ref
-which results in a call to
-  git format-patch ... --ignore-if-in-upstream $old_remote_ref..$cur_branch
-
-In the rebased upstream case, this can result in far fewer commits being
-included in the rebase, though the fact that $old_remote_ref is an ancestor
-of $cur_branch means that format-patch will not know what upstream is and
-will not be able to determine if any patches are already upstream.
-
-In the non-rebased upstream case, this new form is usually the same as the
-original code.  However, as noted above, the --ignore-if-in-upstream flag
-becomes meaningless and all patches will be forced to be reapplied.  Also,
-$old_remote_ref can be an ancestor of
-   $(git merge-base $merge_head $cur_branch)
-meaning that pull --rebase may try to reapply more patches which are
-clearly already upstream, without the means to detect that they've already
-been applied.  This can be extremely confusing for new users ("git is
-giving me lots of conflicts in stuff I didn't even change since my last
-push.")
-
-Fix the non-rebased upstream case by ignoring $old_remote_ref whenever it
-is contained by $(git merge-base $merge_head $cur_branch).
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- git-pull.sh     |   34 ++++++++++++++++++++++------------
- t/t5520-pull.sh |    4 ++--
- 2 files changed, 24 insertions(+), 14 deletions(-)
+ t/t5520-pull.sh |   59 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 59 insertions(+), 0 deletions(-)
 
-diff --git a/git-pull.sh b/git-pull.sh
-index a09a44e..54da07b 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -206,18 +206,6 @@ test true = "$rebase" && {
- 		git diff-index --ignore-submodules --cached --quiet HEAD -- ||
- 		die "refusing to pull with rebase: your working tree is not up-to-date"
- 	fi
--	oldremoteref= &&
--	. git-parse-remote &&
--	remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
--	oldremoteref="$(git rev-parse -q --verify "$remoteref")" &&
--	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
--	do
--		if test "$reflog" = "$(git merge-base $reflog $curr_branch)"
--		then
--			oldremoteref="$reflog"
--			break
--		fi
--	done
- }
- orig_head=$(git rev-parse -q --verify HEAD)
- git fetch $verbosity $progress $dry_run --update-head-ok "$@" || exit 1
-@@ -273,6 +261,28 @@ then
- 	exit
- fi
- 
-+if test true = "$rebase"
-+then
-+	oldremoteref= &&
-+	. git-parse-remote &&
-+	remoteref="$(get_remote_merge_branch "$@" 2>/dev/null)" &&
-+	oldremoteref="$(git rev-parse -q --verify "$remoteref")" &&
-+	for reflog in $(git rev-list -g $remoteref 2>/dev/null)
-+	do
-+		if test "$reflog" = "$(git merge-base $reflog $curr_branch)"
-+		then
-+			oldremoteref="$reflog"
-+			break
-+		fi
-+	done
-+
-+	o=$(git show-branch --merge-base $curr_branch $merge_head $oldremoteref)
-+	if test "$oldremoteref" = "$o"
-+	then
-+		unset oldremoteref
-+	fi
-+fi
-+
- merge_name=$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || exit
- case "$rebase" in
- true)
 diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 8f76829..4bf2253 100755
+index 319e389..8f76829 100755
 --- a/t/t5520-pull.sh
 +++ b/t/t5520-pull.sh
-@@ -182,7 +182,7 @@ test_expect_success 'setup for detecting upstreamed changes' '
- 	)
+@@ -160,4 +160,63 @@ test_expect_success 'pull --rebase works on branch yet to be born' '
+ 	test_cmp expect actual
  '
  
--test_expect_failure 'git pull --rebase detects upstreamed changes' '
-+test_expect_success 'git pull --rebase detects upstreamed changes' '
- 	(cd dst &&
- 	 git pull --rebase &&
- 	 test -z "$(git ls-files -u)"
-@@ -212,7 +212,7 @@ test_expect_success 'setup for avoiding reapplying old patches' '
- 	)
- '
- 
--test_expect_failure 'git pull --rebase does not reapply old patches' '
-+test_expect_success 'git pull --rebase does not reapply old patches' '
- 	(cd dst &&
- 	 (git pull --rebase || true) &&
- 	 test 3 != $(find .git/rebase-apply -name "000*" | wc -l)
++test_expect_success 'setup for detecting upstreamed changes' '
++	mkdir src &&
++	(cd src &&
++	 git init &&
++	 for i in $(seq 1 10); do echo $i; done > stuff &&
++	 git add stuff &&
++	 git commit -m "Initial revision"
++	) &&
++	git clone src dst &&
++	(cd src &&
++	 sed -i s/5/43/ stuff &&
++	 git commit -a -m "5->43" &&
++	 sed -i s/6/42/ stuff &&
++	 git commit -a -m "Make it bigger" &&
++	 correct=$(git rev-parse HEAD)
++	) &&
++	(cd dst &&
++	 sed -i s/5/43/ stuff &&
++	 git commit -a -m "Independent discovery of 5->43"
++	)
++'
++
++test_expect_failure 'git pull --rebase detects upstreamed changes' '
++	(cd dst &&
++	 git pull --rebase &&
++	 test -z "$(git ls-files -u)"
++	)
++'
++
++test_expect_success 'setup for avoiding reapplying old patches' '
++	(cd dst &&
++	 (git rebase --abort || true) &&
++	 git reset --hard origin/master
++	) &&
++	git clone --bare src src-replace.git &&
++	rm -rf src &&
++	mv src-replace.git src &&
++	(cd dst &&
++	 sed -i s/2/22/ stuff &&
++	 git commit -a -m "Change 2" &&
++	 sed -i s/3/33/ stuff &&
++	 git commit -a -m "Change 3" &&
++	 sed -i s/4/44/ stuff &&
++	 git commit -a -m "Chagne 4" &&
++	 git push &&
++
++	 sed -i s/44/55/ stuff &&
++	 git commit --amend -a -m "Change 4" &&
++	 test_must_fail git push
++	)
++'
++
++test_expect_failure 'git pull --rebase does not reapply old patches' '
++	(cd dst &&
++	 (git pull --rebase || true) &&
++	 test 3 != $(find .git/rebase-apply -name "000*" | wc -l)
++	)
++'
++
+ test_done
 -- 
 1.7.1.1
