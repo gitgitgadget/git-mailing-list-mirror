@@ -1,73 +1,79 @@
-From: "Spencer E. Olson" <olsonse@umich.edu>
-Subject: Re: [PATCH v2] Allow HTTP user agent string to be modified.
-Date: Sat, 07 Aug 2010 11:29:44 -0600
-Message-ID: <1281202184.4815.1.camel@compaq.olson.home>
-References: <1281152060-16736-1-git-send-email-olsonse@umich.edu>
-	 <AANLkTinyohKaACbheGR2Q=-K5sWwv+y1u1-3b2WPzxVh@mail.gmail.com>
+From: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
+Subject: wiki "abuse"
+Date: Sat, 7 Aug 2010 20:56:31 +0300
+Message-ID: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>,
-	Mark Lodato <lodatom@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 07 19:40:39 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 07 19:57:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhnNs-0008Q4-5k
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 19:40:36 +0200
+	id 1Ohndl-0005od-F5
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 19:57:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610Ab0HGRkb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 13:40:31 -0400
-Received: from 28dayslater.mr.itd.umich.edu ([141.211.12.118]:44005 "EHLO
-	28dayslater.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752294Ab0HGRka convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sat, 7 Aug 2010 13:40:30 -0400
-Received: FROM hackers.mr.itd.umich.edu (smtp.mail.umich.edu [141.211.14.81])
-	By 28dayslater.mr.itd.umich.edu ID 4C5D9885.6D5AF.22000 ;
-	 7 Aug 2010 13:31:49 EDT
-Received: FROM [192.168.1.5] (174-28-223-52.albq.qwest.net [174.28.223.52])
-	By hackers.mr.itd.umich.edu ID 4C5D9880.7BF22.27088 ;
-	Authuser olsonse;
-	 7 Aug 2010 13:31:45 EDT
-In-Reply-To: <AANLkTinyohKaACbheGR2Q=-K5sWwv+y1u1-3b2WPzxVh@mail.gmail.com>
-X-Mailer: Evolution 2.28.3 
+	id S1753959Ab0HGR44 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 13:56:56 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:43630 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752865Ab0HGR4w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Aug 2010 13:56:52 -0400
+Received: by qwh6 with SMTP id 6so5998951qwh.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 10:56:51 -0700 (PDT)
+Received: by 10.220.122.24 with SMTP id j24mr8968382vcr.154.1281203811282; 
+	Sat, 07 Aug 2010 10:56:51 -0700 (PDT)
+Received: by 10.220.193.2 with HTTP; Sat, 7 Aug 2010 10:56:31 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152861>
 
-I would have no problem doing that.  I was just trying to match the
-style already present in http.c.  All the other pointer tests in that
-function/file are done the same.
+Hallo,
 
+I have accounts on dozens of wikis and i am an admin on a few of them.
+I opened an account on https://git.wiki.kernel.org/ , created a user
+page and put there a link to my blog. That's always the first thing i
+do on wikis to which i plan to contribute, because that's the easiest
+way to tell the world who i am before i start changing pages that
+other people wrote. It's not so different from filling in the
+"website" field on the profile page on GitHub, Twitter, LinkedIn or
+any other website and it's pretty normative.
 
-On Sat, 2010-08-07 at 08:34 +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on wrote:
-> On Sat, Aug 7, 2010 at 03:34, Spencer E. Olson <olsonse@umich.edu> wr=
-ote:
->=20
-> > -       curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AGENT)=
-;
-> > +       if (user_agent !=3D NULL)
-> > +               curl_easy_setopt(result, CURLOPT_USERAGENT, user_ag=
-ent);
-> > +       else
-> > +               curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USE=
-R_AGENT);
->=20
-> Can't you just skip the !=3D NULL?:
->=20
->        if (user_agent)
->                curl_easy_setopt(result, CURLOPT_USERAGENT, user_agent=
-);
->        else
->                curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_A=
-GENT);
->=20
->=20
+On the Git wiki, however, the user page i created was deleted for
+"link spam" and my account was blocked for "Spamming links to external
+sites". I asked on the deleting admin's user talk page what is wrong
+about putting a link to my blog. The admin didn't reply, but deleted
+my question with the comment "Inappropriate abuse of the Wiki as a
+messenger, as well as abuse of the admin". On all the wikis i know the
+whole point of user talk pages is sending messages between users and
+with all seriousness i just can't understand how what i did
+constitutes "abuse of the admin".
+
+It is possible, of course, that this wiki has different rules. For
+example, you may want nothing but technical pages and no personal
+content whatsoever. Although it is quite contrary to the wiki idea, it
+is legitimate, but you should at least write it somewhere. Wikis
+usually have a "Help" or a "Community portal" page - i couldn't find
+anything like that on yours. And if you don't want user and user talk
+pages to exist, just don't allow people to edit them in the first
+place.
+
+I would be glad to have my account, Amire80, unblocked. I can open
+another one, but i happen to like this user name.
+
+Thank you,
+
+--
+=D7=90=D6=B8=D7=9E=D6=B4=D7=99=D7=A8 =D7=90=D6=B1=D7=9C=D6=B4=D7=99=D7=A9=
+=D7=81=D6=B8=D7=A2 =D7=90=D6=B7=D7=94=D6=B2=D7=A8=D7=95=D6=B9=D7=A0=D6=B4=
+=D7=99
+Amir Elisha Aharoni
+
+http://aharoni.wordpress.com
+
+"We're living in pieces,
+=C2=A0I want to live in peace." - T. Moore
