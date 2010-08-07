@@ -1,79 +1,60 @@
-From: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
-Subject: wiki "abuse"
-Date: Sat, 7 Aug 2010 20:56:31 +0300
-Message-ID: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
+From: Michael Witten <mfwitten@gmail.com>
+Subject: Re: wiki "abuse"
+Date: Sat, 7 Aug 2010 14:25:07 -0500
+Message-ID: <AANLkTinQo_Ug9hiN_A=_kXfVuWF_a1ZWVh0hAQP48TkP@mail.gmail.com>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 07 19:57:02 2010
+Cc: git@vger.kernel.org
+To: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
+X-From: git-owner@vger.kernel.org Sat Aug 07 21:25:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ohndl-0005od-F5
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 19:57:01 +0200
+	id 1Ohp1o-0004Mw-IM
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 21:25:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753959Ab0HGR44 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 13:56:56 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:43630 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752865Ab0HGR4w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Aug 2010 13:56:52 -0400
-Received: by qwh6 with SMTP id 6so5998951qwh.19
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 10:56:51 -0700 (PDT)
-Received: by 10.220.122.24 with SMTP id j24mr8968382vcr.154.1281203811282; 
-	Sat, 07 Aug 2010 10:56:51 -0700 (PDT)
-Received: by 10.220.193.2 with HTTP; Sat, 7 Aug 2010 10:56:31 -0700 (PDT)
+	id S1753078Ab0HGTZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Aug 2010 15:25:39 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63139 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752253Ab0HGTZj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Aug 2010 15:25:39 -0400
+Received: by fxm14 with SMTP id 14so4414326fxm.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 12:25:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=6CAWfCX6QoMeZaoRHT8qKb0QRnuwU4LVj1m2YYao5Lg=;
+        b=GiFS099CeFDCur4NBJ9wi4SfQSz6s+EJa0ab/7efnHfKEWW68C7eC6RTolal83ayFm
+         QijRgY17a+1zNNIprJ5yqCRupMo7Mw5FyXJZIPf5QTnl4fmzM1LotqOxHIgjpldOAYH+
+         pk4O14Q5T61I4ikkFk0Qp0/eCXgnzPpVrqJyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=kN2YIYU6qhhHXS3ClPcOTIaOp01vFGgyfY6N7rxBATgidgSTsTTIij8CaIsuF19Eb+
+         otUpl8zI79e9WzXuDK0G4ez/tQptLh35gHkBdQ/z/gSt4K7AB3DLTweFWC+iPZrHzw8Y
+         xYhmM8lZNXtCGfflysGl+lA3HLnMnvPvrvmgY=
+Received: by 10.239.190.20 with SMTP id v20mr723024hbh.45.1281209137330; Sat, 
+	07 Aug 2010 12:25:37 -0700 (PDT)
+Received: by 10.239.157.68 with HTTP; Sat, 7 Aug 2010 12:25:07 -0700 (PDT)
+In-Reply-To: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152862>
 
-Hallo,
+On Sat, Aug 7, 2010 at 12:56, Amir E. Aharoni
+<amir.aharoni@mail.huji.ac.il> wrote:
+> I opened an account on https://git.wiki.kernel.org/ , created a user
+> page and put there a link to my blog. That's always the first thing i
+> do on wikis to which i plan to contribute, because that's the easiest
+> way to tell the world who i am before i start changing pages that
+> other people wrote.
 
-I have accounts on dozens of wikis and i am an admin on a few of them.
-I opened an account on https://git.wiki.kernel.org/ , created a user
-page and put there a link to my blog. That's always the first thing i
-do on wikis to which i plan to contribute, because that's the easiest
-way to tell the world who i am before i start changing pages that
-other people wrote. It's not so different from filling in the
-"website" field on the profile page on GitHub, Twitter, LinkedIn or
-any other website and it's pretty normative.
-
-On the Git wiki, however, the user page i created was deleted for
-"link spam" and my account was blocked for "Spamming links to external
-sites". I asked on the deleting admin's user talk page what is wrong
-about putting a link to my blog. The admin didn't reply, but deleted
-my question with the comment "Inappropriate abuse of the Wiki as a
-messenger, as well as abuse of the admin". On all the wikis i know the
-whole point of user talk pages is sending messages between users and
-with all seriousness i just can't understand how what i did
-constitutes "abuse of the admin".
-
-It is possible, of course, that this wiki has different rules. For
-example, you may want nothing but technical pages and no personal
-content whatsoever. Although it is quite contrary to the wiki idea, it
-is legitimate, but you should at least write it somewhere. Wikis
-usually have a "Help" or a "Community portal" page - i couldn't find
-anything like that on yours. And if you don't want user and user talk
-pages to exist, just don't allow people to edit them in the first
-place.
-
-I would be glad to have my account, Amire80, unblocked. I can open
-another one, but i happen to like this user name.
-
-Thank you,
-
---
-=D7=90=D6=B8=D7=9E=D6=B4=D7=99=D7=A8 =D7=90=D6=B1=D7=9C=D6=B4=D7=99=D7=A9=
-=D7=81=D6=B8=D7=A2 =D7=90=D6=B7=D7=94=D6=B2=D7=A8=D7=95=D6=B9=D7=A0=D6=B4=
-=D7=99
-Amir Elisha Aharoni
-
-http://aharoni.wordpress.com
-
-"We're living in pieces,
-=C2=A0I want to live in peace." - T. Moore
+I say this without malice: Nobody really cares who you are.
