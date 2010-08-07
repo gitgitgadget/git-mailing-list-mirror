@@ -1,122 +1,71 @@
-From: "Spencer E. Olson" <olsonse@umich.edu>
-Subject: [PATCH v2] Allow HTTP user agent string to be modified.
-Date: Fri,  6 Aug 2010 21:34:20 -0600
-Message-ID: <1281152060-16736-1-git-send-email-olsonse@umich.edu>
-Cc: Nick Hengeveld <nickh@reactrix.com>,
-	Mark Lodato <lodatom@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Spencer E. Olson" <olsonse@umich.edu>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: RFD: git-bzr: anyone interested?
+Date: Sat, 07 Aug 2010 12:36:03 +0900
+Message-ID: <8762znjdr0.fsf@catnip.gol.com>
+References: <4B7D8358.1080108@gmail.com>
+	<fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
+	<4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix>
+	<4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix>
+	<4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix>
+	<p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com>
+	<AANLkTi=a27OtQX-oNwPqmXDUmZHFyKo+fPZCRgSv04G3@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 07 05:35:22 2010
+X-From: git-owner@vger.kernel.org Sat Aug 07 05:36:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhaBu-0003bt-2i
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 05:35:22 +0200
+	id 1OhaCo-0003mB-GM
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 05:36:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751117Ab0HGDfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Aug 2010 23:35:17 -0400
-Received: from smtp.mail.umich.edu ([141.211.12.86]:58547 "EHLO
-	tombraider.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752202Ab0HGDfP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 23:35:15 -0400
-Received: FROM localhost.localdomain (zektor.gpcc.itd.umich.edu [141.211.2.203])
-	By tombraider.mr.itd.umich.edu ID 4C5CD470.AC410.30457 ;
-	Authuser olsonse;
-	 6 Aug 2010 23:35:13 EDT
-X-Mailer: git-send-email 1.7.0.4
+	id S1752582Ab0HGDgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Aug 2010 23:36:14 -0400
+Received: from lo.gmane.org ([80.91.229.12]:34267 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751267Ab0HGDgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 23:36:13 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OhaCh-0003lN-Jl
+	for git@vger.kernel.org; Sat, 07 Aug 2010 05:36:11 +0200
+Received: from 218.231.154.125.eo.eaccess.ne.jp ([218.231.154.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 05:36:11 +0200
+Received: from miles by 218.231.154.125.eo.eaccess.ne.jp with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 05:36:11 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 218.231.154.125.eo.eaccess.ne.jp
+System-Type: x86_64-unknown-linux-gnu
+Cancel-Lock: sha1:myQhHYWU44b3Qb/UdW1FiTNwykY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152840>
 
-Some firewalls restrict HTTP connections based on the clients user agent.  This
-commit provides the user the ability to modify the user agent string via either
-a new config option (http.useragent) or by an environment variable
-(GIT_USER_AGENT).  Relevant documentation is added to Documentation/config.txt.
+Conrad Parker <conrad@metadecks.org> writes:
+> Anyone interested in git-bzr might also want to look at some recent
+> rewrites; from the current git-bzr README:
+>
+> The following are rewrites in Python and may offer better bzr integration:
+>   * http://github.com/termie/git-bzr-ng
+>   * http://github.com/matthew-brett/git-bzr
+>
+> (... and I'd also be interested to know how well either of these work :)
 
-Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
----
+Me too.
 
-Hi all,
+There are some projects I'd like to work on that have bzr repos, but
+it's always very painful to use the actual bzr client...
 
-This is both a reminder and an update for a patch I sent earlier
-(http://article.gmane.org/gmane.comp.version-control.git/151434).
-This update includes the documentation for the new http.useragent configure
-option and the new GIT_USER_AGENT environement variable.  I hadn't seen any
-comments on the earlier version of this patch, so I assume it got lost among the
-other list activity.  
+-Miles
 
- Documentation/config.txt |    9 +++++++++
- http.c                   |   11 ++++++++++-
- 2 files changed, 19 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f81fb91..826e816 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1243,6 +1243,15 @@ http.noEPSV::
- 	support EPSV mode. Can be overridden by the 'GIT_CURL_FTP_NO_EPSV'
- 	environment variable. Default is false (curl will use EPSV).
- 
-+http.useragent::
-+	The HTTP USER_AGENT string presented to an HTTP server.  The default
-+	value represents the version of the client git such as git/1.7.1.
-+	This option allows you to override this value to a more common value
-+	such as Mozilla/4.0.  This may be necessary, for instance, if
-+	connecting through a firewall that restricts HTTP connections to a set
-+	of common USER_AGENT strings (but not including those like git/1.7.1).
-+	Can be overridden by the 'GIT_USER_AGENT' environment variable.
-+
- i18n.commitEncoding::
- 	Character encoding the commit messages are stored in; git itself
- 	does not care per se, but this information is necessary e.g. when
-diff --git a/http.c b/http.c
-index 1320c50..3a17193 100644
---- a/http.c
-+++ b/http.c
-@@ -41,6 +41,7 @@ static long curl_low_speed_time = -1;
- static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
- static char *user_name, *user_pass;
-+static const char *user_agent = NULL;
- 
- #if LIBCURL_VERSION_NUM >= 0x071700
- /* Use CURLOPT_KEYPASSWD as is */
-@@ -196,6 +197,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp("http.useragent", var))
-+		return git_config_string(&user_agent, var, value);
-+
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
- }
-@@ -279,7 +283,10 @@ static CURL *get_curl_handle(void)
- 	if (getenv("GIT_CURL_VERBOSE"))
- 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
- 
--	curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AGENT);
-+	if (user_agent != NULL)
-+		curl_easy_setopt(result, CURLOPT_USERAGENT, user_agent);
-+	else
-+		curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AGENT);
- 
- 	if (curl_ftp_no_epsv)
- 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
-@@ -380,6 +387,8 @@ void http_init(struct remote *remote)
- #endif
- 	set_from_env(&ssl_cainfo, "GIT_SSL_CAINFO");
- 
-+	set_from_env(&user_agent, "GIT_USER_AGENT");
-+
- 	low_speed_limit = getenv("GIT_HTTP_LOW_SPEED_LIMIT");
- 	if (low_speed_limit != NULL)
- 		curl_low_speed_limit = strtol(low_speed_limit, NULL, 10);
 -- 
-1.7.1.1
+Christian, n. One who follows the teachings of Christ so long as they are not
+inconsistent with a life of sin.
