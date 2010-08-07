@@ -1,159 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] imap-send: Code correctness flagged by clang
-Date: Sat, 7 Aug 2010 16:04:29 -0500
-Message-ID: <20100807210429.GA2216@burratino>
-References: <1281183136-10352-1-git-send-email-avarab@gmail.com>
+From: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
+Subject: tests failing on Cygwin
+Date: Sun, 8 Aug 2010 00:37:00 +0300
+Message-ID: <AANLkTimeE-dJrSrjJSuP9Zm93tF9woNakO+HwspJg6CZ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>,
-	Benjamin Kramer <benny.kra@googlemail.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 07 23:06:01 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 07 23:37:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ohqae-0000Qh-VW
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 23:06:01 +0200
+	id 1Ohr5H-0002iU-8v
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 23:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041Ab0HGVF4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 17:05:56 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:54775 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753216Ab0HGVFz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Aug 2010 17:05:55 -0400
-Received: by gxk23 with SMTP id 23so3157802gxk.19
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 14:05:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=rxFZKTQlzbXv72+hODBGUFnjmtMV60I+10XZaj0e0eE=;
-        b=OQen9jzSBYlIYFaVx5MYkobAOjHSUzutTqJUt2Z3RlwX9JsiyvlPLBSMnFS2pQk0OS
-         XVSc24LC+98I+xwLZx6RKnEaEdgty40iZfwHmLz4A5hAqOQUlux/+h5WsszFTGV9kyUc
-         0F0nOJk4bsi9Dr7IR2STGOTIx89CNZECPTBAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=rtDoAXTjppK4b6khV1hasBS4idURLvaQoxnp4dVbO1ZapIXJrm3xMakXPsbTCIJVk4
-         6QhWvDrXQA8Hm4DoBfMlB/704t888pAmu5CpXhr+/qRheB+iAnKosLSXvXgLfQpJMFtS
-         lV8jkBWIBsllUsY+XI3gSd14E4m9RLThG3aJU=
-Received: by 10.151.101.6 with SMTP id d6mr4518721ybm.236.1281215154280;
-        Sat, 07 Aug 2010 14:05:54 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id m12sm2988356ybn.19.2010.08.07.14.05.52
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 07 Aug 2010 14:05:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1281183136-10352-1-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754436Ab0HGVhX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 17:37:23 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:38666 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754316Ab0HGVhW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Aug 2010 17:37:22 -0400
+Received: by qyk7 with SMTP id 7so882390qyk.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 14:37:20 -0700 (PDT)
+Received: by 10.220.122.24 with SMTP id j24mr9006041vcr.154.1281217040141; 
+	Sat, 07 Aug 2010 14:37:20 -0700 (PDT)
+Received: by 10.220.193.2 with HTTP; Sat, 7 Aug 2010 14:37:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152866>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Hallo,
 
-> [Subject: imap-send: Code correctness flagged by clang]
->
-> Clang 1.1 flagged the following issues in imap-send.c, this change
-> fixes the warnings by moving some code around:
->=20
->     imap-send.c:548:27: warning: data argument not used by format str=
-ing [-Wformat-extra-args]
->                                cmd->tag, cmd->cmd, cmd->cb.dlen);
->                                                    ^
->=20
-> Here the sprintf format didn't use the cmd->cb.dlen argument if
-> cmd->cb.data was false. Change the code to use a if/else instead of a
-> two-level ternary to work it. This code was introduced with imap-send
-> itself in f2561fda.
->=20
->     imap-send.c:1089:41: warning: conversion specifies type 'unsigned=
- short' but the argument has type 'int' [-Wformat]
->                     snprintf(portstr, sizeof(portstr), "%hu", srvc->p=
-ort);
->                                                         ~~^   ~~~~~~~=
-~~~
->=20
-> Here sprintf is being given an int with a %hu format. Cast the
-> srvc->port to unsigned short to work it. This code was introduced in
-> 94ad2437 to add IPv6 support.
+I couldn't find a better place to report this and i don't know whether
+anyone really cares about this, but i'll try anyway.
 
-Nitpick: that this was found by clang is probably not the first thing
-a person trying to figure out what the patch does needs to know.
-Maybe:
+I want to make a few corrections to the core documentation. I cloned
+git.git and before starting the actual i built it and ran `make test',
+just in case, and some tests failed.
 
-	Subject: imap-send: Fix sprintf usage
+I am doing this on XP/Cygwin. Some of them may be irrelevant for
+Cygwin; if so, they probably should be skipped. And maybe i am just
+misunderstanding something.
 
-	When composing a command for the imap server, imap-send
-	uses a single nfsnprintf() invocation for brevity
-	instead of dealing separately with the case when there
-	is a message to be sent and the case when there isn=E2=80=99t.
-	The unused argument in the second case, while valid,
-	is confusing for static analyzers and human readers.
+Here's the list of files and names of failed tests:
 
-	v1.6.4-rc0~117 (imap-send: add support for IPv6, 2009-05-25)
-	mistakenly used %hu as the format for an int =E2=80=9Cport=E2=80=9D, b=
-y
-	analogy with existing usage for the unsigned short
-	=E2=80=9Caddr.sin_port=E2=80=9D.  Use %d instead.
+t0001-init.sh:
+* init notices EPERM
 
-	Noticed with clang.
+t1004-read-tree-m-u-wf.sh:
+* funny symlink in work tree, un-unlink-able
 
-> +++ b/imap-send.c
-> @@ -543,9 +543,14 @@ static struct imap_cmd *v_issue_imap_cmd(struct =
-imap_store *ctx,
->  	while (imap->literal_pending)
->  		get_cmd_result(ctx, NULL);
-> =20
-> -	bufl =3D nfsnprintf(buf, sizeof(buf), cmd->cb.data ? CAP(LITERALPLU=
-S) ?
-> -			   "%d %s{%d+}\r\n" : "%d %s{%d}\r\n" : "%d %s\r\n",
-> -			   cmd->tag, cmd->cmd, cmd->cb.dlen);
-> +	if (cmd->cb.data) {
-> +		bufl =3D nfsnprintf(buf, sizeof(buf),
-> +		                  CAP(LITERALPLUS) ? "%d %s{%d+}\r\n" : "%d %s{%d}=
-\r\n",
-> +		                  cmd->tag, cmd->cmd, cmd->cb.dlen);
-> +	} else {
-> +		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->=
-cmd);
-> +	}
-> +
+t3300-funny-names.sh:
+* git diff-tree delete with-funny
+* ... and all the test from here until the end of that file
 
-Hmm, maybe this would be easier to read:
+t3301-notes.sh:
+* test_expect_success 'git notes copy --for-rewrite (disabled)' '
+        git config notes.rewrite.bar false &&
+        echo $(git rev-parse HEAD~3) $(git rev-parse HEAD) |
+        git notes copy --for-rewrite=3Dbar &&
+        git log -2 > output &&
+        test_cmp expect output
+    '
 
-	if (!cmd->cb.data)
-		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cmd=
-);
-	else
-		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s{%d%s}\r\n",
-		                  cmd->tag, cmd->cmd, cmd->cb.dlen,
-		                  CAP(LITERALPLUS) ? "+" : "");
+t556x_common:
+* direct refs/heads/master not found
+* no export by default
+* static file if http.getanyfile true is ok
+* http.uploadpack false
+* http.receivepack default disabled
+* http.receivepack false
 
-i.e., putting the easier case first and avoiding a variable format stri=
-ng.
+t7300-clean.sh:
+* removal failure
 
-> @@ -1086,7 +1091,7 @@ static struct store *imap_open_store(struct ima=
-p_server_conf *srvc)
->  		int gai;
->  		char portstr[6];
-> =20
-> -		snprintf(portstr, sizeof(portstr), "%hu", srvc->port);
-> +		snprintf(portstr, sizeof(portstr), "%hu", (unsigned short)srvc->po=
-rt);
+t7606-merge-custom.sh:
+* merge c2 with a custom strategy
 
-Why not
+--=20
+=D7=90=D6=B8=D7=9E=D6=B4=D7=99=D7=A8 =D7=90=D6=B1=D7=9C=D6=B4=D7=99=D7=A9=
+=D7=81=D6=B8=D7=A2 =D7=90=D6=B7=D7=94=D6=B2=D7=A8=D7=95=D6=B9=D7=A0=D6=B4=
+=D7=99
+Amir Elisha Aharoni
 
-		snprintf(portstr, sizeof(portstr), "%d", srvc->port);
+http://aharoni.wordpress.com
 
-?
-
-Thanks for checking the code.
+"We're living in pieces,
+=C2=A0I want to live in peace." - T. Moore
