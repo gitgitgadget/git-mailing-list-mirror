@@ -1,74 +1,89 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: RFD: git-bzr: anyone interested?
-Date: Sat, 7 Aug 2010 22:37:41 +0900
-Message-ID: <AANLkTinCn2zozF1cH3PY1yqr3rKdTEMxmP28BofZiTp6@mail.gmail.com>
-References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com> 
-	<4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix> 
-	<4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix> 
-	<4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix> 
-	<p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com> 
-	<AANLkTi=a27OtQX-oNwPqmXDUmZHFyKo+fPZCRgSv04G3@mail.gmail.com> 
-	<8762znjdr0.fsf@catnip.gol.com> <4C5D1DC2.6000704@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git check out file time
+Date: Sat, 07 Aug 2010 06:46:20 -0700 (PDT)
+Message-ID: <m3aaoyo7sz.fsf@localhost.localdomain>
+References: <AANLkTinuD8YQ+maWwD3v1C0B4YCOdTS4OsVjHLizga3c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>,
-	conrad@metadecks.org
-To: Gabriel Filion <lelutin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 07 15:38:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tong Sun <suntong001@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 07 15:46:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhjbG-0006fM-7x
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 15:38:10 +0200
+	id 1OhjjJ-0002JL-2n
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 15:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753786Ab0HGNiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Aug 2010 09:38:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54372 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753213Ab0HGNiB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Aug 2010 09:38:01 -0400
-Received: by iwn33 with SMTP id 33so2217674iwn.19
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 06:38:01 -0700 (PDT)
+	id S1762670Ab0HGNqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Aug 2010 09:46:23 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33051 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753213Ab0HGNqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Aug 2010 09:46:22 -0400
+Received: by fxm14 with SMTP id 14so4338069fxm.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 06:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type;
-        bh=w1OXYcvKcX/Ws2AAPNRiI5dn26lOSKcUJ2qGPFmYcBg=;
-        b=a9t0AkJxep6GjVun2Fk0lbMeBbU5sBvvFtFPlImrR4zUZVA17UDVq/yeRV9EuXei9v
-         rbOvGU49EJL+novNGp7MIu3yJaEvnLTxXyEfniCiSobKIK1aXxTWTdX0RHwDC7VA+y0y
-         0AukUDGaR/6+MiLLCreXUFTt/97mkuOnHBPk8=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=GJAJCkr4dYHzPfGXk2MX7bJf1aXNuRGRqn7igOMywwE=;
+        b=UsKql/65I0QzLTlonwW9GVAv3VD8DR0hIALSuFYDty8QYRO/rCvhg8j2qNm9ysrF9g
+         Yy2y14+jNWW2pVL5nhGFrEpAu280UDjgxBsB/nY49ciU/JFwrEJX10nlLg3mgrlEg3wP
+         x83c3CeJuP65HcSPwVNJxMXRU1Sz5JSqsj5qA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type;
-        b=jMpZw9zn4+ZKzkeAna4Hux2m9+S38KnSelg6fG6vOBEgmwzU1+vOACDtayD4AlK1Kn
-         +LS7wo9evm1Gyl6/Hjxa0up+yRmRnzrdPxk9UQeNP2kVz6STaEaMurUWMoQzJYei95dF
-         w+PA2D+XKoWRfr2THZ9iaXS3ChS2ASKElHT68=
-Received: by 10.231.157.207 with SMTP id c15mr15713987ibx.143.1281188281101; 
-	Sat, 07 Aug 2010 06:38:01 -0700 (PDT)
-Received: by 10.231.146.65 with HTTP; Sat, 7 Aug 2010 06:37:41 -0700 (PDT)
-In-Reply-To: <4C5D1DC2.6000704@gmail.com>
-X-Google-Sender-Auth: gG9BkwLqPq-Wxz0wPsJ0UxnOcOk
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=OdI/U1RcdTdvFXXFD5g6B7nvn8rXvSq3w1QKDw6wMaKRaVotvKFK+QyU2m4pn+CdXF
+         YhNchk864YchbZ5NR1d+WmuiuaGaeGH7v2ExfbQTTczWZxcsMix4NclNkK41+vmyFhA2
+         560qPtYMFr1iyuUcY2pZeQKv8S04O0RjXb1Y0=
+Received: by 10.223.113.65 with SMTP id z1mr14285054fap.38.1281188781110;
+        Sat, 07 Aug 2010 06:46:21 -0700 (PDT)
+Received: from localhost.localdomain (abwi49.neoplus.adsl.tpnet.pl [83.8.232.49])
+        by mx.google.com with ESMTPS id r5sm1044160faq.8.2010.08.07.06.46.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 07 Aug 2010 06:46:20 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o77DjlFZ004814;
+	Sat, 7 Aug 2010 15:45:58 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o77DjYX4004807;
+	Sat, 7 Aug 2010 15:45:34 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTinuD8YQ+maWwD3v1C0B4YCOdTS4OsVjHLizga3c@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152858>
 
-On Sat, Aug 7, 2010 at 5:48 PM, Gabriel Filion <lelutin@gmail.com> wrote:
-> (restoring CC list. it is customary on the git list to reply-all)
+Tong Sun <suntong001@gmail.com> writes:
 
-Sorry, I was using gmane (mail/news gateway); I'm not totally sure
-what it does with replies...
+> Quick Q, is it possible to keep the original file time from the git
+> server when checking out / cloning a local repo?
+> 
+> When I did
+> 
+>  git clone git://git.remote...
+> 
+> All my local git files are set to the check out time.
+> 
+> Please help and CC me when replying.
 
-I'll use mail for replies in the future.
+Only with third-party extra tools such as Metastore (or etckeeper that
+uses it), or git-cache-meta (or IsiSetup), see
+  https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools
 
-Thanks,
 
--Miles
+Git itself doesn't store original file time, and with its intended use
+it would screw up mtime-based make rebuilding.
 
+HTH
 -- 
-Do not taunt Happy Fun Ball.
+Jakub Narebski
+Poland
+ShadeHawk on #git
