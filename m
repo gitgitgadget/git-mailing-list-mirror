@@ -1,116 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Maildir ordering in git-mailsplit (was: Using mutt as a git maintainer)
-Date: Sat, 07 Aug 2010 06:23:46 -0700 (PDT)
-Message-ID: <m3eieao8uh.fsf@localhost.localdomain>
-References: <20100806222847.GA4240@sceen.net> <20100807024337.GA15410@kytes>
-	<20100807112159.GA12015@sceen.net>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: RFD: git-bzr: anyone interested?
+Date: Sat, 7 Aug 2010 22:37:41 +0900
+Message-ID: <AANLkTinCn2zozF1cH3PY1yqr3rKdTEMxmP28BofZiTp6@mail.gmail.com>
+References: <4B7D8358.1080108@gmail.com> <fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com> 
+	<4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix> 
+	<4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix> 
+	<4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix> 
+	<p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com> 
+	<AANLkTi=a27OtQX-oNwPqmXDUmZHFyKo+fPZCRgSv04G3@mail.gmail.com> 
+	<8762znjdr0.fsf@catnip.gol.com> <4C5D1DC2.6000704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Richard Braun <rbraun@sceen.net>
-X-From: git-owner@vger.kernel.org Sat Aug 07 15:23:56 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>,
+	conrad@metadecks.org
+To: Gabriel Filion <lelutin@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 07 15:38:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhjNU-0007Kf-5O
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 15:23:56 +0200
+	id 1OhjbG-0006fM-7x
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 15:38:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762630Ab0HGNXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Aug 2010 09:23:50 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48031 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753213Ab0HGNXt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Aug 2010 09:23:49 -0400
-Received: by fxm14 with SMTP id 14so4332704fxm.19
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 06:23:48 -0700 (PDT)
+	id S1753786Ab0HGNiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Aug 2010 09:38:04 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:54372 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753213Ab0HGNiB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Aug 2010 09:38:01 -0400
+Received: by iwn33 with SMTP id 33so2217674iwn.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 06:38:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ETBUjLd2YKo6RNeAIJMKFZUdyUApz5IjhBW2ye8appk=;
-        b=thjEwC8L0ec6NUDvofbwY/OqU86MCscCaeXHBcMDVqxiunyZ43EqOH+evPZ7am17Zb
-         jMyveYA+rduid5Njdx3LpGTN8LDlBoyYHNfTbTyqf3JYXeS1bDazQPYSyWEeZr0kyDNR
-         JkzqayNSBnTkFrzaJdOgaOOcmyM2+ZwRU3EoY=
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type;
+        bh=w1OXYcvKcX/Ws2AAPNRiI5dn26lOSKcUJ2qGPFmYcBg=;
+        b=a9t0AkJxep6GjVun2Fk0lbMeBbU5sBvvFtFPlImrR4zUZVA17UDVq/yeRV9EuXei9v
+         rbOvGU49EJL+novNGp7MIu3yJaEvnLTxXyEfniCiSobKIK1aXxTWTdX0RHwDC7VA+y0y
+         0AukUDGaR/6+MiLLCreXUFTt/97mkuOnHBPk8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=DACb62oNBf5kNocgEkBn44ca+G1NqAmqVzzCei4pD7LP8Ioayj6g2Tyw6Qc+L4Lwff
-         AkGJOAi5jKNXGvmMSozH2y3iVVXeDvkCYOWtSBPTD8ciiECFvnfFiLd0sfGstvkfLiG9
-         4wZ9WERc0CpfDw/fq/yV63RX10q2ZMcj39Fa0=
-Received: by 10.223.119.210 with SMTP id a18mr14227972far.52.1281187428302;
-        Sat, 07 Aug 2010 06:23:48 -0700 (PDT)
-Received: from localhost.localdomain (abwi49.neoplus.adsl.tpnet.pl [83.8.232.49])
-        by mx.google.com with ESMTPS id b36sm1037922faq.11.2010.08.07.06.23.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 07 Aug 2010 06:23:46 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o77DNFhV004539;
-	Sat, 7 Aug 2010 15:23:15 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o77DN3A8004533;
-	Sat, 7 Aug 2010 15:23:04 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20100807112159.GA12015@sceen.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=jMpZw9zn4+ZKzkeAna4Hux2m9+S38KnSelg6fG6vOBEgmwzU1+vOACDtayD4AlK1Kn
+         +LS7wo9evm1Gyl6/Hjxa0up+yRmRnzrdPxk9UQeNP2kVz6STaEaMurUWMoQzJYei95dF
+         w+PA2D+XKoWRfr2THZ9iaXS3ChS2ASKElHT68=
+Received: by 10.231.157.207 with SMTP id c15mr15713987ibx.143.1281188281101; 
+	Sat, 07 Aug 2010 06:38:01 -0700 (PDT)
+Received: by 10.231.146.65 with HTTP; Sat, 7 Aug 2010 06:37:41 -0700 (PDT)
+In-Reply-To: <4C5D1DC2.6000704@gmail.com>
+X-Google-Sender-Auth: gG9BkwLqPq-Wxz0wPsJ0UxnOcOk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152857>
 
-Richard Braun <rbraun@sceen.net> writes:
-> On Sat, Aug 07, 2010 at 08:13:39AM +0530, Ramkumar Ramachandra wrote:
-> > 
-> > Ah, it looks like this problem went unnoticed probably because
-> > everyone uses mboxes. One possible solution would be to teach
-> > `git-mailsplit` to order the emails correctly. You can reply with an
-> > RFC patch; I've CC'ed the Git list on this email.
-> 
-> Well, if everybody else has survived for five years with mbox patch
-> series, I guess I can do that too. With some not-so-difficult work, I
-> managed to have Mutt do what I wanted (that is, saving patch series in
-> mbox files in one macro and keep everything else with Maildir folders
-> untouched).
-> 
-> After some digging in the code, it doesn't look like a git issue. When
-> a Maildir folder is processed, its entries are actually sorted, unlike
-> what I first thought. populate_maildir_list() calls string_list_insert()
-> (in string-list.c) which does insertion sort through its static
-> add_entry() and get_entry_index() functions which use a bare strcmp() to
-> compare file names (it was path-list.c back in Git 1.5, same code).
-> When copying a threaded patch series in a Maildir folder with Mutt, here
-> are the names created:
-> 1281177008.8677_101.myhostname:2,
-> 1281177008.8677_103.myhostname:2,
-[...]
-> 1281177008.8677_11.myhostname:2,
-> 1281177008.8677_13.myhostname:2,
-> 1281177008.8677_15.myhostname:2,
-> 1281177008.8677_17.myhostname:2,
-> 1281177008.8677_19.myhostname:2,
-> 1281177008.8677_1.myhostname:2,
-> 1281177008.8677_21.myhostname:2,
-> 1281177008.8677_23.myhostname:2,
-> 
-> And for such names, git am determines that e.g.
-> "1281177008.8677_107.myhostname:2", should be applied before
-> "1281177008.8677_17.myhostname:2,", which is obviously wrong.
-> 
-> I'm not sure about what depends on string-list.c, but based on the
-> output of a raw grep, it doesn't seem like a good idea to change the
-> way strings are sorted, especially if almost noone uses Maildir for
-> patch series. [...]
+On Sat, Aug 7, 2010 at 5:48 PM, Gabriel Filion <lelutin@gmail.com> wrote:
+> (restoring CC list. it is customary on the git list to reply-all)
 
-Would it be really that difficult to implement "version sort" in git
-(like 'ls -v' / 'ls --sort=version' does), using strverscmp (and
-provide fallback in compat/), and use it in git-am?
+Sorry, I was using gmane (mail/news gateway); I'm not totally sure
+what it does with replies...
+
+I'll use mail for replies in the future.
+
+Thanks,
+
+-Miles
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Do not taunt Happy Fun Ball.
