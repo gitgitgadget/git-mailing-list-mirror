@@ -1,128 +1,202 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v3] gitweb: clarify search results page when no matching
- commit found
-Date: Sat, 7 Aug 2010 16:56:47 -0500
-Message-ID: <20100807215647.GB2969@burratino>
-References: <AANLkTikiVQCMKjftWfrKbK-K+Gv45CTunxjULGc1==Zb@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC/PATCH] imap-send: Code correctness flagged by clang
+Date: Sat, 7 Aug 2010 22:53:51 +0000
+Message-ID: <AANLkTim4CHdVLinkw1EjXB74OJ+YW-ri4GzHMNhRd+Cy@mail.gmail.com>
+References: <1281183136-10352-1-git-send-email-avarab@gmail.com>
+	<20100807210429.GA2216@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	Petr Baudis <pasky@suse.cz>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Erick Mattos <erick.mattos@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 07 23:58:43 2010
+Cc: git@vger.kernel.org, Mike McCormack <mike@codeweavers.com>,
+	Benjamin Kramer <benny.kra@googlemail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 08 00:53:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhrPe-0000sa-Je
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 23:58:42 +0200
+	id 1OhsH7-0000Hc-P5
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 00:53:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754382Ab0HGV60 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 17:58:26 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49929 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752690Ab0HGV60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Aug 2010 17:58:26 -0400
-Received: by ywh1 with SMTP id 1so3138840ywh.19
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 14:58:25 -0700 (PDT)
+	id S1753903Ab0HGWxw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 18:53:52 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52831 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753104Ab0HGWxv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 7 Aug 2010 18:53:51 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 33so2525367iwn.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 15:53:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ubRNt8eMw1NUTlZVOhM1xJWQcY8Gwcn/jy8U2JKNCO8=;
-        b=jv5tO8sHrsXIe/e7eYbcIvgx6dec90x5uD+hAc7uS0DU1OLn2vTAWHohlBTMtcRvgQ
-         TVOFik7/4Bo+NdUFxdHPHfqCPxQG/lLYihVvLAgg0xnTKBfBZO1mqsl8SJlvXcq+fTLh
-         V6KeaQeJZm+9O5ikYSvkw1SRBrlxWc217ieBI=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3xU0VTn+YQTW5uCaRxhj752t5mmkLOk2mCzp+tCfmR0=;
+        b=dm4VkpajHhEpNh/ffQz9VDOVhtgI8jpodTMrcpdQhe9f6KWIVEX02czJ65lXD9LFJZ
+         o4oLjxSIc54lhZYQXomWVzF5mEuHG7bkaovoEyZTpI1Y2kqMJIyxyrPtrL8nEWXh+xdF
+         CC2ovVc0uDs4CGCTgl+vpYwgTsRPNduR05E18=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Z619xekhLM6tFwytj0furwtkcAigh1SHXgMk+renBUF6W0BxX3x0jO8VGbzOoNOK9H
-         6lmF2aZ3XEW6rdyGnfvL8mTBXQPWsubd9RC2j3PNK2LSDsjZ3o7oNBR0iwLU2iF1xMb2
-         HFUf3r5zFVLpWOCrD6USMShx8123MOhEb7n9g=
-Received: by 10.100.225.8 with SMTP id x8mr15789257ang.203.1281218303951;
-        Sat, 07 Aug 2010 14:58:23 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id a12sm4968026and.16.2010.08.07.14.58.20
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 07 Aug 2010 14:58:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikiVQCMKjftWfrKbK-K+Gv45CTunxjULGc1==Zb@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=e/ziLX6FsqZTXYBzIn7D/adERSggIUtUFLa1kN+dFNb2WkApKdcqIUq0/bayh40rAP
+         b60wla9Su7OEUtOFezbIsBiUa2N64uvPkc6d6xqP9MKxzcomq0GhHTut3JJwu7Du4xPG
+         Mk/mbxi6oQC6OqnLaaHHFSn4OtCMz9dtHgqFU=
+Received: by 10.231.183.81 with SMTP id cf17mr16218986ibb.32.1281221631425; 
+	Sat, 07 Aug 2010 15:53:51 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Sat, 7 Aug 2010 15:53:51 -0700 (PDT)
+In-Reply-To: <20100807210429.GA2216@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152869>
 
-When searching commits for a string that never occurs, the results
-page looks something like this:
+On Sat, Aug 7, 2010 at 21:04, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> [Subject: imap-send: Code correctness flagged by clang]
+>>
+>> Clang 1.1 flagged the following issues in imap-send.c, this change
+>> fixes the warnings by moving some code around:
+>>
+>> =C2=A0 =C2=A0 imap-send.c:548:27: warning: data argument not used by=
+ format string [-Wformat-extra-args]
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd->tag, cmd->cmd, cmd->cb.d=
+len);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^
+>>
+>> Here the sprintf format didn't use the cmd->cb.dlen argument if
+>> cmd->cb.data was false. Change the code to use a if/else instead of =
+a
+>> two-level ternary to work it. This code was introduced with imap-sen=
+d
+>> itself in f2561fda.
+>>
+>> =C2=A0 =C2=A0 imap-send.c:1089:41: warning: conversion specifies typ=
+e 'unsigned short' but the argument has type 'int' [-Wformat]
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ snprintf(portstr, sizeof(portstr), "%hu", srvc->port);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~^ =C2=A0 ~~~~=
+~~~~~~
+>>
+>> Here sprintf is being given an int with a %hu format. Cast the
+>> srvc->port to unsigned short to work it. This code was introduced in
+>> 94ad2437 to add IPv6 support.
+>
+> Nitpick: that this was found by clang is probably not the first thing
+> a person trying to figure out what the patch does needs to know.
+> Maybe:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Subject: imap-send: Fix sprintf usage
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0When composing a command for the imap serv=
+er, imap-send
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0uses a single nfsnprintf() invocation for =
+brevity
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0instead of dealing separately with the cas=
+e when there
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0is a message to be sent and the case when =
+there isn=E2=80=99t.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0The unused argument in the second case, wh=
+ile valid,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0is confusing for static analyzers and huma=
+n readers.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0v1.6.4-rc0~117 (imap-send: add support for=
+ IPv6, 2009-05-25)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0mistakenly used %hu as the format for an i=
+nt =E2=80=9Cport=E2=80=9D, by
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0analogy with existing usage for the unsign=
+ed short
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0=E2=80=9Caddr.sin_port=E2=80=9D. =C2=A0Use=
+ %d instead.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0Noticed with clang.
 
-	projects / foo.git / search                                 \o/
-	summary | ... | tree          [commit] search: [ kfjdkas ] [ ]re
-	first =E2=8B=85 prev =E2=8B=85 next
+That looks better.
 
-	Merge branch 'maint'
+>> +++ b/imap-send.c
+>> @@ -543,9 +543,14 @@ static struct imap_cmd *v_issue_imap_cmd(struct=
+ imap_store *ctx,
+>> =C2=A0 =C2=A0 =C2=A0 while (imap->literal_pending)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 get_cmd_result(ctx,=
+ NULL);
+>>
+>> - =C2=A0 =C2=A0 bufl =3D nfsnprintf(buf, sizeof(buf), cmd->cb.data ?=
+ CAP(LITERALPLUS) ?
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0"%d %s{%d+}\r\n" : "%d %s{%d}\r\n" : "%d %s\r\n",
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0cmd->tag, cmd->cmd, cmd->cb.dlen);
+>> + =C2=A0 =C2=A0 if (cmd->cb.data) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bufl =3D nfsnprintf(buf,=
+ sizeof(buf),
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CAP(LITERALPLUS) ? "%d %s{%d+}\r=
+\n" : "%d %s{%d}\r\n",
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cmd->tag, cmd->cmd, cmd->cb.dlen=
+);
+>> + =C2=A0 =C2=A0 } else {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 bufl =3D nfsnprintf(buf,=
+ sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cmd);
+>> + =C2=A0 =C2=A0 }
+>> +
+>
+> Hmm, maybe this would be easier to read:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!cmd->cb.data)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bufl =3D nfsnp=
+rintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cmd);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bufl =3D nfsnp=
+rintf(buf, sizeof(buf), "%d %s{%d%s}\r\n",
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd->tag, cmd->cmd, cm=
+d->cb.dlen,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CAP(LITERALPLUS) ? "+"=
+ : "");
+>
+> i.e., putting the easier case first and avoiding a variable format st=
+ring.
 
-	Foo: a demonstration project
+Yeah, that version looks better.
 
-Without a list of hits to compare it to, the header describing the
-commit named by the hash parameter (usually HEAD) may itself look
-like a hit.  Add some text (=E2=80=9CNo match.=E2=80=9D) to replace the=
- empty
-list of hits and avoid this confusion.
+>> @@ -1086,7 +1091,7 @@ static struct store *imap_open_store(struct im=
+ap_server_conf *srvc)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int gai;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 char portstr[6];
+>>
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(portstr, sizeof=
+(portstr), "%hu", srvc->port);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(portstr, sizeof=
+(portstr), "%hu", (unsigned short)srvc->port);
+>
+> Why not
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0snprintf(ports=
+tr, sizeof(portstr), "%d", srvc->port);
+>
+> ?
 
-While at it, remove some nearby dead code, left behind from a
-simplification a few years ago (v1.5.4-rc0~276^2~4, 2007-11-01).
+I wasn't sure whether it needed to be %hu for the purposes of the
+snprintf() call. I.e. that the resulting contents of portstr might be
+different on some systems.
 
-Noticed-by: Erick Mattos <erick.mattos@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Acked-by: Jakub Narebski <jnareb@gmail.com>
----
-changes relative to v2[1]:
- - better newline placement in the produced HTML.
+Maybe they won't be, then we could just use %d.
 
-Erick Mattos wrote:
+Another alternative would be to change the definition of port from int
+to unsigned short in the srvc struct.
 
-> What's up to:
->=20
-> http://thread.gmane.org/gmane.comp.version-control.git/151402/focus=3D=
-151414
+> Thanks for checking the code.
 
-Hopefully third time=E2=80=99s the charm.  Test reports welcome as alwa=
-ys.
-
- gitweb/gitweb.perl |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 8b02767..4efeebc 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -6521,12 +6521,13 @@ sub git_search {
- 			$paging_nav .=3D " &sdot; next";
- 		}
-=20
--		if ($#commitlist >=3D 100) {
--		}
--
- 		git_print_page_nav('','', $hash,$co{'tree'},$hash, $paging_nav);
- 		git_print_header_div('commit', esc_html($co{'title'}), $hash);
--		git_search_grep_body(\@commitlist, 0, 99, $next_link);
-+		if ($page =3D=3D 0 && !@commitlist) {
-+			print "<p>No match.</p>\n";
-+		} else {
-+			git_search_grep_body(\@commitlist, 0, 99, $next_link);
-+		}
- 	}
-=20
- 	if ($searchtype eq 'pickaxe') {
---=20
-1.7.2.1.544.ga752d.dirty
+Thanks for reviewing the patch.
