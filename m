@@ -1,120 +1,128 @@
-From: Richard Braun <rbraun@sceen.net>
-Subject: Re: Maildir ordering in git-mailsplit (was: Using mutt as a git
-	maintainer)
-Date: Sat, 7 Aug 2010 13:21:59 +0200
-Message-ID: <20100807112159.GA12015@sceen.net>
-References: <20100806222847.GA4240@sceen.net> <20100807024337.GA15410@kytes>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [RFC/PATCH] imap-send: Code correctness flagged by clang
+Date: Sat,  7 Aug 2010 12:12:16 +0000
+Message-ID: <1281183136-10352-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 07 14:13:40 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike McCormack <mike@codeweavers.com>,
+	Benjamin Kramer <benny.kra@googlemail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 07 14:13:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhiHK-0004JG-4N
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 14:13:30 +0200
+	id 1OhiHN-0004JG-VK
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 14:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762030Ab0HGL17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Aug 2010 07:27:59 -0400
-Received: from dalaran.sceen.net ([91.121.161.122]:60288 "EHLO mail.sceen.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755617Ab0HGL16 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Aug 2010 07:27:58 -0400
-X-Greylist: delayed 356 seconds by postgrey-1.27 at vger.kernel.org; Sat, 07 Aug 2010 07:27:58 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.sceen.net (Postfix) with ESMTP id 0D184224264
-	for <git@vger.kernel.org>; Sat,  7 Aug 2010 13:27:57 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at sceen.net
-Received: from mail.sceen.net ([127.0.0.1])
-	by localhost (mail.sceen.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Gtgk1SO3ZsEt for <git@vger.kernel.org>;
-	Sat,  7 Aug 2010 13:27:56 +0200 (CEST)
-Received: by mail.sceen.net (Postfix, from userid 105)
-	id E2E45224286; Sat,  7 Aug 2010 13:27:11 +0200 (CEST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.sceen.net (Postfix) with ESMTP id 4951C224264
-	for <git@vger.kernel.org>; Sat,  7 Aug 2010 13:23:56 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at sceen.net
-Received: from mail.sceen.net ([127.0.0.1])
-	by localhost (mail.sceen.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DOMKZmrvpPhi for <git@vger.kernel.org>;
-	Sat,  7 Aug 2010 13:23:56 +0200 (CEST)
-Received: by mail.sceen.net (Postfix, from userid 105)
-	id 2F612224286; Sat,  7 Aug 2010 13:23:39 +0200 (CEST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.sceen.net (Postfix) with ESMTP id 4E0A9224264;
-	Sat,  7 Aug 2010 13:21:59 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at sceen.net
-Received: from mail.sceen.net ([127.0.0.1])
-	by localhost (mail.sceen.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 59c+ktfuzJTA; Sat,  7 Aug 2010 13:21:59 +0200 (CEST)
-Received: by mail.sceen.net (Postfix, from userid 1000)
-	id 382E7224286; Sat,  7 Aug 2010 13:21:59 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20100807024337.GA15410@kytes>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1753099Ab0HGMMd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 08:12:33 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43683 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751932Ab0HGMMc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Aug 2010 08:12:32 -0400
+Received: by wwj40 with SMTP id 40so10069520wwj.1
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 05:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=MwTu0B5hdCO+Fej5IyVco2S4eRLklEKQJvJr4AZpGy0=;
+        b=XtpCasT7ydiIYr5FmMV1zf9+BCYRq/baCSD8xhzDvt4JUtleAWr9++pMYc1j3Y9LXh
+         TBLPw+thuwuvrCZfQrwSZXw/d/ySWjiYKwExPSO0irevQEl8MV2dU4D4qtDKmx5dfX53
+         U05bd/Dsxi7nuc8H225UVpZCoPcTaL3S+uH78=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=tDlQat1T5pIT+dR9X1ekiW279FLCj3ugGusUoOvWWDzjqTi0CaKqFa2iBGywBPYuKn
+         DfqFTQ742bYK6SnKoaY9Tb1Wng/0Jre9bqT8ZwQL6aJjsZ4yk74zTdQQCOm2u+nRfNFI
+         1eucMEbCA/ZUdz+enGlPGEpWm13+Mow9XwwjQ=
+Received: by 10.216.185.72 with SMTP id t50mr11676365wem.77.1281183150852;
+        Sat, 07 Aug 2010 05:12:30 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id w46sm1446771weq.43.2010.08.07.05.12.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 07 Aug 2010 05:12:29 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152853>
 
-On Sat, Aug 07, 2010 at 08:13:39AM +0530, Ramkumar Ramachandra wrote:
-> Hi Richard,
-> 
-> Ah, it looks like this problem went unnoticed probably because
-> everyone uses mboxes. One possible solution would be to teach
-> `git-mailsplit` to order the emails correctly. You can reply with an
-> RFC patch; I've CC'ed the Git list on this email.
+Clang 1.1 flagged the following issues in imap-send.c, this change
+fixes the warnings by moving some code around:
 
-Well, if everybody else has survived for five years with mbox patch
-series, I guess I can do that too. With some not-so-difficult work, I
-managed to have Mutt do what I wanted (that is, saving patch series in
-mbox files in one macro and keep everything else with Maildir folders
-untouched).
+    imap-send.c:548:27: warning: data argument not used by format strin=
+g [-Wformat-extra-args]
+                               cmd->tag, cmd->cmd, cmd->cb.dlen);
+                                                   ^
 
-After some digging in the code, it doesn't look like a git issue. When
-a Maildir folder is processed, its entries are actually sorted, unlike
-what I first thought. populate_maildir_list() calls string_list_insert()
-(in string-list.c) which does insertion sort through its static
-add_entry() and get_entry_index() functions which use a bare strcmp() to
-compare file names (it was path-list.c back in Git 1.5, same code).
-When copying a threaded patch series in a Maildir folder with Mutt, here
-are the names created:
-1281177008.8677_101.myhostname:2,
-1281177008.8677_103.myhostname:2,
-1281177008.8677_105.myhostname:2,
-1281177008.8677_107.myhostname:2,
-1281177008.8677_109.myhostname:2,
-1281177008.8677_111.myhostname:2,
-1281177008.8677_113.myhostname:2,
-1281177008.8677_11.myhostname:2,
-1281177008.8677_13.myhostname:2,
-1281177008.8677_15.myhostname:2,
-1281177008.8677_17.myhostname:2,
-1281177008.8677_19.myhostname:2,
-1281177008.8677_1.myhostname:2,
-1281177008.8677_21.myhostname:2,
-1281177008.8677_23.myhostname:2,
+Here the sprintf format didn't use the cmd->cb.dlen argument if
+cmd->cb.data was false. Change the code to use a if/else instead of a
+two-level ternary to work it. This code was introduced with imap-send
+itself in f2561fda.
 
-And for such names, git am determines that e.g.
-"1281177008.8677_107.myhostname:2", should be applied before
-"1281177008.8677_17.myhostname:2,", which is obviously wrong.
+    imap-send.c:1089:41: warning: conversion specifies type 'unsigned s=
+hort' but the argument has type 'int' [-Wformat]
+                    snprintf(portstr, sizeof(portstr), "%hu", srvc->por=
+t);
+                                                        ~~^   ~~~~~~~~~=
+~
 
-I'm not sure about what depends on string-list.c, but based on the
-output of a raw grep, it doesn't seem like a good idea to change the
-way strings are sorted, especially if almost noone uses Maildir for
-patch series. The best solution IMO would be a Mutt hook to alter the
-file names or something like that. A good workaround is configuring it
-to use mbox as the default format and keep existing folders as Maildirs
-(that's what I'm doing now). I guess the only file to patch in any case
-is Documentation/SubmittingPatches, adding an entry for Mutt in the MUA
-hints part (if possible with the renaming hook if someone knows how to
-do that - I'll search a bit on my side - or with an explanation of the
-issue and the simple mbox workaround).
+Here sprintf is being given an int with a %hu format. Cast the
+srvc->port to unsigned short to work it. This code was introduced in
+94ad2437 to add IPv6 support.
 
--- 
-Richard Braun
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ imap-send.c |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/imap-send.c b/imap-send.c
+index 1a577a0..4b25375 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -543,9 +543,14 @@ static struct imap_cmd *v_issue_imap_cmd(struct im=
+ap_store *ctx,
+ 	while (imap->literal_pending)
+ 		get_cmd_result(ctx, NULL);
+=20
+-	bufl =3D nfsnprintf(buf, sizeof(buf), cmd->cb.data ? CAP(LITERALPLUS)=
+ ?
+-			   "%d %s{%d+}\r\n" : "%d %s{%d}\r\n" : "%d %s\r\n",
+-			   cmd->tag, cmd->cmd, cmd->cb.dlen);
++	if (cmd->cb.data) {
++		bufl =3D nfsnprintf(buf, sizeof(buf),
++		                  CAP(LITERALPLUS) ? "%d %s{%d+}\r\n" : "%d %s{%d}\r=
+\n",
++		                  cmd->tag, cmd->cmd, cmd->cb.dlen);
++	} else {
++		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cm=
+d);
++	}
++
+ 	if (Verbose) {
+ 		if (imap->num_in_progress)
+ 			printf("(%d in progress) ", imap->num_in_progress);
+@@ -1086,7 +1091,7 @@ static struct store *imap_open_store(struct imap_=
+server_conf *srvc)
+ 		int gai;
+ 		char portstr[6];
+=20
+-		snprintf(portstr, sizeof(portstr), "%hu", srvc->port);
++		snprintf(portstr, sizeof(portstr), "%hu", (unsigned short)srvc->port=
+);
+=20
+ 		memset(&hints, 0, sizeof(hints));
+ 		hints.ai_socktype =3D SOCK_STREAM;
+--=20
+1.7.1
