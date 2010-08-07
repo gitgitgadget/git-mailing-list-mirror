@@ -1,128 +1,90 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [RFC/PATCH] imap-send: Code correctness flagged by clang
-Date: Sat,  7 Aug 2010 12:12:16 +0000
-Message-ID: <1281183136-10352-1-git-send-email-avarab@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: git-archimport (was: Re: RFD: git-bzr: anyone interested?)
+Date: Sat, 07 Aug 2010 06:03:27 -0700 (PDT)
+Message-ID: <m3iq3mo9t5.fsf_-_@localhost.localdomain>
+References: <4B7D8358.1080108@gmail.com>
+	<fabb9a1e1002181037n58d6942dpa63a57a23f506d9c@mail.gmail.com>
+	<4B7E3856.3080609@gmail.com> <20100219135549.GA31796@Knoppix>
+	<4B820B4E.7050405@gmail.com> <20100222105133.GA10577@Knoppix>
+	<4B834989.50502@gmail.com> <20100223124553.GA19153@Knoppix>
+	<p2ka038bef51004261441x7e4857f1mc3f03a4104f8e018@mail.gmail.com>
+	<AANLkTi=a27OtQX-oNwPqmXDUmZHFyKo+fPZCRgSv04G3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike McCormack <mike@codeweavers.com>,
-	Benjamin Kramer <benny.kra@googlemail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 07 14:13:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Gabriel Filion <lelutin@gmail.com>, git@vger.kernel.org
+To: Conrad Parker <conrad@metadecks.org>
+X-From: git-owner@vger.kernel.org Sat Aug 07 15:03:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhiHN-0004JG-VK
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 14:13:34 +0200
+	id 1Ohj3p-0001Ns-8b
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 15:03:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753099Ab0HGMMd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 08:12:33 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43683 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751932Ab0HGMMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Aug 2010 08:12:32 -0400
-Received: by wwj40 with SMTP id 40so10069520wwj.1
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 05:12:30 -0700 (PDT)
+	id S1753468Ab0HGNDb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Aug 2010 09:03:31 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62502 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753385Ab0HGNDa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Aug 2010 09:03:30 -0400
+Received: by fxm14 with SMTP id 14so4327786fxm.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 06:03:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=MwTu0B5hdCO+Fej5IyVco2S4eRLklEKQJvJr4AZpGy0=;
-        b=XtpCasT7ydiIYr5FmMV1zf9+BCYRq/baCSD8xhzDvt4JUtleAWr9++pMYc1j3Y9LXh
-         TBLPw+thuwuvrCZfQrwSZXw/d/ySWjiYKwExPSO0irevQEl8MV2dU4D4qtDKmx5dfX53
-         U05bd/Dsxi7nuc8H225UVpZCoPcTaL3S+uH78=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=McEGNccIGiAL6unnIoC9Ux1d5AunNN7syrEIXlwBg5k=;
+        b=LDsqc3rWhNcdqKDTzAmOWnZZLSYf4P6JP7/NuFEptlVTd1df4yyaK8my9zhgnZPVsU
+         9uLcCqJA1n3HyzW83H8TCqVpULlLNMqpHwggbHfOgH2jXqbbdq1dQf2Fi/cMuXi7ukir
+         jiy+PcTrFew1JmPjf1MI14si+mlPHqJbMf+C8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=tDlQat1T5pIT+dR9X1ekiW279FLCj3ugGusUoOvWWDzjqTi0CaKqFa2iBGywBPYuKn
-         DfqFTQ742bYK6SnKoaY9Tb1Wng/0Jre9bqT8ZwQL6aJjsZ4yk74zTdQQCOm2u+nRfNFI
-         1eucMEbCA/ZUdz+enGlPGEpWm13+Mow9XwwjQ=
-Received: by 10.216.185.72 with SMTP id t50mr11676365wem.77.1281183150852;
-        Sat, 07 Aug 2010 05:12:30 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id w46sm1446771weq.43.2010.08.07.05.12.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 07 Aug 2010 05:12:29 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=QpTrHd12uuzY7X9e5vbQ4FTqx4lJrV/g6lTpQK21C9QJAyiKrfzHnF3NyFISMEeie2
+         316GKug/OvRM7RUiabtkJ9AzVaPZtNozYkTQoMwVXNiH1tfOt4oZ2jkhqlBqLo/+cTWY
+         WHy9p2q03yFLUy/xdqa6cVIC7C4zlbW2ZhdI8=
+Received: by 10.223.103.202 with SMTP id l10mr14299574fao.7.1281186208749;
+        Sat, 07 Aug 2010 06:03:28 -0700 (PDT)
+Received: from localhost.localdomain (abwi49.neoplus.adsl.tpnet.pl [83.8.232.49])
+        by mx.google.com with ESMTPS id c5sm1029207fac.43.2010.08.07.06.03.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 07 Aug 2010 06:03:27 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o77D2biR004204;
+	Sat, 7 Aug 2010 15:02:37 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o77D2FeD004191;
+	Sat, 7 Aug 2010 15:02:15 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTi=a27OtQX-oNwPqmXDUmZHFyKo+fPZCRgSv04G3@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152854>
 
-Clang 1.1 flagged the following issues in imap-send.c, this change
-fixes the warnings by moving some code around:
+Conrad Parker <conrad@metadecks.org> writes:
 
-    imap-send.c:548:27: warning: data argument not used by format strin=
-g [-Wformat-extra-args]
-                               cmd->tag, cmd->cmd, cmd->cb.dlen);
-                                                   ^
+> Anyone interested in git-bzr might also want to look at some recent
+> rewrites; from the current git-bzr README:
+> 
+> The following are rewrites in Python and may offer better bzr integration:
+>   * http://github.com/termie/git-bzr-ng
+>   * http://github.com/matthew-brett/git-bzr
+> 
+> (... and I'd also be interested to know how well either of these work :)
+> 
+> cheers,
 
-Here the sprintf format didn't use the cmd->cb.dlen argument if
-cmd->cb.data was false. Change the code to use a if/else instead of a
-two-level ternary to work it. This code was introduced with imap-send
-itself in f2561fda.
+By the way, perhaps it is time to finally retire git-archimport, or at
+least move it to contrib section.  Is there anyone using it?
 
-    imap-send.c:1089:41: warning: conversion specifies type 'unsigned s=
-hort' but the argument has type 'int' [-Wformat]
-                    snprintf(portstr, sizeof(portstr), "%hu", srvc->por=
-t);
-                                                        ~~^   ~~~~~~~~~=
-~
-
-Here sprintf is being given an int with a %hu format. Cast the
-srvc->port to unsigned short to work it. This code was introduced in
-94ad2437 to add IPv6 support.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- imap-send.c |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
-
-diff --git a/imap-send.c b/imap-send.c
-index 1a577a0..4b25375 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -543,9 +543,14 @@ static struct imap_cmd *v_issue_imap_cmd(struct im=
-ap_store *ctx,
- 	while (imap->literal_pending)
- 		get_cmd_result(ctx, NULL);
-=20
--	bufl =3D nfsnprintf(buf, sizeof(buf), cmd->cb.data ? CAP(LITERALPLUS)=
- ?
--			   "%d %s{%d+}\r\n" : "%d %s{%d}\r\n" : "%d %s\r\n",
--			   cmd->tag, cmd->cmd, cmd->cb.dlen);
-+	if (cmd->cb.data) {
-+		bufl =3D nfsnprintf(buf, sizeof(buf),
-+		                  CAP(LITERALPLUS) ? "%d %s{%d+}\r\n" : "%d %s{%d}\r=
-\n",
-+		                  cmd->tag, cmd->cmd, cmd->cb.dlen);
-+	} else {
-+		bufl =3D nfsnprintf(buf, sizeof(buf), "%d %s\r\n", cmd->tag, cmd->cm=
-d);
-+	}
-+
- 	if (Verbose) {
- 		if (imap->num_in_progress)
- 			printf("(%d in progress) ", imap->num_in_progress);
-@@ -1086,7 +1091,7 @@ static struct store *imap_open_store(struct imap_=
-server_conf *srvc)
- 		int gai;
- 		char portstr[6];
-=20
--		snprintf(portstr, sizeof(portstr), "%hu", srvc->port);
-+		snprintf(portstr, sizeof(portstr), "%hu", (unsigned short)srvc->port=
-);
-=20
- 		memset(&hints, 0, sizeof(hints));
- 		hints.ai_socktype =3D SOCK_STREAM;
---=20
-1.7.1
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
