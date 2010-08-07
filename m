@@ -1,127 +1,75 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Cooking of the ab/i18n series
-Date: Sat, 7 Aug 2010 01:13:47 +0000
-Message-ID: <AANLkTimvNgZ4UU595==Tx5i0LYF56ecNzvYWki0FM3u6@mail.gmail.com>
-References: <AANLkTi=bnDgUsnBCv5493sH9eY5hg0S2YPywKba9jD20@mail.gmail.com>
-	<7vzkx0bt4w.fsf@alter.siamese.dyndns.org>
-	<AANLkTim1G=wjAgts_BvjwU8_B1wqrUEQHWbP_MY=cJa9@mail.gmail.com>
-	<7vmxszamwd.fsf@alter.siamese.dyndns.org>
-	<AANLkTimooDYBW3N0qV4G2JKSvcdWiCVRj3WjuoO+CJ54@mail.gmail.com>
-	<7viq3nagje.fsf@alter.siamese.dyndns.org>
-	<AANLkTimJCgZ8kU0Nrm6Zi-PXSgT96bFfTi0oaaX2t-6v@mail.gmail.com>
-	<AANLkTik1KVpb25nuwSFA2z4ezRJKWdTwRrS_KXzwM+2D@mail.gmail.com>
-	<7viq3n73c6.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH svnrdump-standalone] Sync with upstream
+Date: Fri, 6 Aug 2010 21:30:26 -0500
+Message-ID: <20100807023026.GA3111@burratino>
+References: <1279064176-6645-1-git-send-email-artagnon@gmail.com>
+ <7vsk3myuyo.fsf@alter.siamese.dyndns.org>
+ <20100715105527.GC22574@debian>
+ <20100806175709.GA2683@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 07 03:14:07 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 07 04:32:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhXzB-0008OY-L5
-	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 03:14:05 +0200
+	id 1OhZCm-00083y-IO
+	for gcvg-git-2@lo.gmane.org; Sat, 07 Aug 2010 04:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752365Ab0HGBNu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 6 Aug 2010 21:13:50 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53699 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752298Ab0HGBNs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 6 Aug 2010 21:13:48 -0400
-Received: by fxm14 with SMTP id 14so4192197fxm.19
-        for <git@vger.kernel.org>; Fri, 06 Aug 2010 18:13:47 -0700 (PDT)
+	id S1752627Ab0HGCbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Aug 2010 22:31:55 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:44638 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751917Ab0HGCby (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Aug 2010 22:31:54 -0400
+Received: by gyg10 with SMTP id 10so3043677gyg.19
+        for <git@vger.kernel.org>; Fri, 06 Aug 2010 19:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aE33zsHwsbGMowKQJuJ8PzA+FQNLk4mBo3bvD/dNk7g=;
-        b=rIuIfhgymH3AwD75lnoVWd6756y9mxiLzQvmTdbZYI+aoBbQRKTEcXaBKnuGdlmQpu
-         N1Tv2Ulpa/uIRMBRz0ICEyS2I+ZHPrMbcjGgTRahatyRkvVqRn2gURf7lqp0HrOmSLgN
-         YohFEDlB3afMvkH9dtKwYuued9sunOGHCf1Sk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=426Vw7kuzDICf1Dj9htXG/1gx8sN7qsxZG5+XbvKTGw=;
+        b=IfDLjZaulPQclAD5ismzSBju7yAXa3EeitYBCLp8pIeJbSOn/U81jvOQ1vn1rTWWh+
+         t0dOgWy0fOrlTFT73cK6ZG7gkkjHqErD17DD/gxmm15E1BEn65v/e/7LCclSaTzwYpIQ
+         5xZ5C8ZOIx9odBBKc+8woRbU9Qjcsqgy/yiUc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=G0PVJLFKUcHo974HaLK9ot9prvj7aKa3yBEwks1DmDFe9e0wlNF0V9eSRtG9+2etkJ
-         zWZ0WaHimPuKkAKf7ofPXuI5/avx/u7zBjlY3BiNNNU8CHVKqe32TYI6OPRglxlEeIrM
-         1iA+Q3KR0ZVufFQWoe0rzIyBbAvxkZryk1//Q=
-Received: by 10.223.122.208 with SMTP id m16mr13618929far.88.1281143627274; 
-	Fri, 06 Aug 2010 18:13:47 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Fri, 6 Aug 2010 18:13:47 -0700 (PDT)
-In-Reply-To: <7viq3n73c6.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KQJvU96yaViEZPQGcqWSafIDJrhhwwYngtSOEv+JlZ8pKcxS108FtzrPoydOVgErKZ
+         BtvGwC8aOp1/bet0IfSCUeifY2LXGhvvbw7aqv7qNExIIRJ0CoWlMHRvHtbJ+1pl0MHj
+         Yk4C3v+2CVdD7Y6CZBSZIE2uXK9TywQO6LZc0=
+Received: by 10.151.130.20 with SMTP id h20mr14650521ybn.308.1281148313344;
+        Fri, 06 Aug 2010 19:31:53 -0700 (PDT)
+Received: from burratino ([64.134.175.203])
+        by mx.google.com with ESMTPS id v7sm225096ybe.19.2010.08.06.19.31.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 06 Aug 2010 19:31:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100806175709.GA2683@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152834>
 
-On Fri, Aug 6, 2010 at 23:01, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> My mental plan for this series has basically been as follows:
->>
->> =C2=A0 1. Get it to a state where it can cook in pu [You Are Here]
->>
->> =C2=A0 2. After it's been there for a while get it to master
->>
->> =C2=A0 3. Once it's there for a while and we're sure the new depende=
-ncy /
->> =C2=A0 =C2=A0 =C2=A0code doesn't harm some more obscure systems..
->>
->> =C2=A0 4. Start submitting patches to the main porcelain $(grep
->> =C2=A0 =C2=A0 =C2=A0'mainporcelain common' command-list.txt) to make=
- the most common
->> =C2=A0 =C2=A0 =C2=A0user-visible messages translatable.
->>
->> =C2=A0 5. Recruit translators to translate the strings in #4. Send
->> =C2=A0 =C2=A0 =C2=A0translations in as patches adding/altering the *=
-=2Epo files.
->
-> Matches my expectations modulo s/master/next/.
+Jonathan Nieder wrote:
 
-Yes, I meant to say "on track to master" (via next).
+> Caveats: Most load tests do not pass.
 
-> The stuff parked in 'pu' was primarily because most of the work to
-> get to this point was done during the pre-release freeze for 1.7.2
-> and I didn't want to get distracted, while I obviously did not lose
-> patches.
+They pass now.  Thanks for the help!
 
-I didn't mean to rush you, the delay is fine. It just sounded like the
-series might be stuck in pu in perpetuity from the initial "When
-people see the benefit of doing so" comment.
+You can
 
-But if not, nevermind.
+  git clone git://repo.or.cz/svnrdump/jrn.git
 
->> Now, your main concern is that this doesn't break plumbing output...=
-=2E
->
-> That's not 'main'.
->
-> 'Breaking plumbing' is merely an example of a larger 'main concern' w=
-hich
-> is 'unintended consequences'.
+for the tree.  The todo branch documents how to revive the
+git-svn branches.
 
-Sure, all code's going to have problems, and the ab/i18n series is
-around 1300 lines, so I'd be quite surprised if it didn't have some
-bug.
-
-> And please don't ask me to enumerate them exhaustively. =C2=A0By defi=
-nition
-> 'unintended consequences' cannot be enumerated. =C2=A0They are discov=
-ered over
-> time either by code inspection, by people guinea-pigging a version ou=
-tside
-> 'master', and by careful thinking.
-
-I was just wondering if there was anything particular that you were
-worried about that could be addressed.
-
-But as you've clarified there's nothing about it that I should be
-explicitly addressing before it can move forward (if I've understood
-you correctly).
-
-Thanks for clarifying that and for your time.
+Have fun,
+Jonathan
